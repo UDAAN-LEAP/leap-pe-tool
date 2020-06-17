@@ -146,6 +146,18 @@ private slots:
 
     void on_actionEnglish_triggered();
 
+    void on_actionBold_triggered();
+
+    void on_actionLeftAlign_triggered();
+
+    void on_actionRightAlign_triggered();
+
+    void on_actionCentreAlign_triggered();
+
+    void on_actionAllFontProperties_triggered();
+
+    void on_actionUnBold_triggered();
+
 private:
     Ui::MainWindow *ui;
 

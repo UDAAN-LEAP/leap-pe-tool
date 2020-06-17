@@ -2429,3 +2429,57 @@ void MainWindow::on_actionEnglish_triggered()
 {
     HinFlag = 0 , SanFlag = 0;
 }
+
+void MainWindow::on_actionBold_triggered() //Sanoj
+{
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Bold);
+    ui->textBrowser->textCursor().mergeCharFormat(format);
+}
+
+void MainWindow::on_actionLeftAlign_triggered() //Sanoj
+{
+    QTextCursor cursor = ui->textBrowser->textCursor();
+    QTextBlockFormat textBlockFormat = cursor.blockFormat();
+    textBlockFormat.setAlignment(Qt::AlignLeft);
+    cursor.mergeBlockFormat(textBlockFormat);
+    ui->textBrowser->setTextCursor(cursor);
+
+}
+
+void MainWindow::on_actionRightAlign_triggered() //Sanoj
+{
+    QTextCursor cursor = ui->textBrowser->textCursor();
+    QTextBlockFormat textBlockFormat = cursor.blockFormat();
+    textBlockFormat.setAlignment(Qt::AlignRight);
+    cursor.mergeBlockFormat(textBlockFormat);
+    ui->textBrowser->setTextCursor(cursor);
+}
+
+void MainWindow::on_actionCentreAlign_triggered() //Sanoj
+{
+    QTextCursor cursor = ui->textBrowser->textCursor();
+    QTextBlockFormat textBlockFormat = cursor.blockFormat();
+    textBlockFormat.setAlignment(Qt::AlignCenter);
+    cursor.mergeBlockFormat(textBlockFormat);
+    ui->textBrowser->setTextCursor(cursor);
+}
+
+void MainWindow::on_actionAllFontProperties_triggered()
+{
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok, this);
+    if(ok)
+    {
+        QTextCharFormat font1;
+        font1.setFont(font);
+        ui->textBrowser->textCursor().mergeCharFormat(font1);
+    }
+}
+
+void MainWindow::on_actionUnBold_triggered()
+{
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Normal);
+    ui->textBrowser->textCursor().mergeCharFormat(format);
+}

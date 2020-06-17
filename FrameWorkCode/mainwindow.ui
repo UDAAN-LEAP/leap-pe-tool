@@ -209,10 +209,23 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionHindi"/>
     <addaction name="actionEnglish"/>
    </widget>
+   <widget class="QMenu" name="menuFontAndLayout">
+    <property name="title">
+     <string>FontAndLayout</string>
+    </property>
+    <addaction name="actionAllFontProperties"/>
+    <addaction name="actionBold"/>
+    <addaction name="actionUnBold"/>
+    <addaction name="separator"/>
+    <addaction name="actionLeftAlign"/>
+    <addaction name="actionRightAlign"/>
+    <addaction name="actionCentreAlign"/>
+   </widget>
    <addaction name="menuSelectLanguage"/>
    <addaction name="menuOCR_Correction_Window"/>
    <addaction name="menuCreateReports"/>
    <addaction name="menuSaveVariables"/>
+   <addaction name="menuFontAndLayout"/>
    <addaction name="menuConvertFiles"/>
    <addaction name="menuFeatureExtraction"/>
   </widget>
@@ -242,6 +255,12 @@ p, li { white-space: pre-wrap; }
    <addaction name="separator"/>
    <addaction name="actionToDevanagari"/>
    <addaction name="separator"/>
+   <addaction name="actionBold"/>
+   <addaction name="actionLeftAlign"/>
+   <addaction name="actionRightAlign"/>
+   <addaction name="actionCentreAlign"/>
+   <addaction name="actionAllFontProperties"/>
+   <addaction name="actionUnBold"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -488,6 +507,36 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>English</string>
+   </property>
+  </action>
+  <action name="actionAllFontProperties">
+   <property name="text">
+    <string>AllFontProperties</string>
+   </property>
+  </action>
+  <action name="actionBold">
+   <property name="text">
+    <string>Bold</string>
+   </property>
+  </action>
+  <action name="actionUnBold">
+   <property name="text">
+    <string>UnBold</string>
+   </property>
+  </action>
+  <action name="actionLeftAlign">
+   <property name="text">
+    <string>LeftAlign</string>
+   </property>
+  </action>
+  <action name="actionRightAlign">
+   <property name="text">
+    <string>RightAlign</string>
+   </property>
+  </action>
+  <action name="actionCentreAlign">
+   <property name="text">
+    <string>CentreAlign</string>
    </property>
   </action>
  </widget>
