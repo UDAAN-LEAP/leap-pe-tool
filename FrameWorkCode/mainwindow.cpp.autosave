@@ -269,26 +269,6 @@ void MainWindow::on_actionOpen_triggered()
 //                    ui->textBrowser->setPlainText(text);
 //                }
 
-                if(sFile1.open(QFile::ReadOnly | QFile::Text))
-                {
-                    QTextStream in(&sFile1);
-                    while(!in.atEnd())
-                    {
-                        QString text = in.readLine();
-                        QString nextline = "\n";
-                        ui->textBrowser->append(text);
-                    }sFile.close();
-
-                } else {
-                    QTextStream in(&sFile);
-                    while(!in.atEnd())
-                    {
-                        QString text = in.readLine();
-                        QString nextline = "\n";
-                        ui->textBrowser->append(text);
-                    }sFile.close();
-                }
-
                 // load and show image:
                 QString localmFilename = mFilename;
                 localmFilename.replace("txt","jpeg");
