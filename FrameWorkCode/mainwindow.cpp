@@ -2437,35 +2437,43 @@ void MainWindow::on_actionBold_triggered() //Sanoj
     ui->textBrowser->textCursor().mergeCharFormat(format);
 }
 
+void MainWindow::on_actionUnBold_triggered() //Sanoj
+{
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Normal);
+    ui->textBrowser->textCursor().mergeCharFormat(format);
+}
+
 void MainWindow::on_actionLeftAlign_triggered() //Sanoj
 {
-    QTextCursor cursor = ui->textBrowser->textCursor();
-    QTextBlockFormat textBlockFormat = cursor.blockFormat();
-    textBlockFormat.setAlignment(Qt::AlignLeft);
-    cursor.mergeBlockFormat(textBlockFormat);
-    ui->textBrowser->setTextCursor(cursor);
-
+//    QTextCursor cursor = ui->textBrowser->textCursor();
+//    QTextBlockFormat textBlockFormat = cursor.blockFormat();
+//    QTextBlockFormat textBlockFormat;
+//    textBlockFormat.setAlignment(Qt::AlignLeft);
+//    ui->textBrowser->textCursor().mergeBlockFormat(textBlockFormat);
+    ui->textBrowser->setAlignment(Qt::AlignLeft);
 }
 
 void MainWindow::on_actionRightAlign_triggered() //Sanoj
 {
-    QTextCursor cursor = ui->textBrowser->textCursor();
-    QTextBlockFormat textBlockFormat = cursor.blockFormat();
-    textBlockFormat.setAlignment(Qt::AlignRight);
-    cursor.mergeBlockFormat(textBlockFormat);
-    ui->textBrowser->setTextCursor(cursor);
+    //    QTextCursor cursor = ui->textBrowser->textCursor();
+    //    QTextBlockFormat textBlockFormat = cursor.blockFormat();
+//    QTextBlockFormat textBlockFormat;
+//    textBlockFormat.setAlignment(Qt::AlignRight);
+//    ui->textBrowser->textCursor().mergeBlockFormat(textBlockFormat);
+        ui->textBrowser->setAlignment(Qt::AlignRight);
 }
 
 void MainWindow::on_actionCentreAlign_triggered() //Sanoj
 {
-    QTextCursor cursor = ui->textBrowser->textCursor();
-    QTextBlockFormat textBlockFormat = cursor.blockFormat();
-    textBlockFormat.setAlignment(Qt::AlignCenter);
-    cursor.mergeBlockFormat(textBlockFormat);
-    ui->textBrowser->setTextCursor(cursor);
+//    QTextCursor cursor = ui->textBrowser->textCursor();
+//    QTextBlockFormat textBlockFormat = cursor.blockFormat();
+//    textBlockFormat.setAlignment(Qt::AlignCenter);
+//    ui->textBrowser->textCursor().mergeBlockFormat(textBlockFormat);
+    ui->textBrowser->setAlignment(Qt::AlignCenter);
 }
 
-void MainWindow::on_actionAllFontProperties_triggered()
+void MainWindow::on_actionAllFontProperties_triggered() //Sanoj
 {
     bool ok;
     QFont font = QFontDialog::getFont(&ok, this);
@@ -2477,9 +2485,3 @@ void MainWindow::on_actionAllFontProperties_triggered()
     }
 }
 
-void MainWindow::on_actionUnBold_triggered()
-{
-    QTextCharFormat format;
-    format.setFontWeight(QFont::Normal);
-    ui->textBrowser->textCursor().mergeCharFormat(format);
-}

@@ -9,5 +9,16 @@
         <file>New.png</file>
         <file>cut.png</file>
         <file>copy.png</file>
+        <file>AppResources.qrc</file>
+        <file>next-page.png</file>
+        <file>previous-page.png</file>
+        <file>spellcheck.png</file>
+        <file>LoadData.png</file>
+        <file>SaveLoadPwords1.png</file>
+        <file>AlignCenter.png</file>
+        <file>AlignLeft.png</file>
+        <file>AlignRight.png</file>
+        <file>AllFont.png</file>
+        <file>toDevangari.png</file>
     </qresource>
 </RCC>

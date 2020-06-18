@@ -226,6 +226,7 @@ DIST          = ../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/qt_config.prf \
 		../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/toolchain.prf \
 		../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/default_pre.prf \
@@ -427,6 +428,7 @@ Makefile: qpadfinal.pro ../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++/qmake.co
 		../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/qt_config.prf \
 		../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/toolchain.prf \
 		../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/default_pre.prf \
@@ -614,6 +616,7 @@ Makefile: qpadfinal.pro ../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++/qmake.co
 ../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/qt_config.prf:
 ../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++/qmake.conf:
 ../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/exclusive_builds.prf:
 ../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/toolchain.prf:
 ../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/default_pre.prf:
@@ -686,15 +689,26 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_AppResources.cpp
 qrc_AppResources.cpp: AppResources.qrc \
 		../../../Qt5.9.9/5.9.9/gcc_64/bin/rcc \
-		save-as.png \
-		save.png \
+		LoadData.png \
+		AlignLeft.png \
 		New.png \
 		open.png \
+		spellcheck.png \
 		undo.png \
-		cut.png \
-		redo.png \
+		paste.png \
 		copy.png \
-		paste.png
+		AllFont.png \
+		save-as.png \
+		next-page.png \
+		AlignCenter.png \
+		previous-page.png \
+		AppResources.qrc \
+		SaveLoadPwords1.png \
+		AlignRight.png \
+		toDevangari.png \
+		save.png \
+		redo.png \
+		cut.png
 	/home/sanoj/Qt5.9.9/5.9.9/gcc_64/bin/rcc -name AppResources AppResources.qrc -o qrc_AppResources.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
