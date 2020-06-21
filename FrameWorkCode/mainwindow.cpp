@@ -5,8 +5,7 @@
 #include "trieEditdis.h"
 #include "meanStdPage.h"
 #include <math.h>
-
-
+//# include <QTask>
 
 
 
@@ -255,38 +254,17 @@ void MainWindow::on_actionOpen_triggered()
                 newFile.replace("Inds","Corrected");
                 QFile sFile1(newFile);
 
-
-//                if(sFile1.open(QFile::ReadOnly | QFile::Text))
-//                {
-//                    QTextStream in(&sFile1);
-//                    QString text = in.readAll();
-//                    sFile.close();
-//                    ui->textBrowser->setPlainText(text);
-//                } else {
-//                    QTextStream in(&sFile);
-//                    QString text = in.readAll();
-//                    sFile.close();
-//                    ui->textBrowser->setPlainText(text);
-//                }
-
                 if(sFile1.open(QFile::ReadOnly | QFile::Text))
                 {
                     QTextStream in(&sFile1);
-                    while(!in.atEnd())
-                    {
-                        QString text = in.readLine();
-                        QString nextline = "\n";
-                        ui->textBrowser->append(text);
-                    }sFile.close();
-
+                    QString text = in.readAll();
+                    sFile.close();
+                    ui->textBrowser->setPlainText(text);
                 } else {
                     QTextStream in(&sFile);
-                    while(!in.atEnd())
-                    {
-                        QString text = in.readLine();
-                        QString nextline = "\n";
-                        ui->textBrowser->append(text);
-                    }sFile.close();
+                    QString text = in.readAll();
+                    sFile.close();
+                    ui->textBrowser->setPlainText(text);
                 }
 
                 // load and show image:
@@ -775,10 +753,13 @@ void MainWindow::on_actionSave_triggered()
         on_actionSave_As_triggered();
     }else{ QString localFilename = mFilename; localFilename.replace("Inds","Corrected");
                 QFile sFile(localFilename);
-                  if(sFile.open(QFile::WriteOnly | QFile::Text))
+                  //if(sFile.open(QFile::WriteOnly | QFile::Text))
+                    if(sFile.open(QFile::WriteOnly))
                   {
                       QTextStream out(&sFile);
+
                       out << ui->textBrowser->toPlainText();
+
                       sFile.flush();
                       sFile.close();
                   }
@@ -2508,3 +2489,16 @@ void MainWindow::on_actionAllFontProperties_triggered() //Sanoj
     }
 }
 
+
+
+void MainWindow::on_actionSaveAsODF_triggered()//Sanoj
+{
+    QString s = ui->textBrowser->toHtml();
+    QTextDocument *doc = new QTextDocument();
+    doc->setHtml(s);
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+        "untitled",tr("Open Document ('''.odt)"));
+    QTextDocumentWriter odfWritter(fileName);
+    odfWritter.write(doc); // doc is QTextDocument*
+
+}

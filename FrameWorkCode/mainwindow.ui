@@ -221,6 +221,12 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionRightAlign"/>
     <addaction name="actionCentreAlign"/>
    </widget>
+   <widget class="QMenu" name="menuSaveToODf">
+    <property name="title">
+     <string>SaveToODf</string>
+    </property>
+    <addaction name="actionSaveAsODF"/>
+   </widget>
    <addaction name="menuSelectLanguage"/>
    <addaction name="menuOCR_Correction_Window"/>
    <addaction name="menuCreateReports"/>
@@ -228,6 +234,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="menuFontAndLayout"/>
    <addaction name="menuConvertFiles"/>
    <addaction name="menuFeatureExtraction"/>
+   <addaction name="menuSaveToODf"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -261,6 +268,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionLeftAlign"/>
    <addaction name="actionCentreAlign"/>
    <addaction name="actionRightAlign"/>
+   <addaction name="actionSaveAsODF"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -589,6 +597,11 @@ p, li { white-space: pre-wrap; }
     <string>CentreAlign</string>
    </property>
   </action>
+  <action name="actionSaveAsODF">
+   <property name="text">
+    <string>SaveAsODF</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
@@ -596,6 +609,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>graphicsView</tabstop>
  </tabstops>
  <resources>
+  <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
  </resources>

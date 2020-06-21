@@ -76,6 +76,7 @@ public:
     QAction *actionLeftAlign;
     QAction *actionRightAlign;
     QAction *actionCentreAlign;
+    QAction *actionSaveAsODF;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
     QProgressBar *progressBar;
@@ -92,6 +93,7 @@ public:
     QMenu *menuFeatureExtraction;
     QMenu *menuSelectLanguage;
     QMenu *menuFontAndLayout;
+    QMenu *menuSaveToODf;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -230,6 +232,8 @@ public:
         QIcon icon13;
         icon13.addFile(QStringLiteral(":/Images/AlignCenter.png"), QSize(), QIcon::Normal, QIcon::On);
         actionCentreAlign->setIcon(icon13);
+        actionSaveAsODF = new QAction(MainWindow);
+        actionSaveAsODF->setObjectName(QStringLiteral("actionSaveAsODF"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
@@ -315,6 +319,8 @@ public:
         menuSelectLanguage->setObjectName(QStringLiteral("menuSelectLanguage"));
         menuFontAndLayout = new QMenu(menuBar);
         menuFontAndLayout->setObjectName(QStringLiteral("menuFontAndLayout"));
+        menuSaveToODf = new QMenu(menuBar);
+        menuSaveToODf->setObjectName(QStringLiteral("menuSaveToODf"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -331,6 +337,7 @@ public:
         menuBar->addAction(menuFontAndLayout->menuAction());
         menuBar->addAction(menuConvertFiles->menuAction());
         menuBar->addAction(menuFeatureExtraction->menuAction());
+        menuBar->addAction(menuSaveToODf->menuAction());
         menuOCR_Correction_Window->addAction(actionNew);
         menuOCR_Correction_Window->addAction(actionOpen);
         menuOCR_Correction_Window->addAction(actionSave);
@@ -376,6 +383,7 @@ public:
         menuFontAndLayout->addAction(actionLeftAlign);
         menuFontAndLayout->addAction(actionRightAlign);
         menuFontAndLayout->addAction(actionCentreAlign);
+        menuSaveToODf->addAction(actionSaveAsODF);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen);
         mainToolBar->addAction(actionSave);
@@ -401,6 +409,7 @@ public:
         mainToolBar->addAction(actionLeftAlign);
         mainToolBar->addAction(actionCentreAlign);
         mainToolBar->addAction(actionRightAlign);
+        mainToolBar->addAction(actionSaveAsODF);
 
         retranslateUi(MainWindow);
 
@@ -498,6 +507,7 @@ public:
         actionLeftAlign->setText(QApplication::translate("MainWindow", "LeftAlign", Q_NULLPTR));
         actionRightAlign->setText(QApplication::translate("MainWindow", "RightAlign", Q_NULLPTR));
         actionCentreAlign->setText(QApplication::translate("MainWindow", "CentreAlign", Q_NULLPTR));
+        actionSaveAsODF->setText(QApplication::translate("MainWindow", "SaveAsODF", Q_NULLPTR));
         textBrowser->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -510,6 +520,7 @@ public:
         menuFeatureExtraction->setTitle(QApplication::translate("MainWindow", "FeatureExtraction", Q_NULLPTR));
         menuSelectLanguage->setTitle(QApplication::translate("MainWindow", "SelectLanguage", Q_NULLPTR));
         menuFontAndLayout->setTitle(QApplication::translate("MainWindow", "FontAndLayout", Q_NULLPTR));
+        menuSaveToODf->setTitle(QApplication::translate("MainWindow", "SaveToODf", Q_NULLPTR));
     } // retranslateUi
 
 };

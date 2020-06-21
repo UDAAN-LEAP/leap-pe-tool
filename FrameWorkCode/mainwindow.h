@@ -158,6 +158,8 @@ private slots:
 
     void on_actionUnBold_triggered();
 
+    void on_actionSaveAsODF_triggered();
+
 private:
     Ui::MainWindow *ui;
 
