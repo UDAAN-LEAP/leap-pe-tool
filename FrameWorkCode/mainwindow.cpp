@@ -18,6 +18,8 @@ vector<QString> vs; vector<int> vx,vy,vw,vh;
 map<string, vector<string>> SRules;
 map<string, string> TopConfusions;
 map<string, int> TopConfusionsMask;
+map<string, string> TimeLog;
+string TimeLogLocation = "../Logs/log.txt";
 bool prevTRig = 0;
 //map<string, int> GPage; trie TGPage;
 //map<string, int> PWords;//Common/Possitive OCR Words // already defined before
@@ -107,9 +109,35 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
 //bool OPENSPELLFLAG = 1;// TO NOT CONVERT ASCII STRINGS TO DEVANAGARI ON OPENING WHEN SPELLCHECK IS CLICKED
 QString file = "";
 bool fileFlag = 0;
+QTime myTimer;
+int secs;
 void MainWindow::on_actionLoad_Next_Page_triggered()
 {   if(mFilename.size()>0){
     string localFilename = mFilename.toUtf8().constData();
+    int nMilliseconds = myTimer.elapsed();
+    // do something..
+    secs = nMilliseconds/1000;
+    int mins = secs/60;
+    secs = secs - mins*60;
+    TimeLog[localFilename] = to_string(mins) + " : " + to_string(secs);
+    QString TimeLogLoc = QString::fromStdString(TimeLogLocation);
+    QFile sFile(TimeLogLoc);
+      //if(sFile.open(QFile::WriteOnly | QFile::Text))
+        if(sFile.open(QFile::WriteOnly))
+      {   QString s = "";
+          QTextStream out(&sFile);
+          for (auto i = TimeLog.begin(); i!=TimeLog.end(); i++ )
+          {
+              s+=QString::fromStdString(i->first);
+              s+= "  ";
+              s+= QString::fromStdString(i->second);
+              s+= "\n";
+
+          }
+          out << s;
+          sFile.flush();
+          sFile.close();
+      }
     string nos = "0123456789";
     size_t loc = localFilename.find(".txt");
     string s = localFilename.substr(loc-1,1);
@@ -146,8 +174,7 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
 
     //imageOrig.load(localFilename.replace(QString("txt"),QString("jpeg")));
 }
-QTime myTimer;
-int secs;
+
 bool FirstFlag = 1;
 vector<string> vGPage, vIPage, vCPage; // for calculating WER
 
@@ -260,11 +287,45 @@ void MainWindow::on_actionOpen_triggered()
                     QString text = in.readAll();
                     sFile.close();
                     ui->textBrowser->setPlainText(text);
+//                    align=\"left\" style =\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"
+
+//                    QTextStream in(&sFile1);
+//                    string text2 = "<html><body>";
+//                    string p1 = "<p>";
+//                    string p2 = "</p>";
+//                    while(!in.atEnd())
+//                    {
+//                        QString text = in.readLine();
+//                        string text1 = text.toUtf8().constData();
+//                        text1 = p1 + text1 + p2 + "<br>";
+//                        text2 += text1 ;
+//                    }
+//                    text2 += "</body></html>";
+//                    sFile.close();
+//                    ui->textBrowser->setHtml(QString::fromStdString(text2));
+
+
+
                 } else {
                     QTextStream in(&sFile);
                     QString text = in.readAll();
                     sFile.close();
                     ui->textBrowser->setPlainText(text);
+//                    QTextStream in(&sFile1);
+//                    string text2 = "<html><body>";
+//                    string p1 = "<p>";
+//                    string p2 = "</p>";
+//                    while(!in.atEnd())
+//                    {
+//                        QString text = in.readLine();
+//                        string text1 = text.toUtf8().constData();
+//                        text1 = p1 + text1 + p2 + "<br>";
+//                        text2 += text1 ;
+//                    }
+//                    text2 += "</body></html>";
+//                    sFile.close();
+//                    ui->textBrowser->setHtml(QString::fromStdString(text2));
+
                 }
 
                 // load and show image:
