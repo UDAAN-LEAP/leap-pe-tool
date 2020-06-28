@@ -18,7 +18,7 @@ vector<QString> vs; vector<int> vx,vy,vw,vh;
 map<string, vector<string>> SRules;
 map<string, string> TopConfusions;
 map<string, int> TopConfusionsMask;
-map<string, string> TimeLog;
+map<string, int> TimeLog;
 string TimeLogLocation = "../Logs/log.txt";
 bool prevTRig = 0;
 //map<string, int> GPage; trie TGPage;
@@ -115,31 +115,31 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
 {   if(mFilename.size()>0){
     string localFilename = mFilename.toUtf8().constData();
     int nMilliseconds = myTimer.elapsed();
-    // do something..
     secs = nMilliseconds/1000;
-    int mins = secs/60;
-    secs = secs - mins*60;
-    TimeLog[localFilename] = to_string(mins) + " : " + to_string(secs);
+//    int mins = secs/60;
+//    secs = secs - mins*60;
+    TimeLog[localFilename] += secs;
     QString TimeLogLoc = QString::fromStdString(TimeLogLocation);
     QFile sFile(TimeLogLoc);
-      //if(sFile.open(QFile::WriteOnly | QFile::Text))
         if(sFile.open(QFile::WriteOnly))
-      {   QString s = "";
+      {
+          QString timelogstring = "";
           QTextStream out(&sFile);
           for (auto i = TimeLog.begin(); i!=TimeLog.end(); i++ )
           {
-              s+=QString::fromStdString(i->first);
-              s+= "  ";
-              s+= QString::fromStdString(i->second);
-              s+= "\n";
-
+              timelogstring+= QString::fromStdString(i->first) + " ";
+              timelogstring+= QString::fromStdString(to_string(i->second)) + "\n";
           }
-          out << s;
+          out << timelogstring;
           sFile.flush();
           sFile.close();
       }
     string nos = "0123456789";
     size_t loc = localFilename.find(".txt");
+    if(loc == string::npos)
+    {
+        loc = localFilename.find(".html");
+    }
     string s = localFilename.substr(loc-1,1);
     string no;
     while(nos.find(s) != string::npos) { no = s + no; loc--; s = localFilename.substr(loc-1,1);  }
@@ -158,8 +158,32 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
 void MainWindow::on_actionLoad_Prev_Page_triggered()
 {   if(mFilename.size() >0 ){
     string localFilename = mFilename.toUtf8().constData();
+    int nMilliseconds = myTimer.elapsed();
+    secs = nMilliseconds/1000;
+//    int mins = secs/60;
+//    secs = secs - mins*60;
+    TimeLog[localFilename] += secs;
+    QString TimeLogLoc = QString::fromStdString(TimeLogLocation);
+    QFile sFile(TimeLogLoc);
+        if(sFile.open(QFile::WriteOnly))
+      {
+          QString timelogstring = "";
+          QTextStream out(&sFile);
+          for (auto i = TimeLog.begin(); i!=TimeLog.end(); i++ )
+          {
+              timelogstring+= QString::fromStdString(i->first) + " ";
+              timelogstring+= QString::fromStdString(to_string(i->second)) + "\n";
+          }
+          out << timelogstring;
+          sFile.flush();
+          sFile.close();
+        }
     string nos = "0123456789";
     size_t loc = localFilename.find(".txt");
+    if(loc == string::npos)
+    {
+        loc = localFilename.find(".html");
+    }
     string s = localFilename.substr(loc-1,1);
     string no;
     while(nos.find(s) != string::npos) { no = s + no; loc--; s = localFilename.substr(loc-1,1);  }
@@ -174,6 +198,7 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
 
     //imageOrig.load(localFilename.replace(QString("txt"),QString("jpeg")));
 }
+
 
 bool FirstFlag = 1;
 vector<string> vGPage, vIPage, vCPage; // for calculating WER
@@ -225,7 +250,19 @@ void MainWindow::on_actionCreateBest2OCR_triggered()
 
 void MainWindow::on_actionOpen_triggered()
 {
-    if(!fileFlag) {
+    if(!fileFlag)
+    {
+        string key;
+        int value;
+        ifstream timefile(TimeLogLocation);
+        string fileline;
+        while(getline(timefile, fileline))
+        {
+            istringstream words(fileline);
+            words>>key>>value;
+            TimeLog[key] = value;
+        }
+        timefile.close();
         file = QFileDialog::getOpenFileName(this,"Open a File");
     }
        //qDebug() <<"here" << file <<endl;
@@ -233,11 +270,12 @@ void MainWindow::on_actionOpen_triggered()
         if(!file.isEmpty())
         { //CPair["BApyopetam"] = "BAzyopetam"; CPairRight["BAzyopetam"]++;
             QFile sFile(file);
-            if(sFile.open(QFile::ReadOnly | QFile::Text))
+            //if(sFile.open(QFile::ReadOnly | QFile::Text))
+            if(sFile.open(QFile::ReadOnly)) //Sanoj
             {
                 mFilename = file;
                 localmFilename1 = mFilename;
-
+                string localFilename =  localmFilename1.toUtf8().constData();
                 // load vIPage and vCPage for calculating WER if corresponding CPage exist
                 /*vIPage.clear(); vCPage.clear();
                 //QString localmFilename1 = mFilename;
@@ -273,7 +311,7 @@ void MainWindow::on_actionOpen_triggered()
                 myTimer.start();
                 //int nMilliseconds = myTimer.elapsed();
                 // do something..
-                secs = 0;
+                secs = TimeLog[localFilename];
                 int mins = secs/60;
                 secs = secs - mins*60;
                 ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(secs) + " secs elapsed on this page(Right Click to update)");
@@ -281,28 +319,52 @@ void MainWindow::on_actionOpen_triggered()
                 newFile.replace("Inds","Corrected");
                 QFile sFile1(newFile);
 
-                if(sFile1.open(QFile::ReadOnly | QFile::Text))
+                //if(sFile1.open(QFile::ReadOnly | QFile::Text))
+                if(sFile1.open(QFile::ReadOnly)) //Sanoj
                 {
-                    QTextStream in(&sFile1);
-                    QString text = in.readAll();
-                    sFile.close();
-                    ui->textBrowser->setPlainText(text);
+//                    QTextStream in(&sFile1);
+//                    QString text = in.readAll();
+//                    sFile.close();
+//                    //ui->textBrowser->setPlainText(text);
+//                    ui->textBrowser->setHtml(text); //Sanoj
 //                    align=\"left\" style =\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"
 
-//                    QTextStream in(&sFile1);
+//                    QTextStream in(&sFile);
+//                    QString text = in.readAll();
+//                    sFile.close();
+//                    //ui->textBrowser->setPlainText(text);
+//                    string str1=text.toUtf8().constData();
+//                    istringstream iss(str1);
+//                    string strHtml = "<html><body>"; string line;
+//                    while (getline(iss, line)) {
+
+//                        strHtml += "<p>" + line + "</p>";
+//                        //strHtml +="<br>"; // To add new line
+
+//                   }
+//                   strHtml += "</body></html>";
+//                   ui->textBrowser->setHtml(QString::fromStdString(strHtml));//Sanoj
+//                   qDebug() << ui->textBrowser->toHtml();
+//                    QTextStream in(&sFile1); //Sanoj
 //                    string text2 = "<html><body>";
 //                    string p1 = "<p>";
 //                    string p2 = "</p>";
+//                    ui->textBrowser->setPlainText("");
+//                    ui->textBrowser->append(QString::fromStdString(text2));
 //                    while(!in.atEnd())
 //                    {
+
 //                        QString text = in.readLine();
 //                        string text1 = text.toUtf8().constData();
 //                        text1 = p1 + text1 + p2 + "<br>";
-//                        text2 += text1 ;
+//                        QString htmlcode = (QString::fromStdString(text1)).toHtmlEscaped();
+//                        ui->textBrowser->append(QString::fromStdString(text1));
+//                        QString op = ui->textBrowser->toHtml();
+//                        qDebug() << op;
 //                    }
-//                    text2 += "</body></html>";
+//                    text2 = "</body></html>";
 //                    sFile.close();
-//                    ui->textBrowser->setHtml(QString::fromStdString(text2));
+//                    ui->textBrowser->append(QString::fromStdString(text2));
 
 
 
@@ -310,19 +372,44 @@ void MainWindow::on_actionOpen_triggered()
                     QTextStream in(&sFile);
                     QString text = in.readAll();
                     sFile.close();
-                    ui->textBrowser->setPlainText(text);
-//                    QTextStream in(&sFile1);
+                    //ui->textBrowser->setPlainText(text);
+                    ui->textBrowser->setHtml(text); //Sanoj
+
+//                    QTextStream in(&sFile);
+//                    QString text = in.readAll();
+//                    sFile.close();
+//                    //ui->textBrowser->setPlainText(text);
+//                    string str1=text.toUtf8().constData();
+//                    istringstream iss(str1);
+//                    string strHtml = "<html><body>"; string line;
+//                    while (getline(iss, line)) {
+
+//                        strHtml += "<p>" + line + "</p> ";
+//                        //strHtml +="<br>"; // To add new line
+
+//                   }
+//                   strHtml += "</body></html>";
+//                   ui->textBrowser->setHtml(QString::fromStdString(strHtml));//Sanoj
+
+
+//                    QTextStream in(&sFile1); //Sanoj
 //                    string text2 = "<html><body>";
 //                    string p1 = "<p>";
 //                    string p2 = "</p>";
+//                    ui->textBrowser->setPlainText("");
+//                    ui->textBrowser->append(QString::fromStdString(text2));
 //                    while(!in.atEnd())
 //                    {
+
 //                        QString text = in.readLine();
 //                        string text1 = text.toUtf8().constData();
 //                        text1 = p1 + text1 + p2 + "<br>";
-//                        text2 += text1 ;
+//                        QString htmlcode = (QString::fromStdString(text1)).toHtmlEscaped();
+//                        ui->textBrowser->append(QString::fromStdString(text1));
+//                        QString op = ui->textBrowser->toHtml();
+//                        qDebug() << op;
 //                    }
-//                    text2 += "</body></html>";
+//                    text2 = "</body></html>";
 //                    sFile.close();
 //                    ui->textBrowser->setHtml(QString::fromStdString(text2));
 
@@ -331,6 +418,7 @@ void MainWindow::on_actionOpen_triggered()
                 // load and show image:
                 QString localmFilename = mFilename;
                 localmFilename.replace("txt","jpeg");
+                localmFilename.replace("html","jpeg");
                 //system("cd localmFilename");
                 //localmFilename = "gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' " + localmFilename;
                 //string s2= localmFilename.toUtf8().constData();
@@ -411,8 +499,8 @@ void MainWindow::on_actionSpell_Check_triggered()
         while (getline(iss, line)) {
                     istringstream issw(line);
                     string word;
-
-                    while(issw >> word){
+                    strHtml += "<p>";
+                    while(issw >> word) {
                         if(ConvertSlpDevFlag){
                             string word1 = word;
                             word = toslp1(word);
@@ -437,6 +525,7 @@ void MainWindow::on_actionSpell_Check_triggered()
                             wordNext = find_and_replace_oddInstancesblue(wordNext);
                             wordNext = find_and_replace_oddInstancesorange(wordNext);
                             }
+
                             strHtml += wordNext; strHtml += " "; //cout << strHtml << endl;
                             value ++;
                         }
@@ -444,7 +533,7 @@ void MainWindow::on_actionSpell_Check_triggered()
                     //cout << GPage[(word)] << endl;
                     //Ui -> Dialog -> progressBar -> setValue(value);
                     }
-            strHtml +="<br>"; // To add new line
+            strHtml +="</p>"; // To add new line
 
        }
        strHtml += "</body></html>";
@@ -812,14 +901,17 @@ void MainWindow::on_actionSave_triggered()
     //on_actionSpell_Check_triggered();
     if (mFilename=="Untitled"){
         on_actionSave_As_triggered();
-    }else{ QString localFilename = mFilename; localFilename.replace("Inds","Corrected");
+    }else{ QString localFilename = mFilename;
+        localFilename.replace("Inds","Corrected");
+        localFilename.replace("txt","html");//Sanoj
+
                 QFile sFile(localFilename);
                   //if(sFile.open(QFile::WriteOnly | QFile::Text))
                     if(sFile.open(QFile::WriteOnly))
                   {
                       QTextStream out(&sFile);
 
-                      out << ui->textBrowser->toPlainText();
+                      out << ui->textBrowser->toHtml();//toPlainText()
 
                       sFile.flush();
                       sFile.close();
@@ -837,11 +929,12 @@ void MainWindow::on_actionLoadGDocPage_triggered()
     }else{
                 QString str1 = mFilename;
                 str1.replace("Inds","Corrected");
+                str1.replace("txt","html");
                 QFile sFile(str1);
                   if(sFile.open(QFile::WriteOnly | QFile::Text))
                   {
                       QTextStream out(&sFile);
-                      out << ui->textBrowser->toPlainText();
+                      out << ui->textBrowser->toHtml(); //toPlainText(); Sanoj
                       sFile.flush();
                       sFile.close();
                   }
