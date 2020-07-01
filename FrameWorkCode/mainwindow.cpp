@@ -5,6 +5,8 @@
 #include "trieEditdis.h"
 #include "meanStdPage.h"
 #include <math.h>
+//#include <tesseract/baseapi.h>
+//#include <leptonica/allheaders.h>
 //# include <QTask>
 
 
@@ -329,21 +331,21 @@ void MainWindow::on_actionOpen_triggered()
 //                    ui->textBrowser->setHtml(text); //Sanoj
 //                    align=\"left\" style =\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"
 
-//                    QTextStream in(&sFile);
-//                    QString text = in.readAll();
-//                    sFile.close();
-//                    //ui->textBrowser->setPlainText(text);
-//                    string str1=text.toUtf8().constData();
-//                    istringstream iss(str1);
-//                    string strHtml = "<html><body>"; string line;
-//                    while (getline(iss, line)) {
+                    QTextStream in(&sFile);
+                    QString text = in.readAll();
+                    sFile.close();
+                    //ui->textBrowser->setPlainText(text);
+                    string str1=text.toUtf8().constData();
+                    istringstream iss(str1);
+                    string strHtml = "<html><body>"; string line;
+                    while (getline(iss, line)) {
 
-//                        strHtml += "<p>" + line + "</p>";
-//                        //strHtml +="<br>"; // To add new line
+                        strHtml += "<p>" + line + "</p>";
+                        //strHtml +="<br>"; // To add new line
 
-//                   }
-//                   strHtml += "</body></html>";
-//                   ui->textBrowser->setHtml(QString::fromStdString(strHtml));//Sanoj
+                   }
+                   strHtml += "</body></html>";
+                   ui->textBrowser->setHtml(QString::fromStdString(strHtml));//Sanoj
 //                   qDebug() << ui->textBrowser->toHtml();
 //                    QTextStream in(&sFile1); //Sanoj
 //                    string text2 = "<html><body>";
@@ -369,27 +371,27 @@ void MainWindow::on_actionOpen_triggered()
 
 
                 } else {
-                    QTextStream in(&sFile);
-                    QString text = in.readAll();
-                    sFile.close();
-                    //ui->textBrowser->setPlainText(text);
-                    ui->textBrowser->setHtml(text); //Sanoj
-
 //                    QTextStream in(&sFile);
 //                    QString text = in.readAll();
 //                    sFile.close();
 //                    //ui->textBrowser->setPlainText(text);
-//                    string str1=text.toUtf8().constData();
-//                    istringstream iss(str1);
-//                    string strHtml = "<html><body>"; string line;
-//                    while (getline(iss, line)) {
+//                    ui->textBrowser->setHtml(text); //Sanoj
 
-//                        strHtml += "<p>" + line + "</p> ";
-//                        //strHtml +="<br>"; // To add new line
+                    QTextStream in(&sFile);
+                    QString text = in.readAll();
+                    sFile.close();
+                    //ui->textBrowser->setPlainText(text);
+                    string str1=text.toUtf8().constData();
+                    istringstream iss(str1);
+                    string strHtml = "<html><body>"; string line;
+                    while (getline(iss, line)) {
 
-//                   }
-//                   strHtml += "</body></html>";
-//                   ui->textBrowser->setHtml(QString::fromStdString(strHtml));//Sanoj
+                        strHtml += "<p>" + line + "</p> ";
+                        //strHtml +="<br>"; // To add new line
+
+                   }
+                   strHtml += "</body></html>";
+                   ui->textBrowser->setHtml(QString::fromStdString(strHtml));//Sanoj
 
 
 //                    QTextStream in(&sFile1); //Sanoj
@@ -446,33 +448,33 @@ void MainWindow::on_actionOpen_triggered()
                 Graphics_view_zoom* z = new Graphics_view_zoom(ui->graphicsView);
                 z->set_modifiers(Qt::NoModifier);
                 // fill indexes according to Tesseract
-                /*
-                Pix * image1;
-                image1 = pixRead((localmFilename.replace(QString("txt"),QString("jpeg"))).toUtf8().constData());//phototest.tif
-                localmFilename = mFilename;
-                tesseract::TessBaseAPI *api = new tesseract::TessBaseAPI();
-                api->Init(NULL, "hin+san");
-                api->SetImage(image1);
-                Boxa* boxes = api->GetComponentImages(tesseract::RIL_WORD, true, NULL, NULL);//RIL_SYMBOL
-                //printf("Found %d textline image components.\n", boxes->n);
-                vs.clear();vx.clear();vy.clear();vw.clear();vh.clear();
-                vs.push_back(""); vx.push_back(1); vy.push_back(1); vw.push_back(1); vh.push_back(1);
-                for(int i = 0; i < boxes->n; i++){
-                    BOX* box = boxaGetBox(boxes, i, L_CLONE);
-                    api->SetRectangle(box->x, box->y, box->w, box->h);
-                    string ocrResult = api->GetUTF8Text(); //string ocrResultstr = ocrResult;
-                    QString qstr = QString::fromStdString(ocrResult);
-                    vs.push_back(qstr); vx.push_back(box->x); vy.push_back(box->y); vw.push_back(box->w); vh.push_back(box->h);
-                    //qDebug() << qstr << endl;
+                
+//                Pix * image1;
+//                image1 = pixRead((localmFilename.replace(QString("txt"),QString("jpeg"))).toUtf8().constData());//phototest.tif
+//                localmFilename = mFilename;
+//                tesseract::TessBaseAPI *api = new tesseract::TessBaseAPI();
+//                api->Init(NULL, "hin+san");
+//                api->SetImage(image1);
+//                Boxa* boxes = api->GetComponentImages(tesseract::RIL_WORD, true, NULL, NULL);//RIL_SYMBOL
+//                //printf("Found %d textline image components.\n", boxes->n);
+//                vs.clear();vx.clear();vy.clear();vw.clear();vh.clear();
+//                vs.push_back(""); vx.push_back(1); vy.push_back(1); vw.push_back(1); vh.push_back(1);
+//                for(int i = 0; i < boxes->n; i++){
+//                    BOX* box = boxaGetBox(boxes, i, L_CLONE);
+//                    api->SetRectangle(box->x, box->y, box->w, box->h);
+//                    string ocrResult = api->GetUTF8Text(); //string ocrResultstr = ocrResult;
+//                    QString qstr = QString::fromStdString(ocrResult);
+//                    vs.push_back(qstr); vx.push_back(box->x); vy.push_back(box->y); vw.push_back(box->w); vh.push_back(box->h);
+//                    qDebug() << qstr << endl;
 
-                 } */
+//                 }
 
             } //if(sFile.open(QFile::ReadOnly | QFile::Text))
 
 
         } // if(!file.isEmpty())
 
-}//MainWindow::on_actionOpen_triggered()
+} //MainWindow::on_actionOpen_triggered()
 
 map<string, int> wordLineIndex;
 bool ConvertSlpDevFlag =0;

@@ -29,6 +29,24 @@ SOURCES +=\
 HEADERS  += mainwindow.h \
     eddis.h \
     slpNPatternDict.h \
+    tesseract/apitypes.h \
+    tesseract/baseapi.h \
+    tesseract/capi.h \
+    tesseract/genericvector.h \
+    tesseract/helpers.h \
+    tesseract/ltrresultiterator.h \
+    tesseract/ocrclass.h \
+    tesseract/osdetect.h \
+    tesseract/pageiterator.h \
+    tesseract/platform.h \
+    tesseract/publictypes.h \
+    tesseract/renderer.h \
+    tesseract/resultiterator.h \
+    tesseract/serialis.h \
+    tesseract/strngs.h \
+    tesseract/thresholder.h \
+    tesseract/unichar.h \
+    tesseract/version.h.in \
     trieEditdis.h \
     zoom.h \
     qcustomplot.h \
