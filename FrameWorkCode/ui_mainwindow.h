@@ -21,6 +21,7 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QProgressBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QTextEdit>
@@ -77,13 +78,19 @@ public:
     QAction *actionRightAlign;
     QAction *actionCentreAlign;
     QWidget *centralWidget;
-    QVBoxLayout *verticalLayout;
-    QProgressBar *progressBar;
-    QLineEdit *lineEdit;
+    QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QTextEdit *textEdit;
     QTextBrowser *textBrowser;
     QGraphicsView *graphicsView;
+    QWidget *layoutWidget1;
+    QVBoxLayout *verticalLayout;
+    QLineEdit *lineEdit_2;
+    QPushButton *pushButton;
+    QWidget *layoutWidget2;
+    QVBoxLayout *verticalLayout_2;
+    QProgressBar *progressBar;
+    QLineEdit *lineEdit;
     QMenuBar *menuBar;
     QMenu *menuOCR_Correction_Window;
     QMenu *menuCreateReports;
@@ -232,28 +239,15 @@ public:
         actionCentreAlign->setIcon(icon13);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        verticalLayout = new QVBoxLayout(centralWidget);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        progressBar = new QProgressBar(centralWidget);
-        progressBar->setObjectName(QStringLiteral("progressBar"));
-        progressBar->setMaximumSize(QSize(500, 16777215));
-        progressBar->setValue(0);
-        progressBar->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-
-        verticalLayout->addWidget(progressBar);
-
-        lineEdit = new QLineEdit(centralWidget);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        lineEdit->setMaximumSize(QSize(500, 16777215));
-
-        verticalLayout->addWidget(lineEdit);
-
-        horizontalLayout = new QHBoxLayout();
+        layoutWidget = new QWidget(centralWidget);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setGeometry(QRect(9, 71, 1351, 601));
+        horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        textEdit = new QTextEdit(centralWidget);
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        textEdit = new QTextEdit(layoutWidget);
         textEdit->setObjectName(QStringLiteral("textEdit"));
         textEdit->setMaximumSize(QSize(120, 16777215));
         QFont font;
@@ -265,7 +259,7 @@ public:
 
         horizontalLayout->addWidget(textEdit);
 
-        textBrowser = new QTextBrowser(centralWidget);
+        textBrowser = new QTextBrowser(layoutWidget);
         textBrowser->setObjectName(QStringLiteral("textBrowser"));
         QFont font1;
         font1.setFamily(QStringLiteral("Shobhika"));
@@ -281,8 +275,10 @@ public:
 
         horizontalLayout->addWidget(textBrowser);
 
-        graphicsView = new QGraphicsView(centralWidget);
+        graphicsView = new QGraphicsView(layoutWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
+        graphicsView->setMinimumSize(QSize(608, 0));
+        graphicsView->setMaximumSize(QSize(608, 16777215));
         graphicsView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
         graphicsView->setAlignment(Qt::AlignCenter);
         graphicsView->setRenderHints(QPainter::NonCosmeticDefaultPen);
@@ -292,12 +288,47 @@ public:
 
         horizontalLayout->addWidget(graphicsView);
 
+        layoutWidget1 = new QWidget(centralWidget);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(940, 10, 144, 58));
+        verticalLayout = new QVBoxLayout(layoutWidget1);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        lineEdit_2 = new QLineEdit(layoutWidget1);
+        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
 
-        verticalLayout->addLayout(horizontalLayout);
+        verticalLayout->addWidget(lineEdit_2);
+
+        pushButton = new QPushButton(layoutWidget1);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+
+        verticalLayout->addWidget(pushButton);
+
+        layoutWidget2 = new QWidget(centralWidget);
+        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
+        layoutWidget2->setGeometry(QRect(9, 9, 521, 58));
+        verticalLayout_2 = new QVBoxLayout(layoutWidget2);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        progressBar = new QProgressBar(layoutWidget2);
+        progressBar->setObjectName(QStringLiteral("progressBar"));
+        progressBar->setMaximumSize(QSize(500, 16777215));
+        progressBar->setValue(0);
+        progressBar->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+        verticalLayout_2->addWidget(progressBar);
+
+        lineEdit = new QLineEdit(layoutWidget2);
+        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        lineEdit->setMaximumSize(QSize(500, 16777215));
+
+        verticalLayout_2->addWidget(lineEdit);
 
         MainWindow->setCentralWidget(centralWidget);
-        lineEdit->raise();
-        progressBar->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1369, 22));
@@ -503,6 +534,7 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Shobhika'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("MainWindow", "Accuracy", Q_NULLPTR));
         menuOCR_Correction_Window->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
         menuCreateReports->setTitle(QApplication::translate("MainWindow", "CreateReports", Q_NULLPTR));
         menuSaveVariables->setTitle(QApplication::translate("MainWindow", "SaveVariables", Q_NULLPTR));

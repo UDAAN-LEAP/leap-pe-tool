@@ -9,7 +9,8 @@
 #include <leptonica/allheaders.h>
 //# include <QTask>
 
-
+using namespace std;
+#define MIN(x,y) ((x) < (y) ? (x) : (y)) //calculate minimum between two values
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -2691,4 +2692,85 @@ void MainWindow::on_actionSaveAsODF_triggered()//Sanoj
     QTextDocumentWriter odfWritter(fileName);
     odfWritter.write(doc); // doc is QTextDocument*
 
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    QString origFile = mFilename;
+    QString correctFile = mFilename;
+    correctFile.replace("Inds","Correct");
+    QFile sFile2(origFile);
+    QFile sFile3(correctFile);
+    string s1 = ""; string s2= "";
+
+    QString textBrowserText = ui->textBrowser->toPlainText();
+    s1 = textBrowserText.toUtf8().constData();
+    //qDebug() << textBrowserText;
+//    if(sFile2.open(QFile::ReadOnly | QFile::Text))
+//    {
+//        QTextStream in(&sFile2);
+//        QString t = in.readAll();
+//        s1 = t.toUtf8().constData();
+//        sFile2.close();
+//    }
+//    else
+//    {
+//        QTextStream in(&sFile2);
+//        QString t = in.readAll();
+//        s1 = t.toUtf8().constData();
+//        sFile2.close();
+//    }
+
+    if(sFile3.open(QFile::ReadOnly | QFile::Text))
+    {
+        QTextStream in(&sFile3);
+        QString t = in.readAll();
+        s2 = t.toUtf8().constData();
+        sFile3.close();
+    }
+    else
+    {
+        QTextStream in(&sFile3);
+        QString t = in.readAll();
+        s2 = t.toUtf8().constData();
+        sFile3.close();
+    }
+    int i,j,l1,l2,t,track,levinshtein; float accuracy;
+
+       //take the strings as input
+//       char s1[] = string1;
+//       char s2[] = string2;
+       //stores the lenght of strings s1 and s2
+       l1 = s1.length();
+       l2= s2.length();
+      char char1[l1+1];
+      char char2[l2+1];
+      int dist[l2][l1];
+
+      strcpy(char1, s1.c_str());
+      strcpy(char2, s2.c_str());
+
+       qDebug() <<l1 << "l1";
+       qDebug() <<l2 << "l2";
+       for(i=0;i<=l1;i++) {
+          dist[0][i] = i;
+       }
+       for(j=0;j<=l2;j++) {
+          dist[j][0] = j;
+       }
+       for (j=1;j<=l1;j++) {
+          for(i=1;i<=l2;i++) {
+             if(char1[i-1] == char2[j-1]) {
+                track= 0;
+             } else {
+                track = 1;
+             }
+             t = MIN((dist[i-1][j]+1),(dist[i][j-1]+1));
+             dist[i][j] = MIN(t,(dist[i-1][j-1]+track));
+          }
+       }
+       levinshtein = dist[l2][l1];
+       qDebug() <<levinshtein << "levinshtein";
+       accuracy = ((l1-levinshtein)/l1)*100;
+       ui->lineEdit_2->setText(QString::number(accuracy) + "%");
 }
