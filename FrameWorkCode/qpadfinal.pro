@@ -24,7 +24,8 @@ SOURCES +=\
         mainwindow.cpp \
     main.cpp \
     zoom.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
+	diff_match_patch.cpp
 
 HEADERS  += mainwindow.h \
     eddis.h \
@@ -50,7 +51,8 @@ HEADERS  += mainwindow.h \
     trieEditdis.h \
     zoom.h \
     qcustomplot.h \
-    meanStdPage.h
+    meanStdPage.h \
+	diff_match_patch.h
 
 FORMS    += mainwindow.ui
 

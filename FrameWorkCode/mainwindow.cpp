@@ -7,6 +7,7 @@
 #include <math.h>
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
+#include "diff_match_patch.h"
 //# include <QTask>
 
 using namespace std;
@@ -384,6 +385,7 @@ void MainWindow::on_actionOpen_triggered()
 //                    align=\"left\" style =\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"
 
                     QTextStream in(&sFile);
+					in.setCodec("UTF-8");
                     QString text = in.readAll();
                     sFile.close();
                     //ui->textBrowser->setPlainText(text);
@@ -430,6 +432,7 @@ void MainWindow::on_actionOpen_triggered()
 //                    ui->textBrowser->setHtml(text); //Sanoj
 
                     QTextStream in(&sFile);
+					in.setCodec("UTF-8");
                     QString text = in.readAll();
                     sFile.close();
                     //ui->textBrowser->setPlainText(text);
@@ -2775,4 +2778,10 @@ void MainWindow::on_pushButton_clicked()
        accuracy = ((float)(l1-levenshtein)/(float)l1)*100;
        qDebug() <<accuracy << "accuracy";
        ui->lineEdit_2->setText(QString::number(accuracy) + "%");
+}
+
+void MainWindow::on_actionView_Diff_triggered() {
+	diff_match_patch dmp;
+
+	dmp.diff_main();
 }

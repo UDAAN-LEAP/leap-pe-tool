@@ -78,7 +78,7 @@ private slots:
     //void mouseMoveEvent(QMouseEvent* e) override { e->ignore(); }
 
     //bool eventFilter(QObject *object, QEvent *event);
-
+	void on_actionView_Diff_triggered();
 
     void on_actionLoad_Next_Page_triggered();
 

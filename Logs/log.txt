@@ -1,3 +1,5 @@
-/home/sanoj/Documents/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-6.txt  0 : 13
-/home/sanoj/Documents/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-7.txt  0 : 9
-/home/sanoj/Documents/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-8.txt  1 : 2
+/home/sanoj/Documents/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-6.txt 0
+/home/sanoj/Documents/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-7.txt 0
+/home/sanoj/Documents/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-8.txt 1
+C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-1.txt 252
+C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-2.txt 0
