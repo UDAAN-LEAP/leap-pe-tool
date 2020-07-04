@@ -5,8 +5,8 @@
 #include "trieEditdis.h"
 #include "meanStdPage.h"
 #include <math.h>
-//#include <tesseract/baseapi.h>
-//#include <leptonica/allheaders.h>
+#include <tesseract/baseapi.h>
+#include <leptonica/allheaders.h>
 //# include <QTask>
 
 
@@ -16,12 +16,13 @@ map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPair
 trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
 vector<string> vGBook,vIBook;
 QImage imageOrig;
-vector<QString> vs; vector<int> vx,vy,vw,vh;
+vector<QString> vs; vector<int> vx,vy,vw,vh,vright;
 map<string, vector<string>> SRules;
 map<string, string> TopConfusions;
 map<string, int> TopConfusionsMask;
 map<string, int> TimeLog;
 string TimeLogLocation = "../Logs/log.txt";
+string alignment = "left";
 bool prevTRig = 0;
 //map<string, int> GPage; trie TGPage;
 //map<string, int> PWords;//Common/Possitive OCR Words // already defined before
@@ -310,6 +311,56 @@ void MainWindow::on_actionOpen_triggered()
                 */
                 // load and set data in Browzer
                 // if file exist in corrected open that else open file in Indz
+//                QString tesslocalmFilename = localmFilename1;
+//                Pix * image1;
+//                image1 = pixRead((tesslocalmFilename.replace(QString("txt"),QString("jpeg"))).toUtf8().constData());//phototest.tif
+
+//                tesseract::TessBaseAPI *api = new tesseract::TessBaseAPI();
+//                api->Init(NULL, "hin+san");
+//                api->SetImage(image1);
+//                Boxa* boxes = api->GetComponentImages(tesseract::RIL_TEXTLINE, true, NULL, NULL);//RIL_SYMBOL
+//                printf("Found %d textline image components.\n", boxes->n);
+//                vs.clear();vx.clear();vy.clear();vw.clear();vh.clear();
+//                vs.push_back(""); vx.push_back(1); vy.push_back(1); vw.push_back(1); vh.push_back(1); vright.push_back(1);
+//                int n = boxes->n;
+//                for(int i = 0; i < n; i++){
+//                    BOX* box = boxaGetBox(boxes, i, L_CLONE);
+//                    api->SetRectangle(box->x, box->y, box->w, box->h);
+//                    string ocrResult = api->GetUTF8Text(); //string ocrResultstr = ocrResult;
+//                    QString qstr = QString::fromStdString(ocrResult);
+//                    vs.push_back(qstr); vx.push_back(box->x); vy.push_back(box->y); vw.push_back(box->w); vh.push_back(box->h); vright.push_back(box->w + box->x);
+//                    qDebug() << qstr << vx << vy << vw << vh << vright << endl;
+
+//                 }
+
+//                float leftmean = accumulate(vx.begin(),vx.end(),0)/n;
+//                float leftdiff = 0;
+//                float rightmean = accumulate(vright.begin(),vright.end(),0)/n;
+//                float rightdiff = 0;
+//                 for(int i=0; i<n; i++)
+//                 {
+//                     leftdiff += abs(vx[i]-leftmean);
+//                     rightdiff += abs(vright[i]-rightmean);
+
+//                 }
+//                 float leftvariance = leftdiff/n;
+//                 float rightvariance = rightdiff/n;
+//                 qDebug() << leftvariance<< "-" <<leftmean << "   " << rightvariance << "-" << rightmean << endl;
+//                 if((leftvariance/leftmean)<0.1)
+//                 {
+//                    ui->textBrowser->setAlignment(Qt::AlignLeft);
+//                    alignment = "\"left\"";
+//                 }
+//                 else if((rightvariance/rightmean)<0.1)
+//                 {
+//                     ui->textBrowser->setAlignment(Qt::AlignRight);
+//                     alignment = "\"right\"";
+//                 }
+//                 else
+//                 {
+//                    ui->textBrowser->setAlignment(Qt::AlignCenter);
+//                    alignment = "\"center\"";
+//                 }
                 myTimer.start();
                 //int nMilliseconds = myTimer.elapsed();
                 // do something..
@@ -335,12 +386,12 @@ void MainWindow::on_actionOpen_triggered()
                     QString text = in.readAll();
                     sFile.close();
                     //ui->textBrowser->setPlainText(text);
-                    string str1=text.toUtf8().constData();
+                    string str1 = text.toUtf8().constData();
                     istringstream iss(str1);
                     string strHtml = "<html><body>"; string line;
                     while (getline(iss, line)) {
 
-                        strHtml += "<p>" + line + "</p>";
+                        strHtml += "<p align=" + alignment+ ">" + line + "</p>";
                         //strHtml +="<br>"; // To add new line
 
                    }
@@ -381,7 +432,7 @@ void MainWindow::on_actionOpen_triggered()
                     QString text = in.readAll();
                     sFile.close();
                     //ui->textBrowser->setPlainText(text);
-                    string str1=text.toUtf8().constData();
+                    string str1 = text.toUtf8().constData();
                     istringstream iss(str1);
                     string strHtml = "<html><body>"; string line;
                     while (getline(iss, line)) {
@@ -439,6 +490,7 @@ void MainWindow::on_actionOpen_triggered()
                 //mFilename.replace(QString("jpeg"),QString("txt"));*/
 
                 //GPage.clear(); TGPage.clear();
+
                 localmFilename.replace(QString("Inds"),QString("GDoc"));
                 //loadMap(localmFilename.toUtf8().constData(),GPage, "GPage");  localmFilename = mFilename;
                 //loadmaptoTrie(TGPage,GPage);
@@ -449,25 +501,7 @@ void MainWindow::on_actionOpen_triggered()
                 z->set_modifiers(Qt::NoModifier);
                 // fill indexes according to Tesseract
                 
-//                Pix * image1;
-//                image1 = pixRead((localmFilename.replace(QString("txt"),QString("jpeg"))).toUtf8().constData());//phototest.tif
-//                localmFilename = mFilename;
-//                tesseract::TessBaseAPI *api = new tesseract::TessBaseAPI();
-//                api->Init(NULL, "hin+san");
-//                api->SetImage(image1);
-//                Boxa* boxes = api->GetComponentImages(tesseract::RIL_WORD, true, NULL, NULL);//RIL_SYMBOL
-//                //printf("Found %d textline image components.\n", boxes->n);
-//                vs.clear();vx.clear();vy.clear();vw.clear();vh.clear();
-//                vs.push_back(""); vx.push_back(1); vy.push_back(1); vw.push_back(1); vh.push_back(1);
-//                for(int i = 0; i < boxes->n; i++){
-//                    BOX* box = boxaGetBox(boxes, i, L_CLONE);
-//                    api->SetRectangle(box->x, box->y, box->w, box->h);
-//                    string ocrResult = api->GetUTF8Text(); //string ocrResultstr = ocrResult;
-//                    QString qstr = QString::fromStdString(ocrResult);
-//                    vs.push_back(qstr); vx.push_back(box->x); vy.push_back(box->y); vw.push_back(box->w); vh.push_back(box->h);
-//                    qDebug() << qstr << endl;
 
-//                 }
 
             } //if(sFile.open(QFile::ReadOnly | QFile::Text))
 

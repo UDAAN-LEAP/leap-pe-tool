@@ -38,7 +38,7 @@ DISTNAME      = qpadfinal1.0.0
 DISTDIR = /home/sanoj/Documents/OpenOCRCorrect/FrameWorkCode/.tmp/qpadfinal1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/sanoj/Qt5.9.9/5.9.9/gcc_64/lib
-LIBS          = $(SUBLIBS) -L/home/sanoj/Qt5.9.9/5.9.9/gcc_64/lib -lQt5PrintSupport -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/usr/include/tesseract -L/usr/include/leptonica -ltesseract -llept -L/home/sanoj/Qt5.9.9/5.9.9/gcc_64/lib -lQt5PrintSupport -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -266,7 +266,7 @@ DIST          = ../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/spec_pre.prf \
 		tesseract/strngs.h \
 		tesseract/thresholder.h \
 		tesseract/unichar.h \
-		tesseract/version.h.in \
+		tesseract/version.h \
 		trieEditdis.h \
 		zoom.h \
 		qcustomplot.h \
@@ -676,7 +676,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents AppResources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h eddis.h slpNPatternDict.h tesseract/apitypes.h tesseract/baseapi.h tesseract/capi.h tesseract/genericvector.h tesseract/helpers.h tesseract/ltrresultiterator.h tesseract/ocrclass.h tesseract/osdetect.h tesseract/pageiterator.h tesseract/platform.h tesseract/publictypes.h tesseract/renderer.h tesseract/resultiterator.h tesseract/serialis.h tesseract/strngs.h tesseract/thresholder.h tesseract/unichar.h tesseract/version.h.in trieEditdis.h zoom.h qcustomplot.h meanStdPage.h $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h eddis.h slpNPatternDict.h tesseract/apitypes.h tesseract/baseapi.h tesseract/capi.h tesseract/genericvector.h tesseract/helpers.h tesseract/ltrresultiterator.h tesseract/ocrclass.h tesseract/osdetect.h tesseract/pageiterator.h tesseract/platform.h tesseract/publictypes.h tesseract/renderer.h tesseract/resultiterator.h tesseract/serialis.h tesseract/strngs.h tesseract/thresholder.h tesseract/unichar.h tesseract/version.h trieEditdis.h zoom.h qcustomplot.h meanStdPage.h $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.cpp main.cpp zoom.cpp qcustomplot.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
 
@@ -2105,7 +2105,18 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		slpNPatternDict.h \
 		trieEditdis.h \
 		meanStdPage.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QString
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QString \
+		tesseract/baseapi.h \
+		tesseract/version.h \
+		tesseract/apitypes.h \
+		tesseract/publictypes.h \
+		tesseract/pageiterator.h \
+		tesseract/platform.h \
+		tesseract/resultiterator.h \
+		tesseract/ltrresultiterator.h \
+		tesseract/unichar.h \
+		tesseract/serialis.h \
+		tesseract/thresholder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 main.o: main.cpp mainwindow.h \

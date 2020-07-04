@@ -13,11 +13,11 @@ TARGET = qpadfinal
 TEMPLATE = app
 
 #LIBS += -L"/home/rohit/ExpFinal/2OCRCorrect"
-#LIBS += -L"/usr/local/bin/tesseract"
-
-#LIBS += -L"/usr/local/lib" -llept\
+LIBS += -L"/usr/include/tesseract"
+LIBS += -L"/usr/include/leptonica"
+#LIBS += -L"/usr/lib" -llept\
 #        -ltesseract
-
+LIBS += -ltesseract -llept
 #LIBS += -L"/home/nilesh/OCRCorrection/boost_1_61_0/stage/lib" -lboost_serialization
 
 SOURCES +=\
@@ -46,7 +46,7 @@ HEADERS  += mainwindow.h \
     tesseract/strngs.h \
     tesseract/thresholder.h \
     tesseract/unichar.h \
-    tesseract/version.h.in \
+    tesseract/version.h \
     trieEditdis.h \
     zoom.h \
     qcustomplot.h \
