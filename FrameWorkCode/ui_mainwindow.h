@@ -84,13 +84,16 @@ public:
     QTextBrowser *textBrowser;
     QGraphicsView *graphicsView;
     QWidget *layoutWidget1;
-    QVBoxLayout *verticalLayout;
-    QLineEdit *lineEdit_2;
-    QPushButton *pushButton;
-    QWidget *layoutWidget2;
     QVBoxLayout *verticalLayout_2;
     QProgressBar *progressBar;
     QLineEdit *lineEdit;
+    QWidget *widget;
+    QVBoxLayout *verticalLayout;
+    QLineEdit *lineEdit_2;
+    QHBoxLayout *horizontalLayout_2;
+    QPushButton *pushButton_2;
+    QPushButton *pushButton_3;
+    QPushButton *pushButton;
     QMenuBar *menuBar;
     QMenu *menuOCR_Correction_Window;
     QMenu *menuCreateReports;
@@ -290,31 +293,13 @@ public:
 
         layoutWidget1 = new QWidget(centralWidget);
         layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(940, 10, 144, 58));
-        verticalLayout = new QVBoxLayout(layoutWidget1);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        lineEdit_2 = new QLineEdit(layoutWidget1);
-        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
-
-        verticalLayout->addWidget(lineEdit_2);
-
-        pushButton = new QPushButton(layoutWidget1);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-
-        verticalLayout->addWidget(pushButton);
-
-        layoutWidget2 = new QWidget(centralWidget);
-        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(9, 9, 521, 58));
-        verticalLayout_2 = new QVBoxLayout(layoutWidget2);
+        layoutWidget1->setGeometry(QRect(9, 9, 521, 58));
+        verticalLayout_2 = new QVBoxLayout(layoutWidget1);
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        progressBar = new QProgressBar(layoutWidget2);
+        progressBar = new QProgressBar(layoutWidget1);
         progressBar->setObjectName(QStringLiteral("progressBar"));
         progressBar->setMaximumSize(QSize(500, 16777215));
         progressBar->setValue(0);
@@ -322,11 +307,45 @@ public:
 
         verticalLayout_2->addWidget(progressBar);
 
-        lineEdit = new QLineEdit(layoutWidget2);
+        lineEdit = new QLineEdit(layoutWidget1);
         lineEdit->setObjectName(QStringLiteral("lineEdit"));
         lineEdit->setMaximumSize(QSize(500, 16777215));
 
         verticalLayout_2->addWidget(lineEdit);
+
+        widget = new QWidget(centralWidget);
+        widget->setObjectName(QStringLiteral("widget"));
+        widget->setGeometry(QRect(1080, 10, 256, 60));
+        verticalLayout = new QVBoxLayout(widget);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        lineEdit_2 = new QLineEdit(widget);
+        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
+
+        verticalLayout->addWidget(lineEdit_2);
+
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        pushButton_2 = new QPushButton(widget);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+
+        horizontalLayout_2->addWidget(pushButton_2);
+
+        pushButton_3 = new QPushButton(widget);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+
+        horizontalLayout_2->addWidget(pushButton_3);
+
+        pushButton = new QPushButton(widget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+
+        horizontalLayout_2->addWidget(pushButton);
+
+
+        verticalLayout->addLayout(horizontalLayout_2);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -534,7 +553,9 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Shobhika'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", Q_NULLPTR));
-        pushButton->setText(QApplication::translate("MainWindow", "Accuracy", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Text1", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("MainWindow", "Text2", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("MainWindow", "Similarity", Q_NULLPTR));
         menuOCR_Correction_Window->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
         menuCreateReports->setTitle(QApplication::translate("MainWindow", "CreateReports", Q_NULLPTR));
         menuSaveVariables->setTitle(QApplication::translate("MainWindow", "SaveVariables", Q_NULLPTR));

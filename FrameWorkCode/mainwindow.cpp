@@ -9,9 +9,6 @@
 #include <leptonica/allheaders.h>
 //# include <QTask>
 
-using namespace std;
-#define MIN(x,y) ((x) < (y) ? (x) : (y)) //calculate minimum between two values
-
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
 trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
@@ -2693,7 +2690,7 @@ void MainWindow::on_actionSaveAsODF_triggered()//Sanoj
     odfWritter.write(doc); // doc is QTextDocument*
 
 }
-
+string s1 = "",s2 = ""; int text1checked= 0,text2checked = 0;
 void MainWindow::on_pushButton_clicked()
 {
     QString origFile = mFilename;
@@ -2701,78 +2698,95 @@ void MainWindow::on_pushButton_clicked()
     correctFile.replace("Inds","Correct");
     QFile sFile2(origFile);
     QFile sFile3(correctFile);
-    string s1 = ""; string s2= "";
 
-    QString textBrowserText = ui->textBrowser->toPlainText();
-    s1 = textBrowserText.toUtf8().constData();
+
+    if(!text2checked)
+    {
+        QString textBrowserText = ui->textBrowser->toPlainText();
+        s1 = textBrowserText.toUtf8().constData();
+    }
+
     //qDebug() << textBrowserText;
-//    if(sFile2.open(QFile::ReadOnly | QFile::Text))
+
+    if(!text1checked)
+    {
+        if(sFile2.open(QFile::ReadOnly | QFile::Text))
+        {
+            QTextStream in(&sFile2);
+            QString t = in.readAll();
+            s1 = t.toUtf8().constData();
+            sFile2.close();
+        }
+        else
+        {
+            QTextStream in(&sFile2);
+            QString t = in.readAll();
+            s1 = t.toUtf8().constData();
+            sFile2.close();
+        }
+    }
+
+//    if(sFile3.open(QFile::ReadOnly | QFile::Text))
 //    {
-//        QTextStream in(&sFile2);
+//        QTextStream in(&sFile3);
 //        QString t = in.readAll();
-//        s1 = t.toUtf8().constData();
-//        sFile2.close();
+//        s2 = t.toUtf8().constData();
+//        sFile3.close();
 //    }
 //    else
 //    {
-//        QTextStream in(&sFile2);
+//        QTextStream in(&sFile3);
 //        QString t = in.readAll();
-//        s1 = t.toUtf8().constData();
-//        sFile2.close();
+//        s2 = t.toUtf8().constData();
+//        sFile3.close();
 //    }
+    int l1,l2, levenshtein; float accuracy;
 
-    if(sFile3.open(QFile::ReadOnly | QFile::Text))
-    {
-        QTextStream in(&sFile3);
-        QString t = in.readAll();
-        s2 = t.toUtf8().constData();
-        sFile3.close();
-    }
-    else
-    {
-        QTextStream in(&sFile3);
-        QString t = in.readAll();
-        s2 = t.toUtf8().constData();
-        sFile3.close();
-    }
-    int i,j,l1,l2,t,track,levenshtein; float accuracy;
-
-       //take the strings as input
-//       char s1[] = string1;
-//       char s2[] = string2;
-       //stores the lenght of strings s1 and s2
        l1 = s1.length();
        l2= s2.length();
 
-//      char char1[l1+1];
-//      char char2[l2+1];
-//      int dist[l2][l1];
-
-//      strcpy(char1, s1.c_str());
-//      strcpy(char2, s2.c_str());
-
-       qDebug() <<l1 << "l1";
-       qDebug() <<l2 << "l2";
-//       for(i=0;i<=l1;i++) {
-//          dist[0][i] = i;
-//       }
-//       for(j=0;j<=l2;j++) {
-//          dist[j][0] = j;
-//       }
-//       for (j=1;j<=l1;j++) {
-//          for(i=1;i<=l2;i++) {
-//             if(char1[i-1] == char2[j-1]) {
-//                track= 0;
-//             } else {
-//                track = 1;
-//             }
-//             t = MIN((dist[i-1][j]+1),(dist[i][j-1]+1));
-//             dist[i][j] = MIN(t,(dist[i-1][j-1]+track));
-//          }
-//       }
        levenshtein = editDist(s1,s2);
        qDebug() <<levenshtein << "levenshtein";
        accuracy = ((float)(l1-levenshtein)/(float)l1)*100;
        qDebug() <<accuracy << "accuracy";
        ui->lineEdit_2->setText(QString::number(accuracy) + "%");
 }
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    file = QFileDialog::getOpenFileName(this,"Open Text-1 (BASE)");
+    QString localmFilename1;
+    if(!file.isEmpty())
+    {
+        QFile sFile(file);
+        if(sFile.open(QFile::ReadOnly | QFile::Text))
+        {
+            QTextStream in(&sFile);
+            QString t = in.readAll();
+            s1 = t.toUtf8().constData();
+            text1checked = 1;
+            sFile.close();
+        }
+
+    }
+}
+void MainWindow::on_pushButton_3_clicked()
+{
+    file = QFileDialog::getOpenFileName(this,"Open Text-2");
+    QString localmFilename1;
+    if(!file.isEmpty())
+    {
+        QFile sFile(file);
+        if(sFile.open(QFile::ReadOnly | QFile::Text))
+        {
+            QTextStream in(&sFile);
+            QString t = in.readAll();
+            s2 = t.toUtf8().constData();
+            text2checked = 1;
+            sFile.close();
+        }
+
+    }
+}
+
+
