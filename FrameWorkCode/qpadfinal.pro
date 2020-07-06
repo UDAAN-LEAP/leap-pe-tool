@@ -21,12 +21,16 @@ LIBS += -ltesseract -llept
 #LIBS += -L"/home/nilesh/OCRCorrection/boost_1_61_0/stage/lib" -lboost_serialization
 
 SOURCES +=\
+    DiffView.cpp \
+    diff_match_patch.cpp \
         mainwindow.cpp \
     main.cpp \
     zoom.cpp \
     qcustomplot.cpp
 
 HEADERS  += mainwindow.h \
+    DiffView.h \
+    diff_match_patch.h \
     eddis.h \
     slpNPatternDict.h \
     tesseract/apitypes.h \
@@ -52,7 +56,8 @@ HEADERS  += mainwindow.h \
     qcustomplot.h \
     meanStdPage.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    DiffView.ui
 
 RESOURCES += \
     AppResources.qrc

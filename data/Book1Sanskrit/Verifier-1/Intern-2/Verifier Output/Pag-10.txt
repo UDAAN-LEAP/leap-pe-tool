@@ -1,0 +1,31 @@
+﻿LILAVATI
+Page
+मिश्रव्यवहारः- OPERATIONS ON MIXED QUANTITIES                                         210-37
+मूलधनवृद्धिगणनम् ( Capital and interest)                                                         210-12 
+मूलधंनवृद्धौ संग्रहश्लोकाः ( Rationale of Do.)                                                     213-14 
+तुल्यकलान्तरे प्रकारान्तरम् (Special type on Equal interest)                              214-16 
+तुल्यकलान्तरे संग्रहश्लोकाः ( Rationale of Do.)                                                   216-17
+मूलधनयोगे लाभविभागः (Sharing Profits)                                                          217-19
+वाप्योदिपूरणम् (Filling of tanks etc.)                                                                   219-20
+कयविकय (Sale and Purchase)                                                                           220-24 
+क्रयविक्रये संग्रहश्लोकाः (Rationale of Do.)                                                         224-26 
+रत्नमिश्रम् (Barter of gems)                                                                                   226-32 
+सुवर्णगणितम् (Gold in alloys)                                                                              232-37
+श्रेढीव्यवहारः OPERATIONS IN SERIES                                                                      238-66
+       सङ्कलितैक्यम् ( Summation of series)                                                                      238-40 
+सङ्कलितैक्ये संग्रहश्सोकांः.(Rationale of Do.)                                           241-43
+      वर्गत्ङ्कलित-घनसङ्कलिले (Summation of i. Squares and 
+ii. Cubes)                                                                                                  243-46
+वर्गसङ्कलिते संग्रहश्लोकाः ( Rationale of  i. above)                                             244-45 
+घनसङ्कलिते संग्रहश्लोकाः (Rationale of ii. above)                                                  246 
+      यथोत्तरचयश्रेढी (Arithmetic progression)                                                                246-50 
+श्रेढीफलान्मुखज्ञानम् (First term from Summation)                                          250-51 
+श्रेढीफलात् चयज्ञानम् ( Rate of change from Summation)                                251-52 
+श्रेढीफलात् गच्छज्ञानम् (Number of terms from Summation)                           252-54 
+गच्छज्ञाने संग्रहश्लोकाः ( Rationale on the number of terms)                           255-56
+      गुणोत्तरश्रेढी (Geometrical progression)                                                                  256-61 
+गुणोत्तरश्रेढ्यां संग्रहश्लोकाः ( Rationale of Do.)                                                 261-64 
+गुणोत्तरश्रेढ्यां विशेषोदाहरणानि (Special examples on Do.)                             264-66
+छन्दश्चित्यादि:-SUMMATION OF SYLLABLES IN METRES                                  267-76
+छन्दश्चित्यादौ संग्रहश्लोकाः (Rationale of Do.)                                                    272-76
+

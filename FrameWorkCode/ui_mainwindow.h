@@ -77,6 +77,7 @@ public:
     QAction *actionLeftAlign;
     QAction *actionRightAlign;
     QAction *actionCentreAlign;
+    QAction *actionJusitfiedAlign;
     QWidget *centralWidget;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
@@ -87,7 +88,7 @@ public:
     QVBoxLayout *verticalLayout_2;
     QProgressBar *progressBar;
     QLineEdit *lineEdit;
-    QWidget *widget;
+    QWidget *layoutWidget2;
     QVBoxLayout *verticalLayout;
     QLineEdit *lineEdit_2;
     QHBoxLayout *horizontalLayout_2;
@@ -109,7 +110,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1369, 736);
+        MainWindow->resize(1387, 736);
         MainWindow->setMouseTracking(true);
         actionOpen = new QAction(MainWindow);
         actionOpen->setObjectName(QStringLiteral("actionOpen"));
@@ -240,11 +241,16 @@ public:
         QIcon icon13;
         icon13.addFile(QStringLiteral(":/Images/AlignCenter.png"), QSize(), QIcon::Normal, QIcon::On);
         actionCentreAlign->setIcon(icon13);
+        actionJusitfiedAlign = new QAction(MainWindow);
+        actionJusitfiedAlign->setObjectName(QStringLiteral("actionJusitfiedAlign"));
+        QIcon icon14;
+        icon14.addFile(QStringLiteral(":/Images/JustifiedAlign.png"), QSize(), QIcon::Normal, QIcon::On);
+        actionJusitfiedAlign->setIcon(icon14);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(9, 71, 1351, 601));
+        layoutWidget->setGeometry(QRect(9, 71, 1271, 571));
         horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -313,15 +319,15 @@ public:
 
         verticalLayout_2->addWidget(lineEdit);
 
-        widget = new QWidget(centralWidget);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(1080, 10, 256, 60));
-        verticalLayout = new QVBoxLayout(widget);
+        layoutWidget2 = new QWidget(centralWidget);
+        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
+        layoutWidget2->setGeometry(QRect(670, 10, 256, 60));
+        verticalLayout = new QVBoxLayout(layoutWidget2);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        lineEdit_2 = new QLineEdit(widget);
+        lineEdit_2 = new QLineEdit(layoutWidget2);
         lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
 
         verticalLayout->addWidget(lineEdit_2);
@@ -329,17 +335,17 @@ public:
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        pushButton_2 = new QPushButton(widget);
+        pushButton_2 = new QPushButton(layoutWidget2);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
 
         horizontalLayout_2->addWidget(pushButton_2);
 
-        pushButton_3 = new QPushButton(widget);
+        pushButton_3 = new QPushButton(layoutWidget2);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
 
         horizontalLayout_2->addWidget(pushButton_3);
 
-        pushButton = new QPushButton(widget);
+        pushButton = new QPushButton(layoutWidget2);
         pushButton->setObjectName(QStringLiteral("pushButton"));
 
         horizontalLayout_2->addWidget(pushButton);
@@ -350,7 +356,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1369, 22));
+        menuBar->setGeometry(QRect(0, 0, 1387, 22));
         menuOCR_Correction_Window = new QMenu(menuBar);
         menuOCR_Correction_Window->setObjectName(QStringLiteral("menuOCR_Correction_Window"));
         menuCreateReports = new QMenu(menuBar);
@@ -426,6 +432,7 @@ public:
         menuFontAndLayout->addAction(actionLeftAlign);
         menuFontAndLayout->addAction(actionRightAlign);
         menuFontAndLayout->addAction(actionCentreAlign);
+        menuFontAndLayout->addAction(actionJusitfiedAlign);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen);
         mainToolBar->addAction(actionSave);
@@ -451,6 +458,7 @@ public:
         mainToolBar->addAction(actionLeftAlign);
         mainToolBar->addAction(actionCentreAlign);
         mainToolBar->addAction(actionRightAlign);
+        mainToolBar->addAction(actionJusitfiedAlign);
 
         retranslateUi(MainWindow);
 
@@ -548,6 +556,7 @@ public:
         actionLeftAlign->setText(QApplication::translate("MainWindow", "LeftAlign", Q_NULLPTR));
         actionRightAlign->setText(QApplication::translate("MainWindow", "RightAlign", Q_NULLPTR));
         actionCentreAlign->setText(QApplication::translate("MainWindow", "CentreAlign", Q_NULLPTR));
+        actionJusitfiedAlign->setText(QApplication::translate("MainWindow", "JusitfiedAlign", Q_NULLPTR));
         textBrowser->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

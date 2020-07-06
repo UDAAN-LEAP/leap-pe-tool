@@ -7,6 +7,8 @@
 #include <math.h>
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
+#include "DiffView.h"
+
 //# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
@@ -2664,6 +2666,10 @@ void MainWindow::on_actionCentreAlign_triggered() //Sanoj
 //    ui->textBrowser->textCursor().mergeBlockFormat(textBlockFormat);
     ui->textBrowser->setAlignment(Qt::AlignCenter);
 }
+void MainWindow::on_actionJusitfiedAlign_triggered()
+{
+    ui->textBrowser->setAlignment(Qt::AlignJustify);
+}
 
 void MainWindow::on_actionAllFontProperties_triggered() //Sanoj
 {
@@ -2690,38 +2696,42 @@ void MainWindow::on_actionSaveAsODF_triggered()//Sanoj
     odfWritter.write(doc); // doc is QTextDocument*
 
 }
-string s1 = "",s2 = ""; int text1checked= 0,text2checked = 0;
+string s1 = "",s2 = ""; int text1checked= 0,text2checked = 0; QString qs1="", qs2="";
 void MainWindow::on_pushButton_clicked()
 {
     QString origFile = mFilename;
     QString correctFile = mFilename;
     correctFile.replace("Inds","Correct");
-    QFile sFile2(origFile);
-    QFile sFile3(correctFile);
+    QFile sFile2(correctFile);
+    QFile sFile3(origFile);
 
-
-    if(!text2checked)
+    if(!text1checked)
     {
         QString textBrowserText = ui->textBrowser->toPlainText();
+        qs1=textBrowserText;
         s1 = textBrowserText.toUtf8().constData();
     }
 
     //qDebug() << textBrowserText;
 
-    if(!text1checked)
+    if(!text2checked)
     {
         if(sFile2.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile2);
             QString t = in.readAll();
-            s1 = t.toUtf8().constData();
+            t= t.simplified();
+            qs2=t;
+            s2 = t.toUtf8().constData();
             sFile2.close();
         }
         else
         {
             QTextStream in(&sFile2);
             QString t = in.readAll();
-            s1 = t.toUtf8().constData();
+            t= t.simplified();
+            qs2=t;
+            s2 = t.toUtf8().constData();
             sFile2.close();
         }
     }
@@ -2749,13 +2759,19 @@ void MainWindow::on_pushButton_clicked()
        qDebug() <<levenshtein << "levenshtein";
        accuracy = ((float)(l1-levenshtein)/(float)l1)*100;
        qDebug() <<accuracy << "accuracy";
-       ui->lineEdit_2->setText(QString::number(accuracy) + "%");
+       ui->lineEdit_2->setText(QString::number(accuracy) + "% Similar");
+       DiffView *dv = new DiffView(qs1,qs2);
+       dv->show();
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
     file = QFileDialog::getOpenFileName(this,"Open Text-1 (BASE)");
-    QString localmFilename1;
+    string filename = file.toUtf8().constData();
+    int loc1 = filename.find_last_of("/");
+    int loc2 = filename.find_last_of(".");
+    filename = filename.substr(loc1+1,loc2);
+    QString qfile = QString::fromStdString(filename);
     if(!file.isEmpty())
     {
         QFile sFile(file);
@@ -2763,8 +2779,11 @@ void MainWindow::on_pushButton_2_clicked()
         {
             QTextStream in(&sFile);
             QString t = in.readAll();
+            t= t.simplified();
+            qs1=t;
             s1 = t.toUtf8().constData();
             text1checked = 1;
+            ui->lineEdit_2->setText("Text-1(Base) "+ qfile +" Loaded");
             sFile.close();
         }
 
@@ -2773,7 +2792,11 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_pushButton_3_clicked()
 {
     file = QFileDialog::getOpenFileName(this,"Open Text-2");
-    QString localmFilename1;
+    string filename = file.toUtf8().constData();
+    int loc1 = filename.find_last_of("/");
+    int loc2 = filename.find_last_of(".");
+    filename = filename.substr(loc1+1,loc2);
+    QString qfile = QString::fromStdString(filename);
     if(!file.isEmpty())
     {
         QFile sFile(file);
@@ -2781,12 +2804,18 @@ void MainWindow::on_pushButton_3_clicked()
         {
             QTextStream in(&sFile);
             QString t = in.readAll();
+            t= t.simplified();
+            qs2=t;
             s2 = t.toUtf8().constData();
             text2checked = 1;
+            ui->lineEdit_2->setText("Text-2 "+ qfile +" Loaded");
             sFile.close();
         }
 
     }
+
 }
+
+
 
 

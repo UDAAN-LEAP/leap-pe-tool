@@ -20,5 +20,6 @@
         <file>AlignRight.png</file>
         <file>AllFont.png</file>
         <file>toDevangari.png</file>
+        <file>JustifiedAlign.png</file>
     </qresource>
 </RCC>

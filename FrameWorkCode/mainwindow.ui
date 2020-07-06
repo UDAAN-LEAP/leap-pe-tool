@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1369</width>
+    <width>1387</width>
     <height>736</height>
    </rect>
   </property>
@@ -22,8 +22,8 @@
      <rect>
       <x>9</x>
       <y>71</y>
-      <width>1351</width>
-      <height>601</height>
+      <width>1271</width>
+      <height>571</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -159,10 +159,10 @@ p, li { white-space: pre-wrap; }
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>1080</x>
+      <x>670</x>
       <y>10</y>
       <width>256</width>
       <height>60</height>
@@ -205,7 +205,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1369</width>
+     <width>1387</width>
      <height>22</height>
     </rect>
    </property>
@@ -288,6 +288,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionLeftAlign"/>
     <addaction name="actionRightAlign"/>
     <addaction name="actionCentreAlign"/>
+    <addaction name="actionJusitfiedAlign"/>
    </widget>
    <addaction name="menuSelectLanguage"/>
    <addaction name="menuOCR_Correction_Window"/>
@@ -329,6 +330,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionLeftAlign"/>
    <addaction name="actionCentreAlign"/>
    <addaction name="actionRightAlign"/>
+   <addaction name="actionJusitfiedAlign"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -657,6 +659,16 @@ p, li { white-space: pre-wrap; }
     <string>CentreAlign</string>
    </property>
   </action>
+  <action name="actionJusitfiedAlign">
+   <property name="icon">
+    <iconset>
+     <normalon>:/Images/JustifiedAlign.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>JusitfiedAlign</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
@@ -664,7 +676,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>graphicsView</tabstop>
  </tabstops>
  <resources>
-  <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
  </resources>
