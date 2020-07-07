@@ -1270,8 +1270,10 @@ int diff_match_patch::diff_xIndex(const QList<Diff> &diffs, int loc) {
 }
 
 
-QString diff_match_patch::diff_prettyHtml(const QList<Diff> &diffs) {
-  QString html;
+QList <QString>  diff_match_patch::diff_prettyHtml(const QList<Diff> &diffs, const QString &textcolor) {
+  QString html1;
+  QString html2;
+  QList <QString> htmlList;
   QString text;
   foreach(Diff aDiff, diffs) {
     text = aDiff.text;
@@ -1279,19 +1281,22 @@ QString diff_match_patch::diff_prettyHtml(const QList<Diff> &diffs) {
         .replace(">", "&gt;").replace("\n", "&para;<br>");
     switch (aDiff.operation) {
       case INSERT:
-        html += QString("<ins style=\"background:#e6ffe6;\">") + text
+        html1 += QString("<ins style=\"background:#"+textcolor+";\">") + text
             + QString("</ins>");
         break;
       case DELETE:
-        html += QString("<del style=\"background:#ffe6e6;\">") + text
+        html2 += QString("<del style=\"background:#ffa1a1;\">") + text
             + QString("</del>");
         break;
       case EQUAL:
-        html += QString("<span>") + text + QString("</span>");
+        html1 += QString("<span>") + text + QString("</span>");
+        html2 += QString("<span>") + text + QString("</span>");
         break;
     }
   }
-  return html;
+  htmlList.append(html1);
+  htmlList.append(html2);
+  return htmlList;
 }
 
 
