@@ -25,7 +25,16 @@
        </widget>
       </item>
       <item>
-       <widget class="QTextEdit" name="diff1"/>
+       <widget class="QTextEdit" name="diff1">
+        <property name="font">
+         <font>
+          <family>Shobhika Bold</family>
+          <pointsize>16</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -39,7 +48,16 @@
        </widget>
       </item>
       <item>
-       <widget class="QTextEdit" name="diff2"/>
+       <widget class="QTextEdit" name="diff2">
+        <property name="font">
+         <font>
+          <family>Shobhika Bold</family>
+          <pointsize>16</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -53,7 +71,16 @@
        </widget>
       </item>
       <item>
-       <widget class="QTextEdit" name="diff3"/>
+       <widget class="QTextEdit" name="diff3">
+        <property name="font">
+         <font>
+          <family>Shobhika Bold</family>
+          <pointsize>16</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -65,7 +92,7 @@
      <x>0</x>
      <y>0</y>
      <width>1271</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
