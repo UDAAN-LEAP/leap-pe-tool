@@ -2696,7 +2696,9 @@ void MainWindow::on_actionSaveAsODF_triggered()//Sanoj
     odfWritter.write(doc); // doc is QTextDocument*
 
 }
-string s1 = "",s2 = ""; int text1checked= 0,text2checked = 0; QString qs1="", qs2="";
+
+/*string s1 = "",s2 = ""; int text1checked= 0,text2checked = 0; QString qs1="", qs2="";
+
 void MainWindow::on_pushButton_clicked()
 {
     QString origFile = mFilename;
@@ -2705,33 +2707,35 @@ void MainWindow::on_pushButton_clicked()
     QFile sFile2(correctFile);
     QFile sFile3(origFile);
 
-    if(!text1checked)
+    if(!text2checked)
     {
         QString textBrowserText = ui->textBrowser->toPlainText();
-        qs1=textBrowserText;
-        s1 = textBrowserText.toUtf8().constData();
+        textBrowserText= textBrowserText.replace(" \n","\n");
+        qs2=textBrowserText;
+
+        s2 = textBrowserText.toUtf8().constData();
     }
 
     //qDebug() << textBrowserText;
 
-    if(!text2checked)
+    if(!text1checked)
     {
         if(sFile2.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile2);
             QString t = in.readAll();
-            t= t.simplified();
-            qs2=t;
-            s2 = t.toUtf8().constData();
+            t= t.replace(" \n","\n");
+            qs1=t;
+            s1 = t.toUtf8().constData();
             sFile2.close();
         }
         else
         {
             QTextStream in(&sFile2);
             QString t = in.readAll();
-            t= t.simplified();
-            qs2=t;
-            s2 = t.toUtf8().constData();
+            t= t.replace(" \n","\n");
+            qs1=t;
+            s1 = t.toUtf8().constData();
             sFile2.close();
         }
     }
@@ -2755,65 +2759,144 @@ void MainWindow::on_pushButton_clicked()
        l1 = s1.length();
        l2= s2.length();
 
-       levenshtein = editDist(s1,s2);
+       levenshtein = editDist(s2,s1);
        qDebug() <<levenshtein << "levenshtein";
        accuracy = ((float)(l1-levenshtein)/(float)l1)*100;
+       if(accuracy<0) accuracy = ((float)(l2-levenshtein)/(float)l2)*100;
        qDebug() <<accuracy << "accuracy";
        ui->lineEdit_2->setText(QString::number(accuracy) + "% Similar");
-       DiffView *dv = new DiffView(qs1,qs2);
-       dv->show();
-}
 
-void MainWindow::on_pushButton_2_clicked()
+}*/
+
+
+void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
 {
-    file = QFileDialog::getOpenFileName(this,"Open Text-1 (BASE)");
-    string filename = file.toUtf8().constData();
-    int loc1 = filename.find_last_of("/");
-    int loc2 = filename.find_last_of(".");
-    filename = filename.substr(loc1+1,loc2);
-    QString qfile = QString::fromStdString(filename);
-    if(!file.isEmpty())
+
+    string s1 = "",s2 = ""; QString qs1="", qs2="",qs3="";
+    file = QFileDialog::getOpenFileName(this,"Open Verifier's Output File");
+    QString interntext = file;
+    QString ocrtext = file.replace("InternOutput","OCROutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+    QString verifiertext = file.replace("InternOutput","VerifierOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+
+    if(!ocrtext.isEmpty())
     {
-        QFile sFile(file);
+        QFile sFile(interntext);
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
             QString t = in.readAll();
-            t= t.simplified();
+            t= t.replace(" \n","\n");
             qs1=t;
+            t= t.replace(" ","");
             s1 = t.toUtf8().constData();
-            text1checked = 1;
-            ui->lineEdit_2->setText("Text-1(Base) "+ qfile +" Loaded");
             sFile.close();
         }
 
     }
-}
-void MainWindow::on_pushButton_3_clicked()
-{
-    file = QFileDialog::getOpenFileName(this,"Open Text-2");
-    string filename = file.toUtf8().constData();
-    int loc1 = filename.find_last_of("/");
-    int loc2 = filename.find_last_of(".");
-    filename = filename.substr(loc1+1,loc2);
-    QString qfile = QString::fromStdString(filename);
-    if(!file.isEmpty())
+    if(!interntext.isEmpty())
     {
-        QFile sFile(file);
+        QFile sFile(interntext);
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
             QString t = in.readAll();
-            t= t.simplified();
+            t= t.replace(" \n","\n");
             qs2=t;
+            t= t.replace(" ","");
             s2 = t.toUtf8().constData();
-            text2checked = 1;
-            ui->lineEdit_2->setText("Text-2 "+ qfile +" Loaded");
+            sFile.close();
+        }
+
+    }
+    if(!verifiertext.isEmpty())
+    {
+        QFile sFile(interntext);
+        if(sFile.open(QFile::ReadOnly | QFile::Text))
+        {
+            QTextStream in(&sFile);
+            QString t = in.readAll();
+            t= t.replace(" \n","\n");
+            qs1=t;
+            t= t.replace(" ","");
+            s1 = t.toUtf8().constData();
+            sFile.close();
+        }
+
+    }
+    int l1,l2, levenshtein; float accuracy;
+
+       l1 = s1.length();
+       l2= s2.length();
+
+       levenshtein = editDist(s2,s1);
+       qDebug() <<levenshtein << "levenshtein";
+       accuracy = ((float)(l1-levenshtein)/(float)l1)*100;
+       if(accuracy<0) accuracy = ((float)(l2-levenshtein)/(float)l2)*100;
+       qDebug() <<accuracy << "accuracy";
+    //----to CHANGE-- Sanoj
+       ui->lineEdit_2->setText(QString::number(accuracy) + "% Similar");
+
+
+    DiffView *dv = new DiffView(qs1,qs2,qs3);
+    dv->show();
+}
+
+
+
+void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
+{
+    string s1 = "",s2 = ""; QString qs1="", qs2="",qs3="";
+    file = QFileDialog::getOpenFileName(this,"Open Verifier's Output File");
+    QString interntext = file;
+    QString ocrtext = file.replace("InternOutput","OCROutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+    QString ocrimage = ocrtext.replace(".txt",".jpeg");
+    if(!ocrtext.isEmpty())
+    {
+        QFile sFile(ocrtext);
+        if(sFile.open(QFile::ReadOnly | QFile::Text))
+        {
+            QTextStream in(&sFile);
+            QString t = in.readAll();
+            t= t.replace(" \n","\n");
+            qs1=t;
+            t= t.replace(" ","");
+            s1 = t.toUtf8().constData();
+            sFile.close();
+        }
+
+    }
+    if(!interntext.isEmpty())
+    {
+        QFile sFile(interntext);
+        if(sFile.open(QFile::ReadOnly | QFile::Text))
+        {
+            QTextStream in(&sFile);
+            QString t = in.readAll();
+            t= t.replace(" \n","\n");
+            qs2=t;
+            t= t.replace(" ","");
+            s2 = t.toUtf8().constData();
             sFile.close();
         }
 
     }
 
+    int l1,l2, levenshtein; float accuracy;
+    l1 = s1.length();
+    l2= s2.length();
+
+    levenshtein = editDist(s2,s1);
+    qDebug() <<levenshtein << "levenshtein";
+    accuracy = ((float)(l1-levenshtein)/(float)l1)*100;
+    if(accuracy<0) accuracy = ((float)(l2-levenshtein)/(float)l2)*100;
+    qDebug() <<accuracy << "accuracy";
+    ui->lineEdit_2->setText(QString::number(accuracy) + "% Similar");
+
+
+    /* ---NIPUN--
+    DiffView2 *dv = new DiffView(qs1,qs2,ocrimage); //Fetch OCR Image in DiffView2 and Set
+    dv->show();
+*/
 }
 
 

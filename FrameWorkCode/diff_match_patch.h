@@ -402,7 +402,7 @@ class diff_match_patch {
    * @return HTML representation.
    */
  public:
-  QString diff_prettyHtml(const QList<Diff> &diffs);
+  QList <QString> diff_prettyHtml(const QList<Diff> &diffs, const QString &textcolor);
 
   /**
    * Compute and return the source text (all equalities and deletions).

@@ -164,7 +164,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>670</x>
       <y>10</y>
-      <width>256</width>
+      <width>441</width>
       <height>60</height>
      </rect>
     </property>
@@ -177,21 +177,14 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QPushButton" name="pushButton_2">
          <property name="text">
-          <string>Text1</string>
+          <string>Intern Output Text</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_3">
          <property name="text">
-          <string>Text2</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Similarity</string>
+          <string>Verifier Output Text</string>
          </property>
         </widget>
        </item>
@@ -676,6 +669,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>graphicsView</tabstop>
  </tabstops>
  <resources>
+  <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
  </resources>

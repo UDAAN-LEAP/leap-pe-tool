@@ -2,7 +2,12 @@
 /home/sanoj/Documents/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-7.txt 0
 /home/sanoj/Documents/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-8.txt 1
 /home/sanoj/commited/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-1.txt 412
+/home/sanoj/commited/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-10.txt 987
+/home/sanoj/commited/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-11.txt 5
 /home/sanoj/commited/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-2.txt 373
 /home/sanoj/commited/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-3.txt 196
-/home/sanoj/commited/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-4.txt 339
-/home/sanoj/commited/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-5.txt 2
+/home/sanoj/commited/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-4.txt 698
+/home/sanoj/commited/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-5.txt 11
+/home/sanoj/commited/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-6.txt 2
+/home/sanoj/commited/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-7.txt 68
+/home/sanoj/commited/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-8.txt 2
