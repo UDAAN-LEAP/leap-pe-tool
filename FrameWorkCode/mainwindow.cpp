@@ -128,6 +128,7 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
       {
           QString timelogstring = "";
           QTextStream out(&sFile);
+		  
           for (auto i = TimeLog.begin(); i!=TimeLog.end(); i++ )
           {
               timelogstring+= QString::fromStdString(i->first) + " ";
@@ -383,6 +384,7 @@ void MainWindow::on_actionOpen_triggered()
 //                    align=\"left\" style =\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"
 
                     QTextStream in(&sFile);
+					in.setCodec("UTF-8");
                     QString text = in.readAll();
                     sFile.close();
                     //ui->textBrowser->setPlainText(text);
@@ -429,6 +431,7 @@ void MainWindow::on_actionOpen_triggered()
 //                    ui->textBrowser->setHtml(text); //Sanoj
 
                     QTextStream in(&sFile);
+					in.setCodec("UTF-8");
                     QString text = in.readAll();
                     sFile.close();
                     //ui->textBrowser->setPlainText(text);
@@ -946,7 +949,7 @@ void MainWindow::on_actionSave_triggered()
                     if(sFile.open(QFile::WriteOnly))
                   {
                       QTextStream out(&sFile);
-
+					  out.setCodec("UTF-8");
                       out << ui->textBrowser->toHtml();//toPlainText()
 
                       sFile.flush();
@@ -970,6 +973,7 @@ void MainWindow::on_actionLoadGDocPage_triggered()
                   if(sFile.open(QFile::WriteOnly | QFile::Text))
                   {
                       QTextStream out(&sFile);
+					  out.setCodec("UTF-8");
                       out << ui->textBrowser->toHtml(); //toPlainText(); Sanoj
                       sFile.flush();
                       sFile.close();
@@ -2784,6 +2788,7 @@ void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
+			in.setCodec("UTF-8");
             QString t = in.readAll();
             t= t.replace(" \n","\n");
             qs1=t;
@@ -2799,7 +2804,8 @@ void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
-            QString t = in.readAll();
+			in.setCodec("UTF-8");
+			QString t = in.readAll();
             t= t.replace(" \n","\n");
             qs2=t;
             t= t.replace(" ","");
@@ -2814,6 +2820,7 @@ void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
+			in.setCodec("UTF-8");
             QString t = in.readAll();
             t= t.replace(" \n","\n");
             qs1=t;
@@ -2856,6 +2863,7 @@ void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
+			in.setCodec("UTF-8");
             QString t = in.readAll();
             t= t.replace(" \n","\n");
             qs1=t;
@@ -2871,6 +2879,8 @@ void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
+			
+			in.setCodec("UTF-8");
             QString t = in.readAll();
             t= t.replace(" \n","\n");
             qs2=t;
