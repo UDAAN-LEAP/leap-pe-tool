@@ -8,7 +8,7 @@
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
 #include "DiffView.h"
-
+#include "interndiffview.h"
 //# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
@@ -128,6 +128,7 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
       {
           QString timelogstring = "";
           QTextStream out(&sFile);
+		  
           for (auto i = TimeLog.begin(); i!=TimeLog.end(); i++ )
           {
               timelogstring+= QString::fromStdString(i->first) + " ";
@@ -383,6 +384,7 @@ void MainWindow::on_actionOpen_triggered()
 //                    align=\"left\" style =\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"
 
                     QTextStream in(&sFile);
+					in.setCodec("UTF-8");
                     QString text = in.readAll();
                     sFile.close();
                     //ui->textBrowser->setPlainText(text);
@@ -429,6 +431,7 @@ void MainWindow::on_actionOpen_triggered()
 //                    ui->textBrowser->setHtml(text); //Sanoj
 
                     QTextStream in(&sFile);
+					in.setCodec("UTF-8");
                     QString text = in.readAll();
                     sFile.close();
                     //ui->textBrowser->setPlainText(text);
@@ -946,7 +949,7 @@ void MainWindow::on_actionSave_triggered()
                     if(sFile.open(QFile::WriteOnly))
                   {
                       QTextStream out(&sFile);
-
+					  out.setCodec("UTF-8");
                       out << ui->textBrowser->toHtml();//toPlainText()
 
                       sFile.flush();
@@ -970,6 +973,7 @@ void MainWindow::on_actionLoadGDocPage_triggered()
                   if(sFile.open(QFile::WriteOnly | QFile::Text))
                   {
                       QTextStream out(&sFile);
+					  out.setCodec("UTF-8");
                       out << ui->textBrowser->toHtml(); //toPlainText(); Sanoj
                       sFile.flush();
                       sFile.close();
@@ -2786,6 +2790,7 @@ void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
+			in.setCodec("UTF-8");
             QString t = in.readAll();
             t= t.replace(" \n","\n");
             qs1=t;
@@ -2801,7 +2806,8 @@ void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
-            QString t = in.readAll();
+			in.setCodec("UTF-8");
+			QString t = in.readAll();
             t= t.replace(" \n","\n");
             qs2=t;
             t= t.replace(" ","");
@@ -2816,6 +2822,7 @@ void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
+			in.setCodec("UTF-8");
             QString t = in.readAll();
             t= t.replace(" \n","\n");
             qs3=t;
@@ -2855,14 +2862,17 @@ void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
     string s1 = "",s2 = ""; QString qs1="", qs2="",qs3="";
     file = QFileDialog::getOpenFileName(this,"Open Verifier's Output File");
     QString interntext = file;
-    QString ocrtext = file.replace("InternOutput","OCROutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-    QString ocrimage = ocrtext.replace(".txt",".jpeg");
+	QString ocrtext = file;
+    ocrtext.replace("InternOutput","OCROutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+	QString ocrimage = ocrtext;
+	ocrimage.replace(".txt", ".jpeg");
     if(!ocrtext.isEmpty())
     {
         QFile sFile(ocrtext);
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
+			in.setCodec("UTF-8");
             QString t = in.readAll();
             t= t.replace(" \n","\n");
             qs1=t;
@@ -2878,6 +2888,7 @@ void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
+			in.setCodec("UTF-8");
             QString t = in.readAll();
             t= t.replace(" \n","\n");
             qs2=t;
@@ -2900,10 +2911,9 @@ void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
     ui->lineEdit_2->setText(QString::number(accuracy) + "% Similar");
 
 
-    /* ---NIPUN--
-    DiffView2 *dv = new DiffView(qs1,qs2,ocrimage); //Fetch OCR Image in DiffView2 and Set
+   
+    InternDiffView *dv = new InternDiffView(qs1,qs2,ocrimage); //Fetch OCR Image in DiffView2 and Set
     dv->show();
-*/
 }
 
 
