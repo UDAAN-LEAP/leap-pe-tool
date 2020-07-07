@@ -177,14 +177,14 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QPushButton" name="pushButton_2">
          <property name="text">
-          <string>Intern Output Text</string>
+          <string>Verifier Output Text</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_3">
          <property name="text">
-          <string>Verifier Output Text</string>
+          <string>Intern Output Text</string>
          </property>
         </widget>
        </item>
@@ -199,7 +199,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1387</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOCR_Correction_Window">
