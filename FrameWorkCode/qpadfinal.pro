@@ -26,7 +26,8 @@ SOURCES +=\
         mainwindow.cpp \
     main.cpp \
     zoom.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
+	interndiffview.cpp
 
 HEADERS  += mainwindow.h \
     DiffView.h \
@@ -54,10 +55,12 @@ HEADERS  += mainwindow.h \
     trieEditdis.h \
     zoom.h \
     qcustomplot.h \
-    meanStdPage.h
+    meanStdPage.h \
+	interndiffview.h
 
 FORMS    += mainwindow.ui \
-    DiffView.ui
+    DiffView.ui \
+	interndiffview.ui
 
 RESOURCES += \
     AppResources.qrc

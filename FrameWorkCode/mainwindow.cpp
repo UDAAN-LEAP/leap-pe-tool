@@ -8,7 +8,7 @@
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
 #include "DiffView.h"
-
+#include "interndiffview.h"
 //# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
@@ -2855,8 +2855,10 @@ void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
     string s1 = "",s2 = ""; QString qs1="", qs2="",qs3="";
     file = QFileDialog::getOpenFileName(this,"Open Verifier's Output File");
     QString interntext = file;
-    QString ocrtext = file.replace("InternOutput","OCROutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-    QString ocrimage = ocrtext.replace(".txt",".jpeg");
+	QString ocrtext = file;
+    ocrtext.replace("InternOutput","OCROutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+	QString ocrimage = ocrtext;
+	ocrimage.replace(".txt", ".jpeg");
     if(!ocrtext.isEmpty())
     {
         QFile sFile(ocrtext);
@@ -2879,7 +2881,6 @@ void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
-			
 			in.setCodec("UTF-8");
             QString t = in.readAll();
             t= t.replace(" \n","\n");
@@ -2903,10 +2904,9 @@ void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
     ui->lineEdit_2->setText(QString::number(accuracy) + "% Similar");
 
 
-    /* ---NIPUN--
-    DiffView2 *dv = new DiffView(qs1,qs2,ocrimage); //Fetch OCR Image in DiffView2 and Set
+   
+    InternDiffView *dv = new InternDiffView(qs1,qs2,ocrimage); //Fetch OCR Image in DiffView2 and Set
     dv->show();
-*/
 }
 
 
