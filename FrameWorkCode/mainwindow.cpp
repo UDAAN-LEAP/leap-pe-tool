@@ -2772,15 +2772,17 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
 {
 
-    string s1 = "",s2 = ""; QString qs1="", qs2="",qs3="";
+    string s1 = "",s2 = "", s3 = ""; QString qs1="", qs2="",qs3="";
     file = QFileDialog::getOpenFileName(this,"Open Verifier's Output File");
-    QString interntext = file;
-    QString ocrtext = file.replace("InternOutput","OCROutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-    QString verifiertext = file.replace("InternOutput","VerifierOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-
+    QString verifiertext = file;
+    QString ocrtext = file.replace("VerifierOutput","OCROutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+    QString interntext = file.replace("OCROutput","InternOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+    qDebug() <<verifiertext << "verifiertext";
+    qDebug() <<ocrtext << "ocrtext";
+    qDebug() <<interntext << "interntext";
     if(!ocrtext.isEmpty())
     {
-        QFile sFile(interntext);
+        QFile sFile(ocrtext);
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
@@ -2810,31 +2812,36 @@ void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
     }
     if(!verifiertext.isEmpty())
     {
-        QFile sFile(interntext);
+        QFile sFile(verifiertext);
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
             QString t = in.readAll();
             t= t.replace(" \n","\n");
-            qs1=t;
+            qs3=t;
             t= t.replace(" ","");
-            s1 = t.toUtf8().constData();
+            s3 = t.toUtf8().constData();
             sFile.close();
         }
 
     }
-    int l1,l2, levenshtein; float accuracy;
+    int l1,l2,l3, levenshtein1,levenshtein2,levenshtein3; float accuracy1,accuracy2,accuracy3;
 
        l1 = s1.length();
-       l2= s2.length();
+       l2 = s2.length();
+       l3 = s3.length();
+       levenshtein1 = editDist(s1,s2);
+       accuracy1 = ((float)(l1-levenshtein1)/(float)l1)*100;
+       if(accuracy1<0) accuracy1 = ((float)(l2-levenshtein1)/(float)l2)*100;
 
-       levenshtein = editDist(s2,s1);
-       qDebug() <<levenshtein << "levenshtein";
-       accuracy = ((float)(l1-levenshtein)/(float)l1)*100;
-       if(accuracy<0) accuracy = ((float)(l2-levenshtein)/(float)l2)*100;
-       qDebug() <<accuracy << "accuracy";
-    //----to CHANGE-- Sanoj
-       ui->lineEdit_2->setText(QString::number(accuracy) + "% Similar");
+       levenshtein2 = editDist(s2,s3);
+       accuracy2 = ((float)(l2-levenshtein2)/(float)l2)*100;
+       if(accuracy2<0) accuracy2 = ((float)(l3-levenshtein2)/(float)l3)*100;
+
+       levenshtein3 = editDist(s1,s3);
+       accuracy3 = ((float)(l1-levenshtein3)/(float)l1)*100;
+       if(accuracy3<0) accuracy3 = ((float)(l3-levenshtein3)/(float)l3)*100;
+       ui->lineEdit_2->setText("Intern | "+QString::number(accuracy2) + "% | Verifier | "+QString::number(accuracy3) + "% | OCR");
 
 
     DiffView *dv = new DiffView(qs1,qs2,qs3);

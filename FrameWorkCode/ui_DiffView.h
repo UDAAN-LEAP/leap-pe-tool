@@ -13,7 +13,6 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
@@ -30,7 +29,7 @@ class Ui_DiffView
 public:
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
-    QGraphicsView *graphicsView;
+    QTextEdit *diff1;
     QTextEdit *diff2;
     QTextEdit *diff3;
     QMenuBar *menuBar;
@@ -41,17 +40,17 @@ public:
     {
         if (DiffView->objectName().isEmpty())
             DiffView->setObjectName(QStringLiteral("DiffView"));
-        DiffView->resize(721, 511);
+        DiffView->resize(1120, 502);
         centralWidget = new QWidget(DiffView);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         horizontalLayout = new QHBoxLayout(centralWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        graphicsView = new QGraphicsView(centralWidget);
-        graphicsView->setObjectName(QStringLiteral("graphicsView"));
+        diff1 = new QTextEdit(centralWidget);
+        diff1->setObjectName(QStringLiteral("diff1"));
 
-        horizontalLayout->addWidget(graphicsView);
+        horizontalLayout->addWidget(diff1);
 
         diff2 = new QTextEdit(centralWidget);
         diff2->setObjectName(QStringLiteral("diff2"));
@@ -66,7 +65,7 @@ public:
         DiffView->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(DiffView);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 721, 22));
+        menuBar->setGeometry(QRect(0, 0, 1120, 22));
         DiffView->setMenuBar(menuBar);
         mainToolBar = new QToolBar(DiffView);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));

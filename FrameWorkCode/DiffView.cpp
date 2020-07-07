@@ -8,15 +8,23 @@ DiffView::DiffView(const QString &str1, const QString &str2, const QString &str3
 	ui->setupUi(this);
 	diff_match_patch dmp;
     auto diffs = dmp.diff_main(str1,str2);
-    QString textcolor = "ccfcc"; //Change
-    QList<QString> htmlList = dmp.diff_prettyHtml(diffs, textcolor);
-    QString html1 = htmlList.first();
-    QString html2 = htmlList.last();
+    QString textcolor = "cce6ff";
+    QList<QString> htmlList1 = dmp.diff_prettyHtml(diffs, textcolor);
+    QString html1 = htmlList1.first();
+    QString html2 = htmlList1.last();
+//    qDebug() << "html1" << html1;
+//    qDebug() <<"htmllist" << htmlList1;
+     diffs = dmp.diff_main(str2,str3);
+    textcolor = "ccffcc";
+    QList<QString> htmlList2 = dmp.diff_prettyHtml(diffs, textcolor);
+    QString html3 = htmlList2.first();
     html1.remove("&para;");
     html2.remove("&para;");
-    //CHANGE-->
-//    ui->diff->setHtml(html1);
-//    ui->original->setPlainText(str2);
+    html3.remove("&para;");
+    ui->diff2->setHtml(html1);
+    ui->diff1->setHtml(html2);
+    ui->diff3->setHtml(html3);
+
 }
 
 DiffView::~DiffView()

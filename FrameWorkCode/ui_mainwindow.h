@@ -556,8 +556,8 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Shobhika'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", Q_NULLPTR));
-        pushButton_2->setText(QApplication::translate("MainWindow", "Intern Output Text", Q_NULLPTR));
-        pushButton_3->setText(QApplication::translate("MainWindow", "Verifier Output Text", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Verifier Output Text", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("MainWindow", "Intern Output Text", Q_NULLPTR));
         menuOCR_Correction_Window->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
         menuCreateReports->setTitle(QApplication::translate("MainWindow", "CreateReports", Q_NULLPTR));
         menuSaveVariables->setTitle(QApplication::translate("MainWindow", "SaveVariables", Q_NULLPTR));
