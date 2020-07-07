@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1387</width>
-    <height>736</height>
+    <width>1386</width>
+    <height>733</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -159,36 +159,29 @@ p, li { white-space: pre-wrap; }
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
       <x>670</x>
-      <y>10</y>
-      <width>441</width>
-      <height>60</height>
+      <y>40</y>
+      <width>398</width>
+      <height>27</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLineEdit" name="lineEdit_2"/>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>Compare Corrector's Output</string>
+       </property>
+      </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="text">
-          <string>Verifier Output Text</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="text">
-          <string>Intern Output Text</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>Compare Verifier's Output</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -198,8 +191,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1387</width>
-     <height>21</height>
+     <width>1386</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOCR_Correction_Window">

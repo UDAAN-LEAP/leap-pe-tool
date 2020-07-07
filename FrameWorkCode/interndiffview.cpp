@@ -2,14 +2,14 @@
 #include "ui_interndiffview.h"
 #include "zoom.h"
 #include "diff_match_patch.h"
-InternDiffView::InternDiffView(const QString &ocroutput, const QString &interntxt, const QString &ocrimgpath, QWidget *parent)
+InternDiffView::InternDiffView(const QString &ocroutput, const QString &interntxt, const QString &ocrimgpath, const QString acc, QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui = new Ui::InternDiffView();
 	ui->setupUi(this);
 	diff_match_patch dmp;
 	auto diffs = dmp.diff_main(ocroutput, interntxt);
-	auto html = dmp.diff_prettyHtml(diffs, "ccffcc");
+    auto html = dmp.diff_prettyHtml(diffs, "ffd13d");
 	auto html1 = html[0];
 	auto html2 = html[1];
 	html1.remove("&para;");
@@ -24,6 +24,10 @@ InternDiffView::InternDiffView(const QString &ocroutput, const QString &interntx
 	ui->graphicsView->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
 	Graphics_view_zoom* z = new Graphics_view_zoom(ui->graphicsView);
 	z->set_modifiers(Qt::NoModifier);
+    z->gentle_zoom(30);
+    QString label1 = ui->InternLabel->text();
+    label1.append(acc+"%");
+    ui->InternLabel->setText(label1);
 }
 
 InternDiffView::~InternDiffView()

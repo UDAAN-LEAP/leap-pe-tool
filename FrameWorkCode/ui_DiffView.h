@@ -31,15 +31,15 @@ class Ui_DiffView
 public:
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
-    QVBoxLayout *verticalLayout;
-    QLabel *label;
-    QTextEdit *diff1;
-    QVBoxLayout *verticalLayout_2;
-    QLabel *label_2;
-    QTextEdit *diff2;
     QVBoxLayout *verticalLayout_3;
-    QLabel *label_3;
-    QTextEdit *diff3;
+    QLabel *VerifierLabel;
+    QTextEdit *VerifierText;
+    QVBoxLayout *verticalLayout_2;
+    QLabel *InternLabel;
+    QTextEdit *InternText;
+    QVBoxLayout *verticalLayout;
+    QLabel *OCRLabel;
+    QTextEdit *OCRText;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -55,53 +55,64 @@ public:
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        verticalLayout = new QVBoxLayout();
-        verticalLayout->setSpacing(6);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        label = new QLabel(centralWidget);
-        label->setObjectName(QStringLiteral("label"));
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        VerifierLabel = new QLabel(centralWidget);
+        VerifierLabel->setObjectName(QStringLiteral("VerifierLabel"));
+        VerifierLabel->setAlignment(Qt::AlignCenter);
 
-        verticalLayout->addWidget(label);
+        verticalLayout_3->addWidget(VerifierLabel);
 
-        diff1 = new QTextEdit(centralWidget);
-        diff1->setObjectName(QStringLiteral("diff1"));
+        VerifierText = new QTextEdit(centralWidget);
+        VerifierText->setObjectName(QStringLiteral("VerifierText"));
+        QFont font;
+        font.setFamily(QStringLiteral("Shobhika"));
+        font.setPointSize(14);
+        font.setBold(true);
+        font.setWeight(75);
+        VerifierText->setFont(font);
 
-        verticalLayout->addWidget(diff1);
+        verticalLayout_3->addWidget(VerifierText);
 
 
-        horizontalLayout->addLayout(verticalLayout);
+        horizontalLayout->addLayout(verticalLayout_3);
 
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        label_2 = new QLabel(centralWidget);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        InternLabel = new QLabel(centralWidget);
+        InternLabel->setObjectName(QStringLiteral("InternLabel"));
+        InternLabel->setAlignment(Qt::AlignCenter);
 
-        verticalLayout_2->addWidget(label_2);
+        verticalLayout_2->addWidget(InternLabel);
 
-        diff2 = new QTextEdit(centralWidget);
-        diff2->setObjectName(QStringLiteral("diff2"));
+        InternText = new QTextEdit(centralWidget);
+        InternText->setObjectName(QStringLiteral("InternText"));
+        InternText->setFont(font);
 
-        verticalLayout_2->addWidget(diff2);
+        verticalLayout_2->addWidget(InternText);
 
 
         horizontalLayout->addLayout(verticalLayout_2);
 
-        verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-        label_3 = new QLabel(centralWidget);
-        label_3->setObjectName(QStringLiteral("label_3"));
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setSpacing(6);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        OCRLabel = new QLabel(centralWidget);
+        OCRLabel->setObjectName(QStringLiteral("OCRLabel"));
+        OCRLabel->setAlignment(Qt::AlignCenter);
 
-        verticalLayout_3->addWidget(label_3);
+        verticalLayout->addWidget(OCRLabel);
 
-        diff3 = new QTextEdit(centralWidget);
-        diff3->setObjectName(QStringLiteral("diff3"));
+        OCRText = new QTextEdit(centralWidget);
+        OCRText->setObjectName(QStringLiteral("OCRText"));
+        OCRText->setFont(font);
 
-        verticalLayout_3->addWidget(diff3);
+        verticalLayout->addWidget(OCRText);
 
 
-        horizontalLayout->addLayout(verticalLayout_3);
+        horizontalLayout->addLayout(verticalLayout);
 
         DiffView->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(DiffView);
@@ -123,9 +134,27 @@ public:
     void retranslateUi(QMainWindow *DiffView)
     {
         DiffView->setWindowTitle(QApplication::translate("DiffView", "DiffView", Q_NULLPTR));
-        label->setText(QApplication::translate("DiffView", "OCR Text", Q_NULLPTR));
-        label_2->setText(QApplication::translate("DiffView", "Intern's Output Text", Q_NULLPTR));
-        label_3->setText(QApplication::translate("DiffView", "Verified Text", Q_NULLPTR));
+        VerifierLabel->setText(QApplication::translate("DiffView", "Verified Text\n"
+"Change Made by Verifier: ", Q_NULLPTR));
+        VerifierText->setHtml(QApplication::translate("DiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Shobhika'; font-size:14pt; font-weight:600; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika Regular'; font-size:11pt; font-weight:400;\"><br /></p></body></html>", Q_NULLPTR));
+        InternLabel->setText(QApplication::translate("DiffView", "Corrector's Output Text\n"
+"Changes Made by Corrector: ", Q_NULLPTR));
+        InternText->setHtml(QApplication::translate("DiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Shobhika'; font-size:14pt; font-weight:600; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika Regular'; font-size:11pt; font-weight:400;\"><br /></p></body></html>", Q_NULLPTR));
+        OCRLabel->setText(QApplication::translate("DiffView", "OCR Text (To be Replaced with Image)\n"
+"OCR Accuracy (w.r.t Verified Text): ", Q_NULLPTR));
+        OCRText->setHtml(QApplication::translate("DiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Shobhika'; font-size:14pt; font-weight:600; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika Regular'; font-size:11pt; font-weight:400;\"><br /></p></body></html>", Q_NULLPTR));
     } // retranslateUi
 
 };
