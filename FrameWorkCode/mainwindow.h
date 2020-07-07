@@ -160,7 +160,7 @@ private slots:
 
     void on_actionSaveAsODF_triggered();
 
-    void on_pushButton_clicked();
+    //void on_pushButton_clicked();
 
     void on_pushButton_3_clicked();
 
