@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'DiffView.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.9
+** Created by: Qt User Interface Compiler version 5.14.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,11 +10,8 @@
 #define UI_DIFFVIEW_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -47,24 +44,30 @@ public:
     void setupUi(QMainWindow *DiffView)
     {
         if (DiffView->objectName().isEmpty())
-            DiffView->setObjectName(QStringLiteral("DiffView"));
+            DiffView->setObjectName(QString::fromUtf8("DiffView"));
         DiffView->resize(1271, 508);
         centralWidget = new QWidget(DiffView);
-        centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         horizontalLayout = new QHBoxLayout(centralWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         label = new QLabel(centralWidget);
-        label->setObjectName(QStringLiteral("label"));
+        label->setObjectName(QString::fromUtf8("label"));
 
         verticalLayout->addWidget(label);
 
         diff1 = new QTextEdit(centralWidget);
-        diff1->setObjectName(QStringLiteral("diff1"));
+        diff1->setObjectName(QString::fromUtf8("diff1"));
+        QFont font;
+        font.setFamily(QString::fromUtf8("Shobhika Bold"));
+        font.setPointSize(16);
+        font.setBold(true);
+        font.setWeight(75);
+        diff1->setFont(font);
 
         verticalLayout->addWidget(diff1);
 
@@ -73,14 +76,15 @@ public:
 
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         label_2 = new QLabel(centralWidget);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setObjectName(QString::fromUtf8("label_2"));
 
         verticalLayout_2->addWidget(label_2);
 
         diff2 = new QTextEdit(centralWidget);
-        diff2->setObjectName(QStringLiteral("diff2"));
+        diff2->setObjectName(QString::fromUtf8("diff2"));
+        diff2->setFont(font);
 
         verticalLayout_2->addWidget(diff2);
 
@@ -89,14 +93,15 @@ public:
 
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         label_3 = new QLabel(centralWidget);
-        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setObjectName(QString::fromUtf8("label_3"));
 
         verticalLayout_3->addWidget(label_3);
 
         diff3 = new QTextEdit(centralWidget);
-        diff3->setObjectName(QStringLiteral("diff3"));
+        diff3->setObjectName(QString::fromUtf8("diff3"));
+        diff3->setFont(font);
 
         verticalLayout_3->addWidget(diff3);
 
@@ -105,14 +110,14 @@ public:
 
         DiffView->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(DiffView);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1271, 22));
+        menuBar->setObjectName(QString::fromUtf8("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 1271, 21));
         DiffView->setMenuBar(menuBar);
         mainToolBar = new QToolBar(DiffView);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
+        mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
         DiffView->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(DiffView);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
+        statusBar->setObjectName(QString::fromUtf8("statusBar"));
         DiffView->setStatusBar(statusBar);
 
         retranslateUi(DiffView);
@@ -122,10 +127,10 @@ public:
 
     void retranslateUi(QMainWindow *DiffView)
     {
-        DiffView->setWindowTitle(QApplication::translate("DiffView", "DiffView", Q_NULLPTR));
-        label->setText(QApplication::translate("DiffView", "OCR Text", Q_NULLPTR));
-        label_2->setText(QApplication::translate("DiffView", "Intern's Output Text", Q_NULLPTR));
-        label_3->setText(QApplication::translate("DiffView", "Verified Text", Q_NULLPTR));
+        DiffView->setWindowTitle(QCoreApplication::translate("DiffView", "DiffView", nullptr));
+        label->setText(QCoreApplication::translate("DiffView", "OCR Text", nullptr));
+        label_2->setText(QCoreApplication::translate("DiffView", "Intern's Output Text", nullptr));
+        label_3->setText(QCoreApplication::translate("DiffView", "Verified Text", nullptr));
     } // retranslateUi
 
 };
