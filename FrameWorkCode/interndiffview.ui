@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>808</width>
-    <height>564</height>
+    <width>1010</width>
+    <height>581</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,7 +36,7 @@
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>OCR Output</string>
+           <string>OCR Text</string>
           </property>
          </widget>
         </item>
@@ -59,7 +59,7 @@
         <item>
          <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>Intern's Work</string>
+           <string>Intern's Output Text</string>
           </property>
          </widget>
         </item>
@@ -86,8 +86,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>808</width>
-     <height>21</height>
+     <width>1010</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

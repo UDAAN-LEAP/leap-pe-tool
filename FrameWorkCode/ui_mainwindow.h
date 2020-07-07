@@ -350,7 +350,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1387, 22));
+        menuBar->setGeometry(QRect(0, 0, 1387, 21));
         menuOCR_Correction_Window = new QMenu(menuBar);
         menuOCR_Correction_Window->setObjectName(QStringLiteral("menuOCR_Correction_Window"));
         menuCreateReports = new QMenu(menuBar);
