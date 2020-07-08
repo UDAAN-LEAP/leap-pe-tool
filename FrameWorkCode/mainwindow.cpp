@@ -2838,20 +2838,22 @@ void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
        l2 = s2.length();
        l3 = s3.length();
        levenshtein1 = editDist(s1,s2);
-       accuracy1 = ((float)(l1-levenshtein1)/(float)l1)*100;
-       if(accuracy1<0) accuracy1 = ((float)(l2-levenshtein1)/(float)l2)*100;
+       accuracy1 = ((float)(levenshtein1)/(float)l1)*100;
+       if(accuracy1<0) accuracy1 = ((float)(levenshtein1)/(float)l2)*100;
 
        levenshtein2 = editDist(s2,s3);
-       accuracy2 = ((float)(l2-levenshtein2)/(float)l2)*100;
-       if(accuracy2<0) accuracy2 = ((float)(l3-levenshtein2)/(float)l3)*100;
+       accuracy2 = ((float)(levenshtein2)/(float)l2)*100;
+       if(accuracy2<0) accuracy2 = ((float)(levenshtein2)/(float)l3)*100;
 
        levenshtein3 = editDist(s1,s3);
        accuracy3 = ((float)(l1-levenshtein3)/(float)l1)*100;
        if(accuracy3<0) accuracy3 = ((float)(l3-levenshtein3)/(float)l3)*100;
-       ui->lineEdit_2->setText("Intern | "+QString::number(accuracy2) + "% | Verifier | "+QString::number(accuracy3) + "% | OCR");
+       //ui->lineEdit_2->setText("Intern | "+QString::number(accuracy2) + "% | Verifier | "+QString::number(accuracy3) + "% | OCR");
+        QString intern = QString::number(((float)lround(accuracy1*100))/100);
+        QString verifier = QString::number(((float)lround(accuracy2*100))/100);
+        QString ocr = QString::number(((float)lround(accuracy3*100))/100);
 
-
-    DiffView *dv = new DiffView(qs1,qs2,qs3);
+    DiffView *dv = new DiffView(qs1,qs2,qs3,intern,verifier,ocr);
     dv->show();
 }
 
@@ -2905,14 +2907,12 @@ void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
 
     levenshtein = editDist(s2,s1);
     qDebug() <<levenshtein << "levenshtein";
-    accuracy = ((float)(l1-levenshtein)/(float)l1)*100;
-    if(accuracy<0) accuracy = ((float)(l2-levenshtein)/(float)l2)*100;
+    accuracy = ((float)(levenshtein)/(float)l1)*100;
+    if(accuracy<0) accuracy = ((float)(levenshtein)/(float)l2)*100;
     qDebug() <<accuracy << "accuracy";
-    ui->lineEdit_2->setText(QString::number(accuracy) + "% Similar");
-
-
-   
-    InternDiffView *dv = new InternDiffView(qs1,qs2,ocrimage); //Fetch OCR Image in DiffView2 and Set
+    //ui->lineEdit_2->setText(QString::number(accuracy) + "% Similar");
+   QString diff = QString::number(((float)lround(accuracy*100))/100);
+    InternDiffView *dv = new InternDiffView(qs1,qs2,ocrimage,diff); //Fetch OCR Image in DiffView2 and Set
     dv->show();
 }
 

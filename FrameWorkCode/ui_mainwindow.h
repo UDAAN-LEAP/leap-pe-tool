@@ -88,12 +88,10 @@ public:
     QVBoxLayout *verticalLayout_2;
     QProgressBar *progressBar;
     QLineEdit *lineEdit;
-    QWidget *layoutWidget2;
-    QVBoxLayout *verticalLayout;
-    QLineEdit *lineEdit_2;
+    QWidget *widget;
     QHBoxLayout *horizontalLayout_2;
-    QPushButton *pushButton_2;
     QPushButton *pushButton_3;
+    QPushButton *pushButton_2;
     QMenuBar *menuBar;
     QMenu *menuOCR_Correction_Window;
     QMenu *menuCreateReports;
@@ -109,7 +107,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1387, 736);
+        MainWindow->resize(1386, 733);
         MainWindow->setMouseTracking(true);
         actionOpen = new QAction(MainWindow);
         actionOpen->setObjectName(QStringLiteral("actionOpen"));
@@ -318,39 +316,28 @@ public:
 
         verticalLayout_2->addWidget(lineEdit);
 
-        layoutWidget2 = new QWidget(centralWidget);
-        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(670, 10, 441, 60));
-        verticalLayout = new QVBoxLayout(layoutWidget2);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        lineEdit_2 = new QLineEdit(layoutWidget2);
-        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
-
-        verticalLayout->addWidget(lineEdit_2);
-
-        horizontalLayout_2 = new QHBoxLayout();
+        widget = new QWidget(centralWidget);
+        widget->setObjectName(QStringLiteral("widget"));
+        widget->setGeometry(QRect(670, 40, 398, 27));
+        horizontalLayout_2 = new QHBoxLayout(widget);
         horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        pushButton_2 = new QPushButton(layoutWidget2);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-
-        horizontalLayout_2->addWidget(pushButton_2);
-
-        pushButton_3 = new QPushButton(layoutWidget2);
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        pushButton_3 = new QPushButton(widget);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
 
         horizontalLayout_2->addWidget(pushButton_3);
 
+        pushButton_2 = new QPushButton(widget);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
 
-        verticalLayout->addLayout(horizontalLayout_2);
+        horizontalLayout_2->addWidget(pushButton_2);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1387, 21));
+        menuBar->setGeometry(QRect(0, 0, 1386, 22));
         menuOCR_Correction_Window = new QMenu(menuBar);
         menuOCR_Correction_Window->setObjectName(QStringLiteral("menuOCR_Correction_Window"));
         menuCreateReports = new QMenu(menuBar);
@@ -556,8 +543,8 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Shobhika'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", Q_NULLPTR));
-        pushButton_2->setText(QApplication::translate("MainWindow", "Verifier Output Text", Q_NULLPTR));
-        pushButton_3->setText(QApplication::translate("MainWindow", "Intern Output Text", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("MainWindow", "Compare Corrector's Output", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Compare Verifier's Output", Q_NULLPTR));
         menuOCR_Correction_Window->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
         menuCreateReports->setTitle(QApplication::translate("MainWindow", "CreateReports", Q_NULLPTR));
         menuSaveVariables->setTitle(QApplication::translate("MainWindow", "SaveVariables", Q_NULLPTR));

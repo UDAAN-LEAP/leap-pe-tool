@@ -8,7 +8,7 @@ class InternDiffView : public QMainWindow
 	Q_OBJECT
 
 public:
-	InternDiffView(const QString &ocrtext,const QString &interntxt, const QString &ocrimagepath,QWidget *parent = Q_NULLPTR);
+    InternDiffView(const QString &ocrtext,const QString &interntxt, const QString &ocrimagepath, const QString acc, QWidget *parent = Q_NULLPTR);
 	~InternDiffView();
 
 private:
