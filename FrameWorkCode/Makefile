@@ -2079,9 +2079,6 @@ DiffView.o: DiffView.cpp DiffView.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qicon.h \
 		ui_DiffView.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QVariant \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QAction \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qaction.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qactiongroup.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QApplication \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qapplication.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qcoreapplication.h \
@@ -2089,39 +2086,24 @@ DiffView.o: DiffView.cpp DiffView.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qguiapplication.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qinputmethod.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QButtonGroup \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qbuttongroup.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QHBoxLayout \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qboxlayout.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qlayout.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qlayoutitem.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QHeaderView \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qheaderview.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qframe.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qstyleoption.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qvalidator.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qregularexpression.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qslider.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qstyle.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtabbar.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qrubberband.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QLabel \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qlabel.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qframe.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QMenuBar \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qmenubar.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qmenu.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qaction.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qactiongroup.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QStatusBar \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qstatusbar.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QTextEdit \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtextedit.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractscrollarea.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qtextdocument.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qtextoption.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qtextcursor.h \
@@ -2136,6 +2118,7 @@ DiffView.o: DiffView.cpp DiffView.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QtCoreDepends \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractanimation.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstracteventdispatcher.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractnativeeventfilter.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractproxymodel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractstate.h \
@@ -2177,6 +2160,7 @@ DiffView.o: DiffView.cpp DiffView.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qhistorystate.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qidentityproxymodel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qisenum.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qitemselectionmodel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qjsonarray.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qjsonvalue.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qjsondocument.h \
@@ -2205,6 +2189,7 @@ DiffView.o: DiffView.cpp DiffView.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qvariantanimation.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qqueue.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qreadwritelock.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qregularexpression.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qresource.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsavefile.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qscopedvaluerollback.h \
