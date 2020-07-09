@@ -159,12 +159,12 @@ p, li { white-space: pre-wrap; }
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>670</x>
       <y>40</y>
-      <width>398</width>
+      <width>404</width>
       <height>27</height>
      </rect>
     </property>
@@ -175,6 +175,19 @@ p, li { white-space: pre-wrap; }
         <string>Compare Corrector's Output</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_2">
@@ -228,6 +241,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionErrorDetectionRep"/>
     <addaction name="actionErrorDetectWithoutAdaptation"/>
     <addaction name="actionErrorDetectionRepUniq"/>
+    <addaction name="actionAccuracyLog"/>
    </widget>
    <widget class="QMenu" name="menuSaveVariables">
     <property name="title">
@@ -653,6 +667,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>JusitfiedAlign</string>
+   </property>
+  </action>
+  <action name="actionAccuracyLog">
+   <property name="text">
+    <string>AccuracyLog</string>
    </property>
   </action>
  </widget>

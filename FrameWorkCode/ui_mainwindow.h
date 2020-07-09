@@ -22,6 +22,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QTextEdit>
@@ -78,6 +79,7 @@ public:
     QAction *actionRightAlign;
     QAction *actionCentreAlign;
     QAction *actionJusitfiedAlign;
+    QAction *actionAccuracyLog;
     QWidget *centralWidget;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
@@ -88,9 +90,10 @@ public:
     QVBoxLayout *verticalLayout_2;
     QProgressBar *progressBar;
     QLineEdit *lineEdit;
-    QWidget *widget;
+    QWidget *layoutWidget2;
     QHBoxLayout *horizontalLayout_2;
     QPushButton *pushButton_3;
+    QSpacerItem *horizontalSpacer;
     QPushButton *pushButton_2;
     QMenuBar *menuBar;
     QMenu *menuOCR_Correction_Window;
@@ -243,6 +246,8 @@ public:
         QIcon icon14;
         icon14.addFile(QStringLiteral(":/Images/JustifiedAlign.png"), QSize(), QIcon::Normal, QIcon::On);
         actionJusitfiedAlign->setIcon(icon14);
+        actionAccuracyLog = new QAction(MainWindow);
+        actionAccuracyLog->setObjectName(QStringLiteral("actionAccuracyLog"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
@@ -316,20 +321,24 @@ public:
 
         verticalLayout_2->addWidget(lineEdit);
 
-        widget = new QWidget(centralWidget);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(670, 40, 398, 27));
-        horizontalLayout_2 = new QHBoxLayout(widget);
+        layoutWidget2 = new QWidget(centralWidget);
+        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
+        layoutWidget2->setGeometry(QRect(670, 40, 404, 27));
+        horizontalLayout_2 = new QHBoxLayout(layoutWidget2);
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
-        pushButton_3 = new QPushButton(widget);
+        pushButton_3 = new QPushButton(layoutWidget2);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
 
         horizontalLayout_2->addWidget(pushButton_3);
 
-        pushButton_2 = new QPushButton(widget);
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer);
+
+        pushButton_2 = new QPushButton(layoutWidget2);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
 
         horizontalLayout_2->addWidget(pushButton_2);
@@ -392,6 +401,7 @@ public:
         menuCreateReports->addAction(actionErrorDetectionRep);
         menuCreateReports->addAction(actionErrorDetectWithoutAdaptation);
         menuCreateReports->addAction(actionErrorDetectionRepUniq);
+        menuCreateReports->addAction(actionAccuracyLog);
         menuSaveVariables->addAction(actionCPair);
         menuSaveVariables->addAction(actionPrimarySecOCRPair);
         menuSaveVariables->addAction(actionCPairIEROcrVsCorrect);
@@ -538,6 +548,7 @@ public:
         actionRightAlign->setText(QApplication::translate("MainWindow", "RightAlign", Q_NULLPTR));
         actionCentreAlign->setText(QApplication::translate("MainWindow", "CentreAlign", Q_NULLPTR));
         actionJusitfiedAlign->setText(QApplication::translate("MainWindow", "JusitfiedAlign", Q_NULLPTR));
+        actionAccuracyLog->setText(QApplication::translate("MainWindow", "AccuracyLog", Q_NULLPTR));
         textBrowser->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

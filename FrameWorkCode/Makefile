@@ -262,22 +262,40 @@ DIST          = ../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/spec_pre.prf \
 		eddis.h \
 		slpNPatternDict.h \
 		tesseract/apitypes.h \
+		tesseract/apitypes.h \
+		tesseract/baseapi.h \
 		tesseract/baseapi.h \
 		tesseract/capi.h \
+		tesseract/capi.h \
+		tesseract/genericvector.h \
 		tesseract/genericvector.h \
 		tesseract/helpers.h \
+		tesseract/helpers.h \
+		tesseract/ltrresultiterator.h \
 		tesseract/ltrresultiterator.h \
 		tesseract/ocrclass.h \
+		tesseract/ocrclass.h \
+		tesseract/osdetect.h \
 		tesseract/osdetect.h \
 		tesseract/pageiterator.h \
+		tesseract/pageiterator.h \
+		tesseract/platform.h \
 		tesseract/platform.h \
 		tesseract/publictypes.h \
+		tesseract/publictypes.h \
+		tesseract/renderer.h \
 		tesseract/renderer.h \
 		tesseract/resultiterator.h \
+		tesseract/resultiterator.h \
+		tesseract/serialis.h \
 		tesseract/serialis.h \
 		tesseract/strngs.h \
+		tesseract/strngs.h \
+		tesseract/thresholder.h \
 		tesseract/thresholder.h \
 		tesseract/unichar.h \
+		tesseract/unichar.h \
+		tesseract/version.h \
 		tesseract/version.h \
 		trieEditdis.h \
 		zoom.h \
@@ -692,7 +710,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents AppResources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h DiffView.h diff_match_patch.h eddis.h slpNPatternDict.h tesseract/apitypes.h tesseract/baseapi.h tesseract/capi.h tesseract/genericvector.h tesseract/helpers.h tesseract/ltrresultiterator.h tesseract/ocrclass.h tesseract/osdetect.h tesseract/pageiterator.h tesseract/platform.h tesseract/publictypes.h tesseract/renderer.h tesseract/resultiterator.h tesseract/serialis.h tesseract/strngs.h tesseract/thresholder.h tesseract/unichar.h tesseract/version.h trieEditdis.h zoom.h qcustomplot.h meanStdPage.h interndiffview.h $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h DiffView.h diff_match_patch.h eddis.h slpNPatternDict.h tesseract/apitypes.h tesseract/apitypes.h tesseract/baseapi.h tesseract/baseapi.h tesseract/capi.h tesseract/capi.h tesseract/genericvector.h tesseract/genericvector.h tesseract/helpers.h tesseract/helpers.h tesseract/ltrresultiterator.h tesseract/ltrresultiterator.h tesseract/ocrclass.h tesseract/ocrclass.h tesseract/osdetect.h tesseract/osdetect.h tesseract/pageiterator.h tesseract/pageiterator.h tesseract/platform.h tesseract/platform.h tesseract/publictypes.h tesseract/publictypes.h tesseract/renderer.h tesseract/renderer.h tesseract/resultiterator.h tesseract/resultiterator.h tesseract/serialis.h tesseract/serialis.h tesseract/strngs.h tesseract/strngs.h tesseract/thresholder.h tesseract/thresholder.h tesseract/unichar.h tesseract/unichar.h tesseract/version.h tesseract/version.h trieEditdis.h zoom.h qcustomplot.h meanStdPage.h interndiffview.h $(DISTDIR)/
 	$(COPY_FILE) --parents DiffView.cpp diff_match_patch.cpp mainwindow.cpp main.cpp zoom.cpp qcustomplot.cpp interndiffview.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui DiffView.ui interndiffview.ui $(DISTDIR)/
 
@@ -2095,6 +2113,8 @@ DiffView.o: DiffView.cpp DiffView.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qstyle.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtabbar.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qrubberband.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QLabel \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qlabel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QMenuBar \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qmenubar.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qmenu.h \
@@ -2109,6 +2129,7 @@ DiffView.o: DiffView.cpp DiffView.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qpen.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QToolBar \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtoolbar.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QVBoxLayout \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QWidget \
 		diff_match_patch.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QtCore \
@@ -2805,6 +2826,7 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QPushButton \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qpushbutton.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QSpacerItem \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QStatusBar \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qstatusbar.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QTextBrowser \
@@ -2831,6 +2853,9 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		tesseract/serialis.h \
 		tesseract/thresholder.h \
 		DiffView.h \
+		diff_match_patch.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/QList \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QMap \
 		interndiffview.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
@@ -3906,6 +3931,9 @@ interndiffview.o: interndiffview.cpp interndiffview.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qicon.h \
 		ui_interndiffview.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QVariant \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QAction \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qaction.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qactiongroup.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QApplication \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qapplication.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qcoreapplication.h \
@@ -3913,6 +3941,8 @@ interndiffview.o: interndiffview.cpp interndiffview.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qguiapplication.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qinputmethod.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QButtonGroup \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qbuttongroup.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QGraphicsView \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qgraphicsview.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qpainter.h \
@@ -3922,19 +3952,31 @@ interndiffview.o: interndiffview.cpp interndiffview.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractscrollarea.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qframe.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qgraphicsscene.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QGridLayout \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qgridlayout.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QHBoxLayout \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qboxlayout.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qlayout.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QHBoxLayout \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qgridlayout.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QHeaderView \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qvalidator.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qregularexpression.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qslider.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qstyle.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtabbar.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qrubberband.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QLabel \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qlabel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QMenuBar \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qmenubar.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qmenu.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qaction.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qactiongroup.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QStatusBar \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qstatusbar.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QTextBrowser \
@@ -3954,7 +3996,6 @@ interndiffview.o: interndiffview.cpp interndiffview.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QtCoreDepends \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractanimation.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstracteventdispatcher.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractnativeeventfilter.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractproxymodel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractstate.h \
@@ -3995,7 +4036,6 @@ interndiffview.o: interndiffview.cpp interndiffview.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qhistorystate.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qidentityproxymodel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qisenum.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qitemselectionmodel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qjsonarray.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qjsonvalue.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qjsondocument.h \
@@ -4024,7 +4064,6 @@ interndiffview.o: interndiffview.cpp interndiffview.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qvariantanimation.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qqueue.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qreadwritelock.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qregularexpression.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qresource.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsavefile.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qscopedvaluerollback.h \
