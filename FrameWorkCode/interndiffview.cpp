@@ -19,6 +19,7 @@ InternDiffView::InternDiffView(const QString &ocroutput, const QString &interntx
 	img.load(ocrimgpath);
 	QGraphicsScene *scene = new QGraphicsScene(this);
 	scene->addPixmap(QPixmap::fromImage(img));
+	setWindowTitle("Corrector");
 	ui->graphicsView->setScene(scene);
 	ui->graphicsView->adjustSize();
 	ui->graphicsView->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
