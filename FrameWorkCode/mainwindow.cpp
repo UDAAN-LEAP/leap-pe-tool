@@ -7,10 +7,16 @@
 #include <math.h>
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
-//# include <QTask>
+#include "DiffView.h"
+#include "diff_match_patch.h"
+#include "interndiffview.h"
+#include <string>
+#include <fstream>
+#include <vector>
+#include <utility> // std::pair
 
-using namespace std;
-#define MIN(x,y) ((x) < (y) ? (x) : (y)) //calculate minimum between two values
+
+//# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -129,6 +135,7 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
       {
           QString timelogstring = "";
           QTextStream out(&sFile);
+		  
           for (auto i = TimeLog.begin(); i!=TimeLog.end(); i++ )
           {
               timelogstring+= QString::fromStdString(i->first) + " ";
@@ -331,7 +338,34 @@ void MainWindow::on_actionOpen_triggered()
 //                    QString qstr = QString::fromStdString(ocrResult);
 //                    vs.push_back(qstr); vx.push_back(box->x); vy.push_back(box->y); vw.push_back(box->w); vh.push_back(box->h); vright.push_back(box->w + box->x);
 //                    qDebug() << qstr << vx << vy << vw << vh << vright << endl;
-
+                    //                float leftmean = accumulate(vx.begin(),vx.end(),0)/n;
+                    //                float leftdiff = 0;
+                    //                float rightmean = accumulate(vright.begin(),vright.end(),0)/n;
+                    //                float rightdiff = 0;
+                    //                 for(int i=0; i<n; i++)
+                    //                 {
+                    //                     leftdiff += abs(vx[i]-leftmean);
+                    //                     rightdiff += abs(vright[i]-rightmean);
+                    
+                    //                 }
+                    //                 float leftvariance = leftdiff/n;
+                    //                 float rightvariance = rightdiff/n;
+                    //                 qDebug() << leftvariance<< "-" <<leftmean << "   " << rightvariance << "-" << rightmean << endl;
+                    //                 if((leftvariance/leftmean)<0.1)
+                    //                 {
+                    //                    ui->textBrowser->setAlignment(Qt::AlignLeft);
+                    //                    alignment = "\"left\"";
+                    //                 }
+                    //                 else if((rightvariance/rightmean)<0.1)
+                    //                 {
+                    //                     ui->textBrowser->setAlignment(Qt::AlignRight);
+                    //                     alignment = "\"right\"";
+                    //                 }
+                    //                 else
+                    //                 {
+                    //                    ui->textBrowser->setAlignment(Qt::AlignCenter);
+                    //                    alignment = "\"center\"";
+                    //                 }
 //                 }
 
 //                float leftmean = accumulate(vx.begin(),vx.end(),0)/n;
@@ -384,6 +418,7 @@ void MainWindow::on_actionOpen_triggered()
 //                    align=\"left\" style =\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"
 
                     QTextStream in(&sFile);
+					in.setCodec("UTF-8");
                     QString text = in.readAll();
                     sFile.close();
                     //ui->textBrowser->setPlainText(text);
@@ -430,6 +465,7 @@ void MainWindow::on_actionOpen_triggered()
 //                    ui->textBrowser->setHtml(text); //Sanoj
 
                     QTextStream in(&sFile);
+					in.setCodec("UTF-8");
                     QString text = in.readAll();
                     sFile.close();
                     //ui->textBrowser->setPlainText(text);
@@ -947,7 +983,7 @@ void MainWindow::on_actionSave_triggered()
                     if(sFile.open(QFile::WriteOnly))
                   {
                       QTextStream out(&sFile);
-
+					  out.setCodec("UTF-8");
                       out << ui->textBrowser->toHtml();//toPlainText()
 
                       sFile.flush();
@@ -971,6 +1007,7 @@ void MainWindow::on_actionLoadGDocPage_triggered()
                   if(sFile.open(QFile::WriteOnly | QFile::Text))
                   {
                       QTextStream out(&sFile);
+					  out.setCodec("UTF-8");
                       out << ui->textBrowser->toHtml(); //toPlainText(); Sanoj
                       sFile.flush();
                       sFile.close();
@@ -2667,6 +2704,10 @@ void MainWindow::on_actionCentreAlign_triggered() //Sanoj
 //    ui->textBrowser->textCursor().mergeBlockFormat(textBlockFormat);
     ui->textBrowser->setAlignment(Qt::AlignCenter);
 }
+void MainWindow::on_actionJusitfiedAlign_triggered()
+{
+    ui->textBrowser->setAlignment(Qt::AlignJustify);
+}
 
 void MainWindow::on_actionAllFontProperties_triggered() //Sanoj
 {
@@ -2694,85 +2735,264 @@ void MainWindow::on_actionSaveAsODF_triggered()//Sanoj
 
 }
 
-void MainWindow::on_pushButton_clicked()
+
+
+void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
 {
-    QString origFile = mFilename;
-    QString correctFile = mFilename;
-    correctFile.replace("Inds","Correct");
-    QFile sFile2(origFile);
-    QFile sFile3(correctFile);
-    string s1 = ""; string s2= "";
 
-    QString textBrowserText = ui->textBrowser->toPlainText();
-    s1 = textBrowserText.toUtf8().constData();
-    //qDebug() << textBrowserText;
-//    if(sFile2.open(QFile::ReadOnly | QFile::Text))
-//    {
-//        QTextStream in(&sFile2);
-//        QString t = in.readAll();
-//        s1 = t.toUtf8().constData();
-//        sFile2.close();
-//    }
-//    else
-//    {
-//        QTextStream in(&sFile2);
-//        QString t = in.readAll();
-//        s1 = t.toUtf8().constData();
-//        sFile2.close();
-//    }
-
-    if(sFile3.open(QFile::ReadOnly | QFile::Text))
+    string s1 = "",s2 = "", s3 = ""; QString qs1="", qs2="",qs3="";
+    file = QFileDialog::getOpenFileName(this,"Open Verifier's Output File");
+    QString verifiertext = file;
+    QString ocrtext = file.replace("VerifierOutput","OCROutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+    QString correctortext = file.replace("OCROutput","CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+    if(!ocrtext.isEmpty())
     {
-        QTextStream in(&sFile3);
-        QString t = in.readAll();
-        s2 = t.toUtf8().constData();
-        sFile3.close();
-    }
-    else
-    {
-        QTextStream in(&sFile3);
-        QString t = in.readAll();
-        s2 = t.toUtf8().constData();
-        sFile3.close();
-    }
-    int i,j,l1,l2,t,track,levenshtein; float accuracy;
+        QFile sFile(ocrtext);
+        if(sFile.open(QFile::ReadOnly | QFile::Text))
+        {
+            QTextStream in(&sFile);
+			in.setCodec("UTF-8");
+            QString t = in.readAll();
+            t= t.replace(" \n","\n");
+            qs1=t;
+            t= t.replace(" ","");
+            s1 = t.toUtf8().constData();
+            sFile.close();
+        }
 
-       //take the strings as input
-//       char s1[] = string1;
-//       char s2[] = string2;
-       //stores the lenght of strings s1 and s2
+    }
+    if(!correctortext.isEmpty())
+    {
+        QFile sFile(correctortext);
+        if(sFile.open(QFile::ReadOnly | QFile::Text))
+        {
+            QTextStream in(&sFile);
+			in.setCodec("UTF-8");
+			QString t = in.readAll();
+            t= t.replace(" \n","\n");
+            qs2=t;
+            t= t.replace(" ","");
+            s2 = t.toUtf8().constData();
+            sFile.close();
+        }
+
+    }
+    if(!verifiertext.isEmpty())
+    {
+        QFile sFile(verifiertext);
+        if(sFile.open(QFile::ReadOnly | QFile::Text))
+        {
+            QTextStream in(&sFile);
+			in.setCodec("UTF-8");
+            QString t = in.readAll();
+            t= t.replace(" \n","\n");
+            qs3=t;
+            t= t.replace(" ","");
+            s3 = t.toUtf8().constData();
+            sFile.close();
+        }
+
+    }
+    int l1,l2,l3, DiffOcr_Corrector,DiffCorrector_Verifier,DiffOcr_Verifier; float correctorChangesPerc,verifierChangesPerc,ocrErrorPerc;
+
        l1 = s1.length();
-       l2= s2.length();
+       l2 = s2.length();
+       l3 = s3.length();
+       DiffOcr_Corrector = editDist(s1,s2);
+       correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l1)*100;
+       if(correctorChangesPerc<0) correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l2)*100;
 
-//      char char1[l1+1];
-//      char char2[l2+1];
-//      int dist[l2][l1];
+       DiffCorrector_Verifier = editDist(s2,s3);
+       verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l2)*100;
+       if(verifierChangesPerc<0) verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l3)*100;
 
-//      strcpy(char1, s1.c_str());
-//      strcpy(char2, s2.c_str());
+       DiffOcr_Verifier = editDist(s1,s3);
+       ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l1)*100;
+       if(ocrErrorPerc<0) ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l3)*100;
+       float ocrErrorAcc = 100 - ocrErrorPerc;
 
-       qDebug() <<l1 << "l1";
-       qDebug() <<l2 << "l2";
-//       for(i=0;i<=l1;i++) {
-//          dist[0][i] = i;
-//       }
-//       for(j=0;j<=l2;j++) {
-//          dist[j][0] = j;
-//       }
-//       for (j=1;j<=l1;j++) {
-//          for(i=1;i<=l2;i++) {
-//             if(char1[i-1] == char2[j-1]) {
-//                track= 0;
-//             } else {
-//                track = 1;
-//             }
-//             t = MIN((dist[i-1][j]+1),(dist[i][j-1]+1));
-//             dist[i][j] = MIN(t,(dist[i-1][j-1]+track));
-//          }
-//       }
-       levenshtein = editDist(s1,s2);
-       qDebug() <<levenshtein << "levenshtein";
-       accuracy = ((float)(l1-levenshtein)/(float)l1)*100;
-       qDebug() <<accuracy << "accuracy";
-       ui->lineEdit_2->setText(QString::number(accuracy) + "%");
+       QString qcorrectorChangesPerc = QString::number(((float)lround(correctorChangesPerc*100))/100);
+       QString qverifierChangesPerc = QString::number(((float)lround(verifierChangesPerc*100))/100);
+       QString qocrErrorAcc = QString::number(((float)lround(ocrErrorAcc*100))/100);
+
+    DiffView *dv = new DiffView(qs1,qs2,qs3,qcorrectorChangesPerc,qverifierChangesPerc,qocrErrorAcc);
+    dv->show();
 }
+
+
+
+void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
+{
+    string s1 = "",s2 = ""; QString qs1="", qs2="",qs3="";
+    file = QFileDialog::getOpenFileName(this,"Open Verifier's Output File");
+    QString correctortext = file;
+	QString ocrtext = file;
+    ocrtext.replace("CorrectorOutput","OCROutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+	QString ocrimage = ocrtext;
+	ocrimage.replace(".txt", ".jpeg");
+    if(!ocrtext.isEmpty())
+    {
+        QFile sFile(ocrtext);
+        if(sFile.open(QFile::ReadOnly | QFile::Text))
+        {
+            QTextStream in(&sFile);
+			in.setCodec("UTF-8");
+            QString t = in.readAll();
+            t= t.replace(" \n","\n");
+            qs1=t;
+            t= t.replace(" ","");
+            s1 = t.toUtf8().constData();
+            sFile.close();
+        }
+
+    }
+    if(!correctortext.isEmpty())
+    {
+        QFile sFile(correctortext);
+        if(sFile.open(QFile::ReadOnly | QFile::Text))
+        {
+            QTextStream in(&sFile);
+			in.setCodec("UTF-8");
+            QString t = in.readAll();
+            t= t.replace(" \n","\n");
+            qs2=t;
+            t= t.replace(" ","");
+            s2 = t.toUtf8().constData();
+            sFile.close();
+        }
+
+    }
+
+    int l1,l2, levenshtein; float accuracy;
+    l1 = s1.length();
+    l2= s2.length();
+
+    levenshtein = editDist(s2,s1);
+    //qDebug() <<levenshtein << "levenshtein";
+    accuracy = ((float)(levenshtein)/(float)l1)*100;
+    if(accuracy<0) accuracy = ((float)(levenshtein)/(float)l2)*100;
+    //qDebug() <<accuracy << "accuracy";
+    //ui->lineEdit_2->setText(QString::number(accuracy) + "% Similar");
+    QString diff = QString::number(((float)lround(accuracy*100))/100);
+    InternDiffView *dv = new InternDiffView(qs1,qs2,ocrimage,diff); //Fetch OCR Image in DiffView2 and Set
+    dv->show();
+}
+
+
+
+
+void MainWindow::on_actionAccuracyLog_triggered()
+{
+    string s1 = "",s2 = "", s3 = ""; QString qs1="", qs2="",qs3="";
+
+    file = QFileDialog::getOpenFileName(this,"Open Output File"); //open file
+    int loc =  file.lastIndexOf("/");
+    QString folder = file.left(loc); //fetch parent tdirectory
+
+    QDir directory(folder);
+    QStringList textfiles = directory.entryList((QStringList()<<"*.txt", QDir::Files)); //fetch all files in the parent directory
+
+    int loc1 = folder.lastIndexOf("/");
+    QString qcsvfolder =  folder.left(loc1) +"/AccuracyLog.csv";
+    string csvfolder = qcsvfolder.toUtf8().constData();
+
+    std::ofstream csvFile(csvfolder);
+    csvFile<<"Page Name,"<<"Errors (Word level),"<<"Errors (Character-Level),"<< "Accuracy of Corrector (Word level),"<<"Accuracy of Corrector (Character-Level)," <<"Changes made by Corrector(%)," <<"OCR Accuracy(w.rt. Verified Text)"<<"\n";
+
+    foreach(QString filename, textfiles)
+    {
+
+        string pagename = filename.toUtf8().constData();
+        filename = folder + "/" + filename;
+
+        QString verifiertext = filename;
+        QString ocrtext = filename.replace("VerifierOutput","OCROutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+        QString correctortext = filename.replace("OCROutput","CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+
+        if(!ocrtext.isEmpty())
+        {
+            QFile sFile(ocrtext);
+            if(sFile.open(QFile::ReadOnly | QFile::Text))
+            {
+                QTextStream in(&sFile);
+                in.setCodec("UTF-8");
+                QString t = in.readAll();
+                t.replace(" \n","\n");
+                qs1=t;
+                t= t.replace(" ","");
+                s1 = t.toUtf8().constData();
+                sFile.close();
+            }
+
+        }
+        if(!correctortext.isEmpty())
+        {
+            QFile sFile(correctortext);
+            if(sFile.open(QFile::ReadOnly | QFile::Text))
+            {
+                QTextStream in(&sFile);
+                in.setCodec("UTF-8");
+                QString t = in.readAll();
+                t.replace(" \n","\n");
+                qs2=t; t= t.replace(" ","");
+                s2 = t.toUtf8().constData();
+                sFile.close();
+            }
+
+        }
+        if(!verifiertext.isEmpty())
+        {
+            QFile sFile(verifiertext);
+            if(sFile.open(QFile::ReadOnly | QFile::Text))
+            {
+                QTextStream in(&sFile);
+                in.setCodec("UTF-8");
+                QString t = in.readAll();
+                t.replace(" \n","\n");
+                qs3=t;
+                t= t.replace(" ","");
+                s3 = t.toUtf8().constData();
+                sFile.close();
+            }
+
+        }
+       int l1,l2,l3, DiffOcr_Corrector,DiffCorrector_Verifier,DiffOcr_Verifier; float correctorChangesPerc,verifierChangesPerc,ocrErrorPerc;
+
+       l1 = s1.length(); l2 = s2.length(); l3 = s3.length();
+
+       DiffOcr_Corrector = editDist(s1,s2);
+       correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l1)*100;
+       if(correctorChangesPerc<0) correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l2)*100;
+       correctorChangesPerc = (((float)lround(correctorChangesPerc*100))/100);
+
+       DiffCorrector_Verifier = editDist(s2,s3);
+       verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l2)*100;
+       if(verifierChangesPerc<0) verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l3)*100;
+       float correctorCharAcc =100- (((float)lround(verifierChangesPerc*100))/100); //Corrector accuracy = 100-changes mabe by Verfier
+
+       DiffOcr_Verifier = editDist(s1,s3);
+       ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l1)*100;
+       if(ocrErrorPerc<0) ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l3)*100;
+       float ocrAcc = 100- (((float)lround(ocrErrorPerc*100))/100);
+
+        diff_match_patch dmp;    //For Finding Word Level Accuracy
+        auto a = dmp.diff_linesToChars(qs2.simplified(), qs3.simplified()); //LinesToChars modifed for WordstoChar in diff_match_patch.cpp
+        auto lineText1 = a[0].toString().toUtf8().constData();
+        auto lineText2 = a[1].toString().toUtf8().constData();
+        auto lineArray = a[2].toStringList();
+        int wordcount = lineArray.count();
+        auto diffs = dmp.diff_main(lineText1, lineText2);
+        int worderrors = dmp.diff_levenshtein(diffs);
+        dmp.diff_charsToLines(diffs, lineArray);
+
+        float correctorwordaccuracy = (float)(wordcount-worderrors)/(float)wordcount*100;
+        correctorwordaccuracy = (((float)lround(correctorwordaccuracy*100))/100);
+
+        csvFile<<pagename<<","<<worderrors<<","<<DiffCorrector_Verifier<<","<< correctorwordaccuracy<<","<<correctorCharAcc<<"," <<correctorChangesPerc<<","<<ocrAcc<<"\n";
+
+    }
+
+    csvFile.close();
+
+}
+

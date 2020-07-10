@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1369</width>
-    <height>736</height>
+    <width>1386</width>
+    <height>733</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -22,8 +22,8 @@
      <rect>
       <x>9</x>
       <y>71</y>
-      <width>1351</width>
-      <height>601</height>
+      <width>1271</width>
+      <height>571</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -124,28 +124,6 @@ p, li { white-space: pre-wrap; }
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>940</x>
-      <y>10</y>
-      <width>144</width>
-      <height>58</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QLineEdit" name="lineEdit_2"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string>Accuracy</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
       <x>9</x>
       <y>9</y>
       <width>521</width>
@@ -181,13 +159,52 @@ p, li { white-space: pre-wrap; }
      </item>
     </layout>
    </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>40</y>
+      <width>404</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>Compare Corrector's Output</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>Compare Verifier's Output</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1369</width>
+     <width>1386</width>
      <height>22</height>
     </rect>
    </property>
@@ -224,6 +241,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionErrorDetectionRep"/>
     <addaction name="actionErrorDetectWithoutAdaptation"/>
     <addaction name="actionErrorDetectionRepUniq"/>
+    <addaction name="actionAccuracyLog"/>
    </widget>
    <widget class="QMenu" name="menuSaveVariables">
     <property name="title">
@@ -270,6 +288,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionLeftAlign"/>
     <addaction name="actionRightAlign"/>
     <addaction name="actionCentreAlign"/>
+    <addaction name="actionJusitfiedAlign"/>
    </widget>
    <addaction name="menuSelectLanguage"/>
    <addaction name="menuOCR_Correction_Window"/>
@@ -311,6 +330,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionLeftAlign"/>
    <addaction name="actionCentreAlign"/>
    <addaction name="actionRightAlign"/>
+   <addaction name="actionJusitfiedAlign"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -637,6 +657,21 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>CentreAlign</string>
+   </property>
+  </action>
+  <action name="actionJusitfiedAlign">
+   <property name="icon">
+    <iconset>
+     <normalon>:/Images/JustifiedAlign.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>JusitfiedAlign</string>
+   </property>
+  </action>
+  <action name="actionAccuracyLog">
+   <property name="text">
+    <string>AccuracyLog</string>
    </property>
   </action>
  </widget>

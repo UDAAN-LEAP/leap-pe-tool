@@ -22,6 +22,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QTextEdit>
@@ -77,6 +78,8 @@ public:
     QAction *actionLeftAlign;
     QAction *actionRightAlign;
     QAction *actionCentreAlign;
+    QAction *actionJusitfiedAlign;
+    QAction *actionAccuracyLog;
     QWidget *centralWidget;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
@@ -84,13 +87,14 @@ public:
     QTextBrowser *textBrowser;
     QGraphicsView *graphicsView;
     QWidget *layoutWidget1;
-    QVBoxLayout *verticalLayout;
-    QLineEdit *lineEdit_2;
-    QPushButton *pushButton;
-    QWidget *layoutWidget2;
     QVBoxLayout *verticalLayout_2;
     QProgressBar *progressBar;
     QLineEdit *lineEdit;
+    QWidget *layoutWidget2;
+    QHBoxLayout *horizontalLayout_2;
+    QPushButton *pushButton_3;
+    QSpacerItem *horizontalSpacer;
+    QPushButton *pushButton_2;
     QMenuBar *menuBar;
     QMenu *menuOCR_Correction_Window;
     QMenu *menuCreateReports;
@@ -106,7 +110,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1369, 736);
+        MainWindow->resize(1386, 733);
         MainWindow->setMouseTracking(true);
         actionOpen = new QAction(MainWindow);
         actionOpen->setObjectName(QStringLiteral("actionOpen"));
@@ -237,11 +241,18 @@ public:
         QIcon icon13;
         icon13.addFile(QStringLiteral(":/Images/AlignCenter.png"), QSize(), QIcon::Normal, QIcon::On);
         actionCentreAlign->setIcon(icon13);
+        actionJusitfiedAlign = new QAction(MainWindow);
+        actionJusitfiedAlign->setObjectName(QStringLiteral("actionJusitfiedAlign"));
+        QIcon icon14;
+        icon14.addFile(QStringLiteral(":/Images/JustifiedAlign.png"), QSize(), QIcon::Normal, QIcon::On);
+        actionJusitfiedAlign->setIcon(icon14);
+        actionAccuracyLog = new QAction(MainWindow);
+        actionAccuracyLog->setObjectName(QStringLiteral("actionAccuracyLog"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(9, 71, 1351, 601));
+        layoutWidget->setGeometry(QRect(9, 71, 1271, 571));
         horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -290,31 +301,13 @@ public:
 
         layoutWidget1 = new QWidget(centralWidget);
         layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(940, 10, 144, 58));
-        verticalLayout = new QVBoxLayout(layoutWidget1);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        lineEdit_2 = new QLineEdit(layoutWidget1);
-        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
-
-        verticalLayout->addWidget(lineEdit_2);
-
-        pushButton = new QPushButton(layoutWidget1);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-
-        verticalLayout->addWidget(pushButton);
-
-        layoutWidget2 = new QWidget(centralWidget);
-        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(9, 9, 521, 58));
-        verticalLayout_2 = new QVBoxLayout(layoutWidget2);
+        layoutWidget1->setGeometry(QRect(9, 9, 521, 58));
+        verticalLayout_2 = new QVBoxLayout(layoutWidget1);
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        progressBar = new QProgressBar(layoutWidget2);
+        progressBar = new QProgressBar(layoutWidget1);
         progressBar->setObjectName(QStringLiteral("progressBar"));
         progressBar->setMaximumSize(QSize(500, 16777215));
         progressBar->setValue(0);
@@ -322,16 +315,38 @@ public:
 
         verticalLayout_2->addWidget(progressBar);
 
-        lineEdit = new QLineEdit(layoutWidget2);
+        lineEdit = new QLineEdit(layoutWidget1);
         lineEdit->setObjectName(QStringLiteral("lineEdit"));
         lineEdit->setMaximumSize(QSize(500, 16777215));
 
         verticalLayout_2->addWidget(lineEdit);
 
+        layoutWidget2 = new QWidget(centralWidget);
+        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
+        layoutWidget2->setGeometry(QRect(670, 40, 404, 27));
+        horizontalLayout_2 = new QHBoxLayout(layoutWidget2);
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        pushButton_3 = new QPushButton(layoutWidget2);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+
+        horizontalLayout_2->addWidget(pushButton_3);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer);
+
+        pushButton_2 = new QPushButton(layoutWidget2);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+
+        horizontalLayout_2->addWidget(pushButton_2);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1369, 22));
+        menuBar->setGeometry(QRect(0, 0, 1386, 22));
         menuOCR_Correction_Window = new QMenu(menuBar);
         menuOCR_Correction_Window->setObjectName(QStringLiteral("menuOCR_Correction_Window"));
         menuCreateReports = new QMenu(menuBar);
@@ -386,6 +401,7 @@ public:
         menuCreateReports->addAction(actionErrorDetectionRep);
         menuCreateReports->addAction(actionErrorDetectWithoutAdaptation);
         menuCreateReports->addAction(actionErrorDetectionRepUniq);
+        menuCreateReports->addAction(actionAccuracyLog);
         menuSaveVariables->addAction(actionCPair);
         menuSaveVariables->addAction(actionPrimarySecOCRPair);
         menuSaveVariables->addAction(actionCPairIEROcrVsCorrect);
@@ -407,6 +423,7 @@ public:
         menuFontAndLayout->addAction(actionLeftAlign);
         menuFontAndLayout->addAction(actionRightAlign);
         menuFontAndLayout->addAction(actionCentreAlign);
+        menuFontAndLayout->addAction(actionJusitfiedAlign);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen);
         mainToolBar->addAction(actionSave);
@@ -432,6 +449,7 @@ public:
         mainToolBar->addAction(actionLeftAlign);
         mainToolBar->addAction(actionCentreAlign);
         mainToolBar->addAction(actionRightAlign);
+        mainToolBar->addAction(actionJusitfiedAlign);
 
         retranslateUi(MainWindow);
 
@@ -529,12 +547,15 @@ public:
         actionLeftAlign->setText(QApplication::translate("MainWindow", "LeftAlign", Q_NULLPTR));
         actionRightAlign->setText(QApplication::translate("MainWindow", "RightAlign", Q_NULLPTR));
         actionCentreAlign->setText(QApplication::translate("MainWindow", "CentreAlign", Q_NULLPTR));
+        actionJusitfiedAlign->setText(QApplication::translate("MainWindow", "JusitfiedAlign", Q_NULLPTR));
+        actionAccuracyLog->setText(QApplication::translate("MainWindow", "AccuracyLog", Q_NULLPTR));
         textBrowser->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Shobhika'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", Q_NULLPTR));
-        pushButton->setText(QApplication::translate("MainWindow", "Accuracy", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("MainWindow", "Compare Corrector's Output", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Compare Verifier's Output", Q_NULLPTR));
         menuOCR_Correction_Window->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
         menuCreateReports->setTitle(QApplication::translate("MainWindow", "CreateReports", Q_NULLPTR));
         menuSaveVariables->setTitle(QApplication::translate("MainWindow", "SaveVariables", Q_NULLPTR));
