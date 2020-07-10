@@ -509,8 +509,8 @@ QList<QVariant> diff_match_patch::diff_linesToChars(const QString &text1,
   // So we'll insert a junk entry to avoid generating a null character.
   lineArray.append("");
 
-  const QString chars1 = diff_linesToCharsMunge(text1, lineArray, lineHash);
-  const QString chars2 = diff_linesToCharsMunge(text2, lineArray, lineHash);
+  const QString chars1 = diff_linesToCharsMunge(text1, lineArray, lineHash).toUtf8().constData();
+  const QString chars2 = diff_linesToCharsMunge(text2, lineArray, lineHash).toUtf8().constData();
 
   QList<QVariant> listRet;
   listRet.append(QVariant::fromValue(chars1));
@@ -527,11 +527,11 @@ QString diff_match_patch::diff_linesToCharsMunge(const QString &text,
   int lineEnd = -1;
   QString line;
   QString chars;
-  // Walk the text, pulling out a substring for each line.
-  // text.split('\n') would would temporarily double our memory footprint.
+  // Walk the text, pulling out a substring for each word.
+  // text.split(' ') would would temporarily double our memory footprint.
   // Modifying text would create many large strings to garbage collect.
   while (lineEnd < text.length() - 1) {
-    lineEnd = text.indexOf('\n', lineStart);
+    lineEnd = text.indexOf(' ', lineStart);
     if (lineEnd == -1) {
       lineEnd = text.length() - 1;
     }
@@ -1270,8 +1270,10 @@ int diff_match_patch::diff_xIndex(const QList<Diff> &diffs, int loc) {
 }
 
 
-QString diff_match_patch::diff_prettyHtml(const QList<Diff> &diffs) {
-  QString html;
+QList <QString>  diff_match_patch::diff_prettyHtml(const QList<Diff> &diffs, const QString &textcolor) {
+  QString html1;
+  QString html2;
+  QList <QString> htmlList;
   QString text;
   foreach(Diff aDiff, diffs) {
     text = aDiff.text;
@@ -1279,19 +1281,22 @@ QString diff_match_patch::diff_prettyHtml(const QList<Diff> &diffs) {
         .replace(">", "&gt;").replace("\n", "&para;<br>");
     switch (aDiff.operation) {
       case INSERT:
-        html += QString("<ins style=\"background:#e6ffe6;\">") + text
+        html1 += QString("<ins style=\"background:#"+textcolor+";\">") + text
             + QString("</ins>");
         break;
       case DELETE:
-        html += QString("<del style=\"background:#ffe6e6;\">") + text
+        html2 += QString("<del style=\"background:#ffa1a1;\">") + text
             + QString("</del>");
         break;
       case EQUAL:
-        html += QString("<span>") + text + QString("</span>");
+        html1 += QString("<span>") + text + QString("</span>");
+        html2 += QString("<span>") + text + QString("</span>");
         break;
     }
   }
-  return html;
+  htmlList.append(html1);
+  htmlList.append(html2);
+  return htmlList;
 }
 
 
@@ -1335,6 +1340,8 @@ int diff_match_patch::diff_levenshtein(const QList<Diff> &diffs) {
         insertions = 0;
         deletions = 0;
         break;
+	  default:
+		  break;
     }
   }
   levenshtein += std::max(insertions, deletions);

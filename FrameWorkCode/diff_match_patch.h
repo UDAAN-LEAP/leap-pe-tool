@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef DIFF_MATCH_PATCH_H
-#define DIFF_MATCH_PATCH_H
+//#ifndef DIFF_MATCH_PATCH_H
+//#define DIFF_MATCH_PATCH_H
 
 /*
  * Functions for diff, match and patch.
@@ -63,6 +63,15 @@
 *  Diff(Operation.EQUAL, " world.")}
 * which means: delete "Hello", add "Goodbye" and keep " world."
 */
+#ifndef DIFF_MATCH_PATCH_H
+#define DIFF_MATCH_PATCH_H
+#include <QtCore>
+#include <QString>
+#include <QList>
+#include <QMap>
+#include <QVariant>
+
+//#include "diff_match_patch.h"
 enum Operation {
   DELETE, INSERT, EQUAL
 };
@@ -256,7 +265,7 @@ class diff_match_patch {
    *     encoded text2 and the List of unique strings.  The zeroth element
    *     of the List of unique strings is intentionally blank.
    */
- protected:
+ public:
   QList<QVariant> diff_linesToChars(const QString &text1, const QString &text2); // return elems 0 and 1 are QString, elem 2 is QStringList
 
   /**
@@ -277,7 +286,7 @@ class diff_match_patch {
    * @param diffs LinkedList of Diff objects.
    * @param lineArray List of unique strings.
    */
- private:
+ public:
   void diff_charsToLines(QList<Diff> &diffs, const QStringList &lineArray);
 
   /**
@@ -393,7 +402,7 @@ class diff_match_patch {
    * @return HTML representation.
    */
  public:
-  QString diff_prettyHtml(const QList<Diff> &diffs);
+  QList <QString> diff_prettyHtml(const QList<Diff> &diffs, const QString &textcolor);
 
   /**
    * Compute and return the source text (all equalities and deletions).
