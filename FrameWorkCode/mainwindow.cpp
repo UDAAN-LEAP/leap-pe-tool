@@ -2883,7 +2883,7 @@ void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
 
 void MainWindow::on_actionAccuracyLog_triggered()
 {
-    string s1 = "",s2 = "", s3 = ""; QString qs1="", qs2="",qs3="";
+    QString qs1="", qs2="",qs3="";
 
     file = QFileDialog::getOpenFileName(this,"Open Output File"); //open file
     int loc =  file.lastIndexOf("/");
@@ -2916,12 +2916,7 @@ void MainWindow::on_actionAccuracyLog_triggered()
             {
                 QTextStream in(&sFile);
                 in.setCodec("UTF-8");
-                QString t = in.readAll();
-                t.replace(" \n","\n");
-                qs1=t;
-                t= t.replace(" ","");
-                s1 = t.toUtf8().constData();
-                sFile.close();
+                qs1 = in.readAll().simplified();
             }
 
         }
@@ -2932,11 +2927,7 @@ void MainWindow::on_actionAccuracyLog_triggered()
             {
                 QTextStream in(&sFile);
                 in.setCodec("UTF-8");
-                QString t = in.readAll();
-                t.replace(" \n","\n");
-                qs2=t; t= t.replace(" ","");
-                s2 = t.toUtf8().constData();
-                sFile.close();
+                qs2 = in.readAll().simplified();
             }
 
         }
@@ -2947,39 +2938,47 @@ void MainWindow::on_actionAccuracyLog_triggered()
             {
                 QTextStream in(&sFile);
                 in.setCodec("UTF-8");
-                QString t = in.readAll();
-                t.replace(" \n","\n");
-                qs3=t;
-                t= t.replace(" ","");
-                s3 = t.toUtf8().constData();
+                qs3 = in.readAll().simplified();
                 sFile.close();
             }
 
         }
        int l1,l2,l3, DiffOcr_Corrector,DiffCorrector_Verifier,DiffOcr_Verifier; float correctorChangesPerc,verifierChangesPerc,ocrErrorPerc;
 
-       l1 = s1.length(); l2 = s2.length(); l3 = s3.length();
+       l1 = qs1.length(); l2 = qs2.length(); l3 = qs3.length();
 
-       DiffOcr_Corrector = editDist(s1,s2);
+       diff_match_patch dmp;
+
+       auto diffs1 = dmp.diff_main(qs1,qs2);
+       DiffOcr_Corrector = dmp.diff_levenshtein(diffs1);
        correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l1)*100;
        if(correctorChangesPerc<0) correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l2)*100;
        correctorChangesPerc = (((float)lround(correctorChangesPerc*100))/100);
 
-       DiffCorrector_Verifier = editDist(s2,s3);
+       auto diffs2 = dmp.diff_main(qs2,qs3);
+       DiffCorrector_Verifier = dmp.diff_levenshtein(diffs2);
        verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l2)*100;
        if(verifierChangesPerc<0) verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l3)*100;
        float correctorCharAcc =100- (((float)lround(verifierChangesPerc*100))/100); //Corrector accuracy = 100-changes mabe by Verfier
 
-       DiffOcr_Verifier = editDist(s1,s3);
+       auto diffs3 = dmp.diff_main(qs1,qs3);
+       DiffOcr_Verifier = dmp.diff_levenshtein(diffs3);
        ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l1)*100;
        if(ocrErrorPerc<0) ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l3)*100;
        float ocrAcc = 100- (((float)lround(ocrErrorPerc*100))/100);
 
-        diff_match_patch dmp;    //For Finding Word Level Accuracy
-        auto a = dmp.diff_linesToChars(qs2.simplified(), qs3.simplified()); //LinesToChars modifed for WordstoChar in diff_match_patch.cpp
-        auto lineText1 = a[0].toString().toUtf8().constData();
-        auto lineText2 = a[1].toString().toUtf8().constData();
+
+        auto a = dmp.diff_linesToChars(qs2, qs3); //LinesToChars modifed for WordstoChar in diff_match_patch.cpp
+        auto lineText1 = a[0].toString();
+        auto lineText2 = a[1].toString();
         auto lineArray = a[2].toStringList();
+//        qDebug() << "pagename" << QString::fromStdString(pagename);
+//        qDebug()<<"qs2.simplified()"<<qs2.simplified();
+//        qDebug()<<"qs3.simplified()"<<qs3.simplified();
+//        qDebug()<<"LineText1"<<lineText1;
+//        qDebug()<<"LineText2"<<lineText2;
+//        qDebug()<<"LineArray"<<lineArray;
+//        qDebug()<<"DiffCorrector_Verifier "<<DiffCorrector_Verifier;
         int wordcount = lineArray.count();
         auto diffs = dmp.diff_main(lineText1, lineText2);
         int worderrors = dmp.diff_levenshtein(diffs);

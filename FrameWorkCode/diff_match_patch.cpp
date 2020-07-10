@@ -509,8 +509,8 @@ QList<QVariant> diff_match_patch::diff_linesToChars(const QString &text1,
   // So we'll insert a junk entry to avoid generating a null character.
   lineArray.append("");
 
-  const QString chars1 = diff_linesToCharsMunge(text1, lineArray, lineHash).toUtf8().constData();
-  const QString chars2 = diff_linesToCharsMunge(text2, lineArray, lineHash).toUtf8().constData();
+  const QString chars1 = diff_linesToCharsMunge(text1, lineArray, lineHash);
+  const QString chars2 = diff_linesToCharsMunge(text2, lineArray, lineHash);
 
   QList<QVariant> listRet;
   listRet.append(QVariant::fromValue(chars1));
