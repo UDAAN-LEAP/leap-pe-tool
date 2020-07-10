@@ -22,7 +22,7 @@
 #include <QtCore>
 #include <time.h>
 #include "diff_match_patch.h"
-
+#undef DELETE
 
 //////////////////////////
 //
