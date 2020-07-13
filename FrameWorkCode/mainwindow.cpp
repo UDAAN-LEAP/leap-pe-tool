@@ -15,7 +15,7 @@
 #include <vector>
 #include <utility> // std::pair
 
-
+#include "3rdParty/RapidXML/rapidxml.hpp"
 //# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
@@ -2993,4 +2993,28 @@ void MainWindow::on_actionAccuracyLog_triggered()
     csvFile.close();
 
 }
-
+void explore(rapidxml::xml_node<> * n) {
+	std::string node_name = n->name();
+	for (auto * attr = n->first_attribute(); attr; attr = attr->next_attribute()) {
+		std::string attr_name = attr->name();
+		std::string attr_value = attr->value();
+	}
+	if (n->first_node()) {
+		explore(n->first_node());
+	}
+	if (n->next_sibling()) {
+		explore(n->next_sibling());
+	}
+}
+void MainWindow::on_actionOpen_Project_triggered() {
+	rapidxml::xml_document<> doc;
+	QFile xml = QFileDialog::getOpenFileName(this, "Open Verifier's Output File");
+	xml.open(QIODevice::ReadOnly);
+	QTextStream stream(&xml);
+	QString content;
+	content = stream.readAll();
+	std::string stdcontent = content.toStdString();
+	doc.parse<0>((char*)stdcontent.data());
+	explore(doc.first_node());
+	
+}

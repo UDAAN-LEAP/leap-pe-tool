@@ -168,7 +168,7 @@ private slots:
     void on_actionJusitfiedAlign_triggered();
 
     void on_actionAccuracyLog_triggered();
-    
+	void on_actionOpen_Project_triggered();
 private:
     Ui::MainWindow *ui;
 
