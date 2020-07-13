@@ -31,8 +31,6 @@ map<string, int> TimeLog;
 string TimeLogLocation = "../Logs/log.txt";
 string alignment = "left";
 bool prevTRig = 0;
-//map<string, int> GPage; trie TGPage;
-//map<string, int> PWords;//Common/Possitive OCR Words // already defined before
 map<string, string> CPair;//Correction Pairs
 
 
@@ -143,7 +141,7 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
           }
           out << timelogstring;
           sFile.flush();
-          sFile.close();
+          sFile.close(); 
       }
     string nos = "0123456789";
     size_t loc = localFilename.find(".txt");
