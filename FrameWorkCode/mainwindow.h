@@ -34,7 +34,7 @@
 #include<QTime>
 //#include"staticDict.h"
 //#include "lcsqt.h"
-
+#include <Project.h>
 
 //#include <set>
 using namespace std;
@@ -171,7 +171,7 @@ private slots:
 	void on_actionOpen_Project_triggered();
 private:
     Ui::MainWindow *ui;
-
+	Project mProject;
     QString mFilename;
     QString mFilenamejpeg;
 };

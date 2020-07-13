@@ -3015,6 +3015,8 @@ void MainWindow::on_actionOpen_Project_triggered() {
 	content = stream.readAll();
 	std::string stdcontent = content.toStdString();
 	doc.parse<0>((char*)stdcontent.data());
+	mProject.parse_project_xml(doc);
+
 	explore(doc.first_node());
 	
 }
