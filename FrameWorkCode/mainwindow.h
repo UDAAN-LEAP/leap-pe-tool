@@ -171,23 +171,22 @@ private slots:
     void on_actionJusitfiedAlign_triggered();
 
     void on_actionAccuracyLog_triggered();
-    
- //   void on_actionHighlight_toggled(bool arg1);
+	//   void on_actionHighlight_toggled(bool arg1);
 
-    void on_actionHighlight_triggered();
+	void on_actionHighlight_triggered();
 
-   // void on_addcomments_clicked();
-    
-    void on_viewallcomments_clicked();
-    
-    void on_actionFontBlack_triggered();
+	// void on_addcomments_clicked();
 
-    void updateAverageAccuracies();
+	void on_viewallcomments_clicked();
 
-    void on_actionViewAverageAccuracies_triggered();
+	void on_actionFontBlack_triggered();
 
-    void LogHighlights(QString word);
+	void updateAverageAccuracies();
 
+	void on_actionViewAverageAccuracies_triggered();
+
+	void LogHighlights(QString word);
+	void on_actionOpen_Project_triggered();
 private:
     Ui::MainWindow *ui;
 

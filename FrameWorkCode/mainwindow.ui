@@ -218,7 +218,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1386</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOCR_Correction_Window">
@@ -226,6 +226,7 @@ p, li { white-space: pre-wrap; }
      <string>File</string>
     </property>
     <addaction name="actionNew"/>
+    <addaction name="actionOpen_Project"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
@@ -693,7 +694,7 @@ p, li { white-space: pre-wrap; }
     <string>AccuracyLog</string>
    </property>
   </action>
-  <action name="actionHighlight">
+ <action name="actionHighlight">
    <property name="checked">
     <bool>false</bool>
    </property>
@@ -723,6 +724,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionViewAverageAccuracies">
    <property name="text">
     <string>ViewAverageAccuracies</string>
+   </property>
+  </action>
+ <action name="actionOpen_Project">
+   <property name="text">
+    <string>Open Project</string>
    </property>
   </action>
  </widget>

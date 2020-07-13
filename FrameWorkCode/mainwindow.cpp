@@ -17,7 +17,7 @@
 #include <vector>
 #include <utility> // std::pair
 
-
+#include "3rdParty/RapidXML/rapidxml.hpp"
 //# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
@@ -3333,40 +3333,40 @@ void MainWindow::on_actionViewAverageAccuracies_triggered()
 
 void MainWindow::LogHighlights(QString word)
 {
-    QString highlightsFilename = dir2levelup + "/Comments/HighlightsLog.json";
-    QString pagename = currentpagename;
-    pagename.replace(".txt", "");
-    pagename.replace(".html", "");
-    QFile jsonFile(highlightsFilename);
-    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    QByteArray data = jsonFile.readAll();
+	QString highlightsFilename = dir2levelup + "/Comments/HighlightsLog.json";
+	QString pagename = currentpagename;
+	pagename.replace(".txt", "");
+	pagename.replace(".html", "");
+	QFile jsonFile(highlightsFilename);
+	jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+	QByteArray data = jsonFile.readAll();
 
-    QJsonParseError errorPtr;
-    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-    QJsonObject mainObj = document.object();
-    QJsonObject page = mainObj.value(pagename).toObject();
-    QJsonObject highlights;
-    jsonFile.close();
+	QJsonParseError errorPtr;
+	QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+	QJsonObject mainObj = document.object();
+	QJsonObject page = mainObj.value(pagename).toObject();
+	QJsonObject highlights;
+	jsonFile.close();
 
-    int nMilliseconds = myTimer.elapsed();
-    secs = nMilliseconds/1000;
-//    int mins = secs/60;
-//    secs = secs - mins*60;
-    QString time = QTime::currentTime().toString();
-    highlights["Word"] = word;
-    highlights["Timestamp"] = time;
-    highlights["Time Elapsed (s)"] = secs;
-    highlights["Page Name"] = pagename;
+	int nMilliseconds = myTimer.elapsed();
+	secs = nMilliseconds / 1000;
+	//    int mins = secs/60;
+	//    secs = secs - mins*60;
+	QString time = QTime::currentTime().toString();
+	highlights["Word"] = word;
+	highlights["Timestamp"] = time;
+	highlights["Time Elapsed (s)"] = secs;
+	highlights["Page Name"] = pagename;
 
-    page.remove(time);
-    page.insert(time,highlights);
-    mainObj.remove(pagename);
-    mainObj.insert(pagename,page);
-    document.setObject(mainObj);
+	page.remove(time);
+	page.insert(time, highlights);
+	mainObj.remove(pagename);
+	mainObj.insert(pagename, page);
+	document.setObject(mainObj);
 
-    QFile jsonFile1(highlightsFilename);
-    jsonFile1.open(QIODevice::WriteOnly);
-    jsonFile1.write(document.toJson());
+	QFile jsonFile1(highlightsFilename);
+	jsonFile1.open(QIODevice::WriteOnly);
+	jsonFile1.write(document.toJson());
 }
 
 
@@ -3419,40 +3419,40 @@ void MainWindow::LogHighlights(QString word)
 
 void MainWindow::on_viewallcomments_clicked()
 {
-    map<int ,int> countwords;
-    QString commentFilename = dir2levelup + "/Comments/" + currentpagename;
-    int totalcharerr = 0, totalworderr = 0;
-    auto textcursor1 = ui->textBrowser->textCursor();
-    textcursor1.setPosition(0);
-    while(!textcursor1.atEnd())
-    {
-        QTextCharFormat format = textcursor1.charFormat();
-        if(format.background() == Qt::yellow)
-        {
-            totalcharerr++;
-        }
-        auto textcursor2 = ui->textBrowser->textCursor();
-        textcursor2.select(QTextCursor::WordUnderCursor);
-        int key = textcursor2.selectionStart();
-        QString wordundercursor = textcursor1.selectedText();
-        wordundercursor = wordundercursor.simplified();
-        int wordsinselection = wordundercursor.count(" ")+1;
-        countwords[key] += wordsinselection;
-        qDebug()<<key<<textcursor2.selectedText()<<countwords;
-        textcursor1.movePosition(QTextCursor::NextCharacter , QTextCursor::KeepAnchor);
-    }
-    map<int ,int>::iterator it;
-    for(it=countwords.begin(); it!=countwords.end(); it++)
-    {
-        totalworderr+= it->second;
-    }
-    float characc = (float)(openedFileChars - totalcharerr)/(float)openedFileChars*100;
-    float wordacc = (float)(openedFileWords - totalworderr)/(float)openedFileWords*100 ;
-    wordacc = ((float)lround(wordacc*100))/100;
-    characc = ((float)lround(characc*100))/100;
+	map<int ,int> countwords;
+	QString commentFilename = dir2levelup + "/Comments/" + currentpagename;
+	int totalcharerr = 0, totalworderr = 0;
+	auto textcursor1 = ui->textBrowser->textCursor();
+	textcursor1.setPosition(0);
+	while(!textcursor1.atEnd())
+	{
+		QTextCharFormat format = textcursor1.charFormat();
+		if(format.background() == Qt::yellow)
+		{
+			totalcharerr++;
+		}
+		auto textcursor2 = ui->textBrowser->textCursor();
+		textcursor2.select(QTextCursor::WordUnderCursor);
+		int key = textcursor2.selectionStart();
+		QString wordundercursor = textcursor1.selectedText();
+		wordundercursor = wordundercursor.simplified();
+		int wordsinselection = wordundercursor.count(" ")+1;
+		countwords[key] += wordsinselection;
+		qDebug()<<key<<textcursor2.selectedText()<<countwords;
+		textcursor1.movePosition(QTextCursor::NextCharacter , QTextCursor::KeepAnchor);
+	}
+	map<int ,int>::iterator it;
+	for(it=countwords.begin(); it!=countwords.end(); it++)
+	{
+		totalworderr+= it->second;
+	}
+	float characc = (float)(openedFileChars - totalcharerr)/(float)openedFileChars*100;
+	float wordacc = (float)(openedFileWords - totalworderr)/(float)openedFileWords*100 ;
+	wordacc = ((float)lround(wordacc*100))/100;
+	characc = ((float)lround(characc*100))/100;
 
-    CommentsView *cv = new CommentsView(totalworderr,totalcharerr,wordacc,characc,commentFilename);
-    cv->show();
+	CommentsView *cv = new CommentsView(totalworderr,totalcharerr,wordacc,characc,commentFilename);
+	cv->show();
 
 }
 */
@@ -3467,134 +3467,156 @@ void MainWindow::on_actionHighlight_triggered()
 //    {
 //        on_addcomments_clicked();
 //    }
-    QTextCursor cursor = ui->textBrowser->textCursor();
-    QString text = cursor.selectedText().toUtf8().constData();
-    int pos1 = ui->textBrowser->textCursor().selectionStart();
-    int pos2 = ui->textBrowser->textCursor().selectionEnd();
-    int cursorpos = round(((float)(pos1+pos2))/2);
-    cursor.setPosition(cursorpos);
-    int pos = min(pos1,pos2);
-    //qDebug()<<text;
-    //QString key =  QString::number(pos) + text;
-    int key = pos; 
-    QTextCharFormat  format  = cursor.charFormat();
-    if(format.background() == Qt::yellow)
-    {
-        qDebug()<<"text was yellow"<< text << pos1 << " "<< pos2;
-        format.setBackground(Qt::transparent);
-        if(commentdict.find(key)!=commentdict.end())
-        {
-            commentdict.erase(key);
-        }
-        if(commentederrors.find(key)!=commentederrors.end())
-        {
-             commentederrors.erase(key);
-        }
-    }
-    else
-    {   qDebug()<<"text was not yellow "<< text << pos1 << " "<< pos2;
-        format.setBackground(Qt::yellow);
-        ui->commentsfield->setText(text + ":");
-        int chars = text.length();
-        QString simplifiedtext = text.simplified();
-        int words = simplifiedtext.count(" ") + 1;
+	QTextCursor cursor = ui->textBrowser->textCursor();
+	QString text = cursor.selectedText().toUtf8().constData();
+	int pos1 = ui->textBrowser->textCursor().selectionStart();
+	int pos2 = ui->textBrowser->textCursor().selectionEnd();
+	int cursorpos = round(((float)(pos1+pos2))/2);
+	cursor.setPosition(cursorpos);
+	int pos = min(pos1,pos2);
+	//qDebug()<<text;
+	//QString key =  QString::number(pos) + text;
+	int key = pos;
+	QTextCharFormat  format  = cursor.charFormat();
+	if(format.background() == Qt::yellow)
+	{
+		qDebug()<<"text was yellow"<< text << pos1 << " "<< pos2;
+		format.setBackground(Qt::transparent);
+		if(commentdict.find(key)!=commentdict.end())
+		{
+			commentdict.erase(key);
+		}
+		if(commentederrors.find(key)!=commentederrors.end())
+		{
+			 commentederrors.erase(key);
+		}
+	}
+	else
+	{   qDebug()<<"text was not yellow "<< text << pos1 << " "<< pos2;
+		format.setBackground(Qt::yellow);
+		ui->commentsfield->setText(text + ":");
+		int chars = text.length();
+		QString simplifiedtext = text.simplified();
+		int words = simplifiedtext.count(" ") + 1;
 
-        vector<int> counts;
-        counts.push_back(chars); counts.push_back(words);
-        commentederrors[key] = counts;
+		vector<int> counts;
+		counts.push_back(chars); counts.push_back(words);
+		commentederrors[key] = counts;
 
-    }
-    ui->textBrowser->textCursor().mergeCharFormat(format);
-    ui->commentsfield->setFocus();
+	}
+	ui->textBrowser->textCursor().mergeCharFormat(format);
+	ui->commentsfield->setFocus();
 }
 
 void MainWindow::on_addcomments_clicked()
 {
-    QString commentstext = ui->commentsfield->text().toUtf8().constData();
-    int pos1 = ui->textBrowser->textCursor().selectionStart();
-    int pos2 = ui->textBrowser->textCursor().selectionEnd();
-    int pos = min(pos1,pos2);
-    int loc = commentstext.indexOf(":");
-    QString highlightedtext = ui->textBrowser->textCursor().selectedText().toUtf8().constData();
-    QString comment = commentstext.mid(loc+1,commentstext.length()-loc);
-    if(loc == -1)
-    {
-       comment = commentstext;
-    }
+	QString commentstext = ui->commentsfield->text().toUtf8().constData();
+	int pos1 = ui->textBrowser->textCursor().selectionStart();
+	int pos2 = ui->textBrowser->textCursor().selectionEnd();
+	int pos = min(pos1,pos2);
+	int loc = commentstext.indexOf(":");
+	QString highlightedtext = ui->textBrowser->textCursor().selectedText().toUtf8().constData();
+	QString comment = commentstext.mid(loc+1,commentstext.length()-loc);
+	if(loc == -1)
+	{
+	   comment = commentstext;
+	}
 
 
 //    QString key = QString::number(pos) + highlightedtext;
-    int key = pos;
-    QString value = commentstext;
+	int key = pos;
+	QString value = commentstext;
 
-    if(comment!="" | comment!=" ")
-    {
-        commentdict[key] = value;
-       // qDebug()<< commentdict <<"commenteddict";
-    }
+	if(comment!="" | comment!=" ")
+	{
+		commentdict[key] = value;
+	   // qDebug()<< commentdict <<"commenteddict";
+	}
 
 }
 
 void MainWindow::on_viewallcomments_clicked()
 {
-    QString commentFilename = dir2levelup + "/Comments/" + currentpagename;
-    commentFilename.replace(".txt",".json");
-    commentFilename.replace(".html",".json");
+	QString commentFilename = dir2levelup + "/Comments/" + currentpagename;
+	commentFilename.replace(".txt",".json");
+	commentFilename.replace(".html",".json");
    // qDebug() << commentFilename;
 
-    int totalcharerr = 0 ,totalworderr = 0; QString commentfield = "";
-    map<int, QString>::iterator it1;
-    map<int, vector<int>>::iterator it2;
+	int totalcharerr = 0 ,totalworderr = 0; QString commentfield = "";
+	map<int, QString>::iterator it1;
+	map<int, vector<int>>::iterator it2;
 
-    QJsonObject page;
-    QJsonArray comments;
-    for(it1 = commentdict.begin(); it1!= commentdict.end(); it1++)
-    {
-        QJsonObject comment;
-        comment["key"] = it1->first;
-        comment["value"] = it1->second.toUtf8().constData();
-        comments.push_back(comment);
-        commentfield += it1->second+"\n";
-    }
-    page.insert("comments",comments);
+	QJsonObject page;
+	QJsonArray comments;
+	for(it1 = commentdict.begin(); it1!= commentdict.end(); it1++)
+	{
+		QJsonObject comment;
+		comment["key"] = it1->first;
+		comment["value"] = it1->second.toUtf8().constData();
+		comments.push_back(comment);
+		commentfield += it1->second+"\n";
+	}
+	page.insert("comments",comments);
 
-    QJsonArray charerrors;
-    QJsonArray worderrors;
+	QJsonArray charerrors;
+	QJsonArray worderrors;
 
-    for(it2 = commentederrors.begin(); it2!= commentederrors.end(); it2++)
-    {
-        auto wordchars = it2->second;
-        totalcharerr += wordchars[0];
-        totalworderr += wordchars[1];
+	for(it2 = commentederrors.begin(); it2!= commentederrors.end(); it2++)
+	{
+		auto wordchars = it2->second;
+		totalcharerr += wordchars[0];
+		totalworderr += wordchars[1];
 
-        QJsonObject charerror;
-        QJsonObject worderror;
-        charerror["key"] = it2->first;
-        charerror["value"] = wordchars[0];
-        worderror["key"] = it2->first;
-        worderror["value"] = wordchars[1];
+		QJsonObject charerror;
+		QJsonObject worderror;
+		charerror["key"] = it2->first;
+		charerror["value"] = wordchars[0];
+		worderror["key"] = it2->first;
+		worderror["value"] = wordchars[1];
 
-        charerrors.push_back(charerror);
-        worderrors.push_back(worderror);
-    }
-    page.insert("charerrors",charerrors);
-    page.insert("worderrors",worderrors);
-    QJsonDocument document(page);
+		charerrors.push_back(charerror);
+		worderrors.push_back(worderror);
+	}
+	page.insert("charerrors",charerrors);
+	page.insert("worderrors",worderrors);
+	QJsonDocument document(page);
 
-    QFile jsonFile(commentFilename);
-    jsonFile.open(QIODevice::WriteOnly);
-    jsonFile.write(document.toJson());
+	QFile jsonFile(commentFilename);
+	jsonFile.open(QIODevice::WriteOnly);
+	jsonFile.write(document.toJson());
 
-    float characc = (float)(openedFileChars - totalcharerr)/(float)openedFileChars*100;
-    float wordacc = (float)(openedFileWords - totalworderr)/(float)openedFileWords*100 ;
-    wordacc = ((float)lround(wordacc*100))/100;
-    characc = ((float)lround(characc*100))/100;
+	float characc = (float)(openedFileChars - totalcharerr)/(float)openedFileChars*100;
+	float wordacc = (float)(openedFileWords - totalworderr)/(float)openedFileWords*100 ;
+	wordacc = ((float)lround(wordacc*100))/100;
+	characc = ((float)lround(characc*100))/100;
 
-    CommentsView *cv = new CommentsView(totalworderr,totalcharerr,wordacc,characc,commentfield);
-    cv->show();
+	CommentsView *cv = new CommentsView(totalworderr,totalcharerr,wordacc,characc,commentfield);
+	cv->show();
 
 }
 */
+void explore(rapidxml::xml_node<> * n) {
+	std::string node_name = n->name();
+	for (auto * attr = n->first_attribute(); attr; attr = attr->next_attribute()) {
+		std::string attr_name = attr->name();
+		std::string attr_value = attr->value();
+	}
+	if (n->first_node()) {
+		explore(n->first_node());
+	}
+	if (n->next_sibling()) {
+		explore(n->next_sibling());
+	}
+}
+void MainWindow::on_actionOpen_Project_triggered() {
+	rapidxml::xml_document<> doc;
+	QFile xml = QFileDialog::getOpenFileName(this, "Open Verifier's Output File");
+	xml.open(QIODevice::ReadOnly);
+	QTextStream stream(&xml);
+	QString content;
+	content = stream.readAll();
+	std::string stdcontent = content.toStdString();
+	doc.parse<0>((char*)stdcontent.data());
+	explore(doc.first_node());
 
-
-
+}

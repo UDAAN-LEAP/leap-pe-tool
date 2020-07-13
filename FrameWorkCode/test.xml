@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="Book1">
+  <ItemGroup>
+    <Filter Include="Image">
+      <Extensions>jpeg;jpg;png;</Extensions>
+    </Filter>
+    <Filter Include="Document">
+      <Extensions>docx;txt</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <File Include="page-1.jpeg">
+      <Filter>Image</Filter>
+    </File>
+    <File Include="..\..\page-2.jpeg">
+      <Filter>Image</Filter>
+    </File>
+  </ItemGroup>
+  <ItemGroup>
+    <File Include="page-1.txt">
+      <Filter>Document</Filter>
+    </File>
+	    <File Include="page-2.txt">
+      <Filter>Document</Filter>
+    </File>
+  </ItemGroup>
+</Project>
+
+
