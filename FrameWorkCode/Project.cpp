@@ -1,6 +1,7 @@
 #include "Project.h"
 
-void Project::parse_project_xml(rapidxml::xml_document<>* pDoc)
+
+void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 {
 }
 
@@ -14,4 +15,8 @@ void Project::addFile(QFile & pFile)
 
 void Project::getFile(const QString & pFileName)
 {
+}
+
+TreeModel * Project::getModel() {
+	return mTreeModel;
 }

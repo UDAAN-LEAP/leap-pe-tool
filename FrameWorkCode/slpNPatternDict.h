@@ -277,16 +277,16 @@ ifstream myfile(fileName);
 }
 
 int minIG(int a, int b){ if(a>b)return b; else return a;}
-int maxIG(int a, int b){ if(a<b)return b; else return a;}
+//int std::max(int a, int b){ if(a<b)return b; else return a;}
 
 
 void loadMapPWords(vector<string>& vGBook,vector<string>& vIBook, map<string,int>& PWords){
-    int vGsz = vGBook.size(), vIsz =  vIBook.size();
+    int vGsz = (int)vGBook.size(), vIsz = (int) vIBook.size();
     int win = vGsz  - vIsz;
     if(win<0) win = -1*win;
     // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
     for(int t = 0; t < vIsz;t++){
-        for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
+        for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
             string s1 = vIBook[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
             if( (vGBook[t1].find(s1) != string::npos)|| (vGBook[t1].find(s1 + " ") != string::npos) || (vGBook[t1].find(" " + s1) != string::npos)) {PWords[s1]++; break;}
         }
@@ -456,7 +456,7 @@ std::vector<std::string> split(const std::string& s, const std::string& delimite
 //ADDED FOR ERROR DETECTION REPORT
 
 bool searchS1inGVec(string s1,size_t iocrdone,vector<string>& gocr,size_t winig){
-    for(int t1 = maxIG(iocrdone-winig,0); t1 < min(iocrdone+winig,gocr.size()); t1++){
+    for(size_t t1 = std::max(iocrdone-winig,(size_t)0); t1 < min(iocrdone+winig,gocr.size()); t1++){
         if (s1 == gocr[t1]) return 1;
     }
     return 0;
@@ -733,8 +733,8 @@ bool isNonVowel(string ocrp){
 
 string removeSpaces(string input)
 { string output;
-  int length = input.length();
-  for (int i = 0; i < length; i++) {
+  size_t length = input.length();
+  for (size_t i = 0; i < length; i++) {
      if(input[i] != ' ') output+= input[i];
   }
   return output;
@@ -950,7 +950,7 @@ void generateCorrectionPairs(vector<string> &wrong,vector<string> &right,string 
         //cout << vGsz << " " << vIsz << endl;
         int win = vGsz  - vIsz;
         if(win<0) win = -1*win;
-        win = maxIG(win,5);
+        win = std::max(win,5);
         //cout << win << endl;
         //float WER = 0;
         // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
@@ -958,7 +958,7 @@ void generateCorrectionPairs(vector<string> &wrong,vector<string> &right,string 
             size_t minedit = 1000;
             string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
             string sC;
-            for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
+            for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
                 string sCt1 = vecpC[t1];
                 size_t mineditIC = editDist(s1,sCt1);
                 if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1;   }
@@ -986,7 +986,7 @@ void generatePairs(vector<string> &wrong,vector<string> &right,string localFilen
         //cout << vGsz << " " << vIsz << endl;
         int win = vGsz  - vIsz;
         if(win<0) win = -1*win;
-        win = maxIG(win,5);
+        win = std::max(win,5);
         //cout << win << endl;
         //float WER = 0;
         // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
@@ -994,7 +994,7 @@ void generatePairs(vector<string> &wrong,vector<string> &right,string localFilen
             size_t minedit = 1000,minediti;
             string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
             string sC;
-            for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
+            for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
                 string sCt1 = vecpC[t1];
                 size_t mineditIC = editDist(s1,sCt1);
                 if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1; minediti = t1;  }
@@ -1029,7 +1029,7 @@ void generatePairsIEROCR(string localFilenameI,string localFilenameC, string Rep
     //cout << vGsz << " " << vIsz << endl;
     int win = vGsz  - vIsz;
     if(win<0) win = -1*win;
-    win = maxIG(win,20);
+    win = std::max(win,20);
     //cout << win << endl;
     //float WER = 0;
     // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
@@ -1037,7 +1037,7 @@ void generatePairsIEROCR(string localFilenameI,string localFilenameC, string Rep
         size_t minedit = 1000,minediti;
         string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
         string sC;
-        for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
+        for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
             string sCt1 = vecpC[t1];
             size_t mineditIC = editDist(s1,sCt1);
             if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1; minediti = t1;  }
@@ -1072,7 +1072,7 @@ void generatePairsSpaced(vector<string> &wrong,vector<string> &right,string loca
         //cout << vGsz << " " << vIsz << endl;
         int win = vGsz  - vIsz;
         if(win<0) win = -1*win;
-        win = maxIG(win,5);
+        win = std::max(win,5);
         //cout << win << endl;
         //float WER = 0;
         // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
@@ -1080,7 +1080,7 @@ void generatePairsSpaced(vector<string> &wrong,vector<string> &right,string loca
             size_t minedit = 1000,minediti;
             string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
             string sC;
-            for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
+            for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
                 string sCt1 = vecpC[t1];
                 size_t mineditIC = editDist(s1,sCt1);
                 if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1; minediti = t1;  }

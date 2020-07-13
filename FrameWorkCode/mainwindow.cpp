@@ -221,7 +221,7 @@ void MainWindow::on_actionCreateBest2OCR_triggered()
     //cout << vGsz << " " << vIsz << endl;
     int win = vGsz  - vIsz;
     if(win<0) win = -1*win;
-    win = maxIG(win,5);
+    win = std::max(win,5);
 
     //float WER = 0;
     int mineEdDis = 1000;
@@ -240,7 +240,7 @@ void MainWindow::on_actionCreateBest2OCR_triggered()
         //cout << vIBook[t] << endl;
         string s1 = vIBook[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
         //cout << s1 << "s1 " ;
-        for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
+        for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
 
             int EdDis = editDist(vGBook[t1],s1);
             if(EdDis < mineEdDis) {mineEdDis = EdDis; BestString1 = vGBook[t1];}
@@ -301,13 +301,13 @@ void MainWindow::on_actionOpen_triggered()
                     cout << vGsz << " " << vIsz << endl;
                     int win = vGsz  - vIsz;
                     if(win<0) win = -1*win;
-                    win = maxIG(win,5);
+                    win = std::max(win,5);
                     cout << win << endl;
                     float WER = 0;
                     // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
                     for(int t = 0; t < vIsz;t++){
                         string s1 = vIPage[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
-                        for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
+                        for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
                             if (vCPage[t1] == s1) {WER++; break;}
                         }
                     }
@@ -1451,7 +1451,7 @@ void MainWindow::on_actionCreateSuggestionLog_triggered()
     //cout << vGsz << " " << vIsz << endl;
     int win = vGsz  - vIsz;
     if(win<0) win = -1*win;
-    win = maxIG(win,5);
+    win = std::max(win,5);
     //cout << win << endl;
     //float WER = 0;
     // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
@@ -1459,7 +1459,7 @@ void MainWindow::on_actionCreateSuggestionLog_triggered()
         size_t minedit = 1000;
         string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
         string sC;
-        for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
+        for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
             string sCt1 = vecpC[t1];
             size_t mineditIC = editDist(s1,sCt1);
             if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1;   }
@@ -1716,7 +1716,7 @@ void MainWindow::on_actionCreateSuggestionLogNearestPriority_triggered()
        //cout << vGsz << " " << vIsz << endl;
        int win = vGsz  - vIsz;
        if(win<0) win = -1*win;
-       win = maxIG(win,5);
+       win = std::max(win,5);
        //cout << win << endl;
        //float WER = 0;
        // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
@@ -1724,7 +1724,7 @@ void MainWindow::on_actionCreateSuggestionLogNearestPriority_triggered()
            size_t minedit = 1000;
            string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
            string sC;
-           for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
+           for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
                string sCt1 = vecpC[t1];
                size_t mineditIC = editDist(s1,sCt1);
                if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1;   }
@@ -1914,7 +1914,7 @@ void MainWindow::on_actionErrorDetectionRep_triggered()
         //cout << vGsz << " " << vIsz << endl;
         int win = vGsz  - vIsz;
         if(win<0) win = -1*win;
-        win = maxIG(win,5);
+        win = std::max(win,5);
         //cout << win << endl;
         //float WER = 0;
         // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
@@ -1922,7 +1922,7 @@ void MainWindow::on_actionErrorDetectionRep_triggered()
             size_t minedit = 1000;
             string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
             string sC;
-            for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
+            for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
                 string sCt1 = vecpC[t1];
                 size_t mineditIC = editDist(s1,sCt1);
                 if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1;   }
@@ -2017,7 +2017,7 @@ void MainWindow::on_actionErrorDetectWithoutAdaptation_triggered()
         //cout << vGsz << " " << vIsz << endl;
         int win = vGsz  - vIsz;
         if(win<0) win = -1*win;
-        win = maxIG(win,5);
+        win = std::max(win,5);
         //cout << win << endl;
         //float WER = 0;
         // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
@@ -2025,7 +2025,7 @@ void MainWindow::on_actionErrorDetectWithoutAdaptation_triggered()
             size_t minedit = 1000;
             string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
             string sC;
-            for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
+            for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
                 string sCt1 = vecpC[t1];
                 size_t mineditIC = editDist(s1,sCt1);
                 if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1;   }
@@ -2511,7 +2511,7 @@ void MainWindow::on_actionErrorDetectionRepUniq_triggered()
     //cout << vGsz << " " << vIsz << endl;
     int win = vGsz  - vIsz;
     if(win<0) win = -1*win;
-    win = maxIG(win,5);
+    win = std::max(win,5);
     //cout << win << endl;
     //float WER = 0;
     // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
@@ -2519,7 +2519,7 @@ void MainWindow::on_actionErrorDetectionRepUniq_triggered()
         size_t minedit = 1000;
         string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
         string sC;
-        for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
+        for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
             string sCt1 = vecpC[t1];
             size_t mineditIC = editDist(s1,sCt1);
             if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1;   }
