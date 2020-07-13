@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.9
+** Created by: Qt User Interface Compiler version 5.14.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,10 +12,8 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
@@ -80,10 +78,10 @@ public:
     QAction *actionCentreAlign;
     QAction *actionJusitfiedAlign;
     QAction *actionAccuracyLog;
-    QAction *actionHighlight;
-    QAction *actionFontBlack;
-    QAction *actionViewAverageAccuracies;
-    QWidget *centralWidget;
+	QAction *actionHighlight;
+	QAction *actionFontBlack;
+	QAction *actionViewAverageAccuracies;
+   QAction *actionOpen_Project;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QTextEdit *textEdit;
@@ -113,171 +111,172 @@ public:
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QStringLiteral("MainWindow"));
+            MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(1386, 733);
         MainWindow->setMouseTracking(true);
         actionOpen = new QAction(MainWindow);
-        actionOpen->setObjectName(QStringLiteral("actionOpen"));
+        actionOpen->setObjectName(QString::fromUtf8("actionOpen"));
         QIcon icon;
-        icon.addFile(QStringLiteral(":/Images/open.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/Images/open.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionOpen->setIcon(icon);
         actionSave = new QAction(MainWindow);
-        actionSave->setObjectName(QStringLiteral("actionSave"));
+        actionSave->setObjectName(QString::fromUtf8("actionSave"));
         QIcon icon1;
-        icon1.addFile(QStringLiteral(":/Images/save.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8(":/Images/save.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionSave->setIcon(icon1);
         actionSave_As = new QAction(MainWindow);
-        actionSave_As->setObjectName(QStringLiteral("actionSave_As"));
+        actionSave_As->setObjectName(QString::fromUtf8("actionSave_As"));
         QIcon icon2;
-        icon2.addFile(QStringLiteral(":/Images/save-as.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QString::fromUtf8(":/Images/save-as.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionSave_As->setIcon(icon2);
         actionNew = new QAction(MainWindow);
-        actionNew->setObjectName(QStringLiteral("actionNew"));
+        actionNew->setObjectName(QString::fromUtf8("actionNew"));
         QIcon icon3;
-        icon3.addFile(QStringLiteral(":/Images/New.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon3.addFile(QString::fromUtf8(":/Images/New.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionNew->setIcon(icon3);
         actionSpell_Check = new QAction(MainWindow);
-        actionSpell_Check->setObjectName(QStringLiteral("actionSpell_Check"));
+        actionSpell_Check->setObjectName(QString::fromUtf8("actionSpell_Check"));
         QIcon icon4;
-        icon4.addFile(QStringLiteral(":/Images/spellcheck.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon4.addFile(QString::fromUtf8(":/Images/spellcheck.png"), QSize(), QIcon::Normal, QIcon::On);
         actionSpell_Check->setIcon(icon4);
         actionLoad_Next_Page = new QAction(MainWindow);
-        actionLoad_Next_Page->setObjectName(QStringLiteral("actionLoad_Next_Page"));
+        actionLoad_Next_Page->setObjectName(QString::fromUtf8("actionLoad_Next_Page"));
         QIcon icon5;
-        icon5.addFile(QStringLiteral(":/Images/next-page.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon5.addFile(QString::fromUtf8(":/Images/next-page.png"), QSize(), QIcon::Normal, QIcon::On);
         actionLoad_Next_Page->setIcon(icon5);
         actionLoad_Prev_Page = new QAction(MainWindow);
-        actionLoad_Prev_Page->setObjectName(QStringLiteral("actionLoad_Prev_Page"));
+        actionLoad_Prev_Page->setObjectName(QString::fromUtf8("actionLoad_Prev_Page"));
         QIcon icon6;
-        icon6.addFile(QStringLiteral(":/Images/previous-page.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon6.addFile(QString::fromUtf8(":/Images/previous-page.png"), QSize(), QIcon::Normal, QIcon::On);
         actionLoad_Prev_Page->setIcon(icon6);
         actionLoadGDocPage = new QAction(MainWindow);
-        actionLoadGDocPage->setObjectName(QStringLiteral("actionLoadGDocPage"));
+        actionLoadGDocPage->setObjectName(QString::fromUtf8("actionLoadGDocPage"));
         QIcon icon7;
-        icon7.addFile(QStringLiteral(":/Images/SaveLoadPwords1.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon7.addFile(QString::fromUtf8(":/Images/SaveLoadPwords1.png"), QSize(), QIcon::Normal, QIcon::On);
         actionLoadGDocPage->setIcon(icon7);
         actionToDevanagari = new QAction(MainWindow);
-        actionToDevanagari->setObjectName(QStringLiteral("actionToDevanagari"));
+        actionToDevanagari->setObjectName(QString::fromUtf8("actionToDevanagari"));
         QIcon icon8;
-        icon8.addFile(QStringLiteral(":/Images/toDevangari.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon8.addFile(QString::fromUtf8(":/Images/toDevangari.png"), QSize(), QIcon::Normal, QIcon::On);
         actionToDevanagari->setIcon(icon8);
         actionLoadData = new QAction(MainWindow);
-        actionLoadData->setObjectName(QStringLiteral("actionLoadData"));
+        actionLoadData->setObjectName(QString::fromUtf8("actionLoadData"));
         QIcon icon9;
-        icon9.addFile(QStringLiteral(":/Images/LoadData.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon9.addFile(QString::fromUtf8(":/Images/LoadData.png"), QSize(), QIcon::Normal, QIcon::On);
         actionLoadData->setIcon(icon9);
         actionLoadDict = new QAction(MainWindow);
-        actionLoadDict->setObjectName(QStringLiteral("actionLoadDict"));
+        actionLoadDict->setObjectName(QString::fromUtf8("actionLoadDict"));
         actionLoadOCRWords = new QAction(MainWindow);
-        actionLoadOCRWords->setObjectName(QStringLiteral("actionLoadOCRWords"));
+        actionLoadOCRWords->setObjectName(QString::fromUtf8("actionLoadOCRWords"));
         actionLoadDomain = new QAction(MainWindow);
-        actionLoadDomain->setObjectName(QStringLiteral("actionLoadDomain"));
+        actionLoadDomain->setObjectName(QString::fromUtf8("actionLoadDomain"));
         actionLoadSubPS = new QAction(MainWindow);
-        actionLoadSubPS->setObjectName(QStringLiteral("actionLoadSubPS"));
+        actionLoadSubPS->setObjectName(QString::fromUtf8("actionLoadSubPS"));
         actionLoadConfusions = new QAction(MainWindow);
-        actionLoadConfusions->setObjectName(QStringLiteral("actionLoadConfusions"));
+        actionLoadConfusions->setObjectName(QString::fromUtf8("actionLoadConfusions"));
         actionSugg = new QAction(MainWindow);
-        actionSugg->setObjectName(QStringLiteral("actionSugg"));
+        actionSugg->setObjectName(QString::fromUtf8("actionSugg"));
         actionCreateBest2OCR = new QAction(MainWindow);
-        actionCreateBest2OCR->setObjectName(QStringLiteral("actionCreateBest2OCR"));
+        actionCreateBest2OCR->setObjectName(QString::fromUtf8("actionCreateBest2OCR"));
         actionToSlp1 = new QAction(MainWindow);
-        actionToSlp1->setObjectName(QStringLiteral("actionToSlp1"));
+        actionToSlp1->setObjectName(QString::fromUtf8("actionToSlp1"));
         actionCreateSuggestionLog = new QAction(MainWindow);
-        actionCreateSuggestionLog->setObjectName(QStringLiteral("actionCreateSuggestionLog"));
+        actionCreateSuggestionLog->setObjectName(QString::fromUtf8("actionCreateSuggestionLog"));
         actionCreateSuggestionLogNearestPriority = new QAction(MainWindow);
-        actionCreateSuggestionLogNearestPriority->setObjectName(QStringLiteral("actionCreateSuggestionLogNearestPriority"));
+        actionCreateSuggestionLogNearestPriority->setObjectName(QString::fromUtf8("actionCreateSuggestionLogNearestPriority"));
         actionErrorDetectionRep = new QAction(MainWindow);
-        actionErrorDetectionRep->setObjectName(QStringLiteral("actionErrorDetectionRep"));
+        actionErrorDetectionRep->setObjectName(QString::fromUtf8("actionErrorDetectionRep"));
         actionErrorDetectWithoutAdaptation = new QAction(MainWindow);
-        actionErrorDetectWithoutAdaptation->setObjectName(QStringLiteral("actionErrorDetectWithoutAdaptation"));
+        actionErrorDetectWithoutAdaptation->setObjectName(QString::fromUtf8("actionErrorDetectWithoutAdaptation"));
         actionCPair = new QAction(MainWindow);
-        actionCPair->setObjectName(QStringLiteral("actionCPair"));
+        actionCPair->setObjectName(QString::fromUtf8("actionCPair"));
         actionToSlp1_2 = new QAction(MainWindow);
-        actionToSlp1_2->setObjectName(QStringLiteral("actionToSlp1_2"));
+        actionToSlp1_2->setObjectName(QString::fromUtf8("actionToSlp1_2"));
         actionToDev = new QAction(MainWindow);
-        actionToDev->setObjectName(QStringLiteral("actionToDev"));
+        actionToDev->setObjectName(QString::fromUtf8("actionToDev"));
         actionExtractDev = new QAction(MainWindow);
-        actionExtractDev->setObjectName(QStringLiteral("actionExtractDev"));
+        actionExtractDev->setObjectName(QString::fromUtf8("actionExtractDev"));
         actionPrimarySecOCRPair = new QAction(MainWindow);
-        actionPrimarySecOCRPair->setObjectName(QStringLiteral("actionPrimarySecOCRPair"));
+        actionPrimarySecOCRPair->setObjectName(QString::fromUtf8("actionPrimarySecOCRPair"));
         actionCPairIEROcrVsCorrect = new QAction(MainWindow);
-        actionCPairIEROcrVsCorrect->setObjectName(QStringLiteral("actionCPairIEROcrVsCorrect"));
+        actionCPairIEROcrVsCorrect->setObjectName(QString::fromUtf8("actionCPairIEROcrVsCorrect"));
         actionEditDistRep = new QAction(MainWindow);
-        actionEditDistRep->setObjectName(QStringLiteral("actionEditDistRep"));
+        actionEditDistRep->setObjectName(QString::fromUtf8("actionEditDistRep"));
         actionConfusionFreqHist = new QAction(MainWindow);
-        actionConfusionFreqHist->setObjectName(QStringLiteral("actionConfusionFreqHist"));
+        actionConfusionFreqHist->setObjectName(QString::fromUtf8("actionConfusionFreqHist"));
         actionCPairGEROcrVsCorrect = new QAction(MainWindow);
-        actionCPairGEROcrVsCorrect->setObjectName(QStringLiteral("actionCPairGEROcrVsCorrect"));
+        actionCPairGEROcrVsCorrect->setObjectName(QString::fromUtf8("actionCPairGEROcrVsCorrect"));
         actionFilterOutGT50EditDisPairs = new QAction(MainWindow);
-        actionFilterOutGT50EditDisPairs->setObjectName(QStringLiteral("actionFilterOutGT50EditDisPairs"));
+        actionFilterOutGT50EditDisPairs->setObjectName(QString::fromUtf8("actionFilterOutGT50EditDisPairs"));
         actionPrepareFeatures = new QAction(MainWindow);
-        actionPrepareFeatures->setObjectName(QStringLiteral("actionPrepareFeatures"));
+        actionPrepareFeatures->setObjectName(QString::fromUtf8("actionPrepareFeatures"));
         actionErrorDetectionRepUniq = new QAction(MainWindow);
-        actionErrorDetectionRepUniq->setObjectName(QStringLiteral("actionErrorDetectionRepUniq"));
+        actionErrorDetectionRepUniq->setObjectName(QString::fromUtf8("actionErrorDetectionRepUniq"));
         actionSanskrit = new QAction(MainWindow);
-        actionSanskrit->setObjectName(QStringLiteral("actionSanskrit"));
+        actionSanskrit->setObjectName(QString::fromUtf8("actionSanskrit"));
         actionHindi = new QAction(MainWindow);
-        actionHindi->setObjectName(QStringLiteral("actionHindi"));
+        actionHindi->setObjectName(QString::fromUtf8("actionHindi"));
         actionEnglish = new QAction(MainWindow);
-        actionEnglish->setObjectName(QStringLiteral("actionEnglish"));
+        actionEnglish->setObjectName(QString::fromUtf8("actionEnglish"));
         actionAllFontProperties = new QAction(MainWindow);
-        actionAllFontProperties->setObjectName(QStringLiteral("actionAllFontProperties"));
+        actionAllFontProperties->setObjectName(QString::fromUtf8("actionAllFontProperties"));
         QIcon icon10;
-        icon10.addFile(QStringLiteral(":/Images/AllFont.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon10.addFile(QString::fromUtf8(":/Images/AllFont.png"), QSize(), QIcon::Normal, QIcon::On);
         actionAllFontProperties->setIcon(icon10);
         actionBold = new QAction(MainWindow);
-        actionBold->setObjectName(QStringLiteral("actionBold"));
+        actionBold->setObjectName(QString::fromUtf8("actionBold"));
         actionUnBold = new QAction(MainWindow);
-        actionUnBold->setObjectName(QStringLiteral("actionUnBold"));
+        actionUnBold->setObjectName(QString::fromUtf8("actionUnBold"));
         actionLeftAlign = new QAction(MainWindow);
-        actionLeftAlign->setObjectName(QStringLiteral("actionLeftAlign"));
+        actionLeftAlign->setObjectName(QString::fromUtf8("actionLeftAlign"));
         QIcon icon11;
-        icon11.addFile(QStringLiteral(":/Images/AlignLeft.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon11.addFile(QString::fromUtf8(":/Images/AlignLeft.png"), QSize(), QIcon::Normal, QIcon::On);
         actionLeftAlign->setIcon(icon11);
         actionRightAlign = new QAction(MainWindow);
-        actionRightAlign->setObjectName(QStringLiteral("actionRightAlign"));
+        actionRightAlign->setObjectName(QString::fromUtf8("actionRightAlign"));
         QIcon icon12;
-        icon12.addFile(QStringLiteral(":/Images/AlignRight.png"), QSize(), QIcon::Normal, QIcon::Off);
-        icon12.addFile(QStringLiteral(":/Images/AlignCenter.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon12.addFile(QString::fromUtf8(":/Images/AlignRight.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon12.addFile(QString::fromUtf8(":/Images/AlignCenter.png"), QSize(), QIcon::Normal, QIcon::On);
         actionRightAlign->setIcon(icon12);
         actionCentreAlign = new QAction(MainWindow);
-        actionCentreAlign->setObjectName(QStringLiteral("actionCentreAlign"));
+        actionCentreAlign->setObjectName(QString::fromUtf8("actionCentreAlign"));
         QIcon icon13;
-        icon13.addFile(QStringLiteral(":/Images/AlignCenter.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon13.addFile(QString::fromUtf8(":/Images/AlignCenter.png"), QSize(), QIcon::Normal, QIcon::On);
         actionCentreAlign->setIcon(icon13);
         actionJusitfiedAlign = new QAction(MainWindow);
-        actionJusitfiedAlign->setObjectName(QStringLiteral("actionJusitfiedAlign"));
+        actionJusitfiedAlign->setObjectName(QString::fromUtf8("actionJusitfiedAlign"));
         QIcon icon14;
-        icon14.addFile(QStringLiteral(":/Images/JustifiedAlign.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon14.addFile(QString::fromUtf8(":/Images/JustifiedAlign.png"), QSize(), QIcon::Normal, QIcon::On);
         actionJusitfiedAlign->setIcon(icon14);
         actionAccuracyLog = new QAction(MainWindow);
-        actionAccuracyLog->setObjectName(QStringLiteral("actionAccuracyLog"));
-        actionHighlight = new QAction(MainWindow);
-        actionHighlight->setObjectName(QStringLiteral("actionHighlight"));
-        actionHighlight->setChecked(false);
-        actionHighlight->setEnabled(true);
-        QIcon icon15;
-        icon15.addFile(QStringLiteral(":/Images/highlight-icon.png"), QSize(), QIcon::Normal, QIcon::On);
-        actionHighlight->setIcon(icon15);
-        actionFontBlack = new QAction(MainWindow);
-        actionFontBlack->setObjectName(QStringLiteral("actionFontBlack"));
-        actionViewAverageAccuracies = new QAction(MainWindow);
-        actionViewAverageAccuracies->setObjectName(QStringLiteral("actionViewAverageAccuracies"));
+		actionAccuracyLog->setObjectName(QStringLiteral("actionAccuracyLog"));
+		actionHighlight = new QAction(MainWindow);
+		actionHighlight->setObjectName(QStringLiteral("actionHighlight"));
+		actionHighlight->setChecked(false);
+		actionHighlight->setEnabled(true);
+		QIcon icon15;
+		icon15.addFile(QStringLiteral(":/Images/highlight-icon.png"), QSize(), QIcon::Normal, QIcon::On);
+		actionHighlight->setIcon(icon15);
+		actionFontBlack = new QAction(MainWindow);
+		actionFontBlack->setObjectName(QStringLiteral("actionFontBlack"));
+		actionViewAverageAccuracies = new QAction(MainWindow);
+		actionViewAverageAccuracies->setObjectName(QStringLiteral("actionViewAverageAccuracies"));
+		actionAccuracyLog->setObjectName(QStringLiteral("actionAccuracyLog"));
         centralWidget = new QWidget(MainWindow);
-        centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
-        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
         layoutWidget->setGeometry(QRect(9, 71, 1271, 571));
         horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
         textEdit = new QTextEdit(layoutWidget);
-        textEdit->setObjectName(QStringLiteral("textEdit"));
+        textEdit->setObjectName(QString::fromUtf8("textEdit"));
         textEdit->setMaximumSize(QSize(120, 16777215));
         QFont font;
-        font.setFamily(QStringLiteral("FreeSans"));
+        font.setFamily(QString::fromUtf8("FreeSans"));
         font.setItalic(true);
         textEdit->setFont(font);
         textEdit->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
@@ -286,9 +285,9 @@ public:
         horizontalLayout->addWidget(textEdit);
 
         textBrowser = new QTextBrowser(layoutWidget);
-        textBrowser->setObjectName(QStringLiteral("textBrowser"));
+        textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
         QFont font1;
-        font1.setFamily(QStringLiteral("Shobhika"));
+        font1.setFamily(QString::fromUtf8("Shobhika"));
         font1.setPointSize(16);
         font1.setItalic(false);
         textBrowser->setFont(font1);
@@ -302,7 +301,7 @@ public:
         horizontalLayout->addWidget(textBrowser);
 
         graphicsView = new QGraphicsView(layoutWidget);
-        graphicsView->setObjectName(QStringLiteral("graphicsView"));
+        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
         graphicsView->setMinimumSize(QSize(608, 0));
         graphicsView->setMaximumSize(QSize(608, 16777215));
         graphicsView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
@@ -315,15 +314,15 @@ public:
         horizontalLayout->addWidget(graphicsView);
 
         layoutWidget1 = new QWidget(centralWidget);
-        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
         layoutWidget1->setGeometry(QRect(9, 9, 521, 58));
         verticalLayout_2 = new QVBoxLayout(layoutWidget1);
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
         progressBar = new QProgressBar(layoutWidget1);
-        progressBar->setObjectName(QStringLiteral("progressBar"));
+        progressBar->setObjectName(QString::fromUtf8("progressBar"));
         progressBar->setMaximumSize(QSize(500, 16777215));
         progressBar->setValue(0);
         progressBar->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
@@ -331,21 +330,21 @@ public:
         verticalLayout_2->addWidget(progressBar);
 
         lineEdit = new QLineEdit(layoutWidget1);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
         lineEdit->setMaximumSize(QSize(500, 16777215));
 
         verticalLayout_2->addWidget(lineEdit);
 
         layoutWidget2 = new QWidget(centralWidget);
         layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(670, 10, 421, 27));
+        layoutWidget2->setGeometry(QRect(670, 40, 404, 27));
         horizontalLayout_2 = new QHBoxLayout(layoutWidget2);
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
         pushButton_3 = new QPushButton(layoutWidget2);
-        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
 
         horizontalLayout_2->addWidget(pushButton_3);
 
@@ -354,7 +353,7 @@ public:
         horizontalLayout_2->addItem(horizontalSpacer);
 
         pushButton_2 = new QPushButton(layoutWidget2);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
 
         horizontalLayout_2->addWidget(pushButton_2);
 
@@ -363,29 +362,28 @@ public:
         viewallcomments->setGeometry(QRect(671, 41, 201, 25));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1386, 22));
+        menuBar->setObjectName(QString::fromUtf8("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 1386, 21));
         menuOCR_Correction_Window = new QMenu(menuBar);
-        menuOCR_Correction_Window->setObjectName(QStringLiteral("menuOCR_Correction_Window"));
+        menuOCR_Correction_Window->setObjectName(QString::fromUtf8("menuOCR_Correction_Window"));
         menuCreateReports = new QMenu(menuBar);
-        menuCreateReports->setObjectName(QStringLiteral("menuCreateReports"));
+        menuCreateReports->setObjectName(QString::fromUtf8("menuCreateReports"));
         menuSaveVariables = new QMenu(menuBar);
-        menuSaveVariables->setObjectName(QStringLiteral("menuSaveVariables"));
+        menuSaveVariables->setObjectName(QString::fromUtf8("menuSaveVariables"));
         menuConvertFiles = new QMenu(menuBar);
-        menuConvertFiles->setObjectName(QStringLiteral("menuConvertFiles"));
+        menuConvertFiles->setObjectName(QString::fromUtf8("menuConvertFiles"));
         menuFeatureExtraction = new QMenu(menuBar);
-        menuFeatureExtraction->setObjectName(QStringLiteral("menuFeatureExtraction"));
+        menuFeatureExtraction->setObjectName(QString::fromUtf8("menuFeatureExtraction"));
         menuSelectLanguage = new QMenu(menuBar);
-        menuSelectLanguage->setObjectName(QStringLiteral("menuSelectLanguage"));
+        menuSelectLanguage->setObjectName(QString::fromUtf8("menuSelectLanguage"));
         menuFontAndLayout = new QMenu(menuBar);
-        menuFontAndLayout->setObjectName(QStringLiteral("menuFontAndLayout"));
+        menuFontAndLayout->setObjectName(QString::fromUtf8("menuFontAndLayout"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        mainToolBar->setEnabled(true);
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
+        statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
         QWidget::setTabOrder(textBrowser, graphicsView);
 
@@ -397,6 +395,7 @@ public:
         menuBar->addAction(menuConvertFiles->menuAction());
         menuBar->addAction(menuFeatureExtraction->menuAction());
         menuOCR_Correction_Window->addAction(actionNew);
+        menuOCR_Correction_Window->addAction(actionOpen_Project);
         menuOCR_Correction_Window->addAction(actionOpen);
         menuOCR_Correction_Window->addAction(actionSave);
         menuOCR_Correction_Window->addAction(actionSave_As);
@@ -571,15 +570,6 @@ public:
         actionCentreAlign->setText(QApplication::translate("MainWindow", "CentreAlign", Q_NULLPTR));
         actionJusitfiedAlign->setText(QApplication::translate("MainWindow", "JusitfiedAlign", Q_NULLPTR));
         actionAccuracyLog->setText(QApplication::translate("MainWindow", "AccuracyLog", Q_NULLPTR));
-        actionHighlight->setText(QApplication::translate("MainWindow", "Highlight (Ctrl+H)", Q_NULLPTR));
-#ifndef QT_NO_TOOLTIP
-        actionHighlight->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Highlight<span style=\" font-weight:600;\">(Ctrl+H)</span></p></body></html>", Q_NULLPTR));
-#endif // QT_NO_TOOLTIP
-#ifndef QT_NO_SHORTCUT
-        actionHighlight->setShortcut(QApplication::translate("MainWindow", "Ctrl+H", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        actionFontBlack->setText(QApplication::translate("MainWindow", "FontBlack", Q_NULLPTR));
-        actionViewAverageAccuracies->setText(QApplication::translate("MainWindow", "ViewAverageAccuracies", Q_NULLPTR));
         textBrowser->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -587,7 +577,6 @@ public:
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", Q_NULLPTR));
         pushButton_3->setText(QApplication::translate("MainWindow", "Compare Corrector's Output", Q_NULLPTR));
         pushButton_2->setText(QApplication::translate("MainWindow", "Compare Verifier's Output", Q_NULLPTR));
-        viewallcomments->setText(QApplication::translate("MainWindow", "Comments and Accuracy", Q_NULLPTR));
         menuOCR_Correction_Window->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
         menuCreateReports->setTitle(QApplication::translate("MainWindow", "CreateReports", Q_NULLPTR));
         menuSaveVariables->setTitle(QApplication::translate("MainWindow", "SaveVariables", Q_NULLPTR));

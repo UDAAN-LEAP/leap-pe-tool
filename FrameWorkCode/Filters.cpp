@@ -4,12 +4,12 @@ void Filter::parse_xml()
 {
 }
 
-std::string Filter::get_name()
+QString& Filter::get_name()
 {
-	return std::string();
+	return mName;
 }
 
-std::string Filter::get_extensions()
+QVector<QString>& Filter::get_extensions()
 {
-	return std::string();
+	return mExtensions;
 }

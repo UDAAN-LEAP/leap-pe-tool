@@ -307,6 +307,12 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionHighlight"/>
     <addaction name="actionFontBlack"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionView_File_Hierarchy"/>
+   </widget>
    <addaction name="menuSelectLanguage"/>
    <addaction name="menuOCR_Correction_Window"/>
    <addaction name="menuCreateReports"/>
@@ -314,6 +320,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="menuFontAndLayout"/>
    <addaction name="menuConvertFiles"/>
    <addaction name="menuFeatureExtraction"/>
+   <addaction name="menuView"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="enabled">
@@ -729,6 +736,11 @@ p, li { white-space: pre-wrap; }
  <action name="actionOpen_Project">
    <property name="text">
     <string>Open Project</string>
+   </property>
+  </action>
+  <action name="actionView_File_Hierarchy">
+   <property name="text">
+    <string>View File Hierarchy</string>
    </property>
   </action>
  </widget>

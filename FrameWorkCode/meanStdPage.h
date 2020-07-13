@@ -23,7 +23,7 @@ while(ssIPagec >> szWordsIstr) szWordsI ++;
 int vsz = vCPage.size();
 int win = szWordsI - vsz;
 if(win < 0) win = -1*win;
-win = maxIG(win,5);
+win = std::max(win,5);
 std::ifstream ssIPage(localmFilename2.toUtf8().constData());
 //string localstr;
 int i = 0;
@@ -33,7 +33,7 @@ if (ssIPage.is_open()){
 
         while(ssIPage >> localstr){ localstr = toslp1(localstr);
             if((GBook[(localstr)] > 0) || (PWords[localstr] > 0)){
-                for(int t1 = maxIG(i-win,0); t1 < min(i+win,vsz); t1++){
+                for(int t1 = std::max(i-win,0); t1 < min(i+win,vsz); t1++){
                     if (vCPage[t1] == localstr) {/*cout <<  vCPage[t1] << " " << localstr<< endl;*/ countBGCorrectWords++; break;}
                 }
                 size_t sz = localstr.size(); //cout << "data " << sz << endl;
