@@ -21,5 +21,6 @@
         <file>AllFont.png</file>
         <file>toDevangari.png</file>
         <file>JustifiedAlign.png</file>
+        <file>highlight-icon.png</file>
     </qresource>
 </RCC>

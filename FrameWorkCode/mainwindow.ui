@@ -163,8 +163,8 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>670</x>
-      <y>40</y>
-      <width>404</width>
+      <y>10</y>
+      <width>421</width>
       <height>27</height>
      </rect>
     </property>
@@ -193,6 +193,39 @@ p, li { white-space: pre-wrap; }
       <widget class="QPushButton" name="pushButton_2">
        <property name="text">
         <string>Compare Verifier's Output</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>40</y>
+      <width>531</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLineEdit" name="commentsfield">
+       <property name="text">
+        <string>Add Highlights/Select Text, then add Comments</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="addcomments">
+       <property name="text">
+        <string>Add</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="viewallcomments">
+       <property name="text">
+        <string>View All</string>
        </property>
       </widget>
      </item>
@@ -289,6 +322,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionRightAlign"/>
     <addaction name="actionCentreAlign"/>
     <addaction name="actionJusitfiedAlign"/>
+    <addaction name="actionHighlight"/>
    </widget>
    <addaction name="menuSelectLanguage"/>
    <addaction name="menuOCR_Correction_Window"/>
@@ -331,6 +365,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionCentreAlign"/>
    <addaction name="actionRightAlign"/>
    <addaction name="actionJusitfiedAlign"/>
+   <addaction name="actionHighlight"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -674,6 +709,25 @@ p, li { white-space: pre-wrap; }
     <string>AccuracyLog</string>
    </property>
   </action>
+  <action name="actionHighlight">
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normalon>:/Images/highlight-icon.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Highlight</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
@@ -681,7 +735,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>graphicsView</tabstop>
  </tabstops>
  <resources>
-  <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
  </resources>

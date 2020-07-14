@@ -10,6 +10,7 @@
 #include "DiffView.h"
 #include "diff_match_patch.h"
 #include "interndiffview.h"
+#include "commentsview.h"
 #include <string>
 #include <fstream>
 #include <vector>
@@ -34,8 +35,11 @@ bool prevTRig = 0;
 //map<string, int> GPage; trie TGPage;
 //map<string, int> PWords;//Common/Possitive OCR Words // already defined before
 map<string, string> CPair;//Correction Pairs
-
-
+bool highlightchecked = false;
+map<QString, QString> commentdict;
+map<QString,  vector<int>> commentederrors;
+int openedFileChars;
+int openedFileWords;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -261,6 +265,8 @@ void MainWindow::on_actionCreateBest2OCR_triggered()
 
 void MainWindow::on_actionOpen_triggered()
 {
+    commentdict.clear();
+    commentederrors.clear();
     if(!fileFlag)
     {
         string key;
@@ -420,6 +426,9 @@ void MainWindow::on_actionOpen_triggered()
                     QTextStream in(&sFile);
 					in.setCodec("UTF-8");
                     QString text = in.readAll();
+                    openedFileChars = text.length();
+                    QString  simplifiedtext = text.simplified();
+                    openedFileWords = simplifiedtext.count(" ");
                     sFile.close();
                     //ui->textBrowser->setPlainText(text);
                     string str1 = text.toUtf8().constData();
@@ -467,6 +476,9 @@ void MainWindow::on_actionOpen_triggered()
                     QTextStream in(&sFile);
 					in.setCodec("UTF-8");
                     QString text = in.readAll();
+                    openedFileChars = text.length();
+                    QString  simplifiedtext = text.simplified();
+                    openedFileWords = simplifiedtext.count(" ");
                     sFile.close();
                     //ui->textBrowser->setPlainText(text);
                     string str1 = text.toUtf8().constData();
@@ -701,7 +713,10 @@ bool RightclickFlag = 0;
 string selectedStr;
 //GIVE EVENT TO TEXT BROWZER INSTEAD OF MAINWINDOW
 void MainWindow::mousePressEvent(QMouseEvent *ev)
-{   on_actionLoadData_triggered();
+{
+    //on_actionLoadData_triggered(); //Sanoj
+
+
     ui->textBrowser->cursorForPosition(ev->pos());
 
     int nMilliseconds = myTimer.elapsed();
@@ -860,6 +875,19 @@ void MainWindow::textChangedSlot(){
 }
 */
 
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
+{
+    qDebug()<<"Mouse event release";
+
+    if(highlightchecked)
+    {
+        QTextCharFormat  format;
+        format.setBackground(Qt::yellow);
+        ui->textBrowser->textCursor().mergeCharFormat(format);
+        qDebug()<<"Selected Text release";
+    }
+}
 
 void MainWindow::menuSelection(QAction* action)
 {
@@ -2723,17 +2751,17 @@ void MainWindow::on_actionAllFontProperties_triggered() //Sanoj
 
 
 
-void MainWindow::on_actionSaveAsODF_triggered()//Sanoj
-{
-    QString s = ui->textBrowser->toHtml();
-    QTextDocument *doc = new QTextDocument();
-    doc->setHtml(s);
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-        "untitled",tr("Open Document ('''.odt)"));
-    QTextDocumentWriter odfWritter(fileName);
-    odfWritter.write(doc); // doc is QTextDocument*
+//void MainWindow::on_actionSaveAsODF_triggered()//Sanoj
+//{
+//    QString s = ui->textBrowser->toHtml();
+//    QTextDocument *doc = new QTextDocument();
+//    doc->setHtml(s);
+//    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+//        "untitled",tr("Open Document ('''.odt)"));
+//    QTextDocumentWriter odfWritter(fileName);
+//    odfWritter.write(doc); // doc is QTextDocument*
 
-}
+//}
 
 
 
@@ -2887,13 +2915,13 @@ void MainWindow::on_actionAccuracyLog_triggered()
 
     file = QFileDialog::getOpenFileName(this,"Open Output File"); //open file
     int loc =  file.lastIndexOf("/");
-    QString folder = file.left(loc); //fetch parent tdirectory
+    QString folder = file.mid(0,loc); //fetch parent tdirectory
 
     QDir directory(folder);
     QStringList textfiles = directory.entryList((QStringList()<<"*.txt", QDir::Files)); //fetch all files in the parent directory
 
     int loc1 = folder.lastIndexOf("/");
-    QString qcsvfolder =  folder.left(loc1) +"/AccuracyLog.csv";
+    QString qcsvfolder =  folder.mid(0,loc1) +"/AccuracyLog.csv";
     string csvfolder = qcsvfolder.toUtf8().constData();
 
     std::ofstream csvFile(csvfolder);
@@ -2995,3 +3023,106 @@ void MainWindow::on_actionAccuracyLog_triggered()
 
 }
 
+
+void MainWindow::on_actionHighlight_toggled(bool arg1)
+{
+    highlightchecked = arg1;
+}
+
+
+void MainWindow::on_actionHighlight_triggered()
+{
+//    QString previouscomment = ui->commentsfield->text();
+//    int loc = previouscomment.lastIndexOf(":");
+//    previouscomment = previouscomment.mid(loc, previouscomment.length()-loc);
+//    if(previouscomment!="" | previouscomment!=" ")
+//    {
+//        on_addcomments_clicked();
+//    }
+    QTextCursor cursor = ui->textBrowser->textCursor();
+    QString text = cursor.selectedText();
+    int pos = ui->textBrowser->textCursor().selectionStart();
+    //qDebug()<<text;
+    QString key =  QString::number(pos) + text;
+
+    QTextCharFormat  format  = cursor.charFormat();
+    if(ui->textBrowser->textBackgroundColor() == Qt::yellow)
+    {
+        format.setBackground(Qt::transparent);
+        if(commentdict.find(key)!=commentdict.end())
+        {
+            commentdict.erase(key);
+        }
+        if(commentederrors.find(key)!=commentederrors.end())
+        {
+             commentederrors.erase(key);
+        }
+    }
+    else
+    {
+        format.setBackground(Qt::yellow);
+        ui->commentsfield->setText(text + ":");
+        int chars = text.length();
+        QString simplifiedtext = text.simplified();
+        int words = simplifiedtext.count(" ") + 1;
+
+        vector<int> counts;
+        counts.push_back(chars); counts.push_back(words);
+        commentederrors[key] = counts;
+
+    }
+    ui->textBrowser->textCursor().mergeCharFormat(format);
+    ui->commentsfield->setFocus();
+}
+
+void MainWindow::on_addcomments_clicked()
+{
+    QString commentstext = ui->commentsfield->text().toUtf8().constData();
+    int cursorpos = ui->textBrowser->textCursor().selectionStart();
+    int loc = commentstext.indexOf(":");
+    QString highlightedtext = commentstext.mid(0,loc) ;
+    QString comment = commentstext.mid(loc+1,commentstext.length()-loc);
+
+    QString key = QString::number(cursorpos) + highlightedtext;
+    QString value = commentstext;
+
+    if(comment!="" | comment!=" ")
+    {
+        commentdict[key] = value;
+        qDebug()<< commentdict <<"commenteddict";
+    }
+}
+
+void MainWindow::on_viewallcomments_clicked()
+{
+    QString localFilename = mFilename;
+    QString commentFilename = localFilename.replace(".txt","-comments.txt");
+    commentFilename = localFilename.replace(".html","-comments.txt");
+    qDebug() << commentFilename;
+    std::ofstream commentfile;
+    commentfile.open(commentFilename.toUtf8().constData(), ofstream::out | ofstream::trunc);
+    int charerr = 0 ,worderr = 0;
+    map<QString, QString>::iterator it1;
+    map<QString, vector<int>>::iterator it2;
+    for(it1 = commentdict.begin(), it2 = commentederrors.begin(); it1!= commentdict.end(); it1++,it2++)
+    {
+        commentfile<< it1->second.toUtf8().constData()<<"\n";
+        qDebug()<< it1->second.toUtf8().constData()<<" iterating"<<"\n";
+        auto wordchars = it2->second;
+        charerr += wordchars[0];
+        worderr += wordchars[1];
+
+    }
+    commentfile.flush();
+    commentfile.close();
+
+    float characc = (float)(openedFileChars - charerr)/(float)openedFileChars*100;
+    float wordacc = (float)(openedFileWords - worderr)/(float)openedFileWords*100
+            ;
+    wordacc = ((float)lround(wordacc*100))/100;
+    characc = ((float)lround(characc*100))/100;
+
+    CommentsView *cv = new CommentsView(worderr,charerr,wordacc,characc,commentFilename);
+    cv->show();
+
+}

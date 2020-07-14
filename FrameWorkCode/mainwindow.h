@@ -71,6 +71,8 @@ private slots:
 
     void mousePressEvent(QMouseEvent *ev);
 
+    void mouseReleaseEvent(QMouseEvent *ev);
+
     //void mouseMoveEvent(QMouseEvent *event);
 
     void menuSelection(QAction* action);
@@ -158,7 +160,7 @@ private slots:
 
     void on_actionUnBold_triggered();
 
-    void on_actionSaveAsODF_triggered();
+//    void on_actionSaveAsODF_triggered();
 
     //void on_pushButton_clicked();
 
@@ -169,6 +171,14 @@ private slots:
     void on_actionJusitfiedAlign_triggered();
 
     void on_actionAccuracyLog_triggered();
+    
+    void on_actionHighlight_toggled(bool arg1);
+
+    void on_actionHighlight_triggered();
+
+    void on_addcomments_clicked();
+    
+    void on_viewallcomments_clicked();
     
 private:
     Ui::MainWindow *ui;
