@@ -1,15 +1,22 @@
 #include "Filters.h"
+#include <string>
+#include <QStringList>
 
-void Filter::parse_xml()
-{
+Filter::Filter(const std::string & pName, const std::string & pExt) {
+	m_name.fromStdString(pName);
+	QString exts;
+	exts.fromStdString(pExt);
+	QRegExp exp(";");
+	QStringList list = exts.split(QChar(';'));
+	m_extensions = list;
 }
 
-QString& Filter::get_name()
+QString Filter::name() const
 {
-	return mName;
+	return m_name;
 }
 
-QVector<QString>& Filter::get_extensions()
+QStringList  Filter::extensions() const
 {
-	return mExtensions;
+	return m_extensions;
 }

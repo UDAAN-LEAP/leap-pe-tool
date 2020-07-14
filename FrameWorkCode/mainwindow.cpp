@@ -16,7 +16,7 @@
 #include <fstream>
 #include <vector>
 #include <utility> // std::pair
-
+#include "ProjectHierarchyWindow.h"
 #include "3rdParty/RapidXML/rapidxml.hpp"
 //# include <QTask>
 
@@ -3612,13 +3612,8 @@ void MainWindow::on_actionOpen_Project_triggered() {
 	rapidxml::xml_document<> doc;
 	QFile xml = QFileDialog::getOpenFileName(this, "Open Verifier's Output File");
 	xml.open(QIODevice::ReadOnly);
-	QTextStream stream(&xml);
-	QString content;
-	content = stream.readAll();
-	std::string stdcontent = content.toStdString();
-	doc.parse<0>((char*)stdcontent.data());
-	mProject.parse_project_xml(doc);
-
-	explore(doc.first_node());
-
+	mProject.process_xml(xml);
+	ProjectHierarchyWindow * phw = new ProjectHierarchyWindow(mProject);
+	phw->show();
+	
 }

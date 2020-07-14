@@ -796,13 +796,13 @@ void findConfisionsNindex(string ocr, string correct, vector<string>& vec, vecto
     size_t sz = ocr.size();
     string ocrp = "";
     size_t t = 0;
-    int s1p;
+    size_t s1p;
 
     while(1){
         string ocrn ="";
         string correctn ="";
         string s1 = ocr.substr(t,1), s2 = correct.substr(t,1);
-    int s1t = t;
+		size_t s1t = t;
         //cout << "t = " << t << " " << sz << endl;
         // deletion
         if(s2 == " ") {
