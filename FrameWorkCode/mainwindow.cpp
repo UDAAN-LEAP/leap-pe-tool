@@ -274,7 +274,7 @@ void MainWindow::on_actionOpen_triggered()
         timefile.close();
         file = QFileDialog::getOpenFileName(this,"Open a File");
     }
-       //qDebug() <<"here" << file <<endl;
+       
         QString localmFilename1;
         if(!file.isEmpty())
         { //CPair["BApyopetam"] = "BAzyopetam"; CPairRight["BAzyopetam"]++;
@@ -285,115 +285,7 @@ void MainWindow::on_actionOpen_triggered()
                 mFilename = file;
                 localmFilename1 = mFilename;
                 string localFilename =  localmFilename1.toUtf8().constData();
-                // load vIPage and vCPage for calculating WER if corresponding CPage exist
-                /*vIPage.clear(); vCPage.clear();
-                //QString localmFilename1 = mFilename;
-                std::ifstream ssIPage(localmFilename1.toUtf8().constData());
-                string localstr;
-                while(ssIPage >> localstr) vIPage.push_back(localstr); ssIPage.close();
-                localmFilename1.replace("Inds","Correct");
-                std::ifstream ssCPage(localmFilename1.toUtf8().constData()); localmFilename1 = mFilename;
 
-                vCPage.clear();
-                if (ssCPage.is_open()){
-                 while(ssCPage >> localstr) {vCPage.push_back(localstr); } ssCPage.close();
-                    int vGsz = vCPage.size(), vIsz =  vIPage.size();
-                    cout << vGsz << " " << vIsz << endl;
-                    int win = vGsz  - vIsz;
-                    if(win<0) win = -1*win;
-                    win = std::max(win,5);
-                    cout << win << endl;
-                    float WER = 0;
-                    // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
-                    for(int t = 0; t < vIsz;t++){
-                        string s1 = vIPage[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
-                        for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
-                            if (vCPage[t1] == s1) {WER++; break;}
-                        }
-                    }
-                    cout << vIsz - WER << endl;
-                    ui->lineEdit->setText("Page WER = " + QString::number((vIsz-WER)*100/vIsz));
-                }
-                */
-                // load and set data in Browzer
-                // if file exist in corrected open that else open file in Indz
-//                QString tesslocalmFilename = localmFilename1;
-//                Pix * image1;
-//                image1 = pixRead((tesslocalmFilename.replace(QString("txt"),QString("jpeg"))).toUtf8().constData());//phototest.tif
-
-//                tesseract::TessBaseAPI *api = new tesseract::TessBaseAPI();
-//                api->Init(NULL, "hin+san");
-//                api->SetImage(image1);
-//                Boxa* boxes = api->GetComponentImages(tesseract::RIL_TEXTLINE, true, NULL, NULL);//RIL_SYMBOL
-//                printf("Found %d textline image components.\n", boxes->n);
-//                vs.clear();vx.clear();vy.clear();vw.clear();vh.clear();
-//                vs.push_back(""); vx.push_back(1); vy.push_back(1); vw.push_back(1); vh.push_back(1); vright.push_back(1);
-//                int n = boxes->n;
-//                for(int i = 0; i < n; i++){
-//                    BOX* box = boxaGetBox(boxes, i, L_CLONE);
-//                    api->SetRectangle(box->x, box->y, box->w, box->h);
-//                    string ocrResult = api->GetUTF8Text(); //string ocrResultstr = ocrResult;
-//                    QString qstr = QString::fromStdString(ocrResult);
-//                    vs.push_back(qstr); vx.push_back(box->x); vy.push_back(box->y); vw.push_back(box->w); vh.push_back(box->h); vright.push_back(box->w + box->x);
-//                    qDebug() << qstr << vx << vy << vw << vh << vright << endl;
-                    //                float leftmean = accumulate(vx.begin(),vx.end(),0)/n;
-                    //                float leftdiff = 0;
-                    //                float rightmean = accumulate(vright.begin(),vright.end(),0)/n;
-                    //                float rightdiff = 0;
-                    //                 for(int i=0; i<n; i++)
-                    //                 {
-                    //                     leftdiff += abs(vx[i]-leftmean);
-                    //                     rightdiff += abs(vright[i]-rightmean);
-                    
-                    //                 }
-                    //                 float leftvariance = leftdiff/n;
-                    //                 float rightvariance = rightdiff/n;
-                    //                 qDebug() << leftvariance<< "-" <<leftmean << "   " << rightvariance << "-" << rightmean << endl;
-                    //                 if((leftvariance/leftmean)<0.1)
-                    //                 {
-                    //                    ui->textBrowser->setAlignment(Qt::AlignLeft);
-                    //                    alignment = "\"left\"";
-                    //                 }
-                    //                 else if((rightvariance/rightmean)<0.1)
-                    //                 {
-                    //                     ui->textBrowser->setAlignment(Qt::AlignRight);
-                    //                     alignment = "\"right\"";
-                    //                 }
-                    //                 else
-                    //                 {
-                    //                    ui->textBrowser->setAlignment(Qt::AlignCenter);
-                    //                    alignment = "\"center\"";
-                    //                 }
-//                 }
-
-//                float leftmean = accumulate(vx.begin(),vx.end(),0)/n;
-//                float leftdiff = 0;
-//                float rightmean = accumulate(vright.begin(),vright.end(),0)/n;
-//                float rightdiff = 0;
-//                 for(int i=0; i<n; i++)
-//                 {
-//                     leftdiff += abs(vx[i]-leftmean);
-//                     rightdiff += abs(vright[i]-rightmean);
-
-//                 }
-//                 float leftvariance = leftdiff/n;
-//                 float rightvariance = rightdiff/n;
-//                 qDebug() << leftvariance<< "-" <<leftmean << "   " << rightvariance << "-" << rightmean << endl;
-//                 if((leftvariance/leftmean)<0.1)
-//                 {
-//                    ui->textBrowser->setAlignment(Qt::AlignLeft);
-//                    alignment = "\"left\"";
-//                 }
-//                 else if((rightvariance/rightmean)<0.1)
-//                 {
-//                     ui->textBrowser->setAlignment(Qt::AlignRight);
-//                     alignment = "\"right\"";
-//                 }
-//                 else
-//                 {
-//                    ui->textBrowser->setAlignment(Qt::AlignCenter);
-//                    alignment = "\"center\"";
-//                 }
                 myTimer.start();
                 //int nMilliseconds = myTimer.elapsed();
                 // do something..
