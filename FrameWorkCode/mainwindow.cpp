@@ -299,7 +299,7 @@ void MainWindow::on_actionOpen_triggered()
 
         file = QFileDialog::getOpenFileName(this,"Open a File");
     }
-       //qDebug() <<"here" << file <<endl;
+       
         QString localmFilename1;
         if(!file.isEmpty())
         { //CPair["BApyopetam"] = "BAzyopetam"; CPairRight["BAzyopetam"]++;
@@ -402,34 +402,6 @@ void MainWindow::on_actionOpen_triggered()
                     //                 }
 //                 }
 
-//                float leftmean = accumulate(vx.begin(),vx.end(),0)/n;
-//                float leftdiff = 0;
-//                float rightmean = accumulate(vright.begin(),vright.end(),0)/n;
-//                float rightdiff = 0;
-//                 for(int i=0; i<n; i++)
-//                 {
-//                     leftdiff += abs(vx[i]-leftmean);
-//                     rightdiff += abs(vright[i]-rightmean);
-
-//                 }
-//                 float leftvariance = leftdiff/n;
-//                 float rightvariance = rightdiff/n;
-//                 qDebug() << leftvariance<< "-" <<leftmean << "   " << rightvariance << "-" << rightmean << endl;
-//                 if((leftvariance/leftmean)<0.1)
-//                 {
-//                    ui->textBrowser->setAlignment(Qt::AlignLeft);
-//                    alignment = "\"left\"";
-//                 }
-//                 else if((rightvariance/rightmean)<0.1)
-//                 {
-//                     ui->textBrowser->setAlignment(Qt::AlignRight);
-//                     alignment = "\"right\"";
-//                 }
-//                 else
-//                 {
-//                    ui->textBrowser->setAlignment(Qt::AlignCenter);
-//                    alignment = "\"center\"";
-//                 }
                 myTimer.start();
                 //int nMilliseconds = myTimer.elapsed();
                 // do something..
