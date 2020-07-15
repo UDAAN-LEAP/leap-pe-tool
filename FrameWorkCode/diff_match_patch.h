@@ -265,7 +265,7 @@ class diff_match_patch {
    *     encoded text2 and the List of unique strings.  The zeroth element
    *     of the List of unique strings is intentionally blank.
    */
- protected:
+ public:
   QList<QVariant> diff_linesToChars(const QString &text1, const QString &text2); // return elems 0 and 1 are QString, elem 2 is QStringList
 
   /**
@@ -286,7 +286,7 @@ class diff_match_patch {
    * @param diffs LinkedList of Diff objects.
    * @param lineArray List of unique strings.
    */
- private:
+ public:
   void diff_charsToLines(QList<Diff> &diffs, const QStringList &lineArray);
 
   /**

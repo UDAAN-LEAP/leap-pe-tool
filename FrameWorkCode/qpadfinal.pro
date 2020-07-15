@@ -22,6 +22,7 @@ LIBS += -ltesseract -llept
 
 SOURCES +=\
     DiffView.cpp \
+    commentsview.cpp \
     diff_match_patch.cpp \
         mainwindow.cpp \
     main.cpp \
@@ -31,26 +32,45 @@ SOURCES +=\
 
 HEADERS  += mainwindow.h \
     DiffView.h \
+    commentsview.h \
     diff_match_patch.h \
     eddis.h \
     slpNPatternDict.h \
     tesseract/apitypes.h \
+    tesseract/apitypes.h \
+    tesseract/baseapi.h \
     tesseract/baseapi.h \
     tesseract/capi.h \
+    tesseract/capi.h \
+    tesseract/genericvector.h \
     tesseract/genericvector.h \
     tesseract/helpers.h \
+    tesseract/helpers.h \
+    tesseract/ltrresultiterator.h \
     tesseract/ltrresultiterator.h \
     tesseract/ocrclass.h \
+    tesseract/ocrclass.h \
+    tesseract/osdetect.h \
     tesseract/osdetect.h \
     tesseract/pageiterator.h \
+    tesseract/pageiterator.h \
+    tesseract/platform.h \
     tesseract/platform.h \
     tesseract/publictypes.h \
+    tesseract/publictypes.h \
+    tesseract/renderer.h \
     tesseract/renderer.h \
     tesseract/resultiterator.h \
+    tesseract/resultiterator.h \
+    tesseract/serialis.h \
     tesseract/serialis.h \
     tesseract/strngs.h \
+    tesseract/strngs.h \
+    tesseract/thresholder.h \
     tesseract/thresholder.h \
     tesseract/unichar.h \
+    tesseract/unichar.h \
+    tesseract/version.h \
     tesseract/version.h \
     trieEditdis.h \
     zoom.h \
@@ -60,6 +80,7 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     DiffView.ui \
+    commentsview.ui \
 	interndiffview.ui
 
 RESOURCES += \

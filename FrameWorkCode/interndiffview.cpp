@@ -14,9 +14,11 @@ InternDiffView::InternDiffView(const QString &ocroutput, const QString &interntx
 	auto html2 = html[1];
 	html1.remove("&para;");
 	html2.remove("&para;");
-	ui->current->setHtml(html1);
+
+    ui->current->setHtml(html1);
 	ui->ocroutput->setHtml(html2);
-	img.load(ocrimgpath);
+
+    img.load(ocrimgpath);
 	QGraphicsScene *scene = new QGraphicsScene(this);
 	scene->addPixmap(QPixmap::fromImage(img));	
 	setWindowTitle("Corrector");
@@ -26,6 +28,7 @@ InternDiffView::InternDiffView(const QString &ocroutput, const QString &interntx
 	Graphics_view_zoom* z = new Graphics_view_zoom(ui->graphicsView);
 	z->set_modifiers(Qt::NoModifier);
     z->gentle_zoom(30);
+
     QString label1 = ui->InternLabel->text();
     label1.append(acc+"%");
     ui->InternLabel->setText(label1);

@@ -527,11 +527,11 @@ QString diff_match_patch::diff_linesToCharsMunge(const QString &text,
   int lineEnd = -1;
   QString line;
   QString chars;
-  // Walk the text, pulling out a substring for each line.
-  // text.split('\n') would would temporarily double our memory footprint.
+  // Walk the text, pulling out a substring for each word.
+  // text.split(' ') would would temporarily double our memory footprint.
   // Modifying text would create many large strings to garbage collect.
   while (lineEnd < text.length() - 1) {
-    lineEnd = text.indexOf('\n', lineStart);
+    lineEnd = text.indexOf(' ', lineStart);
     if (lineEnd == -1) {
       lineEnd = text.length() - 1;
     }

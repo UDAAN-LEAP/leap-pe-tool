@@ -69,7 +69,7 @@ public:
         current->setObjectName(QStringLiteral("current"));
         QFont font;
         font.setFamily(QStringLiteral("Shobhika"));
-        font.setPointSize(14);
+        font.setPointSize(11);
         font.setBold(true);
         font.setWeight(75);
         current->setFont(font);
@@ -108,7 +108,12 @@ public:
 
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setFont(font);
+        QFont font1;
+        font1.setFamily(QStringLiteral("Shobhika"));
+        font1.setPointSize(10);
+        font1.setBold(true);
+        font1.setWeight(75);
+        graphicsView->setFont(font1);
         graphicsView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
         graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
 
@@ -137,22 +142,21 @@ public:
     void retranslateUi(QMainWindow *InternDiffView)
     {
         InternDiffView->setWindowTitle(QApplication::translate("InternDiffView", "InternDiffView", Q_NULLPTR));
-        InternLabel->setText(QApplication::translate("InternDiffView", "Corrector's Output Text\n"
-"Changes made by Corrector: ", Q_NULLPTR));
+        InternLabel->setText(QApplication::translate("InternDiffView", "<p><b>Corrector's Output Text</b></p>Changes made by Corrector: ", Q_NULLPTR));
         current->setHtml(QApplication::translate("InternDiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Shobhika'; font-size:14pt; font-weight:600; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:11pt; font-weight:400;\"><br /></p></body></html>", Q_NULLPTR));
-        OCRtextLabel->setText(QApplication::translate("InternDiffView", "OCR Text\n"
-" ", Q_NULLPTR));
+"</style></head><body style=\" font-family:'Shobhika'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;\"><br /></p></body></html>", Q_NULLPTR));
+        OCRtextLabel->setText(QApplication::translate("InternDiffView", "<p><b>OCR Text<b></p>\n"
+"<p> </p>", Q_NULLPTR));
         ocroutput->setHtml(QApplication::translate("InternDiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Shobhika'; font-size:14pt; font-weight:600; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:11pt; font-weight:400;\"><br /></p></body></html>", Q_NULLPTR));
-        label->setText(QApplication::translate("InternDiffView", "OCR Image\n"
-" ", Q_NULLPTR));
+"</style></head><body style=\" font-family:'Shobhika'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;\"><br /></p></body></html>", Q_NULLPTR));
+        label->setText(QApplication::translate("InternDiffView", "<p><b>OCR Image<b></p>\n"
+"<p> </p>", Q_NULLPTR));
     } // retranslateUi
 
 };

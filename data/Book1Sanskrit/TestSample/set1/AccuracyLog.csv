@@ -1,0 +1,4 @@
+Page Name,Errors (Word level),Errors (Character-Level),Accuracy of Corrector (Word level),Accuracy of Corrector (Character-Level),Changes made by Corrector(%),OCR Accuracy(w.rt. Verified Text)
+page-67.txt,4,21,96.92,99.31,18.34,81.34
+page-68.txt,5,27,96.18,99.19,8.05,91.23
+page-69.txt,12,43,93.62,99.02,9.06,90.4

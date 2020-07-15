@@ -12,8 +12,7 @@ DiffView::DiffView(const QString &ocrtext, const QString &interntext, const QStr
     QList<QString> htmlList1 = dmp.diff_prettyHtml(diffs, textcolor);
     QString html1 = htmlList1.first();
     QString html2 = htmlList1.last();
-//    qDebug() << "html1" << html1;
-//    qDebug() <<"htmllist" << htmlList1;
+
      diffs = dmp.diff_main(interntext,verifiertext);
     textcolor = "90ff90";
     QList<QString> htmlList2 = dmp.diff_prettyHtml(diffs, textcolor);
