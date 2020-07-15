@@ -198,6 +198,12 @@ public:
         commentTextBrowser = new QTextBrowser(CommentsView);
         commentTextBrowser->setObjectName(QStringLiteral("commentTextBrowser"));
         commentTextBrowser->setMaximumSize(QSize(604, 16777215));
+        QFont font;
+        font.setFamily(QStringLiteral("Shobhika"));
+        font.setPointSize(14);
+        font.setBold(false);
+        font.setWeight(50);
+        commentTextBrowser->setFont(font);
 
         verticalLayout_7->addWidget(commentTextBrowser);
 

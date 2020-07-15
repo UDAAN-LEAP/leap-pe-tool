@@ -2465,6 +2465,8 @@ commentsview.o: commentsview.cpp commentsview.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qinputmethod.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QButtonGroup \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qbuttongroup.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QFrame \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qframe.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QHBoxLayout \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qboxlayout.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qlayout.h \
@@ -2474,7 +2476,6 @@ commentsview.o: commentsview.cpp commentsview.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qheaderview.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractitemview.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qframe.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qitemselectionmodel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
