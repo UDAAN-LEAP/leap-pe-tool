@@ -1,6 +1,7 @@
 #pragma once
 #include <QVector>
 #include <QVariant>
+#include <QFile>
 class TreeItem {
 public:
 	//Use values not containers like QVector
@@ -21,10 +22,17 @@ public:
 	TreeItem * find(QString & str);
 	QVariant data(int column) const;
 	int row() const;
+	void SetFile( QFile * pFile) {
+		file = pFile;
+	}
+	QFile * GetFile() {
+		return file;
+	}
 	TreeItem * parentItem();
 private:
 	QVector<TreeItem*> mChildItems;
 	QVector<QVariant> mItemData;
 	TreeItem *mParentItem;
+	QFile * file=nullptr;
 
 };

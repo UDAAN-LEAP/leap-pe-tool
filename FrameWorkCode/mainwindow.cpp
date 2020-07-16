@@ -3579,13 +3579,15 @@ void explore(rapidxml::xml_node<> * n) {
 	if (n->next_sibling()) {
 		explore(n->next_sibling());
 	}
+	//auto data = qvar.data();;
+	QString val = qvar.value<QString>();
 }
 void MainWindow::on_actionOpen_Project_triggered() {
 	rapidxml::xml_document<> doc;
-	QFile xml = QFileDialog::getOpenFileName(this, "Open Verifier's Output File");
-	xml.open(QIODevice::ReadOnly);
+	QFile xml = QFileDialog::getOpenFileName(this, "Open Project");
 	mProject.process_xml(xml);
-	ProjectHierarchyWindow * phw = new ProjectHierarchyWindow(mProject);
-	phw->show();
-	
+	//ProjectHierarchyWindow * phw = new ProjectHierarchyWindow(mProject);
+	//phw->show();
+	ui->treeView->setModel(mProject.getModel());
+	bool b = connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
 }
