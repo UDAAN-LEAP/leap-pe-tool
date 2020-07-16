@@ -348,8 +348,6 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionSave_As"/>
    <addaction name="actionLoadData"/>
    <addaction name="separator"/>
-   <addaction name="actionSpell_Check"/>
-   <addaction name="separator"/>
    <addaction name="actionLoad_Prev_Page"/>
    <addaction name="actionLoad_Next_Page"/>
    <addaction name="separator"/>
@@ -725,7 +723,7 @@ p, li { white-space: pre-wrap; }
     </iconset>
    </property>
    <property name="text">
-    <string>Highlight</string>
+    <string>Highlight (Ctrl+H)</string>
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight&lt;span style=&quot; font-weight:600;&quot;&gt;(Ctrl+H)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>

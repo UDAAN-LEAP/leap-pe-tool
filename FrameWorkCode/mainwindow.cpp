@@ -32,7 +32,7 @@ map<string, int> TimeLog;
 string TimeLogLocation = "../Logs/log.txt";
 string alignment = "left";
 bool prevTRig = 0;
-bool userOpenTrig = 1;
+
 //map<string, int> GPage; trie TGPage;
 //map<string, int> PWords;//Common/Possitive OCR Words // already defined before
 map<string, string> CPair;//Correction Pairs
@@ -173,9 +173,9 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
     //cout << localFilename << endl;
     file = QString::fromStdString(localFilename); fileFlag = 1;
     //OPENSPELLFLAG = 1;
-    userOpenTrig = 0;
+
     on_actionOpen_triggered();
-    userOpenTrig = 1;
+    fileFlag = 0;
     }
     //imageOrig.load(localFilename.replace(QString("txt"),QString("jpeg")));
 
@@ -219,9 +219,9 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
     file = QString::fromStdString(localFilename); fileFlag = 1;
     //OPENSPELLFLAG = 1;
     prevTRig =1;
-    userOpenTrig = 0;
+
     on_actionOpen_triggered();
-    userOpenTrig = 1;
+    fileFlag = 0;
     prevTRig =0;
     }
 
@@ -280,7 +280,7 @@ void MainWindow::on_actionCreateBest2OCR_triggered()
 void MainWindow::on_actionOpen_triggered()
 {
 
-    if((!fileFlag) & userOpenTrig)
+    if(!fileFlag)
     {
         string key;
         int value;
