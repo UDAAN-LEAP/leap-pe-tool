@@ -32,6 +32,7 @@ map<string, int> TimeLog;
 string TimeLogLocation = "../Logs/log.txt";
 string alignment = "left";
 bool prevTRig = 0;
+bool userOpenTrig = 1;
 //map<string, int> GPage; trie TGPage;
 //map<string, int> PWords;//Common/Possitive OCR Words // already defined before
 map<string, string> CPair;//Correction Pairs
@@ -40,6 +41,15 @@ map<int, QString> commentdict;
 map<int,  vector<int>> commentederrors;
 int openedFileChars;
 int openedFileWords;
+QString dir1levelup,dir2levelup,currentpagename, currentdirname;
+map<QString, QString> filestructure_fw = {{"Inds","CorrectorOutput"},
+                                     {"CorrectorOutput","VerifierOutput",},
+                                        {"VerifierOutput","VerifierOutput" }
+                                    };
+map<QString, QString> filestructure_bw = {{"VerifierOutput","CorrectorOutput"},
+                                     {"CorrectorOutput","Inds"},
+                                          {"Inds" , "Inds"}
+                                    };
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -163,7 +173,9 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
     //cout << localFilename << endl;
     file = QString::fromStdString(localFilename); fileFlag = 1;
     //OPENSPELLFLAG = 1;
+    userOpenTrig = 0;
     on_actionOpen_triggered();
+    userOpenTrig = 1;
     }
     //imageOrig.load(localFilename.replace(QString("txt"),QString("jpeg")));
 
@@ -207,7 +219,9 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
     file = QString::fromStdString(localFilename); fileFlag = 1;
     //OPENSPELLFLAG = 1;
     prevTRig =1;
+    userOpenTrig = 0;
     on_actionOpen_triggered();
+    userOpenTrig = 1;
     prevTRig =0;
     }
 
@@ -266,7 +280,7 @@ void MainWindow::on_actionCreateBest2OCR_triggered()
 void MainWindow::on_actionOpen_triggered()
 {
 
-    if(!fileFlag)
+    if((!fileFlag) & userOpenTrig)
     {
         string key;
         int value;
@@ -279,6 +293,8 @@ void MainWindow::on_actionOpen_triggered()
             TimeLog[key] = value;
         }
         timefile.close();
+
+
         file = QFileDialog::getOpenFileName(this,"Open a File");
     }
        //qDebug() <<"here" << file <<endl;
@@ -290,8 +306,19 @@ void MainWindow::on_actionOpen_triggered()
             if(sFile.open(QFile::ReadOnly)) //Sanoj
             {
                 mFilename = file;
+
+                //FILE STRUCTURE BREAKDOWN
+
+                int pos1 = mFilename.lastIndexOf("/");
+                dir1levelup = mFilename.mid(0,pos1);
+                currentpagename = mFilename.mid(pos1+1,mFilename.length()-pos1);
+                int pos2 = dir1levelup.lastIndexOf("/");
+                dir2levelup = dir1levelup.mid(0,pos2);
+                currentdirname = dir1levelup.mid(pos2+1,dir1levelup.length()-pos2);
+
                 localmFilename1 = mFilename;
                 string localFilename =  localmFilename1.toUtf8().constData();
+
                 // load vIPage and vCPage for calculating WER if corresponding CPage exist
                 /*vIPage.clear(); vCPage.clear();
                 //QString localmFilename1 = mFilename;
@@ -408,8 +435,9 @@ void MainWindow::on_actionOpen_triggered()
                 int mins = secs/60;
                 secs = secs - mins*60;
                 ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(secs) + " secs elapsed on this page(Right Click to update)");
-                QString newFile = mFilename;
-                newFile.replace("Inds","Corrected");
+                //QString newFile = mFilename; //Filechange
+                //newFile.replace("Inds","CorrectorOutput"); //Filechange
+                QString newFile = dir2levelup + "/CorrectorOutput/" +currentpagename;
                 QFile sFile1(newFile);
 
                 QFileInfo filetype(mFilename);
@@ -537,7 +565,7 @@ void MainWindow::on_actionOpen_triggered()
                 }
 
                     // load and show image:
-                    QString localmFilename = mFilename;
+                    QString localmFilename = dir2levelup + "/Images/" + currentpagename;
                     localmFilename.replace(".txt",".jpeg");
                     localmFilename.replace(".html",".jpeg");
                     //system("cd localmFilename");
@@ -552,14 +580,14 @@ void MainWindow::on_actionOpen_triggered()
                     QGraphicsScene *graphic = new QGraphicsScene(this);
                     graphic->addPixmap(QPixmap::fromImage(imageOrig));
                     ui->graphicsView->setScene(graphic);
-                    ui->graphicsView->adjustSize();
+                    //ui->graphicsView->adjustSize();
                     ui->graphicsView->fitInView(graphic->itemsBoundingRect(),Qt::KeepAspectRatio);
                     localmFilename = mFilename;
                     //mFilename.replace(QString("jpeg"),QString("txt"));*/
 
                     //GPage.clear(); TGPage.clear();
 
-                    localmFilename.replace(QString("Inds"),QString("GDoc"));
+                    //localmFilename.replace(QString("Inds"),QString("GDoc")); //Uncommented prvsly
                     //loadMap(localmFilename.toUtf8().constData(),GPage, "GPage");  localmFilename = mFilename;
                     //loadmaptoTrie(TGPage,GPage);
 
@@ -573,14 +601,15 @@ void MainWindow::on_actionOpen_triggered()
 
                     commentdict.clear();
                     commentederrors.clear();
-                    QString localFilenamecomment = mFilename;
-                    int pos1 = localFilenamecomment.lastIndexOf("/");
-                    QString dir1 = localFilenamecomment.mid(0,pos1);
-                    QString pagename = localFilenamecomment.mid(pos1+1,localFilename.length()-pos1);
-                    int pos2 = dir1.lastIndexOf("/");
-                    QString dir2 = dir1.mid(0,pos2);
 
-                    QString commentFilename = dir2 + "/Comments/" + pagename;
+//                    QString localFilenamecomment = mFilename;
+//                    int pos1 = localFilenamecomment.lastIndexOf("/");
+//                    QString dir1 = localFilenamecomment.mid(0,pos1);
+//                    QString pagename = localFilenamecomment.mid(pos1+1,localFilename.length()-pos1);
+//                    int pos2 = dir1.lastIndexOf("/");
+//                    QString dir2 = dir1.mid(0,pos2);
+
+                    QString commentFilename = dir2levelup + "/Comments/" + currentpagename;
                     commentFilename.replace(".txt",".json");
                     commentFilename.replace(".html",".json");
                     QFile jsonFile(commentFilename);
@@ -604,6 +633,7 @@ void MainWindow::on_actionOpen_triggered()
                         int key = val.toObject().value("key").toInt();
                         QString value = val.toObject().value("value").toString();
                         commentdict[key] = value;
+                        qDebug()<<commentdict<<"onload commentdict";
                     }
 
                     QJsonArray::iterator it1;
@@ -1128,10 +1158,14 @@ void MainWindow::on_actionSave_triggered()
     //on_actionSpell_Check_triggered();
     if (mFilename=="Untitled"){
         on_actionSave_As_triggered();
-    }else{ QString localFilename = mFilename;
-        localFilename.replace("Inds","Corrected");
-        localFilename.replace("txt","html");//Sanoj
+    }else{
+//        QString localFilename = mFilename;
+//        localFilename.replace("Inds","CorrectorOutput");
+//        localFilename.replace("txt","html");//Sanoj
 
+        QString changefiledir = filestructure_fw[currentdirname];
+        QString localFilename = dir2levelup + "/" +changefiledir +"/" + currentpagename;
+        localFilename.replace("txt","html");
                 QFile sFile(localFilename);
                   //if(sFile.open(QFile::WriteOnly | QFile::Text))
                     if(sFile.open(QFile::WriteOnly))
@@ -1154,9 +1188,13 @@ void MainWindow::on_actionLoadGDocPage_triggered()
     if (mFilename=="Untitled"){
         on_actionSave_As_triggered();
     }else{
-                QString str1 = mFilename;
-                str1.replace("Inds","Corrected");
+//                QString str1 = mFilename;
+//                str1.replace("Inds","CorrectorOutput");
+
+                QString changefiledir = filestructure_fw[currentdirname];
+                QString str1 = dir2levelup + "/" +changefiledir +"/" + currentpagename;
                 str1.replace("txt","html");
+
                 QFile sFile(str1);
                   if(sFile.open(QFile::WriteOnly | QFile::Text))
                   {
@@ -1174,7 +1212,8 @@ void MainWindow::on_actionLoadGDocPage_triggered()
                   loadmaptoTrie(TPWords, PWordspage);
 
                   vector<string> wrong,right;
-                  QString str2 = str1; str2.replace("Corrected","Inds");
+                  //QString str2 = str1; str2.replace("CorrectorOutput","Inds");
+                  QString str2 = mFilename;
                   generateCorrectionPairs(wrong,right,str2.toUtf8().constData(), str1.toUtf8().constData());
                   loadConfusionsFont(wrong,right,ConfPmapFont);
                   loadConfusionsFont(wrong,right,ConfPmap);
@@ -1391,8 +1430,12 @@ void MainWindow::on_actionLoadData_triggered()
 }
 
 void MainWindow::on_actionLoadDict_triggered()
-{   QString localmFilename1 = mFilename1;
-    localmFilename1.replace("Inds/","Dict");
+{
+//    QString localmFilename1 = mFilename1;
+//    localmFilename1.replace("Inds/","Dict");
+
+    QString localmFilename1 = dir2levelup + "/Dict";
+
     //localmFilename1n = localmFilename1.toUtf8().constData();
     //cout <<localmFilename1.toUtf8().constData() << endl;
     loadMap(localmFilename1.toUtf8().constData(),Dict,"Dict");
@@ -1413,12 +1456,17 @@ void MainWindow::on_actionLoadDict_triggered()
 }
 
 void MainWindow::on_actionLoadOCRWords_triggered()
-{   QString localmFilename1 = mFilename1;
-    localmFilename1.replace("Inds/","GEROCR");
+{
+//    QString localmFilename1 = mFilename1;
+//    localmFilename1.replace("Inds/","GEROCR");
+    QString localmFilename1 = dir2levelup + "/GEROCR";
+
     cout << localmFilename1.toUtf8().constData() << endl;
     loadMapNV(localmFilename1.toUtf8().constData(),GBook,vGBook,"GBook"); localmFilename1 = mFilename1;
     cout << localmFilename1.toUtf8().constData() << endl;
-    localmFilename1.replace("Inds/","IEROCR");
+
+//    localmFilename1.replace("Inds/","IEROCR");
+    localmFilename1 = dir2levelup + "/IEROCR";
     loadMapNV(localmFilename1.toUtf8().constData(),IBook,vIBook,"IBook");
     cout << GBook.size() << " " << IBook.size() << endl;
     loadStr += "\n" + QString::number((IBook.size())) + " Indsenz Words Loaded & ";
@@ -1429,8 +1477,9 @@ void MainWindow::on_actionLoadOCRWords_triggered()
 
 void MainWindow::on_actionLoadDomain_triggered()
 {
-    QString localmFilename1 = mFilename1;
-    localmFilename1.replace("Inds/","PWords");
+//    QString localmFilename1 = mFilename1;
+//    localmFilename1.replace("Inds/","PWords");
+    QString localmFilename1 = dir2levelup + "/PWords";
     loadMap(localmFilename1.toUtf8().constData(),PWords,"PWords"); localmFilename1 = mFilename1;
     //cout << "PWords loaded" << PWords.size();
     loadMapPWords(vGBook,vIBook,PWords);
@@ -1442,12 +1491,14 @@ void MainWindow::on_actionLoadDomain_triggered()
 map<string, string> LSTM;
 void MainWindow::on_actionLoadSubPS_triggered()
 {
-    QString localmFilename1 = mFilename1;
+//    QString localmFilename1 = mFilename1;
     size_t count = loadPWordsPatternstoTrie(TPWordsP,PWords);// justsubstrings not patterns exactly // PWordsP,
-    localmFilename1.replace("Inds/","CPair");
+//    localmFilename1.replace("Inds/","CPair");
+    QString localmFilename1 = dir2levelup + "/CPair";
     loadCPair(localmFilename1.toUtf8().constData(),CPair,Dict,PWords); localmFilename1 = mFilename1;
 
-    localmFilename1.replace("Inds/","LSTM");
+    //localmFilename1.replace("Inds/","LSTM");
+    localmFilename1 = dir2levelup + "/LSTM";
     ifstream myfile(localmFilename1.toUtf8().constData());
               if (myfile.is_open())
               { string str1, str2,line;
@@ -1471,8 +1522,9 @@ void MainWindow::on_actionLoadSubPS_triggered()
 void MainWindow::on_actionLoadConfusions_triggered()
 {
     //QString lfR = mFilename; lfR.replace("Inds/page-1.txt","WrongAllRight");
-    QString localmFilename1 = mFilename;
-    localmFilename1.replace("Inds/","CPair");
+//    QString localmFilename1 = mFilename;
+//    localmFilename1.replace("Inds/","CPair");
+     QString localmFilename1 = dir2levelup + "/CPair";
    loadConfusions(localmFilename1.toUtf8().constData(), ConfPmap);localmFilename1 = mFilename;
    //loadCPair(localmFilename1.toUtf8().constData(), lfR.toUtf8().constData(), CPair);*./
 
@@ -1554,7 +1606,9 @@ void MainWindow::on_actionCreateSuggestionLog_triggered()
     // Load foders in strC and strI
     QString strI = mFilename;
     QString strC = strI;
-    strI.replace("Corrected", "Inds"); strC.replace("Inds","Corrected");
+    strI.replace("CorrectorOutput", "Inds"); strC.replace("Inds","CorrectorOutput");
+//    QString strC = mFilename;
+//    QString strI = dir2levelup + "/CorrectorOutput/"+ currentpagename ;
 
     // load text files one by one
 
@@ -1719,7 +1773,7 @@ void MainWindow::on_actionCreateSuggestionLog_triggered()
     filereport = QString::fromStdString(localFilenameC);
     } //  while(1) ends
     page_no--;
-    filereport.replace(("Corrected/page-"+ QString::number(page_no) + ".txt"), "SuggReport1.txt" );
+    filereport.replace(("CorrectorOutput/page-"+ QString::number(page_no) + ".txt"), "SuggReport1.txt" );
     std::ofstream rep(filereport.toUtf8().constData());
 
     rep << "y0 = ["; for( size_t i =1; i <= page_no; i++) rep << mapinCorrect[i] << " "; rep << "];" << endl;
@@ -1820,7 +1874,7 @@ void MainWindow::on_actionCreateSuggestionLogNearestPriority_triggered()
        // Load foders in strC and strI
        QString strI = mFilename;
        QString strC = strI;
-       strI.replace("Corrected", "Inds"); strC.replace("Inds","Corrected");
+       strI.replace("CorrectorOutput", "Inds"); strC.replace("Inds","CorrectorOutput");
 
        // load text files one by one
 
@@ -1982,7 +2036,7 @@ void MainWindow::on_actionCreateSuggestionLogNearestPriority_triggered()
        filereport = QString::fromStdString(localFilenameC);
        } //  while(1) ends
        page_no--;
-       filereport.replace(("Corrected/page-"+ QString::number(page_no) + ".txt"), "SuggReportNearestPriority.txt" );
+       filereport.replace(("CorrectorOutput/page-"+ QString::number(page_no) + ".txt"), "SuggReportNearestPriority.txt" );
        std::ofstream rep(filereport.toUtf8().constData());
        rep << "y0 = ["; for( size_t i =1; i <= page_no; i++) rep << mapinCorrect[i] << " "; rep << "];" << endl;
        rep << "y1 = ["; for( size_t i =1; i <= page_no; i++) rep << mapCorrect[i] << " "; rep << "];" << endl;
@@ -2002,10 +2056,10 @@ void MainWindow::on_actionErrorDetectionRep_triggered()
     // Load foders in strC and strI
     QString strI = mFilename;
     QString strC = strI, strG = strI, strIF = strI, strCF = strI;
-    strI.replace("Corrected", "Inds"); strC.replace("Inds","Corrected");
-    strG.replace("Corrected/page-1.txt","GEROCR");strG.replace("Inds/page-1.txt","GEROCR");
-    strIF.replace("Corrected/page-1.txt","IEROCR");strIF.replace("Inds/page-1.txt","IEROCR");
-    strCF.replace("Corrected/page-1.txt","Corrected.txt");strCF.replace("Inds/page-1.txt","Corrected.txt");//Dict Corrected.txt for lower upper baseline resp
+    strI.replace("CorrectorOutput", "Inds"); strC.replace("Inds","CorrectorOutput");
+    strG.replace("CorrectorOutput/page-1.txt","GEROCR");strG.replace("Inds/page-1.txt","GEROCR");
+    strIF.replace("CorrectorOutput/page-1.txt","IEROCR");strIF.replace("Inds/page-1.txt","IEROCR");
+    strCF.replace("CorrectorOutput/page-1.txt","CorrectorOutput.txt");strCF.replace("Inds/page-1.txt","CorrectorOutput.txt");//Dict CorrectorOutput.txt for lower upper baseline resp
     // load text files one by one
     string locstr;
     vector<string> iocr, gocr;
@@ -2019,7 +2073,7 @@ void MainWindow::on_actionErrorDetectionRep_triggered()
     if (iocr.size() < gocr.size()) winig = -1*winig;
     size_t iocrdone = 0;// will be used in each page of IEROCR
     map<string,int> mapCF;// F for Full Book
-    loadMap(strCF.toUtf8().constData(),mapCF,"Corrected.txt");
+    loadMap(strCF.toUtf8().constData(),mapCF,"CorrectorOutput.txt");
     cout << mapCF.size() << endl;
     //Load page1 of Inds
     size_t page_no = 1;
@@ -2104,7 +2158,7 @@ void MainWindow::on_actionErrorDetectionRep_triggered()
         filereport = QString::fromStdString(localFilenameC);
     } //  while(1) ends
         page_no--;
-        filereport.replace(("Corrected/page-"+ QString::number(page_no) + ".txt"), "ErrorDetect.txt" );
+        filereport.replace(("CorrectorOutput/page-"+ QString::number(page_no) + ".txt"), "ErrorDetect.txt" );
         std::ofstream rep(filereport.toUtf8().constData());
         rep << "y0A = ["; for( size_t i =1; i <= page_no; i++) rep << mapCorrectMarkedCorrect[i] << " "; rep << "];" << endl;
         rep << "y1A = ["; for( size_t i =1; i <= page_no; i++) rep << mapInCorrectMarkedCorrect[i] << " "; rep << "];" << endl;
@@ -2121,7 +2175,7 @@ void MainWindow::on_actionErrorDetectWithoutAdaptation_triggered()
     // Load foders in strC and strI
     QString strI = mFilename;
     QString strC = strI;
-    strI.replace("Corrected", "Inds"); strC.replace("Inds","Corrected");
+    strI.replace("CorrectorOutput", "Inds"); strC.replace("Inds","CorrectorOutput");
 
     // load text files one by one
 
@@ -2205,7 +2259,7 @@ void MainWindow::on_actionErrorDetectWithoutAdaptation_triggered()
         filereport = QString::fromStdString(localFilenameC);
     } //  while(1) ends
         page_no--;
-        filereport.replace(("Corrected/page-"+ QString::number(page_no) + ".txt"), "ErrorDetectWOAdapt" );
+        filereport.replace(("CorrectorOutput/page-"+ QString::number(page_no) + ".txt"), "ErrorDetectWOAdapt" );
         std::ofstream rep(filereport.toUtf8().constData());
         rep << "y0 = ["; for( size_t i =1; i <= page_no; i++) rep << mapCorrectMarkedCorrect[i] << " "; rep << "];" << endl;
         rep << "y1 = ["; for( size_t i =1; i <= page_no; i++) rep << mapInCorrectMarkedCorrect[i] << " "; rep << "];" << endl;
@@ -2221,7 +2275,7 @@ void MainWindow::on_actionCPair_triggered()
 {       // Load foders in strC and strI
     QString strI = mFilename;
     QString strC = strI;
-    strI.replace("Corrected", "Inds"); strC.replace("Inds","Corrected");
+    strI.replace("CorrectorOutput", "Inds"); strC.replace("Inds","CorrectorOutput");
 
     // load text files one by one
 
@@ -2614,7 +2668,7 @@ void MainWindow::on_actionErrorDetectionRepUniq_triggered()
     // Load foders in strC and strI
     QString strI = mFilename;
     QString strC = strI;
-    strI.replace("Corrected", "Inds"); strC.replace("Inds","Corrected");
+    strI.replace("CorrectorOutput", "Inds"); strC.replace("Inds","CorrectorOutput");
 
     // load text files one by one
 
@@ -2779,7 +2833,7 @@ void MainWindow::on_actionErrorDetectionRepUniq_triggered()
     filereport = QString::fromStdString(localFilenameC);
     } //  while(1) ends
     page_no--;
-    filereport.replace(("Corrected/page-"+ QString::number(page_no) + ".txt"), "SuggReportUniq1.txt" );
+    filereport.replace(("CorrectorOutput/page-"+ QString::number(page_no) + ".txt"), "SuggReportUniq1.txt" );
     std::ofstream rep(filereport.toUtf8().constData());
 
     rep << "y0 = ["; for( size_t i =1; i <= page_no; i++) rep << mapinCorrect[i] << " "; rep << "];" << endl;
@@ -2897,8 +2951,9 @@ void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
     string s1 = "",s2 = "", s3 = ""; QString qs1="", qs2="",qs3="";
     file = QFileDialog::getOpenFileName(this,"Open Verifier's Output File");
     QString verifiertext = file;
-    QString ocrtext = file.replace("VerifierOutput","OCROutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-    QString correctortext = file.replace("OCROutput","CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+    QString ocrtext = file.replace("VerifierOutput","Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+    QString correctortext = file.replace("Inds","CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+    ocrtext.replace(".html",".txt");
     if(!ocrtext.isEmpty())
     {
         QFile sFile(ocrtext);
@@ -2978,12 +3033,19 @@ void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
 void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
 {
     string s1 = "",s2 = ""; QString qs1="", qs2="",qs3="";
-    file = QFileDialog::getOpenFileName(this,"Open Verifier's Output File");
+    file = QFileDialog::getOpenFileName(this,"Open Corrector's Output File");
     QString correctortext = file;
-	QString ocrtext = file;
-    ocrtext.replace("CorrectorOutput","OCROutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-	QString ocrimage = ocrtext;
-	ocrimage.replace(".txt", ".jpeg");
+    QString ocrtext = file;
+    ocrtext.replace("CorrectorOutput","Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+    QString ocrimage = ocrtext;
+    ocrimage.replace("Inds", "Images");
+    ocrimage.replace(".txt", ".jpeg");
+    ocrimage.replace(".html",".jpeg");
+
+    ocrtext.replace(".html",".txt");
+       qDebug()<<"intern path compare ocr image" << ocrimage;
+       qDebug()<<"intern path compare ocr ttext" << ocrtext;
+       qDebug()<<"intern path compare corrector text " << correctortext;
     if(!ocrtext.isEmpty())
     {
         QFile sFile(ocrtext);
@@ -3060,8 +3122,8 @@ void MainWindow::on_actionAccuracyLog_triggered()
         filename = folder + "/" + filename;
 
         QString verifiertext = filename;
-        QString ocrtext = filename.replace("VerifierOutput","OCROutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-        QString correctortext = filename.replace("OCROutput","CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+        QString ocrtext = filename.replace("VerifierOutput","Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+        QString correctortext = filename.replace("Inds","CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
 
         if(!ocrtext.isEmpty())
         {
