@@ -169,11 +169,16 @@ private slots:
 
     void on_actionAccuracyLog_triggered();
 	void on_actionOpen_Project_triggered();
+	void file_click(const QModelIndex & indx);
+	void LoadDocument(QFile * file);
+	void LoadImageFromFile(QFile * file);
 private:
     Ui::MainWindow *ui;
 	Project mProject;
     QString mFilename;
     QString mFilenamejpeg;
+	QGraphicsScene * graphic =nullptr;
+	Graphics_view_zoom * z = nullptr;
 };
 
 #endif // MAINWINDOW_H

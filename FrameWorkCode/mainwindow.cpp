@@ -2885,23 +2885,47 @@ void MainWindow::on_actionAccuracyLog_triggered()
     csvFile.close();
 
 }
-void explore(rapidxml::xml_node<> * n) {
-	std::string node_name = n->name();
-	for (auto * attr = n->first_attribute(); attr; attr = attr->next_attribute()) {
-		std::string attr_name = attr->name();
-		std::string attr_value = attr->value();
+void MainWindow::LoadDocument(QFile * f) {
+	f->open(QIODevice::ReadOnly);
+	QTextStream stream(f);
+	stream.setCodec("UTF-8");
+	ui->textBrowser->setPlainText( stream.readAll() );
+	f->close();
+}
+void MainWindow::LoadImageFromFile(QFile * f) {
+	QString localFileName = f->fileName();
+	imageOrig.load(localFileName);
+	if(!graphic)graphic = new QGraphicsScene(this);
+	graphic->addPixmap(QPixmap::fromImage(imageOrig));
+	ui->graphicsView->setScene(graphic);
+	ui->graphicsView->fitInView(graphic->itemsBoundingRect(), Qt::KeepAspectRatio);
+	if(!z) z = new Graphics_view_zoom(ui->graphicsView);
+	z->set_modifiers(Qt::NoModifier);
+}
+void MainWindow::file_click(const QModelIndex&indx) {
+	std::cout << "Test";
+	auto item = (TreeItem*)indx.internalPointer();
+	auto qvar = item->data(0);
+	auto file = item->GetFile();
+	if (file) {
+		QFileInfo f(*file);
+		QString suff = f.completeSuffix();
+		if (suff == "txt") {
+			LoadDocument(file);
+		}
+		if (suff == "jpeg") {
+			LoadImageFromFile(file);
+		}
 	}
-	if (n->first_node()) {
-		explore(n->first_node());
-	}
-	if (n->next_sibling()) {
-		explore(n->next_sibling());
-	}
+	//auto data = qvar.data();;
+	QString val = qvar.value<QString>();
 }
 void MainWindow::on_actionOpen_Project_triggered() {
 	rapidxml::xml_document<> doc;
-	QFile xml = QFileDialog::getOpenFileName(this, "Open Verifier's Output File");
+	QFile xml = QFileDialog::getOpenFileName(this, "Open Project");
 	mProject.process_xml(xml);
-	ProjectHierarchyWindow * phw = new ProjectHierarchyWindow(mProject);
-	phw->show();
+	//ProjectHierarchyWindow * phw = new ProjectHierarchyWindow(mProject);
+	//phw->show();
+	ui->treeView->setModel(mProject.getModel());
+	bool b = connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
 }
