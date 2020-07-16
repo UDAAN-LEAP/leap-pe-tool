@@ -552,7 +552,7 @@ void MainWindow::on_actionOpen_triggered()
                     QGraphicsScene *graphic = new QGraphicsScene(this);
                     graphic->addPixmap(QPixmap::fromImage(imageOrig));
                     ui->graphicsView->setScene(graphic);
-                    ui->graphicsView->adjustSize();
+                    //ui->graphicsView->adjustSize();
                     ui->graphicsView->fitInView(graphic->itemsBoundingRect(),Qt::KeepAspectRatio);
                     localmFilename = mFilename;
                     //mFilename.replace(QString("jpeg"),QString("txt"));*/
@@ -604,6 +604,7 @@ void MainWindow::on_actionOpen_triggered()
                         int key = val.toObject().value("key").toInt();
                         QString value = val.toObject().value("value").toString();
                         commentdict[key] = value;
+                        qDebug()<<commentdict<<"onload commentdict";
                     }
 
                     QJsonArray::iterator it1;

@@ -1,0 +1,40 @@
+{
+    "charerrors": [
+        {
+            "key": 83,
+            "value": 3
+        },
+        {
+            "key": 105,
+            "value": 1
+        },
+        {
+            "key": 168,
+            "value": 1
+        }
+    ],
+    "comments": [
+        {
+            "key": 83,
+            "value": "भटा:"
+        },
+        {
+            "key": 105,
+            "value": "भ:"
+        }
+    ],
+    "worderrors": [
+        {
+            "key": 83,
+            "value": 1
+        },
+        {
+            "key": 105,
+            "value": 1
+        },
+        {
+            "key": 168,
+            "value": 1
+        }
+    ]
+}

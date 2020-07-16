@@ -727,6 +727,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Highlight</string>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight&lt;span style=&quot; font-weight:600;&quot;&gt;(Ctrl+H)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+H</string>
    </property>
