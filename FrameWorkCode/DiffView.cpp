@@ -1,10 +1,21 @@
 #include "DiffView.h"
 #include "ui_DiffView.h"
 #include "diff_match_patch.h"
-DiffView::DiffView(const QString &ocrtext, const QString &interntext, const QString &verifiertext,const QString &InternAcc, const QString &VerifierAcc, const QString &OcrAcc, QWidget *parent)
+DiffView::DiffView( QString &ocrtext,  QString &interntext,  QString &verifiertext,const QString &InternAcc, const QString &VerifierAcc, const QString &OcrAcc, QWidget *parent)
 	: QMainWindow(parent)
 {
-	ui = new Ui::DiffView();
+
+    QTextDocument doc;
+    doc.setHtml(interntext);
+    interntext = doc.toPlainText();
+
+    doc.setHtml(ocrtext);
+    ocrtext = doc.toPlainText();
+
+    doc.setHtml(verifiertext);
+    verifiertext = doc.toPlainText();
+
+    ui = new Ui::DiffView();
 	ui->setupUi(this);
 	diff_match_patch dmp;
     auto diffs = dmp.diff_main(ocrtext,interntext);
