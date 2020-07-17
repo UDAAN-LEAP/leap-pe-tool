@@ -1,0 +1,16 @@
+
+QTextCharFormat f;
+QBrush b;
+b.setColor(QColor("red"));
+auto txcursor = ui->textBrowser->textCursor();
+f.setBackground(b);
+while (!txcursor.atEnd()) {
+	txcursor.movePosition(QTextCursor::MoveOperation::EndOfWord);
+	txcursor.select(QTextCursor::SelectionType::WordUnderCursor);
+	if(txcursor.hasSelection()){
+		txcursor.beginEditBlock();
+		txcursor.mergeCharFormat(f2);
+		txcursor.endEditBlock();
+	}
+	txcursor.movePosition(QTextCursor::MoveOperation::NextWord);
+}

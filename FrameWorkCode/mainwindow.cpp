@@ -16,6 +16,7 @@
 #include <utility> // std::pair
 #include "ProjectHierarchyWindow.h"
 #include "3rdParty/RapidXML/rapidxml.hpp"
+#include <QDomDocument>
 //# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
@@ -421,13 +422,13 @@ void MainWindow::on_actionOpen_triggered()
                 localmFilename.replace(QString("Inds"),QString("GDoc"));
                 //loadMap(localmFilename.toUtf8().constData(),GPage, "GPage");  localmFilename = mFilename;
                 //loadmaptoTrie(TGPage,GPage);
-                if (!prevTRig) on_actionSpell_Check_triggered();
+               
                 //OPENSPELLFLAG = 0;
 
                 Graphics_view_zoom* z = new Graphics_view_zoom(ui->graphicsView);
                 z->set_modifiers(Qt::NoModifier);
                 // fill indexes according to Tesseract
-                
+				on_actionSpell_Check_triggered();
 
 
             } //if(sFile.open(QFile::ReadOnly | QFile::Text))
@@ -436,87 +437,32 @@ void MainWindow::on_actionOpen_triggered()
         } // if(!file.isEmpty())
 
 } //MainWindow::on_actionOpen_triggered()
-
+void HandleTextNode(QDomNodeList &list) {
+	for (int i = 0; i<list.size(); i++) {
+		auto n = list.at(i);
+		
+	}
+}
 map<string, int> wordLineIndex;
 bool ConvertSlpDevFlag =0;
 void MainWindow::on_actionSpell_Check_triggered()
 {
+	
+	auto txcursor = ui->textBrowser->textCursor();
+	txcursor.setPosition(0);
+	auto format = txcursor.charFormat();
+	format.setForeground(QColor(255, 0, 0));
 
-        QString textBrowserText = ui->textBrowser->toPlainText();
-        QChar ch;
-        ch=textBrowserText[1];
-        textBrowserText+=" ";
-        string str1=textBrowserText.toUtf8().constData();
-
-        // load no of words
-        istringstream iss1(str1);
-        size_t WordCount = 0; string word1;
-        while(iss1 >> word1) WordCount++;
-
-        //str1 = toslp1(str1);
-        istringstream iss(str1);
-        string strHtml = "<html><body>"; string line;
-
-
-        int value = 0;
-        while (getline(iss, line)) {
-                    istringstream issw(line);
-                    string word;
-                    strHtml += "<p>";
-                    while(issw >> word) {
-                        if(ConvertSlpDevFlag){
-                            string word1 = word;
-                            word = toslp1(word);
-                            string wordNext;
-                            if(hasM40PerAsci(word1)){wordNext = word1;}else{wordNext = toDev(word);}
-                            strHtml += wordNext; strHtml += " "; //cout << strHtml << endl;
-                            value ++;
-                        }
-                        else{
-                            string word1 = word;
-                            word = toslp1(word);
-                            string wordNext;
-                            //cout << GPage.size() <<  word << " " << GPage[word] << endl;
-                            if(hasM40PerAsci(word1)){wordNext = word1;}
-                            else if(GBook[(word)] > 0 ){wordNext = toDev(word); PWords[word]++;}
-                            //else if(CPairRight[word] >0) {wordNext = "<font color=\'purple\'>" + toDev(CPair[word]) + "</font>";}
-                            else if(PWords[word] > 0) { wordNext = "<font color=\'gray\'>" + toDev(word) + "</font>";}
-                            else if((Dict[word] ==0) && (PWords[word] == 0) && (CPair[word].size() > 0)) {
-                                wordNext = "<font color=\'purple\'>" + toDev(CPair[word]) + "</font>";
-                            } else {
-                            wordNext = findDictEntries(toslp1(word),Dict,PWords, word.size());//replace m1 with m2,m1 for combined search
-                            wordNext = find_and_replace_oddInstancesblue(wordNext);
-                            wordNext = find_and_replace_oddInstancesorange(wordNext);
-                            }
-
-                            strHtml += wordNext; strHtml += " "; //cout << strHtml << endl;
-                            value ++;
-                        }
-
-                    //cout << GPage[(word)] << endl;
-                    //Ui -> Dialog -> progressBar -> setValue(value);
-                    }
-            strHtml +="</p>"; // To add new line
-
-       }
-       strHtml += "</body></html>";
-       ui->textBrowser->setHtml(QString::fromStdString(strHtml));
-       //dialog->progressBar-> setValue(WordCount);
-
-       //secdialog.progressBar.setValue(WordCount);
-
-
-       // load wordLineIndex map for pairing with WordImages
-       str1=textBrowserText.toUtf8().constData();
-       // str1 = clean(str1);
-       istringstream iss2(str1);
-       size_t WordCount2 = 0;
-       while (getline(iss2, line)) {
-                   istringstream issw(line);
-                   string word;
-                   while(issw >> word){ wordLineIndex[(word + "###" + line)] = WordCount2; WordCount2++;} // clean(word) instead of word
-       }
-
+	while (!txcursor.atEnd()) {
+		txcursor.movePosition(QTextCursor::MoveOperation::EndOfWord);
+		txcursor.select(QTextCursor::SelectionType::WordUnderCursor);
+		if (txcursor.hasSelection()) {
+			txcursor.beginEditBlock();
+			txcursor.mergeCharFormat(format);
+			txcursor.endEditBlock();
+		}
+		txcursor.movePosition(QTextCursor::MoveOperation::NextWord);
+	}
 }
 
 /*
@@ -2902,12 +2848,32 @@ void MainWindow::LoadImageFromFile(QFile * f) {
 	if(!z) z = new Graphics_view_zoom(ui->graphicsView);
 	z->set_modifiers(Qt::NoModifier);
 }
+QString GetFilter(QString & Name,const QStringList &list) {
+	QString Filter = Name;
+	Filter += " ( ";
+	for (auto ext : list) {
+		//int loc = ext.lastIndexOf(".");
+		QString s = "*";
+		if (ext.size() > 1) {
+			if (ext[0] != '.') {
+				s += ".";
+			}
+			s += ext;
+			Filter += s + " ";
+		}
+	}
+	Filter += ")";
+	return Filter;
+}
 void MainWindow::file_click(const QModelIndex&indx) {
 	std::cout << "Test";
 	auto item = (TreeItem*)indx.internalPointer();
 	auto qvar = item->data(0);
 	auto file = item->GetFile();
-	if (file) {
+	NodeType type = item->GetNodeType();
+	switch(type) {
+	case NodeType::_FILETYPE: 
+	{
 		QFileInfo f(*file);
 		QString suff = f.completeSuffix();
 		if (suff == "txt") {
@@ -2916,16 +2882,32 @@ void MainWindow::file_click(const QModelIndex&indx) {
 		if (suff == "jpeg") {
 			LoadImageFromFile(file);
 		}
+		break;
+	}
+		
+	case NodeType::FILTER:
+	{
+		Filter * filtr = item->GetFilter();
+		QString name = filtr->name();
+		QStringList list = filtr->extensions();
+		QString filter = GetFilter(name, list);
+		std::string str = filter.toStdString();
+		QFile fileo = QFileDialog::getOpenFileName(this, "Open File", "./", tr(str.c_str()));
+		if (fileo.exists()) {
+			//Add it to project
+		}
+		break;
+	}
 	}
 	//auto data = qvar.data();;
 	QString val = qvar.value<QString>();
 }
 void MainWindow::on_actionOpen_Project_triggered() {
 	rapidxml::xml_document<> doc;
-	QFile xml = QFileDialog::getOpenFileName(this, "Open Project");
-	mProject.process_xml(xml);
-	//ProjectHierarchyWindow * phw = new ProjectHierarchyWindow(mProject);
-	//phw->show();
-	ui->treeView->setModel(mProject.getModel());
-	bool b = connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
+	QFile xml = QFileDialog::getOpenFileName(this, "Open Project","./",tr("Project(*.xml)"));
+	if (xml.exists()) {
+		mProject.process_xml(xml);
+		ui->treeView->setModel(mProject.getModel());
+		bool b = connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
+	}
 }

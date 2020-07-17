@@ -3,11 +3,11 @@
 #include <QStringList>
 
 Filter::Filter(const std::string & pName, const std::string & pExt) {
-	m_name.fromStdString(pName);
+	m_name = m_name.fromStdString(pName);
 	QString exts;
-	exts.fromStdString(pExt);
+	exts = exts.fromStdString(pExt);
 	QRegExp exp(";");
-	QStringList list = exts.split(QChar(';'));
+	QStringList list = exts.split(";");
 	m_extensions = list;
 }
 

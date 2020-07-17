@@ -20,7 +20,7 @@ public:
 	}
 private:
 	QVector<QFile*> mFiles;
-	QVector<Filter> mFilters;
+	QVector<Filter*> mFilters;
 	TreeItem * mRoot;
 	TreeModel * mTreeModel;
 	QString mFileName;
