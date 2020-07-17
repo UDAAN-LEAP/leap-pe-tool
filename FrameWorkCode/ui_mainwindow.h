@@ -468,8 +468,6 @@ public:
         mainToolBar->addAction(actionSave_As);
         mainToolBar->addAction(actionLoadData);
         mainToolBar->addSeparator();
-        mainToolBar->addAction(actionSpell_Check);
-        mainToolBar->addSeparator();
         mainToolBar->addAction(actionLoad_Prev_Page);
         mainToolBar->addAction(actionLoad_Next_Page);
         mainToolBar->addSeparator();
@@ -484,10 +482,10 @@ public:
         mainToolBar->addAction(actionAllFontProperties);
         mainToolBar->addAction(actionBold);
         mainToolBar->addAction(actionUnBold);
+        mainToolBar->addAction(actionJusitfiedAlign);
         mainToolBar->addAction(actionLeftAlign);
         mainToolBar->addAction(actionCentreAlign);
         mainToolBar->addAction(actionRightAlign);
-        mainToolBar->addAction(actionJusitfiedAlign);
         mainToolBar->addAction(actionHighlight);
 
         retranslateUi(MainWindow);
@@ -588,7 +586,10 @@ public:
         actionCentreAlign->setText(QApplication::translate("MainWindow", "CentreAlign", Q_NULLPTR));
         actionJusitfiedAlign->setText(QApplication::translate("MainWindow", "JusitfiedAlign", Q_NULLPTR));
         actionAccuracyLog->setText(QApplication::translate("MainWindow", "AccuracyLog", Q_NULLPTR));
-        actionHighlight->setText(QApplication::translate("MainWindow", "Highlight", Q_NULLPTR));
+        actionHighlight->setText(QApplication::translate("MainWindow", "Highlight (Ctrl+H)", Q_NULLPTR));
+#ifndef QT_NO_TOOLTIP
+        actionHighlight->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Highlight<span style=\" font-weight:600;\">(Ctrl+H)</span></p></body></html>", Q_NULLPTR));
+#endif // QT_NO_TOOLTIP
 #ifndef QT_NO_SHORTCUT
         actionHighlight->setShortcut(QApplication::translate("MainWindow", "Ctrl+H", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT

@@ -149,7 +149,7 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
       {
           QString timelogstring = "";
           QTextStream out(&sFile);
-		  
+
           for (auto i = TimeLog.begin(); i!=TimeLog.end(); i++ )
           {
               timelogstring+= QString::fromStdString(i->first) + " ";
@@ -378,7 +378,7 @@ void MainWindow::on_actionOpen_triggered()
                     //                 {
                     //                     leftdiff += abs(vx[i]-leftmean);
                     //                     rightdiff += abs(vright[i]-rightmean);
-                    
+
                     //                 }
                     //                 float leftvariance = leftdiff/n;
                     //                 float rightvariance = rightdiff/n;
@@ -453,22 +453,13 @@ void MainWindow::on_actionOpen_triggered()
                     QString  simplifiedtext = text.simplified();
                     openedFileWords = simplifiedtext.count(" ");
                     sFile.close();
-                    qDebug()<<"openedHTMlFile";
+                    //qDebug()<<"openedHTMlFile";
                 }
                 else
                 {
-
-
                     //if(sFile1.open(QFile::ReadOnly | QFile::Text))
                     if(sFile1.open(QFile::ReadOnly)) //Sanoj
                     {
-    //                    QTextStream in(&sFile1);
-    //                    QString text = in.readAll();
-    //                    sFile.close();
-    //                    //ui->textBrowser->setPlainText(text);
-    //                    ui->textBrowser->setHtml(text); //Sanoj
-    //                    align=\"left\" style =\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"
-
                         QTextStream in(&sFile);
                         in.setCodec("UTF-8");
                         QString text = in.readAll();
@@ -488,36 +479,12 @@ void MainWindow::on_actionOpen_triggered()
                        }
                        strHtml += "</body></html>";
                        ui->textBrowser->setHtml(QString::fromStdString(strHtml));//Sanoj
-    //                   qDebug() << ui->textBrowser->toHtml();
-    //                    QTextStream in(&sFile1); //Sanoj
-    //                    string text2 = "<html><body>";
-    //                    string p1 = "<p>";
-    //                    string p2 = "</p>";
-    //                    ui->textBrowser->setPlainText("");
-    //                    ui->textBrowser->append(QString::fromStdString(text2));
-    //                    while(!in.atEnd())
-    //                    {
 
-    //                        QString text = in.readLine();
-    //                        string text1 = text.toUtf8().constData();
-    //                        text1 = p1 + text1 + p2 + "<br>";
-    //                        QString htmlcode = (QString::fromStdString(text1)).toHtmlEscaped();
-    //                        ui->textBrowser->append(QString::fromStdString(text1));
-    //                        QString op = ui->textBrowser->toHtml();
-    //                        qDebug() << op;
-    //                    }
-    //                    text2 = "</body></html>";
-    //                    sFile.close();
-    //                    ui->textBrowser->append(QString::fromStdString(text2));
 
 
 
                     } else {
-    //                    QTextStream in(&sFile);
-    //                    QString text = in.readAll();
-    //                    sFile.close();
-    //                    //ui->textBrowser->setPlainText(text);
-    //                    ui->textBrowser->setHtml(text); //Sanoj
+
 
                         QTextStream in(&sFile);
                         in.setCodec("UTF-8");
@@ -539,32 +506,11 @@ void MainWindow::on_actionOpen_triggered()
                        strHtml += "</body></html>";
                        ui->textBrowser->setHtml(QString::fromStdString(strHtml));//Sanoj
 
-
-    //                    QTextStream in(&sFile1); //Sanoj
-    //                    string text2 = "<html><body>";
-    //                    string p1 = "<p>";
-    //                    string p2 = "</p>";
-    //                    ui->textBrowser->setPlainText("");
-    //                    ui->textBrowser->append(QString::fromStdString(text2));
-    //                    while(!in.atEnd())
-    //                    {
-
-    //                        QString text = in.readLine();
-    //                        string text1 = text.toUtf8().constData();
-    //                        text1 = p1 + text1 + p2 + "<br>";
-    //                        QString htmlcode = (QString::fromStdString(text1)).toHtmlEscaped();
-    //                        ui->textBrowser->append(QString::fromStdString(text1));
-    //                        QString op = ui->textBrowser->toHtml();
-    //                        qDebug() << op;
-    //                    }
-    //                    text2 = "</body></html>";
-    //                    sFile.close();
-    //                    ui->textBrowser->setHtml(QString::fromStdString(text2));
-
                     }
                 }
 
                     // load and show image:
+                    setWindowTitle(mFilename);
                     QString localmFilename = dir2levelup + "/Images/" + currentpagename;
                     localmFilename.replace(".txt",".jpeg");
                     localmFilename.replace(".html",".jpeg");
@@ -602,13 +548,6 @@ void MainWindow::on_actionOpen_triggered()
                     commentdict.clear();
                     commentederrors.clear();
 
-//                    QString localFilenamecomment = mFilename;
-//                    int pos1 = localFilenamecomment.lastIndexOf("/");
-//                    QString dir1 = localFilenamecomment.mid(0,pos1);
-//                    QString pagename = localFilenamecomment.mid(pos1+1,localFilename.length()-pos1);
-//                    int pos2 = dir1.lastIndexOf("/");
-//                    QString dir2 = dir1.mid(0,pos2);
-
                     QString commentFilename = dir2levelup + "/Comments/" + currentpagename;
                     commentFilename.replace(".txt",".json");
                     commentFilename.replace(".html",".json");
@@ -621,7 +560,7 @@ void MainWindow::on_actionOpen_triggered()
                     QJsonObject page = document.object();
                     if(document.isNull())
                     {
-                        qDebug()<<"empty json/parse error";
+                        //qDebug()<<"empty json/parse error";
                     }
 
                     QJsonArray comments = page.value("comments").toArray();
@@ -633,7 +572,7 @@ void MainWindow::on_actionOpen_triggered()
                         int key = val.toObject().value("key").toInt();
                         QString value = val.toObject().value("value").toString();
                         commentdict[key] = value;
-                        qDebug()<<commentdict<<"onload commentdict";
+                        //qDebug()<<commentdict<<"onload commentdict";
                     }
 
                     QJsonArray::iterator it1;
@@ -653,59 +592,11 @@ void MainWindow::on_actionOpen_triggered()
                         if(key1==key2)
                         {
                             commentederrors[key1] = v;
-                            qDebug()<<key1<<"key1"<<v<<"v";
+                            //qDebug()<<key1<<"key1"<<v<<"v";
                         }
 
 
                     }
-
-    //                foreach(const QJsonValue &val, charerrors)
-    //                {
-    //                    QString key = val.toObject().value("key").toString();
-    //                    QString value = val.toObject().value("value").toString();
-    //                    //commentederrors[key] = value;
-    //                }
-    //                foreach(const QJsonValue &val, worderrors)
-    //                {
-    //                    QString key = val.toObject().value("key").toString();
-    //                    QString value = val.toObject().value("value").toString();
-    //                    commentdict[key] = value;
-    //                }
-
-    //                QFile sFilecomment(commentFilename);
-    //                if(sFilecomment.open(QFile::ReadOnly)) //Sanoj
-    //                {
-    //                    QTextStream in(&sFilecomment);
-    //                    in.setCodec("UTF-8");
-    //                    QString text = in.readAll();
-    //                    sFilecomment.close();
-
-    //                    string str1 = text.toUtf8().constData();
-    //                    istringstream iss(str1);
-    //                    string line;
-    //                    while (getline(iss, line))
-    //                    {
-
-    //                        QString commentline = QString::fromStdString(line);
-    //                        int pos = commentline.indexOf("$$");
-    //                        QString key = commentline.mid(0,pos);
-    //                        QString value = commentline.mid(pos+2, commentline.length()-pos);
-    //                        commentdict[key]=value;
-    //                        pos = value.indexOf(":");
-    //                        QString highlightedtext = value.mid(0,pos);
-    //                        int chars = highlightedtext.length();
-    //                        QString simplifiedtext = highlightedtext.simplified();
-    //                        int words = simplifiedtext.count(" ") + 1;
-
-    //                        vector<int> counts;
-    //                        counts.push_back(chars); counts.push_back(words);
-    //                        commentederrors[key] = counts;
-
-
-
-    //                    }
-    //                }
-
 
 
                 } //if(sFile.open(QFile::ReadOnly | QFile::Text))
@@ -720,6 +611,7 @@ bool ConvertSlpDevFlag =0;
 void MainWindow::on_actionSpell_Check_triggered()
 {
 
+        on_actionSave_triggered();
         QString textBrowserText = ui->textBrowser->toPlainText();
         QChar ch;
         ch=textBrowserText[1];
@@ -870,7 +762,7 @@ string selectedStr;
 //GIVE EVENT TO TEXT BROWZER INSTEAD OF MAINWINDOW
 void MainWindow::mousePressEvent(QMouseEvent *ev)
 {
-    //on_actionLoadData_triggered(); //Sanoj
+    on_actionLoadData_triggered();
 
 
     ui->textBrowser->cursorForPosition(ev->pos());
@@ -1032,18 +924,7 @@ void MainWindow::textChangedSlot(){
 */
 
 
-void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
-{
-    qDebug()<<"Mouse event release";
 
-    if(highlightchecked)
-    {
-        QTextCharFormat  format;
-        format.setBackground(Qt::yellow);
-        ui->textBrowser->textCursor().mergeCharFormat(format);
-        qDebug()<<"Selected Text release";
-    }
-}
 
 void MainWindow::menuSelection(QAction* action)
 {
@@ -1171,7 +1052,7 @@ void MainWindow::on_actionSave_triggered()
                     if(sFile.open(QFile::WriteOnly))
                   {
                       QTextStream out(&sFile);
-					  out.setCodec("UTF-8");
+                      out.setCodec("UTF-8");
                       out << ui->textBrowser->toHtml();//toPlainText()
 
                       sFile.flush();
@@ -1199,7 +1080,7 @@ void MainWindow::on_actionLoadGDocPage_triggered()
                   if(sFile.open(QFile::WriteOnly | QFile::Text))
                   {
                       QTextStream out(&sFile);
-					  out.setCodec("UTF-8");
+                      out.setCodec("UTF-8");
                       out << ui->textBrowser->toHtml(); //toPlainText(); Sanoj
                       sFile.flush();
                       sFile.close();
@@ -2960,7 +2841,7 @@ void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
-			in.setCodec("UTF-8");
+            in.setCodec("UTF-8");
             QString t = in.readAll();
             t= t.replace(" \n","\n");
             qs1=t;
@@ -2976,8 +2857,8 @@ void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
-			in.setCodec("UTF-8");
-			QString t = in.readAll();
+            in.setCodec("UTF-8");
+            QString t = in.readAll();
             t= t.replace(" \n","\n");
             qs2=t;
             t= t.replace(" ","");
@@ -2992,7 +2873,7 @@ void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
-			in.setCodec("UTF-8");
+            in.setCodec("UTF-8");
             QString t = in.readAll();
             t= t.replace(" \n","\n");
             qs3=t;
@@ -3043,16 +2924,13 @@ void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
     ocrimage.replace(".html",".jpeg");
 
     ocrtext.replace(".html",".txt");
-       qDebug()<<"intern path compare ocr image" << ocrimage;
-       qDebug()<<"intern path compare ocr ttext" << ocrtext;
-       qDebug()<<"intern path compare corrector text " << correctortext;
     if(!ocrtext.isEmpty())
     {
         QFile sFile(ocrtext);
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
-			in.setCodec("UTF-8");
+            in.setCodec("UTF-8");
             QString t = in.readAll();
             t= t.replace(" \n","\n");
             qs1=t;
@@ -3068,7 +2946,7 @@ void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
         if(sFile.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&sFile);
-			in.setCodec("UTF-8");
+            in.setCodec("UTF-8");
             QString t = in.readAll();
             t= t.replace(" \n","\n");
             qs2=t;
@@ -3212,11 +3090,6 @@ void MainWindow::on_actionAccuracyLog_triggered()
 }
 
 
-void MainWindow::on_actionHighlight_toggled(bool arg1)
-{
-    highlightchecked = arg1;
-}
-
 
 void MainWindow::on_actionHighlight_triggered()
 {
@@ -3282,27 +3155,18 @@ void MainWindow::on_addcomments_clicked()
     if(comment!="" | comment!=" ")
     {
         commentdict[key] = value;
-        qDebug()<< commentdict <<"commenteddict";
+       // qDebug()<< commentdict <<"commenteddict";
     }
 
 }
 
 void MainWindow::on_viewallcomments_clicked()
 {
-    QString localFilename = mFilename;
-    int pos1 = localFilename.lastIndexOf("/");
-    QString dir1 = localFilename.mid(0,pos1);
-    QString pagename = localFilename.mid(pos1+1,localFilename.length()-pos1);
-    int pos2 = dir1.lastIndexOf("/");
-    QString dir2 = dir1.mid(0,pos2);
-
-    QString commentFilename = dir2 + "/Comments/" + pagename;
+    QString commentFilename = dir2levelup + "/Comments/" + currentpagename;
     commentFilename.replace(".txt",".json");
     commentFilename.replace(".html",".json");
-    qDebug() << commentFilename;
+   // qDebug() << commentFilename;
 
-//    std::ofstream commentfile;
-//    commentfile.open(commentFilename.toUtf8().constData(), ofstream::out | ofstream::trunc);
     int totalcharerr = 0 ,totalworderr = 0; QString commentfield = "";
     map<int, QString>::iterator it1;
     map<int, vector<int>>::iterator it2;
@@ -3346,26 +3210,10 @@ void MainWindow::on_viewallcomments_clicked()
     jsonFile.open(QIODevice::WriteOnly);
     jsonFile.write(document.toJson());
 
-//    for(it1 = commentdict.begin(), it2 = commentederrors.begin(); it2!= commentederrors.end(); it1++,it2++)
-//    {
-//        QString first = (it1->first);
-//        QString second = (it1->second);
-//        commentfield += (second +"\n");
-
-//        auto wordchars = it2->second;
-//        totalcharerr += wordchars[0];
-//        totalworderr += wordchars[1];
-
-//        commentfile<<first.toUtf8().constData()<<"$$" <<second.toUtf8().constData()<<"\n";
-//    }
-
     float characc = (float)(openedFileChars - totalcharerr)/(float)openedFileChars*100;
     float wordacc = (float)(openedFileWords - totalworderr)/(float)openedFileWords*100 ;
     wordacc = ((float)lround(wordacc*100))/100;
     characc = ((float)lround(characc*100))/100;
-//    commentfile<<totalworderr<<","<<totalcharerr<<","<<wordacc<<","<<characc;
-//    commentfile.flush();
-//    commentfile.close();
 
     CommentsView *cv = new CommentsView(totalworderr,totalcharerr,wordacc,characc,commentfield);
     cv->show();

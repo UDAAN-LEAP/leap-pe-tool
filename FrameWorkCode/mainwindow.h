@@ -71,7 +71,7 @@ private slots:
 
     void mousePressEvent(QMouseEvent *ev);
 
-    void mouseReleaseEvent(QMouseEvent *ev);
+   // void mouseReleaseEvent(QMouseEvent *ev);
 
     //void mouseMoveEvent(QMouseEvent *event);
 
@@ -172,7 +172,7 @@ private slots:
 
     void on_actionAccuracyLog_triggered();
     
-    void on_actionHighlight_toggled(bool arg1);
+ //   void on_actionHighlight_toggled(bool arg1);
 
     void on_actionHighlight_triggered();
 

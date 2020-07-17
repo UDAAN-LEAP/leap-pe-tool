@@ -35,7 +35,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = qpadfinal1.0.0
-DISTDIR = /home/sanoj/commited/OpenOCRCorrect/FrameWorkCode/.tmp/qpadfinal1.0.0
+DISTDIR = /home/sanoj/new1/OpenOCRCorrect/FrameWorkCode/.tmp/qpadfinal1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/sanoj/Qt5.9.9/5.9.9/gcc_64/lib
 LIBS          = $(SUBLIBS) -L/usr/include/tesseract -L/usr/include/leptonica -ltesseract -llept -L/home/sanoj/Qt5.9.9/5.9.9/gcc_64/lib -lQt5PrintSupport -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -1130,7 +1130,7 @@ moc_mainwindow.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QInputDialog
 		mainwindow.h \
 		moc_predefs.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/bin/moc
-	/home/sanoj/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/sanoj/commited/OpenOCRCorrect/FrameWorkCode -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtPrintSupport -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
+	/home/sanoj/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/sanoj/new1/OpenOCRCorrect/FrameWorkCode -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtPrintSupport -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
 
 moc_DiffView.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QMainWindow \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -1238,7 +1238,7 @@ moc_DiffView.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QMainWindow \
 		DiffView.h \
 		moc_predefs.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/bin/moc
-	/home/sanoj/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/sanoj/commited/OpenOCRCorrect/FrameWorkCode -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtPrintSupport -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DiffView.h -o moc_DiffView.cpp
+	/home/sanoj/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/sanoj/new1/OpenOCRCorrect/FrameWorkCode -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtPrintSupport -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DiffView.h -o moc_DiffView.cpp
 
 moc_commentsview.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QDialog \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qdialog.h \
@@ -1344,7 +1344,7 @@ moc_commentsview.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QDialog \
 		commentsview.h \
 		moc_predefs.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/bin/moc
-	/home/sanoj/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/sanoj/commited/OpenOCRCorrect/FrameWorkCode -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtPrintSupport -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include commentsview.h -o moc_commentsview.cpp
+	/home/sanoj/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/sanoj/new1/OpenOCRCorrect/FrameWorkCode -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtPrintSupport -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include commentsview.h -o moc_commentsview.cpp
 
 moc_zoom.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QObject \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qobject.h \
@@ -1458,7 +1458,7 @@ moc_zoom.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QObject \
 		zoom.h \
 		moc_predefs.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/bin/moc
-	/home/sanoj/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/sanoj/commited/OpenOCRCorrect/FrameWorkCode -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtPrintSupport -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include zoom.h -o moc_zoom.cpp
+	/home/sanoj/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/sanoj/new1/OpenOCRCorrect/FrameWorkCode -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtPrintSupport -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include zoom.h -o moc_zoom.cpp
 
 moc_qcustomplot.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qglobal.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qconfig-bootstrapped.h \
@@ -1949,7 +1949,7 @@ moc_qcustomplot.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qglobal.h \
 		qcustomplot.h \
 		moc_predefs.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/bin/moc
-	/home/sanoj/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/sanoj/commited/OpenOCRCorrect/FrameWorkCode -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtPrintSupport -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include qcustomplot.h -o moc_qcustomplot.cpp
+	/home/sanoj/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/sanoj/new1/OpenOCRCorrect/FrameWorkCode -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtPrintSupport -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include qcustomplot.h -o moc_qcustomplot.cpp
 
 moc_interndiffview.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QMainWindow \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -2057,7 +2057,7 @@ moc_interndiffview.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QMainWin
 		interndiffview.h \
 		moc_predefs.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/bin/moc
-	/home/sanoj/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/sanoj/commited/OpenOCRCorrect/FrameWorkCode -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtPrintSupport -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include interndiffview.h -o moc_interndiffview.cpp
+	/home/sanoj/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/sanoj/new1/OpenOCRCorrect/FrameWorkCode -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtPrintSupport -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/sanoj/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include interndiffview.h -o moc_interndiffview.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:

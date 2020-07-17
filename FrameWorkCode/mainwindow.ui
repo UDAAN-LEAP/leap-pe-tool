@@ -362,10 +362,10 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionAllFontProperties"/>
    <addaction name="actionBold"/>
    <addaction name="actionUnBold"/>
+   <addaction name="actionJusitfiedAlign"/>
    <addaction name="actionLeftAlign"/>
    <addaction name="actionCentreAlign"/>
    <addaction name="actionRightAlign"/>
-   <addaction name="actionJusitfiedAlign"/>
    <addaction name="actionHighlight"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
