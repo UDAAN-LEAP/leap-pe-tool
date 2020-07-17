@@ -1,0 +1,76 @@
+{
+    "charerrors": [
+        {
+            "key": 83,
+            "value": 3
+        },
+        {
+            "key": 105,
+            "value": 1
+        },
+        {
+            "key": 106,
+            "value": 2
+        },
+        {
+            "key": 168,
+            "value": 1
+        },
+        {
+            "key": 173,
+            "value": 4
+        },
+        {
+            "key": 206,
+            "value": 5
+        }
+    ],
+    "comments": [
+        {
+            "key": 83,
+            "value": "भटा:"
+        },
+        {
+            "key": 105,
+            "value": "भ:"
+        },
+        {
+            "key": 173,
+            "value": "टः- :1"
+        },
+        {
+            "key": 180,
+            "value": "म्पु:"
+        },
+        {
+            "key": 206,
+            "value": "ञ्जन्:2"
+        }
+    ],
+    "worderrors": [
+        {
+            "key": 83,
+            "value": 1
+        },
+        {
+            "key": 105,
+            "value": 1
+        },
+        {
+            "key": 106,
+            "value": 1
+        },
+        {
+            "key": 168,
+            "value": 1
+        },
+        {
+            "key": 173,
+            "value": 1
+        },
+        {
+            "key": 206,
+            "value": 1
+        }
+    ]
+}

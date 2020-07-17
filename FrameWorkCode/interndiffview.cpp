@@ -2,10 +2,17 @@
 #include "ui_interndiffview.h"
 #include "zoom.h"
 #include "diff_match_patch.h"
-InternDiffView::InternDiffView(const QString &ocroutput, const QString &interntxt, const QString &ocrimgpath, const QString acc, QWidget *parent)
+InternDiffView::InternDiffView( QString &ocroutput,  QString &interntxt, const QString &ocrimgpath, const QString acc, QWidget *parent)
 	: QMainWindow(parent)
 {
-	ui = new Ui::InternDiffView();
+    QTextDocument doc;
+    doc.setHtml(interntxt);
+    interntxt = doc.toPlainText();
+
+    doc.setHtml(ocroutput);
+    ocroutput = doc.toPlainText();
+
+    ui = new Ui::InternDiffView();
 	ui->setupUi(this);
 	diff_match_patch dmp;
 	auto diffs = dmp.diff_main(ocroutput, interntxt);
@@ -20,7 +27,7 @@ InternDiffView::InternDiffView(const QString &ocroutput, const QString &interntx
 
     img.load(ocrimgpath);
 	QGraphicsScene *scene = new QGraphicsScene(this);
-	scene->addPixmap(QPixmap::fromImage(img));
+	scene->addPixmap(QPixmap::fromImage(img));	
 	setWindowTitle("Corrector");
 	ui->graphicsView->setScene(scene);
 	ui->graphicsView->adjustSize();
