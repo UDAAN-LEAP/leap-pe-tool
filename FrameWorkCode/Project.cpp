@@ -25,12 +25,13 @@ void Project::process_node(rapidxml::xml_node<>* pNode,TreeItem * parent)
 			std::string filter_name = pNode->first_attribute("Include")->value();
 			std::string filter_exts = pNode->first_node()->value();
 
-			Filter filter(filter_name, filter_exts);
-			
+			Filter *filter = new Filter(filter_name, filter_exts);
+			mFilters.push_back(filter);
 			QString str;
 			str = str.fromStdString(filter_name);
 			//mFilters.push_back(filter_name);
-			TreeItem * filter_node = new TreeItem(str,parent);
+			TreeItem * filter_node = new TreeItem(str,NodeType::FILTER,parent);
+			filter_node->SetFilter(filter);
 			parent->append_child(filter_node);
 			process_node(pNode->next_sibling(),parent);
 		}
@@ -52,7 +53,7 @@ void Project::process_node(rapidxml::xml_node<>* pNode,TreeItem * parent)
 			QFile *f = new QFile(fpath);
 			mFiles.push_back(f);
 			auto filename = fileinfo.fileName();
-			TreeItem *nodefile = new TreeItem(filename,node);
+			TreeItem *nodefile = new TreeItem(filename,_FILETYPE,node);
 			node->append_child(nodefile);
 			nodefile->SetFile(mFiles.back());
 			process_node(pNode->next_sibling(), parent);
@@ -77,7 +78,7 @@ void Project::process_xml(QFile & pFile) {
 	auto attr  = first->first_attribute("name");
 	std::string project_name = attr->value();
 	mProjectName = mProjectName.fromStdString(project_name);
-	TreeItem * root = new TreeItem(mProjectName);
+	TreeItem * root = new TreeItem(mProjectName,FOLDER);
 	mRoot = root;
 	auto child = first->first_node();
 	while (child) {
