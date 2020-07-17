@@ -11,6 +11,8 @@
 *.vcxproj.filters
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
+*.o
+qpadfinal
 
 # Build results
 [Dd]ebug/
