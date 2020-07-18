@@ -19,6 +19,7 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
@@ -56,6 +57,7 @@ public:
     QLineEdit *acc_character;
     QLabel *label_3;
     QTextBrowser *commentTextBrowser;
+    QPushButton *pushButton;
 
     void setupUi(QDialog *CommentsView)
     {
@@ -207,6 +209,11 @@ public:
 
         verticalLayout_7->addWidget(commentTextBrowser);
 
+        pushButton = new QPushButton(CommentsView);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+
+        verticalLayout_7->addWidget(pushButton);
+
 
         horizontalLayout_4->addLayout(verticalLayout_7);
 
@@ -226,6 +233,7 @@ public:
         label_7->setText(QApplication::translate("CommentsView", "Word-Level", Q_NULLPTR));
         label_8->setText(QApplication::translate("CommentsView", "Character-Level", Q_NULLPTR));
         label_3->setText(QApplication::translate("CommentsView", "<b>Comments</b>", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("CommentsView", "Save", Q_NULLPTR));
     } // retranslateUi
 
 };

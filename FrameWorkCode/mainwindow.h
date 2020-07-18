@@ -176,7 +176,7 @@ private slots:
 
     void on_actionHighlight_triggered();
 
-    void on_addcomments_clicked();
+   // void on_addcomments_clicked();
     
     void on_viewallcomments_clicked();
     
