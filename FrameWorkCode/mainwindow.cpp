@@ -3218,7 +3218,7 @@ void MainWindow::on_viewallcomments_clicked()
   
   if(!save_triggered)
   {
-    CommentsView *cv = new CommentsView(totalworderr,totalcharerr,wordacc,characc,commentfield);
+    CommentsView *cv = new CommentsView(totalworderr,totalcharerr,wordacc,characc,commentfield,rating);
     cv->show();
   }
 }
