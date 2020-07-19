@@ -2,8 +2,9 @@
 #include "ui_commentsview.h"
 #include "mainwindow.h"
 #include <QCloseEvent>
-string commentsFilename;
-CommentsView::CommentsView(const int &words, const int &chars, const float &wordacc, const float &characc,const QString commentsFilelocation, QWidget *parent) :
+
+QString commentFilename;
+CommentsView::CommentsView(const int &words, const int &chars, const float &wordacc, const float &characc,const QString commentsField,const QString commentsFilelocation, int rating, QWidget *parent) :
     QDialog(parent)
 {
     ui = new Ui::CommentsView();
@@ -12,12 +13,11 @@ CommentsView::CommentsView(const int &words, const int &chars, const float &word
     ui->h_characters->setText(QString::number(chars));
     ui->acc_word->setText(QString::number(wordacc));
     ui->acc_character->setText(QString::number(characc));
-    commentsFilename = commentsFilelocation.toUtf8().constData();
-    fstream commentsFile(commentsFilename);
-    string comments;
-    commentsFile>>comments;
-    commentsFile.close();
-    ui->commentTextBrowser->setText(QString::fromStdString(comments));
+    ui->commentTextBrowser->setText(commentsField);
+    //ui->rating->setText(QString::number(rating));
+    commentFilename = commentsFilelocation;
+
+
 }
 
 
@@ -28,10 +28,22 @@ CommentsView::~CommentsView()
 
 void CommentsView::on_pushButton_clicked()
 {
-    fstream commentsFile;
-    commentsFile.open(commentsFilename, ios::out | ios::trunc);
-    string comments = ui->commentTextBrowser->toPlainText().toUtf8().constData();
-    commentsFile<<comments;
-    commentsFile.close();
+
+    QString comments = ui->commentTextBrowser->toPlainText();
+    //QString rating = ui->rating->text();
+    QFile jsonFile(commentFilename);
+    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    QByteArray data = jsonFile.readAll();
+
+    QJsonParseError errorPtr;
+    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+    QJsonObject page = document.object();
+    jsonFile.close();
+    page["comments"] = comments;
+    //page["rating"] = rating;
+    document.setObject(page);
+    QFile jsonFile1(commentFilename);
+    jsonFile1.open(QIODevice::WriteOnly);
+    jsonFile1.write(document.toJson());
 
 }

@@ -29,7 +29,6 @@ QT_BEGIN_NAMESPACE
 class Ui_CommentsView
 {
 public:
-    QHBoxLayout *horizontalLayout_4;
     QVBoxLayout *verticalLayout_7;
     QHBoxLayout *horizontalLayout_3;
     QVBoxLayout *verticalLayout_3;
@@ -55,7 +54,17 @@ public:
     QVBoxLayout *verticalLayout_6;
     QLabel *label_8;
     QLineEdit *acc_character;
+    QHBoxLayout *horizontalLayout_5;
     QLabel *label_3;
+    QHBoxLayout *horizontalLayout_4;
+    QSpacerItem *horizontalSpacer_3;
+    QSpacerItem *horizontalSpacer_4;
+    QSpacerItem *horizontalSpacer_5;
+    QSpacerItem *horizontalSpacer_6;
+    QSpacerItem *horizontalSpacer_7;
+    QSpacerItem *horizontalSpacer_8;
+    QSpacerItem *horizontalSpacer_9;
+    QSpacerItem *horizontalSpacer_10;
     QTextBrowser *commentTextBrowser;
     QPushButton *pushButton;
 
@@ -64,9 +73,7 @@ public:
         if (CommentsView->objectName().isEmpty())
             CommentsView->setObjectName(QStringLiteral("CommentsView"));
         CommentsView->resize(479, 377);
-        horizontalLayout_4 = new QHBoxLayout(CommentsView);
-        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
-        verticalLayout_7 = new QVBoxLayout();
+        verticalLayout_7 = new QVBoxLayout(CommentsView);
         verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
@@ -192,10 +199,52 @@ public:
 
         verticalLayout_7->addLayout(horizontalLayout_3);
 
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
         label_3 = new QLabel(CommentsView);
         label_3->setObjectName(QStringLiteral("label_3"));
 
-        verticalLayout_7->addWidget(label_3);
+        horizontalLayout_5->addWidget(label_3);
+
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_3);
+
+        horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_4);
+
+        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_5);
+
+        horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_6);
+
+        horizontalSpacer_7 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_7);
+
+        horizontalSpacer_8 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_8);
+
+        horizontalSpacer_9 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_9);
+
+        horizontalSpacer_10 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_10);
+
+
+        horizontalLayout_5->addLayout(horizontalLayout_4);
+
+
+        verticalLayout_7->addLayout(horizontalLayout_5);
 
         commentTextBrowser = new QTextBrowser(CommentsView);
         commentTextBrowser->setObjectName(QStringLiteral("commentTextBrowser"));
@@ -206,16 +255,21 @@ public:
         font.setBold(false);
         font.setWeight(50);
         commentTextBrowser->setFont(font);
+        commentTextBrowser->setReadOnly(false);
+        commentTextBrowser->setOverwriteMode(true);
 
         verticalLayout_7->addWidget(commentTextBrowser);
 
         pushButton = new QPushButton(CommentsView);
         pushButton->setObjectName(QStringLiteral("pushButton"));
+        QFont font1;
+        font1.setPointSize(11);
+        font1.setBold(true);
+        font1.setUnderline(false);
+        font1.setWeight(75);
+        pushButton->setFont(font1);
 
         verticalLayout_7->addWidget(pushButton);
-
-
-        horizontalLayout_4->addLayout(verticalLayout_7);
 
 
         retranslateUi(CommentsView);
@@ -232,7 +286,7 @@ public:
         label_6->setText(QApplication::translate("CommentsView", "<b>Accuracy</b>", Q_NULLPTR));
         label_7->setText(QApplication::translate("CommentsView", "Word-Level", Q_NULLPTR));
         label_8->setText(QApplication::translate("CommentsView", "Character-Level", Q_NULLPTR));
-        label_3->setText(QApplication::translate("CommentsView", "<b>Comments</b>", Q_NULLPTR));
+        label_3->setText(QApplication::translate("CommentsView", "<html><head/><body><p><span style=\" font-weight:600;\">Add Comments</span></p></body></html>", Q_NULLPTR));
         pushButton->setText(QApplication::translate("CommentsView", "Save", Q_NULLPTR));
     } // retranslateUi
 
