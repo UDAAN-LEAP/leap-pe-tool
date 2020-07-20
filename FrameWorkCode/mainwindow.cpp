@@ -3178,13 +3178,13 @@ void MainWindow::on_viewallcomments_clicked()
         textcursor1.select(QTextCursor::WordUnderCursor);
         QString wordundercursor = textcursor1.selectedText();
         int key = textcursor1.selectionStart();
-        qDebug()<<wordundercursor<<" :Word" <<wordundercursor.length()<< " :len" <<anchor<<"anchor" <<key << "key";
+        //qDebug()<<wordundercursor<<" :Word" <<wordundercursor.length()<< " :len" <<anchor<<"anchor" <<key << "key";
 
         if(format.background() == Qt::yellow && anchor>=(key+1))
         {
             totalcharerr++;
             wordcount[key]++;
-            qDebug()<<wordcount<<totalcharerr;
+            //qDebug()<<wordcount<<totalcharerr;
         }
         textcursor1.setPosition(anchor+1);
         //textcursor1.movePosition(QTextCursor::NextCharacter , QTextCursor::MoveAnchor, 1);
