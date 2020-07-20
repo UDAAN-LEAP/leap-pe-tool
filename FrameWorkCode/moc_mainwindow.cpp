@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[58];
-    char stringdata0[1641];
+    char stringdata0[1647];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -87,8 +87,8 @@ QT_MOC_LITERAL(52, 1473, 23), // "on_pushButton_2_clicked"
 QT_MOC_LITERAL(53, 1497, 33), // "on_actionJusitfiedAlign_trigg..."
 QT_MOC_LITERAL(54, 1531, 30), // "on_actionAccuracyLog_triggered"
 QT_MOC_LITERAL(55, 1562, 28), // "on_actionHighlight_triggered"
-QT_MOC_LITERAL(56, 1591, 22), // "on_addcomments_clicked"
-QT_MOC_LITERAL(57, 1614, 26) // "on_viewallcomments_clicked"
+QT_MOC_LITERAL(56, 1591, 26), // "on_viewallcomments_clicked"
+QT_MOC_LITERAL(57, 1618, 28) // "on_actionFontBlack_triggered"
 
     },
     "MainWindow\0on_actionNew_triggered\0\0"
@@ -139,8 +139,8 @@ QT_MOC_LITERAL(57, 1614, 26) // "on_viewallcomments_clicked"
     "on_actionJusitfiedAlign_triggered\0"
     "on_actionAccuracyLog_triggered\0"
     "on_actionHighlight_triggered\0"
-    "on_addcomments_clicked\0"
-    "on_viewallcomments_clicked"
+    "on_viewallcomments_clicked\0"
+    "on_actionFontBlack_triggered"
 };
 #undef QT_MOC_LITERAL
 
@@ -324,8 +324,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 47: _t->on_actionJusitfiedAlign_triggered(); break;
         case 48: _t->on_actionAccuracyLog_triggered(); break;
         case 49: _t->on_actionHighlight_triggered(); break;
-        case 50: _t->on_addcomments_clicked(); break;
-        case 51: _t->on_viewallcomments_clicked(); break;
+        case 50: _t->on_viewallcomments_clicked(); break;
+        case 51: _t->on_actionFontBlack_triggered(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {

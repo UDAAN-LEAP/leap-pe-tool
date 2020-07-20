@@ -81,6 +81,7 @@ public:
     QAction *actionJusitfiedAlign;
     QAction *actionAccuracyLog;
     QAction *actionHighlight;
+    QAction *actionFontBlack;
     QWidget *centralWidget;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
@@ -96,10 +97,6 @@ public:
     QPushButton *pushButton_3;
     QSpacerItem *horizontalSpacer;
     QPushButton *pushButton_2;
-    QWidget *layoutWidget3;
-    QHBoxLayout *horizontalLayout_3;
-    QLineEdit *commentsfield;
-    QPushButton *addcomments;
     QPushButton *viewallcomments;
     QMenuBar *menuBar;
     QMenu *menuOCR_Correction_Window;
@@ -261,6 +258,8 @@ public:
         QIcon icon15;
         icon15.addFile(QStringLiteral(":/Images/highlight-icon.png"), QSize(), QIcon::Normal, QIcon::On);
         actionHighlight->setIcon(icon15);
+        actionFontBlack = new QAction(MainWindow);
+        actionFontBlack->setObjectName(QStringLiteral("actionFontBlack"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
@@ -356,29 +355,9 @@ public:
 
         horizontalLayout_2->addWidget(pushButton_2);
 
-        layoutWidget3 = new QWidget(centralWidget);
-        layoutWidget3->setObjectName(QStringLiteral("layoutWidget3"));
-        layoutWidget3->setGeometry(QRect(670, 40, 531, 27));
-        horizontalLayout_3 = new QHBoxLayout(layoutWidget3);
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
-        commentsfield = new QLineEdit(layoutWidget3);
-        commentsfield->setObjectName(QStringLiteral("commentsfield"));
-
-        horizontalLayout_3->addWidget(commentsfield);
-
-        addcomments = new QPushButton(layoutWidget3);
-        addcomments->setObjectName(QStringLiteral("addcomments"));
-
-        horizontalLayout_3->addWidget(addcomments);
-
-        viewallcomments = new QPushButton(layoutWidget3);
+        viewallcomments = new QPushButton(centralWidget);
         viewallcomments->setObjectName(QStringLiteral("viewallcomments"));
-
-        horizontalLayout_3->addWidget(viewallcomments);
-
+        viewallcomments->setGeometry(QRect(671, 41, 201, 25));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -462,6 +441,7 @@ public:
         menuFontAndLayout->addAction(actionCentreAlign);
         menuFontAndLayout->addAction(actionJusitfiedAlign);
         menuFontAndLayout->addAction(actionHighlight);
+        menuFontAndLayout->addAction(actionFontBlack);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen);
         mainToolBar->addAction(actionSave);
@@ -487,6 +467,7 @@ public:
         mainToolBar->addAction(actionCentreAlign);
         mainToolBar->addAction(actionRightAlign);
         mainToolBar->addAction(actionHighlight);
+        mainToolBar->addAction(actionFontBlack);
 
         retranslateUi(MainWindow);
 
@@ -593,6 +574,7 @@ public:
 #ifndef QT_NO_SHORTCUT
         actionHighlight->setShortcut(QApplication::translate("MainWindow", "Ctrl+H", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
+        actionFontBlack->setText(QApplication::translate("MainWindow", "FontBlack", Q_NULLPTR));
         textBrowser->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -600,9 +582,7 @@ public:
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", Q_NULLPTR));
         pushButton_3->setText(QApplication::translate("MainWindow", "Compare Corrector's Output", Q_NULLPTR));
         pushButton_2->setText(QApplication::translate("MainWindow", "Compare Verifier's Output", Q_NULLPTR));
-        commentsfield->setText(QApplication::translate("MainWindow", "Add Highlights/Select Text, then add Comments", Q_NULLPTR));
-        addcomments->setText(QApplication::translate("MainWindow", "Add", Q_NULLPTR));
-        viewallcomments->setText(QApplication::translate("MainWindow", "View All", Q_NULLPTR));
+        viewallcomments->setText(QApplication::translate("MainWindow", "Comments and Accuracy", Q_NULLPTR));
         menuOCR_Correction_Window->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
         menuCreateReports->setTitle(QApplication::translate("MainWindow", "CreateReports", Q_NULLPTR));
         menuSaveVariables->setTitle(QApplication::translate("MainWindow", "SaveVariables", Q_NULLPTR));

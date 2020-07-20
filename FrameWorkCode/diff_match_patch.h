@@ -71,7 +71,6 @@
 #include <QMap>
 #include <QVariant>
 
-#undef DELETE
 //#include "diff_match_patch.h"
 enum Operation {
   DELETE, INSERT, EQUAL
@@ -631,6 +630,5 @@ class diff_match_patch {
     return (pos == str.length()) ? QString("") : str.mid(pos, len);
   }
 };
-#define DELETE                           (0x00010000L)
 
 #endif // DIFF_MATCH_PATCH_H

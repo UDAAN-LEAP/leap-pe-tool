@@ -11,3 +11,5 @@
 /home/sanoj/commited/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-6.txt 2
 /home/sanoj/commited/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-7.txt 68
 /home/sanoj/commited/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-8.txt 2
+/home/sanoj/new1/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-1.html 418
+/home/sanoj/new1/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-2.html 21
