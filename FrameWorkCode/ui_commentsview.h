@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'commentsview.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.9
+** Created by: Qt User Interface Compiler version 5.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -279,15 +279,15 @@ public:
 
     void retranslateUi(QDialog *CommentsView)
     {
-        CommentsView->setWindowTitle(QApplication::translate("CommentsView", "View Comments", Q_NULLPTR));
-        label->setText(QApplication::translate("CommentsView", "<b>Total Highlights</b>", Q_NULLPTR));
-        label_2->setText(QApplication::translate("CommentsView", "Words", Q_NULLPTR));
-        label_4->setText(QApplication::translate("CommentsView", "Characters", Q_NULLPTR));
-        label_6->setText(QApplication::translate("CommentsView", "<b>Accuracy</b>", Q_NULLPTR));
-        label_7->setText(QApplication::translate("CommentsView", "Word-Level", Q_NULLPTR));
-        label_8->setText(QApplication::translate("CommentsView", "Character-Level", Q_NULLPTR));
-        label_3->setText(QApplication::translate("CommentsView", "<html><head/><body><p><span style=\" font-weight:600;\">Add Comments</span></p></body></html>", Q_NULLPTR));
-        pushButton->setText(QApplication::translate("CommentsView", "Save", Q_NULLPTR));
+        CommentsView->setWindowTitle(QApplication::translate("CommentsView", "View Comments", 0));
+        label->setText(QApplication::translate("CommentsView", "<b>Total Highlights</b>", 0));
+        label_2->setText(QApplication::translate("CommentsView", "Words", 0));
+        label_4->setText(QApplication::translate("CommentsView", "Characters", 0));
+        label_6->setText(QApplication::translate("CommentsView", "<b>Accuracy</b>", 0));
+        label_7->setText(QApplication::translate("CommentsView", "Word-Level", 0));
+        label_8->setText(QApplication::translate("CommentsView", "Character-Level", 0));
+        label_3->setText(QApplication::translate("CommentsView", "<html><head/><body><p><span style=\" font-weight:600;\">Add Comments</span></p></body></html>", 0));
+        pushButton->setText(QApplication::translate("CommentsView", "Save", 0));
     } // retranslateUi
 
 };

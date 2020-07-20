@@ -50,7 +50,9 @@ void CommentsView::on_pushButton_clicked()
 
     pages.remove(pagename);
     pages.insert(pagename,page);
-    document.setObject(page);
+    mainObj.remove("pages");
+    mainObj.insert("pages",pages);
+    document.setObject(mainObj);
 
     QFile jsonFile1(commentFilename);
     jsonFile1.open(QIODevice::WriteOnly);

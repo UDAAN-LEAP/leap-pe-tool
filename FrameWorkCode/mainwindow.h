@@ -182,6 +182,8 @@ private slots:
     
     void on_actionFontBlack_triggered();
 
+    void updateAverageAccuracies();
+
 private:
     Ui::MainWindow *ui;
 

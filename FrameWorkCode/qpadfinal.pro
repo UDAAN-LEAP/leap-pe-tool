@@ -22,6 +22,7 @@ LIBS += -ltesseract -llept
 
 SOURCES +=\
     DiffView.cpp \
+    averageaccuracies.cpp \
     commentsview.cpp \
     diff_match_patch.cpp \
         mainwindow.cpp \
@@ -32,6 +33,7 @@ SOURCES +=\
 
 HEADERS  += mainwindow.h \
     DiffView.h \
+    averageaccuracies.h \
     commentsview.h \
     diff_match_patch.h \
     eddis.h \
@@ -80,6 +82,7 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     DiffView.ui \
+    averageaccuracies.ui \
     commentsview.ui \
 	interndiffview.ui
 

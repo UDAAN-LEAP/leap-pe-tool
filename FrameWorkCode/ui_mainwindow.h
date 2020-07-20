@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.9
+** Created by: Qt User Interface Compiler version 5.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -476,120 +476,96 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
-        actionOpen->setText(QApplication::translate("MainWindow", "Open", Q_NULLPTR));
-#ifndef QT_NO_SHORTCUT
-        actionOpen->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        actionSave->setText(QApplication::translate("MainWindow", "Save", Q_NULLPTR));
-#ifndef QT_NO_SHORTCUT
-        actionSave->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        actionSave_As->setText(QApplication::translate("MainWindow", "Save As", Q_NULLPTR));
-#ifndef QT_NO_SHORTCUT
-        actionSave_As->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+S", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        actionNew->setText(QApplication::translate("MainWindow", "New", Q_NULLPTR));
-#ifndef QT_NO_SHORTCUT
-        actionNew->setShortcut(QApplication::translate("MainWindow", "Ctrl+N", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        actionSpell_Check->setText(QApplication::translate("MainWindow", "Spell Check(CntrlShftC)", Q_NULLPTR));
-#ifndef QT_NO_SHORTCUT
-        actionSpell_Check->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+C", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        actionLoad_Next_Page->setText(QApplication::translate("MainWindow", "Page(CntlShiftR)>>", Q_NULLPTR));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
+        actionOpen->setText(QApplication::translate("MainWindow", "Open", 0));
+        actionOpen->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", 0));
+        actionSave->setText(QApplication::translate("MainWindow", "Save", 0));
+        actionSave->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0));
+        actionSave_As->setText(QApplication::translate("MainWindow", "Save As", 0));
+        actionSave_As->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+S", 0));
+        actionNew->setText(QApplication::translate("MainWindow", "New", 0));
+        actionNew->setShortcut(QApplication::translate("MainWindow", "Ctrl+N", 0));
+        actionSpell_Check->setText(QApplication::translate("MainWindow", "Spell Check(CntrlShftC)", 0));
+        actionSpell_Check->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+C", 0));
+        actionLoad_Next_Page->setText(QApplication::translate("MainWindow", "Page(CntlShiftR)>>", 0));
 #ifndef QT_NO_TOOLTIP
-        actionLoad_Next_Page->setToolTip(QApplication::translate("MainWindow", "Page(CntlShiftR)>>", Q_NULLPTR));
+        actionLoad_Next_Page->setToolTip(QApplication::translate("MainWindow", "Page(CntlShiftR)>>", 0));
 #endif // QT_NO_TOOLTIP
-#ifndef QT_NO_SHORTCUT
-        actionLoad_Next_Page->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+R", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        actionLoad_Prev_Page->setText(QApplication::translate("MainWindow", "<<Page(CntrlShftL)", Q_NULLPTR));
+        actionLoad_Next_Page->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+R", 0));
+        actionLoad_Prev_Page->setText(QApplication::translate("MainWindow", "<<Page(CntrlShftL)", 0));
 #ifndef QT_NO_TOOLTIP
-        actionLoad_Prev_Page->setToolTip(QApplication::translate("MainWindow", "<<Page(CntrlShftL)", Q_NULLPTR));
+        actionLoad_Prev_Page->setToolTip(QApplication::translate("MainWindow", "<<Page(CntrlShftL)", 0));
 #endif // QT_NO_TOOLTIP
-#ifndef QT_NO_SHORTCUT
-        actionLoad_Prev_Page->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+L", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        actionLoadGDocPage->setText(QApplication::translate("MainWindow", "Save&LoadPWords(CntrlShftP)", Q_NULLPTR));
-#ifndef QT_NO_SHORTCUT
-        actionLoadGDocPage->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+P", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        actionToDevanagari->setText(QApplication::translate("MainWindow", "toDevanagari(CntrlD)", Q_NULLPTR));
-#ifndef QT_NO_SHORTCUT
-        actionToDevanagari->setShortcut(QApplication::translate("MainWindow", "Ctrl+D", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        actionLoadData->setText(QApplication::translate("MainWindow", "LoadData", Q_NULLPTR));
-        actionLoadDict->setText(QApplication::translate("MainWindow", "LoadDict", Q_NULLPTR));
-        actionLoadOCRWords->setText(QApplication::translate("MainWindow", "LoadOCRWords", Q_NULLPTR));
-        actionLoadDomain->setText(QApplication::translate("MainWindow", "LoadDomain", Q_NULLPTR));
-        actionLoadSubPS->setText(QApplication::translate("MainWindow", "LoadSubPS", Q_NULLPTR));
-        actionLoadConfusions->setText(QApplication::translate("MainWindow", "LoadConfusions", Q_NULLPTR));
-        actionSugg->setText(QApplication::translate("MainWindow", "sugg", Q_NULLPTR));
-#ifndef QT_NO_SHORTCUT
-        actionSugg->setShortcut(QApplication::translate("MainWindow", "Menu", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        actionCreateBest2OCR->setText(QApplication::translate("MainWindow", "CreateBest2OCR", Q_NULLPTR));
-        actionToSlp1->setText(QApplication::translate("MainWindow", "toSlp1", Q_NULLPTR));
-#ifndef QT_NO_SHORTCUT
-        actionToSlp1->setShortcut(QApplication::translate("MainWindow", "Ctrl+G", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        actionCreateSuggestionLog->setText(QApplication::translate("MainWindow", "CreateSuggestionLog", Q_NULLPTR));
-        actionCreateSuggestionLogNearestPriority->setText(QApplication::translate("MainWindow", "CreateSuggestionLogNearestPriority", Q_NULLPTR));
-        actionErrorDetectionRep->setText(QApplication::translate("MainWindow", "ErrorDetectionRep", Q_NULLPTR));
-        actionErrorDetectWithoutAdaptation->setText(QApplication::translate("MainWindow", "ErrorDetectWithoutAdaptation", Q_NULLPTR));
-        actionCPair->setText(QApplication::translate("MainWindow", "CPair", Q_NULLPTR));
-        actionToSlp1_2->setText(QApplication::translate("MainWindow", "toSlp1", Q_NULLPTR));
-        actionToDev->setText(QApplication::translate("MainWindow", "toDev", Q_NULLPTR));
-        actionExtractDev->setText(QApplication::translate("MainWindow", "ExtractDevWords", Q_NULLPTR));
+        actionLoad_Prev_Page->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+L", 0));
+        actionLoadGDocPage->setText(QApplication::translate("MainWindow", "Save&LoadPWords(CntrlShftP)", 0));
+        actionLoadGDocPage->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+P", 0));
+        actionToDevanagari->setText(QApplication::translate("MainWindow", "toDevanagari(CntrlD)", 0));
+        actionToDevanagari->setShortcut(QApplication::translate("MainWindow", "Ctrl+D", 0));
+        actionLoadData->setText(QApplication::translate("MainWindow", "LoadData", 0));
+        actionLoadDict->setText(QApplication::translate("MainWindow", "LoadDict", 0));
+        actionLoadOCRWords->setText(QApplication::translate("MainWindow", "LoadOCRWords", 0));
+        actionLoadDomain->setText(QApplication::translate("MainWindow", "LoadDomain", 0));
+        actionLoadSubPS->setText(QApplication::translate("MainWindow", "LoadSubPS", 0));
+        actionLoadConfusions->setText(QApplication::translate("MainWindow", "LoadConfusions", 0));
+        actionSugg->setText(QApplication::translate("MainWindow", "sugg", 0));
+        actionSugg->setShortcut(QApplication::translate("MainWindow", "Menu", 0));
+        actionCreateBest2OCR->setText(QApplication::translate("MainWindow", "CreateBest2OCR", 0));
+        actionToSlp1->setText(QApplication::translate("MainWindow", "toSlp1", 0));
+        actionToSlp1->setShortcut(QApplication::translate("MainWindow", "Ctrl+G", 0));
+        actionCreateSuggestionLog->setText(QApplication::translate("MainWindow", "CreateSuggestionLog", 0));
+        actionCreateSuggestionLogNearestPriority->setText(QApplication::translate("MainWindow", "CreateSuggestionLogNearestPriority", 0));
+        actionErrorDetectionRep->setText(QApplication::translate("MainWindow", "ErrorDetectionRep", 0));
+        actionErrorDetectWithoutAdaptation->setText(QApplication::translate("MainWindow", "ErrorDetectWithoutAdaptation", 0));
+        actionCPair->setText(QApplication::translate("MainWindow", "CPair", 0));
+        actionToSlp1_2->setText(QApplication::translate("MainWindow", "toSlp1", 0));
+        actionToDev->setText(QApplication::translate("MainWindow", "toDev", 0));
+        actionExtractDev->setText(QApplication::translate("MainWindow", "ExtractDevWords", 0));
 #ifndef QT_NO_TOOLTIP
-        actionExtractDev->setToolTip(QApplication::translate("MainWindow", "ExtractDevWords", Q_NULLPTR));
+        actionExtractDev->setToolTip(QApplication::translate("MainWindow", "ExtractDevWords", 0));
 #endif // QT_NO_TOOLTIP
-        actionPrimarySecOCRPair->setText(QApplication::translate("MainWindow", "PrimarySecOCRPairs", Q_NULLPTR));
-        actionCPairIEROcrVsCorrect->setText(QApplication::translate("MainWindow", "CPairIEROcrVsCorrect", Q_NULLPTR));
-        actionEditDistRep->setText(QApplication::translate("MainWindow", "EditDistRep", Q_NULLPTR));
-        actionConfusionFreqHist->setText(QApplication::translate("MainWindow", "ConfusionFreqHist", Q_NULLPTR));
-        actionCPairGEROcrVsCorrect->setText(QApplication::translate("MainWindow", "CPairGEROcrVsCorrect", Q_NULLPTR));
-        actionFilterOutGT50EditDisPairs->setText(QApplication::translate("MainWindow", "FilterOutGT50EditDisPairs", Q_NULLPTR));
-        actionPrepareFeatures->setText(QApplication::translate("MainWindow", "PrepareFeatures", Q_NULLPTR));
-        actionErrorDetectionRepUniq->setText(QApplication::translate("MainWindow", "ErrorSuggRepUniq", Q_NULLPTR));
-        actionSanskrit->setText(QApplication::translate("MainWindow", "Sanskrit", Q_NULLPTR));
-        actionHindi->setText(QApplication::translate("MainWindow", "Hindi/Marathi", Q_NULLPTR));
-        actionEnglish->setText(QApplication::translate("MainWindow", "English", Q_NULLPTR));
+        actionPrimarySecOCRPair->setText(QApplication::translate("MainWindow", "PrimarySecOCRPairs", 0));
+        actionCPairIEROcrVsCorrect->setText(QApplication::translate("MainWindow", "CPairIEROcrVsCorrect", 0));
+        actionEditDistRep->setText(QApplication::translate("MainWindow", "EditDistRep", 0));
+        actionConfusionFreqHist->setText(QApplication::translate("MainWindow", "ConfusionFreqHist", 0));
+        actionCPairGEROcrVsCorrect->setText(QApplication::translate("MainWindow", "CPairGEROcrVsCorrect", 0));
+        actionFilterOutGT50EditDisPairs->setText(QApplication::translate("MainWindow", "FilterOutGT50EditDisPairs", 0));
+        actionPrepareFeatures->setText(QApplication::translate("MainWindow", "PrepareFeatures", 0));
+        actionErrorDetectionRepUniq->setText(QApplication::translate("MainWindow", "ErrorSuggRepUniq", 0));
+        actionSanskrit->setText(QApplication::translate("MainWindow", "Sanskrit", 0));
+        actionHindi->setText(QApplication::translate("MainWindow", "Hindi/Marathi", 0));
+        actionEnglish->setText(QApplication::translate("MainWindow", "English", 0));
 #ifndef QT_NO_TOOLTIP
-        actionEnglish->setToolTip(QApplication::translate("MainWindow", "English", Q_NULLPTR));
+        actionEnglish->setToolTip(QApplication::translate("MainWindow", "English", 0));
 #endif // QT_NO_TOOLTIP
-        actionAllFontProperties->setText(QApplication::translate("MainWindow", "AllFontProperties", Q_NULLPTR));
-        actionBold->setText(QApplication::translate("MainWindow", "Bold", Q_NULLPTR));
-        actionUnBold->setText(QApplication::translate("MainWindow", "UnBold", Q_NULLPTR));
-        actionLeftAlign->setText(QApplication::translate("MainWindow", "LeftAlign", Q_NULLPTR));
-        actionRightAlign->setText(QApplication::translate("MainWindow", "RightAlign", Q_NULLPTR));
-        actionCentreAlign->setText(QApplication::translate("MainWindow", "CentreAlign", Q_NULLPTR));
-        actionJusitfiedAlign->setText(QApplication::translate("MainWindow", "JusitfiedAlign", Q_NULLPTR));
-        actionAccuracyLog->setText(QApplication::translate("MainWindow", "AccuracyLog", Q_NULLPTR));
-        actionHighlight->setText(QApplication::translate("MainWindow", "Highlight (Ctrl+H)", Q_NULLPTR));
+        actionAllFontProperties->setText(QApplication::translate("MainWindow", "AllFontProperties", 0));
+        actionBold->setText(QApplication::translate("MainWindow", "Bold", 0));
+        actionUnBold->setText(QApplication::translate("MainWindow", "UnBold", 0));
+        actionLeftAlign->setText(QApplication::translate("MainWindow", "LeftAlign", 0));
+        actionRightAlign->setText(QApplication::translate("MainWindow", "RightAlign", 0));
+        actionCentreAlign->setText(QApplication::translate("MainWindow", "CentreAlign", 0));
+        actionJusitfiedAlign->setText(QApplication::translate("MainWindow", "JusitfiedAlign", 0));
+        actionAccuracyLog->setText(QApplication::translate("MainWindow", "AccuracyLog", 0));
+        actionHighlight->setText(QApplication::translate("MainWindow", "Highlight (Ctrl+H)", 0));
 #ifndef QT_NO_TOOLTIP
-        actionHighlight->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Highlight<span style=\" font-weight:600;\">(Ctrl+H)</span></p></body></html>", Q_NULLPTR));
+        actionHighlight->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Highlight<span style=\" font-weight:600;\">(Ctrl+H)</span></p></body></html>", 0));
 #endif // QT_NO_TOOLTIP
-#ifndef QT_NO_SHORTCUT
-        actionHighlight->setShortcut(QApplication::translate("MainWindow", "Ctrl+H", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        actionFontBlack->setText(QApplication::translate("MainWindow", "FontBlack", Q_NULLPTR));
+        actionHighlight->setShortcut(QApplication::translate("MainWindow", "Ctrl+H", 0));
+        actionFontBlack->setText(QApplication::translate("MainWindow", "FontBlack", 0));
         textBrowser->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Shobhika'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", Q_NULLPTR));
-        pushButton_3->setText(QApplication::translate("MainWindow", "Compare Corrector's Output", Q_NULLPTR));
-        pushButton_2->setText(QApplication::translate("MainWindow", "Compare Verifier's Output", Q_NULLPTR));
-        viewallcomments->setText(QApplication::translate("MainWindow", "Comments and Accuracy", Q_NULLPTR));
-        menuOCR_Correction_Window->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
-        menuCreateReports->setTitle(QApplication::translate("MainWindow", "CreateReports", Q_NULLPTR));
-        menuSaveVariables->setTitle(QApplication::translate("MainWindow", "SaveVariables", Q_NULLPTR));
-        menuConvertFiles->setTitle(QApplication::translate("MainWindow", "ConvertFiles", Q_NULLPTR));
-        menuFeatureExtraction->setTitle(QApplication::translate("MainWindow", "FeatureExtraction", Q_NULLPTR));
-        menuSelectLanguage->setTitle(QApplication::translate("MainWindow", "SelectLanguage", Q_NULLPTR));
-        menuFontAndLayout->setTitle(QApplication::translate("MainWindow", "FontAndLayout", Q_NULLPTR));
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", 0));
+        pushButton_3->setText(QApplication::translate("MainWindow", "Compare Corrector's Output", 0));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Compare Verifier's Output", 0));
+        viewallcomments->setText(QApplication::translate("MainWindow", "Comments and Accuracy", 0));
+        menuOCR_Correction_Window->setTitle(QApplication::translate("MainWindow", "File", 0));
+        menuCreateReports->setTitle(QApplication::translate("MainWindow", "CreateReports", 0));
+        menuSaveVariables->setTitle(QApplication::translate("MainWindow", "SaveVariables", 0));
+        menuConvertFiles->setTitle(QApplication::translate("MainWindow", "ConvertFiles", 0));
+        menuFeatureExtraction->setTitle(QApplication::translate("MainWindow", "FeatureExtraction", 0));
+        menuSelectLanguage->setTitle(QApplication::translate("MainWindow", "SelectLanguage", 0));
+        menuFontAndLayout->setTitle(QApplication::translate("MainWindow", "FontAndLayout", 0));
     } // retranslateUi
 
 };

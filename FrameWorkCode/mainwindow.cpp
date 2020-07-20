@@ -1034,6 +1034,7 @@ void MainWindow::on_actionSave_triggered()
 {
     save_triggered = 1;
     on_viewallcomments_clicked();
+    updateAverageAccuracies();
 
     int nMilliseconds = myTimer.elapsed();
     secs = nMilliseconds/1000;
@@ -3137,7 +3138,70 @@ void MainWindow::on_actionHighlight_triggered()
 }
 
 
+void MainWindow::updateAverageAccuracies()
+{
+    QString commentFilename = dir2levelup + "/Comments/comments.json";
+    QString pagename = currentpagename;
+    pagename.replace(".txt", "");
+    pagename.replace(".html", "");
+    float totalcharacc=0, totalwordacc = 0, totalrating  = 0; int totalcharerrors = 0, totalworderrors = 0, count = 0;
 
+    QFile jsonFile(commentFilename);
+    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    QByteArray data = jsonFile.readAll();
+
+    QJsonParseError errorPtr;
+    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+    QJsonObject mainObj = document.object();
+    QJsonObject pages = mainObj.value("pages").toObject();
+    QJsonObject page;
+    if(document.isNull())
+    {
+        //qDebug()<<"empty json/parse error";
+    }
+    jsonFile.close();
+
+    string csvfolder = dir2levelup.toUtf8().constData();
+    csvfolder += "/Comments/AverageAccuracies.csv";
+    std::ofstream csvFile(csvfolder);
+    csvFile<<"Page Name,"<< "Accuracy of Corrector (Word level),"<<"Accuracy of Corrector (Character-Level)," <<"Errors (Word level),"<<"Errors (Character-Level),"<<"\n";
+
+    foreach(const QJsonValue &val, pages)
+    {
+        float characc    = val.toObject().value("characcuracy").toDouble();
+        float wordacc    = val.toObject().value("wordaccuracy").toDouble();
+        int charerrors = val.toObject().value("charerrors").toInt();
+        int worderrors = val.toObject().value("worderrors").toInt();
+        //int rating     = val.toObject().value("rating").toInt();
+
+        csvFile << pagename.toUtf8().constData() <<"," << wordacc << "," << characc << "," << worderrors<< "," << charerrors<<"\n";
+
+        totalcharacc    += characc;
+        totalwordacc    += wordacc;
+        totalcharerrors += charerrors;
+        totalworderrors += worderrors;
+        //totalrating     += rating;
+
+        count++;
+    }
+    mainObj["AverageCharAccuracy"] = totalcharacc/count;
+    mainObj["AverageWordAccuracy"] = totalwordacc/count;
+    mainObj["AverageCharErrors"] = totalcharerrors/count;
+    mainObj["AverageWordErrors"] = totalworderrors/count;
+    //mainObj["AverageRating"] = totalrating/count;
+
+    csvFile<<" ,"<< "Average Accuracy (Word level),"<<"Average Accuracy (Character-Level)," <<"Average Errors (Word level),"<<"Average Errors (Character-Level),"<<"\n";
+    csvFile <<" " <<"," << totalwordacc/count << "," << totalcharacc/count << "," << totalworderrors/count<< "," << totalcharerrors/count<<"\n";
+
+
+    QJsonDocument document1(mainObj);
+
+    QFile jsonFile1(commentFilename);
+    jsonFile1.open(QIODevice::WriteOnly);
+    jsonFile1.write(document1.toJson());
+    jsonFile1.close();
+
+}
 
 void MainWindow::on_viewallcomments_clicked()
 {
@@ -3149,7 +3213,7 @@ void MainWindow::on_viewallcomments_clicked()
     QString pagename = currentpagename;
     pagename.replace(".txt", "");
     pagename.replace(".html", "");
-    int totalcharerr = 0, totalworderr = 0, rating = 0; QString comments = ""; float avgCharAcc=100.0, avgWordAcc = 100.0;
+    int totalcharerr = 0, totalworderr = 0, rating = 0; QString comments = "";
 
     QFile jsonFile(commentFilename);
     jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -3168,10 +3232,10 @@ void MainWindow::on_viewallcomments_clicked()
 
     comments = page.value("comments").toString();
     rating = page.value("rating").toInt();
-//    avgCharAcc= mainObj.value("AverageCharAccuracy").toDouble();
-//    avgWordAcc= mainObj.value("AverageWordAccuracy").toDouble();
-//    totalcharerr = page.value("charerrors").toInt();
-//    totalworderr = page.value("worderrors").toInt();
+//    Avgcharacc= mainObj.value("AverageCharAccuracy").toDouble();
+//    Avgwordacc= mainObj.value("AverageWordAccuracy").toDouble();
+//    Avgcharerr = page.value("AverageCharErrors").toInt();
+//    Avgworderr = page.value("AverageWordErrors").toInt();
     jsonFile.close();
 
     auto textcursor1 = ui->textBrowser->textCursor();
@@ -3225,10 +3289,15 @@ void MainWindow::on_viewallcomments_clicked()
 
     if(!save_triggered)
     {
-        CommentsView *cv = new CommentsView(totalworderr,totalcharerr,wordacc,characc,comments,commentFilename, pagename, rating);
+        CommentsView *cv = new CommentsView(totalworderr,totalcharerr,wordacc,characc,comments,commentFilename,pagename, rating);
         cv->show();
     }
 
+}
+
+void MainWindow::on_actionFontBlack_triggered()
+{
+    ui->textBrowser->setTextColor(Qt::black);
 }
 
 //void MainWindow::on_viewallcomments_clicked()
@@ -3456,7 +3525,4 @@ void MainWindow::on_viewallcomments_clicked()
 }
 */
 
-void MainWindow::on_actionFontBlack_triggered()
-{
-    ui->textBrowser->setTextColor(Qt::black);
-}
+
