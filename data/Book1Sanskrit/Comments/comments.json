@@ -1,0 +1,20 @@
+{
+    "pages": {
+        "page-4.txt": {
+            "characcuracy": 98.97000122070312,
+            "charerrors": 13,
+            "comments": "",
+            "rating": 4,
+            "wordaccuracy": 97.44000244140625,
+            "worderrors": 3
+        },
+        "page-5.txt": {
+            "characcuracy": 99.63999938964844,
+            "charerrors": 6,
+            "comments": "",
+            "rating": 5,
+            "wordaccuracy": 98.44999694824219,
+            "worderrors": 2
+        }
+    }
+}

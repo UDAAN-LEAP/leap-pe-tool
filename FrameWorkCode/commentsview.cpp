@@ -4,7 +4,8 @@
 #include <QCloseEvent>
 
 QString commentFilename;
-CommentsView::CommentsView(const int &words, const int &chars, const float &wordacc, const float &characc,const QString commentsField,const QString commentsFilelocation, int rating, QWidget *parent) :
+QString pagename;
+CommentsView::CommentsView(const int &words, const int &chars, const float &wordacc, const float &characc,const QString commentsField,const QString commentsFilelocation, const QString currentpagename, int rating, QWidget *parent) :
     QDialog(parent)
 {
     ui = new Ui::CommentsView();
@@ -17,7 +18,7 @@ CommentsView::CommentsView(const int &words, const int &chars, const float &word
     ui->commentTextBrowser->setFocus();
     //ui->rating->setText(QString::number(rating));
     commentFilename = commentsFilelocation;
-
+    pagename = currentpagename;
 
 }
 
@@ -32,17 +33,25 @@ void CommentsView::on_pushButton_clicked()
 
     QString comments = ui->commentTextBrowser->toPlainText();
     //QString rating = ui->rating->text();
+
+
     QFile jsonFile(commentFilename);
     jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
     QByteArray data = jsonFile.readAll();
 
     QJsonParseError errorPtr;
     QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-    QJsonObject page = document.object();
+    QJsonObject mainObj = document.object();
+    QJsonObject pages = mainObj.value("pages").toObject();
+    QJsonObject page = pages.value(pagename).toObject();
     jsonFile.close();
     page["comments"] = comments;
     //page["rating"] = rating;
+
+    pages.remove(pagename);
+    pages.insert(pagename,page);
     document.setObject(page);
+
     QFile jsonFile1(commentFilename);
     jsonFile1.open(QIODevice::WriteOnly);
     jsonFile1.write(document.toJson());
