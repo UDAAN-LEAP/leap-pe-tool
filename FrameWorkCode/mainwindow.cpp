@@ -19,6 +19,7 @@
 #include "ProjectHierarchyWindow.h"
 #include "3rdParty/RapidXML/rapidxml.hpp"
 #include <QDomDocument>
+
 //# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
@@ -3530,6 +3531,7 @@ QString GetFilter(QString & Name,const QStringList &list) {
 	Filter += ")";
 	return Filter;
 }
+
 void MainWindow::file_click(const QModelIndex&indx) {
 	std::cout << "Test";
 	auto item = (TreeItem*)indx.internalPointer();
@@ -3560,6 +3562,7 @@ void MainWindow::file_click(const QModelIndex&indx) {
 		QFile fileo = QFileDialog::getOpenFileName(this, "Open File", "./", tr(str.c_str()));
 		if (fileo.exists()) {
 			//Add it to project
+			mProject.addFile(*filtr,fileo);
 		}
 		break;
 	}
