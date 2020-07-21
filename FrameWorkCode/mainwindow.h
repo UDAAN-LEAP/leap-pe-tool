@@ -190,6 +190,9 @@ private slots:
 	void file_click(const QModelIndex & indx);
 	void LoadDocument(QFile * file);
 	void LoadImageFromFile(QFile * file);
+	void CustomContextMenuTriggered(const QPoint &p);
+	void AddNewFile();
+	void RemoveFile();
 private:
     Ui::MainWindow *ui;
 	Project mProject;
@@ -197,6 +200,7 @@ private:
     QString mFilenamejpeg;
 	QGraphicsScene * graphic =nullptr;
 	Graphics_view_zoom * z = nullptr;
+	QModelIndex curr_idx;
 };
 
 #endif // MAINWINDOW_H

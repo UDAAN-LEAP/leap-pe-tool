@@ -18,9 +18,6 @@
 		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/FrameWorkCode/oooo.txt">
 			<Filter>Document</Filter>
 		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-4.txt">
-			<Filter>Document</Filter>
-		</File>
 		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-3.jpeg">
 			<Filter>Image</Filter>
 		</File>
@@ -28,54 +25,6 @@
 			<Filter>Image</Filter>
 		</File>
 		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-5.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-6.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-7.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-8.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-9.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-10.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-11.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-12.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-13.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-14.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-15.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-16.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-17.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-18.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-67.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-68.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-69.jpeg">
 			<Filter>Image</Filter>
 		</File>
 		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-3.txt">
@@ -90,9 +39,6 @@
 		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-6.txt">
 			<Filter>Document</Filter>
 		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-6.txt">
-			<Filter>Document</Filter>
-		</File>
 		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-7.txt">
 			<Filter>Document</Filter>
 		</File>
@@ -102,13 +48,16 @@
 		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-9.txt">
 			<Filter>Document</Filter>
 		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-10.txt">
-			<Filter>Document</Filter>
-		</File>
 		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-11.txt">
 			<Filter>Document</Filter>
 		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-12.txt">
+		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-67.txt">
+			<Filter>Document</Filter>
+		</File>
+		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-8.txt">
+			<Filter>Document</Filter>
+		</File>
+		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-13.txt">
 			<Filter>Document</Filter>
 		</File>
 	</ItemGroup>

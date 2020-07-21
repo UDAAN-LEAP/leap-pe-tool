@@ -16,12 +16,12 @@ void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 	
 }
 
-void Project::process_node(rapidxml::xml_node<>* pNode,TreeItem * parent)
+void Project::process_node(rapidxml::xml_node<>* pNode, TreeItem * parent)
 {
 	if (pNode) {
 		std::string node_name = pNode->name();
 		if (node_name == "ItemGroup") {
-			process_node(pNode->first_node(),parent);
+			process_node(pNode->first_node(), parent);
 		}
 		if (node_name == "Filter")
 		{
@@ -38,10 +38,10 @@ void Project::process_node(rapidxml::xml_node<>* pNode,TreeItem * parent)
 			QString str;
 			str = str.fromStdString(filter_name);
 			//mFilters.push_back(filter_name);
-			TreeItem * filter_node = new TreeItem(str,NodeType::FILTER,parent);
+			TreeItem * filter_node = new TreeItem(str, NodeType::FILTER, parent);
 			filter_node->SetFilter(filter);
 			parent->append_child(filter_node);
-			process_node(pNode->next_sibling(),parent);
+			process_node(pNode->next_sibling(), parent);
 		}
 		if (node_name == "File") {
 
@@ -51,13 +51,13 @@ void Project::process_node(rapidxml::xml_node<>* pNode,TreeItem * parent)
 					<Filter>Image</Filter>
 				</File>
 			*/
-			std::string filtername =  pNode->first_node()->value();
+			std::string filtername = pNode->first_node()->value();
 			QString qfilter;
 			qfilter = qfilter.fromStdString(filtername);
 			auto node = mRoot->find(qfilter);
 			QString val = QString(pNode->first_attribute("Include")->value());
 			QFileInfo info1(val);
-			
+
 			auto path_ = info1.path();
 			QString fpath = "";
 			if (info1.isRelative())
@@ -68,12 +68,45 @@ void Project::process_node(rapidxml::xml_node<>* pNode,TreeItem * parent)
 			QFile *f = new QFile(fpath);
 			mFiles.push_back(f);
 			auto filename = fileinfo.fileName();
-			TreeItem *nodefile = new TreeItem(filename,_FILETYPE,node);
+			TreeItem *nodefile = new TreeItem(filename, _FILETYPE, node);
 			node->append_child(nodefile);
 			nodefile->SetFile(mFiles.back());
 			process_node(pNode->next_sibling(), parent);
 		}
 	}
+}
+pugi::xml_node FindFile(QFile & file,pugi::xml_node  & n) {
+	auto ch = n.child("File");
+	if (!ch) return ch;
+	auto key = file.fileName().toStdString();
+	while (ch) {
+		std::string filename = ch.attribute("Include").as_string();
+		if (filename == key) {
+			return ch;
+		}
+		ch = ch.next_sibling();
+	}
+	auto next = n.next_sibling();
+	return FindFile(file, next);
+}
+void Project::removeFile(QModelIndex & idx,Filter & pFilter, QFile & pFile) {
+	auto first = doc.child("Project").child("ItemGroup");
+	
+	auto ch = first.next_sibling();
+	auto node = FindFile(pFile, ch);
+	auto pnode  = node.parent();
+	pnode.remove_child(node);
+	save_xml();
+
+	mTreeModel->layoutAboutToBeChanged();
+	TreeItem * item = (TreeItem*)idx.internalPointer();
+	auto parent = item->parentItem();
+	mTreeModel->RemoveRow(idx.row(), 1, idx.parent());
+	parent->RemoveNode(item);
+	
+	delete item;
+
+	mTreeModel->layoutChanged();
 }
 void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
 {
