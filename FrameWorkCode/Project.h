@@ -15,6 +15,7 @@ public:
 	void addFile(Filter &f, QFile & pFile);
 	void getFile(const QString & pFileName);
 	void save_xml();
+	void removeFile(QModelIndex & idx, Filter & pFilter, QFile & pFile);
 	TreeModel * getModel();
 	~Project() {
 		for (auto p : mFiles) {

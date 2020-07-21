@@ -17,7 +17,7 @@
 #include "ProjectHierarchyWindow.h"
 #include "3rdParty/RapidXML/rapidxml.hpp"
 #include <QDomDocument>
-
+#include <QTreeView>
 //# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
@@ -2886,24 +2886,64 @@ void MainWindow::file_click(const QModelIndex&indx) {
 		}
 		break;
 	}
-		
-	case NodeType::FILTER:
-	{
-		Filter * filtr = item->GetFilter();
-		QString name = filtr->name();
-		QStringList list = filtr->extensions();
-		QString filter = GetFilter(name, list);
-		std::string str = filter.toStdString();
-		QFile fileo = QFileDialog::getOpenFileName(this, "Open File", "./", tr(str.c_str()));
-		if (fileo.exists()) {
-			//Add it to project
-			mProject.addFile(*filtr,fileo);
-		}
+	default:
 		break;
-	}
+	
 	}
 	//auto data = qvar.data();;
 	QString val = qvar.value<QString>();
+}
+void MainWindow::RemoveFile() {
+	std::cout << "Test";
+	auto item = (TreeItem*)curr_idx.internalPointer();
+	Filter * filtr = item->GetFilter();
+	QFile * file = item->GetFile();
+	if (file->exists()) {
+		mProject.removeFile(curr_idx, *filtr, *file);
+		ui->treeView->reset();
+	}
+}
+void MainWindow::AddNewFile() {
+	auto item = (TreeItem*)curr_idx.internalPointer();
+	Filter * filtr = item->GetFilter();
+	QString name = filtr->name();
+	QStringList list = filtr->extensions();
+	QString filter = GetFilter(name, list);
+	std::string str = filter.toStdString();
+	QFile fileo = QFileDialog::getOpenFileName(this, "Open File", "./", tr(str.c_str()));
+	if (fileo.exists()) {
+		//Add it to project
+		mProject.addFile(*filtr, fileo);
+	}
+}
+void MainWindow::CustomContextMenuTriggered(const QPoint & p) {
+	curr_idx = ui->treeView->indexAt(p);
+
+	if (curr_idx.isValid()) {
+		auto item = (TreeItem*)curr_idx.internalPointer();
+		switch (item->GetNodeType()) {
+		case _FILETYPE: {
+			QMenu * m = new QMenu(this);
+			QAction * act = new QAction("Remove File");
+			connect(act, &QAction::triggered, this, &MainWindow::RemoveFile);
+			m->addAction(act);
+			m->move(ui->treeView->mapToGlobal(p));
+			m->show();
+			}
+			break;
+		case FILTER:
+		{
+			QMenu * m = new QMenu(this);
+
+			QAction * act = new QAction("Add New File");
+			connect(act, &QAction::triggered, this, &MainWindow::AddNewFile);
+			m->addAction(act);
+			m->move(ui->treeView->mapToGlobal(p));
+			m->show();
+			break;
+		}
+		}
+	}
 }
 void MainWindow::on_actionOpen_Project_triggered() {
 	rapidxml::xml_document<> doc;
@@ -2911,6 +2951,10 @@ void MainWindow::on_actionOpen_Project_triggered() {
 	if (xml.exists()) {
 		mProject.process_xml(xml);
 		ui->treeView->setModel(mProject.getModel());
-		bool b = connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
+		ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
+		bool b = connect(ui->treeView,SIGNAL(customContextMenuRequested(const QPoint&)),this,SLOT(CustomContextMenuTriggered(const QPoint&)));
+		b = connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
+
+		bool b1 = b;
 	}
 }

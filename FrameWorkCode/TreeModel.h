@@ -18,6 +18,11 @@ public:
 	void setRoot(TreeItem * root) {
 		mRootItem = root;
 	}
+	void RemoveRow(int row, int rows, const QModelIndex & parent) {
+		beginRemoveRows(parent, row, rows+ row - 1);
+		
+		endRemoveRows();
+	}
 private:
 	void setupModelData(const QStringList &lines, TreeItem * parent);
 	TreeItem * mRootItem;
