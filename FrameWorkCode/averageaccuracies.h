@@ -2,6 +2,9 @@
 #define AVERAGEACCURACIES_H
 
 #include <QDialog>
+#include <QStandardItemModel>
+#include <QFile>
+#include <QTextStream>
 
 namespace Ui {
 class AverageAccuracies;
@@ -12,7 +15,7 @@ class AverageAccuracies : public QDialog
     Q_OBJECT
 
 public:
-    explicit AverageAccuracies(QWidget *parent = nullptr);
+    explicit AverageAccuracies(QString averageaccuraciescsv, float avgwordacc, float avgcharacc, int avgcharerrors, int avgworderrors, QWidget *parent = nullptr);
     ~AverageAccuracies();
 
 private:

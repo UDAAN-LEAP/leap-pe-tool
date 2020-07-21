@@ -255,6 +255,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionErrorDetectWithoutAdaptation"/>
     <addaction name="actionErrorDetectionRepUniq"/>
     <addaction name="actionAccuracyLog"/>
+    <addaction name="actionViewAverageAccuracies"/>
    </widget>
    <widget class="QMenu" name="menuSaveVariables">
     <property name="title">
@@ -717,6 +718,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionFontBlack">
    <property name="text">
     <string>FontBlack</string>
+   </property>
+  </action>
+  <action name="actionViewAverageAccuracies">
+   <property name="text">
+    <string>ViewAverageAccuracies</string>
    </property>
   </action>
  </widget>

@@ -40,7 +40,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_7"/>
+            <widget class="QLineEdit" name="avgworderrors"/>
            </item>
           </layout>
          </item>
@@ -54,7 +54,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_8"/>
+            <widget class="QLineEdit" name="avgcharerrors"/>
            </item>
           </layout>
          </item>
@@ -86,7 +86,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_5"/>
+            <widget class="QLineEdit" name="avgwordacc"/>
            </item>
           </layout>
          </item>
@@ -100,7 +100,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_6"/>
+            <widget class="QLineEdit" name="avgcharacc"/>
            </item>
           </layout>
          </item>

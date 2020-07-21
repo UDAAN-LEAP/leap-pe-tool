@@ -1347,6 +1347,12 @@ moc_averageaccuracies.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QDial
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qfiledevice.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qvector2d.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qtouchdevice.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/QStandardItemModel \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qstandarditemmodel.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qicon.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QFile \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QTextStream \
 		averageaccuracies.h \
 		moc_predefs.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/bin/moc
@@ -2581,7 +2587,45 @@ averageaccuracies.o: averageaccuracies.cpp averageaccuracies.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qfiledevice.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qvector2d.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qtouchdevice.h \
-		ui_averageaccuracies.h
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/QStandardItemModel \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qstandarditemmodel.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qicon.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QFile \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QTextStream \
+		ui_averageaccuracies.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QVariant \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QAction \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qaction.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qactiongroup.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QApplication \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qapplication.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qeventloop.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qguiapplication.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qinputmethod.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QButtonGroup \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qbuttongroup.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QHeaderView \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qframe.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qvalidator.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qregularexpression.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qslider.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qstyle.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtabbar.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtabwidget.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qrubberband.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QTableView \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtableview.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o averageaccuracies.o averageaccuracies.cpp
 
 commentsview.o: commentsview.cpp commentsview.h \

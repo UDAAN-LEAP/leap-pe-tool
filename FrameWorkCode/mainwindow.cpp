@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "averageaccuracies.h"
 #include "eddis.h"
 #include "slpNPatternDict.h" //as included through lcsqt.h
 #include "trieEditdis.h"
@@ -3141,7 +3142,7 @@ void MainWindow::on_actionHighlight_triggered()
 void MainWindow::updateAverageAccuracies()
 {
     QString commentFilename = dir2levelup + "/Comments/comments.json";
-    QString pagename = currentpagename;
+    QString pagename;
     pagename.replace(".txt", "");
     pagename.replace(".html", "");
     float totalcharacc=0, totalwordacc = 0, totalrating  = 0; int totalcharerrors = 0, totalworderrors = 0, count = 0;
@@ -3168,6 +3169,7 @@ void MainWindow::updateAverageAccuracies()
 
     foreach(const QJsonValue &val, pages)
     {
+        pagename = val.toString();
         float characc    = val.toObject().value("characcuracy").toDouble();
         float wordacc    = val.toObject().value("wordaccuracy").toDouble();
         int charerrors = val.toObject().value("charerrors").toInt();
@@ -3526,3 +3528,29 @@ void MainWindow::on_viewallcomments_clicked()
 */
 
 
+
+void MainWindow::on_actionViewAverageAccuracies_triggered()
+{
+    QString commentFilename = dir2levelup + "/Comments/comments.json";
+    QString csvfile = dir2levelup + "/Comments/AverageAccuracies.csv";
+    QString pagename = currentpagename;
+    pagename.replace(".txt", "");
+    pagename.replace(".html", "");
+    float avgcharacc=0, avgwordacc = 0, avgrating  = 0; int avgcharerrors = 0, avgworderrors = 0;
+
+    QFile jsonFile(commentFilename);
+    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    QByteArray data = jsonFile.readAll();
+
+    QJsonParseError errorPtr;
+    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+    QJsonObject mainObj = document.object();
+
+    avgcharacc= mainObj["AverageCharAccuracy"].toDouble();
+    avgwordacc = mainObj["AverageWordAccuracy"].toDouble();
+    avgcharerrors = mainObj["AverageCharErrors"].toInt();
+    avgworderrors = mainObj["AverageWordErrors"].toInt();
+
+    AverageAccuracies *aa = new AverageAccuracies(csvfile, avgwordacc, avgcharacc, avgworderrors, avgcharerrors);
+    aa->show();
+}

@@ -184,6 +184,8 @@ private slots:
 
     void updateAverageAccuracies();
 
+    void on_actionViewAverageAccuracies_triggered();
+
 private:
     Ui::MainWindow *ui;
 
