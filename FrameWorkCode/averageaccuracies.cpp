@@ -1,7 +1,7 @@
 #include "averageaccuracies.h"
 #include "ui_averageaccuracies.h"
 
-AverageAccuracies::AverageAccuracies(QString csvfilepath,float avgwordacc, float avgcharacc, int avgcharerrors, int avgworderrors, QWidget *parent) :
+AverageAccuracies::AverageAccuracies(QString csvfilepath,float avgwordacc, float avgcharacc, int avgworderrors, int avgcharerrors, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AverageAccuracies)
 {

@@ -15,7 +15,7 @@ class AverageAccuracies : public QDialog
     Q_OBJECT
 
 public:
-    explicit AverageAccuracies(QString averageaccuraciescsv, float avgwordacc, float avgcharacc, int avgcharerrors, int avgworderrors, QWidget *parent = nullptr);
+    explicit AverageAccuracies(QString averageaccuraciescsv, float avgwordacc, float avgcharacc, int avgworderrors, int avgcharerrors, QWidget *parent = nullptr);
     ~AverageAccuracies();
 
 private:

@@ -186,6 +186,8 @@ private slots:
 
     void on_actionViewAverageAccuracies_triggered();
 
+    void LogHighlights(QString word);
+
 private:
     Ui::MainWindow *ui;
 

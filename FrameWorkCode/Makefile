@@ -2607,6 +2607,11 @@ averageaccuracies.o: averageaccuracies.cpp averageaccuracies.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qinputmethod.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QButtonGroup \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qbuttongroup.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QHBoxLayout \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qlayout.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qlayoutitem.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qgridlayout.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QHeaderView \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qheaderview.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qabstractitemview.h \
@@ -2624,8 +2629,17 @@ averageaccuracies.o: averageaccuracies.cpp averageaccuracies.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtabbar.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qrubberband.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QLabel \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qlabel.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QLineEdit \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qlineedit.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qtextcursor.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qtextformat.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qpen.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qtextoption.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QTableView \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtableview.h
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtableview.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QVBoxLayout
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o averageaccuracies.o averageaccuracies.cpp
 
 commentsview.o: commentsview.cpp commentsview.h \
@@ -3603,6 +3617,10 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtoolbar.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QVBoxLayout \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QWidget \
+		averageaccuracies.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QDialog \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/QStandardItemModel \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QTextStream \
 		eddis.h \
 		slpNPatternDict.h \
 		trieEditdis.h \
@@ -3624,8 +3642,7 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/QList \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QMap \
 		interndiffview.h \
-		commentsview.h \
-		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QDialog
+		commentsview.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 main.o: main.cpp mainwindow.h \
