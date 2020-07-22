@@ -9,14 +9,11 @@
 		</Filter>
 	</ItemGroup>
 	<ItemGroup>
-		<File Include="page-1.jpeg">
+		<File Include="Inds/page-1.jpeg">
 			<Filter>Image</Filter>
 		</File>
-		<File Include="page-2.jpeg">
+		<File Include="Inds/page-2.jpeg">
 			<Filter>Image</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/FrameWorkCode/oooo.txt">
-			<Filter>Document</Filter>
 		</File>
 		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-3.jpeg">
 			<Filter>Image</Filter>
@@ -36,36 +33,18 @@
 		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-5.txt">
 			<Filter>Document</Filter>
 		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-6.txt">
+		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/TestProject/Inds/page-6.txt">
 			<Filter>Document</Filter>
 		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-7.txt">
-			<Filter>Document</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-8.txt">
-			<Filter>Document</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-9.txt">
-			<Filter>Document</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-11.txt">
-			<Filter>Document</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-67.txt">
-			<Filter>Document</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-8.txt">
-			<Filter>Document</Filter>
-		</File>
-		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-13.txt">
-			<Filter>Document</Filter>
+		<File Include="C:/Users/raman/source/repos/OpenOCRCorrect/TestProject/Images/page-6.jpeg">
+			<Filter>Image</Filter>
 		</File>
 	</ItemGroup>
 	<ItemGroup>
-		<File Include="page-1.txt">
+		<File Include="Inds/page-1.txt">
 			<Filter>Document</Filter>
 		</File>
-		<File Include="page-2.txt">
+		<File Include="Inds/page-2.txt">
 			<Filter>Document</Filter>
 		</File>
 	</ItemGroup>
