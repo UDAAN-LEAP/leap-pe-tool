@@ -418,7 +418,7 @@ void MainWindow::on_actionOpen_triggered()
                 secs = TimeLog[localFilename];
                 int mins = secs/60;
                 secs = secs - mins*60;
-                ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(secs) + " secs elapsed on this page(Right Click to update)");
+                //ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(secs) + " secs elapsed on this page(Right Click to update)");
                 //QString newFile = mFilename; //Filechange
                 //newFile.replace("Inds","CorrectorOutput"); //Filechange
                 QString newFile = dir2levelup + "/CorrectorOutput/" +currentpagename;
@@ -696,7 +696,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
     secs = nMilliseconds/1000;
     int mins = secs/60;
     secs = secs - mins*60;
-    ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(secs) + " secs elapsed on this page(Right Click to update)");
+  //  ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(secs) + " secs elapsed on this page(Right Click to update)");
     if ((ev->button() == Qt::RightButton) || (RightclickFlag))
     {
         QTextCursor cursor1 = ui->textBrowser->cursorForPosition(ev->pos());
@@ -966,7 +966,7 @@ void MainWindow::on_actionSave_triggered()
     secs = nMilliseconds/1000;
     int mins = secs/60;
     secs = secs - mins*60;
-    ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(secs) + " secs elapsed on this page(Right Click to update)");
+   // ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(secs) + " secs elapsed on this page(Right Click to update)");
     ConvertSlpDevFlag =1;
     //on_actionSpell_Check_triggered();
     if (mFilename=="Untitled"){
@@ -1035,7 +1035,7 @@ void MainWindow::on_actionLoadGDocPage_triggered()
 
 			//on_actionSpell_Check_triggered();
 		}
-	}
+	
 }
 
 
@@ -1091,11 +1091,11 @@ void MainWindow::on_actionLoadData_triggered()
         localmFilename1n = localmFilename1n.substr(0,localmFilename1n.find("page"));
 
         localmFilename1 = QString::fromStdString(localmFilename1n);
-        mFilename1 = localmFilename1;
+       // mFilename1 = localmFilename1;
 
-        loadStr = "Loading Dict Words";
-        loadStr1 = loadStr + " Please wait...";
-        curr_browser->setPlainText(loadStr1);
+        //loadStr = "Loading Dict Words";
+        //loadStr1 = loadStr + " Please wait...";
+       // curr_browser->setPlainText(loadStr1);
         on_actionLoadDict_triggered();
         loadStr += "\n";
         //ui->progressBar->setValue(20);
@@ -1267,11 +1267,11 @@ void MainWindow::on_actionLoadDict_triggered()
     boost::archive::text_iarchive oarch(ss);
     //ui->lineEdit->setText("Loading Dictionary Words.. Please wait..");
     oarch >> Dict; ss.close(); */
-    loadStr += "\n" + QString::number((Dict.size())) + "Dict Words Loaded";
-    loadStr1 = loadStr + "\nLoading OCR Files Please wait.." ;
+    //loadStr += "\n" + QString::number((Dict.size())) + "Dict Words Loaded";
+    //loadStr1 = loadStr + "\nLoading OCR Files Please wait.." ;
     //cout << Dict.size() << " Dict Words Loaded" << endl;
     //cout << "here" << endl;
-    curr_browser->setPlainText(loadStr1);
+   // curr_browser->setPlainText(loadStr1);
 }
 
 void MainWindow::on_actionLoadOCRWords_triggered()
@@ -1288,10 +1288,10 @@ void MainWindow::on_actionLoadOCRWords_triggered()
     localmFilename1 = dir2levelup + "/IEROCR";
     loadMapNV(localmFilename1.toUtf8().constData(),IBook,vIBook,"IBook");
     cout << GBook.size() << " " << IBook.size() << endl;
-    loadStr += "\n" + QString::number((IBook.size())) + " Indsenz Words Loaded & ";
+    /*loadStr += "\n" + QString::number((IBook.size())) + " Indsenz Words Loaded & ";
     loadStr += "\n" + QString::number((GBook.size())) + " Google Doc Words Loaded.";
-    loadStr1 = loadStr + "Please wait...";
-    curr_browser->setPlainText(loadStr1);
+    loadStr1 = loadStr + "Please wait...";*/
+    //curr_browser->setPlainText(loadStr1);
 }
 
 void MainWindow::on_actionLoadDomain_triggered()
@@ -1299,12 +1299,12 @@ void MainWindow::on_actionLoadDomain_triggered()
 //    QString localmFilename1 = mFilename1;
 //    localmFilename1.replace("Inds/","PWords");
     QString localmFilename1 = dir2levelup + "/PWords";
-    loadMap(localmFilename1.toUtf8().constData(),PWords,"PWords"); localmFilename1 = mFilename1;
+    ///loadMap(localmFilename1.toUtf8().constData(),PWords,"PWords"); localmFilename1 = mFilename1;
     //cout << "PWords loaded" << PWords.size();
     loadMapPWords(vGBook,vIBook,PWords);
-    loadStr += "\n" + QString::number((PWords.size())) + " Domain Words Loaded.";
-    loadStr1 = loadStr + "Please wait...";
-    curr_browser->setPlainText(loadStr1);
+   // loadStr += "\n" + QString::number((PWords.size())) + " Domain Words Loaded.";
+   // loadStr1 = loadStr + "Please wait...";
+    //curr_browser->setPlainText(loadStr1);
 }
 
 map<string, string> LSTM;
@@ -1331,9 +1331,9 @@ void MainWindow::on_actionLoadSubPS_triggered()
     loadmaptoTrie(TDict,Dict);
     loadmaptoTrie(TGBook,GBook);
     loadPWordsPatternstoTrie(TGBookP,GBook);
-    loadStr += "\n" + QString::number(count) + " Substrings and 71 Sandhi Rules Loaded.";
-    loadStr1 = loadStr + "Please wait...";
-    curr_browser->setPlainText(loadStr1);
+   /* loadStr += "\n" + QString::number(count) + " Substrings and 71 Sandhi Rules Loaded.";
+    loadStr1 = loadStr + "Please wait...";*/
+   // curr_browser->setPlainText(loadStr1);
 }
 
 
@@ -1358,11 +1358,11 @@ void MainWindow::on_actionLoadConfusions_triggered()
     //if ConfpConfPmap.size() == 0)
 
 
-    loadStr += "\n" + QString::number(ConfPmap.size()) + " Confusions Loaded.";
+   /* loadStr += "\n" + QString::number(ConfPmap.size()) + " Confusions Loaded.";
     loadSandhiRules("SRules",SRules);
     loadTopConfusions(ConfPmap,TopConfusions,TopConfusionsMask);
 
-    curr_browser->setPlainText(loadStr1);
+    curr_browser->setPlainText(loadStr1);*/
 
 }
 
@@ -3518,7 +3518,7 @@ void MainWindow::on_viewallcomments_clicked()
 	CommentsView *cv = new CommentsView(totalworderr,totalcharerr,wordacc,characc,commentfield);
 	cv->show();
 
-}
+}*/
 QString GetFilter(QString & Name,const QStringList &list) {
 	
 	QString Filter = Name;
