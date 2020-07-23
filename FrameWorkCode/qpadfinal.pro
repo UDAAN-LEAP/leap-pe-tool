@@ -90,3 +90,5 @@ RESOURCES += \
     AppResources.qrc
 
 CONFIG += c++11
+
+include(qpadfinal.pri)
