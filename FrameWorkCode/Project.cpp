@@ -75,10 +75,10 @@ void Project::process_node(rapidxml::xml_node<>* pNode, TreeItem * parent)
 		}
 	}
 }
-pugi::xml_node FindFile(QFile & file,pugi::xml_node  & n) {
+pugi::xml_node Project::FindFile(QFile & file,pugi::xml_node  & n) {
 	auto ch = n.child("File");
 	if (!ch) return ch;
-	auto key = file.fileName().toStdString();
+	auto key =  mProjectDir.relativeFilePath(file.fileName()).toStdString();
 	while (ch) {
 		std::string filename = ch.attribute("Include").as_string();
 		if (filename == key) {
@@ -149,15 +149,10 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
 			QString qfilter;
 			qfilter = qfilter.fromStdString(filtername);
 			auto node = mRoot->find(qfilter);
-			QString val = QString(pNode->attribute("Include").value());
-			QFileInfo info1(val);
-
-			auto path_ = info1.path();
+			QString filepath = QString(pNode->attribute("Include").value());
+			
 			QString fpath = "";
-			if (info1.isRelative())
-				fpath = QFileInfo(mProjectDir.absolutePath()).absoluteDir().absolutePath() + "/" + info1.fileName();
-			else
-				fpath = val;
+			fpath = mProjectDir.absolutePath()+ "/" + filepath;
 			QFileInfo fileinfo(fpath);
 			QFile *f = new QFile(fpath);
 			mFiles.push_back(f);
@@ -175,7 +170,7 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
 */
 void Project::process_xml(QFile & pFile) {
 	if (mTreeModel)delete mTreeModel;
-	if (mRoot) delete mRoot;
+	/*if (mRoot) delete mRoot;*/
 	
 	pFile.open(QIODevice::ReadOnly);
 	QFileInfo info;
@@ -183,7 +178,8 @@ void Project::process_xml(QFile & pFile) {
 	std::string path = pFile.fileName().toStdString();
 	pugi::xml_parse_result res =  doc.load_file(path.c_str());
 	
-	mProjectDir = info.absoluteFilePath();
+	mProjectDir = info.absoluteDir();
+	mFileName = info.absoluteFilePath();
 	mXML = pFile.readAll().toStdString();
 	mDoc.parse<0>((char*)mXML.c_str());
 	//process_node(mDoc.first_node());
@@ -207,8 +203,9 @@ void Project::addFile(Filter &f,QFile & pFile)
 {
 	auto node = doc.child("Project").child("ItemGroup").next_sibling();
 	QString path = pFile.fileName();
+	QString relpath = mProjectDir.relativeFilePath(path);
+	std::string str = relpath.toStdString();
 	
-	std::string str = path.toStdString();
 	std::string filtername = f.name().toStdString();
 	/*
 				Example:
@@ -230,7 +227,7 @@ void Project::addFile(Filter &f,QFile & pFile)
 
 void Project::save_xml() {
 	try {
-		std::string str = mProjectDir.path().toStdString();
+		std::string str = mFileName.toStdString();
 		bool isSaved = doc.save_file(str.c_str());
 	}
 	catch (const std::runtime_error& e)

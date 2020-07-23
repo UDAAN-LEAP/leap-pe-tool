@@ -35,7 +35,7 @@
 //#include"staticDict.h"
 //#include "lcsqt.h"
 #include <Project.h>
-
+#include <QTextBrowser>
 //#include <set>
 using namespace std;
 
@@ -193,14 +193,18 @@ private slots:
 	void CustomContextMenuTriggered(const QPoint &p);
 	void AddNewFile();
 	void RemoveFile();
+	void closetab(int index);
+	void tabchanged(int index);
 private:
     Ui::MainWindow *ui;
 	Project mProject;
     QString mFilename;
     QString mFilenamejpeg;
+	QTextBrowser * curr_browser = nullptr;
 	QGraphicsScene * graphic =nullptr;
 	Graphics_view_zoom * z = nullptr;
 	QModelIndex curr_idx;
+	QVector<QString> tabs_open;
 };
 
 #endif // MAINWINDOW_H

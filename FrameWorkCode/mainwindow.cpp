@@ -20,6 +20,7 @@
 #include "3rdParty/RapidXML/rapidxml.hpp"
 #include <QDomDocument>
 #include <QTreeView>
+#include <QFont>
 //# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
@@ -60,14 +61,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     ui->textBrowser->setMouseTracking(true);
-    ui->textBrowser->installEventFilter(this);
-    ui->textBrowser->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
-    //QObject::connect(ui->textBrowser,SIGNAL(textChanged()),this,SLOT(textChangedSlot()));
+	ui->textBrowser->installEventFilter(this);
+	ui->textBrowser->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
+    //QObject::connect(curr_browser,SIGNAL(textChanged()),this,SLOT(textChangedSlot()));
     QString str = "SLP1 Guide:";
     str += "\n";
     str += "डॉ,, ड़,, ढ़,, अ   - a,, आ/ ा   - A,, इ/ ि   - i,, ई/ ी   - I,, उ/ ु   - u,, ऊ/ ू   - U,, ऋ/ ृ   - f,, ॠ/ ॄ   - F,, ऌ/ ॢ   - x,, ॡ/ \"ॣ\”   - X,, ए/ े   - e,, ऐ/ ै   - E,, ओ/ ो   - o,, औ/ ौ   - O,, ं   - M,, ः   - H,, ँ    - ~,, ऽ   - $,, ॐ   - %,, ज्ञ   - jYa ,, ळ ,, त्र   - tra,, श्र   - Sra,, क्ष्/क्ष   - kz/kza,, द्य्/द्य   - dy/dya,, क्/क   - k/ka,, ख्/ख   - K/Ka,, ग्/ग   - g/ga,, घ्/घ   - G/Ga,, ङ्/ङ   - N/Na,, च्/च   - c/ca,, छ्/छ   - C/Ca,, ज्/ज   - j/ja,, झ्/झ   - J/Ja,, ञ्/ञ   - Y/Ya,, ट्/ट   - w/wa,, ठ्/ठ   - W/Wa,, ड्/ड   - q/qa,, ढ्/ढ   - Q/Qa,, ण्/ण   - R/Ra,, त्/त   - t/ta,, थ्/थ   - T/Ta,, द्/द   - d/da,, ध्/ध   - D/Da,, न्/न   - n/na,, प्/प   - p/pa,, फ्/फ   - P/Pa,, ब्/ब   - b/ba,, भ्/भ   - B/Ba,, म्/म   - m/ma,, य्/य   - y/ya,, र्/र   - r/ra,, ल्/ल   - l/la,, व्/व   - v/va,, श्/श   - S/Sa,, ष्/ष   - z/za,, स्/स   - s/sa,, ह्/ह   - h/ha,, ळ्/ळ   - &/&a,, ऩ्  -%,, फ़्  - ^,, य़्  - L,, ऱ्  - V,,१   - 1,, २   - 2,, ३   - 3,, ४   - 4,, ५   - 5,, ६   - 6,, ७   - 7,, ८   - 8,, ९   - 9,, ०   - 0,, ।   - |,, ॥   - ||";
-
+	ui->tabWidget_2->removeTab(0);
+	ui->tabWidget_2->removeTab(0);
+	bool b = connect(ui->tabWidget_2,SIGNAL(tabCloseRequested(int)),this,SLOT(closetab(int)));
+	b = connect(ui->tabWidget_2, SIGNAL(currentChanged(int)), this, SLOT(tabchanged(int)));
     str.replace(",, ", "\n");
    // str.replace(", ","\t");
     ui->textEdit->setText(str);
@@ -239,45 +244,48 @@ vector<string> vGPage, vIPage, vCPage; // for calculating WER
 vector<string> vBest;
 void MainWindow::on_actionCreateBest2OCR_triggered()
 {
-    // vGBook and vIBook contain the loaded words from both OCR
+	if (curr_browser) {
+		// vGBook and vIBook contain the loaded words from both OCR
 
-    int vGsz = vGBook.size(), vIsz =  vIBook.size();
-    //cout << vGsz << " " << vIsz << endl;
-    int win = vGsz  - vIsz;
-    if(win<0) win = -1*win;
-    win = std::max(win,5);
+		int vGsz = vGBook.size(), vIsz = vIBook.size();
+		//cout << vGsz << " " << vIsz << endl;
+		int win = vGsz - vIsz;
+		if (win < 0) win = -1 * win;
+		win = std::max(win, 5);
 
-    //float WER = 0;
-    int mineEdDis = 1000;
-    // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
-    //cout << win << endl;
-    string localFilename = mFilename.toUtf8().constData();
-    size_t loc = localFilename.find("Inds");
-    localFilename = localFilename.substr(0,loc);
-    localFilename = localFilename + "Best2ocrRep.txt";
-    cout<< "writing to" << localFilename << " please wait"<< endl;
-    std::ofstream best2(localFilename);
-    for(int t = 0; t < vIsz;t++){
-        mineEdDis = 1000;
-        //cout << mineEdDis << endl;
-        string BestString1;
-        //cout << vIBook[t] << endl;
-        string s1 = vIBook[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
-        //cout << s1 << "s1 " ;
-        for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
+		//float WER = 0;
+		int mineEdDis = 1000;
+		// search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
+		//cout << win << endl;
+		string localFilename = mFilename.toUtf8().constData();
+		size_t loc = localFilename.find("Inds");
+		localFilename = localFilename.substr(0, loc);
+		localFilename = localFilename + "Best2ocrRep.txt";
+		cout << "writing to" << localFilename << " please wait" << endl;
+		std::ofstream best2(localFilename);
+		for (int t = 0; t < vIsz; t++) {
+			mineEdDis = 1000;
+			//cout << mineEdDis << endl;
+			string BestString1;
+			//cout << vIBook[t] << endl;
+			string s1 = vIBook[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
+			//cout << s1 << "s1 " ;
+			for (int t1 = std::max(t - win, 0); t1 < min(t + win, vGsz); t1++) {
 
-            int EdDis = editDist(vGBook[t1],s1);
-            if(EdDis < mineEdDis) {mineEdDis = EdDis; BestString1 = vGBook[t1];}
-            if (vGBook[t1] == s1) {BestString1 = s1; break;}
-        }
-        //cout << BestString1 << "BestString1 " ;
+				int EdDis = editDist(vGBook[t1], s1);
+				if (EdDis < mineEdDis) { mineEdDis = EdDis; BestString1 = vGBook[t1]; }
+				if (vGBook[t1] == s1) { BestString1 = s1; break; }
+			}
+			//cout << BestString1 << "BestString1 " ;
 
-        if(s1 == BestString1){vBest.push_back(s1); best2 << toDev(s1) << " ";}
-        else{ string s22 = bestIG(s1,BestString1,Dict); vBest.push_back(s22); best2 << toDev(s22) << " ";
+			if (s1 == BestString1) { vBest.push_back(s1); best2 << toDev(s1) << " "; }
+			else {
+				string s22 = bestIG(s1, BestString1, Dict); vBest.push_back(s22); best2 << toDev(s22) << " ";
 
-        }
-    }
-    best2 << endl;
+			}
+		}
+		best2 << endl;
+	}
 }
 
 
@@ -581,33 +589,27 @@ void MainWindow::on_actionOpen_triggered()
         } // if(!file.isEmpty())
 
 } //MainWindow::on_actionOpen_triggered()
-void HandleTextNode(QDomNodeList &list) {
-	for (int i = 0; i<list.size(); i++) {
-		auto n = list.at(i);
-		
-	}
-}
+
 map<string, int> wordLineIndex;
 bool ConvertSlpDevFlag =0;
 void MainWindow::on_actionSpell_Check_triggered()
 {
+	if (curr_browser) {
+		auto txcursor = curr_browser->textCursor();
+		txcursor.setPosition(0);
+		auto format = txcursor.charFormat();
+		format.setForeground(QColor(255, 0, 0));
 
-        on_actionSave_triggered();
-        QString textBrowserText = ui->textBrowser->toPlainText();
-        QChar ch;
-        ch=textBrowserText[1];
-        textBrowserText+=" ";
-        string str1=textBrowserText.toUtf8().constData();
-
-	while (!txcursor.atEnd()) {
-		txcursor.movePosition(QTextCursor::MoveOperation::EndOfWord);
-		txcursor.select(QTextCursor::SelectionType::WordUnderCursor);
-		if (txcursor.hasSelection()) {
-			txcursor.beginEditBlock();
-			txcursor.mergeCharFormat(format);
-			txcursor.endEditBlock();
+		while (!txcursor.atEnd()) {
+			txcursor.movePosition(QTextCursor::MoveOperation::EndOfWord);
+			txcursor.select(QTextCursor::SelectionType::WordUnderCursor);
+			if (txcursor.hasSelection()) {
+				txcursor.beginEditBlock();
+				txcursor.mergeCharFormat(format);
+				txcursor.endEditBlock();
+			}
+			txcursor.movePosition(QTextCursor::MoveOperation::NextWord);
 		}
-		txcursor.movePosition(QTextCursor::MoveOperation::NextWord);
 	}
 }
 
@@ -616,7 +618,7 @@ string strPrev;
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
 
-   /.* QTextCursor cursor = ui->textBrowser->textCursor();
+   /.* QTextCursor cursor = curr_browser->textCursor();
     cursor.select(QTextCursor::WordUnderCursor);
     // code to copy selected string:-
     strPrev = cursor.selectedText().toUtf8().constData();/
@@ -634,7 +636,7 @@ size_t ind = 0;
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
 
-    QTextCursor cursor = ui->textBrowser->textCursor();
+    QTextCursor cursor = curr_browser->textCursor();
     cursor.select(QTextCursor::WordUnderCursor);
     // code to copy selected string:-
     string str1 = cursor.selectedText().toUtf8().constData();;
@@ -830,7 +832,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 /*
 QString strPrev = "";
 void MainWindow::textChangedSlot(){
-        QTextCursor cursor = ui->textBrowser->textCursor();
+        QTextCursor cursor = curr_browser->textCursor();
         cursor.select(QTextCursor::WordUnderCursor);
         // code to copy selected string:-
         QString strPrev1 = cursor.selectedText();
@@ -850,105 +852,108 @@ void MainWindow::textChangedSlot(){
 
 void MainWindow::menuSelection(QAction* action)
 {
-    QTextCursor cursor = ui->textBrowser->textCursor();
-    cursor.select(QTextCursor::WordUnderCursor);
-    cursor.beginEditBlock();
-    cursor.removeSelectedText();
+	if (curr_browser) {
+		QTextCursor cursor = curr_browser->textCursor();
+		cursor.select(QTextCursor::WordUnderCursor);
+		cursor.beginEditBlock();
+		cursor.removeSelectedText();
 
-    //cursor.insertHtml("</body></html><font color=\'purple\'>" + action->text() + "</font><html><body>");
+		//cursor.insertHtml("</body></html><font color=\'purple\'>" + action->text() + "</font><html><body>");
 
-    string target  = (action->text().toUtf8().constData());
-    CPair[toslp1(selectedStr)] = toslp1(target);
-    PWords[toslp1(target)]++; //CPairRight[toslp1(target)]++;
-    cursor.insertText(action->text());
-    //cout <<target << CPair.size() << " "<< GBook.size() << " " << IBook.size() << endl;
-    //on_actionSpell_Check_triggered();
-    //cout << selectedStr << " to " << target << " " << CPair[toslp1(selectedStr)] <<" " << IBook[toslp1(selectedStr)] + 1 << "Corrections made"<< endl;
+		string target = (action->text().toUtf8().constData());
+		CPair[toslp1(selectedStr)] = toslp1(target);
+		PWords[toslp1(target)]++; //CPairRight[toslp1(target)]++;
+		cursor.insertText(action->text());
+		//cout <<target << CPair.size() << " "<< GBook.size() << " " << IBook.size() << endl;
+		//on_actionSpell_Check_triggered();
+		//cout << selectedStr << " to " << target << " " << CPair[toslp1(selectedStr)] <<" " << IBook[toslp1(selectedStr)] + 1 << "Corrections made"<< endl;
 
-    // replace words with name same as selectedStr and are underlined
-    // underlined:-
-    //strHtml += "<a href='xxx'>";
-    //strHtml += word;
-    //strHtml += "</a>";
+		// replace words with name same as selectedStr and are underlined
+		// underlined:-
+		//strHtml += "<a href='xxx'>";
+		//strHtml += word;
+		//strHtml += "</a>";
 
-    //QTextDocument *doc=ui->textBrowser->document();
-    //QString html=doc->toHtml();
-    //string html0=html.toUtf8().constData();
+		//QTextDocument *doc=curr_browser->document();
+		//QString html=doc->toHtml();
+		//string html0=html.toUtf8().constData();
 
-    //cout<<selectedStr<<endl;
-    cursor.endEditBlock();
+		//cout<<selectedStr<<endl;
+		cursor.endEditBlock();
 
-    /*
-    QString textBrowserText = ui->textBrowser->toPlainText();
-    string alltext=(textBrowserText.toUtf8().constData()); //toslp1
-    istringstream ss(alltext);
-    string word="";
-    //int len = alltext.length(),a=0;
-    int noCorr = 0;
-    ss >> word;
-    cursor.setPosition(0,QTextCursor::MoveAnchor);
-    size_t cnt = 1;
-    while( ss >> word) cnt++;
-    for(size_t c1 = 0; c1 < cnt + 10; c1++){ cursor.movePosition(QTextCursor::NextWord, QTextCursor::KeepAnchor);
-        cursor.select(QTextCursor::WordUnderCursor);
-        QString str1 = cursor.selectedText();
-        word = str1.toUtf8().constData();
-        if(word==(selectedStr)){
-        //cursor.movePosition(QTextCursor::NextWord, QTextCursor::KeepAnchor);
-        //cursor.select(QTextCursor::WordUnderCursor);
-        cursor.beginEditBlock();
-        cursor.removeSelectedText();
-        cursor.insertHtml("</body></html><font color=\'purple\'>" + action->text() + "</font><html><body>");
-        noCorr++;
-        cursor.endEditBlock();
-        }
-        }
-    cout << "noCOrr made on this Page " << noCorr << endl;
-    */
-    /*
-    while(a<len)
-    {
-        if(alltext[a]==' ')
-        {
-            if(word==toslp1(selectedStr))
-            {   cursor.setPosition(a-1,QTextCursor::MoveAnchor);
-                cursor.setPosition(a-1,QTextCursor::MoveAnchor);
-                cursor.select(QTextCursor::WordUnderCursor);
-                cursor.beginEditBlock();
-                cursor.removeSelectedText();
-                cursor.insertHtml("</body></html><font color=\'purple\'>" + action->text() + "</font><html><body>");
-                noCorr++;
-                cursor.endEditBlock();
-            }
-            word="";
-        }
-        else
-            word+=alltext[a];
-        a++;
-    }*/
+		/*
+		QString textBrowserText = curr_browser->toPlainText();
+		string alltext=(textBrowserText.toUtf8().constData()); //toslp1
+		istringstream ss(alltext);
+		string word="";
+		//int len = alltext.length(),a=0;
+		int noCorr = 0;
+		ss >> word;
+		cursor.setPosition(0,QTextCursor::MoveAnchor);
+		size_t cnt = 1;
+		while( ss >> word) cnt++;
+		for(size_t c1 = 0; c1 < cnt + 10; c1++){ cursor.movePosition(QTextCursor::NextWord, QTextCursor::KeepAnchor);
+			cursor.select(QTextCursor::WordUnderCursor);
+			QString str1 = cursor.selectedText();
+			word = str1.toUtf8().constData();
+			if(word==(selectedStr)){
+			//cursor.movePosition(QTextCursor::NextWord, QTextCursor::KeepAnchor);
+			//cursor.select(QTextCursor::WordUnderCursor);
+			cursor.beginEditBlock();
+			cursor.removeSelectedText();
+			cursor.insertHtml("</body></html><font color=\'purple\'>" + action->text() + "</font><html><body>");
+			noCorr++;
+			cursor.endEditBlock();
+			}
+			}
+		cout << "noCOrr made on this Page " << noCorr << endl;
+		*/
+		/*
+		while(a<len)
+		{
+			if(alltext[a]==' ')
+			{
+				if(word==toslp1(selectedStr))
+				{   cursor.setPosition(a-1,QTextCursor::MoveAnchor);
+					cursor.setPosition(a-1,QTextCursor::MoveAnchor);
+					cursor.select(QTextCursor::WordUnderCursor);
+					cursor.beginEditBlock();
+					cursor.removeSelectedText();
+					cursor.insertHtml("</body></html><font color=\'purple\'>" + action->text() + "</font><html><body>");
+					noCorr++;
+					cursor.endEditBlock();
+				}
+				word="";
+			}
+			else
+				word+=alltext[a];
+			a++;
+		}*/
 
 
-    // write code to pick word one by one in string word
-/*
-    // code to search for a string in another string
-    // say word has 1st word from Text Browzer
-    int pos = word.find("</a>", 0);
-    if(pos != static_cast<int>(string::npos)){
-        // then delete extra things that underline the word
-        //if this remaining string matches selectedStr(rohlt) replace it with action->text()
-            //action->text() might be Qstring
-            alltextnew + = action->text();// convert this Qstring to string it has rohit
-        else  alltextnew + = word;
-    }else alltextnew + = word;
-    */
-  //qDebug() << "Triggered: " << action->text();
+		// write code to pick word one by one in string word
+	/*
+		// code to search for a string in another string
+		// say word has 1st word from Text Browzer
+		int pos = word.find("</a>", 0);
+		if(pos != static_cast<int>(string::npos)){
+			// then delete extra things that underline the word
+			//if this remaining string matches selectedStr(rohlt) replace it with action->text()
+				//action->text() might be Qstring
+				alltextnew + = action->text();// convert this Qstring to string it has rohit
+			else  alltextnew + = word;
+		}else alltextnew + = word;
+		*/
+		//qDebug() << "Triggered: " << action->text();
+	}
 }
 
 void MainWindow::on_actionNew_triggered()
 {
-
-    mFilename = "Untitled";
-    ui->textBrowser->setPlainText("");
+	if (curr_browser) {
+		mFilename = "Untitled";
+		curr_browser->setPlainText("");
+	}
 }
 
 void MainWindow::on_actionSave_triggered()
@@ -1015,9 +1020,9 @@ void MainWindow::on_actionLoadGDocPage_triggered()
                   //qDebug() << str1 << endl;
                   loadMap(str1.toUtf8().constData(),PWords,"PWords");
 
-                  map<string, int> PWordspage;
-                  loadMap(str1.toUtf8().constData(),PWordspage,"PWordspage");
-                  loadmaptoTrie(TPWords, PWordspage);
+			map<string, int> PWordspage;
+			loadMap(str1.toUtf8().constData(), PWordspage, "PWordspage");
+			loadmaptoTrie(TPWords, PWordspage);
 
                   vector<string> wrong,right;
                   //QString str2 = str1; str2.replace("CorrectorOutput","Inds");
@@ -1028,9 +1033,9 @@ void MainWindow::on_actionLoadGDocPage_triggered()
                   TopConfusions.clear(); TopConfusionsMask.clear();
                   loadTopConfusions(ConfPmap,TopConfusions,TopConfusionsMask);
 
-                  //on_actionSpell_Check_triggered();
-    }
-
+			//on_actionSpell_Check_triggered();
+		}
+	}
 }
 
 
@@ -1060,8 +1065,8 @@ void MainWindow::on_actionToDevanagari_triggered()
     secs = nMilliseconds/1000;
     int mins = secs/60;
     secs = secs - mins*60;
-    ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(secs) + " secs elapsed on this page(Right Click to update)");
-    QTextCursor cursor = ui->textBrowser->textCursor();
+    //ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(secs) + " secs elapsed on this page(Right Click to update)");
+    QTextCursor cursor = curr_browser->textCursor();
     cursor.select(QTextCursor::WordUnderCursor);
     QString str1 = cursor.selectedText();
     selectedStr = str1.toUtf8().constData();
@@ -1090,35 +1095,35 @@ void MainWindow::on_actionLoadData_triggered()
 
         loadStr = "Loading Dict Words";
         loadStr1 = loadStr + " Please wait...";
-        ui->textBrowser->setPlainText(loadStr1);
+        curr_browser->setPlainText(loadStr1);
         on_actionLoadDict_triggered();
         loadStr += "\n";
-        ui->progressBar->setValue(20);
+        //ui->progressBar->setValue(20);
         //cout << "here1" << endl;
 
         loadStr += "\n \nLoading OCR Words";
         loadStr1 = loadStr + " Please wait...";
-        ui->textBrowser->setPlainText(loadStr1);
+        curr_browser->setPlainText(loadStr1);
         on_actionLoadOCRWords_triggered();
-         ui->progressBar->setValue(40);
+         //ui->progressBar->setValue(40);
 
          loadStr += "\n \n Loading Domain Words";
          loadStr1 = loadStr + " Please wait...";
-         ui->textBrowser->setPlainText(loadStr1);
+         curr_browser->setPlainText(loadStr1);
          on_actionLoadDomain_triggered();
-          ui->progressBar->setValue(60);
+         // ui->progressBar->setValue(60);
 
           loadStr += "\n \nLoading Substrings and Sandhi Rules";
           loadStr1 = loadStr + " Please wait...";
-          ui->textBrowser->setPlainText(loadStr1);
+          curr_browser->setPlainText(loadStr1);
           on_actionLoadSubPS_triggered();
-           ui->progressBar->setValue(80);
+          // ui->progressBar->setValue(80);
 
            loadStr += "\n \nLoading Confusions";
            loadStr1 = loadStr + " Please wait...";
-           ui->textBrowser->setPlainText(loadStr1);
+           curr_browser->setPlainText(loadStr1);
            on_actionLoadConfusions_triggered();
-            ui->progressBar->setValue(100);
+          //  ui->progressBar->setValue(100);
 
         /*
 
@@ -1266,7 +1271,7 @@ void MainWindow::on_actionLoadDict_triggered()
     loadStr1 = loadStr + "\nLoading OCR Files Please wait.." ;
     //cout << Dict.size() << " Dict Words Loaded" << endl;
     //cout << "here" << endl;
-    ui->textBrowser->setPlainText(loadStr1);
+    curr_browser->setPlainText(loadStr1);
 }
 
 void MainWindow::on_actionLoadOCRWords_triggered()
@@ -1286,7 +1291,7 @@ void MainWindow::on_actionLoadOCRWords_triggered()
     loadStr += "\n" + QString::number((IBook.size())) + " Indsenz Words Loaded & ";
     loadStr += "\n" + QString::number((GBook.size())) + " Google Doc Words Loaded.";
     loadStr1 = loadStr + "Please wait...";
-    ui->textBrowser->setPlainText(loadStr1);
+    curr_browser->setPlainText(loadStr1);
 }
 
 void MainWindow::on_actionLoadDomain_triggered()
@@ -1299,7 +1304,7 @@ void MainWindow::on_actionLoadDomain_triggered()
     loadMapPWords(vGBook,vIBook,PWords);
     loadStr += "\n" + QString::number((PWords.size())) + " Domain Words Loaded.";
     loadStr1 = loadStr + "Please wait...";
-    ui->textBrowser->setPlainText(loadStr1);
+    curr_browser->setPlainText(loadStr1);
 }
 
 map<string, string> LSTM;
@@ -1328,7 +1333,7 @@ void MainWindow::on_actionLoadSubPS_triggered()
     loadPWordsPatternstoTrie(TGBookP,GBook);
     loadStr += "\n" + QString::number(count) + " Substrings and 71 Sandhi Rules Loaded.";
     loadStr1 = loadStr + "Please wait...";
-    ui->textBrowser->setPlainText(loadStr1);
+    curr_browser->setPlainText(loadStr1);
 }
 
 
@@ -1357,7 +1362,7 @@ void MainWindow::on_actionLoadConfusions_triggered()
     loadSandhiRules("SRules",SRules);
     loadTopConfusions(ConfPmap,TopConfusions,TopConfusionsMask);
 
-    ui->textBrowser->setPlainText(loadStr1);
+    curr_browser->setPlainText(loadStr1);
 
 }
 
@@ -1401,8 +1406,8 @@ void MainWindow::on_actionToSlp1_triggered()
         secs = nMilliseconds/1000;
         int mins = secs/60;
         secs = secs - mins*60;
-        ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(secs) + " secs elapsed on this page(Right Click to update)");
-        QTextCursor cursor = ui->textBrowser->textCursor();
+        //ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(secs) + " secs elapsed on this page(Right Click to update)");
+        QTextCursor cursor = curr_browser->textCursor();
         //cursor.select(QTextCursor::WordUnderCursor);
         QString str1 = cursor.selectedText();
         selectedStr = str1.toUtf8().constData();
@@ -2688,47 +2693,47 @@ void MainWindow::on_actionBold_triggered() //Sanoj
 {
     QTextCharFormat format;
     format.setFontWeight(QFont::Bold);
-    ui->textBrowser->textCursor().mergeCharFormat(format);
+    curr_browser->textCursor().mergeCharFormat(format);
 }
 
 void MainWindow::on_actionUnBold_triggered() //Sanoj
 {
     QTextCharFormat format;
     format.setFontWeight(QFont::Normal);
-    ui->textBrowser->textCursor().mergeCharFormat(format);
+    curr_browser->textCursor().mergeCharFormat(format);
 }
 
 void MainWindow::on_actionLeftAlign_triggered() //Sanoj
 {
-//    QTextCursor cursor = ui->textBrowser->textCursor();
+//    QTextCursor cursor = curr_browser->textCursor();
 //    QTextBlockFormat textBlockFormat = cursor.blockFormat();
 //    QTextBlockFormat textBlockFormat;
 //    textBlockFormat.setAlignment(Qt::AlignLeft);
-//    ui->textBrowser->textCursor().mergeBlockFormat(textBlockFormat);
-    ui->textBrowser->setAlignment(Qt::AlignLeft);
+//    curr_browser->textCursor().mergeBlockFormat(textBlockFormat);
+    curr_browser->setAlignment(Qt::AlignLeft);
 }
 
 void MainWindow::on_actionRightAlign_triggered() //Sanoj
 {
-    //    QTextCursor cursor = ui->textBrowser->textCursor();
+    //    QTextCursor cursor = curr_browser->textCursor();
     //    QTextBlockFormat textBlockFormat = cursor.blockFormat();
 //    QTextBlockFormat textBlockFormat;
 //    textBlockFormat.setAlignment(Qt::AlignRight);
-//    ui->textBrowser->textCursor().mergeBlockFormat(textBlockFormat);
-        ui->textBrowser->setAlignment(Qt::AlignRight);
+//    curr_browser->textCursor().mergeBlockFormat(textBlockFormat);
+        curr_browser->setAlignment(Qt::AlignRight);
 }
 
 void MainWindow::on_actionCentreAlign_triggered() //Sanoj
 {
-//    QTextCursor cursor = ui->textBrowser->textCursor();
+//    QTextCursor cursor = curr_browser->textCursor();
 //    QTextBlockFormat textBlockFormat = cursor.blockFormat();
 //    textBlockFormat.setAlignment(Qt::AlignCenter);
-//    ui->textBrowser->textCursor().mergeBlockFormat(textBlockFormat);
-    ui->textBrowser->setAlignment(Qt::AlignCenter);
+//    curr_browser->textCursor().mergeBlockFormat(textBlockFormat);
+    curr_browser->setAlignment(Qt::AlignCenter);
 }
 void MainWindow::on_actionJusitfiedAlign_triggered()
 {
-    ui->textBrowser->setAlignment(Qt::AlignJustify);
+    curr_browser->setAlignment(Qt::AlignJustify);
 }
 
 void MainWindow::on_actionAllFontProperties_triggered() //Sanoj
@@ -2740,7 +2745,7 @@ void MainWindow::on_actionAllFontProperties_triggered() //Sanoj
         QTextCharFormat font1;
         font1.LineHeight;
         font1.setFont(font);
-        ui->textBrowser->textCursor().mergeCharFormat(font1);
+        curr_browser->textCursor().mergeCharFormat(font1);
     }
 }
 
@@ -3515,6 +3520,7 @@ void MainWindow::on_viewallcomments_clicked()
 
 }
 QString GetFilter(QString & Name,const QStringList &list) {
+	
 	QString Filter = Name;
 	Filter += " ( ";
 	for (auto ext : list) {
@@ -3610,9 +3616,18 @@ void MainWindow::CustomContextMenuTriggered(const QPoint & p) {
 		}
 	}
 }
+void MainWindow::closetab(int idx) {
+	std::cout << "Test";
+	//ui->tabWidget_2->removeTab(idx);
+	delete ui->tabWidget_2->widget(idx);
+}
+void MainWindow::tabchanged(int idx) {
+	curr_browser =(QTextBrowser*) ui->tabWidget_2->widget(idx);
+}
 void MainWindow::on_actionOpen_Project_triggered() {
 	rapidxml::xml_document<> doc;
 	QFile xml = QFileDialog::getOpenFileName(this, "Open Project","./",tr("Project(*.xml)"));
+	ui->treeView->reset();
 	if (xml.exists()) {
 		mProject.process_xml(xml);
 		ui->treeView->setModel(mProject.getModel());

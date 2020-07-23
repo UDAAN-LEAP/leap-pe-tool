@@ -16,6 +16,7 @@ public:
 	void getFile(const QString & pFileName);
 	void save_xml();
 	void removeFile(QModelIndex & idx, Filter & pFilter, QFile & pFile);
+	pugi::xml_node FindFile(QFile & file, pugi::xml_node  & n);
 	TreeModel * getModel();
 	~Project() {
 		for (auto p : mFiles) {

@@ -16,13 +16,9 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QProgressBar>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
@@ -30,7 +26,6 @@
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QTreeView>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -96,14 +91,7 @@ public:
     QAction *actionOpen_Project;
     QAction *actionView_File_Hierarchy;
     QWidget *centralWidget;
-    QGridLayout *gridLayout_3;
-    QVBoxLayout *verticalLayout_2;
-    QProgressBar *progressBar;
-    QLineEdit *lineEdit;
-    QHBoxLayout *horizontalLayout_2;
-    QPushButton *pushButton_3;
-    QSpacerItem *horizontalSpacer;
-    QPushButton *pushButton_2;
+    QGridLayout *gridLayout_4;
     QHBoxLayout *horizontalLayout;
     QTabWidget *tabWidget;
     QWidget *tab;
@@ -113,7 +101,11 @@ public:
     QGridLayout *gridLayout_2;
     QTreeView *treeView;
     QSplitter *splitter;
+    QTabWidget *tabWidget_2;
+    QWidget *tab_5;
+    QHBoxLayout *horizontalLayout_2;
     QTextBrowser *textBrowser;
+    QWidget *tab_6;
     QGraphicsView *graphicsView;
     QMenuBar *menuBar;
     QMenu *menuOCR_Correction_Window;
@@ -282,50 +274,10 @@ public:
 		actionAccuracyLog->setObjectName(QStringLiteral("actionAccuracyLog"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        gridLayout_3 = new QGridLayout(centralWidget);
-        gridLayout_3->setSpacing(6);
-        gridLayout_3->setContentsMargins(11, 11, 11, 11);
-        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
-        verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        progressBar = new QProgressBar(centralWidget);
-        progressBar->setObjectName(QString::fromUtf8("progressBar"));
-        progressBar->setMaximumSize(QSize(500, 16777215));
-        progressBar->setValue(0);
-        progressBar->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-
-        verticalLayout_2->addWidget(progressBar);
-
-        lineEdit = new QLineEdit(centralWidget);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setMaximumSize(QSize(500, 16777215));
-
-        verticalLayout_2->addWidget(lineEdit);
-
-
-        gridLayout_3->addLayout(verticalLayout_2, 0, 0, 1, 1);
-
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        pushButton_3 = new QPushButton(centralWidget);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-
-        horizontalLayout_2->addWidget(pushButton_3);
-
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_2->addItem(horizontalSpacer);
-
-        pushButton_2 = new QPushButton(centralWidget);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-
-        horizontalLayout_2->addWidget(pushButton_2);
-
-
-        gridLayout_3->addLayout(horizontalLayout_2, 0, 1, 1, 1);
-
+        gridLayout_4 = new QGridLayout(centralWidget);
+        gridLayout_4->setSpacing(6);
+        gridLayout_4->setContentsMargins(11, 11, 11, 11);
+        gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -378,10 +330,24 @@ public:
         splitter = new QSplitter(centralWidget);
         splitter->setObjectName(QString::fromUtf8("splitter"));
         splitter->setOrientation(Qt::Horizontal);
-        textBrowser = new QTextBrowser(splitter);
+        tabWidget_2 = new QTabWidget(splitter);
+        tabWidget_2->setObjectName(QString::fromUtf8("tabWidget_2"));
+        tabWidget_2->setTabsClosable(true);
+        tabWidget_2->setMovable(true);
+        tabWidget_2->setTabBarAutoHide(true);
+        tab_5 = new QWidget();
+        tab_5->setObjectName(QString::fromUtf8("tab_5"));
+        horizontalLayout_2 = new QHBoxLayout(tab_5);
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        textBrowser = new QTextBrowser(tab_5);
         textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
-        sizePolicy1.setHeightForWidth(textBrowser->sizePolicy().hasHeightForWidth());
-        textBrowser->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(textBrowser->sizePolicy().hasHeightForWidth());
+        textBrowser->setSizePolicy(sizePolicy2);
         QFont font1;
         font1.setFamily(QString::fromUtf8("Shobhika"));
         font1.setPointSize(16);
@@ -393,15 +359,22 @@ public:
         textBrowser->setReadOnly(false);
         textBrowser->setAcceptRichText(true);
         textBrowser->setTextInteractionFlags(Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextEditable|Qt::TextEditorInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
-        splitter->addWidget(textBrowser);
+
+        horizontalLayout_2->addWidget(textBrowser);
+
+        tabWidget_2->addTab(tab_5, QString());
+        tab_6 = new QWidget();
+        tab_6->setObjectName(QString::fromUtf8("tab_6"));
+        tabWidget_2->addTab(tab_6, QString());
+        splitter->addWidget(tabWidget_2);
         graphicsView = new QGraphicsView(splitter);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(graphicsView->sizePolicy().hasHeightForWidth());
-        graphicsView->setSizePolicy(sizePolicy2);
-        graphicsView->setMinimumSize(QSize(500, 0));
+        QSizePolicy sizePolicy3(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(graphicsView->sizePolicy().hasHeightForWidth());
+        graphicsView->setSizePolicy(sizePolicy3);
+        graphicsView->setMinimumSize(QSize(0, 0));
         graphicsView->setMaximumSize(QSize(608, 16777215));
         graphicsView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
         graphicsView->setAlignment(Qt::AlignCenter);
@@ -414,7 +387,7 @@ public:
         horizontalLayout->addWidget(splitter);
 
 
-        gridLayout_3->addLayout(horizontalLayout, 1, 0, 1, 2);
+        gridLayout_4->addLayout(horizontalLayout, 0, 0, 1, 1);
 
         layoutWidget2 = new QWidget(centralWidget);
         layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
@@ -556,6 +529,7 @@ public:
         retranslateUi(MainWindow);
 
         tabWidget->setCurrentIndex(1);
+        tabWidget_2->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -656,8 +630,6 @@ public:
         actionAccuracyLog->setText(QCoreApplication::translate("MainWindow", "AccuracyLog", nullptr));
         actionOpen_Project->setText(QCoreApplication::translate("MainWindow", "Open Project", nullptr));
         actionView_File_Hierarchy->setText(QCoreApplication::translate("MainWindow", "View File Hierarchy", nullptr));
-        pushButton_3->setText(QCoreApplication::translate("MainWindow", "Compare Corrector's Output", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("MainWindow", "Compare Verifier's Output", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "Tab 1", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
         textBrowser->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -675,6 +647,8 @@ public:
         menuSelectLanguage->setTitle(QApplication::translate("MainWindow", "SelectLanguage", Q_NULLPTR));
         menuFontAndLayout->setTitle(QApplication::translate("MainWindow", "FontAndLayout", Q_NULLPTR));
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", nullptr));
+        tabWidget_2->setTabText(tabWidget_2->indexOf(tab_5), QCoreApplication::translate("MainWindow", "Tab 1", nullptr));
+        tabWidget_2->setTabText(tabWidget_2->indexOf(tab_6), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
         menuOCR_Correction_Window->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
         menuCreateReports->setTitle(QCoreApplication::translate("MainWindow", "CreateReports", nullptr));
         menuSaveVariables->setTitle(QCoreApplication::translate("MainWindow", "SaveVariables", nullptr));
