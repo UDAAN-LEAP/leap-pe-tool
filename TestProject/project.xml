@@ -15,6 +15,12 @@
 		<File Include="Images/page-2.jpeg">
 			<Filter>Image</Filter>
 		</File>
+		<File Include="../FrameWorkCode/oooo.txt">
+			<Filter>Document</Filter>
+		</File>
+		<File Include="Inds/page-3.txt">
+			<Filter>Document</Filter>
+		</File>
 	</ItemGroup>
 	<ItemGroup>
 		<File Include="Inds/page-1.txt">

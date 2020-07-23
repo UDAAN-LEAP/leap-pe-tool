@@ -21,6 +21,7 @@
 #include <QDomDocument>
 #include <QTreeView>
 #include <QFont>
+
 //# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
@@ -3537,7 +3538,44 @@ QString GetFilter(QString & Name,const QStringList &list) {
 	Filter += ")";
 	return Filter;
 }
+void MainWindow::LoadDocument(QFile * f) {
 
+	f->open(QIODevice::ReadOnly);
+	QFileInfo finfo(f->fileName());
+	QString fileName = finfo.fileName();
+	if (ui->tabWidget_2->count() != 0) {
+		for (int i = 0; i < ui->tabWidget_2->count(); i++) {
+			if (fileName == ui->tabWidget_2->tabText(i)) {
+				ui->tabWidget_2->setCurrentIndex(i);
+				return;
+			}
+		}
+	}
+	QTextBrowser * b = new QTextBrowser(this);
+	QTextStream stream(f);
+	stream.setCodec("UTF-8");
+	QFont font("Shobhika Regular");
+	font.setPointSize(20);
+	b->setPlainText(stream.readAll());
+	b->setFont(font);
+	int idx = ui->tabWidget_2->addTab(b, fileName);
+	ui->tabWidget_2->setCurrentIndex(idx);
+
+	f->close();
+}
+void MainWindow::LoadImageFromFile(QFile * f) {
+	QString localFileName = f->fileName();
+	
+	imageOrig.load(localFileName);
+	if (graphic)delete graphic;
+	graphic = new QGraphicsScene(this);
+	graphic->addPixmap(QPixmap::fromImage(imageOrig));
+	ui->graphicsView->setScene(graphic);
+	ui->graphicsView->fitInView(graphic->itemsBoundingRect(), Qt::KeepAspectRatio);
+	if (z)delete z;
+	z = new Graphics_view_zoom(ui->graphicsView);
+	z->set_modifiers(Qt::NoModifier);
+}
 void MainWindow::file_click(const QModelIndex&indx) {
 	std::cout << "Test";
 	auto item = (TreeItem*)indx.internalPointer();

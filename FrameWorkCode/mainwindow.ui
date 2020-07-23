@@ -95,7 +95,7 @@
           <bool>true</bool>
          </property>
          <property name="tabBarAutoHide">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
          <widget class="QWidget" name="tab_5">
           <attribute name="title">
@@ -135,141 +135,69 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Shobhika'; font-size:16pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="acceptRichText">
-        <bool>true</bool>
-       </property>
-       <property name="textInteractionFlags">
-        <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextEditable|Qt::TextEditorInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGraphicsView" name="graphicsView">
-       <property name="minimumSize">
-        <size>
-         <width>608</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>608</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="sizeAdjustPolicy">
-        <enum>QAbstractScrollArea::AdjustIgnored</enum>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="renderHints">
-        <set>QPainter::NonCosmeticDefaultPen</set>
-       </property>
-       <property name="dragMode">
-        <enum>QGraphicsView::ScrollHandDrag</enum>
-       </property>
-       <property name="transformationAnchor">
-        <enum>QGraphicsView::AnchorViewCenter</enum>
-       </property>
-       <property name="resizeAnchor">
-        <enum>QGraphicsView::AnchorViewCenter</enum>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>9</x>
-      <y>9</y>
-      <width>521</width>
-      <height>58</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <widget class="QProgressBar" name="progressBar">
-       <property name="maximumSize">
-        <size>
-         <width>500</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="value">
-        <number>0</number>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEdit">
-       <property name="maximumSize">
-        <size>
-         <width>500</width>
-         <height>16777215</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>670</x>
-      <y>10</y>
-      <width>421</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QPushButton" name="pushButton_3">
-       <property name="text">
-        <string>Compare Corrector's Output</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_2">
-       <property name="text">
-        <string>Compare Verifier's Output</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QPushButton" name="viewallcomments">
-    <property name="geometry">
-     <rect>
-      <x>671</x>
-      <y>41</y>
-      <width>201</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Comments and Accuracy</string>
-    </property>
-   </widget>
+             </property>
+             <property name="acceptRichText">
+              <bool>true</bool>
+             </property>
+             <property name="textInteractionFlags">
+              <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextEditable|Qt::TextEditorInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_6">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <attribute name="title">
+           <string>Tab 2</string>
+          </attribute>
+         </widget>
+        </widget>
+        <widget class="QGraphicsView" name="graphicsView">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>608</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::AdjustIgnored</enum>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="renderHints">
+          <set>QPainter::NonCosmeticDefaultPen</set>
+         </property>
+         <property name="dragMode">
+          <enum>QGraphicsView::ScrollHandDrag</enum>
+         </property>
+         <property name="transformationAnchor">
+          <enum>QGraphicsView::AnchorViewCenter</enum>
+         </property>
+         <property name="resizeAnchor">
+          <enum>QGraphicsView::AnchorViewCenter</enum>
+         </property>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -315,7 +243,6 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionErrorDetectWithoutAdaptation"/>
     <addaction name="actionErrorDetectionRepUniq"/>
     <addaction name="actionAccuracyLog"/>
-    <addaction name="actionViewAverageAccuracies"/>
    </widget>
    <widget class="QMenu" name="menuSaveVariables">
     <property name="title">
@@ -363,8 +290,6 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionRightAlign"/>
     <addaction name="actionCentreAlign"/>
     <addaction name="actionJusitfiedAlign"/>
-    <addaction name="actionHighlight"/>
-    <addaction name="actionFontBlack"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -382,9 +307,6 @@ p, li { white-space: pre-wrap; }
    <addaction name="menuView"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -396,6 +318,8 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionSave"/>
    <addaction name="actionSave_As"/>
    <addaction name="actionLoadData"/>
+   <addaction name="separator"/>
+   <addaction name="actionSpell_Check"/>
    <addaction name="separator"/>
    <addaction name="actionLoad_Prev_Page"/>
    <addaction name="actionLoad_Next_Page"/>
@@ -411,12 +335,10 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionAllFontProperties"/>
    <addaction name="actionBold"/>
    <addaction name="actionUnBold"/>
-   <addaction name="actionJusitfiedAlign"/>
    <addaction name="actionLeftAlign"/>
    <addaction name="actionCentreAlign"/>
    <addaction name="actionRightAlign"/>
-   <addaction name="actionHighlight"/>
-   <addaction name="actionFontBlack"/>
+   <addaction name="actionJusitfiedAlign"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -760,39 +682,7 @@ p, li { white-space: pre-wrap; }
     <string>AccuracyLog</string>
    </property>
   </action>
- <action name="actionHighlight">
-   <property name="checked">
-    <bool>false</bool>
-   </property>
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normalon>:/Images/highlight-icon.png</normalon>
-    </iconset>
-   </property>
-   <property name="text">
-    <string>Highlight (Ctrl+H)</string>
-   </property>
-   <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight&lt;span style=&quot; font-weight:600;&quot;&gt;(Ctrl+H)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+H</string>
-   </property>
-  </action>
-  <action name="actionFontBlack">
-   <property name="text">
-    <string>FontBlack</string>
-   </property>
-  </action>
-  <action name="actionViewAverageAccuracies">
-   <property name="text">
-    <string>ViewAverageAccuracies</string>
-   </property>
-  </action>
- <action name="actionOpen_Project">
+  <action name="actionOpen_Project">
    <property name="text">
     <string>Open Project</string>
    </property>

@@ -70,7 +70,9 @@
 #include <QList>
 #include <QMap>
 #include <QVariant>
-
+#ifdef _WIN32
+#undef DELETE
+#endif
 //#include "diff_match_patch.h"
 enum Operation {
   DELETE, INSERT, EQUAL

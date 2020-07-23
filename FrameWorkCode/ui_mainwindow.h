@@ -78,16 +78,6 @@ public:
     QAction *actionCentreAlign;
     QAction *actionJusitfiedAlign;
     QAction *actionAccuracyLog;
-	QAction *actionHighlight;
-	QAction *actionFontBlack;
-	QAction *actionViewAverageAccuracies;
-   QAction *actionOpen_Project;
-    QWidget *layoutWidget;
-    QHBoxLayout *horizontalLayout;
-    QTextEdit *textEdit;
-    QTextBrowser *textBrowser;
-    QGraphicsView *graphicsView;
-    QWidget *layoutWidget1;
     QAction *actionOpen_Project;
     QAction *actionView_File_Hierarchy;
     QWidget *centralWidget;
@@ -115,6 +105,7 @@ public:
     QMenu *menuFeatureExtraction;
     QMenu *menuSelectLanguage;
     QMenu *menuFontAndLayout;
+    QMenu *menuView;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -259,19 +250,11 @@ public:
         icon14.addFile(QString::fromUtf8(":/Images/JustifiedAlign.png"), QSize(), QIcon::Normal, QIcon::On);
         actionJusitfiedAlign->setIcon(icon14);
         actionAccuracyLog = new QAction(MainWindow);
-		actionAccuracyLog->setObjectName(QStringLiteral("actionAccuracyLog"));
-		actionHighlight = new QAction(MainWindow);
-		actionHighlight->setObjectName(QStringLiteral("actionHighlight"));
-		actionHighlight->setChecked(false);
-		actionHighlight->setEnabled(true);
-		QIcon icon15;
-		icon15.addFile(QStringLiteral(":/Images/highlight-icon.png"), QSize(), QIcon::Normal, QIcon::On);
-		actionHighlight->setIcon(icon15);
-		actionFontBlack = new QAction(MainWindow);
-		actionFontBlack->setObjectName(QStringLiteral("actionFontBlack"));
-		actionViewAverageAccuracies = new QAction(MainWindow);
-		actionViewAverageAccuracies->setObjectName(QStringLiteral("actionViewAverageAccuracies"));
-		actionAccuracyLog->setObjectName(QStringLiteral("actionAccuracyLog"));
+        actionAccuracyLog->setObjectName(QString::fromUtf8("actionAccuracyLog"));
+        actionOpen_Project = new QAction(MainWindow);
+        actionOpen_Project->setObjectName(QString::fromUtf8("actionOpen_Project"));
+        actionView_File_Hierarchy = new QAction(MainWindow);
+        actionView_File_Hierarchy->setObjectName(QString::fromUtf8("actionView_File_Hierarchy"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout_4 = new QGridLayout(centralWidget);
@@ -334,7 +317,7 @@ public:
         tabWidget_2->setObjectName(QString::fromUtf8("tabWidget_2"));
         tabWidget_2->setTabsClosable(true);
         tabWidget_2->setMovable(true);
-        tabWidget_2->setTabBarAutoHide(true);
+        tabWidget_2->setTabBarAutoHide(false);
         tab_5 = new QWidget();
         tab_5->setObjectName(QString::fromUtf8("tab_5"));
         horizontalLayout_2 = new QHBoxLayout(tab_5);
@@ -365,6 +348,7 @@ public:
         tabWidget_2->addTab(tab_5, QString());
         tab_6 = new QWidget();
         tab_6->setObjectName(QString::fromUtf8("tab_6"));
+        tab_6->setEnabled(true);
         tabWidget_2->addTab(tab_6, QString());
         splitter->addWidget(tabWidget_2);
         graphicsView = new QGraphicsView(splitter);
@@ -389,31 +373,6 @@ public:
 
         gridLayout_4->addLayout(horizontalLayout, 0, 0, 1, 1);
 
-        layoutWidget2 = new QWidget(centralWidget);
-        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(670, 40, 404, 27));
-        horizontalLayout_2 = new QHBoxLayout(layoutWidget2);
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
-        pushButton_3 = new QPushButton(layoutWidget2);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-
-        horizontalLayout_2->addWidget(pushButton_3);
-
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_2->addItem(horizontalSpacer);
-
-        pushButton_2 = new QPushButton(layoutWidget2);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-
-        horizontalLayout_2->addWidget(pushButton_2);
-
-        viewallcomments = new QPushButton(centralWidget);
-        viewallcomments->setObjectName(QStringLiteral("viewallcomments"));
-        viewallcomments->setGeometry(QRect(671, 41, 201, 25));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -432,9 +391,11 @@ public:
         menuSelectLanguage->setObjectName(QString::fromUtf8("menuSelectLanguage"));
         menuFontAndLayout = new QMenu(menuBar);
         menuFontAndLayout->setObjectName(QString::fromUtf8("menuFontAndLayout"));
+        menuView = new QMenu(menuBar);
+        menuView->setObjectName(QString::fromUtf8("menuView"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
+        mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
@@ -448,6 +409,7 @@ public:
         menuBar->addAction(menuFontAndLayout->menuAction());
         menuBar->addAction(menuConvertFiles->menuAction());
         menuBar->addAction(menuFeatureExtraction->menuAction());
+        menuBar->addAction(menuView->menuAction());
         menuOCR_Correction_Window->addAction(actionNew);
         menuOCR_Correction_Window->addAction(actionOpen_Project);
         menuOCR_Correction_Window->addAction(actionOpen);
@@ -474,7 +436,6 @@ public:
         menuCreateReports->addAction(actionErrorDetectWithoutAdaptation);
         menuCreateReports->addAction(actionErrorDetectionRepUniq);
         menuCreateReports->addAction(actionAccuracyLog);
-        menuCreateReports->addAction(actionViewAverageAccuracies);
         menuSaveVariables->addAction(actionCPair);
         menuSaveVariables->addAction(actionPrimarySecOCRPair);
         menuSaveVariables->addAction(actionCPairIEROcrVsCorrect);
@@ -497,13 +458,14 @@ public:
         menuFontAndLayout->addAction(actionRightAlign);
         menuFontAndLayout->addAction(actionCentreAlign);
         menuFontAndLayout->addAction(actionJusitfiedAlign);
-        menuFontAndLayout->addAction(actionHighlight);
-        menuFontAndLayout->addAction(actionFontBlack);
+        menuView->addAction(actionView_File_Hierarchy);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen);
         mainToolBar->addAction(actionSave);
         mainToolBar->addAction(actionSave_As);
         mainToolBar->addAction(actionLoadData);
+        mainToolBar->addSeparator();
+        mainToolBar->addAction(actionSpell_Check);
         mainToolBar->addSeparator();
         mainToolBar->addAction(actionLoad_Prev_Page);
         mainToolBar->addAction(actionLoad_Next_Page);
@@ -519,12 +481,10 @@ public:
         mainToolBar->addAction(actionAllFontProperties);
         mainToolBar->addAction(actionBold);
         mainToolBar->addAction(actionUnBold);
-        mainToolBar->addAction(actionJusitfiedAlign);
         mainToolBar->addAction(actionLeftAlign);
         mainToolBar->addAction(actionCentreAlign);
         mainToolBar->addAction(actionRightAlign);
-        mainToolBar->addAction(actionHighlight);
-        mainToolBar->addAction(actionFontBlack);
+        mainToolBar->addAction(actionJusitfiedAlign);
 
         retranslateUi(MainWindow);
 
@@ -636,16 +596,6 @@ public:
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Shobhika'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", Q_NULLPTR));
-        pushButton_3->setText(QApplication::translate("MainWindow", "Compare Corrector's Output", Q_NULLPTR));
-        pushButton_2->setText(QApplication::translate("MainWindow", "Compare Verifier's Output", Q_NULLPTR));
-        menuOCR_Correction_Window->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
-        menuCreateReports->setTitle(QApplication::translate("MainWindow", "CreateReports", Q_NULLPTR));
-        menuSaveVariables->setTitle(QApplication::translate("MainWindow", "SaveVariables", Q_NULLPTR));
-        menuConvertFiles->setTitle(QApplication::translate("MainWindow", "ConvertFiles", Q_NULLPTR));
-        menuFeatureExtraction->setTitle(QApplication::translate("MainWindow", "FeatureExtraction", Q_NULLPTR));
-        menuSelectLanguage->setTitle(QApplication::translate("MainWindow", "SelectLanguage", Q_NULLPTR));
-        menuFontAndLayout->setTitle(QApplication::translate("MainWindow", "FontAndLayout", Q_NULLPTR));
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab_5), QCoreApplication::translate("MainWindow", "Tab 1", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab_6), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
