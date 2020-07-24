@@ -192,6 +192,7 @@ private slots:
 	void LoadImageFromFile(QFile * file);
 	void CustomContextMenuTriggered(const QPoint &p);
 	void AddNewFile();
+	void OpenDirectory();
 	void RemoveFile();
 	void closetab(int index);
 	void tabchanged(int index);

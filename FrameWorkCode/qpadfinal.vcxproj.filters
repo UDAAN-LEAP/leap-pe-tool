@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DiffView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="diff_match_patch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="interndiffview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="qcustomplot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="zoom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeItem.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Filters.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Project.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectHierarchyWindow.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeModel.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="commentsview.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="averageaccuracies.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="DiffView.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="tesseract\apitypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tesseract\baseapi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tesseract\capi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="diff_match_patch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eddis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tesseract\genericvector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tesseract\helpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="interndiffview.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="tesseract\ltrresultiterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="mainwindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="meanStdPage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tesseract\ocrclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tesseract\osdetect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tesseract\pageiterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tesseract\platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tesseract\publictypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="qcustomplot.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="tesseract\renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tesseract\resultiterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tesseract\serialis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="slpNPatternDict.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tesseract\strngs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tesseract\thresholder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trieEditdis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tesseract\unichar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tesseract\version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="zoom.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="TreeModel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ProjectHierarchyWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="commentsview.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="averageaccuracies.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="debug\moc_predefs.h.cbt">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="release\moc_predefs.h.cbt">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="DiffView.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="interndiffview.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="mainwindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ProjectHierarchyWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="commentsview.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="averageaccuracies.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AlignCenter.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="AlignLeft.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="AlignRight.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="AllFont.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <QtRcc Include="AppResources.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <None Include="JustifiedAlign.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="LoadData.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="New.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="SaveLoadPwords1.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="copy.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="cut.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="highlight-icon.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="next-page.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="open.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="paste.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="previous-page.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="redo.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="save-as.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="save.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="spellcheck.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="toDevangari.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="undo.png">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="3rdParty\RapidXML\rapidxml.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParty\RapidXML\rapidxml_iterators.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParty\RapidXML\rapidxml_print.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParty\RapidXML\rapidxml_utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Filters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Project.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -80,6 +80,10 @@ public:
     QAction *actionAccuracyLog;
     QAction *actionOpen_Project;
     QAction *actionView_File_Hierarchy;
+    QAction *actionClone;
+    QAction *actionPush;
+    QAction *actionCommit;
+    QAction *actionFetch_And_Pull;
     QWidget *centralWidget;
     QGridLayout *gridLayout_4;
     QHBoxLayout *horizontalLayout;
@@ -106,6 +110,7 @@ public:
     QMenu *menuSelectLanguage;
     QMenu *menuFontAndLayout;
     QMenu *menuView;
+    QMenu *menuGit;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -255,6 +260,14 @@ public:
         actionOpen_Project->setObjectName(QString::fromUtf8("actionOpen_Project"));
         actionView_File_Hierarchy = new QAction(MainWindow);
         actionView_File_Hierarchy->setObjectName(QString::fromUtf8("actionView_File_Hierarchy"));
+        actionClone = new QAction(MainWindow);
+        actionClone->setObjectName(QString::fromUtf8("actionClone"));
+        actionPush = new QAction(MainWindow);
+        actionPush->setObjectName(QString::fromUtf8("actionPush"));
+        actionCommit = new QAction(MainWindow);
+        actionCommit->setObjectName(QString::fromUtf8("actionCommit"));
+        actionFetch_And_Pull = new QAction(MainWindow);
+        actionFetch_And_Pull->setObjectName(QString::fromUtf8("actionFetch_And_Pull"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout_4 = new QGridLayout(centralWidget);
@@ -393,6 +406,8 @@ public:
         menuFontAndLayout->setObjectName(QString::fromUtf8("menuFontAndLayout"));
         menuView = new QMenu(menuBar);
         menuView->setObjectName(QString::fromUtf8("menuView"));
+        menuGit = new QMenu(menuBar);
+        menuGit->setObjectName(QString::fromUtf8("menuGit"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -410,6 +425,7 @@ public:
         menuBar->addAction(menuConvertFiles->menuAction());
         menuBar->addAction(menuFeatureExtraction->menuAction());
         menuBar->addAction(menuView->menuAction());
+        menuBar->addAction(menuGit->menuAction());
         menuOCR_Correction_Window->addAction(actionNew);
         menuOCR_Correction_Window->addAction(actionOpen_Project);
         menuOCR_Correction_Window->addAction(actionOpen);
@@ -459,6 +475,10 @@ public:
         menuFontAndLayout->addAction(actionCentreAlign);
         menuFontAndLayout->addAction(actionJusitfiedAlign);
         menuView->addAction(actionView_File_Hierarchy);
+        menuGit->addAction(actionClone);
+        menuGit->addAction(actionPush);
+        menuGit->addAction(actionCommit);
+        menuGit->addAction(actionFetch_And_Pull);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen);
         mainToolBar->addAction(actionSave);
@@ -590,6 +610,10 @@ public:
         actionAccuracyLog->setText(QCoreApplication::translate("MainWindow", "AccuracyLog", nullptr));
         actionOpen_Project->setText(QCoreApplication::translate("MainWindow", "Open Project", nullptr));
         actionView_File_Hierarchy->setText(QCoreApplication::translate("MainWindow", "View File Hierarchy", nullptr));
+        actionClone->setText(QCoreApplication::translate("MainWindow", "Clone", nullptr));
+        actionPush->setText(QCoreApplication::translate("MainWindow", "Push", nullptr));
+        actionCommit->setText(QCoreApplication::translate("MainWindow", "Commit", nullptr));
+        actionFetch_And_Pull->setText(QCoreApplication::translate("MainWindow", "Fetch And Pull", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "Tab 1", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
         textBrowser->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -607,6 +631,7 @@ public:
         menuSelectLanguage->setTitle(QCoreApplication::translate("MainWindow", "SelectLanguage", nullptr));
         menuFontAndLayout->setTitle(QCoreApplication::translate("MainWindow", "FontAndLayout", nullptr));
         menuView->setTitle(QCoreApplication::translate("MainWindow", "View", nullptr));
+        menuGit->setTitle(QCoreApplication::translate("MainWindow", "Git", nullptr));
     } // retranslateUi
 
 };

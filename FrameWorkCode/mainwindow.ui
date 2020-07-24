@@ -297,6 +297,15 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="actionView_File_Hierarchy"/>
    </widget>
+   <widget class="QMenu" name="menuGit">
+    <property name="title">
+     <string>Git</string>
+    </property>
+    <addaction name="actionClone"/>
+    <addaction name="actionPush"/>
+    <addaction name="actionCommit"/>
+    <addaction name="actionFetch_And_Pull"/>
+   </widget>
    <addaction name="menuSelectLanguage"/>
    <addaction name="menuOCR_Correction_Window"/>
    <addaction name="menuCreateReports"/>
@@ -305,6 +314,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="menuConvertFiles"/>
    <addaction name="menuFeatureExtraction"/>
    <addaction name="menuView"/>
+   <addaction name="menuGit"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -690,6 +700,26 @@ p, li { white-space: pre-wrap; }
   <action name="actionView_File_Hierarchy">
    <property name="text">
     <string>View File Hierarchy</string>
+   </property>
+  </action>
+  <action name="actionClone">
+   <property name="text">
+    <string>Clone</string>
+   </property>
+  </action>
+  <action name="actionPush">
+   <property name="text">
+    <string>Push</string>
+   </property>
+  </action>
+  <action name="actionCommit">
+   <property name="text">
+    <string>Commit</string>
+   </property>
+  </action>
+  <action name="actionFetch_And_Pull">
+   <property name="text">
+    <string>Fetch And Pull</string>
    </property>
   </action>
  </widget>
