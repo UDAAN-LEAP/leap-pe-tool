@@ -705,8 +705,8 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 			cursor.select(QTextCursor::WordUnderCursor);
 			// code to copy selected string:-
 			QString str1 = cursor.selectedText();
-			selectedStr = str1.toUtf8().constData();
-
+			selectedStr = str1.toStdString();
+			
 			// code to display options on rightclick
 			curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
 			QMenu* popup_menu = curr_browser->createStandardContextMenu();
@@ -1105,25 +1105,25 @@ void MainWindow::on_actionLoadData_triggered()
 
 			loadStr += "\n \nLoading OCR Words";
 			loadStr1 = loadStr + " Please wait...";
-			curr_browser->setPlainText(loadStr1);
+			//curr_browser->setPlainText(loadStr1);
 			on_actionLoadOCRWords_triggered();
 			//ui->progressBar->setValue(40);
 
 			loadStr += "\n \n Loading Domain Words";
 			loadStr1 = loadStr + " Please wait...";
-			curr_browser->setPlainText(loadStr1);
+			//curr_browser->setPlainText(loadStr1);
 			on_actionLoadDomain_triggered();
 			// ui->progressBar->setValue(60);
 
 			loadStr += "\n \nLoading Substrings and Sandhi Rules";
 			loadStr1 = loadStr + " Please wait...";
-			curr_browser->setPlainText(loadStr1);
+			//curr_browser->setPlainText(loadStr1);
 			on_actionLoadSubPS_triggered();
 			// ui->progressBar->setValue(80);
 
 			loadStr += "\n \nLoading Confusions";
 			loadStr1 = loadStr + " Please wait...";
-			curr_browser->setPlainText(loadStr1);
+			//curr_browser->setPlainText(loadStr1);
 			on_actionLoadConfusions_triggered();
 			//  ui->progressBar->setValue(100);
 
@@ -1156,8 +1156,8 @@ void MainWindow::on_actionLoadData_triggered()
 
 		  */
 			FirstFlag = 0;
-			on_actionLoad_Next_Page_triggered();
-			on_actionLoad_Prev_Page_triggered();
+			//on_actionLoad_Next_Page_triggered();
+			//on_actionLoad_Prev_Page_triggered();
 
 			// Plotting Graph for Black and Gray Words
 			//cout<< " Loading Graph values and performing Significance test on Word Length" << endl;
@@ -1256,7 +1256,7 @@ void MainWindow::on_actionLoadDict_triggered()
 //    QString localmFilename1 = mFilename1;
 //    localmFilename1.replace("Inds/","Dict");
 
-    QString localmFilename1 = dir2levelup + "/Dict";
+    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/"+"Dict";
 
     //localmFilename1n = localmFilename1.toUtf8().constData();
     //cout <<localmFilename1.toUtf8().constData() << endl;
@@ -1281,14 +1281,14 @@ void MainWindow::on_actionLoadOCRWords_triggered()
 {
 //    QString localmFilename1 = mFilename1;
 //    localmFilename1.replace("Inds/","GEROCR");
-    QString localmFilename1 = dir2levelup + "/GEROCR";
+    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/"+"GEROCR";
 
     cout << localmFilename1.toUtf8().constData() << endl;
     loadMapNV(localmFilename1.toUtf8().constData(),GBook,vGBook,"GBook"); localmFilename1 = mFilename1;
     cout << localmFilename1.toUtf8().constData() << endl;
 
 //    localmFilename1.replace("Inds/","IEROCR");
-    localmFilename1 = dir2levelup + "/IEROCR";
+    localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "IEROCR";
     loadMapNV(localmFilename1.toUtf8().constData(),IBook,vIBook,"IBook");
     cout << GBook.size() << " " << IBook.size() << endl;
     /*loadStr += "\n" + QString::number((IBook.size())) + " Indsenz Words Loaded & ";
@@ -1301,7 +1301,7 @@ void MainWindow::on_actionLoadDomain_triggered()
 {
 //    QString localmFilename1 = mFilename1;
 //    localmFilename1.replace("Inds/","PWords");
-    QString localmFilename1 = dir2levelup + "/PWords";
+    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "/PWords";
     ///loadMap(localmFilename1.toUtf8().constData(),PWords,"PWords"); localmFilename1 = mFilename1;
     //cout << "PWords loaded" << PWords.size();
     loadMapPWords(vGBook,vIBook,PWords);
@@ -1316,11 +1316,11 @@ void MainWindow::on_actionLoadSubPS_triggered()
 //    QString localmFilename1 = mFilename1;
     size_t count = loadPWordsPatternstoTrie(TPWordsP,PWords);// justsubstrings not patterns exactly // PWordsP,
 //    localmFilename1.replace("Inds/","CPair");
-    QString localmFilename1 = dir2levelup + "/CPair";
+    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/"+"CPair";
     loadCPair(localmFilename1.toUtf8().constData(),CPair,Dict,PWords); localmFilename1 = mFilename1;
 
     //localmFilename1.replace("Inds/","LSTM");
-    localmFilename1 = dir2levelup + "/LSTM";
+    localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/"+"LSTM";
     ifstream myfile(localmFilename1.toUtf8().constData());
               if (myfile.is_open())
               { string str1, str2,line;
@@ -1346,7 +1346,7 @@ void MainWindow::on_actionLoadConfusions_triggered()
     //QString lfR = mFilename; lfR.replace("Inds/page-1.txt","WrongAllRight");
 //    QString localmFilename1 = mFilename;
 //    localmFilename1.replace("Inds/","CPair");
-     QString localmFilename1 = dir2levelup + "/CPair";
+     QString localmFilename1 = mProject.GetDir().absolutePath()+"/Dicts/"+ "CPair";
    loadConfusions(localmFilename1.toUtf8().constData(), ConfPmap);localmFilename1 = mFilename;
    //loadCPair(localmFilename1.toUtf8().constData(), lfR.toUtf8().constData(), CPair);*./
 
@@ -3556,6 +3556,7 @@ void MainWindow::LoadDocument(QFile * f) {
 	}
 	mFilename = f->fileName();
 	QTextBrowser * b = new QTextBrowser(this);
+	b->setReadOnly(false);
 	QTextStream stream(f);
 	stream.setCodec("UTF-8");
 	QFont font("Shobhika Regular");

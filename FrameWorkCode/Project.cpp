@@ -199,6 +199,9 @@ void Project::process_xml(QFile & pFile) {
 	mTreeModel->setRoot(root);
 	mTreeModel->layoutChanged();
 }
+QDir Project::GetDir() {
+	return mProjectDir;
+}
 void Project::addFile(Filter &f,QFile & pFile)
 {
 	auto node = doc.child("Project").child("ItemGroup").next_sibling();
