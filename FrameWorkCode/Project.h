@@ -6,6 +6,7 @@
 #include "TreeModel.h"
 #include <QDir>
 #include <pugixml.hpp>
+#include <git2.h>
 class Project {
 public:
 	void parse_project_xml(rapidxml::xml_document<> & pDoc);
@@ -17,13 +18,15 @@ public:
 	void save_xml();
 	QDir GetDir();
 	void removeFile(QModelIndex & idx, Filter & pFilter, QFile & pFile);
-	pugi::xml_node FindFile(QFile & file, pugi::xml_node  & n);
+    pugi::xml_node FindFile(QFile & file, pugi::xml_node  & n);
 	TreeModel * getModel();
+	void open_git_repo();
 	~Project() {
 		for (auto p : mFiles) {
 			delete p;
 		}
 	}
+	void add_and_commit();
 private:
 	QVector<QFile*> mFiles;
 	QVector<Filter*> mFilters;
@@ -35,6 +38,7 @@ private:
 	QString mProjectName;
 	std::string mXML;
 	QDir mProjectDir;
-	pugi::xml_document doc;
+    pugi::xml_document doc;
 	rapidxml::xml_document<> mDoc;
+    git_repository * repo;
 };

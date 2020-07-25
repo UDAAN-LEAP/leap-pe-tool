@@ -52,5 +52,12 @@
 			<Filter>Image</Filter>
 		</File>
 	</ItemGroup>
-	<ItemGroup />
+	<ItemGroup/>
+	<Metadata>
+		<Version></Version>
+		<Stage>Corrector</Stage>
+		<Corrector></Corrector>
+		<SanityChecker></SanityChecker>
+		<Verifier></Verifier>
+	</Metadata>
 </Project>

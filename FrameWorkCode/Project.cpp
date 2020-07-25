@@ -11,6 +11,7 @@
 #include <Windows.h>
 #include <debugapi.h>
 #include <pugixml.hpp>
+#include "lg2_common.h"
 void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 {
 	
@@ -103,7 +104,7 @@ void Project::removeFile(QModelIndex & idx,Filter & pFilter, QFile & pFile) {
 	auto parent = item->parentItem();
 	mTreeModel->RemoveRow(idx.row(), 1, idx.parent());
 	parent->RemoveNode(item);
-	
+
 	delete item;
 
 	mTreeModel->layoutChanged();
@@ -202,6 +203,7 @@ void Project::process_xml(QFile & pFile) {
 QDir Project::GetDir() {
 	return mProjectDir;
 }
+
 void Project::addFile(Filter &f,QFile & pFile)
 {
 	auto node = doc.child("Project").child("ItemGroup").next_sibling();
@@ -256,4 +258,170 @@ void Project::getFile(const QString & pFileName)
 
 TreeModel * Project::getModel() {
 	return mTreeModel;
+}
+
+
+
+git_repository_init_options make_opts(bool bare, const char * templ,
+	uint32_t shared,
+	const char * gitdir,
+	const char * dir)
+{
+	git_repository_init_options opts = GIT_REPOSITORY_INIT_OPTIONS_INIT;
+
+	if (bare)
+		opts.flags |= GIT_REPOSITORY_INIT_BARE;
+
+	if (templ)
+	{
+		opts.flags |= GIT_REPOSITORY_INIT_EXTERNAL_TEMPLATE;
+		opts.template_path = templ;
+	}
+
+	if (gitdir)
+	{
+		/* if you specified a separate git directory, then initialize
+		 * the repository at that path and use the second path as the
+		 * working directory of the repository (with a git-link file)
+		 */
+		opts.workdir_path = dir;
+		dir = gitdir;
+	}
+
+	if (shared != 0)
+		opts.mode = shared;
+
+	return opts;
+}
+
+void create_initial_commit(git_repository * repo) {
+	git_signature *sig;
+	git_index *index;
+	git_oid tree_id, commit_id;
+	git_tree *tree;
+	std::string name = "Nipun Ramani";
+	std::string email = "ramaninipun@gmail.com";
+
+	/** First use the config to initialize a commit signature for the user. */
+
+	//check_lg2(git_signature_default(&sig, repo),"Unable to create a commit signature.","Perhaps 'user.name' and 'user.email' are not set");
+
+	check_lg2(git_signature_now(&sig, name.c_str(), email.c_str()),"Could not create commit signature","");
+	/* Now let's create an empty tree for this commit */
+
+	check_lg2(git_repository_index(&index, repo),"Could not open repository index", "");
+
+	/**
+	 * Outside of this example, you could call git_index_add_bypath()
+	 * here to put actual files into the index.  For our purposes, we'll
+	 * leave it empty for now.
+	 */
+
+	check_lg2(git_index_write_tree(&tree_id, index),"Unable to write initial tree from index", "");
+	git_index_free(index);
+	check_lg2(git_tree_lookup(&tree, repo, &tree_id),"Could not look up initial tree", "");
+
+	/**
+	 * Ready to create the initial commit.
+	 *
+	 * Normally creating a commit would involve looking up the current
+	 * HEAD commit and making that be the parent of the initial commit,
+	 * but here this is the first commit so there will be no parent.
+	 */
+
+	check_lg2(git_commit_create_v(&commit_id, repo, "HEAD", sig, sig,NULL, "Initial project commit", tree, 0),"Could not create the initial commit", "");
+
+	/** Clean up so we don't leak memory. */
+
+	git_tree_free(tree);
+	git_signature_free(sig);
+}
+enum index_mode {
+	INDEX_NONE,
+	INDEX_ADD,
+};
+
+struct index_options {
+	int dry_run;
+	int verbose;
+	git_repository *repo;
+	enum index_mode mode;
+	int add_update;
+};
+void commit(git_repository * repo,std::string message) {
+	git_signature *sig;
+	git_index *index;
+	git_oid tree_id, commit_id;
+	git_tree *tree;
+	std::string name = "Nipun Ramani";
+	std::string email = "ramaninipun@gmail.com";
+	git_object *parent = NULL;
+	git_reference *ref = NULL;
+	/** First use the config to initialize a commit signature for the user. */
+
+	//check_lg2(git_signature_default(&sig, repo),"Unable to create a commit signature.","Perhaps 'user.name' and 'user.email' are not set");
+	git_revparse_ext(&parent, &ref, repo, "HEAD");
+	check_lg2(git_signature_now(&sig, name.c_str(), email.c_str()), "Could not create commit signature", "");
+	/* Now let's create an empty tree for this commit */
+
+	check_lg2(git_repository_index(&index, repo), "Could not open repository index", "");
+
+	/**
+	 * Outside of this example, you could call git_index_add_bypath()
+	 * here to put actual files into the index.  For our purposes, we'll
+	 * leave it empty for now.
+	 */
+
+	check_lg2(git_index_write_tree(&tree_id, index), "Could not write tree", "");;
+	check_lg2(git_index_write(index), "Could not write index", "");;
+	check_lg2(git_tree_lookup(&tree, repo, &tree_id), "Error looking up tree", "");
+	check_lg2(git_signature_default(&sig, repo), "Error creating signature", "");
+	/**
+	 * Ready to create the initial commit.
+	 *
+	 * Normally creating a commit would involve looking up the current
+	 * HEAD commit and making that be the parent of the initial commit,
+	 * but here this is the first commit so there will be no parent.
+	 */
+
+	check_lg2(git_commit_create_v(&commit_id, repo, "HEAD", sig, sig, NULL, message.c_str(), tree, parent ? 1 : 0, parent), "Could not create the initial commit", "");
+
+	/** Clean up so we don't leak memory. */
+
+	git_tree_free(tree);
+	git_signature_free(sig);
+	git_index_free(index);
+	git_tree_free(tree);
+}
+void lg2_add(git_repository * repo) {
+	git_index *index;
+	git_strarray array = { 0 };
+	index_options options = { 0 };
+	check_lg2(git_repository_index(&index,repo), "Could not open repository index", "");
+	check_lg2(git_index_add_all(index, nullptr, GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH, 0, 0),"Could not add files","");
+	git_index_free(index);
+}
+void Project::add_and_commit() {
+	
+}
+void Project::open_git_repo() {
+	std::string dir = mProjectDir.path().toStdString();
+	QString gitpath = mProjectDir.path() + "/.git";
+	QDir gitdir(gitpath);
+	git_signature * out;
+	
+	
+	if (gitdir.exists())
+	{
+		check_lg2(git_repository_open(&repo, dir.c_str()), "Failed to Open", "");
+		lg2_add(repo);
+		commit(repo, "Commit after adding files.");
+	}
+	else
+	{
+		check_lg2(git_repository_init(&repo, dir.c_str(),0), "Failed to Open", "");
+		create_initial_commit(repo);
+		lg2_add(repo);
+	}
+	git_repository_free(repo);
 }
