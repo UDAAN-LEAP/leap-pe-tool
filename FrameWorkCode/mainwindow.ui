@@ -214,7 +214,6 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="actionNew"/>
     <addaction name="actionOpen_Project"/>
-    <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
     <addaction name="actionSpell_Check"/>

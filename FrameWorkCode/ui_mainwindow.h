@@ -428,7 +428,6 @@ public:
         menuBar->addAction(menuGit->menuAction());
         menuOCR_Correction_Window->addAction(actionNew);
         menuOCR_Correction_Window->addAction(actionOpen_Project);
-        menuOCR_Correction_Window->addAction(actionOpen);
         menuOCR_Correction_Window->addAction(actionSave);
         menuOCR_Correction_Window->addAction(actionSave_As);
         menuOCR_Correction_Window->addAction(actionSpell_Check);

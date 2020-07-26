@@ -1,7 +1,6 @@
 #pragma once
 #include<QFile>
 #include"Filters.h"
-#include "3rdParty/RapidXML/rapidxml.hpp"
 #include "TreeItem.h"
 #include "TreeModel.h"
 #include <QDir>
@@ -27,8 +26,6 @@ public:
 private:
 	QVector<QFile*> mFiles;
 	QVector<Filter*> mFilters;
-	std::vector<char *> allocated_nodes;
-	std::vector< rapidxml::xml_document<>*> docs;
 	TreeItem * mRoot;
 	TreeModel * mTreeModel;
 	QString mFileName;
@@ -36,5 +33,5 @@ private:
 	std::string mXML;
 	QDir mProjectDir;
 	pugi::xml_document doc;
-	rapidxml::xml_document<> mDoc;
+	
 };

@@ -7,7 +7,6 @@
 #include <sstream>
 #include <ostream>
 #include <iostream>
-#include "3rdParty/RapidXML/rapidxml_print.hpp"
 #include <Windows.h>
 #include <debugapi.h>
 #include <pugixml.hpp>
@@ -16,65 +15,6 @@ void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 	
 }
 
-void Project::process_node(rapidxml::xml_node<>* pNode, TreeItem * parent)
-{
-	if (pNode) {
-		std::string node_name = pNode->name();
-		if (node_name == "ItemGroup") {
-			process_node(pNode->first_node(), parent);
-		}
-		if (node_name == "Filter")
-		{
-			/*   Example
-				 <Filter Include="Image">
-					<Extensions>jpeg;jpg;png;</Extensions>
-				 </Filter>
-			*/
-			std::string filter_name = pNode->first_attribute("Include")->value();
-			std::string filter_exts = pNode->first_node()->value();
-
-			Filter *filter = new Filter(filter_name, filter_exts);
-			mFilters.push_back(filter);
-			QString str;
-			str = str.fromStdString(filter_name);
-			//mFilters.push_back(filter_name);
-			TreeItem * filter_node = new TreeItem(str, NodeType::FILTER, parent);
-			filter_node->SetFilter(filter);
-			parent->append_child(filter_node);
-			process_node(pNode->next_sibling(), parent);
-		}
-		if (node_name == "File") {
-
-			/*
-				Example:
-				<File Include="page-1.jpeg">
-					<Filter>Image</Filter>
-				</File>
-			*/
-			std::string filtername = pNode->first_node()->value();
-			QString qfilter;
-			qfilter = qfilter.fromStdString(filtername);
-			auto node = mRoot->find(qfilter);
-			QString val = QString(pNode->first_attribute("Include")->value());
-			QFileInfo info1(val);
-
-			auto path_ = info1.path();
-			QString fpath = "";
-			if (info1.isRelative())
-				fpath = QFileInfo(mProjectDir.absolutePath()).absoluteDir().absolutePath() + "/" + info1.fileName();
-			else
-				fpath = val;
-			QFileInfo fileinfo(fpath);
-			QFile *f = new QFile(fpath);
-			mFiles.push_back(f);
-			auto filename = fileinfo.fileName();
-			TreeItem *nodefile = new TreeItem(filename, _FILETYPE, node);
-			node->append_child(nodefile);
-			nodefile->SetFile(mFiles.back());
-			process_node(pNode->next_sibling(), parent);
-		}
-	}
-}
 pugi::xml_node Project::FindFile(QFile & file,pugi::xml_node  & n) {
 	auto ch = n.child("File");
 	if (!ch) return ch;
@@ -181,14 +121,9 @@ void Project::process_xml(QFile & pFile) {
 	mProjectDir = info.absoluteDir();
 	mFileName = info.absoluteFilePath();
 	mXML = pFile.readAll().toStdString();
-	mDoc.parse<0>((char*)mXML.c_str());
-	//process_node(mDoc.first_node());
-	auto first = mDoc.first_node("Project");
-	auto attr  = first->first_attribute("name");
-	std::string project_name = attr->value();
-	mProjectName = mProjectName.fromStdString(project_name);
-	TreeItem * root = new TreeItem(mProjectName,FOLDER);
 	auto child = doc.child("Project");
+	mProjectName = child.attribute("name").as_string();
+	TreeItem * root = new TreeItem(mProjectName,FOLDER);
 
 	mRoot = root;
 	for (pugi::xml_node child : doc.child("Project")) {
@@ -208,7 +143,6 @@ void Project::addFile(Filter &f,QFile & pFile)
 	QString path = pFile.fileName();
 	QString relpath = mProjectDir.relativeFilePath(path);
 	std::string str = relpath.toStdString();
-	
 	std::string filtername = f.name().toStdString();
 	/*
 				Example:
@@ -236,10 +170,6 @@ void Project::save_xml() {
 	catch (const std::runtime_error& e)
 	{
 		std::cerr << "Runtime error was: " << e.what() << std::endl;
-	}
-	catch (const rapidxml::parse_error& e)
-	{
-		std::cerr << "Parse error was: " << e.what() << std::endl;
 	}
 	catch (const std::exception& e)
 	{
