@@ -15,9 +15,10 @@ TEMPLATE = app
 #LIBS += -L"/home/rohit/ExpFinal/2OCRCorrect"
 LIBS += -L"/usr/include/tesseract"
 LIBS += -L"/usr/include/leptonica"
-#LIBS += -L"/usr/lib" -llept\
+LIBS += -L"/usr/include/pugixml"
+#LIBS += -L"/usr/lib" -llept
 #        -ltesseract
-LIBS += -ltesseract -llept
+LIBS += -ltesseract -llept -lpugixml
 #LIBS += -L"/home/nilesh/OCRCorrection/boost_1_61_0/stage/lib" -lboost_serialization
 
 
