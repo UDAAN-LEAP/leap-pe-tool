@@ -348,6 +348,37 @@ struct index_options {
 	enum index_mode mode;
 	int add_update;
 };
+int credentials_cb(git_cred **out, const char *url, const char *username_from_url,
+	unsigned int allowed_types, void *payload)
+{
+	int error;
+	std::string user, pass;
+
+	/*
+	 * Ask the user via the UI. On error, store the information and return GIT_EUSER which will be
+	 * bubbled up to the code performing the fetch or push. Using GIT_EUSER allows the application
+	 * to know it was an error from the application instead of libgit2.
+	 */
+
+
+	return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
+}
+void push(git_repository * repo) {
+	check_lg2(git_remote_set_pushurl(repo, "origin", "https://github.com/BhayanakMoth/TestProject.git"),"Could not set pushurl","");
+	git_push_options options;
+	git_remote * remote = NULL;
+	char * refspec = (char*)"refs/heads/master";
+	const git_strarray refspecs = { &refspec,1 };
+	git_remote_callbacks cb;
+	check_lg2(git_push_options_init(&options, GIT_PUSH_OPTIONS_VERSION), "Error initializaing options", "");
+
+	options.callbacks.credentials = credentials_cb;
+	
+	check_lg2(git_remote_lookup(&remote, repo, "origin"),"Unable to lookup remote","");
+	check_lg2(git_remote_push(remote, &refspecs, &options), "Error Pushing", "");
+	
+	return;
+}
 void commit(git_repository * repo,std::string message) {
 	git_signature *sig;
 	git_index *index;
@@ -414,8 +445,9 @@ void Project::open_git_repo() {
 	if (gitdir.exists())
 	{
 		check_lg2(git_repository_open(&repo, dir.c_str()), "Failed to Open", "");
-		lg2_add(repo);
-		commit(repo, "Commit after adding files.");
+		//lg2_add(repo);
+		//commit(repo, "Commit after adding files.");
+		push(repo);
 	}
 	else
 	{
