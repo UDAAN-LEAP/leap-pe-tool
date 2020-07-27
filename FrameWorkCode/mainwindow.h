@@ -61,7 +61,7 @@ private slots:
 
     void on_actionNew_triggered();
 
-  //  void on_actionOpen_triggered();
+    //void on_actionOpen_triggered();
 
     void on_actionSave_triggered();
 
@@ -199,7 +199,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
 	Project mProject;
-    QString mFilename = "";
+    QString mFilename;
     QString mFilenamejpeg;
 	QTextBrowser * curr_browser = nullptr;
 	QGraphicsScene * graphic =nullptr;

@@ -36,6 +36,5 @@ private:
 	std::string mXML;
 	QDir mProjectDir;
     pugi::xml_document doc;
-	rapidxml::xml_document<> mDoc;
     git_repository * repo;
 };
