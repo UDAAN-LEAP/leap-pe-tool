@@ -21,10 +21,13 @@
 #include <QDomDocument>
 #include <QTreeView>
 #include <QFont>
+#include <git2.h>
+//# include <QTask>
 
-map<string, int> Dict, GBook, IBook, PWords, PWordsP, ConfPmap, ConfPmapFont, CPairRight;
-trie TDict, TGBook, TGBookP, newtrie, TPWords, TPWordsP;
-vector<string> vGBook, vIBook;
+//gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
+map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
+trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
+vector<string> vGBook,vIBook;
 QImage imageOrig;
 vector<QString> vs; vector<int> vx, vy, vw, vh, vright;
 map<string, vector<string>> SRules;
@@ -2971,6 +2974,7 @@ void MainWindow::on_actionOpen_Project_triggered() {
 	ui->treeView->reset();
 	if (xml.exists()) {
 		mProject.process_xml(xml);
+		mProject.open_git_repo();
 		ui->treeView->setModel(mProject.getModel());
 		ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
 		bool b = connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(CustomContextMenuTriggered(const QPoint&)));

@@ -475,9 +475,6 @@ public:
         menuFontAndLayout->addAction(actionJusitfiedAlign);
         menuView->addAction(actionView_File_Hierarchy);
         menuGit->addAction(actionClone);
-        menuGit->addAction(actionPush);
-        menuGit->addAction(actionCommit);
-        menuGit->addAction(actionFetch_And_Pull);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen);
         mainToolBar->addAction(actionSave);
@@ -609,7 +606,7 @@ public:
         actionAccuracyLog->setText(QCoreApplication::translate("MainWindow", "AccuracyLog", nullptr));
         actionOpen_Project->setText(QCoreApplication::translate("MainWindow", "Open Project", nullptr));
         actionView_File_Hierarchy->setText(QCoreApplication::translate("MainWindow", "View File Hierarchy", nullptr));
-        actionClone->setText(QCoreApplication::translate("MainWindow", "Clone", nullptr));
+        actionClone->setText(QCoreApplication::translate("MainWindow", "Turn In", nullptr));
         actionPush->setText(QCoreApplication::translate("MainWindow", "Push", nullptr));
         actionCommit->setText(QCoreApplication::translate("MainWindow", "Commit", nullptr));
         actionFetch_And_Pull->setText(QCoreApplication::translate("MainWindow", "Fetch And Pull", nullptr));

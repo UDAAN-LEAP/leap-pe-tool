@@ -89,6 +89,9 @@
     <ClCompile Include="averageaccuracies.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="lg2_common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DiffView.h">
@@ -304,6 +307,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Project.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lg2_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

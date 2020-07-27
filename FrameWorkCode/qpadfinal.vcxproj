@@ -64,6 +64,8 @@
     <TargetName>qpadfinal</TargetName>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <QtInstall>msvc2017_64</QtInstall>
@@ -208,6 +210,7 @@
     <ClCompile Include="diff_match_patch.cpp" />
     <ClCompile Include="Filters.cpp" />
     <ClCompile Include="interndiffview.cpp" />
+    <ClCompile Include="lg2_common.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="Project.cpp" />
@@ -227,6 +230,7 @@
     <QtMoc Include="commentsview.h" />
     <QtMoc Include="averageaccuracies.h" />
     <ClInclude Include="Filters.h" />
+    <ClInclude Include="lg2_common.h" />
     <ClInclude Include="Project.h" />
     <QtMoc Include="ProjectHierarchyWindow.h" />
     <ClInclude Include="tesseract\apitypes.h" />
