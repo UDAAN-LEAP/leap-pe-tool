@@ -7,8 +7,6 @@
 #include <sstream>
 #include <ostream>
 #include <iostream>
-#include <Windows.h>
-#include <debugapi.h>
 #include <pugixml.hpp>
 void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 {
