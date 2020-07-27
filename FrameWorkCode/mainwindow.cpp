@@ -2920,7 +2920,7 @@ void MainWindow::AddNewFile() {
 	QStringList list = filtr->extensions();
 	QString filter = GetFilter(name, list);
 	std::string str = filter.toStdString();
-	QFile fileo = QFileDialog::getOpenFileName(this, "Open File", "./", tr(str.c_str()));
+	QFile fileo(QFileDialog::getOpenFileName(this, "Open File", "./", tr(str.c_str())));
 	if (fileo.exists()) {
 		//Add it to project
 		mProject.addFile(*filtr, fileo);
