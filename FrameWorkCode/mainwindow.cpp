@@ -600,7 +600,7 @@ void MainWindow::on_actionNew_triggered()
 void MainWindow::on_actionSave_triggered()
 {
 	save_triggered = 1;
-	on_viewallcomments_clicked();
+	on_actionView_Comments_triggered();
 	updateAverageAccuracies();
 
 	int nMilliseconds = myTimer.elapsed();
@@ -2049,7 +2049,7 @@ void MainWindow::on_actionFontBlack_triggered()
 
 
 
-void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
+void MainWindow::on_actionVerifier_Diff_View_triggered() //VERIFER Sanoj
 {
 
 	string s1 = "", s2 = "", s3 = ""; QString qs1 = "", qs2 = "", qs3 = "";
@@ -2142,7 +2142,7 @@ void MainWindow::on_pushButton_2_clicked() //VERIFER Sanoj
 
 
 
-void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
+void MainWindow::on_actionCorrector_Diff_View_triggered() //INTERN NIPUN
 {
 	string s1 = "", s2 = ""; QString qs1 = "", qs2 = "", qs3 = "";
 	file = QFileDialog::getOpenFileName(this, "Open Corrector's Output File");
@@ -2211,7 +2211,7 @@ void MainWindow::on_pushButton_3_clicked() //INTERN NIPUN
 
 
 
-void MainWindow::on_actionAccuracyLog_triggered()
+void MainWindow::on_actionAverage_Accuracy_triggered()
 {
 	QString qs1 = "", qs2 = "", qs3 = "";
 
@@ -2416,7 +2416,7 @@ void MainWindow::updateAverageAccuracies()
 
 }
 
-void MainWindow::on_viewallcomments_clicked()
+void MainWindow::on_actionView_Comments_triggered()
 {
 
 	map<int, int> wordcount;

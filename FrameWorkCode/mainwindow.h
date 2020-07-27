@@ -164,20 +164,22 @@ private slots:
 
     //void on_pushButton_clicked();
 
-    void on_pushButton_3_clicked();
+    void on_actionVerifier_Diff_View_triggered();
+	
+	void on_actionCorrector_Diff_View_triggered();
 
-    void on_pushButton_2_clicked();
+ 
 
     void on_actionJusitfiedAlign_triggered();
 
-    void on_actionAccuracyLog_triggered();
+    void on_actionAverage_Accuracy_triggered();
 	//   void on_actionHighlight_toggled(bool arg1);
 
 	void on_actionHighlight_triggered();
 
 	// void on_addcomments_clicked();
 
-	void on_viewallcomments_clicked();
+	void on_actionView_Comments_triggered();
 
 	void on_actionFontBlack_triggered();
 

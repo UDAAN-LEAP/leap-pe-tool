@@ -84,6 +84,10 @@ public:
     QAction *actionPush;
     QAction *actionCommit;
     QAction *actionFetch_And_Pull;
+    QAction *actionVerifier_Diff_View;
+    QAction *actionCorrector_Diff_View;
+    QAction *actionAverage_Accuracy;
+    QAction *actionView_Comments;
     QWidget *centralWidget;
     QGridLayout *gridLayout_4;
     QHBoxLayout *horizontalLayout;
@@ -268,6 +272,14 @@ public:
         actionCommit->setObjectName(QString::fromUtf8("actionCommit"));
         actionFetch_And_Pull = new QAction(MainWindow);
         actionFetch_And_Pull->setObjectName(QString::fromUtf8("actionFetch_And_Pull"));
+        actionVerifier_Diff_View = new QAction(MainWindow);
+        actionVerifier_Diff_View->setObjectName(QString::fromUtf8("actionVerifier_Diff_View"));
+        actionCorrector_Diff_View = new QAction(MainWindow);
+        actionCorrector_Diff_View->setObjectName(QString::fromUtf8("actionCorrector_Diff_View"));
+        actionAverage_Accuracy = new QAction(MainWindow);
+        actionAverage_Accuracy->setObjectName(QString::fromUtf8("actionAverage_Accuracy"));
+        actionView_Comments = new QAction(MainWindow);
+        actionView_Comments->setObjectName(QString::fromUtf8("actionView_Comments"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout_4 = new QGridLayout(centralWidget);
@@ -473,7 +485,11 @@ public:
         menuFontAndLayout->addAction(actionRightAlign);
         menuFontAndLayout->addAction(actionCentreAlign);
         menuFontAndLayout->addAction(actionJusitfiedAlign);
-        menuView->addAction(actionView_File_Hierarchy);
+        menuView->addAction(actionVerifier_Diff_View);
+        menuView->addAction(actionCorrector_Diff_View);
+        menuView->addSeparator();
+        menuView->addAction(actionAverage_Accuracy);
+        menuView->addAction(actionView_Comments);
         menuGit->addAction(actionClone);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen);
@@ -610,6 +626,10 @@ public:
         actionPush->setText(QCoreApplication::translate("MainWindow", "Push", nullptr));
         actionCommit->setText(QCoreApplication::translate("MainWindow", "Commit", nullptr));
         actionFetch_And_Pull->setText(QCoreApplication::translate("MainWindow", "Fetch And Pull", nullptr));
+        actionVerifier_Diff_View->setText(QCoreApplication::translate("MainWindow", "Verifier Diff View", nullptr));
+        actionCorrector_Diff_View->setText(QCoreApplication::translate("MainWindow", "Corrector Diff View", nullptr));
+        actionAverage_Accuracy->setText(QCoreApplication::translate("MainWindow", "Average Accuracy", nullptr));
+        actionView_Comments->setText(QCoreApplication::translate("MainWindow", "View Comments", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "Tab 1", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
         textBrowser->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
