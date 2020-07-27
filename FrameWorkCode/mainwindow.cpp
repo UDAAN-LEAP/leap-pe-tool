@@ -669,7 +669,7 @@ void MainWindow::on_actionLoadGDocPage_triggered()
 
 void MainWindow::on_actionSave_As_triggered()
 {
-	QString file = QFileDialog::getSaveFileName(this, "Open a File");
+	QString file(QFileDialog::getSaveFileName(this, "Open a File"));
 	if (!file.isEmpty())
 	{
 		mFilename = file;
@@ -2858,7 +2858,13 @@ void MainWindow::LoadImageFromFile(QFile * f) {
 	z = new Graphics_view_zoom(ui->graphicsView);
 	z->set_modifiers(Qt::NoModifier);
 }
-void MainWindow::file_click(const QModelIndex&indx) {
+
+/*
+* 
+*
+*
+*/
+void MainWindow::file_click(const QModelIndex & indx) {
 	std::cout << "Test";
 	auto item = (TreeItem*)indx.internalPointer();
 	auto qvar = item->data(0);
@@ -2961,7 +2967,7 @@ void MainWindow::tabchanged(int idx) {
 }
 void MainWindow::on_actionOpen_Project_triggered() {
 	rapidxml::xml_document<> doc;
-	QFile xml = QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)"));
+	QFile xml(QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)")));
 	ui->treeView->reset();
 	if (xml.exists()) {
 		mProject.process_xml(xml);

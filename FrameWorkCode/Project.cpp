@@ -53,7 +53,8 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
 	if (pNode) {
 		std::string node_name = pNode->name();
 		if (node_name == "ItemGroup") {
-			process_node(&pNode->first_child(), parent);
+			pugi::xml_node p = pNode->first_child();
+			process_node(&p, parent);
 		}
 		if (node_name == "Filter")
 		{
@@ -75,7 +76,8 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
 			TreeItem * filter_node = new TreeItem(str, NodeType::FILTER, parent);
 			filter_node->SetFilter(filter);
 			parent->append_child(filter_node);
-			process_node(&pNode->next_sibling(), parent);
+			auto p = pNode->next_sibling();
+			process_node(&p, parent);
 		}
 		if (node_name == "File") {
 
@@ -100,7 +102,8 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
 			TreeItem *nodefile = new TreeItem(filename, _FILETYPE, node);
 			node->append_child(nodefile);
 			nodefile->SetFile(f);
-			process_node(&pNode->next_sibling(), parent);
+			auto p = pNode->next_sibling();
+			process_node(&p, parent);
 		}
 	}
 }

@@ -26,8 +26,8 @@ public:
 private:
 	QVector<QFile*> mFiles;
 	QVector<Filter*> mFilters;
-	TreeItem * mRoot;
-	TreeModel * mTreeModel;
+	TreeItem * mRoot=nullptr;
+	TreeModel * mTreeModel=nullptr;
 	QString mFileName;
 	QString mProjectName;
 	std::string mXML;
