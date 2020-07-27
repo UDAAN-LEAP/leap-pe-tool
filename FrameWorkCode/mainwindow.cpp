@@ -600,8 +600,8 @@ void MainWindow::on_actionNew_triggered()
 void MainWindow::on_actionSave_triggered()
 {
 	save_triggered = 1;
-	on_actionView_Comments_triggered();
-	updateAverageAccuracies();
+	//on_actionView_Comments_triggered();
+	//updateAverageAccuracies();
 
 	int nMilliseconds = myTimer.elapsed();
 	secs = nMilliseconds / 1000;
@@ -613,8 +613,9 @@ void MainWindow::on_actionSave_triggered()
 	}
 	else {
 
-		QString changefiledir = filestructure_fw[currentdirname];
-		QString localFilename = mProject.GetDir().absolutePath() + "/" + changefiledir + "/" + currentpagename;
+		QString changefiledir = filestructure_fw[current_folder];
+		
+		QString localFilename = mProject.GetDir().absolutePath() + "/" + changefiledir + "/" + current_page_name;
 		localFilename.replace("txt", "html");
 		QFile sFile(localFilename);
 		if (sFile.open(QFile::WriteOnly))
@@ -635,10 +636,10 @@ void MainWindow::on_actionSave_triggered()
 void MainWindow::on_actionLoadGDocPage_triggered()
 {
 	if (mFilename == "Untitled") {
-		on_actionSave_As_triggered();
+		
 	}
 	else {
-
+		on_actionSave_As_triggered();
 		QString changefiledir = filestructure_fw[currentdirname];
 		QString str1 = dir2levelup + "/" + changefiledir + "/" + currentpagename;
 		str1.replace("txt", "html");
@@ -2661,8 +2662,8 @@ void MainWindow::on_viewallcomments_clicked()
 
 }
 */
-/*
 
+/*
 void MainWindow::on_actionHighlight_triggered()
 {
 //    QString previouscomment = ui->commentsfield->text();
@@ -2821,6 +2822,7 @@ void MainWindow::LoadDocument(QFile * f) {
 
 	f->open(QIODevice::ReadOnly);
 	QFileInfo finfo(f->fileName());
+	current_folder = finfo.dir().dirName();
 	QString fileName = finfo.fileName();
 	if (ui->tabWidget_2->count() != 0) {
 		for (int i = 0; i < ui->tabWidget_2->count(); i++) {
@@ -2837,7 +2839,7 @@ void MainWindow::LoadDocument(QFile * f) {
 	QTextStream stream(f);
 	stream.setCodec("UTF-8");
 	QFont font("Shobhika Regular");
-	font.setPointSize(20);
+	font.setPointSize(16);
 	b->setPlainText(stream.readAll());
 	b->setFont(font);
 	int idx = ui->tabWidget_2->addTab(b, fileName);
@@ -2967,6 +2969,7 @@ void MainWindow::closetab(int idx) {
 }
 void MainWindow::tabchanged(int idx) {
 	curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(idx);
+	current_page_name = ui->tabWidget_2->tabText(idx);
 }
 void MainWindow::on_actionOpen_Project_triggered() {
 	rapidxml::xml_document<> doc;

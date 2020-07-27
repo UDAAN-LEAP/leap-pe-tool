@@ -203,6 +203,8 @@ private:
 	Project mProject;
     QString mFilename;
     QString mFilenamejpeg;
+	QString current_folder;
+	QString current_page_name="";
 	QTextBrowser * curr_browser = nullptr;
 	QGraphicsScene * graphic =nullptr;
 	Graphics_view_zoom * z = nullptr;
