@@ -8,7 +8,10 @@
 #include <ostream>
 #include <iostream>
 #include <pugixml.hpp>
+#include <QDialog>
+#include <QInputDialog>
 #include "lg2_common.h"
+#include <QObject>
 void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 {
 	
@@ -281,20 +284,29 @@ struct index_options {
 };
 int credentials_cb(git_cred **out, const char *url, const char *username_from_url,
 	unsigned int allowed_types, void *payload)
-{
+{	
 	int error;
 	std::string user, pass;
-
+	
 	/*
 	 * Ask the user via the UI. On error, store the information and return GIT_EUSER which will be
 	 * bubbled up to the code performing the fetch or push. Using GIT_EUSER allows the application
 	 * to know it was an error from the application instead of libgit2.
 	 */
-
-
+	QInputDialog inp;
+	bool ok = false;
+	QString quser = QInputDialog::getText(nullptr, QWidget::tr("QInputDialog::getText()"),
+		QWidget::tr("Username:"), QLineEdit::Normal,
+		QDir::home().dirName(), &ok);
+	QString qpass = QInputDialog::getText(nullptr, QWidget::tr("QInputDialog::getText()"),
+		QWidget::tr("Password:"), QLineEdit::Normal,
+		"", &ok);
+	user = quser.toStdString();
+	pass = qpass.toStdString();
 	return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
-void push(git_repository * repo) {
+void Project::push() {
+	lg2_add();
 	check_lg2(git_remote_set_pushurl(repo, "origin", "https://github.com/BhayanakMoth/TestProject.git"),"Could not set pushurl","");
 	git_push_options options;
 	git_remote * remote = NULL;
@@ -310,7 +322,7 @@ void push(git_repository * repo) {
 	
 	return;
 }
-void commit(git_repository * repo,std::string message) {
+void Project::commit(std::string message) {
 	git_signature *sig;
 	git_index *index;
 	git_oid tree_id, commit_id;
@@ -355,7 +367,13 @@ void commit(git_repository * repo,std::string message) {
 	git_index_free(index);
 	git_tree_free(tree);
 }
-void lg2_add(git_repository * repo) {
+void Project::add_config() {
+	git_config * cfg = NULL;
+	check_lg2( git_config_open_default(&cfg), "Could not open config.","");
+	check_lg2(git_config_set_string(cfg, "user.name", "Nipun Ramani"),"Could not set user.name value","");
+	git_config_free(cfg);
+}
+void Project::lg2_add() {
 	git_index *index;
 	git_strarray array = { 0 };
 	index_options options = { 0 };
@@ -376,15 +394,13 @@ void Project::open_git_repo() {
 	if (gitdir.exists())
 	{
 		check_lg2(git_repository_open(&repo, dir.c_str()), "Failed to Open", "");
-		//lg2_add(repo);
-		//commit(repo, "Commit after adding files.");
-		push(repo);
+		add_config();
 	}
 	else
 	{
 		check_lg2(git_repository_init(&repo, dir.c_str(),0), "Failed to Open", "");
-		create_initial_commit(repo);
-		lg2_add(repo);
+		
+		commit("Initial Commit");
+		lg2_add();
 	}
-	git_repository_free(repo);
 }

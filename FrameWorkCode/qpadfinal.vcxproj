@@ -218,9 +218,11 @@
     <ClCompile Include="qcustomplot.cpp" />
     <ClCompile Include="TreeItem.cpp" />
     <ClCompile Include="TreeModel.cpp" />
+    <ClCompile Include="VCSWidget.cpp" />
     <ClCompile Include="zoom.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="VCSWidget.h" />
     <QtMoc Include="DiffView.h">
     </QtMoc>
     <ClInclude Include="3rdParty\RapidXML\rapidxml.hpp" />
@@ -295,6 +297,7 @@
     <QtUic Include="mainwindow.ui">
     </QtUic>
     <QtUic Include="ProjectHierarchyWindow.ui" />
+    <QtUic Include="VCSWidget.ui" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AlignCenter.png" />

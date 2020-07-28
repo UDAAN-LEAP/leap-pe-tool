@@ -20,10 +20,15 @@ public:
     pugi::xml_node FindFile(QFile & file, pugi::xml_node  & n);
 	TreeModel * getModel();
 	void open_git_repo();
+	void lg2_add();
+	void commit(std::string message);
+	void push();
+	void add_config();
 	~Project() {
 		for (auto p : mFiles) {
 			delete p;
 		}
+		git_repository_free(repo);
 	}
 	void add_and_commit();
 private:

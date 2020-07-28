@@ -80,14 +80,15 @@ public:
     QAction *actionAccuracyLog;
     QAction *actionOpen_Project;
     QAction *actionView_File_Hierarchy;
-    QAction *actionClone;
-    QAction *actionPush;
-    QAction *actionCommit;
-    QAction *actionFetch_And_Pull;
+    QAction *actionTurn_In;
+    QAction *actionFetch;
     QAction *actionVerifier_Diff_View;
     QAction *actionCorrector_Diff_View;
     QAction *actionAverage_Accuracy;
     QAction *actionView_Comments;
+    QAction *actionCommit;
+    QAction *actionFetch_2;
+    QAction *actionPush;
     QWidget *centralWidget;
     QGridLayout *gridLayout_4;
     QHBoxLayout *horizontalLayout;
@@ -103,7 +104,6 @@ public:
     QWidget *tab_5;
     QHBoxLayout *horizontalLayout_2;
     QTextBrowser *textBrowser;
-    QWidget *tab_6;
     QGraphicsView *graphicsView;
     QMenuBar *menuBar;
     QMenu *menuOCR_Correction_Window;
@@ -264,14 +264,10 @@ public:
         actionOpen_Project->setObjectName(QString::fromUtf8("actionOpen_Project"));
         actionView_File_Hierarchy = new QAction(MainWindow);
         actionView_File_Hierarchy->setObjectName(QString::fromUtf8("actionView_File_Hierarchy"));
-        actionClone = new QAction(MainWindow);
-        actionClone->setObjectName(QString::fromUtf8("actionClone"));
-        actionPush = new QAction(MainWindow);
-        actionPush->setObjectName(QString::fromUtf8("actionPush"));
-        actionCommit = new QAction(MainWindow);
-        actionCommit->setObjectName(QString::fromUtf8("actionCommit"));
-        actionFetch_And_Pull = new QAction(MainWindow);
-        actionFetch_And_Pull->setObjectName(QString::fromUtf8("actionFetch_And_Pull"));
+        actionTurn_In = new QAction(MainWindow);
+        actionTurn_In->setObjectName(QString::fromUtf8("actionTurn_In"));
+        actionFetch = new QAction(MainWindow);
+        actionFetch->setObjectName(QString::fromUtf8("actionFetch"));
         actionVerifier_Diff_View = new QAction(MainWindow);
         actionVerifier_Diff_View->setObjectName(QString::fromUtf8("actionVerifier_Diff_View"));
         actionCorrector_Diff_View = new QAction(MainWindow);
@@ -280,6 +276,12 @@ public:
         actionAverage_Accuracy->setObjectName(QString::fromUtf8("actionAverage_Accuracy"));
         actionView_Comments = new QAction(MainWindow);
         actionView_Comments->setObjectName(QString::fromUtf8("actionView_Comments"));
+        actionCommit = new QAction(MainWindow);
+        actionCommit->setObjectName(QString::fromUtf8("actionCommit"));
+        actionFetch_2 = new QAction(MainWindow);
+        actionFetch_2->setObjectName(QString::fromUtf8("actionFetch_2"));
+        actionPush = new QAction(MainWindow);
+        actionPush->setObjectName(QString::fromUtf8("actionPush"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout_4 = new QGridLayout(centralWidget);
@@ -304,7 +306,12 @@ public:
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         textEdit = new QTextEdit(tab);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
-        textEdit->setMaximumSize(QSize(120, 16777215));
+        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(textEdit->sizePolicy().hasHeightForWidth());
+        textEdit->setSizePolicy(sizePolicy1);
+        textEdit->setMaximumSize(QSize(300, 16777215));
         QFont font;
         font.setFamily(QString::fromUtf8("FreeSans"));
         font.setItalic(true);
@@ -323,9 +330,6 @@ public:
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         treeView = new QTreeView(tab_2);
         treeView->setObjectName(QString::fromUtf8("treeView"));
-        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Expanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(treeView->sizePolicy().hasHeightForWidth());
         treeView->setSizePolicy(sizePolicy1);
 
@@ -371,10 +375,6 @@ public:
         horizontalLayout_2->addWidget(textBrowser);
 
         tabWidget_2->addTab(tab_5, QString());
-        tab_6 = new QWidget();
-        tab_6->setObjectName(QString::fromUtf8("tab_6"));
-        tab_6->setEnabled(true);
-        tabWidget_2->addTab(tab_6, QString());
         splitter->addWidget(tabWidget_2);
         graphicsView = new QGraphicsView(splitter);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
@@ -490,7 +490,10 @@ public:
         menuView->addSeparator();
         menuView->addAction(actionAverage_Accuracy);
         menuView->addAction(actionView_Comments);
-        menuGit->addAction(actionClone);
+        menuGit->addAction(actionTurn_In);
+        menuGit->addAction(actionCommit);
+        menuGit->addAction(actionFetch_2);
+        menuGit->addAction(actionPush);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen);
         mainToolBar->addAction(actionSave);
@@ -622,23 +625,23 @@ public:
         actionAccuracyLog->setText(QCoreApplication::translate("MainWindow", "AccuracyLog", nullptr));
         actionOpen_Project->setText(QCoreApplication::translate("MainWindow", "Open Project", nullptr));
         actionView_File_Hierarchy->setText(QCoreApplication::translate("MainWindow", "View File Hierarchy", nullptr));
-        actionClone->setText(QCoreApplication::translate("MainWindow", "Turn In", nullptr));
-        actionPush->setText(QCoreApplication::translate("MainWindow", "Push", nullptr));
-        actionCommit->setText(QCoreApplication::translate("MainWindow", "Commit", nullptr));
-        actionFetch_And_Pull->setText(QCoreApplication::translate("MainWindow", "Fetch And Pull", nullptr));
+        actionTurn_In->setText(QCoreApplication::translate("MainWindow", "Turn In", nullptr));
+        actionFetch->setText(QCoreApplication::translate("MainWindow", "Fetch", nullptr));
         actionVerifier_Diff_View->setText(QCoreApplication::translate("MainWindow", "Verifier Diff View", nullptr));
         actionCorrector_Diff_View->setText(QCoreApplication::translate("MainWindow", "Corrector Diff View", nullptr));
         actionAverage_Accuracy->setText(QCoreApplication::translate("MainWindow", "Average Accuracy", nullptr));
         actionView_Comments->setText(QCoreApplication::translate("MainWindow", "View Comments", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "Tab 1", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
+        actionCommit->setText(QCoreApplication::translate("MainWindow", "Commit", nullptr));
+        actionFetch_2->setText(QCoreApplication::translate("MainWindow", "Fetch", nullptr));
+        actionPush->setText(QCoreApplication::translate("MainWindow", "Push", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "SLP", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Project", nullptr));
         textBrowser->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Shobhika'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab_5), QCoreApplication::translate("MainWindow", "Tab 1", nullptr));
-        tabWidget_2->setTabText(tabWidget_2->indexOf(tab_6), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
         menuOCR_Correction_Window->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
         menuCreateReports->setTitle(QCoreApplication::translate("MainWindow", "CreateReports", nullptr));
         menuSaveVariables->setTitle(QCoreApplication::translate("MainWindow", "SaveVariables", nullptr));

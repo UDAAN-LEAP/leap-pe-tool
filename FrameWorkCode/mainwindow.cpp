@@ -22,6 +22,7 @@
 #include <QTreeView>
 #include <QFont>
 #include <git2.h>
+#include <QFileSystemWatcher>
 //# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
@@ -2800,6 +2801,23 @@ void MainWindow::on_viewallcomments_clicked()
 	cv->show();
 
 }*/
+void MainWindow::on_actionPush_triggered() {
+	mProject.push();
+}
+void MainWindow::on_actionCommit_triggered() {
+	QInputDialog inp;
+	bool ok = false;
+	QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"),
+		tr("Message:"), QLineEdit::Normal,
+		QDir::home().dirName(), &ok);
+	mProject.commit(text.toStdString());
+}
+void MainWindow::on_actionTurn_In_triggered() {
+	mProject.push();
+}
+void MainWindow::on_actionFetch_triggered() {
+
+}
 QString GetFilter(QString & Name, const QStringList &list) {
 
 	QString Filter = Name;
@@ -2839,6 +2857,7 @@ void MainWindow::LoadDocument(QFile * f) {
 	QTextStream stream(f);
 	stream.setCodec("UTF-8");
 	QFont font("Shobhika Regular");
+	setWindowTitle(f->fileName());
 	font.setPointSize(16);
 	b->setPlainText(stream.readAll());
 	b->setFont(font);
@@ -2970,6 +2989,7 @@ void MainWindow::closetab(int idx) {
 void MainWindow::tabchanged(int idx) {
 	curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(idx);
 	current_page_name = ui->tabWidget_2->tabText(idx);
+
 }
 void MainWindow::on_actionOpen_Project_triggered() {
 	rapidxml::xml_document<> doc;

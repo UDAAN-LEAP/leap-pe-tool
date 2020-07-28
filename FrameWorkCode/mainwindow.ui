@@ -33,14 +33,20 @@
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
-          <string>Tab 1</string>
+          <string>SLP</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
            <widget class="QTextEdit" name="textEdit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="maximumSize">
              <size>
-              <width>120</width>
+              <width>300</width>
               <height>16777215</height>
              </size>
             </property>
@@ -62,7 +68,7 @@
         </widget>
         <widget class="QWidget" name="tab_2">
          <attribute name="title">
-          <string>Tab 2</string>
+          <string>Project</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">
@@ -145,14 +151,6 @@ p, li { white-space: pre-wrap; }
             </widget>
            </item>
           </layout>
-         </widget>
-         <widget class="QWidget" name="tab_6">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <attribute name="title">
-           <string>Tab 2</string>
-          </attribute>
          </widget>
         </widget>
         <widget class="QGraphicsView" name="graphicsView">
@@ -304,7 +302,10 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Git</string>
     </property>
-    <addaction name="actionClone"/>
+    <addaction name="actionTurn_In"/>
+    <addaction name="actionCommit"/>
+    <addaction name="actionFetch_2"/>
+    <addaction name="actionPush"/>
    </widget>
    <addaction name="menuSelectLanguage"/>
    <addaction name="menuOCR_Correction_Window"/>
@@ -702,24 +703,14 @@ p, li { white-space: pre-wrap; }
     <string>View File Hierarchy</string>
    </property>
   </action>
-  <action name="actionClone">
+  <action name="actionTurn_In">
    <property name="text">
     <string>Turn In</string>
    </property>
   </action>
-  <action name="actionPush">
+  <action name="actionFetch">
    <property name="text">
-    <string>Push</string>
-   </property>
-  </action>
-  <action name="actionCommit">
-   <property name="text">
-    <string>Commit</string>
-   </property>
-  </action>
-  <action name="actionFetch_And_Pull">
-   <property name="text">
-    <string>Fetch And Pull</string>
+    <string>Fetch</string>
    </property>
   </action>
   <action name="actionVerifier_Diff_View">
@@ -740,6 +731,21 @@ p, li { white-space: pre-wrap; }
   <action name="actionView_Comments">
    <property name="text">
     <string>View Comments</string>
+   </property>
+  </action>
+  <action name="actionCommit">
+   <property name="text">
+    <string>Commit</string>
+   </property>
+  </action>
+  <action name="actionFetch_2">
+   <property name="text">
+    <string>Fetch</string>
+   </property>
+  </action>
+  <action name="actionPush">
+   <property name="text">
+    <string>Push</string>
    </property>
   </action>
  </widget>

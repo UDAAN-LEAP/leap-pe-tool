@@ -92,6 +92,9 @@
     <ClCompile Include="lg2_common.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VCSWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DiffView.h">
@@ -190,6 +193,9 @@
     <QtMoc Include="averageaccuracies.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="VCSWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -216,6 +222,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="averageaccuracies.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="VCSWidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

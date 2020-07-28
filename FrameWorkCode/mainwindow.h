@@ -51,10 +51,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
+	Project & GetProject() {
+		return mProject;
+	}
 
 public slots:
-    //void textChangedSlot();
+	//void textChangedSlot();
 
 private slots:
 
@@ -198,6 +200,10 @@ private slots:
 	void RemoveFile();
 	void closetab(int index);
 	void tabchanged(int index);
+	void on_actionCommit_triggered();
+	void on_actionTurn_In_triggered();
+	void on_actionPush_triggered();
+	void on_actionFetch_triggered();
 private:
     Ui::MainWindow *ui;
 	Project mProject;
