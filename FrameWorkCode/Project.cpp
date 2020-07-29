@@ -12,6 +12,7 @@
 #include <QInputDialog>
 #include "lg2_common.h"
 #include <QObject>
+#include <git2.h>
 void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 {
 	
@@ -282,7 +283,7 @@ struct index_options {
 	enum index_mode mode;
 	int add_update;
 };
-int credentials_cb(git_cred **out, const char *url, const char *username_from_url,
+int credentials_cb(git_cred ** out, const char *url, const char *username_from_url,
 	unsigned int allowed_types, void *payload)
 {	
 	int error;
@@ -298,8 +299,9 @@ int credentials_cb(git_cred **out, const char *url, const char *username_from_ur
 	QString quser = QInputDialog::getText(nullptr, QWidget::tr("QInputDialog::getText()"),
 		QWidget::tr("Username:"), QLineEdit::Normal,
 		QDir::home().dirName(), &ok);
+
 	QString qpass = QInputDialog::getText(nullptr, QWidget::tr("QInputDialog::getText()"),
-		QWidget::tr("Password:"), QLineEdit::Normal,
+		QWidget::tr("Password:"), QLineEdit::Password,
 		"", &ok);
 	user = quser.toStdString();
 	pass = qpass.toStdString();
@@ -319,10 +321,63 @@ void Project::push() {
 	
 	check_lg2(git_remote_lookup(&remote, repo, "origin"),"Unable to lookup remote","");
 	check_lg2(git_remote_push(remote, &refspecs, &options), "Error Pushing", "");
-	
+	git_remote_free(remote);
 	return;
 }
+static int progress_cb(const char *str, int len, void *data)
+{
+	return 0;
+}
+static int update_cb(const char *refname, const git_oid *a, const git_oid *b, void *data)
+{
+	char a_str[GIT_OID_HEXSZ + 1], b_str[GIT_OID_HEXSZ + 1];
+	(void)data;
+
+	git_oid_fmt(b_str, b);
+	b_str[GIT_OID_HEXSZ] = '\0';
+
+	if (git_oid_is_zero(a)) {
+		printf("[new]     %.20s %s\n", b_str, refname);
+	}
+	else {
+		git_oid_fmt(a_str, a);
+		a_str[GIT_OID_HEXSZ] = '\0';
+		printf("[updated] %.10s..%.10s %s\n", a_str, b_str, refname);
+	}
+
+	return 0;
+}
+static int transfer_progress_cb(const git_indexer_progress *stats, void *payload)
+{
+	(void)payload;
+
+	if (stats->received_objects == stats->total_objects) {
+
+	}
+	else if (stats->total_objects > 0) {
+
+
+	}
+	return 0;
+}
+void Project::fetch() {
+	git_remote *remote = NULL;
+	const git_indexer_progress *stats;
+	git_fetch_options fetch_opts = GIT_FETCH_OPTIONS_INIT;
+	int error = git_remote_lookup(&remote, repo, "origin");
+	check_lg2(error, "Couldn't find remote: origin", "");
+	fetch_opts.callbacks.update_tips = &update_cb;
+	fetch_opts.callbacks.sideband_progress = &progress_cb;
+	fetch_opts.callbacks.transfer_progress = transfer_progress_cb;
+	fetch_opts.callbacks.credentials = credentials_cb;
+	error = git_remote_fetch(remote, NULL, &fetch_opts, "fetch");
+	check_lg2(error, "Couldn't fetch from remote", "");
+	git_remote_free(remote);
+}
+
+
 void Project::commit(std::string message) {
+	lg2_add();
 	git_signature *sig;
 	git_index *index;
 	git_oid tree_id, commit_id;
@@ -333,9 +388,8 @@ void Project::commit(std::string message) {
 	git_reference *ref = NULL;
 	/** First use the config to initialize a commit signature for the user. */
 
-	//check_lg2(git_signature_default(&sig, repo),"Unable to create a commit signature.","Perhaps 'user.name' and 'user.email' are not set");
-	git_revparse_ext(&parent, &ref, repo, "HEAD");
-	check_lg2(git_signature_now(&sig, name.c_str(), email.c_str()), "Could not create commit signature", "");
+	check_lg2(git_signature_default(&sig, repo),"Unable to create a commit signature.","Perhaps 'user.name' and 'user.email' are not set");
+	check_lg2(git_revparse_ext(&parent, &ref, repo, "HEAD"),"Head not found","");
 	/* Now let's create an empty tree for this commit */
 
 	check_lg2(git_repository_index(&index, repo), "Could not open repository index", "");
@@ -369,17 +423,35 @@ void Project::commit(std::string message) {
 }
 void Project::add_config() {
 	git_config * cfg = NULL;
-	check_lg2( git_config_open_default(&cfg), "Could not open config.","");
+	check_lg2( git_repository_config(&cfg,repo), "Could not open config.","");
 	check_lg2(git_config_set_string(cfg, "user.name", "Nipun Ramani"),"Could not set user.name value","");
+	check_lg2(git_config_set_string(cfg, "user.email", "ramaninipun@gmail.com"), "Could not set user.name value", "");
+
 	git_config_free(cfg);
 }
+int match_cb(const char *path, const char *spec, void *payload) {
+
+	//match_data *d = (match_data*)payload;
+	/*
+	 * return 0 to add/remove this path,
+	 * a positive number to skip this path,
+	 * or a negative number to abort the operation.
+	 */
+	std::string spath = path;
+	return 0;
+}
 void Project::lg2_add() {
-	git_index *index;
-	git_strarray array = { 0 };
-	index_options options = { 0 };
-	check_lg2(git_repository_index(&index,repo), "Could not open repository index", "");
-	check_lg2(git_index_add_all(index, nullptr, GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH, 0, 0),"Could not add files","");
-	git_index_free(index);
+	const char * paths[] = { "/*" };
+	git_strarray arr = { (char**)paths,1 };
+	git_index *idx = NULL;
+	int error = git_repository_index(&idx, repo);
+	check_lg2(error, "Error Could not open index", "");
+	error = git_index_add_all(idx, &arr, GIT_INDEX_ADD_DEFAULT, match_cb, nullptr);
+	check_lg2(error, "Error could not add", "");
+	error = git_index_update_all(idx, &arr, match_cb, nullptr);
+	check_lg2(error, "Error could not update", "");
+	git_index_write(idx);
+	git_index_free(idx);
 }
 void Project::add_and_commit() {
 	
@@ -394,12 +466,13 @@ void Project::open_git_repo() {
 	if (gitdir.exists())
 	{
 		check_lg2(git_repository_open(&repo, dir.c_str()), "Failed to Open", "");
-		add_config();
+		/*add_config();*/
 	}
 	else
 	{
 		check_lg2(git_repository_init(&repo, dir.c_str(),0), "Failed to Open", "");
-		
+		add_config();
+
 		commit("Initial Commit");
 		lg2_add();
 	}

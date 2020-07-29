@@ -24,10 +24,12 @@ public:
 	void commit(std::string message);
 	void push();
 	void add_config();
+	void fetch();
 	~Project() {
 		for (auto p : mFiles) {
 			delete p;
 		}
+		if(repo)
 		git_repository_free(repo);
 	}
 	void add_and_commit();
@@ -40,6 +42,7 @@ private:
 	QString mProjectName;
 	std::string mXML;
 	QDir mProjectDir;
+	
     pugi::xml_document doc;
     git_repository * repo;
 };

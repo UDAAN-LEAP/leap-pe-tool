@@ -203,7 +203,7 @@ private slots:
 	void on_actionCommit_triggered();
 	void on_actionTurn_In_triggered();
 	void on_actionPush_triggered();
-	void on_actionFetch_triggered();
+	void on_actionFetch_2_triggered();
 private:
     Ui::MainWindow *ui;
 	Project mProject;

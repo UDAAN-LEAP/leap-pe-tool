@@ -2815,8 +2815,8 @@ void MainWindow::on_actionCommit_triggered() {
 void MainWindow::on_actionTurn_In_triggered() {
 	mProject.push();
 }
-void MainWindow::on_actionFetch_triggered() {
-
+void MainWindow::on_actionFetch_2_triggered() {
+	mProject.fetch();
 }
 QString GetFilter(QString & Name, const QStringList &list) {
 
