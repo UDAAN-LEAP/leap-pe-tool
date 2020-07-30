@@ -7,6 +7,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
+	int retn = a.exec();
 	git_libgit2_shutdown();
-    return a.exec();
+    return retn;
 }

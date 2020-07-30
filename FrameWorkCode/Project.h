@@ -44,5 +44,5 @@ private:
 	QDir mProjectDir;
 	
     pugi::xml_document doc;
-    git_repository * repo;
+    git_repository * repo=nullptr;
 };
