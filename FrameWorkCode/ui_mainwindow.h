@@ -89,6 +89,7 @@ public:
     QAction *actionCommit;
     QAction *actionFetch_2;
     QAction *actionPush;
+    QAction *actionVerifier_Turn_In;
     QWidget *centralWidget;
     QGridLayout *gridLayout_4;
     QHBoxLayout *horizontalLayout;
@@ -282,6 +283,8 @@ public:
         actionFetch_2->setObjectName(QString::fromUtf8("actionFetch_2"));
         actionPush = new QAction(MainWindow);
         actionPush->setObjectName(QString::fromUtf8("actionPush"));
+        actionVerifier_Turn_In = new QAction(MainWindow);
+        actionVerifier_Turn_In->setObjectName(QString::fromUtf8("actionVerifier_Turn_In"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout_4 = new QGridLayout(centralWidget);
@@ -494,6 +497,7 @@ public:
         menuGit->addAction(actionCommit);
         menuGit->addAction(actionFetch_2);
         menuGit->addAction(actionPush);
+        menuGit->addAction(actionVerifier_Turn_In);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen);
         mainToolBar->addAction(actionSave);
@@ -634,6 +638,7 @@ public:
         actionCommit->setText(QCoreApplication::translate("MainWindow", "Commit", nullptr));
         actionFetch_2->setText(QCoreApplication::translate("MainWindow", "Fetch", nullptr));
         actionPush->setText(QCoreApplication::translate("MainWindow", "Push", nullptr));
+        actionVerifier_Turn_In->setText(QCoreApplication::translate("MainWindow", "Verifier Turn In", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "SLP", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Project", nullptr));
         textBrowser->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"

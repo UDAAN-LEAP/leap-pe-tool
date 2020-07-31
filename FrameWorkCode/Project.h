@@ -25,6 +25,7 @@ public:
 	void push();
 	void add_config();
 	void fetch();
+	void enable_push();
 	~Project() {
 		for (auto p : mFiles) {
 			delete p;

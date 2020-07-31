@@ -306,6 +306,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionCommit"/>
     <addaction name="actionFetch_2"/>
     <addaction name="actionPush"/>
+    <addaction name="actionVerifier_Turn_In"/>
    </widget>
    <addaction name="menuSelectLanguage"/>
    <addaction name="menuOCR_Correction_Window"/>
@@ -746,6 +747,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionPush">
    <property name="text">
     <string>Push</string>
+   </property>
+  </action>
+  <action name="actionVerifier_Turn_In">
+   <property name="text">
+    <string>Verifier Turn In</string>
    </property>
   </action>
  </widget>

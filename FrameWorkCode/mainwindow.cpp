@@ -2813,7 +2813,7 @@ void MainWindow::on_actionCommit_triggered() {
 	mProject.commit(text.toStdString());
 }
 void MainWindow::on_actionTurn_In_triggered() {
-	//mProject.push();
+	mProject.push();
 	mProject.disable_push();
 	auto list = ui->menuGit->actions();
 	for (auto a : list) {
@@ -2825,6 +2825,17 @@ void MainWindow::on_actionTurn_In_triggered() {
 }
 void MainWindow::on_actionFetch_2_triggered() {
 	mProject.fetch();
+}
+void MainWindow::on_actionVerifier_Turn_In_triggered() {
+	mProject.push();
+	mProject.enable_push();
+	auto list = ui->menuGit->actions();
+	for (auto a : list) {
+		QString name = a->text();
+		if (name == "Turn In") {
+			a->setEnabled(true);
+		}
+	}
 }
 QString GetFilter(QString & Name, const QStringList &list) {
 
@@ -3002,8 +3013,8 @@ void MainWindow::tabchanged(int idx) {
 void MainWindow::on_actionOpen_Project_triggered() {
 	rapidxml::xml_document<> doc;
 	QFile xml(QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)")));
-	ui->treeView->reset();
 	if (xml.exists()) {
+		ui->treeView->reset();
 		mProject.process_xml(xml);
 		mProject.open_git_repo();
 		ui->treeView->setModel(mProject.getModel());
@@ -3012,6 +3023,15 @@ void MainWindow::on_actionOpen_Project_triggered() {
 		b = connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
 		QString stage = mProject.get_stage();
 		std::cout << stage.toStdString();
+		if (stage != "Corrector") {
+			auto list = ui->menuGit->actions();
+			for (auto a : list) {
+				QString name = a->text();
+				if (name == "Turn In") {
+					a->setEnabled(false);
+				}
+			}
+		}
 		bool b1 = b;
 	}
 }

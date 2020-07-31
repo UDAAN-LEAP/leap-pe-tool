@@ -13,6 +13,7 @@
 #include "lg2_common.h"
 #include <QObject>
 #include <git2.h>
+#include <QProcess>
 void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 {
 	
@@ -35,6 +36,14 @@ pugi::xml_node Project::FindFile(QFile & file,pugi::xml_node  & n) {
 void Project::disable_push() {
 	auto c = doc.child("Project").child("Metadata");
 	bool s = c.child("Stage").first_child().set_value("Verifier");
+	save_xml();
+}
+void Project::enable_push() {
+	auto c = doc.child("Project").child("Metadata");
+	bool s = c.child("Stage").first_child().set_value("Corrector");
+	int ver = std::stoi(c.child("Version").child_value());
+	ver++;
+	c.child("Version").first_child().set_value(std::to_string(ver).c_str());
 	save_xml();
 }
 void Project::removeFile(QModelIndex & idx,Filter & pFilter, QFile & pFile) {
@@ -366,7 +375,7 @@ static int transfer_progress_cb(const git_indexer_progress *stats, void *payload
 	return 0;
 }
 void Project::fetch() {
-	git_remote *remote = NULL;
+	/*git_remote *remote = NULL;
 	const git_indexer_progress *stats;
 	git_fetch_options fetch_opts = GIT_FETCH_OPTIONS_INIT;
 	int error = git_remote_lookup(&remote, repo, "origin");
@@ -376,8 +385,11 @@ void Project::fetch() {
 	fetch_opts.callbacks.transfer_progress = transfer_progress_cb;
 	fetch_opts.callbacks.credentials = credentials_cb;
 	error = git_remote_fetch(remote, NULL, &fetch_opts, "fetch");
-	check_lg2(error, "Couldn't fetch from remote", "");
-	git_remote_free(remote);
+	check_lg2(error, "Couldn't fetch from remote", "");*/
+	//git_remote_free(remote);
+	QDir::setCurrent(mProjectDir.absolutePath());
+	QProcess::execute("git pull -Xtheirs;");
+
 }
 
 
