@@ -32,6 +32,11 @@ pugi::xml_node Project::FindFile(QFile & file,pugi::xml_node  & n) {
 	auto next = n.next_sibling();
 	return FindFile(file, next);
 }
+void Project::disable_push() {
+	auto c = doc.child("Project").child("Metadata");
+	bool s = c.child("Stage").first_child().set_value("Verifier");
+	save_xml();
+}
 void Project::removeFile(QModelIndex & idx,Filter & pFilter, QFile & pFile) {
 	auto first = doc.child("Project").child("ItemGroup");
 	
@@ -455,6 +460,11 @@ void Project::lg2_add() {
 }
 void Project::add_and_commit() {
 	
+}
+QString Project::get_stage() {
+	auto c = doc.child("Project").child("Metadata");
+	QString stage = c.child("Stage").child_value();
+	return stage;
 }
 void Project::open_git_repo() {
 	std::string dir = mProjectDir.path().toStdString();

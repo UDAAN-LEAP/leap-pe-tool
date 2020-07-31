@@ -52,12 +52,11 @@
 			<Filter>Image</Filter>
 		</File>
 	</ItemGroup>
-	<ItemGroup/>
 	<Metadata>
-		<Version></Version>
-		<Stage>Corrector</Stage>
-		<Corrector></Corrector>
-		<SanityChecker></SanityChecker>
-		<Verifier></Verifier>
+		<Version>1</Version>
+		<Stage>Verifier</Stage>
+		<Corrector>None</Corrector>
+		<SanityChecker>None</SanityChecker>
+		<Verifier>None</Verifier>
 	</Metadata>
 </Project>

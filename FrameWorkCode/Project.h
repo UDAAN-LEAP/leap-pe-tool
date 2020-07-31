@@ -33,6 +33,8 @@ public:
 		git_repository_free(repo);
 	}
 	void add_and_commit();
+	void disable_push();
+	QString get_stage();
 private:
 	QVector<QFile*> mFiles;
 	QVector<Filter*> mFilters;

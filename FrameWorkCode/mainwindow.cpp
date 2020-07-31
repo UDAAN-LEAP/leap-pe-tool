@@ -2813,7 +2813,15 @@ void MainWindow::on_actionCommit_triggered() {
 	mProject.commit(text.toStdString());
 }
 void MainWindow::on_actionTurn_In_triggered() {
-	mProject.push();
+	//mProject.push();
+	mProject.disable_push();
+	auto list = ui->menuGit->actions();
+	for (auto a : list) {
+		QString name = a->text();
+		if (name == "Turn In") {
+			a->setEnabled(false);
+		}
+	}
 }
 void MainWindow::on_actionFetch_2_triggered() {
 	mProject.fetch();
@@ -3002,7 +3010,8 @@ void MainWindow::on_actionOpen_Project_triggered() {
 		ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
 		bool b = connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(CustomContextMenuTriggered(const QPoint&)));
 		b = connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
-
+		QString stage = mProject.get_stage();
+		std::cout << stage.toStdString();
 		bool b1 = b;
 	}
 }
