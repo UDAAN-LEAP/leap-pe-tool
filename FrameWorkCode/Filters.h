@@ -15,6 +15,12 @@ public:
 	Filter & operator=(const Filter& f) = default;
 	QString  name() const;
 	QStringList  extensions() const;
+	void setName(QString name) {
+		m_name = name;
+	}
+	void setExtensions(QStringList extensions) {
+		m_extensions = extensions;
+	}
 	~Filter() = default;
 private:
 	QString m_name;

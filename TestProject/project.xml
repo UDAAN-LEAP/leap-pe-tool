@@ -5,7 +5,7 @@
 			<Extensions>jpeg;jpg;png;</Extensions>
 		</Filter>
 		<Filter Include="Document">
-			<Extensions>docx;txt</Extensions>
+			<Extensions>docx;txt;html</Extensions>
 		</Filter>
 	</ItemGroup>
 	<ItemGroup>

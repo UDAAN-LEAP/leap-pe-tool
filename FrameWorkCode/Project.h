@@ -26,6 +26,8 @@ public:
 	void add_config();
 	void fetch();
 	void enable_push();
+	void AddTemp(Filter * f, QFile &pFile,QString prefix);
+
 	~Project() {
 		for (auto p : mFiles) {
 			delete p;
@@ -36,6 +38,7 @@ public:
 	void add_and_commit();
 	void disable_push();
 	QString get_stage();
+	Filter * getFilter(QString name);
 private:
 	QVector<QFile*> mFiles;
 	QVector<Filter*> mFilters;

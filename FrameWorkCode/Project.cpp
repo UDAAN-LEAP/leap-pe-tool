@@ -176,13 +176,24 @@ void Project::addFile(Filter &f,QFile & pFile)
 	chnode.append_attribute("Include") = str.c_str();
 	auto fn = chnode.append_child("Filter").append_child(pugi::node_pcdata).set_value(filtername.c_str());
 	auto val = chnode.first_child().child_value();
-	
 	save_xml();
-	
 	process_node(&chnode, mRoot);
 	mTreeModel->layoutChanged();
 }
-
+void Project::AddTemp(Filter * filter, QFile & file,QString prefix) {
+	QString name = filter->name();
+	TreeItem * t = mRoot->find(name);
+	QFileInfo finfo(file.fileName());
+	QString fileName = prefix+finfo.fileName();
+	TreeItem * f = new TreeItem(fileName,NodeType::_FILETYPE,t);
+	QFile * filep = new QFile(file.fileName());
+	mFiles.push_back(filep);
+	f->SetFile(filep);
+	Filter * filtr = new Filter();
+	f->SetFilter(filter);
+	t->append_child(f);
+	mTreeModel->layoutChanged();
+}
 void Project::save_xml() {
 	try {
 		std::string str = mFileName.toStdString();
@@ -472,6 +483,14 @@ void Project::lg2_add() {
 }
 void Project::add_and_commit() {
 	
+}
+Filter * Project::getFilter(QString str) {
+	for (auto * p : mFilters) {
+		if (p->name() == str) {
+			return p;
+		}
+	}
+	return nullptr;
 }
 QString Project::get_stage() {
 	auto c = doc.child("Project").child("Metadata");

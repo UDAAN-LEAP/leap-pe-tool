@@ -23,6 +23,9 @@
 #include <QFont>
 #include <git2.h>
 #include <QFileSystemWatcher>
+#include <set>
+#include <algorithm>
+#include <QSet>
 //# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
@@ -71,6 +74,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->tabWidget_2->removeTab(0);
 	bool b = connect(ui->tabWidget_2, SIGNAL(tabCloseRequested(int)), this, SLOT(closetab(int)));
 	b = connect(ui->tabWidget_2, SIGNAL(currentChanged(int)), this, SLOT(tabchanged(int)));
+	b = connect(&watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(directoryChanged(const QString&)));
 	str.replace(",, ", "\n");
 	// str.replace(", ","\t");
 	ui->textEdit->setText(str);
@@ -615,7 +619,8 @@ void MainWindow::on_actionSave_triggered()
 	else {
 
 		QString changefiledir = filestructure_fw[current_folder];
-		
+		current_page_name = current_page_name.replace("CorrectorOutput/", "");
+		current_page_name = current_page_name.replace("VerifierOutput/", "");
 		QString localFilename = mProject.GetDir().absolutePath() + "/" + changefiledir + "/" + current_page_name;
 		localFilename.replace("txt", "html");
 		QFile sFile(localFilename);
@@ -2855,7 +2860,7 @@ QString GetFilter(QString & Name, const QStringList &list) {
 	Filter += ")";
 	return Filter;
 }
-void MainWindow::LoadDocument(QFile * f) {
+void MainWindow::LoadDocument(QFile * f,QString ext,QString name) {
 
 	f->open(QIODevice::ReadOnly);
 	QFileInfo finfo(f->fileName());
@@ -2863,7 +2868,7 @@ void MainWindow::LoadDocument(QFile * f) {
 	QString fileName = finfo.fileName();
 	if (ui->tabWidget_2->count() != 0) {
 		for (int i = 0; i < ui->tabWidget_2->count(); i++) {
-			if (fileName == ui->tabWidget_2->tabText(i)) {
+			if (name == ui->tabWidget_2->tabText(i)) {
 				ui->tabWidget_2->setCurrentIndex(i);
 				mFilename = f->fileName();
 				return;
@@ -2876,11 +2881,14 @@ void MainWindow::LoadDocument(QFile * f) {
 	QTextStream stream(f);
 	stream.setCodec("UTF-8");
 	QFont font("Shobhika Regular");
-	setWindowTitle(f->fileName());
+	setWindowTitle(name);
 	font.setPointSize(16);
-	b->setPlainText(stream.readAll());
+	if(ext == "txt")
+		b->setPlainText(stream.readAll());
+	if (ext == "html")
+		b->setHtml(stream.readAll());
 	b->setFont(font);
-	int idx = ui->tabWidget_2->addTab(b, fileName);
+	int idx = ui->tabWidget_2->addTab(b, name);
 	ui->tabWidget_2->setCurrentIndex(idx);
 	b->setMouseTracking(true);
 	b->installEventFilter(this);
@@ -2910,7 +2918,7 @@ void MainWindow::LoadImageFromFile(QFile * f) {
 void MainWindow::file_click(const QModelIndex & indx) {
 	std::cout << "Test";
 	auto item = (TreeItem*)indx.internalPointer();
-	auto qvar = item->data(0);
+	auto qvar = item->data(0).toString();
 	auto file = item->GetFile();
 	NodeType type = item->GetNodeType();
 	switch (type) {
@@ -2918,8 +2926,8 @@ void MainWindow::file_click(const QModelIndex & indx) {
 	{
 		QFileInfo f(*file);
 		QString suff = f.completeSuffix();
-		if (suff == "txt") {
-			LoadDocument(file);
+		if (suff == "txt" || suff == "html") {
+			LoadDocument(file,suff,qvar);
 		}
 		if (suff == "jpeg") {
 			LoadImageFromFile(file);
@@ -2931,7 +2939,7 @@ void MainWindow::file_click(const QModelIndex & indx) {
 
 	}
 	//auto data = qvar.data();;
-	QString val = qvar.value<QString>();
+	
 }
 void MainWindow::OpenDirectory() {
 	auto item = (TreeItem*)curr_idx.internalPointer();
@@ -3002,6 +3010,7 @@ void MainWindow::CustomContextMenuTriggered(const QPoint & p) {
 		}
 	}
 }
+
 void MainWindow::closetab(int idx) {
 	delete ui->tabWidget_2->widget(idx);
 }
@@ -3022,7 +3031,29 @@ void MainWindow::on_actionOpen_Project_triggered() {
 		bool b = connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(CustomContextMenuTriggered(const QPoint&)));
 		b = connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
 		QString stage = mProject.get_stage();
+		QDir dir = mProject.GetDir();
+		QString str = mProject.GetDir().absolutePath()+"/CorrectorOutput/";
+		QString str2 = mProject.GetDir().absolutePath() + "/VerifierOutput/";
+		watcher.addPath(str);
+		watcher.addPath(str2);
+		QDir cdir(str);
+		Filter * filter = mProject.getFilter("Document");
+		auto list = cdir.entryList(QDir::Filter::Files);
 		std::cout << stage.toStdString();
+		for (auto f : list) {
+			QString t = str + "/" + f;
+			QFile f2(t);
+			mProject.AddTemp(filter,f2, "CorrectorOutput/" );
+			corrector_set.insert(f);
+		}
+		cdir.setPath(str2);
+		list = cdir.entryList(QDir::Files);
+		for (auto f : list) {
+			verifier_set.insert(f);
+			QString t = str2 + "/" + f;
+			QFile f2(t);
+			mProject.AddTemp(filter, f2, "VerifierOutput/");
+		}
 		if (stage != "Corrector") {
 			auto list = ui->menuGit->actions();
 			for (auto a : list) {
@@ -3033,5 +3064,39 @@ void MainWindow::on_actionOpen_Project_triggered() {
 			}
 		}
 		bool b1 = b;
+		
+	}
+}
+void MainWindow::directoryChanged(const QString &path) {
+	
+	QDir d(path);
+	QString dirstr = d.dirName();
+	auto list = d.entryList(QDir::Files);
+	QSet<QString> s;
+	for (auto file : list) {
+		s.insert(file);
+	}
+	if (dirstr == "CorrectorOutput") {
+		QSet<QString> added = s - corrector_set;
+		QString str = mProject.GetDir().absolutePath() + "/CorrectorOutput/";
+		Filter * filter = mProject.getFilter("Document");		
+		for (auto f : added) {
+			QString t = str + "/" + f;
+			QFile f2(t);
+			mProject.AddTemp(filter, f2, "CorrectorOutput/");
+			corrector_set.insert(f);
+		}
+	}
+	else
+	{
+		QSet<QString> added = s - verifier_set;
+		QString str = mProject.GetDir().absolutePath() + "/VerifierOutput/";
+		Filter * filter = mProject.getFilter("Document");
+		for (auto f : added) {
+			QString t = str + "/" + f;
+			QFile f2(t);
+			mProject.AddTemp(filter, f2, "VerifierOutput/");
+			verifier_set.insert(f);
+		}
 	}
 }

@@ -36,6 +36,8 @@
 //#include "lcsqt.h"
 #include <Project.h>
 #include <QTextBrowser>
+#include <QSet>
+#include <QFileSystemWatcher>
 //#include <set>
 using namespace std;
 
@@ -192,7 +194,7 @@ private slots:
 	void LogHighlights(QString word);
 	void on_actionOpen_Project_triggered();
 	void file_click(const QModelIndex & indx);
-	void LoadDocument(QFile * file);
+	void LoadDocument(QFile * file, QString ext, QString name);
 	void LoadImageFromFile(QFile * file);
 	void CustomContextMenuTriggered(const QPoint &p);
 	void AddNewFile();
@@ -205,6 +207,7 @@ private slots:
 	void on_actionPush_triggered();
 	void on_actionFetch_2_triggered();
 	void on_actionVerifier_Turn_In_triggered();
+	void directoryChanged(const QString &path);
 private:
     Ui::MainWindow *ui;
 	Project mProject;
@@ -216,7 +219,9 @@ private:
 	QGraphicsScene * graphic =nullptr;
 	Graphics_view_zoom * z = nullptr;
 	QModelIndex curr_idx;
-	QVector<QString> tabs_open;
+	QSet<QString> corrector_set;
+	QSet<QString> verifier_set;
+	QFileSystemWatcher watcher;
 };
 
 #endif // MAINWINDOW_H
