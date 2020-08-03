@@ -636,7 +636,7 @@ public:
         actionAverage_Accuracy->setText(QCoreApplication::translate("MainWindow", "Average Accuracy", nullptr));
         actionView_Comments->setText(QCoreApplication::translate("MainWindow", "View Comments", nullptr));
         actionCommit->setText(QCoreApplication::translate("MainWindow", "Commit", nullptr));
-        actionFetch_2->setText(QCoreApplication::translate("MainWindow", "Fetch", nullptr));
+        actionFetch_2->setText(QCoreApplication::translate("MainWindow", "Pull", nullptr));
         actionPush->setText(QCoreApplication::translate("MainWindow", "Push", nullptr));
         actionVerifier_Turn_In->setText(QCoreApplication::translate("MainWindow", "Verifier Turn In", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "SLP", nullptr));

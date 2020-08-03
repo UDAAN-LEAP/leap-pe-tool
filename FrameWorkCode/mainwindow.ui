@@ -741,7 +741,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionFetch_2">
    <property name="text">
-    <string>Fetch</string>
+    <string>Pull</string>
    </property>
   </action>
   <action name="actionPush">
