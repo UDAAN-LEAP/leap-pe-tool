@@ -82,14 +82,15 @@ public:
     QAction *actionView_File_Hierarchy;
     QAction *actionTurn_In;
     QAction *actionFetch;
-    QAction *actionVerifier_Diff_View;
-    QAction *actionCorrector_Diff_View;
+    QAction *actionCompare_Verifier;
+    QAction *actionCompare_Corrector;
     QAction *actionAverage_Accuracy;
     QAction *actionView_Comments;
     QAction *actionCommit;
     QAction *actionFetch_2;
     QAction *actionPush;
     QAction *actionVerifier_Turn_In;
+    QAction *actionHighlight;
     QWidget *centralWidget;
     QGridLayout *gridLayout_4;
     QHBoxLayout *horizontalLayout;
@@ -269,10 +270,10 @@ public:
         actionTurn_In->setObjectName(QString::fromUtf8("actionTurn_In"));
         actionFetch = new QAction(MainWindow);
         actionFetch->setObjectName(QString::fromUtf8("actionFetch"));
-        actionVerifier_Diff_View = new QAction(MainWindow);
-        actionVerifier_Diff_View->setObjectName(QString::fromUtf8("actionVerifier_Diff_View"));
-        actionCorrector_Diff_View = new QAction(MainWindow);
-        actionCorrector_Diff_View->setObjectName(QString::fromUtf8("actionCorrector_Diff_View"));
+        actionCompare_Verifier = new QAction(MainWindow);
+        actionCompare_Verifier->setObjectName(QString::fromUtf8("actionCompare_Verifier"));
+        actionCompare_Corrector = new QAction(MainWindow);
+        actionCompare_Corrector->setObjectName(QString::fromUtf8("actionCompare_Corrector"));
         actionAverage_Accuracy = new QAction(MainWindow);
         actionAverage_Accuracy->setObjectName(QString::fromUtf8("actionAverage_Accuracy"));
         actionView_Comments = new QAction(MainWindow);
@@ -285,6 +286,8 @@ public:
         actionPush->setObjectName(QString::fromUtf8("actionPush"));
         actionVerifier_Turn_In = new QAction(MainWindow);
         actionVerifier_Turn_In->setObjectName(QString::fromUtf8("actionVerifier_Turn_In"));
+        actionHighlight = new QAction(MainWindow);
+        actionHighlight->setObjectName(QString::fromUtf8("actionHighlight"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout_4 = new QGridLayout(centralWidget);
@@ -483,20 +486,20 @@ public:
         menuFontAndLayout->addAction(actionAllFontProperties);
         menuFontAndLayout->addAction(actionBold);
         menuFontAndLayout->addAction(actionUnBold);
+        menuFontAndLayout->addAction(actionHighlight);
         menuFontAndLayout->addSeparator();
         menuFontAndLayout->addAction(actionLeftAlign);
         menuFontAndLayout->addAction(actionRightAlign);
         menuFontAndLayout->addAction(actionCentreAlign);
         menuFontAndLayout->addAction(actionJusitfiedAlign);
-        menuView->addAction(actionVerifier_Diff_View);
-        menuView->addAction(actionCorrector_Diff_View);
+        menuView->addAction(actionCompare_Verifier);
+        menuView->addAction(actionCompare_Corrector);
         menuView->addSeparator();
         menuView->addAction(actionAverage_Accuracy);
         menuView->addAction(actionView_Comments);
         menuGit->addAction(actionTurn_In);
         menuGit->addAction(actionCommit);
         menuGit->addAction(actionFetch_2);
-        menuGit->addAction(actionPush);
         menuGit->addAction(actionVerifier_Turn_In);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen);
@@ -524,6 +527,7 @@ public:
         mainToolBar->addAction(actionCentreAlign);
         mainToolBar->addAction(actionRightAlign);
         mainToolBar->addAction(actionJusitfiedAlign);
+        mainToolBar->addAction(actionHighlight);
 
         retranslateUi(MainWindow);
 
@@ -631,14 +635,15 @@ public:
         actionView_File_Hierarchy->setText(QCoreApplication::translate("MainWindow", "View File Hierarchy", nullptr));
         actionTurn_In->setText(QCoreApplication::translate("MainWindow", "Turn In", nullptr));
         actionFetch->setText(QCoreApplication::translate("MainWindow", "Fetch", nullptr));
-        actionVerifier_Diff_View->setText(QCoreApplication::translate("MainWindow", "Verifier Diff View", nullptr));
-        actionCorrector_Diff_View->setText(QCoreApplication::translate("MainWindow", "Corrector Diff View", nullptr));
+        actionCompare_Verifier->setText(QCoreApplication::translate("MainWindow", "Verifier Diff View", nullptr));
+        actionCompare_Corrector->setText(QCoreApplication::translate("MainWindow", "Corrector Diff View", nullptr));
         actionAverage_Accuracy->setText(QCoreApplication::translate("MainWindow", "Average Accuracy", nullptr));
         actionView_Comments->setText(QCoreApplication::translate("MainWindow", "View Comments", nullptr));
         actionCommit->setText(QCoreApplication::translate("MainWindow", "Commit", nullptr));
         actionFetch_2->setText(QCoreApplication::translate("MainWindow", "Pull", nullptr));
         actionPush->setText(QCoreApplication::translate("MainWindow", "Push", nullptr));
         actionVerifier_Turn_In->setText(QCoreApplication::translate("MainWindow", "Verifier Turn In", nullptr));
+        actionHighlight->setText(QCoreApplication::translate("MainWindow", "Highlight", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "SLP", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Project", nullptr));
         textBrowser->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -655,7 +660,7 @@ public:
         menuSelectLanguage->setTitle(QCoreApplication::translate("MainWindow", "SelectLanguage", nullptr));
         menuFontAndLayout->setTitle(QCoreApplication::translate("MainWindow", "FontAndLayout", nullptr));
         menuView->setTitle(QCoreApplication::translate("MainWindow", "View", nullptr));
-        menuGit->setTitle(QCoreApplication::translate("MainWindow", "Git", nullptr));
+        menuGit->setTitle(QCoreApplication::translate("MainWindow", "Version Control", nullptr));
     } // retranslateUi
 
 };

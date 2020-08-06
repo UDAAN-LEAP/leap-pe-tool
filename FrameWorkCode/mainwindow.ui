@@ -282,6 +282,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionAllFontProperties"/>
     <addaction name="actionBold"/>
     <addaction name="actionUnBold"/>
+    <addaction name="actionHighlight"/>
     <addaction name="separator"/>
     <addaction name="actionLeftAlign"/>
     <addaction name="actionRightAlign"/>
@@ -292,20 +293,19 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>View</string>
     </property>
-    <addaction name="actionVerifier_Diff_View"/>
-    <addaction name="actionCorrector_Diff_View"/>
+    <addaction name="actionCompare_Verifier"/>
+    <addaction name="actionCompare_Corrector"/>
     <addaction name="separator"/>
     <addaction name="actionAverage_Accuracy"/>
     <addaction name="actionView_Comments"/>
    </widget>
    <widget class="QMenu" name="menuGit">
     <property name="title">
-     <string>Git</string>
+     <string>Version Control</string>
     </property>
     <addaction name="actionTurn_In"/>
     <addaction name="actionCommit"/>
     <addaction name="actionFetch_2"/>
-    <addaction name="actionPush"/>
     <addaction name="actionVerifier_Turn_In"/>
    </widget>
    <addaction name="menuSelectLanguage"/>
@@ -351,6 +351,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionCentreAlign"/>
    <addaction name="actionRightAlign"/>
    <addaction name="actionJusitfiedAlign"/>
+   <addaction name="actionHighlight"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -714,12 +715,12 @@ p, li { white-space: pre-wrap; }
     <string>Fetch</string>
    </property>
   </action>
-  <action name="actionVerifier_Diff_View">
+  <action name="actionCompare_Verifier">
    <property name="text">
     <string>Verifier Diff View</string>
    </property>
   </action>
-  <action name="actionCorrector_Diff_View">
+  <action name="actionCompare_Corrector">
    <property name="text">
     <string>Corrector Diff View</string>
    </property>
@@ -752,6 +753,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionVerifier_Turn_In">
    <property name="text">
     <string>Verifier Turn In</string>
+   </property>
+  </action>
+  <action name="actionHighlight">
+   <property name="text">
+    <string>Highlight</string>
    </property>
   </action>
  </widget>

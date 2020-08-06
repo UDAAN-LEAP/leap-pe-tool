@@ -172,14 +172,14 @@ private slots:
 	
 	void on_actionCorrector_Diff_View_triggered();
 
- 
+	void on_viewallcomments_clicked();
 
     void on_actionJusitfiedAlign_triggered();
 
     void on_actionAverage_Accuracy_triggered();
-	//   void on_actionHighlight_toggled(bool arg1);
+	 void on_actionHighlight_triggered();
 
-	void on_actionHighlight_triggered();
+	//void on_actionHighlight_triggered();
 
 	// void on_addcomments_clicked();
 
@@ -188,7 +188,8 @@ private slots:
 	void on_actionFontBlack_triggered();
 
 	void updateAverageAccuracies();
-
+	void on_actionCompare_Verifier_clicked();
+	void on_actionCompare_Corrector_triggered();
 	void on_actionViewAverageAccuracies_triggered();
 
 	void LogHighlights(QString word);

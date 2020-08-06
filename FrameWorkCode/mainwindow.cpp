@@ -2581,145 +2581,346 @@ void MainWindow::LogHighlights(QString word)
 	jsonFile1.write(document.toJson());
 }
 
+void MainWindow::on_actionCompare_Verifier_clicked() //Verifier
+{
+
+	string s1 = "", s2 = "", s3 = ""; QString qs1 = "", qs2 = "", qs3 = "";
+	file = QFileDialog::getOpenFileName(this, "Open Verifier's Output File");
+	if (!file.isEmpty())
+	{
+		QString verifiertext = file;
+		QString correctortext = file.replace("VerifierOutput", "CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+		QString ocrtext = file.replace("CorrectorOutput", "Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+		ocrtext.replace(".html", ".txt");
+		ocrtext.replace("V1_", "");
+		ocrtext.replace("V2_", "");
+		ocrtext.replace("V3_", "");
+		if (!ocrtext.isEmpty())
+		{
+			QFile sFile(ocrtext);
+			if (sFile.open(QFile::ReadOnly | QFile::Text))
+			{
+				QTextStream in(&sFile);
+				in.setCodec("UTF-8");
+				QString t = in.readAll();
+				t = t.replace(" \n", "\n");
+				qs1 = t;
+				sFile.close();
+			}
+
+		}
+		if (!correctortext.isEmpty())
+		{
+			QFile sFile(correctortext);
+			if (sFile.open(QFile::ReadOnly | QFile::Text))
+			{
+				QTextStream in(&sFile);
+				in.setCodec("UTF-8");
+				QString t = in.readAll();
+				t = t.replace(" \n", "\n");
+				qs2 = t;
+				sFile.close();
+			}
+
+		}
+		if (!verifiertext.isEmpty())
+		{
+			QFile sFile(verifiertext);
+			if (sFile.open(QFile::ReadOnly | QFile::Text))
+			{
+				QTextStream in(&sFile);
+				in.setCodec("UTF-8");
+				QString t = in.readAll();
+				t = t.replace(" \n", "\n");
+				qs3 = t;
+				sFile.close();
+			}
+
+		}
+		QTextDocument doc;
+		QString t;
+
+		//    doc.setHtml(qs1);
+		//    qs1 = doc.toPlainText();
+		t = qs1;  t.replace(" ", "");
+		s1 = t.toUtf8().constData();
+
+		doc.setHtml(qs2);
+		qs2 = doc.toPlainText();
+		t = qs2;  t.replace(" ", "");
+		s2 = t.toUtf8().constData();
+
+		doc.setHtml(qs3);
+		qs3 = doc.toPlainText();
+		t = qs3;  t.replace(" ", "");
+		s3 = t.toUtf8().constData();
+
+		int l1, l2, l3, DiffOcr_Corrector, DiffCorrector_Verifier, DiffOcr_Verifier; float correctorChangesPerc, verifierChangesPerc, ocrErrorPerc;
 
 
-//void MainWindow::on_viewallcomments_clicked()
-//{
-//    QString commentFilename = dir2levelup + "/Comments/" + currentpagename;
-//    int totalcharerr = 0, totalworderr = 0;
-//    auto textcursor1 = ui->textBrowser->textCursor();
-//    auto textcursor2 = textcursor1;
-//    textcursor1.setPosition(0);
-//    while(!textcursor1.atEnd())
-//    {
-//        int anchor = textcursor1.position();
-//        textcursor2.setPosition(anchor);
-//        int wordflag = 0;
-//        textcursor1.select(QTextCursor::WordUnderCursor);
-//        QString wordundercursor = textcursor1.selectedText();
+		l1 = s1.length();
+		l2 = s2.length();
+		l3 = s3.length();
+		DiffOcr_Corrector = editDist(s1, s2);
+		correctorChangesPerc = ((float)(DiffOcr_Corrector) / (float)l1) * 100;
+		if (correctorChangesPerc < 0) correctorChangesPerc = ((float)(DiffOcr_Corrector) / (float)l2) * 100;
 
-//        qDebug()<<wordundercursor<<" :Word" <<wordundercursor.length()<< " :len" <<anchor<<"anchor";
+		DiffCorrector_Verifier = editDist(s2, s3);
+		verifierChangesPerc = ((float)(DiffCorrector_Verifier) / (float)l2) * 100;
+		if (verifierChangesPerc < 0) verifierChangesPerc = ((float)(DiffCorrector_Verifier) / (float)l3) * 100;
 
-//        for(int i = anchor;  i < anchor+wordundercursor.length(); ++i)
-//        {
-//            qDebug()<<textcursor2.position();
-//            QTextCharFormat format = textcursor2.charFormat();
-//            if(format.background() == Qt::yellow)
-//            {
-//                totalcharerr++;
-//                wordflag++;
-//            }
-//            if(wordflag == 1)
-//            {
-//                totalworderr++;
-//            }
-//            textcursor2.setPosition(i);
-//        }
-//        textcursor1.movePosition(QTextCursor::NextWord , QTextCursor::MoveAnchor, 1);
-//    }
-//    float characc = (float)(openedFileChars - totalcharerr)/(float)openedFileChars*100;
-//    float wordacc = (float)(openedFileWords - totalworderr)/(float)openedFileWords*100 ;
-//    wordacc = ((float)lround(wordacc*100))/100;
-//    characc = ((float)lround(characc*100))/100;
+		DiffOcr_Verifier = editDist(s1, s3);
+		ocrErrorPerc = ((float)(DiffOcr_Verifier) / (float)l1) * 100;
+		if (ocrErrorPerc < 0) ocrErrorPerc = ((float)(DiffOcr_Verifier) / (float)l3) * 100;
+		float ocrErrorAcc = 100 - ocrErrorPerc;
 
-//    CommentsView *cv = new CommentsView(totalworderr,totalcharerr,wordacc,characc,commentFilename);
-//    cv->show();
+		QString qcorrectorChangesPerc = QString::number(((float)lround(correctorChangesPerc * 100)) / 100);
+		QString qverifierChangesPerc = QString::number(((float)lround(verifierChangesPerc * 100)) / 100);
+		QString qocrErrorAcc = QString::number(((float)lround(ocrErrorAcc * 100)) / 100);
 
-//}
+		DiffView *dv = new DiffView(qs1, qs2, qs3, qcorrectorChangesPerc, qverifierChangesPerc, qocrErrorAcc);
+		dv->show();
+	}
+}
 
-/*
+
+void MainWindow::on_actionCompare_Corrector_triggered() //Corrector
+{
+	string s1 = "", s2 = ""; QString qs1 = "", qs2 = "", qs3 = "";
+	file = QFileDialog::getOpenFileName(this, "Open Corrector's Output File");
+	if (!file.isEmpty())
+	{
+		QString correctortext = file;
+		QString ocrtext = file;
+		ocrtext.replace("CorrectorOutput", "Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+		ocrtext.replace(".html", ".txt");
+		ocrtext.replace("V1_", "");
+		ocrtext.replace("V2_", "");
+		ocrtext.replace("V3_", "");
+		QString ocrimage = ocrtext;
+		ocrimage.replace("Inds", "Images");
+		ocrimage.replace(".txt", ".jpeg");
+		ocrimage.replace(".html", ".jpeg");
+
+		//ocrtext.replace(".html",".txt");
+		if (!ocrtext.isEmpty())
+		{
+			QFile sFile(ocrtext);
+			if (sFile.open(QFile::ReadOnly | QFile::Text))
+			{
+				QTextStream in(&sFile);
+				in.setCodec("UTF-8");
+				QString t = in.readAll();
+				t = t.replace(" \n", "\n");
+				qs1 = t;
+				sFile.close();
+			}
+
+		}
+		if (!correctortext.isEmpty())
+		{
+			QFile sFile(correctortext);
+			if (sFile.open(QFile::ReadOnly | QFile::Text))
+			{
+				QTextStream in(&sFile);
+				in.setCodec("UTF-8");
+				QString t = in.readAll();
+				t = t.replace(" \n", "\n");
+				qs2 = t;
+				sFile.close();
+			}
+
+		}
+		QTextDocument doc;
+		QString t;
+
+		//    doc.setHtml(qs1);
+		//    qs1 = doc.toPlainText();
+		t = qs1;  t.replace(" ", "");
+		s1 = t.toUtf8().constData();
+
+		doc.setHtml(qs2);
+		qs2 = doc.toPlainText();
+		t = qs2; t.replace(" ", "");
+		s2 = t.toUtf8().constData();
+
+		int l1, l2, levenshtein; float accuracy;
+		l1 = s1.length();
+		l2 = s2.length();
+
+		levenshtein = editDist(s2, s1);
+		//qDebug() <<levenshtein << "levenshtein";
+		accuracy = ((float)(levenshtein) / (float)l1) * 100;
+		if (accuracy < 0) accuracy = ((float)(levenshtein) / (float)l2) * 100;
+		//qDebug() <<accuracy << "accuracy";
+		//ui->lineEdit_2->setText(QString::number(accuracy) + "% Similar");
+		QString diff = QString::number(((float)lround(accuracy * 100)) / 100);
+		InternDiffView *dv = new InternDiffView(qs1, qs2, ocrimage, diff); //Fetch OCR Image in DiffView2 and Set
+		dv->show();
+	}
+}
+
 
 void MainWindow::on_viewallcomments_clicked()
 {
-	map<int ,int> countwords;
-	QString commentFilename = dir2levelup + "/Comments/" + currentpagename;
-	int totalcharerr = 0, totalworderr = 0;
+	QString correctorOutput, currentpagetext;
+	QString correctortext = dir2levelup + "/CorrectorOutput/" + currentpagename;
+	if (!correctortext.isEmpty())
+	{
+		QFile sFile(correctortext);
+		if (sFile.open(QFile::ReadOnly | QFile::Text))
+		{
+			QTextStream in(&sFile);
+			in.setCodec("UTF-8");
+			correctorOutput = in.readAll().simplified();
+			sFile.close();
+		}
+
+	}
+	//map<int, int> wordcount;
+	QString commentFilename = dir2levelup + "/Comments/comments.json";
+	QString pagename = currentpagename;
+	pagename.replace(".txt", "");
+	pagename.replace(".html", "");
+
+	int totalcharerr = 0, totalworderr = 0, rating = 0; QString comments = ""; float wordacc = 100, characc = 100;
+
+	QFile jsonFile(commentFilename);
+	jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+	QByteArray data = jsonFile.readAll();
+
+	QJsonParseError errorPtr;
+	QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+	QJsonObject mainObj = document.object();
+	QJsonObject pages = mainObj.value("pages").toObject();
+	QJsonObject page = pages.value(pagename).toObject();
+
+	comments = page.value("comments").toString();
+	rating = page.value("rating").toInt();
+	totalcharerr = page.value("charerrors").toInt();
+	totalworderr = page.value("worderrors").toInt();
+	characc = page.value("characcuracy").toInt();
+	wordacc = page.value("wordaccuracy").toInt();
+	pagename = page.value("pagename").toString();
+
+	jsonFile.close();
+
+	if (dir1levelup != (dir2levelup + "/Inds")) //if Inds file-> do not create new accuracies just display previous accuracy
+	{
+		QTextDocument doc;
+		doc.setHtml(correctorOutput);
+		correctorOutput = doc.toPlainText().simplified();
+		currentpagetext = ui->textBrowser->toPlainText().simplified();
+
+		int l1 = correctorOutput.length(), l2 = currentpagetext.length();
+		diff_match_patch dmp;
+
+		auto diffs1 = dmp.diff_main(correctorOutput, currentpagetext);
+		totalcharerr = dmp.diff_levenshtein(diffs1);
+
+		characc = (float)(l1 - totalcharerr) / (float)l1 * 100;
+		if (characc < 0) characc = ((float)(l2 - totalcharerr) / (float)l2) * 100;
+		characc = (((float)lround(characc * 100)) / 100);
+
+		auto diffs2 = dmp.diff_linesToChars(correctorOutput, currentpagetext); //LinesToChars modifed for WordstoChar in diff_match_patch.cpp
+		auto lineText1 = diffs2[0].toString();
+		auto lineText2 = diffs2[1].toString();
+		auto lineArray = diffs2[2].toStringList();
+		int totalwords = lineArray.count();
+		auto diffs3 = dmp.diff_main(lineText1, lineText2);
+		totalworderr = dmp.diff_levenshtein(diffs3);
+		dmp.diff_charsToLines(diffs3, lineArray);
+
+		wordacc = (float)(totalwords - totalworderr) / (float)totalwords * 100;
+		wordacc = (((float)lround(wordacc * 100)) / 100);
+	}
+
+	/* Using Highlights to Calculate errors
+	 *
 	auto textcursor1 = ui->textBrowser->textCursor();
 	textcursor1.setPosition(0);
 	while(!textcursor1.atEnd())
 	{
+		int anchor = textcursor1.position();
 		QTextCharFormat format = textcursor1.charFormat();
-		if(format.background() == Qt::yellow)
+		textcursor1.select(QTextCursor::WordUnderCursor);
+		QString wordundercursor = textcursor1.selectedText();
+		int key = textcursor1.selectionStart();
+
+		if(format.background() == Qt::yellow && anchor>=(key+1))
 		{
 			totalcharerr++;
+			wordcount[key]++;
 		}
-		auto textcursor2 = ui->textBrowser->textCursor();
-		textcursor2.select(QTextCursor::WordUnderCursor);
-		int key = textcursor2.selectionStart();
-		QString wordundercursor = textcursor1.selectedText();
-		wordundercursor = wordundercursor.simplified();
-		int wordsinselection = wordundercursor.count(" ")+1;
-		countwords[key] += wordsinselection;
-		qDebug()<<key<<textcursor2.selectedText()<<countwords;
-		textcursor1.movePosition(QTextCursor::NextCharacter , QTextCursor::KeepAnchor);
+		textcursor1.setPosition(anchor+1);
+		//textcursor1.movePosition(QTextCursor::NextCharacter , QTextCursor::MoveAnchor, 1);
 	}
-	map<int ,int>::iterator it;
-	for(it=countwords.begin(); it!=countwords.end(); it++)
-	{
-		totalworderr+= it->second;
-	}
+
+	totalworderr = wordcount.size();
 	float characc = (float)(openedFileChars - totalcharerr)/(float)openedFileChars*100;
 	float wordacc = (float)(openedFileWords - totalworderr)/(float)openedFileWords*100 ;
 	wordacc = ((float)lround(wordacc*100))/100;
 	characc = ((float)lround(characc*100))/100;
+	*/
 
-	CommentsView *cv = new CommentsView(totalworderr,totalcharerr,wordacc,characc,commentFilename);
-	cv->show();
+	if (characc > 99.0) rating = 5;
+	else if (characc > 98.0) rating = 4;
+	else if (characc > 97.0) rating = 3;
+	else if (characc > 96.0) rating = 2;
+	else if (characc > 95.0) rating = 1;
 
-}
-*/
+	page["comments"] = comments;
+	page["charerrors"] = totalcharerr;
+	page["worderrors"] = totalworderr;
+	page["characcuracy"] = characc;
+	page["wordaccuracy"] = wordacc;
+	page["rating"] = rating;
+	page["pagename"] = pagename;
+	pages.remove(pagename);
+	pages.insert(pagename, page);
+	mainObj.remove("pages");
+	mainObj.insert("pages", pages);
+	QJsonDocument document1(mainObj);
 
-/*
-void MainWindow::on_actionHighlight_triggered()
-{
-//    QString previouscomment = ui->commentsfield->text();
-//    int loc = previouscomment.lastIndexOf(":");
-//    previouscomment = previouscomment.mid(loc, previouscomment.length()-loc);
-//    if(previouscomment!="" | previouscomment!=" ")
-//    {
-//        on_addcomments_clicked();
-//    }
-	QTextCursor cursor = ui->textBrowser->textCursor();
-	QString text = cursor.selectedText().toUtf8().constData();
-	int pos1 = ui->textBrowser->textCursor().selectionStart();
-	int pos2 = ui->textBrowser->textCursor().selectionEnd();
-	int cursorpos = round(((float)(pos1+pos2))/2);
-	cursor.setPosition(cursorpos);
-	int pos = min(pos1,pos2);
-	//qDebug()<<text;
-	//QString key =  QString::number(pos) + text;
-	int key = pos;
-	QTextCharFormat  format  = cursor.charFormat();
-	if(format.background() == Qt::yellow)
+	QFile jsonFile1(commentFilename);
+	jsonFile1.open(QIODevice::WriteOnly);
+	jsonFile1.write(document1.toJson());
+	jsonFile1.close();
+
+	if (!save_triggered)
 	{
-		qDebug()<<"text was yellow"<< text << pos1 << " "<< pos2;
-		format.setBackground(Qt::transparent);
-		if(commentdict.find(key)!=commentdict.end())
-		{
-			commentdict.erase(key);
-		}
-		if(commentederrors.find(key)!=commentederrors.end())
-		{
-			 commentederrors.erase(key);
-		}
+		CommentsView *cv = new CommentsView(totalworderr, totalcharerr, wordacc, characc, comments, commentFilename, pagename, rating);
+		cv->show();
 	}
-	else
-	{   qDebug()<<"text was not yellow "<< text << pos1 << " "<< pos2;
-		format.setBackground(Qt::yellow);
-		ui->commentsfield->setText(text + ":");
-		int chars = text.length();
-		QString simplifiedtext = text.simplified();
-		int words = simplifiedtext.count(" ") + 1;
 
-		vector<int> counts;
-		counts.push_back(chars); counts.push_back(words);
-		commentederrors[key] = counts;
-
-	}
-	ui->textBrowser->textCursor().mergeCharFormat(format);
-	ui->commentsfield->setFocus();
 }
 
+
+//void MainWindow::on_actionHighlight_triggered()
+//{
+//	if (curr_browser) {
+//		QTextCursor cursor = curr_browser->textCursor();
+//		QString text = cursor.selectedText().toUtf8().constData();
+//		int pos1 = curr_browser->textCursor().selectionStart();
+//		int pos2 = curr_browser->textCursor().selectionEnd();
+//
+//		int cursorpos = round(((float)(pos1 + pos2)) / 2);
+//		cursor.setPosition(cursorpos);
+//
+//		QTextCharFormat  format = cursor.charFormat();
+//		if (format.background() == Qt::yellow)
+//		{
+//			curr_browser->setTextBackgroundColor(Qt::transparent);
+//		}
+//		else
+//		{
+//			curr_browser->setTextBackgroundColor(Qt::yellow);
+//			LogHighlights(text);
+//		}
+//		ui->textBrowser->copy();
+//	}
+//}
+/*
 void MainWindow::on_addcomments_clicked()
 {
 	QString commentstext = ui->commentsfield->text().toUtf8().constData();
