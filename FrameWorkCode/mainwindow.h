@@ -172,7 +172,7 @@ private slots:
 	
 	void on_actionCorrector_Diff_View_triggered();
 
-	void on_viewallcomments_clicked();
+    //void on_viewallcomments_clicked();
 
     void on_actionJusitfiedAlign_triggered();
 
@@ -188,7 +188,7 @@ private slots:
 	void on_actionFontBlack_triggered();
 
 	void updateAverageAccuracies();
-	void on_actionCompare_Verifier_clicked();
+    //void on_actionCompare_Verifier_clicked();
 	void on_actionCompare_Corrector_triggered();
 	void on_actionViewAverageAccuracies_triggered();
 
@@ -209,6 +209,30 @@ private slots:
 	void on_actionFetch_2_triggered();
 	void on_actionVerifier_Turn_In_triggered();
 	void directoryChanged(const QString &path);
+
+
+    void on_actionAccuracyLog_triggered();
+
+    //void on_actionView_File_Hierarchy_triggered();
+
+    //void on_actionFetch_triggered();
+
+ //   void on_actionCompare_Verifier_triggered();
+
+
+    void on_compareCorrectorOutput_clicked();
+
+    void on_ViewComments_clicked();
+
+    void on_actionZoom_In_triggered();
+
+    void on_actionZoom_Out_triggered();
+
+    void on_actionDiacritics_triggered();
+
+    void on_actionCompare_Verifier_triggered();
+
+
 private:
     Ui::MainWindow *ui;
 	Project mProject;

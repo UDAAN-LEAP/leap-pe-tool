@@ -340,7 +340,7 @@ void Project::push() {
 	char * refspec = (char*)"refs/heads/master";
 	const git_strarray refspecs = { &refspec,1 };
 	git_remote_callbacks cb;
-	check_lg2(git_push_options_init(&options, GIT_PUSH_OPTIONS_VERSION), "Error initializaing options", "");
+    check_lg2(git_push_init_options(&options, GIT_PUSH_OPTIONS_VERSION), "Error initializaing options", "");
 
 	options.callbacks.credentials = credentials_cb;
 	
@@ -361,7 +361,7 @@ static int update_cb(const char *refname, const git_oid *a, const git_oid *b, vo
 	git_oid_fmt(b_str, b);
 	b_str[GIT_OID_HEXSZ] = '\0';
 
-	if (git_oid_is_zero(a)) {
+    if (git_oid_iszero(a)) {
 		printf("[new]     %.20s %s\n", b_str, refname);
 	}
 	else {
@@ -372,7 +372,7 @@ static int update_cb(const char *refname, const git_oid *a, const git_oid *b, vo
 
 	return 0;
 }
-static int transfer_progress_cb(const git_indexer_progress *stats, void *payload)
+static int transfer_progress_cb(const git_transfer_progress *stats, void *payload)
 {
 	(void)payload;
 

@@ -2661,7 +2661,7 @@ void MainWindow::on_actionViewAverageAccuracies_triggered()
 
 void MainWindow::LogHighlights(QString word)
 {
-	QString highlightsFilename = dir2levelup + "/Comments/HighlightsLog.json";
+	QString highlightsFilename = dir2levelup + "/Da/Comments/HighlightsLog.json";
 	QString pagename = currentpagename;
 	pagename.replace(".txt", "");
 	pagename.replace(".html", "");

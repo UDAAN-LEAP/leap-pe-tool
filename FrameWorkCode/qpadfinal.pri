@@ -4,7 +4,7 @@
 
 # This is a reminder that you are using a generated .pro file.
 # Remove it when you are finished editing this file.
-message("You are running qmake on a generated .pro file. This may not work!")
+#message("You are running qmake on a generated .pro file. This may not work!")
 
 
 HEADERS += ./3rdParty/RapidXML/rapidxml.hpp \
@@ -45,7 +45,9 @@ HEADERS += ./3rdParty/RapidXML/rapidxml.hpp \
     ./TreeModel.h \
     ./zoom.h \
     ./commentsview.h \
-    ./averageaccuracies.h
+    ./averageaccuracies.h \
+    $$PWD/diacriticsview.h \
+    $$PWD/lg2_common.h
 SOURCES += ./Filters.cpp \
     ./Project.cpp \
     ./ProjectHierarchyWindow.cpp \
@@ -59,11 +61,14 @@ SOURCES += ./Filters.cpp \
     ./qcustomplot.cpp \
     ./zoom.cpp \
     ./commentsview.cpp \
-    ./averageaccuracies.cpp
+    ./averageaccuracies.cpp \
+    $$PWD/diacriticsview.cpp \
+    $$PWD/lg2_common.cpp
 FORMS += ./DiffView.ui \
     ./interndiffview.ui \
     ./mainwindow.ui \
     ./ProjectHierarchyWindow.ui \
     ./commentsview.ui \
-    ./averageaccuracies.ui
+    ./averageaccuracies.ui \
+    $$PWD/diacriticsview.ui
 RESOURCES += AppResources.qrc

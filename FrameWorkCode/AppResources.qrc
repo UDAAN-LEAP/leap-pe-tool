@@ -22,5 +22,8 @@
         <file>toDevangari.png</file>
         <file>JustifiedAlign.png</file>
         <file>highlight-icon.png</file>
+        <file>icon_diacritics.png</file>
+        <file>Zoom-Out-icon.png</file>
+        <file>Zoom-In-icon.png</file>
     </qresource>
 </RCC>
