@@ -254,13 +254,12 @@ git_repository_init_options make_opts(bool bare, const char * templ,
 	return opts;
 }
 
-void create_initial_commit(git_repository * repo) {
+void create_initial_commit(git_repository * repo,std::string name ,std::string email) {
 	git_signature *sig;
 	git_index *index;
 	git_oid tree_id, commit_id;
 	git_tree *tree;
-	std::string name = "Nipun Ramani";
-	std::string email = "ramaninipun@gmail.com";
+	
 
 	/** First use the config to initialize a commit signature for the user. */
 
@@ -321,31 +320,44 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
 	 */
 	QInputDialog inp;
 	bool ok = false;
-	QString quser = QInputDialog::getText(nullptr, QWidget::tr("QInputDialog::getText()"),
+	QString quser = QInputDialog::getText(nullptr, QWidget::tr("Email"),
 		QWidget::tr("Username:"), QLineEdit::Normal,
-		QDir::home().dirName(), &ok);
+		" ", &ok);
 
-	QString qpass = QInputDialog::getText(nullptr, QWidget::tr("QInputDialog::getText()"),
+	if (!ok) return -1;
+	QString qpass = QInputDialog::getText(nullptr, QWidget::tr("Password"),
 		QWidget::tr("Password:"), QLineEdit::Password,
-		"", &ok);
+		" ", &ok);
+	if (!ok) return -1;
 	user = quser.toStdString();
 	pass = qpass.toStdString();
+
 	return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
 void Project::push() {
 	lg2_add();
-	check_lg2(git_remote_set_pushurl(repo, "origin", "https://github.com/BhayanakMoth/TestProject.git"),"Could not set pushurl","");
 	git_push_options options;
 	git_remote * remote = NULL;
 	char * refspec = (char*)"refs/heads/master";
 	const git_strarray refspecs = { &refspec,1 };
 	git_remote_callbacks cb;
-    check_lg2(git_push_init_options(&options, GIT_PUSH_OPTIONS_VERSION), "Error initializaing options", "");
-
+    int klass = check_lg2(git_push_init_options(&options, GIT_PUSH_OPTIONS_VERSION), "Error initializaing options", "");
+	if (klass != 0) {
+		return;
+	}
 	options.callbacks.credentials = credentials_cb;
 	
-	check_lg2(git_remote_lookup(&remote, repo, "origin"),"Unable to lookup remote","");
+	klass = check_lg2(git_remote_lookup(&remote, repo, "origin"),"Unable to lookup remote","");
+	if (klass != 0) {
+		git_remote_free(remote);
+		return;
+	}
 	check_lg2(git_remote_push(remote, &refspecs, &options), "Error Pushing", "");
+	if (klass != 0) {
+	
+		git_remote_free(remote);
+		return;
+	}
 	git_remote_free(remote);
 	return;
 }
@@ -410,17 +422,28 @@ void Project::commit(std::string message) {
 	git_index *index;
 	git_oid tree_id, commit_id;
 	git_tree *tree;
-	std::string name = "Nipun Ramani";
-	std::string email = "ramaninipun@gmail.com";
+	
 	git_object *parent = NULL;
 	git_reference *ref = NULL;
 	/** First use the config to initialize a commit signature for the user. */
+	
+	//check_lg2(git_signature_default(&sig, repo),"Unable to create a commit signature.","Perhaps 'user.name' and 'user.email' are not set");
+	int klass = check_lg2(git_signature_now(&sig, mName.c_str(), mEmail.c_str()),"Could not create signature","");
+	if (klass > 0) {
+		if(sig)
+			git_signature_free(sig);
 
-	check_lg2(git_signature_default(&sig, repo),"Unable to create a commit signature.","Perhaps 'user.name' and 'user.email' are not set");
-	check_lg2(git_revparse_ext(&parent, &ref, repo, "HEAD"),"Head not found","");
+	}
+	klass = check_lg2(git_revparse_ext(&parent, &ref, repo, "HEAD"),"Head not found","");
+	if (klass > 0) {
+		return;
+	}
 	/* Now let's create an empty tree for this commit */
 
-	check_lg2(git_repository_index(&index, repo), "Could not open repository index", "");
+	klass = check_lg2(git_repository_index(&index, repo), "Could not open repository index", "");
+	if (klass > 0) {
+		return;
+	}
 
 	/**
 	 * Outside of this example, you could call git_index_add_bypath()
@@ -428,10 +451,26 @@ void Project::commit(std::string message) {
 	 * leave it empty for now.
 	 */
 
-	check_lg2(git_index_write_tree(&tree_id, index), "Could not write tree", "");;
-	check_lg2(git_index_write(index), "Could not write index", "");;
-	check_lg2(git_tree_lookup(&tree, repo, &tree_id), "Error looking up tree", "");
-	check_lg2(git_signature_default(&sig, repo), "Error creating signature", "");
+	klass = check_lg2(git_index_write_tree(&tree_id, index), "Could not write tree", "");;
+	if (klass > 0) {
+		return;
+	}
+
+	klass = check_lg2(git_index_write(index), "Could not write index", "");;
+	if (klass > 0) {
+		return;
+	}
+
+	klass = check_lg2(git_tree_lookup(&tree, repo, &tree_id), "Error looking up tree", "");
+	if (klass > 0) {
+		return;
+	}
+
+	klass = check_lg2(git_signature_default(&sig, repo), "Error creating signature", "");
+	if (klass > 0) {
+		return;
+	}
+
 	/**
 	 * Ready to create the initial commit.
 	 *
@@ -440,7 +479,15 @@ void Project::commit(std::string message) {
 	 * but here this is the first commit so there will be no parent.
 	 */
 
-	check_lg2(git_commit_create_v(&commit_id, repo, "HEAD", sig, sig, NULL, message.c_str(), tree, parent ? 1 : 0, parent), "Could not create the initial commit", "");
+	klass = check_lg2(git_commit_create_v(&commit_id, repo, "HEAD", sig, sig, NULL, message.c_str(), tree, parent ? 1 : 0, parent), "Could not create the initial commit", "");
+	if (klass > 0) {
+		git_tree_free(tree);
+		git_signature_free(sig);
+		git_index_free(index);
+		git_tree_free(tree);
+
+		return;
+	}
 
 	/** Clean up so we don't leak memory. */
 
@@ -449,13 +496,63 @@ void Project::commit(std::string message) {
 	git_index_free(index);
 	git_tree_free(tree);
 }
-void Project::add_config() {
+bool Project::add_config() {
 	git_config * cfg = NULL;
-	check_lg2( git_repository_config(&cfg,repo), "Could not open config.","");
-	check_lg2(git_config_set_string(cfg, "user.name", "Nipun Ramani"),"Could not set user.name value","");
-	check_lg2(git_config_set_string(cfg, "user.email", "ramaninipun@gmail.com"), "Could not set user.name value", "");
+	git_config* sys_cfg = NULL;
+	git_config_entry* entry = NULL;
+	std::string user = "";
+	std::string email = "";
 
+	int error = git_repository_config(&cfg, repo);
+	check_lg2(error, "Couldn't open config file", "");
+
+	error = git_config_open_level(&sys_cfg, cfg, GIT_CONFIG_LEVEL_SYSTEM);
+	check_lg2(error, "Couldn't open system level config", "");
+
+	error = git_config_get_entry(&entry, sys_cfg, "user.name");
+	check_lg2(error, "Couldn't get user.name", "");
+	std::string str = "";
+	if (entry) {
+		str = entry->value;
+	}
+	else {
+		//add username
+		bool ok = false;
+		QString quser = QInputDialog::getText(nullptr, QWidget::tr("Enter name:"),
+			QWidget::tr("Username:"), QLineEdit::Normal,
+			" ", &ok);
+
+		str = quser.toStdString();
+		error = git_config_set_string(sys_cfg, "user.name", (char*)str.c_str());
+		check_lg2(error, "Could not set user.name", "");
+		if (!ok || error < 0)
+			return false;
+
+	}
+	mName = str;
+
+	error = git_config_get_entry(&entry, sys_cfg, "user.email");
+	check_lg2(error, "Couldn't get user.email", "");
+	if (entry) {
+		str = entry->value;
+	}
+	else
+	{
+		//add username
+		bool ok = false;
+		QString quser = QInputDialog::getText(nullptr, QWidget::tr("Enter email:"),
+			QWidget::tr("Email:"), QLineEdit::Normal,
+			" ", &ok);
+		std::string str = quser.toStdString();
+		error = git_config_set_string(sys_cfg, "user.email", (char*)str.c_str());
+		check_lg2(error, "Could not set user.email", "");
+		if (!ok || error < 0)
+			return false;
+
+	}
+	mEmail = str;
 	git_config_free(cfg);
+	git_config_free(sys_cfg);
 }
 int match_cb(const char *path, const char *spec, void *payload) {
 
@@ -507,7 +604,7 @@ void Project::open_git_repo() {
 	if (gitdir.exists())
 	{
 		check_lg2(git_repository_open(&repo, dir.c_str()), "Failed to Open", "");
-		/*add_config();*/
+		add_config();
 	}
 	else
 	{

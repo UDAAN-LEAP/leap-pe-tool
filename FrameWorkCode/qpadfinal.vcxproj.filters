@@ -74,9 +74,6 @@
     <ClCompile Include="Filters.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="Project.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="ProjectHierarchyWindow.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
@@ -97,6 +94,9 @@
     </ClCompile>
     <ClCompile Include="diacriticsview.cpp">
       <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Project.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -23,7 +23,7 @@ public:
 	void lg2_add();
 	void commit(std::string message);
 	void push();
-	void add_config();
+	bool add_config();
 	void fetch();
 	void enable_push();
 	void AddTemp(Filter * f, QFile &pFile,QString prefix);
@@ -48,7 +48,8 @@ private:
 	QString mProjectName;
 	std::string mXML;
 	QDir mProjectDir;
-	
+	std::string mName = "";
+	std::string mEmail = "";
     pugi::xml_document doc;
     git_repository * repo=nullptr;
 };
