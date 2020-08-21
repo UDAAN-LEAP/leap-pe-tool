@@ -14,13 +14,13 @@
     <ProjectGuid>{7C007E09-3363-304F-A5B6-2CDEDD2D9F59}</ProjectGuid>
     <RootNamespace>qpadfinal</RootNamespace>
     <Keyword>QtVS_v303</Keyword>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' or !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <OutputDirectory>release\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
     <CharacterSet>NotSet</CharacterSet>
@@ -29,7 +29,7 @@
     <PrimaryOutput>qpadfinal</PrimaryOutput>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <OutputDirectory>debug\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
     <CharacterSet>NotSet</CharacterSet>
@@ -206,6 +206,7 @@
   <ItemGroup>
     <ClCompile Include="averageaccuracies.cpp" />
     <ClCompile Include="commentsview.cpp" />
+    <ClCompile Include="diacriticsview.cpp" />
     <ClCompile Include="DiffView.cpp" />
     <ClCompile Include="diff_match_patch.cpp" />
     <ClCompile Include="Filters.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="3rdParty\RapidXML\rapidxml_utils.hpp" />
     <QtMoc Include="commentsview.h" />
     <QtMoc Include="averageaccuracies.h" />
+    <QtMoc Include="diacriticsview.h" />
     <ClInclude Include="Filters.h" />
     <ClInclude Include="lg2_common.h" />
     <ClInclude Include="Project.h" />
@@ -290,6 +292,7 @@
   <ItemGroup>
     <QtUic Include="averageaccuracies.ui" />
     <QtUic Include="commentsview.ui" />
+    <QtUic Include="diacriticsview.ui" />
     <QtUic Include="DiffView.ui">
     </QtUic>
     <QtUic Include="interndiffview.ui">

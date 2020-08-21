@@ -95,6 +95,9 @@
     <ClCompile Include="VCSWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="diacriticsview.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DiffView.h">
@@ -196,6 +199,9 @@
     <QtMoc Include="VCSWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="diacriticsview.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -225,6 +231,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="VCSWidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="diacriticsview.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

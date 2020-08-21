@@ -263,3 +263,11 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/FrameWorkCode/HOCRRenderer.h
+/FrameWorkCode/HOCRRenderer.cpp
+/FrameWorkCode/HOCRItem.h
+/FrameWorkCode/HOCRItem.cpp
+/FrameWorkCode/HOCRGraphicView.h
+/FrameWorkCode/HOCRDocument.hpp
+/FrameWorkCode/HOCRDocument.cpp
+/FrameWorkCode/tessdata

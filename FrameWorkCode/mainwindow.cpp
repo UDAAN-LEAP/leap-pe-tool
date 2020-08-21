@@ -58,7 +58,7 @@ int openedFileWords;
 bool save_triggered = 0;
 QString dir1levelup, dir2levelup, currentpagename, currentdirname;
 map<QString, QString> filestructure_fw = { {"Inds","CorrectorOutput"},
-									 {"CorrectorOutput","VerifierOutput",},
+									 {"CorrectorOutput","CorrectorOutput",},
 										{"VerifierOutput","VerifierOutput" }
 };
 map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
@@ -338,8 +338,7 @@ string selectedStr;
 //GIVE EVENT TO TEXT BROWZER INSTEAD OF MAINWINDOW
 void MainWindow::mousePressEvent(QMouseEvent *ev)
 {
-	on_actionLoadData_triggered();
-
+	
 	if (curr_browser) {
 		curr_browser->cursorForPosition(ev->pos());
 
@@ -357,126 +356,127 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 			// code to copy selected string:-
 			QString str1 = cursor.selectedText();
 			selectedStr = str1.toStdString();
-
-			// code to display options on rightclick
-			curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
-			QMenu* popup_menu = curr_browser->createStandardContextMenu();
-			QMenu* spell_menu;
-			spell_menu = new QMenu("suggestions", this);
-			//QAction* action = tr("tihor");
-			QAction* act;
-			//vector<string> Words =  print5NearestEntries(TGPage,selectedStr);
-			vector<string>  Words1 = print5NearestEntries(TGBook, selectedStr);
-			vector<string> Alligned = print5NearestEntries(TGBookP, selectedStr);
-			vector<string> PWords1 = print5NearestEntries(TPWords, selectedStr);
-			string PairSugg = print2OCRSugg(selectedStr, Alligned[0], ConfPmap, Dict); // map<string,int>&
-			vector<string>  Words = print1OCRNearestEntries(toslp1(selectedStr), vIBook);
-			//cout <<" here " << toDev(Words[0]) << endl;
-
-
-			// find nearest confirming to OCR Sugg from Book
-			string nearestCOnfconfirmingSuggvec;
-			vector<string> vec = Words1;
-			int min = 100;
-			for (size_t t = 0; t < vec.size(); t++) {
-				vector<string> wordConfusions; vector<int> wCindex;
-				int minFactor = loadWConfusionsNindex1(selectedStr, vec[t], ConfPmap, wordConfusions, wCindex);
-				wordConfusions.clear(); wCindex.clear();
-				if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvec = vec[t]; }
-			}
-
-			// find nearest confirming to OCR Sugg from PWords
-			string nearestCOnfconfirmingSuggvec1;
-			vector<string> vec1 = PWords1;
-			min = 100;
-			for (size_t t = 0; t < vec1.size(); t++) {
-				vector<string> wordConfusions; vector<int> wCindex;
-				int minFactor = loadWConfusionsNindex1(selectedStr, vec1[t], ConfPmap, wordConfusions, wCindex);
-				wordConfusions.clear(); wCindex.clear();
-				if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvec1 = vec1[t]; }
-			}
-
-			vector<pair<int, string>> vecSugg, vecSugg1;
-			map<string, int> mapSugg;
-			string CSugg = CPair[toslp1(selectedStr)];
-			if (CSugg.size() > 0) mapSugg[toslp1(CSugg)]++;
-			if (Words.size() > 0)  mapSugg[toslp1(Words[0])]++;
-			if (Words1.size() > 0) mapSugg[toslp1(nearestCOnfconfirmingSuggvec)]++;
-			if (PWords1.size() > 0) mapSugg[toslp1(nearestCOnfconfirmingSuggvec1)]++;
-			if (PairSugg.size() > 0) mapSugg[toslp1(PairSugg)]++;
-			mapSugg[SamasBreakLRCorrect(toslp1(selectedStr), Dict, PWords, TPWords, TPWordsP)]++;
-			string s1 = toslp1(selectedStr);
-			string nearestCOnfconfirmingSuggvecFont = "";
-			min = 100;
-			for (size_t t = 0; t < vec.size(); t++) {
-				vector<string> wordConfusions; vector<int> wCindex;
-				int minFactor = loadWConfusionsNindex1(s1, vec[t], ConfPmapFont, wordConfusions, wCindex);
-				wordConfusions.clear(); wCindex.clear();
-				if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvecFont = vec[t]; }
-			}
-			if (nearestCOnfconfirmingSuggvecFont.size() > 0) mapSugg[nearestCOnfconfirmingSuggvecFont]++;
-
-			string PairSuggFont = "";
-			if (Alligned.size() > 0) PairSuggFont = print2OCRSugg(s1, Alligned[0], ConfPmap, Dict);
-			if (PairSuggFont.size() > 0) mapSugg[PairSuggFont]++;
-
-			string sugg9 = "";
-			sugg9 = generatePossibilitesNsuggest(s1, TopConfusions, TopConfusionsMask, Dict, SRules);
-			if (sugg9.size() > 0) mapSugg[sugg9]++;
-
-			map<string, int> mapSugg1;
-			for (size_t ksugg1 = 0; ksugg1 < 5; ksugg1++) {
-				if (Words.size() > ksugg1)  mapSugg1[toslp1(Words[ksugg1])]++;
-				if (Words1.size() > ksugg1) mapSugg1[toslp1(Words1[ksugg1])]++;
-				if (PWords1.size() > ksugg1) mapSugg1[toslp1(PWords1[ksugg1])]++;
-			}
+			if (selectedStr != "") {
+				// code to display options on rightclick
+				curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
+				QMenu* popup_menu = curr_browser->createStandardContextMenu();
+				QMenu* spell_menu;
+				spell_menu = new QMenu("suggestions", this);
+				//QAction* action = tr("tihor");
+				QAction* act;
+				//vector<string> Words =  print5NearestEntries(TGPage,selectedStr);
+				vector<string>  Words1 = print5NearestEntries(TGBook, selectedStr);
+				vector<string> Alligned = print5NearestEntries(TGBookP, selectedStr);
+				vector<string> PWords1 = print5NearestEntries(TPWords, selectedStr);
+				string PairSugg = print2OCRSugg(selectedStr, Alligned[0], ConfPmap, Dict); // map<string,int>&
+				vector<string>  Words = print1OCRNearestEntries(toslp1(selectedStr), vIBook);
+				//cout <<" here " << toDev(Words[0]) << endl;
 
 
-			for (map<string, int>::const_iterator eptr = mapSugg.begin(); eptr != mapSugg.end(); eptr++) {
-				vecSugg.push_back(make_pair(editDist(toslp1(eptr->first), toslp1(selectedStr)), eptr->first));
-			}
+				// find nearest confirming to OCR Sugg from Book
+				string nearestCOnfconfirmingSuggvec;
+				vector<string> vec = Words1;
+				int min = 100;
+				for (size_t t = 0; t < vec.size(); t++) {
+					vector<string> wordConfusions; vector<int> wCindex;
+					int minFactor = loadWConfusionsNindex1(selectedStr, vec[t], ConfPmap, wordConfusions, wCindex);
+					wordConfusions.clear(); wCindex.clear();
+					if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvec = vec[t]; }
+				}
 
-			for (map<string, int>::const_iterator eptr = mapSugg1.begin(); eptr != mapSugg1.end(); eptr++) {
-				vecSugg1.push_back(make_pair(editDist(toslp1(eptr->first), toslp1(selectedStr)), eptr->first));
-			}
+				// find nearest confirming to OCR Sugg from PWords
+				string nearestCOnfconfirmingSuggvec1;
+				vector<string> vec1 = PWords1;
+				min = 100;
+				for (size_t t = 0; t < vec1.size(); t++) {
+					vector<string> wordConfusions; vector<int> wCindex;
+					int minFactor = loadWConfusionsNindex1(selectedStr, vec1[t], ConfPmap, wordConfusions, wCindex);
+					wordConfusions.clear(); wCindex.clear();
+					if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvec1 = vec1[t]; }
+				}
+
+				vector<pair<int, string>> vecSugg, vecSugg1;
+				map<string, int> mapSugg;
+				string CSugg = CPair[toslp1(selectedStr)];
+				if (CSugg.size() > 0) mapSugg[toslp1(CSugg)]++;
+				if (Words.size() > 0)  mapSugg[toslp1(Words[0])]++;
+				if (Words1.size() > 0) mapSugg[toslp1(nearestCOnfconfirmingSuggvec)]++;
+				if (PWords1.size() > 0) mapSugg[toslp1(nearestCOnfconfirmingSuggvec1)]++;
+				if (PairSugg.size() > 0) mapSugg[toslp1(PairSugg)]++;
+				mapSugg[SamasBreakLRCorrect(toslp1(selectedStr), Dict, PWords, TPWords, TPWordsP)]++;
+				string s1 = toslp1(selectedStr);
+				string nearestCOnfconfirmingSuggvecFont = "";
+				min = 100;
+				for (size_t t = 0; t < vec.size(); t++) {
+					vector<string> wordConfusions; vector<int> wCindex;
+					int minFactor = loadWConfusionsNindex1(s1, vec[t], ConfPmapFont, wordConfusions, wCindex);
+					wordConfusions.clear(); wCindex.clear();
+					if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvecFont = vec[t]; }
+				}
+				if (nearestCOnfconfirmingSuggvecFont.size() > 0) mapSugg[nearestCOnfconfirmingSuggvecFont]++;
+
+				string PairSuggFont = "";
+				if (Alligned.size() > 0) PairSuggFont = print2OCRSugg(s1, Alligned[0], ConfPmap, Dict);
+				if (PairSuggFont.size() > 0) mapSugg[PairSuggFont]++;
+
+				string sugg9 = "";
+				sugg9 = generatePossibilitesNsuggest(s1, TopConfusions, TopConfusionsMask, Dict, SRules);
+				if (sugg9.size() > 0) mapSugg[sugg9]++;
+
+				map<string, int> mapSugg1;
+				for (size_t ksugg1 = 0; ksugg1 < 5; ksugg1++) {
+					if (Words.size() > ksugg1)  mapSugg1[toslp1(Words[ksugg1])]++;
+					if (Words1.size() > ksugg1) mapSugg1[toslp1(Words1[ksugg1])]++;
+					if (PWords1.size() > ksugg1) mapSugg1[toslp1(PWords1[ksugg1])]++;
+				}
 
 
-			//vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),selectedStr),selectedStr));
-			//if(Words.size() > 0) vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),toslp1(Words[0])),Words[0]));
-			//vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),toslp1(Words1[0])),Words1[0]));
-			//vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),toslp1(PairSugg)),PairSugg));
-			sort(vecSugg.begin(), vecSugg.end()); sort(vecSugg1.begin(), vecSugg1.end());
-			//cout << vec[0]  << " " << vec[1]  << " " << vec[2]  << " " << newtrie.next.size() << endl;
-			//Words = suggestions((selectedStr));
-			for (uint bitarrayi = 0; bitarrayi < vecSugg.size(); bitarrayi++) {
-				act = new QAction(QString::fromStdString(toDev(vecSugg[bitarrayi].second)), spell_menu);
-				//cout<<vecSugg[bitarrayi].first<<endl;
-				spell_menu->addAction(act);
-			}
+				for (map<string, int>::const_iterator eptr = mapSugg.begin(); eptr != mapSugg.end(); eptr++) {
+					vecSugg.push_back(make_pair(editDist(toslp1(eptr->first), toslp1(selectedStr)), eptr->first));
+				}
 
-			for (uint bitarrayi = 0; bitarrayi < vecSugg1.size(); bitarrayi++) {
-				if (mapSugg[vecSugg1[bitarrayi].second] < 1) {
-					act = new QAction(QString::fromStdString(toDev(vecSugg1[bitarrayi].second)), spell_menu);
-					//cout<<vecSugg1[bitarrayi].first<<endl;
+				for (map<string, int>::const_iterator eptr = mapSugg1.begin(); eptr != mapSugg1.end(); eptr++) {
+					vecSugg1.push_back(make_pair(editDist(toslp1(eptr->first), toslp1(selectedStr)), eptr->first));
+				}
+
+
+				//vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),selectedStr),selectedStr));
+				//if(Words.size() > 0) vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),toslp1(Words[0])),Words[0]));
+				//vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),toslp1(Words1[0])),Words1[0]));
+				//vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),toslp1(PairSugg)),PairSugg));
+				sort(vecSugg.begin(), vecSugg.end()); sort(vecSugg1.begin(), vecSugg1.end());
+				//cout << vec[0]  << " " << vec[1]  << " " << vec[2]  << " " << newtrie.next.size() << endl;
+				//Words = suggestions((selectedStr));
+				for (uint bitarrayi = 0; bitarrayi < vecSugg.size(); bitarrayi++) {
+					act = new QAction(QString::fromStdString(toDev(vecSugg[bitarrayi].second)), spell_menu);
+					//cout<<vecSugg[bitarrayi].first<<endl;
 					spell_menu->addAction(act);
 				}
+
+				for (uint bitarrayi = 0; bitarrayi < vecSugg1.size(); bitarrayi++) {
+					if (mapSugg[vecSugg1[bitarrayi].second] < 1) {
+						act = new QAction(QString::fromStdString(toDev(vecSugg1[bitarrayi].second)), spell_menu);
+						//cout<<vecSugg1[bitarrayi].first<<endl;
+						spell_menu->addAction(act);
+					}
+				}
+				/*Words =  print5NearestEntries(TDict,selectedStr);
+				if (Words.size() > 0) {
+					act = new QAction(QString::fromStdString(toDev(Words[0])), spell_menu);
+
+					spell_menu->addAction(act);
+
+				}*/
+
+				popup_menu->insertSeparator(popup_menu->actions()[0]);
+				popup_menu->insertMenu(popup_menu->actions()[0], spell_menu);
+				connect(spell_menu, SIGNAL(triggered(QAction*)), this, SLOT(menuSelection(QAction*)));
+				popup_menu->exec(ev->globalPos());
+				popup_menu->close(); popup_menu->clear();
+				//curr_browser->createStandardContextMenu()->clear();
+				//cursor.select(QTextCursor::WordUnderCursor);
+				vecSugg.clear(); Words1.clear(); Words.clear(); Alligned.clear(); PairSugg.clear();
 			}
-			/*Words =  print5NearestEntries(TDict,selectedStr);
-			if (Words.size() > 0) {
-				act = new QAction(QString::fromStdString(toDev(Words[0])), spell_menu);
-
-				spell_menu->addAction(act);
-
-			}*/
-
-			popup_menu->insertSeparator(popup_menu->actions()[0]);
-			popup_menu->insertMenu(popup_menu->actions()[0], spell_menu);
-			connect(spell_menu, SIGNAL(triggered(QAction*)), this, SLOT(menuSelection(QAction*)));
-			popup_menu->exec(ev->globalPos());
-			popup_menu->close(); popup_menu->clear();
-			//ui->textBrowser->createStandardContextMenu()->clear();
-			//cursor.select(QTextCursor::WordUnderCursor);
-			vecSugg.clear(); Words1.clear(); Words.clear(); Alligned.clear(); PairSugg.clear();
 		} // if right click
 	}
 }// if mouse event
@@ -661,7 +661,7 @@ void MainWindow::on_actionLoadGDocPage_triggered()
 		{
 			QTextStream out(&sFile);
 			out.setCodec("UTF-8");
-			out << ui->textBrowser->toHtml(); //toPlainText(); Sanoj
+			out << curr_browser->toHtml(); //toPlainText(); Sanoj
 			sFile.flush();
 			sFile.close();
 		}
@@ -2044,13 +2044,13 @@ void MainWindow::on_actionAllFontProperties_triggered() //Sanoj
 
 void MainWindow::on_actionFontBlack_triggered()
 {
-	ui->textBrowser->setTextColor(Qt::black);
+	curr_browser->setTextColor(Qt::black);
 }
 
 
 //void MainWindow::on_actionSaveAsODF_triggered()//Sanoj
 //{
-//    QString s = ui->textBrowser->toHtml();
+//    QString s = curr_browser->toHtml();
 //    QTextDocument *doc = new QTextDocument();
 //    doc->setHtml(s);
 //    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
@@ -2339,120 +2339,122 @@ void MainWindow::on_actionAverage_Accuracy_triggered()
 	QString qs1 = "", qs2 = "", qs3 = "";
 
 	file = QFileDialog::getOpenFileName(this, "Open Output File"); //open file
-	int loc = file.lastIndexOf("/");
-	QString folder = file.mid(0, loc); //fetch parent tdirectory
+	if (!file.isEmpty()) {
+		int loc = file.lastIndexOf("/");
+		QString folder = file.mid(0, loc); //fetch parent tdirectory
 
-	QDir directory(folder);
-	QStringList textfiles = directory.entryList((QStringList() << "*.txt", QDir::Files)); //fetch all files in the parent directory
+		QDir directory(folder);
+		QStringList textfiles = directory.entryList((QStringList() << "*.txt", QDir::Files)); //fetch all files in the parent directory
 
-	int loc1 = folder.lastIndexOf("/");
-	QString qcsvfolder = folder.mid(0, loc1) + "/AccuracyLog.csv";
-	string csvfolder = qcsvfolder.toUtf8().constData();
+		int loc1 = folder.lastIndexOf("/");
+		QString qcsvfolder = folder.mid(0, loc1) + "/AccuracyLog.csv";
+		string csvfolder = qcsvfolder.toUtf8().constData();
 
-	std::ofstream csvFile(csvfolder);
-	csvFile << "Page Name," << "Errors (Word level)," << "Errors (Character-Level)," << "Accuracy of Corrector (Word level)," << "Accuracy of Corrector (Character-Level)," << "Changes made by Corrector(%)," << "OCR Accuracy(w.rt. Verified Text)" << "\n";
+		std::ofstream csvFile(csvfolder);
+		csvFile << "Page Name," << "Errors (Word level)," << "Errors (Character-Level)," << "Accuracy of Corrector (Word level)," << "Accuracy of Corrector (Character-Level)," << "Changes made by Corrector(%)," << "OCR Accuracy(w.rt. Verified Text)" << "\n";
 
-	foreach(QString filename, textfiles)
-	{
-
-		string pagename = filename.toUtf8().constData();
-		filename = folder + "/" + filename;
-
-		QString verifiertext = filename;
-		QString ocrtext = filename.replace("VerifierOutput", "Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-		QString correctortext = filename.replace("Inds", "CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-
-		if (!ocrtext.isEmpty())
+		foreach(QString filename, textfiles)
 		{
-			QFile sFile(ocrtext);
-			if (sFile.open(QFile::ReadOnly | QFile::Text))
+
+			string pagename = filename.toUtf8().constData();
+			filename = folder + "/" + filename;
+
+			QString verifiertext = filename;
+			QString ocrtext = filename.replace("VerifierOutput", "Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+			QString correctortext = filename.replace("Inds", "CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+
+			if (!ocrtext.isEmpty())
 			{
-				QTextStream in(&sFile);
-				in.setCodec("UTF-8");
-				qs1 = in.readAll().simplified();
+				QFile sFile(ocrtext);
+				if (sFile.open(QFile::ReadOnly | QFile::Text))
+				{
+					QTextStream in(&sFile);
+					in.setCodec("UTF-8");
+					qs1 = in.readAll().simplified();
+				}
+
 			}
+			if (!correctortext.isEmpty())
+			{
+				QFile sFile(correctortext);
+				if (sFile.open(QFile::ReadOnly | QFile::Text))
+				{
+					QTextStream in(&sFile);
+					in.setCodec("UTF-8");
+					qs2 = in.readAll().simplified();
+				}
+
+			}
+			if (!verifiertext.isEmpty())
+			{
+				QFile sFile(verifiertext);
+				if (sFile.open(QFile::ReadOnly | QFile::Text))
+				{
+					QTextStream in(&sFile);
+					in.setCodec("UTF-8");
+					qs3 = in.readAll().simplified();
+					sFile.close();
+				}
+
+			}
+			int l1, l2, l3, DiffOcr_Corrector, DiffCorrector_Verifier, DiffOcr_Verifier; float correctorChangesPerc, verifierChangesPerc, ocrErrorPerc;
+
+			l1 = qs1.length(); l2 = qs2.length(); l3 = qs3.length();
+
+			diff_match_patch dmp;
+
+			auto diffs1 = dmp.diff_main(qs1, qs2);
+			DiffOcr_Corrector = dmp.diff_levenshtein(diffs1);
+			correctorChangesPerc = ((float)(DiffOcr_Corrector) / (float)l1) * 100;
+			if (correctorChangesPerc < 0) correctorChangesPerc = ((float)(DiffOcr_Corrector) / (float)l2) * 100;
+			correctorChangesPerc = (((float)lround(correctorChangesPerc * 100)) / 100);
+
+			auto diffs2 = dmp.diff_main(qs2, qs3);
+			DiffCorrector_Verifier = dmp.diff_levenshtein(diffs2);
+			verifierChangesPerc = ((float)(DiffCorrector_Verifier) / (float)l2) * 100;
+			if (verifierChangesPerc < 0) verifierChangesPerc = ((float)(DiffCorrector_Verifier) / (float)l3) * 100;
+			float correctorCharAcc = 100 - (((float)lround(verifierChangesPerc * 100)) / 100); //Corrector accuracy = 100-changes mabe by Verfier
+
+			auto diffs3 = dmp.diff_main(qs1, qs3);
+			DiffOcr_Verifier = dmp.diff_levenshtein(diffs3);
+			ocrErrorPerc = ((float)(DiffOcr_Verifier) / (float)l1) * 100;
+			if (ocrErrorPerc < 0) ocrErrorPerc = ((float)(DiffOcr_Verifier) / (float)l3) * 100;
+			float ocrAcc = 100 - (((float)lround(ocrErrorPerc * 100)) / 100);
+
+
+			auto a = dmp.diff_linesToChars(qs2, qs3); //LinesToChars modifed for WordstoChar in diff_match_patch.cpp
+			auto lineText1 = a[0].toString();
+			auto lineText2 = a[1].toString();
+			auto lineArray = a[2].toStringList();
+			//        qDebug() << "pagename" << QString::fromStdString(pagename);
+			//        qDebug()<<"qs2.simplified()"<<qs2.simplified();
+			//        qDebug()<<"qs3.simplified()"<<qs3.simplified();
+			//        qDebug()<<"LineText1"<<lineText1;
+			//        qDebug()<<"LineText2"<<lineText2;
+			//        qDebug()<<"LineArray"<<lineArray;
+			//        qDebug()<<"DiffCorrector_Verifier "<<DiffCorrector_Verifier;
+			int wordcount = lineArray.count();
+			auto diffs = dmp.diff_main(lineText1, lineText2);
+			int worderrors = dmp.diff_levenshtein(diffs);
+			dmp.diff_charsToLines(diffs, lineArray);
+
+			float correctorwordaccuracy = (float)(wordcount - worderrors) / (float)wordcount * 100;
+			correctorwordaccuracy = (((float)lround(correctorwordaccuracy * 100)) / 100);
+
+			csvFile << pagename << "," << worderrors << "," << DiffCorrector_Verifier << "," << correctorwordaccuracy << "," << correctorCharAcc << "," << correctorChangesPerc << "," << ocrAcc << "\n";
 
 		}
-		if (!correctortext.isEmpty())
-		{
-			QFile sFile(correctortext);
-			if (sFile.open(QFile::ReadOnly | QFile::Text))
-			{
-				QTextStream in(&sFile);
-				in.setCodec("UTF-8");
-				qs2 = in.readAll().simplified();
-			}
 
-		}
-		if (!verifiertext.isEmpty())
-		{
-			QFile sFile(verifiertext);
-			if (sFile.open(QFile::ReadOnly | QFile::Text))
-			{
-				QTextStream in(&sFile);
-				in.setCodec("UTF-8");
-				qs3 = in.readAll().simplified();
-				sFile.close();
-			}
-
-		}
-		int l1, l2, l3, DiffOcr_Corrector, DiffCorrector_Verifier, DiffOcr_Verifier; float correctorChangesPerc, verifierChangesPerc, ocrErrorPerc;
-
-		l1 = qs1.length(); l2 = qs2.length(); l3 = qs3.length();
-
-		diff_match_patch dmp;
-
-		auto diffs1 = dmp.diff_main(qs1, qs2);
-		DiffOcr_Corrector = dmp.diff_levenshtein(diffs1);
-		correctorChangesPerc = ((float)(DiffOcr_Corrector) / (float)l1) * 100;
-		if (correctorChangesPerc < 0) correctorChangesPerc = ((float)(DiffOcr_Corrector) / (float)l2) * 100;
-		correctorChangesPerc = (((float)lround(correctorChangesPerc * 100)) / 100);
-
-		auto diffs2 = dmp.diff_main(qs2, qs3);
-		DiffCorrector_Verifier = dmp.diff_levenshtein(diffs2);
-		verifierChangesPerc = ((float)(DiffCorrector_Verifier) / (float)l2) * 100;
-		if (verifierChangesPerc < 0) verifierChangesPerc = ((float)(DiffCorrector_Verifier) / (float)l3) * 100;
-		float correctorCharAcc = 100 - (((float)lround(verifierChangesPerc * 100)) / 100); //Corrector accuracy = 100-changes mabe by Verfier
-
-		auto diffs3 = dmp.diff_main(qs1, qs3);
-		DiffOcr_Verifier = dmp.diff_levenshtein(diffs3);
-		ocrErrorPerc = ((float)(DiffOcr_Verifier) / (float)l1) * 100;
-		if (ocrErrorPerc < 0) ocrErrorPerc = ((float)(DiffOcr_Verifier) / (float)l3) * 100;
-		float ocrAcc = 100 - (((float)lround(ocrErrorPerc * 100)) / 100);
-
-
-		auto a = dmp.diff_linesToChars(qs2, qs3); //LinesToChars modifed for WordstoChar in diff_match_patch.cpp
-		auto lineText1 = a[0].toString();
-		auto lineText2 = a[1].toString();
-		auto lineArray = a[2].toStringList();
-		//        qDebug() << "pagename" << QString::fromStdString(pagename);
-		//        qDebug()<<"qs2.simplified()"<<qs2.simplified();
-		//        qDebug()<<"qs3.simplified()"<<qs3.simplified();
-		//        qDebug()<<"LineText1"<<lineText1;
-		//        qDebug()<<"LineText2"<<lineText2;
-		//        qDebug()<<"LineArray"<<lineArray;
-		//        qDebug()<<"DiffCorrector_Verifier "<<DiffCorrector_Verifier;
-		int wordcount = lineArray.count();
-		auto diffs = dmp.diff_main(lineText1, lineText2);
-		int worderrors = dmp.diff_levenshtein(diffs);
-		dmp.diff_charsToLines(diffs, lineArray);
-
-		float correctorwordaccuracy = (float)(wordcount - worderrors) / (float)wordcount * 100;
-		correctorwordaccuracy = (((float)lround(correctorwordaccuracy * 100)) / 100);
-
-		csvFile << pagename << "," << worderrors << "," << DiffCorrector_Verifier << "," << correctorwordaccuracy << "," << correctorCharAcc << "," << correctorChangesPerc << "," << ocrAcc << "\n";
-
+		csvFile.close();
 	}
-
-	csvFile.close();
 
 }
 void MainWindow::on_actionHighlight_triggered()
 {
-	QTextCursor cursor = ui->textBrowser->textCursor();
+	QTextCursor cursor = curr_browser->textCursor();
 	QString text = cursor.selectedText().toUtf8().constData();
-	int pos1 = ui->textBrowser->textCursor().selectionStart();
-	int pos2 = ui->textBrowser->textCursor().selectionEnd();
+	int pos1 = curr_browser->textCursor().selectionStart();
+	int pos2 = curr_browser->textCursor().selectionEnd();
 
 	int cursorpos = round(((float)(pos1 + pos2)) / 2);
 	cursor.setPosition(cursorpos);
@@ -2467,8 +2469,8 @@ void MainWindow::on_actionHighlight_triggered()
 		format.setBackground(Qt::yellow);
 		LogHighlights(text);
 	}
-	ui->textBrowser->textCursor().mergeCharFormat(format);
-	ui->textBrowser->copy();
+	curr_browser->textCursor().mergeCharFormat(format);
+	curr_browser->copy();
 }
 
 
@@ -2541,94 +2543,95 @@ void MainWindow::updateAverageAccuracies()
 
 void MainWindow::on_actionView_Comments_triggered()
 {
+	if (curr_browser) {
+		map<int, int> wordcount;
+		QString projDir = mProject.GetDir().absolutePath();
+		QString commentFilename = projDir + "/Comments/comments.json";
+		//    commentFilename.replace(".txt",".json");
+		//    commentFilename.replace(".html",".json");
+		QString pagename = currentpagename;
+		pagename.replace(".txt", "");
+		pagename.replace(".html", "");
+		int totalcharerr = 0, totalworderr = 0, rating = 0; QString comments = "";
 
-	map<int, int> wordcount;
-	QString commentFilename = dir2levelup + "/Comments/comments.json";
-	//    commentFilename.replace(".txt",".json");
-	//    commentFilename.replace(".html",".json");
-	QString pagename = currentpagename;
-	pagename.replace(".txt", "");
-	pagename.replace(".html", "");
-	int totalcharerr = 0, totalworderr = 0, rating = 0; QString comments = "";
+		QFile jsonFile(commentFilename);
+		jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+		QByteArray data = jsonFile.readAll();
 
-	QFile jsonFile(commentFilename);
-	jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-	QByteArray data = jsonFile.readAll();
+		QJsonParseError errorPtr;
+		QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+		QJsonObject mainObj = document.object();
+		QJsonObject pages = mainObj.value("pages").toObject();
+		QJsonObject page = pages.value(pagename).toObject();
 
-	QJsonParseError errorPtr;
-	QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-	QJsonObject mainObj = document.object();
-	QJsonObject pages = mainObj.value("pages").toObject();
-	QJsonObject page = pages.value(pagename).toObject();
-
-	if (document.isNull())
-	{
-		//qDebug()<<"empty json/parse error";
-	}
-
-	comments = page.value("comments").toString();
-	rating = page.value("rating").toInt();
-
-	jsonFile.close();
-
-	auto textcursor1 = ui->textBrowser->textCursor();
-	textcursor1.setPosition(0);
-	while (!textcursor1.atEnd())
-	{
-		int anchor = textcursor1.position();
-		QTextCharFormat format = textcursor1.charFormat();
-		textcursor1.select(QTextCursor::WordUnderCursor);
-		QString wordundercursor = textcursor1.selectedText();
-		int key = textcursor1.selectionStart();
-		//qDebug()<<wordundercursor<<" :Word" <<wordundercursor.length()<< " :len" <<anchor<<"anchor" <<key << "key";
-
-		if (format.background() == Qt::yellow && anchor >= (key + 1))
+		if (document.isNull())
 		{
-			totalcharerr++;
-			wordcount[key]++;
-			//qDebug()<<wordcount<<totalcharerr;
+			//qDebug()<<"empty json/parse error";
 		}
-		textcursor1.setPosition(anchor + 1);
-		//textcursor1.movePosition(QTextCursor::NextCharacter , QTextCursor::MoveAnchor, 1);
+
+		comments = page.value("comments").toString();
+		rating = page.value("rating").toInt();
+
+		jsonFile.close();
+
+		auto textcursor1 = curr_browser->textCursor();
+		textcursor1.setPosition(0);
+		while (!textcursor1.atEnd())
+		{
+			int anchor = textcursor1.position();
+			QTextCharFormat format = textcursor1.charFormat();
+			textcursor1.select(QTextCursor::WordUnderCursor);
+			QString wordundercursor = textcursor1.selectedText();
+			int key = textcursor1.selectionStart();
+			//qDebug()<<wordundercursor<<" :Word" <<wordundercursor.length()<< " :len" <<anchor<<"anchor" <<key << "key";
+
+			if (format.background() == Qt::yellow && anchor >= (key + 1))
+			{
+				totalcharerr++;
+				wordcount[key]++;
+				//qDebug()<<wordcount<<totalcharerr;
+			}
+			textcursor1.setPosition(anchor + 1);
+			//textcursor1.movePosition(QTextCursor::NextCharacter , QTextCursor::MoveAnchor, 1);
+		}
+
+		totalworderr = wordcount.size();
+		float characc = (float)(openedFileChars - totalcharerr) / (float)openedFileChars * 100;
+		float wordacc = (float)(openedFileWords - totalworderr) / (float)openedFileWords * 100;
+		wordacc = ((float)lround(wordacc * 100)) / 100;
+		characc = ((float)lround(characc * 100)) / 100;
+
+		if (characc > 99.0) rating = 5;
+		else if (characc > 98.0) rating = 4;
+		else if (characc > 97.0) rating = 3;
+		else if (characc > 96.0) rating = 2;
+		else if (characc > 95.0) rating = 1;
+
+
+		page["comments"] = comments;
+		page["charerrors"] = totalcharerr;
+		page["worderrors"] = totalworderr;
+		page["characcuracy"] = characc;
+		page["wordaccuracy"] = wordacc;
+		page["rating"] = rating;
+		page["pagename"] = pagename;
+		pages.remove(pagename);
+		pages.insert(pagename, page);
+		mainObj.remove("pages");
+		mainObj.insert("pages", pages);
+		QJsonDocument document1(mainObj);
+
+		QFile jsonFile1(commentFilename);
+		jsonFile1.open(QIODevice::WriteOnly);
+		jsonFile1.write(document1.toJson());
+		jsonFile1.close();
+
+		if (!save_triggered)
+		{
+			CommentsView* cv = new CommentsView(totalworderr, totalcharerr, wordacc, characc, comments, commentFilename, pagename, rating);
+			cv->show();
+		}
 	}
-
-	totalworderr = wordcount.size();
-	float characc = (float)(openedFileChars - totalcharerr) / (float)openedFileChars * 100;
-	float wordacc = (float)(openedFileWords - totalworderr) / (float)openedFileWords * 100;
-	wordacc = ((float)lround(wordacc * 100)) / 100;
-	characc = ((float)lround(characc * 100)) / 100;
-
-	if (characc > 99.0) rating = 5;
-	else if (characc > 98.0) rating = 4;
-	else if (characc > 97.0) rating = 3;
-	else if (characc > 96.0) rating = 2;
-	else if (characc > 95.0) rating = 1;
-
-
-	page["comments"] = comments;
-	page["charerrors"] = totalcharerr;
-	page["worderrors"] = totalworderr;
-	page["characcuracy"] = characc;
-	page["wordaccuracy"] = wordacc;
-	page["rating"] = rating;
-	page["pagename"] = pagename;
-	pages.remove(pagename);
-	pages.insert(pagename, page);
-	mainObj.remove("pages");
-	mainObj.insert("pages", pages);
-	QJsonDocument document1(mainObj);
-
-	QFile jsonFile1(commentFilename);
-	jsonFile1.open(QIODevice::WriteOnly);
-	jsonFile1.write(document1.toJson());
-	jsonFile1.close();
-
-	if (!save_triggered)
-	{
-		CommentsView *cv = new CommentsView(totalworderr, totalcharerr, wordacc, characc, comments, commentFilename, pagename, rating);
-		cv->show();
-	}
-
 }
 
 
@@ -2661,6 +2664,7 @@ void MainWindow::on_actionViewAverageAccuracies_triggered()
 
 void MainWindow::LogHighlights(QString word)
 {
+	QString dir = mProject.GetDir().absolutePath();
 	QString highlightsFilename = dir2levelup + "/Comments/HighlightsLog.json";
 	QString pagename = currentpagename;
 	pagename.replace(".txt", "");
@@ -2898,18 +2902,18 @@ void MainWindow::on_actionCompare_Corrector_triggered() //Corrector
 //			curr_browser->setTextBackgroundColor(Qt::yellow);
 //			LogHighlights(text);
 //		}
-//		ui->textBrowser->copy();
+//		curr_browser->copy();
 //	}
 //}
 /*
 void MainWindow::on_addcomments_clicked()
 {
 	QString commentstext = ui->commentsfield->text().toUtf8().constData();
-	int pos1 = ui->textBrowser->textCursor().selectionStart();
-	int pos2 = ui->textBrowser->textCursor().selectionEnd();
+	int pos1 = curr_browser->textCursor().selectionStart();
+	int pos2 = curr_browser->textCursor().selectionEnd();
 	int pos = min(pos1,pos2);
 	int loc = commentstext.indexOf(":");
-	QString highlightedtext = ui->textBrowser->textCursor().selectedText().toUtf8().constData();
+	QString highlightedtext = curr_browser->textCursor().selectedText().toUtf8().constData();
 	QString comment = commentstext.mid(loc+1,commentstext.length()-loc);
 	if(loc == -1)
 	{
@@ -3204,9 +3208,16 @@ void MainWindow::tabchanged(int idx) {
 
 }
 void MainWindow::on_actionOpen_Project_triggered() {
-	rapidxml::xml_document<> doc;
+	
 	QFile xml(QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)")));
-	if (xml.exists()) {
+	QFileInfo finfo(xml);
+	QString basedir = finfo.absoluteDir().absolutePath();
+	QString s1 = basedir+"/CorrectorOutput/";
+	QString s2 = basedir + "/Inds/";
+	QString s3 = basedir + "/Images/";
+	QString s4 = basedir + "/VerifierOutput/";
+	bool exists = QDir(s1).exists() && QDir(s2).exists() && QDir(s3).exists() && QDir(s4).exists();
+	if (xml.exists()&& exists) {
 		ui->treeView->reset();
 		mProject.process_xml(xml);
 		mProject.open_git_repo();
