@@ -3212,11 +3212,11 @@ void MainWindow::on_actionOpen_Project_triggered() {
 	QFile xml(QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)")));
 	QFileInfo finfo(xml);
 	QString basedir = finfo.absoluteDir().absolutePath();
-	QString s1 = basedir+"/CorrectorOutput/";
+	QString s3 = basedir+"/CorrectorOutput/";
 	QString s2 = basedir + "/Inds/";
-	QString s3 = basedir + "/Images/";
+	QString s1 = basedir + "/Images/";
 	QString s4 = basedir + "/VerifierOutput/";
-	bool exists = QDir(s1).exists() && QDir(s2).exists() && QDir(s3).exists() && QDir(s4).exists();
+	bool exists = QDir(s1).exists() && QDir(s2).exists() && QDir(s3).exists() &&(QDir(s3).exists()|| QDir(s4).exists());
 	if (xml.exists()&& exists) {
 		ui->treeView->reset();
 		mProject.process_xml(xml);

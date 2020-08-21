@@ -16,11 +16,10 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
@@ -95,15 +94,14 @@ public:
     QAction *actionZoom_Out;
     QAction *actionDiacritics;
     QWidget *centralWidget;
-    QGridLayout *gridLayout_3;
-    QHBoxLayout *horizontalLayout_4;
-    QLineEdit *lineEdit;
-    QSpacerItem *horizontalSpacer_2;
+    QHBoxLayout *horizontalLayout_2;
+    QGridLayout *gridLayout;
+    QHBoxLayout *horizontalLayout;
+    QPlainTextEdit *plainTextEdit;
     QSplitter *splitter_2;
     QSplitter *splitter;
     QTabWidget *tabWidget;
     QWidget *tab;
-    QGridLayout *gridLayout;
     QTextEdit *textEdit;
     QWidget *tab_2;
     QGridLayout *gridLayout_2;
@@ -130,6 +128,11 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(1386, 788);
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
+        MainWindow->setSizePolicy(sizePolicy);
         MainWindow->setMouseTracking(true);
         actionSave = new QAction(MainWindow);
         actionSave->setObjectName(QString::fromUtf8("actionSave"));
@@ -306,53 +309,59 @@ public:
         actionDiacritics->setIcon(icon17);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        gridLayout_3 = new QGridLayout(centralWidget);
-        gridLayout_3->setSpacing(6);
-        gridLayout_3->setContentsMargins(11, 11, 11, 11);
-        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
-        horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setSpacing(6);
-        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        lineEdit = new QLineEdit(centralWidget);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
+        centralWidget->setSizePolicy(sizePolicy1);
+        horizontalLayout_2 = new QHBoxLayout(centralWidget);
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        gridLayout = new QGridLayout();
+        gridLayout->setSpacing(6);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        plainTextEdit = new QPlainTextEdit(centralWidget);
+        plainTextEdit->setObjectName(QString::fromUtf8("plainTextEdit"));
 
-        horizontalLayout_4->addWidget(lineEdit);
-
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_4->addItem(horizontalSpacer_2);
+        horizontalLayout->addWidget(plainTextEdit);
 
 
-        gridLayout_3->addLayout(horizontalLayout_4, 0, 0, 1, 1);
+        gridLayout->addLayout(horizontalLayout, 0, 0, 1, 1);
 
         splitter_2 = new QSplitter(centralWidget);
         splitter_2->setObjectName(QString::fromUtf8("splitter_2"));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Minimum);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(splitter_2->sizePolicy().hasHeightForWidth());
+        splitter_2->setSizePolicy(sizePolicy2);
         splitter_2->setOrientation(Qt::Horizontal);
         splitter = new QSplitter(splitter_2);
         splitter->setObjectName(QString::fromUtf8("splitter"));
         splitter->setOrientation(Qt::Horizontal);
         tabWidget = new QTabWidget(splitter);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
-        tabWidget->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Expanding);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
+        tabWidget->setSizePolicy(sizePolicy3);
         tabWidget->setMinimumSize(QSize(120, 0));
         tabWidget->setMaximumSize(QSize(300, 16777215));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
-        gridLayout = new QGridLayout(tab);
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         textEdit = new QTextEdit(tab);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
-        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Expanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(textEdit->sizePolicy().hasHeightForWidth());
-        textEdit->setSizePolicy(sizePolicy1);
+        textEdit->setGeometry(QRect(9, 9, 120, 71));
+        QSizePolicy sizePolicy4(QSizePolicy::Maximum, QSizePolicy::Minimum);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(textEdit->sizePolicy().hasHeightForWidth());
+        textEdit->setSizePolicy(sizePolicy4);
         textEdit->setMinimumSize(QSize(120, 0));
         textEdit->setMaximumSize(QSize(300, 16777215));
         QFont font;
@@ -361,9 +370,6 @@ public:
         textEdit->setFont(font);
         textEdit->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
         textEdit->setReadOnly(true);
-
-        gridLayout->addWidget(textEdit, 0, 0, 1, 1);
-
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
@@ -373,8 +379,11 @@ public:
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         treeView = new QTreeView(tab_2);
         treeView->setObjectName(QString::fromUtf8("treeView"));
-        sizePolicy1.setHeightForWidth(treeView->sizePolicy().hasHeightForWidth());
-        treeView->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy5(QSizePolicy::Maximum, QSizePolicy::Expanding);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(treeView->sizePolicy().hasHeightForWidth());
+        treeView->setSizePolicy(sizePolicy5);
         treeView->setMinimumSize(QSize(90, 600));
         treeView->setMaximumSize(QSize(400, 16777215));
 
@@ -392,11 +401,11 @@ public:
         textBrowser = new QTextBrowser(tab_5);
         textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
         textBrowser->setGeometry(QRect(-70, 20, 600, 600));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Minimum);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(textBrowser->sizePolicy().hasHeightForWidth());
-        textBrowser->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy6(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(textBrowser->sizePolicy().hasHeightForWidth());
+        textBrowser->setSizePolicy(sizePolicy6);
         textBrowser->setMinimumSize(QSize(400, 600));
         QFont font1;
         font1.setFamily(QString::fromUtf8("Shobhika"));
@@ -414,11 +423,8 @@ public:
         splitter_2->addWidget(splitter);
         graphicsView = new QGraphicsView(splitter_2);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
-        QSizePolicy sizePolicy3(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(graphicsView->sizePolicy().hasHeightForWidth());
-        graphicsView->setSizePolicy(sizePolicy3);
+        sizePolicy6.setHeightForWidth(graphicsView->sizePolicy().hasHeightForWidth());
+        graphicsView->setSizePolicy(sizePolicy6);
         graphicsView->setMinimumSize(QSize(400, 600));
         graphicsView->setMaximumSize(QSize(608, 16777215));
         graphicsView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
@@ -429,7 +435,10 @@ public:
         graphicsView->setResizeAnchor(QGraphicsView::AnchorViewCenter);
         splitter_2->addWidget(graphicsView);
 
-        gridLayout_3->addWidget(splitter_2, 1, 0, 1, 1);
+        gridLayout->addWidget(splitter_2, 1, 0, 1, 1);
+
+
+        horizontalLayout_2->addLayout(gridLayout);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
