@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{7C007E09-3363-304F-A5B6-2CDEDD2D9F59}</ProjectGuid>
+    <ProjectGuid>{3A8264A6-864D-3DE9-973E-0D53A19D11FC}</ProjectGuid>
     <RootNamespace>qpadfinal</RootNamespace>
     <Keyword>QtVS_v303</Keyword>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
