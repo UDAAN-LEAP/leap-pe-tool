@@ -398,20 +398,10 @@ static int transfer_progress_cb(const git_transfer_progress *stats, void *payloa
 	return 0;
 }
 void Project::fetch() {
-	/*git_remote *remote = NULL;
-	const git_indexer_progress *stats;
-	git_fetch_options fetch_opts = GIT_FETCH_OPTIONS_INIT;
-	int error = git_remote_lookup(&remote, repo, "origin");
-	check_lg2(error, "Couldn't find remote: origin", "");
-	fetch_opts.callbacks.update_tips = &update_cb;
-	fetch_opts.callbacks.sideband_progress = &progress_cb;
-	fetch_opts.callbacks.transfer_progress = transfer_progress_cb;
-	fetch_opts.callbacks.credentials = credentials_cb;
-	error = git_remote_fetch(remote, NULL, &fetch_opts, "fetch");
-	check_lg2(error, "Couldn't fetch from remote", "");*/
-	//git_remote_free(remote);
+	
 	QDir::setCurrent(mProjectDir.absolutePath());
-	QProcess::execute("git pull -Xtheirs;");
+	QProcess::execute("git fetch");
+	QProcess::execute("git reset --hard origin/master");
 
 }
 
@@ -553,6 +543,7 @@ bool Project::add_config() {
 	mEmail = str;
 	git_config_free(cfg);
 	git_config_free(sys_cfg);
+	return true;
 }
 int match_cb(const char *path, const char *spec, void *payload) {
 
