@@ -25,5 +25,6 @@
         <file>icon_diacritics.png</file>
         <file>Zoom-Out-icon.png</file>
         <file>Zoom-In-icon.png</file>
+        <file>linespacing.png</file>
     </qresource>
 </RCC>

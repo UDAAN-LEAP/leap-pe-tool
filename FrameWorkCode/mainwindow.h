@@ -168,9 +168,9 @@ private slots:
 
     //void on_pushButton_clicked();
 
-    void on_actionVerifier_Diff_View_triggered();
+//    void on_actionVerifier_Diff_View_triggered();
 	
-	void on_actionCorrector_Diff_View_triggered();
+//	void on_actionCorrector_Diff_View_triggered();
 
     //void on_viewallcomments_clicked();
 
@@ -183,13 +183,12 @@ private slots:
 
 	// void on_addcomments_clicked();
 
-	void on_actionView_Comments_triggered();
+    //void on_actionView_Comments_triggered();
 
 	void on_actionFontBlack_triggered();
 
 	void updateAverageAccuracies();
     //void on_actionCompare_Verifier_clicked();
-	void on_actionCompare_Corrector_triggered();
 	void on_actionViewAverageAccuracies_triggered();
 
 	void LogHighlights(QString word);
@@ -219,10 +218,9 @@ private slots:
 
  //   void on_actionCompare_Verifier_triggered();
 
-
     void on_compareCorrectorOutput_clicked();
 
-    void on_ViewComments_clicked();
+    void on_viewComments_clicked();
 
     void on_actionZoom_In_triggered();
 
@@ -230,7 +228,17 @@ private slots:
 
     void on_actionDiacritics_triggered();
 
-    void on_actionCompare_Verifier_triggered();
+    //void on_actionCompare_Verifier_triggered();
+
+    void on_actionInset_Tab_Space_triggered();
+
+    void on_actionLineSpace_triggered();
+
+    void on_actionInsert_Horizontal_Line_triggered();
+
+    void on_actionSubscript_triggered();
+
+    void on_actionSuperscript_triggered();
 
 
 private:

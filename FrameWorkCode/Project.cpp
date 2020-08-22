@@ -509,7 +509,7 @@ bool Project::add_config() {
 	error = git_config_open_level(&sys_cfg, cfg, GIT_CONFIG_LEVEL_SYSTEM);
 	check_lg2(error, "Couldn't open system level config", "");
 
-	error = git_config_get_entry(&entry, sys_cfg, "user.name");
+    error = git_config_get_entry(&entry, sys_cfg, "user.name");
 	check_lg2(error, "Couldn't get user.name", "");
 	std::string str = "";
 	if (entry) {

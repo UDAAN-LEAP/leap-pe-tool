@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.14.2
+** Created by: Qt User Interface Compiler version 5.15.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -20,6 +20,8 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
@@ -96,11 +98,17 @@ public:
     QAction *actionZoom_In;
     QAction *actionZoom_Out;
     QAction *actionDiacritics;
+    QAction *actionSuperscript;
+    QAction *actionSubscript;
+    QAction *actionInsert_Horizontal_Line;
+    QAction *actionFontBlack;
+    QAction *actionLineSpace;
+    QAction *actionViewAverageAccuracies;
+    QAction *actionInsert_Tab_Space;
     QWidget *centralWidget;
-    QGridLayout *gridLayout_3;
-    QVBoxLayout *verticalLayout;
+    QVBoxLayout *verticalLayout_2;
     QLineEdit *lineEdit;
-    QSplitter *splitter_2;
+    QSplitter *splitter;
     QTabWidget *tabWidget;
     QWidget *tab;
     QGridLayout *gridLayout;
@@ -108,11 +116,16 @@ public:
     QWidget *tab_2;
     QGridLayout *gridLayout_2;
     QTreeView *treeView;
-    QSplitter *splitter;
     QTabWidget *tabWidget_2;
     QWidget *tab_5;
     QHBoxLayout *horizontalLayout_2;
     QTextBrowser *textBrowser;
+    QWidget *layoutWidget;
+    QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout;
+    QPushButton *viewComments;
+    QPushButton *compareCorrectorOutput;
+    QSpacerItem *horizontalSpacer;
     QGraphicsView *graphicsView;
     QMenuBar *menuBar;
     QMenu *menuOCR_Correction_Window;
@@ -295,30 +308,47 @@ public:
         actionVerifier_Turn_In->setObjectName(QString::fromUtf8("actionVerifier_Turn_In"));
         actionHighlight = new QAction(MainWindow);
         actionHighlight->setObjectName(QString::fromUtf8("actionHighlight"));
+        QIcon icon15;
+        icon15.addFile(QString::fromUtf8(":/Images/highlight-icon.png"), QSize(), QIcon::Normal, QIcon::On);
+        actionHighlight->setIcon(icon15);
         actionZoom_In = new QAction(MainWindow);
         actionZoom_In->setObjectName(QString::fromUtf8("actionZoom_In"));
-        QIcon icon15;
-        icon15.addFile(QString::fromUtf8(":/Images/Zoom-In-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionZoom_In->setIcon(icon15);
+        QIcon icon16;
+        icon16.addFile(QString::fromUtf8(":/Images/Zoom-In-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionZoom_In->setIcon(icon16);
         actionZoom_Out = new QAction(MainWindow);
         actionZoom_Out->setObjectName(QString::fromUtf8("actionZoom_Out"));
-        QIcon icon16;
-        icon16.addFile(QString::fromUtf8(":/Images/Zoom-Out-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionZoom_Out->setIcon(icon16);
+        QIcon icon17;
+        icon17.addFile(QString::fromUtf8(":/Images/Zoom-Out-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionZoom_Out->setIcon(icon17);
         actionDiacritics = new QAction(MainWindow);
         actionDiacritics->setObjectName(QString::fromUtf8("actionDiacritics"));
-        QIcon icon17;
-        icon17.addFile(QString::fromUtf8(":/Images/icon_diacritics.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionDiacritics->setIcon(icon17);
+        QIcon icon18;
+        icon18.addFile(QString::fromUtf8(":/Images/icon_diacritics.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionDiacritics->setIcon(icon18);
+        actionSuperscript = new QAction(MainWindow);
+        actionSuperscript->setObjectName(QString::fromUtf8("actionSuperscript"));
+        actionSubscript = new QAction(MainWindow);
+        actionSubscript->setObjectName(QString::fromUtf8("actionSubscript"));
+        actionInsert_Horizontal_Line = new QAction(MainWindow);
+        actionInsert_Horizontal_Line->setObjectName(QString::fromUtf8("actionInsert_Horizontal_Line"));
+        actionFontBlack = new QAction(MainWindow);
+        actionFontBlack->setObjectName(QString::fromUtf8("actionFontBlack"));
+        actionLineSpace = new QAction(MainWindow);
+        actionLineSpace->setObjectName(QString::fromUtf8("actionLineSpace"));
+        QIcon icon19;
+        icon19.addFile(QString::fromUtf8(":/Images/linespacing.png"), QSize(), QIcon::Normal, QIcon::On);
+        actionLineSpace->setIcon(icon19);
+        actionViewAverageAccuracies = new QAction(MainWindow);
+        actionViewAverageAccuracies->setObjectName(QString::fromUtf8("actionViewAverageAccuracies"));
+        actionInsert_Tab_Space = new QAction(MainWindow);
+        actionInsert_Tab_Space->setObjectName(QString::fromUtf8("actionInsert_Tab_Space"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        gridLayout_3 = new QGridLayout(centralWidget);
-        gridLayout_3->setSpacing(6);
-        gridLayout_3->setContentsMargins(11, 11, 11, 11);
-        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
-        verticalLayout = new QVBoxLayout();
-        verticalLayout->setSpacing(6);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout_2 = new QVBoxLayout(centralWidget);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         lineEdit = new QLineEdit(centralWidget);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
@@ -329,20 +359,20 @@ public:
         lineEdit->setMinimumSize(QSize(400, 20));
         lineEdit->setMaximumSize(QSize(400, 20));
 
-        verticalLayout->addWidget(lineEdit);
+        verticalLayout_2->addWidget(lineEdit);
 
-        splitter_2 = new QSplitter(centralWidget);
-        splitter_2->setObjectName(QString::fromUtf8("splitter_2"));
-        splitter_2->setOrientation(Qt::Horizontal);
-        tabWidget = new QTabWidget(splitter_2);
+        splitter = new QSplitter(centralWidget);
+        splitter->setObjectName(QString::fromUtf8("splitter"));
+        splitter->setOrientation(Qt::Horizontal);
+        tabWidget = new QTabWidget(splitter);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
         tabWidget->setSizePolicy(sizePolicy1);
-        tabWidget->setMinimumSize(QSize(200, 0));
-        tabWidget->setMaximumSize(QSize(300, 16777215));
+        tabWidget->setMinimumSize(QSize(100, 0));
+        tabWidget->setMaximumSize(QSize(250, 16777215));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
         gridLayout = new QGridLayout(tab);
@@ -353,7 +383,8 @@ public:
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
         sizePolicy1.setHeightForWidth(textEdit->sizePolicy().hasHeightForWidth());
         textEdit->setSizePolicy(sizePolicy1);
-        textEdit->setMaximumSize(QSize(300, 16777215));
+        textEdit->setMinimumSize(QSize(100, 0));
+        textEdit->setMaximumSize(QSize(250, 16777215));
         QFont font;
         font.setFamily(QString::fromUtf8("FreeSans"));
         font.setItalic(true);
@@ -374,14 +405,13 @@ public:
         treeView->setObjectName(QString::fromUtf8("treeView"));
         sizePolicy1.setHeightForWidth(treeView->sizePolicy().hasHeightForWidth());
         treeView->setSizePolicy(sizePolicy1);
+        treeView->setMinimumSize(QSize(100, 0));
+        treeView->setMaximumSize(QSize(250, 16777215));
 
         gridLayout_2->addWidget(treeView, 0, 0, 1, 1);
 
         tabWidget->addTab(tab_2, QString());
-        splitter_2->addWidget(tabWidget);
-        splitter = new QSplitter(splitter_2);
-        splitter->setObjectName(QString::fromUtf8("splitter"));
-        splitter->setOrientation(Qt::Horizontal);
+        splitter->addWidget(tabWidget);
         tabWidget_2 = new QTabWidget(splitter);
         tabWidget_2->setObjectName(QString::fromUtf8("tabWidget_2"));
         tabWidget_2->setMaximumSize(QSize(16777215, 16777215));
@@ -401,6 +431,7 @@ public:
         sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(textBrowser->sizePolicy().hasHeightForWidth());
         textBrowser->setSizePolicy(sizePolicy2);
+        textBrowser->setMinimumSize(QSize(550, 550));
         QFont font1;
         font1.setFamily(QString::fromUtf8("Shobhika"));
         font1.setPointSize(16);
@@ -417,14 +448,41 @@ public:
 
         tabWidget_2->addTab(tab_5, QString());
         splitter->addWidget(tabWidget_2);
-        graphicsView = new QGraphicsView(splitter);
+        layoutWidget = new QWidget(splitter);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        verticalLayout = new QVBoxLayout(layoutWidget);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        viewComments = new QPushButton(layoutWidget);
+        viewComments->setObjectName(QString::fromUtf8("viewComments"));
+
+        horizontalLayout->addWidget(viewComments);
+
+        compareCorrectorOutput = new QPushButton(layoutWidget);
+        compareCorrectorOutput->setObjectName(QString::fromUtf8("compareCorrectorOutput"));
+
+        horizontalLayout->addWidget(compareCorrectorOutput);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer);
+
+
+        verticalLayout->addLayout(horizontalLayout);
+
+        graphicsView = new QGraphicsView(layoutWidget);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
         QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy3.setHorizontalStretch(0);
         sizePolicy3.setVerticalStretch(0);
         sizePolicy3.setHeightForWidth(graphicsView->sizePolicy().hasHeightForWidth());
         graphicsView->setSizePolicy(sizePolicy3);
-        graphicsView->setMinimumSize(QSize(200, 0));
+        graphicsView->setMinimumSize(QSize(400, 550));
         graphicsView->setMaximumSize(QSize(16777215, 16777215));
         graphicsView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
         graphicsView->setAlignment(Qt::AlignCenter);
@@ -432,18 +490,17 @@ public:
         graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
         graphicsView->setTransformationAnchor(QGraphicsView::AnchorViewCenter);
         graphicsView->setResizeAnchor(QGraphicsView::AnchorViewCenter);
-        splitter->addWidget(graphicsView);
-        splitter_2->addWidget(splitter);
 
-        verticalLayout->addWidget(splitter_2);
+        verticalLayout->addWidget(graphicsView);
 
+        splitter->addWidget(layoutWidget);
 
-        gridLayout_3->addLayout(verticalLayout, 0, 0, 1, 1);
+        verticalLayout_2->addWidget(splitter);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1366, 21));
+        menuBar->setGeometry(QRect(0, 0, 1366, 22));
         menuOCR_Correction_Window = new QMenu(menuBar);
         menuOCR_Correction_Window->setObjectName(QString::fromUtf8("menuOCR_Correction_Window"));
         menuCreateReports = new QMenu(menuBar);
@@ -505,6 +562,7 @@ public:
         menuCreateReports->addAction(actionErrorDetectWithoutAdaptation);
         menuCreateReports->addAction(actionErrorDetectionRepUniq);
         menuCreateReports->addAction(actionAccuracyLog);
+        menuCreateReports->addAction(actionViewAverageAccuracies);
         menuSaveVariables->addAction(actionCPair);
         menuSaveVariables->addAction(actionPrimarySecOCRPair);
         menuSaveVariables->addAction(actionCPairIEROcrVsCorrect);
@@ -528,6 +586,12 @@ public:
         menuFontAndLayout->addAction(actionRightAlign);
         menuFontAndLayout->addAction(actionCentreAlign);
         menuFontAndLayout->addAction(actionJusitfiedAlign);
+        menuFontAndLayout->addAction(actionSuperscript);
+        menuFontAndLayout->addAction(actionSubscript);
+        menuFontAndLayout->addAction(actionInsert_Horizontal_Line);
+        menuFontAndLayout->addAction(actionFontBlack);
+        menuFontAndLayout->addAction(actionLineSpace);
+        menuFontAndLayout->addAction(actionInsert_Tab_Space);
         menuView->addAction(actionCompare_Verifier);
         menuView->addAction(actionCompare_Corrector);
         menuView->addSeparator();
@@ -563,6 +627,7 @@ public:
         mainToolBar->addAction(actionCentreAlign);
         mainToolBar->addAction(actionRightAlign);
         mainToolBar->addAction(actionJusitfiedAlign);
+        mainToolBar->addAction(actionLineSpace);
         mainToolBar->addAction(actionHighlight);
         mainToolBar->addAction(actionZoom_In);
         mainToolBar->addAction(actionZoom_Out);
@@ -570,7 +635,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
         tabWidget_2->setCurrentIndex(0);
 
 
@@ -686,6 +751,16 @@ public:
         actionZoom_In->setText(QCoreApplication::translate("MainWindow", "Zoom In", nullptr));
         actionZoom_Out->setText(QCoreApplication::translate("MainWindow", "Zoom_Out", nullptr));
         actionDiacritics->setText(QCoreApplication::translate("MainWindow", "Diacritics", nullptr));
+        actionSuperscript->setText(QCoreApplication::translate("MainWindow", "Superscript", nullptr));
+        actionSubscript->setText(QCoreApplication::translate("MainWindow", "Subscript", nullptr));
+        actionInsert_Horizontal_Line->setText(QCoreApplication::translate("MainWindow", "Insert Horizontal Line", nullptr));
+        actionFontBlack->setText(QCoreApplication::translate("MainWindow", "FontBlack", nullptr));
+        actionLineSpace->setText(QCoreApplication::translate("MainWindow", "LineSpace", nullptr));
+        actionViewAverageAccuracies->setText(QCoreApplication::translate("MainWindow", "ViewAverageAccuracies", nullptr));
+        actionInsert_Tab_Space->setText(QCoreApplication::translate("MainWindow", "Insert Tab Space", nullptr));
+#if QT_CONFIG(shortcut)
+        actionInsert_Tab_Space->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+T", nullptr));
+#endif // QT_CONFIG(shortcut)
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "SLP", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Project", nullptr));
         textBrowser->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -694,8 +769,10 @@ public:
 "</style></head><body style=\" font-family:'Shobhika'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab_5), QCoreApplication::translate("MainWindow", "Tab 1", nullptr));
+        viewComments->setText(QCoreApplication::translate("MainWindow", "View Comments", nullptr));
+        compareCorrectorOutput->setText(QCoreApplication::translate("MainWindow", "Compare Corrector Output", nullptr));
         menuOCR_Correction_Window->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
-        menuCreateReports->setTitle(QCoreApplication::translate("MainWindow", "CreateReports", nullptr));
+        menuCreateReports->setTitle(QCoreApplication::translate("MainWindow", "Reports", nullptr));
         menuSaveVariables->setTitle(QCoreApplication::translate("MainWindow", "SaveVariables", nullptr));
         menuConvertFiles->setTitle(QCoreApplication::translate("MainWindow", "ConvertFiles", nullptr));
         menuFeatureExtraction->setTitle(QCoreApplication::translate("MainWindow", "FeatureExtraction", nullptr));
