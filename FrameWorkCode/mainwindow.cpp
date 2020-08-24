@@ -56,10 +56,9 @@ map<int, vector<int>> commentederrors;
 int openedFileChars;
 int openedFileWords;
 bool save_triggered = 0;
-QString dir1levelup, dir2levelup, currentpagename, currentdirname;
 map<QString, QString> filestructure_fw = { {"Inds","CorrectorOutput"},
 									 {"CorrectorOutput","CorrectorOutput",},
-										{"VerifierOutput","VerifierOutput" }
+                                        {"VerifierOutput","CorrectorOutput" }
 };
 map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
 									 {"CorrectorOutput","Inds"},
@@ -90,11 +89,20 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
+void MainWindow::UpdateFileStructure()
+{
+    int pos1 = mFilename.lastIndexOf("/");
+    gDirOneLevelUp = mFilename.mid(0,pos1);
+    gCurrentPageName = mFilename.mid(pos1+1,mFilename.length()-pos1);
+    int pos2 = gDirOneLevelUp.lastIndexOf("/");
 
+    gDirTwoLevelUp = mProject.GetDir().absolutePath();
+    gCurrentDirName = gDirOneLevelUp.mid(pos2+1,gDirOneLevelUp.length()-pos2);
+}
 //bool OPENSPELLFLAG = 1;// TO NOT CONVERT ASCII STRINGS TO DEVANAGARI ON OPENING WHEN SPELLCHECK IS CLICKED
 QString file = "";
 bool fileFlag = 0;
-QTime myTimer;
+QElapsedTimer myTimer;
 int secs;
 int gSeconds;
 void MainWindow::on_actionLoad_Next_Page_triggered()
@@ -149,7 +157,7 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
 {
 	if (mFilename.size() > 0) {
 		string localFilename = mFilename.toUtf8().constData();
-		int nMilliseconds = myTimer.elapsed();
+        int nMilliseconds = myTimer.elapsed();
 		secs = nMilliseconds / 1000;
 		//    int mins = secs/60;
 		//    secs = secs - mins*60;
@@ -332,7 +340,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 } */
 
 
-
 bool RightclickFlag = 0;
 string selectedStr;
 //GIVE EVENT TO TEXT BROWZER INSTEAD OF MAINWINDOW
@@ -476,9 +483,20 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 				//curr_browser->createStandardContextMenu()->clear();
 				//cursor.select(QTextCursor::WordUnderCursor);
 				vecSugg.clear(); Words1.clear(); Words.clear(); Alligned.clear(); PairSugg.clear();
-			}
+            }
+            else {
+                /* timelog info code to be inserted here */
+                QMenu* popup_menu = curr_browser->createStandardContextMenu();
+                popup_menu->exec(ev->globalPos());
+                popup_menu->close(); popup_menu->clear();
+            }
 		} // if right click
-	}
+    }
+    else if ((ev->button() == Qt::RightButton) || (RightclickFlag)) {
+        QMenu* popup_menu = curr_browser->createStandardContextMenu();
+        popup_menu->exec(ev->globalPos());
+        popup_menu->close(); popup_menu->clear();
+    }
 }// if mouse event
 
 /*
@@ -625,9 +643,9 @@ void MainWindow::on_actionSave_triggered()
 	else {
 
 		QString changefiledir = filestructure_fw[current_folder];
-		current_page_name = current_page_name.replace("CorrectorOutput/", "");
-		current_page_name = current_page_name.replace("VerifierOutput/", "");
-		QString localFilename = mProject.GetDir().absolutePath() + "/" + changefiledir + "/" + current_page_name;
+        currentTabPageName = currentTabPageName.replace("CorrectorOutput/", "");
+        currentTabPageName = currentTabPageName.replace("VerifierOutput/", "");
+        QString localFilename = mProject.GetDir().absolutePath() + "/" + changefiledir + "/" + currentTabPageName;
 		localFilename.replace("txt", "html");
 		QFile sFile(localFilename);
 		if (sFile.open(QFile::WriteOnly))
@@ -652,8 +670,8 @@ void MainWindow::on_actionLoadGDocPage_triggered()
 	}
 	else {
 		on_actionSave_As_triggered();
-		QString changefiledir = filestructure_fw[currentdirname];
-		QString str1 = dir2levelup + "/" + changefiledir + "/" + currentpagename;
+        QString changefiledir = filestructure_fw[gCurrentDirName];
+        QString str1 = gDirTwoLevelUp + "/" + changefiledir + "/" + gCurrentPageName;
 		str1.replace("txt", "html");
 
 		QFile sFile(str1);
@@ -690,11 +708,11 @@ void MainWindow::on_actionSave_As_triggered()
 	{
 		mFilename = file;
 		int pos1 = mFilename.lastIndexOf("/");
-		dir1levelup = mFilename.mid(0, pos1);
-		currentpagename = mFilename.mid(pos1 + 1, mFilename.length() - pos1);
-		int pos2 = dir1levelup.lastIndexOf("/");
-		dir2levelup = dir1levelup.mid(0, pos2);
-		currentdirname = dir1levelup.mid(pos2 + 1, dir1levelup.length() - pos2);
+        gDirOneLevelUp = mFilename.mid(0, pos1);
+        gCurrentPageName = mFilename.mid(pos1 + 1, mFilename.length() - pos1);
+        int pos2 = gDirOneLevelUp.lastIndexOf("/");
+        gDirTwoLevelUp = gDirOneLevelUp.mid(0, pos2);
+        gCurrentDirName = gDirOneLevelUp.mid(pos2 + 1, gDirOneLevelUp.length() - pos2);
 		on_actionSave_triggered();
 	}
 
@@ -868,7 +886,7 @@ void MainWindow::on_actionCreateSuggestionLog_triggered()
 	QString strC = strI;
 	strI.replace("CorrectorOutput", "Inds"); strC.replace("Inds", "CorrectorOutput");
 	//    QString strC = mFilename;
-	//    QString strI = dir2levelup + "/CorrectorOutput/"+ currentpagename ;
+    //    QString strI = gDirTwoLevelUp + "/CorrectorOutput/"+ gCurrentPageName ;
 
 		// load text files one by one
 
@@ -2429,103 +2447,43 @@ void MainWindow::updateAverageAccuracies()
 void MainWindow::on_viewComments_clicked()
 {
 	if (curr_browser) {
-		map<int, int> wordcount;
-		QString projDir = mProject.GetDir().absolutePath();
-		QString commentFilename = projDir + "/Comments/comments.json";
-		//    commentFilename.replace(".txt",".json");
-		//    commentFilename.replace(".html",".json");
-		QString pagename = currentpagename;
-		pagename.replace(".txt", "");
-		pagename.replace(".html", "");
-		int totalcharerr = 0, totalworderr = 0, rating = 0; QString comments = "";
+        map<int, int> wordcount;
+        QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
+        QString pageName = gCurrentPageName;
+        pageName.replace(".txt", "");
+        pageName.replace(".html", "");
+        int totalCharError = 0, totalWordError = 0, rating = 0; QString comments = ""; float wordAccuracy,charAccuracy;
 
-		QFile jsonFile(commentFilename);
-		jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-		QByteArray data = jsonFile.readAll();
+        QFile jsonFile(commentFilename);
+        jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+        QByteArray data = jsonFile.readAll();
+        QJsonDocument document = QJsonDocument::fromJson(data);
+        QJsonObject mainObj = document.object();
+        QJsonObject pages = mainObj.value("pages").toObject();
+        QJsonObject page = pages.value(pageName).toObject();
 
-		QJsonParseError errorPtr;
-		QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-		QJsonObject mainObj = document.object();
-		QJsonObject pages = mainObj.value("pages").toObject();
-		QJsonObject page = pages.value(pagename).toObject();
-
-		if (document.isNull())
-		{
-			//qDebug()<<"empty json/parse error";
-		}
-
-		comments = page.value("comments").toString();
-		rating = page.value("rating").toInt();
-
-		jsonFile.close();
-
-		auto textcursor1 = curr_browser->textCursor();
-		textcursor1.setPosition(0);
-		while (!textcursor1.atEnd())
-		{
-			int anchor = textcursor1.position();
-			QTextCharFormat format = textcursor1.charFormat();
-			textcursor1.select(QTextCursor::WordUnderCursor);
-			QString wordundercursor = textcursor1.selectedText();
-			int key = textcursor1.selectionStart();
-			//qDebug()<<wordundercursor<<" :Word" <<wordundercursor.length()<< " :len" <<anchor<<"anchor" <<key << "key";
-
-			if (format.background() == Qt::yellow && anchor >= (key + 1))
-			{
-				totalcharerr++;
-				wordcount[key]++;
-				//qDebug()<<wordcount<<totalcharerr;
-			}
-			textcursor1.setPosition(anchor + 1);
-			//textcursor1.movePosition(QTextCursor::NextCharacter , QTextCursor::MoveAnchor, 1);
-		}
-
-		totalworderr = wordcount.size();
-		float characc = (float)(openedFileChars - totalcharerr) / (float)openedFileChars * 100;
-		float wordacc = (float)(openedFileWords - totalworderr) / (float)openedFileWords * 100;
-		wordacc = ((float)lround(wordacc * 100)) / 100;
-		characc = ((float)lround(characc * 100)) / 100;
-
-		if (characc > 99.0) rating = 5;
-		else if (characc > 98.0) rating = 4;
-		else if (characc > 97.0) rating = 3;
-		else if (characc > 96.0) rating = 2;
-		else if (characc > 95.0) rating = 1;
+        comments = page.value("comments").toString();
+        rating = page.value("rating").toInt();
+        totalCharError = page.value("charerrors").toInt();
+        totalWordError = page.value("worderrors").toInt();
+        wordAccuracy = page.value("wordaccuracy").toDouble();
+        charAccuracy = page.value("characcuracy").toDouble();
 
 
-		page["comments"] = comments;
-		page["charerrors"] = totalcharerr;
-		page["worderrors"] = totalworderr;
-		page["characcuracy"] = characc;
-		page["wordaccuracy"] = wordacc;
-		page["rating"] = rating;
-		page["pagename"] = pagename;
-		pages.remove(pagename);
-		pages.insert(pagename, page);
-		mainObj.remove("pages");
-		mainObj.insert("pages", pages);
-		QJsonDocument document1(mainObj);
+        jsonFile.close();
 
-		QFile jsonFile1(commentFilename);
-		jsonFile1.open(QIODevice::WriteOnly);
-		jsonFile1.write(document1.toJson());
-		jsonFile1.close();
-
-		if (!save_triggered)
-		{
-			CommentsView* cv = new CommentsView(totalworderr, totalcharerr, wordacc, characc, comments, commentFilename, pagename, rating);
-			cv->show();
-		}
-	}
+        CommentsView *cv = new CommentsView(totalWordError,totalCharError,wordAccuracy,charAccuracy,comments,commentFilename, rating);
+        cv->show();
+    }
 }
 
 
 
 void MainWindow::on_actionViewAverageAccuracies_triggered()
 {
-	QString commentFilename = dir2levelup + "/Comments/comments.json";
-	QString csvfile = dir2levelup + "/Comments/AverageAccuracies.csv";
-	QString pagename = currentpagename;
+    QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
+    QString csvfile = gDirTwoLevelUp + "/Comments/AverageAccuracies.csv";
+    QString pagename = gCurrentPageName;
 	pagename.replace(".txt", "");
 	pagename.replace(".html", "");
 	float avgcharacc = 0, avgwordacc = 0, avgrating = 0; int avgcharerrors = 0, avgworderrors = 0;
@@ -2547,44 +2505,44 @@ void MainWindow::on_actionViewAverageAccuracies_triggered()
 	aa->show();
 }
 
-void MainWindow::LogHighlights(QString word)
-{
-	QString dir = mProject.GetDir().absolutePath();
-	QString highlightsFilename = dir2levelup + "/Comments/HighlightsLog.json";
-	QString pagename = currentpagename;
-	pagename.replace(".txt", "");
-	pagename.replace(".html", "");
-	QFile jsonFile(highlightsFilename);
-	jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-	QByteArray data = jsonFile.readAll();
+//void MainWindow::LogHighlights(QString word) //Verifier
+//{
+//	QString dir = mProject.GetDir().absolutePath();
+//	QString highlightsFilename = gDirTwoLevelUp + "/Comments/HighlightsLog.json";
+//	QString pagename = gCurrentPageName;
+//	pagename.replace(".txt", "");
+//	pagename.replace(".html", "");
+//	QFile jsonFile(highlightsFilename);
+//	jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+//	QByteArray data = jsonFile.readAll();
 
-	QJsonParseError errorPtr;
-	QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-	QJsonObject mainObj = document.object();
-	QJsonObject page = mainObj.value(pagename).toObject();
-	QJsonObject highlights;
-	jsonFile.close();
+//	QJsonParseError errorPtr;
+//	QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+//	QJsonObject mainObj = document.object();
+//	QJsonObject page = mainObj.value(pagename).toObject();
+//	QJsonObject highlights;
+//	jsonFile.close();
 
-	int nMilliseconds = myTimer.elapsed();
-	secs = nMilliseconds / 1000;
-	//    int mins = secs/60;
-	//    secs = secs - mins*60;
-	QString time = QTime::currentTime().toString();
-	highlights["Word"] = word;
-	highlights["Timestamp"] = time;
-	highlights["Time Elapsed (s)"] = secs;
-	highlights["Page Name"] = pagename;
+//	int nMilliseconds = myTimer.elapsed();
+//	secs = nMilliseconds / 1000;
+//	//    int mins = secs/60;
+//	//    secs = secs - mins*60;
+//	QString time = QTime::currentTime().toString();
+//	highlights["Word"] = word;
+//	highlights["Timestamp"] = time;
+//	highlights["Time Elapsed (s)"] = secs;
+//	highlights["Page Name"] = pagename;
 
-	page.remove(time);
-	page.insert(time, highlights);
-	mainObj.remove(pagename);
-	mainObj.insert(pagename, page);
-	document.setObject(mainObj);
+//	page.remove(time);
+//	page.insert(time, highlights);
+//	mainObj.remove(pagename);
+//	mainObj.insert(pagename, page);
+//	document.setObject(mainObj);
 
-	QFile jsonFile1(highlightsFilename);
-	jsonFile1.open(QIODevice::WriteOnly);
-	jsonFile1.write(document.toJson());
-}
+//	QFile jsonFile1(highlightsFilename);
+//	jsonFile1.open(QIODevice::WriteOnly);
+//	jsonFile1.write(document.toJson());
+//}
 
 //void MainWindow::on_actionCompare_Verifier_triggered() //Verifier
 //{
@@ -2821,7 +2779,7 @@ QString GetFilter(QString & Name, const QStringList &list) {
 	Filter += ")";
 	return Filter;
 }
-void MainWindow::LoadDocument(QFile * f,QString ext,QString name) {
+void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
 	f->open(QIODevice::ReadOnly);
 	QFileInfo finfo(f->fileName());
@@ -2832,11 +2790,13 @@ void MainWindow::LoadDocument(QFile * f,QString ext,QString name) {
 			if (name == ui->tabWidget_2->tabText(i)) {
 				ui->tabWidget_2->setCurrentIndex(i);
 				mFilename = f->fileName();
+                UpdateFileStructure();
 				return;
 			}
 		}
 	}
 	mFilename = f->fileName();
+    UpdateFileStructure();
 	QTextBrowser * b = new QTextBrowser(this);
 	b->setReadOnly(false);
 	QTextStream stream(f);
@@ -2844,10 +2804,33 @@ void MainWindow::LoadDocument(QFile * f,QString ext,QString name) {
 	QFont font("Shobhika Regular");
 	setWindowTitle(name);
 	font.setPointSize(16);
-	if(ext == "txt")
-		b->setPlainText(stream.readAll());
-	if (ext == "html")
+    if(ext == "txt") {
+        istringstream iss(stream.readAll().toUtf8().constData());
+        string strHtml = "<html><body><p>";
+        string line;
+        while (getline(iss, line)) {
+            QString qline = QString::fromStdString(line);
+            if(line == "\n" | line == "" | qline.contains("\r") )
+                strHtml+="</p><p>";
+            else strHtml += line + "<br />";
+       }
+       strHtml += "</p></body></html>";
+       QString qstrHtml = QString::fromStdString(strHtml);
+       qstrHtml.replace("<br /></p>", "</p>");
+
+       QFont font("Shobhika-Regular");
+       font.setWeight(14);
+       font.setPointSize(14);
+       font.setFamily("Shobhika");
+       ui->textBrowser->setFont(font);
+       ui->textBrowser->setHtml(qstrHtml);
+       ui->textBrowser->setFont(font);
+    }
+    gInitialTextHtml = ui->textBrowser->toHtml();
+
+    if (ext == "html") {
 		b->setHtml(stream.readAll());
+    }
 	b->setFont(font);
 	int idx = ui->tabWidget_2->addTab(b, name);
 	ui->tabWidget_2->setCurrentIndex(idx);
@@ -2856,6 +2839,10 @@ void MainWindow::LoadDocument(QFile * f,QString ext,QString name) {
 	b->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
 
 	f->close();
+
+    QFile *pImageFile = new QFile(mProject.GetDir().absolutePath()+"/Images/" + gCurrentPageName);
+    LoadImageFromFile(pImageFile);
+
 }
 void MainWindow::LoadImageFromFile(QFile * f) {
 	QString localFileName = f->fileName();
@@ -2872,10 +2859,12 @@ void MainWindow::LoadImageFromFile(QFile * f) {
 }
 
 void MainWindow::file_click(const QModelIndex & indx) {
-	std::cout << "Test";
+    //std::cout << "Test";
 	auto item = (TreeItem*)indx.internalPointer();
 	auto qvar = item->data(0).toString();
 	auto file = item->GetFile();
+    QString fileName = file->fileName();
+
 	NodeType type = item->GetNodeType();
 	switch (type) {
 	case NodeType::_FILETYPE:
@@ -2972,17 +2961,21 @@ void MainWindow::closetab(int idx) {
 }
 void MainWindow::tabchanged(int idx) {
 	curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(idx);
-	current_page_name = ui->tabWidget_2->tabText(idx);
-
+    currentTabPageName = ui->tabWidget_2->tabText(idx);
+    if(currentTabPageName.contains("/CorrectorOutput/") | currentTabPageName.contains("/VerifierOutput/"))
+        mFilename = mProject.GetDir().absolutePath() + currentTabPageName;
+    else
+        mFilename = mProject.GetDir().absolutePath() + "/Inds/" + currentTabPageName;
+    UpdateFileStructure();
 }
 void MainWindow::on_actionOpen_Project_triggered() {
 	
 	QFile xml(QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)")));
 	QFileInfo finfo(xml);
-	QString basedir = finfo.absoluteDir().absolutePath();
-	QString s3 = basedir+"/CorrectorOutput/";
-	QString s2 = basedir + "/Inds/";
-	QString s1 = basedir + "/Images/";
+    QString basedir = finfo.absoluteDir().absolutePath();
+    QString s1 = basedir + "/Images/";
+    QString s2 = basedir + "/Inds/";
+    QString s3 = basedir+"/CorrectorOutput/";
 	QString s4 = basedir + "/VerifierOutput/";
 	bool exists = QDir(s1).exists() && QDir(s2).exists() && QDir(s3).exists() &&(QDir(s3).exists()|| QDir(s4).exists());
 	if (xml.exists()&& exists) {
@@ -3027,7 +3020,23 @@ void MainWindow::on_actionOpen_Project_triggered() {
 			}
 		}
 		bool b1 = b;
-		
+
+        UpdateFileStructure();
+        gTimeLogLocation = gDirTwoLevelUp + "/Comments/Timelog.json";
+        QFile jsonFile(gTimeLogLocation);
+        jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+        QByteArray data = jsonFile.readAll();
+
+        QJsonDocument document = QJsonDocument::fromJson(data);
+        QJsonObject mainObj = document.object();
+        jsonFile.close();
+
+        foreach(const QJsonValue &val, mainObj)
+        {
+            QString directory = val.toObject().value("directory").toString();
+            int seconds    = val.toObject().value("seconds").toInt();
+            timeLog[directory] = seconds;
+        }
 	}
 }
 void MainWindow::directoryChanged(const QString &path) {
