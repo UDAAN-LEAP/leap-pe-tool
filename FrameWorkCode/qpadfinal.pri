@@ -8,6 +8,7 @@
 
 
 HEADERS += ./3rdParty/RapidXML/rapidxml.hpp \
+    $$PWD/resizeimageview.h \
     ./3rdParty/RapidXML/rapidxml_iterators.hpp \
     ./3rdParty/RapidXML/rapidxml_print.hpp \
     ./3rdParty/RapidXML/rapidxml_utils.hpp \
@@ -49,6 +50,7 @@ HEADERS += ./3rdParty/RapidXML/rapidxml.hpp \
     $$PWD/diacriticsview.h \
     $$PWD/lg2_common.h
 SOURCES += ./Filters.cpp \
+    $$PWD/resizeimageview.cpp \
     ./Project.cpp \
     ./ProjectHierarchyWindow.cpp \
     ./TreeItem.cpp \
@@ -65,6 +67,7 @@ SOURCES += ./Filters.cpp \
     $$PWD/diacriticsview.cpp \
     $$PWD/lg2_common.cpp
 FORMS += ./DiffView.ui \
+    $$PWD/resizeimageview.ui \
     ./interndiffview.ui \
     ./mainwindow.ui \
     ./ProjectHierarchyWindow.ui \

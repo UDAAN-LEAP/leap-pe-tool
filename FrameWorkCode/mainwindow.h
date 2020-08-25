@@ -221,7 +221,7 @@ private slots:
 
     //void on_actionCompare_Verifier_triggered();
 
-    void on_actionInset_Tab_Space_triggered();
+    void on_actionInsert_Tab_Space_triggered();
 
     void on_actionLineSpace_triggered();
 
@@ -231,8 +231,15 @@ private slots:
 
     void on_actionSuperscript_triggered();
 
-    void UpdateFileStructure();
+    void UpdateFileBrekadown();
 
+    void on_actionAdd_Image_triggered();
+
+    void SaveTimeLog();
+
+    void DisplayTimeLog();
+
+    void on_actionResize_Image_triggered();
 
 private:
     Ui::MainWindow *ui;
@@ -241,6 +248,7 @@ private:
     QString mFilenamejpeg;
 	QString current_folder;
     QString currentTabPageName="";
+    int currentTabIndex;
 	QTextBrowser * curr_browser = nullptr;
 	QGraphicsScene * graphic =nullptr;
 	Graphics_view_zoom * z = nullptr;

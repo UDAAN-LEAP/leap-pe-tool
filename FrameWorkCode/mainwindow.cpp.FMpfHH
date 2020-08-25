@@ -175,7 +175,6 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
         QString ext = "";
         GetPageNumber(localFilename, &no, &loc, &ext);
         localFilename.replace(loc,no.size(),to_string(stoi(no) + 1));
-
         GetPageNumber(localCurrentTabPageName, &no, &loc, &ext);
         localCurrentTabPageName.replace(loc,no.size(),to_string(stoi(no) + 1));
         currentTabPageName = QString::fromStdString(localCurrentTabPageName);
@@ -207,22 +206,21 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
 
         SaveTimeLog();
 
-        string no = "";
+        string no;
         size_t loc;
-        QString ext = "";
+        QString ext;
         GetPageNumber(localFilename, &no, &loc, &ext);
         localFilename.replace(loc,no.size(),to_string(stoi(no) - 1));
 
+        currentTabPageName = QString::fromStdString(localCurrentTabPageName);
         GetPageNumber(localCurrentTabPageName, &no, &loc, &ext);
         localCurrentTabPageName.replace(loc,no.size(),to_string(stoi(no) - 1));
-        currentTabPageName = QString::fromStdString(localCurrentTabPageName);
 
         QFile *file = new QFile(QString::fromStdString(localFilename));
         fileFlag = 1;
         LoadDocument(file, ext, currentTabPageName);
         fileFlag = 0;
-   }
-
+    }
 }
 
 
@@ -697,14 +695,14 @@ void MainWindow::on_actionLoadGDocPage_triggered()
 		on_actionSave_As_triggered();
         QString changefiledir = filestructure_fw[gCurrentDirName];
         QString str1 = gDirTwoLevelUp + "/" + changefiledir + "/" + gCurrentPageName;
-        str1.replace(".txt", ".html");
+		str1.replace("txt", "html");
 
 		QFile sFile(str1);
 		if (sFile.open(QFile::WriteOnly | QFile::Text))
 		{
 			QTextStream out(&sFile);
 			out.setCodec("UTF-8");
-            out << curr_browser->toHtml(); //toPlainText(); //Modified
+			out << curr_browser->toHtml(); //toPlainText(); Sanoj
 			sFile.flush();
 			sFile.close();
 		}
@@ -2840,28 +2838,38 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 	b->setFont(font);
     gInitialTextHtml = b->toHtml();
 
+    curr_browser = b;
+    int localTabIndex = currentTabIndex;
     if(fileFlag) {
-        curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
-        curr_browser->setDocument(b->document());
-        ui->tabWidget_2->setTabText(currentTabIndex, name);
-        tabchanged(currentTabIndex);
+        ui->tabWidget_2->removeTab(localTabIndex);
+        ui->tabWidget_2->insertTab(localTabIndex, curr_browser, name);
     }
     else {
         currentTabIndex = ui->tabWidget_2->addTab(b, name);
         ui->tabWidget_2->setCurrentIndex(currentTabIndex);
     }
 
+    currentTabIndex = localTabIndex;
+    currentTabPageName = name;
 	b->setMouseTracking(true);
 	b->installEventFilter(this);
 	b->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
-  
+
 	f->close();
 
-    QString imageFilePath = mProject.GetDir().absolutePath()+"/Images/" + gCurrentPageName;
-    imageFilePath.replace(".txt", ".jpeg");
-    imageFilePath.replace(".html", ".jpeg");
-    QFile *pImageFile = new QFile(imageFilePath);
+    QFile *pImageFile = new QFile(mProject.GetDir().absolutePath()+"/Images/" + gCurrentPageName);
     LoadImageFromFile(pImageFile);
+
+    myTimer.start();
+    DisplayTimeLog();
+
+    const QString qstr = "नमस्ते";
+    int c=0;
+    QTextBoundaryFinder finder = QTextBoundaryFinder(QTextBoundaryFinder::BoundaryType::Grapheme, qstr);
+    while (finder.toNextBoundary() != -1) {
+           c++;
+       }
+    qDebug() << c << "\n";
 
 }
 void MainWindow::LoadImageFromFile(QFile * f) {

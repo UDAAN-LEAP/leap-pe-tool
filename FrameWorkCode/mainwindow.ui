@@ -60,12 +60,12 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>250</width>
+         <width>16777215</width>
          <height>16777215</height>
         </size>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -88,7 +88,7 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>250</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -129,7 +129,7 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>250</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -390,6 +390,8 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionFontBlack"/>
     <addaction name="actionLineSpace"/>
     <addaction name="actionInsert_Tab_Space"/>
+    <addaction name="actionAdd_Image"/>
+    <addaction name="actionResize_Image"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -428,7 +430,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </attribute>
    <addaction name="actionNew"/>
-   <addaction name="actionOpen"/>
+   <addaction name="actionOpen_Project"/>
    <addaction name="actionSave"/>
    <addaction name="actionSave_As"/>
    <addaction name="actionLoadData"/>
@@ -460,13 +462,13 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionDiacritics"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionOpen">
+  <action name="actionOpen_Project">
    <property name="icon">
     <iconset resource="AppResources.qrc">
      <normaloff>:/Images/open.png</normaloff>:/Images/open.png</iconset>
    </property>
    <property name="text">
-    <string>Open</string>
+    <string>Open Project</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -801,11 +803,6 @@ p, li { white-space: pre-wrap; }
     <string>AccuracyLog</string>
    </property>
   </action>
-  <action name="actionOpen_Project">
-   <property name="text">
-    <string>Open Project</string>
-   </property>
-  </action>
   <action name="actionView_File_Hierarchy">
    <property name="text">
     <string>View File Hierarchy</string>
@@ -939,6 +936,16 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionAdd_Image">
+   <property name="text">
+    <string>Add Image</string>
+   </property>
+  </action>
+  <action name="actionResize_Image">
+   <property name="text">
+    <string>Resize Image</string>
    </property>
   </action>
  </widget>
