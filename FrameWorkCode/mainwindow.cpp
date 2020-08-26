@@ -646,7 +646,9 @@ void MainWindow::on_actionNew_triggered()
 		mFilename = "Untitled";
 		curr_browser->setPlainText("");
     } else {
-
+        QTextBrowser * b = new QTextBrowser();
+        currentTabIndex = ui->tabWidget_2->addTab(b, "Untitled");
+        ui->tabWidget_2->setCurrentIndex(currentTabIndex);
     }
 }
 
@@ -2817,6 +2819,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() {
 			a->setEnabled(true);
 		}
 	}
+    ui->lineEdit_2->setText("Version " + mProject.get_version());
 }
 QString GetFilter(QString & Name, const QStringList &list) {
 
