@@ -206,7 +206,6 @@
   <ItemGroup>
     <ClCompile Include="averageaccuracies.cpp" />
     <ClCompile Include="commentsview.cpp" />
-    <ClCompile Include="diacriticsview.cpp" />
     <ClCompile Include="DiffView.cpp" />
     <ClCompile Include="diff_match_patch.cpp" />
     <ClCompile Include="Filters.cpp" />
@@ -217,6 +216,8 @@
     <ClCompile Include="Project.cpp" />
     <ClCompile Include="ProjectHierarchyWindow.cpp" />
     <ClCompile Include="qcustomplot.cpp" />
+    <ClCompile Include="resizeimageview.cpp" />
+    <ClCompile Include="Symbols.cpp" />
     <ClCompile Include="TreeItem.cpp" />
     <ClCompile Include="TreeModel.cpp" />
     <ClCompile Include="VCSWidget.cpp" />
@@ -232,11 +233,12 @@
     <ClInclude Include="3rdParty\RapidXML\rapidxml_utils.hpp" />
     <QtMoc Include="commentsview.h" />
     <QtMoc Include="averageaccuracies.h" />
-    <QtMoc Include="diacriticsview.h" />
     <ClInclude Include="Filters.h" />
     <ClInclude Include="lg2_common.h" />
     <ClInclude Include="Project.h" />
     <QtMoc Include="ProjectHierarchyWindow.h" />
+    <QtMoc Include="Symbols.h" />
+    <QtMoc Include="resizeimageview.h" />
     <ClInclude Include="tesseract\apitypes.h" />
     <ClInclude Include="tesseract\baseapi.h" />
     <ClInclude Include="tesseract\capi.h" />
@@ -292,7 +294,6 @@
   <ItemGroup>
     <QtUic Include="averageaccuracies.ui" />
     <QtUic Include="commentsview.ui" />
-    <QtUic Include="diacriticsview.ui" />
     <QtUic Include="DiffView.ui">
     </QtUic>
     <QtUic Include="interndiffview.ui">
@@ -300,6 +301,8 @@
     <QtUic Include="mainwindow.ui">
     </QtUic>
     <QtUic Include="ProjectHierarchyWindow.ui" />
+    <QtUic Include="resizeimageview.ui" />
+    <QtUic Include="Symbols.ui" />
     <QtUic Include="VCSWidget.ui" />
   </ItemGroup>
   <ItemGroup>

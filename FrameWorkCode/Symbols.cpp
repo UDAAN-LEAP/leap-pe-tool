@@ -5,10 +5,11 @@ SymbolsView::SymbolsView(QWidget *parent) :
       QDialog(parent),
       ui(new Ui::SymbolsView)
 {
+    ui->setupUi(this);
     setWindowTitle("Special Symbols");
     currentTab = ui->Diacritics;
     connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabchanged(int)));
-    ui->setupUi(this);
+  
 }
  void SymbolsView::tabchanged(int idx)
  {
