@@ -18,7 +18,7 @@ public:
 
 public slots:
     void on_copyButton_clicked();
-    void tabchanged(int idx);
+    void tabChanged(int idx);
 
 private:
     Ui::SymbolsView *ui;

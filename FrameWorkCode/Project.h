@@ -38,6 +38,7 @@ public:
 	void add_and_commit();
 	void disable_push();
 	QString get_stage();
+    QString get_version();
 	Filter * getFilter(QString name);
 private:
 	QVector<QFile*> mFiles;

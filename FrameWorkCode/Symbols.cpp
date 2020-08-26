@@ -8,10 +8,10 @@ SymbolsView::SymbolsView(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle("Special Symbols");
     currentTab = ui->Diacritics;
-    connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabchanged(int)));
-  
+    bool b = connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
+
 }
- void SymbolsView::tabchanged(int idx)
+ void SymbolsView::tabChanged(int idx)
  {
      currentTab = (QTextEdit*)ui->tabWidget->widget(idx);
  }
