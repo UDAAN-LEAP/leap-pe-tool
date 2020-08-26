@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1366</width>
-    <height>768</height>
+    <height>1190</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -19,26 +19,74 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <widget class="QLineEdit" name="lineEdit">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>400</width>
-        <height>20</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>400</width>
-        <height>20</height>
-       </size>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>400</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>400</width>
+          <height>20</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="viewComments">
+          <property name="text">
+           <string>View Comments</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="compareCorrectorOutput">
+          <property name="text">
+           <string>Compare Corrector Output</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="compareVerifierOutput">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Comapre Verifer Output</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </item>
     <item>
      <widget class="QSplitter" name="splitter">
@@ -139,6 +187,12 @@
        </widget>
       </widget>
       <widget class="QTabWidget" name="tabWidget_2">
+       <property name="minimumSize">
+        <size>
+         <width>500</width>
+         <height>1000</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>16777215</width>
@@ -172,8 +226,8 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>550</width>
-             <height>550</height>
+             <width>500</width>
+             <height>1000</height>
             </size>
            </property>
            <property name="font">
@@ -216,23 +270,67 @@ p, li { white-space: pre-wrap; }
       <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
           <item>
-           <widget class="QPushButton" name="viewComments">
-            <property name="text">
-             <string>View Comments</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QToolButton" name="ZoomIn">
+              <property name="minimumSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Zoom In</string>
+              </property>
+              <property name="text">
+               <string>ZoomIn</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/Images/Zoom-In-icon.png</normalon>
+               </iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>22</width>
+                <height>22</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="ZoomOut">
+              <property name="minimumSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Zoom Out</string>
+              </property>
+              <property name="text">
+               <string>ZoomOut</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/Images/Zoom-Out-icon.png</normalon>
+               </iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>22</width>
+                <height>22</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
-           <widget class="QPushButton" name="compareCorrectorOutput">
-            <property name="text">
-             <string>Compare Corrector Output</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer">
+           <spacer name="horizontalSpacer_2">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -257,7 +355,7 @@ p, li { white-space: pre-wrap; }
           <property name="minimumSize">
            <size>
             <width>400</width>
-            <height>550</height>
+            <height>1000</height>
            </size>
           </property>
           <property name="maximumSize">
@@ -457,9 +555,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionJusitfiedAlign"/>
    <addaction name="actionLineSpace"/>
    <addaction name="actionHighlight"/>
-   <addaction name="actionZoom_In"/>
-   <addaction name="actionZoom_Out"/>
-   <addaction name="actionDiacritics"/>
+   <addaction name="actionSymbols"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen_Project">
@@ -867,6 +963,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Highlight</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
   </action>
   <action name="actionZoom_In">
    <property name="icon">
@@ -875,6 +974,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Zoom In</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl++</string>
    </property>
   </action>
   <action name="actionZoom_Out">
@@ -885,14 +987,21 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Zoom_Out</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
   </action>
-  <action name="actionDiacritics">
+  <action name="actionSymbols">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/icon_diacritics.png</normaloff>:/Images/icon_diacritics.png</iconset>
+     <normaloff>:/Images/symbols.png</normaloff>
+     <normalon>:/Images/symbols.png</normalon>:/Images/symbols.png</iconset>
    </property>
    <property name="text">
-    <string>Diacritics</string>
+    <string>Symbols</string>
+   </property>
+   <property name="toolTip">
+    <string>Special Symbols</string>
    </property>
   </action>
   <action name="actionSuperscript">
@@ -951,7 +1060,6 @@ p, li { white-space: pre-wrap; }
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>textBrowser</tabstop>
   <tabstop>graphicsView</tabstop>
  </tabstops>
  <resources>

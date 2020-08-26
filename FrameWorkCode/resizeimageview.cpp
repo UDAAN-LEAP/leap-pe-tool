@@ -9,6 +9,7 @@ ResizeImageView::ResizeImageView(QWidget *parent,double imageWidth,double imageH
     QDialog(parent),
     ui(new Ui::ResizeImageView)
 {
+    setWindowTitle("Resize Image Size");
     ui->setupUi(this);
 
         widthLabel = new QLabel("Image width");

@@ -4,7 +4,7 @@
 DiffView::DiffView( QString &ocrtext,  QString &interntext,  QString &verifiertext,const QString &InternAcc, const QString &VerifierAcc, const QString &OcrAcc, QWidget *parent)
 	: QMainWindow(parent)
 {
-
+    setWindowTitle("Verifier Output Difference");
     QTextDocument doc;
     doc.setHtml(interntext);
     interntext = doc.toPlainText();

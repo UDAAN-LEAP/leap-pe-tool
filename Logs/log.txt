@@ -1,2 +1,0 @@
-C:/Users/raman/source/repos/OpenOCRCorrect/TestProject/Inds/page-4.txt 0
-C:/Users/raman/source/repos/OpenOCRCorrect/TestProject/Inds/page-5.txt 0

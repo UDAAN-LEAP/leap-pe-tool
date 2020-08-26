@@ -157,8 +157,6 @@ private slots:
 
     void on_actionJusitfiedAlign_triggered();
 
-    void on_actionAverage_Accuracy_triggered();
-
     void on_actionHighlight_triggered();
 
 	void on_actionFontBlack_triggered();
@@ -217,7 +215,7 @@ private slots:
 
     void on_actionZoom_Out_triggered();
 
-    void on_actionDiacritics_triggered();
+    void on_actionSymbols_triggered();
 
     //void on_actionCompare_Verifier_triggered();
 
@@ -240,6 +238,14 @@ private slots:
     void DisplayTimeLog();
 
     void on_actionResize_Image_triggered();
+
+    void LogHighlights(QString word);
+
+    void on_compareVerifierOutput_clicked();
+
+    void on_ZoomIn_clicked();
+
+    void on_ZoomOut_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -5,6 +5,7 @@
 InternDiffView::InternDiffView( QString &ocroutput,  QString &interntxt, const QString &ocrimgpath, const QString acc, QWidget *parent)
 	: QMainWindow(parent)
 {
+    setWindowTitle("Corrector Output Difference");
     QTextDocument doc;
     doc.setHtml(interntxt);
     interntxt = doc.toPlainText();

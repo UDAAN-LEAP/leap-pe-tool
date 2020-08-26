@@ -8,6 +8,7 @@
 
 
 HEADERS += ./3rdParty/RapidXML/rapidxml.hpp \
+    $$PWD/Symbols.h \
     $$PWD/resizeimageview.h \
     ./3rdParty/RapidXML/rapidxml_iterators.hpp \
     ./3rdParty/RapidXML/rapidxml_print.hpp \
@@ -47,9 +48,9 @@ HEADERS += ./3rdParty/RapidXML/rapidxml.hpp \
     ./zoom.h \
     ./commentsview.h \
     ./averageaccuracies.h \
-    $$PWD/diacriticsview.h \
     $$PWD/lg2_common.h
 SOURCES += ./Filters.cpp \
+    $$PWD/Symbols.cpp \
     $$PWD/resizeimageview.cpp \
     ./Project.cpp \
     ./ProjectHierarchyWindow.cpp \
@@ -64,14 +65,13 @@ SOURCES += ./Filters.cpp \
     ./zoom.cpp \
     ./commentsview.cpp \
     ./averageaccuracies.cpp \
-    $$PWD/diacriticsview.cpp \
     $$PWD/lg2_common.cpp
 FORMS += ./DiffView.ui \
+    $$PWD/Symbols.ui \
     $$PWD/resizeimageview.ui \
     ./interndiffview.ui \
     ./mainwindow.ui \
     ./ProjectHierarchyWindow.ui \
     ./commentsview.ui \
-    ./averageaccuracies.ui \
-    $$PWD/diacriticsview.ui
+    ./averageaccuracies.ui
 RESOURCES += AppResources.qrc

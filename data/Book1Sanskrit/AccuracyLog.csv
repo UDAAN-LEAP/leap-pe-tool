@@ -1,0 +1,8 @@
+Page Name,Errors (Word level),Errors (Character-Level),Accuracy of Corrector (Word level),Accuracy of Corrector (Character-Level),Changes made by Corrector(%),OCR Accuracy(w.rt. Verified Text)
+page-1.html,1,3,95.83,99.95,5.67,93.48
+page-69.html,0,0,100,100,2.06,97.94
+test.html,284,1683,-7.17,6.29,0,6.24
+V1_page-2.html,0,0,100,100,1.52,98.48
+V1_page-3.html,0,0,100,100,1.47,98.53
+V1_page-4.html,0,0,100,100,1.66,98.34
+V2_page-3.html,0,0,100,100,1.47,98.53

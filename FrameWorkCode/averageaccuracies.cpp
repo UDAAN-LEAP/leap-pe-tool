@@ -6,7 +6,7 @@ AverageAccuracies::AverageAccuracies(QString csvfilepath,float avgwordacc, float
     ui(new Ui::AverageAccuracies)
 {
     ui->setupUi(this);
-    
+    setWindowTitle("Average Accuracies");
     QStandardItemModel *model = new QStandardItemModel;
 
     QFile file(csvfilepath);

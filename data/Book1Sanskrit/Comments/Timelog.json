@@ -1,0 +1,42 @@
+{
+    "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/V1_page-2.html": {
+        "directory": "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/V1_page-2.html",
+        "seconds": 0
+    },
+    "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-10.html": {
+        "directory": "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-10.html",
+        "seconds": 2
+    },
+    "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-9.html": {
+        "directory": "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-9.html",
+        "seconds": 18
+    },
+    "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-10.txt": {
+        "directory": "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-10.txt",
+        "seconds": 5
+    },
+    "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-11.txt": {
+        "directory": "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-11.txt",
+        "seconds": 1
+    },
+    "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-12.txt": {
+        "directory": "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-12.txt",
+        "seconds": 0
+    },
+    "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-13.txt": {
+        "directory": "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-13.txt",
+        "seconds": 0
+    },
+    "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-14.txt": {
+        "directory": "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-14.txt",
+        "seconds": 1
+    },
+    "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-15.txt": {
+        "directory": "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-15.txt",
+        "seconds": 0
+    },
+    "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-16.txt": {
+        "directory": "/home/sanoj/TEST/OpenOCRCorrect/data/Book1Sanskrit/Inds/page-16.txt",
+        "seconds": 85
+    }
+}

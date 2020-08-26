@@ -26,5 +26,6 @@
         <file>Zoom-Out-icon.png</file>
         <file>Zoom-In-icon.png</file>
         <file>linespacing.png</file>
+        <file>symbols.png</file>
     </qresource>
 </RCC>
