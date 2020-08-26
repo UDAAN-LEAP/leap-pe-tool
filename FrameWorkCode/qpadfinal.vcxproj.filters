@@ -92,11 +92,14 @@
     <ClCompile Include="VCSWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="diacriticsview.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="Project.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Symbols.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="resizeimageview.cpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,7 +202,10 @@
     <QtMoc Include="VCSWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="diacriticsview.h">
+    <QtMoc Include="Symbols.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="resizeimageview.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -233,7 +239,10 @@
     <QtUic Include="VCSWidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="diacriticsview.ui">
+    <QtUic Include="Symbols.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="resizeimageview.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

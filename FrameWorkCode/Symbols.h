@@ -16,7 +16,7 @@ public:
     explicit SymbolsView(QWidget *parent = 0);
     ~SymbolsView();
 
-private slots:
+public slots:
     void on_copyButton_clicked();
     void tabChanged(int idx);
 
