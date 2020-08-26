@@ -5,7 +5,9 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <vector>
 #include <unordered_map>
+#include "eddis.h"
 //#include <boost/serialization/map.hpp>
 //#include <boost/serialization/vector.hpp>
 //#include <boost/serialization/serialization.hpp>
@@ -59,26 +61,26 @@ string toDev(string s)
         string vowel_slp1[]={"a","A","i","I","u","U","f","e","E","o","O","Z","M","H","*","~"};
         string consonants_dn[]={"क","ख","ग","घ","ङ","च","छ","ज","झ","ञ","ट","ठ","ड","ढ","ण","त","थ","द","ध","न","प","फ","ब","भ","म","य","र","ल","व","श","ष","स","ह","क़","ख़","ग़","ज़","ड़","ढ़","ऩ","फ़","य़","ऱ","ळ"};
         string consonants_dn_halanta[]={"क्","ख्","ग्","घ्","ङ्","च्","छ्","ज्","झ्","ञ्","ट्","ठ्","ड्","ढ्","ण्","त्","थ्","द्","ध्","न्","प्","फ्","ब्","भ्","म्","य्","र्","ल्","व्","श्","ष्","स्","ह्","क़्","ख़्","ग़्","ज़्","ड़्","ढ़्","ऩ्","फ़्","य़्","ऱ्","ळ्"};
-        string consonants_slp1[]={"k","K","g","G","N","c","C","j","J","Y","w","W","q","Q","R","t","T","d","D","n","p","P","b","B","m","y","r","l","v","S","z","s","h","@","#","$","F","x","X","%","^","L","V","&"};
+        string consonants_slp1[]={"k","K","g","G","N","c","C","j","J","Y","w","W","q","Q","R","t","T","d","D","n","p","P","b","B","m","y","r","l","v","S","z","s","h","@","#","$","F","x","X","%","^","&","V","L"};
         string no_dn[]={"०","१","२","३","४","५","६","७","८","९","॥","।","–","—"};
         string no_slp1[]={"0","1","2","3","4","5","6","7","8","9","||","|","-","-"};
 
         for(int i=0;i<44;i++)
-                {
-                    s=ReplaceString(s,consonants_slp1[i],consonants_dn_halanta[i]);
-                }
-                for(int i=0;i<12;i++)
-                {
-                    s=ReplaceString(s,"्"+vowel_slp1[i],vowel_dn_joiner[i]);
-                }
-                for(int i=0;i<16;i++)
-                {
-                    s=ReplaceString(s,vowel_slp1[i],vowel_dn[i]);
-                }
-                for(int i=0;i<13;i++)
-                {
-                    s=ReplaceString(s,no_slp1[i],no_dn[i]);
-                }
+        {
+            s=ReplaceString(s,consonants_slp1[i],consonants_dn_halanta[i]);
+        }
+        for(int i=0;i<12;i++)
+        {
+            s=ReplaceString(s,"्"+vowel_slp1[i],vowel_dn_joiner[i]);
+        }
+        for(int i=0;i<16;i++)
+        {
+            s=ReplaceString(s,vowel_slp1[i],vowel_dn[i]);
+        }
+        for(int i=0;i<13;i++)
+        {
+            s=ReplaceString(s,no_slp1[i],no_dn[i]);
+        }
     }
 else if(SanFlag ){
     string vowel_dn[]={"अ","आ","इ","ई","उ","ऊ","ऋ","ॠ","ऌ","ॡ","ए","ऐ","ओ","औ","ं","ः","ँ","ᳲ","ᳳ","ऽ","ॐ"};
@@ -91,27 +93,27 @@ else if(SanFlag ){
     string numbers_eng[]={"1","2","3","4","5","6","7","8","9","0","|","||","0","$","'","'","''","''","%"};
 
 
-        for(int i=0;i<34;i++)
-        {
-            s=ReplaceString(s,consonants_slp1[i],consonants_dn_halanta[i]);
-        }
-        //cout << "here1 " << s <<endl;
-        for(int i=0;i<14;i++)
-        {
-            s=ReplaceString(s,"्"+vowel_slp1[i],vowel_dn_joiner[i]);
-        }
-        //cout << "here2 " << s <<endl;
-        for(int i=0;i<21;i++)
-        {
-            s=ReplaceString(s,vowel_slp1[i],vowel_dn[i]);
-        }
-        //cout << "here3 " << s <<endl;
-        for(unsigned int i=0;i<(sizeof(numbers_etc_dn)/sizeof(numbers_etc_dn[0]));i++)
-        {
-            s=ReplaceString(s,numbers_eng[i],numbers_etc_dn[i]);
-        }
-        //cout << "here3 " << s <<endl;
-        //cout<<s<<endl;
+       for(int i=0;i<34;i++)
+       {
+           s=ReplaceString(s,consonants_slp1[i],consonants_dn_halanta[i]);
+       }
+       //cout << "here1 " << s <<endl;
+       for(int i=0;i<14;i++)
+       {
+           s=ReplaceString(s,"्"+vowel_slp1[i],vowel_dn_joiner[i]);
+       }
+       //cout << "here2 " << s <<endl;
+       for(int i=0;i<21;i++)
+       {
+           s=ReplaceString(s,vowel_slp1[i],vowel_dn[i]);
+       }
+       //cout << "here3 " << s <<endl;
+       for(unsigned int i=0;i<(sizeof(numbers_etc_dn)/sizeof(numbers_etc_dn[0]));i++)
+       {
+           s=ReplaceString(s,numbers_eng[i],numbers_etc_dn[i]);
+       }
+       //cout << "here3 " << s <<endl;
+       //cout<<s<<endl;
     }
 
     return s;
@@ -126,7 +128,7 @@ string toslp1(string s)
         string vowel_slp1[]={"a","A","i","I","u","U","f","e","E","o","O","Z","M","H","*","~"};
         string consonants_dn[]={"क","ख","ग","घ","ङ","च","छ","ज","झ","ञ","ट","ठ","ड","ढ","ण","त","थ","द","ध","न","प","फ","ब","भ","म","य","र","ल","व","श","ष","स","ह","क़","ख़","ग़","ज़","ड़","ढ़","ऩ","फ़","य़","ऱ","ळ"};
         string consonants_dn_halanta[]={"क्","ख्","ग्","घ्","ङ्","च्","छ्","ज्","झ्","ञ्","ट्","ठ्","ड्","ढ्","ण्","त्","थ्","द्","ध्","न्","प्","फ्","ब्","भ्","म्","य्","र्","ल्","व्","श्","ष्","स्","ह्","क़्","ख़्","ग़्","ज़्","ड़्","ढ़्","ऩ्","फ़्","य़्","ऱ्","ळ्"};
-        string consonants_slp1[]={"k","K","g","G","N","c","C","j","J","Y","w","W","q","Q","R","t","T","d","D","n","p","P","b","B","m","y","r","l","v","S","z","s","h","@","#","$","F","x","X","%","^","L","V","&"};
+        string consonants_slp1[]={"k","K","g","G","N","c","C","j","J","Y","w","W","q","Q","R","t","T","d","D","n","p","P","b","B","m","y","r","l","v","S","z","s","h","@","#","$","F","x","X","%","^","&","V","L"};
         string no_dn[]={"०","१","२","३","४","५","६","७","८","९","।","॥","–","—"};
         string no_slp1[]={"0","1","2","3","4","5","6","7","8","9","|","||","-","-"};
 
@@ -277,16 +279,16 @@ ifstream myfile(fileName);
 }
 
 int minIG(int a, int b){ if(a>b)return b; else return a;}
-//int std::max(int a, int b){ if(a<b)return b; else return a;}
+int maxIG(int a, int b){ if(a<b)return b; else return a;}
 
 
 void loadMapPWords(vector<string>& vGBook,vector<string>& vIBook, map<string,int>& PWords){
-    int vGsz = (int)vGBook.size(), vIsz = (int) vIBook.size();
+    int vGsz = vGBook.size(), vIsz =  vIBook.size();
     int win = vGsz  - vIsz;
     if(win<0) win = -1*win;
     // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
     for(int t = 0; t < vIsz;t++){
-        for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
+        for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
             string s1 = vIBook[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
             if( (vGBook[t1].find(s1) != string::npos)|| (vGBook[t1].find(s1 + " ") != string::npos) || (vGBook[t1].find(" " + s1) != string::npos)) {PWords[s1]++; break;}
         }
@@ -456,7 +458,7 @@ std::vector<std::string> split(const std::string& s, const std::string& delimite
 //ADDED FOR ERROR DETECTION REPORT
 
 bool searchS1inGVec(string s1,size_t iocrdone,vector<string>& gocr,size_t winig){
-    for(size_t t1 = std::max(iocrdone-winig,(size_t)0); t1 < min(iocrdone+winig,gocr.size()); t1++){
+    for(int t1 = maxIG(iocrdone-winig,0); t1 < min(iocrdone+winig,gocr.size()); t1++){
         if (s1 == gocr[t1]) return 1;
     }
     return 0;
@@ -733,8 +735,8 @@ bool isNonVowel(string ocrp){
 
 string removeSpaces(string input)
 { string output;
-  size_t length = input.length();
-  for (size_t i = 0; i < length; i++) {
+  int length = input.length();
+  for (int i = 0; i < length; i++) {
      if(input[i] != ' ') output+= input[i];
   }
   return output;
@@ -796,13 +798,13 @@ void findConfisionsNindex(string ocr, string correct, vector<string>& vec, vecto
     size_t sz = ocr.size();
     string ocrp = "";
     size_t t = 0;
-    size_t s1p;
+    int s1p;
 
     while(1){
         string ocrn ="";
         string correctn ="";
         string s1 = ocr.substr(t,1), s2 = correct.substr(t,1);
-		size_t s1t = t;
+    int s1t = t;
         //cout << "t = " << t << " " << sz << endl;
         // deletion
         if(s2 == " ") {
@@ -950,7 +952,7 @@ void generateCorrectionPairs(vector<string> &wrong,vector<string> &right,string 
         //cout << vGsz << " " << vIsz << endl;
         int win = vGsz  - vIsz;
         if(win<0) win = -1*win;
-        win = std::max(win,5);
+        win = maxIG(win,5);
         //cout << win << endl;
         //float WER = 0;
         // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
@@ -958,7 +960,7 @@ void generateCorrectionPairs(vector<string> &wrong,vector<string> &right,string 
             size_t minedit = 1000;
             string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
             string sC;
-            for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
+            for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
                 string sCt1 = vecpC[t1];
                 size_t mineditIC = editDist(s1,sCt1);
                 if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1;   }
@@ -986,7 +988,7 @@ void generatePairs(vector<string> &wrong,vector<string> &right,string localFilen
         //cout << vGsz << " " << vIsz << endl;
         int win = vGsz  - vIsz;
         if(win<0) win = -1*win;
-        win = std::max(win,5);
+        win = maxIG(win,5);
         //cout << win << endl;
         //float WER = 0;
         // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
@@ -994,7 +996,7 @@ void generatePairs(vector<string> &wrong,vector<string> &right,string localFilen
             size_t minedit = 1000,minediti;
             string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
             string sC;
-            for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
+            for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
                 string sCt1 = vecpC[t1];
                 size_t mineditIC = editDist(s1,sCt1);
                 if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1; minediti = t1;  }
@@ -1029,7 +1031,7 @@ void generatePairsIEROCR(string localFilenameI,string localFilenameC, string Rep
     //cout << vGsz << " " << vIsz << endl;
     int win = vGsz  - vIsz;
     if(win<0) win = -1*win;
-    win = std::max(win,20);
+    win = maxIG(win,20);
     //cout << win << endl;
     //float WER = 0;
     // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
@@ -1037,7 +1039,7 @@ void generatePairsIEROCR(string localFilenameI,string localFilenameC, string Rep
         size_t minedit = 1000,minediti;
         string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
         string sC;
-        for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
+        for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
             string sCt1 = vecpC[t1];
             size_t mineditIC = editDist(s1,sCt1);
             if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1; minediti = t1;  }
@@ -1072,7 +1074,7 @@ void generatePairsSpaced(vector<string> &wrong,vector<string> &right,string loca
         //cout << vGsz << " " << vIsz << endl;
         int win = vGsz  - vIsz;
         if(win<0) win = -1*win;
-        win = std::max(win,5);
+        win = maxIG(win,5);
         //cout << win << endl;
         //float WER = 0;
         // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
@@ -1080,7 +1082,7 @@ void generatePairsSpaced(vector<string> &wrong,vector<string> &right,string loca
             size_t minedit = 1000,minediti;
             string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
             string sC;
-            for(int t1 = std::max(t-win,0); t1 < min(t+win,vGsz); t1++){
+            for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
                 string sCt1 = vecpC[t1];
                 size_t mineditIC = editDist(s1,sCt1);
                 if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1; minediti = t1;  }
@@ -1494,4 +1496,3 @@ return "";
 }
 
 #endif // SLPNPATTERNDICT_H
-

@@ -585,6 +585,11 @@ QString Project::get_stage() {
 	QString stage = c.child("Stage").child_value();
 	return stage;
 }
+QString Project::get_version() {
+    auto c = doc.child("Project").child("Metadata");
+    QString version = c.child("Version").child_value();
+    return version;
+}
 void Project::open_git_repo() {
 	std::string dir = mProjectDir.path().toStdString();
 	QString gitpath = mProjectDir.path() + "/.git";
