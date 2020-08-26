@@ -58,7 +58,7 @@ int openedFileChars;
 int openedFileWords;
 bool gSaveTriggered = 0;
 map<QString, QString> filestructure_fw = { {"Inds","CorrectorOutput"},
-									 {"CorrectorOutput","CorrectorOutput",},
+									 {"CorrectorOutput","VerifierOutput",},
                                         {"VerifierOutput","CorrectorOutput" }
 };
 map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
@@ -2872,7 +2872,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         while (getline(iss, line)) {
             QString qline = QString::fromStdString(line);
             if(line == "\n" | line == "" | qline.contains("\r") )
-                strHtml+="</p><p>";
+                strHtml+=line+"</p><p>";
             else strHtml += line + "<br />";
        }
        strHtml += "</p></body></html>";

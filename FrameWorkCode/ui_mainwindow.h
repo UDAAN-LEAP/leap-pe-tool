@@ -112,6 +112,7 @@ public:
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout_3;
     QLineEdit *lineEdit;
+    QLineEdit *lineEdit_2;
     QSpacerItem *horizontalSpacer;
     QHBoxLayout *horizontalLayout;
     QPushButton *viewComments;
@@ -377,6 +378,13 @@ public:
 
         horizontalLayout_3->addWidget(lineEdit);
 
+        lineEdit_2 = new QLineEdit(centralWidget);
+        lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
+        lineEdit_2->setMinimumSize(QSize(0, 20));
+        lineEdit_2->setMaximumSize(QSize(16777215, 20));
+
+        horizontalLayout_3->addWidget(lineEdit_2);
+
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_3->addItem(horizontalSpacer);
@@ -417,7 +425,7 @@ public:
         sizePolicy1.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
         tabWidget->setSizePolicy(sizePolicy1);
         tabWidget->setMinimumSize(QSize(100, 0));
-        tabWidget->setMaximumSize(QSize(400, 16777215));
+        tabWidget->setMaximumSize(QSize(500, 16777215));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
         gridLayout = new QGridLayout(tab);
@@ -429,7 +437,7 @@ public:
         sizePolicy1.setHeightForWidth(textEdit->sizePolicy().hasHeightForWidth());
         textEdit->setSizePolicy(sizePolicy1);
         textEdit->setMinimumSize(QSize(100, 0));
-        textEdit->setMaximumSize(QSize(300, 16777215));
+        textEdit->setMaximumSize(QSize(500, 16777215));
         QFont font;
         font.setFamily(QString::fromUtf8("FreeSans"));
         font.setItalic(true);
@@ -451,7 +459,7 @@ public:
         sizePolicy1.setHeightForWidth(treeView->sizePolicy().hasHeightForWidth());
         treeView->setSizePolicy(sizePolicy1);
         treeView->setMinimumSize(QSize(100, 0));
-        treeView->setMaximumSize(QSize(400, 16777215));
+        treeView->setMaximumSize(QSize(500, 16777215));
 
         gridLayout_2->addWidget(treeView, 0, 0, 1, 1);
 
@@ -477,7 +485,7 @@ public:
         sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(textBrowser->sizePolicy().hasHeightForWidth());
         textBrowser->setSizePolicy(sizePolicy2);
-        textBrowser->setMinimumSize(QSize(500, 1000));
+        textBrowser->setMinimumSize(QSize(400, 1000));
         QFont font1;
         font1.setFamily(QString::fromUtf8("Shobhika"));
         font1.setPointSize(16);
@@ -659,7 +667,6 @@ public:
         menuView->addAction(actionCompare_Corrector);
         menuView->addSeparator();
         menuView->addAction(actionAverage_Accuracy);
-        menuView->addAction(actionView_Comments);
         menuGit->addAction(actionTurn_In);
         menuGit->addAction(actionCommit);
         menuGit->addAction(actionFetch_2);
@@ -696,7 +703,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
         tabWidget_2->setCurrentIndex(0);
 
 
