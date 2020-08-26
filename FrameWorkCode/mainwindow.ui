@@ -499,7 +499,6 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionCompare_Corrector"/>
     <addaction name="separator"/>
     <addaction name="actionAverage_Accuracy"/>
-    <addaction name="actionView_Comments"/>
    </widget>
    <widget class="QMenu" name="menuGit">
     <property name="title">
