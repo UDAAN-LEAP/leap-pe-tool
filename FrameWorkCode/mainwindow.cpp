@@ -57,9 +57,9 @@ map<int, vector<int>> commentederrors;
 int openedFileChars;
 int openedFileWords;
 bool gSaveTriggered = 0;
-map<QString, QString> filestructure_fw = { {"Inds","CorrectorOutput"},
-									 {"CorrectorOutput","CorrectorOutput",},
-                                        {"VerifierOutput","CorrectorOutput" }
+map<QString, QString> filestructure_fw = { {"Inds","VerifierOutput"},
+                                     {"CorrectorOutput","VerifierOutput",},
+                                        {"VerifierOutput","VerifierOutput" }
 };
 map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
 									 {"CorrectorOutput","Inds"},
@@ -155,6 +155,51 @@ void GetPageNumber(string localFilename, string *no, size_t *loc, QString *ext)
     while(nos.find(s) != string::npos) {
         *no = s + *no; (*loc)--; s = localFilename.substr((*loc)-1,1);
     }
+}
+
+int GetGraphemesCount(QString string)
+{
+    int count = 0;
+    QTextBoundaryFinder finder = QTextBoundaryFinder(QTextBoundaryFinder::BoundaryType::Grapheme, string);
+    while (finder.toNextBoundary() != -1) {
+            count++;
+        }
+    int spaces = string.count(' ');
+    return count - spaces;
+}
+
+int LevenshteinWithGraphemes(QList<Diff> diffs)
+{
+    int levenshtein = 0;
+    QString diffChars = "";
+    QString insertions = "";
+    QString deletions = "";
+    foreach(Diff aDiff, diffs) {
+      switch (aDiff.operation) {
+        case INSERT:
+          insertions += aDiff.text;
+          break;
+        case DELETE:
+          deletions += aDiff.text;
+          break;
+        case EQUAL:
+          // A deletion and an insertion is one substitution.
+          if(GetGraphemesCount(insertions)> GetGraphemesCount(deletions))
+              levenshtein += insertions.length();
+          else
+              levenshtein += deletions.length();
+          insertions = "";
+          deletions = "";
+          break;
+        default:
+            break;
+      }
+    }
+    if(GetGraphemesCount(insertions)> GetGraphemesCount(deletions))
+        levenshtein += insertions.length();
+    else
+        levenshtein += deletions.length();
+    return levenshtein;
 }
 
 void MainWindow::on_actionLoad_Next_Page_triggered()
@@ -2357,7 +2402,7 @@ void MainWindow::on_viewComments_clicked() //Verifier-Version
 
                 diff_match_patch dmp;
                 auto diffs1 = dmp.diff_main(correctorOutput,currentpagetext);
-                totalCharErrors = dmp.diff_levenshtein(diffs1);
+                totalCharErrors = LevenshteinWithGraphemes(diffs1);
 
                 auto diffs2 = dmp.diff_linesToChars(correctorOutput, currentpagetext); //LinesToChars modifed for WordstoChar in diff_match_patch.cpp
                 auto lineText1 = diffs2[0].toString();
@@ -2365,7 +2410,7 @@ void MainWindow::on_viewComments_clicked() //Verifier-Version
                 auto lineArray = diffs2[2].toStringList();
                 int totalwords = lineArray.count();
                 auto diffs3 = dmp.diff_main(lineText1, lineText2);
-                totalWordErrors= dmp.diff_levenshtein(diffs3);
+                totalWordErrors= LevenshteinWithGraphemes(diffs3);
                 dmp.diff_charsToLines(diffs3, lineArray);
 
 
@@ -2407,13 +2452,8 @@ void MainWindow::on_viewComments_clicked() //Verifier-Version
                     textCursor.setPosition(anchor+1);
                     //textCursor.movePosition(QTextCursor::NextCharacter , QTextCursor::MoveAnchor, 1);
                 }
-                int c = 0;
-                QTextBoundaryFinder finder = QTextBoundaryFinder(QTextBoundaryFinder::BoundaryType::Grapheme, highlightedChars);
-                while (finder.toNextBoundary() != -1) {
-                        c++;
-                    }
-                int spaces = highlightedChars.count(' ');
-                totalCharErrors = c - spaces;
+
+                totalCharErrors = GetGraphemesCount(highlightedChars);
 
                 int totalChars=0;
                 QString currentText = curr_browser->toPlainText();
@@ -2517,11 +2557,11 @@ void MainWindow::on_compareCorrectorOutput_clicked() //Corrector
 
             int l1,l2, DiffOcr_Corrector; float correctorChangesPerc;
 
-            l1 = qs1.length(); l2 = qs2.length();
+            l1 = GetGraphemesCount(qs1); l2 = GetGraphemesCount(qs2);
 
             diff_match_patch dmp;
             auto diffs1 = dmp.diff_main(qs1,qs2);
-            DiffOcr_Corrector = dmp.diff_levenshtein(diffs1);
+            DiffOcr_Corrector = LevenshteinWithGraphemes(diffs1);
             correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l2)*100;
             if(correctorChangesPerc>100) correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l1)*100;
             correctorChangesPerc = (((float)lround(correctorChangesPerc*100))/100);
@@ -2534,101 +2574,95 @@ void MainWindow::on_compareCorrectorOutput_clicked() //Corrector
 void MainWindow::on_compareVerifierOutput_clicked() //Verifier-Version
 {
 
-    string s1 = "", s2 = "", s3 = ""; QString qs1 = "", qs2 = "", qs3 = "";
-    file = QFileDialog::getOpenFileName(this, "Open Verifier's Output File");
-    if (!file.isEmpty())
+    QString qs1="", qs2="",qs3="";
+    file = QFileDialog::getOpenFileName(this,"Open Verifier's Output File");
+    if(!file.isEmpty())
     {
-        QString verifiertext = file;
-        QString correctortext = file.replace("VerifierOutput", "CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-        QString ocrtext = file.replace("CorrectorOutput", "Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-        ocrtext.replace(".html", ".txt");
-        ocrtext.replace("V1_", "");
-        ocrtext.replace("V2_", "");
-        ocrtext.replace("V3_", "");
-        if (!ocrtext.isEmpty())
+        QString verifierText = file;
+        QString correctorText = file.replace("VerifierOutput","CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+        QString ocrText = file.replace("CorrectorOutput","Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+        ocrText.replace(".html",".txt");
+        ocrText.replace("V1_","");
+        ocrText.replace("V2_","");
+        ocrText.replace("V3_","");
+        if(!ocrText.isEmpty())
         {
-            QFile sFile(ocrtext);
-            if (sFile.open(QFile::ReadOnly | QFile::Text))
+            QFile sFile(ocrText);
+            if(sFile.open(QFile::ReadOnly | QFile::Text))
             {
                 QTextStream in(&sFile);
                 in.setCodec("UTF-8");
-                QString t = in.readAll();
-                t = t.replace(" \n", "\n");
-                qs1 = t;
+                qs1 = in.readAll().replace(" \n","\n");
+                if(qs1=="") {
+                    DisplayError("Error in Displaying File: "+ ocrText + "is Empty");
+                    return;      }
                 sFile.close();
             }
 
         }
-        if (!correctortext.isEmpty())
+        if(!correctorText.isEmpty())
         {
-            QFile sFile(correctortext);
-            if (sFile.open(QFile::ReadOnly | QFile::Text))
+            QFile sFile(correctorText);
+            if(sFile.open(QFile::ReadOnly | QFile::Text))
             {
                 QTextStream in(&sFile);
                 in.setCodec("UTF-8");
-                QString t = in.readAll();
-                t = t.replace(" \n", "\n");
-                qs2 = t;
+                qs2 = in.readAll();
+                if(qs2=="") {
+                    DisplayError("Error in Displaying File: "+ correctorText + "is Empty");
+                    return;      }
                 sFile.close();
             }
 
         }
-        if (!verifiertext.isEmpty())
+        if(!verifierText.isEmpty())
         {
-            QFile sFile(verifiertext);
-            if (sFile.open(QFile::ReadOnly | QFile::Text))
+            QFile sFile(verifierText);
+            if(sFile.open(QFile::ReadOnly | QFile::Text))
             {
                 QTextStream in(&sFile);
                 in.setCodec("UTF-8");
-                QString t = in.readAll();
-                t = t.replace(" \n", "\n");
-                qs3 = t;
+                qs3 = in.readAll();
+                if(qs3=="") {
+                    DisplayError("Error in Displaying File: "+ verifierText + "is Empty");
+                    return;      }
                 sFile.close();
             }
 
         }
         QTextDocument doc;
-        QString t;
-
-        //    doc.setHtml(qs1);
-        //    qs1 = doc.toPlainText();
-        t = qs1;  t.replace(" ", "");
-        s1 = t.toUtf8().constData();
 
         doc.setHtml(qs2);
-        qs2 = doc.toPlainText();
-        t = qs2;  t.replace(" ", "");
-        s2 = t.toUtf8().constData();
+        qs2 = doc.toPlainText().replace(" \n","\n");
 
         doc.setHtml(qs3);
-        qs3 = doc.toPlainText();
-        t = qs3;  t.replace(" ", "");
-        s3 = t.toUtf8().constData();
+        qs3 = doc.toPlainText().replace(" \n","\n");
 
-        int l1, l2, l3, DiffOcr_Corrector, DiffCorrector_Verifier, DiffOcr_Verifier; float correctorChangesPerc, verifierChangesPerc, ocrErrorPerc;
+        int l1,l2,l3, DiffOcr_Corrector,DiffCorrector_Verifier,DiffOcr_Verifier; float correctorChangesPerc,verifierChangesPerc,ocrErrorPerc;
 
+        l1 = GetGraphemesCount(qs1); l2 = GetGraphemesCount(qs2); l3 = GetGraphemesCount(qs3);
 
-        l1 = s1.length();
-        l2 = s2.length();
-        l3 = s3.length();
-        DiffOcr_Corrector = editDist(s1, s2);
-        correctorChangesPerc = ((float)(DiffOcr_Corrector) / (float)l1) * 100;
-        if (correctorChangesPerc < 0) correctorChangesPerc = ((float)(DiffOcr_Corrector) / (float)l2) * 100;
+        diff_match_patch dmp;
 
-        DiffCorrector_Verifier = editDist(s2, s3);
-        verifierChangesPerc = ((float)(DiffCorrector_Verifier) / (float)l2) * 100;
-        if (verifierChangesPerc < 0) verifierChangesPerc = ((float)(DiffCorrector_Verifier) / (float)l3) * 100;
+        auto diffs1 = dmp.diff_main(qs1,qs2);
+        DiffOcr_Corrector = LevenshteinWithGraphemes(diffs1);
+        correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l2)*100;
+        if(correctorChangesPerc>100) correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l1)*100;
+        correctorChangesPerc = (((float)lround(correctorChangesPerc*100))/100);
 
-        DiffOcr_Verifier = editDist(s1, s3);
-        ocrErrorPerc = ((float)(DiffOcr_Verifier) / (float)l1) * 100;
-        if (ocrErrorPerc < 0) ocrErrorPerc = ((float)(DiffOcr_Verifier) / (float)l3) * 100;
-        float ocrErrorAcc = 100 - ocrErrorPerc;
+        auto diffs2 = dmp.diff_main(qs2,qs3);
+        DiffCorrector_Verifier = LevenshteinWithGraphemes(diffs2);
+        verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l3)*100;
+        if(verifierChangesPerc>100) verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l2)*100;
+        verifierChangesPerc = (((float)lround(verifierChangesPerc*100))/100);
 
-        QString qcorrectorChangesPerc = QString::number(((float)lround(correctorChangesPerc * 100)) / 100);
-        QString qverifierChangesPerc = QString::number(((float)lround(verifierChangesPerc * 100)) / 100);
-        QString qocrErrorAcc = QString::number(((float)lround(ocrErrorAcc * 100)) / 100);
+        auto diffs3 = dmp.diff_main(qs1,qs3);
+        DiffOcr_Verifier = LevenshteinWithGraphemes(diffs3);
+        ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l3)*100;
+        if(ocrErrorPerc>100) ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l1)*100;
+        float ocrAcc = 100 - (((float)lround(ocrErrorPerc*100))/100);
 
-        DiffView *dv = new DiffView(qs1, qs2, qs3, qcorrectorChangesPerc, qverifierChangesPerc, qocrErrorAcc);
+        DiffView *dv = new DiffView(qs1,qs2,qs3,QString::number(correctorChangesPerc),QString::number(verifierChangesPerc),QString::number(ocrAcc));
         dv->show();
     }
 }
@@ -2729,7 +2763,7 @@ void MainWindow::on_actionAccuracyLog_triggered()
         }
        int l1,l2,l3, DiffOcr_Corrector,DiffCorrector_Verifier,DiffOcr_Verifier; float correctorChangesPerc,verifierChangesPerc,ocrErrorPerc;
 
-       l1 = qs1.length(); l2 = qs2.length(); l3 = qs3.length();
+       l1 = GetGraphemesCount(qs1); l2 = GetGraphemesCount(qs2); l3 = GetGraphemesCount(qs3);
        if(qs1=="" | qs2 == "" | qs3 == "")
        {
            continue;
@@ -2745,19 +2779,19 @@ void MainWindow::on_actionAccuracyLog_triggered()
        diff_match_patch dmp;
 
        auto diffs1 = dmp.diff_main(qs1,qs2);
-       DiffOcr_Corrector = dmp.diff_levenshtein(diffs1);
+       DiffOcr_Corrector = LevenshteinWithGraphemes(diffs1);
        correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l1)*100;
        if(correctorChangesPerc<0) correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l2)*100;
        correctorChangesPerc = (((float)lround(correctorChangesPerc*100))/100);
 
        auto diffs2 = dmp.diff_main(qs2,qs3);
-       DiffCorrector_Verifier = dmp.diff_levenshtein(diffs2);
+       DiffCorrector_Verifier = LevenshteinWithGraphemes(diffs2);
        verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l2)*100;
        if(verifierChangesPerc<0) verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l3)*100;
        float correctorCharAcc =100- (((float)lround(verifierChangesPerc*100))/100); //Corrector accuracy = 100-changes mabe by Verfier
 
        auto diffs3 = dmp.diff_main(qs1,qs3);
-       DiffOcr_Verifier = dmp.diff_levenshtein(diffs3);
+       DiffOcr_Verifier = LevenshteinWithGraphemes(diffs3);
        ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l1)*100;
        if(ocrErrorPerc<0) ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l3)*100;
        float ocrAcc = 100- (((float)lround(ocrErrorPerc*100))/100);
@@ -2769,7 +2803,7 @@ void MainWindow::on_actionAccuracyLog_triggered()
         auto lineArray = a[2].toStringList();
         int wordCount = lineArray.count();
         auto diffs = dmp.diff_main(lineText1, lineText2);
-        int worderrors = dmp.diff_levenshtein(diffs);
+        int worderrors = LevenshteinWithGraphemes(diffs);
         dmp.diff_charsToLines(diffs, lineArray);
 
         float correctorwordaccuracy = (float)(wordCount-worderrors)/(float)wordCount*100;
