@@ -7,6 +7,7 @@ LoginPageView::LoginPageView(QWidget *parent) :
     ui(new Ui::LoginPageView)
 {
     ui->setupUi(this);
+    ui->passwordEdit->setEchoMode(QLineEdit::Password);
 }
 
 LoginPageView::~LoginPageView()
