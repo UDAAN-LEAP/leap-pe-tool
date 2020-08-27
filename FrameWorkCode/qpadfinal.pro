@@ -33,3 +33,13 @@ RESOURCES += \
     AppResources.qrc
 
 CONFIG += c++11
+
+FORMS +=
+
+HEADERS +=
+
+SOURCES +=
+
+DISTFILES += \
+    ProjectJson.json \
+    UserJson.json

@@ -1,0 +1,35 @@
+{
+	"U0001": {
+	    "ID": "U0001",
+	    "Name": "Corrector Test User 1",
+	    "Mail": "ctestuser1.iitb@gmail.com",
+	    "github userid": "ctestuser1-iitb",
+	    "github password": "backend-ui",
+	    "Role": "Corrector"
+	},
+	"U0002": {
+	    "ID": "U0002",
+	    "Name": "Verifier Test User 1",
+	    "Mail": "vtestuser1.iitb@gmail.com",
+	    "github userid": "vtestuser1-iitb",
+	    "github password": "backend-ui",
+	    "Role": "Verifier"
+	},
+	"U0003": {
+	    "ID": "U0003",
+	    "Name": "ProjectManager User 3",
+	    "Mail": "pmtestuser1.iitb@gmail.com",
+	    "github userid": "pmtestuser1-iitb",
+	    "github password": "backend-ui",
+	    "Role": "Project Manager"
+	},
+	"U0004": {
+	    "ID": "U0004",
+	    "Name": "SanityChecker Test User 4",
+	    "Mail": "sctestuser1.iitb@gmail.com",
+	    "github userid": "sctestuser1-iitb",
+	    "github password": "backend-ui",
+	    "Role": "Sanity Checker"
+	}
+
+}
