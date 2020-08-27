@@ -10,7 +10,6 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QIcon>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGraphicsView>
@@ -29,7 +28,6 @@
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
-#include <QtWidgets/QToolButton>
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -134,9 +132,6 @@ public:
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout_5;
     QHBoxLayout *horizontalLayout_4;
-    QToolButton *ZoomIn;
-    QToolButton *ZoomOut;
-    QSpacerItem *horizontalSpacer_2;
     QGraphicsView *graphicsView;
     QMenuBar *menuBar;
     QMenu *menuOCR_Correction_Window;
@@ -515,32 +510,8 @@ public:
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        ZoomIn = new QToolButton(layoutWidget);
-        ZoomIn->setObjectName(QString::fromUtf8("ZoomIn"));
-        ZoomIn->setMinimumSize(QSize(25, 25));
-        QIcon icon20;
-        icon20.addFile(QString::fromUtf8(":/Images/Zoom-In-icon.png"), QSize(), QIcon::Normal, QIcon::On);
-        ZoomIn->setIcon(icon20);
-        ZoomIn->setIconSize(QSize(22, 22));
-
-        horizontalLayout_4->addWidget(ZoomIn);
-
-        ZoomOut = new QToolButton(layoutWidget);
-        ZoomOut->setObjectName(QString::fromUtf8("ZoomOut"));
-        ZoomOut->setMinimumSize(QSize(25, 25));
-        QIcon icon21;
-        icon21.addFile(QString::fromUtf8(":/Images/Zoom-Out-icon.png"), QSize(), QIcon::Normal, QIcon::On);
-        ZoomOut->setIcon(icon21);
-        ZoomOut->setIconSize(QSize(22, 22));
-
-        horizontalLayout_4->addWidget(ZoomOut);
-
 
         horizontalLayout_5->addLayout(horizontalLayout_4);
-
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_5->addItem(horizontalSpacer_2);
 
 
         verticalLayout->addLayout(horizontalLayout_5);
@@ -570,7 +541,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1366, 22));
+        menuBar->setGeometry(QRect(0, 0, 1366, 21));
         menuOCR_Correction_Window = new QMenu(menuBar);
         menuOCR_Correction_Window->setObjectName(QString::fromUtf8("menuOCR_Correction_Window"));
         menuCreateReports = new QMenu(menuBar);
@@ -700,6 +671,8 @@ public:
         mainToolBar->addAction(actionLineSpace);
         mainToolBar->addAction(actionHighlight);
         mainToolBar->addAction(actionSymbols);
+        mainToolBar->addAction(actionZoom_In);
+        mainToolBar->addAction(actionZoom_Out);
 
         retranslateUi(MainWindow);
 
@@ -853,14 +826,6 @@ public:
 "</style></head><body style=\" font-family:'Shobhika'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab_5), QCoreApplication::translate("MainWindow", "Tab 1", nullptr));
-#if QT_CONFIG(tooltip)
-        ZoomIn->setToolTip(QCoreApplication::translate("MainWindow", "Zoom In", nullptr));
-#endif // QT_CONFIG(tooltip)
-        ZoomIn->setText(QCoreApplication::translate("MainWindow", "ZoomIn", nullptr));
-#if QT_CONFIG(tooltip)
-        ZoomOut->setToolTip(QCoreApplication::translate("MainWindow", "Zoom Out", nullptr));
-#endif // QT_CONFIG(tooltip)
-        ZoomOut->setText(QCoreApplication::translate("MainWindow", "ZoomOut", nullptr));
         menuOCR_Correction_Window->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
         menuCreateReports->setTitle(QCoreApplication::translate("MainWindow", "Reports", nullptr));
         menuSaveVariables->setTitle(QCoreApplication::translate("MainWindow", "SaveVariables", nullptr));

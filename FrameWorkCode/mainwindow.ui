@@ -288,75 +288,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <item>
-             <widget class="QToolButton" name="ZoomIn">
-              <property name="minimumSize">
-               <size>
-                <width>25</width>
-                <height>25</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Zoom In</string>
-              </property>
-              <property name="text">
-               <string>ZoomIn</string>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normalon>:/Images/Zoom-In-icon.png</normalon>
-               </iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>22</width>
-                <height>22</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="ZoomOut">
-              <property name="minimumSize">
-               <size>
-                <width>25</width>
-                <height>25</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Zoom Out</string>
-              </property>
-              <property name="text">
-               <string>ZoomOut</string>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normalon>:/Images/Zoom-Out-icon.png</normalon>
-               </iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>22</width>
-                <height>22</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
+           <layout class="QHBoxLayout" name="horizontalLayout_4"/>
           </item>
          </layout>
         </item>
@@ -412,7 +344,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1366</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOCR_Correction_Window">
@@ -571,6 +503,8 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionLineSpace"/>
    <addaction name="actionHighlight"/>
    <addaction name="actionSymbols"/>
+   <addaction name="actionZoom_In"/>
+   <addaction name="actionZoom_Out"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen_Project">
