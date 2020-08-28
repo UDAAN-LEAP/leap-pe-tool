@@ -447,10 +447,17 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 				QAction* act;
 				//vector<string> Words =  print5NearestEntries(TGPage,selectedStr);
 				vector<string>  Words1 = print5NearestEntries(TGBook, selectedStr);
+				if (Words1.empty()) return;
 				vector<string> Alligned = print5NearestEntries(TGBookP, selectedStr);
+				if (Alligned.empty()) return;
+
 				vector<string> PWords1 = print5NearestEntries(TPWords, selectedStr);
+				if (PWords1.empty()) return;
+
 				string PairSugg = print2OCRSugg(selectedStr, Alligned[0], ConfPmap, Dict); // map<string,int>&
+				if (PairSugg.empty())return;
 				vector<string>  Words = print1OCRNearestEntries(toslp1(selectedStr), vIBook);
+				if (Words.empty())return;
 				//cout <<" here " << toDev(Words[0]) << endl;
 
 
