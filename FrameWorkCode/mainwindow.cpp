@@ -28,6 +28,7 @@
 #include <set>
 #include <algorithm>
 #include <QSet>
+#include <QAction>
 //# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
@@ -57,11 +58,7 @@ map<int, vector<int>> commentederrors;
 int openedFileChars;
 int openedFileWords;
 bool gSaveTriggered = 0;
-map<QString, QString> filestructure_fw = { {"Inds","VerifierOutput"},
-                                     {"CorrectorOutput","VerifierOutput",},
-                                        {"VerifierOutput","VerifierOutput" }
-
-};
+map<QString, QString> filestructure_fw;
 map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
 									 {"CorrectorOutput","Inds"},
 										  {"Inds" , "Inds"}
@@ -85,7 +82,40 @@ MainWindow::MainWindow(QWidget *parent) :
 	// str.replace(", ","\t");
 	ui->textEdit->setText(str);
 }
+void MainWindow::setRole(QString role)
+{
+    this->mRole = role;
+    if(mRole == "Admin") {
+       int button = QMessageBox::question(this, "Select Role", "Which Role do you want to Load?",
+                                   "Verifier", "Corrector", "Project Manager", 0);
+       if(button == 0)
+           mRole = "Verifier";
+       if(button == 1)
+           mRole = "Corrector";
+       if(button == 2)
+           return;
+    }
+    if(mRole == "Verifier") {
+        filestructure_fw = { {"Inds","VerifierOutput"},
+                             {"CorrectorOutput","VerifierOutput",},
+                             {"VerifierOutput","VerifierOutput" }
+                           };
+        isVerifier = 1;
 
+    } else if(mRole == "Corrector") {
+        filestructure_fw = { {"Inds","CorrectorOutput"},
+                             {"CorrectorOutput","CorrectorOutput",},
+                             {"VerifierOutput","CorrectorOutput" }
+                           };
+        ui->compareVerifierOutput->setVisible(false);
+        ui->compareVerifierOutput->setEnabled(false);
+
+        ui->actionVerifier_Turn_In->setVisible(false);
+        ui->actionVerifier_Turn_In->setEnabled(false);
+        isVerifier = 0;
+    }
+
+}
 MainWindow::~MainWindow()
 {
 	delete ui;
@@ -700,6 +730,7 @@ void MainWindow::on_actionNew_triggered()
 		curr_browser->setPlainText("");
     } else {
         QTextBrowser * b = new QTextBrowser();
+        b->setPlainText("");
         currentTabIndex = ui->tabWidget_2->addTab(b, "Untitled");
         ui->tabWidget_2->setCurrentIndex(currentTabIndex);
     }
@@ -710,9 +741,12 @@ void MainWindow::on_actionSave_triggered()
     SaveTimeLog();
     DisplayTimeLog();
     gSaveTriggered = 1;
-    on_viewComments_clicked();
-    updateAverageAccuracies();
-    SaveTimeLog();
+    
+    if(isVerifier) {
+        on_viewComments_clicked();
+        updateAverageAccuracies();
+    }
+    gSaveTriggered = 0;
     ConvertSlpDevFlag =1;
     //on_actionSpell_Check_triggered();
 
@@ -2200,6 +2234,8 @@ void MainWindow::on_actionFontBlack_triggered()
 }
 
 void MainWindow::on_actionSuperscript_triggered() {
+    if(!curr_browser)
+        return;
     auto cursor = curr_browser->textCursor();
     auto selected = cursor.selection();
     QString sel = selected.toPlainText();
@@ -2209,6 +2245,8 @@ void MainWindow::on_actionSuperscript_triggered() {
     cursor.insertFragment(newFrag);
 }
 void MainWindow::on_actionSubscript_triggered() {
+    if(!curr_browser)
+        return;
     auto cursor = curr_browser->textCursor();
     auto selected = cursor.selection();
     cursor.removeSelectedText();
@@ -2224,25 +2262,25 @@ void MainWindow::on_actionInsert_Horizontal_Line_triggered()
     curr_browser->insertHtml("<hr>");
 }
 
-void MainWindow::on_actionLineSpace_triggered()
-{
-	if(!curr_browser)
-		return;
-    QTextCursor cursor = curr_browser->textCursor();
-    QTextBlockFormat format = cursor.blockFormat();
-    double lineHeight = format.lineHeight()/100;
-    bool False = false;
-    bool *ok = &False;
-    if(lineHeight == 0)
-        lineHeight = 1;
-    double inputLineSpace = QInputDialog::getDouble(this, "Custom Line Space", "Line Space", lineHeight, 0, 10, 2,ok);
-    if(*ok) {
-        // LineHeight(x,1) sets x as a percentage with base as 100
-        //200 is Double LineSpace and 50 is half LineSpace
-        format.setLineHeight(inputLineSpace*100, 1);
-        cursor.setBlockFormat(format);
-    }
-}
+//void MainWindow::on_actionLineSpace_triggered()
+//{
+//	if(!curr_browser)
+//		return;
+//    QTextCursor cursor = curr_browser->textCursor();
+//    QTextBlockFormat format = cursor.blockFormat();
+//    double lineHeight = format.lineHeight()/100;
+//    bool False = false;
+//    bool *ok = &False;
+//    if(lineHeight == 0)
+//        lineHeight = 1;
+//    double inputLineSpace = QInputDialog::getDouble(this, "Custom Line Space", "Line Space", lineHeight, 0, 10, 2,ok);
+//    if(*ok) {
+//        // LineHeight(x,1) sets x as a percentage with base as 100
+//        //200 is Double LineSpace and 50 is half LineSpace
+//        format.setLineHeight(inputLineSpace*100, 1);
+//        cursor.setBlockFormat(format);
+//    }
+//}
 
 void MainWindow::on_actionInsert_Tab_Space_triggered()
 {
@@ -2256,26 +2294,30 @@ void MainWindow::on_actionInsert_Tab_Space_triggered()
 void MainWindow::on_actionHighlight_triggered() //Verifier-Version
 {
     if(curr_browser) {
-        QTextCursor cursor = curr_browser->textCursor();
-        QString text = cursor.selectedText().toUtf8().constData();
-        int pos1 = curr_browser->textCursor().selectionStart();
-        int pos2 = curr_browser->textCursor().selectionEnd();
-
-        int cursorpos = round(((float)(pos1 + pos2)) / 2);
-        cursor.setPosition(cursorpos);
-
-        QTextCharFormat  format = cursor.charFormat();
-        if (format.background() == Qt::yellow)
-        {
-            format.setBackground(Qt::transparent);
+        if(isVerifier) {
+            QTextCursor cursor = curr_browser->textCursor();
+            QString text = cursor.selectedText().toUtf8().constData();
+            int pos1 = curr_browser->textCursor().selectionStart();
+            int pos2 = curr_browser->textCursor().selectionEnd();
+        
+            int cursorpos = round(((float)(pos1 + pos2)) / 2);
+            cursor.setPosition(cursorpos);
+        
+            QTextCharFormat  format = cursor.charFormat();
+            if (format.background() == Qt::yellow)
+            {
+                format.setBackground(Qt::transparent);
+            }
+            else
+            {
+                format.setBackground(Qt::yellow);
+                LogHighlights(text);
+            }
+            curr_browser->textCursor().mergeCharFormat(format);
+            curr_browser->copy();
+        } else {
+            curr_browser->setTextBackgroundColor(Qt::transparent);
         }
-        else
-        {
-            format.setBackground(Qt::yellow);
-            LogHighlights(text);
-        }
-        curr_browser->textCursor().mergeCharFormat(format);
-        curr_browser->copy();
     }
 }
 
@@ -2415,8 +2457,16 @@ void MainWindow::on_viewComments_clicked() //Verifier-Version
             QJsonObject page = pages.value(pageName).toObject();
             comments = page.value("comments").toString();
             rating = page.value("rating").toInt();
-
+            totalCharErrors = page.value("charerrors").toInt();
+            totalWordErrors = page.value("worderrors").toInt();
+            wordAccuracy = page.value("wordaccuracy").toDouble();
+            charAccuracy = page.value("characcuracy").toDouble();
             jsonFile.close();
+            if(!isVerifier) {
+                CommentsView *cv = new CommentsView(totalWordErrors,totalCharErrors,wordAccuracy,charAccuracy,comments,commentFilename, pageName, rating, mRole);
+                cv->show();
+                return;
+            }
             if(gDirOneLevelUp!= (gDirTwoLevelUp + "/Inds")) //if Inds file-> do not create new accuracies just display previous accuracy to the Verifier
             {
                 /*
@@ -2527,13 +2577,13 @@ void MainWindow::on_viewComments_clicked() //Verifier-Version
 
             if(!gSaveTriggered)
             {
-                CommentsView *cv = new CommentsView(totalWordErrors,totalCharErrors,wordAccuracy,charAccuracy,comments,commentFilename,pageName, rating);
+                CommentsView *cv = new CommentsView(totalWordErrors,totalCharErrors,wordAccuracy,charAccuracy,comments,commentFilename,pageName, rating, mRole);
                 cv->show();
             }
     }
 }
 
-void MainWindow::on_compareCorrectorOutput_clicked() //Corrector
+void MainWindow::on_compareCorrectorOutput_clicked()
 {
     QString qs1="", qs2="";
         file = QFileDialog::getOpenFileName(this,"Open Corrector's Output File");
@@ -2871,7 +2921,9 @@ void MainWindow::on_actionTurn_In_triggered() {
 	}
 }
 void MainWindow::on_actionFetch_2_triggered() {
-	mProject.fetch();
+    mProject.fetch();
+    QString version = mProject.get_version();
+    ui->lineEdit_2->setText("Version: " + version);
 }
 void MainWindow::on_actionVerifier_Turn_In_triggered() {
 	mProject.push();

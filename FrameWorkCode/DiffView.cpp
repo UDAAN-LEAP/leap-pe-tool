@@ -4,7 +4,12 @@
 DiffView::DiffView( QString &ocrtext,  QString &interntext,  QString &verifiertext,const QString &InternAcc, const QString &VerifierAcc, const QString &OcrAcc, QWidget *parent)
 	: QMainWindow(parent)
 {
+
+    ui = new Ui::DiffView();
+	ui->setupUi(this);
+
     setWindowTitle("Verifier Output Difference");
+
     QTextDocument doc;
     doc.setHtml(interntext);
     interntext = doc.toPlainText();
@@ -15,8 +20,6 @@ DiffView::DiffView( QString &ocrtext,  QString &interntext,  QString &verifierte
     doc.setHtml(verifiertext);
     verifiertext = doc.toPlainText();
 
-    ui = new Ui::DiffView();
-	ui->setupUi(this);
 	diff_match_patch dmp;
     auto diffs = dmp.diff_main(ocrtext,interntext);
     QString textcolor = "ffd13d";

@@ -5,12 +5,13 @@
 #include <QString>
 QString commentFilename;
 QString pagename;
-CommentsView::CommentsView(const int &words, const int &chars, const float &wordacc, const float &characc,const QString commentsField,const QString commentsFilelocation, const QString currentpagename, int rating, QWidget *parent) :
+CommentsView::CommentsView(const int &words, const int &chars, const float &wordacc, const float &characc,const QString commentsField,const QString commentsFilelocation, const QString currentpagename, int rating, const QString role, QWidget *parent) :
     QDialog(parent)
 {
-    setWindowTitle("Comments and Accuracy");
+
     ui = new Ui::CommentsView();
     ui->setupUi(this);
+    setWindowTitle("Comments and Accuracy");
     ui->h_words->setText(QString::number(words));
     ui->h_characters->setText(QString::number(chars));
     ui->acc_word->setText(QString::number(wordacc));
@@ -22,6 +23,11 @@ CommentsView::CommentsView(const int &words, const int &chars, const float &word
     pagename = currentpagename;
 	pagename.replace(".txt", "");
 	pagename.replace(".html", "");
+    if(role == "Corrector") {
+        ui->commentTextBrowser->setReadOnly(true);
+        ui->pushButton->setEnabled(false);
+        ui->pushButton->setVisible(false);
+    }
 }
 
 
@@ -30,7 +36,7 @@ CommentsView::~CommentsView()
     delete ui;
 }
 
-void CommentsView::on_pushButton_clicked()
+void CommentsView::on_pushButton_clicked() //Verifier-Version
 {
 
     QString comments = ui->commentTextBrowser->toPlainText();

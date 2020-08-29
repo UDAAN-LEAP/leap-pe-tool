@@ -56,12 +56,12 @@ public:
 	Project & GetProject() {
 		return mProject;
 	}
+    void setRole(QString role);
 
 public slots:
 	//void textChangedSlot();
 
 private slots:
-
 
     void on_actionNew_triggered();
 
@@ -163,9 +163,7 @@ private slots:
 
 	void updateAverageAccuracies();
 
-	void on_actionViewAverageAccuracies_triggered();
-
-    //void LogHighlights(QString word);
+    void on_actionViewAverageAccuracies_triggered();
 
 	void on_actionOpen_Project_triggered();
 
@@ -221,7 +219,7 @@ private slots:
 
     void on_actionInsert_Tab_Space_triggered();
 
-    void on_actionLineSpace_triggered();
+    //void on_actionLineSpace_triggered();
 
     void on_actionInsert_Horizontal_Line_triggered();
 
@@ -248,6 +246,8 @@ private slots:
     void on_ZoomOut_clicked();
 
 private:
+    QString mRole;
+    bool isVerifier;
     Ui::MainWindow *ui;
 	Project mProject;
     QString mFilename;
