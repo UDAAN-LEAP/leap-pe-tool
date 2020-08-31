@@ -11,57 +11,23 @@ ResizeImageView::ResizeImageView(QWidget *parent,double imageWidth,double imageH
 {
     setWindowTitle("Resize Image Size");
     ui->setupUi(this);
-
-        widthLabel = new QLabel("Image width");
-        hightLabel = new QLabel("Image height");
-
-        widthSpinBox = new QDoubleSpinBox;
-        widthSpinBox->setMaximum(1500);
-        widthSpinBox->setValue(imageWidth);
-        connect(widthSpinBox, SIGNAL(valueChanged(double)), this, SLOT(widthChanged(double)));
-
-
-        hightSpinBox = new QDoubleSpinBox;
-        hightSpinBox->setMaximum(1500);
-        hightSpinBox->setValue(imageHight);
-        connect(hightSpinBox, SIGNAL(valueChanged(double)), this, SLOT(hightChanged(double)));
-
         ratio = imageWidth/imageHight;
 
+        widthSpinBox = ui->widthSpinBox;
+        hightSpinBox = ui->hightSpinBox;
 
-        keepRatioCheckBox = new QCheckBox("Keep ratio",this);
+        keepRatioCheckBox = ui->checkBox;
         keepRatioCheckBox->setChecked(true);
 
+        widthSpinBox->setMaximum(1500);
+        widthSpinBox->setValue(imageWidth);
+        hightSpinBox->setMaximum(1500);
+        hightSpinBox->setValue(imageHight);
 
-        widthLayout = new QHBoxLayout;
-        widthLayout->addWidget(widthLabel);
-        widthLayout->addWidget(widthSpinBox);
+        okButton = ui->Ok;
 
-        hightLayout  = new QHBoxLayout;
-        hightLayout->addWidget(hightLabel);
-        hightLayout->addWidget(hightSpinBox);
+        cancelButton = ui->Cancel;
 
-        okButton = new QPushButton("OK",this);
-        QObject::connect(okButton, SIGNAL(clicked()), this, SLOT(accept()));
-
-        cancelButton = new QPushButton("Cancel",this);
-        QObject::connect(cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
-
-        buttonLayout = new QHBoxLayout;
-        buttonLayout->addStretch();
-        buttonLayout->addWidget(okButton);
-        buttonLayout->addWidget(cancelButton);
-
-        generalLayout = new QVBoxLayout;
-        generalLayout->addLayout(widthLayout);
-        generalLayout->addLayout(hightLayout);
-        generalLayout->addWidget(keepRatioCheckBox);
-        generalLayout->addLayout(buttonLayout);
-        setLayout(generalLayout);
-
-        setMaximumSize(300, 300);
-        setModal(true);
-        //resize(670,630);
         setWindowTitle(tr("Resize Image"));
         setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
@@ -80,4 +46,38 @@ QPair<double,double> ResizeImageView::getNewSize(QWidget * parent, double imageW
 ResizeImageView::~ResizeImageView()
 {
     delete ui;
+}
+
+void ResizeImageView::on_widthSpinBox_valueChanged(double width)
+{
+    if(keepRatioCheckBox->isChecked()) {
+        double hight = (double)((int)(width/ratio*10)/10.0);
+        if(widthChanged)
+            return;
+        heightChanged = 1;
+        ui->hightSpinBox->setValue(hight);
+        heightChanged = 0;
+    }
+}
+
+void ResizeImageView::on_hightSpinBox_valueChanged(double hight)
+{
+    if(keepRatioCheckBox->isChecked()) {
+        double width = (double)((int)(ratio*hight*10)/10.0);
+        if(heightChanged)
+            return;
+        widthChanged = 1;
+        ui->widthSpinBox->setValue(width);
+        widthChanged = 0;
+    }
+}
+
+void ResizeImageView::on_Ok_clicked()
+{
+    accept();
+}
+
+void ResizeImageView::on_Cancel_clicked()
+{
+    reject();
 }

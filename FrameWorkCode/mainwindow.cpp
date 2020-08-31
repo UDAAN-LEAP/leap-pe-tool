@@ -3244,7 +3244,10 @@ void MainWindow::on_actionOpen_Project_triggered() {
             int seconds    = val.toObject().value("seconds").toInt();
             timeLog[directory] = seconds;
         }
-	}
+         qDebug()<<"Orig"<<QDir::current();
+        bool isSet = QDir::setCurrent(mProject.GetDir().absolutePath() + "/Inds") ; //Change application Directory to any subfolder of mProject folder for Image Insertion feature.
+        qDebug()<<isSet<<QDir::current();
+    }
 }
 void MainWindow::directoryChanged(const QString &path) {
 	
@@ -3306,15 +3309,41 @@ void MainWindow::on_actionAdd_Image_triggered()
                                             "JPEG (*.jpg *jpeg)\n"
                                             "GIF (*.gif)\n"
                                             "PNG (*.png)\n"));
-        QUrl Uri ( QString ( "file://%1" ).arg ( file ) );
-        QImage image = QImageReader ( file ).read();
+        QFileInfo fileInfo(file);
+        QString fileName = fileInfo.fileName();
+        QString destinationFileName =  mProject.GetDir().absolutePath() + "/Images/Inserted/" + fileName;
+        QString copiedFileName;
+        if(QFileInfo::exists(destinationFileName)) {
+            QString temp = destinationFileName;
+            int i =0;
+            while(QFileInfo::exists(temp)) {
+             temp = destinationFileName ;
+             temp.insert(destinationFileName.lastIndexOf("."),  ("(" + QString::number(++i) + ")"));
+            }
+            destinationFileName = temp;
+            QFileInfo finfo(destinationFileName);
+        }
+        QFile::copy(file, destinationFileName);
+
+        copiedFileName = QDir::current().relativeFilePath(destinationFileName);
+
+        //QUrl Uri ( QString ( "file://%1" ).arg ( file ) );
+        QImage image = QImageReader ( copiedFileName ).read();
         QTextDocument * textDocument = curr_browser->document();
-        textDocument->addResource( QTextDocument::ImageResource, Uri, QVariant ( image ) );
+        textDocument->addResource( QTextDocument::ImageResource, copiedFileName, QVariant ( image ) );
         QTextCursor cursor = curr_browser->textCursor();
+        int width = image.width();
+        int height = image.height();
+        if(width < 0 || height < 0){
+            width = 256;
+            height = 256;
+        }
         QTextImageFormat imageFormat;
         imageFormat.setWidth( image.width() );
         imageFormat.setHeight( image.height() );
-        imageFormat.setName( Uri.toString() );
+        imageFormat.setName( copiedFileName );
+        QTextDocumentFragment fragment;
+        fragment = QTextDocumentFragment::fromHtml("<img src=\""+ copiedFileName + "\" width=\"" + width + "\" height=\"" + height + "\" />");
         cursor.insertImage(imageFormat);
     }
 }

@@ -9,6 +9,7 @@
 
 HEADERS += ./3rdParty/RapidXML/rapidxml.hpp \
     $$PWD/Symbols.h \
+    $$PWD/passkey.h \
     $$PWD/resizeimageview.h \
     ./3rdParty/RapidXML/rapidxml_iterators.hpp \
     ./3rdParty/RapidXML/rapidxml_print.hpp \
@@ -52,6 +53,7 @@ HEADERS += ./3rdParty/RapidXML/rapidxml.hpp \
     $$PWD/loginpageview.h
 SOURCES += ./Filters.cpp \
     $$PWD/Symbols.cpp \
+    $$PWD/passkey.cpp \
     $$PWD/resizeimageview.cpp \
     ./Project.cpp \
     ./ProjectHierarchyWindow.cpp \
@@ -70,6 +72,7 @@ SOURCES += ./Filters.cpp \
     $$PWD/loginpageview.cpp
 FORMS += ./DiffView.ui \
     $$PWD/Symbols.ui \
+    $$PWD/passkey.ui \
     $$PWD/resizeimageview.ui \
     ./interndiffview.ui \
     ./mainwindow.ui \
