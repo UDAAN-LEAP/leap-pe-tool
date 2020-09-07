@@ -56,7 +56,10 @@ public:
 	Project & GetProject() {
 		return mProject;
 	}
-    void setRole(QString role);
+    bool setRole(QString role);
+    bool exitStatus() {
+        return mExitStatus;
+    }
 
 public slots:
 	//void textChangedSlot();
@@ -185,7 +188,7 @@ private slots:
 
     void tabchanged(int index);
 
-    void on_actionCommit_triggered();
+    //void on_actionCommit_triggered();
 
     void on_actionTurn_In_triggered();
 
@@ -241,11 +244,18 @@ private slots:
 
     void on_compareVerifierOutput_clicked();
 
-    void on_ZoomIn_clicked();
+    void on_sanButton_toggled(bool checked);
 
-    void on_ZoomOut_clicked();
+    void on_hinButton_toggled(bool checked);
+
+    void on_actionLineSpace_triggered();
+
+    void on_actionUndo_triggered();
+
+    void on_actionRedo_triggered();
 
 private:
+    bool mExitStatus = false;
     QString mRole;
     bool isVerifier;
     Ui::MainWindow *ui;

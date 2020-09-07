@@ -13,7 +13,11 @@ SymbolsView::SymbolsView(QWidget *parent) :
 }
  void SymbolsView::tabChanged(int idx)
  {
-     currentTab = (QTextEdit*)ui->tabWidget->widget(idx);
+    QWidget *widget = ui->tabWidget->widget(idx);
+    QList<QTextEdit*> allTextEdits = widget->findChildren<QTextEdit*>();
+    if(allTextEdits.count()!= 1)
+      return;
+    currentTab = allTextEdits[0];
  }
 SymbolsView::~SymbolsView()
 {

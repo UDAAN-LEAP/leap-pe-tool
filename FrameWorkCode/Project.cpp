@@ -14,6 +14,7 @@
 #include <QObject>
 #include <git2.h>
 #include <QProcess>
+#include <QMessageBox>
 void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 {
 	
@@ -38,13 +39,32 @@ void Project::disable_push() {
 	bool s = c.child("Stage").first_child().set_value("Verifier");
 	save_xml();
 }
-void Project::enable_push() {
+bool Project::enable_push(QWidget *parent) {
 	auto c = doc.child("Project").child("Metadata");
 	bool s = c.child("Stage").first_child().set_value("Corrector");
 	int ver = std::stoi(c.child("Version").child_value());
-	ver++;
+	int ver2 = ver + 1;
+	QString msg = QString("Do you want to Increment the Version and Turn In?\n\nClick Yes to Turnin and Increment the Version from "+ QString::number(ver) +" to "+QString::number(ver2)+" \nClick No to Turnin Without Incrementing Version (When you are Resubmitting or Accepting this as the final Version)");
+    int button = QMessageBox::question(parent, "Select Role", msg,
+                                       "Yes", "No", "Cancel", 0);
+
+    if(button == 0)
+        ver++;
+    else if(button == 2)
+        return false;
 	c.child("Version").first_child().set_value(std::to_string(ver).c_str());
 	save_xml();
+    return true;
+}
+void Project::enable_push() {
+    auto c = doc.child("Project").child("Metadata");
+    bool s = c.child("Stage").first_child().set_value("Corrector");
+    int ver = std::stoi(c.child("Version").child_value());
+
+    ver++;
+
+    c.child("Version").first_child().set_value(std::to_string(ver).c_str());
+    save_xml();
 }
 void Project::removeFile(QModelIndex & idx,Filter & pFilter, QFile & pFile) {
 	auto first = doc.child("Project").child("ItemGroup");
@@ -268,6 +288,7 @@ void create_initial_commit(git_repository * repo,std::string name ,std::string e
 	check_lg2(git_signature_now(&sig, name.c_str(), email.c_str()),"Could not create commit signature","");
 	/* Now let's create an empty tree for this commit */
 
+	
 	check_lg2(git_repository_index(&index, repo),"Could not open repository index", "");
 
 	/**
@@ -399,9 +420,10 @@ static int transfer_progress_cb(const git_transfer_progress *stats, void *payloa
 }
 void Project::fetch() {
 	
-	QDir::setCurrent(mProjectDir.absolutePath());
+    QDir::setCurrent(mProjectDir.absolutePath());
 	QProcess::execute("git fetch");
 	QProcess::execute("git reset --hard origin/master");
+	QDir::setCurrent(mProjectDir.absolutePath()+"/CorrectorOutput/");
 
 }
 
@@ -469,7 +491,7 @@ void Project::commit(std::string message) {
 	 * but here this is the first commit so there will be no parent.
 	 */
 
-	klass = check_lg2(git_commit_create_v(&commit_id, repo, "HEAD", sig, sig, NULL, message.c_str(), tree, parent ? 1 : 0, parent), "Could not create the initial commit", "");
+	klass = check_lg2(git_commit_create_v(&commit_id, repo, "HEAD", sig, sig, NULL, message.c_str(), tree, parent ? 1 : 0, parent), "Could not create commit", "");
 	if (klass > 0) {
 		git_tree_free(tree);
 		git_signature_free(sig);

@@ -94,7 +94,7 @@
          </size>
         </property>
         <property name="text">
-         <string>Comapre Verifer Output</string>
+         <string>Comapre Verifier Output</string>
         </property>
        </widget>
       </item>
@@ -125,7 +125,7 @@
         </size>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -133,6 +133,45 @@
         </attribute>
         <layout class="QGridLayout" name="gridLayout">
          <item row="0" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QPushButton" name="hinButton">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Hindi/Marathi</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="sanButton">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Sanskrit</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="0">
           <widget class="QTextEdit" name="textEdit">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
@@ -352,6 +391,8 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionLoadConfusions"/>
     <addaction name="actionSugg"/>
     <addaction name="actionToSlp1"/>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
    </widget>
    <widget class="QMenu" name="menuCreateReports">
     <property name="title">
@@ -412,33 +453,21 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionLeftAlign"/>
     <addaction name="actionRightAlign"/>
     <addaction name="actionCentreAlign"/>
-    <addaction name="actionJusitfiedAlign"/>
     <addaction name="actionSuperscript"/>
     <addaction name="actionSubscript"/>
     <addaction name="actionInsert_Horizontal_Line"/>
     <addaction name="actionFontBlack"/>
-    <addaction name="actionLineSpace"/>
     <addaction name="actionInsert_Tab_Space"/>
     <addaction name="actionAdd_Image"/>
     <addaction name="actionResize_Image"/>
-   </widget>
-   <widget class="QMenu" name="menuView">
-    <property name="title">
-     <string>View</string>
-    </property>
-    <addaction name="actionCompare_Verifier"/>
-    <addaction name="actionCompare_Corrector"/>
-    <addaction name="separator"/>
-    <addaction name="actionAverage_Accuracy"/>
    </widget>
    <widget class="QMenu" name="menuGit">
     <property name="title">
      <string>Version Control</string>
     </property>
-    <addaction name="actionTurn_In"/>
-    <addaction name="actionCommit"/>
     <addaction name="actionFetch_2"/>
     <addaction name="actionVerifier_Turn_In"/>
+    <addaction name="actionTurn_In"/>
    </widget>
    <addaction name="menuSelectLanguage"/>
    <addaction name="menuOCR_Correction_Window"/>
@@ -447,7 +476,6 @@ p, li { white-space: pre-wrap; }
    <addaction name="menuFontAndLayout"/>
    <addaction name="menuConvertFiles"/>
    <addaction name="menuFeatureExtraction"/>
-   <addaction name="menuView"/>
    <addaction name="menuGit"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -463,29 +491,24 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionSave_As"/>
    <addaction name="actionLoadData"/>
    <addaction name="separator"/>
-   <addaction name="actionSpell_Check"/>
-   <addaction name="separator"/>
-   <addaction name="actionLoad_Prev_Page"/>
-   <addaction name="actionLoad_Next_Page"/>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
    <addaction name="separator"/>
    <addaction name="actionLoadGDocPage"/>
-   <addaction name="separator"/>
-   <addaction name="actionSanskrit"/>
-   <addaction name="actionEnglish"/>
-   <addaction name="actionHindi"/>
    <addaction name="separator"/>
    <addaction name="actionToDevanagari"/>
    <addaction name="separator"/>
    <addaction name="actionAllFontProperties"/>
    <addaction name="actionBold"/>
    <addaction name="actionUnBold"/>
+   <addaction name="actionFontBlack"/>
    <addaction name="actionLeftAlign"/>
    <addaction name="actionCentreAlign"/>
    <addaction name="actionRightAlign"/>
-   <addaction name="actionJusitfiedAlign"/>
-   <addaction name="actionLineSpace"/>
+   <addaction name="separator"/>
    <addaction name="actionHighlight"/>
    <addaction name="actionSymbols"/>
+   <addaction name="separator"/>
    <addaction name="actionZoom_In"/>
    <addaction name="actionZoom_Out"/>
   </widget>
@@ -539,6 +562,9 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionSpell_Check">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset>
      <normalon>:/Images/spellcheck.png</normalon>
@@ -838,7 +864,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionTurn_In">
    <property name="text">
-    <string>Turn In</string>
+    <string>Corrector Turn In</string>
    </property>
   </action>
   <action name="actionFetch">
@@ -877,6 +903,9 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionPush">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Push</string>
    </property>
@@ -895,6 +924,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Highlight</string>
    </property>
+   <property name="toolTip">
+    <string>Highlight (Ctrl+H)</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+H</string>
    </property>
@@ -907,6 +939,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Zoom In</string>
    </property>
+   <property name="toolTip">
+    <string>Zoom In (Ctrl + +)</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl++</string>
    </property>
@@ -918,6 +953,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Zoom_Out</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom Out (Ctrl + -)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+-</string>
@@ -957,6 +995,9 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionLineSpace">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset>
      <normalon>:/Images/linespacing.png</normalon>
@@ -973,7 +1014,10 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionInsert_Tab_Space">
    <property name="text">
-    <string>Insert Tab Space</string>
+    <string>Insert Tab Space(Ctrl+T)</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Tab Space (Ctrl+T)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
@@ -987,6 +1031,32 @@ p, li { white-space: pre-wrap; }
   <action name="actionResize_Image">
    <property name="text">
     <string>Resize Image</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="icon">
+    <iconset>
+     <normalon>:/Images/undo.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset>
+     <normalon>:/Images/redo.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Redo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Z</string>
    </property>
   </action>
  </widget>

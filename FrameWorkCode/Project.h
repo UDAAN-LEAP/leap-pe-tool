@@ -25,13 +25,17 @@ public:
 	void push();
 	bool add_config();
 	void fetch();
-	void enable_push();
+    bool enable_push(QWidget *parent);
+    void enable_push();
 	void AddTemp(Filter * f, QFile &pFile,QString prefix);
 
 	~Project() {
 		for (auto p : mFiles) {
 			delete p;
 		}
+        for (auto f : mFilters) {
+                    delete f;
+                }
 		if(repo)
 		git_repository_free(repo);
 	}
@@ -40,7 +44,14 @@ public:
 	QString get_stage();
     QString get_version();
 	Filter * getFilter(QString name);
+	bool isProjectOpen() {
+		return m_isOpen;
+	}
+	void setProjectOpen(bool open) {
+		m_isOpen = open;
+	}
 private:
+	bool m_isOpen = false;
 	QVector<QFile*> mFiles;
 	QVector<Filter*> mFilters;
 	TreeItem * mRoot=nullptr;
