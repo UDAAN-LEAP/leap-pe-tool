@@ -254,6 +254,20 @@ private slots:
 
     void on_actionRedo_triggered();
 
+    void on_actionNew_Project_triggered();
+
+    //void calculateRatings();
+
+    void on_actionInsert_Table_2_triggered();
+
+    void on_actionAdd_Columns_triggered();
+
+    void on_actionAdd_Rows_triggered();
+
+    void on_actionRemove_Columns_triggered();
+
+    void on_actionRemove_Rows_triggered();
+
 private:
     bool mExitStatus = false;
     QString mRole;

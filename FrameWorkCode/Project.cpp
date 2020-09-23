@@ -39,19 +39,12 @@ void Project::disable_push() {
 	bool s = c.child("Stage").first_child().set_value("Verifier");
 	save_xml();
 }
-bool Project::enable_push(QWidget *parent) {
+bool Project::enable_push(bool increment) {
 	auto c = doc.child("Project").child("Metadata");
 	bool s = c.child("Stage").first_child().set_value("Corrector");
 	int ver = std::stoi(c.child("Version").child_value());
-	int ver2 = ver + 1;
-	QString msg = QString("Do you want to Increment the Version and Turn In?\n\nClick Yes to Turnin and Increment the Version from "+ QString::number(ver) +" to "+QString::number(ver2)+" \nClick No to Turnin Without Incrementing Version (When you are Resubmitting or Accepting this as the final Version)");
-    int button = QMessageBox::question(parent, "Select Role", msg,
-                                       "Yes", "No", "Cancel", 0);
-
-    if(button == 0)
+    if(increment)
         ver++;
-    else if(button == 2)
-        return false;
 	c.child("Version").first_child().set_value(std::to_string(ver).c_str());
 	save_xml();
     return true;
@@ -341,13 +334,13 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
 	 */
 	QInputDialog inp;
 	bool ok = false;
-	QString quser = QInputDialog::getText(nullptr, QWidget::tr("Email"),
-		QWidget::tr("Username:"), QLineEdit::Normal,
+    QString quser = QInputDialog::getText(nullptr, QWidget::tr("Github Username"),
+        QWidget::tr("Username:"), QLineEdit::Normal,
 		" ", &ok);
 
 	if (!ok) return -1;
-	QString qpass = QInputDialog::getText(nullptr, QWidget::tr("Password"),
-		QWidget::tr("Password:"), QLineEdit::Password,
+    QString qpass = QInputDialog::getText(nullptr, QWidget::tr("Github Password"),
+        QWidget::tr("Password:"), QLineEdit::Password,
 		" ", &ok);
 	if (!ok) return -1;
 	user = quser.toStdString();
@@ -578,8 +571,8 @@ int match_cb(const char *path, const char *spec, void *payload) {
 	std::string spath = path;
 	return 0;
 }
-void Project::lg2_add() {
-	const char * paths[] = { "/*" };
+void Project::lg2_add(QString workingFolder) {
+    const char * paths[] = { "/Dicts" ,"/Comments","/Images", workingFolder.toUtf8().constData()};
 	git_strarray arr = { (char**)paths,1 };
 	git_index *idx = NULL;
 	int error = git_repository_index(&idx, repo);
@@ -590,6 +583,19 @@ void Project::lg2_add() {
 	check_lg2(error, "Error could not update", "");
 	git_index_write(idx);
 	git_index_free(idx);
+}
+void Project::lg2_add() {
+    const char * paths[] = { "/*"};
+    git_strarray arr = { (char**)paths,1 };
+    git_index *idx = NULL;
+    int error = git_repository_index(&idx, repo);
+    check_lg2(error, "Error Could not open index", "");
+    error = git_index_add_all(idx, &arr, GIT_INDEX_ADD_DEFAULT, match_cb, nullptr);
+    check_lg2(error, "Error could not add", "");
+    error = git_index_update_all(idx, &arr, match_cb, nullptr);
+    check_lg2(error, "Error could not update", "");
+    git_index_write(idx);
+    git_index_free(idx);
 }
 void Project::add_and_commit() {
 	

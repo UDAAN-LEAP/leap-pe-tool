@@ -45,15 +45,55 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Distribution Files">
+      <UniqueIdentifier>{B83CAF91-C7BF-462F-B76C-EA11631F866C}</UniqueIdentifier>
+      <Extensions>*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Distribution Files">
+      <UniqueIdentifier>{B83CAF91-C7BF-462F-B76C-EA11631F866C}</UniqueIdentifier>
+      <Extensions>*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DiffView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Filters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Project.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectHierarchyWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Symbols.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="averageaccuracies.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="commentsview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="diff_match_patch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="interndiffview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lg2_common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="loginpageview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -65,56 +105,56 @@
     <ClCompile Include="qcustomplot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="resizeimageview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="zoom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TreeItem.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Filters.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ProjectHierarchyWindow.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TreeModel.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="commentsview.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="averageaccuracies.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="lg2_common.cpp">
+    <ClCompile Include="ProjectWizard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VCSWidget.cpp">
+    <ClCompile Include="CreateProjectPage.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Project.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Symbols.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="resizeimageview.cpp">
-      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DiffView.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <ClInclude Include="Filters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Project.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="ProjectHierarchyWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Symbols.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="TreeItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="TreeModel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <ClInclude Include="tesseract\apitypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <QtMoc Include="averageaccuracies.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <ClInclude Include="tesseract\baseapi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tesseract\capi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <QtMoc Include="commentsview.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <ClInclude Include="diff_match_patch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -128,6 +168,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <QtMoc Include="interndiffview.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="lg2_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="loginpageview.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <ClInclude Include="tesseract\ltrresultiterator.h">
@@ -157,9 +203,24 @@
     <QtMoc Include="qcustomplot.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <ClInclude Include="3rdParty\RapidXML\rapidxml.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParty\RapidXML\rapidxml_iterators.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParty\RapidXML\rapidxml_print.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParty\RapidXML\rapidxml_utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="tesseract\renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <QtMoc Include="resizeimageview.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <ClInclude Include="tesseract\resultiterator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -187,25 +248,10 @@
     <QtMoc Include="zoom.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="TreeModel.h">
+    <QtMoc Include="CreateProjectPage.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="ProjectHierarchyWindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="commentsview.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="averageaccuracies.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="VCSWidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="Symbols.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="resizeimageview.h">
+    <QtMoc Include="ProjectWizard.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -221,25 +267,25 @@
     <QtUic Include="DiffView.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="interndiffview.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="mainwindow.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="ProjectHierarchyWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="commentsview.ui">
+    <QtUic Include="Symbols.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="averageaccuracies.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="VCSWidget.ui">
+    <QtUic Include="commentsview.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="Symbols.ui">
+    <QtUic Include="interndiffview.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="loginpageview.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="mainwindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="resizeimageview.ui">
@@ -274,6 +320,12 @@
     <None Include="SaveLoadPwords1.png">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Zoom-In-icon.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Zoom-Out-icon.png">
+      <Filter>Resource Files</Filter>
+    </None>
     <None Include="copy.png">
       <Filter>Resource Files</Filter>
     </None>
@@ -281,6 +333,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="highlight-icon.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="icon_diacritics.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="linespacing.png">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="next-page.png">
@@ -307,6 +365,9 @@
     <None Include="spellcheck.png">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="symbols.png">
+      <Filter>Resource Files</Filter>
+    </None>
     <None Include="toDevangari.png">
       <Filter>Resource Files</Filter>
     </None>
@@ -315,29 +376,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="3rdParty\RapidXML\rapidxml.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdParty\RapidXML\rapidxml_iterators.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdParty\RapidXML\rapidxml_print.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdParty\RapidXML\rapidxml_utils.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Filters.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TreeItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Project.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lg2_common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <None Include="ProjectJson.json">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="UserJson.json">
+      <Filter>Distribution Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

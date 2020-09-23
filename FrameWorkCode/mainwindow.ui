@@ -74,7 +74,7 @@
       <item>
        <widget class="QPushButton" name="viewComments">
         <property name="text">
-         <string>View Comments</string>
+         <string>Comments &amp; Accuracy</string>
         </property>
        </widget>
       </item>
@@ -374,6 +374,7 @@ p, li { white-space: pre-wrap; }
      <string>File</string>
     </property>
     <addaction name="actionNew"/>
+    <addaction name="actionNew_Project"/>
     <addaction name="actionOpen_Project"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
@@ -445,6 +446,16 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>FontAndLayout</string>
     </property>
+    <widget class="QMenu" name="menuTables">
+     <property name="title">
+      <string>Tables</string>
+     </property>
+     <addaction name="actionInsert_Table_2"/>
+     <addaction name="actionAdd_Columns"/>
+     <addaction name="actionAdd_Rows"/>
+     <addaction name="actionRemove_Columns"/>
+     <addaction name="actionRemove_Rows"/>
+    </widget>
     <addaction name="actionAllFontProperties"/>
     <addaction name="actionBold"/>
     <addaction name="actionUnBold"/>
@@ -460,6 +471,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionInsert_Tab_Space"/>
     <addaction name="actionAdd_Image"/>
     <addaction name="actionResize_Image"/>
+    <addaction name="menuTables"/>
    </widget>
    <widget class="QMenu" name="menuGit">
     <property name="title">
@@ -1057,6 +1069,39 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+Z</string>
+   </property>
+  </action>
+  <action name="actionNew_Project">
+   <property name="text">
+    <string>New Project</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionInsert_Table_2">
+   <property name="text">
+    <string>Insert Table</string>
+   </property>
+  </action>
+  <action name="actionAdd_Columns">
+   <property name="text">
+    <string>Add Columns</string>
+   </property>
+  </action>
+  <action name="actionAdd_Rows">
+   <property name="text">
+    <string>Add Rows</string>
+   </property>
+  </action>
+  <action name="actionRemove_Columns">
+   <property name="text">
+    <string>Remove Columns</string>
+   </property>
+  </action>
+  <action name="actionRemove_Rows">
+   <property name="text">
+    <string>Remove Rows</string>
    </property>
   </action>
  </widget>

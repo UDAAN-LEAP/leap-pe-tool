@@ -4,17 +4,12 @@
 
 # This is a reminder that you are using a generated .pro file.
 # Remove it when you are finished editing this file.
-#message("You are running qmake on a generated .pro file. This may not work!")
+message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./3rdParty/RapidXML/rapidxml.hpp \
-    $$PWD/Symbols.h \
-    $$PWD/resizeimageview.h \
-    ./3rdParty/RapidXML/rapidxml_iterators.hpp \
-    ./3rdParty/RapidXML/rapidxml_print.hpp \
-    ./3rdParty/RapidXML/rapidxml_utils.hpp \
-    ./Filters.h \
+HEADERS += ./Filters.h \
     ./Project.h \
+    ./TreeItem.h \
     ./tesseract/apitypes.h \
     ./tesseract/baseapi.h \
     ./tesseract/capi.h \
@@ -22,6 +17,7 @@ HEADERS += ./3rdParty/RapidXML/rapidxml.hpp \
     ./eddis.h \
     ./tesseract/genericvector.h \
     ./tesseract/helpers.h \
+    ./lg2_common.h \
     ./tesseract/ltrresultiterator.h \
     ./meanStdPage.h \
     ./tesseract/ocrclass.h \
@@ -29,52 +25,60 @@ HEADERS += ./3rdParty/RapidXML/rapidxml.hpp \
     ./tesseract/pageiterator.h \
     ./tesseract/platform.h \
     ./tesseract/publictypes.h \
+    ./3rdParty/RapidXML/rapidxml.hpp \
+    ./3rdParty/RapidXML/rapidxml_iterators.hpp \
+    ./3rdParty/RapidXML/rapidxml_print.hpp \
+    ./3rdParty/RapidXML/rapidxml_utils.hpp \
     ./tesseract/renderer.h \
     ./tesseract/resultiterator.h \
     ./tesseract/serialis.h \
     ./slpNPatternDict.h \
     ./tesseract/strngs.h \
     ./tesseract/thresholder.h \
-    ./TreeItem.h \
     ./trieEditdis.h \
     ./tesseract/unichar.h \
     ./tesseract/version.h \
     ./DiffView.h \
     ./ProjectHierarchyWindow.h \
+    ./Symbols.h \
+    ./TreeModel.h \
+    ./averageaccuracies.h \
+    ./commentsview.h \
     ./interndiffview.h \
+    ./loginpageview.h \
     ./mainwindow.h \
     ./qcustomplot.h \
-    ./TreeModel.h \
+    ./resizeimageview.h \
     ./zoom.h \
-    ./commentsview.h \
-    ./averageaccuracies.h \
-    $$PWD/lg2_common.h \
-    $$PWD/loginpageview.h
-SOURCES += ./Filters.cpp \
-    $$PWD/Symbols.cpp \
-    $$PWD/resizeimageview.cpp \
+    ./ProjectWizard.h \
+    ./CreateProjectPage.h
+SOURCES += ./DiffView.cpp \
+    ./Filters.cpp \
     ./Project.cpp \
     ./ProjectHierarchyWindow.cpp \
+    ./Symbols.cpp \
     ./TreeItem.cpp \
     ./TreeModel.cpp \
-    ./DiffView.cpp \
+    ./averageaccuracies.cpp \
+    ./commentsview.cpp \
     ./diff_match_patch.cpp \
     ./interndiffview.cpp \
+    ./lg2_common.cpp \
+    ./loginpageview.cpp \
     ./main.cpp \
     ./mainwindow.cpp \
     ./qcustomplot.cpp \
+    ./resizeimageview.cpp \
     ./zoom.cpp \
-    ./commentsview.cpp \
-    ./averageaccuracies.cpp \
-    $$PWD/lg2_common.cpp \
-    $$PWD/loginpageview.cpp
+    ./ProjectWizard.cpp \
+    ./CreateProjectPage.cpp
 FORMS += ./DiffView.ui \
-    $$PWD/Symbols.ui \
-    $$PWD/resizeimageview.ui \
-    ./interndiffview.ui \
-    ./mainwindow.ui \
     ./ProjectHierarchyWindow.ui \
-    ./commentsview.ui \
+    ./Symbols.ui \
     ./averageaccuracies.ui \
-    $$PWD/loginpageview.ui
+    ./commentsview.ui \
+    ./interndiffview.ui \
+    ./loginpageview.ui \
+    ./mainwindow.ui \
+    ./resizeimageview.ui
 RESOURCES += AppResources.qrc

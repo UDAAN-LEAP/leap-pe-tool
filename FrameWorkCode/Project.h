@@ -20,12 +20,13 @@ public:
     pugi::xml_node FindFile(QFile & file, pugi::xml_node  & n);
 	TreeModel * getModel();
 	void open_git_repo();
-	void lg2_add();
+    void lg2_add(QString workingFolder);
+    void lg2_add();
 	void commit(std::string message);
 	void push();
 	bool add_config();
 	void fetch();
-    bool enable_push(QWidget *parent);
+    bool enable_push(bool increment);
     void enable_push();
 	void AddTemp(Filter * f, QFile &pFile,QString prefix);
 

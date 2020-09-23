@@ -21,6 +21,8 @@
 #include "ProjectHierarchyWindow.h"
 #include "3rdParty/RapidXML/rapidxml.hpp"
 #include <QDomDocument>
+#include <QFormLayout>
+#include <QDialogButtonBox>
 #include <QTreeView>
 #include <QFont>
 #include <git2.h>
@@ -29,6 +31,7 @@
 #include <algorithm>
 #include <QSet>
 #include <QAction>
+#include "ProjectWizard.h"
 //# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
@@ -37,7 +40,7 @@ trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
 vector<string> vGBook,vIBook;
 QImage imageOrig;
 QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName;
-QString gInitialTextHtml;
+map<QString, QString> gInitialTextHtml;
 QString gTimeLogLocation;
 map<QString, int> timeLog;
 vector<QString> vs; vector<int> vx, vy, vw, vh, vright;
@@ -81,7 +84,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     map<QString, QString> passwordRoleMap = { { "x3JzWx5KY}Gd&,]A" ,"Verifier"},
                                               { "3`t,FxjytJ[uU,HW" ,"Corrector"},
-                                              {"Admin@IITB2020", "Admin"}
+                                              { "Admin@IITB2020", "Admin"},
+                                              { "sfbkasg81!248-Bks","Project Manager"}
                                             };
     if(!setRole(passwordRoleMap[password]))
         mExitStatus = true;
@@ -116,14 +120,24 @@ bool MainWindow::setRole(QString role)
     this->mRole = role;
     if(mRole == "Admin") {
        int button = QMessageBox::question(this, "Select Role", "Which Role do you want to Load?",
-                                   "Verifier", "Corrector","Cancel", 0);
+                                   "Verifier", "Corrector","Project Manager", 0);
        if(button == 0)
            mRole = "Verifier";
        else if(button == 1)
            mRole = "Corrector";
+       else if(button == 2)
+           mRole = "Project Manager";
        else
            return false;
     }
+
+    if(mRole == "Project Manager"){
+        ui->actionNew_Project->setEnabled(true);
+        ui->actionNew_Project->setVisible(true);
+        mRole = "Verifier";
+
+    }
+
     if(mRole == "Verifier") {
         filestructure_fw = { {"Inds","VerifierOutput"},
                              {"CorrectorOutput","VerifierOutput",},
@@ -278,7 +292,7 @@ int LevenshteinWithGraphemes(QList<Diff> diffs)
 void MainWindow::on_actionLoad_Next_Page_triggered()
 {
     if(curr_browser) {
-        if(gInitialTextHtml.compare(curr_browser->toHtml())) {
+        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {
             int btn = QMessageBox::question(this, "Save?", "Do you want to save this file?",
                                             QMessageBox::StandardButton::Ok, QMessageBox::StandardButton::No);
             if (btn == QMessageBox::StandardButton::Ok)
@@ -319,8 +333,8 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
 void MainWindow::on_actionLoad_Prev_Page_triggered()
 {
     if(curr_browser) {
-        if(gInitialTextHtml.compare(curr_browser->toHtml())) {
-            int btn = QMessageBox::question(this, "Save?", "Do you want to save this file?",
+        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {
+            int btn = QMessageBox::question(this, "Save?", "Do you want to save " + currentTabPageName + " file?",
                                             QMessageBox::StandardButton::Ok, QMessageBox::StandardButton::No);
             if (btn == QMessageBox::StandardButton::Ok)
                 on_actionSave_triggered();
@@ -837,7 +851,7 @@ void MainWindow::on_actionSave_triggered()
             QTextStream out(&sFile);
             out.setCodec("UTF-8");
             QString output = curr_browser->toHtml();
-            gInitialTextHtml = output;
+            gInitialTextHtml[currentTabPageName] = output;
             output = "<style> body{ width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; } </style>" + output;
             out << output;
             sFile.flush();
@@ -2283,6 +2297,12 @@ void MainWindow::on_actionRedo_triggered()
     curr_browser->redo();
 }
 
+void MainWindow::on_actionNew_Project_triggered()
+{
+        ProjectWizard* wiz = new ProjectWizard();
+        wiz->show();
+}
+
 
 void MainWindow::on_actionBold_triggered()
 {
@@ -2587,7 +2607,7 @@ void MainWindow::updateAverageAccuracies() //Verifier only
     QString pageName;
     pageName.replace(".txt", "");
     pageName.replace(".html", "");
-    float totalcharacc=0, totalwordacc = 0, totalrating  = 0; int totalcharerrors = 0, totalworderrors = 0, count = 0;
+    float totalcharacc=0, totalwordacc = 0; int totalcharerrors = 0, totalworderrors = 0, count = 0;
 
     QFile jsonFile(commentFilename);
     jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -2631,7 +2651,8 @@ void MainWindow::updateAverageAccuracies() //Verifier only
     mainObj["AverageWordAccuracy"] = totalwordacc/count;
     mainObj["AverageCharErrors"] = totalcharerrors/count;
     mainObj["AverageWordErrors"] = totalworderrors/count;
-    //mainObj["AverageRating"] = totalrating/count;
+
+//    mainObj["AverageRating"] = totalrating/count;
 
     csvFile<< ",,,,";
     csvFile<<" ,"<< "Average Accuracy (Word level),"<<"Average Accuracy (Character-Level)," <<"Average Errors (Word level),"<<"Average Errors (Character-Level),"<<"\n";
@@ -2667,7 +2688,7 @@ void MainWindow::on_viewComments_clicked() //Version Based
             QString pageName = gCurrentPageName;
             pageName.replace(".txt", "");
             pageName.replace(".html", "");
-            int totalCharErrors = 0, totalWordErrors = 0, rating = 0; QString comments = ""; float wordAccuracy=100, charAccuracy=100;
+            int totalCharErrors = 0, totalWordErrors = 0, rating = 0, formatting = 0; QString comments = ""; float wordAccuracy=100, charAccuracy=100;
             QFile jsonFile(commentFilename);
             jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
             QByteArray data = jsonFile.readAll();
@@ -2678,6 +2699,7 @@ void MainWindow::on_viewComments_clicked() //Version Based
             QJsonObject page = pages.value(pageName).toObject();
             comments = page.value("comments").toString();
             rating = page.value("rating").toInt();
+            //formatting = page.value("formatting").toInt();
             totalCharErrors = page.value("charerrors").toInt();
             totalWordErrors = page.value("worderrors").toInt();
             wordAccuracy = page.value("wordaccuracy").toDouble();
@@ -2774,11 +2796,13 @@ void MainWindow::on_viewComments_clicked() //Version Based
 
             }
 
-            if(charAccuracy>99.0) rating =5;
-            else if(charAccuracy > 98.0) rating =4;
-            else if(charAccuracy > 97.0) rating =3;
-            else if(charAccuracy > 96.0) rating =2;
-            else if(charAccuracy > 95.0) rating =1;
+            if(charAccuracy>98.5) rating =4;
+            else if(charAccuracy > 97.5) rating =3;
+            else if(charAccuracy > 96.5) rating =2;
+            else if(charAccuracy <= 96.5) rating =1;
+
+            if(formatting)
+                rating += 1;
 
             page["comments"] = comments;
             page["charerrors"] = totalCharErrors;
@@ -2787,6 +2811,7 @@ void MainWindow::on_viewComments_clicked() //Version Based
             page["wordaccuracy"] = wordAccuracy;
             page["rating"] = rating;
             page["pagename"] = pageName;
+            //page["formatting"] = formatting;
             pages.remove(pageName);
             pages.insert(pageName, page);
             mainObj.remove("pages");
@@ -2805,6 +2830,7 @@ void MainWindow::on_viewComments_clicked() //Version Based
             }
     }
 }
+
 
 void MainWindow::on_compareCorrectorOutput_clicked()
 {
@@ -3149,6 +3175,15 @@ void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
 }
 
 void MainWindow::on_actionFetch_2_triggered() {
+    QString stage = mProject.get_stage();
+    QString prvs_stage = (stage=="Corrector")?"Verifier":"Corrector";
+    QString prvs_output_dir = prvs_stage + "Output"; //"VerifierOutput" or "CorrectorOutput"
+
+    int btn = QMessageBox::question(this, "Pull?", "This will overwrite files in" + prvs_output_dir + "directory. Do you want to Continue?",
+                                    QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
+    if (btn != QMessageBox::StandardButton::Yes)
+        return
+
     mProject.fetch();
     if(!isVerifier) {
         if (mProject.get_stage() == "Corrector") {
@@ -3162,12 +3197,32 @@ void MainWindow::on_actionFetch_2_triggered() {
 
 }
 void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
-
-
-    if(!mProject.enable_push(this))
+    int ver = mProject.get_version().toInt();
+    int ver2 = ver + 1;
+    bool increment = true;
+    QString commit_msg;
+    QString msg = QString("Do you want to Increment the Version and Turn In?\n\nClick Yes to Turnin and Increment the Version from "+ QString::number(ver) +" to "+QString::number(ver2)+" \nClick Resubmit to Turn In without Incrementing Version.\nClick Finalise to Approve the set as the Final Version");
+    int button = QMessageBox::question(this, "Turn In", msg,
+                                       "Yes", "Resubmit","Finalise" "Cancel", 0);
+    switch(button){
+    case 0:
+        mProject.enable_push(increment);
+        commit_msg = "Verifier has Turned in new Version:" + mProject.get_version();
+        break;
+    case 1:
+        mProject.enable_push(!increment);
+        commit_msg = "Verifier has Resubmitted Version:" + mProject.get_version();
+        break;
+    case 2:
+        mProject.enable_push(!increment);
+        commit_msg = "Verifier Finalised Version:" + mProject.get_version();
+        break;
+    default:
         return;
-    QString text = "Verifier has Turned in Version:" + mProject.get_version();
-    mProject.commit(text.toStdString());
+
+    }
+
+    mProject.commit(commit_msg.toStdString());
     mProject.push();
     ui->lineEdit_2->setText("Version " + mProject.get_version());
     QMessageBox::information(0, "Turn In", "Turned In Successfully");
@@ -3245,8 +3300,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         b->setHtml(stream.readAll());
     }
     b->setFont(font);
-    gInitialTextHtml = b->toHtml();
-
     if(fileFlag) {
         curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
         curr_browser->setDocument(b->document());
@@ -3257,6 +3310,8 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         currentTabIndex = ui->tabWidget_2->addTab(b, name);
         ui->tabWidget_2->setCurrentIndex(currentTabIndex);
     }
+    currentTabPageName = ui->tabWidget_2->tabText(currentTabIndex);
+    gInitialTextHtml[currentTabPageName] = b->toHtml();
 
     b->setMouseTracking(true);
     b->installEventFilter(this);
@@ -3390,8 +3445,9 @@ void MainWindow::closetab(int idx) {
 
     QTextBrowser *closing_browser = (QTextBrowser*)ui->tabWidget_2->widget(idx);
     QString closing_browserHtml = closing_browser->toHtml();
-    if( (closing_browser == curr_browser) && (closing_browserHtml != gInitialTextHtml)) {
-        int btn = QMessageBox::question(this, "Save?", "Do you want to save this file?",
+    QString closingTabPageName = ui->tabWidget_2->tabText(idx);
+    if(closing_browserHtml != gInitialTextHtml[closingTabPageName]) {
+        int btn = QMessageBox::question(this, "Save?", "Do you want to save " + closingTabPageName + " file?",
                                         QMessageBox::StandardButton::Ok, QMessageBox::StandardButton::No);
         if (btn == QMessageBox::StandardButton::Ok)
             on_actionSave_triggered();
@@ -3418,8 +3474,6 @@ void MainWindow::tabchanged(int idx) {
     QFile *pImageFile = new QFile(imagePathFile);
     LoadImageFromFile(pImageFile);
 
-    if(curr_browser)
-        gInitialTextHtml = curr_browser->toHtml();
     myTimer.start();
     DisplayTimeLog();
 }
@@ -3534,3 +3588,60 @@ void MainWindow::directoryChanged(const QString &path) {
 
 
 
+
+void MainWindow::on_actionInsert_Table_2_triggered()
+{
+    if(!curr_browser)
+        return;
+
+    QDialog dialog(this);
+    // Use a layout allowing to have a label next to each field
+    QFormLayout form(&dialog);
+    form.addRow(new QLabel("Insert Table"));
+
+    // Add the lineEdits with their respective labels
+    QLineEdit *rows = new QLineEdit(&dialog);
+    QLineEdit *columns = new QLineEdit(&dialog);
+    form.addRow("Rows", rows);
+    form.addRow("Columns", columns);
+    // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                               Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    // Show the dialog as modal
+    if (dialog.exec() == QDialog::Accepted) {
+
+
+        QTextTableFormat tf;
+        tf.setBorderBrush(Qt::black);
+        tf.setCellSpacing(0);
+
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
+
+        }
+}
+
+
+void MainWindow::on_actionAdd_Columns_triggered()
+{
+
+}
+
+void MainWindow::on_actionAdd_Rows_triggered()
+{
+
+}
+
+void MainWindow::on_actionRemove_Columns_triggered()
+{
+
+}
+
+void MainWindow::on_actionRemove_Rows_triggered()
+{
+
+}
