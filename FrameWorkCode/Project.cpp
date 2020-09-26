@@ -336,19 +336,19 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
 	bool ok = false;
     QString quser = QInputDialog::getText(nullptr, QWidget::tr("Github Username"),
         QWidget::tr("Username:"), QLineEdit::Normal,
-		" ", &ok);
+		"", &ok);
 
 	if (!ok) return -1;
     QString qpass = QInputDialog::getText(nullptr, QWidget::tr("Github Password"),
         QWidget::tr("Password:"), QLineEdit::Password,
-		" ", &ok);
+		"", &ok);
 	if (!ok) return -1;
 	user = quser.toStdString();
 	pass = qpass.toStdString();
 
 	return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
-void Project::push() {
+bool Project::push() {
 	lg2_add();
 	git_push_options options;
 	git_remote * remote = NULL;
@@ -357,23 +357,24 @@ void Project::push() {
 	git_remote_callbacks cb;
     int klass = check_lg2(git_push_init_options(&options, GIT_PUSH_OPTIONS_VERSION), "Error initializaing options", "");
 	if (klass != 0) {
-		return;
+        return 0;
 	}
 	options.callbacks.credentials = credentials_cb;
 	
 	klass = check_lg2(git_remote_lookup(&remote, repo, "origin"),"Unable to lookup remote","");
 	if (klass != 0) {
 		git_remote_free(remote);
-		return;
+        return 0;
 	}
 	check_lg2(git_remote_push(remote, &refspecs, &options), "Error Pushing", "");
 	if (klass != 0) {
 	
 		git_remote_free(remote);
-		return;
+        return 0;
 	}
-	git_remote_free(remote);
-	return;
+    git_remote_free(remote);
+
+    return 1;//No errors
 }
 static int progress_cb(const char *str, int len, void *data)
 {
@@ -421,7 +422,7 @@ void Project::fetch() {
 }
 
 
-void Project::commit(std::string message) {
+bool Project::commit(std::string message) {
 	lg2_add();
 	git_signature *sig;
 	git_index *index;
@@ -441,13 +442,13 @@ void Project::commit(std::string message) {
 	}
 	klass = check_lg2(git_revparse_ext(&parent, &ref, repo, "HEAD"),"Head not found","");
 	if (klass > 0) {
-		return;
+        return 0;
 	}
 	/* Now let's create an empty tree for this commit */
 
 	klass = check_lg2(git_repository_index(&index, repo), "Could not open repository index", "");
 	if (klass > 0) {
-		return;
+        return 0;
 	}
 
 	/**
@@ -458,22 +459,22 @@ void Project::commit(std::string message) {
 
 	klass = check_lg2(git_index_write_tree(&tree_id, index), "Could not write tree", "");;
 	if (klass > 0) {
-		return;
+        return 0;
 	}
 
 	klass = check_lg2(git_index_write(index), "Could not write index", "");;
 	if (klass > 0) {
-		return;
+        return 0;
 	}
 
 	klass = check_lg2(git_tree_lookup(&tree, repo, &tree_id), "Error looking up tree", "");
 	if (klass > 0) {
-		return;
+        return 0;
 	}
 
 	klass = check_lg2(git_signature_default(&sig, repo), "Error creating signature", "");
 	if (klass > 0) {
-		return;
+        return 0;
 	}
 
 	/**
@@ -491,7 +492,7 @@ void Project::commit(std::string message) {
 		git_index_free(index);
 		git_tree_free(tree);
 
-		return;
+        return 0;
 	}
 
 	/** Clean up so we don't leak memory. */
@@ -500,6 +501,7 @@ void Project::commit(std::string message) {
 	git_signature_free(sig);
 	git_index_free(index);
 	git_tree_free(tree);
+    return 1;
 }
 bool Project::add_config() {
 	git_config * cfg = NULL;
@@ -618,6 +620,27 @@ QString Project::get_version() {
     QString version = c.child("Version").child_value();
     return version;
 }
+QString Project::get_pmEmail() {
+    auto c = doc.child("Project").child("Metadata");
+    QString stage = c.child("ProjectManagerEmail").child_value();
+    return stage;
+}
+QString Project::get_bookId() {
+    auto c = doc.child("Project").child("Metadata");
+    QString version = c.child("BookId").child_value();
+    return version;
+}
+QString Project::get_setId() {
+    auto c = doc.child("Project").child("Metadata");
+    QString stage = c.child("SetId").child_value();
+    return stage;
+}
+QString Project::get_repo() {
+    auto c = doc.child("Project").child("Metadata");
+    QString stage = c.child("RepositoryLink").child_value();
+    return stage;
+}
+
 void Project::open_git_repo() {
 	std::string dir = mProjectDir.path().toStdString();
 	QString gitpath = mProjectDir.path() + "/.git";

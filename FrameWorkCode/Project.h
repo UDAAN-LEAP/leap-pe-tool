@@ -22,8 +22,8 @@ public:
 	void open_git_repo();
     void lg2_add(QString workingFolder);
     void lg2_add();
-	void commit(std::string message);
-	void push();
+    bool commit(std::string message);
+    bool push();
 	bool add_config();
 	void fetch();
     bool enable_push(bool increment);
@@ -41,9 +41,13 @@ public:
 		git_repository_free(repo);
 	}
 	void add_and_commit();
-	void disable_push();
+    void disable_push();
 	QString get_stage();
     QString get_version();
+    QString get_pmEmail();
+    QString get_bookId();
+    QString get_setId();
+    QString get_repo();
 	Filter * getFilter(QString name);
 	bool isProjectOpen() {
 		return m_isOpen;

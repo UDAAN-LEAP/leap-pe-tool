@@ -32,6 +32,7 @@
 #include <QSet>
 #include <QAction>
 #include "ProjectWizard.h"
+#include <SimpleMail/SimpleMail>
 //# include <QTask>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
@@ -172,6 +173,28 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
+QJsonObject readJsonFile(QString filepath)
+{
+    QFile jsonFile(filepath);
+    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    QByteArray data = jsonFile.readAll();
+
+    QJsonParseError errorPtr;
+    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+    QJsonObject mainObj = document.object();
+    jsonFile.close();
+    return mainObj;
+}
+
+void writeJsonFile(QString filepath, QJsonObject mainObj)
+{
+    QJsonDocument document1(mainObj);
+
+    QFile jsonFile(filepath);
+    jsonFile.open(QIODevice::WriteOnly);
+    jsonFile.write(document1.toJson());
+    jsonFile.close();
+}
 QString file = "";
 bool fileFlag = 0;
 QElapsedTimer myTimer;
@@ -182,18 +205,13 @@ void MainWindow::SaveTimeLog()
 {
     QJsonObject mainObj;
     QJsonObject page;
-    QJsonDocument document;
     for (auto i = timeLog.begin(); i!=timeLog.end(); i++ )
     {
         page["directory"] = i->first;
         page["seconds"] = i->second;
         mainObj.insert(i->first, page);
     }
-    document.setObject(mainObj);
-
-    QFile jsonFile(gTimeLogLocation);
-    jsonFile.open(QIODevice::WriteOnly);
-    jsonFile.write(document.toJson());
+    writeJsonFile(gTimeLogLocation, mainObj);
 }
 
 void MainWindow::DisplayTimeLog()
@@ -221,6 +239,7 @@ void DisplayError(QString error)
     msgBox.setText(error);
     msgBox.exec();
 }
+
 
 //bool OPENSPELLFLAG = 1;// TO NOT CONVERT ASCII STRINGS TO DEVANAGARI ON OPENING WHEN SPELLCHECK IS CLICKED
 int GetPageNumber(string localFilename, string *no, size_t *loc, QString *ext)
@@ -354,6 +373,9 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
         QString ext = "";
         if(!GetPageNumber(localFilename, &no, &loc, &ext))
             return;
+
+
+
         localFilename.replace(loc,no.size(),to_string(stoi(no) - 1));
         QFile *file = new QFile(QString::fromStdString(localFilename));
         QFileInfo finfo(file->fileName());
@@ -2569,16 +2591,10 @@ void MainWindow::LogHighlights(QString word) //Verifier Only
     QString pagename = gCurrentPageName;
     pagename.replace(".txt", "");
     pagename.replace(".html", "");
-    QFile jsonFile(highlightsFilename);
-    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    QByteArray data = jsonFile.readAll();
-
-    QJsonParseError errorPtr;
-    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-    QJsonObject mainObj = document.object();
+    QJsonObject mainObj = readJsonFile(highlightsFilename);
     QJsonObject page = mainObj.value(pagename).toObject();
     QJsonObject highlights;
-    jsonFile.close();
+
 
     int nMilliseconds = myTimer.elapsed();
     secs = nMilliseconds / 1000;
@@ -2594,37 +2610,16 @@ void MainWindow::LogHighlights(QString word) //Verifier Only
     page.insert(time, highlights);
     mainObj.remove(pagename);
     mainObj.insert(pagename, page);
-    document.setObject(mainObj);
 
-    QFile jsonFile1(highlightsFilename);
-    jsonFile1.open(QIODevice::WriteOnly);
-    jsonFile1.write(document.toJson());
+    writeJsonFile(highlightsFilename, mainObj);
 }
 
-void MainWindow::updateAverageAccuracies() //Verifier only
+QJsonObject MainWindow::getAverageAccuracies(QJsonObject mainObj)
 {
-    QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
-    QString pageName;
-    pageName.replace(".txt", "");
-    pageName.replace(".html", "");
-    float totalcharacc=0, totalwordacc = 0; int totalcharerrors = 0, totalworderrors = 0, count = 0;
+    float totalcharacc=0, totalwordacc = 0; int totalcharerrors = 0, totalworderrors = 0, count = 0, rating = 0;
 
-    QFile jsonFile(commentFilename);
-    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    QByteArray data = jsonFile.readAll();
-
-    QJsonParseError errorPtr;
-    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-    QJsonObject mainObj = document.object();
     QJsonObject pages = mainObj.value("pages").toObject();
     QJsonObject page;
-
-    jsonFile.close();
-
-    string csvfolder = gDirTwoLevelUp.toUtf8().constData();
-    csvfolder += "/Comments/AverageAccuracies.csv";
-    std::ofstream csvFile(csvfolder);
-    csvFile<<"Page Name,"<< "Word-Level Accuracy,"<<"Character-Level Accuracy," <<"Word-Level Errors,"<<"Character-Level Errors"<<"\n";
 
     foreach(const QJsonValue &val, pages)
     {
@@ -2633,7 +2628,61 @@ void MainWindow::updateAverageAccuracies() //Verifier only
         float wordAccuracy    = val.toObject().value("wordaccuracy").toDouble();
         int charerrors = val.toObject().value("charerrors").toInt();
         int worderrors = val.toObject().value("worderrors").toInt();
-        //int rating     = val.toObject().value("rating").toInt();
+
+        totalcharacc    += charAccuracy;
+        totalwordacc    += wordAccuracy;
+        totalcharerrors += charerrors;
+        totalworderrors += worderrors;
+
+        count++;
+    }
+    if(count)
+    {
+
+        double avgcharacc = totalcharacc/count;
+        if(avgcharacc>98.5) rating = 4;
+        else if(avgcharacc > 97.5) rating = 3;
+        else if(avgcharacc > 96.5) rating = 2;
+        else if(avgcharacc <= 96.5) rating = 1;
+
+        if(mProject.get_stage() != mRole)
+            mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;
+        else
+            mainObj["Rating-V"+ mProject.get_version()] = rating;
+        mainObj["AverageCharAccuracy"] = avgcharacc;
+        mainObj["AverageWordAccuracy"] = totalwordacc/count;
+        mainObj["AverageCharErrors"] = totalcharerrors/count;
+        mainObj["AverageWordErrors"] = totalworderrors/count;
+
+    }
+    return mainObj;
+}
+
+void MainWindow::updateAverageAccuracies() //Verifier only
+{
+    QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
+
+    string csvfolder = gDirTwoLevelUp.toUtf8().constData();
+    csvfolder += "/Comments/AverageAccuracies.csv";
+    std::ofstream csvFile(csvfolder);
+    csvFile<<"Page Name,"<< "Word-Level Accuracy,"<<"Character-Level Accuracy," <<"Word-Level Errors,"<<"Character-Level Errors"<<"\n";
+
+    QJsonObject mainObj = readJsonFile(commentFilename);
+    if(mainObj.isEmpty())
+        return;
+    float totalcharacc=0, totalwordacc = 0; int totalcharerrors = 0, totalworderrors = 0, count = 0, rating = 0;
+
+
+    QJsonObject pages = mainObj.value("pages").toObject();
+    QJsonObject page;
+
+    foreach(const QJsonValue &val, pages)
+    {
+        QString page = val.toObject().value("pagename").toString();
+        float charAccuracy    = val.toObject().value("characcuracy").toDouble();
+        float wordAccuracy    = val.toObject().value("wordaccuracy").toDouble();
+        int charerrors = val.toObject().value("charerrors").toInt();
+        int worderrors = val.toObject().value("worderrors").toInt();
 
         csvFile << page.toUtf8().constData() <<"," << wordAccuracy << "," << charAccuracy << "," << worderrors<< "," << charerrors<<"\n";
 
@@ -2641,30 +2690,34 @@ void MainWindow::updateAverageAccuracies() //Verifier only
         totalwordacc    += wordAccuracy;
         totalcharerrors += charerrors;
         totalworderrors += worderrors;
-        //totalrating     += rating;
 
         count++;
     }
     if(count)
     {
-    mainObj["AverageCharAccuracy"] = totalcharacc/count;
-    mainObj["AverageWordAccuracy"] = totalwordacc/count;
-    mainObj["AverageCharErrors"] = totalcharerrors/count;
-    mainObj["AverageWordErrors"] = totalworderrors/count;
 
-//    mainObj["AverageRating"] = totalrating/count;
+        double avgcharacc = totalcharacc/count;
+        if(avgcharacc>98.5) rating = 4;
+        else if(avgcharacc > 97.5) rating = 3;
+        else if(avgcharacc > 96.5) rating = 2;
+        else if(avgcharacc <= 96.5) rating = 1;
+
+        if(mProject.get_stage() != mRole)
+            mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;
+        else
+            mainObj["Rating-V"+ mProject.get_version()] = rating;
+        mainObj["AverageCharAccuracy"] = avgcharacc;
+        mainObj["AverageWordAccuracy"] = totalwordacc/count;
+        mainObj["AverageCharErrors"] = totalcharerrors/count;
+        mainObj["AverageWordErrors"] = totalworderrors/count;
 
     csvFile<< ",,,,";
     csvFile<<" ,"<< "Average Accuracy (Word level),"<<"Average Accuracy (Character-Level)," <<"Average Errors (Word level),"<<"Average Errors (Character-Level),"<<"\n";
     csvFile <<" " <<"," << totalwordacc/count << "," << totalcharacc/count << "," << totalworderrors/count<< "," << totalcharerrors/count<<"\n";
 
 
-    QJsonDocument document1(mainObj);
+    writeJsonFile(commentFilename, mainObj);
 
-    QFile jsonFile1(commentFilename);
-    jsonFile1.open(QIODevice::WriteOnly);
-    jsonFile1.write(document1.toJson());
-    jsonFile1.close();
     }
 
 }
@@ -2688,32 +2741,41 @@ void MainWindow::on_viewComments_clicked() //Version Based
             QString pageName = gCurrentPageName;
             pageName.replace(".txt", "");
             pageName.replace(".html", "");
-            int totalCharErrors = 0, totalWordErrors = 0, rating = 0, formatting = 0; QString comments = ""; float wordAccuracy=100, charAccuracy=100;
-            QFile jsonFile(commentFilename);
-            jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-            QByteArray data = jsonFile.readAll();
-            QJsonParseError errorPtr;
-            QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-            QJsonObject mainObj = document.object();
+            int totalCharErrors = 0, totalWordErrors = 0, rating = 0;
+            QString comments = "";
+            QString avgAcc = "100%";
+            float wordAccuracy=100, charAccuracy=100, avgCharAcc = 100;
+            QString version = mProject.get_version();
+
+            QJsonObject mainObj = readJsonFile(commentFilename);
             QJsonObject pages = mainObj.value("pages").toObject();
             QJsonObject page = pages.value(pageName).toObject();
-            comments = page.value("comments").toString();
-            rating = page.value("rating").toInt();
-            //formatting = page.value("formatting").toInt();
-            totalCharErrors = page.value("charerrors").toInt();
-            totalWordErrors = page.value("worderrors").toInt();
-            wordAccuracy = page.value("wordaccuracy").toDouble();
-            charAccuracy = page.value("characcuracy").toDouble();
-            jsonFile.close();
+
+            if( !mainObj.isEmpty() ) {
+
+                rating = mainObj["Rating-V"+ mProject.get_version()].toInt();
+                avgCharAcc = mainObj["AverageCharAccuracy"].toDouble();
+                avgAcc = QString::number((((float)lround(avgCharAcc*100))/100)) + "%";
+
+                if(!page.isEmpty()) {
+                    comments = page.value("comments").toString();
+                    totalCharErrors = page.value("charerrors").toInt();
+                    totalWordErrors = page.value("worderrors").toInt();
+                    wordAccuracy = page.value("wordaccuracy").toDouble();
+                    charAccuracy = page.value("characcuracy").toDouble();
+                }
+            }
 
             if(!isVerifier) {
-                CommentsView *cv = new CommentsView(totalWordErrors,totalCharErrors,wordAccuracy,charAccuracy,comments,commentFilename, pageName, rating, mRole);
+
+                CommentsView *cv = new CommentsView(totalWordErrors,totalCharErrors,wordAccuracy,charAccuracy,comments,commentFilename, pageName, rating, avgAcc, mRole,version);
                 cv->show();
                 return;
             }
 
             if(gDirOneLevelUp!= (gDirTwoLevelUp + "/Inds")) //if Inds file-> do not create new accuracies just display previous accuracy to the Verifier
             {
+
                 /*
                 //      Character Changes for Accuracy Calculation
 
@@ -2754,8 +2816,7 @@ void MainWindow::on_viewComments_clicked() //Version Based
                 textCursor.setPosition(0);
                 QString highlightedChars = "", selectedChar; // to store all the highlighted characters
                 int prevHighlightPos = -2; // Used as an indicator to separate non contigous highlighted text with a space
-                while(!textCursor.atEnd())
-                {
+                while(!textCursor.atEnd()) {
                     int anchor = textCursor.position();
                     QTextCharFormat format = textCursor.charFormat();
                     if(anchor!=0)
@@ -2796,36 +2857,32 @@ void MainWindow::on_viewComments_clicked() //Version Based
 
             }
 
-            if(charAccuracy>98.5) rating =4;
-            else if(charAccuracy > 97.5) rating =3;
-            else if(charAccuracy > 96.5) rating =2;
-            else if(charAccuracy <= 96.5) rating =1;
-
-            if(formatting)
-                rating += 1;
-
             page["comments"] = comments;
             page["charerrors"] = totalCharErrors;
             page["worderrors"] = totalWordErrors;
             page["characcuracy"] = charAccuracy;
             page["wordaccuracy"] = wordAccuracy;
-            page["rating"] = rating;
             page["pagename"] = pageName;
-            //page["formatting"] = formatting;
+
             pages.remove(pageName);
             pages.insert(pageName, page);
             mainObj.remove("pages");
             mainObj.insert("pages",pages);
-            QJsonDocument document1(mainObj);
 
-            QFile jsonFile1(commentFilename);
-            jsonFile1.open(QIODevice::WriteOnly);
-            jsonFile1.write(document1.toJson());
-            jsonFile1.close();
+            mainObj = getAverageAccuracies(mainObj);
+
+            if(mProject.get_stage() != mRole)
+                rating = mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)].toInt();
+            else
+                rating = mainObj["Rating-V"+ mProject.get_version()].toInt();
+            avgCharAcc = mainObj["AverageCharAccuracy"].toDouble();
+            avgAcc = QString::number((((float)lround(avgCharAcc*100))/100)) + "%";
+
+            writeJsonFile(commentFilename, mainObj);
 
             if(!gSaveTriggered)
             {
-                CommentsView *cv = new CommentsView(totalWordErrors,totalCharErrors,wordAccuracy,charAccuracy,comments,commentFilename,pageName, rating, mRole);
+                CommentsView *cv = new CommentsView(totalWordErrors,totalCharErrors,wordAccuracy,charAccuracy,comments,commentFilename,pageName, rating, avgAcc, mRole, version);
                 cv->show();
             }
     }
@@ -3006,12 +3063,7 @@ void MainWindow::on_actionViewAverageAccuracies_triggered()
 	pagename.replace(".html", "");
 	float avgcharacc = 0, avgwordacc = 0, avgrating = 0; int avgcharerrors = 0, avgworderrors = 0;
 
-	QFile jsonFile(commentFilename);
-	jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-	QByteArray data = jsonFile.readAll();
-
-	QJsonDocument document = QJsonDocument::fromJson(data);
-	QJsonObject mainObj = document.object();
+    QJsonObject mainObj = readJsonFile(commentFilename);
 
 	avgcharacc = mainObj["AverageCharAccuracy"].toDouble();
 	avgwordacc = mainObj["AverageWordAccuracy"].toDouble();
@@ -3021,7 +3073,6 @@ void MainWindow::on_actionViewAverageAccuracies_triggered()
 	AverageAccuracies *aa = new AverageAccuracies(csvFile, avgwordacc, avgcharacc, avgworderrors, avgcharerrors);
 	aa->show();
 }
-
 
 
 void MainWindow::on_actionAccuracyLog_triggered()
@@ -3166,11 +3217,27 @@ void MainWindow::on_actionPush_triggered() {
 //}
 
 void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
-    QString version = mProject.get_version();
-    std::string turn_in = "Corrector Turned in Version: " + version.toStdString();
+    QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();;
     mProject.disable_push();
-    mProject.commit(turn_in);
-    mProject.push();
+    if(! mProject.commit(commit_msg.toStdString())) {
+        QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+        return;
+    }
+    if(! mProject.push()){
+        QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+        return;
+    }
+
+    ui->lineEdit_2->setText("Version " + mProject.get_version());
+
+    QString emailText =  "Book ID: " + mProject.get_bookId()
+                        + "\nSet ID: " + mProject.get_setId()
+                        + "\n" + commit_msg ;
+    if( !sendEmail(emailText)) {
+        QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nEmail Notification Unsuccessful!,Please Check your Internet Connection");
+        return;
+    }
+    QMessageBox::information(0, "Turn In", "Turned In Successfully");
     ui->actionTurn_In->setEnabled(false);
 }
 
@@ -3198,33 +3265,145 @@ void MainWindow::on_actionFetch_2_triggered() {
 }
 void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
     int ver = mProject.get_version().toInt();
-    int ver2 = ver + 1;
-    bool increment = true;
     QString commit_msg;
-    QString msg = QString("Do you want to Increment the Version and Turn In?\n\nClick Yes to Turnin and Increment the Version from "+ QString::number(ver) +" to "+QString::number(ver2)+" \nClick Resubmit to Turn In without Incrementing Version.\nClick Finalise to Approve the set as the Final Version");
-    int button = QMessageBox::question(this, "Turn In", msg,
-                                       "Yes", "Resubmit","Finalise" "Cancel", 0);
-    switch(button){
-    case 0:
-        mProject.enable_push(increment);
-        commit_msg = "Verifier has Turned in new Version:" + mProject.get_version();
-        break;
-    case 1:
-        mProject.enable_push(!increment);
-        commit_msg = "Verifier has Resubmitted Version:" + mProject.get_version();
-        break;
-    case 2:
-        mProject.enable_push(!increment);
-        commit_msg = "Verifier Finalised Version:" + mProject.get_version();
-        break;
-    default:
-        return;
 
+
+    QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
+    float avgcharacc = 0;
+    bool formatting = false;
+    int rating = 0;
+
+    QJsonObject mainObj = readJsonFile(commentFilename);
+
+    avgcharacc = mainObj["AverageCharAccuracy"].toDouble();
+    if(mProject.get_stage() != mRole)
+        rating = mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)].toInt();
+    else
+        rating = mainObj["Rating-V"+ mProject.get_version()].toInt();
+    if(((!mainObj["Formatting"].isNull())) || (! mainObj["Formatting"].isUndefined()))
+        formatting = mainObj["Formatting"].toBool();
+
+
+    QDialog dialog(this);
+    dialog.setWindowTitle("Check Formatting");
+
+    QFormLayout form(&dialog);
+    form.addRow(new QLabel("Average Rating of Current Set  : " + QString::number(rating) + " out of 4"));
+
+    QCheckBox *cb = new QCheckBox("Perfect Formatting?" ,&dialog);
+    cb->setChecked(formatting);
+    form.addRow(cb);
+
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                               Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    if (dialog.exec() == QDialog::Accepted) {
+        formatting = cb->isChecked();
+        if(rating == 4 && formatting)
+            rating = 5;
+        else if(rating == 5 && (!formatting))
+            rating = 4;
+    }
+    else{
+        QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+        return;
     }
 
-    mProject.commit(commit_msg.toStdString());
-    mProject.push();
+    mainObj["Formatting"] = formatting;
+    if(mProject.get_stage() != mRole)
+        mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;
+    else
+        mainObj["Rating-V"+ mProject.get_version()] = rating;
+
+    writeJsonFile(commentFilename, mainObj);
+
+
+
+
+    QMessageBox messageBox(this);
+    QString msg1 = QString(
+        "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
+
+        + "\n\nDo you want to Return the Set to the Corrector or Finalise the set?"
+
+        + "\n\nClick \"Return Set\" to Increment the Version from "
+        + QString::number(ver) +" to "+QString::number(ver + 1)
+
+        + "\nClick \"Finalise\" to Approve the set as the Final Version"
+        );
+
+    QString msg2 = QString(
+        "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
+
+        + "\n\nDo you want to Return or Resubmit or Finalise the set?"
+
+        + "\n\nClick \"Return Set\" to Turnin and Increment the Version from "
+        + QString::number(ver) +" to "+QString::number(ver + 1)
+
+        + " \nClick \"Resubmit\" to Turn In without Incrementing Version."
+
+        + "\nClick \"Finalise\" to Approve the set as the Final Version"
+        );
+
+    messageBox.setWindowTitle("Turn In");
+    QAbstractButton *resubmitButton =
+        messageBox.addButton(tr("Resubmit"), QMessageBox::ActionRole);
+    QAbstractButton *returnSetButton =
+        messageBox.addButton(tr("Return Set"), QMessageBox::ActionRole);
+    QAbstractButton *finaliseButton =
+        messageBox.addButton(tr("Finalise"), QMessageBox::ActionRole);
+    QAbstractButton *cancelButton =
+        messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+
+    if(mRole != mProject.get_stage()) {
+        messageBox.setText(msg1);
+        messageBox.removeButton(resubmitButton);
+    }
+    else {
+        messageBox.setText(msg2);
+    }
+
+    messageBox.exec();
+    if (messageBox.clickedButton() == resubmitButton) {
+        mProject.enable_push( false ); //Increment = false
+        commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
+    }
+    else if (messageBox.clickedButton() == returnSetButton) {
+        mProject.enable_push( true ); //Increment = true
+        commit_msg = "Verifier has Turned in the Next Version:" + mProject.get_version();
+    }
+    else if (messageBox.clickedButton() == finaliseButton) {
+        mProject.enable_push( false ); //Increment = false
+        commit_msg = "Verifier Finalised Version:" + mProject.get_version();
+    }
+    else {
+        QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+        return;
+    }
+
+
+    if(! mProject.commit(commit_msg.toStdString())) {
+        QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+        return;
+    }
+    if(! mProject.push()){
+      QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+      return;
+    }
+
     ui->lineEdit_2->setText("Version " + mProject.get_version());
+
+    QString emailText =  "Book ID: " + mProject.get_bookId()
+                       + "\nSet ID: " + mProject.get_setId()
+                        + "\nRating Provided: " + QString::number(rating)
+                       + "\n" + commit_msg ;
+    if( !sendEmail(emailText)) {
+        QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nTurn-In Unsuccessful!,Please Check your Internet Connection");
+        return;
+    }
     QMessageBox::information(0, "Turn In", "Turned In Successfully");
 
 }
@@ -3501,16 +3680,20 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         QString version = mProject.get_version();
         ui->lineEdit_2->setText("Version: " + version);
         QDir dir = mProject.GetDir();
-        QString str = mProject.GetDir().absolutePath()+"/CorrectorOutput/";
+        QString str1 = mProject.GetDir().absolutePath()+"/CorrectorOutput/";
         QString str2 = mProject.GetDir().absolutePath() + "/VerifierOutput/";
-        watcher.addPath(str);
+        QString str3 = mProject.GetDir().absolutePath() + "/Inds/";
+        QString str4 = mProject.GetDir().absolutePath() + "/Images/";
+        watcher.addPath(str1);
         watcher.addPath(str2);
-        QDir cdir(str);
+//        watcher.addPath(str3);
+//        watcher.addPath(str4);
+        QDir cdir(str1);
         Filter * filter = mProject.getFilter("Document");
         auto list = cdir.entryList(QDir::Filter::Files);
         std::cout << stage.toStdString();
         for (auto f : list) {
-            QString t = str + "/" + f;
+            QString t = str1 + "/" + f;
             QFile f2(t);
             mProject.AddTemp(filter,f2, "CorrectorOutput/" );
             corrector_set.insert(f);
@@ -3523,6 +3706,22 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             QFile f2(t);
             mProject.AddTemp(filter, f2, "VerifierOutput/");
         }
+        cdir.setPath(str3);
+        list = cdir.entryList(QDir::Filter::Files);
+        for (auto f : list) {
+            QString t = str3 + "/" + f;
+            QFile f2(t);
+            mProject.AddTemp(filter, f2, "");
+        }
+
+        filter = mProject.getFilter("Image");
+        cdir.setPath(str4);
+        list = cdir.entryList(QDir::Filter::Files);
+        for (auto f : list) {
+            QString t = str4 + "/" + f;
+            QFile f2(t);
+            mProject.AddTemp(filter, f2, "");
+        }
 
         //Disable Corrector Turn In once the Corrector has Turned in until the next version is fetched.
         if(!isVerifier) {
@@ -3532,14 +3731,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         }
 
         UpdateFileBrekadown();
-        gTimeLogLocation = gDirTwoLevelUp + "/Comments/Timelog.json";
-        QFile jsonFile(gTimeLogLocation);
-        jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-        QByteArray data = jsonFile.readAll();
 
-        QJsonDocument document = QJsonDocument::fromJson(data);
-        QJsonObject mainObj = document.object();
-        jsonFile.close();
+        gTimeLogLocation = gDirTwoLevelUp + "/Comments/Timelog.json";
+        QJsonObject mainObj =  readJsonFile(gTimeLogLocation);
 
         foreach(const QJsonValue &val, mainObj)
         {
@@ -3547,6 +3741,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             int seconds    = val.toObject().value("seconds").toInt();
             timeLog[directory] = seconds;
         }
+
         bool isSet = QDir::setCurrent(mProject.GetDir().absolutePath() + "/CorrectorOutput") ; //Change application Directory to any subfolder of mProject folder for Image Insertion feature.
         if(!QDir(mProject.GetDir().absolutePath() + "/Images/Inserted").exists())
             QDir().mkdir(mProject.GetDir().absolutePath() + "/Images/Inserted");
@@ -3586,7 +3781,18 @@ void MainWindow::directoryChanged(const QString &path) {
     }
 }
 
-
+void MainWindow::closeEvent (QCloseEvent *event)
+{
+    QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Close",
+                                                               tr("Are you sure?\n"),
+                                                               QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
+                                                               QMessageBox::Yes);
+    if (resBtn != QMessageBox::Yes) {
+        event->ignore();
+    } else {
+        event->accept();
+    }
+}
 
 
 void MainWindow::on_actionInsert_Table_2_triggered()
@@ -3624,7 +3830,31 @@ void MainWindow::on_actionInsert_Table_2_triggered()
 
         }
 }
+bool MainWindow::sendEmail(QString emailText)
+{
+    QString pmEmail = mProject.get_pmEmail();
+    if(pmEmail == "" || (!pmEmail.contains("@")))
+        return 0;
 
+    SimpleMail::Sender sender ("smtp.gmail.com", 465, SimpleMail::Sender::SslConnection);
+    sender.setUser("aksharanveshini.iitb@gmail.com");
+    sender.setPassword("backend-ui");
+    SimpleMail::MimeMessage message;
+    message.setSender(SimpleMail::EmailAddress("aksharanveshini.iitb@gmail.com", "Akshar Anveshini"));
+
+    QList <SimpleMail::EmailAddress> listRecipients;
+    listRecipients.append(pmEmail);
+    message.setToRecipients(listRecipients);
+    message.setSubject(mProject.get_setId() + " Turn In");
+    SimpleMail::MimeText *text = new SimpleMail::MimeText();
+    text->setText(emailText);
+    message.addPart(text);
+    if(!sender.sendMail(message))
+        return 0;
+
+    return 1;
+
+}
 
 void MainWindow::on_actionAdd_Columns_triggered()
 {

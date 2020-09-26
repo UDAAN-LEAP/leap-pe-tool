@@ -16,6 +16,7 @@ public:
         QString imgExtn;
 		QString dir;
         QString pmEmail;
+        QString repo;
 	};
 	CreateProjectPage(QWidget *parent=nullptr);
 	~CreateProjectPage();
@@ -35,4 +36,6 @@ private:
     QLineEdit * pmEmail_lineEdit;
     QLabel * setId_label;
     QLineEdit * setId_lineEdit;
+    QLabel * repo_label;
+    QLineEdit * repo_lineEdit;
 };

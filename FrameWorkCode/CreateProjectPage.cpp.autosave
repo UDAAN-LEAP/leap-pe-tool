@@ -43,9 +43,11 @@ CreateProjectPage::CreateProjectPage(QWidget *parent)
 
     document_layout->addWidget(docExtn_label);
     document_layout->addWidget(docExtn_lineEdit);
+    docExtn_lineEdit->setText("txt;html;");
 
     image_layout->addWidget(imgExtn_label);
     image_layout->addWidget(imgExtn_lineEdit);
+    imgExtn_lineEdit->setText("jpg;jpeg;");
 
     pmEmail_layout->addWidget(pmEmail_label);
     pmEmail_layout->addWidget(pmEmail_lineEdit);

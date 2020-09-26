@@ -256,8 +256,6 @@ private slots:
 
     void on_actionNew_Project_triggered();
 
-    //void calculateRatings();
-
     void on_actionInsert_Table_2_triggered();
 
     void on_actionAdd_Columns_triggered();
@@ -267,6 +265,12 @@ private slots:
     void on_actionRemove_Columns_triggered();
 
     void on_actionRemove_Rows_triggered();
+
+    void closeEvent (QCloseEvent *event);
+
+    QJsonObject getAverageAccuracies(QJsonObject mainObj);
+
+    bool sendEmail(QString message);
 
 private:
     bool mExitStatus = false;

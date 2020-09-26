@@ -8,6 +8,29 @@ message("You are running qmake on a generated .pro file. This may not work!")
 
 
 HEADERS += ./Filters.h \
+    $$PWD/SimpleMail/SimpleMail \
+    $$PWD/SimpleMail/emailaddress.h \
+    $$PWD/SimpleMail/emailaddress_p.h \
+    $$PWD/SimpleMail/mimeattachment.h \
+    $$PWD/SimpleMail/mimecontentformatter.h \
+    $$PWD/SimpleMail/mimefile.h \
+    $$PWD/SimpleMail/mimehtml.h \
+    $$PWD/SimpleMail/mimeinlinefile.h \
+    $$PWD/SimpleMail/mimemessage.h \
+    $$PWD/SimpleMail/mimemessage_p.h \
+    $$PWD/SimpleMail/mimemultipart.h \
+    $$PWD/SimpleMail/mimemultipart_p.h \
+    $$PWD/SimpleMail/mimepart.h \
+    $$PWD/SimpleMail/mimepart_p.h \
+    $$PWD/SimpleMail/mimetext.h \
+    $$PWD/SimpleMail/quotedprintable.h \
+    $$PWD/SimpleMail/sender.h \
+    $$PWD/SimpleMail/sender_p.h \
+    $$PWD/SimpleMail/server.h \
+    $$PWD/SimpleMail/server_p.h \
+    $$PWD/SimpleMail/serverreply.h \
+    $$PWD/SimpleMail/serverreply_p.h \
+    $$PWD/SimpleMail/smtpexports.h \
     ./Project.h \
     ./TreeItem.h \
     ./tesseract/apitypes.h \
@@ -53,6 +76,20 @@ HEADERS += ./Filters.h \
     ./ProjectWizard.h \
     ./CreateProjectPage.h
 SOURCES += ./DiffView.cpp \
+    $$PWD/SimpleMail/emailaddress.cpp \
+    $$PWD/SimpleMail/mimeattachment.cpp \
+    $$PWD/SimpleMail/mimecontentformatter.cpp \
+    $$PWD/SimpleMail/mimefile.cpp \
+    $$PWD/SimpleMail/mimehtml.cpp \
+    $$PWD/SimpleMail/mimeinlinefile.cpp \
+    $$PWD/SimpleMail/mimemessage.cpp \
+    $$PWD/SimpleMail/mimemultipart.cpp \
+    $$PWD/SimpleMail/mimepart.cpp \
+    $$PWD/SimpleMail/mimetext.cpp \
+    $$PWD/SimpleMail/quotedprintable.cpp \
+    $$PWD/SimpleMail/sender.cpp \
+    $$PWD/SimpleMail/server.cpp \
+    $$PWD/SimpleMail/serverreply.cpp \
     ./Filters.cpp \
     ./Project.cpp \
     ./ProjectHierarchyWindow.cpp \
@@ -82,3 +119,7 @@ FORMS += ./DiffView.ui \
     ./mainwindow.ui \
     ./resizeimageview.ui
 RESOURCES += AppResources.qrc
+
+DISTFILES += \
+    $$PWD/SimpleMail/CMakeLists.txt \
+    $$PWD/SimpleMail/simplemail-qt5.pc.in
