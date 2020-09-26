@@ -216,7 +216,11 @@ void MainWindow::SaveTimeLog()
 
 void MainWindow::DisplayTimeLog()
 {
-    gSeconds = timeLog[mFilename];
+    QString currentVersion = mProject.get_version();
+    if(mRole == "Verifier" && mRole != currentVersion)
+        currentVersion = QString::number(currentVersion.toInt() - 1);
+
+    gSeconds = timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion];
     int nMilliseconds = myTimer.elapsed();
     gSeconds += nMilliseconds / 1000;
     int mins = gSeconds / 60;
@@ -323,7 +327,11 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
 
         int nMilliseconds = myTimer.elapsed();
         gSeconds = nMilliseconds/1000;
-        timeLog[mFilename] += gSeconds;
+        QString currentVersion = mProject.get_version();
+        if(mRole == "Verifier" && mRole != currentVersion)
+            currentVersion = QString::number(currentVersion.toInt() - 1);
+
+        gSeconds = timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion];
 
         SaveTimeLog();
 
@@ -364,7 +372,11 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
 
         int nMilliseconds = myTimer.elapsed();
         gSeconds = nMilliseconds/1000;
-        timeLog[mFilename] += gSeconds;
+        QString currentVersion = mProject.get_version();
+        if(mRole == "Verifier" && mRole != currentVersion)
+            currentVersion = QString::number(currentVersion.toInt() - 1);
+
+        gSeconds = timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion];
 
         SaveTimeLog();
 
@@ -3838,7 +3850,7 @@ bool MainWindow::sendEmail(QString emailText)
 
     SimpleMail::Sender sender ("smtp.gmail.com", 465, SimpleMail::Sender::SslConnection);
     sender.setUser("aksharanveshini.iitb@gmail.com");
-    sender.setPassword("backend-ui");
+    sender.setPassword("backend-ui"); //has to be encoded
     SimpleMail::MimeMessage message;
     message.setSender(SimpleMail::EmailAddress("aksharanveshini.iitb@gmail.com", "Akshar Anveshini"));
 
