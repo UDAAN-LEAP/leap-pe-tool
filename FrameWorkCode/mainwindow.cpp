@@ -85,7 +85,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     map<QString, QString> passwordRoleMap = { { "x3JzWx5KY}Gd&,]A" ,"Verifier"},
                                               { "3`t,FxjytJ[uU,HW" ,"Corrector"},
-                                              { "Admin@IITB2020", "Admin"},
+                                              { "$5Y9hkc+`{<7N%{L:KuR", "Admin"},
                                               { "sfbkasg81!248-Bks","Project Manager"}
                                             };
     if(!setRole(passwordRoleMap[password]))
