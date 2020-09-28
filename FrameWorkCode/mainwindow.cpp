@@ -3868,22 +3868,74 @@ bool MainWindow::sendEmail(QString emailText)
 
 }
 
-void MainWindow::on_actionAdd_Columns_triggered()
+void MainWindow::on_actionInsert_Columnleft_triggered()
 {
-
+    if(!curr_browser)
+            return;
+    if(curr_browser->textCursor().currentTable())
+        {
+            QTextTable *currentTable = curr_browser->textCursor().currentTable();
+            QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
+            currentTable->insertColumns(currentCell.column(),1);
+         }
 }
 
-void MainWindow::on_actionAdd_Rows_triggered()
+void MainWindow::on_actionInsert_Columnright_triggered()
 {
-
+    if(!curr_browser)
+            return;
+    if(curr_browser->textCursor().currentTable())
+        {
+            QTextTable *currentTable = curr_browser->textCursor().currentTable();
+            QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
+            currentTable->insertColumns(currentCell.column()+1,1);
+         }
 }
 
-void MainWindow::on_actionRemove_Columns_triggered()
+void MainWindow::on_actionInsert_Rowabove_triggered()
 {
-
+    if(!curr_browser)
+         return;
+    if(curr_browser->textCursor().currentTable())
+       {
+         QTextTable *currentTable = curr_browser->textCursor().currentTable();
+         QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
+         currentTable->insertRows(currentCell.row(),1);
+       }
 }
 
-void MainWindow::on_actionRemove_Rows_triggered()
+void MainWindow::on_actionInsert_Rowbelow_triggered()
 {
+    if(!curr_browser)
+         return;
+    if(curr_browser->textCursor().currentTable())
+       {
+         QTextTable *currentTable = curr_browser->textCursor().currentTable();
+         QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
+         currentTable->insertRows(currentCell.row()+1,1);
+       }
+}
 
+void MainWindow::on_actionRemove_Column_triggered()
+{
+    if(!curr_browser)
+            return;
+    if(curr_browser->textCursor().currentTable())
+        {
+            QTextTable *currentTable = curr_browser->textCursor().currentTable();
+            QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
+            currentTable->removeColumns(currentCell.column(),1);
+         }
+}
+
+void MainWindow::on_actionRemove_Row_triggered()
+{
+    if(!curr_browser)
+         return;
+    if(curr_browser->textCursor().currentTable())
+       {
+         QTextTable *currentTable = curr_browser->textCursor().currentTable();
+         QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
+         currentTable->removeRows(currentCell.row(),1);
+       }
 }
