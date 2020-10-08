@@ -2494,10 +2494,11 @@ void MainWindow::on_actionAdd_Image_triggered()
 {
     if(curr_browser) {
         QString file = QFileDialog::getOpenFileName(this, tr("Select an image"),
-                                          ".", tr("Bitmap Files (*.bmp)\n"
+                                          "./", tr("Bitmap Files (*.bmp)\n"
                                             "JPEG (*.jpg *jpeg)\n"
                                             "GIF (*.gif)\n"
                                             "PNG (*.png)\n"));
+        if(!file.isEmpty()){
         QFileInfo fileInfo(file);
         QString fileName = fileInfo.fileName();
         QString destinationFileName =  mProject.GetDir().absolutePath() + "/Images/Inserted/" + fileName;
@@ -2528,6 +2529,7 @@ void MainWindow::on_actionAdd_Image_triggered()
         imageFormat.setName( copiedFileName );
         cursor.insertImage(imageFormat);
     }
+}
 }
 
 void MainWindow::on_actionResize_Image_triggered()

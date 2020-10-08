@@ -20,7 +20,7 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <widget class="QLabel" name="VerifierLabel">
@@ -54,7 +54,7 @@ p, li { white-space: pre-wrap; }
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QLabel" name="InternLabel">
@@ -87,12 +87,12 @@ p, li { white-space: pre-wrap; }
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QLabel" name="OCRLabel">
           <property name="text">
-           <string>&lt;p&gt;&lt;b&gt;OCR Text &lt;/b&gt;&lt;i&gt;(To be Replaced with Image)&lt;/i&gt;&lt;/p&gt;
+           <string>&lt;p&gt;&lt;b&gt;OCR Text &lt;/b&gt;&lt;/p&gt;
 Accuracy of OCR Text (w.r.t Verified Text): </string>
           </property>
           <property name="alignment">
