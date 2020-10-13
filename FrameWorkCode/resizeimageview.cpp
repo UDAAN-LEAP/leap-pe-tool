@@ -20,8 +20,10 @@ ResizeImageView::ResizeImageView(QWidget *parent,double imageWidth,double imageH
         keepRatioCheckBox->setChecked(true);
 
         widthSpinBox->setMaximum(1500);
+        widthSpinBox->setMinimum(20);
         widthSpinBox->setValue(imageWidth);
         hightSpinBox->setMaximum(1500);
+        hightSpinBox->setMinimum(20);
         hightSpinBox->setValue(imageHight);
 
         okButton = ui->Ok;

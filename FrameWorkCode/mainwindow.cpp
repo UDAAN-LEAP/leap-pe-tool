@@ -3231,6 +3231,7 @@ void MainWindow::on_actionPush_triggered() {
 //}
 
 void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
+    if(mProject.get_version().toInt()){
     QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();;
     mProject.disable_push();
     if(! mProject.commit(commit_msg.toStdString())) {
@@ -3253,6 +3254,10 @@ void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
     }
     QMessageBox::information(0, "Turn In", "Turned In Successfully");
     ui->actionTurn_In->setEnabled(false);
+    }
+    else{
+    QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
+    }
 }
 
 void MainWindow::on_actionFetch_2_triggered() {
@@ -3278,6 +3283,7 @@ void MainWindow::on_actionFetch_2_triggered() {
 
 }
 void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
+    if(mProject.get_version().toInt()){
     int ver = mProject.get_version().toInt();
     QString commit_msg;
 
@@ -3419,6 +3425,10 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
         return;
     }
     QMessageBox::information(0, "Turn In", "Turned In Successfully");
+    }
+    else{
+    QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
+    }
 
 }
 QString GetFilter(QString & Name, const QStringList &list) {
