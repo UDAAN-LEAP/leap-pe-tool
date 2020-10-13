@@ -3279,7 +3279,13 @@ void MainWindow::on_actionFetch_2_triggered() {
             ui->actionTurn_In->setEnabled(false);
         }
     }
+    if(mProject.get_version().toInt()){
     ui->lineEdit_2->setText("Version " + mProject.get_version());
+    QMessageBox::information(0, "Pull Success", "Pull Succesful");
+    }
+    else{
+    QMessageBox::information(0, "Pull Error", "Pull Un-succesful, Please Check Your Internet Connection");
+    }
 
 }
 void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
