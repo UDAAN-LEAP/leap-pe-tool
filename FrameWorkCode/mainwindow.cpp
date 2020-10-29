@@ -3248,10 +3248,10 @@ void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
     QString emailText =  "Book ID: " + mProject.get_bookId()
                         + "\nSet ID: " + mProject.get_setId()
                         + "\n" + commit_msg ;
-    if( !sendEmail(emailText)) {
+  /*  if( !sendEmail(emailText)) {
         QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nEmail Notification Unsuccessful!,Please Check your Internet Connection");
         return;
-    }
+    } */
     QMessageBox::information(0, "Turn In", "Turned In Successfully");
     ui->actionTurn_In->setEnabled(false);
     }
@@ -3425,10 +3425,10 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
                        + "\nSet ID: " + mProject.get_setId()
                         + "\nRating Provided: " + QString::number(rating)
                        + "\n" + commit_msg ;
-    if( !sendEmail(emailText)) {
+  /*  if( !sendEmail(emailText)) {
         QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nTurn-In Unsuccessful!,Please Check your Internet Connection");
         return;
-    }
+    } */
     QMessageBox::information(0, "Turn In", "Turned In Successfully");
     }
     else{
