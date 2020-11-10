@@ -471,8 +471,6 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionInsert_Horizontal_Line"/>
     <addaction name="actionFontBlack"/>
     <addaction name="actionInsert_Tab_Space"/>
-    <addaction name="actionAdd_Image"/>
-    <addaction name="actionResize_Image"/>
     <addaction name="menuTables"/>
    </widget>
    <widget class="QMenu" name="menuGit">
@@ -1117,6 +1115,21 @@ p, li { white-space: pre-wrap; }
   <action name="actionRemove_Row">
    <property name="text">
     <string>Remove Row</string>
+   </property>
+  </action>
+  <action name="actionItalic">
+   <property name="text">
+    <string>Italic</string>
+   </property>
+  </action>
+  <action name="actionNonitalic">
+   <property name="text">
+    <string>Non Italic</string>
+   </property>
+  </action>
+  <action name="actionSave_All">
+   <property name="text">
+    <string>Save All</string>
    </property>
   </action>
  </widget>

@@ -3956,3 +3956,33 @@ void MainWindow::on_actionRemove_Row_triggered()
          currentTable->removeRows(currentCell.row(),1);
        }
 }
+
+void MainWindow::on_actionItalic_triggered()    //enable when required
+{
+    if(!curr_browser)
+        return;
+    QTextCharFormat format;
+    format.setFontItalic(true);
+    curr_browser->textCursor().mergeCharFormat(format);
+}
+
+void MainWindow::on_actionNonitalic_triggered() //enable when required
+{
+    if(!curr_browser)
+        return;
+    QTextCharFormat format;
+    format.setFontItalic(false);
+    curr_browser->textCursor().mergeCharFormat(format);
+}
+
+void MainWindow::on_actionSave_All_triggered()  //enable when required
+{
+    if(ui->tabWidget_2->count()!=0){
+        for(int i=0;i<ui->tabWidget_2->count();i++){
+            ui->tabWidget_2->setCurrentIndex(i);
+            UpdateFileBrekadown();
+            on_actionSave_triggered();
+        }
+    }
+
+}

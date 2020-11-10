@@ -276,6 +276,12 @@ private slots:
 
     void on_actionRemove_Row_triggered();
 
+    void on_actionItalic_triggered();
+
+    void on_actionNonitalic_triggered();
+
+    void on_actionSave_All_triggered();
+
 private:
     bool mExitStatus = false;
     QString mRole;
