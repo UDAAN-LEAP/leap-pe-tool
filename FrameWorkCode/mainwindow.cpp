@@ -3268,7 +3268,7 @@ void MainWindow::on_actionFetch_2_triggered() {
     int btn = QMessageBox::question(this, "Pull?", "This will overwrite files in" + prvs_output_dir + "directory. Do you want to Continue?",
                                     QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
     if (btn != QMessageBox::StandardButton::Yes)
-        return
+        return;
 
     mProject.fetch();
     if(mProject.get_version().toInt()){
