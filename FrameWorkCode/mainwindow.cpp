@@ -34,6 +34,8 @@
 #include "ProjectWizard.h"
 #include <SimpleMail/SimpleMail>
 //# include <QTask>
+#include <QDebug>
+#include <unistd.h>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -3231,13 +3233,28 @@ void MainWindow::on_actionPush_triggered() {
 //}
 
 void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
+    std::cerr << "on_actionTur_in_triggered\n";
     if(mProject.get_version().toInt()){
-    QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();;
+    QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();
+//    QString outmsg = "commit message set as" + commit_msg +"\n";
+//    std::cerr << "commit message is generated as " << commit_msg.toStdString();
     mProject.disable_push();
     if(! mProject.commit(commit_msg.toStdString())) {
         QMessageBox::information(0, "Turn In", "Turn In Cancelled");
         return;
     }
+//    std::cerr << "next line is fetch function calling\n";
+   on_actionFetch_2_triggered();
+//   void delay()
+//   {
+//       QTime dieTime= QTime::currentTime().addSecs(1);
+//       while (QTime::currentTime() < dieTime)
+//           QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+//   }
+   std::cerr << "Fetch function must have been called by now\n";
+//   QThread::sleep(17);
+//   std::cerr << "after 7 secs\n";
+
     if(! mProject.push()){
         QMessageBox::information(0, "Turn In", "Turn In Cancelled");
         return;
@@ -3262,30 +3279,38 @@ void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
 
 void MainWindow::on_actionFetch_2_triggered() {
     QString stage = mProject.get_stage();
+    std::cerr << "fetch function executed";
     QString prvs_stage = (stage=="Corrector")?"Verifier":"Corrector";
     QString prvs_output_dir = prvs_stage + "Output"; //"VerifierOutput" or "CorrectorOutput"
 
     int btn = QMessageBox::question(this, "Pull?", "This will overwrite files in" + prvs_output_dir + "directory. Do you want to Continue?",
                                     QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
-    if (btn != QMessageBox::StandardButton::Yes)
-        return;
+    if (btn == QMessageBox::StandardButton::Yes){
+        int btn2 = QMessageBox::question(this, "Are you sure?", "This will delete all your previous work from this project.        DO YOU STILL WANT TO CONTINUE?",
+                                        QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
+        if (btn2 == QMessageBox::StandardButton::Yes){
+            mProject.fetch();
+            qDebug() << "Fetch funtion executed ";
+            if(mProject.get_version().toInt()){
+            QMessageBox::information(0, "Pull Success", "Pull Succesful");
+            }
+            else{
+            QMessageBox::information(0, "Pull Error", "Pull Un-succesful, Please Check Your Internet Connection");
+            }
+            if(!isVerifier) {
+                if (mProject.get_stage() == "Corrector") {
+                    ui->actionTurn_In->setEnabled(true);
+                }
+                else {
+                    ui->actionTurn_In->setEnabled(false);
+                }
+            }
+            ui->lineEdit_2->setText("Version " + mProject.get_version());
+        }
 
-    mProject.fetch();
-    if(mProject.get_version().toInt()){
-    QMessageBox::information(0, "Pull Success", "Pull Succesful");
     }
-    else{
-    QMessageBox::information(0, "Pull Error", "Pull Un-succesful, Please Check Your Internet Connection");
-    }
-    if(!isVerifier) {
-        if (mProject.get_stage() == "Corrector") {
-            ui->actionTurn_In->setEnabled(true);
-        }
-        else {
-            ui->actionTurn_In->setEnabled(false);
-        }
-    }
-    ui->lineEdit_2->setText("Version " + mProject.get_version());
+    else
+        return;
 }
 void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
     if(mProject.get_version().toInt()){
@@ -3414,6 +3439,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
         QMessageBox::information(0, "Turn In", "Turn In Cancelled");
         return;
     }
+    on_actionFetch_2_triggered();
     if(! mProject.push()){
       QMessageBox::information(0, "Turn In", "Turn In Cancelled");
       return;

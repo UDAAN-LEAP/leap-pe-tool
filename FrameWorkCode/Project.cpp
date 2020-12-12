@@ -15,6 +15,7 @@
 #include <git2.h>
 #include <QProcess>
 #include <QMessageBox>
+#include <QDebug>
 void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 {
 	
@@ -349,7 +350,7 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
 	return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
 bool Project::push() {
-	lg2_add();
+//    lg2_add();
 	git_push_options options;
 	git_remote * remote = NULL;
 	char * refspec = (char*)"refs/heads/master";
@@ -359,8 +360,8 @@ bool Project::push() {
 	if (klass != 0) {
         return 0;
 	}
+    std::cerr << "inside push function...just before the breakpoint\n";
 	options.callbacks.credentials = credentials_cb;
-	
 	klass = check_lg2(git_remote_lookup(&remote, repo, "origin"),"Unable to lookup remote","");
 	if (klass != 0) {
 		git_remote_free(remote);
@@ -415,14 +416,17 @@ static int transfer_progress_cb(const git_transfer_progress *stats, void *payloa
 void Project::fetch() {
 	
     QDir::setCurrent(mProjectDir.absolutePath());
-	QProcess::execute("git fetch");
-	QProcess::execute("git reset --hard origin/master");
+    QProcess::execute("git pull");
+    qDebug()<<"pull command executed";
+    std::cerr << "pull command executed in std::COUT number 2";
+//	QProcess::execute("git reset --hard origin/master");
 	QDir::setCurrent(mProjectDir.absolutePath()+"/CorrectorOutput/");
 
 }
 
 
 bool Project::commit(std::string message) {
+    std::cerr << "We have entered the commit function now\n ";
 	lg2_add();
 	git_signature *sig;
 	git_index *index;
@@ -486,7 +490,9 @@ bool Project::commit(std::string message) {
 	 */
 
 	klass = check_lg2(git_commit_create_v(&commit_id, repo, "HEAD", sig, sig, NULL, message.c_str(), tree, parent ? 1 : 0, parent), "Could not create commit", "");
+    std::cerr << "value of KLASS outside if loop = "<<klass<<"\n";
 	if (klass > 0) {
+        std::cerr << "value of KLASS inside if loop = "<<klass<<"\n";
 		git_tree_free(tree);
 		git_signature_free(sig);
 		git_index_free(index);

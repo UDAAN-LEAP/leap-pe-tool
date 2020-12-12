@@ -879,7 +879,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionTurn_In">
    <property name="text">
-    <string>Corrector Turn In</string>
+    <string>Submit Corrector</string>
    </property>
   </action>
   <action name="actionFetch">
@@ -913,6 +913,9 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionFetch_2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Pull</string>
    </property>
@@ -927,7 +930,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionVerifier_Turn_In">
    <property name="text">
-    <string>Verifier Turn In</string>
+    <string>Submit Verifier</string>
    </property>
   </action>
   <action name="actionHighlight">
