@@ -928,7 +928,7 @@ void MainWindow::on_actionSave_triggered()
 
         int len = qjsonobj.length();
 
-        QJsonDocument doc(qjsonobj);
+//        QJsonDocument doc(qjsonobj);
         QFile sFile2(localFilename2);
         if(sFile2.open(QIODevice::WriteOnly | QIODevice::Text))
         {

@@ -30,5 +30,33 @@
     "Corrector:page-1.txt:V-1": {
         "directory": "Corrector:page-1.txt:V-1",
         "seconds": 0
+    },
+    "Verifier:page-1.html:V-0": {
+        "directory": "Verifier:page-1.html:V-0",
+        "seconds": 0
+    },
+    "Verifier:page-1.txt:V-0": {
+        "directory": "Verifier:page-1.txt:V-0",
+        "seconds": 0
+    },
+    "Verifier:page-2.txt:V-0": {
+        "directory": "Verifier:page-2.txt:V-0",
+        "seconds": 0
+    },
+    "Verifier:page-3.txt:V-0": {
+        "directory": "Verifier:page-3.txt:V-0",
+        "seconds": 0
+    },
+    "Verifier:page-4.txt:V-0": {
+        "directory": "Verifier:page-4.txt:V-0",
+        "seconds": 0
+    },
+    "Verifier:page-6.txt:V-0": {
+        "directory": "Verifier:page-6.txt:V-0",
+        "seconds": 0
+    },
+    "Verifier:page-7.txt:V-0": {
+        "directory": "Verifier:page-7.txt:V-0",
+        "seconds": 0
     }
 }
