@@ -360,7 +360,6 @@ bool Project::push() {
 	if (klass != 0) {
         return 0;
 	}
-    std::cerr << "inside push function...just before the breakpoint\n";
 	options.callbacks.credentials = credentials_cb;
 	klass = check_lg2(git_remote_lookup(&remote, repo, "origin"),"Unable to lookup remote","");
 	if (klass != 0) {
@@ -426,7 +425,6 @@ void Project::fetch() {
 
 
 bool Project::commit(std::string message) {
-    std::cerr << "We have entered the commit function now\n ";
 	lg2_add();
 	git_signature *sig;
 	git_index *index;
@@ -490,9 +488,7 @@ bool Project::commit(std::string message) {
 	 */
 
 	klass = check_lg2(git_commit_create_v(&commit_id, repo, "HEAD", sig, sig, NULL, message.c_str(), tree, parent ? 1 : 0, parent), "Could not create commit", "");
-    std::cerr << "value of KLASS outside if loop = "<<klass<<"\n";
 	if (klass > 0) {
-        std::cerr << "value of KLASS inside if loop = "<<klass<<"\n";
 		git_tree_free(tree);
 		git_signature_free(sig);
 		git_index_free(index);
