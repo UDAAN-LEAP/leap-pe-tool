@@ -936,11 +936,12 @@ void MainWindow::on_actionSave_triggered()
             out << "{";
             for(int x = 0; x<len; x++){
                 QString z = QString::number(x);
-                out << "\"" << x << "\"" << ":" << "\"" << qjsonobj[z].toString() << "\"" << '\n';
+                out << "\"" << x << "\"" << ":" << "\"" << qjsonobj[z].toString() << "\"" <<","<< '\n';
             }
             out << "}";
 //            QTextStream out(&sFile2);
 //            out << doc.toJson(QJsonDocument::Compact);
+		sFile2.flush();
             sFile2.close();
         }
     }
