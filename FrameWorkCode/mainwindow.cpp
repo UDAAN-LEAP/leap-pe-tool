@@ -924,8 +924,6 @@ void MainWindow::on_actionSave_triggered()
             QString z = QString::number(i);
             qjsonobj.insert(z, QJsonValue(s[i]));
         }
-//        qjsonobj.insert("1", plain);
-
         int len = qjsonobj.length();
 
 //         QJsonDocument doc(qjsonobj);
@@ -941,7 +939,7 @@ void MainWindow::on_actionSave_triggered()
             out << "}";
 //            QTextStream out(&sFile2);
 //            out << doc.toJson(QJsonDocument::Compact);
-		sFile2.flush();
+		    sFile2.flush();
             sFile2.close();
         }
     }
@@ -3284,7 +3282,6 @@ void MainWindow::on_actionPush_triggered() {
 //}
 
 void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
-    std::cerr << "on_actionTur_in_triggered\n";
     if(mProject.get_version().toInt()){
     QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();
     mProject.disable_push();
@@ -3318,7 +3315,6 @@ void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
 
 void MainWindow::on_actionFetch_2_triggered() {
     QString stage = mProject.get_stage();
-    std::cerr << "fetch function executed";
     QString prvs_stage = (stage=="Corrector")?"Verifier":"Corrector";
     QString prvs_output_dir = prvs_stage + "Output"; //"VerifierOutput" or "CorrectorOutput"
 

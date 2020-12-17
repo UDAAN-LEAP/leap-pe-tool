@@ -416,8 +416,6 @@ void Project::fetch() {
 	
     QDir::setCurrent(mProjectDir.absolutePath());
     QProcess::execute("git pull");
-    qDebug()<<"pull command executed";
-    std::cerr << "pull command executed in std::COUT number 2";
 //	QProcess::execute("git reset --hard origin/master");
 	QDir::setCurrent(mProjectDir.absolutePath()+"/CorrectorOutput/");
 
