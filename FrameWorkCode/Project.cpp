@@ -15,6 +15,7 @@
 #include <git2.h>
 #include <QProcess>
 #include <QMessageBox>
+#include <QDebug>
 void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 {
 	
@@ -349,7 +350,7 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
 	return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
 bool Project::push() {
-	lg2_add();
+//    lg2_add();
 	git_push_options options;
 	git_remote * remote = NULL;
 	char * refspec = (char*)"refs/heads/master";
@@ -360,7 +361,6 @@ bool Project::push() {
         return 0;
 	}
 	options.callbacks.credentials = credentials_cb;
-	
 	klass = check_lg2(git_remote_lookup(&remote, repo, "origin"),"Unable to lookup remote","");
 	if (klass != 0) {
 		git_remote_free(remote);
@@ -415,8 +415,8 @@ static int transfer_progress_cb(const git_transfer_progress *stats, void *payloa
 void Project::fetch() {
 	
     QDir::setCurrent(mProjectDir.absolutePath());
-	QProcess::execute("git fetch");
-	QProcess::execute("git reset --hard origin/master");
+    QProcess::execute("git pull");
+//	QProcess::execute("git reset --hard origin/master");
 	QDir::setCurrent(mProjectDir.absolutePath()+"/CorrectorOutput/");
 
 }
