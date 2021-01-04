@@ -35,7 +35,6 @@
 #include <SimpleMail/SimpleMail>
 //# include <QTask>
 #include <QDebug>
-#include <unistd.h>
 #include <QJsonObject>
 #include <QTextDocumentFragment>
 #include <sstream>
@@ -43,6 +42,9 @@
 #include<vector>
 #include <QJsonValue>
 
+#ifdef __unix__
+#include <unistd.h>
+#endif
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
 trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
@@ -931,7 +933,8 @@ void MainWindow::on_actionSave_triggered()
         if(sFile2.open(QIODevice::WriteOnly | QIODevice::Text))
         {
             QTextStream out(&sFile2);
-            out << "{";
+			out.setCodec("UTF-8");
+            out << "{\n";
             for(int x = 0; x<len; x++){
                 QString z = QString::number(x);
                 out << "\"" << x << "\"" << ":" << "\"" << qjsonobj[z].toString() << "\"" <<","<< '\n';
