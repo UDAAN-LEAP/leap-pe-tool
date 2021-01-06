@@ -16,6 +16,10 @@
 #include <QProcess>
 #include <QMessageBox>
 #include <QDebug>
+#include <string>
+#include <cstdlib>
+#include <cstdio>
+
 void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 {
 	
@@ -35,7 +39,7 @@ pugi::xml_node Project::FindFile(QFile & file,pugi::xml_node  & n) {
 	auto next = n.next_sibling();
 	return FindFile(file, next);
 }
-void Project::disable_push() {
+void Project::set_stage_verifier() {
 	auto c = doc.child("Project").child("Metadata");
 	bool s = c.child("Stage").first_child().set_value("Verifier");
 	save_xml();
@@ -50,16 +54,7 @@ bool Project::enable_push(bool increment) {
 	save_xml();
     return true;
 }
-void Project::enable_push() {
-    auto c = doc.child("Project").child("Metadata");
-    bool s = c.child("Stage").first_child().set_value("Corrector");
-    int ver = std::stoi(c.child("Version").child_value());
 
-    ver++;
-
-    c.child("Version").first_child().set_value(std::to_string(ver).c_str());
-    save_xml();
-}
 void Project::removeFile(QModelIndex & idx,Filter & pFilter, QFile & pFile) {
 	auto first = doc.child("Project").child("ItemGroup");
 	
@@ -327,7 +322,7 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
 {	
 	int error;
 	std::string user, pass;
-	
+
 	/*
 	 * Ask the user via the UI. On error, store the information and return GIT_EUSER which will be
 	 * bubbled up to the code performing the fetch or push. Using GIT_EUSER allows the application
@@ -339,14 +334,13 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
         QWidget::tr("Username:"), QLineEdit::Normal,
 		"", &ok);
 
-	if (!ok) return -1;
+    if (!ok) return -1;
     QString qpass = QInputDialog::getText(nullptr, QWidget::tr("Github Password"),
         QWidget::tr("Password:"), QLineEdit::Password,
 		"", &ok);
-	if (!ok) return -1;
-	user = quser.toStdString();
+    if (!ok) return -1;
+    user = quser.toStdString();
 	pass = qpass.toStdString();
-
 	return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
 bool Project::push() {
@@ -355,26 +349,26 @@ bool Project::push() {
 	git_remote * remote = NULL;
 	char * refspec = (char*)"refs/heads/master";
 	const git_strarray refspecs = { &refspec,1 };
-	git_remote_callbacks cb;
-    int klass = check_lg2(git_push_init_options(&options, GIT_PUSH_OPTIONS_VERSION), "Error initializaing options", "");
-	if (klass != 0) {
-        return 0;
+    git_remote_callbacks cb;
+    int error = git_push_init_options(&options, GIT_PUSH_OPTIONS_VERSION);
+    if (error != 0) {
+        return false;
 	}
-	options.callbacks.credentials = credentials_cb;
-	klass = check_lg2(git_remote_lookup(&remote, repo, "origin"),"Unable to lookup remote","");
-	if (klass != 0) {
-		git_remote_free(remote);
-        return 0;
-	}
-	check_lg2(git_remote_push(remote, &refspecs, &options), "Error Pushing", "");
-	if (klass != 0) {
+    options.callbacks.credentials = credentials_cb;
+    error = git_remote_lookup(&remote, repo, "origin");
+    if (error != 0) {
+        git_remote_free(remote);
+        return false;
+    }
+    //qDebug() << QString::number(git_remote_push(remote, &refspecs, &options));
+    error = git_remote_push(remote, &refspecs, &options);
+    if (error != 0) {
 	
 		git_remote_free(remote);
-        return 0;
+        return false;
 	}
     git_remote_free(remote);
-
-    return 1;//No errors
+    return true;//No errors
 }
 static int progress_cb(const char *str, int len, void *data)
 {
@@ -662,3 +656,45 @@ void Project::open_git_repo() {
 		lg2_add();
 	}
 }
+
+#ifdef _WIN32
+int Project::findNumberOfFilesInDirectory(std::string path)
+{
+    FILE* fp;
+    int file_count;
+ //   std::string command = "dir /b /a-s-d " + path + R"( | find /c /v "")"; //  non-recursive count -> files in sub-directories will not be counted
+    std::string command = "dir /b /s /a-s-d " + path + R"( | find /c /v "")"; // recursive count
+    fp = _popen(command.c_str(), "r");
+    if (!fp) {
+        std::cout << "Failed to count files at " << path << std::endl;
+        return -1;
+    }
+
+    fscanf_s(fp, "%d", &file_count);
+
+    _pclose(fp);
+    return file_count;
+}
+#endif
+
+#ifdef __unix__
+int Project::findNumberOfFilesInDirectory(std::string path)
+{
+    FILE* fp;
+    int file_count;
+
+//    std::string command = "find " + path + R"( -maxdepth 1 -not -path '*/\.*' -type f | wc -l)"; //  non-recursive count -> files in sub-directories will not be counted
+    std::string command = "find " + path + R"( -not -path '*/\.*' -type f | wc -l)"; // recursive count
+    fp = popen(command.c_str(), "r");
+    if (!fp) {
+        std::cout << "Failed to count files at " << path << std::endl;
+        return -1;
+    }
+
+    fscanf(fp, "%d", &file_count);
+
+    pclose(fp);
+    return file_count;
+
+}
+#endif

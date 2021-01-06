@@ -6,6 +6,8 @@
 #include <QDir>
 #include <pugixml.hpp>
 #include <git2.h>
+#include <string>
+
 class Project {
 public:
 	void parse_project_xml(rapidxml::xml_document<> & pDoc);
@@ -27,8 +29,8 @@ public:
 	bool add_config();
 	void fetch();
     bool enable_push(bool increment);
-    void enable_push();
 	void AddTemp(Filter * f, QFile &pFile,QString prefix);
+    int findNumberOfFilesInDirectory(std::string);
 
 	~Project() {
 		for (auto p : mFiles) {
@@ -41,7 +43,7 @@ public:
 		git_repository_free(repo);
 	}
 	void add_and_commit();
-    void disable_push();
+    void set_stage_verifier();
 	QString get_stage();
     QString get_version();
     QString get_pmEmail();

@@ -3285,34 +3285,40 @@ void MainWindow::on_actionPush_triggered() {
 //}
 
 void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
-    if(mProject.get_version().toInt()){
-    QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();
-    mProject.disable_push();
-    if(! mProject.commit(commit_msg.toStdString())) {
-        QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-        return;
-    }
-   on_actionFetch_2_triggered();
+    if(mProject.get_version().toInt()){       
+        if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/CorrectorOutput/)")
+                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
+        {
+            QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in CorrectorOutput directory");
+            return;
+        }
+        QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();
+        if(! mProject.commit(commit_msg.toStdString())) {
+            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            return;
+        }
+        on_actionFetch_2_triggered();
 
-    if(! mProject.push()){
-        QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-        return;
-    }
+        if(! mProject.push()){
+            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            return;
+        }
 
-    ui->lineEdit_2->setText("Version " + mProject.get_version());
+        ui->lineEdit_2->setText("Version " + mProject.get_version());
 
-    QString emailText =  "Book ID: " + mProject.get_bookId()
-                        + "\nSet ID: " + mProject.get_setId()
-                        + "\n" + commit_msg ;
-  /*  if( !sendEmail(emailText)) {
-        QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nEmail Notification Unsuccessful!,Please Check your Internet Connection");
-        return;
-    } */
-    QMessageBox::information(0, "Turn In", "Turned In Successfully");
-    ui->actionTurn_In->setEnabled(false);
+        QString emailText =  "Book ID: " + mProject.get_bookId()
+                            + "\nSet ID: " + mProject.get_setId()
+                            + "\n" + commit_msg ;
+      /*  if( !sendEmail(emailText)) {
+            QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nEmail Notification Unsuccessful!,Please Check your Internet Connection");
+            return;
+        } */
+        mProject.set_stage_verifier();
+        ui->actionTurn_In->setEnabled(false);
+        QMessageBox::information(0, "Turn In", "Turned In Successfully");
     }
     else{
-    QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
+        QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
     }
 }
 
@@ -3351,6 +3357,14 @@ void MainWindow::on_actionFetch_2_triggered() {
         return;
 }
 void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
+
+    if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
+                != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
+    {
+        QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
+        return;
+    }
+
     if(mProject.get_version().toInt()){
     int ver = mProject.get_version().toInt();
     QString commit_msg;
