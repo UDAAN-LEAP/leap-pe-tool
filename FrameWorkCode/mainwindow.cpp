@@ -3366,148 +3366,156 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
     }
 
     if(mProject.get_version().toInt()){
-    int ver = mProject.get_version().toInt();
-    QString commit_msg;
+        int ver = mProject.get_version().toInt();
+        QString commit_msg;
 
 
-    QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
-    float avgcharacc = 0;
-    bool formatting = false;
-    int rating = 0;
+        QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
+        float avgcharacc = 0;
+        bool formatting = false;
+        int rating = 0;
 
-    QJsonObject mainObj = readJsonFile(commentFilename);
+        QJsonObject mainObj = readJsonFile(commentFilename);
 
-    avgcharacc = mainObj["AverageCharAccuracy"].toDouble();
-    if(mProject.get_stage() != mRole)
-        rating = mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)].toInt();
-    else
-        rating = mainObj["Rating-V"+ mProject.get_version()].toInt();
-    if(((!mainObj["Formatting"].isNull())) || (! mainObj["Formatting"].isUndefined()))
-        formatting = mainObj["Formatting"].toBool();
-
-
-    QDialog dialog(this);
-    dialog.setWindowTitle("Check Formatting");
-
-    QFormLayout form(&dialog);
-    form.addRow(new QLabel("Average Rating of Current Set  : " + QString::number(rating) + " out of 4"));
-
-    QCheckBox *cb = new QCheckBox("Perfect Formatting?" ,&dialog);
-    cb->setChecked(formatting);
-    form.addRow(cb);
-
-    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-                               Qt::Horizontal, &dialog);
-    form.addRow(&buttonBox);
-    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
-    if (dialog.exec() == QDialog::Accepted) {
-        formatting = cb->isChecked();
-        if(rating == 4 && formatting)
-            rating = 5;
-        else if(rating == 5 && (!formatting))
-            rating = 4;
-    }
-    else{
-        QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-        return;
-    }
-
-    mainObj["Formatting"] = formatting;
-    if(mProject.get_stage() != mRole)
-        mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;
-    else
-        mainObj["Rating-V"+ mProject.get_version()] = rating;
-
-    writeJsonFile(commentFilename, mainObj);
+        avgcharacc = mainObj["AverageCharAccuracy"].toDouble();
+        if(mProject.get_stage() != mRole)
+            rating = mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)].toInt();
+        else
+            rating = mainObj["Rating-V"+ mProject.get_version()].toInt();
+        if(((!mainObj["Formatting"].isNull())) || (! mainObj["Formatting"].isUndefined()))
+            formatting = mainObj["Formatting"].toBool();
 
 
+        QDialog dialog(this);
+        dialog.setWindowTitle("Check Formatting");
+
+        QFormLayout form(&dialog);
+        form.addRow(new QLabel("Average Rating of Current Set  : " + QString::number(rating) + " out of 4"));
+
+        QCheckBox *cb = new QCheckBox("Perfect Formatting?" ,&dialog);
+        cb->setChecked(formatting);
+        form.addRow(cb);
+
+        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                                   Qt::Horizontal, &dialog);
+        form.addRow(&buttonBox);
+        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+        if (dialog.exec() == QDialog::Accepted) {
+            formatting = cb->isChecked();
+            if(rating == 4 && formatting)
+                rating = 5;
+            else if(rating == 5 && (!formatting))
+                rating = 4;
+        }
+        else{
+            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            return;
+        }
+
+        mainObj["Formatting"] = formatting;
+        if(mProject.get_stage() != mRole)
+            mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;
+        else
+            mainObj["Rating-V"+ mProject.get_version()] = rating;
+
+        writeJsonFile(commentFilename, mainObj);
 
 
-    QMessageBox messageBox(this);
-    QString msg1 = QString(
-        "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
-
-        + "\n\nDo you want to Return the Set to the Corrector or Finalise the set?"
-
-        + "\n\nClick \"Return Set\" to Increment the Version from "
-        + QString::number(ver) +" to "+QString::number(ver + 1)
-
-        + "\nClick \"Finalise\" to Approve the set as the Final Version"
-        );
-
-    QString msg2 = QString(
-        "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
-
-        + "\n\nDo you want to Return or Resubmit or Finalise the set?"
-
-        + "\n\nClick \"Return Set\" to Turnin and Increment the Version from "
-        + QString::number(ver) +" to "+QString::number(ver + 1)
-
-        + " \nClick \"Resubmit\" to Turn In without Incrementing Version."
-
-        + "\nClick \"Finalise\" to Approve the set as the Final Version"
-        );
-
-    messageBox.setWindowTitle("Turn In");
-    QAbstractButton *resubmitButton =
-        messageBox.addButton(tr("Resubmit"), QMessageBox::ActionRole);
-    QAbstractButton *returnSetButton =
-        messageBox.addButton(tr("Return Set"), QMessageBox::ActionRole);
-    QAbstractButton *finaliseButton =
-        messageBox.addButton(tr("Finalise"), QMessageBox::ActionRole);
-    QAbstractButton *cancelButton =
-        messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
-
-    if(mRole != mProject.get_stage()) {
-        messageBox.setText(msg1);
-        messageBox.removeButton(resubmitButton);
-    }
-    else {
-        messageBox.setText(msg2);
-    }
-
-    messageBox.exec();
-    if (messageBox.clickedButton() == resubmitButton) {
-        mProject.enable_push( false ); //Increment = false
-        commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
-    }
-    else if (messageBox.clickedButton() == returnSetButton) {
-        mProject.enable_push( true ); //Increment = true
-        commit_msg = "Verifier has Turned in the Next Version:" + mProject.get_version();
-    }
-    else if (messageBox.clickedButton() == finaliseButton) {
-        mProject.enable_push( false ); //Increment = false
-        commit_msg = "Verifier Finalised Version:" + mProject.get_version();
-    }
-    else {
-        QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-        return;
-    }
 
 
-    if(! mProject.commit(commit_msg.toStdString())) {
-        QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-        return;
-    }
-    on_actionFetch_2_triggered();
-    if(! mProject.push()){
-      QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-      return;
-    }
+        QMessageBox messageBox(this);
+        QString msg1 = QString(
+            "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
 
-    ui->lineEdit_2->setText("Version " + mProject.get_version());
+            + "\n\nDo you want to Return the Set to the Corrector or Finalise the set?"
 
-    QString emailText =  "Book ID: " + mProject.get_bookId()
-                       + "\nSet ID: " + mProject.get_setId()
-                        + "\nRating Provided: " + QString::number(rating)
-                       + "\n" + commit_msg ;
-  /*  if( !sendEmail(emailText)) {
-        QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nTurn-In Unsuccessful!,Please Check your Internet Connection");
-        return;
-    } */
-    QMessageBox::information(0, "Turn In", "Turned In Successfully");
+            + "\n\nClick \"Return Set\" to Increment the Version from "
+            + QString::number(ver) +" to "+QString::number(ver + 1)
+
+            + "\nClick \"Finalise\" to Approve the set as the Final Version"
+            );
+
+        QString msg2 = QString(
+            "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
+
+            + "\n\nDo you want to Return or Resubmit or Finalise the set?"
+
+            + "\n\nClick \"Return Set\" to Turnin and Increment the Version from "
+            + QString::number(ver) +" to "+QString::number(ver + 1)
+
+            + " \nClick \"Resubmit\" to Turn In without Incrementing Version."
+
+            + "\nClick \"Finalise\" to Approve the set as the Final Version"
+            );
+
+        messageBox.setWindowTitle("Turn In");
+        QAbstractButton *resubmitButton =
+            messageBox.addButton(tr("Resubmit"), QMessageBox::ActionRole);
+        QAbstractButton *returnSetButton =
+            messageBox.addButton(tr("Return Set"), QMessageBox::ActionRole);
+        QAbstractButton *finaliseButton =
+            messageBox.addButton(tr("Finalise"), QMessageBox::ActionRole);
+        QAbstractButton *cancelButton =
+            messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+
+        if(mRole != mProject.get_stage()) {
+            messageBox.setText(msg1);
+            messageBox.removeButton(resubmitButton);
+        }
+        else {
+            messageBox.setText(msg2);
+        }
+
+        messageBox.exec();
+        bool is_return_set = false;
+        if (messageBox.clickedButton() == resubmitButton) {
+            //mProject.enable_push( false ); //Increment = false
+            commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
+        }
+        else if (messageBox.clickedButton() == returnSetButton) {
+            //mProject.enable_push( true ); //Increment = true
+            is_return_set = true;
+            commit_msg = "Verifier has Turned in the Next Version:" + mProject.get_version();
+        }
+        else if (messageBox.clickedButton() == finaliseButton) {
+            //mProject.enable_push( false ); //Increment = false
+            commit_msg = "Verifier Finalised Version:" + mProject.get_version();
+        }
+        else {
+            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            return;
+        }
+
+
+        if(! mProject.commit(commit_msg.toStdString())) {
+            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            return;
+        }
+        on_actionFetch_2_triggered();
+        if(! mProject.push()){
+          QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+          return;
+        }
+
+        ui->lineEdit_2->setText("Version " + mProject.get_version());
+
+        QString emailText =  "Book ID: " + mProject.get_bookId()
+                           + "\nSet ID: " + mProject.get_setId()
+                            + "\nRating Provided: " + QString::number(rating)
+                           + "\n" + commit_msg ;
+      /*  if( !sendEmail(emailText)) {
+            QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nTurn-In Unsuccessful!,Please Check your Internet Connection");
+            return;
+        } */
+        if(is_return_set) {
+            mProject.enable_push( true );
+        }
+        else {
+            mProject.enable_push( false );
+        }
+        QMessageBox::information(0, "Turn In", "Turned In Successfully");
     }
     else{
     QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
