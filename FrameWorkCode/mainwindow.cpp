@@ -3286,7 +3286,7 @@ void MainWindow::on_actionPush_triggered() {
 void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
     if(mProject.get_version().toInt()){       
         if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/CorrectorOutput/)")
-                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
+                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)")+1)
         {
             QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in CorrectorOutput directory");
             return;
@@ -3358,7 +3358,7 @@ void MainWindow::on_actionFetch_2_triggered() {
 void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
 
     if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
-                != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
+                != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)")+1)
     {
         QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
         return;
