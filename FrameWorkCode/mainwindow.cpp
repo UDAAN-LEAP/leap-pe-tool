@@ -885,9 +885,7 @@ void MainWindow::on_actionSave_triggered()
 //        }
         QString changefiledir = filestructure_fw[gCurrentDirName];
         QString localFilename = gDirTwoLevelUp + "/" +changefiledir +"/" + tempPageName;
-        QString localFilename2 = gDirTwoLevelUp + "/" +changefiledir +"/" + tempPageName;
         localFilename.replace(".txt",".html");
-        localFilename2.replace(".txt",".json");
 
 
         QFile sFile(localFilename);
@@ -929,7 +927,8 @@ void MainWindow::on_actionSave_triggered()
         int len = qjsonobj.length();
 
 //         QJsonDocument doc(qjsonobj);
-        QFile sFile2(localFilename2);
+        localFilename.replace(".html",".json");
+        QFile sFile2(localFilename);
         if(sFile2.open(QIODevice::WriteOnly | QIODevice::Text))
         {
             QTextStream out(&sFile2);
