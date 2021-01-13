@@ -3326,31 +3326,25 @@ void MainWindow::on_actionFetch_2_triggered() {
     QString prvs_stage = (stage=="Corrector")?"Verifier":"Corrector";
     QString prvs_output_dir = prvs_stage + "Output"; //"VerifierOutput" or "CorrectorOutput"
 
-    int btn = QMessageBox::question(this, "Pull?", "This will overwrite files in" + prvs_output_dir + "directory. Do you want to Continue?",
+    int btn = QMessageBox::question(this, "Pull ?", "This will overwrite files in" + prvs_output_dir + "directory. Do you want to Continue?",
                                     QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
     if (btn == QMessageBox::StandardButton::Yes){
-        int btn2 = QMessageBox::question(this, "Are you sure?", "This will delete all your previous work from this project.        DO YOU STILL WANT TO CONTINUE?",
-                                        QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
-        if (btn2 == QMessageBox::StandardButton::Yes){
-            mProject.fetch();
-            qDebug() << "Fetch funtion executed ";
-            if(mProject.get_version().toInt()){
+        mProject.fetch();
+        if(mProject.get_version().toInt()){
             QMessageBox::information(0, "Pull Success", "Pull Succesful");
-            }
-            else{
-            QMessageBox::information(0, "Pull Error", "Pull Un-succesful, Please Check Your Internet Connection");
-            }
-            if(!isVerifier) {
-                if (mProject.get_stage() == "Corrector") {
-                    ui->actionTurn_In->setEnabled(true);
-                }
-                else {
-                    ui->actionTurn_In->setEnabled(false);
-                }
-            }
-            ui->lineEdit_2->setText("Version " + mProject.get_version());
         }
-
+        else{
+            QMessageBox::information(0, "Pull Error", "Pull Un-succesful, Please Check Your Internet Connection");
+        }
+        if(!isVerifier) {
+            if (mProject.get_stage() == "Corrector") {
+                ui->actionTurn_In->setEnabled(true);
+            }
+            else {
+                ui->actionTurn_In->setEnabled(false);
+            }
+        }
+        ui->lineEdit_2->setText("Version " + mProject.get_version());
     }
     else
         return;
@@ -3780,6 +3774,13 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     QString s2 = basedir + "/Inds/";
     QString s3 = basedir+"/CorrectorOutput/";
     QString s4 = basedir + "/VerifierOutput/";
+
+    if (!QDir(s3).exists() && !isVerifier) {
+        QDir().mkdir(s3);
+    }
+    else if (!QDir(s4).exists() && isVerifier) {
+        QDir().mkdir(s4);
+    }
     bool exists = QDir(s1).exists() && QDir(s2).exists() && QDir(s3).exists() &&(QDir(s3).exists()|| QDir(s4).exists());
     if (xml.exists()&& exists) {
         ui->treeView->reset();
