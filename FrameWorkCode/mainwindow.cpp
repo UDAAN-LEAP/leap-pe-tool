@@ -3284,7 +3284,7 @@ void MainWindow::on_actionPush_triggered() {
 //}
 
 void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
-    if(mProject.get_version().toInt()){       
+    if(mProject.get_version().toInt()) {
         if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/CorrectorOutput/)")
                     != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)")+1)
         {
@@ -3326,7 +3326,7 @@ void MainWindow::on_actionFetch_2_triggered() {
     QString prvs_stage = (stage=="Corrector")?"Verifier":"Corrector";
     QString prvs_output_dir = prvs_stage + "Output"; //"VerifierOutput" or "CorrectorOutput"
 
-    int btn = QMessageBox::question(this, "Pull ?", "This will overwrite files in" + prvs_output_dir + "directory. Do you want to Continue?",
+    int btn = QMessageBox::question(this, "Pull ?", "This will overwrite files in " + prvs_output_dir + " directory. Do you want to Continue?",
                                     QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
     if (btn == QMessageBox::StandardButton::Yes){
         mProject.fetch();
@@ -3350,18 +3350,15 @@ void MainWindow::on_actionFetch_2_triggered() {
         return;
 }
 void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
-
-    if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
-                != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)")+1)
-    {
-        QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
-        return;
-    }
-
-    if(mProject.get_version().toInt()){
+    if(mProject.get_version().toInt()) {
+        if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
+                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)")+1)
+        {
+            QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
+            return;
+        }
         int ver = mProject.get_version().toInt();
         QString commit_msg;
-
 
         QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
         float avgcharacc = 0;

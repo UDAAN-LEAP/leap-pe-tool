@@ -662,6 +662,7 @@ int Project::findNumberOfFilesInDirectory(std::string path)
 {
     FILE* fp;
     int file_count;
+    replace(path.begin(), path.end(), '/', '\\');
  //   std::string command = "dir /b /a-s-d " + path + R"( | find /c /v "")"; //  non-recursive count -> files in sub-directories will not be counted
     std::string command = "dir /b /s /a-s-d " + path + R"( | find /c /v "")"; // recursive count
     fp = _popen(command.c_str(), "r");
