@@ -17,7 +17,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
-#include <utility> 
+#include <utility>
 #include "ProjectHierarchyWindow.h"
 #include "3rdParty/RapidXML/rapidxml.hpp"
 #include <QDomDocument>
@@ -74,17 +74,17 @@ int openedFileWords;
 bool gSaveTriggered = 0;
 map<QString, QString> filestructure_fw;
 map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
-									 {"CorrectorOutput","Inds"},
-										  {"Inds" , "Inds"}
+                                     {"CorrectorOutput","Inds"},
+                                          {"Inds" , "Inds"}
 };
 
 QString gSanskrit, gHindi;
 
 MainWindow::MainWindow(QWidget *parent) :
-	QMainWindow(parent),
-	ui(new Ui::MainWindow)
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
 
     QString password  = "";
     QString passwordFilePath = QDir::currentPath() + "/pass.txt";
@@ -121,10 +121,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->sanButton->setChecked(true);
 
     ui->tabWidget_2->removeTab(0);
-	ui->tabWidget_2->removeTab(0);
+    ui->tabWidget_2->removeTab(0);
     bool b = connect(ui->tabWidget_2, SIGNAL(tabCloseRequested(int)), this, SLOT(closetab(int)));
     b = connect(ui->tabWidget_2, SIGNAL(currentChanged(int)), this, SLOT(tabchanged(int)));
-	b = connect(&watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(directoryChanged(const QString&)));
+    b = connect(&watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(directoryChanged(const QString&)));
 }
 bool MainWindow::setRole(QString role)
 {
@@ -180,7 +180,7 @@ bool MainWindow::setRole(QString role)
 }
 MainWindow::~MainWindow()
 {
-	delete ui;
+    delete ui;
 }
 
 QJsonObject readJsonFile(QString filepath)
@@ -423,72 +423,72 @@ vector<string> vGPage, vIPage, vCPage; // for calculating WER
 vector<string> vBest;
 void MainWindow::on_actionCreateBest2OCR_triggered()
 {
-	if (curr_browser) {
+    if (curr_browser) {
 
-		// vGBook and vIBook contain the loaded words from both OCR
+        // vGBook and vIBook contain the loaded words from both OCR
 
-		int vGsz = vGBook.size(), vIsz = vIBook.size();
-		//cout << vGsz << " " << vIsz << endl;
-		int win = vGsz - vIsz;
-		if (win < 0) win = -1 * win;
-		win = std::max(win, 5);
+        int vGsz = vGBook.size(), vIsz = vIBook.size();
+        //cout << vGsz << " " << vIsz << endl;
+        int win = vGsz - vIsz;
+        if (win < 0) win = -1 * win;
+        win = std::max(win, 5);
 
-		//float WER = 0;
-		int mineEdDis = 1000;
-		// search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
-		//cout << win << endl;
-		string localFilename = mFilename.toUtf8().constData();
-		size_t loc = localFilename.find("Inds");
-		localFilename = localFilename.substr(0, loc);
-		localFilename = localFilename + "Best2ocrRep.txt";
-		cout << "writing to" << localFilename << " please wait" << endl;
-		std::ofstream best2(localFilename);
-		for (int t = 0; t < vIsz; t++) {
-			mineEdDis = 1000;
-			//cout << mineEdDis << endl;
-			string BestString1;
-			//cout << vIBook[t] << endl;
-			string s1 = vIBook[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
-			//cout << s1 << "s1 " ;
-			for (int t1 = std::max(t - win, 0); t1 < min(t + win, vGsz); t1++) {
+        //float WER = 0;
+        int mineEdDis = 1000;
+        // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
+        //cout << win << endl;
+        string localFilename = mFilename.toUtf8().constData();
+        size_t loc = localFilename.find("Inds");
+        localFilename = localFilename.substr(0, loc);
+        localFilename = localFilename + "Best2ocrRep.txt";
+        cout << "writing to" << localFilename << " please wait" << endl;
+        std::ofstream best2(localFilename);
+        for (int t = 0; t < vIsz; t++) {
+            mineEdDis = 1000;
+            //cout << mineEdDis << endl;
+            string BestString1;
+            //cout << vIBook[t] << endl;
+            string s1 = vIBook[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
+            //cout << s1 << "s1 " ;
+            for (int t1 = std::max(t - win, 0); t1 < min(t + win, vGsz); t1++) {
 
-				int EdDis = editDist(vGBook[t1], s1);
-				if (EdDis < mineEdDis) { mineEdDis = EdDis; BestString1 = vGBook[t1]; }
-				if (vGBook[t1] == s1) { BestString1 = s1; break; }
-			}
-			//cout << BestString1 << "BestString1 " ;
+                int EdDis = editDist(vGBook[t1], s1);
+                if (EdDis < mineEdDis) { mineEdDis = EdDis; BestString1 = vGBook[t1]; }
+                if (vGBook[t1] == s1) { BestString1 = s1; break; }
+            }
+            //cout << BestString1 << "BestString1 " ;
 
-			if (s1 == BestString1) { vBest.push_back(s1); best2 << toDev(s1) << " "; }
-			else {
-				string s22 = bestIG(s1, BestString1, Dict); vBest.push_back(s22); best2 << toDev(s22) << " ";
+            if (s1 == BestString1) { vBest.push_back(s1); best2 << toDev(s1) << " "; }
+            else {
+                string s22 = bestIG(s1, BestString1, Dict); vBest.push_back(s22); best2 << toDev(s22) << " ";
 
-			}
-		}
-		best2 << endl;
-	}
+            }
+        }
+        best2 << endl;
+    }
 }
 
 map<string, int> wordLineIndex;
 bool ConvertSlpDevFlag = 0;
 void MainWindow::on_actionSpell_Check_triggered()
 {
-	if (curr_browser) {
-		auto txcursor = curr_browser->textCursor();
-		txcursor.setPosition(0);
-		auto format = txcursor.charFormat();
-		format.setForeground(QColor(255, 0, 0));
+    if (curr_browser) {
+        auto txcursor = curr_browser->textCursor();
+        txcursor.setPosition(0);
+        auto format = txcursor.charFormat();
+        format.setForeground(QColor(255, 0, 0));
 
-		while (!txcursor.atEnd()) {
-			txcursor.movePosition(QTextCursor::MoveOperation::EndOfWord);
-			txcursor.select(QTextCursor::SelectionType::WordUnderCursor);
-			if (txcursor.hasSelection()) {
-				txcursor.beginEditBlock();
-				txcursor.mergeCharFormat(format);
-				txcursor.endEditBlock();
-			}
-			txcursor.movePosition(QTextCursor::MoveOperation::NextWord);
-		}
-	}
+        while (!txcursor.atEnd()) {
+            txcursor.movePosition(QTextCursor::MoveOperation::EndOfWord);
+            txcursor.select(QTextCursor::SelectionType::WordUnderCursor);
+            if (txcursor.hasSelection()) {
+                txcursor.beginEditBlock();
+                txcursor.mergeCharFormat(format);
+                txcursor.endEditBlock();
+            }
+            txcursor.movePosition(QTextCursor::MoveOperation::NextWord);
+        }
+    }
 }
 
 /*
@@ -497,9 +497,9 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
 
    /.* QTextCursor cursor = curr_browser->textCursor();
-	cursor.select(QTextCursor::WordUnderCursor);
-	// code to copy selected string:-
-	strPrev = cursor.selectedText().toUtf8().constData();/
+    cursor.select(QTextCursor::WordUnderCursor);
+    // code to copy selected string:-
+    strPrev = cursor.selectedText().toUtf8().constData();/
 
 
 return 1;
@@ -514,46 +514,46 @@ size_t ind = 0;
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
 
-	QTextCursor cursor = curr_browser->textCursor();
-	cursor.select(QTextCursor::WordUnderCursor);
-	// code to copy selected string:-
-	string str1 = cursor.selectedText().toUtf8().constData();;
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.select(QTextCursor::WordUnderCursor);
+    // code to copy selected string:-
+    string str1 = cursor.selectedText().toUtf8().constData();;
 
-	cursor.select(QTextCursor::LineUnderCursor);
-	string line1 = cursor.selectedText().toUtf8().constData();;
+    cursor.select(QTextCursor::LineUnderCursor);
+    string line1 = cursor.selectedText().toUtf8().constData();;
 
-	if((str1 != strPrev) || (line1 != linePrev) ) {
+    if((str1 != strPrev) || (line1 != linePrev) ) {
 
-	strPrev = str1; linePrev = line1;
-	QImage image = imageOrig;
-	ind = wordLineIndex[(str1 + "###" + line1)];
-	cout << wordLineIndex.size()<< " " << str1 + "###" + line1 << " " << ind << endl;
+    strPrev = str1; linePrev = line1;
+    QImage image = imageOrig;
+    ind = wordLineIndex[(str1 + "###" + line1)];
+    cout << wordLineIndex.size()<< " " << str1 + "###" + line1 << " " << ind << endl;
 
-	for(int i = vx[ind]; i < (vx[ind] + vw[ind]); i++){
-
-
-				image.setPixel(i,vy[ind],qRgb(150,0,0)); image.setPixel(i,vy[ind]-1,qRgb(150,0,0));  //i,vy[ind]-1,QRg
-				image.setPixel(i,(vy[ind] + vh[ind]),qRgb(150,0,0));image.setPixel(i,(vy[ind] + vh[ind]+1),qRgb(150,0,0));
+    for(int i = vx[ind]; i < (vx[ind] + vw[ind]); i++){
 
 
-	}
-	for(int j = vy[ind]; j < (vy[ind] + vh[ind]); j++){
+                image.setPixel(i,vy[ind],qRgb(150,0,0)); image.setPixel(i,vy[ind]-1,qRgb(150,0,0));  //i,vy[ind]-1,QRg
+                image.setPixel(i,(vy[ind] + vh[ind]),qRgb(150,0,0));image.setPixel(i,(vy[ind] + vh[ind]+1),qRgb(150,0,0));
 
-				image.setPixel(vx[ind],j,qRgb(150,0,0)); image.setPixel(vx[ind]-1,j,qRgb(150,0,0));//qGray(150)
-				image.setPixel((vx[ind]+vw[ind]),j,qRgb(150,0,0)); image.setPixel((vx[ind]+vw[ind] + 1 ),j,qRgb(150,0,0));
 
-	}
+    }
+    for(int j = vy[ind]; j < (vy[ind] + vh[ind]); j++){
 
-	QImage imageO = image;
+                image.setPixel(vx[ind],j,qRgb(150,0,0)); image.setPixel(vx[ind]-1,j,qRgb(150,0,0));//qGray(150)
+                image.setPixel((vx[ind]+vw[ind]),j,qRgb(150,0,0)); image.setPixel((vx[ind]+vw[ind] + 1 ),j,qRgb(150,0,0));
 
-	QGraphicsScene *graphic = new QGraphicsScene(this);
-	graphic->addPixmap(QPixmap::fromImage(imageO));
-	ui->graphicsView->setScene(graphic);
-	ui->graphicsView->fitInView(graphic->itemsBoundingRect(),Qt::KeepAspectRatio);
+    }
+
+    QImage imageO = image;
+
+    QGraphicsScene *graphic = new QGraphicsScene(this);
+    graphic->addPixmap(QPixmap::fromImage(imageO));
+    ui->graphicsView->setScene(graphic);
+    ui->graphicsView->fitInView(graphic->itemsBoundingRect(),Qt::KeepAspectRatio);
 
     } // 1st if ends
 
-	return false;
+    return false;
 
 } */
 
@@ -725,18 +725,18 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 /*
 QString strPrev = "";
 void MainWindow::textChangedSlot(){
-		QTextCursor cursor = curr_browser->textCursor();
-		cursor.select(QTextCursor::WordUnderCursor);
-		// code to copy selected string:-
-		QString strPrev1 = cursor.selectedText();
-		if( editDist(toslp1(strPrev1.toUtf8().constData()),toslp1(strPrev.toUtf8().constData())) > 0) {
-		strPrev = cursor.selectedText();
-		QString text = strPrev;
-		QMessageBox* box = new QMessageBox();
-		box->setWindowTitle(QString("Hello"));
-		box->setText(QString("Current Text:\""+text+"\""));
-		box->show();
-		}
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.select(QTextCursor::WordUnderCursor);
+        // code to copy selected string:-
+        QString strPrev1 = cursor.selectedText();
+        if( editDist(toslp1(strPrev1.toUtf8().constData()),toslp1(strPrev.toUtf8().constData())) > 0) {
+        strPrev = cursor.selectedText();
+        QString text = strPrev;
+        QMessageBox* box = new QMessageBox();
+        box->setWindowTitle(QString("Hello"));
+        box->setText(QString("Current Text:\""+text+"\""));
+        box->show();
+        }
 }
 */
 
@@ -863,7 +863,7 @@ void MainWindow::on_actionSave_triggered()
         gSaveTriggered = 1;
         on_viewComments_clicked();
         gSaveTriggered = 0;
-        updateAverageAccuracies();    
+        updateAverageAccuracies();
     }
     ConvertSlpDevFlag =1;
 
@@ -932,7 +932,7 @@ void MainWindow::on_actionSave_triggered()
         if(sFile2.open(QIODevice::WriteOnly | QIODevice::Text))
         {
             QTextStream out(&sFile2);
-			out.setCodec("UTF-8");
+            out.setCodec("UTF-8");
             out << "{\n";
             for(int x = 0; x<len; x++){
                 QString z = QString::number(x);
@@ -941,7 +941,7 @@ void MainWindow::on_actionSave_triggered()
             out << "}";
 //            QTextStream out(&sFile2);
 //            out << doc.toJson(QJsonDocument::Compact);
-		    sFile2.flush();
+            sFile2.flush();
             sFile2.close();
         }
     }
@@ -952,51 +952,51 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::on_actionLoadGDocPage_triggered()
 {
-	if (mFilename == "Untitled") {
-		
-	}
-	else {
-		on_actionSave_As_triggered();
+    if (mFilename == "Untitled") {
+
+    }
+    else {
+        on_actionSave_As_triggered();
         QString changefiledir = filestructure_fw[gCurrentDirName];
         QString str1 = gDirTwoLevelUp + "/" + changefiledir + "/" + gCurrentPageName;
         str1.replace(".txt", ".html");
 
-		QFile sFile(str1);
-		if (sFile.open(QFile::WriteOnly | QFile::Text))
-		{
-			QTextStream out(&sFile);
-			out.setCodec("UTF-8");
+        QFile sFile(str1);
+        if (sFile.open(QFile::WriteOnly | QFile::Text))
+        {
+            QTextStream out(&sFile);
+            out.setCodec("UTF-8");
             out << curr_browser->toHtml(); //toPlainText(); //Modified
-			sFile.flush();
-			sFile.close();
-		}
-		//qDebug() << str1 << endl;
-		loadMap(str1.toUtf8().constData(), PWords, "PWords");
+            sFile.flush();
+            sFile.close();
+        }
+        //qDebug() << str1 << endl;
+        loadMap(str1.toUtf8().constData(), PWords, "PWords");
 
-		map<string, int> PWordspage;
-		loadMap(str1.toUtf8().constData(), PWordspage, "PWordspage");
-		loadmaptoTrie(TPWords, PWordspage);
-		vector<string> wrong, right;
-		QString str2 = mFilename;
-		generateCorrectionPairs(wrong, right, str2.toUtf8().constData(), str1.toUtf8().constData());
-		loadConfusionsFont(wrong, right, ConfPmapFont);
-		loadConfusionsFont(wrong, right, ConfPmap);
-		TopConfusions.clear(); TopConfusionsMask.clear();
-		loadTopConfusions(ConfPmap, TopConfusions, TopConfusionsMask);
-	}
+        map<string, int> PWordspage;
+        loadMap(str1.toUtf8().constData(), PWordspage, "PWordspage");
+        loadmaptoTrie(TPWords, PWordspage);
+        vector<string> wrong, right;
+        QString str2 = mFilename;
+        generateCorrectionPairs(wrong, right, str2.toUtf8().constData(), str1.toUtf8().constData());
+        loadConfusionsFont(wrong, right, ConfPmapFont);
+        loadConfusionsFont(wrong, right, ConfPmap);
+        TopConfusions.clear(); TopConfusionsMask.clear();
+        loadTopConfusions(ConfPmap, TopConfusions, TopConfusionsMask);
+    }
 
 }
 
 
 void MainWindow::on_actionSave_As_triggered()
 {
-	QString file(QFileDialog::getSaveFileName(this, "Open a File"));
-	if (!file.isEmpty())
-	{
-		mFilename = file;
-		UpdateFileBrekadown();
-		on_actionSave_triggered();
-	}
+    QString file(QFileDialog::getSaveFileName(this, "Open a File"));
+    if (!file.isEmpty())
+    {
+        mFilename = file;
+        UpdateFileBrekadown();
+        on_actionSave_triggered();
+    }
 
 }
 
@@ -2393,8 +2393,8 @@ void MainWindow::on_actionNew_Project_triggered()
 
 void MainWindow::on_actionBold_triggered()
 {
-	if(!curr_browser)
-		return;
+    if(!curr_browser)
+        return;
     QTextCharFormat format;
     format.setFontWeight(QFont::Bold);
     curr_browser->textCursor().mergeCharFormat(format);
@@ -2402,8 +2402,8 @@ void MainWindow::on_actionBold_triggered()
 
 void MainWindow::on_actionUnBold_triggered()
 {
-	if(!curr_browser)
-		return;
+    if(!curr_browser)
+        return;
     QTextCharFormat format;
     format.setFontWeight(QFont::Normal);
     curr_browser->textCursor().mergeCharFormat(format);
@@ -2411,28 +2411,28 @@ void MainWindow::on_actionUnBold_triggered()
 
 void MainWindow::on_actionLeftAlign_triggered()
 {
-	if(!curr_browser)
-		return;
+    if(!curr_browser)
+        return;
     curr_browser->setAlignment(Qt::AlignLeft);
 }
 
 void MainWindow::on_actionRightAlign_triggered()
 {
-	if(!curr_browser)
-		return;
+    if(!curr_browser)
+        return;
     curr_browser->setAlignment(Qt::AlignRight);
 }
 
 void MainWindow::on_actionCentreAlign_triggered()
 {
-	if(!curr_browser)
-		return;
+    if(!curr_browser)
+        return;
     curr_browser->setAlignment(Qt::AlignCenter);
 }
 void MainWindow::on_actionJusitfiedAlign_triggered() //Not used, does not work as intended
 {
-	if(!curr_browser)
-		return;
+    if(!curr_browser)
+        return;
     auto cursor = curr_browser->textCursor();
     auto selected = cursor.selection();
     cursor.removeSelectedText();
@@ -2446,8 +2446,8 @@ void MainWindow::on_actionJusitfiedAlign_triggered() //Not used, does not work a
 
 void MainWindow::on_actionAllFontProperties_triggered()
 {
-	if(!curr_browser)
-		return;
+    if(!curr_browser)
+        return;
     QFont initialFont = curr_browser->font();
     auto pointsize = curr_browser->fontPointSize();
     if(pointsize) initialFont.setPointSize(pointsize);
@@ -2463,8 +2463,8 @@ void MainWindow::on_actionAllFontProperties_triggered()
 
 void MainWindow::on_actionFontBlack_triggered()
 {
-	if(!curr_browser)
-		return;
+    if(!curr_browser)
+        return;
     curr_browser->setTextColor(Qt::black);
 }
 
@@ -2492,8 +2492,8 @@ void MainWindow::on_actionSubscript_triggered() {
 }
 void MainWindow::on_actionInsert_Horizontal_Line_triggered()
 {
-	if(!curr_browser)
-		return;
+    if(!curr_browser)
+        return;
     curr_browser->insertHtml("<hr>");
 }
 
@@ -2519,8 +2519,8 @@ void MainWindow::on_actionLineSpace_triggered() //Not used, does not work as int
 
 void MainWindow::on_actionInsert_Tab_Space_triggered()
 {
-	if(!curr_browser)
-		return;
+    if(!curr_browser)
+        return;
     curr_browser->insertPlainText("    ");
 }
 
@@ -2625,10 +2625,10 @@ void MainWindow::on_actionHighlight_triggered() //Version Based
             QString text = cursor.selectedText().toUtf8().constData();
             int pos1 = curr_browser->textCursor().selectionStart();
             int pos2 = curr_browser->textCursor().selectionEnd();
-        
+
             int cursorpos = round(((float)(pos1 + pos2)) / 2);
             cursor.setPosition(cursorpos);
-        
+
             QTextCharFormat  format = cursor.charFormat();
             if (format.background() == Qt::yellow)
             {
@@ -2791,7 +2791,7 @@ void MainWindow::updateAverageAccuracies() //Verifier only
 
 void MainWindow::on_viewComments_clicked() //Version Based
 {
-	if (curr_browser) {
+    if (curr_browser) {
         QString correctorOutput,currentpagetext;
             QString correctorText = gDirTwoLevelUp + "/CorrectorOutput/" + gCurrentPageName;
             QFile sFile(correctorText);
@@ -3126,19 +3126,19 @@ void MainWindow::on_actionViewAverageAccuracies_triggered()
     QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
     QString csvFile = gDirTwoLevelUp + "/Comments/AverageAccuracies.csv";
     QString pagename = gCurrentPageName;
-	pagename.replace(".txt", "");
-	pagename.replace(".html", "");
-	float avgcharacc = 0, avgwordacc = 0, avgrating = 0; int avgcharerrors = 0, avgworderrors = 0;
+    pagename.replace(".txt", "");
+    pagename.replace(".html", "");
+    float avgcharacc = 0, avgwordacc = 0, avgrating = 0; int avgcharerrors = 0, avgworderrors = 0;
 
     QJsonObject mainObj = readJsonFile(commentFilename);
 
-	avgcharacc = mainObj["AverageCharAccuracy"].toDouble();
-	avgwordacc = mainObj["AverageWordAccuracy"].toDouble();
-	avgcharerrors = mainObj["AverageCharErrors"].toInt();
-	avgworderrors = mainObj["AverageWordErrors"].toInt();
+    avgcharacc = mainObj["AverageCharAccuracy"].toDouble();
+    avgwordacc = mainObj["AverageWordAccuracy"].toDouble();
+    avgcharerrors = mainObj["AverageCharErrors"].toInt();
+    avgworderrors = mainObj["AverageWordErrors"].toInt();
 
-	AverageAccuracies *aa = new AverageAccuracies(csvFile, avgwordacc, avgcharacc, avgworderrors, avgcharerrors);
-	aa->show();
+    AverageAccuracies *aa = new AverageAccuracies(csvFile, avgwordacc, avgcharacc, avgworderrors, avgcharerrors);
+    aa->show();
 }
 
 
