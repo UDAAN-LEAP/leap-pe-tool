@@ -321,88 +321,157 @@ struct index_options {
 };
 
 static int login_tries = 1;
+static bool is_cred_cached = false;
 int credentials_cb(git_cred ** out, const char *url, const char *username_from_url,
     unsigned int allowed_types, void *payload)
 {
     int error;
-    std::string user, pass;
+    static std::string user, pass;
 
     /*
      * Ask the user via the UI. On error, store the information and return GIT_EUSER which will be
      * bubbled up to the code performing the fetch or push. Using GIT_EUSER allows the application
      * to know it was an error from the application instead of libgit2.
      */
+    if (!is_cred_cached)
+    {
+        QInputDialog inp;
+        bool ok = false;
+        if (login_tries != 1) {
+            QMessageBox msgWarning;
+            msgWarning.setText("Invalid username or password. Please try again");
+            msgWarning.setIcon(QMessageBox::Warning);
+            msgWarning.setWindowTitle("Authentication Failed!");
+            msgWarning.exec();
+        }
+        QDialog dialog(nullptr);
+        dialog.setWindowTitle("Github Login");
+        QFormLayout form(&dialog);
 
-    QInputDialog inp;
-    bool ok = false;
-    if (login_tries != 1) {
-        QMessageBox msgWarning;
-        msgWarning.setText("Invalid username or password. Please try again");
-        msgWarning.setIcon(QMessageBox::Warning);
-        msgWarning.setWindowTitle("Authentication Failed!");
-        msgWarning.exec();
+        QLineEdit *userfield = new QLineEdit(&dialog);
+        QString userlabel = QString("Username: ");
+        form.addRow(userlabel, userfield);
+        QLineEdit *passfield = new QLineEdit(&dialog);
+        passfield->setEchoMode(QLineEdit::Password);
+        QString passlabel = QString("Password: ");
+        form.addRow(passlabel, passfield);
+
+        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                                   Qt::Horizontal, &dialog);
+        form.addRow(&buttonBox);
+        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+        if (dialog.exec() == QDialog::Accepted) {
+            user = userfield->text().toStdString();
+            pass = passfield->text().toStdString();
+            ok = true;
+        }
+        else {
+            ok = false;
+        }
+        if (!ok) return -1;
+
+        login_tries++;
+        delete userfield;
+        delete passfield;
     }
-    QDialog dialog(nullptr);
-    dialog.setWindowTitle("Github Login");
-    QFormLayout form(&dialog);
-
-    QLineEdit *userfield = new QLineEdit(&dialog);
-    QString userlabel = QString("Username: ");
-    form.addRow(userlabel, userfield);
-    QLineEdit *passfield = new QLineEdit(&dialog);
-    passfield->setEchoMode(QLineEdit::Password);
-    QString passlabel = QString("Password: ");
-    form.addRow(passlabel, passfield);
-
-    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-                               Qt::Horizontal, &dialog);
-    form.addRow(&buttonBox);
-    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
-    if (dialog.exec() == QDialog::Accepted) {
-        user = userfield->text().toStdString();
-        pass = passfield->text().toStdString();
-        ok = true;
-    }
-    else {
-        ok = false;
-    }
-    if (!ok) return -1;
-
-    login_tries++;
-    delete userfield;
-    delete passfield;
     return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
 bool Project::push() {
 //    lg2_add();
-    git_push_options options;
+    git_libgit2_init();
+    login_tries = 1;
     git_remote * remote = NULL;
     char * refspec = (char*)"refs/heads/master";
     const git_strarray refspecs = { &refspec,1 };
-    git_remote_callbacks cb;
-    int error = git_push_init_options(&options, GIT_PUSH_OPTIONS_VERSION);
-    if (error != 0) {
-        return false;
-    }
-    login_tries = 1;
-    options.callbacks.credentials = credentials_cb;
-    error = git_remote_lookup(&remote, repo, "origin");
-    if (error != 0) {
-        git_remote_free(remote);
-        return false;
-    }
-    //qDebug() << QString::number(git_remote_push(remote, &refspecs, &options));
-    error = git_remote_push(remote, &refspecs, &options);
-    if (error != 0) {
+    git_fetch_options fetch_opts;
+    git_merge_options merge_opts = GIT_MERGE_OPTIONS_INIT;
+    git_checkout_options checkout_opts = GIT_CHECKOUT_OPTIONS_INIT;
+    checkout_opts.checkout_strategy = GIT_CHECKOUT_SAFE;
+    git_annotated_commit *heads[1] = {NULL};
+    git_reference *theirs_ref = NULL, *head_ref = NULL;
+    git_index *index = NULL;
+    git_oid id, tree_oid;
+    git_signature *signature = NULL;
+    git_tree *tree = NULL;
+    git_commit **parents = (git_commit **)calloc(2, sizeof(git_commit *));
+    git_push_options push_opts;
 
+    // Store remote info from repo
+    int error = git_remote_lookup(&remote, repo, "origin");
+    if(error)
+        goto cleanup;
+
+    /* Fetch objects from remote repository
+     * Direct pull is not available via libgit2
+     */
+    git_fetch_init_options(&fetch_opts, GIT_FETCH_OPTIONS_VERSION);
+    fetch_opts.callbacks.credentials = credentials_cb;
+    error = git_remote_fetch( remote, NULL, &fetch_opts, NULL );
+    if(error)
+        goto cleanup;
+    // cache the credentials
+    is_cred_cached = true;
+
+    /* Merge fetched objects with local branch
+     * It will update index and current working area
+     */
+    error = (git_reference_lookup(&theirs_ref, repo, "refs/remotes/origin/master") != GIT_OK)
+         || (git_annotated_commit_from_ref(heads, repo, theirs_ref) != GIT_OK)
+         || (git_merge(repo, (const git_annotated_commit **)heads, 1, &merge_opts, &checkout_opts) != GIT_OK);
+
+    if(error)
+        goto cleanup;
+
+    /* Get the needed ref, index, sign and tree
+     */
+    error = (git_repository_head(&head_ref, repo))
+         || (git_repository_index(&index, repo))
+         || (git_signature_default(&signature, repo))
+         || (git_index_write_tree(&tree_oid, index))
+         || (git_tree_lookup(&tree, repo, &tree_oid));
+
+    if(error)
+        goto cleanup;
+
+    /* Commit the merge and cleanup repo state
+     */
+    error = (git_reference_peel((git_object **)&parents[0], head_ref, GIT_OBJECT_COMMIT))
+         || (git_commit_lookup(&parents[1], repo, git_annotated_commit_id(heads[0])))
+         || (git_commit_create(&id, repo, "HEAD", signature, signature, NULL, "Merge commit - OpenOCRCorrect", tree, 2, (const git_commit **)parents))
+         || (git_repository_state_cleanup(repo));
+
+    if(error)
+        goto cleanup;
+
+    error = git_push_init_options(&push_opts, GIT_PUSH_OPTIONS_VERSION);
+    push_opts.callbacks.credentials = credentials_cb;
+    error = git_remote_push(remote, &refspecs, &push_opts);
+
+    cleanup:
+    if(remote)
         git_remote_free(remote);
+    if(heads[0])
+        git_annotated_commit_free(*heads);
+    if(theirs_ref)
+        git_reference_free(theirs_ref);
+    if(head_ref)
+        git_reference_free(head_ref);
+    if(index)
+        git_index_free(index);
+    if(signature)
+        git_signature_free(signature);
+    if(tree)
+        git_tree_free(tree);
+    if(parents)
+        free(parents);
+
+    if (error)
         return false;
-    }
-    git_remote_free(remote);
     return true;//No errors
 }
+
 static int progress_cb(const char *str, int len, void *data)
 {
     return 0;

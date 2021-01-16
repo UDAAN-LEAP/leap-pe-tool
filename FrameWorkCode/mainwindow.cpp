@@ -3291,14 +3291,18 @@ void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
             QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in CorrectorOutput directory");
             return;
         }
-        QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();
-        if(! mProject.commit(commit_msg.toStdString())) {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-            return;
-        }
-        on_actionFetch_2_triggered();
 
-        if(! mProject.push()){
+        QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();
+
+        int btn = QMessageBox::question(this, "Pull ?", "This will overwrite files in CorrectorOutput directory. Do you want to Continue?",
+                                        QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
+        if (btn == QMessageBox::StandardButton::Yes){
+            if(!mProject.commit(commit_msg.toStdString()) || !mProject.push()) {
+                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+                return;
+            }
+        }
+        else {
             QMessageBox::information(0, "Turn In", "Turn In Cancelled");
             return;
         }
@@ -3323,7 +3327,7 @@ void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
 
 void MainWindow::on_actionFetch_2_triggered() {
     QString stage = mProject.get_stage();
-    QString prvs_stage = (stage=="Corrector")?"Verifier":"Corrector";
+    QString prvs_stage = (stage=="Verifier")?"Verifier":"Corrector";
     QString prvs_output_dir = prvs_stage + "Output"; //"VerifierOutput" or "CorrectorOutput"
 
     int btn = QMessageBox::question(this, "Pull ?", "This will overwrite files in " + prvs_output_dir + " directory. Do you want to Continue?",
@@ -3478,18 +3482,18 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
             return;
         }
 
-
-        if(! mProject.commit(commit_msg.toStdString())) {
+        int btn = QMessageBox::question(this, "Pull ?", "This will overwrite files in VerifierOutput directory. Do you want to Continue?",
+                                        QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
+        if (btn == QMessageBox::StandardButton::Yes){
+            if(!mProject.commit(commit_msg.toStdString()) || !mProject.push()) {
+                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+                return;
+            }
+        }
+        else {
             QMessageBox::information(0, "Turn In", "Turn In Cancelled");
             return;
         }
-        on_actionFetch_2_triggered();
-        if(! mProject.push()){
-          QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-          return;
-        }
-
-        ui->lineEdit_2->setText("Version " + mProject.get_version());
 
         QString emailText =  "Book ID: " + mProject.get_bookId()
                            + "\nSet ID: " + mProject.get_setId()
@@ -3505,10 +3509,11 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
         else {
             mProject.enable_push( false );
         }
+        ui->lineEdit_2->setText("Version " + mProject.get_version());
         QMessageBox::information(0, "Turn In", "Turned In Successfully");
     }
     else{
-    QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
+        QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
     }
 
 }
