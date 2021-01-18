@@ -3294,7 +3294,7 @@ void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
 
         QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();
 
-        int btn = QMessageBox::question(this, "Pull ?", "This will overwrite files in CorrectorOutput directory. Do you want to Continue?",
+        int btn = QMessageBox::question(this, "Submit ?", "Are you ready to submit your changes?",
                                         QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
         if (btn == QMessageBox::StandardButton::Yes){
             if(!mProject.commit(commit_msg.toStdString()) || !mProject.push()) {
@@ -3482,7 +3482,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
             return;
         }
 
-        int btn = QMessageBox::question(this, "Pull ?", "This will overwrite files in VerifierOutput directory. Do you want to Continue?",
+        int btn = QMessageBox::question(this, "Submit ?", "Are you ready to submit your changes?",
                                         QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
         if (btn == QMessageBox::StandardButton::Yes){
             if(!mProject.commit(commit_msg.toStdString()) || !mProject.push()) {
