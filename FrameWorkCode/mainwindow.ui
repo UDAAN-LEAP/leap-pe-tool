@@ -821,10 +821,19 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Bold</string>
    </property>
+   <property name="toolTip">
+    <string>Bold/Unbold - Ctrl+B</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
   </action>
   <action name="actionUnBold">
    <property name="text">
     <string>UnBold</string>
+   </property>
+   <property name="toolTip">
+    <string>UnBold (Deprecated - Use Bold button for bold/unbold)</string>
    </property>
   </action>
   <action name="actionLeftAlign">
@@ -996,10 +1005,16 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Superscript</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+`</string>
+   </property>
   </action>
   <action name="actionSubscript">
    <property name="text">
     <string>Subscript</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+`</string>
    </property>
   </action>
   <action name="actionInsert_Horizontal_Line">

@@ -2395,9 +2395,12 @@ void MainWindow::on_actionBold_triggered()
 {
     if(!curr_browser)
         return;
-    QTextCharFormat format;
-    format.setFontWeight(QFont::Bold);
-    curr_browser->textCursor().mergeCharFormat(format);
+    QTextCursor cursor = curr_browser->textCursor();
+    bool isBold = cursor.charFormat().font().bold();
+    QTextCharFormat fmt;
+    fmt.setFontWeight(isBold ? QFont::Normal : QFont::Bold);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
 }
 
 void MainWindow::on_actionUnBold_triggered()
@@ -2472,23 +2475,19 @@ void MainWindow::on_actionSuperscript_triggered() {
     if(!curr_browser)
         return;
     auto cursor = curr_browser->textCursor();
-    auto selected = cursor.selection();
-    QString sel = selected.toPlainText();
-    cursor.removeSelectedText();
-    sel = "<sup>" + sel + "</sup>";
-    auto newFrag = selected.fromHtml(sel);
-    cursor.insertFragment(newFrag);
+    QTextCharFormat fmt;
+    fmt.setVerticalAlignment((cursor.charFormat().verticalAlignment() == QTextCharFormat::AlignSuperScript)? QTextCharFormat::AlignNormal : QTextCharFormat::AlignSuperScript);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
 }
 void MainWindow::on_actionSubscript_triggered() {
     if(!curr_browser)
         return;
     auto cursor = curr_browser->textCursor();
-    auto selected = cursor.selection();
-    cursor.removeSelectedText();
-    QString sel = selected.toPlainText();
-    sel = "<sub>" + sel + "</sub>";
-    auto newFrag = selected.fromHtml(sel);
-    cursor.insertFragment(newFrag);
+    QTextCharFormat fmt;
+    fmt.setVerticalAlignment((cursor.charFormat().verticalAlignment() == QTextCharFormat::AlignSubScript)? QTextCharFormat::AlignNormal : QTextCharFormat::AlignSubScript);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
 }
 void MainWindow::on_actionInsert_Horizontal_Line_triggered()
 {
