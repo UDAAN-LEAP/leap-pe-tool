@@ -3788,7 +3788,10 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         ui->treeView->reset();
         mProject.process_xml(xml);
         mProject.open_git_repo();
-        mProject.setProjectOpen(true);
+        if(!mProject.isProjectOpen()) {
+            QMessageBox::warning(0, "Project Error", "Couldn't open project. Please check your project.");
+            return;
+        }
         ui->treeView->setModel(mProject.getModel());
         ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
         bool b = connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(CustomContextMenuTriggered(const QPoint&)));
@@ -3808,7 +3811,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         QDir cdir(str1);
         Filter * filter = mProject.getFilter("Document");
         auto list = cdir.entryList(QDir::Filter::Files);
-        std::cout << stage.toStdString();
         for (auto f : list) {
             QString t = str1 + "/" + f;
             QFile f2(t);
@@ -3862,6 +3864,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         bool isSet = QDir::setCurrent(mProject.GetDir().absolutePath() + "/CorrectorOutput") ; //Change application Directory to any subfolder of mProject folder for Image Insertion feature.
         if(!QDir(mProject.GetDir().absolutePath() + "/Images/Inserted").exists())
             QDir().mkdir(mProject.GetDir().absolutePath() + "/Images/Inserted");
+
+        QMessageBox::information(0, "Success", "Project opened successfully.");
     }
 }
 void MainWindow::directoryChanged(const QString &path) {

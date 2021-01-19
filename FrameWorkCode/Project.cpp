@@ -84,8 +84,7 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
             pugi::xml_node p = pNode->first_child();
             process_node(&p, parent);
         }
-        if (node_name == "Filter")
-        {
+        else if (node_name == "Filter") {
             /*   Example
                  <Filter Include="Image">
                     <Extensions>jpeg;jpg;png;</Extensions>
@@ -94,6 +93,7 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
 
             std::string filter_name = pNode->attribute("Include").as_string();;
             auto ch = pNode->child("Extensions");
+            if(!ch) setProjectOpen(false);
             std::string filter_exts =  ch.child_value();
 
             Filter *filter = new Filter(filter_name, filter_exts);
@@ -107,7 +107,7 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
             auto p = pNode->next_sibling();
             process_node(&p, parent);
         }
-        if (node_name == "File") {
+        else if (node_name == "File") {
 
             /*
                 Example:
@@ -134,6 +134,9 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
             process_node(&p, parent);
         }
     }
+    else {
+        setProjectOpen(false);
+    }
 }
 /*
 * Give XML file path and the content will be stored inside the class
@@ -142,17 +145,19 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
 void Project::process_xml(QFile & pFile) {
     if (mTreeModel)delete mTreeModel;
     /*if (mRoot) delete mRoot;*/
-
+    setProjectOpen(true);
     pFile.open(QIODevice::ReadOnly);
     QFileInfo info;
     info.setFile(pFile);
     std::string path = pFile.fileName().toStdString();
     pugi::xml_parse_result res =  doc.load_file(path.c_str());
-
+    if (!res) setProjectOpen(false);
     mProjectDir = info.absoluteDir();
     mFileName = info.absoluteFilePath();
     mXML = pFile.readAll().toStdString();
     auto child = doc.child("Project");
+    if (!child) setProjectOpen(false);
+
     mProjectName = child.attribute("name").as_string();
     TreeItem * root = new TreeItem(mProjectName,FOLDER);
 
@@ -160,10 +165,11 @@ void Project::process_xml(QFile & pFile) {
     for (pugi::xml_node child : doc.child("Project")) {
         process_node(&child, root);
     }
-
-    mTreeModel = new TreeModel();
-    mTreeModel->setRoot(root);
-    mTreeModel->layoutChanged();
+    if(isProjectOpen()) {
+        mTreeModel = new TreeModel();
+        mTreeModel->setRoot(root);
+        mTreeModel->layoutChanged();
+    }
 }
 QDir Project::GetDir() {
     return mProjectDir;
