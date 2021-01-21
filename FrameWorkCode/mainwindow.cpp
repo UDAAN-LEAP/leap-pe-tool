@@ -2539,6 +2539,7 @@ void MainWindow::on_actionSymbols_triggered()
 {
     SymbolsView *symbols = new SymbolsView(this);
     symbols->show();
+
 }
 
 
@@ -3704,7 +3705,7 @@ void MainWindow::CustomContextMenuTriggered(const QPoint & p) {
         switch (item->GetNodeType()) {
         case _FILETYPE: {
             QMenu * m = new QMenu(this);
-            QAction * act = new QAction("Remove File");
+            QAction * act = new QAction("Remove File", this);
             connect(act, &QAction::triggered, this, &MainWindow::RemoveFile);
             m->addAction(act);
             m->move(ui->treeView->mapToGlobal(p));
@@ -3715,10 +3716,10 @@ void MainWindow::CustomContextMenuTriggered(const QPoint & p) {
         {
             QMenu * m = new QMenu(this);
 
-            QAction * act = new QAction("Add New File");
+            QAction * act = new QAction("Add New File", this);
             connect(act, &QAction::triggered, this, &MainWindow::AddNewFile);
             m->addAction(act);
-            QAction * act2 = new QAction("Add Files");
+            QAction * act2 = new QAction("Add Files", this);
             connect(act2, &QAction::triggered, this, &MainWindow::OpenDirectory);
             m->addAction(act2);
             m->move(ui->treeView->mapToGlobal(p));
@@ -3923,7 +3924,7 @@ void MainWindow::on_actionInsert_Table_2_triggered()
     QDialog dialog(this);
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
-    form.addRow(new QLabel("Insert Table"));
+    form.addRow(new QLabel("Insert Table", this));
 
     // Add the lineEdits with their respective labels
     QLineEdit *rows = new QLineEdit(&dialog);
@@ -3944,11 +3945,11 @@ void MainWindow::on_actionInsert_Table_2_triggered()
         QTextTableFormat tf;
         tf.setBorderBrush(Qt::black);
         tf.setCellSpacing(0);
-
+        tf.setCellPadding(7);
         QTextCursor cursor = curr_browser->textCursor();
         cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
 
-        }
+    }
 }
 bool MainWindow::sendEmail(QString emailText)
 {

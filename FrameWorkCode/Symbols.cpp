@@ -2,7 +2,7 @@
 #include "ui_Symbols.h"
 
 SymbolsView::SymbolsView(QWidget *parent) :
-      QDialog(parent),
+      QDialog(parent, Qt::WindowCloseButtonHint),
       ui(new Ui::SymbolsView)
 {
     ui->setupUi(this);

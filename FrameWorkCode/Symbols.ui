@@ -24,7 +24,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -33,10 +33,16 @@
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QTextEdit" name="Diacritics">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="font">
           <font>
            <pointsize>20</pointsize>
           </font>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
          </property>
          <property name="html">
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -148,12 +154,15 @@ p, li { white-space: pre-wrap; }
            <pointsize>20</pointsize>
           </font>
          </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
          <property name="html">
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:20pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;docs-internal-guid-f0af7852-7fff-6c5b-db96-c848c4aeda35&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#1d1c1d; background-color:#ffffff;&quot;&gt;¶&lt;/span&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#1d1c1d; background-color:#ffffff;&quot;&gt;  ¦  Ȝ  ȝ  —  –  ‑  °  ·&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;docs-internal-guid-f0af7852-7fff-6c5b-db96-c848c4aeda35&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#1d1c1d; background-color:#ffffff;&quot;&gt;¶&lt;/span&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#1d1c1d; background-color:#ffffff;&quot;&gt;  ¦  Ȝ  ȝ  —  –  ‑  °  ·&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
@@ -171,31 +180,34 @@ p, li { white-space: pre-wrap; }
            <pointsize>20</pointsize>
           </font>
          </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
          <property name="html">
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:20pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;a name=&quot;docs-internal-guid-da2b489d-7fff-3a9f-1ab2-7e8e61a9c3d8&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;∀&lt;/span&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;  ∁  ∂  ∃  ∄  ∅  ∆  ∇  ∈  ∉  ∊  ∋  ∌  ∍  ∎  ∏&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;∐  ∑  −  ∓  ∔  ∕  ∖  ∗  ∘  ∙  √  ∛  ∜  ∝  ∞  ∟  ∠  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;∡  ∢  ∣  ∤  ∥  ∦  ∧  ∨  ∩  ∪  ∫  ∬  ∭  ∮  ∯  ∰  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;∱  ∲  ∳  ∴  ∵  ∶  ∷  ∸  ∹  ∺  ∻  ∼  ∽  ∾  ∿  ≀  ≁  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;≂  ≃  ≄  ≅  ≆  ≇  ≈  ≉  ≊  ≋  ≌  ≍  ≎  ≏  ≐  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;≑  ≒  ≓  ≔  ≕  ≖  ≗  ≘  ≙  ≚  ≛  ≜  ≝  ≞  ≟  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;≠  ≡  ≢  ≣  ≤  ≥  ≦  ≧  ≨  ≩  ≪  ≫  ≬  ≭  ≮  ≯  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;≰  ≱  ≲  ≳  ≴  ≵  ≶  ≷  ≸  ≹  ⊂  ⊃  ⊄  ⊅  ⊆  ⊇  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;⊈  ⊉  ⊊  ⊋  ⊌  ⊍  ⊎  ⊏  ⊐  ⊑  ⊒  ⊓  ⊔  ⊕  ⊖  ⊗  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;⊘  ⊙  ⊢  ⊣  ⊤  ⊥  ⊦  ⊧  ⊨  ⊩  ⊪  ⊫  ⊬  ⊭  ⊮  ⊯  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;⊻  ⊼  ⊽  ⊾  ⊿  ⋀  ⋁  ⋂  ⋃  ⋄  ⋅  ⋆  ⋇  ⋈  ⋉  ⋊  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;⋋  ⋌  ⋍  ⋎  ⋏  ⋐  ⋑  ⋒  ⋓  ⋔  ⋕  ⋖  ⋗  ⋘  ⋙  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;⋚  ⋛  ⋜  ⋝  ⋞  ⋟  ⋮  ⋯  ⋰  ⋱  ⋵  ⋶  ⋷  ⋸  ⋹  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;⋺  ⋻  ⋼  ⋽  ⋾  ⋿&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;a name=&quot;docs-internal-guid-da2b489d-7fff-3a9f-1ab2-7e8e61a9c3d8&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;∀&lt;/span&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;  ∁  ∂  ∃  ∄  ∅  ∆  ∇  ∈  ∉  ∊  ∋  ∌  ∍  ∎  ∏&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;∐  ∑  −  ∓  ∔  ∕  ∖  ∗  ∘  ∙  √  ∛  ∜  ∝  ∞  ∟  ∠  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;∡  ∢  ∣  ∤  ∥  ∦  ∧  ∨  ∩  ∪  ∫  ∬  ∭  ∮  ∯  ∰  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;∱  ∲  ∳  ∴  ∵  ∶  ∷  ∸  ∹  ∺  ∻  ∼  ∽  ∾  ∿  ≀  ≁  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;≂  ≃  ≄  ≅  ≆  ≇  ≈  ≉  ≊  ≋  ≌  ≍  ≎  ≏  ≐  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;≑  ≒  ≓  ≔  ≕  ≖  ≗  ≘  ≙  ≚  ≛  ≜  ≝  ≞  ≟  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;≠  ≡  ≢  ≣  ≤  ≥  ≦  ≧  ≨  ≩  ≪  ≫  ≬  ≭  ≮  ≯  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;≰  ≱  ≲  ≳  ≴  ≵  ≶  ≷  ≸  ≹  ⊂  ⊃  ⊄  ⊅  ⊆  ⊇  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;⊈  ⊉  ⊊  ⊋  ⊌  ⊍  ⊎  ⊏  ⊐  ⊑  ⊒  ⊓  ⊔  ⊕  ⊖  ⊗  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;⊘  ⊙  ⊢  ⊣  ⊤  ⊥  ⊦  ⊧  ⊨  ⊩  ⊪  ⊫  ⊬  ⊭  ⊮  ⊯  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;⊻  ⊼  ⊽  ⊾  ⊿  ⋀  ⋁  ⋂  ⋃  ⋄  ⋅  ⋆  ⋇  ⋈  ⋉  ⋊  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;⋋  ⋌  ⋍  ⋎  ⋏  ⋐  ⋑  ⋒  ⋓  ⋔  ⋕  ⋖  ⋗  ⋘  ⋙  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;⋚  ⋛  ⋜  ⋝  ⋞  ⋟  ⋮  ⋯  ⋰  ⋱  ⋵  ⋶  ⋷  ⋸  ⋹  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#202122; background-color:#ffffff;&quot;&gt;⋺  ⋻  ⋼  ⋽  ⋾  ⋿&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%; font-family:'Arial'; font-size:24pt; color:#202122;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#000000; background-color:transparent;&quot;&gt;⥢  ⥣  ⥤  ⥥  ⥦  ⥧  ⥨  ⥩  ⥪  ⥫  ⥬  ⥭  ⥮  ⥯&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#000000; background-color:transparent;&quot;&gt;⥢  ⥣  ⥤  ⥥  ⥦  ⥧  ⥨  ⥩  ⥪  ⥫  ⥬  ⥭  ⥮  ⥯&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%; font-family:'Arial'; font-size:24pt; color:#202122;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#000000; background-color:transparent;&quot;&gt;𝛣  𝛤  𝛥  𝛦  𝛧  𝛨  𝛩  𝛪  𝛫  𝛬  𝛭  𝛮  𝛯  𝛰  𝛱  𝛲  𝛳  𝛴  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#000000; background-color:transparent;&quot;&gt;𝛵  𝛶  𝛷  𝛸  𝛹  𝛺  𝛻  𝛼  𝛽  𝛾  𝛿  𝜀  𝜁  𝜂  𝜃  𝜄  𝜅  𝜆  𝜇  𝜈  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#000000; background-color:transparent;&quot;&gt;𝜉  𝜊  𝜋  𝜌  𝜍  𝜎  𝜏  𝜐  𝜑  𝜒  𝜓  𝜔  𝜕  𝜖  𝜗  𝜘  𝜙  𝜚  𝜛  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#000000; background-color:transparent;&quot;&gt;𝛣  𝛤  𝛥  𝛦  𝛧  𝛨  𝛩  𝛪  𝛫  𝛬  𝛭  𝛮  𝛯  𝛰  𝛱  𝛲  𝛳  𝛴  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#000000; background-color:transparent;&quot;&gt;𝛵  𝛶  𝛷  𝛸  𝛹  𝛺  𝛻  𝛼  𝛽  𝛾  𝛿  𝜀  𝜁  𝜂  𝜃  𝜄  𝜅  𝜆  𝜇  𝜈  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#000000; background-color:transparent;&quot;&gt;𝜉  𝜊  𝜋  𝜌  𝜍  𝜎  𝜏  𝜐  𝜑  𝜒  𝜓  𝜔  𝜕  𝜖  𝜗  𝜘  𝜙  𝜚  𝜛  &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%;&quot;&gt;&lt;a name=&quot;docs-internal-guid-c92af4c9-7fff-bba2-a4a0-51e856a97003&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#000000; background-color:transparent;&quot;&gt;℉&lt;/span&gt;&lt;span style=&quot; font-family:'Arial'; font-size:24pt; color:#000000; background-color:transparent;&quot;&gt; ℃	&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:138%; font-family:'Arial'; font-size:24pt; color:#202122;&quot;&gt;&lt;br /&gt;&lt;/p&gt;

@@ -271,7 +271,7 @@ git_repository_init_options make_opts(bool bare, const char * templ,
     return opts;
 }
 
-void create_initial_commit(git_repository * repo,std::string name ,std::string email) {
+void create_initial_commit(git_repository * repo) {
     git_signature *sig;
     git_index *index;
     git_oid tree_id, commit_id;
@@ -282,7 +282,7 @@ void create_initial_commit(git_repository * repo,std::string name ,std::string e
 
     //check_lg2(git_signature_default(&sig, repo),"Unable to create a commit signature.","Perhaps 'user.name' and 'user.email' are not set");
 
-    check_lg2(git_signature_now(&sig, name.c_str(), email.c_str()),"Could not create commit signature","");
+    check_lg2(git_signature_default(&sig, repo),"Could not create commit signature","");
     /* Now let's create an empty tree for this commit */
 
 
@@ -592,8 +592,6 @@ bool Project::commit(std::string message) {
         git_tree_free(tree);
         git_signature_free(sig);
         git_index_free(index);
-        git_tree_free(tree);
-
         return 0;
     }
 
@@ -602,7 +600,6 @@ bool Project::commit(std::string message) {
     git_tree_free(tree);
     git_signature_free(sig);
     git_index_free(index);
-    git_tree_free(tree);
     return 1;
 }
 bool Project::add_config() {
@@ -759,9 +756,9 @@ void Project::open_git_repo() {
     {
         check_lg2(git_repository_init(&repo, dir.c_str(),0), "Failed to Open", "");
         add_config();
-
-        commit("Initial Commit");
         lg2_add();
+        create_initial_commit(repo);
+
     }
 }
 
