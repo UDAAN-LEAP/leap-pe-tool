@@ -768,8 +768,9 @@ int Project::findNumberOfFilesInDirectory(std::string path)
     FILE* fp;
     int file_count;
     replace(path.begin(), path.end(), '/', '\\');
- //   std::string command = "dir /b /a-s-d " + path + R"( | find /c /v "")"; //  non-recursive count -> files in sub-directories will not be counted
-    std::string command = "dir /b /s /a-s-d " + path + R"( | find /c /v "")"; // recursive count
+    
+ //   std::string command = R"(dir /b /a-s-d ")" + path + R"(" | find /c /v "")"; //  non-recursive count -> files in sub-directories will not be counted
+    std::string command = R"(dir /b /s /a-s-d ")" + path + R"(" | find /c /v "")"; // recursive count
     fp = _popen(command.c_str(), "r");
     if (!fp) {
         std::cout << "Failed to count files at " << path << std::endl;
@@ -789,16 +790,15 @@ int Project::findNumberOfFilesInDirectory(std::string path)
     FILE* fp;
     int file_count;
 
-//    std::string command = "find " + path + R"( -maxdepth 1 -not -path '*/\.*' -type f | wc -l)"; //  non-recursive count -> files in sub-directories will not be counted
-    std::string command = "find " + path + R"( -not -path '*/\.*' -type f | wc -l)"; // recursive count
+//    std::string command = R"(find ")" + path + R"(" -maxdepth 1 -not -path '*/\.*' -type f | wc -l)"; //  non-recursive count -> files in sub-directories will not be counted
+    std::string command = R"(find ")" + path + R"(" -not -path '*/\.*' -type f | wc -l)"; // recursive count
+    
     fp = popen(command.c_str(), "r");
     if (!fp) {
         std::cout << "Failed to count files at " << path << std::endl;
         return -1;
     }
-
     fscanf(fp, "%d", &file_count);
-
     pclose(fp);
     return file_count;
 
