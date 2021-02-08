@@ -461,6 +461,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionAllFontProperties"/>
     <addaction name="actionBold"/>
     <addaction name="actionUnBold"/>
+    <addaction name="actionItalic"/>
     <addaction name="actionHighlight"/>
     <addaction name="separator"/>
     <addaction name="actionLeftAlign"/>
@@ -516,6 +517,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionAllFontProperties"/>
    <addaction name="actionBold"/>
    <addaction name="actionUnBold"/>
+   <addaction name="actionItalic"/>
    <addaction name="actionFontBlack"/>
    <addaction name="actionLeftAlign"/>
    <addaction name="actionCentreAlign"/>
@@ -1138,6 +1140,9 @@ p, li { white-space: pre-wrap; }
   <action name="actionItalic">
    <property name="text">
     <string>Italic</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
    </property>
   </action>
   <action name="actionNonitalic">

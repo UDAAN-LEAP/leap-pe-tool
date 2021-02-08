@@ -125,6 +125,8 @@ MainWindow::MainWindow(QWidget *parent) :
     bool b = connect(ui->tabWidget_2, SIGNAL(tabCloseRequested(int)), this, SLOT(closetab(int)));
     b = connect(ui->tabWidget_2, SIGNAL(currentChanged(int)), this, SLOT(tabchanged(int)));
     b = connect(&watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(directoryChanged(const QString&)));
+    connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(CustomContextMenuTriggered(const QPoint&)));
+    connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
 }
 bool MainWindow::setRole(QString role)
 {
@@ -3794,8 +3796,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         }
         ui->treeView->setModel(mProject.getModel());
         ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
-        bool b = connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(CustomContextMenuTriggered(const QPoint&)));
-        b = connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
+
         QString stage = mProject.get_stage();
         QString version = mProject.get_version();
         ui->lineEdit_2->setText("Version: " + version);
@@ -4049,13 +4050,16 @@ void MainWindow::on_actionRemove_Row_triggered()
        }
 }
 
-void MainWindow::on_actionItalic_triggered()    //enable when required
+void MainWindow::on_actionItalic_triggered()
 {
     if(!curr_browser)
         return;
-    QTextCharFormat format;
-    format.setFontItalic(true);
-    curr_browser->textCursor().mergeCharFormat(format);
+    QTextCursor cursor = curr_browser->textCursor();
+    bool isItalic = cursor.charFormat().font().italic();
+    QTextCharFormat fmt;
+    fmt.setFontItalic(isItalic ? false : true);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
 }
 
 void MainWindow::on_actionNonitalic_triggered() //enable when required
