@@ -3467,18 +3467,21 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
         }
 
         messageBox.exec();
-        bool is_return_set = false;
+        enum class SubmissionType {resubmit, return_set, finalise};
+        SubmissionType s ;
         if (messageBox.clickedButton() == resubmitButton) {
             //mProject.enable_push( false ); //Increment = false
+            s = SubmissionType::resubmit;
             commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
         }
         else if (messageBox.clickedButton() == returnSetButton) {
             //mProject.enable_push( true ); //Increment = true
-            is_return_set = true;
+            s = SubmissionType::return_set;
             commit_msg = "Verifier has Turned in the Next Version:" + mProject.get_version();
         }
         else if (messageBox.clickedButton() == finaliseButton) {
             //mProject.enable_push( false ); //Increment = false
+            s = SubmissionType::finalise;
             commit_msg = "Verifier Finalised Version:" + mProject.get_version();
         }
         else {
@@ -3489,14 +3492,14 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
         int btn = QMessageBox::question(this, "Submit ?", "Are you ready to submit your changes?",
                                         QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
         if (btn == QMessageBox::StandardButton::Yes){
-            if(is_return_set) {
+            if(s == SubmissionType::return_set) {
                 mProject.enable_push( true );
             }
-            else {
+            else if (s == SubmissionType::resubmit) {
                 mProject.enable_push( false );
             }
             if(!mProject.commit(commit_msg.toStdString()) || !mProject.push()) {
-                if(is_return_set) {
+                if(s == SubmissionType::return_set) {
                     mProject.set_version( mProject.get_version().toInt() - 1 );
                 }
                 mProject.set_stage_verifier();
@@ -3786,16 +3789,21 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     QString s3 = basedir+"/CorrectorOutput/";
     QString s4 = basedir + "/VerifierOutput/";
 
+    if (finfo.fileName() == "")
+        return;
+
     if (!QDir(s3).exists()) {
         QDir().mkdir(s3);
     }
     if (!QDir(s4).exists()) {
         QDir().mkdir(s4);
     }
-    bool exists = QDir(s1).exists() && QDir(s2).exists() && QDir(s3).exists() &&(QDir(s3).exists()|| QDir(s4).exists());
+
+    bool exists = QDir(s1).exists() && QDir(s2).exists();
     if (xml.exists()&& exists) {
         ui->treeView->reset();
         mProject.process_xml(xml);
+
         mProject.open_git_repo();
         if(!mProject.isProjectOpen()) {
             QMessageBox::warning(0, "Project Error", "Couldn't open project. Please check your project.");
