@@ -3288,7 +3288,7 @@ void MainWindow::on_actionPush_triggered() {
 void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
     if(mProject.get_version().toInt()) {
         if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/CorrectorOutput/)")
-                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)")+1)
+                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
         {
             QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in CorrectorOutput directory");
             return;
@@ -3299,7 +3299,9 @@ void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
         int btn = QMessageBox::question(this, "Submit ?", "Are you ready to submit your changes?",
                                         QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
         if (btn == QMessageBox::StandardButton::Yes){
+            mProject.set_stage_verifier();
             if(!mProject.commit(commit_msg.toStdString()) || !mProject.push()) {
+                mProject.enable_push(false);
                 QMessageBox::information(0, "Turn In", "Turn In Cancelled");
                 return;
             }
@@ -3318,7 +3320,7 @@ void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
             QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nEmail Notification Unsuccessful!,Please Check your Internet Connection");
             return;
         } */
-        mProject.set_stage_verifier();
+
         ui->actionTurn_In->setEnabled(false);
         QMessageBox::information(0, "Turn In", "Turned In Successfully");
     }
@@ -3358,7 +3360,7 @@ void MainWindow::on_actionFetch_2_triggered() {
 void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
     if(mProject.get_version().toInt()) {
         if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
-                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)")+1)
+                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
         {
             QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
             return;
@@ -3487,7 +3489,17 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
         int btn = QMessageBox::question(this, "Submit ?", "Are you ready to submit your changes?",
                                         QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
         if (btn == QMessageBox::StandardButton::Yes){
+            if(is_return_set) {
+                mProject.enable_push( true );
+            }
+            else {
+                mProject.enable_push( false );
+            }
             if(!mProject.commit(commit_msg.toStdString()) || !mProject.push()) {
+                if(is_return_set) {
+                    mProject.set_version( mProject.get_version().toInt() - 1 );
+                }
+                mProject.set_stage_verifier();
                 QMessageBox::information(0, "Turn In", "Turn In Cancelled");
                 return;
             }
@@ -3505,12 +3517,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
             QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nTurn-In Unsuccessful!,Please Check your Internet Connection");
             return;
         } */
-        if(is_return_set) {
-            mProject.enable_push( true );
-        }
-        else {
-            mProject.enable_push( false );
-        }
+
         ui->lineEdit_2->setText("Version " + mProject.get_version());
         QMessageBox::information(0, "Turn In", "Turned In Successfully");
     }
@@ -3779,10 +3786,10 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     QString s3 = basedir+"/CorrectorOutput/";
     QString s4 = basedir + "/VerifierOutput/";
 
-    if (!QDir(s3).exists() && !isVerifier) {
+    if (!QDir(s3).exists()) {
         QDir().mkdir(s3);
     }
-    else if (!QDir(s4).exists() && isVerifier) {
+    if (!QDir(s4).exists()) {
         QDir().mkdir(s4);
     }
     bool exists = QDir(s1).exists() && QDir(s2).exists() && QDir(s3).exists() &&(QDir(s3).exists()|| QDir(s4).exists());

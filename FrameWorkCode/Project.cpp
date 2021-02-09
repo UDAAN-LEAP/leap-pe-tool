@@ -57,6 +57,12 @@ bool Project::enable_push(bool increment) {
     return true;
 }
 
+void Project::set_version(int ver) {
+    auto c = doc.child("Project").child("Metadata");
+    c.child("Version").first_child().set_value(std::to_string(ver).c_str());
+    save_xml();
+}
+
 void Project::removeFile(QModelIndex & idx,Filter & pFilter, QFile & pFile) {
     auto first = doc.child("Project").child("ItemGroup");
 
@@ -423,34 +429,36 @@ bool Project::push() {
     /* Merge fetched objects with local branch
      * It will update index and current working area
      */
-    error = (git_reference_lookup(&theirs_ref, repo, "refs/remotes/origin/master") != GIT_OK)
-         || (git_annotated_commit_from_ref(heads, repo, theirs_ref) != GIT_OK)
-         || (git_merge(repo, (const git_annotated_commit **)heads, 1, &merge_opts, &checkout_opts) != GIT_OK);
+    error = (git_reference_lookup(&theirs_ref, repo, "refs/remotes/origin/master") != GIT_OK);
+    if (!error)
+    {
+        error = (git_annotated_commit_from_ref(heads, repo, theirs_ref) != GIT_OK)
+             || (git_merge(repo, (const git_annotated_commit **)heads, 1, &merge_opts, &checkout_opts) != GIT_OK);
 
-    if(error)
-        goto cleanup;
+        if(error)
+            goto cleanup;
 
-    /* Get the needed ref, index, sign and tree
-     */
-    error = (git_repository_head(&head_ref, repo))
-         || (git_repository_index(&index, repo))
-         || (git_signature_default(&signature, repo))
-         || (git_index_write_tree(&tree_oid, index))
-         || (git_tree_lookup(&tree, repo, &tree_oid));
+        /* Get the needed ref, index, sign and tree
+         */
+        error = (git_repository_head(&head_ref, repo))
+             || (git_repository_index(&index, repo))
+             || (git_signature_default(&signature, repo))
+             || (git_index_write_tree(&tree_oid, index))
+             || (git_tree_lookup(&tree, repo, &tree_oid));
 
-    if(error)
-        goto cleanup;
+        if(error)
+            goto cleanup;
 
-    /* Commit the merge and cleanup repo state
-     */
-    error = (git_reference_peel((git_object **)&parents[0], head_ref, GIT_OBJECT_COMMIT))
-         || (git_commit_lookup(&parents[1], repo, git_annotated_commit_id(heads[0])))
-         || (git_commit_create(&id, repo, "HEAD", signature, signature, NULL, "Merge commit - OpenOCRCorrect", tree, 2, (const git_commit **)parents))
-         || (git_repository_state_cleanup(repo));
+        /* Commit the merge and cleanup repo state
+         */
+        error = (git_reference_peel((git_object **)&parents[0], head_ref, GIT_OBJECT_COMMIT))
+             || (git_commit_lookup(&parents[1], repo, git_annotated_commit_id(heads[0])))
+             || (git_commit_create(&id, repo, "HEAD", signature, signature, NULL, "Merge commit - OpenOCRCorrect", tree, 2, (const git_commit **)parents))
+             || (git_repository_state_cleanup(repo));
 
-    if(error)
-        goto cleanup;
-
+        if(error)
+            goto cleanup;
+    }
     error = git_push_init_options(&push_opts, GIT_PUSH_OPTIONS_VERSION);
     push_opts.callbacks.credentials = credentials_cb;
     error = git_remote_push(remote, &refspecs, &push_opts);
