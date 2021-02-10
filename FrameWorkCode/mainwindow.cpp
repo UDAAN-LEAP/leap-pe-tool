@@ -85,6 +85,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
+    ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
 
     QString password  = "";
     QString passwordFilePath = QDir::currentPath() + "/pass.txt";
