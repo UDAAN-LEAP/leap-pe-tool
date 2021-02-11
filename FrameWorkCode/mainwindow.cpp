@@ -150,7 +150,6 @@ bool MainWindow::setRole(QString role)
         ui->actionNew_Project->setEnabled(true);
         ui->actionNew_Project->setVisible(true);
         mRole = "Verifier";
-
     }
 
     if(mRole == "Verifier") {
@@ -161,6 +160,8 @@ bool MainWindow::setRole(QString role)
         isVerifier = 1;
         ui->actionTurn_In->setVisible(false);
         ui->actionTurn_In->setEnabled(false);
+        this->setWindowTitle("OpenOCRCorrect-Verifier");
+
 
     } else if(mRole == "Corrector") {
         filestructure_fw = { {"Inds","CorrectorOutput"},
@@ -173,6 +174,7 @@ bool MainWindow::setRole(QString role)
         ui->actionVerifier_Turn_In->setVisible(false);
         ui->actionVerifier_Turn_In->setEnabled(false);
         isVerifier = 0;
+        this->setWindowTitle("OpenOCRCorrect-Corrector");
     }
     else {
         int result = QMessageBox::information(this,"Login","Login Failed");
@@ -3790,6 +3792,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     QString s2 = basedir + "/Inds/";
     QString s3 = basedir+"/CorrectorOutput/";
     QString s4 = basedir + "/VerifierOutput/";
+    QString s5 = basedir + "/Comments/";
 
     if (finfo.fileName() == "")
         return;
@@ -3799,6 +3802,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     }
     if (!QDir(s4).exists()) {
         QDir().mkdir(s4);
+    }
+    if (!QDir(s5).exists()) {
+        QDir().mkdir(s5);
     }
 
     bool exists = QDir(s1).exists() && QDir(s2).exists();
@@ -3884,6 +3890,10 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             QDir().mkdir(mProject.GetDir().absolutePath() + "/Images/Inserted");
 
         QMessageBox::information(0, "Success", "Project opened successfully.");
+    }
+    else {
+            QMessageBox::warning(0, "Project Error", "Couldn't open project. Please check your project.");
+            return;
     }
 }
 void MainWindow::directoryChanged(const QString &path) {

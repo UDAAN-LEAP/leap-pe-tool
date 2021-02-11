@@ -139,6 +139,12 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
             auto p = pNode->next_sibling();
             process_node(&p, parent);
         }
+        else if (node_name == "Metadata")
+        {
+            QString stage = pNode->child("Stage").child_value();
+            if (stage != "Corrector" && stage != "Verifier")
+                setProjectOpen(false);
+        }
     }
     else {
         setProjectOpen(false);
