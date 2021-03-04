@@ -3363,12 +3363,7 @@ void MainWindow::on_actionFetch_2_triggered() {
 }
 void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
     if(mProject.get_version().toInt()) {
-        if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
-                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
-        {
-            QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
-            return;
-        }
+
         int ver = mProject.get_version().toInt();
         QString commit_msg;
 
@@ -3424,9 +3419,6 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
 
         writeJsonFile(commentFilename, mainObj);
 
-
-
-
         QMessageBox messageBox(this);
         QString msg1 = QString(
             "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
@@ -3475,6 +3467,12 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
         SubmissionType s ;
         if (messageBox.clickedButton() == resubmitButton) {
             //mProject.enable_push( false ); //Increment = false
+            if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
+                        != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
+            {
+                QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
+                return;
+            }
             s = SubmissionType::resubmit;
             commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
         }
@@ -3485,6 +3483,12 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
         }
         else if (messageBox.clickedButton() == finaliseButton) {
             //mProject.enable_push( false ); //Increment = false
+            if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
+                        != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
+            {
+                QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
+                return;
+            }
             s = SubmissionType::finalise;
             commit_msg = "Verifier Finalised Version:" + mProject.get_version();
         }
