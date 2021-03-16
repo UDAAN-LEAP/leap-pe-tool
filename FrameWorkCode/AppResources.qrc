@@ -27,5 +27,6 @@
         <file>Zoom-In-icon.png</file>
         <file>linespacing.png</file>
         <file>symbols.png</file>
+        <file>find-and-replace.png</file>
     </qresource>
 </RCC>

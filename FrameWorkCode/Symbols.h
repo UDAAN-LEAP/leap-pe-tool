@@ -13,8 +13,8 @@ class SymbolsView : public QDialog
     Q_OBJECT
 
 public:
-    explicit SymbolsView(QWidget *parent = 0);
     ~SymbolsView();
+    static SymbolsView* openSymbolTable(QWidget *);
 
 public slots:
     void on_copyButton_clicked();
@@ -23,6 +23,9 @@ public slots:
 private:
     Ui::SymbolsView *ui;
     QTextEdit *currentTab;
+    static SymbolsView *symbolsView;
+    explicit SymbolsView(QWidget *parent = 0);
+
 };
 
 #endif // SymbolsView_H

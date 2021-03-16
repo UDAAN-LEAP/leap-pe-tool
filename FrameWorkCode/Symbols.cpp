@@ -1,6 +1,8 @@
 #include "Symbols.h"
 #include "ui_Symbols.h"
 
+SymbolsView *SymbolsView::symbolsView = 0;
+
 SymbolsView::SymbolsView(QWidget *parent) :
       QDialog(parent, Qt::WindowCloseButtonHint),
       ui(new Ui::SymbolsView)
@@ -9,7 +11,6 @@ SymbolsView::SymbolsView(QWidget *parent) :
     setWindowTitle("Special Symbols");
     currentTab = ui->Diacritics;
     bool b = connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
-
 }
  void SymbolsView::tabChanged(int idx)
  {
@@ -21,10 +22,19 @@ SymbolsView::SymbolsView(QWidget *parent) :
  }
 SymbolsView::~SymbolsView()
 {
-      delete ui;
+    delete ui;
 }
 
 void SymbolsView::on_copyButton_clicked()
 {
       currentTab->copy();
+}
+
+SymbolsView* SymbolsView::openSymbolTable(QWidget *parent) {
+    if (symbolsView) {
+        return symbolsView;
+    }
+
+    symbolsView = new SymbolsView(parent);
+    return symbolsView;
 }

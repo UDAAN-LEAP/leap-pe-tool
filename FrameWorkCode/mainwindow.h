@@ -60,6 +60,12 @@ public:
     bool exitStatus() {
         return mExitStatus;
     }
+    int getCurrentTabIndex() {
+        return currentTabIndex;
+    }
+    QTextBrowser * getCurrentBrowser() {
+        return curr_browser;
+    };
 
 public slots:
 	//void textChangedSlot();
@@ -281,6 +287,8 @@ private slots:
     void on_actionNonitalic_triggered();
 
     void on_actionSave_All_triggered();
+
+    void on_actionFind_and_Replace_triggered();
 
 private:
     bool mExitStatus = false;

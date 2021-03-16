@@ -405,8 +405,6 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionLoadConfusions"/>
     <addaction name="actionSugg"/>
     <addaction name="actionToSlp1"/>
-    <addaction name="actionUndo"/>
-    <addaction name="actionRedo"/>
    </widget>
    <widget class="QMenu" name="menuCreateReports">
     <property name="title">
@@ -495,8 +493,18 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionVerifier_Turn_In"/>
     <addaction name="actionTurn_In"/>
    </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+    <addaction name="separator"/>
+    <addaction name="actionFind_and_Replace"/>
+   </widget>
    <addaction name="menuSelectLanguage"/>
    <addaction name="menuOCR_Correction_Window"/>
+   <addaction name="menuEdit"/>
    <addaction name="menuCreateReports"/>
    <addaction name="menuSaveVariables"/>
    <addaction name="menuFontAndLayout"/>
@@ -522,6 +530,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="separator"/>
    <addaction name="actionUndo"/>
    <addaction name="actionRedo"/>
+   <addaction name="actionFind_and_Replace"/>
    <addaction name="separator"/>
    <addaction name="actionLoadGDocPage"/>
    <addaction name="separator"/>
@@ -1168,10 +1177,21 @@ p, li { white-space: pre-wrap; }
     <string>Save All</string>
    </property>
   </action>
+  <action name="actionFind_and_Replace">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/find-and-replace.png</normaloff>:/Images/find-and-replace.png</iconset>
+   </property>
+   <property name="text">
+    <string>Find and Replace</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
  </resources>

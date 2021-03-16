@@ -31,6 +31,7 @@ HEADERS += ./Filters.h \
     $$PWD/SimpleMail/serverreply.h \
     $$PWD/SimpleMail/serverreply_p.h \
     $$PWD/SimpleMail/smtpexports.h \
+    $$PWD/textfinder.h \
     ./Project.h \
     ./TreeItem.h \
     ./tesseract/apitypes.h \
@@ -90,6 +91,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/SimpleMail/sender.cpp \
     $$PWD/SimpleMail/server.cpp \
     $$PWD/SimpleMail/serverreply.cpp \
+    $$PWD/textfinder.cpp \
     ./Filters.cpp \
     ./Project.cpp \
     ./ProjectHierarchyWindow.cpp \
@@ -110,6 +112,7 @@ SOURCES += ./DiffView.cpp \
     ./ProjectWizard.cpp \
     ./CreateProjectPage.cpp
 FORMS += ./DiffView.ui \
+    $$PWD/textfinder.ui \
     ./ProjectHierarchyWindow.ui \
     ./Symbols.ui \
     ./averageaccuracies.ui \

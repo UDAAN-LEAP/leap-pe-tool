@@ -13,6 +13,7 @@
 #include "interndiffview.h"
 #include "commentsview.h"
 #include "Symbols.h"
+#include "textfinder.h"
 #include "resizeimageview.h"
 #include <string>
 #include <fstream>
@@ -2543,11 +2544,10 @@ void MainWindow::on_actionZoom_Out_triggered()
 
 void MainWindow::on_actionSymbols_triggered()
 {
-    SymbolsView *symbols = new SymbolsView(this);
-    symbols->show();
 
+    SymbolsView *dialog = SymbolsView::openSymbolTable(this);
+    dialog->show();
 }
-
 
 void MainWindow::on_actionAdd_Image_triggered()
 {
@@ -4112,4 +4112,11 @@ void MainWindow::on_actionSave_All_triggered()  //enable when required
         }
     }
 
+}
+
+
+void MainWindow::on_actionFind_and_Replace_triggered()
+{
+    TextFinder *dialog = TextFinder::openFindAndReplace(this);
+    dialog->show();
 }
