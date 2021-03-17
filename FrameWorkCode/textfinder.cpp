@@ -11,7 +11,7 @@ extern string toDev(string s);
 
 TextFinder *TextFinder::textFinder = 0;
 TextFinder::TextFinder(QWidget *parent) :
-    QDialog(parent),
+    QDialog(parent, Qt::WindowCloseButtonHint),
     ui(new Ui::TextFinder)
 {
     ui->setupUi(this);
