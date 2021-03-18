@@ -544,6 +544,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionLeftAlign"/>
    <addaction name="actionCentreAlign"/>
    <addaction name="actionRightAlign"/>
+   <addaction name="actionInsert_Horizontal_Line"/>
    <addaction name="separator"/>
    <addaction name="actionHighlight"/>
    <addaction name="actionSymbols"/>
@@ -1042,8 +1043,15 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionInsert_Horizontal_Line">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/horizontal-line.png</normaloff>:/Images/horizontal-line.png</iconset>
+   </property>
    <property name="text">
-    <string>Insert Horizontal Line</string>
+    <string>Horizontal Line</string>
+   </property>
+   <property name="toolTip">
+    <string>Horizontal Line</string>
    </property>
   </action>
   <action name="actionFontBlack">

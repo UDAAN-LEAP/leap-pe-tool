@@ -28,5 +28,6 @@
         <file>linespacing.png</file>
         <file>symbols.png</file>
         <file>find-and-replace.png</file>
+        <file>horizontal-line.png</file>
     </qresource>
 </RCC>

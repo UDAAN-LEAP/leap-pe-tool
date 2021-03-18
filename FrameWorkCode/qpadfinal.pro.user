@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.11.1, 2020-12-16T19:46:05. -->
+<!-- Written by QtCreator 4.11.0, 2021-03-18T14:27:16. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{0f3e327e-15d6-4c7b-abc7-6279aa70a14f}</value>
+  <value type="QByteArray">{42af87f4-8c2d-49e3-8d1a-09e106484f0d}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -64,12 +64,12 @@
   <valuemap type="QVariantMap">
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Desktop</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Desktop</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{52c4e8d3-3eda-4a3f-96a4-0e78ec8f5af1}</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{47076472-b2dc-4184-979b-76e44cf9b512}</value>
    <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/home/dhruva/Documents/IITB_project/latest/OpenOCRCorrect-dev/FrameWorkCode</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/home/ravi/myrepos/OpenOCRCorrect-dev/FrameWorkCode</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -189,8 +189,8 @@
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/dhruva/Documents/IITB_project/latest/OpenOCRCorrect-dev/FrameWorkCode/qpadfinal.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/dhruva/Documents/IITB_project/latest/OpenOCRCorrect-dev/FrameWorkCode/qpadfinal.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/ravi/myrepos/OpenOCRCorrect-dev/FrameWorkCode/qpadfinal.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/ravi/myrepos/OpenOCRCorrect-dev/FrameWorkCode/qpadfinal.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="bool" key="RunConfiguration.Arguments.multi">false</value>
     <value type="QString" key="RunConfiguration.OverrideDebuggerStartup"></value>
@@ -201,7 +201,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory"></value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/home/dhruva/Documents/IITB_project/latest/OpenOCRCorrect-dev/FrameWorkCode</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/home/ravi/myrepos/OpenOCRCorrect-dev/FrameWorkCode</value>
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>
