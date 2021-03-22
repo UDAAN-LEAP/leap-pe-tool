@@ -895,6 +895,12 @@ void MainWindow::on_actionSave_triggered()
         QString localFilename = gDirTwoLevelUp + "/" +changefiledir +"/" + tempPageName;
         localFilename.replace(".txt",".html");
 
+        if (gCurrentDirName == "Inds" || mRole == "Verifier" && gCurrentDirName == "CorrectorOutput") {
+            QFileInfo check_file(localFilename);
+            if (check_file.exists() && check_file.isFile()) {
+                return ;
+            }
+        }
 
         QFile sFile(localFilename);
         //if(sFile.open(QFile::WriteOnly | QFile::Text))
