@@ -289,6 +289,8 @@ private slots:
     void on_actionSave_All_triggered();
 
     void on_actionFind_and_Replace_triggered();
+    bool checkUnsavedWork();
+    void saveAllWork();
 
 private:
     bool mExitStatus = false;

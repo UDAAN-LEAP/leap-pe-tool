@@ -890,6 +890,7 @@ void MainWindow::on_actionSave_triggered()
 //            tempPageName.replace("V2_","V3_");
 //            tempPageName.replace("V1_","V2_");
 //        }
+
         QString changefiledir = filestructure_fw[gCurrentDirName];
         QString localFilename = gDirTwoLevelUp + "/" +changefiledir +"/" + tempPageName;
         localFilename.replace(".txt",".html");
@@ -3290,6 +3291,20 @@ void MainWindow::on_actionPush_triggered() {
 //}
 
 void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
+    if (checkUnsavedWork()) {
+
+        QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Unsaved Work",
+                                                                       tr("You have unsaved files. Save it before turn-in.\n"),
+                                                                       QMessageBox::Cancel | QMessageBox::Save,
+                                                                       QMessageBox::Save);
+        if (resBtn == QMessageBox::Cancel) {
+            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            return;
+        }
+        else {
+            saveAllWork();
+        }
+    }
     if(mProject.get_version().toInt()) {
         if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/CorrectorOutput/)")
                     != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
@@ -3297,7 +3312,6 @@ void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
             QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in CorrectorOutput directory");
             return;
         }
-
         QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();
 
         int btn = QMessageBox::question(this, "Submit ?", "Are you ready to submit your changes?",
@@ -3362,6 +3376,20 @@ void MainWindow::on_actionFetch_2_triggered() {
         return;
 }
 void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
+    if (checkUnsavedWork()) {
+
+        QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Unsaved Work",
+                                                                       tr("You have unsaved files. Save it before turn-in.\n"),
+                                                                       QMessageBox::Cancel | QMessageBox::Save,
+                                                                       QMessageBox::Save);
+        if (resBtn == QMessageBox::Cancel) {
+            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            return;
+        }
+        else {
+            saveAllWork();
+        }
+    }
     if(mProject.get_version().toInt()) {
 
         int ver = mProject.get_version().toInt();
@@ -3934,16 +3962,62 @@ void MainWindow::directoryChanged(const QString &path) {
     }
 }
 
+bool MainWindow::checkUnsavedWork() {
+    for (int i = 0; i < ui->tabWidget_2->count(); ++i) {
+        ui->tabWidget_2->setCurrentIndex(i);
+        QTextBrowser *closing_browser = (QTextBrowser*)ui->tabWidget_2->widget(i);
+        QString closing_browserHtml = closing_browser->toHtml();
+        QString closingTabPageName = ui->tabWidget_2->tabText(i);
+        QFile f(mFilename);
+        QFileInfo fileInfo(f.fileName());
+        QString filename(fileInfo.fileName());
+        if (filename == "Untitled") {
+            continue;
+        }
+        if(closing_browserHtml != gInitialTextHtml[closingTabPageName]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void MainWindow::saveAllWork() {
+    for (int i = 0; i < ui->tabWidget_2->count(); ++i) {
+        ui->tabWidget_2->setCurrentIndex(i);
+        QTextBrowser *closing_browser = (QTextBrowser*)ui->tabWidget_2->widget(i);
+        QString closing_browserHtml = closing_browser->toHtml();
+        QString closingTabPageName = ui->tabWidget_2->tabText(i);
+        QFile f(mFilename);
+        QFileInfo fileInfo(f.fileName());
+        QString filename(fileInfo.fileName());
+        if (filename == "Untitled") {
+            continue;
+        }
+        if(closing_browserHtml != gInitialTextHtml[closingTabPageName]) {
+            on_actionSave_triggered();
+        }
+    }
+}
+
 void MainWindow::closeEvent (QCloseEvent *event)
 {
-    QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Close",
-                                                               tr("Are you sure?\n"),
-                                                               QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
-                                                               QMessageBox::Yes);
-    if (resBtn != QMessageBox::Yes) {
-        event->ignore();
-    } else {
-        event->accept();
+    bool isUnsaved = checkUnsavedWork();
+
+    if (isUnsaved) {
+        QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Close",
+                                                                   tr("You have unsaved files. Your changes will be lost if you don't save them.\n"),
+                                                                   QMessageBox::Discard | QMessageBox::Cancel | QMessageBox::Save,
+                                                                   QMessageBox::Save);
+        if (resBtn == QMessageBox::Cancel) {
+            event->ignore();
+        }
+        else if (resBtn == QMessageBox::Discard) {
+            event->accept();
+        }
+        else {
+            saveAllWork();
+            event->accept();
+        }
     }
 }
 
