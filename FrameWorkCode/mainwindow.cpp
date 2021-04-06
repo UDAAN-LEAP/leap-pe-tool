@@ -895,7 +895,8 @@ void MainWindow::on_actionSave_triggered()
         QString localFilename = gDirTwoLevelUp + "/" +changefiledir +"/" + tempPageName;
         localFilename.replace(".txt",".html");
 
-        if (gCurrentDirName == "Inds" || mRole == "Verifier" && gCurrentDirName == "CorrectorOutput") {
+        // Don't save if output file already exists
+        if (gCurrentDirName == "Inds" || isVerifier && gCurrentDirName == "CorrectorOutput") {
             QFileInfo check_file(localFilename);
             if (check_file.exists() && check_file.isFile()) {
                 return ;
@@ -958,6 +959,32 @@ void MainWindow::on_actionSave_triggered()
             sFile2.flush();
             sFile2.close();
         }
+
+
+        // Set Inds file readonly after saving - Corrector mode
+        if (!isVerifier && gCurrentDirName == "Inds") {
+            if(QFile::exists(localFilename)) {
+                curr_browser->setReadOnly(true);
+            }
+
+        }
+
+        // Set Inds and CorrectorOutput files readonly after generating output file - Verifier mode
+        if (isVerifier && (gCurrentDirName == "Inds" || gCurrentDirName == "CorrectorOutput")) {
+            if(QFile::exists(localFilename)) {
+                QString Inds_file = gCurrentPageName;
+                Inds_file.replace(".html", ".txt");
+                QString Corr_file = "CorrectorOutput/" + Inds_file;
+                Corr_file.replace(".txt", ".html");
+                for (int i = 0; i < ui->tabWidget_2->count(); i++) {
+                    QString tab_name = ui->tabWidget_2->tabText(i);
+                    if (tab_name == Inds_file || tab_name == Corr_file) {
+                        auto b = (QTextBrowser*)ui->tabWidget_2->widget(i);
+                        b->setReadOnly(true);
+                    }
+                }
+            }
+        }
     }
     ConvertSlpDevFlag =0;
     //on_actionSpell_Check_triggered();
@@ -1016,7 +1043,7 @@ void MainWindow::on_actionSave_As_triggered()
 
 void MainWindow::on_actionToDevanagari_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
             return;
      QTextCursor cursor = curr_browser->textCursor();
 
@@ -2386,14 +2413,14 @@ void MainWindow::on_hinButton_toggled(bool checked)
 
 void MainWindow::on_actionUndo_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->undo();
 }
 
 void MainWindow::on_actionRedo_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->redo();
 }
@@ -2407,7 +2434,7 @@ void MainWindow::on_actionNew_Project_triggered()
 
 void MainWindow::on_actionBold_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     QTextCursor cursor = curr_browser->textCursor();
     bool isBold = cursor.charFormat().font().bold();
@@ -2419,7 +2446,7 @@ void MainWindow::on_actionBold_triggered()
 
 void MainWindow::on_actionUnBold_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     QTextCharFormat format;
     format.setFontWeight(QFont::Normal);
@@ -2428,27 +2455,27 @@ void MainWindow::on_actionUnBold_triggered()
 
 void MainWindow::on_actionLeftAlign_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->setAlignment(Qt::AlignLeft);
 }
 
 void MainWindow::on_actionRightAlign_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->setAlignment(Qt::AlignRight);
 }
 
 void MainWindow::on_actionCentreAlign_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->setAlignment(Qt::AlignCenter);
 }
 void MainWindow::on_actionJusitfiedAlign_triggered() //Not used, does not work as intended
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     auto cursor = curr_browser->textCursor();
     auto selected = cursor.selection();
@@ -2463,7 +2490,7 @@ void MainWindow::on_actionJusitfiedAlign_triggered() //Not used, does not work a
 
 void MainWindow::on_actionAllFontProperties_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     QFont initialFont = curr_browser->font();
     auto pointsize = curr_browser->fontPointSize();
@@ -2480,13 +2507,13 @@ void MainWindow::on_actionAllFontProperties_triggered()
 
 void MainWindow::on_actionFontBlack_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->setTextColor(Qt::black);
 }
 
 void MainWindow::on_actionSuperscript_triggered() {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     auto cursor = curr_browser->textCursor();
     QTextCharFormat fmt;
@@ -2495,7 +2522,7 @@ void MainWindow::on_actionSuperscript_triggered() {
     curr_browser->mergeCurrentCharFormat(fmt);
 }
 void MainWindow::on_actionSubscript_triggered() {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     auto cursor = curr_browser->textCursor();
     QTextCharFormat fmt;
@@ -2505,7 +2532,7 @@ void MainWindow::on_actionSubscript_triggered() {
 }
 void MainWindow::on_actionInsert_Horizontal_Line_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->insertHtml("<hr>");
 }
@@ -2532,7 +2559,7 @@ void MainWindow::on_actionLineSpace_triggered() //Not used, does not work as int
 
 void MainWindow::on_actionInsert_Tab_Space_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->insertPlainText("    ");
 }
@@ -2631,7 +2658,7 @@ void MainWindow::on_actionResize_Image_triggered()
 
 void MainWindow::on_actionHighlight_triggered() //Version Based
 {
-    if(curr_browser) {
+    if(curr_browser && !curr_browser->isReadOnly()) {
 
         if(isVerifier) {
             QTextCursor cursor = curr_browser->textCursor();
@@ -3593,6 +3620,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
     f->open(QIODevice::ReadOnly);
     QFileInfo finfo(f->fileName());
+
     if(!(finfo.exists() && finfo.isFile()))
             return;
     current_folder = finfo.dir().dirName();
@@ -3612,6 +3640,21 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     UpdateFileBrekadown();
     QTextBrowser * b = new QTextBrowser(this);
     b->setReadOnly(false);
+    if (!isVerifier && current_folder == "Inds") {
+        QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
+        output_file.replace(".txt", ".html");
+        if (QFile::exists(output_file)) {
+            b->setReadOnly(true);
+        }
+    }
+    if (isVerifier && (current_folder == "Inds" || current_folder == "CorrectorOutput")) {
+        QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
+        output_file.replace(".txt", ".html");
+        if (QFile::exists(output_file)) {
+            b->setReadOnly(true);
+        }
+    }
+
     QTextStream stream(f);
     stream.setCodec("UTF-8");
     QFont font("Shobhika Regular");
@@ -3789,7 +3832,8 @@ void MainWindow::closetab(int idx) {
     QTextBrowser *closing_browser = (QTextBrowser*)ui->tabWidget_2->widget(idx);
     QString closing_browserHtml = closing_browser->toHtml();
     QString closingTabPageName = ui->tabWidget_2->tabText(idx);
-    if(closing_browserHtml != gInitialTextHtml[closingTabPageName]) {
+
+    if(!closing_browser->isReadOnly() && (closing_browserHtml != gInitialTextHtml[closingTabPageName])) {
         int btn = QMessageBox::question(this, "Save?", "Do you want to save " + closingTabPageName + " file?",
                                         QMessageBox::StandardButton::Ok, QMessageBox::StandardButton::No);
         if (btn == QMessageBox::StandardButton::Ok)
@@ -3945,6 +3989,7 @@ void MainWindow::directoryChanged(const QString &path) {
     }
     if (dirstr == "CorrectorOutput") {
         QSet<QString> added = s - corrector_set;
+        QSet<QString> removed = corrector_set - s;
         QString str = mProject.GetDir().absolutePath() + "/CorrectorOutput/";
         Filter * filter = mProject.getFilter("Document");
         for (auto f : added) {
@@ -3977,7 +4022,7 @@ bool MainWindow::checkUnsavedWork() {
         QFile f(mFilename);
         QFileInfo fileInfo(f.fileName());
         QString filename(fileInfo.fileName());
-        if (filename == "Untitled") {
+        if (filename == "Untitled" || closing_browser->isReadOnly()) {
             continue;
         }
         if(closing_browserHtml != gInitialTextHtml[closingTabPageName]) {
@@ -3999,7 +4044,7 @@ void MainWindow::saveAllWork() {
         if (filename == "Untitled") {
             continue;
         }
-        if(closing_browserHtml != gInitialTextHtml[closingTabPageName]) {
+        if(!closing_browser->isReadOnly() && closing_browserHtml != gInitialTextHtml[closingTabPageName]) {
             on_actionSave_triggered();
         }
     }
@@ -4030,7 +4075,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
 
 void MainWindow::on_actionInsert_Table_2_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
 
     QDialog dialog(this);
@@ -4091,7 +4136,7 @@ bool MainWindow::sendEmail(QString emailText)
 
 void MainWindow::on_actionInsert_Columnleft_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
             return;
     if(curr_browser->textCursor().currentTable())
         {
@@ -4103,7 +4148,7 @@ void MainWindow::on_actionInsert_Columnleft_triggered()
 
 void MainWindow::on_actionInsert_Columnright_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
             return;
     if(curr_browser->textCursor().currentTable())
         {
@@ -4115,7 +4160,7 @@ void MainWindow::on_actionInsert_Columnright_triggered()
 
 void MainWindow::on_actionInsert_Rowabove_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
          return;
     if(curr_browser->textCursor().currentTable())
        {
@@ -4127,7 +4172,7 @@ void MainWindow::on_actionInsert_Rowabove_triggered()
 
 void MainWindow::on_actionInsert_Rowbelow_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
          return;
     if(curr_browser->textCursor().currentTable())
        {
@@ -4139,7 +4184,7 @@ void MainWindow::on_actionInsert_Rowbelow_triggered()
 
 void MainWindow::on_actionRemove_Column_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
             return;
     if(curr_browser->textCursor().currentTable())
         {
@@ -4151,7 +4196,7 @@ void MainWindow::on_actionRemove_Column_triggered()
 
 void MainWindow::on_actionRemove_Row_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
          return;
     if(curr_browser->textCursor().currentTable())
        {
@@ -4163,7 +4208,7 @@ void MainWindow::on_actionRemove_Row_triggered()
 
 void MainWindow::on_actionItalic_triggered()
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     QTextCursor cursor = curr_browser->textCursor();
     bool isItalic = cursor.charFormat().font().italic();
@@ -4175,7 +4220,7 @@ void MainWindow::on_actionItalic_triggered()
 
 void MainWindow::on_actionNonitalic_triggered() //enable when required
 {
-    if(!curr_browser)
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     QTextCharFormat format;
     format.setFontItalic(false);

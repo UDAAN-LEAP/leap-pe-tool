@@ -68,7 +68,7 @@ void TextFinder::on_replaceButton_clicked()
     QString searchString = ui->findLineEdit->text();
     QString replaceString = ui->replaceLineEdit->text();
     QTextBrowser *curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
-    if (!curr_browser) {
+    if (!curr_browser || curr_browser->isReadOnly()) {
         return;
     }
     QTextCursor cursor = curr_browser->textCursor();
@@ -85,7 +85,7 @@ void TextFinder::on_replaceAllButton_clicked()
     QString searchString = ui->findLineEdit->text();
     QString replaceString = ui->replaceLineEdit->text();
     QTextBrowser *curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
-    if (!curr_browser) {
+    if (!curr_browser || curr_browser->isReadOnly()) {
         return;
     }
     QTextCursor saved_cursor = curr_browser->textCursor();
