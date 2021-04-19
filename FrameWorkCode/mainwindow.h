@@ -53,9 +53,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-	Project & GetProject() {
-		return mProject;
-	}
+    Project & GetProject() {
+        return mProject;
+    }
     bool setRole(QString role);
     bool exitStatus() {
         return mExitStatus;
@@ -68,7 +68,7 @@ public:
     };
 
 public slots:
-	//void textChangedSlot();
+    //void textChangedSlot();
 
 private slots:
 
@@ -168,13 +168,13 @@ private slots:
 
     void on_actionHighlight_triggered();
 
-	void on_actionFontBlack_triggered();
+    void on_actionFontBlack_triggered();
 
-	void updateAverageAccuracies();
+    void updateAverageAccuracies();
 
     void on_actionViewAverageAccuracies_triggered();
 
-	void on_actionOpen_Project_triggered();
+    void on_actionOpen_Project_triggered();
 
     void file_click(const QModelIndex & indx);
 
@@ -297,19 +297,19 @@ private:
     QString mRole;
     bool isVerifier;
     Ui::MainWindow *ui;
-	Project mProject;
+    Project mProject;
     QString mFilename;
     QString mFilenamejpeg;
-	QString current_folder;
+    QString current_folder;
     QString currentTabPageName="";
     int currentTabIndex;
-	QTextBrowser * curr_browser = nullptr;
-	QGraphicsScene * graphic =nullptr;
-	Graphics_view_zoom * z = nullptr;
-	QModelIndex curr_idx;
-	QSet<QString> corrector_set;
-	QSet<QString> verifier_set;
-	QFileSystemWatcher watcher;
+    QTextBrowser * curr_browser = nullptr;
+    QGraphicsScene * graphic =nullptr;
+    Graphics_view_zoom * z = nullptr;
+    QModelIndex curr_idx;
+    QSet<QString> corrector_set;
+    QSet<QString> verifier_set;
+    QFileSystemWatcher watcher;
 };
 
 #endif // MAINWINDOW_H
