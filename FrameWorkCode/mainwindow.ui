@@ -603,7 +603,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSpell_Check">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="icon">
     <iconset>
@@ -854,11 +854,17 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionUnBold">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>UnBold</string>
    </property>
    <property name="toolTip">
     <string>UnBold (Deprecated - Use Bold button for bold/unbold)</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionLeftAlign">
@@ -1200,6 +1206,7 @@ p, li { white-space: pre-wrap; }
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
+  <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
  </resources>

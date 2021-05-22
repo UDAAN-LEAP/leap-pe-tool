@@ -457,7 +457,7 @@ bool Project::push() {
 
         /* Commit the merge and cleanup repo state
          */
-        error = (git_reference_peel((git_object **)&parents[0], head_ref, GIT_OBJECT_COMMIT))
+        error = (git_reference_peel((git_object **)&parents[0], head_ref, GIT_OBJ_COMMIT))
              || (git_commit_lookup(&parents[1], repo, git_annotated_commit_id(heads[0])))
              || (git_commit_create(&id, repo, "HEAD", signature, signature, NULL, "Merge commit - OpenOCRCorrect", tree, 2, (const git_commit **)parents))
              || (git_repository_state_cleanup(repo));

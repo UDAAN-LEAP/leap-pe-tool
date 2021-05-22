@@ -12,8 +12,8 @@ SymbolsView::SymbolsView(QWidget *parent) :
         R"(∀ ∁ ∂ ∃ ∄ ∅ ∆ ∇ ∈ ∉ ∊ ∋ ∌ ∍ ∎ ∏
 ∐ ∑ − ± ∓ ∔ ∕ ∖ ∗ ∘ ∙ √ ∛ ∜ ∝ ∞ ∟ ∠
 ∡ ∢ ∣ ∤ ∥ ∦ ∧ ∨ ∩ ∪ ∫ ∬ ∭ ∮ ∯ ∰
-∱ ∲ ∳ ∴ ∵ ∶ ∷ ∸ ∹ ∺ ∻ ∼ ∽ ∾ ∿ ≀ ≁
-≂ ≃ ≄ ≅ ≆ ≇ ≈ ≉ ≊ ≋ ≌ ≍ ≎ ≏ ≐
+∱ ∲ ∳ ∴ ∵ ∶ ∷ ∸ ∹ ∺ ∻ ÷ ∼ ∽ ∾ ∿ ≀
+≁ ≂ ≃ ≄ ≅ ≆ ≇ ≈ ≉ ≊ ≋ ≌ ≍ ≎ ≏ ≐
 ≑ ≒ ≓ ≔ ≕ ≖ ≗ ≘ ≙ ≚ ≛ ≜ ≝ ≞ ≟
 ≠ ≡ ≢ ≣ ≤ ≥ ≦ ≧ ≨ ≩ ≪ ≫ ≬ ≭ ≮ ≯
 ≰ ≱ ≲ ≳ ≴ ≵ ≶ ≷ ≸ ≹ ⊂ ⊃ ⊄ ⊅ ⊆ ⊇
@@ -33,7 +33,7 @@ SymbolsView::SymbolsView(QWidget *parent) :
 )"
 );
     ui->SpecialCharacters->setText(
-    R"(¶  ¦  Ȝ  ȝ  —  –  ‑  °  ·)"
+    R"(¶  ¦  Ȝ  ȝ  —  –  ‑  °  ·  † ‡ §)"
 );
     ui->Diacritics->setText(
     R"(A

@@ -479,25 +479,84 @@ map<string, int> wordLineIndex;
 bool ConvertSlpDevFlag = 0;
 void MainWindow::on_actionSpell_Check_triggered()
 {
-    if (curr_browser) {
-        auto txcursor = curr_browser->textCursor();
-        txcursor.setPosition(0);
-        auto format = txcursor.charFormat();
-        format.setForeground(QColor(255, 0, 0));
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
 
-        while (!txcursor.atEnd()) {
-            txcursor.movePosition(QTextCursor::MoveOperation::EndOfWord);
-            txcursor.select(QTextCursor::SelectionType::WordUnderCursor);
-            if (txcursor.hasSelection()) {
-                txcursor.beginEditBlock();
-                txcursor.mergeCharFormat(format);
-                txcursor.endEditBlock();
+    QString textBrowserText = curr_browser->toPlainText();
+    QChar ch;
+    ch=textBrowserText[1];
+    textBrowserText+=" ";
+    string str1=textBrowserText.toUtf8().constData();
+
+    // load no of words
+    istringstream iss1(str1);
+    size_t WordCount = 0; string word1;
+    while(iss1 >> word1) WordCount++;
+
+    //str1 = toslp1(str1);
+    istringstream iss(str1);
+    string strHtml = "<html><body>"; string line;
+
+
+    int value = 0;
+    while (getline(iss, line)) {
+        istringstream issw(line);
+        string word;
+
+        while(issw >> word){
+            if(ConvertSlpDevFlag){
+                string word1 = word;
+                word = toslp1(word);
+                string wordNext;
+                if(hasM40PerAsci(word1)){wordNext = word1;}else{wordNext = toDev(word);}
+                strHtml += wordNext; strHtml += " "; //cout << strHtml << endl;
+                value ++;
             }
-            txcursor.movePosition(QTextCursor::MoveOperation::NextWord);
-        }
-    }
-}
+            else{
+                string word1 = word;
+                word = toslp1(word);
+                string wordNext;
+                //cout << GPage.size() <<  word << " " << GPage[word] << endl;
+                if(hasM40PerAsci(word1)){wordNext = word1;}
+                else if(GBook[(word)] > 0 ){wordNext = toDev(word); PWords[word]++;}
+                //else if(CPairRight[word] >0) {wordNext = "<font color=\'purple\'>" + toDev(CPair[word]) + "</font>";}
+                else if(PWords[word] > 0) { wordNext = "<font color=\'gray\'>" + toDev(word) + "</font>";}
+                else if((Dict[word] ==0) && (PWords[word] == 0) && (CPair[word].size() > 0)) {
+                    wordNext = "<font color=\'purple\'>" + toDev(CPair[word]) + "</font>";
+                } else {
+                    wordNext = findDictEntries(toslp1(word),Dict,PWords, word.size());//replace m1 with m2,m1 for combined search
+                    wordNext = find_and_replace_oddInstancesblue(wordNext);
+                    wordNext = find_and_replace_oddInstancesorange(wordNext);
+                }
+                strHtml += wordNext; strHtml += " "; //cout << strHtml << endl;
+                value ++;
+            }
 
+            //cout << GPage[(word)] << endl;
+            //Ui -> Dialog -> progressBar -> setValue(value);
+        }
+        strHtml +="<br>"; // To add new line
+
+    }
+    strHtml += "</body></html>";
+    curr_browser->setHtml(QString::fromStdString(strHtml));
+    //dialog->progressBar-> setValue(WordCount);
+
+    //secdialog.progressBar.setValue(WordCount);
+
+
+    // load wordLineIndex map for pairing with WordImages
+    str1=textBrowserText.toUtf8().constData();
+    // str1 = clean(str1);
+    istringstream iss2(str1);
+    size_t WordCount2 = 0;
+    while (getline(iss2, line)) {
+        istringstream issw(line);
+        string word;
+        while(issw >> word){ wordLineIndex[(word + "###" + line)] = WordCount2; WordCount2++;} // clean(word) instead of word
+    }
+
+}
 /*
 string strPrev;
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
@@ -905,7 +964,15 @@ void MainWindow::on_actionSave_triggered()
 
         QFile sFile(localFilename);
         //if(sFile.open(QFile::WriteOnly | QFile::Text))
+
+        QTextCharFormat fmt;
+        fmt.setForeground(QBrush(QColor(0,0,0)));
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.select(QTextCursor::Document);
+        cursor.mergeCharFormat(fmt);
+
         QString output = curr_browser->toHtml();
+
         if(sFile.open(QFile::WriteOnly))
         {
             QTextStream out(&sFile);
@@ -1093,6 +1160,7 @@ void MainWindow::on_actionLoadData_triggered()
             localmFilename1 = QString::fromStdString(localmFilename1n);
             on_actionLoadDict_triggered();
             loadStr += "\n";
+
 
             on_actionLoadOCRWords_triggered();
             on_actionLoadDomain_triggered();
@@ -3696,7 +3764,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     b->setUndoRedoEnabled(true);
 
     f->close();
-
     QString imageFilePath = mProject.GetDir().absolutePath()+"/Images/" + gCurrentPageName;
     imageFilePath.replace(".txt", ".jpeg");
     imageFilePath.replace(".html", ".jpeg");
