@@ -161,6 +161,7 @@ bool MainWindow::setRole(QString role)
         isVerifier = 1;
         ui->actionTurn_In->setVisible(false);
         ui->actionTurn_In->setEnabled(false);
+
         this->setWindowTitle("OpenOCRCorrect-Verifier");
 
 
@@ -169,6 +170,10 @@ bool MainWindow::setRole(QString role)
                              {"CorrectorOutput","CorrectorOutput",},
                              {"VerifierOutput","CorrectorOutput" }
                            };
+
+        ui->actionSpell_Check->setEnabled(true);
+        ui->actionSpell_Check->setVisible(true);
+
         ui->compareVerifierOutput->setVisible(false);
         ui->compareVerifierOutput->setEnabled(false);
 
@@ -3769,7 +3774,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     imageFilePath.replace(".html", ".jpeg");
     QFile *pImageFile = new QFile(imageFilePath);
     LoadImageFromFile(pImageFile);
-
 }
 
 void MainWindow::LoadImageFromFile(QFile * f) {
