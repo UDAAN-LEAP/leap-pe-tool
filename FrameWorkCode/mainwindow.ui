@@ -106,7 +106,7 @@
        <enum>Qt::Horizontal</enum>
       </property>
       <property name="childrenCollapsible">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <widget class="QTabWidget" name="tabWidget">
        <property name="sizePolicy">
@@ -128,7 +128,7 @@
         </size>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -600,6 +600,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Ctrl+N</string>
    </property>
+   <property name="visible">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionSpell_Check">
    <property name="enabled">
@@ -615,6 +618,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+C</string>
+   </property>
+   <property name="visible">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionLoad_Next_Page">
@@ -676,6 +682,9 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionLoadData">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset>
      <normalon>:/Images/LoadData.png</normalon>
@@ -683,6 +692,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>LoadData</string>
+   </property>
+   <property name="visible">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionLoadDict">
@@ -974,6 +986,9 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionHighlight">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset>
      <normalon>:/Images/highlight-icon.png</normalon>
@@ -987,6 +1002,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+H</string>
+   </property>
+   <property name="visible">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionZoom_In">
