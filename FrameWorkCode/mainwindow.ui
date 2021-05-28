@@ -606,7 +606,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSpell_Check">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset>
