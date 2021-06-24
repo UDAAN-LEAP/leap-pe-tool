@@ -71,6 +71,7 @@ public slots:
     //void textChangedSlot();
 
 private slots:
+    bool eventFilter(QObject *, QEvent *);
 
     void on_actionNew_triggered();
 
