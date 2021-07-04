@@ -26,6 +26,7 @@ HEADERS += ./Filters.h \
     $$PWD/SimpleMail/serverreply.h \
     $$PWD/SimpleMail/serverreply_p.h \
     $$PWD/SimpleMail/smtpexports.h \
+    $$PWD/customtextbrowser.h \
     $$PWD/textfinder.h \
     ./Project.h \
     ./TreeItem.h \
@@ -86,6 +87,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/SimpleMail/sender.cpp \
     $$PWD/SimpleMail/server.cpp \
     $$PWD/SimpleMail/serverreply.cpp \
+    $$PWD/customtextbrowser.cpp \
     $$PWD/textfinder.cpp \
     ./Filters.cpp \
     ./Project.cpp \

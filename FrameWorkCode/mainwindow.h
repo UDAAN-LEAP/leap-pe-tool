@@ -38,6 +38,7 @@
 #include <QTextBrowser>
 #include <QSet>
 #include <QFileSystemWatcher>
+#include<QGraphicsRectItem>
 //#include <set>
 using namespace std;
 
@@ -311,6 +312,8 @@ private:
     QSet<QString> corrector_set;
     QSet<QString> verifier_set;
     QFileSystemWatcher watcher;
+    QGraphicsRectItem* item1;
+
 };
 
 #endif // MAINWINDOW_H

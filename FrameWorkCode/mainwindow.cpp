@@ -42,10 +42,13 @@
 #include <QVector>
 #include<vector>
 #include <QJsonValue>
-
+#include <QGraphicsRectItem>
+#include <QToolTip>
 #ifdef __unix__
 #include <unistd.h>
 #endif
+#include "customtextbrowser.h"
+
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
 trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
@@ -74,6 +77,8 @@ int openedFileChars;
 int openedFileWords;
 bool gSaveTriggered = 0;
 map<QString, QString> filestructure_fw;
+
+
 map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
                                            {"CorrectorOutput","Inds"},
                                            {"Inds" , "Inds"}
@@ -86,6 +91,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+//    QRect qr = QRect();
+
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
     ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
 
@@ -129,6 +136,8 @@ MainWindow::MainWindow(QWidget *parent) :
     b = connect(&watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(directoryChanged(const QString&)));
     connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(CustomContextMenuTriggered(const QPoint&)));
     connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
+
+    qApp->installEventFilter(this);
 }
 bool MainWindow::setRole(QString role)
 {
@@ -561,15 +570,48 @@ void MainWindow::on_actionSpell_Check_triggered()
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
+//    if( object->parent() == curr_browser) {
+        if (event->type() == QEvent::ToolTip)
+        {
+   //         QToolTip *toolEvent = static_cast<QToolTip*>(event)
+            qDebug() << "Tooltip "<<QEvent :: ToolTip;
+            event->accept();
 
-    if( object->parent() == curr_browser) {
+           if(QToolTip::isVisible())
+           {
+
+                QString qs =  QToolTip :: text();
+//               const char *str = QToolTip :: text().toStdString().c_str();
+//               char w[10];
+               int x0, y0, x1, y1;
+//               sscanf(str, "%s %d %d %d %d", w, &x0, &y0, &x1, &y1);
+//               qDebug() << x0 << y0 << x1 << y1 << "\n";
+//               item1->setRect(x0, y0, x1-x0, y1-y0);
+
+               QStringList list;
+                list=qs.split(" ");
+               x0 = list[1].toInt();
+               y0 =list[2].toInt();
+               x1 = list[3].toInt();
+               y1 = list[4].replace(";", "").toInt();
+               qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
+
+               QColor blue40 = Qt::blue;
+               blue40.setAlphaF( 0.4 );
+
+               item1->setBrush(blue40);
+
+               item1->setRect(x0, y0, x1-x0, y1-y0);
+           }
+
+        }
+//    }
+     if( object->parent() == ui->graphicsView) {
         if (event->type() == QEvent::MouseMove) {
             QHoverEvent *hoverEvent = static_cast<QHoverEvent*>(event);
-            cerr << "*****MouseMove*****\n";
-            event->ignore();
-        }
-        else {
-            cerr << "event:" << int(event->type()) << "\n";
+//            cerr << "*****MouseMove*****\n";
+            qDebug() << hoverEvent->pos().x() << " " << hoverEvent->pos().y() << "\n";
+            event->accept();
         }
     }
     return QMainWindow::eventFilter(object, event);
@@ -3751,6 +3793,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     b->setFont(font);
     if(fileFlag) {
         curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
+
         curr_browser->setDocument(b->document());
         ui->tabWidget_2->setTabText(currentTabIndex, name);
         tabchanged(currentTabIndex);
@@ -3763,7 +3806,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     gInitialTextHtml[currentTabPageName] = b->toHtml();
 
     b->setMouseTracking(true);
-    b->viewport()->installEventFilter(this);
     b->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
     b->setUndoRedoEnabled(true);
 
@@ -3773,6 +3815,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     imageFilePath.replace(".html", ".jpeg");
     QFile *pImageFile = new QFile(imageFilePath);
     LoadImageFromFile(pImageFile);
+
 }
 
 void MainWindow::LoadImageFromFile(QFile * f) {
@@ -3787,6 +3830,12 @@ void MainWindow::LoadImageFromFile(QFile * f) {
     if (z)delete z;
     z = new Graphics_view_zoom(ui->graphicsView);
     z->set_modifiers(Qt::NoModifier);
+//    z->gentle_zoom(2.0);
+
+    item1 =new QGraphicsRectItem(325, 203, 341, 31);
+    graphic->addItem(item1);
+    ui->graphicsView->setMouseTracking(true);
+    ui->graphicsView->viewport()->installEventFilter(this);
 }
 
 void MainWindow::file_click(const QModelIndex & indx) {
