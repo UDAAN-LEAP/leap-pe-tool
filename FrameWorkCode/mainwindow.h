@@ -312,7 +312,7 @@ private:
     QSet<QString> corrector_set;
     QSet<QString> verifier_set;
     QFileSystemWatcher watcher;
-    QGraphicsRectItem* item1;
+    QGraphicsRectItem* bboxRect;
 
 };
 
