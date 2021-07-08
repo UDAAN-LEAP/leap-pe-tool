@@ -589,19 +589,23 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 //               item1->setRect(x0, y0, x1-x0, y1-y0);
 
                QStringList list;
-                list=qs.split(" ");
+               list=qs.split(" ");
                x0 = list[1].toInt();
                y0 =list[2].toInt();
                x1 = list[3].toInt();
                y1 = list[4].replace(";", "").toInt();
                qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
-
+//                x0=x0/1700*989;
+//                y0=y0/2200*1280;
+//                x1=x1/1700*989;
+//                y1=y1/2200*1280;
                QColor blue40 = Qt::blue;
                blue40.setAlphaF( 0.4 );
 
                item1->setBrush(blue40);
 
                item1->setRect(x0, y0, x1-x0, y1-y0);
+
            }
 
         }
@@ -3118,6 +3122,7 @@ void MainWindow::on_compareCorrectorOutput_clicked()
         ocrimage.replace("Inds", "Images");
         ocrimage.replace(".txt", ".jpeg");
         ocrimage.replace(".html",".jpeg");
+        ocrimage.replace(".html",".png");
 
         if(!ocrtext.isEmpty())
         {
@@ -3813,6 +3818,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     QString imageFilePath = mProject.GetDir().absolutePath()+"/Images/" + gCurrentPageName;
     imageFilePath.replace(".txt", ".jpeg");
     imageFilePath.replace(".html", ".jpeg");
+    imageFilePath.replace(".html", ".png");
     QFile *pImageFile = new QFile(imageFilePath);
     LoadImageFromFile(pImageFile);
 
@@ -3856,7 +3862,7 @@ void MainWindow::file_click(const QModelIndex & indx) {
         if (suff == "txt" || suff == "html") {
             LoadDocument(file,suff,qvar);
         }
-        if (suff == "jpeg") {
+        if (suff == "png") {
             LoadImageFromFile(file);
         }
         break;
@@ -3968,6 +3974,7 @@ void MainWindow::tabchanged(int idx) {
     imagePathFile.replace("Inds", "Images");
     imagePathFile.replace(".txt", ".jpeg");
     imagePathFile.replace(".html", ".jpeg");
+    imagePathFile.replace(".html", ".png");
     QFile *pImageFile = new QFile(imagePathFile);
     LoadImageFromFile(pImageFile);
 
