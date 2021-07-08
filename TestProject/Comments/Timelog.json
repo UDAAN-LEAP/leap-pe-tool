@@ -1,0 +1,62 @@
+{
+    "C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-1.html": {
+        "directory": "C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-1.html",
+        "seconds": 43
+    },
+    "C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-2.html": {
+        "directory": "C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-2.html",
+        "seconds": 32
+    },
+    "C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-3.html": {
+        "directory": "C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-3.html",
+        "seconds": 70
+    },
+    "C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-4.html": {
+        "directory": "C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-4.html",
+        "seconds": 32
+    },
+    "C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-5.html": {
+        "directory": "C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/CorrectorOutput/page-5.html",
+        "seconds": 1
+    },
+    "C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/VerifierOutput/page-1.html": {
+        "directory": "C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/VerifierOutput/page-1.html",
+        "seconds": 0
+    },
+    "Corrector:Untitled:V-": {
+        "directory": "Corrector:Untitled:V-",
+        "seconds": 0
+    },
+    "Corrector:page-1.txt:V-1": {
+        "directory": "Corrector:page-1.txt:V-1",
+        "seconds": 0
+    },
+    "Verifier:page-1.html:V-0": {
+        "directory": "Verifier:page-1.html:V-0",
+        "seconds": 0
+    },
+    "Verifier:page-1.txt:V-0": {
+        "directory": "Verifier:page-1.txt:V-0",
+        "seconds": 0
+    },
+    "Verifier:page-2.txt:V-0": {
+        "directory": "Verifier:page-2.txt:V-0",
+        "seconds": 0
+    },
+    "Verifier:page-3.txt:V-0": {
+        "directory": "Verifier:page-3.txt:V-0",
+        "seconds": 0
+    },
+    "Verifier:page-4.txt:V-0": {
+        "directory": "Verifier:page-4.txt:V-0",
+        "seconds": 0
+    },
+    "Verifier:page-6.txt:V-0": {
+        "directory": "Verifier:page-6.txt:V-0",
+        "seconds": 0
+    },
+    "Verifier:page-7.txt:V-0": {
+        "directory": "Verifier:page-7.txt:V-0",
+        "seconds": 0
+    }
+}
