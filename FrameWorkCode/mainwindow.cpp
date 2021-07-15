@@ -1103,7 +1103,7 @@ void MainWindow::on_actionSave_As_triggered()
     QString file(QFileDialog::getSaveFileName(this, "Open a File"));
     if (!file.isEmpty())
     {
-        mFilename = file;
+        setMFilename(file);
         UpdateFileBrekadown();
         on_actionSave_triggered();
     }
@@ -3075,6 +3075,19 @@ void MainWindow::on_compareCorrectorOutput_clicked()
         ocrimage.replace(".txt", ".jpeg");
         ocrimage.replace(".html",".jpeg");
 
+        // select the image. look for jpeg, jpg and png(select first whichever is found)
+        QFileInfo check_file(ocrimage);
+        if (!(check_file.exists() && check_file.isFile()))
+        {
+            ocrimage.replace(".jpeg", ".jpg");
+            check_file.setFile(ocrimage);
+            if (!(check_file.exists() && check_file.isFile()))
+            {
+                ocrimage.replace(".jpg", ".png");
+                check_file.setFile(ocrimage);
+            }
+        }
+
         if(!ocrtext.isEmpty())
         {
             QFile sFile(ocrtext);
@@ -3690,14 +3703,14 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         for (int i = 0; i < ui->tabWidget_2->count(); i++) {
             if (name == ui->tabWidget_2->tabText(i)) {
                 ui->tabWidget_2->setCurrentIndex(i);
-                mFilename = f->fileName();
+                setMFilename(f->fileName());
                 UpdateFileBrekadown();
                 f->close();
                 return;
             }
         }
     }
-    mFilename = f->fileName();
+    setMFilename(mFilename = f->fileName());
     UpdateFileBrekadown();
     QTextBrowser * b = new QTextBrowser(this);
     b->setReadOnly(false);
@@ -3766,10 +3779,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     b->setUndoRedoEnabled(true);
 
     f->close();
-    QString imageFilePath = mProject.GetDir().absolutePath()+"/Images/" + gCurrentPageName;
-    imageFilePath.replace(".txt", ".jpeg");
-    imageFilePath.replace(".html", ".jpeg");
-    QFile *pImageFile = new QFile(imageFilePath);
+    QFile *pImageFile = new QFile(mFilenameImage);
     LoadImageFromFile(pImageFile);
 }
 
@@ -3805,7 +3815,7 @@ void MainWindow::file_click(const QModelIndex & indx) {
         if (suff == "txt" || suff == "html") {
             LoadDocument(file,suff,qvar);
         }
-        if (suff == "jpeg") {
+        if (suff == "jpeg" || suff == "jpg" || suff == "png") {
             LoadImageFromFile(file);
         }
         break;
@@ -3906,22 +3916,53 @@ void MainWindow::tabchanged(int idx) {
     curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
     currentTabPageName = ui->tabWidget_2->tabText(currentTabIndex);
     if(currentTabPageName.contains("CorrectorOutput/") | currentTabPageName.contains("VerifierOutput/"))
-        mFilename = mProject.GetDir().absolutePath() + "/" + currentTabPageName;
+        setMFilename(mProject.GetDir().absolutePath() + "/" + currentTabPageName);
     else
-        mFilename = mProject.GetDir().absolutePath() + "/Inds/" + currentTabPageName;
+        setMFilename(mProject.GetDir().absolutePath() + "/Inds/" + currentTabPageName);
     UpdateFileBrekadown();
 
-    QString imagePathFile = mFilename;
-    imagePathFile.replace("CorrectorOutput", "Images");
-    imagePathFile.replace("VerifierOutput", "Images");
-    imagePathFile.replace("Inds", "Images");
-    imagePathFile.replace(".txt", ".jpeg");
-    imagePathFile.replace(".html", ".jpeg");
-    QFile *pImageFile = new QFile(imagePathFile);
+    QFile *pImageFile = new QFile(mFilenameImage);
     LoadImageFromFile(pImageFile);
 
     myTimer.start();
     DisplayTimeLog();
+}
+
+// sets current file and image
+void MainWindow::setMFilename( QString name )
+{
+    mFilename = name;
+    QString tempName = mFilename;
+
+    tempName.replace("Inds", "Images");
+    tempName.replace("CorrectorOutput", "Images");
+    tempName.replace("VerifierOutput", "Images");
+
+    tempName.replace(".txt", ".jpeg").replace(".html", ".jpeg");
+
+    // select the image. look for jpeg, jpg and png(select first whichever is found)
+    QFileInfo check_file(tempName);
+    if (check_file.exists() && check_file.isFile())
+    {
+        mFilenameImage = tempName;
+        return;
+    }
+
+    tempName.replace(".jpeg", ".jpg");
+    check_file.setFile(tempName);
+    if (check_file.exists() && check_file.isFile())
+    {
+        mFilenameImage = tempName;
+        return;
+    }
+
+    tempName.replace(".jpg", ".png");
+    check_file.setFile(tempName);
+    if (check_file.exists() && check_file.isFile())
+    {
+        mFilenameImage = tempName;
+        return;
+    }
 }
 
 void MainWindow::on_actionOpen_Project_triggered() { //Version Based
