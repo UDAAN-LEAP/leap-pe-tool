@@ -3122,7 +3122,10 @@ void MainWindow::on_compareCorrectorOutput_clicked()
         ocrimage.replace("Inds", "Images");
         ocrimage.replace(".txt", ".jpeg");
         ocrimage.replace(".html",".jpeg");
+        ocrimage.replace(".txt",".png");
         ocrimage.replace(".html",".png");
+        ocrimage.replace(".txt",".jpg");
+        ocrimage.replace(".html",".jpg");
 
         if(!ocrtext.isEmpty())
         {
@@ -3816,17 +3819,65 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
     f->close();
     QString imageFilePath = mProject.GetDir().absolutePath()+"/Images/" + gCurrentPageName;
-    imageFilePath.replace(".txt", ".jpeg");
-    imageFilePath.replace(".html", ".jpeg");
-    imageFilePath.replace(".html", ".png");
-    QFile *pImageFile = new QFile(imageFilePath);
-    LoadImageFromFile(pImageFile);
+    QString temp = imageFilePath;
+    int flag=0;
+    temp.replace(".txt", ".jpeg");
+    if (QFile::exists(temp) && flag==0)
+    {
+        imageFilePath=temp;
+        QFile *pImageFile = new QFile(imageFilePath);
+        flag=1;
+        LoadImageFromFile(pImageFile);
+    }
+    else
+    {
+        temp=imageFilePath;
+    }
+
+    temp.replace(".html", ".jpeg");
+    if (QFile::exists(temp) && flag==0)
+    {
+        imageFilePath=temp;
+        QFile *pImageFile = new QFile(imageFilePath);
+        flag=1;
+        LoadImageFromFile(pImageFile);
+    }
+    else
+    {
+        temp = imageFilePath;
+    }
+    temp.replace(".html", ".png");
+    if (QFile::exists(temp) && flag==0)
+    {
+        imageFilePath=temp;
+        QFile *pImageFile = new QFile(imageFilePath);
+        flag=1;
+        LoadImageFromFile(pImageFile);
+    }
+    else
+    {
+        temp = imageFilePath;
+    }
+    temp.replace(".html", ".jpg");
+    if (QFile::exists(temp) && flag==0)
+    {
+        imageFilePath=temp;
+        QFile *pImageFile = new QFile(imageFilePath);
+        flag=1;
+        LoadImageFromFile(pImageFile);
+    }
+    else
+    {
+        temp = imageFilePath;
+    }
+
+
 
 }
 
 void MainWindow::LoadImageFromFile(QFile * f) {
     QString localFileName = f->fileName();
-
+//    qDebug() << "local file name" << localFileName;
     imageOrig.load(localFileName);
     if (graphic)delete graphic;
     graphic = new QGraphicsScene(this);
@@ -3862,8 +3913,9 @@ void MainWindow::file_click(const QModelIndex & indx) {
         if (suff == "txt" || suff == "html") {
             LoadDocument(file,suff,qvar);
         }
-        if (suff == "png") {
+        if (suff == "png" || suff== "jpeg" || suff == "jpg") {
             LoadImageFromFile(file);
+//            qDebug() << "here";
         }
         break;
     }
@@ -3972,12 +4024,59 @@ void MainWindow::tabchanged(int idx) {
     imagePathFile.replace("CorrectorOutput", "Images");
     imagePathFile.replace("VerifierOutput", "Images");
     imagePathFile.replace("Inds", "Images");
-    imagePathFile.replace(".txt", ".jpeg");
-    imagePathFile.replace(".html", ".jpeg");
-    imagePathFile.replace(".html", ".png");
-    QFile *pImageFile = new QFile(imagePathFile);
-    LoadImageFromFile(pImageFile);
+    QString temp = imagePathFile;
+    int flag=0;
+    temp.replace(".txt", ".jpeg");
+    if (QFile::exists(temp) && flag==0)
+    {
+        imagePathFile=temp;
+        QFile *pImageFile = new QFile(imagePathFile);
+        flag=1;
+        LoadImageFromFile(pImageFile);
+    }
+    else
+    {
+        temp=imagePathFile;
+    }
+    temp.replace(".html", ".jpeg");
+    if (QFile::exists(temp) && flag==0)
+    {
+        imagePathFile=temp;
+        QFile *pImageFile = new QFile(imagePathFile);
+        flag=1;
+        LoadImageFromFile(pImageFile);
+    }
+    else
+    {
+        temp=imagePathFile;
+    }
+    temp.replace(".html", ".png");
+    if (QFile::exists(temp) && flag==0)
+    {
+        imagePathFile=temp;
+        QFile *pImageFile = new QFile(imagePathFile);
+        flag=1;
+        LoadImageFromFile(pImageFile);
+    }
+    else
+    {
+        temp=imagePathFile;
+    }
+    temp.replace(".html", ".jpg");
+    if (QFile::exists(temp) && flag==0)
+    {
+        imagePathFile=temp;
+        QFile *pImageFile = new QFile(imagePathFile);
+        flag=1;
+        LoadImageFromFile(pImageFile);
+    }
+    else
+    {
+        temp=imagePathFile;
+    }
 
+
+//       qDebug() << imagePathFile;
     myTimer.start();
     DisplayTimeLog();
 }
