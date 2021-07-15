@@ -7,6 +7,7 @@
 #include <map>
 #include <vector>
 #include <unordered_map>
+#include <QFile>
 #include "eddis.h"
 //#include <boost/serialization/map.hpp>
 //#include <boost/serialization/vector.hpp>
@@ -51,7 +52,41 @@ string ReplaceStringRestricted(string subject, const string& search, const strin
     return subject;
 }
 
-
+void loadFileCSV(map<string, vector<int>>& synonym, vector<vector<string>>& synrows, const string filename=""){
+    QString fn = QString::fromStdString(filename);
+    QFile file(fn);
+    if (!file.open(QIODevice::ReadOnly)) {
+        qDebug() << file.errorString();
+        return;
+    }
+    QTextStream in(&file);
+    QStringList wordList;
+    int j = 0;
+    while (!in.atEnd()) {
+       QString line = in.readLine();
+       QList<QString> L = line.split(',');
+       qDebug() << L.first() << endl;
+       vector<string> V;
+       synrows.push_back(V);
+       for(int i=0 ; i  < L.size(); i++){
+           string S = L[i].toUtf8().constData();
+           if(S != "" && j){
+               S.erase(remove(S.begin(), S.end(), ' '), S.end());
+               if(S.substr(0, 1) == "\""){
+                   S = S.substr(1, S.size()-1);
+               }
+               if(S.substr(S.size()-1, 1) == "\""){
+                   S = S.substr(0, S.size()-1);
+               }
+               cout << S << endl;
+               synrows[j].push_back(S);
+               synonym[S].push_back(j);
+           }
+       }
+       cout << j << endl;
+       j++;
+    }
+}
 
 string toDev(string s)
 { //Hin:-

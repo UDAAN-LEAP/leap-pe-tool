@@ -66,7 +66,8 @@ map<string, int> TimeLog;
 string TimeLogLocation = "../Logs/log.txt";
 string alignment = "left";
 bool prevTRig = 0;
-
+map<string, vector<int>> synonym;
+vector<vector<string>> synrows;
 //map<string, int> GPage; trie TGPage;
 //map<string, int> PWords;//Common/Possitive OCR Words // already defined before
 map<string, string> CPair;//Correction Pairs
@@ -697,13 +698,15 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 // code to display options on rightclick
                 curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
                 QMenu* popup_menu = curr_browser->createStandardContextMenu();
-                QMenu* spell_menu;
+                QMenu* spell_menu, *translate_menu;
 
                 spell_menu = new QMenu("suggestions", this);
+                translate_menu = new QMenu("translate", this);
                 QFont font("Shobhika-Regular");
                 font.setWeight(14);
                 font.setPointSize(12);
                 spell_menu->setFont(font);
+                translate_menu->setFont(font);
                 //QAction* action = tr("tihor");
                 QAction* act;
                 //vector<string> Words =  print5NearestEntries(TGPage,selectedStr);
@@ -816,15 +819,43 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                     spell_menu->addAction(act);
 
                 }*/
+                selectedStr.erase(remove(selectedStr.begin(), selectedStr.end(), ' '), selectedStr.end());
+                vector<string> translate;
+                vector<int>& syn = synonym[selectedStr];
+                for(int i=0; i < syn.size(); i++){
+                    vector<string>& rowit = synrows[syn[i]];
+                    for(int j=0; j < rowit.size(); j++){
+                        if(rowit[j] != selectedStr){
+                            translate.push_back(rowit[j]);
+                            cout << rowit[j] << endl;
+                        }
+                    }
+                }
+
+                for (uint bitarrayi = 0; bitarrayi < translate.size(); bitarrayi++) {
+
+                    act = new QAction(QString::fromStdString(translate[bitarrayi]), translate_menu);
+                    //cout<<vecSugg1[bitarrayi].first<<endl;
+                    translate_menu->addAction(act);
+
+                }
 
                 popup_menu->insertSeparator(popup_menu->actions()[0]);
                 popup_menu->insertMenu(popup_menu->actions()[0], spell_menu);
+
+                popup_menu->insertSeparator(popup_menu->actions()[1]);
+                popup_menu->insertMenu(popup_menu->actions()[1], translate_menu);
+
+
                 connect(spell_menu, SIGNAL(triggered(QAction*)), this, SLOT(menuSelection(QAction*)));
+                connect(translate_menu, SIGNAL(triggered(QAction*)), this, SLOT(translate_replace(QAction*)));
+
                 popup_menu->exec(ev->globalPos());
                 popup_menu->close(); popup_menu->clear();
                 //curr_browser->createStandardContextMenu()->clear();
                 //cursor.select(QTextCursor::WordUnderCursor);
                 vecSugg.clear(); Words1.clear(); Words.clear(); Alligned.clear(); PairSugg.clear();
+                translate.clear();
             }
             else {
 
@@ -953,6 +984,30 @@ void MainWindow::menuSelection(QAction* action)
         //qDebug() << "Triggered: " << action->text();
     }
 }
+
+
+void MainWindow::translate_replace(QAction* action)
+{
+
+    if (curr_browser) {
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.select(QTextCursor::WordUnderCursor);
+        cursor.beginEditBlock();
+        cursor.removeSelectedText();
+
+
+        string target = (action->text().toUtf8().constData());
+//        CPair[toslp1(selectedStr)] = toslp1(target);
+//        PWords[toslp1(target)]++; //CPairRight[toslp1(target)]++;
+        cursor.insertText(action->text());
+
+
+
+        cursor.endEditBlock();
+
+    }
+}
+
 
 void MainWindow::on_actionNew_triggered()
 {
@@ -1216,6 +1271,9 @@ void MainWindow::on_actionLoadData_triggered()
             on_actionLoadDomain_triggered();
             on_actionLoadSubPS_triggered();
             on_actionLoadConfusions_triggered();
+
+            QString filepath = mProject.GetDir().absolutePath() + "/Dicts/synonyms.csv" ;
+            loadFileCSV(synonym, synrows, filepath.toUtf8().constData());
 
             ui->lineEdit->setText(initialText);
             LoadDataFlag = 0;

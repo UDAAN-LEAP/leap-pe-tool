@@ -88,6 +88,8 @@ private slots:
 
     void menuSelection(QAction* action);
 
+    void translate_replace(QAction*);
+
     void on_actionLoad_Next_Page_triggered();
 
     void on_actionLoad_Prev_Page_triggered();
