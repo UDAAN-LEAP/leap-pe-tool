@@ -47,7 +47,6 @@
 #ifdef __unix__
 #include <unistd.h>
 #endif
-#include "customtextbrowser.h"
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -3115,17 +3114,76 @@ void MainWindow::on_compareCorrectorOutput_clicked()
         QString ocrtext = file;
         ocrtext.replace("CorrectorOutput","Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
         ocrtext.replace(".html",".txt");
-        //            ocrtext.replace("V1_","");
-        //            ocrtext.replace("V2_","");
-        //            ocrtext.replace("V3_","");
         QString ocrimage = ocrtext;
         ocrimage.replace("Inds", "Images");
-        ocrimage.replace(".txt", ".jpeg");
-        ocrimage.replace(".html",".jpeg");
-        ocrimage.replace(".txt",".png");
-        ocrimage.replace(".html",".png");
-        ocrimage.replace(".txt",".jpg");
-        ocrimage.replace(".html",".jpg");
+        QString temp = ocrimage;
+        int flag=0;
+        temp.replace(".txt", ".jpeg");
+        if (QFile::exists(temp) && flag==0)
+        {
+            ocrimage=temp;
+            flag=1;
+
+        }
+        else
+        {
+            temp=ocrimage;
+        }
+        temp.replace(".html", ".jpeg");
+        if (QFile::exists(temp) && flag==0)
+        {
+            ocrimage=temp;
+            flag=1;
+
+        }
+        else
+        {
+            temp=ocrimage;
+        }
+        temp.replace(".txt", ".png");
+        if (QFile::exists(temp) && flag==0)
+        {
+            ocrimage=temp;
+            flag=1;
+
+        }
+        else
+        {
+            temp=ocrimage;
+        }
+        temp.replace(".html", ".png");
+        if (QFile::exists(temp) && flag==0)
+        {
+            ocrimage=temp;
+            flag=1;
+
+        }
+        else
+        {
+            temp=ocrimage;
+        }
+        temp.replace(".txt", ".jpg");
+        if (QFile::exists(temp) && flag==0)
+        {
+            ocrimage=temp;
+            flag=1;
+
+        }
+        else
+        {
+            temp=ocrimage;
+        }
+        temp.replace(".html", ".jpg");
+        if (QFile::exists(temp) && flag==0)
+        {
+            ocrimage=temp;
+            flag=1;
+
+        }
+        else
+        {
+            temp=ocrimage;
+        }
 
         if(!ocrtext.isEmpty())
         {
