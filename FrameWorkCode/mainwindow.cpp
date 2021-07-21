@@ -570,51 +570,52 @@ void MainWindow::on_actionSpell_Check_triggered()
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
-//    if( object->parent() == curr_browser) {
+
         if (event->type() == QEvent::ToolTip)
         {
-   //         QToolTip *toolEvent = static_cast<QToolTip*>(event)
-            qDebug() << "Tooltip "<<QEvent :: ToolTip;
+
+//            qDebug() << "Tooltip "<<QEvent :: ToolTip;
             event->accept();
 
            if(QToolTip::isVisible())
            {
 
                 QString qs =  QToolTip :: text();
-//               const char *str = QToolTip :: text().toStdString().c_str();
-//               char w[10];
+
                int x0, y0, x1, y1;
-//               sscanf(str, "%s %d %d %d %d", w, &x0, &y0, &x1, &y1);
-//               qDebug() << x0 << y0 << x1 << y1 << "\n";
-//               item1->setRect(x0, y0, x1-x0, y1-y0);
+
 
                QStringList list;
                list=qs.split(" ");
-               x0 = list[1].toInt();
-               y0 =list[2].toInt();
-               x1 = list[3].toInt();
-               y1 = list[4].replace(";", "").toInt();
-               qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
-//                x0=x0/1700*989;
-//                y0=y0/2200*1280;
-//                x1=x1/1700*989;
-//                y1=y1/2200*1280;
-               QColor blue40 = Qt::blue;
-               blue40.setAlphaF( 0.4 );
+               int len = list.count();
+               if (len>=5)
+               {
 
-               item1->setBrush(blue40);
+                   x0 = list[1].toInt();
+                   y0 =list[2].toInt();
+                   x1 = list[3].toInt();
+                   y1 = list[4].replace(";", "").toInt();
+                   qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
+                    qDebug() << "here";
+                   if(x1!=0 && x0!=0 && y1!=0 && y0!=0)
+                   {
+                       QColor blue40 = Qt::blue;
+                       blue40.setAlphaF( 0.4 );
 
-               item1->setRect(x0, y0, x1-x0, y1-y0);
+                       item1->setBrush(blue40);
 
-           }
+                       item1->setRect(x0, y0, x1-x0, y1-y0);
+                    }
+                   }
+          }
 
         }
-//    }
+
      if( object->parent() == ui->graphicsView) {
         if (event->type() == QEvent::MouseMove) {
             QHoverEvent *hoverEvent = static_cast<QHoverEvent*>(event);
 //            cerr << "*****MouseMove*****\n";
-            qDebug() << hoverEvent->pos().x() << " " << hoverEvent->pos().y() << "\n";
+//            qDebug() << hoverEvent->pos().x() << " " << hoverEvent->pos().y() << "\n";
             event->accept();
         }
     }
