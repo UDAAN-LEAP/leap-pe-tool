@@ -3569,7 +3569,7 @@ void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
     }
     if(mProject.get_version().toInt()) {
         if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/CorrectorOutput/)")
-                != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
+                >= 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
         {
             QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in CorrectorOutput directory");
             return;
@@ -3758,7 +3758,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
         if (messageBox.clickedButton() == resubmitButton) {
             //mProject.enable_push( false ); //Increment = false
             if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
-                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
+                    >= 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
             {
                 QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
                 return;
@@ -3774,7 +3774,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
         else if (messageBox.clickedButton() == finaliseButton) {
             //mProject.enable_push( false ); //Increment = false
             if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
-                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
+                    >= 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
             {
                 QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
                 return;
@@ -3845,6 +3845,49 @@ QString GetFilter(QString & Name, const QStringList &list) {
     Filter += ")";
     return Filter;
 }
+
+// Load and display *.dict files
+void MainWindow::DisplayJsonDict(void) {
+    QJsonDocument doc;
+    QJsonObject obj;
+    QByteArray data_json;
+
+    // Get dict file from current opened file
+    QString dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
+    dictFilename.replace(".txt", ".dict");
+    dictFilename.replace(".html", ".dict");
+    QFile dictQFile(dictFilename);
+
+    ui->textEdit_dict->clear();
+
+    // Open the dict file and display it in textedit view
+    if(dictQFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+       data_json = dictQFile.readAll();
+       dictQFile.close();
+       doc = doc.fromJson(data_json);
+       obj = doc.object();
+       QJsonValue jv = obj.value(obj.keys().at(0));
+       QJsonObject item = jv.toObject();
+       for(int i = 0; i < item.count(); i++)
+       {
+           ui->textEdit_dict->append(item.keys().at(i)+":");
+           QJsonValue subobj = item.value(item.keys().at(i));;
+           QJsonArray test = subobj.toArray();
+           for(int k = 0; k < test.count(); k++)
+           {
+               ui->textEdit_dict->moveCursor(QTextCursor::End);
+               ui->textEdit_dict->insertPlainText(" "+test[k].toString());
+               if(k<test.count()-1)
+               {
+                  ui->textEdit_dict->insertPlainText(",");
+               }
+               ui->textEdit_dict->moveCursor(QTextCursor::End);
+           }
+       }
+     }
+}
+
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
     f->open(QIODevice::ReadOnly);
@@ -3869,6 +3912,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     UpdateFileBrekadown();
     QTextBrowser * b = new QTextBrowser(this);
     b->setReadOnly(false);
+    DisplayJsonDict();
     if (!isVerifier && current_folder == "Inds") {
         QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
         output_file.replace(".txt", ".html");
@@ -4195,6 +4239,7 @@ void MainWindow::tabchanged(int idx) {
 //       qDebug() << imagePathFile;
     myTimer.start();
     DisplayTimeLog();
+    DisplayJsonDict();
 }
 
 void MainWindow::on_actionOpen_Project_triggered() { //Version Based

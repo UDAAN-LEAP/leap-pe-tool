@@ -72,6 +72,8 @@ public slots:
     //void textChangedSlot();
 
 private slots:
+    void DisplayJsonDict(void);
+
     bool eventFilter(QObject *, QEvent *);
 
     void on_actionNew_triggered();

@@ -213,6 +213,13 @@ void Project::AddTemp(Filter * filter, QFile & file,QString prefix) {
     QString name = filter->name();
     TreeItem * t = mRoot->find(name);
     QFileInfo finfo(file.fileName());
+
+    // Add only required files(ingore all except html and txt) to the tree view
+    QString suff = finfo.completeSuffix();
+    if (name == "Document" && suff != "txt" && suff != "html") {
+        return ;
+    }
+
     QString fileName = prefix+finfo.fileName();
     TreeItem * f = new TreeItem(fileName,NodeType::_FILETYPE,t);
     QFile * filep = new QFile(file.fileName());
