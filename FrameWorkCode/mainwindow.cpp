@@ -610,14 +610,48 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
           }
 
         }
-
+     static float x1, y1;
+     int x2, y2;
      if( object->parent() == ui->graphicsView) {
-        if (event->type() == QEvent::MouseMove) {
-            QHoverEvent *hoverEvent = static_cast<QHoverEvent*>(event);
+        if (event->type() == QEvent::MouseButtonPress) {
+            QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
 //            cerr << "*****MouseMove*****\n";
-//            qDebug() << hoverEvent->pos().x() << " " << hoverEvent->pos().y() << "\n";
+            qDebug() << mEvent->pos().x() << " " << mEvent->pos().y() << "\n";
+            x1 = mEvent->pos().x();
+            y1 = mEvent->pos().y();
             event->accept();
         }
+
+        if (event->type() == QEvent::MouseButtonRelease) {
+
+            QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+//            cerr << "*****MouseMove*****\n";
+            qDebug() << mEvent->pos().x() << " " << mEvent->pos().y() << "\n";
+            x2 = mEvent->pos().x();
+            y2 = mEvent->pos().y();
+
+            QGraphicsRectItem *crop_rect = new QGraphicsRectItem();
+            graphic->addItem(crop_rect);
+
+            QColor blue40 = Qt::blue;
+            blue40.setAlphaF( 0.4 );
+
+            crop_rect->setBrush(blue40);
+
+            qDebug() << x1 << " " << y1 << " " << x2 - x1 << " " << y2 - y1;
+            crop_rect->setRect(0, 0, 100, 100);
+
+            event->accept();
+        }
+
+        if (event->type() == QEvent::MouseMove) {
+            QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+
+//            cerr << "*****MouseMove*****\n";
+            statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
+            event->accept();
+        }
+
     }
     return QMainWindow::eventFilter(object, event);
 }
