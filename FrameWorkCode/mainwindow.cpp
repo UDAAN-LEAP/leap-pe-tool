@@ -36,6 +36,7 @@
 #include <SimpleMail/SimpleMail>
 //# include <QTask>
 #include <QDebug>
+#include <QPainter>
 #include <QJsonObject>
 #include <QTextDocumentFragment>
 #include <sstream>
@@ -615,10 +616,16 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
      if( object->parent() == ui->graphicsView) {
         if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+            QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
+            QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
+            //qDebug() << "RGB" <<( int )pos.x()<<( int )pos.y();
+
 //            cerr << "*****MouseMove*****\n";
-            qDebug() << mEvent->pos().x() << " " << mEvent->pos().y() << "\n";
-            x1 = mEvent->pos().x();
-            y1 = mEvent->pos().y();
+            //qDebug() << mEvent->pos().x() << " " << mEvent->pos().y() << "\n";
+//            x1 = mEvent->pos().x();
+//            y1 = mEvent->pos().y();
+            x1 = ( int )pos.x();
+            y1 = ( int )pos.y();
             event->accept();
         }
 
@@ -626,11 +633,20 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
 //            cerr << "*****MouseMove*****\n";
-            qDebug() << mEvent->pos().x() << " " << mEvent->pos().y() << "\n";
-            x2 = mEvent->pos().x();
-            y2 = mEvent->pos().y();
+            //qDebug() << mEvent->pos().x() << " " << mEvent->pos().y() << "\n";
+            QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
+            QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
+            //qDebug() << "RGB" <<( int )pos.x()<<( int )pos.y();
+//            x2 = mEvent->pos().x();
+//            y2 = mEvent->pos().y();
+            x2 = ( int )pos.x();
+            y2 = ( int )pos.y();
+
+//            QPainter qPainter(&imageOrig);
+//            qPainter.drawRect(x1, x2, x2-x1, y2-y1);
 
             QGraphicsRectItem *crop_rect = new QGraphicsRectItem();
+
             graphic->addItem(crop_rect);
 
             QColor blue40 = Qt::blue;
@@ -639,16 +655,26 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             crop_rect->setBrush(blue40);
 
             qDebug() << x1 << " " << y1 << " " << x2 - x1 << " " << y2 - y1;
-            crop_rect->setRect(0, 0, 100, 100);
+            int x_ratio = 1073/534;
+            int y_ratio = 1517/880;
+            // 534=1073 1=1073/534=2
+            // 880=1517 1=1.72
+            //crop_rect->setRect((x1)*x_ratio, y1*y_ratio, (x2-x1)*x_ratio, (y2-y1)*y_ratio);
+            //crop_rect->setRect(0, 0, 1073, 1517);
+            crop_rect->setRect(x1, y1, x2 - x1, y2 - y1);
 
             event->accept();
         }
 
         if (event->type() == QEvent::MouseMove) {
             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-
+//            QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
+//            QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
+//            qDebug() << "RGB" <<( int )pos.x(),( int )pos.y();
 //            cerr << "*****MouseMove*****\n";
-            statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
+            qDebug() << imageOrig.size() << ui->graphicsView->size();
+
+            //statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
             event->accept();
         }
 
@@ -4077,6 +4103,7 @@ void MainWindow::LoadImageFromFile(QFile * f) {
     if (graphic)delete graphic;
     graphic = new QGraphicsScene(this);
     graphic->addPixmap(QPixmap::fromImage(imageOrig));
+    //graphic->setPos(0, 0);
     ui->graphicsView->setScene(graphic);
     ui->graphicsView->fitInView(graphic->itemsBoundingRect(), Qt::KeepAspectRatio);
     if (z)delete z;
