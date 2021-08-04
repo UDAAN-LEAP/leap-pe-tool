@@ -87,6 +87,9 @@ map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
 
 QString gSanskrit, gHindi;
 
+//This flag is to prevent inserting the IMAGEHOLDER twice
+bool drawRectangleFlag=false;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -631,7 +634,13 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         }
 
         if (event->type() == QEvent::MouseButtonRelease) {
+            if(drawRectangleFlag==true){
+                drawRectangleFlag=false;
+                event->accept();
+                return true;
+            }
 
+            drawRectangleFlag=true;
 
             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
 //            cerr << "*****MouseMove*****\n";
@@ -682,7 +691,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             {
                 displayHolder(x1,y1,x2,y2,i);
                 i++;
-                decider = 0;
+                //decider = 0;
                 graphic->removeItem(crop_rect);
                 return 0;
             }
@@ -708,7 +717,9 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
 void MainWindow::displayHolder(int x1,int y1,int x2,int y2,int i)
 {
-    curr_browser->append("[IMGHOLDER Figure 1."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.insertText("[IMGHOLDER Figure 1."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");
+    //curr_browser->append("[IMGHOLDER Figure 1."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");
     return;
 }
 
