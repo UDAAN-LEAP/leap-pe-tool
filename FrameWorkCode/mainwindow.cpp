@@ -614,6 +614,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
      static float x1, y1;
      int x2, y2;
      if( object->parent() == ui->graphicsView) {
+         installEventFilter(this);
         if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
             QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
@@ -631,6 +632,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
         if (event->type() == QEvent::MouseButtonRelease) {
 
+
             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
 //            cerr << "*****MouseMove*****\n";
             //qDebug() << mEvent->pos().x() << " " << mEvent->pos().y() << "\n";
@@ -644,7 +646,9 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
 //            QPainter qPainter(&imageOrig);
 //            qPainter.drawRect(x1, x2, x2-x1, y2-y1);
-
+            static bool decider = 1;
+            if(decider)
+            {
             QGraphicsRectItem *crop_rect = new QGraphicsRectItem();
 
             graphic->addItem(crop_rect);
@@ -655,14 +659,34 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             crop_rect->setBrush(blue40);
 
             qDebug() << x1 << " " << y1 << " " << x2 - x1 << " " << y2 - y1;
-            int x_ratio = 1073/534;
-            int y_ratio = 1517/880;
+            //int x_ratio = 1073/534;
+            //int y_ratio = 1517/880;
             // 534=1073 1=1073/534=2
             // 880=1517 1=1.72
             //crop_rect->setRect((x1)*x_ratio, y1*y_ratio, (x2-x1)*x_ratio, (y2-y1)*y_ratio);
             //crop_rect->setRect(0, 0, 1073, 1517);
             crop_rect->setRect(x1, y1, x2 - x1, y2 - y1);
+            static int i = 1;
 
+            QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Window",
+                                                                        tr("getting image coordinates.\n"),
+                                                                        QMessageBox::Cancel | QMessageBox::Save,
+                                                                        QMessageBox::Save);
+            if (resBtn == QMessageBox::Cancel) {
+                QMessageBox::information(0, "not save", "Cancelled");
+                graphic->removeItem(crop_rect);
+                decider = 0;
+                return 0;
+            }
+            else if(resBtn == QMessageBox::Save)
+            {
+                displayHolder(x1,y1,x2,y2,i);
+                i++;
+                decider = 0;
+                graphic->removeItem(crop_rect);
+                return 0;
+            }
+        }
             event->accept();
         }
 
@@ -672,7 +696,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 //            QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
 //            qDebug() << "RGB" <<( int )pos.x(),( int )pos.y();
 //            cerr << "*****MouseMove*****\n";
-            qDebug() << imageOrig.size() << ui->graphicsView->size();
+            //qDebug() << imageOrig.size() << ui->graphicsView->size();
 
             //statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
             event->accept();
@@ -682,6 +706,11 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     return QMainWindow::eventFilter(object, event);
 }
 
+void MainWindow::displayHolder(int x1,int y1,int x2,int y2,int i)
+{
+    curr_browser->append("[IMGHOLDER Figure 1."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");
+    return;
+}
 
 
 /*
