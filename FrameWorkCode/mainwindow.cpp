@@ -595,47 +595,46 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 //    QTextStream out(&file);
 
 //    file.close();
-//        if (event->type() == QEvent::ToolTip)
-//      {
+        if (event->type() == QEvent::ToolTip)
+      {
 
-//            qDebug() << "Tooltip "<<QEvent :: ToolTip;
-//            event->accept();
+            qDebug() << "Tooltip "<<QEvent :: ToolTip;
+            event->accept();
 
-//           if(QToolTip::isVisible())
-//           {
+           if(QToolTip::isVisible())
+           {
 
-//                QString qs =  QToolTip :: text();
+                QString qs =  QToolTip :: text();
 
-//               int x0, y0, x1, y1;
+               int x0, y0, x1, y1;
 
 
-//               QStringList list;
-//               list=qs.split(" ");
-//               int len = list.count();
-//               if (len>=5)
-//               {
+               QStringList list;
+               list=qs.split(" ");
+               int len = list.count();
+               if (len>=5)
+               {
 
-//                   x0 = list[1].toInt();
-//                   y0 =list[2].toInt();
-//                   x1 = list[3].toInt();
-//                   y1 = list[4].replace(";", "").toInt();
-//                   qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
-//                    qDebug() << "here";
-//                   if(x1!=0 && x0!=0 && y1!=0 && y0!=0)
-//                   {
-//                       QColor blue40 = Qt::blue;
-//                       blue40.setAlphaF( 0.4 );
+                   x0 = list[1].toInt();
+                   y0 =list[2].toInt();
+                   x1 = list[3].toInt();
+                   y1 = list[4].replace(";", "").toInt();
+                   qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
+                    qDebug() << "here";
+                   if(x1!=0 && x0!=0 && y1!=0 && y0!=0)
+                   {
+                       QColor blue40 = Qt::blue;
+                       blue40.setAlphaF( 0.4 );
 
-//                       item1->setBrush(blue40);
+                       item1->setBrush(blue40);
 
-//                       item1->setRect(x0, y0, x1-x0, y1-y0);
-//                    }
-//                   }
-//          }
+                       item1->setRect(x0, y0, x1-x0, y1-y0);
+                    }
+                   }
+          }
 
-//        }
-//    QString sn = mProject.get_stage();
-//    qDebug()<<sn;
+        }
+
     if(loadimage) //Check image is loaded or not.
     {
      static float x1, y1; //coordinate values
