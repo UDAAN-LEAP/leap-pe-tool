@@ -90,9 +90,12 @@ QString gSanskrit, gHindi;
 //This flag is to prevent inserting the IMAGEHOLDER twice
 bool drawRectangleFlag=false;
 
+<<<<<<< HEAD
 //Check image is loaded on not
 bool loadimage=false;
 
+=======
+>>>>>>> c642406d36519e30d570a9c0b91a9462b3f391e2
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -697,10 +700,16 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             }
             else if (messageBox.clickedButton() == tableButton)
             {
+<<<<<<< HEAD
                 QString s1 = "TBHOLDER";
                 QString s2 = "Table";
                 displayHolder(s1,s2,x1,y1,x2,y2,j);
                 j++;
+=======
+                displayHolder(x1,y1,x2,y2,i);
+                i++;
+                //decider = 0;
+>>>>>>> c642406d36519e30d570a9c0b91a9462b3f391e2
                 graphic->removeItem(crop_rect);
                 return 0;
             }
@@ -742,11 +751,15 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 void MainWindow::displayHolder(QString s1,QString s2,int x1,int y1,int x2,int y2,int i)
 {
     QTextCursor cursor = curr_browser->textCursor();
+<<<<<<< HEAD
 
     QStringList PageNo=gCurrentPageName.split(QRegExp("[-.]"));
     QString PageNumber = PageNo[1];
     //qDebug()<<PageNo[1];
     cursor.insertText("["+s1+" "+s2+"-"+PageNumber+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");
+=======
+    cursor.insertText("[IMGHOLDER Figure 1."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");
+>>>>>>> c642406d36519e30d570a9c0b91a9462b3f391e2
     //curr_browser->append("[IMGHOLDER Figure 1."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");
     return;
 }
