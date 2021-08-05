@@ -80,7 +80,7 @@ int openedFileChars;
 int openedFileWords;
 bool gSaveTriggered = 0;
 map<QString, QString> filestructure_fw;
-
+int pressedFlag;
 
 map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
                                            {"CorrectorOutput","Inds"},
@@ -639,29 +639,26 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     {
      static float x1, y1; //coordinate values
      int x2, y2; //coordinate values
-
+      int x_temp , y_temp; // dynamic coordinate values
      if( object->parent() == ui->graphicsView)
      {
-            installEventFilter(this);
+//            installEventFilter(this);
             if (event->type() == QEvent::MouseButtonPress)
             {
             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
             QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
             QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
-            //qDebug() << "RGB" <<( int )pos.x()<<( int )pos.y();
 
-//            cerr << "*****MouseMove*****\n";
-            //qDebug() << mEvent->pos().x() << " " << mEvent->pos().y() << "\n";
-//            x1 = mEvent->pos().x();
-//            y1 = mEvent->pos().y();
             x1 = ( int )pos.x();
             y1 = ( int )pos.y();
+            pressedFlag=1;
             event->accept();
         }
 
         if (event->type() == QEvent::MouseButtonRelease) {
             if(drawRectangleFlag==true){
                 drawRectangleFlag=false;
+                pressedFlag =0;
                 event->accept();
                 return true;
             }
@@ -670,25 +667,21 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
             QString figValues = mProject.get_figNumValues();
             QStringList figNo=figValues.split(QRegExp(" "));
-            //qDebug()<<figNo[0];
             static int i = figNo[0].toInt();
             static int j = figNo[1].toInt();
             static int k = figNo[2].toInt();
 
             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-//            cerr << "*****MouseMove*****\n";
-            //qDebug() << mEvent->pos().x() << " " << mEvent->pos().y() << "\n";
+
             QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
             QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
-            //qDebug() << "RGB" <<( int )pos.x()<<( int )pos.y();
-//            x2 = mEvent->pos().x();
-//            y2 = mEvent->pos().y();
+
             x2 = ( int )pos.x();
             y2 = ( int )pos.y();
+            pressedFlag =0;
+//            QGraphicsRectItem *crop_rect = new QGraphicsRectItem();
 
-            QGraphicsRectItem *crop_rect = new QGraphicsRectItem();
-
-            graphic->addItem(crop_rect);
+//            graphic->addItem(crop_rect);
 
             QColor blue40 = Qt::blue;
             blue40.setAlphaF( 0.4 );
@@ -698,7 +691,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             qDebug() << x1 << " " << y1 << " " << x2 - x1 << " " << y2 - y1;
 
             crop_rect->setRect(x1, y1, x2 - x1, y2 - y1);
-            //static int i=1,j=1,k=1;
+
 
             QMessageBox messageBox(this);
             messageBox.setWindowTitle("Do you want to add");
@@ -720,7 +713,8 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 QString s2 = "Figure";
                 displayHolder(s1,s2,x1,y1,x2,y2,i);
                 i++;
-                graphic->removeItem(crop_rect);
+//                graphic->removeItem(crop_rect);
+                crop_rect->setRect(0,0,1,1);
                 mProject.set_figNumValues(i,j,k);
                 return 0;
             }
@@ -730,7 +724,8 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 QString s2 = "Table";
                 displayHolder(s1,s2,x1,y1,x2,y2,j);
                 j++;
-                graphic->removeItem(crop_rect);
+//                graphic->removeItem(crop_rect);
+                crop_rect->setRect(0,0,1,1);
                 mProject.set_figNumValues(i,j,k);
                 return 0;
             }
@@ -740,13 +735,13 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 QString s2 = "Equation";
                 displayHolder(s1,s2,x1,y1,x2,y2,k);
                 k++;
-                graphic->removeItem(crop_rect);
+                crop_rect->setRect(0,0,1,1);
                 mProject.set_figNumValues(i,j,k);
                 return 0;
             }
             else {
                 QMessageBox::information(0, "Not saved", "Cancelled");
-                graphic->removeItem(crop_rect);
+                crop_rect->setRect(0,0,1,1);
                 return 0;
             }
 
@@ -756,13 +751,24 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
         if (event->type() == QEvent::MouseMove) {
             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-//            QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
-//            QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
-//            qDebug() << "RGB" <<( int )pos.x(),( int )pos.y();
-//            cerr << "*****MouseMove*****\n";
-            //qDebug() << imageOrig.size() << ui->graphicsView->size();
+            if (pressedFlag == 1)
+            {
+                statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
 
-            //statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
+                QPointF position =  ui->graphicsView->mapToScene( mEvent->pos() );
+                QRgb rgb = imageOrig.pixel( ( int )position.x(), ( int )position.y() );
+
+                QColor blue40 = Qt::blue;
+                blue40.setAlphaF( 0.4 );
+                crop_rect->setBrush(blue40);
+                x_temp = ( int )position.x();
+                y_temp = ( int )position.y();
+
+
+                crop_rect->setRect(x1, y1, x_temp-x1, y_temp-y1);
+
+
+            }
             event->accept();
         }
 
@@ -4211,8 +4217,10 @@ void MainWindow::LoadImageFromFile(QFile * f) {
     z->set_modifiers(Qt::NoModifier);
 //    z->gentle_zoom(2.0);
 
-//    item1 =new QGraphicsRectItem(325, 203, 341, 31);
-//    graphic->addItem(item1);
+    item1 =new QGraphicsRectItem(325, 203, 341, 31);
+    crop_rect = new QGraphicsRectItem(325, 203, 341, 31);
+    graphic->addItem(item1);
+    graphic->addItem(crop_rect);
     ui->graphicsView->setMouseTracking(true);
     ui->graphicsView->viewport()->installEventFilter(this);
 }

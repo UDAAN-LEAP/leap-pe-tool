@@ -318,6 +318,7 @@ private:
     QSet<QString> verifier_set;
     QFileSystemWatcher watcher;
     QGraphicsRectItem* item1;
+    QGraphicsRectItem* crop_rect;
 
 };
 
