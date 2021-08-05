@@ -63,6 +63,17 @@ void Project::set_version(int ver) {
     save_xml();
 }
 
+void Project::set_figNumValues(int i, int j, int k) {
+
+    auto c = doc.child("Project").child("image");
+    c.child("number").first_child().set_value(std::to_string(i).c_str());
+    auto d = doc.child("Project").child("table");
+    d.child("number").first_child().set_value(std::to_string(j).c_str());
+    auto e = doc.child("Project").child("equations");
+    e.child("number").first_child().set_value(std::to_string(k).c_str());
+    save_xml();
+}
+
 void Project::removeFile(QModelIndex & idx,Filter & pFilter, QFile & pFile) {
     auto first = doc.child("Project").child("ItemGroup");
 
@@ -734,6 +745,15 @@ QString Project::get_stage() {
     auto c = doc.child("Project").child("Metadata");
     QString stage = c.child("Stage").child_value();
     return stage;
+}
+QString Project::get_figNumValues() {
+    auto c = doc.child("Project").child("image");
+    auto d = doc.child("Project").child("image");
+    auto e = doc.child("Project").child("image");
+    QString imgNo = c.child("number").child_value();
+    QString tableNo = d.child("number").child_value();
+    QString eqNo = e.child("number").child_value();
+    return imgNo+" "+tableNo+" "+eqNo;
 }
 QString Project::get_version() {
     auto c = doc.child("Project").child("Metadata");

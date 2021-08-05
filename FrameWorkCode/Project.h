@@ -46,7 +46,9 @@ public:
     void set_stage_verifier();
 	QString get_stage();
     QString get_version();
+    QString get_figNumValues();
     void set_version(int);
+    void set_figNumValues(int,int,int);
     QString get_pmEmail();
     QString get_bookId();
     QString get_setId();
