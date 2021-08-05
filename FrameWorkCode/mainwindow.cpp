@@ -87,6 +87,12 @@ map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
 
 QString gSanskrit, gHindi;
 
+//This flag is to prevent inserting the IMAGEHOLDER twice
+bool drawRectangleFlag=false;
+
+//Check image is loaded on not
+bool loadimage=false;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -572,45 +578,47 @@ void MainWindow::on_actionSpell_Check_triggered()
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
 
-        if (event->type() == QEvent::ToolTip)
-        {
+//        if (event->type() == QEvent::ToolTip)
+//      {
 
 //            qDebug() << "Tooltip "<<QEvent :: ToolTip;
-            event->accept();
+//            event->accept();
 
-           if(QToolTip::isVisible())
-           {
+//           if(QToolTip::isVisible())
+//           {
 
-                QString qs =  QToolTip :: text();
+//                QString qs =  QToolTip :: text();
 
-               int x0, y0, x1, y1;
+//               int x0, y0, x1, y1;
 
 
-               QStringList list;
-               list=qs.split(" ");
-               int len = list.count();
-               if (len>=5)
-               {
+//               QStringList list;
+//               list=qs.split(" ");
+//               int len = list.count();
+//               if (len>=5)
+//               {
 
-                   x0 = list[1].toInt();
-                   y0 =list[2].toInt();
-                   x1 = list[3].toInt();
-                   y1 = list[4].replace(";", "").toInt();
-                   qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
-                    qDebug() << "here";
-                   if(x1!=0 && x0!=0 && y1!=0 && y0!=0)
-                   {
-                       QColor blue40 = Qt::blue;
-                       blue40.setAlphaF( 0.4 );
+//                   x0 = list[1].toInt();
+//                   y0 =list[2].toInt();
+//                   x1 = list[3].toInt();
+//                   y1 = list[4].replace(";", "").toInt();
+//                   qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
+//                    qDebug() << "here";
+//                   if(x1!=0 && x0!=0 && y1!=0 && y0!=0)
+//                   {
+//                       QColor blue40 = Qt::blue;
+//                       blue40.setAlphaF( 0.4 );
 
-                       item1->setBrush(blue40);
+//                       item1->setBrush(blue40);
 
-                       item1->setRect(x0, y0, x1-x0, y1-y0);
-                    }
-                   }
-          }
+//                       item1->setRect(x0, y0, x1-x0, y1-y0);
+//                    }
+//                   }
+//          }
 
-        }
+//        }
+    if(loadimage)
+    {
      static float x1, y1;
      int x2, y2;
      if( object->parent() == ui->graphicsView) {
@@ -631,7 +639,13 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         }
 
         if (event->type() == QEvent::MouseButtonRelease) {
+            if(drawRectangleFlag==true){
+                drawRectangleFlag=false;
+                event->accept();
+                return true;
+            }
 
+            drawRectangleFlag=true;
 
             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
 //            cerr << "*****MouseMove*****\n";
@@ -644,11 +658,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             x2 = ( int )pos.x();
             y2 = ( int )pos.y();
 
-//            QPainter qPainter(&imageOrig);
-//            qPainter.drawRect(x1, x2, x2-x1, y2-y1);
-            static bool decider = 1;
-            if(decider)
-            {
             QGraphicsRectItem *crop_rect = new QGraphicsRectItem();
 
             graphic->addItem(crop_rect);
@@ -659,35 +668,59 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             crop_rect->setBrush(blue40);
 
             qDebug() << x1 << " " << y1 << " " << x2 - x1 << " " << y2 - y1;
-            //int x_ratio = 1073/534;
-            //int y_ratio = 1517/880;
-            // 534=1073 1=1073/534=2
-            // 880=1517 1=1.72
-            //crop_rect->setRect((x1)*x_ratio, y1*y_ratio, (x2-x1)*x_ratio, (y2-y1)*y_ratio);
-            //crop_rect->setRect(0, 0, 1073, 1517);
-            crop_rect->setRect(x1, y1, x2 - x1, y2 - y1);
-            static int i = 1;
 
-            QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Window",
-                                                                        tr("getting image coordinates.\n"),
-                                                                        QMessageBox::Cancel | QMessageBox::Save,
-                                                                        QMessageBox::Save);
-            if (resBtn == QMessageBox::Cancel) {
+            crop_rect->setRect(x1, y1, x2 - x1, y2 - y1);
+            static int i = 1,j=1,k=1;
+
+            QMessageBox messageBox(this);
+            messageBox.setWindowTitle("Do you want to add");
+            QAbstractButton *figureButton =
+                    messageBox.addButton(tr("Figure"), QMessageBox::ActionRole);
+            QAbstractButton *tableButton =
+                    messageBox.addButton(tr("Table"), QMessageBox::ActionRole);
+            QAbstractButton *equationButton =
+                    messageBox.addButton(tr("Equation"), QMessageBox::ActionRole);
+            QAbstractButton *cancelButton =
+                    messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+            QString msg = "Select One Option\n";
+            messageBox.setText(msg);
+            messageBox.exec();
+
+            if (messageBox.clickedButton() == figureButton)
+            {
+                QString s1 = "IMGHOLDER";
+                QString s2 = "Figure";
+                displayHolder(s1,s2,x1,y1,x2,y2,i);
+                i++;
+                graphic->removeItem(crop_rect);
+                return 0;
+            }
+            else if (messageBox.clickedButton() == tableButton)
+            {
+                QString s1 = "TBHOLDER";
+                QString s2 = "Table";
+                displayHolder(s1,s2,x1,y1,x2,y2,j);
+                j++;
+                graphic->removeItem(crop_rect);
+                return 0;
+            }
+            else if(messageBox.clickedButton() == equationButton)
+            {
+                QString s1 = "EQHOLDER";
+                QString s2 = "Equation";
+                displayHolder(s1,s2,x1,y1,x2,y2,k);
+                k++;
+                graphic->removeItem(crop_rect);
+                return 0;
+            }
+            else {
                 QMessageBox::information(0, "not save", "Cancelled");
                 graphic->removeItem(crop_rect);
-                decider = 0;
                 return 0;
             }
-            else if(resBtn == QMessageBox::Save)
-            {
-                displayHolder(x1,y1,x2,y2,i);
-                i++;
-                decider = 0;
-                graphic->removeItem(crop_rect);
-                return 0;
-            }
-        }
+
             event->accept();
+        }
         }
 
         if (event->type() == QEvent::MouseMove) {
@@ -706,9 +739,15 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     return QMainWindow::eventFilter(object, event);
 }
 
-void MainWindow::displayHolder(int x1,int y1,int x2,int y2,int i)
+void MainWindow::displayHolder(QString s1,QString s2,int x1,int y1,int x2,int y2,int i)
 {
-    curr_browser->append("[IMGHOLDER Figure 1."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");
+    QTextCursor cursor = curr_browser->textCursor();
+
+    QStringList PageNo=gCurrentPageName.split(QRegExp("[-.]"));
+    QString PageNumber = PageNo[1];
+    //qDebug()<<PageNo[1];
+    cursor.insertText("["+s1+" "+s2+"-"+PageNumber+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");
+    //curr_browser->append("[IMGHOLDER Figure 1."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");
     return;
 }
 
@@ -4127,6 +4166,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
 void MainWindow::LoadImageFromFile(QFile * f) {
     QString localFileName = f->fileName();
+    loadimage = true;
 //    qDebug() << "local file name" << localFileName;
     imageOrig.load(localFileName);
     if (graphic)delete graphic;

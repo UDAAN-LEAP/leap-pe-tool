@@ -75,7 +75,7 @@ private slots:
     void DisplayJsonDict(void);
 
     bool eventFilter(QObject *, QEvent *);
-    void displayHolder(int,int,int,int,int);
+    void displayHolder(QString,QString,int,int,int,int,int);
 
     void on_actionNew_triggered();
 
