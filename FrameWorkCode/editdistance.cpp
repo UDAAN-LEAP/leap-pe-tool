@@ -19,7 +19,13 @@ int editDistance(QString a, QString b)
     s1=a.split( rx, QString::SkipEmptyParts );
     s2=b.split( rx, QString::SkipEmptyParts );
 
-    int solution[s1.count()+1][s2.count()+1];
+    int** solution = new int* [s1.count() + 1];
+
+    for (int i = 0; i <= s1.count(); i++) {
+        solution[i] = new int[s2.count() + 1];
+    }
+
+    //int solution[s1.count()+1][s2.count()+1];
     for (int i = 0; i <= s1.count(); i++)
     {
         solution[i][0] = i;
@@ -117,8 +123,12 @@ int editDistance(QString a, QString b)
 
             //Collections.reverse(optimalPath);
 //            qDebug() << optimalPath;
+            int ret = solution[s1.count()][s2.count()];
+            for (int i = 0;i < s1.count()+1;i++)
+                delete[] solution[i];
+            delete[] solution;
 
-            return solution[s1.count()][s2.count()];
+            return ret;
 
 
 
