@@ -37,6 +37,7 @@
 #include <Project.h>
 #include <QTextBrowser>
 #include <QSet>
+#include<QDomDocument>
 #include <QFileSystemWatcher>
 #include<QGraphicsRectItem>
 //#include <set>
@@ -76,6 +77,8 @@ private slots:
 
     bool eventFilter(QObject *, QEvent *);
     void displayHolder(QString,QString,int,int,int,int,int);
+    void updateEntries(QDomDocument, QString, QString, QString, int);
+    void createImageInfoXMLFile();
 
     void on_actionNew_triggered();
 
@@ -318,6 +321,7 @@ private:
     QSet<QString> verifier_set;
     QFileSystemWatcher watcher;
     QGraphicsRectItem* item1;
+    QGraphicsRectItem* crop_rect;
 
 };
 

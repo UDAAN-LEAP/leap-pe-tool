@@ -80,7 +80,7 @@ int openedFileChars;
 int openedFileWords;
 bool gSaveTriggered = 0;
 map<QString, QString> filestructure_fw;
-
+int pressedFlag;
 
 map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
                                            {"CorrectorOutput","Inds"},
@@ -579,67 +579,50 @@ void MainWindow::on_actionSpell_Check_triggered()
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
-//    QDomDocument doc1;
+    if (event->type() == QEvent::ToolTip)
+    {
 
-//    // Add processing instructions that are XML instructions
-//    QDomProcessingInstruction instruction;
-//    instruction = doc1.createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
-//    doc1.appendChild(instruction);
+          qDebug() << "Tooltip "<<QEvent :: ToolTip;
+          event->accept();
 
-//    // add root element
-//    QDomElement root = doc1.createElement(QString("Book Stack"));
-//    doc1.appendChild(root);
+         if(QToolTip::isVisible())
+         {
 
-//    QFile file("my.xml");
-//    if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) return 0;
-//    QTextStream out(&file);
+              QString qs =  QToolTip :: text();
 
-//    file.close();
-        if (event->type() == QEvent::ToolTip)
-      {
-
-            qDebug() << "Tooltip "<<QEvent :: ToolTip;
-            event->accept();
-
-           if(QToolTip::isVisible())
-           {
-
-                QString qs =  QToolTip :: text();
-
-               int x0, y0, x1, y1;
+             int x0, y0, x1, y1;
 
 
-               QStringList list;
-               list=qs.split(" ");
-               int len = list.count();
-               if (len>=5)
-               {
+             QStringList list;
+             list=qs.split(" ");
+             int len = list.count();
+             if (len>=5)
+             {
 
-                   x0 = list[1].toInt();
-                   y0 =list[2].toInt();
-                   x1 = list[3].toInt();
-                   y1 = list[4].replace(";", "").toInt();
-                   qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
-                    qDebug() << "here";
-                   if(x1!=0 && x0!=0 && y1!=0 && y0!=0)
-                   {
-                       QColor blue40 = Qt::blue;
-                       blue40.setAlphaF( 0.4 );
+                 x0 = list[1].toInt();
+                 y0 =list[2].toInt();
+                 x1 = list[3].toInt();
+                 y1 = list[4].replace(";", "").toInt();
+                 qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
+                  qDebug() << "here";
+                 if(x1!=0 && x0!=0 && y1!=0 && y0!=0)
+                 {
+                     QColor blue40 = Qt::blue;
+                     blue40.setAlphaF( 0.4 );
 
-                       item1->setBrush(blue40);
+                     item1->setBrush(blue40);
 
-                       item1->setRect(x0, y0, x1-x0, y1-y0);
-                    }
-                   }
-          }
-
+                     item1->setRect(x0, y0, x1-x0, y1-y0);
+                  }
+                 }
         }
 
+      }
     if(loadimage) //Check image is loaded or not.
     {
      static float x1, y1; //coordinate values
      int x2, y2; //coordinate values
-
+     int x_temp , y_temp; // dynamic coordinate values
      if( object->parent() == ui->graphicsView)
      {
             installEventFilter(this);
@@ -656,24 +639,72 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 //            y1 = mEvent->pos().y();
             x1 = ( int )pos.x();
             y1 = ( int )pos.y();
+            pressedFlag=1;
             event->accept();
         }
 
         if (event->type() == QEvent::MouseButtonRelease) {
             if(drawRectangleFlag==true){
                 drawRectangleFlag=false;
+                pressedFlag =0;
                 event->accept();
                 return true;
             }
 
             drawRectangleFlag=true;
+            static int i,j,k;
 
-            QString figValues = mProject.get_figNumValues();
-            QStringList figNo=figValues.split(QRegExp(" "));
-            //qDebug()<<figNo[0];
-            static int i = figNo[0].toInt();
-            static int j = figNo[1].toInt();
-            static int k = figNo[2].toInt();
+            QStringList PageNo=gCurrentPageName.split(QRegExp("[-.]"));
+            QString PageNumber = PageNo[1];
+
+            QDomDocument document;
+            QString filename12 = mProject.GetDir().absolutePath() + "/my.xml";
+            //qDebug()<<filename12;
+            QFile f(filename12);
+            if (!f.open(QIODevice::ReadOnly ))
+            {
+                // Error while loading file
+                std::cerr << "Error while loading file" << std::endl;
+                return 1;
+            }
+            // Set data into the QDomDocument before processing
+            document.setContent(&f);
+            f.close();
+
+           QDomElement root=document.documentElement();
+            //qDebug()<<root.elementsByTagName("page101").elementsByTagName("image").toText().data().toInt();
+            QDomElement Component=root.firstChild().toElement();
+
+            // Loop while there is a child
+            while(!Component.isNull())
+            {    
+                // Check if the child tag name is COMPONENT
+
+                if (Component.tagName()=="page"+PageNo[1])
+                {
+                    QDomElement Child=Component.firstChild().toElement();
+                    while (!Child.isNull())
+                    {
+                        //qDebug()<<"hello";
+                        // Read Name and value
+                        if (Child.tagName()=="image") i=Child.firstChild().toText().data().toInt();
+                        if (Child.tagName()=="table") j=Child.firstChild().toText().data().toInt();
+                        if (Child.tagName()=="equation") k=Child.firstChild().toText().data().toInt();
+
+                        // Next child
+                        Child = Child.nextSibling().toElement();
+                    }
+                }
+                // Next component
+                Component = Component.nextSibling().toElement();
+             }
+
+//            QString figValues = mProject.get_figNumValues();
+//            QStringList figNo=figValues.split(QRegExp(" "));
+//            //qDebug()<<figNo[0];
+//            static int i = figNo[0].toInt();
+//            static int j = figNo[1].toInt();
+//            static int k = figNo[2].toInt();
 
             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
 //            cerr << "*****MouseMove*****\n";
@@ -685,10 +716,10 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 //            y2 = mEvent->pos().y();
             x2 = ( int )pos.x();
             y2 = ( int )pos.y();
+            pressedFlag =0;
+//            QGraphicsRectItem *crop_rect = new QGraphicsRectItem();
 
-            QGraphicsRectItem *crop_rect = new QGraphicsRectItem();
-
-            graphic->addItem(crop_rect);
+//            graphic->addItem(crop_rect);
 
             QColor blue40 = Qt::blue;
             blue40.setAlphaF( 0.4 );
@@ -715,13 +746,16 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             messageBox.exec();
 
             if (messageBox.clickedButton() == figureButton)
-            {
+            {               
                 QString s1 = "IMGHOLDER";
                 QString s2 = "Figure";
                 displayHolder(s1,s2,x1,y1,x2,y2,i);
                 i++;
-                graphic->removeItem(crop_rect);
-                mProject.set_figNumValues(i,j,k);
+                //graphic->removeItem(crop_rect);
+                crop_rect->setRect(0,0,1,1);
+                updateEntries(document, filename12, PageNo[1], s2, i);
+
+                //mProject.set_figNumValues(i,j,k);
                 return 0;
             }
             else if (messageBox.clickedButton() == tableButton)
@@ -730,8 +764,10 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 QString s2 = "Table";
                 displayHolder(s1,s2,x1,y1,x2,y2,j);
                 j++;
-                graphic->removeItem(crop_rect);
-                mProject.set_figNumValues(i,j,k);
+                //graphic->removeItem(crop_rect);
+                crop_rect->setRect(0,0,1,1);
+                updateEntries(document, filename12, PageNo[1], s2, j);
+                //mProject.set_figNumValues(i,j,k);
                 return 0;
             }
             else if(messageBox.clickedButton() == equationButton)
@@ -740,13 +776,15 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 QString s2 = "Equation";
                 displayHolder(s1,s2,x1,y1,x2,y2,k);
                 k++;
-                graphic->removeItem(crop_rect);
-                mProject.set_figNumValues(i,j,k);
+                //graphic->removeItem(crop_rect);
+                crop_rect->setRect(0,0,1,1);
+                updateEntries(document, filename12, PageNo[1], s2, k);
+                //mProject.set_figNumValues(i,j,k);
                 return 0;
             }
             else {
                 QMessageBox::information(0, "Not saved", "Cancelled");
-                graphic->removeItem(crop_rect);
+                crop_rect->setRect(0,0,1,1);
                 return 0;
             }
 
@@ -754,18 +792,28 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         }
         }
 
-        if (event->type() == QEvent::MouseMove) {
-            QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-//            QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
-//            QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
-//            qDebug() << "RGB" <<( int )pos.x(),( int )pos.y();
-//            cerr << "*****MouseMove*****\n";
-            //qDebug() << imageOrig.size() << ui->graphicsView->size();
+     if (event->type() == QEvent::MouseMove) {
+         QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+         if (pressedFlag == 1)
+         {
+             statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
 
-            //statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
-            event->accept();
-        }
+             QPointF position =  ui->graphicsView->mapToScene( mEvent->pos() );
+             QRgb rgb = imageOrig.pixel( ( int )position.x(), ( int )position.y() );
 
+             QColor blue40 = Qt::blue;
+             blue40.setAlphaF( 0.4 );
+             crop_rect->setBrush(blue40);
+             x_temp = ( int )position.x();
+             y_temp = ( int )position.y();
+
+
+             crop_rect->setRect(x1, y1, x_temp-x1, y_temp-y1);
+
+
+         }
+         event->accept();
+     }
     }
     return QMainWindow::eventFilter(object, event);
 }
@@ -782,6 +830,115 @@ void MainWindow::displayHolder(QString s1,QString s2,int x1,int y1,int x2,int y2
     return;
 }
 
+void MainWindow::updateEntries(QDomDocument document, QString filename,QString PageNo, QString s2, int i)
+{
+    QDomElement root = document.documentElement();
+    QDomElement Component=root.firstChild().toElement();
+    //qDebug()<<Component.tagName();
+    // Loop while there is a child
+    while(!Component.isNull())
+    {
+        // Check if the child tag name is COMPONENT
+
+        if (Component.tagName()=="page"+PageNo)
+        {
+            //qDebug()<<Component.tagName();
+            QDomElement Child=Component.firstChild().toElement();
+            //qDebug()<<Child.tagName();
+            while (!Child.isNull())
+            {
+                if (s2 == "Figure" && Child.tagName()=="image")
+                {
+                    Child.childNodes().at(0).setNodeValue(QString::number(i));
+                }
+                else if (s2 == "Table" && Child.tagName()=="table")
+                {
+                    //qDebug()<<Child.tagName();
+                    //qDebug()<<i;
+                    Child.childNodes().at(0).setNodeValue(QString::number(i));
+                }
+                else if (s2 == "Equation" && Child.tagName()=="equation")
+                {
+                    Child.childNodes().at(0).setNodeValue(QString::number(i));
+                }
+
+                // Next child
+                Child = Child.nextSibling().toElement();
+            }
+        }
+        // Next component
+        Component = Component.nextSibling().toElement();
+     }
+    QFile f(filename);
+    f.open(QIODevice::WriteOnly);
+    QTextStream stream;
+    stream.setDevice(&f);
+    stream.setCodec("UTF-8");
+    document.save(stream,4);
+    f.close();
+}
+
+void MainWindow::createImageInfoXMLFile()
+{
+    QDomDocument document;
+
+    // Add processing instructions that are XML instructions
+    QDomProcessingInstruction instruction;
+    instruction = document.createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
+    document.appendChild(instruction);
+
+    // add root element
+    QDomElement root = document.createElement("BookSet");
+    document.appendChild(root);
+
+    //add some elements
+    QString strI = gDirTwoLevelUp + "/Inds";
+    QDir directory(strI);
+    //qDebug()<<"str"<<strI;
+    QStringList list1 = directory.entryList(QStringList() << "*.txt",QDir::Files);
+
+    for ( const auto& i : list1 )
+    {
+        QStringList PageNo = i.split(QRegExp("[-.]"));
+        //qDebug()<<PageNo;
+        QDomElement tagPage = document.createElement("page"+PageNo[1]);
+        root.appendChild(tagPage);
+
+        QDomElement tagImage = document.createElement("image");
+        tagPage.appendChild(tagImage);
+        QDomText NoImage = document.createTextNode("1");
+        tagImage.appendChild(NoImage);
+
+        QDomElement tagTable = document.createElement("table");
+        tagPage.appendChild(tagTable);
+        QDomText NoTable = document.createTextNode("1");
+        tagTable.appendChild(NoTable);
+
+        QDomElement tagEquation = document.createElement("equation");
+        tagPage.appendChild(tagEquation);
+        QDomText NoEquation = document.createTextNode("1");
+        tagEquation.appendChild(NoEquation);
+    }
+
+    //qDebug()<<"xxml file" << strI <<"pageno" << list1;
+
+    QString filename12 = mProject.GetDir().absolutePath() + "/my.xml";
+    if(!QFileInfo::exists(filename12))
+    {
+        QFile file(filename12);
+
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)){
+            qDebug()<<"Failed to open xml file";
+            return;
+        }
+        else{
+            QTextStream out(&file);
+            out << document.toString();
+            file.close();
+            qDebug()<<"Writing to xml file";
+        }
+    }
+}
 
 /*
 // refer http://stackoverflow.com/questions/28746541/qt-mousemove-event-not-being-caught-in-eventfilter
@@ -4211,8 +4368,10 @@ void MainWindow::LoadImageFromFile(QFile * f) {
     z->set_modifiers(Qt::NoModifier);
 //    z->gentle_zoom(2.0);
 
-//    item1 =new QGraphicsRectItem(325, 203, 341, 31);
-//    graphic->addItem(item1);
+    item1 =new QGraphicsRectItem(325, 203, 341, 31);
+    crop_rect = new QGraphicsRectItem(325, 203, 341, 31);
+    graphic->addItem(item1);
+    graphic->addItem(crop_rect);
     ui->graphicsView->setMouseTracking(true);
     ui->graphicsView->viewport()->installEventFilter(this);
 }
@@ -4511,6 +4670,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             QDir().mkdir(mProject.GetDir().absolutePath() + "/Images/Inserted");
 
         QMessageBox::information(0, "Success", "Project opened successfully.");
+        createImageInfoXMLFile();
+
     }
     else {
         QMessageBox::warning(0, "Project Error", "Couldn't open project. Please check your project.");
