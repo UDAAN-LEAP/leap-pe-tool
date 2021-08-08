@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <set>
 #include <vector>
 #include <unordered_map>
 #include <QFile>
@@ -302,6 +303,58 @@ ifstream myfile(filename);
 loadCwordsPair(toslp1(str1),toslp1(str2),CPair,Dict,PWords);}
         cout <<"CPairs " << CPair.size() <<  " loaded" << endl;
           } else cout <<"Error:" << filename <<  "CPair NOT there/loaded" << endl;
+}
+
+
+void loadCwordsPairs(string wordL,string wordR, map<string, set<string> >& CPairs,map<string,int>& Dict,map<string,int>&  PWords)
+{
+    //cout<< "hello"<<wordR<<endl;
+    std::replace(wordR.begin(), wordR.end(), ',', ' ');
+    stringstream ss(wordR);
+    string setwords;
+    set<string> setstring;
+    while (ss >> setwords)
+    {
+        //cout << setwords << endl;
+        setstring.insert(setwords);
+    }
+    //set<string> wordRs = wordR;
+    CPairs[wordL] = setstring;
+}
+
+void loadCPairs(string filename, map<string, set<string> >& CPairs,map<string,int>&  Dict, map<string,int>&  PWords)
+{
+    ifstream myfile(filename);
+    if (myfile.is_open())
+    {
+        string line;
+        while(getline(myfile, line))
+        {
+            //cout << "String 1"<<line<<endl;
+            // Vector of string to save tokens
+            vector <string> tokens;
+
+            // stringstream class check1
+            stringstream check1(line);
+            string intermediate;
+
+            // Tokenizing w.r.t. space 'tab'
+            while(getline(check1, intermediate, '\t'))
+            {
+                tokens.push_back(intermediate);
+            }
+
+            // Printing the token vector
+            for(int i = 0; i < tokens.size(); i++)
+            {
+                string str1 = tokens[0];
+                string str2 = tokens[1];
+                loadCwordsPairs(toslp1(str1),toslp1(str2),CPairs,Dict,PWords);
+            }
+        }
+        cout <<"CPairs " << CPairs.size() <<  " loaded" << endl;
+     }
+    else cout <<"Error:" << filename <<  "CPair NOT there/loaded" << endl;
 }
 
 void loadMapNV(string fileName, map<string,int>& OCRWords, vector<string>& vec, string GBook){

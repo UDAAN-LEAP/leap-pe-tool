@@ -50,6 +50,7 @@
 #ifdef __unix__
 #include <unistd.h>
 #endif
+#include <editdistance.h>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -73,6 +74,7 @@ vector<vector<string>> synrows;
 //map<string, int> GPage; trie TGPage;
 //map<string, int> PWords;//Common/Possitive OCR Words // already defined before
 map<string, string> CPair;//Correction Pairs
+std::map<string, set<string> > CPairs;
 bool highlightchecked = false;
 map<int, QString> commentdict;
 map<int, vector<int>> commentederrors;
@@ -80,7 +82,6 @@ int openedFileChars;
 int openedFileWords;
 bool gSaveTriggered = 0;
 map<QString, QString> filestructure_fw;
-int pressedFlag;
 
 map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
                                            {"CorrectorOutput","Inds"},
@@ -94,6 +95,9 @@ bool drawRectangleFlag=false;
 
 //Check image is loaded on not
 bool loadimage=false;
+
+//Resposible for dynamic rectangular drawing
+int pressedFlag;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -576,9 +580,15 @@ void MainWindow::on_actionSpell_Check_triggered()
     }
 
 }
-
+/*! Function Description
+ * \brief MainWindow::eventFilter
+ * \param object:
+ * \param event: ToolTip and ImageMarkingRegion
+ * \return (QMainWindow::eventFilter(object, event));
+ */
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
+    //! Tooltip documentation
     if (event->type() == QEvent::ToolTip)
     {
 
@@ -618,206 +628,220 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         }
 
       }
-    if(loadimage) //Check image is loaded or not.
+
+    /*
+      * \description:
+      1. Responsible for drawing rectangular region
+      2. Placing a PlaceHolder for figure/table/equation entries
+      3. Set a MessageBox for figure/table/equation/cancel
+      4. Set counter for pagewise for each entry
+      5. Mark multiple image regions in a loaded image.
+      6. Set various flag: a)drawRectangleFlag: is to prevent triggering of this function twice
+      b) loadimage: check image is loaded on not; c) pressedFlag: resposible for dynamic rectangular
+      drawing.
+     */
+
+    if(loadimage)                   //Check image is loaded or not.
     {
-     static float x1, y1; //coordinate values
-     int x2, y2; //coordinate values
-     int x_temp , y_temp; // dynamic coordinate values
+     static int x1, y1;             //top & left coordinate values
+     int x2, y2;                    //bottom & right coordinate values
+     int x_temp , y_temp;           // dynamic coordinate values
+
+     //! Apply event on graphicsview (image loaded part)
      if( object->parent() == ui->graphicsView)
      {
             installEventFilter(this);
+            //! Capturing mouse press event on graphicsview
             if (event->type() == QEvent::MouseButtonPress)
             {
-            QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-            QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
-            QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
-            //qDebug() << "RGB" <<( int )pos.x()<<( int )pos.y();
+                QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+                QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos()); //Capturing the coordinates values according to the image.
+                QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y());
 
-//            cerr << "*****MouseMove*****\n";
-            //qDebug() << mEvent->pos().x() << " " << mEvent->pos().y() << "\n";
-//            x1 = mEvent->pos().x();
-//            y1 = mEvent->pos().y();
-            x1 = ( int )pos.x();
-            y1 = ( int )pos.y();
-            pressedFlag=1;
-            event->accept();
-        }
-
-        if (event->type() == QEvent::MouseButtonRelease) {
-            if(drawRectangleFlag==true){
-                drawRectangleFlag=false;
-                pressedFlag =0;
+                x1 = ( int )pos.x();      //left coordinate value
+                y1 = ( int )pos.y();      //top coordinate value
+                pressedFlag=1;            //drawing is on until it becomes 0 or for continuous pressing event
                 event->accept();
-                return true;
             }
-
-            drawRectangleFlag=true;
-            static int i,j,k;
-
-            QStringList PageNo=gCurrentPageName.split(QRegExp("[-.]"));
-            QString PageNumber = PageNo[1];
-
-            QDomDocument document;
-            QString filename12 = mProject.GetDir().absolutePath() + "/my.xml";
-            //qDebug()<<filename12;
-            QFile f(filename12);
-            if (!f.open(QIODevice::ReadOnly ))
+            //! Capturing mouse release event on graphicsview
+            if (event->type() == QEvent::MouseButtonRelease)
             {
-                // Error while loading file
-                std::cerr << "Error while loading file" << std::endl;
-                return 1;
-            }
-            // Set data into the QDomDocument before processing
-            document.setContent(&f);
-            f.close();
-
-           QDomElement root=document.documentElement();
-            //qDebug()<<root.elementsByTagName("page101").elementsByTagName("image").toText().data().toInt();
-            QDomElement Component=root.firstChild().toElement();
-
-            // Loop while there is a child
-            while(!Component.isNull())
-            {    
-                // Check if the child tag name is COMPONENT
-
-                if (Component.tagName()=="page"+PageNo[1])
+                //! reponsible for preventing the event second time.
+                if(drawRectangleFlag==true)
                 {
-                    QDomElement Child=Component.firstChild().toElement();
-                    while (!Child.isNull())
-                    {
-                        //qDebug()<<"hello";
-                        // Read Name and value
-                        if (Child.tagName()=="image") i=Child.firstChild().toText().data().toInt();
-                        if (Child.tagName()=="table") j=Child.firstChild().toText().data().toInt();
-                        if (Child.tagName()=="equation") k=Child.firstChild().toText().data().toInt();
-
-                        // Next child
-                        Child = Child.nextSibling().toElement();
-                    }
+                    drawRectangleFlag=false;
+                    pressedFlag =0;        //for stopping the drawing
+                    event->accept();
+                    return true;
                 }
-                // Next component
-                Component = Component.nextSibling().toElement();
-             }
 
-//            QString figValues = mProject.get_figNumValues();
-//            QStringList figNo=figValues.split(QRegExp(" "));
-//            //qDebug()<<figNo[0];
-//            static int i = figNo[0].toInt();
-//            static int j = figNo[1].toInt();
-//            static int k = figNo[2].toInt();
+                drawRectangleFlag=true;     //set the flag true when occuring for first time
+                static int i,j,k;           //for storing the counter values for figure/equation/table for each page
 
-            QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-//            cerr << "*****MouseMove*****\n";
-            //qDebug() << mEvent->pos().x() << " " << mEvent->pos().y() << "\n";
-            QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
-            QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
-            //qDebug() << "RGB" <<( int )pos.x()<<( int )pos.y();
-//            x2 = mEvent->pos().x();
-//            y2 = mEvent->pos().y();
-            x2 = ( int )pos.x();
-            y2 = ( int )pos.y();
-            pressedFlag =0;
-//            QGraphicsRectItem *crop_rect = new QGraphicsRectItem();
+                //! Getting PageNo string from gCurrentPageName
+                QStringList PageNo=gCurrentPageName.split(QRegExp("[-.]"));
+                QString PageNumber = PageNo[1];
 
-//            graphic->addItem(crop_rect);
+                //!Getting i,j,k values from image.xml file
+                //! first reading the file
+                QDomDocument document;
+                QString filename12 = mProject.GetDir().absolutePath() + "/image.xml";
+                //qDebug()<<filename12;
+                QFile f(filename12);
 
-            QColor blue40 = Qt::blue;
-            blue40.setAlphaF( 0.4 );
+                //! throws an error if file is not in readonly mode
+                if (!f.open(QIODevice::ReadOnly ))
+                {
+                    std::cerr << "Error while loading file" << std::endl;
+                    return 1;
+                }
+                document.setContent(&f);       // Set data into the QDomDocument before processing
+                f.close();
 
-            crop_rect->setBrush(blue40);
+                //!for this you can refer image.xml file
+                QDomElement root=document.documentElement();       //Item: BookSet
+                QDomElement Component=root.firstChild().toElement();      //Item: Page(No)
 
-            qDebug() << x1 << " " << y1 << " " << x2 - x1 << " " << y2 - y1;
+                //! Loop while there is a child
+                while(!Component.isNull())
+                {
+                    //! Check if the child tag name is Page(No)
+                    if (Component.tagName()=="page"+PageNo[1])
+                    {
+                        QDomElement Child=Component.firstChild().toElement();      //Item: figure
+                        while (!Child.isNull())
+                        {
+                            //! Read tagNames and values
+                            if (Child.tagName()=="figure") i=Child.firstChild().toText().data().toInt();
+                            if (Child.tagName()=="table") j=Child.firstChild().toText().data().toInt();
+                            if (Child.tagName()=="equation") k=Child.firstChild().toText().data().toInt();
 
-            crop_rect->setRect(x1, y1, x2 - x1, y2 - y1);
-            //static int i=1,j=1,k=1;
+                            Child = Child.nextSibling().toElement();        // Next child
+                        }
+                    }
+                    Component = Component.nextSibling().toElement();        // Next component
+                 }
 
-            QMessageBox messageBox(this);
-            messageBox.setWindowTitle("Do you want to add");
-            QAbstractButton *figureButton =
-                    messageBox.addButton(tr("Figure"), QMessageBox::ActionRole);
-            QAbstractButton *tableButton =
-                    messageBox.addButton(tr("Table"), QMessageBox::ActionRole);
-            QAbstractButton *equationButton =
-                    messageBox.addButton(tr("Equation"), QMessageBox::ActionRole);
-            QAbstractButton *cancelButton =
-                    messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
-            QString msg = "Select an option\n";
-            messageBox.setText(msg);
-            messageBox.exec();
+                QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+                QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
+                QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
 
-            if (messageBox.clickedButton() == figureButton)
-            {               
-                QString s1 = "IMGHOLDER";
-                QString s2 = "Figure";
-                displayHolder(s1,s2,x1,y1,x2,y2,i);
-                i++;
-                //graphic->removeItem(crop_rect);
-                crop_rect->setRect(0,0,1,1);
-                updateEntries(document, filename12, PageNo[1], s2, i);
+                x2 = ( int )pos.x();         //right coordinate value
+                y2 = ( int )pos.y();         //bottom coordinate value
+                pressedFlag =0;              // stop rectangular drawing
 
-                //mProject.set_figNumValues(i,j,k);
-                return 0;
+
+                QColor blue40 = Qt::blue;     //sets its color
+                blue40.setAlphaF( 0.4 );      //for transparency
+
+                crop_rect->setBrush(blue40);   //set brush
+
+                qDebug() << x1 << " " << y1 << " " << x2 - x1 << " " << y2 - y1;   //getting the coordinates
+
+                crop_rect->setRect(x1, y1, x2 - x1, y2 - y1);       //set final coordinates for rectangular region
+
+                //! Set a messagebox for choosing what do you want to add: Figure/Table/Equation/Cancel
+                QMessageBox messageBox(this);
+                messageBox.setWindowTitle("Do you want to add");
+                QAbstractButton *figureButton = messageBox.addButton(tr("Figure"), QMessageBox::ActionRole);
+                QAbstractButton *tableButton = messageBox.addButton(tr("Table"), QMessageBox::ActionRole);
+                QAbstractButton *equationButton = messageBox.addButton(tr("Equation"), QMessageBox::ActionRole);
+                QAbstractButton *cancelButton = messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+
+                QString msg = "Select an option\n";
+                messageBox.setText(msg);
+                messageBox.exec();
+
+                //! settings for a figureholder
+                if (messageBox.clickedButton() == figureButton)
+                {
+                    QString s1 = "IMGHOLDER";
+                    QString s2 = "Figure";
+
+                    //! for placing a figure placeholder
+                    displayHolder(s1,s2,x1,y1,x2,y2,i);
+
+                    i++;       //increment values when a figure is inserted in the textBrowser
+                    //graphic->removeItem(crop_rect);
+                    crop_rect->setRect(0,0,1,1);       //settings this for dynamic rectangular region
+
+                    //! updating entries for figure entries in xml file
+                    updateEntries(document, filename12, PageNo[1], s2, i);
+
+                    return 0;
+                }
+                //! settings for a tableholder
+                else if (messageBox.clickedButton() == tableButton)
+                {
+                    QString s1 = "TBHOLDER";
+                    QString s2 = "Table";
+
+                    //! for placing a table placeholder
+                    displayHolder(s1,s2,x1,y1,x2,y2,j);
+
+                    j++;         //increment values when a table is inserted in the textBrowser
+                    //graphic->removeItem(crop_rect);
+                    crop_rect->setRect(0,0,1,1);         //settings this for dynamic rectangular region
+
+                    //! updating entries for table entries in xml file
+                    updateEntries(document, filename12, PageNo[1], s2, j);
+
+                    return 0;
+                }
+                //! settings for a equationholder
+                else if(messageBox.clickedButton() == equationButton)
+                {
+                    QString s1 = "EQHOLDER";
+                    QString s2 = "Equation";
+
+                    //! for placing a equation placeholder
+                    displayHolder(s1,s2,x1,y1,x2,y2,k);
+
+                    k++;       //increment values when a equation is inserted in the textBrowser
+                    //graphic->removeItem(crop_rect);
+                    crop_rect->setRect(0,0,1,1);       //settings this for dynamic rectangular region
+
+                    //! updating entries for equation entries in xml file
+                    updateEntries(document, filename12, PageNo[1], s2, k);
+
+                    return 0;
+                }
+                //! settings for cancelbutton
+                else
+                {
+                    QMessageBox::information(0, "Not saved", "Cancelled");
+                    crop_rect->setRect(0,0,1,1);
+                    return 0;
+                }
+
+                event->accept();
             }
-            else if (messageBox.clickedButton() == tableButton)
-            {
-                QString s1 = "TBHOLDER";
-                QString s2 = "Table";
-                displayHolder(s1,s2,x1,y1,x2,y2,j);
-                j++;
-                //graphic->removeItem(crop_rect);
-                crop_rect->setRect(0,0,1,1);
-                updateEntries(document, filename12, PageNo[1], s2, j);
-                //mProject.set_figNumValues(i,j,k);
-                return 0;
-            }
-            else if(messageBox.clickedButton() == equationButton)
-            {
-                QString s1 = "EQHOLDER";
-                QString s2 = "Equation";
-                displayHolder(s1,s2,x1,y1,x2,y2,k);
-                k++;
-                //graphic->removeItem(crop_rect);
-                crop_rect->setRect(0,0,1,1);
-                updateEntries(document, filename12, PageNo[1], s2, k);
-                //mProject.set_figNumValues(i,j,k);
-                return 0;
-            }
-            else {
-                QMessageBox::information(0, "Not saved", "Cancelled");
-                crop_rect->setRect(0,0,1,1);
-                return 0;
-            }
-
-            event->accept();
         }
-        }
+        //! Capturing mousemove event & creating single dynamic rectangle & Updating the temporary coordinates until pressedFlag is true
+        if (event->type() == QEvent::MouseMove)
+        {
+             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+             if (pressedFlag == 1)
+             {
+                 statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
+                 QPointF position =  ui->graphicsView->mapToScene( mEvent->pos() );
+                 QRgb rgb = imageOrig.pixel( ( int )position.x(), ( int )position.y() );
 
-     if (event->type() == QEvent::MouseMove) {
-         QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-         if (pressedFlag == 1)
-         {
-             statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
+                 QColor blue40 = Qt::blue;
+                 blue40.setAlphaF( 0.4 );
+                 crop_rect->setBrush(blue40);
+                 x_temp = ( int )position.x();
+                 y_temp = ( int )position.y();
 
-             QPointF position =  ui->graphicsView->mapToScene( mEvent->pos() );
-             QRgb rgb = imageOrig.pixel( ( int )position.x(), ( int )position.y() );
-
-             QColor blue40 = Qt::blue;
-             blue40.setAlphaF( 0.4 );
-             crop_rect->setBrush(blue40);
-             x_temp = ( int )position.x();
-             y_temp = ( int )position.y();
-
-
-             crop_rect->setRect(x1, y1, x_temp-x1, y_temp-y1);
-
-
+                 crop_rect->setRect(x1, y1, x_temp-x1, y_temp-y1);
          }
          event->accept();
-     }
+      }
     }
     return QMainWindow::eventFilter(object, event);
 }
 
+//!Setting for placeholder for figure/table/equation
 void MainWindow::displayHolder(QString s1,QString s2,int x1,int y1,int x2,int y2,int i)
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -830,6 +854,7 @@ void MainWindow::displayHolder(QString s1,QString s2,int x1,int y1,int x2,int y2
     return;
 }
 
+//! Updating entries for figure/table/equation pagewise
 void MainWindow::updateEntries(QDomDocument document, QString filename,QString PageNo, QString s2, int i)
 {
     QDomElement root = document.documentElement();
@@ -847,7 +872,7 @@ void MainWindow::updateEntries(QDomDocument document, QString filename,QString P
             //qDebug()<<Child.tagName();
             while (!Child.isNull())
             {
-                if (s2 == "Figure" && Child.tagName()=="image")
+                if (s2 == "Figure" && Child.tagName()=="figure")
                 {
                     Child.childNodes().at(0).setNodeValue(QString::number(i));
                 }
@@ -878,6 +903,7 @@ void MainWindow::updateEntries(QDomDocument document, QString filename,QString P
     f.close();
 }
 
+//! Genearte image.xml for figure/table/equation entries and initialize these values by 1 iff when this file does not exist.
 void MainWindow::createImageInfoXMLFile()
 {
     QDomDocument document;
@@ -904,7 +930,7 @@ void MainWindow::createImageInfoXMLFile()
         QDomElement tagPage = document.createElement("page"+PageNo[1]);
         root.appendChild(tagPage);
 
-        QDomElement tagImage = document.createElement("image");
+        QDomElement tagImage = document.createElement("figure");
         tagPage.appendChild(tagImage);
         QDomText NoImage = document.createTextNode("1");
         tagImage.appendChild(NoImage);
@@ -922,7 +948,7 @@ void MainWindow::createImageInfoXMLFile()
 
     //qDebug()<<"xxml file" << strI <<"pageno" << list1;
 
-    QString filename12 = mProject.GetDir().absolutePath() + "/my.xml";
+    QString filename12 = mProject.GetDir().absolutePath() + "/image.xml";
     if(!QFileInfo::exists(filename12))
     {
         QFile file(filename12);
@@ -1010,6 +1036,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             // code to copy selected string:-
             QString str1 = cursor.selectedText();
             selectedStr = str1.toUtf8().constData();
+
             if (selectedStr != "") {
                 // code to display options on rightclick
                 curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
@@ -1065,54 +1092,159 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
                 vector<pair<int, string>> vecSugg, vecSugg1;
                 map<string, int> mapSugg;
-                string CSugg = CPair[toslp1(selectedStr)];
-                if (CSugg.size() > 0) mapSugg[toslp1(CSugg)]++;
-                if (Words.size() > 0)  mapSugg[toslp1(Words[0])]++;
-                if (Words1.size() > 0) mapSugg[toslp1(nearestCOnfconfirmingSuggvec)]++;
-                if (PWords1.size() > 0) mapSugg[toslp1(nearestCOnfconfirmingSuggvec1)]++;
-                if (PairSugg.size() > 0) mapSugg[toslp1(PairSugg)]++;
-                mapSugg[SamasBreakLRCorrect(toslp1(selectedStr), Dict, PWords, TPWords, TPWordsP)]++;
-                string s1 = toslp1(selectedStr);
-                string nearestCOnfconfirmingSuggvecFont = "";
-                min = 100;
-                for (size_t t = 0; t < vec.size(); t++) {
-                    vector<string> wordConfusions; vector<int> wCindex;
-                    int minFactor = loadWConfusionsNindex1(s1, vec[t], ConfPmapFont, wordConfusions, wCindex);
-                    wordConfusions.clear(); wCindex.clear();
-                    if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvecFont = vec[t]; }
+
+                QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "CPair";
+                loadCPairs(localmFilename1.toUtf8().constData(), CPairs, Dict, PWords);
+                //loadCPair(localmFilename1.toUtf8().constData(), CPair, Dict, PWords);
+
+                //string CSugg = CPair[toslp1(selectedStr)];
+
+                vector<string> out;
+                map<string, set<string>>::iterator itr;
+                set<string>::iterator set_it;
+                for (itr = CPairs.begin(); itr != CPairs.end(); ++itr)
+                {
+                    if(toslp1(itr->first) == toslp1(selectedStr))
+                    {
+                        for (set_it = itr->second.begin(); set_it != itr->second.end(); ++set_it)
+                        {
+                           out.push_back(toslp1(*set_it));
+                        }
+                    }
                 }
-                if (nearestCOnfconfirmingSuggvecFont.size() > 0) mapSugg[nearestCOnfconfirmingSuggvecFont]++;
 
-                string PairSuggFont = "";
-                if (Alligned.size() > 0) PairSuggFont = print2OCRSugg(s1, Alligned[0], ConfPmap, Dict);
-                if (PairSuggFont.size() > 0) mapSugg[PairSuggFont]++;
 
-                string sugg9 = "";
-                sugg9 = generatePossibilitesNsuggest(s1, TopConfusions, TopConfusionsMask, Dict, SRules);
-                if (sugg9.size() > 0) mapSugg[sugg9]++;
+//                for(auto& it : CPairs){
+//                    if(toslp1(it.first) == toslp1(selectedStr))
+//                    {
+//                        //cout << toslp1(it.second) << endl;
+//                        out.push_back(toslp1(it.second));
+//                    }
+//                    //cout<<"Word: "<<it.second<< " Mapped Int: "<<it.first<<endl;
+//                }
+//                //sort( out.begin(), out.end() );
+//                //out.erase( unique( out.begin(), out.end() ), out.end() );
 
-                map<string, int> mapSugg1;
-                for (size_t ksugg1 = 0; ksugg1 < 5; ksugg1++) {
-                    if (Words.size() > ksugg1)  mapSugg1[toslp1(Words[ksugg1])]++;
-                    if (Words1.size() > ksugg1) mapSugg1[toslp1(Words1[ksugg1])]++;
-                    if (PWords1.size() > ksugg1) mapSugg1[toslp1(PWords1[ksugg1])]++;
+                //if (CSugg.size() > 0) mapSugg[toslp1(CSugg)]++;
+
+                for (size_t ksugg1 = 0; ksugg1 < 6; ksugg1++) {
+                        //qDebug()<< mProject.get_configuration();
+                    if (out.size() > ksugg1)  mapSugg[toslp1(out[ksugg1])]++;
                 }
+                if(mProject.get_configuration()=="True")
+                {
+                    if (Words.size() > 0)  mapSugg[toslp1(Words[0])]++;
+                    if (Words1.size() > 0) mapSugg[toslp1(nearestCOnfconfirmingSuggvec)]++;
+                    if (PWords1.size() > 0) mapSugg[toslp1(nearestCOnfconfirmingSuggvec1)]++;
+                    if (PairSugg.size() > 0) mapSugg[toslp1(PairSugg)]++;
+                    mapSugg[SamasBreakLRCorrect(toslp1(selectedStr), Dict, PWords, TPWords, TPWordsP)]++;
+                    string s1 = toslp1(selectedStr);
+                    string nearestCOnfconfirmingSuggvecFont = "";
+                    min = 100;
+                    for (size_t t = 0; t < vec.size(); t++) {
+                        vector<string> wordConfusions; vector<int> wCindex;
+                        int minFactor = loadWConfusionsNindex1(s1, vec[t], ConfPmapFont, wordConfusions, wCindex);
+                        wordConfusions.clear(); wCindex.clear();
+                        if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvecFont = vec[t]; }
+                    }
+                    //if (nearestCOnfconfirmingSuggvecFont.size() > 0) mapSugg[nearestCOnfconfirmingSuggvecFont]++;
+
+                    string PairSuggFont = "";
+                    if (Alligned.size() > 0) PairSuggFont = print2OCRSugg(s1, Alligned[0], ConfPmap, Dict);
+                    //if (PairSuggFont.size() > 0) mapSugg[PairSuggFont]++;
+
+                    string sugg9 = "";
+                    sugg9 = generatePossibilitesNsuggest(s1, TopConfusions, TopConfusionsMask, Dict, SRules);
+                    //if (sugg9.size() > 0) mapSugg[sugg9]++;
+
+                    cout<<"selected string: "<<toslp1(selectedStr)<<endl;
+                    cout<<"Mapped Suggestion 0: "<<endl; //(string,int) Words, last no. of occuring, create single entry for single same word
+                    //cout<<"From CPair: "<<CSugg<<endl;
+                    cout<<"From CPairs: ";
+                    for(auto& it : out){
+                        cout << toslp1(it) << endl;
+                    }
+                    cout<<"From Primary OCR: ";
+                    for(auto& it : Words){
+                        for(uint i = 0;i<it.size();i++){
+                             cout << it[i];
+                        }
+                        cout<<"\n";
+                    }
+                    cout<<"Nearest confirming from Secondary OCR "<<nearestCOnfconfirmingSuggvec<<endl;
+                    cout<<"Nearest confirming from PWords "<<nearestCOnfconfirmingSuggvec1<<endl;
+                    cout<<"One suggestion from ConfusionPair and secondary OCR Trie Pattern Data "<<toslp1(PairSugg)<<endl;
+                    cout<<"One suggestion from Pwords which is present in Dict "<<SamasBreakLRCorrect(toslp1(selectedStr), Dict, PWords, TPWords, TPWordsP)<<endl;
+    //                cout<<"Nearest confirming from Secondary OCR by converting the string in English "<<nearestCOnfconfirmingSuggvecFont<<endl;
+    //                cout<<"One suggestion from ConfusionPair and secondary OCR Trie Pattern Data by converting the string in English "<<toslp1(PairSuggFont)<<endl;
+    //                cout<<"One suggestion from TopConfusion and SandhiRules by converting the string in English "<<sugg9<<endl;
+                }
+//                map<string, int> mapSugg1;
+//                for (size_t ksugg1 = 0; ksugg1 < 5; ksugg1++) {
+//                    if (Words.size() > ksugg1)  mapSugg1[toslp1(Words[ksugg1])]++;
+//                    if (Words1.size() > ksugg1) mapSugg1[toslp1(Words1[ksugg1])]++;
+//                    if (PWords1.size() > ksugg1) mapSugg1[toslp1(PWords1[ksugg1])]++;
+//                }
+
+//                cout<<"Mapped Suggestion 1: "<<endl;
+//                cout<<"From Primary OCR: ";
+//                for(auto& it : Words){
+//                    for(uint i = 0;i<it.size();i++){
+//                         cout << it[i];
+//                    }
+//                    cout<<"\n";
+//                }
+//                cout<<"From Secondary OCR: ";
+//                for(auto& it : Words1){
+//                    for(uint i = 0;i<it.size();i++){
+//                         cout << it[i];
+//                    }
+//                    cout<<"\n";
+//                }
+//                cout<<"From PWords: ";
+//                for(auto& it : PWords1){
+//                    for(uint i = 0;i<it.size();i++){
+//                         cout << it[i];
+//                    }
+//                    cout<<"\n";
+//                }
 
 
                 for (map<string, int>::const_iterator eptr = mapSugg.begin(); eptr != mapSugg.end(); eptr++) {
                     vecSugg.push_back(make_pair(editDist(toslp1(eptr->first), toslp1(selectedStr)), eptr->first));
                 }
 
-                for (map<string, int>::const_iterator eptr = mapSugg1.begin(); eptr != mapSugg1.end(); eptr++) {
-                    vecSugg1.push_back(make_pair(editDist(toslp1(eptr->first), toslp1(selectedStr)), eptr->first));
-                }
+//                for (map<string, int>::const_iterator eptr = mapSugg1.begin(); eptr != mapSugg1.end(); eptr++) {
+//                    vecSugg1.push_back(make_pair(editDist(toslp1(eptr->first), toslp1(selectedStr)), eptr->first));
+//                }
 
 
                 //vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),selectedStr),selectedStr));
                 //if(Words.size() > 0) vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),toslp1(Words[0])),Words[0]));
                 //vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),toslp1(Words1[0])),Words1[0]));
                 //vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),toslp1(PairSugg)),PairSugg));
-                sort(vecSugg.begin(), vecSugg.end()); sort(vecSugg1.begin(), vecSugg1.end());
+                sort(vecSugg.begin(), vecSugg.end());
+                //sort(vecSugg1.begin(), vecSugg1.end());
+
+//                cout << "\n Filtered Vector Suggestions 1\n"; //With the mapsugg0
+//                cout << "MappingNum0\t MappingNum1\t Word\n";
+
+//                for (uint i = 0; i < vecSugg1.size(); i++){
+//                    cout<<mapSugg[vecSugg1[i].second]<<"\t"<<mapSugg1[vecSugg1[i].second]<<"\t"<<toDev(vecSugg1[i].second)<<endl;
+//                }
+
+                cout << "\nVector Suggestions 0\n";
+                cout << "MappingNum\t vector_int\t Word\n";
+                for (uint i = 0; i < vecSugg.size(); i++){
+                    cout<<mapSugg[vecSugg[i].second]<<"\t"<<vecSugg[i].first<<"\t"<<toDev(vecSugg[i].second)<<endl;
+                }
+
+//                cout << "\nVector Suggestions 1\n";
+//                cout << "MappingNum\t vector_int\t Word\n";
+//                for (uint i = 0; i < vecSugg1.size(); i++){
+//                    cout<<mapSugg1[vecSugg1[i].second]<<"\t"<<vecSugg1[i].first<<"\t"<<toDev(vecSugg1[i].second)<<endl;
+//                }
+
                 //cout << vec[0]  << " " << vec[1]  << " " << vec[2]  << " " << newtrie.next.size() << endl;
                 //Words = suggestions((selectedStr));
                 for (uint bitarrayi = 0; bitarrayi < vecSugg.size(); bitarrayi++) {
@@ -1121,13 +1253,13 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                     spell_menu->addAction(act);
                 }
 
-                for (uint bitarrayi = 0; bitarrayi < vecSugg1.size(); bitarrayi++) {
-                    if (mapSugg[vecSugg1[bitarrayi].second] < 1) {
-                        act = new QAction(QString::fromStdString(toDev(vecSugg1[bitarrayi].second)), spell_menu);
-                        //cout<<vecSugg1[bitarrayi].first<<endl;
-                        spell_menu->addAction(act);
-                    }
-                }
+//                for (uint bitarrayi = 0; bitarrayi < vecSugg1.size(); bitarrayi++) {
+//                    if (mapSugg[vecSugg1[bitarrayi].second] < 1) {
+//                        act = new QAction(QString::fromStdString(toDev(vecSugg1[bitarrayi].second)), spell_menu);
+//                        //cout<<vecSugg1[bitarrayi].first<<endl;
+//                        spell_menu->addAction(act);
+//                    }
+//                }
                 /*Words =  print5NearestEntries(TDict,selectedStr);
                 if (Words.size() > 0) {
                     act = new QAction(QString::fromStdString(toDev(Words[0])), spell_menu);
@@ -1393,6 +1525,64 @@ void MainWindow::on_actionSave_triggered()
         cursor.mergeCharFormat(fmt);
 
         QString output = curr_browser->toHtml();
+        QTextDocument doc;
+        doc.setHtml( gInitialTextHtml[currentTabPageName] );
+        s1 = doc.toPlainText();
+        s2 = curr_browser->toPlainText();
+
+        // Update CPair by editdistance
+        editDistance(s1, s2);
+
+        //CPair.insert(CPair_editDis.begin(), CPair_editDis.end());
+        for(auto elem : CPair_editDis)
+        {
+           std::cerr << elem.first << " " << elem.second << "\n";
+           std::cerr << toslp1(elem.first) << " " << toslp1(elem.second) << "\n";
+           CPair.insert(make_pair(toslp1(elem.first), toslp1(elem.second)));
+           if ( CPairs.find(toslp1(elem.first)) != CPairs.end())
+           {
+               std::set< std::string>& s_ref = CPairs[toslp1(elem.first)];
+               s_ref.insert(toslp1(elem.second));
+           }
+           else
+           {
+               CPairs[toslp1(elem.first)].insert(toslp1(elem.second));
+           }
+           //CPair1.insert(make_pair(toslp1(elem.first), toslp1(elem.second)));
+        }
+
+        QString filename12 = mProject.GetDir().absolutePath() + "/Dicts/" + "CPair";
+        QFile file12(filename12);
+        if(!file12.exists()){
+           qDebug() << "NO exist file "<<filename12;
+         }else{
+           qDebug() << filename12<<"exists";
+         }
+        if (file12.open(QIODevice::WriteOnly | QIODevice::Text)){
+            QTextStream out(&file12);
+            out.setCodec("UTF-8");
+            map<string, set<string>>::iterator itr;
+            set<string>::iterator set_it;
+
+            for (itr = CPairs.begin(); itr != CPairs.end(); ++itr)
+            {
+                out <<  QString::fromStdString(toDev(itr->first)) << '\t';
+                for (set_it = itr->second.begin(); set_it != itr->second.end(); ++set_it)
+                {
+                    if(set_it != prev(itr->second.end()))
+                    {
+                        out << QString::fromStdString(toDev(*set_it)) << ",";
+                    }
+                    else {
+                        out << QString::fromStdString(toDev(*set_it));
+                    }
+
+                }
+                out <<"\n";
+            }
+
+             file12.close();
+        }
 
         if(sFile.open(QFile::WriteOnly))
         {
@@ -1635,7 +1825,9 @@ void MainWindow::on_actionLoadSubPS_triggered()
     size_t count = loadPWordsPatternstoTrie(TPWordsP, PWords);// justsubstrings not patterns exactly // PWordsP,
     //    localmFilename1.replace("Inds/","CPair");
     QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "CPair";
-    loadCPair(localmFilename1.toUtf8().constData(), CPair, Dict, PWords); localmFilename1 = mFilename1;
+    //loadCPair(localmFilename1.toUtf8().constData(), CPair, Dict, PWords); localmFilename1 = mFilename1;
+    loadCPairs(localmFilename1.toUtf8().constData(), CPairs, Dict, PWords);
+    localmFilename1 = mFilename1;
 
     //localmFilename1.replace("Inds/","LSTM");
     localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "LSTM";
@@ -4369,8 +4561,9 @@ void MainWindow::LoadImageFromFile(QFile * f) {
 //    z->gentle_zoom(2.0);
 
     item1 =new QGraphicsRectItem(325, 203, 341, 31);
-    crop_rect = new QGraphicsRectItem(325, 203, 341, 31);
     graphic->addItem(item1);
+    //! while loading an image; create crop_rect and add it to graphic; so we can track & capture mouse press and mouse release event
+    crop_rect = new QGraphicsRectItem(0, 0, 1, 1);
     graphic->addItem(crop_rect);
     ui->graphicsView->setMouseTracking(true);
     ui->graphicsView->viewport()->installEventFilter(this);
@@ -4670,6 +4863,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             QDir().mkdir(mProject.GetDir().absolutePath() + "/Images/Inserted");
 
         QMessageBox::information(0, "Success", "Project opened successfully.");
+        //!Genearte image.xml for figure/table/equation entries and initialize these values by 1.
         createImageInfoXMLFile();
 
     }

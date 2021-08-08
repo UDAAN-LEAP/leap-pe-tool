@@ -322,7 +322,7 @@ private:
     QFileSystemWatcher watcher;
     QGraphicsRectItem* item1;
     QGraphicsRectItem* crop_rect;
-
+    QString s1, s2;
 };
 
 #endif // MAINWINDOW_H

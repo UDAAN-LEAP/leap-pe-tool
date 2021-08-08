@@ -63,6 +63,13 @@ void Project::set_version(int ver) {
     save_xml();
 }
 
+void Project::set_configuration(QString val) {
+    std::string value = val.toUtf8().constData();
+    auto c = doc.child("Project").child("Configuration");
+    c.child("Prefixmatch").first_child().set_value(value.c_str());
+    save_xml();
+}
+
 void Project::removeFile(QModelIndex & idx,Filter & pFilter, QFile & pFile) {
     auto first = doc.child("Project").child("ItemGroup");
 
@@ -730,6 +737,13 @@ Filter * Project::getFilter(QString str) {
     }
     return nullptr;
 }
+
+QString Project::get_configuration() {
+    auto c = doc.child("Project").child("Configuration");
+    QString PMatch = c.child("Prefixmatch").child_value();
+    return PMatch;
+}
+
 QString Project::get_stage() {
     auto c = doc.child("Project").child("Metadata");
     QString stage = c.child("Stage").child_value();
