@@ -622,20 +622,21 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     {
      static float x1, y1; //coordinate values
      int x2, y2; //coordinate values
-<<<<<<< HEAD
      int x_temp , y_temp; // dynamic coordinate values
-=======
-      int x_temp , y_temp; // dynamic coordinate values
->>>>>>> caadef86dd7590ac0ca00d0635f6a89bec5e4ee8
      if( object->parent() == ui->graphicsView)
      {
-//            installEventFilter(this);
+            installEventFilter(this);
             if (event->type() == QEvent::MouseButtonPress)
             {
             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
             QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
             QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
+            //qDebug() << "RGB" <<( int )pos.x()<<( int )pos.y();
 
+//            cerr << "*****MouseMove*****\n";
+            //qDebug() << mEvent->pos().x() << " " << mEvent->pos().y() << "\n";
+//            x1 = mEvent->pos().x();
+//            y1 = mEvent->pos().y();
             x1 = ( int )pos.x();
             y1 = ( int )pos.y();
             pressedFlag=1;
@@ -698,26 +699,21 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 Component = Component.nextSibling().toElement();
              }
 
-<<<<<<< HEAD
 //            QString figValues = mProject.get_figNumValues();
 //            QStringList figNo=figValues.split(QRegExp(" "));
 //            //qDebug()<<figNo[0];
 //            static int i = figNo[0].toInt();
 //            static int j = figNo[1].toInt();
 //            static int k = figNo[2].toInt();
-=======
-            QString figValues = mProject.get_figNumValues();
-            QStringList figNo=figValues.split(QRegExp(" "));
-            static int i = figNo[0].toInt();
-            static int j = figNo[1].toInt();
-            static int k = figNo[2].toInt();
->>>>>>> caadef86dd7590ac0ca00d0635f6a89bec5e4ee8
 
             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-
+//            cerr << "*****MouseMove*****\n";
+            //qDebug() << mEvent->pos().x() << " " << mEvent->pos().y() << "\n";
             QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
             QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
-
+            //qDebug() << "RGB" <<( int )pos.x()<<( int )pos.y();
+//            x2 = mEvent->pos().x();
+//            y2 = mEvent->pos().y();
             x2 = ( int )pos.x();
             y2 = ( int )pos.y();
             pressedFlag =0;
@@ -733,7 +729,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             qDebug() << x1 << " " << y1 << " " << x2 - x1 << " " << y2 - y1;
 
             crop_rect->setRect(x1, y1, x2 - x1, y2 - y1);
-
+            //static int i=1,j=1,k=1;
 
             QMessageBox messageBox(this);
             messageBox.setWindowTitle("Do you want to add");
@@ -755,17 +751,11 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 QString s2 = "Figure";
                 displayHolder(s1,s2,x1,y1,x2,y2,i);
                 i++;
-<<<<<<< HEAD
                 //graphic->removeItem(crop_rect);
                 crop_rect->setRect(0,0,1,1);
                 updateEntries(document, filename12, PageNo[1], s2, i);
 
                 //mProject.set_figNumValues(i,j,k);
-=======
-//                graphic->removeItem(crop_rect);
-                crop_rect->setRect(0,0,1,1);
-                mProject.set_figNumValues(i,j,k);
->>>>>>> caadef86dd7590ac0ca00d0635f6a89bec5e4ee8
                 return 0;
             }
             else if (messageBox.clickedButton() == tableButton)
@@ -774,16 +764,10 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 QString s2 = "Table";
                 displayHolder(s1,s2,x1,y1,x2,y2,j);
                 j++;
-<<<<<<< HEAD
                 //graphic->removeItem(crop_rect);
                 crop_rect->setRect(0,0,1,1);
                 updateEntries(document, filename12, PageNo[1], s2, j);
                 //mProject.set_figNumValues(i,j,k);
-=======
-//                graphic->removeItem(crop_rect);
-                crop_rect->setRect(0,0,1,1);
-                mProject.set_figNumValues(i,j,k);
->>>>>>> caadef86dd7590ac0ca00d0635f6a89bec5e4ee8
                 return 0;
             }
             else if(messageBox.clickedButton() == equationButton)
@@ -792,15 +776,10 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 QString s2 = "Equation";
                 displayHolder(s1,s2,x1,y1,x2,y2,k);
                 k++;
-<<<<<<< HEAD
                 //graphic->removeItem(crop_rect);
                 crop_rect->setRect(0,0,1,1);
                 updateEntries(document, filename12, PageNo[1], s2, k);
                 //mProject.set_figNumValues(i,j,k);
-=======
-                crop_rect->setRect(0,0,1,1);
-                mProject.set_figNumValues(i,j,k);
->>>>>>> caadef86dd7590ac0ca00d0635f6a89bec5e4ee8
                 return 0;
             }
             else {
@@ -813,7 +792,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         }
         }
 
-<<<<<<< HEAD
      if (event->type() == QEvent::MouseMove) {
          QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
          if (pressedFlag == 1)
@@ -831,30 +809,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
 
              crop_rect->setRect(x1, y1, x_temp-x1, y_temp-y1);
-=======
-        if (event->type() == QEvent::MouseMove) {
-            QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-            if (pressedFlag == 1)
-            {
-                statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
-
-                QPointF position =  ui->graphicsView->mapToScene( mEvent->pos() );
-                QRgb rgb = imageOrig.pixel( ( int )position.x(), ( int )position.y() );
-
-                QColor blue40 = Qt::blue;
-                blue40.setAlphaF( 0.4 );
-                crop_rect->setBrush(blue40);
-                x_temp = ( int )position.x();
-                y_temp = ( int )position.y();
-
-
-                crop_rect->setRect(x1, y1, x_temp-x1, y_temp-y1);
-
-
-            }
-            event->accept();
-        }
->>>>>>> caadef86dd7590ac0ca00d0635f6a89bec5e4ee8
 
 
          }
