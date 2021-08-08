@@ -3219,38 +3219,7 @@ void MainWindow::on_viewComments_clicked() //Version Based
             cv->show();
             return;
         }
-        /*
-                //      Character Changes for Accuracy Calculation
 
-                QTextDocument doc;
-                doc.setHtml(correctorOutput);
-                correctorOutput = doc.toPlainText().simplified();
-                currentpagetext = curr_browser->toPlainText().simplified();
-
-                int l1 = correctorOutput.length(), l2 = currentpagetext.length();
-
-
-                diff_match_patch dmp;
-                auto diffs1 = dmp.diff_main(correctorOutput,currentpagetext);
-                totalCharErrors = LevenshteinWithGraphemes(diffs1);
-
-                auto diffs2 = dmp.diff_linesToChars(correctorOutput, currentpagetext); //LinesToChars modifed for WordstoChar in diff_match_patch.cpp
-                auto lineText1 = diffs2[0].toString();
-                auto lineText2 = diffs2[1].toString();
-                auto lineArray = diffs2[2].toStringList();
-                int totalwords = lineArray.count();
-                auto diffs3 = dmp.diff_main(lineText1, lineText2);
-                totalWordErrors= LevenshteinWithGraphemes(diffs3);
-                dmp.diff_charsToLines(diffs3, lineArray);
-
-
-                charAccuracy = (float)(l1 - totalCharErrors)/(float)l1*100;
-                if(charAccuracy<0) charAccuracy = ((float)(l2 - totalCharErrors)/(float)l2)*100;
-                charAccuracy = (((float)lround(charAccuracy*100))/100);
-
-                wordAccuracy = (float)(totalwords - totalWordErrors)/(float)totalwords*100;
-                wordAccuracy = (((float)lround(wordAccuracy*100))/100);
-                */
 
         //HIGHLIGHTS FOR Accuracy Calculation
         auto textCursor = curr_browser->textCursor();
@@ -3470,9 +3439,7 @@ void MainWindow::on_compareVerifierOutput_clicked() //Verifier-Version
         QString correctorText = file.replace("VerifierOutput","CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
         QString ocrText = file.replace("CorrectorOutput","Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
         ocrText.replace(".html",".txt");
-        //        ocrText.replace("V1_","");
-        //        ocrText.replace("V2_","");
-        //        ocrText.replace("V3_","");
+
         if(!ocrText.isEmpty())
         {
             QFile sFile(ocrText);
@@ -3712,11 +3679,6 @@ void MainWindow::on_actionPush_triggered() {
     mProject.push();
 }
 
-//void MainWindow::on_actionCommit_triggered() {
-
-//    QString text = "Verifier has Turned in Version:" + mProject.get_version();
-//    mProject.commit(text.toStdString());
-//}
 
 void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
     if (checkUnsavedWork()) {
@@ -3762,10 +3724,7 @@ void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
         QString emailText =  "Book ID: " + mProject.get_bookId()
                 + "\nSet ID: " + mProject.get_setId()
                 + "\n" + commit_msg ;
-        /*  if( !sendEmail(emailText)) {
-            QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nEmail Notification Unsuccessful!,Please Check your Internet Connection");
-            return;
-        } */
+
 
         ui->actionTurn_In->setEnabled(false);
         QMessageBox::information(0, "Turn In", "Turned In Successfully");
@@ -3933,12 +3892,12 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
             commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
         }
         else if (messageBox.clickedButton() == returnSetButton) {
-            //mProject.enable_push( true ); //Increment = true
+
             s = SubmissionType::return_set;
             commit_msg = "Verifier has Turned in the Next Version:" + mProject.get_version();
         }
         else if (messageBox.clickedButton() == finaliseButton) {
-            //mProject.enable_push( false ); //Increment = false
+
             if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
                     >= 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
             {
@@ -3980,10 +3939,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
                 + "\nSet ID: " + mProject.get_setId()
                 + "\nRating Provided: " + QString::number(rating)
                 + "\n" + commit_msg ;
-        /*  if( !sendEmail(emailText)) {
-            QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nTurn-In Unsuccessful!,Please Check your Internet Connection");
-            return;
-        } */
+
 
         ui->lineEdit_2->setText("Version " + mProject.get_version());
         QMessageBox::information(0, "Turn In", "Turned In Successfully");
@@ -4204,18 +4160,18 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 void MainWindow::LoadImageFromFile(QFile * f) {
     QString localFileName = f->fileName();
     loadimage = true;
-//    qDebug() << "local file name" << localFileName;
+
     imageOrig.load(localFileName);
     if (graphic)delete graphic;
     graphic = new QGraphicsScene(this);
     graphic->addPixmap(QPixmap::fromImage(imageOrig));
-    //graphic->setPos(0, 0);
+
     ui->graphicsView->setScene(graphic);
     ui->graphicsView->fitInView(graphic->itemsBoundingRect(), Qt::KeepAspectRatio);
     if (z)delete z;
     z = new Graphics_view_zoom(ui->graphicsView);
     z->set_modifiers(Qt::NoModifier);
-//    z->gentle_zoom(2.0);
+
 
     item1 =new QGraphicsRectItem(325, 203, 341, 31);
     crop_rect = new QGraphicsRectItem(325, 203, 341, 31);
@@ -4245,7 +4201,7 @@ void MainWindow::file_click(const QModelIndex & indx) {
         }
         if (suff == "png" || suff== "jpeg" || suff == "jpg") {
             LoadImageFromFile(file);
-//            qDebug() << "here";
+
         }
         break;
     }
@@ -4435,7 +4391,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     if (!QDir(s5).exists()) {
         QDir().mkdir(s5);
     }
-
+    //        watcher.addPath(str3);
+    //        watcher.addPath(str4);
     bool exists = QDir(s1).exists() && QDir(s2).exists();
     if (xml.exists()&& exists) {
         ui->treeView->reset();
@@ -4459,8 +4416,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         QString str4 = mProject.GetDir().absolutePath() + "/Images/";
         watcher.addPath(str1);
         watcher.addPath(str2);
-        //        watcher.addPath(str3);
-        //        watcher.addPath(str4);
         QDir cdir(str1);
         Filter * filter = mProject.getFilter("Document");
         auto list = cdir.entryList(QDir::Filter::Files);
