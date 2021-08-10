@@ -1533,6 +1533,26 @@ void MainWindow::on_actionSave_triggered()
         // Update CPair by editdistance
         editDistance(s1, s2);
 
+        //! Do commit when there are some changes in previous and new html file on the basis of editdistance.
+        if(editDistance(s1,s2))
+        {
+            if(mProject.get_version().toInt())     //Check version number
+            {
+                QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();
+                //!Check commit condition
+                if(!mProject.commit(commit_msg.toStdString()))
+                {
+                    cout<<"Commit Unsuccessful"<<endl;
+                    return;
+                }
+                else
+                {
+                    mProject.commit(commit_msg.toStdString());
+                    cout<<"Commit Successful"<<endl;
+                }
+            }
+        }
+
         //CPair.insert(CPair_editDis.begin(), CPair_editDis.end());
         for(auto elem : CPair_editDis)
         {
