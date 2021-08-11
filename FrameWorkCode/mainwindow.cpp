@@ -4580,7 +4580,7 @@ void MainWindow::LoadImageFromFile(QFile * f) {
     z->set_modifiers(Qt::NoModifier);
 //    z->gentle_zoom(2.0);
 
-    item1 =new QGraphicsRectItem(325, 203, 341, 31);
+    item1 =new QGraphicsRectItem(0, 0, 1, 1);
     graphic->addItem(item1);
     //! while loading an image; create crop_rect and add it to graphic; so we can track & capture mouse press and mouse release event
     crop_rect = new QGraphicsRectItem(0, 0, 1, 1);
