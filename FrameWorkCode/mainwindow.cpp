@@ -96,6 +96,9 @@ bool drawRectangleFlag=false;
 //Check image is loaded on not
 bool loadimage=false;
 
+//button functioning over marking a region for figure/table/equations
+bool shouldIDraw=false;
+
 //Resposible for dynamic rectangular drawing
 int pressedFlag;
 
@@ -580,11 +583,20 @@ void MainWindow::on_actionSpell_Check_triggered()
     }
 
 }
-/*! Function Description
- * \brief MainWindow::eventFilter
- * \param object:
- * \param event: ToolTip and ImageMarkingRegion
- * \return (QMainWindow::eventFilter(object, event));
+/*!
+ * \fn MainWindow::eventFilter
+ * \brief event: ToolTip and ImageMarkingRegion
+      1. Responsible for drawing rectangular region
+      2. Placing a PlaceHolder for figure/table/equation entries
+      3. Set a MessageBox for figure/table/equation/cancel
+      4. Set counter for pagewise for each entry
+      5. Mark multiple image regions in a loaded image.
+      6. Set various flag: a)drawRectangleFlag: is to prevent triggering of this function twice
+      b) loadimage: check image is loaded on not; c) pressedFlag: resposible for dynamic rectangular
+      drawing.
+ * \param object, event
+ * \return QMainWindow::eventFilter(object, event);
+ * \sa MainWindow::displayHolder, MainWindow::updateEntries, MainWindow::createImageInfoXMLFile
  */
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
@@ -629,17 +641,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
       }
 
-    /*
-      * \description:
-      1. Responsible for drawing rectangular region
-      2. Placing a PlaceHolder for figure/table/equation entries
-      3. Set a MessageBox for figure/table/equation/cancel
-      4. Set counter for pagewise for each entry
-      5. Mark multiple image regions in a loaded image.
-      6. Set various flag: a)drawRectangleFlag: is to prevent triggering of this function twice
-      b) loadimage: check image is loaded on not; c) pressedFlag: resposible for dynamic rectangular
-      drawing.
-     */
+    //! ImageMarkingRegion feature
 
     if(loadimage)                   //Check image is loaded or not.
     {
@@ -652,7 +654,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
      {
             installEventFilter(this);
             //! Capturing mouse press event on graphicsview
-            if (event->type() == QEvent::MouseButtonPress)
+            if (event->type() == QEvent::MouseButtonPress && shouldIDraw)
             {
                 QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
                 QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos()); //Capturing the coordinates values according to the image.
@@ -674,6 +676,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     event->accept();
                     return true;
                 }
+                if(shouldIDraw){
 
                 drawRectangleFlag=true;     //set the flag true when occuring for first time
                 static int i,j,k;           //for storing the counter values for figure/equation/table for each page
@@ -736,7 +739,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
                 crop_rect->setBrush(blue40);   //set brush
 
-                qDebug() << x1 << " " << y1 << " " << x2 - x1 << " " << y2 - y1;   //getting the coordinates
+                //qDebug() << x1 << " " << y1 << " " << x2 - x1 << " " << y2 - y1;   //getting the coordinates
 
                 crop_rect->setRect(x1, y1, x2 - x1, y2 - y1);       //set final coordinates for rectangular region
 
@@ -768,7 +771,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     //! updating entries for figure entries in xml file
                     updateEntries(document, filename12, PageNo[1], s2, i);
 
-                    return 0;
+                    shouldIDraw=false;
                 }
                 //! settings for a tableholder
                 else if (messageBox.clickedButton() == tableButton)
@@ -786,7 +789,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     //! updating entries for table entries in xml file
                     updateEntries(document, filename12, PageNo[1], s2, j);
 
-                    return 0;
+                    shouldIDraw=false;
                 }
                 //! settings for a equationholder
                 else if(messageBox.clickedButton() == equationButton)
@@ -804,17 +807,19 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     //! updating entries for equation entries in xml file
                     updateEntries(document, filename12, PageNo[1], s2, k);
 
-                    return 0;
+                    shouldIDraw=false;
                 }
                 //! settings for cancelbutton
                 else
                 {
                     QMessageBox::information(0, "Not saved", "Cancelled");
                     crop_rect->setRect(0,0,1,1);
-                    return 0;
+                    shouldIDraw=false;
                 }
 
                 event->accept();
+                //return true;
+            }
             }
         }
         //! Capturing mousemove event & creating single dynamic rectangle & Updating the temporary coordinates until pressedFlag is true
@@ -844,13 +849,11 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 //!Setting for placeholder for figure/table/equation
 void MainWindow::displayHolder(QString s1,QString s2,int x1,int y1,int x2,int y2,int i)
 {
-    QTextCursor cursor = curr_browser->textCursor();
+    QTextCursor cursor = curr_browser->textCursor();       //getting the cursor position
 
-    QStringList PageNo=gCurrentPageName.split(QRegExp("[-.]"));
+    QStringList PageNo=gCurrentPageName.split(QRegExp("[-.]"));     //splitting page number
     QString PageNumber = PageNo[1];
-    //qDebug()<<PageNo[1];
-    cursor.insertText("["+s1+" "+s2+"-"+PageNumber+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");
-    //curr_browser->append("[IMGHOLDER Figure 1."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");
+    cursor.insertText("["+s1+" "+s2+"-"+PageNumber+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");         //insert placeholder
     return;
 }
 
@@ -859,17 +862,13 @@ void MainWindow::updateEntries(QDomDocument document, QString filename,QString P
 {
     QDomElement root = document.documentElement();
     QDomElement Component=root.firstChild().toElement();
-    //qDebug()<<Component.tagName();
-    // Loop while there is a child
-    while(!Component.isNull())
-    {
-        // Check if the child tag name is COMPONENT
 
+    while(!Component.isNull())       // Loop while there is a child
+    {
+        //! Check if the child tag name is COMPONENT
         if (Component.tagName()=="page"+PageNo)
         {
-            //qDebug()<<Component.tagName();
             QDomElement Child=Component.firstChild().toElement();
-            //qDebug()<<Child.tagName();
             while (!Child.isNull())
             {
                 if (s2 == "Figure" && Child.tagName()=="figure")
@@ -878,8 +877,6 @@ void MainWindow::updateEntries(QDomDocument document, QString filename,QString P
                 }
                 else if (s2 == "Table" && Child.tagName()=="table")
                 {
-                    //qDebug()<<Child.tagName();
-                    //qDebug()<<i;
                     Child.childNodes().at(0).setNodeValue(QString::number(i));
                 }
                 else if (s2 == "Equation" && Child.tagName()=="equation")
@@ -887,12 +884,10 @@ void MainWindow::updateEntries(QDomDocument document, QString filename,QString P
                     Child.childNodes().at(0).setNodeValue(QString::number(i));
                 }
 
-                // Next child
-                Child = Child.nextSibling().toElement();
+                Child = Child.nextSibling().toElement();       // Next child
             }
         }
-        // Next component
-        Component = Component.nextSibling().toElement();
+        Component = Component.nextSibling().toElement();        // Next component
      }
     QFile f(filename);
     f.open(QIODevice::WriteOnly);
@@ -5158,4 +5153,9 @@ void MainWindow::on_actionFind_and_Replace_triggered()
 {
     TextFinder *dialog = TextFinder::openFindAndReplace(this);
     dialog->show();
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    shouldIDraw=true;
 }

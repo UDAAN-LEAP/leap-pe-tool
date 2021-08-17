@@ -302,6 +302,8 @@ private slots:
     bool checkUnsavedWork();
     void saveAllWork();
 
+    void on_pushButton_clicked();
+
 private:
     bool mExitStatus = false;
     QString mRole;

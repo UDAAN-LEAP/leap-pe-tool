@@ -74,6 +74,13 @@
          </spacer>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>Mark Regions</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="viewComments">
           <property name="text">
            <string>Comments &amp; Accuracy</string>

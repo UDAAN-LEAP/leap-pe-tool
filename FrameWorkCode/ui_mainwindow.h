@@ -127,6 +127,7 @@ public:
     QLineEdit *lineEdit;
     QLineEdit *lineEdit_2;
     QSpacerItem *horizontalSpacer;
+    QPushButton *pushButton;
     QPushButton *viewComments;
     QPushButton *compareCorrectorOutput;
     QPushButton *compareVerifierOutput;
@@ -456,6 +457,11 @@ public:
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
+
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+
+        horizontalLayout->addWidget(pushButton);
 
         viewComments = new QPushButton(centralWidget);
         viewComments->setObjectName(QString::fromUtf8("viewComments"));
@@ -961,6 +967,7 @@ public:
 #ifndef QT_NO_SHORTCUT
         actionFind_and_Replace->setShortcut(QApplication::translate("MainWindow", "Ctrl+F", nullptr));
 #endif // QT_NO_SHORTCUT
+        pushButton->setText(QApplication::translate("MainWindow", "Mark Regions", nullptr));
         viewComments->setText(QApplication::translate("MainWindow", "Comments & Accuracy", nullptr));
         compareCorrectorOutput->setText(QApplication::translate("MainWindow", "Compare Corrector Output", nullptr));
         compareVerifierOutput->setText(QApplication::translate("MainWindow", "Comapre Verifier Output", nullptr));
