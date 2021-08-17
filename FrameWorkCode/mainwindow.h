@@ -40,6 +40,7 @@
 #include<QDomDocument>
 #include <QFileSystemWatcher>
 #include<QGraphicsRectItem>
+
 //#include <set>
 using namespace std;
 
@@ -50,7 +51,6 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -68,9 +68,6 @@ public:
     QTextBrowser * getCurrentBrowser() {
         return curr_browser;
     };
-
-public slots:
-    //void textChangedSlot();
 
 private slots:
     void DisplayJsonDict(void);
@@ -301,6 +298,8 @@ private slots:
     void on_actionFind_and_Replace_triggered();
     bool checkUnsavedWork();
     void saveAllWork();
+    void setMFilename( QString );
+
 
     void on_pushButton_clicked();
 
@@ -311,7 +310,7 @@ private:
     Ui::MainWindow *ui;
     Project mProject;
     QString mFilename;
-    QString mFilenamejpeg;
+    QString mFilenameImage;
     QString current_folder;
     QString currentTabPageName="";
     int currentTabIndex;
