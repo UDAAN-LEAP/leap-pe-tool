@@ -102,6 +102,9 @@ bool shouldIDraw=false;
 //Resposible for dynamic rectangular drawing
 int pressedFlag;
 
+//load CPair only when it contains proper format
+bool loadCPairOrNot;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -605,7 +608,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     if (event->type() == QEvent::ToolTip)
     {
 
-          qDebug() << "Tooltip "<<QEvent :: ToolTip;
+          //qDebug() << "Tooltip "<<QEvent :: ToolTip;
           event->accept();
 
          if(QToolTip::isVisible())
@@ -626,8 +629,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                  y0 =list[2].toInt();
                  x1 = list[3].toInt();
                  y1 = list[4].replace(";", "").toInt();
-                 qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
-                  qDebug() << "here";
+                 //qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
                  if(x1!=0 && x0!=0 && y1!=0 && y0!=0)
                  {
                      QColor blue40 = Qt::blue;
@@ -773,6 +775,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     updateEntries(document, filename12, PageNo[1], s2, i);
 
                     shouldIDraw=false;
+                    ui->pushButton->setStyleSheet("");     //remove the style once the operation is done
                 }
                 //! settings for a tableholder
                 else if (messageBox.clickedButton() == tableButton)
@@ -791,6 +794,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     updateEntries(document, filename12, PageNo[1], s2, j);
 
                     shouldIDraw=false;
+                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
                 }
                 //! settings for a equationholder
                 else if(messageBox.clickedButton() == equationButton)
@@ -809,6 +813,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     updateEntries(document, filename12, PageNo[1], s2, k);
 
                     shouldIDraw=false;
+                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
                 }
                 //! settings for cancelbutton
                 else
@@ -816,6 +821,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     QMessageBox::information(0, "Not saved", "Cancelled");
                     crop_rect->setRect(0,0,1,1);
                     shouldIDraw=false;
+                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
                 }
 
                 event->accept();
@@ -1089,12 +1095,6 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 vector<pair<int, string>> vecSugg, vecSugg1;
                 map<string, int> mapSugg;
 
-                QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "CPair";
-                loadCPairs(localmFilename1.toUtf8().constData(), CPairs, Dict, PWords);
-                //loadCPair(localmFilename1.toUtf8().constData(), CPair, Dict, PWords);
-
-                //string CSugg = CPair[toslp1(selectedStr)];
-
                 vector<string> out;
                 map<string, set<string>>::iterator itr;
                 set<string>::iterator set_it;
@@ -1109,24 +1109,16 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                     }
                 }
 
-
-//                for(auto& it : CPairs){
-//                    if(toslp1(it.first) == toslp1(selectedStr))
-//                    {
-//                        //cout << toslp1(it.second) << endl;
-//                        out.push_back(toslp1(it.second));
-//                    }
-//                    //cout<<"Word: "<<it.second<< " Mapped Int: "<<it.first<<endl;
-//                }
-//                //sort( out.begin(), out.end() );
-//                //out.erase( unique( out.begin(), out.end() ), out.end() );
-
-                //if (CSugg.size() > 0) mapSugg[toslp1(CSugg)]++;
-
-                for (size_t ksugg1 = 0; ksugg1 < 6; ksugg1++) {
+                cout<<"From CPairs: ";
+                for(auto& it : out){
+                    cout << toslp1(it) << endl;
+                }
+                for (size_t ksugg1 = 0; ksugg1 < 6; ksugg1++)
+                {
                         //qDebug()<< mProject.get_configuration();
                     if (out.size() > ksugg1)  mapSugg[toslp1(out[ksugg1])]++;
                 }
+
                 if(mProject.get_configuration()=="True")
                 {
                     if (Words.size() > 0)  mapSugg[toslp1(Words[0])]++;
@@ -1156,10 +1148,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                     cout<<"selected string: "<<toslp1(selectedStr)<<endl;
                     cout<<"Mapped Suggestion 0: "<<endl; //(string,int) Words, last no. of occuring, create single entry for single same word
                     //cout<<"From CPair: "<<CSugg<<endl;
-                    cout<<"From CPairs: ";
-                    for(auto& it : out){
-                        cout << toslp1(it) << endl;
-                    }
+
                     cout<<"From Primary OCR: ";
                     for(auto& it : Words){
                         for(uint i = 0;i<it.size();i++){
@@ -1554,7 +1543,7 @@ void MainWindow::on_actionSave_triggered()
         {
            std::cerr << elem.first << " " << elem.second << "\n";
            std::cerr << toslp1(elem.first) << " " << toslp1(elem.second) << "\n";
-           CPair.insert(make_pair(toslp1(elem.first), toslp1(elem.second)));
+           //CPair.insert(make_pair(toslp1(elem.first), toslp1(elem.second)));
            if ( CPairs.find(toslp1(elem.first)) != CPairs.end())
            {
                std::set< std::string>& s_ref = CPairs[toslp1(elem.first)];
@@ -5211,5 +5200,11 @@ void MainWindow::on_actionFind_and_Replace_triggered()
 
 void MainWindow::on_pushButton_clicked()
 {
-    shouldIDraw=true;
+    if(loadimage)                   //Check image is loaded or not.
+    {
+        shouldIDraw=true;
+        auto p = (QPushButton*)ui->pushButton;       //get the pushButton
+        p->setStyleSheet("QPushButton { background-color: grey; }\n"
+                          "QPushButton:enabled { background-color: rgb(200,205,180); }\n");      //apply style on button when it is triggered
+     }
 }

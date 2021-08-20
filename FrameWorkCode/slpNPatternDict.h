@@ -328,9 +328,15 @@ void loadCPairs(string filename, map<string, set<string> >& CPairs,map<string,in
     if (myfile.is_open())
     {
         string line;
+
         while(getline(myfile, line))
         {
-            //cout << "String 1"<<line<<endl;
+            cout << "String 1"<<line<<endl;
+            QString line1 = QString::fromStdString(line);
+            line1.replace(" ","\t");      //dealing with incorrect format
+            line = line1.toStdString();
+            cout<<line;
+
             // Vector of string to save tokens
             vector <string> tokens;
 
