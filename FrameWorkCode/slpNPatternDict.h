@@ -332,7 +332,7 @@ void loadCPairs(string filename, map<string, set<string> >& CPairs,map<string,in
         while(getline(myfile, line))
         {
             //cout << "String 1"<<line<<endl;
-            //!Making CPair formatting into Correct format upto some extent
+            //!Making CPair formatting into Correct format upto max extent
             QString line1 = QString::fromStdString(line);
             line1.replace(" ","\t");      //dealing with incorrect format
             QStringList m = line1.split("\t");

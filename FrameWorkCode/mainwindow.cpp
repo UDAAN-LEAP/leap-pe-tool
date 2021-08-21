@@ -3057,28 +3057,39 @@ void MainWindow::on_actionErrorDetectionRepUniq_triggered()
     rep << "TotalSuggestionsWithLSTM =" << "sum(y3+y4+y5+y6+y7+y8+y9+y10+y11+y12)" << endl;
 }
 
+/*!
+ * \fn MainWindow::on_actionSanskrit_triggered()
+ * \brief Sets the language of the current broweser to Sanskrit by by passing the SanFlag as true
+ * \sa setText()
+ */
 void MainWindow::on_actionSanskrit_triggered()
 {
     HinFlag = 0, SanFlag = 1;
-    ui->textEdit->setText(gSanskrit);
+    ui->textEdit->setText(gSanskrit);//whenever language change is required it will be converted to Sanskrit using the slpNPatternDict.h
     ui->hinButton->setChecked(HinFlag);
-    //ui->sanButton->setChecked(SanFlag);
-
-
 }
 
+/*!
+ * \fn MainWindow::on_actied()
+ * \brief Sets the language of the current broweser to Hindi by by passing the HinFlag as true
+ * \sa setText()
+ */
 void MainWindow::on_actionHindi_triggered()
 {
     HinFlag = 1, SanFlag = 0;
-    ui->textEdit->setText(gHindi);
-    //ui->hinButton->setChecked(HinFlag);
+    ui->textEdit->setText(gHindi);  //whenever language change is required it will be converted to Hindi using the slpNPatternDict.h
     ui->sanButton->setChecked(SanFlag);
 }
 
+/*!
+ * \fn MainWindow::on_actionEnglish_triggered()
+ * \brief Sets the language of the current broweser to Hindi by passing the HinFlag and the SanFlag as false
+ * \sa setText()
+ */
 void MainWindow::on_actionEnglish_triggered()
 {
     HinFlag = 0, SanFlag = 0;
-    ui->hinButton->setChecked(HinFlag);
+    ui->hinButton->setChecked(HinFlag);//whenever language change is required it will be left as it is
     ui->sanButton->setChecked(SanFlag);
 }
 
