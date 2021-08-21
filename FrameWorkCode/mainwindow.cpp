@@ -90,17 +90,13 @@ map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
 
 QString gSanskrit, gHindi;
 
-//This flag is to prevent inserting the IMAGEHOLDER twice
-bool drawRectangleFlag=false;
+bool drawRectangleFlag=false;      //This flag is to prevent inserting the IMAGEHOLDER twice
 
-//Check image is loaded on not
-bool loadimage=false;
+bool loadimage=false;           //Check image is loaded on not
 
-//button functioning over marking a region for figure/table/equations
-bool shouldIDraw=false;
+bool shouldIDraw=false;         //button functioning over marking a region for figure/table/equations
 
-//Resposible for dynamic rectangular drawing
-int pressedFlag;
+int pressedFlag;            //Resposible for dynamic rectangular drawing
 
 //load CPair only when it contains proper format
 bool loadCPairOrNot;
