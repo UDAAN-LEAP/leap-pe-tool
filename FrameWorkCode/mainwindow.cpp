@@ -98,9 +98,6 @@ bool shouldIDraw=false;         //button functioning over marking a region for f
 
 int pressedFlag;            //Resposible for dynamic rectangular drawing
 
-//load CPair only when it contains proper format
-bool loadCPairOrNot;
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -113,7 +110,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QString password  = "";
     QString passwordFilePath = QDir::currentPath() + "/pass.txt";
-    qDebug() <<passwordFilePath;
     QFile passwordFile(passwordFilePath);
     if(passwordFile.open(QFile::ReadOnly | QFile::Text))
         password = passwordFile.readAll().replace("\n","").replace("\r","");
@@ -3106,7 +3102,10 @@ void MainWindow::on_hinButton_toggled(bool checked)
         on_actionHindi_triggered();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionUndo_triggered
+ * \brief undo the changes made QTextBrowser
+ */
 void MainWindow::on_actionUndo_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3114,6 +3113,10 @@ void MainWindow::on_actionUndo_triggered()
     curr_browser->undo();
 }
 
+/*!
+ * \fn MainWindow::on_actionRedo_triggered
+ * \brief Redo the changes made in QTextBrowser
+ */
 void MainWindow::on_actionRedo_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -5198,7 +5201,11 @@ void MainWindow::on_actionSave_All_triggered()  //enable when required
 
 }
 
-
+/*!
+ * \fn MainWindow::on_actionFind_and_Replace_triggered
+ * \brief helps to find particular text and replaces them with new user entered text
+ * \sa openFindAndReplace
+ */
 void MainWindow::on_actionFind_and_Replace_triggered()
 {
     TextFinder *dialog = TextFinder::openFindAndReplace(this);
