@@ -1833,7 +1833,6 @@ void MainWindow::on_actionToDevanagari_triggered()
     cursor.removeSelectedText();
     cursor.insertText(QString::fromStdString(toDev(toslp1(selectedStr))));
     cursor.endEditBlock();
-
 }
 
 /*!
@@ -2730,6 +2729,13 @@ void MainWindow::on_actionCPair_triggered()
     }
 }
 
+/*!
+ * \fn MainWindow::on_actionToSlp1_2_triggered()
+ * \brief Converts devanagri text to transliterated/ romanized text.
+ * This function opens a file open dialogue asking you to open a devnagri text file.
+ * The output is a new file containing translitrated text
+ * The output is saved as input_file_nameDev.txt
+*/
 void MainWindow::on_actionToSlp1_2_triggered()
 {
     QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
@@ -2747,7 +2753,14 @@ void MainWindow::on_actionToSlp1_2_triggered()
     }
 }
 
-
+/*!
+ * \fn MainWindow::on_actionExtractDev_triggered()
+ * \brief Extracts words from a devnagri text file to lines.
+ * This function opens a file open dialogue asking you to open a devnagri text file.
+ * The output is all words in the file seperated by newline
+ * The output is saved as input_file_nameDev.txt
+ * \sa slpNPatternDict::toDev()
+*/
 void MainWindow::on_actionToDev_triggered()
 {
     QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
@@ -2765,6 +2778,14 @@ void MainWindow::on_actionToDev_triggered()
     }
 }
 
+/*!
+ * \fn MainWindow::on_actionExtractDev_triggered()
+ * \brief Extracts words from a devnagri text file to lines.
+ * This function opens a file open dialogue asking you to open a devnagri text file.
+ * The output is all words in the file seperated by newline
+ * The output is saved as input_file_nameDev.txt
+ * \sa slpNPatternDict::toDev()
+*/
 void MainWindow::on_actionExtractDev_triggered()
 {
     QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
@@ -5065,20 +5086,42 @@ void MainWindow::setMFilename( QString name )
     }
 }
 
+/*!
+ * \fn MainWindow::on_actionOpen_Project_triggered
+ * \brief Opens a new OCR project
+ * \note Every project contains six folders - Images, Inds, CorrectorOutput, VerifierOutput, Dicts and Comments.
+ *
+ * \sa process_xml(), open_git_repo(), get_stage(), get_version(), getModel(), AddTemp(), getFilter(), insert(), UpdateFileBrekadown(), readJsonFile()
+ */
 void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
-    QFile xml(QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)")));
+    /* Description
+     * 1. Check if file named "project.xml" exists else terminates the function.
+     * 2. Create a new directory if CorrectorOutput, VerifierOutput or Comments folders does not exist.
+     * 3. Loading the requisites.
+     *    a) Processing the project.xml file.
+     *    b) Load git repository.
+     * 4. Set the model for ProjectHierarchyWindow(TreeView). TreeView is composed of Documents and Images.
+     * 5. Reset the current file name and directory levels.
+     * 6. Get the value for time elapsed from Timelog.json.
+     */
+
+    QFile xml(QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)")));   //Opens only if the file name is Project.xml
     QFileInfo finfo(xml);
     QString basedir = finfo.absoluteDir().absolutePath();
+
+    //!Initializes the string with directory name
     QString s1 = basedir + "/Images/";
     QString s2 = basedir + "/Inds/";
     QString s3 = basedir+"/CorrectorOutput/";
     QString s4 = basedir + "/VerifierOutput/";
     QString s5 = basedir + "/Comments/";
 
+    //! Terminates function if Project.xml doesn't exist
     if (finfo.fileName() == "")
         return;
 
+    //! Creates a new directory if the CorrectorOutput, VerifierOutput or Comments folders does not exist.
     if (!QDir(s3).exists()) {
         QDir().mkdir(s3);
     }
@@ -5090,32 +5133,40 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     }
 
     bool exists = QDir(s1).exists() && QDir(s2).exists();
-    if (xml.exists()&& exists) {
-        ui->treeView->reset();
+    if (xml.exists()&& exists)
+    {
+        ui->treeView->reset();    //reinitialize the ProjectHierarchyWindow
         mProject.process_xml(xml);
 
-        mProject.open_git_repo();
-        if(!mProject.isProjectOpen()) {
+        mProject.open_git_repo();   //Open git repo
+        if(!mProject.isProjectOpen())
+        {
             QMessageBox::warning(0, "Project Error", "Couldn't open project. Please check your project.");
             return;
         }
         ui->treeView->setModel(mProject.getModel());
         ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
 
-        QString stage = mProject.get_stage();
-        QString version = mProject.get_version();
-        ui->lineEdit_2->setText("Version: " + version);
+        QString stage = mProject.get_stage();                          //fetches the stage from project.xml file
+        QString version = mProject.get_version();                      //Fetches version from project.xml file
+        ui->lineEdit_2->setText("Version: " + version);                //Updates version in ui
+
+        //!Get the path of all necessary directories
         QDir dir = mProject.GetDir();
         QString str1 = mProject.GetDir().absolutePath()+"/CorrectorOutput/";
         QString str2 = mProject.GetDir().absolutePath() + "/VerifierOutput/";
         QString str3 = mProject.GetDir().absolutePath() + "/Inds/";
         QString str4 = mProject.GetDir().absolutePath() + "/Images/";
+
+        //!To lookout for changes in CorrectorOutput and VerifierOutput directory
         watcher.addPath(str1);
         watcher.addPath(str2);
-        //        watcher.addPath(str3);
-        //        watcher.addPath(str4);
+
+        //!To Display tree view for Document
         QDir cdir(str1);
         Filter * filter = mProject.getFilter("Document");
+
+        //!Adds each file present in CorrectorOutput directory to treeView
         auto list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list) {
             QString t = str1 + "/" + f;
@@ -5123,6 +5174,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             mProject.AddTemp(filter,f2, "CorrectorOutput/" );
             corrector_set.insert(f);
         }
+
+        //!Adds each file present in VerifierOutput directory to treeView
         cdir.setPath(str2);
         list = cdir.entryList(QDir::Files);
         for (auto f : list) {
@@ -5131,6 +5184,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             QFile f2(t);
             mProject.AddTemp(filter, f2, "VerifierOutput/");
         }
+
+        //!Adds the files from inds folder to treeView
         cdir.setPath(str3);
         list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list) {
@@ -5139,7 +5194,10 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             mProject.AddTemp(filter, f2, "");
         }
 
+        //!To Display treeView for Image
         filter = mProject.getFilter("Image");
+
+        //!Adds the files from Image folder to treeView
         cdir.setPath(str4);
         list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list) {
@@ -5148,18 +5206,20 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             mProject.AddTemp(filter, f2, "");
         }
 
-        //Disable Corrector Turn In once the Corrector has Turned in until the next version is fetched.
+        //!Disable Corrector Turn In once the Corrector has Turned in until the next version is fetched.
         if(!isVerifier) {
             if (stage != "Corrector") {
                 ui->actionTurn_In->setEnabled(false);
             }
         }
 
-        UpdateFileBrekadown();
+        UpdateFileBrekadown();    //Reset the current file and dir levels
 
-        gTimeLogLocation = gDirTwoLevelUp + "/Comments/Timelog.json";
+        //!Get the elapsed time in Timelog.json file under Comments folder
+        gTimeLogLocation = gDirTwoLevelUp + "/Comments/Timelog.json";     //Navigate to Timelog.json uder Comments folder
         QJsonObject mainObj =  readJsonFile(gTimeLogLocation);
 
+        //!Get the seconds elapsed for their file name in json file
         foreach(const QJsonValue &val, mainObj)
         {
             QString directory = val.toObject().value("directory").toString();
@@ -5172,6 +5232,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             QDir().mkdir(mProject.GetDir().absolutePath() + "/Images/Inserted");
 
         QMessageBox::information(0, "Success", "Project opened successfully.");
+
         //!Genearte image.xml for figure/table/equation entries and initialize these values by 1.
         createImageInfoXMLFile();
 
