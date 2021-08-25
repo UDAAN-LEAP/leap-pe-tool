@@ -3238,7 +3238,10 @@ void MainWindow::on_actionNew_Project_triggered()
     wiz->show();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionBold_triggered()
+ * \brief Sets the font weight to bold
+*/
 void MainWindow::on_actionBold_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3246,11 +3249,19 @@ void MainWindow::on_actionBold_triggered()
     QTextCursor cursor = curr_browser->textCursor();
     bool isBold = cursor.charFormat().font().bold();
     QTextCharFormat fmt;
+    /*
+     * If the font-weight value is bold then
+     * it will change it to normal else bold.
+    */
     fmt.setFontWeight(isBold ? QFont::Normal : QFont::Bold);
     cursor.mergeCharFormat(fmt);
     curr_browser->mergeCurrentCharFormat(fmt);
 }
 
+/*!
+ * \fn MainWindow::on_actionUnBold_triggered()
+ * \brief Sets the font weight to regular
+*/
 void MainWindow::on_actionUnBold_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3260,6 +3271,42 @@ void MainWindow::on_actionUnBold_triggered()
     curr_browser->textCursor().mergeCharFormat(format);
 }
 
+/*!
+ * \fn MainWindow::on_actionItalic_triggered()
+ * \brief Sets the font style to italic
+*/
+void MainWindow::on_actionItalic_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+
+    QTextCursor cursor = curr_browser->textCursor();                        // initialize cursor position at text cursor's position
+    bool isItalic = cursor.charFormat().font().italic();                    // check if character under cursor is italic or not
+
+    QTextCharFormat fmt;
+    fmt.setFontItalic(isItalic ? false : true);                             // if font is italic set font to regular, else set it to italic
+
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);                              // Merge current character format to character under cursor's format (previous properties + italic/non italic)
+}
+
+/*!
+ * \fn MainWindow::on_actionNonitalic_triggered()
+ * \brief Resets the font style to non italic
+*/
+void MainWindow::on_actionNonitalic_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCharFormat format;
+    format.setFontItalic(false);
+    curr_browser->textCursor().mergeCharFormat(format);
+}
+
+/*!
+ * \fn MainWindow::on_actionLeftAlign_triggered()
+ * \brief Sets the browser text alignment to Left Align
+*/
 void MainWindow::on_actionLeftAlign_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3267,6 +3314,10 @@ void MainWindow::on_actionLeftAlign_triggered()
     curr_browser->setAlignment(Qt::AlignLeft);
 }
 
+/*!
+ * \fn MainWindow::on_actionRightAlign_triggered()
+ * \brief Sets the browser text alignment to Right Align
+*/
 void MainWindow::on_actionRightAlign_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3274,12 +3325,25 @@ void MainWindow::on_actionRightAlign_triggered()
     curr_browser->setAlignment(Qt::AlignRight);
 }
 
+/*!
+ * \fn MainWindow::on_actionCentreAlign_triggered()
+ * \brief Sets the browser text alignment to Center Align
+*/
 void MainWindow::on_actionCentreAlign_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->setAlignment(Qt::AlignCenter);
 }
+
+/*!
+ * \deprecated
+ * \fn MainWindow::on_action_JustifiedAlign_triggered()
+ * \brief Justifies the text.
+ * Here, whenever there is a break in the text, that is being replaced by space
+ * and then text is placed in-between paragraph tags. After that, the following
+ * selected text is justisfied aligned.
+*/
 void MainWindow::on_actionJusitfiedAlign_triggered() //Not used, does not work as intended
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3295,15 +3359,27 @@ void MainWindow::on_actionJusitfiedAlign_triggered() //Not used, does not work a
     curr_browser->setAlignment(Qt::AlignJustify);
 }
 
+/*!
+ * \fn MainWindow::on_actionAllFontProperties_triggered()
+ * \brief Opens a pop up font properties selector and applies chosen properties to font.
+ * The font selector lets you choose:
+ * Font face, font size, variations of those fonts (regular, bold, italic).
+ * The font selector is the Operating System's native font selector.
+ * All fonts installed in the system will appear in the selector
+ * (a software restart after font installation/ reopening the selector might be required).
+*/
 void MainWindow::on_actionAllFontProperties_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
         return;
-    QFont initialFont = curr_browser->font();
+    QFont initialFont = curr_browser->font();      // initial font face
     auto pointsize = curr_browser->fontPointSize();
-    if(pointsize) initialFont.setPointSize(pointsize);
+
+    if(pointsize) initialFont.setPointSize(pointsize);      // initial font size
     bool ok;
     QFont font = QFontDialog::getFont(&ok, initialFont, this);
+
+    /*! If user clicks OK then change to selected font with properties*/
     if(ok)
     {
         QTextCharFormat newFont;
@@ -3312,6 +3388,11 @@ void MainWindow::on_actionAllFontProperties_triggered()
     }
 }
 
+/*!
+ * \fn MainWindow::on_actionFontBlack_triggered()
+ * \brief Sets the current font colour to black.
+ * \note There are no further colour properties provided by the editor.
+*/
 void MainWindow::on_actionFontBlack_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3319,24 +3400,54 @@ void MainWindow::on_actionFontBlack_triggered()
     curr_browser->setTextColor(Qt::black);
 }
 
+/*!
+ *  \fn MainWindow::on_actionSuperscript_triggered()
+ *  \brief toggles superscript for selected text/ character at cursor
+*/
 void MainWindow::on_actionSuperscript_triggered() {
+
     if(!curr_browser || curr_browser->isReadOnly())
         return;
+
     auto cursor = curr_browser->textCursor();
+
     QTextCharFormat fmt;
-    fmt.setVerticalAlignment((cursor.charFormat().verticalAlignment() == QTextCharFormat::AlignSuperScript)? QTextCharFormat::AlignNormal : QTextCharFormat::AlignSuperScript);
+
+    fmt.setVerticalAlignment((cursor.charFormat().verticalAlignment() == QTextCharFormat::AlignSuperScript)?\
+                                 QTextCharFormat::AlignNormal : \
+                                 QTextCharFormat::AlignSuperScript
+                                 ); // Ternary operator for isSuperscripted ? alignNormal : alignSuperscript
+
     cursor.mergeCharFormat(fmt);
     curr_browser->mergeCurrentCharFormat(fmt);
 }
+
+/*!
+ *  \fn MainWindow::on_actionSubscript_triggered()
+ *  \brief toggles subscript for selected text/ character at cursor
+*/
 void MainWindow::on_actionSubscript_triggered() {
+
     if(!curr_browser || curr_browser->isReadOnly())
         return;
+
     auto cursor = curr_browser->textCursor();
+
     QTextCharFormat fmt;
     fmt.setVerticalAlignment((cursor.charFormat().verticalAlignment() == QTextCharFormat::AlignSubScript)? QTextCharFormat::AlignNormal : QTextCharFormat::AlignSubScript);
+
     cursor.mergeCharFormat(fmt);
     curr_browser->mergeCurrentCharFormat(fmt);
 }
+
+/*!
+ * \fn MainWindow::on_actionInsert_Horizontal_Line_triggered()
+ * \brief Draws a horizontal rule a line below the cursor.
+ * Uses html to insert a horizontal rule using <hr> tag.
+ * Selecting text and then using this fuctionality will clear the text,
+ * and then insert a horizontal rule below it.
+ * \note The text browser is a rich text field, so html tags and styling can be used seamlessly.
+*/
 void MainWindow::on_actionInsert_Horizontal_Line_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3364,6 +3475,10 @@ void MainWindow::on_actionLineSpace_triggered() //Not used, does not work as int
     }
 }
 
+/*!
+ * \fn MainWindow::on_actionInsert_Tab_Space_triggered()
+ * \brief inserts tab (4 whitespaces) at cursor
+*/
 void MainWindow::on_actionInsert_Tab_Space_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3461,22 +3576,34 @@ void MainWindow::on_actionResize_Image_triggered()
     }
 }
 
-
-
+/*!
+ * \fn MainWindow::on_actionHighlight_triggered()
+ * \brief Highlights selected text in text browser and then calls LogHighlights()
+ * Only Verifiers can highlight the text, correctors can only remove highlights.
+ * Takes the start and end position of cursor and goes to the middle of the word,
+ * then formats the word.LogHighlights() is called only when a highlight is made.
+ * \note Text Highlight works by changing the background colour to yellow
+ * \sa LogHighlights()
+*/
 void MainWindow::on_actionHighlight_triggered() //Version Based
 {
-    if(curr_browser && !curr_browser->isReadOnly()) {
-
-        if(isVerifier) {
+     //! Check if text browser exists AND it is NOT in read only mode
+     if(curr_browser && !curr_browser->isReadOnly())
+     {
+        //! Verifier gets to add and remove highlight the text
+        if(isVerifier)
+        {
             QTextCursor cursor = curr_browser->textCursor();
             QString text = cursor.selectedText().toUtf8().constData();
             int pos1 = curr_browser->textCursor().selectionStart();
             int pos2 = curr_browser->textCursor().selectionEnd();
 
-            int cursorpos = round(((float)(pos1 + pos2)) / 2);
+            int cursorpos = round(((float)(pos1 + pos2)) / 2);      // goes to mid of the selection
             cursor.setPosition(cursorpos);
 
-            QTextCharFormat  format = cursor.charFormat();
+            QTextCharFormat  format = cursor.charFormat();         // gets word character format properties
+
+            //! If word background is already yellow, set it to transparent, else set it to yellow (yellow is the highlight colour).
             if (format.background() == Qt::yellow)
             {
                 format.setBackground(Qt::transparent);
@@ -3485,35 +3612,41 @@ void MainWindow::on_actionHighlight_triggered() //Version Based
             {
                 format.setBackground(Qt::yellow);
 
-                LogHighlights(text);
+                LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
             }
-            curr_browser->textCursor().mergeCharFormat(format);
-            curr_browser->copy();
+            curr_browser->textCursor().mergeCharFormat(format);        // Set format at current cursor
         }
-        else {
+        else
+        {
             curr_browser->setTextBackgroundColor(Qt::transparent); //Correctors are only allowed to remove highlights.
         }
     }
 }
 
+/*!
+ * \fn MainWindow::LogHighlights()
+ * \param QString text
+ * \brief Stores highlight metadata to JSON files
+ * \note Meta data includes: Word highlighted, timestamp, time elapsed, page name
+*/
 void MainWindow::LogHighlights(QString word) //Verifier Only
 {
-    //Highlighted Time meta data is stored
-
+    //!Highlighted Time meta data is stored
     QString dir = mProject.GetDir().absolutePath();
-    QString highlightsFilename = gDirTwoLevelUp + "/Comments/HighlightsLog.json";
-    QString pagename = gCurrentPageName;
-    pagename.replace(".txt", "");
-    pagename.replace(".html", "");
-    QJsonObject mainObj = readJsonFile(highlightsFilename);
-    QJsonObject page = mainObj.value(pagename).toObject();
-    QJsonObject highlights;
 
+    QString highlightsFilename = gDirTwoLevelUp + "/Comments/HighlightsLog.json"; // load the highlight file name
+    QString pagename = gCurrentPageName;                                          // load the current page name (in the text browser)
+
+    pagename.replace(".txt", "");                                                 // remove extension from file name to use it as a key
+    pagename.replace(".html", "");
+
+    QJsonObject mainObj = readJsonFile(highlightsFilename);                       // read JSON file into mainObj
+    QJsonObject page = mainObj.value(pagename).toObject();                        // set values for page name
+    QJsonObject highlights;                                                       // make a new JSON object to store new metadata
 
     int nMilliseconds = myTimer.elapsed();
     secs = nMilliseconds / 1000;
-    //    int mins = secs/60;
-    //    secs = secs - mins*60;
+
     QString time = QTime::currentTime().toString();
     highlights["Word"] = word;
     highlights["Timestamp"] = time;
@@ -5120,6 +5253,18 @@ void MainWindow::saveAllWork() {
     }
 }
 
+void MainWindow::on_actionSave_All_triggered()  //enable when required
+{
+    if(ui->tabWidget_2->count()!=0){
+        for(int i=0;i<ui->tabWidget_2->count();i++){
+            ui->tabWidget_2->setCurrentIndex(i);
+            UpdateFileBrekadown();
+            on_actionSave_triggered();
+        }
+    }
+
+}
+
 void MainWindow::closeEvent (QCloseEvent *event)
 {
     bool isUnsaved = checkUnsavedWork();
@@ -5142,42 +5287,6 @@ void MainWindow::closeEvent (QCloseEvent *event)
     }
 }
 
-
-void MainWindow::on_actionInsert_Table_2_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-
-    QDialog dialog(this);
-    // Use a layout allowing to have a label next to each field
-    QFormLayout form(&dialog);
-    form.addRow(new QLabel("Insert Table", this));
-
-    // Add the lineEdits with their respective labels
-    QLineEdit *rows = new QLineEdit(&dialog);
-    QLineEdit *columns = new QLineEdit(&dialog);
-    form.addRow("Rows", rows);
-    form.addRow("Columns", columns);
-    // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-                               Qt::Horizontal, &dialog);
-    form.addRow(&buttonBox);
-    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
-    // Show the dialog as modal
-    if (dialog.exec() == QDialog::Accepted) {
-
-
-        QTextTableFormat tf;
-        tf.setBorderBrush(Qt::black);
-        tf.setCellSpacing(0);
-        tf.setCellPadding(7);
-        QTextCursor cursor = curr_browser->textCursor();
-        cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
-
-    }
-}
 bool MainWindow::sendEmail(QString emailText)
 {
     QString pmEmail = mProject.get_pmEmail();
@@ -5201,9 +5310,52 @@ bool MainWindow::sendEmail(QString emailText)
         return 0;
 
     return 1;
-
 }
 
+/*!
+ * \fn MainWindow::on_actionInsert_Table_2_triggered()
+ * \brief Inserts table at text cursor
+ * Creates a dialog to insert the numbr of rows and columns.
+*/
+void MainWindow::on_actionInsert_Table_2_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+
+    QDialog dialog(this);
+    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+    form.addRow(new QLabel("Insert Table", this));                                  // Create a dialog for asking table dimensions
+
+    //! Add the lineEdits with their respective labels
+    QLineEdit *rows = new QLineEdit(&dialog);
+    QLineEdit *columns = new QLineEdit(&dialog);                                    // Add lineEdits to get Rows
+    form.addRow("Rows", rows);                                                      // Add lineEdits to get Columns
+    form.addRow("Columns", columns);
+
+    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    //! Show the dialog as modal
+    if (dialog.exec() == QDialog::Accepted)
+    {
+
+        QTextTableFormat tf;
+        tf.setBorderBrush(Qt::black);
+        tf.setCellSpacing(0);
+        tf.setCellPadding(7);
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
+
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionInsert_Columnleft_triggered()
+ * \brief Inserts Column to the left of table
+*/
 void MainWindow::on_actionInsert_Columnleft_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -5216,6 +5368,10 @@ void MainWindow::on_actionInsert_Columnleft_triggered()
     }
 }
 
+/*!
+ * \fn MainWindow::on_actionInsert_Columnright_triggered()
+ * \brief Inserts Column to the right of table
+*/
 void MainWindow::on_actionInsert_Columnright_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -5228,6 +5384,10 @@ void MainWindow::on_actionInsert_Columnright_triggered()
     }
 }
 
+/*!
+ * \fn MainWindow::on_actionInsert_Rowabove_triggered()
+ * \brief Inserts Row above the table
+*/
 void MainWindow::on_actionInsert_Rowabove_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -5240,6 +5400,10 @@ void MainWindow::on_actionInsert_Rowabove_triggered()
     }
 }
 
+/*!
+ * \fn MainWindow::on_actionInsert_Rowbelow_triggered()
+ * \brief Inserts Row below the table
+*/
 void MainWindow::on_actionInsert_Rowbelow_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -5252,6 +5416,10 @@ void MainWindow::on_actionInsert_Rowbelow_triggered()
     }
 }
 
+/*!
+ * \fn MainWindow::on_actionRemove_Column_triggered()
+ * \brief Delete selected column
+*/
 void MainWindow::on_actionRemove_Column_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -5264,6 +5432,10 @@ void MainWindow::on_actionRemove_Column_triggered()
     }
 }
 
+/*!
+ * \fn MainWindow::on_actionRemove_Row_triggered()
+ * \brief Delete selected row
+*/
 void MainWindow::on_actionRemove_Row_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -5274,39 +5446,6 @@ void MainWindow::on_actionRemove_Row_triggered()
         QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
         currentTable->removeRows(currentCell.row(),1);
     }
-}
-
-void MainWindow::on_actionItalic_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    QTextCursor cursor = curr_browser->textCursor();
-    bool isItalic = cursor.charFormat().font().italic();
-    QTextCharFormat fmt;
-    fmt.setFontItalic(isItalic ? false : true);
-    cursor.mergeCharFormat(fmt);
-    curr_browser->mergeCurrentCharFormat(fmt);
-}
-
-void MainWindow::on_actionNonitalic_triggered() //enable when required
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    QTextCharFormat format;
-    format.setFontItalic(false);
-    curr_browser->textCursor().mergeCharFormat(format);
-}
-
-void MainWindow::on_actionSave_All_triggered()  //enable when required
-{
-    if(ui->tabWidget_2->count()!=0){
-        for(int i=0;i<ui->tabWidget_2->count();i++){
-            ui->tabWidget_2->setCurrentIndex(i);
-            UpdateFileBrekadown();
-            on_actionSave_triggered();
-        }
-    }
-
 }
 
 /*!
