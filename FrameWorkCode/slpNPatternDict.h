@@ -338,7 +338,9 @@ void loadCPairs(string filename, map<string, set<string> >& CPairs,map<string,in
             QStringList m = line1.split("\t");
             if(m[1] == "")
             {
-                continue;
+                //continue;
+                QMessageBox::information(0, "File Error", "Make sure CPair contains correct file format\nIncorrect_Word(tab)Correct_Word");
+                break;
             }
             line = line1.toStdString();
 

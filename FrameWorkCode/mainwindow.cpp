@@ -799,6 +799,10 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 //qDebug() << x1 << " " << y1 << " " << x2 - x1 << " " << y2 - y1;   //getting the coordinates
 
                 crop_rect->setRect(x1, y1, x2 - x1, y2 - y1);       //set final coordinates for rectangular region
+                QRect rect(x1, y1, x2 - x1, y2 - y1);              //set QRect
+                QPixmap image=QPixmap::fromImage(imageOrig);       //set QPixmap image
+                QPixmap cropped=image.copy(rect);                   //get cropped image according to coordinates
+
 
                 //! Set a messagebox for choosing what do you want to add: Figure/Table/Equation/Cancel
                 QMessageBox messageBox(this);
@@ -821,8 +825,13 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     //! for placing a figure placeholder
                     displayHolder(s1,s2,x1,y1,x2,y2,i);
 
-                    i++;       //increment values when a figure is inserted in the textBrowser
                     //graphic->removeItem(crop_rect);
+
+                    //!Saving Image Regions to their respective folder(Figure/Table/Equation)
+                    saveImageRegion(cropped,PageNo[1],s1,i);
+
+                    i++;       //increment values when a figure is inserted in the textBrowser
+
                     crop_rect->setRect(0,0,1,1);       //settings this for dynamic rectangular region
 
                     //! updating entries for figure entries in xml file
@@ -840,8 +849,13 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     //! for placing a table placeholder
                     displayHolder(s1,s2,x1,y1,x2,y2,j);
 
-                    j++;         //increment values when a table is inserted in the textBrowser
                     //graphic->removeItem(crop_rect);
+
+                    //!Saving Image Regions to their respective folder(Figure/Table/Equation)
+                    saveImageRegion(cropped,PageNo[1],s1,j);
+
+                    j++;         //increment values when a table is inserted in the textBrowser
+
                     crop_rect->setRect(0,0,1,1);         //settings this for dynamic rectangular region
 
                     //! updating entries for table entries in xml file
@@ -859,8 +873,13 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     //! for placing a equation placeholder
                     displayHolder(s1,s2,x1,y1,x2,y2,k);
 
-                    k++;       //increment values when a equation is inserted in the textBrowser
                     //graphic->removeItem(crop_rect);
+
+                    //!Saving Image Regions to their respective folder(Figure/Table/Equation)
+                    saveImageRegion(cropped,PageNo[1],s1,k);
+
+                    k++;       //increment values when a equation is inserted in the textBrowser
+
                     crop_rect->setRect(0,0,1,1);       //settings this for dynamic rectangular region
 
                     //! updating entries for equation entries in xml file
@@ -907,6 +926,61 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     return QMainWindow::eventFilter(object, event);
 }
 
+//!Saving Image Regions to their respective folder(Figure/Table/Equation)
+void MainWindow::saveImageRegion(QPixmap cropped, QString PageNo, QString s1,int z)
+{
+    if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
+    {
+        QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+    }
+    if(QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
+    {
+        if(s1 == "IMGHOLDER")
+        {
+            QString path = "/Cropped_Images/Figures/P"+PageNo+"_N"+QString::number(z)+".jpg";
+            if(!QDir(gDirTwoLevelUp+"/Cropped_Images/Figures").exists())
+            {
+                QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Figures");
+                cropped.save(gDirTwoLevelUp+path);
+            }
+            else
+            {
+                cropped.save(gDirTwoLevelUp+path);
+            }
+        }
+        else if(s1 == "TBHOLDER")
+        {
+            QString path = "/Cropped_Images/Tables/P"+PageNo+"_N"+QString::number(z)+".jpg";
+            if(!QDir(gDirTwoLevelUp+"/Cropped_Images/Tables").exists())
+            {
+                QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Tables");
+                cropped.save(gDirTwoLevelUp+path);
+            }
+            else
+            {
+                cropped.save(gDirTwoLevelUp+path);
+            }
+        }
+        else if(s1 == "EQHOLDER")
+        {
+            QString path = "/Cropped_Images/Equations/P"+PageNo+"_N"+QString::number(z)+".jpg";
+            if(!QDir(gDirTwoLevelUp+"/Cropped_Images/Equations").exists())
+            {
+                QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Equations");
+                cropped.save(gDirTwoLevelUp+path);
+            }
+            else
+            {
+                cropped.save(gDirTwoLevelUp+path);
+            }
+        }
+        else
+        {
+
+        }
+    }
+}
+
 //!Setting for placeholder for figure/table/equation
 void MainWindow::displayHolder(QString s1,QString s2,int x1,int y1,int x2,int y2,int i)
 {
@@ -918,7 +992,7 @@ void MainWindow::displayHolder(QString s1,QString s2,int x1,int y1,int x2,int y2
     return;
 }
 
-//! Updating entries for figure/table/equation pagewise
+//! Updating entries for figure/table/equation pagewise in image.xml
 void MainWindow::updateEntries(QDomDocument document, QString filename,QString PageNo, QString s2, int i)
 {
     QDomElement root = document.documentElement();
@@ -978,12 +1052,12 @@ void MainWindow::createImageInfoXMLFile()
     QDir directory(strI);
     //qDebug()<<"str"<<strI;
     QStringList list1 = directory.entryList(QStringList() << "*.txt",QDir::Files);
-
+    int counter_i = 1;
     for ( const auto& i : list1 )
     {
         QStringList PageNo = i.split(QRegExp("[-.]"));
         //qDebug()<<PageNo;
-        QDomElement tagPage = document.createElement("page"+PageNo[1]);
+        QDomElement tagPage = document.createElement("page"+PageNo[1]+"_"+QString::number(counter_i));
         root.appendChild(tagPage);
 
         QDomElement tagImage = document.createElement("figure");
@@ -1000,6 +1074,7 @@ void MainWindow::createImageInfoXMLFile()
         tagPage.appendChild(tagEquation);
         QDomText NoEquation = document.createTextNode("1");
         tagEquation.appendChild(NoEquation);
+        counter_i++;
     }
 
     //qDebug()<<"xxml file" << strI <<"pageno" << list1;
@@ -4652,7 +4727,15 @@ void MainWindow::DisplayJsonDict(void) {
     QByteArray data_json;
 
     // Get dict file from current opened file
-    QString dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
+    QString dictFilename;
+    if(mRole=="Verifier")
+    {
+        dictFilename = gDirTwoLevelUp + "/" + "VerifierOutput" + "/" + gCurrentPageName;
+    }
+    else if(mRole=="Corrector")
+    {
+        dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
+    }
     dictFilename.replace(".txt", ".dict");
     dictFilename.replace(".html", ".dict");
     QFile dictQFile(dictFilename);
@@ -5520,6 +5603,10 @@ void MainWindow::on_actionFind_and_Replace_triggered()
     dialog->show();
 }
 
+/*!
+ * \fn MainWindow::on_pushButton_clicked
+ * \brief When button is clicked, then we can add placeholders for figure/table/equation.
+ */
 void MainWindow::on_pushButton_clicked()
 {
     if(loadimage)                   //Check image is loaded or not.
