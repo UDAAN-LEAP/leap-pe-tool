@@ -74,7 +74,7 @@ private slots:
 
     bool eventFilter(QObject *, QEvent *);
     void saveImageRegion(QPixmap, QString, QString,int);
-    void displayHolder(QString,QString,int,int,int,int,int);
+    void displayHolder(QString,QString,QString,int,int,int,int,int);
     void updateEntries(QDomDocument, QString, QString, QString, int);
     void createImageInfoXMLFile();
 

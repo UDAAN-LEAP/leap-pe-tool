@@ -737,6 +737,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
                 drawRectangleFlag=true;     //set the flag true when occuring for first time
                 static int i,j,k;           //for storing the counter values for figure/equation/table for each page
+                static QString a;           //pagecounter
 
                 //! Getting PageNo string from gCurrentPageName
                 QStringList PageNo=gCurrentPageName.split(QRegExp("[-.]"));
@@ -768,6 +769,8 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     //! Check if the child tag name is Page(No)
                     if (Component.tagName()=="page"+PageNo[1])
                     {
+                        a = Component.attribute("count");        //get counter value for each page starts with 1.
+                        //qDebug() << a << "hel" <<endl;
                         QDomElement Child=Component.firstChild().toElement();      //Item: figure
                         while (!Child.isNull())
                         {
@@ -823,12 +826,12 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     QString s2 = "Figure";
 
                     //! for placing a figure placeholder
-                    displayHolder(s1,s2,x1,y1,x2,y2,i);
+                    displayHolder(s1,s2,a,x1,y1,x2,y2,i);
 
                     //graphic->removeItem(crop_rect);
 
                     //!Saving Image Regions to their respective folder(Figure/Table/Equation)
-                    saveImageRegion(cropped,PageNo[1],s1,i);
+                    saveImageRegion(cropped,a,s1,i);
 
                     i++;       //increment values when a figure is inserted in the textBrowser
 
@@ -847,12 +850,12 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     QString s2 = "Table";
 
                     //! for placing a table placeholder
-                    displayHolder(s1,s2,x1,y1,x2,y2,j);
+                    displayHolder(s1,s2,a,x1,y1,x2,y2,j);
 
                     //graphic->removeItem(crop_rect);
 
                     //!Saving Image Regions to their respective folder(Figure/Table/Equation)
-                    saveImageRegion(cropped,PageNo[1],s1,j);
+                    saveImageRegion(cropped,a,s1,j);
 
                     j++;         //increment values when a table is inserted in the textBrowser
 
@@ -871,12 +874,12 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     QString s2 = "Equation";
 
                     //! for placing a equation placeholder
-                    displayHolder(s1,s2,x1,y1,x2,y2,k);
+                    displayHolder(s1,s2,a,x1,y1,x2,y2,k);
 
                     //graphic->removeItem(crop_rect);
 
                     //!Saving Image Regions to their respective folder(Figure/Table/Equation)
-                    saveImageRegion(cropped,PageNo[1],s1,k);
+                    saveImageRegion(cropped,a,s1,k);
 
                     k++;       //increment values when a equation is inserted in the textBrowser
 
@@ -927,7 +930,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 }
 
 //!Saving Image Regions to their respective folder(Figure/Table/Equation)
-void MainWindow::saveImageRegion(QPixmap cropped, QString PageNo, QString s1,int z)
+void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z)
 {
     if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
     {
@@ -937,7 +940,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString PageNo, QString s1,int
     {
         if(s1 == "IMGHOLDER")
         {
-            QString path = "/Cropped_Images/Figures/P"+PageNo+"_N"+QString::number(z)+".jpg";
+            QString path = "/Cropped_Images/Figures/Figure"+a+"-"+QString::number(z)+".jpg";
             if(!QDir(gDirTwoLevelUp+"/Cropped_Images/Figures").exists())
             {
                 QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Figures");
@@ -950,7 +953,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString PageNo, QString s1,int
         }
         else if(s1 == "TBHOLDER")
         {
-            QString path = "/Cropped_Images/Tables/P"+PageNo+"_N"+QString::number(z)+".jpg";
+            QString path = "/Cropped_Images/Tables/Table"+a+"-"+QString::number(z)+".jpg";
             if(!QDir(gDirTwoLevelUp+"/Cropped_Images/Tables").exists())
             {
                 QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Tables");
@@ -958,12 +961,12 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString PageNo, QString s1,int
             }
             else
             {
-                cropped.save(gDirTwoLevelUp+path);
+                cropped.save(gDirTwoLevelUp+path,"JPG", 100);
             }
         }
         else if(s1 == "EQHOLDER")
         {
-            QString path = "/Cropped_Images/Equations/P"+PageNo+"_N"+QString::number(z)+".jpg";
+            QString path = "/Cropped_Images/Equations/Equation"+a+"-"+QString::number(z)+".jpg";
             if(!QDir(gDirTwoLevelUp+"/Cropped_Images/Equations").exists())
             {
                 QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Equations");
@@ -982,13 +985,11 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString PageNo, QString s1,int
 }
 
 //!Setting for placeholder for figure/table/equation
-void MainWindow::displayHolder(QString s1,QString s2,int x1,int y1,int x2,int y2,int i)
+void MainWindow::displayHolder(QString s1,QString s2,QString a,int x1,int y1,int x2,int y2,int i)
 {
     QTextCursor cursor = curr_browser->textCursor();       //getting the cursor position
 
-    QStringList PageNo=gCurrentPageName.split(QRegExp("[-.]"));     //splitting page number
-    QString PageNumber = PageNo[1];
-    cursor.insertText("["+s1+" "+s2+"-"+PageNumber+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");         //insert placeholder
+    cursor.insertText("["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");         //insert placeholder
     return;
 }
 
@@ -1057,7 +1058,8 @@ void MainWindow::createImageInfoXMLFile()
     {
         QStringList PageNo = i.split(QRegExp("[-.]"));
         //qDebug()<<PageNo;
-        QDomElement tagPage = document.createElement("page"+PageNo[1]+"_"+QString::number(counter_i));
+        QDomElement tagPage = document.createElement("page"+PageNo[1]);
+        tagPage.setAttribute("count", counter_i);
         root.appendChild(tagPage);
 
         QDomElement tagImage = document.createElement("figure");
