@@ -1501,6 +1501,7 @@ void MainWindow::translate_replace(QAction* action)
  */
 void MainWindow::on_actionNew_triggered()
 {
+
     QTextBrowser * b = new QTextBrowser(this);
     b->setReadOnly(false);
     b->setUndoRedoEnabled(true);            //User can use Undo/Redo commands
@@ -1528,7 +1529,7 @@ void MainWindow::on_actionSave_triggered()
 {
     SaveTimeLog();
     DisplayTimeLog();
-
+    QVector <QString> optimalPath;
     //! When changes are made by the verifier the following values are also updated.
     if(isVerifier)
     {
@@ -1580,10 +1581,11 @@ void MainWindow::on_actionSave_triggered()
         s1 = doc.toPlainText();          //before Saving
         s2 = curr_browser->toPlainText();       //after Saving
 
-        editDistance(s1, s2);           // Update CPair by editdistance
+        optimalPath = editDistance(s1, s2);           // Update CPair by editdistance
+        //! Do commit when there are some changes in previous and new html file on the basis of distance.
+//        iteratorReplace(globalFileName, optimalPath);
 
-        //! Do commit when there are some changes in previous and new html file on the basis of editdistance.
-        if(editDistance(s1,s2))
+        if(optimalPath.size())
         {
             if(mProject.get_version().toInt())     //Check version number
             {
@@ -1739,7 +1741,9 @@ void MainWindow::on_actionSave_triggered()
             }
         }
     }
+    iteratorReplace(globalFileName, optimalPath);
     ConvertSlpDevFlag =0;
+
 }
 
 /*!
@@ -4866,7 +4870,8 @@ void MainWindow::file_click(const QModelIndex & indx) {
     if(qvar == "Document" || qvar == "Image")
         return;
     auto file = item->GetFile();
-    QString fileName = file->fileName();
+    globalFileName = file->fileName();
+//    qDebug() << file->fileName();
 
     NodeType type = item->GetNodeType();
     switch (type) {
@@ -4876,6 +4881,7 @@ void MainWindow::file_click(const QModelIndex & indx) {
         QString suff = f.completeSuffix();
         if (suff == "txt" || suff == "html") {
             LoadDocument(file,suff,qvar);
+//            qDebug() << "hello";
         }
 
         if (suff == "jpeg" || suff == "jpg" || suff == "png") {
@@ -5529,4 +5535,59 @@ void MainWindow::on_pushButton_clicked()
         p->setStyleSheet("QPushButton { background-color: grey; }\n"
                           "QPushButton:enabled { background-color: rgb(200,205,180); }\n");      //apply style on button when it is triggered
      }
+}
+
+void MainWindow::iteratorReplace(QString str , QVector <QString> optimalPath)
+{
+    QMap <QString, QString> globalReplacementMap;
+    QMap<QString, QString>::iterator j;
+    QStringList list, changesList;
+    list=str.split("/");
+    str="";
+    for (int i=0; i<list.size()-1; i++)
+    {
+        str+=list[i];
+        str+="/";
+    }
+
+    str.chop(1);
+
+    QDirIterator it(str,QDirIterator::Subdirectories);
+    for (int i=0; i<optimalPath.size(); i++)
+    {
+        changesList = optimalPath[i].split(" ");
+        globalReplacementMap[changesList[1]] = changesList[3];
+    }
+    int count=0;
+    while (it.hasNext())
+    {
+
+        count+=1;
+        QString s = it.next();
+        QFile *f = new QFile(s);
+        f->open(QIODevice::ReadOnly);
+//        QFileInfo finfo(f->fileName());
+
+        QTextStream in(f);
+        QString s1 = in.readAll();
+        f->close();
+
+        f->open(QIODevice::WriteOnly);
+        for (j = globalReplacementMap.begin(); j != globalReplacementMap.end(); ++j)
+        {
+        //      cout << j.key() << ": " << j.value() << Qt::endl;
+                 if (s1.contains(j.key()))
+                 {
+                     s1.replace(j.key() , j.value());
+                 }
+         }
+
+
+        in << s1;
+        f->close();
+
+
+    }
+    qDebug() << count;
+
 }

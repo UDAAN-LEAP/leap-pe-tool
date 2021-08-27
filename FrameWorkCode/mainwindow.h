@@ -299,7 +299,7 @@ private slots:
     bool checkUnsavedWork();
     void saveAllWork();
     void setMFilename( QString );
-
+    void iteratorReplace( QString , QVector<QString> );
 
     void on_pushButton_clicked();
 
@@ -324,6 +324,7 @@ private:
     QGraphicsRectItem* item1;
     QGraphicsRectItem* crop_rect;
     QString s1, s2;
+    QString globalFileName;
 };
 
 #endif // MAINWINDOW_H

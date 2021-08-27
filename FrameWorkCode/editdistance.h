@@ -3,7 +3,7 @@
 #include <QString>
 #include <map>
 #include <string>
-int editDistance(QString , QString );
+QVector <QString> editDistance(QString , QString );
 int min(int ,int );
 extern std::map<std::string, std::string> CPair_editDis;
 
