@@ -98,12 +98,10 @@ bool shouldIDraw=false;         //button functioning over marking a region for f
 
 int pressedFlag;            //Resposible for dynamic rectangular drawing
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+//Constructor
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-//    QRect qr = QRect();
 
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
     ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
@@ -122,6 +120,7 @@ MainWindow::MainWindow(QWidget *parent) :
                                             };
     if(!setRole(passwordRoleMap[password]))
         mExitStatus = true;
+
     QString common = "डॉ - xZ,, अ  - a,, आ/ ा  - A,, इ/ ि  - i,, ई/ ी  - I,, उ/ ु  - u,, ऊ/ ू  - U,, ऋ/ ृ  - f,, ए/ े  - e,, ऐ/ ै  - E,, ओ/ ो  - o,, औ/ ौ  - O,, ं  - M,, ः  - H,,  ँ   - ~,, ज्ञ  - jYa,, त्र  - tra,, श्र  - Sra,, क्ष्/क्ष  - kz/kza,, द्य्/द्य  - dy/dya,, क्/क  - k/ka,, ख्/ख  - K/Ka,, ग्/ग  - g/ga,, घ्/घ  - G/Ga,, ङ्/ङ  - N/Na,, च्/च  - c/ca,, छ्/छ  - C/Ca,, ज्/ज  - j/ja,, झ्/झ  - J/Ja,, ञ्/ञ  - Y/Ya,, ट्/ट  - w/wa,, ठ्/ठ  - W/Wa,, ड्/ड  - q/qa,, ढ्/ढ  - Q/Qa,, ण्/ण  - R/Ra,, त्/त  - t/ta,, थ्/थ  - T/Ta,, द्/द  - d/da,, ध्/ध  - D/Da,, न्/न  - n/na,, प्/प  - p/pa,, फ्/फ  - P/Pa,, ब्/ब  - b/ba,, भ्/भ  - B/Ba,, म्/म  - m/ma,, य्/य  - y/ya,, र्/र  - r/ra,, ल्/ल  - l/la,, व्/व  - v/va,, श्/श  - S/Sa,, ष्/ष  - z/za,, स्/स  - s/sa,, ह्/ह  - h/ha,, ळ्/ळ  - L/La,, १  - 1,, २  - 2,, ३  - 3,, ४  - 4,, ५  - 5,, ६  - 6,, ७  - 7,, ८  - 8,, ९  - 9,, ०  - 0,, ।  - |,, ॥  - ||";
     gSanskrit = "SLP1 Sanskrit Guide:";
     gSanskrit += "\n";
@@ -143,6 +142,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->tabWidget_2->removeTab(0);
     ui->tabWidget_2->removeTab(0);
+
     bool b = connect(ui->tabWidget_2, SIGNAL(tabCloseRequested(int)), this, SLOT(closetab(int)));
     b = connect(ui->tabWidget_2, SIGNAL(currentChanged(int)), this, SLOT(tabchanged(int)));
     b = connect(&watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(directoryChanged(const QString&)));
@@ -152,10 +152,18 @@ MainWindow::MainWindow(QWidget *parent) :
     qApp->installEventFilter(this);
 }
 
+/*!
+ * \brief MainWindow::setRole()
+ * \param role
+ * \return true/false
+ */
 bool MainWindow::setRole(QString role)
 {
     this->mRole = role;
-    if(mRole == "Admin") {
+
+    //! Checking role
+    if(mRole == "Admin")
+    {
         int button = QMessageBox::question(this, "Select Role", "Which Role do you want to Load?",
                                            "Verifier", "Corrector","Project Manager", 0);
         if(button == 0)
@@ -168,25 +176,31 @@ bool MainWindow::setRole(QString role)
             return false;
     }
 
-    if(mRole == "Project Manager"){
-        ui->actionNew_Project->setEnabled(true);
-        ui->actionNew_Project->setVisible(true);
+    if(mRole == "Project Manager")
+    {
+        ui->actionNew_Project->setEnabled(true);    //enable the option
+        ui->actionNew_Project->setVisible(true);    //make it visible
         mRole = "Verifier";
     }
 
-    if(mRole == "Verifier") {
+    if(mRole == "Verifier")
+    {
+        //! setting its each filesructure with verifieroutput
         filestructure_fw = { {"Inds","VerifierOutput"},
                              {"CorrectorOutput","VerifierOutput",},
                              {"VerifierOutput","VerifierOutput" }
                            };
         isVerifier = 1;
-        ui->actionTurn_In->setVisible(false);
-        ui->actionTurn_In->setEnabled(false);
+        ui->actionTurn_In->setVisible(false);      //set false to its visibility; now shown
+        ui->actionTurn_In->setEnabled(false);      //disable the option
 
         this->setWindowTitle("OpenOCRCorrect-Verifier");
 
 
-    } else if(mRole == "Corrector") {
+    }
+    else if(mRole == "Corrector")
+    {
+        //! setting its each filesructure with correctoroutput
         filestructure_fw = { {"Inds","CorrectorOutput"},
                              {"CorrectorOutput","CorrectorOutput",},
                              {"VerifierOutput","CorrectorOutput" }
@@ -197,17 +211,19 @@ bool MainWindow::setRole(QString role)
 
         ui->actionVerifier_Turn_In->setVisible(false);
         ui->actionVerifier_Turn_In->setEnabled(false);
+
         isVerifier = 0;
         this->setWindowTitle("OpenOCRCorrect-Corrector");
     }
-    else {
+    else
+    {
         int result = QMessageBox::information(this,"Login","Login Failed");
-
         return false;
     }
     return true;
-
 }
+
+//destructor
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -400,512 +416,6 @@ void MainWindow::on_actionCreateBest2OCR_triggered()
         best2 << endl;
     }
 }
-
-/*!
- * \fn MainWindow::eventFilter
- * \brief event: ToolTip and ImageMarkingRegion
-      1. Responsible for drawing rectangular region
-      2. Placing a PlaceHolder for figure/table/equation entries
-      3. Set a MessageBox for figure/table/equation/cancel
-      4. Set counter for pagewise for each entry
-      5. Mark multiple image regions in a loaded image.
-      6. Set various flag: a)drawRectangleFlag: is to prevent triggering of this function twice
-      b) loadimage: check image is loaded on not; c) pressedFlag: resposible for dynamic rectangular
-      drawing.
- * \param object, event
- * \return QMainWindow::eventFilter(object, event);
- * \sa MainWindow::displayHolder, MainWindow::updateEntries, MainWindow::createImageInfoXMLFile
- */
-bool MainWindow::eventFilter(QObject *object, QEvent *event)
-{
-    //! Tooltip documentation
-    if (event->type() == QEvent::ToolTip)
-    {
-
-          //qDebug() << "Tooltip "<<QEvent :: ToolTip;
-          event->accept();
-
-         if(QToolTip::isVisible())
-         {
-
-              QString qs =  QToolTip :: text();
-
-             int x0, y0, x1, y1;
-
-
-             QStringList list;
-             list=qs.split(" ");
-             int len = list.count();
-             if (len>=5)
-             {
-
-                 x0 = list[1].toInt();
-                 y0 =list[2].toInt();
-                 x1 = list[3].toInt();
-                 y1 = list[4].replace(";", "").toInt();
-                 //qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
-                 if(x1!=0 && x0!=0 && y1!=0 && y0!=0)
-                 {
-                     QColor blue40 = Qt::blue;
-                     blue40.setAlphaF( 0.4 );
-
-                     item1->setBrush(blue40);
-
-                     item1->setRect(x0, y0, x1-x0, y1-y0);
-                  }
-                 }
-        }
-
-      }
-
-    //! ImageMarkingRegion feature
-
-    if(loadimage)                   //Check image is loaded or not.
-    {
-     static int x1, y1;             //top & left coordinate values
-     int x2, y2;                    //bottom & right coordinate values
-     int x_temp , y_temp;           // dynamic coordinate values
-
-     //! Apply event on graphicsview (image loaded part)
-     if( object->parent() == ui->graphicsView)
-     {
-            installEventFilter(this);
-            //! Capturing mouse press event on graphicsview
-            if (event->type() == QEvent::MouseButtonPress && shouldIDraw)
-            {
-                QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-                QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos()); //Capturing the coordinates values according to the image.
-                QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y());
-
-                x1 = ( int )pos.x();      //left coordinate value
-                y1 = ( int )pos.y();      //top coordinate value
-                pressedFlag=1;            //drawing is on until it becomes 0 or for continuous pressing event
-                event->accept();
-            }
-            //! Capturing mouse release event on graphicsview
-            if (event->type() == QEvent::MouseButtonRelease)
-            {
-                //! reponsible for preventing the event second time.
-                if(drawRectangleFlag==true)
-                {
-                    drawRectangleFlag=false;
-                    pressedFlag =0;        //for stopping the drawing
-                    event->accept();
-                    return true;
-                }
-                if(shouldIDraw){
-
-                drawRectangleFlag=true;     //set the flag true when occuring for first time
-                static int i,j,k;           //for storing the counter values for figure/equation/table for each page
-                static QString a;           //pagecounter
-
-                //! Getting PageNo string from gCurrentPageName
-                QStringList PageNo=gCurrentPageName.split(QRegExp("[-.]"));
-                QString PageNumber = PageNo[1];
-
-                //!Getting i,j,k values from image.xml file
-                //! first reading the file
-                QDomDocument document;
-                QString filename12 = mProject.GetDir().absolutePath() + "/image.xml";
-                //qDebug()<<filename12;
-                QFile f(filename12);
-
-                //! throws an error if file is not in readonly mode
-                if (!f.open(QIODevice::ReadOnly ))
-                {
-                    std::cerr << "Error while loading file" << std::endl;
-                    return 1;
-                }
-                document.setContent(&f);       // Set data into the QDomDocument before processing
-                f.close();
-
-                //!for this you can refer image.xml file
-                QDomElement root=document.documentElement();       //Item: BookSet
-                QDomElement Component=root.firstChild().toElement();      //Item: Page(No)
-
-                //! Loop while there is a child
-                while(!Component.isNull())
-                {
-                    //! Check if the child tag name is Page(No)
-                    if (Component.tagName()=="page"+PageNo[1])
-                    {
-                        a = Component.attribute("count");        //get counter value for each page starts with 1.
-                        //qDebug() << a << "hel" <<endl;
-                        QDomElement Child=Component.firstChild().toElement();      //Item: figure
-                        while (!Child.isNull())
-                        {
-                            //! Read tagNames and values
-                            if (Child.tagName()=="figure") i=Child.firstChild().toText().data().toInt();
-                            if (Child.tagName()=="table") j=Child.firstChild().toText().data().toInt();
-                            if (Child.tagName()=="equation") k=Child.firstChild().toText().data().toInt();
-
-                            Child = Child.nextSibling().toElement();        // Next child
-                        }
-                    }
-                    Component = Component.nextSibling().toElement();        // Next component
-                 }
-
-                QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-                QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
-                QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
-
-                x2 = ( int )pos.x();         //right coordinate value
-                y2 = ( int )pos.y();         //bottom coordinate value
-                pressedFlag =0;              // stop rectangular drawing
-
-
-                QColor blue40 = Qt::blue;     //sets its color
-                blue40.setAlphaF( 0.4 );      //for transparency
-
-                crop_rect->setBrush(blue40);   //set brush
-
-                //qDebug() << x1 << " " << y1 << " " << x2 - x1 << " " << y2 - y1;   //getting the coordinates
-
-                crop_rect->setRect(x1, y1, x2 - x1, y2 - y1);       //set final coordinates for rectangular region
-                QRect rect(x1, y1, x2 - x1, y2 - y1);              //set QRect
-                QPixmap image=QPixmap::fromImage(imageOrig);       //set QPixmap image
-                QPixmap cropped=image.copy(rect);                   //get cropped image according to coordinates
-
-                //! Set a messagebox for choosing what do you want to add: Figure/Table/Equation/Cancel
-                QMessageBox messageBox(this);
-                messageBox.setWindowTitle("Do you want to add");
-                QAbstractButton *figureButton = messageBox.addButton(tr("Figure"), QMessageBox::ActionRole);
-                QAbstractButton *tableButton = messageBox.addButton(tr("Table"), QMessageBox::ActionRole);
-                QAbstractButton *equationButton = messageBox.addButton(tr("Equation"), QMessageBox::ActionRole);
-                QAbstractButton *cancelButton = messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
-
-                QString msg = "Select an option\n";
-                messageBox.setText(msg);
-                messageBox.exec();
-
-                //! settings for a figureholder
-                if (messageBox.clickedButton() == figureButton)
-                {
-                    QString s1 = "IMGHOLDER";
-                    QString s2 = "Figure";
-
-                    //! for placing a figure placeholder
-                    displayHolder(s1,s2,a,x1,y1,x2,y2,i);
-
-                    //graphic->removeItem(crop_rect);
-
-                    //!Saving Image Regions to their respective folder(Figure/Table/Equation)
-                    saveImageRegion(cropped,a,s1,i);
-
-                    i++;       //increment values when a figure is inserted in the textBrowser
-
-                    crop_rect->setRect(0,0,1,1);       //settings this for dynamic rectangular region
-
-                    //! updating entries for figure entries in xml file
-                    updateEntries(document, filename12, PageNo[1], s2, i);
-
-                    shouldIDraw=false;
-                    ui->pushButton->setStyleSheet("");     //remove the style once the operation is done
-                }
-                //! settings for a tableholder
-                else if (messageBox.clickedButton() == tableButton)
-                {
-                    QString s1 = "TBHOLDER";
-                    QString s2 = "Table";
-
-                    //! for placing a table placeholder
-                    displayHolder(s1,s2,a,x1,y1,x2,y2,j);
-
-                    //graphic->removeItem(crop_rect);
-
-                    //!Saving Image Regions to their respective folder(Figure/Table/Equation)
-                    saveImageRegion(cropped,a,s1,j);
-
-                    j++;         //increment values when a table is inserted in the textBrowser
-
-                    crop_rect->setRect(0,0,1,1);         //settings this for dynamic rectangular region
-
-                    //! updating entries for table entries in xml file
-                    updateEntries(document, filename12, PageNo[1], s2, j);
-
-                    shouldIDraw=false;
-                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
-                }
-                //! settings for a equationholder
-                else if(messageBox.clickedButton() == equationButton)
-                {
-                    QString s1 = "EQHOLDER";
-                    QString s2 = "Equation";
-
-                    //! for placing a equation placeholder
-                    displayHolder(s1,s2,a,x1,y1,x2,y2,k);
-
-                    //graphic->removeItem(crop_rect);
-
-                    //!Saving Image Regions to their respective folder(Figure/Table/Equation)
-                    saveImageRegion(cropped,a,s1,k);
-
-                    k++;       //increment values when a equation is inserted in the textBrowser
-
-                    crop_rect->setRect(0,0,1,1);       //settings this for dynamic rectangular region
-
-                    //! updating entries for equation entries in xml file
-                    updateEntries(document, filename12, PageNo[1], s2, k);
-
-                    shouldIDraw=false;
-                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
-                }
-                //! setting for cancelbutton
-                else
-                {
-                    QMessageBox::information(0, "Not saved", "Cancelled");
-                    crop_rect->setRect(0,0,1,1);
-                    shouldIDraw=false;
-                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
-                }
-
-                event->accept();
-                //return true;
-            }
-            }
-        }
-        //! Capturing mousemove event & creating single dynamic rectangle & Updating the temporary coordinates until pressedFlag is true
-        if (event->type() == QEvent::MouseMove)
-        {
-             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-             if (pressedFlag == 1)
-             {
-                 statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
-                 QPointF position =  ui->graphicsView->mapToScene( mEvent->pos() );
-                 QRgb rgb = imageOrig.pixel( ( int )position.x(), ( int )position.y() );
-
-                 QColor blue40 = Qt::blue;
-                 blue40.setAlphaF( 0.4 );
-                 crop_rect->setBrush(blue40);
-                 x_temp = ( int )position.x();
-                 y_temp = ( int )position.y();
-
-                 crop_rect->setRect(x1, y1, x_temp-x1, y_temp-y1);
-         }
-         event->accept();
-      }
-    }
-    return QMainWindow::eventFilter(object, event);
-}
-
-//!Saving Image Regions to their respective folder(Figure/Table/Equation)
-void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z)
-{
-    if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
-    {
-        QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
-        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Figures");
-        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Tables");
-        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Equations");
-    }
-    if(QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
-    {
-        if(s1 == "IMGHOLDER")
-        {
-            QString path = "/Cropped_Images/Figures/Figure"+a+"-"+QString::number(z)+".jpg";
-
-            cropped.save(gDirTwoLevelUp+path,"JPG",100);       //100:storing the image in uncompressed high resolution
-            //QString placeholder = "["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]";
-
-            QString src = gDirTwoLevelUp+path;
-            QString html = QString("\n <img src='%1'>").arg(src);
-            QTextCursor cursor = curr_browser->textCursor();
-            cursor.insertHtml(html);
-        }
-        else if(s1 == "TBHOLDER")
-        {
-            QString path = "/Cropped_Images/Tables/Table"+a+"-"+QString::number(z)+".jpg";
-
-            cropped.save(gDirTwoLevelUp+path,"JPG", 100);
-
-            QString src = gDirTwoLevelUp+path;
-            QString html = QString("<img src='%1'>").arg(src);
-            QTextCursor cursor = curr_browser->textCursor();
-            cursor.insertHtml(html);
-
-        }
-        else if(s1 == "EQHOLDER")
-        {
-            QString path = "/Cropped_Images/Equations/Equation"+a+"-"+QString::number(z)+".jpg";
-
-            cropped.save(gDirTwoLevelUp+path,"JPG",100);
-
-            QString src = gDirTwoLevelUp+path;
-            QString html = QString("<img src='%1'>").arg(src);
-            QTextCursor cursor = curr_browser->textCursor();
-            cursor.insertHtml(html);
-        }
-        else
-        {
-            //empty
-        }
-    }
-}
-
-//!Setting for placeholder for figure/table/equation
-void MainWindow::displayHolder(QString s1,QString s2,QString a,int x1,int y1,int x2,int y2,int i)
-{
-    QTextCursor cursor = curr_browser->textCursor();       //getting the cursor position
-    cursor.insertText("["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");         //insert placeholder
-    return;
-}
-
-//! Updating entries for figure/table/equation pagewise in image.xml
-void MainWindow::updateEntries(QDomDocument document, QString filename,QString PageNo, QString s2, int i)
-{
-    QDomElement root = document.documentElement();
-    QDomElement Component=root.firstChild().toElement();
-
-    while(!Component.isNull())       // Loop while there is a child
-    {
-        //! Check if the child tag name is COMPONENT
-        if (Component.tagName()=="page"+PageNo)
-        {
-            QDomElement Child=Component.firstChild().toElement();
-            while (!Child.isNull())
-            {
-                if (s2 == "Figure" && Child.tagName()=="figure")
-                {
-                    Child.childNodes().at(0).setNodeValue(QString::number(i));
-                }
-                else if (s2 == "Table" && Child.tagName()=="table")
-                {
-                    Child.childNodes().at(0).setNodeValue(QString::number(i));
-                }
-                else if (s2 == "Equation" && Child.tagName()=="equation")
-                {
-                    Child.childNodes().at(0).setNodeValue(QString::number(i));
-                }
-
-                Child = Child.nextSibling().toElement();       // Next child
-            }
-        }
-        Component = Component.nextSibling().toElement();        // Next component
-     }
-    QFile f(filename);
-    f.open(QIODevice::WriteOnly);
-    QTextStream stream;
-    stream.setDevice(&f);
-    stream.setCodec("UTF-8");
-    document.save(stream,4);
-    f.close();
-}
-
-//! Genearte image.xml for figure/table/equation entries and initialize these values by 1 iff when this file does not exist.
-void MainWindow::createImageInfoXMLFile()
-{
-    QDomDocument document;
-
-    // Add processing instructions that are XML instructions
-    QDomProcessingInstruction instruction;
-    instruction = document.createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
-    document.appendChild(instruction);
-
-    // add root element
-    QDomElement root = document.createElement("BookSet");
-    document.appendChild(root);
-
-    //add some elements
-    QString strI = gDirTwoLevelUp + "/Inds";
-    QDir directory(strI);
-    //qDebug()<<"str"<<strI;
-    QStringList list1 = directory.entryList(QStringList() << "*.txt",QDir::Files);
-    int counter_i = 1;
-    for ( const auto& i : list1 )
-    {
-        QStringList PageNo = i.split(QRegExp("[-.]"));
-        //qDebug()<<PageNo;
-        QDomElement tagPage = document.createElement("page"+PageNo[1]);
-        tagPage.setAttribute("count", counter_i);
-        root.appendChild(tagPage);
-
-        QDomElement tagImage = document.createElement("figure");
-        tagPage.appendChild(tagImage);
-        QDomText NoImage = document.createTextNode("1");
-        tagImage.appendChild(NoImage);
-
-        QDomElement tagTable = document.createElement("table");
-        tagPage.appendChild(tagTable);
-        QDomText NoTable = document.createTextNode("1");
-        tagTable.appendChild(NoTable);
-
-        QDomElement tagEquation = document.createElement("equation");
-        tagPage.appendChild(tagEquation);
-        QDomText NoEquation = document.createTextNode("1");
-        tagEquation.appendChild(NoEquation);
-        counter_i++;
-    }
-
-    //qDebug()<<"xxml file" << strI <<"pageno" << list1;
-
-    QString filename12 = mProject.GetDir().absolutePath() + "/image.xml";
-    if(!QFileInfo::exists(filename12))
-    {
-        QFile file(filename12);
-
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)){
-            qDebug()<<"Failed to open xml file";
-            return;
-        }
-        else{
-            QTextStream out(&file);
-            out << document.toString();
-            file.close();
-            qDebug()<<"Writing to xml file";
-        }
-    }
-}
-
-/*
-// refer http://stackoverflow.com/questions/28746541/qt-mousemove-event-not-being-caught-in-eventfilter
-string strPrev, linePrev;
-size_t ind = 0;
-bool MainWindow::eventFilter(QObject *object, QEvent *event)
-{
-
-    QTextCursor cursor = curr_browser->textCursor();
-    cursor.select(QTextCursor::WordUnderCursor);
-    // code to copy selected string:-
-    string str1 = cursor.selectedText().toUtf8().constData();;
-
-    cursor.select(QTextCursor::LineUnderCursor);
-    string line1 = cursor.selectedText().toUtf8().constData();;
-
-    if((str1 != strPrev) || (line1 != linePrev) ) {
-
-    strPrev = str1; linePrev = line1;
-    QImage image = imageOrig;
-    ind = wordLineIndex[(str1 + "###" + line1)];
-    cout << wordLineIndex.size()<< " " << str1 + "###" + line1 << " " << ind << endl;
-
-    for(int i = vx[ind]; i < (vx[ind] + vw[ind]); i++){
-
-
-                image.setPixel(i,vy[ind],qRgb(150,0,0)); image.setPixel(i,vy[ind]-1,qRgb(150,0,0));  //i,vy[ind]-1,QRg
-                image.setPixel(i,(vy[ind] + vh[ind]),qRgb(150,0,0));image.setPixel(i,(vy[ind] + vh[ind]+1),qRgb(150,0,0));
-
-
-    }
-    for(int j = vy[ind]; j < (vy[ind] + vh[ind]); j++){
-
-                image.setPixel(vx[ind],j,qRgb(150,0,0)); image.setPixel(vx[ind]-1,j,qRgb(150,0,0));//qGray(150)
-                image.setPixel((vx[ind]+vw[ind]),j,qRgb(150,0,0)); image.setPixel((vx[ind]+vw[ind] + 1 ),j,qRgb(150,0,0));
-
-    }
-
-    QImage imageO = image;
-
-    QGraphicsScene *graphic = new QGraphicsScene(this);
-    graphic->addPixmap(QPixmap::fromImage(imageO));
-    ui->graphicsView->setScene(graphic);
-    ui->graphicsView->fitInView(graphic->itemsBoundingRect(),Qt::KeepAspectRatio);
-
-    } // 1st if ends
-
-    return false;
-
-} */
-
 
 bool RightclickFlag = 0;
 string selectedStr ="";
@@ -1189,24 +699,6 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
         } // if right click
     }
 }// if mouse event
-
-/*
-QString strPrev = "";
-void MainWindow::textChangedSlot(){
-        QTextCursor cursor = curr_browser->textCursor();
-        cursor.select(QTextCursor::WordUnderCursor);
-        // code to copy selected string:-
-        QString strPrev1 = cursor.selectedText();
-        if( editDist(toslp1(strPrev1.toUtf8().constData()),toslp1(strPrev.toUtf8().constData())) > 0) {
-        strPrev = cursor.selectedText();
-        QString text = strPrev;
-        QMessageBox* box = new QMessageBox();
-        box->setWindowTitle(QString("Hello"));
-        box->setText(QString("Current Text:\""+text+"\""));
-        box->show();
-        }
-}
-*/
 
 void MainWindow::menuSelection(QAction* action)
 {
@@ -3859,6 +3351,461 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
     else
     {
         QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
+    }
+}
+
+/*!
+ * \fn MainWindow::eventFilter
+ * \brief event: ToolTip and ImageMarkingRegion
+      1. Responsible for drawing rectangular region
+      2. Placing a PlaceHolder for figure/table/equation entries
+      3. Set a MessageBox for figure/table/equation/cancel
+      4. Set counter for pagewise for each entry
+      5. Mark multiple image regions in a loaded image.
+      6. Set various flag: a)drawRectangleFlag: is to prevent triggering of this function twice
+      b) loadimage: check image is loaded on not; c) pressedFlag: resposible for dynamic rectangular
+      drawing.
+ * \param object, event
+ * \return QMainWindow::eventFilter(object, event);
+ * \sa MainWindow::displayHolder, MainWindow::updateEntries, MainWindow::createImageInfoXMLFile
+ */
+bool MainWindow::eventFilter(QObject *object, QEvent *event)
+{
+    //! Tooltip documentation
+    if (event->type() == QEvent::ToolTip)
+    {
+
+          //qDebug() << "Tooltip "<<QEvent :: ToolTip;
+          event->accept();
+
+         if(QToolTip::isVisible())
+         {
+
+              QString qs =  QToolTip :: text();
+
+             int x0, y0, x1, y1;
+
+
+             QStringList list;
+             list=qs.split(" ");
+             int len = list.count();
+             if (len>=5)
+             {
+
+                 x0 = list[1].toInt();
+                 y0 =list[2].toInt();
+                 x1 = list[3].toInt();
+                 y1 = list[4].replace(";", "").toInt();
+                 //qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
+                 if(x1!=0 && x0!=0 && y1!=0 && y0!=0)
+                 {
+                     QColor blue40 = Qt::blue;
+                     blue40.setAlphaF( 0.4 );
+
+                     item1->setBrush(blue40);
+
+                     item1->setRect(x0, y0, x1-x0, y1-y0);
+                  }
+                 }
+        }
+
+      }
+
+    //! ImageMarkingRegion feature
+
+    if(loadimage)                   //Check image is loaded or not.
+    {
+     static int x1, y1;             //top & left coordinate values
+     int x2, y2;                    //bottom & right coordinate values
+     int x_temp , y_temp;           // dynamic coordinate values
+
+     //! Apply event on graphicsview (image loaded part)
+     if( object->parent() == ui->graphicsView)
+     {
+            installEventFilter(this);
+            //! Capturing mouse press event on graphicsview
+            if (event->type() == QEvent::MouseButtonPress && shouldIDraw)
+            {
+                QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+                QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos()); //Capturing the coordinates values according to the image.
+                QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y());
+
+                x1 = ( int )pos.x();      //left coordinate value
+                y1 = ( int )pos.y();      //top coordinate value
+                pressedFlag=1;            //drawing is on until it becomes 0 or for continuous pressing event
+                event->accept();
+            }
+            //! Capturing mouse release event on graphicsview
+            if (event->type() == QEvent::MouseButtonRelease)
+            {
+                //! reponsible for preventing the event second time.
+                if(drawRectangleFlag==true)
+                {
+                    drawRectangleFlag=false;
+                    pressedFlag =0;        //for stopping the drawing
+                    event->accept();
+                    return true;
+                }
+                if(shouldIDraw){
+
+                drawRectangleFlag=true;     //set the flag true when occuring for first time
+                static int i,j,k;           //for storing the counter values for figure/equation/table for each page
+                static QString a;           //pagecounter
+
+                //! Getting PageNo string from gCurrentPageName
+                QStringList PageNo=gCurrentPageName.split(QRegExp("[-.]"));
+                QString PageNumber = PageNo[1];
+
+                //!Getting i,j,k values from image.xml file
+                //! first reading the file
+                QDomDocument document;
+                QString filename12 = mProject.GetDir().absolutePath() + "/image.xml";
+                //qDebug()<<filename12;
+                QFile f(filename12);
+
+                //! throws an error if file is not in readonly mode
+                if (!f.open(QIODevice::ReadOnly ))
+                {
+                    std::cerr << "Error while loading file" << std::endl;
+                    return 1;
+                }
+                document.setContent(&f);       // Set data into the QDomDocument before processing
+                f.close();
+
+                //!for this you can refer image.xml file
+                QDomElement root=document.documentElement();       //Item: BookSet
+                QDomElement Component=root.firstChild().toElement();      //Item: Page(No)
+
+                //! Loop while there is a child
+                while(!Component.isNull())
+                {
+                    //! Check if the child tag name is Page(No)
+                    if (Component.tagName()=="page"+PageNo[1])
+                    {
+                        a = Component.attribute("count");        //get counter value for each page starts with 1.
+                        //qDebug() << a << "hel" <<endl;
+                        QDomElement Child=Component.firstChild().toElement();      //Item: figure
+                        while (!Child.isNull())
+                        {
+                            //! Read tagNames and values
+                            if (Child.tagName()=="figure") i=Child.firstChild().toText().data().toInt();
+                            if (Child.tagName()=="table") j=Child.firstChild().toText().data().toInt();
+                            if (Child.tagName()=="equation") k=Child.firstChild().toText().data().toInt();
+
+                            Child = Child.nextSibling().toElement();        // Next child
+                        }
+                    }
+                    Component = Component.nextSibling().toElement();        // Next component
+                 }
+
+                QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+                QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
+                QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
+
+                x2 = ( int )pos.x();         //right coordinate value
+                y2 = ( int )pos.y();         //bottom coordinate value
+                pressedFlag =0;              // stop rectangular drawing
+
+
+                QColor blue40 = Qt::blue;     //sets its color
+                blue40.setAlphaF( 0.4 );      //for transparency
+
+                crop_rect->setBrush(blue40);   //set brush
+
+                //qDebug() << x1 << " " << y1 << " " << x2 - x1 << " " << y2 - y1;   //getting the coordinates
+
+                crop_rect->setRect(x1, y1, x2 - x1, y2 - y1);       //set final coordinates for rectangular region
+                QRect rect(x1, y1, x2 - x1, y2 - y1);              //set QRect
+                QPixmap image=QPixmap::fromImage(imageOrig);       //set QPixmap image
+                QPixmap cropped=image.copy(rect);                   //get cropped image according to coordinates
+
+                //! Set a messagebox for choosing what do you want to add: Figure/Table/Equation/Cancel
+                QMessageBox messageBox(this);
+                messageBox.setWindowTitle("Do you want to add");
+                QAbstractButton *figureButton = messageBox.addButton(tr("Figure"), QMessageBox::ActionRole);
+                QAbstractButton *tableButton = messageBox.addButton(tr("Table"), QMessageBox::ActionRole);
+                QAbstractButton *equationButton = messageBox.addButton(tr("Equation"), QMessageBox::ActionRole);
+                QAbstractButton *cancelButton = messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+
+                QString msg = "Select an option\n";
+                messageBox.setText(msg);
+                messageBox.exec();
+
+                //! settings for a figureholder
+                if (messageBox.clickedButton() == figureButton)
+                {
+                    QString s1 = "IMGHOLDER";
+                    QString s2 = "Figure";
+
+                    //! for placing a figure placeholder
+                    displayHolder(s1,s2,a,x1,y1,x2,y2,i);
+
+                    //graphic->removeItem(crop_rect);
+
+                    //!Saving Image Regions to their respective folder(Figure/Table/Equation)
+                    saveImageRegion(cropped,a,s1,i);
+
+                    i++;       //increment values when a figure is inserted in the textBrowser
+
+                    crop_rect->setRect(0,0,1,1);       //settings this for dynamic rectangular region
+
+                    //! updating entries for figure entries in xml file
+                    updateEntries(document, filename12, PageNo[1], s2, i);
+
+                    shouldIDraw=false;
+                    ui->pushButton->setStyleSheet("");     //remove the style once the operation is done
+                }
+                //! settings for a tableholder
+                else if (messageBox.clickedButton() == tableButton)
+                {
+                    QString s1 = "TBHOLDER";
+                    QString s2 = "Table";
+
+                    //! for placing a table placeholder
+                    displayHolder(s1,s2,a,x1,y1,x2,y2,j);
+
+                    //graphic->removeItem(crop_rect);
+
+                    //!Saving Image Regions to their respective folder(Figure/Table/Equation)
+                    saveImageRegion(cropped,a,s1,j);
+
+                    j++;         //increment values when a table is inserted in the textBrowser
+
+                    crop_rect->setRect(0,0,1,1);         //settings this for dynamic rectangular region
+
+                    //! updating entries for table entries in xml file
+                    updateEntries(document, filename12, PageNo[1], s2, j);
+
+                    shouldIDraw=false;
+                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
+                }
+                //! settings for a equationholder
+                else if(messageBox.clickedButton() == equationButton)
+                {
+                    QString s1 = "EQHOLDER";
+                    QString s2 = "Equation";
+
+                    //! for placing a equation placeholder
+                    displayHolder(s1,s2,a,x1,y1,x2,y2,k);
+
+                    //graphic->removeItem(crop_rect);
+
+                    //!Saving Image Regions to their respective folder(Figure/Table/Equation)
+                    saveImageRegion(cropped,a,s1,k);
+
+                    k++;       //increment values when a equation is inserted in the textBrowser
+
+                    crop_rect->setRect(0,0,1,1);       //settings this for dynamic rectangular region
+
+                    //! updating entries for equation entries in xml file
+                    updateEntries(document, filename12, PageNo[1], s2, k);
+
+                    shouldIDraw=false;
+                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
+                }
+                //! setting for cancelbutton
+                else
+                {
+                    QMessageBox::information(0, "Not saved", "Cancelled");
+                    crop_rect->setRect(0,0,1,1);
+                    shouldIDraw=false;
+                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
+                }
+
+                event->accept();
+                //return true;
+            }
+            }
+        }
+        //! Capturing mousemove event & creating single dynamic rectangle & Updating the temporary coordinates until pressedFlag is true
+        if (event->type() == QEvent::MouseMove)
+        {
+             QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+             if (pressedFlag == 1)
+             {
+                 statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
+                 QPointF position =  ui->graphicsView->mapToScene( mEvent->pos() );
+                 QRgb rgb = imageOrig.pixel( ( int )position.x(), ( int )position.y() );
+
+                 QColor blue40 = Qt::blue;
+                 blue40.setAlphaF( 0.4 );
+                 crop_rect->setBrush(blue40);
+                 x_temp = ( int )position.x();
+                 y_temp = ( int )position.y();
+
+                 crop_rect->setRect(x1, y1, x_temp-x1, y_temp-y1);
+         }
+         event->accept();
+      }
+    }
+    return QMainWindow::eventFilter(object, event);
+}
+
+//!Saving Image Regions to their respective folder(Figure/Table/Equation)
+void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z)
+{
+    if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
+    {
+        QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Figures");
+        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Tables");
+        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Equations");
+    }
+    if(QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
+    {
+        if(s1 == "IMGHOLDER")
+        {
+            QString path = "/Cropped_Images/Figures/Figure"+a+"-"+QString::number(z)+".jpg";
+
+            cropped.save(gDirTwoLevelUp+path,"JPG",100);       //100:storing the image in uncompressed high resolution
+            //QString placeholder = "["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]";
+
+            QString src = gDirTwoLevelUp+path;
+            QString html = QString("\n <img src='%1'>").arg(src);
+            QTextCursor cursor = curr_browser->textCursor();
+            cursor.insertHtml(html);
+        }
+        else if(s1 == "TBHOLDER")
+        {
+            QString path = "/Cropped_Images/Tables/Table"+a+"-"+QString::number(z)+".jpg";
+
+            cropped.save(gDirTwoLevelUp+path,"JPG", 100);
+
+            QString src = gDirTwoLevelUp+path;
+            QString html = QString("<img src='%1'>").arg(src);
+            QTextCursor cursor = curr_browser->textCursor();
+            cursor.insertHtml(html);
+
+        }
+        else if(s1 == "EQHOLDER")
+        {
+            QString path = "/Cropped_Images/Equations/Equation"+a+"-"+QString::number(z)+".jpg";
+
+            cropped.save(gDirTwoLevelUp+path,"JPG",100);
+
+            QString src = gDirTwoLevelUp+path;
+            QString html = QString("<img src='%1'>").arg(src);
+            QTextCursor cursor = curr_browser->textCursor();
+            cursor.insertHtml(html);
+        }
+        else
+        {
+            //empty
+        }
+    }
+}
+
+//!Setting for placeholder for figure/table/equation
+void MainWindow::displayHolder(QString s1,QString s2,QString a,int x1,int y1,int x2,int y2,int i)
+{
+    QTextCursor cursor = curr_browser->textCursor();       //getting the cursor position
+    cursor.insertText("["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");         //insert placeholder
+    return;
+}
+
+//! Updating entries for figure/table/equation pagewise in image.xml
+void MainWindow::updateEntries(QDomDocument document, QString filename,QString PageNo, QString s2, int i)
+{
+    QDomElement root = document.documentElement();
+    QDomElement Component=root.firstChild().toElement();
+
+    while(!Component.isNull())       // Loop while there is a child
+    {
+        //! Check if the child tag name is COMPONENT
+        if (Component.tagName()=="page"+PageNo)
+        {
+            QDomElement Child=Component.firstChild().toElement();
+            while (!Child.isNull())
+            {
+                if (s2 == "Figure" && Child.tagName()=="figure")
+                {
+                    Child.childNodes().at(0).setNodeValue(QString::number(i));
+                }
+                else if (s2 == "Table" && Child.tagName()=="table")
+                {
+                    Child.childNodes().at(0).setNodeValue(QString::number(i));
+                }
+                else if (s2 == "Equation" && Child.tagName()=="equation")
+                {
+                    Child.childNodes().at(0).setNodeValue(QString::number(i));
+                }
+
+                Child = Child.nextSibling().toElement();       // Next child
+            }
+        }
+        Component = Component.nextSibling().toElement();        // Next component
+     }
+    QFile f(filename);
+    f.open(QIODevice::WriteOnly);
+    QTextStream stream;
+    stream.setDevice(&f);
+    stream.setCodec("UTF-8");
+    document.save(stream,4);
+    f.close();
+}
+
+//! Genearte image.xml for figure/table/equation entries and initialize these values by 1 iff when this file does not exist.
+void MainWindow::createImageInfoXMLFile()
+{
+    QDomDocument document;
+
+    // Add processing instructions that are XML instructions
+    QDomProcessingInstruction instruction;
+    instruction = document.createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
+    document.appendChild(instruction);
+
+    // add root element
+    QDomElement root = document.createElement("BookSet");
+    document.appendChild(root);
+
+    //add some elements
+    QString strI = gDirTwoLevelUp + "/Inds";
+    QDir directory(strI);
+    //qDebug()<<"str"<<strI;
+    QStringList list1 = directory.entryList(QStringList() << "*.txt",QDir::Files);
+    int counter_i = 1;
+    for ( const auto& i : list1 )
+    {
+        QStringList PageNo = i.split(QRegExp("[-.]"));
+        //qDebug()<<PageNo;
+        QDomElement tagPage = document.createElement("page"+PageNo[1]);
+        tagPage.setAttribute("count", counter_i);
+        root.appendChild(tagPage);
+
+        QDomElement tagImage = document.createElement("figure");
+        tagPage.appendChild(tagImage);
+        QDomText NoImage = document.createTextNode("1");
+        tagImage.appendChild(NoImage);
+
+        QDomElement tagTable = document.createElement("table");
+        tagPage.appendChild(tagTable);
+        QDomText NoTable = document.createTextNode("1");
+        tagTable.appendChild(NoTable);
+
+        QDomElement tagEquation = document.createElement("equation");
+        tagPage.appendChild(tagEquation);
+        QDomText NoEquation = document.createTextNode("1");
+        tagEquation.appendChild(NoEquation);
+        counter_i++;
+    }
+
+    //qDebug()<<"xxml file" << strI <<"pageno" << list1;
+
+    QString filename12 = mProject.GetDir().absolutePath() + "/image.xml";
+    if(!QFileInfo::exists(filename12))
+    {
+        QFile file(filename12);
+
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)){
+            qDebug()<<"Failed to open xml file";
+            return;
+        }
+        else{
+            QTextStream out(&file);
+            out << document.toString();
+            file.close();
+            qDebug()<<"Writing to xml file";
+        }
     }
 }
 
