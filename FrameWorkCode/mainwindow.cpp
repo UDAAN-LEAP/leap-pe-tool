@@ -891,7 +891,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     shouldIDraw=false;
                     ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
                 }
-                //! settings for cancelbutton
+                //! setting for cancelbutton
                 else
                 {
                     QMessageBox::information(0, "Not saved", "Cancelled");
@@ -987,7 +987,6 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z)
 void MainWindow::displayHolder(QString s1,QString s2,QString a,int x1,int y1,int x2,int y2,int i)
 {
     QTextCursor cursor = curr_browser->textCursor();       //getting the cursor position
-    cursor.insertHtml("<img src=""");
     cursor.insertText("["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");         //insert placeholder
 
     return;
