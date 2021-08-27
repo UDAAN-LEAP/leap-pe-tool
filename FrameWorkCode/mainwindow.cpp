@@ -806,7 +806,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 QPixmap image=QPixmap::fromImage(imageOrig);       //set QPixmap image
                 QPixmap cropped=image.copy(rect);                   //get cropped image according to coordinates
 
-
                 //! Set a messagebox for choosing what do you want to add: Figure/Table/Equation/Cancel
                 QMessageBox messageBox(this);
                 messageBox.setWindowTitle("Do you want to add");
@@ -935,51 +934,50 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z)
     if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
     {
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Figures");
+        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Tables");
+        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Equations");
     }
     if(QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
     {
         if(s1 == "IMGHOLDER")
         {
             QString path = "/Cropped_Images/Figures/Figure"+a+"-"+QString::number(z)+".jpg";
-            if(!QDir(gDirTwoLevelUp+"/Cropped_Images/Figures").exists())
-            {
-                QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Figures");
-                cropped.save(gDirTwoLevelUp+path,"JPG",100); //saving image in uncompressed resolution
-            }
-            else
-            {
-                cropped.save(gDirTwoLevelUp+path,"JPG",100);
-            }
+
+            cropped.save(gDirTwoLevelUp+path,"JPG",100);       //100:storing the image in uncompressed high resolution
+            //QString placeholder = "["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]";
+
+            QString src = gDirTwoLevelUp+path;
+            QString html = QString("\n <img src='%1'>").arg(src);
+            QTextCursor cursor = curr_browser->textCursor();
+            cursor.insertHtml(html);
         }
         else if(s1 == "TBHOLDER")
         {
             QString path = "/Cropped_Images/Tables/Table"+a+"-"+QString::number(z)+".jpg";
-            if(!QDir(gDirTwoLevelUp+"/Cropped_Images/Tables").exists())
-            {
-                QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Tables");
-                cropped.save(gDirTwoLevelUp+path,"JPG",100);
-            }
-            else
-            {
-                cropped.save(gDirTwoLevelUp+path,"JPG", 100);
-            }
+
+            cropped.save(gDirTwoLevelUp+path,"JPG", 100);
+
+            QString src = gDirTwoLevelUp+path;
+            QString html = QString("<img src='%1'>").arg(src);
+            QTextCursor cursor = curr_browser->textCursor();
+            cursor.insertHtml(html);
+
         }
         else if(s1 == "EQHOLDER")
         {
             QString path = "/Cropped_Images/Equations/Equation"+a+"-"+QString::number(z)+".jpg";
-            if(!QDir(gDirTwoLevelUp+"/Cropped_Images/Equations").exists())
-            {
-                QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Equations");
-                cropped.save(gDirTwoLevelUp+path,"JPG",100);
-            }
-            else
-            {
-                cropped.save(gDirTwoLevelUp+path,"JPG",100);
-            }
+
+            cropped.save(gDirTwoLevelUp+path,"JPG",100);
+
+            QString src = gDirTwoLevelUp+path;
+            QString html = QString("<img src='%1'>").arg(src);
+            QTextCursor cursor = curr_browser->textCursor();
+            cursor.insertHtml(html);
         }
         else
         {
-
+            //empty
         }
     }
 }
