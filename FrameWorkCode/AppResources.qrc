@@ -29,5 +29,6 @@
         <file>symbols.png</file>
         <file>find-and-replace.png</file>
         <file>horizontal-line.png</file>
+        <file>toSlp1.png</file>
     </qresource>
 </RCC>

@@ -413,8 +413,9 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionLoad_Next_Page"/>
     <addaction name="actionLoad_Prev_Page"/>
     <addaction name="separator"/>
-    <addaction name="actionLoadGDocPage"/>
     <addaction name="actionToDevanagari"/>
+    <addaction name="actionToSlp1"/>
+    <addaction name="actionLoadGDocPage"/>
     <addaction name="actionLoadData"/>
     <addaction name="actionLoadDict"/>
     <addaction name="actionLoadOCRWords"/>
@@ -422,7 +423,6 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionLoadSubPS"/>
     <addaction name="actionLoadConfusions"/>
     <addaction name="actionSugg"/>
-    <addaction name="actionToSlp1"/>
    </widget>
    <widget class="QMenu" name="menuCreateReports">
     <property name="title">
@@ -754,8 +754,12 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionToSlp1">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/toSlp1.png</normaloff>:/Images/toSlp1.png</iconset>
+   </property>
    <property name="text">
-    <string>toSlp1</string>
+    <string>toSlp1(CntrlG)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+G</string>
@@ -1242,7 +1246,6 @@ p, li { white-space: pre-wrap; }
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
  </resources>

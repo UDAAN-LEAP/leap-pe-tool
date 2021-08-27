@@ -557,6 +557,7 @@ qrc_AppResources.cpp: AppResources.qrc \
 		/usr/lib/qt5/bin/rcc \
 		LoadData.png \
 		AlignLeft.png \
+		toSlp1.png \
 		New.png \
 		open.png \
 		spellcheck.png \
@@ -590,6 +591,7 @@ qrc_AppResources.cpp: AppResources.qrc \
 		/usr/lib/qt5/bin/rcc \
 		LoadData.png \
 		AlignLeft.png \
+		toSlp1.png \
 		New.png \
 		open.png \
 		spellcheck.png \

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BookSet>
+ <page1 count="1">
+  <figure>1</figure>
+  <table>1</table>
+  <equation>1</equation>
+ </page1>
+ <page2 count="2">
+  <figure>1</figure>
+  <table>1</table>
+  <equation>1</equation>
+ </page2>
+ <page3 count="3">
+  <figure>1</figure>
+  <table>1</table>
+  <equation>1</equation>
+ </page3>
+ <page4 count="4">
+  <figure>1</figure>
+  <table>1</table>
+  <equation>1</equation>
+ </page4>
+ <page5 count="5">
+  <figure>1</figure>
+  <table>1</table>
+  <equation>1</equation>
+ </page5>
+ <page6 count="6">
+  <figure>1</figure>
+  <table>1</table>
+  <equation>1</equation>
+ </page6>
+ <page7 count="7">
+  <figure>1</figure>
+  <table>1</table>
+  <equation>1</equation>
+ </page7>
+</BookSet>

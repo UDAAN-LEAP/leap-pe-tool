@@ -351,136 +351,6 @@ int LevenshteinWithGraphemes(QList<Diff> diffs)
     return levenshtein;
 }
 
-/*!
- * \fn MainWindow::on_actionLoad_Next_Page_triggered
- * \brief Sets the browser window to display the next page
- *
- * \sa on_actionSave_triggered() ,get_version(), SaveTimeLog(), GetPageNumber(), LoadDocument()
- */
-void MainWindow::on_actionLoad_Next_Page_triggered()
-{
-    /*Description
-     * 1. Check if the file is saved else save the file
-     * 2. Add Entries in Timelog.json about the elapsed time
-     *    a) If the present mode is verifier, adds entries as verifer. Eg: "Verifier:page-2.txt:V-0"
-     *    b) If the present mode is corrector, adds entries as corrector Eg: "Corrector:page-1.txt:V-1"
-     * 3. Increment the page number extracted from the localFilename by value one. Terminates function if file doesn't exist
-     * 4. Page number extracted from the tab name is incremented and set as the new tab name
-     * 5. Loads the file with the incremented page number
-     * */
-
-    //! Checking if the file is saved else saves the file
-    if(curr_browser) {
-        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {    //fetching the text from the key(tab name) and comparing it to current browser text
-            int btn = QMessageBox::question(this, "Save?", "Do you want to save this file?",
-                                            QMessageBox::StandardButton::Ok, QMessageBox::StandardButton::No);
-            if (btn == QMessageBox::StandardButton::Ok)
-                on_actionSave_triggered();
-        }
-
-        string localFilename = mFilename.toUtf8().constData();
-        string localCurrentTabPageName = currentTabPageName.toUtf8().constData();
-
-        //! Adding entries in Timelog.json about the elapsed time
-        int nMilliseconds = myTimer.elapsed();
-        gSeconds = nMilliseconds/1000;                                 //Converting milliseconds to seconds
-        QString currentVersion = mProject.get_version();
-        if(mRole == "Verifier" && mRole != currentVersion)
-            currentVersion = QString::number(currentVersion.toInt() - 1);   //Version is decremented for Verifier
-
-        gSeconds = timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion];
-
-        SaveTimeLog();
-
-        //! Extract page number from the localFilename and checks if the incremented page exists
-        string no = "";
-        size_t loc;
-        QString ext = "";
-        if(!GetPageNumber(localFilename, &no, &loc, &ext))
-            return;
-        localFilename.replace(loc,no.size(),to_string(stoi(no) + 1));   //Increments page number by one
-        QFile *file = new QFile(QString::fromStdString(localFilename));
-        QFileInfo finfo(file->fileName());
-        if(!(finfo.exists() && finfo.isFile()))
-            return;
-
-        //!Extract page number from tab name and set the incremented page number as a new tab name and Loads the file
-        if(!GetPageNumber(localCurrentTabPageName, &no, &loc, &ext))
-            return;
-        localCurrentTabPageName.replace(loc,no.size(),to_string(stoi(no) + 1));  //Increments page number by one
-        currentTabPageName = QString::fromStdString(localCurrentTabPageName);
-
-        fileFlag = 1;
-        LoadDocument(file, ext, currentTabPageName);    //loads the new file
-        fileFlag = 0;
-    }
-}
-
-/*!
- * \fn MainWindow::on_actionLoad_Prev_Page_triggered
- * \brief Sets the browser window to display the previous page
- *
- * \sa on_actionSave_triggered() ,get_version(), SaveTimeLog(), GetPageNumber(), LoadDocument()
- */
-void MainWindow::on_actionLoad_Prev_Page_triggered()
-{
-    /*Description
-     * 1. Check if the file is saved else save the file
-     * 2. Add Entries in Timelog.json about the elapsed time
-     *    a) If the present mode is verifier, adds entries as verifer. Eg: "Verifier:page-2.txt:V-0"
-     *    b) If the present mode is corrector, adds entries as corrector Eg: "Corrector:page-1.txt:V-1"
-     * 3. Extract page number from the localfileName and decrements the page number by one. Terminates function if file doesn't exist
-     * 4. Decrement the page number extracted from tab name and sets it as new tab name
-     * 5. Loads the file with the decremented page number
-     * */
-
-    //! Check if the file is saved or not
-    if(curr_browser) {
-        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
-            int btn = QMessageBox::question(this, "Save?", "Do you want to save " + currentTabPageName + " file?",
-                                            QMessageBox::StandardButton::Ok, QMessageBox::StandardButton::No);
-            if (btn == QMessageBox::StandardButton::Ok)
-                on_actionSave_triggered();
-        }
-
-        string localFilename = mFilename.toUtf8().constData();
-        string localCurrentTabPageName = currentTabPageName.toUtf8().constData();
-
-        //! Adding entries in Timelog.json about the elapsed time
-        int nMilliseconds = myTimer.elapsed();
-        gSeconds = nMilliseconds/1000;                           //Converting milliseconds to seconds
-        QString currentVersion = mProject.get_version();
-        if(mRole == "Verifier" && mRole != currentVersion)
-            currentVersion = QString::number(currentVersion.toInt() - 1);  //Version is decremented for Verifier
-        gSeconds = timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion];
-        SaveTimeLog();
-
-        //! Extract page number from the localFilename
-        string no = "";
-        size_t loc;
-        QString ext = "";
-        if(!GetPageNumber(localFilename, &no, &loc, &ext))
-            return;
-        localFilename.replace(loc,no.size(),to_string(stoi(no) - 1));    //Version is decremented for Verifier
-
-        //!checks if the decremented page exists
-        QFile *file = new QFile(QString::fromStdString(localFilename));
-        QFileInfo finfo(file->fileName());
-        if(!(finfo.exists() && finfo.isFile())) // Check if file exists
-            return;
-
-        //!Extract page number from tab name and set the decremented page number as a new tab name and Loads the file
-        if(!GetPageNumber(localCurrentTabPageName, &no, &loc, &ext))
-            return;
-        localCurrentTabPageName.replace(loc,no.size(),to_string(stoi(no) - 1));
-        currentTabPageName = QString::fromStdString(localCurrentTabPageName);  //sets the decremented page number
-        fileFlag = 1;
-        LoadDocument(file, ext, currentTabPageName);          //loads the file with the decremented page name
-        fileFlag = 0;
-    }
-
-}
-
 vector<string> vGPage, vIPage, vCPage; // for calculating WER
 
 vector<string> vBest;
@@ -531,117 +401,6 @@ void MainWindow::on_actionCreateBest2OCR_triggered()
     }
 }
 
-/*!
- * \fn on_actionSpell_Check_triggered()
- * \brief Converts the whole html page to the original text page in orange color
- * \note works on the basis of a pre-defined flag which helps to always convert the text to Devanagari
- * \sa findDictEntries(), find_and_replace_oddInstancesblue(), find_and_replace_oddInstancesorange(),hasM40PerAsci()
- */
-bool ConvertSlpDevFlag = 0;
-map<string, int> wordLineIndex;
-
-void MainWindow::on_actionSpell_Check_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-
-    QString textBrowserText = curr_browser->toPlainText();
-    QChar ch;
-    ch=textBrowserText[1];
-    textBrowserText+=" ";
-    string str1=textBrowserText.toUtf8().constData();
-
-    //! load number of words
-    istringstream iss1(str1);
-    size_t WordCount = 0;
-    string word1;
-    while(iss1 >> word1) WordCount++;
-
-    //str1 = toslp1(str1);
-    istringstream iss(str1);
-    string strHtml = "<html><body>";
-    string line;
-
-    int value = 0;
-    while (getline(iss, line))
-    {
-        istringstream issw(line);
-        string word;
-
-        while(issw >> word)
-        {
-            if(ConvertSlpDevFlag)
-            {
-                string word1 = word;
-                word = toslp1(word);
-                string wordNext;
-                if(hasM40PerAsci(word1))
-                {
-                    wordNext = word1;
-                }
-                else
-                {
-                    wordNext = toDev(word);
-                }
-                strHtml += wordNext; strHtml += " ";
-                value ++;
-            }
-            else
-            {
-                string word1 = word;
-                word = toslp1(word);
-                string wordNext;
-                //! checks if the word exists in the English language, Seconday OCR, Pwords, Dict and CPair; convert its color coding
-                if(hasM40PerAsci(word1))
-                    wordNext = word1;
-
-                else if(GBook[(word)] > 0 )
-                {
-                    wordNext = toDev(word);
-                    PWords[word]++;
-                }
-
-                else if(PWords[word] > 0)
-                {
-                    wordNext = "<font color=\'gray\'>" + toDev(word) + "</font>";
-                }
-                else if((Dict[word] ==0) && (PWords[word] == 0) && (CPair[word].size() > 0))
-                {
-                    wordNext = "<font color=\'purple\'>" + toDev(CPair[word]) + "</font>";
-                }
-                else
-                {
-                    wordNext = findDictEntries(toslp1(word),Dict,PWords, word.size());     //replace m1 with m2,m1 for combined search
-                    wordNext = find_and_replace_oddInstancesblue(wordNext);
-                    wordNext = find_and_replace_oddInstancesorange(wordNext);
-                }
-                strHtml += wordNext;
-                strHtml += " ";
-                value ++;
-            }
-        }
-        strHtml +="<br>";  // To add new line
-    }
-    strHtml += "</body></html>";
-    curr_browser->setHtml(QString::fromStdString(strHtml));
-
-    str1=textBrowserText.toUtf8().constData();
-
-    istringstream iss2(str1);
-    size_t WordCount2 = 0;
-
-    //! clean(word) instead of word
-    while (getline(iss2, line))
-    {
-        istringstream issw(line);
-        string word;
-        while(issw >> word)
-        {
-            wordLineIndex[(word + "###" + line)] = WordCount2; WordCount2++;
-        }
-    }
-
-}
 /*!
  * \fn MainWindow::eventFilter
  * \brief event: ToolTip and ImageMarkingRegion
@@ -988,7 +747,6 @@ void MainWindow::displayHolder(QString s1,QString s2,QString a,int x1,int y1,int
 {
     QTextCursor cursor = curr_browser->textCursor();       //getting the cursor position
     cursor.insertText("["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");         //insert placeholder
-
     return;
 }
 
@@ -1571,803 +1329,6 @@ void MainWindow::translate_replace(QAction* action)
     }
 }
 
-/*!
- * \fn MainWindow::on_actionNew_triggered
- * \brief This function allows the user to create new file/project.
- */
-void MainWindow::on_actionNew_triggered()
-{
-    QTextBrowser * b = new QTextBrowser(this);
-    b->setReadOnly(false);
-    b->setUndoRedoEnabled(true);            //User can use Undo/Redo commands
-
-    //! When opened tabs count is not zero
-    if (ui->tabWidget_2->count() != 0) {
-        for (int i = 0; i < ui->tabWidget_2->count(); i++) {
-            //!When opened file name is not set
-            if ("Untitled" == ui->tabWidget_2->tabText(i)) {
-                ui->tabWidget_2->setCurrentIndex(i);
-            }
-        }
-    }
-    //! Setting current tab index
-    currentTabIndex = ui->tabWidget_2->addTab(b, "Untitled");
-    ui->tabWidget_2->setCurrentIndex(currentTabIndex);
-}
-
-/*!
- * \fn MainWindow::on_actionSave_triggered
- * \brief This function will save any changes made in the current file.
- * \sa SaveTimeLog(), DisplayTimeLog()
-*/
-void MainWindow::on_actionSave_triggered()
-{
-    SaveTimeLog();
-    DisplayTimeLog();
-
-    //! When changes are made by the verifier the following values are also updated.
-    if(isVerifier)
-    {
-        gSaveTriggered = 1;
-        on_viewComments_clicked();
-        gSaveTriggered = 0;
-        updateAverageAccuracies();
-    }
-    ConvertSlpDevFlag =1;
-
-    /*
-     * If file name is \value untitled on_actionSave_As_triggered is called.
-     * Otherwise we will update the changes in the existing saved file.
-    */
-    if (mFilename=="Untitled")
-    {
-        on_actionSave_As_triggered();
-    }
-    else
-    {
-        QString tempPageName = gCurrentPageName;
-
-        //! Selecting the location where file is to be saved
-        QString changefiledir = filestructure_fw[gCurrentDirName];
-        QString localFilename = gDirTwoLevelUp + "/" +changefiledir +"/" + tempPageName;
-        localFilename.replace(".txt",".html");
-
-        //! Don't create and save new file if output file already exists.
-        if (gCurrentDirName == "Inds" || isVerifier && gCurrentDirName == "CorrectorOutput")
-        {
-            QFileInfo check_file(localFilename);
-            if (check_file.exists() && check_file.isFile()) {
-                return ;
-            }
-        }
-
-        QFile sFile(localFilename);
-
-        QTextCharFormat fmt;
-        fmt.setForeground(QBrush(QColor(0,0,0)));           //Setting foreground brush to render text
-        QTextCursor cursor = curr_browser->textCursor();
-        cursor.select(QTextCursor::Document);
-        cursor.mergeCharFormat(fmt);
-
-        QString output = curr_browser->toHtml();
-
-        QTextDocument doc;
-        doc.setHtml( gInitialTextHtml[currentTabPageName] );
-        s1 = doc.toPlainText();          //before Saving
-        s2 = curr_browser->toPlainText();       //after Saving
-
-        editDistance(s1, s2);           // Update CPair by editdistance
-
-        //! Do commit when there are some changes in previous and new html file on the basis of editdistance.
-        if(editDistance(s1,s2))
-        {
-            if(mProject.get_version().toInt())     //Check version number
-            {
-                QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();
-                //!Check commit condition
-                if(!mProject.commit(commit_msg.toStdString()))
-                {
-                    cout<<"Commit Unsuccessful"<<endl;
-                    return;
-                }
-                else
-                {
-                    mProject.commit(commit_msg.toStdString());
-                    cout<<"Commit Successful"<<endl;
-                }
-            }
-        }
-
-        //CPair.insert(CPair_editDis.begin(), CPair_editDis.end());
-        //! Enters entries in CPairs through CPair_editDis; allows multiple entries for a incorrent word entry
-        for(auto elem : CPair_editDis)
-        {
-           std::cerr << elem.first << " " << elem.second << "\n";
-           std::cerr << toslp1(elem.first) << " " << toslp1(elem.second) << "\n";
-           //CPair.insert(make_pair(toslp1(elem.first), toslp1(elem.second)));
-           if ( CPairs.find(toslp1(elem.first)) != CPairs.end())
-           {
-               std::set< std::string>& s_ref = CPairs[toslp1(elem.first)];
-               s_ref.insert(toslp1(elem.second));
-           }
-           else
-           {
-               CPairs[toslp1(elem.first)].insert(toslp1(elem.second));
-           }
-        }
-
-        //! Reflecting CPairs entries in the file /Dicts/CPair; Making it dynamic
-        QString filename12 = mProject.GetDir().absolutePath() + "/Dicts/" + "CPair";
-        QFile file12(filename12);
-        if(!file12.exists())
-        {
-           qDebug() << "NO exist file "<<filename12;
-        }
-        else
-        {
-           qDebug() << filename12<<"exists";
-        }
-        //! Insert entries in Correct Formatting Hello (/t) hi,(comma)hiii
-        if (file12.open(QIODevice::WriteOnly | QIODevice::Text)){
-            QTextStream out(&file12);
-            out.setCodec("UTF-8");
-            map<string, set<string>>::iterator itr;
-            set<string>::iterator set_it;
-
-            for (itr = CPairs.begin(); itr != CPairs.end(); ++itr)
-            {
-                out <<  QString::fromStdString(toDev(itr->first)) << '\t';
-                for (set_it = itr->second.begin(); set_it != itr->second.end(); ++set_it)
-                {
-                    if(set_it != prev(itr->second.end()))
-                    {
-                        out << QString::fromStdString(toDev(*set_it)) << ",";
-                    }
-                    else {
-                        out << QString::fromStdString(toDev(*set_it));
-                    }
-
-                }
-                out <<"\n";
-            }
-
-             file12.close();
-        }
-
-        //! If file is in write-only mode
-        if(sFile.open(QFile::WriteOnly))
-        {
-            QTextStream out(&sFile);
-            out.setCodec("UTF-8");          //Sets the codec for this stream
-            gInitialTextHtml[currentTabPageName] = output;
-            output = "<style> body{ width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; } </style>" + output;     //Formatting the output using CSS <style> tag
-            out << output;
-            sFile.flush();      //Flushes any buffered data waiting to be written in the \a sFile
-            sFile.close();      //Closing the file
-        }
-
-        //! Converting html output into plain text.
-        QTextDocumentFragment qtextdocfragment;
-        QString plain = qtextdocfragment.fromHtml(output).toPlainText();
-
-        std::stringstream ss(plain.toStdString());
-        std::string to;
-        //! Appending the plain text in QVector<QString> object.
-        QVector<QString> s;
-        if (plain != NULL)
-        {
-            while(std::getline(ss,to,'\n')){
-                QString qstr = QString::fromStdString(to);
-                s.append(qstr);
-
-            }
-        }
-
-        //! Inserting string values in \a qjsonobj.
-        QJsonObject qjsonobj;
-        for(int i = 0;i < s.size(); i++){
-            QString z = QString::number(i);
-            qjsonobj.insert(z, QJsonValue(s[i]));
-        }
-        int len = qjsonobj.length();
-
-        localFilename.replace(".html",".json");         //Replacing extension of file from .html to .json
-        QFile sFile2(localFilename);
-
-        //! Sets codec value and then adding values in file
-        if(sFile2.open(QIODevice::WriteOnly | QIODevice::Text))
-        {
-            QTextStream out(&sFile2);
-            out.setCodec("UTF-8");
-            out << "{\n";
-            for(int x = 0; x<len; x++){
-                QString z = QString::number(x);
-                out << "\"" << x << "\"" << ":" << "\"" << qjsonobj[z].toString() << "\"" <<","<< '\n';
-            }
-            out << "}";
-
-            sFile2.flush();
-            sFile2.close();
-        }
-
-        //! Set Inds file readonly after saving - Corrector mode
-        if (!isVerifier && gCurrentDirName == "Inds") {
-            if(QFile::exists(localFilename)) {
-                curr_browser->setReadOnly(true);
-            }
-
-        }
-
-        //! Set Inds and CorrectorOutput files readonly after generating output file - Verifier mode
-        if (isVerifier && (gCurrentDirName == "Inds" || gCurrentDirName == "CorrectorOutput")) {
-            if(QFile::exists(localFilename)) {
-                QString Inds_file = gCurrentPageName;
-                Inds_file.replace(".html", ".txt");
-                QString Corr_file = "CorrectorOutput/" + Inds_file;
-                Corr_file.replace(".txt", ".html");
-                for (int i = 0; i < ui->tabWidget_2->count(); i++) {
-                    QString tab_name = ui->tabWidget_2->tabText(i);
-                    if (tab_name == Inds_file || tab_name == Corr_file) {
-                        auto b = (QTextBrowser*)ui->tabWidget_2->widget(i);
-                        b->setReadOnly(true);
-                    }
-                }
-            }
-        }
-    }
-    ConvertSlpDevFlag =0;
-}
-
-/*!
- * \fn MainWindow::on_actionLoadGDocPage_triggered()
- * \brief Loads PWords and its associated trie data structure
- * \sa on_actionSave_As_triggered(), loadMap(), loadmaptoTrie(), generateCorrectionPairs(), loadConfusionsFont, loadTopConfusions()
-*/
-void MainWindow::on_actionLoadGDocPage_triggered()
-{
-    /*! If file name is Untitled do nothing*/
-    if (mFilename == "Untitled")
-    {
-
-    }
-    else
-    {
-        /*! Create an html file for current ind file*/
-        on_actionSave_As_triggered();
-        QString changefiledir = filestructure_fw[gCurrentDirName];
-        QString str1 = gDirTwoLevelUp + "/" + changefiledir + "/" + gCurrentPageName;
-        str1.replace(".txt", ".html");
-
-        QFile sFile(str1);
-        if (sFile.open(QFile::WriteOnly | QFile::Text))
-        {
-            QTextStream out(&sFile);
-            out.setCodec("UTF-8");
-            out << curr_browser->toHtml(); //toPlainText(); //Modified
-            sFile.flush();
-            sFile.close();
-        }
-
-        /*! Load PWord and Top Confusion Words*/
-        loadMap(str1.toUtf8().constData(), PWords, "PWords");
-
-        map<string, int> PWordspage;
-        loadMap(str1.toUtf8().constData(), PWordspage, "PWordspage");
-        loadmaptoTrie(TPWords, PWordspage);
-
-        vector<string> wrong, right;
-        QString str2 = mFilename;
-
-        generateCorrectionPairs(wrong, right, str2.toUtf8().constData(), str1.toUtf8().constData());
-
-        loadConfusionsFont(wrong, right, ConfPmapFont);
-        loadConfusionsFont(wrong, right, ConfPmap);
-
-        TopConfusions.clear();
-        TopConfusionsMask.clear();
-        loadTopConfusions(ConfPmap, TopConfusions, TopConfusionsMask);
-    }
-
-}
-
-/*!
- * \fn MainWindow::on_actionSave_As_triggered
- * \brief This function saves the file which has never been saved once.
- */
-void MainWindow::on_actionSave_As_triggered()
-{
-    QString file(QFileDialog::getSaveFileName(this, "Open a File"));
-
-    //! Sets the file name and saves the file.
-    if (!file.isEmpty())
-    {
-        setMFilename(file);
-        UpdateFileBrekadown();
-        on_actionSave_triggered();
-    }
-
-}
-
-/*!
- * \fn MainWindow::on_actionToDevnagri_triggered()
- * \brief Converts transliterated text to devnagri text
- * Transliterated here means Hindi/ Sanskrit written in English.
- * This function converts selected translitrate text or last written translitrate word to Devnagri.
-*/
-void MainWindow::on_actionToDevanagari_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    QTextCursor cursor = curr_browser->textCursor();
-
-    if(!cursor.hasSelection())
-        cursor.select(QTextCursor::WordUnderCursor);
-
-    QString str1 = cursor.selectedText();
-    selectedStr = str1.toUtf8().constData();
-    cursor.beginEditBlock();
-    cursor.removeSelectedText();
-    cursor.insertText(QString::fromStdString(toDev(toslp1(selectedStr))));
-    cursor.endEditBlock();
-}
-
-/*!
- * \fn MainWindow::on_actionLoadData_triggered()
- * \brief Loads the dictionary files only once
- * This function is only called once per project to load the dictionary file of the project,
- * dictionary files can be used to work on suggestions.
- */
-bool LoadDataFlag = 1; //To load data only once
-QString mFilename1, loadStr, loadStr1;
-void MainWindow::on_actionLoadData_triggered()
-{
-    if (mProject.isProjectOpen())
-    {
-        if (LoadDataFlag)
-        {
-            QString initialText = ui->lineEdit->text();
-            ui->lineEdit->setText("Loading Data...");
-            QString  localmFilename1 = mFilename;
-            string localmFilename1n = localmFilename1.toUtf8().constData();
-            localmFilename1n = localmFilename1n.substr(0, localmFilename1n.find("page"));
-            localmFilename1 = QString::fromStdString(localmFilename1n);
-
-            on_actionLoadDict_triggered();       //sanskrit dictionary files are called
-            loadStr += "\n";
-
-            //!GEROCR IEROCR PWords and CPair files are loaded and reflected in terminal
-            on_actionLoadOCRWords_triggered();
-            on_actionLoadDomain_triggered();
-            on_actionLoadSubPS_triggered();
-            on_actionLoadConfusions_triggered();
-
-            QString filepath = mProject.GetDir().absolutePath() + "/Dicts/synonyms.csv" ;
-            loadFileCSV(synonym, synrows, filepath.toUtf8().constData());
-
-            ui->lineEdit->setText(initialText);
-            LoadDataFlag = 0;
-            QMessageBox messageBox;
-            messageBox.information(0, "Load Data", "Data has been loaded.");
-        }
-    }
-}
-
-/*!
- * \fn loadDict()
- * \param current project file location
- * \brief The path of the dictionary file is fetched and the files are returned in the map
- * these words are then fetched depending upon the word selected
- * \sa loadMap()
- */
-bool loadDict(Project & project) {
-    QString localmFilename1 = project.GetDir().absolutePath() + "/Dicts/" + "Dict";
-    if (!QFile::exists(localmFilename1)) return false;
-    loadMap(localmFilename1.toUtf8().constData(), Dict, "Dict");
-    return true;
-}
-
-/*!
- * \fn on_actionLoadDict_triggered()
- * \brief The path of the dictionary file is fetched and the files are returned in the map
- * these words are then fetched depending upon the word selected
- * \sa loadDict()
- */
-void MainWindow::on_actionLoadDict_triggered()
-{
-    loadDict(mProject);
-}
-
-/*!
- * \fn MainWindow::on_actionLoadOCRWords_triggered()
- * \brief Loads the OCR files
- * The path of the GEROCR and IEROCR file is fetched and the files are returned in the map which is again,
- * used as a suggestion depending upon the word selected
- * \sa LoadMapNV()
- */
-void MainWindow::on_actionLoadOCRWords_triggered()
-{
-    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "GEROCR";
-    cout << localmFilename1.toUtf8().constData() << endl;
-    loadMapNV(localmFilename1.toUtf8().constData(), GBook, vGBook, "GBook"); localmFilename1 = mFilename1;
-    cout << localmFilename1.toUtf8().constData() << endl;
-    localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "IEROCR";
-    loadMapNV(localmFilename1.toUtf8().constData(), IBook, vIBook, "IBook");
-    cout << GBook.size() << " " << IBook.size() << endl;
-
-}
-
-/*!
-  \fn MainWindow::on_actionLoadDomain_triggered()
-  \brief loads the common OCR files
- The path of the PWords file is fetched and the files are returned in the map which can be used
- for the suggestion feature
- \sa loadMapPWords()
- */
-void MainWindow::on_actionLoadDomain_triggered()
-{
-    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "/PWords";
-    loadMapPWords(vGBook, vIBook, PWords);
-}
-
-/*!
-  \fn MainWindow::on_actionLoadSubPS_triggered()
-  \brief the CPair files
-    The path of the CPair files are fetched and the files are returned in the map which is returned
-    to load the suggestions
-  \sa loadmaptoTrie(), loadPwordsPatternstoTrie(), loadCPair()
- */
-map<string, string> LSTM;
-void MainWindow::on_actionLoadSubPS_triggered()
-{
-    size_t count = loadPWordsPatternstoTrie(TPWordsP, PWords);// justsubstrings not patterns exactly // PWordsP,
-    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "CPair";
-
-    loadCPairs(localmFilename1.toUtf8().constData(), CPairs, Dict, PWords);
-    localmFilename1 = mFilename1;
-
-    localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "LSTM";
-    ifstream myfile(localmFilename1.toUtf8().constData());
-    if (myfile.is_open())
-    {
-        string str1, str2, line;
-        while (getline(myfile, line))
-        {
-            istringstream slinenew(line); slinenew >> str1; slinenew >> str2;
-            if (str2.size() > 0) LSTM[str1] = str2;
-        }
-    }
-    cout << LSTM.size() << "LSTM Pairs Loaded";
-    localmFilename1 = mFilename1;
-
-    loadmaptoTrie(TPWords, PWords);
-    loadmaptoTrie(TDict, Dict);
-    loadmaptoTrie(TGBook, GBook);
-    loadPWordsPatternstoTrie(TGBookP, GBook);
-}
-
-/*!
- * \fn MainWindow::on_actionLoadConfusions_triggered
- * \brief Loads the confusions for CPair
- */
-void MainWindow::on_actionLoadConfusions_triggered()
-{
-    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "CPair";
-    loadConfusions(localmFilename1.toUtf8().constData(), ConfPmap);
-    localmFilename1 = mFilename;
-}
-
-/*!
- * \fn MainWindow::on_actionSugg_triggered
- * \brief Displays the context menu that has suggestion item
- * \note It works only when the data is loaded
- */
-void MainWindow::on_actionSugg_triggered()
-{
-    /*Description
-     * The function loads the context menu and waits for mouse event.
-     * As soon as the mouse event is captured, the context menu is unloaded.
-     */
-    RightclickFlag = 1;
-    QMouseEvent *ev1;
-    mousePressEvent(ev1);      //to capture mouse events
-    RightclickFlag = 0;
-
-}
-
-void MainWindow::on_actionToSlp1_triggered()
-{
-
-    int nMilliseconds = myTimer.elapsed();
-    secs = nMilliseconds / 1000;
-    int mins = secs / 60;
-    secs = secs - mins * 60;
-    //ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(secs) + " secs elapsed on this page(Right Click to update)");
-    QTextCursor cursor = curr_browser->textCursor();
-    //cursor.select(QTextCursor::WordUnderCursor);
-    QString str1 = cursor.selectedText();
-    selectedStr = str1.toUtf8().constData();
-    cursor.beginEditBlock();
-    cursor.removeSelectedText();
-    cursor.insertText(QString::fromStdString((toslp1(selectedStr))));
-    cursor.endEditBlock();
-
-}
-
-void MainWindow::on_actionCreateSuggestionLog_triggered()
-{
-    map<size_t, size_t> mapCorrect, mapinCorrect, mapTyping, mapSugg1, mapSugg2, mapSugg3, mapSugg4, mapSugg5, mapSugg6, mapSugg7, mapSugg8, mapSugg9, mapSugg10;
-
-    // Load foders in strC and strI
-    //	QString strI = mFilename;
-    //	QString strC = strI;
-    //	strI.replace("CorrectorOutput", "Inds"); strC.replace("Inds", "CorrectorOutput");
-    QString strI = gDirTwoLevelUp + "/Inds/"+ gCurrentPageName ;
-    strI.replace(".html",".txt");
-    QString strC = gDirTwoLevelUp + "/CorrectorOutput/"+ gCurrentPageName ;
-
-    // load text files one by one
-
-    //Load page1 of Inds
-    size_t page_no = 1;
-    QString filereport;
-
-    while (1) {
-
-        string nos = "0123456789";
-        string localFilenameI = strI.toUtf8().constData();
-        size_t loc = localFilenameI.find(".txt");
-        string s = localFilenameI.substr(loc - 1, 1); // page-123.txt s = 3
-        string no;
-
-        vector<string> wrong, right;
-        while (nos.find(s) != string::npos) { no = s + no; loc--; s = localFilenameI.substr(loc - 1, 1); } // if s in nos, s = 2  no = 23, s = 1 no = 123, s = - break
-        //cout << stoi(no) + 1 << endl;
-        localFilenameI.replace(loc, no.size(), to_string(page_no));//to_string(stoi(no) + 1)
-        //cout << localFilename << endl;
-        //QString fileI = QString::fromStdString(localFilenameI);
-
-        //Load page1 of C
-
-        string localFilenameC = strC.toUtf8().constData();
-        loc = localFilenameC.find(".txt");
-        s = localFilenameC.substr(loc - 1, 1); // page-123.txt s = 3
-        no = "";
-        while (nos.find(s) != string::npos) { no = s + no; loc--; s = localFilenameC.substr(loc - 1, 1); } // if s in nos, s = 2  no = 23, s = 1 no = 123, s = - break
-        //cout << stoi(no) + 1 << endl;
-        localFilenameC.replace(loc, no.size(), to_string(page_no));//to_string(stoi(no) + 1)
-        //cout << localFilename << endl;
-        // QString fileC = QString::fromStdString(localFilenameC);
-
-        // NOW localFilenameI and localFilenameC has page1 of both
-        //cout << localFilenameI << " " << localFilenameC << endl;
-        // load fileI in vecpI and
-        vector<string> vecpI, vecpC;
-        map<string, bool> isAscii;
-        std::ifstream sIpage(localFilenameI);
-        if (!(sIpage.is_open())) break; // break the while loop for page_no
-        string localstr;
-        while (sIpage >> localstr) vecpI.push_back(toslp1(localstr)); sIpage.close();
-        std::ifstream sCpage(localFilenameC);
-        while (sCpage >> localstr) { if (hasM40PerAsci(localstr)) { isAscii[toslp1(localstr)] = 1; }  vecpC.push_back(toslp1(localstr)); } sIpage.close();
-
-        // if 1st word is wrong generate suggestions
-        int vGsz = vecpC.size(), vIsz = vecpI.size();
-        if (vGsz > vIsz) mapTyping[page_no] = vGsz - vIsz;
-        //cout << vGsz << " " << vIsz << endl;
-        int win = vGsz - vIsz;
-        if (win < 0) win = -1 * win;
-        win = std::max(win, 5);
-        //cout << win << endl;
-        //float WER = 0;
-        // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
-        for (int t = 0; t < vIsz; t++) {
-            size_t minedit = 1000;
-            string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
-            string sC;
-            for (int t1 = std::max(t - win, 0); t1 < min(t + win, vGsz); t1++) {
-                string sCt1 = vecpC[t1];
-                size_t mineditIC = editDist(s1, sCt1);
-                if (mineditIC < minedit) { minedit = mineditIC; sC = sCt1; }
-                if (sCt1 == s1) {/*WER++;*/ break; }
-            }
-
-            // now we have IndsWord in s1 and correct word in sC
-            //cout << s1 << " " << s1.size() << " " << sC << " " << sC.size()<< endl;
-            if ((sC == (s1))) {
-                mapCorrect[page_no]++; //cout<< " in correct words ke liye if" << endl;
-            }
-            else if (!isAscii[sC]) {
-                wrong.push_back(s1); right.push_back(sC);
-                //cout<< " inside incorrect words ke liye else" << endl;
-                vector<string>  Words1 = print5NearestEntries(TGBook, s1); //2
-                if (Words1.size() == 0) Words1.push_back("");
-                string nearestCOnfconfirmingSuggvec; //1
-                vector<string> vec = Words1;
-                int min = 100;
-                for (size_t t = 0; t < vec.size(); t++) {
-                    vector<string> wordConfusions; vector<int> wCindex;
-                    int minFactor = loadWConfusionsNindex1(s1, vec[t], ConfPmap, wordConfusions, wCindex);
-                    wordConfusions.clear(); wCindex.clear();
-                    if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvec = vec[t]; }
-                }
-                //cout << "sz" << Words1.size() << " "<< Words1[0]<< endl;
-                if (nearestCOnfconfirmingSuggvec == (sC)) { mapSugg1[page_no]++; }
-                /*else*/ if ((Words1[0] == (sC))) { mapSugg2[page_no]++; }
-                /*else*/ {
-
-                    vector<string> Alligned = print5NearestEntries(TGBookP, s1); //6
-                    if (Alligned.size() == 0) Alligned.push_back("");
-
-                    string PairSugg = "";
-                    if (Alligned.size() > 0) PairSugg = print2OCRSugg(s1, Alligned[0], ConfPmap, Dict);//3
-                    //cout << sC << "PairSugg " << PairSugg<<endl;
-                    if (PairSugg == sC) { mapSugg3[page_no]++; }
-                    /*else*/ { vector<string>  Words = print1OCRNearestEntries(toslp1(s1), vIBook); // 4 primary doc based
-                        if (Words.size() == 0) Words.push_back("");
-                        if (Words[0] == (sC)) { mapSugg4[page_no]++; }
-                        /*else*/ { string samassugg = SamasBreakLRCorrect(toslp1(s1), Dict, PWords, TPWords, TPWordsP); // 5
-                            if (samassugg == sC) { mapSugg5[page_no]++; }
-                            /*else*/ {
-                                vector<string> PWords1 = print5NearestEntries(TPWords, s1); // 6
-                                if (PWords1.size() == 0) PWords1.push_back("");
-                                if (PWords1[0] == (sC)) { mapSugg6[page_no]++; }
-                                /*else*/ {string nearestCOnfconfirmingSuggvecFont;
-                                    int min = 100;
-                                    for (size_t t = 0; t < vec.size(); t++) {
-                                        vector<string> wordConfusions; vector<int> wCindex;
-                                        int minFactor = loadWConfusionsNindex1(s1, vec[t], ConfPmapFont, wordConfusions, wCindex);
-                                        wordConfusions.clear(); wCindex.clear();
-                                        if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvecFont = vec[t]; }
-                                    }
-                                    if (nearestCOnfconfirmingSuggvecFont == sC) { mapSugg7[page_no]++; }
-                                    /*else*/ {
-                                        /*string PairSuggFont = "";
-                            if(Alligned.size() > 0) PairSuggFont = print2OCRSugg(s1, Alligned[0], ConfPmap,Dict);//3
-                            //cout << sC << "PairSugg " << PairSugg<<endl;
-                            if(PairSuggFont == sC) {  mapSugg8[page_no]++;}*/
-                                        vector<string> Wordsdict; {Wordsdict = print5NearestEntries(TDict, s1); }
-                                        if ((Wordsdict.size() > 0) && (Wordsdict[0] == sC)) { mapSugg8[page_no]++; }
-                                        /*else*/ {
-                                            string sugg9 = generatePossibilitesNsuggest(s1, TopConfusions, TopConfusionsMask, Dict, SRules);
-                                            if (sugg9 == sC) {
-                                                mapSugg9[page_no]++;
-                                                //cout << s1 << " "<<sC << endl;
-                                            }
-                                            /*else*/ { if (LSTM[s1] == sC) {
-                                                    mapSugg10[page_no]++;
-                                                    cout << s1 << " lstm " << sC << endl;
-                                                }
-                                                else mapTyping[page_no]++; }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                }
-
-            }
-            else { mapTyping[page_no]++; } // else
-            //cout << mapCorrect[1]<< " " << mapTyping[1]<< " " <<mapSugg1[1]<< " " <<mapSugg2[1]<< " " <<mapSugg3[1]<< " " <<mapSugg4[1]<< " " <<mapSugg5[1]<< " " <<mapSugg6[1]<<endl;
-            //cout << "here" << endl;
-        }// for 1st page ends
-        mapinCorrect[page_no] = vIsz - mapCorrect[page_no];
-        //Loading PWords:-
-        cout << "page_no = " << page_no << endl;
-        loadMap(localFilenameC, PWords, "PWords");
-        map<string, int> PWordspage;
-        loadMap(localFilenameC, PWordspage, "PWordspage");
-        loadmaptoTrie(TPWords, PWordspage);
-        //generateCorrectionPairs(wrong,right,str2.toUtf8().constData(), str1.toUtf8().constData());
-        loadConfusionsFont(wrong, right, ConfPmap);
-        loadConfusionsFont(wrong, right, ConfPmapFont);
-        TopConfusions.clear(); TopConfusionsMask.clear();
-        loadTopConfusions(ConfPmap, TopConfusions, TopConfusionsMask);
-
-
-
-        //cout << mapCorrect[page_no]<< " " << mapTyping[page_no]<< " " <<mapSugg1[page_no]<< " " <<mapSugg2[page_no]<< " " <<mapSugg3[page_no]<< " " <<mapSugg4[page_no]<< " " <<mapSugg5[page_no]<< " " <<mapSugg6[page_no]<<endl;
-        //cout << vIsz - WER << endl;
-        //ui->lineEdit->setText("Page WER = " + QString::number((vIsz-WER)*100/vIsz));
-        page_no++;
-        filereport = QString::fromStdString(localFilenameC);
-    } //  while(1) ends
-    page_no--;
-    filereport.replace(("CorrectorOutput/page-" + QString::number(page_no) + ".txt"), "SuggReport1.txt");
-    std::ofstream rep(filereport.toUtf8().constData());
-
-    rep << "y0 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapinCorrect[i] << " "; rep << "];" << endl;
-    rep << "y1 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapCorrect[i] << " "; rep << "];" << endl;
-    rep << "y2 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapTyping[i] << " "; rep << "];" << endl;
-    rep << "y3 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg1[i] << " "; rep << "];" << endl;
-    rep << "y4 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg2[i] << " "; rep << "];" << endl;
-    rep << "y5 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg3[i] << " "; rep << "];" << endl;
-    rep << "y6 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg4[i] << " "; rep << "];" << endl;
-    rep << "y7 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg5[i] << " "; rep << "];" << endl;
-    rep << "y8 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg6[i] << " "; rep << "];" << endl;
-    rep << "y9 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg7[i] << " "; rep << "];" << endl;
-    rep << "y10 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg8[i] << " "; rep << "];" << endl;
-    rep << "y11 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg9[i] << " "; rep << "];" << endl;
-    rep << "y12 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg10[i] << " "; rep << "];" << endl;
-    rep << "x = 1:" << page_no << ";" << endl << "plot(x,y0,x,y1,x,y2,x,y3,x,y4,x,y5,x,y6,x,y7,x,y8,x,y9,x,y10,x,y11);" << endl;
-    rep << "legend(\'IncorrectWords\',\'CorrectWords\', \'#TypingCorrections\', \'#CorrectSugg1\',\'#CorrectSugg2\',\'#CorrectSugg3\',\'#CorrectSugg4\',\'#CorrectSugg5\',\'#CorrectSugg6\',\'#CorrectSugg7\',\'#CorrectSugg8\',\'#CorrectSugg9\' )" << endl;
-    rep << "TotalSuggestions =" << "sum(y3+y4+y5+y6+y7+y8+y9+y10+y11)" << endl;
-    rep << "TotalSuggestionsWithLSTM =" << "sum(y3+y4+y5+y6+y7+y8+y9+y10+y11+y12)" << endl;
-}
-
-
-/*
- // 3 map<string,int>&
-
-//cout <<" here " << toDev(Words[0]) << endl;
-
-
-// find nearest confirming to OCR Sugg from 2ndary Book //1
-
-
-// find nearest confirming to OCR Sugg from PWords
-string nearestCOnfconfirmingSuggvec1;
-    vector<string> vec1 = PWords1;
-    min= 100;
-        for (size_t t=0;t<vec1.size();t++){
-        vector<string> wordConfusions; vector<int> wCindex;
-        int minFactor = loadWConfusionsNindex1(selectedStr,vec1[t],ConfPmap,wordConfusions,wCindex);
-        wordConfusions.clear(); wCindex.clear();
-        if(minFactor < min) {min = minFactor; nearestCOnfconfirmingSuggvec1 = vec1[t];}
-        }
-
-vector<pair<int,string>> vecSugg,vecSugg1;
-map<string, int> mapSugg;
-string CSugg = CPair[toslp1(selectedStr)];
-if(CSugg.size() > 0) mapSugg[toslp1(CSugg)]++;
-if(Words.size() > 0)  mapSugg[toslp1(Words[0])]++;
-if(Words1.size() > 0) mapSugg[toslp1(nearestCOnfconfirmingSuggvec)]++;
-if(PWords1.size() > 0) mapSugg[toslp1(nearestCOnfconfirmingSuggvec1)]++;
-if(PairSugg.size() > 0) mapSugg[toslp1(PairSugg)]++;
-
-
-
-map<string, int> mapSugg1;
-for(size_t ksugg1 = 0; ksugg1 < 5; ksugg1++) {
-if(Words.size() > ksugg1)  mapSugg1[toslp1(Words[ksugg1])]++;
-if(Words1.size() > ksugg1) mapSugg1[toslp1(Words1[ksugg1])]++;
-if(PWords1.size() > ksugg1) mapSugg1[toslp1(PWords1[ksugg1])]++;
-}
-
-
-for( map<string,int>::const_iterator eptr=mapSugg.begin(); eptr!=mapSugg.end(); eptr++){
-    vecSugg.push_back(make_pair(editDist(toslp1(eptr->first),toslp1(selectedStr)),eptr->first));
-}
-
-for( map<string,int>::const_iterator eptr=mapSugg1.begin(); eptr!=mapSugg1.end(); eptr++){
-    vecSugg1.push_back(make_pair(editDist(toslp1(eptr->first),toslp1(selectedStr)),eptr->first));
-}
-
-
-//vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),selectedStr),selectedStr));
-//if(Words.size() > 0) vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),toslp1(Words[0])),Words[0]));
-//vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),toslp1(Words1[0])),Words1[0]));
-//vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),toslp1(PairSugg)),PairSugg));
-sort(vecSugg.begin(), vecSugg.end()); sort(vecSugg1.begin(), vecSugg1.end());
-//cout << vec[0]  << " " << vec[1]  << " " << vec[2]  << " " << newtrie.next.size() << endl;
-//Words = suggestions((selectedStr));
-for ( uint bitarrayi = 0; bitarrayi < vecSugg.size(); bitarrayi++) {
-    act = new QAction( QString::fromStdString(toDev(vecSugg[bitarrayi].second)) , spell_menu);
-    //cout<<vecSugg[bitarrayi].first<<endl;
-    spell_menu->addAction(act);
-    }
-
-for ( uint bitarrayi = 0; bitarrayi < vecSugg1.size(); bitarrayi++) {
-    if(mapSugg[vecSugg1[bitarrayi].second] < 1){
-    act = new QAction(QString::fromStdString(toDev(vecSugg1[bitarrayi].second)), spell_menu);
-    //cout<<vecSugg1[bitarrayi].first<<endl;
-    spell_menu->addAction(act);
-    }
-    }
-*/
-
-
 void MainWindow::on_actionCreateSuggestionLogNearestPriority_triggered()
 {
     map<size_t, size_t> mapCorrect, mapinCorrect, mapTyping, mapSugg1, mapSugg2, mapSugg3, mapSugg4, mapSugg5, mapSugg6, mapSugg7, mapSugg8, mapSugg9, mapSugg10;
@@ -2805,6 +1766,1554 @@ void MainWindow::on_actionCPair_triggered()
     }
 }
 
+//start
+
+/*!
+ * \fn MainWindow::on_actionSanskrit_triggered()
+ * \brief Sets the language of the current broweser to Sanskrit by by passing the SanFlag as true
+ * \sa setText()
+ */
+void MainWindow::on_actionSanskrit_triggered()
+{
+    HinFlag = 0, SanFlag = 1;
+    ui->textEdit->setText(gSanskrit);//whenever language change is required it will be converted to Sanskrit using the slpNPatternDict.h
+    ui->hinButton->setChecked(HinFlag);
+}
+
+/*!
+ * \fn MainWindow::on_actied()
+ * \brief Sets the language of the current broweser to Hindi by by passing the HinFlag as true
+ * \sa setText()
+ */
+void MainWindow::on_actionHindi_triggered()
+{
+    HinFlag = 1, SanFlag = 0;
+    ui->textEdit->setText(gHindi);  //whenever language change is required it will be converted to Hindi using the slpNPatternDict.h
+    ui->sanButton->setChecked(SanFlag);
+}
+
+/*!
+ * \fn MainWindow::on_actionEnglish_triggered()
+ * \brief Sets the language of the current broweser to Hindi by passing the HinFlag and the SanFlag as false
+ * \sa setText()
+ */
+void MainWindow::on_actionEnglish_triggered()
+{
+    HinFlag = 0, SanFlag = 0;
+    ui->hinButton->setChecked(HinFlag);//whenever language change is required it will be left as it is
+    ui->sanButton->setChecked(SanFlag);
+}
+
+/*!
+ * \fn MainWindow::on_actionNew_triggered
+ * \brief This function allows the user to create new file/project.
+ */
+void MainWindow::on_actionNew_triggered()
+{
+    QTextBrowser * b = new QTextBrowser(this);
+    b->setReadOnly(false);
+    b->setUndoRedoEnabled(true);            //User can use Undo/Redo commands
+
+    //! When opened tabs count is not zero
+    if (ui->tabWidget_2->count() != 0) {
+        for (int i = 0; i < ui->tabWidget_2->count(); i++) {
+            //!When opened file name is not set
+            if ("Untitled" == ui->tabWidget_2->tabText(i)) {
+                ui->tabWidget_2->setCurrentIndex(i);
+            }
+        }
+    }
+    //! Setting current tab index
+    currentTabIndex = ui->tabWidget_2->addTab(b, "Untitled");
+    ui->tabWidget_2->setCurrentIndex(currentTabIndex);
+}
+
+/*!
+ * \fn MainWindow::on_actionOpen_Project_triggered
+ * \brief Opens a new OCR project
+ * \note Every project contains six folders - Images, Inds, CorrectorOutput, VerifierOutput, Dicts and Comments.
+ *
+ * \sa process_xml(), open_git_repo(), get_stage(), get_version(), getModel(), AddTemp(), getFilter(), insert(), UpdateFileBrekadown(), readJsonFile()
+ */
+void MainWindow::on_actionOpen_Project_triggered() { //Version Based
+
+    /* Description
+     * 1. Check if file named "project.xml" exists else terminates the function.
+     * 2. Create a new directory if CorrectorOutput, VerifierOutput or Comments folders does not exist.
+     * 3. Loading the requisites.
+     *    a) Processing the project.xml file.
+     *    b) Load git repository.
+     * 4. Set the model for ProjectHierarchyWindow(TreeView). TreeView is composed of Documents and Images.
+     * 5. Reset the current file name and directory levels.
+     * 6. Get the value for time elapsed from Timelog.json.
+     */
+
+    QFile xml(QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)")));   //Opens only if the file name is Project.xml
+    QFileInfo finfo(xml);
+    QString basedir = finfo.absoluteDir().absolutePath();
+
+    //!Initializes the string with directory name
+    QString s1 = basedir + "/Images/";
+    QString s2 = basedir + "/Inds/";
+    QString s3 = basedir+"/CorrectorOutput/";
+    QString s4 = basedir + "/VerifierOutput/";
+    QString s5 = basedir + "/Comments/";
+
+    //! Terminates function if Project.xml doesn't exist
+    if (finfo.fileName() == "")
+        return;
+
+    //! Creates a new directory if the CorrectorOutput, VerifierOutput or Comments folders does not exist.
+    if (!QDir(s3).exists())
+    {
+        QDir().mkdir(s3);
+    }
+    if (!QDir(s4).exists())
+    {
+        QDir().mkdir(s4);
+    }
+    if (!QDir(s5).exists())
+    {
+        QDir().mkdir(s5);
+    }
+
+    bool exists = QDir(s1).exists() && QDir(s2).exists();
+    if (xml.exists()&& exists)
+    {
+        ui->treeView->reset();    //reinitialize the ProjectHierarchyWindow
+        mProject.process_xml(xml);
+
+        mProject.open_git_repo();   //Open git repo
+        if(!mProject.isProjectOpen())
+        {
+            QMessageBox::warning(0, "Project Error", "Couldn't open project. Please check your project.");
+            return;
+        }
+        ui->treeView->setModel(mProject.getModel());
+        ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
+
+        QString stage = mProject.get_stage();                          //fetches the stage from project.xml file
+        QString version = mProject.get_version();                      //Fetches version from project.xml file
+        ui->lineEdit_2->setText("Version: " + version);                //Updates version in ui
+
+        //!Get the path of all necessary directories
+        QDir dir = mProject.GetDir();
+        QString str1 = mProject.GetDir().absolutePath()+"/CorrectorOutput/";
+        QString str2 = mProject.GetDir().absolutePath() + "/VerifierOutput/";
+        QString str3 = mProject.GetDir().absolutePath() + "/Inds/";
+        QString str4 = mProject.GetDir().absolutePath() + "/Images/";
+
+        //!To lookout for changes in CorrectorOutput and VerifierOutput directory
+        watcher.addPath(str1);
+        watcher.addPath(str2);
+
+        //!To Display tree view for Document
+        QDir cdir(str1);
+        Filter * filter = mProject.getFilter("Document");
+
+        //!Adds each file present in CorrectorOutput directory to treeView
+        auto list = cdir.entryList(QDir::Filter::Files);
+        for (auto f : list)
+        {
+            QString t = str1 + "/" + f;
+            QFile f2(t);
+            mProject.AddTemp(filter,f2, "CorrectorOutput/" );
+            corrector_set.insert(f);
+        }
+
+        //!Adds each file present in VerifierOutput directory to treeView
+        cdir.setPath(str2);
+        list = cdir.entryList(QDir::Files);
+        for (auto f : list)
+        {
+            verifier_set.insert(f);
+            QString t = str2 + "/" + f;
+            QFile f2(t);
+            mProject.AddTemp(filter, f2, "VerifierOutput/");
+        }
+
+        //!Adds the files from inds folder to treeView
+        cdir.setPath(str3);
+        list = cdir.entryList(QDir::Filter::Files);
+        for (auto f : list)
+        {
+            QString t = str3 + "/" + f;
+            QFile f2(t);
+            mProject.AddTemp(filter, f2, "");
+        }
+
+        //!To Display treeView for Image
+        filter = mProject.getFilter("Image");
+
+        //!Adds the files from Image folder to treeView
+        cdir.setPath(str4);
+        list = cdir.entryList(QDir::Filter::Files);
+        for (auto f : list) {
+            QString t = str4 + "/" + f;
+            QFile f2(t);
+            mProject.AddTemp(filter, f2, "");
+        }
+
+        //!Disable Corrector Turn In once the Corrector has Turned in until the next version is fetched.
+        if(!isVerifier)
+        {
+            if (stage != "Corrector")
+            {
+                ui->actionTurn_In->setEnabled(false);
+            }
+        }
+
+        UpdateFileBrekadown();    //Reset the current file and dir levels
+
+        //!Get the elapsed time in Timelog.json file under Comments folder
+        gTimeLogLocation = gDirTwoLevelUp + "/Comments/Timelog.json";     //Navigate to Timelog.json uder Comments folder
+        QJsonObject mainObj =  readJsonFile(gTimeLogLocation);
+
+        //!Get the seconds elapsed for their file name in json file
+        foreach(const QJsonValue &val, mainObj)
+        {
+            QString directory = val.toObject().value("directory").toString();
+            int seconds    = val.toObject().value("seconds").toInt();
+            timeLog[directory] = seconds;
+        }
+
+        bool isSet = QDir::setCurrent(mProject.GetDir().absolutePath() + "/CorrectorOutput") ; //Change application Directory to any subfolder of mProject folder for Image Insertion feature.
+        if(!QDir(mProject.GetDir().absolutePath() + "/Images/Inserted").exists())
+            QDir().mkdir(mProject.GetDir().absolutePath() + "/Images/Inserted");
+
+        QMessageBox::information(0, "Success", "Project opened successfully.");
+
+        //!Genearte image.xml for figure/table/equation entries and initialize these values by 1.
+        createImageInfoXMLFile();
+
+    }
+    else
+    {
+        QMessageBox::warning(0, "Project Error", "Couldn't open project. Please check your project.");
+        return;
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionSave_triggered()
+ * \brief This function will save any changes made in the current file.
+ * \sa SaveTimeLog(), DisplayTimeLog()
+*/
+bool ConvertSlpDevFlag = 0;
+void MainWindow::on_actionSave_triggered()
+{
+    SaveTimeLog();
+    DisplayTimeLog();
+
+    //! When changes are made by the verifier the following values are also updated.
+    if(isVerifier)
+    {
+        gSaveTriggered = 1;
+        on_viewComments_clicked();
+        gSaveTriggered = 0;
+        updateAverageAccuracies();
+    }
+    ConvertSlpDevFlag =1;
+
+    /*
+     * If file name is \value untitled on_actionSave_As_triggered is called.
+     * Otherwise we will update the changes in the existing saved file.
+    */
+    if (mFilename=="Untitled")
+    {
+        on_actionSave_As_triggered();
+    }
+    else
+    {
+        QString tempPageName = gCurrentPageName;
+
+        //! Selecting the location where file is to be saved
+        QString changefiledir = filestructure_fw[gCurrentDirName];
+        QString localFilename = gDirTwoLevelUp + "/" +changefiledir +"/" + tempPageName;
+        localFilename.replace(".txt",".html");
+
+        //! Don't create and save new file if output file already exists.
+        if (gCurrentDirName == "Inds" || isVerifier && gCurrentDirName == "CorrectorOutput")
+        {
+            QFileInfo check_file(localFilename);
+            if (check_file.exists() && check_file.isFile())
+            {
+                return ;
+            }
+        }
+
+        QFile sFile(localFilename);
+
+        QTextCharFormat fmt;
+        fmt.setForeground(QBrush(QColor(0,0,0)));           //Setting foreground brush to render text
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.select(QTextCursor::Document);
+        cursor.mergeCharFormat(fmt);
+
+        QString output = curr_browser->toHtml();
+
+        QTextDocument doc;
+        doc.setHtml( gInitialTextHtml[currentTabPageName] );
+        s1 = doc.toPlainText();          //before Saving
+        s2 = curr_browser->toPlainText();       //after Saving
+
+        editDistance(s1, s2);           // Update CPair by editdistance
+
+        //! Do commit when there are some changes in previous and new html file on the basis of editdistance.
+        if(editDistance(s1,s2))
+        {
+            if(mProject.get_version().toInt())     //Check version number
+            {
+                QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();
+                //!Check commit condition
+                if(!mProject.commit(commit_msg.toStdString()))
+                {
+                    cout<<"Commit Unsuccessful"<<endl;
+                    return;
+                }
+                else
+                {
+                    mProject.commit(commit_msg.toStdString());
+                    cout<<"Commit Successful"<<endl;
+                }
+            }
+        }
+
+        //CPair.insert(CPair_editDis.begin(), CPair_editDis.end());
+        //! Enters entries in CPairs through CPair_editDis; allows multiple entries for a incorrent word entry
+        for(auto elem : CPair_editDis)
+        {
+           std::cerr << elem.first << " " << elem.second << "\n";
+           std::cerr << toslp1(elem.first) << " " << toslp1(elem.second) << "\n";
+           //CPair.insert(make_pair(toslp1(elem.first), toslp1(elem.second)));
+           if ( CPairs.find(toslp1(elem.first)) != CPairs.end())
+           {
+               std::set< std::string>& s_ref = CPairs[toslp1(elem.first)];
+               s_ref.insert(toslp1(elem.second));
+           }
+           else
+           {
+               CPairs[toslp1(elem.first)].insert(toslp1(elem.second));
+           }
+        }
+
+        //! Reflecting CPairs entries in the file /Dicts/CPair; Making it dynamic
+        QString filename12 = mProject.GetDir().absolutePath() + "/Dicts/" + "CPair";
+        QFile file12(filename12);
+        if(!file12.exists())
+        {
+           qDebug() << "NO exist file "<<filename12;
+        }
+        else
+        {
+           qDebug() << filename12<<"exists";
+        }
+
+        //! Insert entries in Correct Formatting Hello (/t) hi,(comma)hiii
+        if (file12.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            QTextStream out(&file12);
+            out.setCodec("UTF-8");
+            map<string, set<string>>::iterator itr;
+            set<string>::iterator set_it;
+
+            for (itr = CPairs.begin(); itr != CPairs.end(); ++itr)
+            {
+                out <<  QString::fromStdString(toDev(itr->first)) << '\t';
+                for (set_it = itr->second.begin(); set_it != itr->second.end(); ++set_it)
+                {
+                    if(set_it != prev(itr->second.end()))
+                    {
+                        out << QString::fromStdString(toDev(*set_it)) << ",";
+                    }
+                    else {
+                        out << QString::fromStdString(toDev(*set_it));
+                    }
+
+                }
+                out <<"\n";
+            }
+             file12.close();
+        }
+
+        //! If file is in write-only mode
+        if(sFile.open(QFile::WriteOnly))
+        {
+            QTextStream out(&sFile);
+            out.setCodec("UTF-8");          //Sets the codec for this stream
+            gInitialTextHtml[currentTabPageName] = output;
+            output = "<style> body{ width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; } </style>" + output;     //Formatting the output using CSS <style> tag
+            out << output;
+            sFile.flush();      //Flushes any buffered data waiting to be written in the \a sFile
+            sFile.close();      //Closing the file
+        }
+
+        //! Converting html output into plain text.
+        QTextDocumentFragment qtextdocfragment;
+        QString plain = qtextdocfragment.fromHtml(output).toPlainText();
+
+        std::stringstream ss(plain.toStdString());
+        std::string to;
+        //! Appending the plain text in QVector<QString> object.
+        QVector<QString> s;
+        if (plain != NULL)
+        {
+            while(std::getline(ss,to,'\n'))
+            {
+                QString qstr = QString::fromStdString(to);
+                s.append(qstr);
+            }
+        }
+
+        //! Inserting string values in \a qjsonobj.
+        QJsonObject qjsonobj;
+        for(int i = 0;i < s.size(); i++)
+        {
+            QString z = QString::number(i);
+            qjsonobj.insert(z, QJsonValue(s[i]));
+        }
+        int len = qjsonobj.length();
+
+        localFilename.replace(".html",".json");         //Replacing extension of file from .html to .json
+        QFile sFile2(localFilename);
+
+        //! Sets codec value and then adding values in file
+        if(sFile2.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            QTextStream out(&sFile2);
+            out.setCodec("UTF-8");
+            out << "{\n";
+            for(int x = 0; x<len; x++)
+            {
+                QString z = QString::number(x);
+                out << "\"" << x << "\"" << ":" << "\"" << qjsonobj[z].toString() << "\"" <<","<< '\n';
+            }
+            out << "}";
+
+            sFile2.flush();
+            sFile2.close();
+        }
+
+        //! Set Inds file readonly after saving - Corrector mode
+        if (!isVerifier && gCurrentDirName == "Inds")
+        {
+            if(QFile::exists(localFilename))
+            {
+                curr_browser->setReadOnly(true);
+            }
+
+        }
+
+        //! Set Inds and CorrectorOutput files readonly after generating output file - Verifier mode
+        if (isVerifier && (gCurrentDirName == "Inds" || gCurrentDirName == "CorrectorOutput"))
+        {
+            if(QFile::exists(localFilename))
+            {
+                QString Inds_file = gCurrentPageName;
+                Inds_file.replace(".html", ".txt");
+                QString Corr_file = "CorrectorOutput/" + Inds_file;
+                Corr_file.replace(".txt", ".html");
+                for (int i = 0; i < ui->tabWidget_2->count(); i++)
+                {
+                    QString tab_name = ui->tabWidget_2->tabText(i);
+                    if (tab_name == Inds_file || tab_name == Corr_file)
+                    {
+                        auto b = (QTextBrowser*)ui->tabWidget_2->widget(i);
+                        b->setReadOnly(true);
+                    }
+                }
+            }
+        }
+    }
+    ConvertSlpDevFlag =0;
+}
+
+
+/*!
+ * \fn MainWindow::on_actionSave_As_triggered()
+ * \brief This function saves the file which has never been saved once.
+ */
+void MainWindow::on_actionSave_As_triggered()
+{
+    QString file(QFileDialog::getSaveFileName(this, "Open a File"));
+
+    //! Sets the file name and saves the file.
+    if (!file.isEmpty())
+    {
+        setMFilename(file);
+        UpdateFileBrekadown();
+        on_actionSave_triggered();
+    }
+}
+
+/*!
+ * \fn on_actionSpell_Check_triggered()
+ * \brief Converts the whole html page to the original text page in orange color
+ * \note works on the basis of a pre-defined flag which helps to always convert the text to Devanagari
+ * \sa findDictEntries(), find_and_replace_oddInstancesblue(), find_and_replace_oddInstancesorange(),hasM40PerAsci()
+ */
+map<string, int> wordLineIndex;
+
+void MainWindow::on_actionSpell_Check_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+
+    QString textBrowserText = curr_browser->toPlainText();
+    QChar ch;
+    ch=textBrowserText[1];
+    textBrowserText+=" ";
+    string str1=textBrowserText.toUtf8().constData();
+
+    //! load number of words
+    istringstream iss1(str1);
+    size_t WordCount = 0;
+    string word1;
+    while(iss1 >> word1) WordCount++;
+
+    //str1 = toslp1(str1);
+    istringstream iss(str1);
+    string strHtml = "<html><body>";
+    string line;
+
+    int value = 0;
+    while (getline(iss, line))
+    {
+        istringstream issw(line);
+        string word;
+
+        while(issw >> word)
+        {
+            if(ConvertSlpDevFlag)
+            {
+                string word1 = word;
+                word = toslp1(word);
+                string wordNext;
+                if(hasM40PerAsci(word1))
+                {
+                    wordNext = word1;
+                }
+                else
+                {
+                    wordNext = toDev(word);
+                }
+                strHtml += wordNext; strHtml += " ";
+                value ++;
+            }
+            else
+            {
+                string word1 = word;
+                word = toslp1(word);
+                string wordNext;
+                //! checks if the word exists in the English language, Seconday OCR, Pwords, Dict and CPair; convert its color coding
+                if(hasM40PerAsci(word1))
+                    wordNext = word1;
+
+                else if(GBook[(word)] > 0 )
+                {
+                    wordNext = toDev(word);
+                    PWords[word]++;
+                }
+
+                else if(PWords[word] > 0)
+                {
+                    wordNext = "<font color=\'gray\'>" + toDev(word) + "</font>";
+                }
+                else if((Dict[word] ==0) && (PWords[word] == 0) && (CPair[word].size() > 0))
+                {
+                    wordNext = "<font color=\'purple\'>" + toDev(CPair[word]) + "</font>";
+                }
+                else
+                {
+                    wordNext = findDictEntries(toslp1(word),Dict,PWords, word.size());     //replace m1 with m2,m1 for combined search
+                    wordNext = find_and_replace_oddInstancesblue(wordNext);
+                    wordNext = find_and_replace_oddInstancesorange(wordNext);
+                }
+                strHtml += wordNext;
+                strHtml += " ";
+                value ++;
+            }
+        }
+        strHtml +="<br>";  // To add new line
+    }
+    strHtml += "</body></html>";
+    curr_browser->setHtml(QString::fromStdString(strHtml));
+
+    str1=textBrowserText.toUtf8().constData();
+
+    istringstream iss2(str1);
+    size_t WordCount2 = 0;
+
+    //! clean(word) instead of word
+    while (getline(iss2, line))
+    {
+        istringstream issw(line);
+        string word;
+        while(issw >> word)
+        {
+            wordLineIndex[(word + "###" + line)] = WordCount2; WordCount2++;
+        }
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionLoad_Next_Page_triggered
+ * \brief Sets the browser window to display the next page
+ *
+ * \sa on_actionSave_triggered() ,get_version(), SaveTimeLog(), GetPageNumber(), LoadDocument()
+ */
+void MainWindow::on_actionLoad_Next_Page_triggered()
+{
+    /*Description
+     * 1. Check if the file is saved else save the file
+     * 2. Add Entries in Timelog.json about the elapsed time
+     *    a) If the present mode is verifier, adds entries as verifer. Eg: "Verifier:page-2.txt:V-0"
+     *    b) If the present mode is corrector, adds entries as corrector Eg: "Corrector:page-1.txt:V-1"
+     * 3. Increment the page number extracted from the localFilename by value one. Terminates function if file doesn't exist
+     * 4. Page number extracted from the tab name is incremented and set as the new tab name
+     * 5. Loads the file with the incremented page number
+     * */
+
+    //! Checking if the file is saved else saves the file
+    if(curr_browser) {
+        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {    //fetching the text from the key(tab name) and comparing it to current browser text
+            int btn = QMessageBox::question(this, "Save?", "Do you want to save this file?",
+                                            QMessageBox::StandardButton::Ok, QMessageBox::StandardButton::No);
+            if (btn == QMessageBox::StandardButton::Ok)
+                on_actionSave_triggered();
+        }
+
+        string localFilename = mFilename.toUtf8().constData();
+        string localCurrentTabPageName = currentTabPageName.toUtf8().constData();
+
+        //! Adding entries in Timelog.json about the elapsed time
+        int nMilliseconds = myTimer.elapsed();
+        gSeconds = nMilliseconds/1000;                                 //Converting milliseconds to seconds
+        QString currentVersion = mProject.get_version();
+        if(mRole == "Verifier" && mRole != currentVersion)
+            currentVersion = QString::number(currentVersion.toInt() - 1);   //Version is decremented for Verifier
+
+        gSeconds = timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion];
+
+        SaveTimeLog();
+
+        //! Extract page number from the localFilename and checks if the incremented page exists
+        string no = "";
+        size_t loc;
+        QString ext = "";
+        if(!GetPageNumber(localFilename, &no, &loc, &ext))
+            return;
+        localFilename.replace(loc,no.size(),to_string(stoi(no) + 1));   //Increments page number by one
+        QFile *file = new QFile(QString::fromStdString(localFilename));
+        QFileInfo finfo(file->fileName());
+        if(!(finfo.exists() && finfo.isFile()))
+            return;
+
+        //!Extract page number from tab name and set the incremented page number as a new tab name and Loads the file
+        if(!GetPageNumber(localCurrentTabPageName, &no, &loc, &ext))
+            return;
+        localCurrentTabPageName.replace(loc,no.size(),to_string(stoi(no) + 1));  //Increments page number by one
+        currentTabPageName = QString::fromStdString(localCurrentTabPageName);
+
+        fileFlag = 1;
+        LoadDocument(file, ext, currentTabPageName);    //loads the new file
+        fileFlag = 0;
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionLoad_Prev_Page_triggered()
+ * \brief Sets the browser window to display the previous page
+ *
+ * \sa on_actionSave_triggered() ,get_version(), SaveTimeLog(), GetPageNumber(), LoadDocument()
+ */
+void MainWindow::on_actionLoad_Prev_Page_triggered()
+{
+    /*Description
+     * 1. Check if the file is saved else save the file
+     * 2. Add Entries in Timelog.json about the elapsed time
+     *    a) If the present mode is verifier, adds entries as verifer. Eg: "Verifier:page-2.txt:V-0"
+     *    b) If the present mode is corrector, adds entries as corrector Eg: "Corrector:page-1.txt:V-1"
+     * 3. Extract page number from the localfileName and decrements the page number by one. Terminates function if file doesn't exist
+     * 4. Decrement the page number extracted from tab name and sets it as new tab name
+     * 5. Loads the file with the decremented page number
+     * */
+
+    //! Check if the file is saved or not
+    if(curr_browser) {
+        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
+            int btn = QMessageBox::question(this, "Save?", "Do you want to save " + currentTabPageName + " file?",
+                                            QMessageBox::StandardButton::Ok, QMessageBox::StandardButton::No);
+            if (btn == QMessageBox::StandardButton::Ok)
+                on_actionSave_triggered();
+        }
+
+        string localFilename = mFilename.toUtf8().constData();
+        string localCurrentTabPageName = currentTabPageName.toUtf8().constData();
+
+        //! Adding entries in Timelog.json about the elapsed time
+        int nMilliseconds = myTimer.elapsed();
+        gSeconds = nMilliseconds/1000;                           //Converting milliseconds to seconds
+        QString currentVersion = mProject.get_version();
+        if(mRole == "Verifier" && mRole != currentVersion)
+            currentVersion = QString::number(currentVersion.toInt() - 1);  //Version is decremented for Verifier
+        gSeconds = timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion];
+        SaveTimeLog();
+
+        //! Extract page number from the localFilename
+        string no = "";
+        size_t loc;
+        QString ext = "";
+        if(!GetPageNumber(localFilename, &no, &loc, &ext))
+            return;
+        localFilename.replace(loc,no.size(),to_string(stoi(no) - 1));    //Version is decremented for Verifier
+
+        //!checks if the decremented page exists
+        QFile *file = new QFile(QString::fromStdString(localFilename));
+        QFileInfo finfo(file->fileName());
+        if(!(finfo.exists() && finfo.isFile())) // Check if file exists
+            return;
+
+        //!Extract page number from tab name and set the decremented page number as a new tab name and Loads the file
+        if(!GetPageNumber(localCurrentTabPageName, &no, &loc, &ext))
+            return;
+        localCurrentTabPageName.replace(loc,no.size(),to_string(stoi(no) - 1));
+        currentTabPageName = QString::fromStdString(localCurrentTabPageName);  //sets the decremented page number
+        fileFlag = 1;
+        LoadDocument(file, ext, currentTabPageName);          //loads the file with the decremented page name
+        fileFlag = 0;
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionToDevnagri_triggered()
+ * \brief Converts transliterated text to devanagri text
+ * Transliterated here means Hindi/ Sanskrit written in English.
+ * This function converts selected translitrate text or last written translitrate word to Devanagri.
+*/
+void MainWindow::on_actionToDevanagari_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+
+    if(!cursor.hasSelection())
+        cursor.select(QTextCursor::WordUnderCursor);
+
+    QString str1 = cursor.selectedText();
+    selectedStr = str1.toUtf8().constData();
+    cursor.beginEditBlock();
+    cursor.removeSelectedText();
+    cursor.insertText(QString::fromStdString(toDev(toslp1(selectedStr))));
+    cursor.endEditBlock();
+}
+
+/*!
+ * \fn MainWindow::on_actionToSlp1_triggered()
+ * \brief Converts devanagri/Sanskrit text to transliterated(english) text
+ * This function converts selected Devanagri text to transliterated text.
+*/
+void MainWindow::on_actionToSlp1_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+            return;
+    QTextCursor cursor = curr_browser->textCursor();
+
+    if(!cursor.hasSelection())
+        cursor.select(QTextCursor::WordUnderCursor);
+
+    QString str1 = cursor.selectedText();
+    selectedStr = str1.toUtf8().constData();
+    cursor.beginEditBlock();
+    cursor.removeSelectedText();
+    cursor.insertText(QString::fromStdString((toslp1(selectedStr))));
+    cursor.endEditBlock();
+}
+
+/*!
+ * \fn MainWindow::on_actionLoadGDocPage_triggered()
+ * \brief Loads PWords and its associated trie data structure
+ * \sa on_actionSave_As_triggered(), loadMap(), loadmaptoTrie(), generateCorrectionPairs(), loadConfusionsFont, loadTopConfusions()
+*/
+void MainWindow::on_actionLoadGDocPage_triggered()
+{
+    /*! If file name is Untitled do nothing*/
+    if (mFilename == "Untitled")
+    {
+
+    }
+    else
+    {
+        /*! Create an html file for current ind file*/
+        on_actionSave_As_triggered();
+        QString changefiledir = filestructure_fw[gCurrentDirName];
+        QString str1 = gDirTwoLevelUp + "/" + changefiledir + "/" + gCurrentPageName;
+        str1.replace(".txt", ".html");
+
+        QFile sFile(str1);
+        if (sFile.open(QFile::WriteOnly | QFile::Text))
+        {
+            QTextStream out(&sFile);
+            out.setCodec("UTF-8");
+            out << curr_browser->toHtml(); //toPlainText(); //Modified
+            sFile.flush();
+            sFile.close();
+        }
+
+        /*! Load PWord and Top Confusion Words*/
+        loadMap(str1.toUtf8().constData(), PWords, "PWords");
+
+        map<string, int> PWordspage;
+        loadMap(str1.toUtf8().constData(), PWordspage, "PWordspage");
+        loadmaptoTrie(TPWords, PWordspage);
+
+        vector<string> wrong, right;
+        QString str2 = mFilename;
+
+        generateCorrectionPairs(wrong, right, str2.toUtf8().constData(), str1.toUtf8().constData());
+
+        loadConfusionsFont(wrong, right, ConfPmapFont);
+        loadConfusionsFont(wrong, right, ConfPmap);
+
+        TopConfusions.clear();
+        TopConfusionsMask.clear();
+        loadTopConfusions(ConfPmap, TopConfusions, TopConfusionsMask);
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionLoadData_triggered()
+ * \brief Loads the dictionary files only once
+ * This function is only called once per project to load the dictionary file of the project,
+ * dictionary files can be used to work on suggestions.
+ */
+bool LoadDataFlag = 1; //To load data only once
+QString mFilename1, loadStr, loadStr1;
+void MainWindow::on_actionLoadData_triggered()
+{
+    if (mProject.isProjectOpen())
+    {
+        if (LoadDataFlag)
+        {
+            QString initialText = ui->lineEdit->text();
+            ui->lineEdit->setText("Loading Data...");
+            QString  localmFilename1 = mFilename;
+            string localmFilename1n = localmFilename1.toUtf8().constData();
+            localmFilename1n = localmFilename1n.substr(0, localmFilename1n.find("page"));
+            localmFilename1 = QString::fromStdString(localmFilename1n);
+
+            on_actionLoadDict_triggered();       //sanskrit dictionary files are called
+            loadStr += "\n";
+
+            //!GEROCR IEROCR PWords and CPair files are loaded and reflected in terminal
+            on_actionLoadOCRWords_triggered();
+            on_actionLoadDomain_triggered();
+            on_actionLoadSubPS_triggered();
+            on_actionLoadConfusions_triggered();
+
+            QString filepath = mProject.GetDir().absolutePath() + "/Dicts/synonyms.csv" ;
+            loadFileCSV(synonym, synrows, filepath.toUtf8().constData());
+
+            ui->lineEdit->setText(initialText);
+            LoadDataFlag = 0;
+            QMessageBox messageBox;
+            messageBox.information(0, "Load Data", "Data has been loaded.");
+        }
+    }
+}
+
+/*!
+ * \fn loadDict()
+ * \param current project file location
+ * \brief The path of the dictionary file is fetched and the files are returned in the map
+ * these words are then fetched depending upon the word selected
+ * \sa loadMap()
+ */
+bool loadDict(Project & project) {
+    QString localmFilename1 = project.GetDir().absolutePath() + "/Dicts/" + "Dict";
+    if (!QFile::exists(localmFilename1)) return false;
+    loadMap(localmFilename1.toUtf8().constData(), Dict, "Dict");
+    return true;
+}
+
+/*!
+ * \fn on_actionLoadDict_triggered()
+ * \brief The path of the dictionary file is fetched and the files are returned in the map
+ * these words are then fetched depending upon the word selected
+ * \sa loadDict()
+ */
+void MainWindow::on_actionLoadDict_triggered()
+{
+    loadDict(mProject);
+}
+
+/*!
+ * \fn MainWindow::on_actionLoadOCRWords_triggered()
+ * \brief Loads the OCR files
+ * The path of the GEROCR and IEROCR file is fetched and the files are returned in the map which is again,
+ * used as a suggestion depending upon the word selected
+ * \sa LoadMapNV()
+ */
+void MainWindow::on_actionLoadOCRWords_triggered()
+{
+    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "GEROCR";
+    cout << localmFilename1.toUtf8().constData() << endl;
+    loadMapNV(localmFilename1.toUtf8().constData(), GBook, vGBook, "GBook"); localmFilename1 = mFilename1;
+    cout << localmFilename1.toUtf8().constData() << endl;
+    localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "IEROCR";
+    loadMapNV(localmFilename1.toUtf8().constData(), IBook, vIBook, "IBook");
+    cout << GBook.size() << " " << IBook.size() << endl;
+
+}
+
+/*!
+  \fn MainWindow::on_actionLoadDomain_triggered()
+  \brief loads the common OCR files
+ The path of the PWords file is fetched and the files are returned in the map which can be used
+ for the suggestion feature
+ \sa loadMapPWords()
+ */
+void MainWindow::on_actionLoadDomain_triggered()
+{
+    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "/PWords";
+    loadMapPWords(vGBook, vIBook, PWords);
+}
+
+/*!
+  \fn MainWindow::on_actionLoadSubPS_triggered()
+  \brief the CPair files
+    The path of the CPair files are fetched and the files are returned in the map which is returned
+    to load the suggestions
+  \sa loadmaptoTrie(), loadPwordsPatternstoTrie(), loadCPair()
+ */
+map<string, string> LSTM;
+void MainWindow::on_actionLoadSubPS_triggered()
+{
+    size_t count = loadPWordsPatternstoTrie(TPWordsP, PWords);// justsubstrings not patterns exactly // PWordsP,
+    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "CPair";
+
+    loadCPairs(localmFilename1.toUtf8().constData(), CPairs, Dict, PWords);
+    localmFilename1 = mFilename1;
+
+    localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "LSTM";
+    ifstream myfile(localmFilename1.toUtf8().constData());
+    if (myfile.is_open())
+    {
+        string str1, str2, line;
+        while (getline(myfile, line))
+        {
+            istringstream slinenew(line); slinenew >> str1; slinenew >> str2;
+            if (str2.size() > 0) LSTM[str1] = str2;
+        }
+    }
+    cout << LSTM.size() << "LSTM Pairs Loaded";
+    localmFilename1 = mFilename1;
+
+    loadmaptoTrie(TPWords, PWords);
+    loadmaptoTrie(TDict, Dict);
+    loadmaptoTrie(TGBook, GBook);
+    loadPWordsPatternstoTrie(TGBookP, GBook);
+}
+
+/*!
+ * \fn MainWindow::on_actionLoadConfusions_triggered
+ * \brief Loads the confusions for CPair
+ */
+void MainWindow::on_actionLoadConfusions_triggered()
+{
+    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "CPair";
+    loadConfusions(localmFilename1.toUtf8().constData(), ConfPmap);
+    localmFilename1 = mFilename;
+}
+
+/*!
+ * \fn MainWindow::on_actionSugg_triggered
+ * \brief Displays the context menu that has suggestion item
+ * \note It works only when the data is loaded
+ */
+void MainWindow::on_actionSugg_triggered()
+{
+    /*Description
+     * The function loads the context menu and waits for mouse event.
+     * As soon as the mouse event is captured, the context menu is unloaded.
+     */
+    RightclickFlag = 1;
+    QMouseEvent *ev1;
+    mousePressEvent(ev1);      //to capture mouse events
+    RightclickFlag = 0;
+
+}
+
+/*!
+ * \fn MainWindow::on_actionUndo_triggered()
+ * \brief undo the changes made QTextBrowser
+ */
+void MainWindow::on_actionUndo_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    curr_browser->undo();
+}
+
+/*!
+ * \fn MainWindow::on_actionRedo_triggered()
+ * \brief Redo the changes made in QTextBrowser
+ */
+void MainWindow::on_actionRedo_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    curr_browser->redo();
+}
+
+/*!
+ * \fn MainWindow::on_actionFind_and_Replace_triggered()
+ * \brief helps to find particular text and replaces them with new user entered text
+ * \sa openFindAndReplace
+ */
+void MainWindow::on_actionFind_and_Replace_triggered()
+{
+    TextFinder *dialog = TextFinder::openFindAndReplace(this);
+    dialog->show();
+}
+
+//4&5
+
+/*!
+ * \fn MainWindow::on_actionPrimarySecOCRPair_triggered()
+ * \brief Compares primary ocr to secondary ocr with the help of file inputs
+ * and generates pairs with the help of generatePairsSpaced which generates
+ * words with a space in betwen.
+ * \sa slpNPatternDict::generatePairsSpaced()
+*/
+void MainWindow::on_actionPrimarySecOCRPair_triggered()
+{
+    QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
+
+    if (!file1.isEmpty())
+    {
+        QFile sFile(file1);
+        if (sFile.open(QFile::ReadOnly | QFile::Text))
+        {
+            string localFilenameN = file1.toUtf8().constData();
+            int loc = localFilenameN.find("IEROCR");
+            string localFilenameG = localFilenameN.substr(0, loc) + "GEROCR";
+
+            std::ofstream op(localFilenameN + "ocrPairs");
+            vector<string> wrong1, right1;
+            generatePairsSpaced(wrong1, right1, localFilenameN, localFilenameG);    //Files are compared with words
+
+            size_t sz = wrong1.size();
+            if (sz < right1.size()) sz = right1.size();
+
+            for (size_t t = 0; t < sz; t++)
+            {
+                if (right1[t] != "") op << wrong1[t] << "\t" << right1[t] << endl;
+            }
+        }
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionCPairIEROcrVsCorrect_triggered()
+ * \brief CPairs based upon Inds are generated with the help of
+ * IEROCR files and these words are generated with the help of generatePairsIEROCR()
+ * \sa slpNPatternDict::generatePairsIEROCR
+*/
+void MainWindow::on_actionCPairIEROcrVsCorrect_triggered()
+{
+    QString strI1 = mFilename;    // Load foders in strC and strI
+
+    string strInew = strI1.toUtf8().constData();
+    size_t locI = strInew.find("Inds");
+    string strI = strInew.substr(0, locI) + "IEROCR";
+    string strC = strInew.substr(0, locI) + "Correct";
+
+    //! load text files one by one
+    string localFilenameN = strI1.toUtf8().constData();
+    size_t loc1 = localFilenameN.find("Inds");
+    string s1 = localFilenameN.substr(0, loc1);
+    string sRepx = s1 + "Reports/inputx";
+    string sRepy = s1 + "Reports/inputy";
+
+    vector<string> wrong1, right1;
+    generatePairsIEROCR(strI, strC, sRepx, sRepy);
+}
+
+/*!
+ * \fn MainWindow::on_actionCPairGEROcrVsCorrect_triggered()
+ * \brief CPairs based upon Inds are generated with the help of
+ * GEROCR files and these words are generated with the help of generatePairsGEROCR()
+ * \sa slpNPatternDict::generatePairsGEROCR
+*/
+void MainWindow::on_actionCPairGEROcrVsCorrect_triggered()
+{
+    QString strI1 = mFilename;       // Load foders in strC and strI
+
+    string strInew = strI1.toUtf8().constData();
+    size_t locI = strInew.find("Inds");
+    string strI = strInew.substr(0, locI) + "GEROCR";
+    string strC = strInew.substr(0, locI) + "Correct";
+
+    //! load text files one by one
+    string localFilenameN = strI1.toUtf8().constData();
+    size_t loc1 = localFilenameN.find("Inds");
+    string s1 = localFilenameN.substr(0, loc1);
+    string sRepx = s1 + "Reports/inputx";
+    string sRepy = s1 + "Reports/inputy";
+
+    vector<string> wrong1, right1;
+    generatePairsIEROCR(strI, strC, sRepx, sRepy);
+}
+
+/*!
+ * \fn MainWindow::on_actionAllFontProperties_triggered()
+ * \brief Opens a pop up font properties selector and applies chosen properties to font.
+ * The font selector lets you choose:
+ * Font face, font size, variations of those fonts (regular, bold, italic).
+ * The font selector is the Operating System's native font selector.
+ * All fonts installed in the system will appear in the selector
+ * (a software restart after font installation/ reopening the selector might be required).
+*/
+void MainWindow::on_actionAllFontProperties_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QFont initialFont = curr_browser->font();      // initial font face
+    auto pointsize = curr_browser->fontPointSize();
+
+    if(pointsize) initialFont.setPointSize(pointsize);      // initial font size
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok, initialFont, this);
+
+    /*! If user clicks OK then change to selected font with properties*/
+    if(ok)
+    {
+        QTextCharFormat newFont;
+        newFont.setFont(font);
+        curr_browser->textCursor().mergeCharFormat(newFont);
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionBold_triggered()
+ * \brief Sets the font weight to bold
+*/
+void MainWindow::on_actionBold_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    bool isBold = cursor.charFormat().font().bold();
+    QTextCharFormat fmt;
+    /*
+     * If the font-weight value is bold then
+     * it will change it to normal else bold.
+    */
+    fmt.setFontWeight(isBold ? QFont::Normal : QFont::Bold);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
+}
+
+/*!
+ * \fn MainWindow::on_actionUnBold_triggered()
+ * \brief Sets the font weight to regular
+*/
+void MainWindow::on_actionUnBold_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Normal);
+    curr_browser->textCursor().mergeCharFormat(format);
+}
+
+/*!
+ * \fn MainWindow::on_actionItalic_triggered()
+ * \brief Sets the font style to italic
+*/
+void MainWindow::on_actionItalic_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+
+    QTextCursor cursor = curr_browser->textCursor();                        // initialize cursor position at text cursor's position
+    bool isItalic = cursor.charFormat().font().italic();                    // check if character under cursor is italic or not
+
+    QTextCharFormat fmt;
+    fmt.setFontItalic(isItalic ? false : true);                             // if font is italic set font to regular, else set it to italic
+
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);                              // Merge current character format to character under cursor's format (previous properties + italic/non italic)
+}
+
+/*!
+ * \fn MainWindow::on_actionNonitalic_triggered()
+ * \brief Resets the font style to non italic
+*/
+void MainWindow::on_actionNonitalic_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCharFormat format;
+    format.setFontItalic(false);
+    curr_browser->textCursor().mergeCharFormat(format);
+}
+
+/*!
+ * \fn MainWindow::on_actionHighlight_triggered()
+ * \brief Highlights selected text in text browser and then calls LogHighlights()
+ * Only Verifiers can highlight the text, correctors can only remove highlights.
+ * Takes the start and end position of cursor and goes to the middle of the word,
+ * then formats the word.LogHighlights() is called only when a highlight is made.
+ * \note Text Highlight works by changing the background colour to yellow
+ * \sa LogHighlights()
+*/
+void MainWindow::on_actionHighlight_triggered()
+{
+     //! Check if text browser exists AND it is NOT in read only mode
+     if(curr_browser && !curr_browser->isReadOnly())
+     {
+        //! Verifier gets to add and remove highlight the text
+        if(isVerifier)
+        {
+            QTextCursor cursor = curr_browser->textCursor();
+            QString text = cursor.selectedText().toUtf8().constData();
+            int pos1 = curr_browser->textCursor().selectionStart();
+            int pos2 = curr_browser->textCursor().selectionEnd();
+
+            int cursorpos = round(((float)(pos1 + pos2)) / 2);      // goes to mid of the selection
+            cursor.setPosition(cursorpos);
+
+            QTextCharFormat  format = cursor.charFormat();         // gets word character format properties
+
+            //! If word background is already yellow, set it to transparent, else set it to yellow (yellow is the highlight colour).
+            if (format.background() == Qt::yellow)
+            {
+                format.setBackground(Qt::transparent);
+            }
+            else
+            {
+                format.setBackground(Qt::yellow);
+
+                LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
+            }
+            curr_browser->textCursor().mergeCharFormat(format);        // Set format at current cursor
+        }
+        else
+        {
+            curr_browser->setTextBackgroundColor(Qt::transparent); //Correctors are only allowed to remove highlights.
+        }
+    }
+}
+
+/*!
+ * \fn MainWindow::LogHighlights()
+ * \param QString text
+ * \brief Stores highlight metadata to JSON files
+ * \note Meta data includes: Word highlighted, timestamp, time elapsed, page name
+*/
+void MainWindow::LogHighlights(QString word) //Verifier Only
+{
+    //!Highlighted Time meta data is stored
+    QString dir = mProject.GetDir().absolutePath();
+
+    QString highlightsFilename = gDirTwoLevelUp + "/Comments/HighlightsLog.json"; // load the highlight file name
+    QString pagename = gCurrentPageName;                                          // load the current page name (in the text browser)
+
+    pagename.replace(".txt", "");                                                 // remove extension from file name to use it as a key
+    pagename.replace(".html", "");
+
+    QJsonObject mainObj = readJsonFile(highlightsFilename);                       // read JSON file into mainObj
+    QJsonObject page = mainObj.value(pagename).toObject();                        // set values for page name
+    QJsonObject highlights;                                                       // make a new JSON object to store new metadata
+
+    int nMilliseconds = myTimer.elapsed();
+    secs = nMilliseconds / 1000;
+
+    QString time = QTime::currentTime().toString();
+    highlights["Word"] = word;
+    highlights["Timestamp"] = time;
+    highlights["Time Elapsed (s)"] = secs;
+    highlights["Page Name"] = pagename;
+
+    page.remove(time);
+    page.insert(time, highlights);
+    mainObj.remove(pagename);
+    mainObj.insert(pagename, page);
+
+    writeJsonFile(highlightsFilename, mainObj);
+}
+
+/*!
+ * \fn MainWindow::on_actionLeftAlign_triggered()
+ * \brief Sets the browser text alignment to Left Align
+*/
+void MainWindow::on_actionLeftAlign_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    curr_browser->setAlignment(Qt::AlignLeft);
+}
+
+/*!
+ * \fn MainWindow::on_actionRightAlign_triggered()
+ * \brief Sets the browser text alignment to Right Align
+*/
+void MainWindow::on_actionRightAlign_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    curr_browser->setAlignment(Qt::AlignRight);
+}
+
+/*!
+ * \fn MainWindow::on_actionCentreAlign_triggered()
+ * \brief Sets the browser text alignment to Center Align
+*/
+void MainWindow::on_actionCentreAlign_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    curr_browser->setAlignment(Qt::AlignCenter);
+}
+
+/*!
+ * \deprecated
+ * \fn MainWindow::on_action_JustifiedAlign_triggered()
+ * \brief Justifies the text.
+ * Here, whenever there is a break in the text, that is being replaced by space
+ * and then text is placed in-between paragraph tags. After that, the following
+ * selected text is justisfied aligned.
+*/
+void MainWindow::on_actionJusitfiedAlign_triggered() //Not used, does not work as intended
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    auto cursor = curr_browser->textCursor();
+    auto selected = cursor.selection();
+    cursor.removeSelectedText();
+    QString sel = selected.toHtml();
+    sel.replace("<br />" ," ");
+    sel = "</p><p>" + sel + "</p><p>";
+    auto newFrag = selected.fromHtml(sel);
+    cursor.insertFragment(newFrag);
+    curr_browser->setAlignment(Qt::AlignJustify);
+}
+
+/*!
+ *  \fn MainWindow::on_actionSuperscript_triggered()
+ *  \brief toggles superscript for selected text/ character at cursor
+*/
+void MainWindow::on_actionSuperscript_triggered() {
+
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+
+    auto cursor = curr_browser->textCursor();
+
+    QTextCharFormat fmt;
+
+    fmt.setVerticalAlignment((cursor.charFormat().verticalAlignment() == QTextCharFormat::AlignSuperScript)?\
+                                 QTextCharFormat::AlignNormal : \
+                                 QTextCharFormat::AlignSuperScript
+                                 ); // Ternary operator for isSuperscripted ? alignNormal : alignSuperscript
+
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
+}
+
+/*!
+ *  \fn MainWindow::on_actionSubscript_triggered()
+ *  \brief toggles subscript for selected text/ character at cursor
+*/
+void MainWindow::on_actionSubscript_triggered() {
+
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+
+    auto cursor = curr_browser->textCursor();
+
+    QTextCharFormat fmt;
+    fmt.setVerticalAlignment((cursor.charFormat().verticalAlignment() == QTextCharFormat::AlignSubScript)? QTextCharFormat::AlignNormal : QTextCharFormat::AlignSubScript);
+
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
+}
+
+/*!
+ * \fn MainWindow::on_actionInsert_Horizontal_Line_triggered()
+ * \brief Draws a horizontal rule a line below the cursor.
+ * Uses html to insert a horizontal rule using <hr> tag.
+ * Selecting text and then using this fuctionality will clear the text,
+ * and then insert a horizontal rule below it.
+ * \note The text browser is a rich text field, so html tags and styling can be used seamlessly.
+*/
+void MainWindow::on_actionInsert_Horizontal_Line_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    curr_browser->insertHtml("<hr>");
+}
+
+/*!
+ * \fn MainWindow::on_actionFontBlack_triggered()
+ * \brief Sets the current font colour to black.
+ * \note There are no further colour properties provided by the editor.
+*/
+void MainWindow::on_actionFontBlack_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    curr_browser->setTextColor(Qt::black);
+}
+
+/*!
+ * \fn MainWindow::on_actionInsert_Tab_Space_triggered()
+ * \brief inserts tab (4 whitespaces) at cursor
+*/
+void MainWindow::on_actionInsert_Tab_Space_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    curr_browser->insertPlainText("    ");
+}
+
+/*!
+ * \fn MainWindow::on_actionInsert_Table_2_triggered()
+ * \brief Inserts table at text cursor
+ * Creates a dialog to insert the numbr of rows and columns.
+*/
+void MainWindow::on_actionInsert_Table_2_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+
+    QDialog dialog(this);
+    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+    form.addRow(new QLabel("Insert Table", this));                                  // Create a dialog for asking table dimensions
+
+    //! Add the lineEdits with their respective labels
+    QLineEdit *rows = new QLineEdit(&dialog);
+    QLineEdit *columns = new QLineEdit(&dialog);                                    // Add lineEdits to get Rows
+    form.addRow("Rows", rows);                                                      // Add lineEdits to get Columns
+    form.addRow("Columns", columns);
+
+    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    //! Show the dialog as modal
+    if (dialog.exec() == QDialog::Accepted)
+    {
+
+        QTextTableFormat tf;
+        tf.setBorderBrush(Qt::black);
+        tf.setCellSpacing(0);
+        tf.setCellPadding(7);
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionInsert_Columnleft_triggered()
+ * \brief Inserts Column to the left of table
+*/
+void MainWindow::on_actionInsert_Columnleft_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    if(curr_browser->textCursor().currentTable())
+    {
+        QTextTable *currentTable = curr_browser->textCursor().currentTable();
+        QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
+        currentTable->insertColumns(currentCell.column(),1);
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionInsert_Columnright_triggered()
+ * \brief Inserts Column to the right of table
+*/
+void MainWindow::on_actionInsert_Columnright_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    if(curr_browser->textCursor().currentTable())
+    {
+        QTextTable *currentTable = curr_browser->textCursor().currentTable();
+        QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
+        currentTable->insertColumns(currentCell.column()+1,1);
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionInsert_Rowabove_triggered()
+ * \brief Inserts Row above the table
+*/
+void MainWindow::on_actionInsert_Rowabove_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    if(curr_browser->textCursor().currentTable())
+    {
+        QTextTable *currentTable = curr_browser->textCursor().currentTable();
+        QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
+        currentTable->insertRows(currentCell.row(),1);
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionInsert_Rowbelow_triggered()
+ * \brief Inserts Row below the table
+*/
+void MainWindow::on_actionInsert_Rowbelow_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    if(curr_browser->textCursor().currentTable())
+    {
+        QTextTable *currentTable = curr_browser->textCursor().currentTable();
+        QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
+        currentTable->insertRows(currentCell.row()+1,1);
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionRemove_Column_triggered()
+ * \brief Delete selected column
+*/
+void MainWindow::on_actionRemove_Column_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    if(curr_browser->textCursor().currentTable())
+    {
+        QTextTable *currentTable = curr_browser->textCursor().currentTable();
+        QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
+        currentTable->removeColumns(currentCell.column(),1);
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionRemove_Row_triggered()
+ * \brief Delete selected row
+*/
+void MainWindow::on_actionRemove_Row_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    if(curr_browser->textCursor().currentTable())
+    {
+        QTextTable *currentTable = curr_browser->textCursor().currentTable();
+        QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
+        currentTable->removeRows(currentCell.row(),1);
+    }
+}
+
 /*!
  * \fn MainWindow::on_actionToSlp1_2_triggered()
  * \brief Converts devanagri text to transliterated/ romanized text.
@@ -2830,12 +3339,11 @@ void MainWindow::on_actionToSlp1_2_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionExtractDev_triggered()
- * \brief Extracts words from a devnagri text file to lines.
- * This function opens a file open dialogue asking you to open a devnagri text file.
- * The output is all words in the file seperated by newline
+ * \fn MainWindow::on_actionToDev_triggered()
+ * \brief Converts transliterated file to devanagri file
+ * Transliterated here means Hindi/ Sanskrit written in English.
+ * This function opens a file open dialogue asking you to open a transliterated text file.
  * The output is saved as input_file_nameDev.txt
- * \sa slpNPatternDict::toDev()
 */
 void MainWindow::on_actionToDev_triggered()
 {
@@ -2879,99 +3387,83 @@ void MainWindow::on_actionExtractDev_triggered()
     }
 }
 
-void MainWindow::on_actionPrimarySecOCRPair_triggered()
-{
-    QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
-
-    if (!file1.isEmpty())
-    {
-        QFile sFile(file1);
-        if (sFile.open(QFile::ReadOnly | QFile::Text)) {
-            string localFilenameN = file1.toUtf8().constData();
-            int loc = localFilenameN.find("IEROCR");
-            string localFilenameG = localFilenameN.substr(0, loc) + "GEROCR";
-            cout << localFilenameG << endl;
-            std::ofstream op(localFilenameN + "ocrPairs");
-            vector<string> wrong1, right1;
-            generatePairsSpaced(wrong1, right1, localFilenameN, localFilenameG);
-            size_t sz = wrong1.size();
-            if (sz < right1.size()) sz = right1.size();
-            for (size_t t = 0; t < sz; t++) {
-                if (right1[t] != "") op << wrong1[t] << "\t" << right1[t] << endl;
-            }
-        }
-
-    }
-}
-
-
-
-void MainWindow::on_actionCPairGEROcrVsCorrect_triggered()
-{
-    QString strI1 = mFilename;
-    string strInew = strI1.toUtf8().constData();
-    size_t locI = strInew.find("Inds");
-    string strI = strInew.substr(0, locI) + "GEROCR";
-    string strC = strInew.substr(0, locI) + "Correct";
-    string localFilenameN = strI1.toUtf8().constData();
-    size_t loc1 = localFilenameN.find("Inds");
-    string s1 = localFilenameN.substr(0, loc1);
-    string sRepx = s1 + "Reports/inputx";
-    string sRepy = s1 + "Reports/inputy";
-    vector<string> wrong1, right1;
-    generatePairsIEROCR(strI, strC, sRepx, sRepy);
-}
-
-
-void MainWindow::on_actionCPairIEROcrVsCorrect_triggered()
-{
-    // Load foders in strC and strI
-    QString strI1 = mFilename;
-    //strI.replace("Correct", "Inds"); strC.replace("Inds","Correct");
-    string strInew = strI1.toUtf8().constData();
-    size_t locI = strInew.find("Inds");
-    string strI = strInew.substr(0, locI) + "IEROCR";
-    string strC = strInew.substr(0, locI) + "Correct";
-    // load text files one by one
-    //Load page1 of Inds
-    string localFilenameN = strI1.toUtf8().constData();
-    size_t loc1 = localFilenameN.find("Inds");
-    string s1 = localFilenameN.substr(0, loc1);
-    string sRepx = s1 + "Reports/inputx";
-    string sRepy = s1 + "Reports/inputy";
-    vector<string> wrong1, right1;
-    generatePairsIEROCR(strI, strC, sRepx, sRepy);
-
-}
-
+/*!
+ * \fn MainWindow::on_actionEditDistRep_triggered
+ * \brief Creates a new file that contains the edit distance values for each line present in the user opened file.
+ * \note The new file is named as EditDistRep Which is appended to its original file name that user opened via OpenFileDialog window
+ * \sa editDist()
+ */
 void MainWindow::on_actionEditDistRep_triggered()
 {
-    QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
+    QString file1 = QFileDialog::getOpenFileName(this, "Open a File");        //Prompts a Open File Dialog window
 
     if (!file1.isEmpty())
     {
         QFile sFile(file1);
-        if (sFile.open(QFile::ReadOnly | QFile::Text)) {
+        if (sFile.open(QFile::ReadOnly | QFile::Text))
+        {
             string localFilenameN = file1.toUtf8().constData();
             std::ifstream ip1(localFilenameN); std::ifstream ip2(localFilenameN + "y");
-            std::ofstream op(localFilenameN + "EditDisRep");
+            std::ofstream op(localFilenameN + "EditDisRep");       //append "EditDisRep" to the new file name
             string word1, word2;
             int max = 0;
             op << "a = [";
-            while (getline(ip1, word1)) {
+            while (getline(ip1, word1))
+            {
                 getline(ip2, word2);
-                int ed = editDist(word1, word2);
+                int ed = editDist(word1, word2);         //calculate the edit distance
                 op << ed << " ";
                 if (ed > max) max = ed;
             }
             op << "];" << endl;
             op << " hist(a,-0.5:0.5:max(a))" << endl << "pause()" << endl;
-
-
         }
     }
 }
 
+/*!
+ * \fn MainWindow::on_actionConfusionFreqHist_triggered()
+ * \brief Creates two new files for the user opened file. One file contains thte X-axis values and the
+ * other Octaves which are neccesary to form a histogram to show the frequency of items. The alternate lines are
+ * stored in two files.
+ * \note The two new files are named as HistOCtaveRep and HistXaxisRep and the names are appended to its original filename.
+ */
+void MainWindow::on_actionConfusionFreqHist_triggered()
+{
+    QString file1 = QFileDialog::getOpenFileName(this, "Open a File");     //Prompts a Open File Dialog window
+    if (!file1.isEmpty())
+    {
+        QFile sFile(file1);
+        if (sFile.open(QFile::ReadOnly | QFile::Text))
+        {
+            string localFilenameN = file1.toUtf8().constData();
+            std::ifstream ip(localFilenameN);
+            std::ofstream op(localFilenameN + "HistOCtaveRep");
+            std::ofstream opx(localFilenameN + "HistXaxisRep");
+            string line;
+            op << "a = [";
+            while (getline(ip, line))
+            {
+                opx << line << "\t" << endl;
+                line = "";
+                getline(ip, line);
+                op << line << " ";
+
+            }
+            op << "];" << endl;
+            op << " hist(a,-0.5:0.5:max(a))" << endl << "pause()" << endl;
+        }
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionFilterOutGT50EditDisPairs_triggered
+ * \brief Opens a pop up which asks the user to select a text file which filters out the words based upon the
+ * edit distance, which finds the edit distance between the 2 words that have come in and if the edit distance
+ * comes out to be more than 50 then the words are not printed, else they are printed in the file which is created
+ * with the same name as of project file with "EditDisLE50FilteredRep" at the end.
+ * \sa editdistance::editDist()
+ */
 void MainWindow::on_actionFilterOutGT50EditDisPairs_triggered()
 {
     QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
@@ -2996,36 +3488,6 @@ void MainWindow::on_actionFilterOutGT50EditDisPairs_triggered()
         }
     }
 }
-
-void MainWindow::on_actionConfusionFreqHist_triggered()
-{
-    QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
-    if (!file1.isEmpty())
-    {
-        QFile sFile(file1);
-        if (sFile.open(QFile::ReadOnly | QFile::Text)) {
-            string localFilenameN = file1.toUtf8().constData();
-            std::ifstream ip(localFilenameN);
-            std::ofstream op(localFilenameN + "HistOCtaveRep");
-            std::ofstream opx(localFilenameN + "HistXaxisRep");
-            string line;
-            op << "a = [";
-            while (getline(ip, line)) {
-                opx << line << "\t" << endl;
-                line = "";
-                getline(ip, line);
-                op << line << " ";
-
-            }
-            op << "];" << endl;
-            op << " hist(a,-0.5:0.5:max(a))" << endl << "pause()" << endl;
-        }
-    }
-}
-
-
-
-
 
 void MainWindow::on_actionPrepareFeatures_triggered()
 {
@@ -3091,6 +3553,522 @@ void MainWindow::on_actionPrepareFeatures_triggered()
     }
 }
 
+void MainWindow::on_actionFetch_2_triggered()
+{
+    QString stage = mProject.get_stage();
+    QString prvs_stage = (stage=="Verifier")?"Verifier":"Corrector";
+    QString prvs_output_dir = prvs_stage + "Output"; //"VerifierOutput" or "CorrectorOutput"
+
+    int btn = QMessageBox::question(this, "Pull ?", "This will overwrite files in " + prvs_output_dir + " directory. Do you want to Continue?",
+                                    QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
+    if (btn == QMessageBox::StandardButton::Yes)
+    {
+        mProject.fetch();
+        if(mProject.get_version().toInt())
+        {
+            QMessageBox::information(0, "Pull Success", "Pull Succesful");
+        }
+        else
+        {
+            QMessageBox::information(0, "Pull Error", "Pull Un-succesful, Please Check Your Internet Connection");
+        }
+        if(!isVerifier)
+        {
+            if (mProject.get_stage() == "Corrector")
+            {
+                ui->actionTurn_In->setEnabled(true);
+            }
+            else
+            {
+                ui->actionTurn_In->setEnabled(false);
+            }
+        }
+        ui->lineEdit_2->setText("Version " + mProject.get_version());
+    }
+    else
+        return;
+}
+
+//Corrector-only
+void MainWindow::on_actionTurn_In_triggered()
+{
+    if (checkUnsavedWork())
+    {
+        QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Unsaved Work",
+                                                                    tr("You have unsaved files. Save it before turn-in.\n"),
+                                                                    QMessageBox::Cancel | QMessageBox::Save,
+                                                                    QMessageBox::Save);
+        if (resBtn == QMessageBox::Cancel)
+        {
+            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            return;
+        }
+        else
+        {
+            saveAllWork();
+        }
+    }
+    if(mProject.get_version().toInt())
+    {
+        if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/CorrectorOutput/)")
+                != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
+        {
+            QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in CorrectorOutput directory");
+            return;
+        }
+        QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();
+
+        int btn = QMessageBox::question(this, "Submit ?", "Are you ready to submit your changes?",
+                                        QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
+        if (btn == QMessageBox::StandardButton::Yes)
+        {
+            mProject.set_stage_verifier();
+            if(!mProject.commit(commit_msg.toStdString()) || !mProject.push())
+            {
+                mProject.enable_push(false);
+                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+                return;
+            }
+        }
+        else
+        {
+            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            return;
+        }
+
+        ui->lineEdit_2->setText("Version " + mProject.get_version());
+
+        QString emailText =  "Book ID: " + mProject.get_bookId()
+                + "\nSet ID: " + mProject.get_setId()
+                + "\n" + commit_msg ;
+
+        ui->actionTurn_In->setEnabled(false);
+        QMessageBox::information(0, "Turn In", "Turned In Successfully");
+    }
+    else
+    {
+        QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
+    }
+}
+
+//Verifier-only
+void MainWindow::on_actionVerifier_Turn_In_triggered()
+{
+    if (checkUnsavedWork())
+    {
+
+        QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Unsaved Work",
+                                                                    tr("You have unsaved files. Save it before turn-in.\n"),
+                                                                    QMessageBox::Cancel | QMessageBox::Save,
+                                                                    QMessageBox::Save);
+        if (resBtn == QMessageBox::Cancel)
+        {
+            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            return;
+        }
+        else
+        {
+            saveAllWork();
+        }
+    }
+    if(mProject.get_version().toInt())
+    {
+
+        int ver = mProject.get_version().toInt();
+        QString commit_msg;
+
+        QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
+        float avgcharacc = 0;
+        bool formatting = false;
+        int rating = 0;
+
+        QJsonObject mainObj = readJsonFile(commentFilename);
+
+        avgcharacc = mainObj["AverageCharAccuracy"].toDouble();
+        if(mProject.get_stage() != mRole)
+            rating = mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)].toInt();
+        else
+            rating = mainObj["Rating-V"+ mProject.get_version()].toInt();
+        if(((!mainObj["Formatting"].isNull())) || (! mainObj["Formatting"].isUndefined()))
+            formatting = mainObj["Formatting"].toBool();
+
+
+        QDialog dialog(this);
+        dialog.setWindowTitle("Check Formatting");
+
+        QFormLayout form(&dialog);
+        form.addRow(new QLabel("Average Rating of Current Set  : " + QString::number(rating) + " out of 4"));
+
+        QCheckBox *cb = new QCheckBox("Perfect Formatting?" ,&dialog);
+        cb->setChecked(formatting);
+        form.addRow(cb);
+
+        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                                   Qt::Horizontal, &dialog);
+        form.addRow(&buttonBox);
+        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+        if (dialog.exec() == QDialog::Accepted)
+        {
+            formatting = cb->isChecked();
+            if(rating == 4 && formatting)
+                rating = 5;
+            else if(rating == 5 && (!formatting))
+                rating = 4;
+        }
+        else
+        {
+            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            return;
+        }
+
+        mainObj["Formatting"] = formatting;
+        if(mProject.get_stage() != mRole)
+            mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;
+        else
+            mainObj["Rating-V"+ mProject.get_version()] = rating;
+
+        writeJsonFile(commentFilename, mainObj);
+
+        QMessageBox messageBox(this);
+        QString msg1 = QString(
+                    "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
+
+                    + "\n\nDo you want to Return the Set to the Corrector or Finalise the set?"
+
+                    + "\n\nClick \"Return Set\" to Increment the Version from "
+                    + QString::number(ver) +" to "+QString::number(ver + 1)
+
+                    + "\nClick \"Finalise\" to Approve the set as the Final Version"
+                    );
+
+        QString msg2 = QString(
+                    "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
+
+                    + "\n\nDo you want to Return or Resubmit or Finalise the set?"
+
+                    + "\n\nClick \"Return Set\" to Turnin and Increment the Version from "
+                    + QString::number(ver) +" to "+QString::number(ver + 1)
+
+                    + " \nClick \"Resubmit\" to Turn In without Incrementing Version."
+
+                    + "\nClick \"Finalise\" to Approve the set as the Final Version"
+                    );
+
+        messageBox.setWindowTitle("Turn In");
+        QAbstractButton *resubmitButton =
+                messageBox.addButton(tr("Resubmit"), QMessageBox::ActionRole);
+        QAbstractButton *returnSetButton =
+                messageBox.addButton(tr("Return Set"), QMessageBox::ActionRole);
+        QAbstractButton *finaliseButton =
+                messageBox.addButton(tr("Finalise"), QMessageBox::ActionRole);
+        QAbstractButton *cancelButton =
+                messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+
+        if(mRole != mProject.get_stage())
+        {
+            messageBox.setText(msg1);
+            messageBox.removeButton(resubmitButton);
+        }
+        else
+        {
+            messageBox.setText(msg2);
+        }
+
+        messageBox.exec();
+        enum class SubmissionType {resubmit, return_set, finalise};
+        SubmissionType s ;
+        if (messageBox.clickedButton() == resubmitButton)
+        {
+            //mProject.enable_push( false ); //Increment = false
+            if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
+                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
+            {
+                QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
+                return;
+            }
+            s = SubmissionType::resubmit;
+            commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
+        }
+        else if (messageBox.clickedButton() == returnSetButton)
+        {
+            //mProject.enable_push( true ); //Increment = true
+            s = SubmissionType::return_set;
+            commit_msg = "Verifier has Turned in the Next Version:" + mProject.get_version();
+        }
+        else if (messageBox.clickedButton() == finaliseButton)
+        {
+            //mProject.enable_push( false ); //Increment = false
+            if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
+                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
+            {
+                QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
+                return;
+            }
+            s = SubmissionType::finalise;
+            commit_msg = "Verifier Finalised Version:" + mProject.get_version();
+        }
+        else
+        {
+            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            return;
+        }
+
+        int btn = QMessageBox::question(this, "Submit ?", "Are you ready to submit your changes?",
+                                        QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
+        if (btn == QMessageBox::StandardButton::Yes)
+        {
+            if(s == SubmissionType::return_set)
+            {
+                mProject.enable_push( true );
+            }
+            else if (s == SubmissionType::resubmit)
+            {
+                mProject.enable_push( false );
+            }
+            if(!mProject.commit(commit_msg.toStdString()) || !mProject.push())
+            {
+                if(s == SubmissionType::return_set)
+                {
+                    mProject.set_version( mProject.get_version().toInt() - 1 );
+                }
+                mProject.set_stage_verifier();
+                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+                return;
+            }
+        }
+        else
+        {
+            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            return;
+        }
+
+        QString emailText =  "Book ID: " + mProject.get_bookId()
+                + "\nSet ID: " + mProject.get_setId()
+                + "\nRating Provided: " + QString::number(rating)
+                + "\n" + commit_msg ;
+        /*  if( !sendEmail(emailText)) {
+            QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nTurn-In Unsuccessful!,Please Check your Internet Connection");
+            return;
+        } */
+
+        ui->lineEdit_2->setText("Version " + mProject.get_version());
+        QMessageBox::information(0, "Turn In", "Turned In Successfully");
+    }
+    else
+    {
+        QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
+    }
+}
+
+//end
+
+void MainWindow::on_actionCreateSuggestionLog_triggered()
+{
+    map<size_t, size_t> mapCorrect, mapinCorrect, mapTyping, mapSugg1, mapSugg2, mapSugg3, mapSugg4, mapSugg5, mapSugg6, mapSugg7, mapSugg8, mapSugg9, mapSugg10;
+
+    // Load foders in strC and strI
+    //	QString strI = mFilename;
+    //	QString strC = strI;
+    //	strI.replace("CorrectorOutput", "Inds"); strC.replace("Inds", "CorrectorOutput");
+    QString strI = gDirTwoLevelUp + "/Inds/"+ gCurrentPageName ;
+    strI.replace(".html",".txt");
+    QString strC = gDirTwoLevelUp + "/CorrectorOutput/"+ gCurrentPageName ;
+
+    // load text files one by one
+
+    //Load page1 of Inds
+    size_t page_no = 1;
+    QString filereport;
+
+    while (1) {
+
+        string nos = "0123456789";
+        string localFilenameI = strI.toUtf8().constData();
+        size_t loc = localFilenameI.find(".txt");
+        string s = localFilenameI.substr(loc - 1, 1); // page-123.txt s = 3
+        string no;
+
+        vector<string> wrong, right;
+        while (nos.find(s) != string::npos) { no = s + no; loc--; s = localFilenameI.substr(loc - 1, 1); } // if s in nos, s = 2  no = 23, s = 1 no = 123, s = - break
+        //cout << stoi(no) + 1 << endl;
+        localFilenameI.replace(loc, no.size(), to_string(page_no));//to_string(stoi(no) + 1)
+        //cout << localFilename << endl;
+        //QString fileI = QString::fromStdString(localFilenameI);
+
+        //Load page1 of C
+
+        string localFilenameC = strC.toUtf8().constData();
+        loc = localFilenameC.find(".txt");
+        s = localFilenameC.substr(loc - 1, 1); // page-123.txt s = 3
+        no = "";
+        while (nos.find(s) != string::npos) { no = s + no; loc--; s = localFilenameC.substr(loc - 1, 1); } // if s in nos, s = 2  no = 23, s = 1 no = 123, s = - break
+        //cout << stoi(no) + 1 << endl;
+        localFilenameC.replace(loc, no.size(), to_string(page_no));//to_string(stoi(no) + 1)
+        //cout << localFilename << endl;
+        // QString fileC = QString::fromStdString(localFilenameC);
+
+        // NOW localFilenameI and localFilenameC has page1 of both
+        //cout << localFilenameI << " " << localFilenameC << endl;
+        // load fileI in vecpI and
+        vector<string> vecpI, vecpC;
+        map<string, bool> isAscii;
+        std::ifstream sIpage(localFilenameI);
+        if (!(sIpage.is_open())) break; // break the while loop for page_no
+        string localstr;
+        while (sIpage >> localstr) vecpI.push_back(toslp1(localstr)); sIpage.close();
+        std::ifstream sCpage(localFilenameC);
+        while (sCpage >> localstr) { if (hasM40PerAsci(localstr)) { isAscii[toslp1(localstr)] = 1; }  vecpC.push_back(toslp1(localstr)); } sIpage.close();
+
+        // if 1st word is wrong generate suggestions
+        int vGsz = vecpC.size(), vIsz = vecpI.size();
+        if (vGsz > vIsz) mapTyping[page_no] = vGsz - vIsz;
+        //cout << vGsz << " " << vIsz << endl;
+        int win = vGsz - vIsz;
+        if (win < 0) win = -1 * win;
+        win = std::max(win, 5);
+        //cout << win << endl;
+        //float WER = 0;
+        // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
+        for (int t = 0; t < vIsz; t++) {
+            size_t minedit = 1000;
+            string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
+            string sC;
+            for (int t1 = std::max(t - win, 0); t1 < min(t + win, vGsz); t1++) {
+                string sCt1 = vecpC[t1];
+                size_t mineditIC = editDist(s1, sCt1);
+                if (mineditIC < minedit) { minedit = mineditIC; sC = sCt1; }
+                if (sCt1 == s1) {/*WER++;*/ break; }
+            }
+
+            // now we have IndsWord in s1 and correct word in sC
+            //cout << s1 << " " << s1.size() << " " << sC << " " << sC.size()<< endl;
+            if ((sC == (s1))) {
+                mapCorrect[page_no]++; //cout<< " in correct words ke liye if" << endl;
+            }
+            else if (!isAscii[sC]) {
+                wrong.push_back(s1); right.push_back(sC);
+                //cout<< " inside incorrect words ke liye else" << endl;
+                vector<string>  Words1 = print5NearestEntries(TGBook, s1); //2
+                if (Words1.size() == 0) Words1.push_back("");
+                string nearestCOnfconfirmingSuggvec; //1
+                vector<string> vec = Words1;
+                int min = 100;
+                for (size_t t = 0; t < vec.size(); t++) {
+                    vector<string> wordConfusions; vector<int> wCindex;
+                    int minFactor = loadWConfusionsNindex1(s1, vec[t], ConfPmap, wordConfusions, wCindex);
+                    wordConfusions.clear(); wCindex.clear();
+                    if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvec = vec[t]; }
+                }
+                //cout << "sz" << Words1.size() << " "<< Words1[0]<< endl;
+                if (nearestCOnfconfirmingSuggvec == (sC)) { mapSugg1[page_no]++; }
+                /*else*/ if ((Words1[0] == (sC))) { mapSugg2[page_no]++; }
+                /*else*/ {
+
+                    vector<string> Alligned = print5NearestEntries(TGBookP, s1); //6
+                    if (Alligned.size() == 0) Alligned.push_back("");
+
+                    string PairSugg = "";
+                    if (Alligned.size() > 0) PairSugg = print2OCRSugg(s1, Alligned[0], ConfPmap, Dict);//3
+                    //cout << sC << "PairSugg " << PairSugg<<endl;
+                    if (PairSugg == sC) { mapSugg3[page_no]++; }
+                    /*else*/ { vector<string>  Words = print1OCRNearestEntries(toslp1(s1), vIBook); // 4 primary doc based
+                        if (Words.size() == 0) Words.push_back("");
+                        if (Words[0] == (sC)) { mapSugg4[page_no]++; }
+                        /*else*/ { string samassugg = SamasBreakLRCorrect(toslp1(s1), Dict, PWords, TPWords, TPWordsP); // 5
+                            if (samassugg == sC) { mapSugg5[page_no]++; }
+                            /*else*/ {
+                                vector<string> PWords1 = print5NearestEntries(TPWords, s1); // 6
+                                if (PWords1.size() == 0) PWords1.push_back("");
+                                if (PWords1[0] == (sC)) { mapSugg6[page_no]++; }
+                                /*else*/ {string nearestCOnfconfirmingSuggvecFont;
+                                    int min = 100;
+                                    for (size_t t = 0; t < vec.size(); t++) {
+                                        vector<string> wordConfusions; vector<int> wCindex;
+                                        int minFactor = loadWConfusionsNindex1(s1, vec[t], ConfPmapFont, wordConfusions, wCindex);
+                                        wordConfusions.clear(); wCindex.clear();
+                                        if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvecFont = vec[t]; }
+                                    }
+                                    if (nearestCOnfconfirmingSuggvecFont == sC) { mapSugg7[page_no]++; }
+                                    /*else*/ {
+                                        /*string PairSuggFont = "";
+                            if(Alligned.size() > 0) PairSuggFont = print2OCRSugg(s1, Alligned[0], ConfPmap,Dict);//3
+                            //cout << sC << "PairSugg " << PairSugg<<endl;
+                            if(PairSuggFont == sC) {  mapSugg8[page_no]++;}*/
+                                        vector<string> Wordsdict; {Wordsdict = print5NearestEntries(TDict, s1); }
+                                        if ((Wordsdict.size() > 0) && (Wordsdict[0] == sC)) { mapSugg8[page_no]++; }
+                                        /*else*/ {
+                                            string sugg9 = generatePossibilitesNsuggest(s1, TopConfusions, TopConfusionsMask, Dict, SRules);
+                                            if (sugg9 == sC) {
+                                                mapSugg9[page_no]++;
+                                                //cout << s1 << " "<<sC << endl;
+                                            }
+                                            /*else*/ { if (LSTM[s1] == sC) {
+                                                    mapSugg10[page_no]++;
+                                                    cout << s1 << " lstm " << sC << endl;
+                                                }
+                                                else mapTyping[page_no]++; }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+            }
+            else { mapTyping[page_no]++; } // else
+            //cout << mapCorrect[1]<< " " << mapTyping[1]<< " " <<mapSugg1[1]<< " " <<mapSugg2[1]<< " " <<mapSugg3[1]<< " " <<mapSugg4[1]<< " " <<mapSugg5[1]<< " " <<mapSugg6[1]<<endl;
+            //cout << "here" << endl;
+        }// for 1st page ends
+        mapinCorrect[page_no] = vIsz - mapCorrect[page_no];
+        //Loading PWords:-
+        cout << "page_no = " << page_no << endl;
+        loadMap(localFilenameC, PWords, "PWords");
+        map<string, int> PWordspage;
+        loadMap(localFilenameC, PWordspage, "PWordspage");
+        loadmaptoTrie(TPWords, PWordspage);
+        //generateCorrectionPairs(wrong,right,str2.toUtf8().constData(), str1.toUtf8().constData());
+        loadConfusionsFont(wrong, right, ConfPmap);
+        loadConfusionsFont(wrong, right, ConfPmapFont);
+        TopConfusions.clear(); TopConfusionsMask.clear();
+        loadTopConfusions(ConfPmap, TopConfusions, TopConfusionsMask);
+
+
+
+        //cout << mapCorrect[page_no]<< " " << mapTyping[page_no]<< " " <<mapSugg1[page_no]<< " " <<mapSugg2[page_no]<< " " <<mapSugg3[page_no]<< " " <<mapSugg4[page_no]<< " " <<mapSugg5[page_no]<< " " <<mapSugg6[page_no]<<endl;
+        //cout << vIsz - WER << endl;
+        //ui->lineEdit->setText("Page WER = " + QString::number((vIsz-WER)*100/vIsz));
+        page_no++;
+        filereport = QString::fromStdString(localFilenameC);
+    } //  while(1) ends
+    page_no--;
+    filereport.replace(("CorrectorOutput/page-" + QString::number(page_no) + ".txt"), "SuggReport1.txt");
+    std::ofstream rep(filereport.toUtf8().constData());
+
+    rep << "y0 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapinCorrect[i] << " "; rep << "];" << endl;
+    rep << "y1 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapCorrect[i] << " "; rep << "];" << endl;
+    rep << "y2 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapTyping[i] << " "; rep << "];" << endl;
+    rep << "y3 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg1[i] << " "; rep << "];" << endl;
+    rep << "y4 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg2[i] << " "; rep << "];" << endl;
+    rep << "y5 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg3[i] << " "; rep << "];" << endl;
+    rep << "y6 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg4[i] << " "; rep << "];" << endl;
+    rep << "y7 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg5[i] << " "; rep << "];" << endl;
+    rep << "y8 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg6[i] << " "; rep << "];" << endl;
+    rep << "y9 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg7[i] << " "; rep << "];" << endl;
+    rep << "y10 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg8[i] << " "; rep << "];" << endl;
+    rep << "y11 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg9[i] << " "; rep << "];" << endl;
+    rep << "y12 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg10[i] << " "; rep << "];" << endl;
+    rep << "x = 1:" << page_no << ";" << endl << "plot(x,y0,x,y1,x,y2,x,y3,x,y4,x,y5,x,y6,x,y7,x,y8,x,y9,x,y10,x,y11);" << endl;
+    rep << "legend(\'IncorrectWords\',\'CorrectWords\', \'#TypingCorrections\', \'#CorrectSugg1\',\'#CorrectSugg2\',\'#CorrectSugg3\',\'#CorrectSugg4\',\'#CorrectSugg5\',\'#CorrectSugg6\',\'#CorrectSugg7\',\'#CorrectSugg8\',\'#CorrectSugg9\' )" << endl;
+    rep << "TotalSuggestions =" << "sum(y3+y4+y5+y6+y7+y8+y9+y10+y11)" << endl;
+    rep << "TotalSuggestionsWithLSTM =" << "sum(y3+y4+y5+y6+y7+y8+y9+y10+y11+y12)" << endl;
+}
+
+
+
 void MainWindow::on_actionErrorDetectionRepUniq_triggered()
 {
     map<size_t, size_t> mapCorrect, mapinCorrect, mapTyping, mapSugg1, mapSugg2, mapSugg3, mapSugg4, mapSugg5, mapSugg6, mapSugg7, mapSugg8, mapSugg9, mapSugg10;
@@ -3098,8 +4076,6 @@ void MainWindow::on_actionErrorDetectionRepUniq_triggered()
     QString strI = mFilename;
     QString strC = strI;
     strI.replace("CorrectorOutput", "Inds"); strC.replace("Inds", "CorrectorOutput");
-
-
     size_t page_no = 1;
     QString filereport;
 
@@ -3258,42 +4234,6 @@ void MainWindow::on_actionErrorDetectionRepUniq_triggered()
     rep << "TotalSuggestionsWithLSTM =" << "sum(y3+y4+y5+y6+y7+y8+y9+y10+y11+y12)" << endl;
 }
 
-/*!
- * \fn MainWindow::on_actionSanskrit_triggered()
- * \brief Sets the language of the current broweser to Sanskrit by by passing the SanFlag as true
- * \sa setText()
- */
-void MainWindow::on_actionSanskrit_triggered()
-{
-    HinFlag = 0, SanFlag = 1;
-    ui->textEdit->setText(gSanskrit);//whenever language change is required it will be converted to Sanskrit using the slpNPatternDict.h
-    ui->hinButton->setChecked(HinFlag);
-}
-
-/*!
- * \fn MainWindow::on_actied()
- * \brief Sets the language of the current broweser to Hindi by by passing the HinFlag as true
- * \sa setText()
- */
-void MainWindow::on_actionHindi_triggered()
-{
-    HinFlag = 1, SanFlag = 0;
-    ui->textEdit->setText(gHindi);  //whenever language change is required it will be converted to Hindi using the slpNPatternDict.h
-    ui->sanButton->setChecked(SanFlag);
-}
-
-/*!
- * \fn MainWindow::on_actionEnglish_triggered()
- * \brief Sets the language of the current broweser to Hindi by passing the HinFlag and the SanFlag as false
- * \sa setText()
- */
-void MainWindow::on_actionEnglish_triggered()
-{
-    HinFlag = 0, SanFlag = 0;
-    ui->hinButton->setChecked(HinFlag);//whenever language change is required it will be left as it is
-    ui->sanButton->setChecked(SanFlag);
-}
-
 void MainWindow::on_sanButton_toggled(bool checked)
 {
     if(checked)
@@ -3307,249 +4247,10 @@ void MainWindow::on_hinButton_toggled(bool checked)
         on_actionHindi_triggered();
 }
 
-/*!
- * \fn MainWindow::on_actionUndo_triggered
- * \brief undo the changes made QTextBrowser
- */
-void MainWindow::on_actionUndo_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    curr_browser->undo();
-}
-
-/*!
- * \fn MainWindow::on_actionRedo_triggered
- * \brief Redo the changes made in QTextBrowser
- */
-void MainWindow::on_actionRedo_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    curr_browser->redo();
-}
-
 void MainWindow::on_actionNew_Project_triggered()
 {
     ProjectWizard* wiz = new ProjectWizard();
     wiz->show();
-}
-
-/*!
- * \fn MainWindow::on_actionBold_triggered()
- * \brief Sets the font weight to bold
-*/
-void MainWindow::on_actionBold_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    QTextCursor cursor = curr_browser->textCursor();
-    bool isBold = cursor.charFormat().font().bold();
-    QTextCharFormat fmt;
-    /*
-     * If the font-weight value is bold then
-     * it will change it to normal else bold.
-    */
-    fmt.setFontWeight(isBold ? QFont::Normal : QFont::Bold);
-    cursor.mergeCharFormat(fmt);
-    curr_browser->mergeCurrentCharFormat(fmt);
-}
-
-/*!
- * \fn MainWindow::on_actionUnBold_triggered()
- * \brief Sets the font weight to regular
-*/
-void MainWindow::on_actionUnBold_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    QTextCharFormat format;
-    format.setFontWeight(QFont::Normal);
-    curr_browser->textCursor().mergeCharFormat(format);
-}
-
-/*!
- * \fn MainWindow::on_actionItalic_triggered()
- * \brief Sets the font style to italic
-*/
-void MainWindow::on_actionItalic_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-
-    QTextCursor cursor = curr_browser->textCursor();                        // initialize cursor position at text cursor's position
-    bool isItalic = cursor.charFormat().font().italic();                    // check if character under cursor is italic or not
-
-    QTextCharFormat fmt;
-    fmt.setFontItalic(isItalic ? false : true);                             // if font is italic set font to regular, else set it to italic
-
-    cursor.mergeCharFormat(fmt);
-    curr_browser->mergeCurrentCharFormat(fmt);                              // Merge current character format to character under cursor's format (previous properties + italic/non italic)
-}
-
-/*!
- * \fn MainWindow::on_actionNonitalic_triggered()
- * \brief Resets the font style to non italic
-*/
-void MainWindow::on_actionNonitalic_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    QTextCharFormat format;
-    format.setFontItalic(false);
-    curr_browser->textCursor().mergeCharFormat(format);
-}
-
-/*!
- * \fn MainWindow::on_actionLeftAlign_triggered()
- * \brief Sets the browser text alignment to Left Align
-*/
-void MainWindow::on_actionLeftAlign_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    curr_browser->setAlignment(Qt::AlignLeft);
-}
-
-/*!
- * \fn MainWindow::on_actionRightAlign_triggered()
- * \brief Sets the browser text alignment to Right Align
-*/
-void MainWindow::on_actionRightAlign_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    curr_browser->setAlignment(Qt::AlignRight);
-}
-
-/*!
- * \fn MainWindow::on_actionCentreAlign_triggered()
- * \brief Sets the browser text alignment to Center Align
-*/
-void MainWindow::on_actionCentreAlign_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    curr_browser->setAlignment(Qt::AlignCenter);
-}
-
-/*!
- * \deprecated
- * \fn MainWindow::on_action_JustifiedAlign_triggered()
- * \brief Justifies the text.
- * Here, whenever there is a break in the text, that is being replaced by space
- * and then text is placed in-between paragraph tags. After that, the following
- * selected text is justisfied aligned.
-*/
-void MainWindow::on_actionJusitfiedAlign_triggered() //Not used, does not work as intended
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    auto cursor = curr_browser->textCursor();
-    auto selected = cursor.selection();
-    cursor.removeSelectedText();
-    QString sel = selected.toHtml();
-    sel.replace("<br />" ," ");
-    sel = "</p><p>" + sel + "</p><p>";
-    auto newFrag = selected.fromHtml(sel);
-    cursor.insertFragment(newFrag);
-    curr_browser->setAlignment(Qt::AlignJustify);
-}
-
-/*!
- * \fn MainWindow::on_actionAllFontProperties_triggered()
- * \brief Opens a pop up font properties selector and applies chosen properties to font.
- * The font selector lets you choose:
- * Font face, font size, variations of those fonts (regular, bold, italic).
- * The font selector is the Operating System's native font selector.
- * All fonts installed in the system will appear in the selector
- * (a software restart after font installation/ reopening the selector might be required).
-*/
-void MainWindow::on_actionAllFontProperties_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    QFont initialFont = curr_browser->font();      // initial font face
-    auto pointsize = curr_browser->fontPointSize();
-
-    if(pointsize) initialFont.setPointSize(pointsize);      // initial font size
-    bool ok;
-    QFont font = QFontDialog::getFont(&ok, initialFont, this);
-
-    /*! If user clicks OK then change to selected font with properties*/
-    if(ok)
-    {
-        QTextCharFormat newFont;
-        newFont.setFont(font);
-        curr_browser->textCursor().mergeCharFormat(newFont);
-    }
-}
-
-/*!
- * \fn MainWindow::on_actionFontBlack_triggered()
- * \brief Sets the current font colour to black.
- * \note There are no further colour properties provided by the editor.
-*/
-void MainWindow::on_actionFontBlack_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    curr_browser->setTextColor(Qt::black);
-}
-
-/*!
- *  \fn MainWindow::on_actionSuperscript_triggered()
- *  \brief toggles superscript for selected text/ character at cursor
-*/
-void MainWindow::on_actionSuperscript_triggered() {
-
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-
-    auto cursor = curr_browser->textCursor();
-
-    QTextCharFormat fmt;
-
-    fmt.setVerticalAlignment((cursor.charFormat().verticalAlignment() == QTextCharFormat::AlignSuperScript)?\
-                                 QTextCharFormat::AlignNormal : \
-                                 QTextCharFormat::AlignSuperScript
-                                 ); // Ternary operator for isSuperscripted ? alignNormal : alignSuperscript
-
-    cursor.mergeCharFormat(fmt);
-    curr_browser->mergeCurrentCharFormat(fmt);
-}
-
-/*!
- *  \fn MainWindow::on_actionSubscript_triggered()
- *  \brief toggles subscript for selected text/ character at cursor
-*/
-void MainWindow::on_actionSubscript_triggered() {
-
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-
-    auto cursor = curr_browser->textCursor();
-
-    QTextCharFormat fmt;
-    fmt.setVerticalAlignment((cursor.charFormat().verticalAlignment() == QTextCharFormat::AlignSubScript)? QTextCharFormat::AlignNormal : QTextCharFormat::AlignSubScript);
-
-    cursor.mergeCharFormat(fmt);
-    curr_browser->mergeCurrentCharFormat(fmt);
-}
-
-/*!
- * \fn MainWindow::on_actionInsert_Horizontal_Line_triggered()
- * \brief Draws a horizontal rule a line below the cursor.
- * Uses html to insert a horizontal rule using <hr> tag.
- * Selecting text and then using this fuctionality will clear the text,
- * and then insert a horizontal rule below it.
- * \note The text browser is a rich text field, so html tags and styling can be used seamlessly.
-*/
-void MainWindow::on_actionInsert_Horizontal_Line_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    curr_browser->insertHtml("<hr>");
 }
 
 void MainWindow::on_actionLineSpace_triggered() //Not used, does not work as intended
@@ -3570,17 +4271,6 @@ void MainWindow::on_actionLineSpace_triggered() //Not used, does not work as int
         format.setLineHeight(inputLineSpace*100, 1);
         cursor.setBlockFormat(format);
     }
-}
-
-/*!
- * \fn MainWindow::on_actionInsert_Tab_Space_triggered()
- * \brief inserts tab (4 whitespaces) at cursor
-*/
-void MainWindow::on_actionInsert_Tab_Space_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    curr_browser->insertPlainText("    ");
 }
 
 void MainWindow::on_actionZoom_In_triggered()
@@ -3671,91 +4361,6 @@ void MainWindow::on_actionResize_Image_triggered()
             }
         }
     }
-}
-
-/*!
- * \fn MainWindow::on_actionHighlight_triggered()
- * \brief Highlights selected text in text browser and then calls LogHighlights()
- * Only Verifiers can highlight the text, correctors can only remove highlights.
- * Takes the start and end position of cursor and goes to the middle of the word,
- * then formats the word.LogHighlights() is called only when a highlight is made.
- * \note Text Highlight works by changing the background colour to yellow
- * \sa LogHighlights()
-*/
-void MainWindow::on_actionHighlight_triggered() //Version Based
-{
-     //! Check if text browser exists AND it is NOT in read only mode
-     if(curr_browser && !curr_browser->isReadOnly())
-     {
-        //! Verifier gets to add and remove highlight the text
-        if(isVerifier)
-        {
-            QTextCursor cursor = curr_browser->textCursor();
-            QString text = cursor.selectedText().toUtf8().constData();
-            int pos1 = curr_browser->textCursor().selectionStart();
-            int pos2 = curr_browser->textCursor().selectionEnd();
-
-            int cursorpos = round(((float)(pos1 + pos2)) / 2);      // goes to mid of the selection
-            cursor.setPosition(cursorpos);
-
-            QTextCharFormat  format = cursor.charFormat();         // gets word character format properties
-
-            //! If word background is already yellow, set it to transparent, else set it to yellow (yellow is the highlight colour).
-            if (format.background() == Qt::yellow)
-            {
-                format.setBackground(Qt::transparent);
-            }
-            else
-            {
-                format.setBackground(Qt::yellow);
-
-                LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
-            }
-            curr_browser->textCursor().mergeCharFormat(format);        // Set format at current cursor
-        }
-        else
-        {
-            curr_browser->setTextBackgroundColor(Qt::transparent); //Correctors are only allowed to remove highlights.
-        }
-    }
-}
-
-/*!
- * \fn MainWindow::LogHighlights()
- * \param QString text
- * \brief Stores highlight metadata to JSON files
- * \note Meta data includes: Word highlighted, timestamp, time elapsed, page name
-*/
-void MainWindow::LogHighlights(QString word) //Verifier Only
-{
-    //!Highlighted Time meta data is stored
-    QString dir = mProject.GetDir().absolutePath();
-
-    QString highlightsFilename = gDirTwoLevelUp + "/Comments/HighlightsLog.json"; // load the highlight file name
-    QString pagename = gCurrentPageName;                                          // load the current page name (in the text browser)
-
-    pagename.replace(".txt", "");                                                 // remove extension from file name to use it as a key
-    pagename.replace(".html", "");
-
-    QJsonObject mainObj = readJsonFile(highlightsFilename);                       // read JSON file into mainObj
-    QJsonObject page = mainObj.value(pagename).toObject();                        // set values for page name
-    QJsonObject highlights;                                                       // make a new JSON object to store new metadata
-
-    int nMilliseconds = myTimer.elapsed();
-    secs = nMilliseconds / 1000;
-
-    QString time = QTime::currentTime().toString();
-    highlights["Word"] = word;
-    highlights["Timestamp"] = time;
-    highlights["Time Elapsed (s)"] = secs;
-    highlights["Page Name"] = pagename;
-
-    page.remove(time);
-    page.insert(time, highlights);
-    mainObj.remove(pagename);
-    mainObj.insert(pagename, page);
-
-    writeJsonFile(highlightsFilename, mainObj);
 }
 
 QJsonObject MainWindow::getAverageAccuracies(QJsonObject mainObj)
@@ -4260,6 +4865,7 @@ void MainWindow::on_compareVerifierOutput_clicked() //Verifier-Version
         float ocrAcc = 100 - (((float)lround(ocrErrorPerc*100))/100);
 
         DiffView *dv = new DiffView(qs1,qs2,qs3,QString::number(correctorChangesPerc),QString::number(verifierChangesPerc),QString::number(ocrAcc));
+        qDebug()<<correctorChangesPerc<<verifierChangesPerc<<ocrAcc;
         dv->show();
     }
 }
@@ -4417,291 +5023,11 @@ void MainWindow::on_actionAccuracyLog_triggered()
 
 }
 
-void MainWindow::on_actionPush_triggered() {
+void MainWindow::on_actionPush_triggered()
+{
     mProject.push();
 }
 
-//void MainWindow::on_actionCommit_triggered() {
-
-//    QString text = "Verifier has Turned in Version:" + mProject.get_version();
-//    mProject.commit(text.toStdString());
-//}
-
-void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
-    if (checkUnsavedWork()) {
-
-        QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Unsaved Work",
-                                                                    tr("You have unsaved files. Save it before turn-in.\n"),
-                                                                    QMessageBox::Cancel | QMessageBox::Save,
-                                                                    QMessageBox::Save);
-        if (resBtn == QMessageBox::Cancel) {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-            return;
-        }
-        else {
-            saveAllWork();
-        }
-    }
-    if(mProject.get_version().toInt()) {
-        if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/CorrectorOutput/)")
-                != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
-        {
-            QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in CorrectorOutput directory");
-            return;
-        }
-        QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();
-
-        int btn = QMessageBox::question(this, "Submit ?", "Are you ready to submit your changes?",
-                                        QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
-        if (btn == QMessageBox::StandardButton::Yes){
-            mProject.set_stage_verifier();
-            if(!mProject.commit(commit_msg.toStdString()) || !mProject.push()) {
-                mProject.enable_push(false);
-                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-                return;
-            }
-        }
-        else {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-            return;
-        }
-
-        ui->lineEdit_2->setText("Version " + mProject.get_version());
-
-        QString emailText =  "Book ID: " + mProject.get_bookId()
-                + "\nSet ID: " + mProject.get_setId()
-                + "\n" + commit_msg ;
-        /*  if( !sendEmail(emailText)) {
-            QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nEmail Notification Unsuccessful!,Please Check your Internet Connection");
-            return;
-        } */
-
-        ui->actionTurn_In->setEnabled(false);
-        QMessageBox::information(0, "Turn In", "Turned In Successfully");
-    }
-    else{
-        QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
-    }
-}
-
-void MainWindow::on_actionFetch_2_triggered() {
-    QString stage = mProject.get_stage();
-    QString prvs_stage = (stage=="Verifier")?"Verifier":"Corrector";
-    QString prvs_output_dir = prvs_stage + "Output"; //"VerifierOutput" or "CorrectorOutput"
-
-    int btn = QMessageBox::question(this, "Pull ?", "This will overwrite files in " + prvs_output_dir + " directory. Do you want to Continue?",
-                                    QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
-    if (btn == QMessageBox::StandardButton::Yes){
-        mProject.fetch();
-        if(mProject.get_version().toInt()){
-            QMessageBox::information(0, "Pull Success", "Pull Succesful");
-        }
-        else{
-            QMessageBox::information(0, "Pull Error", "Pull Un-succesful, Please Check Your Internet Connection");
-        }
-        if(!isVerifier) {
-            if (mProject.get_stage() == "Corrector") {
-                ui->actionTurn_In->setEnabled(true);
-            }
-            else {
-                ui->actionTurn_In->setEnabled(false);
-            }
-        }
-        ui->lineEdit_2->setText("Version " + mProject.get_version());
-    }
-    else
-        return;
-}
-void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
-    if (checkUnsavedWork()) {
-
-        QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Unsaved Work",
-                                                                    tr("You have unsaved files. Save it before turn-in.\n"),
-                                                                    QMessageBox::Cancel | QMessageBox::Save,
-                                                                    QMessageBox::Save);
-        if (resBtn == QMessageBox::Cancel) {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-            return;
-        }
-        else {
-            saveAllWork();
-        }
-    }
-    if(mProject.get_version().toInt()) {
-
-        int ver = mProject.get_version().toInt();
-        QString commit_msg;
-
-        QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
-        float avgcharacc = 0;
-        bool formatting = false;
-        int rating = 0;
-
-        QJsonObject mainObj = readJsonFile(commentFilename);
-
-        avgcharacc = mainObj["AverageCharAccuracy"].toDouble();
-        if(mProject.get_stage() != mRole)
-            rating = mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)].toInt();
-        else
-            rating = mainObj["Rating-V"+ mProject.get_version()].toInt();
-        if(((!mainObj["Formatting"].isNull())) || (! mainObj["Formatting"].isUndefined()))
-            formatting = mainObj["Formatting"].toBool();
-
-
-        QDialog dialog(this);
-        dialog.setWindowTitle("Check Formatting");
-
-        QFormLayout form(&dialog);
-        form.addRow(new QLabel("Average Rating of Current Set  : " + QString::number(rating) + " out of 4"));
-
-        QCheckBox *cb = new QCheckBox("Perfect Formatting?" ,&dialog);
-        cb->setChecked(formatting);
-        form.addRow(cb);
-
-        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-                                   Qt::Horizontal, &dialog);
-        form.addRow(&buttonBox);
-        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
-        if (dialog.exec() == QDialog::Accepted) {
-            formatting = cb->isChecked();
-            if(rating == 4 && formatting)
-                rating = 5;
-            else if(rating == 5 && (!formatting))
-                rating = 4;
-        }
-        else{
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-            return;
-        }
-
-        mainObj["Formatting"] = formatting;
-        if(mProject.get_stage() != mRole)
-            mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;
-        else
-            mainObj["Rating-V"+ mProject.get_version()] = rating;
-
-        writeJsonFile(commentFilename, mainObj);
-
-        QMessageBox messageBox(this);
-        QString msg1 = QString(
-                    "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
-
-                    + "\n\nDo you want to Return the Set to the Corrector or Finalise the set?"
-
-                    + "\n\nClick \"Return Set\" to Increment the Version from "
-                    + QString::number(ver) +" to "+QString::number(ver + 1)
-
-                    + "\nClick \"Finalise\" to Approve the set as the Final Version"
-                    );
-
-        QString msg2 = QString(
-                    "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
-
-                    + "\n\nDo you want to Return or Resubmit or Finalise the set?"
-
-                    + "\n\nClick \"Return Set\" to Turnin and Increment the Version from "
-                    + QString::number(ver) +" to "+QString::number(ver + 1)
-
-                    + " \nClick \"Resubmit\" to Turn In without Incrementing Version."
-
-                    + "\nClick \"Finalise\" to Approve the set as the Final Version"
-                    );
-
-        messageBox.setWindowTitle("Turn In");
-        QAbstractButton *resubmitButton =
-                messageBox.addButton(tr("Resubmit"), QMessageBox::ActionRole);
-        QAbstractButton *returnSetButton =
-                messageBox.addButton(tr("Return Set"), QMessageBox::ActionRole);
-        QAbstractButton *finaliseButton =
-                messageBox.addButton(tr("Finalise"), QMessageBox::ActionRole);
-        QAbstractButton *cancelButton =
-                messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
-
-        if(mRole != mProject.get_stage()) {
-            messageBox.setText(msg1);
-            messageBox.removeButton(resubmitButton);
-        }
-        else {
-            messageBox.setText(msg2);
-        }
-
-        messageBox.exec();
-        enum class SubmissionType {resubmit, return_set, finalise};
-        SubmissionType s ;
-        if (messageBox.clickedButton() == resubmitButton) {
-            //mProject.enable_push( false ); //Increment = false
-            if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
-                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
-            {
-                QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
-                return;
-            }
-            s = SubmissionType::resubmit;
-            commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
-        }
-        else if (messageBox.clickedButton() == returnSetButton) {
-            //mProject.enable_push( true ); //Increment = true
-            s = SubmissionType::return_set;
-            commit_msg = "Verifier has Turned in the Next Version:" + mProject.get_version();
-        }
-        else if (messageBox.clickedButton() == finaliseButton) {
-            //mProject.enable_push( false ); //Increment = false
-            if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
-                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
-            {
-                QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
-                return;
-            }
-            s = SubmissionType::finalise;
-            commit_msg = "Verifier Finalised Version:" + mProject.get_version();
-        }
-        else {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-            return;
-        }
-
-        int btn = QMessageBox::question(this, "Submit ?", "Are you ready to submit your changes?",
-                                        QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
-        if (btn == QMessageBox::StandardButton::Yes){
-            if(s == SubmissionType::return_set) {
-                mProject.enable_push( true );
-            }
-            else if (s == SubmissionType::resubmit) {
-                mProject.enable_push( false );
-            }
-            if(!mProject.commit(commit_msg.toStdString()) || !mProject.push()) {
-                if(s == SubmissionType::return_set) {
-                    mProject.set_version( mProject.get_version().toInt() - 1 );
-                }
-                mProject.set_stage_verifier();
-                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-                return;
-            }
-        }
-        else {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-            return;
-        }
-
-        QString emailText =  "Book ID: " + mProject.get_bookId()
-                + "\nSet ID: " + mProject.get_setId()
-                + "\nRating Provided: " + QString::number(rating)
-                + "\n" + commit_msg ;
-        /*  if( !sendEmail(emailText)) {
-            QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nTurn-In Unsuccessful!,Please Check your Internet Connection");
-            return;
-        } */
-
-        ui->lineEdit_2->setText("Version " + mProject.get_version());
-        QMessageBox::information(0, "Turn In", "Turned In Successfully");
-    }
-    else{
-        QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
-    }
-
-}
 QString GetFilter(QString & Name, const QStringList &list) {
 
     QString Filter = Name;
@@ -5170,162 +5496,6 @@ void MainWindow::setMFilename( QString name )
     }
 }
 
-/*!
- * \fn MainWindow::on_actionOpen_Project_triggered
- * \brief Opens a new OCR project
- * \note Every project contains six folders - Images, Inds, CorrectorOutput, VerifierOutput, Dicts and Comments.
- *
- * \sa process_xml(), open_git_repo(), get_stage(), get_version(), getModel(), AddTemp(), getFilter(), insert(), UpdateFileBrekadown(), readJsonFile()
- */
-void MainWindow::on_actionOpen_Project_triggered() { //Version Based
-
-    /* Description
-     * 1. Check if file named "project.xml" exists else terminates the function.
-     * 2. Create a new directory if CorrectorOutput, VerifierOutput or Comments folders does not exist.
-     * 3. Loading the requisites.
-     *    a) Processing the project.xml file.
-     *    b) Load git repository.
-     * 4. Set the model for ProjectHierarchyWindow(TreeView). TreeView is composed of Documents and Images.
-     * 5. Reset the current file name and directory levels.
-     * 6. Get the value for time elapsed from Timelog.json.
-     */
-
-    QFile xml(QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)")));   //Opens only if the file name is Project.xml
-    QFileInfo finfo(xml);
-    QString basedir = finfo.absoluteDir().absolutePath();
-
-    //!Initializes the string with directory name
-    QString s1 = basedir + "/Images/";
-    QString s2 = basedir + "/Inds/";
-    QString s3 = basedir+"/CorrectorOutput/";
-    QString s4 = basedir + "/VerifierOutput/";
-    QString s5 = basedir + "/Comments/";
-
-    //! Terminates function if Project.xml doesn't exist
-    if (finfo.fileName() == "")
-        return;
-
-    //! Creates a new directory if the CorrectorOutput, VerifierOutput or Comments folders does not exist.
-    if (!QDir(s3).exists()) {
-        QDir().mkdir(s3);
-    }
-    if (!QDir(s4).exists()) {
-        QDir().mkdir(s4);
-    }
-    if (!QDir(s5).exists()) {
-        QDir().mkdir(s5);
-    }
-
-    bool exists = QDir(s1).exists() && QDir(s2).exists();
-    if (xml.exists()&& exists)
-    {
-        ui->treeView->reset();    //reinitialize the ProjectHierarchyWindow
-        mProject.process_xml(xml);
-
-        mProject.open_git_repo();   //Open git repo
-        if(!mProject.isProjectOpen())
-        {
-            QMessageBox::warning(0, "Project Error", "Couldn't open project. Please check your project.");
-            return;
-        }
-        ui->treeView->setModel(mProject.getModel());
-        ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
-
-        QString stage = mProject.get_stage();                          //fetches the stage from project.xml file
-        QString version = mProject.get_version();                      //Fetches version from project.xml file
-        ui->lineEdit_2->setText("Version: " + version);                //Updates version in ui
-
-        //!Get the path of all necessary directories
-        QDir dir = mProject.GetDir();
-        QString str1 = mProject.GetDir().absolutePath()+"/CorrectorOutput/";
-        QString str2 = mProject.GetDir().absolutePath() + "/VerifierOutput/";
-        QString str3 = mProject.GetDir().absolutePath() + "/Inds/";
-        QString str4 = mProject.GetDir().absolutePath() + "/Images/";
-
-        //!To lookout for changes in CorrectorOutput and VerifierOutput directory
-        watcher.addPath(str1);
-        watcher.addPath(str2);
-
-        //!To Display tree view for Document
-        QDir cdir(str1);
-        Filter * filter = mProject.getFilter("Document");
-
-        //!Adds each file present in CorrectorOutput directory to treeView
-        auto list = cdir.entryList(QDir::Filter::Files);
-        for (auto f : list) {
-            QString t = str1 + "/" + f;
-            QFile f2(t);
-            mProject.AddTemp(filter,f2, "CorrectorOutput/" );
-            corrector_set.insert(f);
-        }
-
-        //!Adds each file present in VerifierOutput directory to treeView
-        cdir.setPath(str2);
-        list = cdir.entryList(QDir::Files);
-        for (auto f : list) {
-            verifier_set.insert(f);
-            QString t = str2 + "/" + f;
-            QFile f2(t);
-            mProject.AddTemp(filter, f2, "VerifierOutput/");
-        }
-
-        //!Adds the files from inds folder to treeView
-        cdir.setPath(str3);
-        list = cdir.entryList(QDir::Filter::Files);
-        for (auto f : list) {
-            QString t = str3 + "/" + f;
-            QFile f2(t);
-            mProject.AddTemp(filter, f2, "");
-        }
-
-        //!To Display treeView for Image
-        filter = mProject.getFilter("Image");
-
-        //!Adds the files from Image folder to treeView
-        cdir.setPath(str4);
-        list = cdir.entryList(QDir::Filter::Files);
-        for (auto f : list) {
-            QString t = str4 + "/" + f;
-            QFile f2(t);
-            mProject.AddTemp(filter, f2, "");
-        }
-
-        //!Disable Corrector Turn In once the Corrector has Turned in until the next version is fetched.
-        if(!isVerifier) {
-            if (stage != "Corrector") {
-                ui->actionTurn_In->setEnabled(false);
-            }
-        }
-
-        UpdateFileBrekadown();    //Reset the current file and dir levels
-
-        //!Get the elapsed time in Timelog.json file under Comments folder
-        gTimeLogLocation = gDirTwoLevelUp + "/Comments/Timelog.json";     //Navigate to Timelog.json uder Comments folder
-        QJsonObject mainObj =  readJsonFile(gTimeLogLocation);
-
-        //!Get the seconds elapsed for their file name in json file
-        foreach(const QJsonValue &val, mainObj)
-        {
-            QString directory = val.toObject().value("directory").toString();
-            int seconds    = val.toObject().value("seconds").toInt();
-            timeLog[directory] = seconds;
-        }
-
-        bool isSet = QDir::setCurrent(mProject.GetDir().absolutePath() + "/CorrectorOutput") ; //Change application Directory to any subfolder of mProject folder for Image Insertion feature.
-        if(!QDir(mProject.GetDir().absolutePath() + "/Images/Inserted").exists())
-            QDir().mkdir(mProject.GetDir().absolutePath() + "/Images/Inserted");
-
-        QMessageBox::information(0, "Success", "Project opened successfully.");
-
-        //!Genearte image.xml for figure/table/equation entries and initialize these values by 1.
-        createImageInfoXMLFile();
-
-    }
-    else {
-        QMessageBox::warning(0, "Project Error", "Couldn't open project. Please check your project.");
-        return;
-    }
-}
 void MainWindow::directoryChanged(const QString &path) {
 
     QDir d(path);
@@ -5455,153 +5625,6 @@ bool MainWindow::sendEmail(QString emailText)
         return 0;
 
     return 1;
-}
-
-/*!
- * \fn MainWindow::on_actionInsert_Table_2_triggered()
- * \brief Inserts table at text cursor
- * Creates a dialog to insert the numbr of rows and columns.
-*/
-void MainWindow::on_actionInsert_Table_2_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-
-    QDialog dialog(this);
-    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
-    form.addRow(new QLabel("Insert Table", this));                                  // Create a dialog for asking table dimensions
-
-    //! Add the lineEdits with their respective labels
-    QLineEdit *rows = new QLineEdit(&dialog);
-    QLineEdit *columns = new QLineEdit(&dialog);                                    // Add lineEdits to get Rows
-    form.addRow("Rows", rows);                                                      // Add lineEdits to get Columns
-    form.addRow("Columns", columns);
-
-    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-    form.addRow(&buttonBox);
-    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
-    //! Show the dialog as modal
-    if (dialog.exec() == QDialog::Accepted)
-    {
-
-        QTextTableFormat tf;
-        tf.setBorderBrush(Qt::black);
-        tf.setCellSpacing(0);
-        tf.setCellPadding(7);
-        QTextCursor cursor = curr_browser->textCursor();
-        cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
-
-    }
-}
-
-/*!
- * \fn MainWindow::on_actionInsert_Columnleft_triggered()
- * \brief Inserts Column to the left of table
-*/
-void MainWindow::on_actionInsert_Columnleft_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    if(curr_browser->textCursor().currentTable())
-    {
-        QTextTable *currentTable = curr_browser->textCursor().currentTable();
-        QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
-        currentTable->insertColumns(currentCell.column(),1);
-    }
-}
-
-/*!
- * \fn MainWindow::on_actionInsert_Columnright_triggered()
- * \brief Inserts Column to the right of table
-*/
-void MainWindow::on_actionInsert_Columnright_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    if(curr_browser->textCursor().currentTable())
-    {
-        QTextTable *currentTable = curr_browser->textCursor().currentTable();
-        QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
-        currentTable->insertColumns(currentCell.column()+1,1);
-    }
-}
-
-/*!
- * \fn MainWindow::on_actionInsert_Rowabove_triggered()
- * \brief Inserts Row above the table
-*/
-void MainWindow::on_actionInsert_Rowabove_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    if(curr_browser->textCursor().currentTable())
-    {
-        QTextTable *currentTable = curr_browser->textCursor().currentTable();
-        QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
-        currentTable->insertRows(currentCell.row(),1);
-    }
-}
-
-/*!
- * \fn MainWindow::on_actionInsert_Rowbelow_triggered()
- * \brief Inserts Row below the table
-*/
-void MainWindow::on_actionInsert_Rowbelow_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    if(curr_browser->textCursor().currentTable())
-    {
-        QTextTable *currentTable = curr_browser->textCursor().currentTable();
-        QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
-        currentTable->insertRows(currentCell.row()+1,1);
-    }
-}
-
-/*!
- * \fn MainWindow::on_actionRemove_Column_triggered()
- * \brief Delete selected column
-*/
-void MainWindow::on_actionRemove_Column_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    if(curr_browser->textCursor().currentTable())
-    {
-        QTextTable *currentTable = curr_browser->textCursor().currentTable();
-        QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
-        currentTable->removeColumns(currentCell.column(),1);
-    }
-}
-
-/*!
- * \fn MainWindow::on_actionRemove_Row_triggered()
- * \brief Delete selected row
-*/
-void MainWindow::on_actionRemove_Row_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    if(curr_browser->textCursor().currentTable())
-    {
-        QTextTable *currentTable = curr_browser->textCursor().currentTable();
-        QTextTableCell currentCell = currentTable->cellAt(curr_browser->textCursor());
-        currentTable->removeRows(currentCell.row(),1);
-    }
-}
-
-/*!
- * \fn MainWindow::on_actionFind_and_Replace_triggered
- * \brief helps to find particular text and replaces them with new user entered text
- * \sa openFindAndReplace
- */
-void MainWindow::on_actionFind_and_Replace_triggered()
-{
-    TextFinder *dialog = TextFinder::openFindAndReplace(this);
-    dialog->show();
 }
 
 /*!
