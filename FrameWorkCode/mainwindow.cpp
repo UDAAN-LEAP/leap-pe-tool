@@ -5556,18 +5556,24 @@ void MainWindow::iteratorReplace(QString str , QVector <QString> optimalPath)
     for (int i=0; i<optimalPath.size(); i++)
     {
         changesList = optimalPath[i].split(" ");
-        globalReplacementMap[changesList[1]] = changesList[3];
+        QMessageBox messageBox(this);
+        messageBox.setWindowTitle("Global Replace");
+        QString msg = "Do you want to replace " + changesList[1] + " with " + changesList[3] + " Globally?\n" ;
+        QAbstractButton *replaceButton = messageBox.addButton(tr("Replace"), QMessageBox::ActionRole);
+        QAbstractButton *cancelButton = messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+        messageBox.setText(msg);
+        messageBox.exec();
+        if (messageBox.clickedButton() == replaceButton)
+        {
+            globalReplacementMap[changesList[1]] = changesList[3];
+
+        }
     }
-    int count=0;
     while (it.hasNext())
     {
-
-        count+=1;
         QString s = it.next();
         QFile *f = new QFile(s);
         f->open(QIODevice::ReadOnly);
-//        QFileInfo finfo(f->fileName());
-
         QTextStream in(f);
         QString s1 = in.readAll();
         f->close();
@@ -5575,19 +5581,15 @@ void MainWindow::iteratorReplace(QString str , QVector <QString> optimalPath)
         f->open(QIODevice::WriteOnly);
         for (j = globalReplacementMap.begin(); j != globalReplacementMap.end(); ++j)
         {
-        //      cout << j.key() << ": " << j.value() << Qt::endl;
-                 if (s1.contains(j.key()))
-                 {
-                     s1.replace(j.key() , j.value());
-                 }
-         }
+//            QRegExp rx("\b"(j.key())"\b");
 
+            if (s1.contains(j.key()))
+            {
+                s1.replace(j.key() , j.value());
 
+            }
+        }
         in << s1;
         f->close();
-
-
     }
-    qDebug() << count;
-
 }
