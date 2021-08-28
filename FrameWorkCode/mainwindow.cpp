@@ -1273,7 +1273,7 @@ void MainWindow::on_actionSanskrit_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actied()
+ * \fn MainWindow::on_actionHindi_triggered
  * \brief Sets the language of the current broweser to Hindi by by passing the HinFlag as true
  * \sa setText()
  */
@@ -3422,10 +3422,6 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
                 + "\nSet ID: " + mProject.get_setId()
                 + "\nRating Provided: " + QString::number(rating)
                 + "\n" + commit_msg ;
-        /*  if( !sendEmail(emailText)) {
-            QMessageBox::information(0, "Turn In", "Network-Connection Error!\n\nTurn-In Unsuccessful!,Please Check your Internet Connection");
-            return;
-        } */
 
         //! Updating the Project Version
         ui->lineEdit_2->setText("Version " + mProject.get_version());
@@ -3467,9 +3463,23 @@ void MainWindow::on_actionZoom_Out_triggered()
     if (z)
         z->gentle_zoom(0.9);
 }
-//end
 
-//start extra functions
+/*!
+ * \fn MainWindow::on_pushButton_clicked
+ * \brief When button is clicked, then we can add placeholders for figure/table/equation.
+ * \sa eventFilter
+ */
+void MainWindow::on_pushButton_clicked()
+{
+    if(loadimage)                   //Check image is loaded or not.
+    {
+        shouldIDraw=true;
+        auto p = (QPushButton*)ui->pushButton;       //get the pushButton
+        p->setStyleSheet("QPushButton { background-color: grey; }\n"
+                          "QPushButton:enabled { background-color: rgb(200,205,180); }\n");      //apply style on button when it is triggered
+     }
+}
+
 /*!
  * \fn MainWindow::eventFilter
  * \brief event: ToolTip and ImageMarkingRegion
@@ -3920,7 +3930,7 @@ void MainWindow::createImageInfoXMLFile()
         }
     }
 }
-//end extra functions
+//end
 
 void MainWindow::on_actionCreateSuggestionLog_triggered()
 {
@@ -5109,31 +5119,35 @@ void MainWindow::DisplayJsonDict(void) {
     ui->textEdit_dict->clear();
 
     // Open the dict file and display it in textedit view
-    if(dictQFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    if(QFile::exists(dictFilename))
     {
-       data_json = dictQFile.readAll();
-       dictQFile.close();
-       doc = doc.fromJson(data_json);
-       obj = doc.object();
-       QJsonValue jv = obj.value(obj.keys().at(0));
-       QJsonObject item = jv.toObject();
-       for(int i = 0; i < item.count(); i++)
-       {
-           ui->textEdit_dict->append(item.keys().at(i)+":");
-           QJsonValue subobj = item.value(item.keys().at(i));;
-           QJsonArray test = subobj.toArray();
-           for(int k = 0; k < test.count(); k++)
-           {
-               ui->textEdit_dict->moveCursor(QTextCursor::End);
-               ui->textEdit_dict->insertPlainText(" "+test[k].toString());
-               if(k<test.count()-1)
+            QFile dictQFile(dictFilename);
+            if(dictQFile.open(QIODevice::ReadOnly | QIODevice::Text))
+            {
+               data_json = dictQFile.readAll();
+               dictQFile.close();
+               doc = doc.fromJson(data_json);
+               obj = doc.object();
+               QJsonValue jv = obj.value(obj.keys().at(0));
+               QJsonObject item = jv.toObject();
+               for(int i = 0; i < item.count(); i++)
                {
-                  ui->textEdit_dict->insertPlainText(",");
+                  ui->textEdit_dict->append(item.keys().at(i)+":");
+                  QJsonValue subobj = item.value(item.keys().at(i));;
+                  QJsonArray test = subobj.toArray();
+                  for(int k = 0; k < test.count(); k++)
+                  {
+                     ui->textEdit_dict->moveCursor(QTextCursor::End);
+                     ui->textEdit_dict->insertPlainText(" "+test[k].toString());
+                     if(k<test.count()-1)
+                     {
+                        ui->textEdit_dict->insertPlainText(",");
+                     }
+                     ui->textEdit_dict->moveCursor(QTextCursor::End);
+                   }
                }
-               ui->textEdit_dict->moveCursor(QTextCursor::End);
-           }
-       }
-     }
+          }
+    }
 }
 
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
@@ -5664,19 +5678,4 @@ bool MainWindow::sendEmail(QString emailText)
         return 0;
 
     return 1;
-}
-
-/*!
- * \fn MainWindow::on_pushButton_clicked
- * \brief When button is clicked, then we can add placeholders for figure/table/equation.
- */
-void MainWindow::on_pushButton_clicked()
-{
-    if(loadimage)                   //Check image is loaded or not.
-    {
-        shouldIDraw=true;
-        auto p = (QPushButton*)ui->pushButton;       //get the pushButton
-        p->setStyleSheet("QPushButton { background-color: grey; }\n"
-                          "QPushButton:enabled { background-color: rgb(200,205,180); }\n");      //apply style on button when it is triggered
-     }
 }

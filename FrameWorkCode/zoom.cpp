@@ -58,8 +58,9 @@ void Graphics_view_zoom::set_zoom_factor_base(double value) {
  * \param event
  * Waits for the zoom to occur
  * This is an event filter which checks for 2 events, mouse click and mouse moves, it can scale the image by the amount of movement detected
- * \return
- */
+ * \return true
+ * \sa keyboardModifiers
+*/
 bool Graphics_view_zoom::eventFilter(QObject *object, QEvent *event)
 {
   //! If its a basic mouse movement
