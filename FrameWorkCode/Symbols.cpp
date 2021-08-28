@@ -1,11 +1,19 @@
+/*
+ * It shows the table for various symbols
+ */
 #include "Symbols.h"
 #include "ui_Symbols.h"
 
+/*!
+ * \brief SymbolsView::symbolsView
+ */
 SymbolsView *SymbolsView::symbolsView = 0;
 
-SymbolsView::SymbolsView(QWidget *parent) :
-      QDialog(parent, Qt::WindowCloseButtonHint),
-      ui(new Ui::SymbolsView)
+/*!
+ * \brief SymbolsView::SymbolsView
+ * \param parent
+ */
+SymbolsView::SymbolsView(QWidget *parent) : QDialog(parent, Qt::WindowCloseButtonHint), ui(new Ui::SymbolsView)
 {
     ui->setupUi(this);
     ui->MathematicalSymbols->setText(
@@ -129,7 +137,11 @@ Z
     currentTab = ui->Diacritics;
     bool b = connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 }
- void SymbolsView::tabChanged(int idx)
+/*!
+ * \brief SymbolsView::tabChanged
+ * \param idx
+ */
+void SymbolsView::tabChanged(int idx)
  {
     QWidget *widget = ui->tabWidget->widget(idx);
     QList<QTextEdit*> allTextEdits = widget->findChildren<QTextEdit*>();
@@ -137,18 +149,33 @@ Z
       return;
     currentTab = allTextEdits[0];
  }
+
+ /*!
+ * \brief SymbolsView::~SymbolsView
+ */
 SymbolsView::~SymbolsView()
 {
     delete ui;
 }
 
+/*!
+ * \brief SymbolsView::on_copyButton_clicked
+ */
 void SymbolsView::on_copyButton_clicked()
 {
       currentTab->copy();
 }
 
-SymbolsView* SymbolsView::openSymbolTable(QWidget *parent) {
-    if (symbolsView) {
+/*!
+ * \brief SymbolsView::openSymbolTable
+ * \param parent
+ * \return
+ * opens symbol table
+ */
+SymbolsView* SymbolsView::openSymbolTable(QWidget *parent)
+{
+    if (symbolsView)
+    {
         return symbolsView;
     }
 

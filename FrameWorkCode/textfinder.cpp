@@ -37,10 +37,8 @@ TextFinder::~TextFinder()
 }
 
 /*!
- * \fn TextFinder::openFindAndReplace
+ * \fn TextFinder* TextFinder::openFindAndReplace(QWidget *parent)
  * \brief The function checks if the window is already open else opens a new one
- * \param parent
- * \return textFinder
  */
 TextFinder* TextFinder::openFindAndReplace(QWidget *parent) {
     if (textFinder) {
@@ -52,7 +50,7 @@ TextFinder* TextFinder::openFindAndReplace(QWidget *parent) {
 }
 
 /*!
- * \fn TextFinder::on_findNextButton_clicked
+ * \fn TextFinder* TextFinder::openFindAndReplace(QWidget *parent)
  * \brief Moves the cursor to the next identified text
  *  which the user entered to search
  */
@@ -71,7 +69,7 @@ void TextFinder::on_findNextButton_clicked()
 }
 
 /*!
- * \fn TextFinder::on_findPreviousButton_clicked
+ * \fn void TextFinder::on_findPreviousButton_clicked()
  * \brief Moves the cursor to the previously identified
  * text which the user entered to search
  */
@@ -90,7 +88,7 @@ void TextFinder::on_findPreviousButton_clicked()
 }
 
 /*!
- * \fn TextFinder::on_replaceButton_clicked
+ * \fn void TextFinder::on_replaceButton_clicked()
  * \brief Replaces the current text under cursor
  * with a new user entered text
  */
@@ -111,7 +109,7 @@ void TextFinder::on_replaceButton_clicked()
 }
 
 /*!
- * \fn TextFinder::on_replaceAllButton_clicked
+ * \fn void TextFinder::on_replaceAllButton_clicked()
  * \brief Replaces all the found text with a new user entered text
  */
 void TextFinder::on_replaceAllButton_clicked()
@@ -132,11 +130,9 @@ void TextFinder::on_replaceAllButton_clicked()
 }
 
 /*!
- * \fn TextFinder::keyPressEvent
+ * \fn void TextFinder::keyPressEvent(QKeyEvent *e)
  * \brief The function translates the user entered text on the
  * textedit to Devanagari language when Ctrl+D is pressed
- * \param e
- *
  * \sa toDevanagari()
  */
 void TextFinder::keyPressEvent(QKeyEvent *e)
@@ -159,22 +155,17 @@ void TextFinder::keyPressEvent(QKeyEvent *e)
 }
 
 /*!
- * \fn TextFinder::toDevanagari
+ * \fn QString TextFinder::toDevanagari(string text)
  * \brief The function assess the user entered text language
  * and converts the string of text into devanagari
- * \param text
- * \return string
  */
 QString TextFinder::toDevanagari(string text) {
     return QString::fromStdString(toDev(toslp1(text)));
 }
 
 /*!
- * \fn TextFinder::eventFilter
  * \brief Filters the user key events and raises handlers if
  * ' ctrl + D' is pressed.
- * \param watched
- * \param event
  * \return QDialog::eventFilter(watched, event)
  *
  * \sa keyPressEvent()

@@ -46,30 +46,30 @@
   
   Sets the x coordinate of this vector to \a x.
   
-  \see setY
+  \sa setY
 */
 
 /*! \fn void QCPVector2D::setY(double y)
   
   Sets the y coordinate of this vector to \a y.
   
-  \see setX
+  \sa setX
 */
 
 /*! \fn double QCPVector2D::length() const
   
   Returns the length of this vector.
   
-  \see lengthSquared
+  \sa lengthSquared
 */
 
 /*! \fn double QCPVector2D::lengthSquared() const
   
   Returns the squared length of this vector. In some situations, e.g. when just trying to find the
-  shortest vector of a group, this is faster than calculating \ref length, because it avoids
+  shortest vector of a group, this is faster than calculating   length, because it avoids
   calculation of a square root.
   
-  \see length
+  \sa length
 */
 
 /*! \fn QPoint QCPVector2D::toPoint() const
@@ -77,14 +77,14 @@
   Returns a QPoint which has the x and y coordinates of this vector, truncating any floating point
   information.
   
-  \see toPointF
+  \sa toPointF
 */
 
 /*! \fn QPointF QCPVector2D::toPointF() const
   
   Returns a QPointF which has the x and y coordinates of this vector.
   
-  \see toPoint
+  \sa toPoint
 */
 
 /*! \fn bool QCPVector2D::isNull() const
@@ -147,7 +147,7 @@ QCPVector2D::QCPVector2D(const QPointF &point) :
 /*!
   Normalizes this vector. After this operation, the length of the vector is equal to 1.
   
-  \see normalized, length, lengthSquared
+   \sa normalized, length, lengthSquared
 */
 void QCPVector2D::normalize()
 {
@@ -159,7 +159,7 @@ void QCPVector2D::normalize()
 /*!
   Returns a normalized version of this vector. The length of the returned vector is equal to 1.
   
-  \see normalize, length, lengthSquared
+   \sa normalize, length, lengthSquared
 */
 QCPVector2D QCPVector2D::normalized() const
 {
@@ -173,7 +173,7 @@ QCPVector2D QCPVector2D::normalized() const
   Returns the squared shortest distance of this vector (interpreted as a point) to the finite line
   segment given by \a start and \a end.
   
-  \see distanceToStraightLine
+   \sa distanceToStraightLine
 */
 double QCPVector2D::distanceSquaredToLine(const QCPVector2D &start, const QCPVector2D &end) const
 {
@@ -197,7 +197,7 @@ double QCPVector2D::distanceSquaredToLine(const QCPVector2D &start, const QCPVec
   Returns the squared shortest distance of this vector (interpreted as a point) to the finite line
   segment given by \a line.
   
-  \see distanceToStraightLine
+   \sa distanceToStraightLine
 */
 double QCPVector2D::distanceSquaredToLine(const QLineF &line) const
 {
@@ -208,7 +208,7 @@ double QCPVector2D::distanceSquaredToLine(const QLineF &line) const
   Returns the shortest distance of this vector (interpreted as a point) to the infinite straight
   line given by a \a base point and a \a direction vector.
   
-  \see distanceSquaredToLine
+   \sa distanceSquaredToLine
 */
 double QCPVector2D::distanceToStraightLine(const QCPVector2D &base, const QCPVector2D &direction) const
 {
@@ -295,7 +295,7 @@ QCPPainter::QCPPainter() :
   Creates a new QCPPainter instance on the specified paint \a device and sets default values. Just
   like the analogous QPainter constructor, begins painting on \a device immediately.
   
-  Like \ref begin, this method sets QPainter::NonCosmeticDefaultPen in Qt versions before Qt5.
+  Like begin, this method sets QPainter::NonCosmeticDefaultPen in Qt versions before Qt5.
 */
 QCPPainter::QCPPainter(QPaintDevice *device) :
   QPainter(device),
@@ -402,7 +402,7 @@ void QCPPainter::setModes(QCPPainter::PainterModes modes)
   all pens are non-cosmetic by default, and in Qt4 this render hint must be set to get that
   behaviour.
   
-  The Constructor \ref QCPPainter(QPaintDevice *device) which directly starts painting also sets
+  The Constructor QCPPainter(QPaintDevice *device) which directly starts painting also sets
   the render hint as appropriate.
   
   \note this function hides the non-virtual base class implementation.
@@ -436,7 +436,7 @@ void QCPPainter::setMode(QCPPainter::PainterMode mode, bool enabled)
   
   \note this function hides the non-virtual base class implementation.
   
-  \see restore
+   \sa restore
 */
 void QCPPainter::save()
 {
@@ -450,7 +450,7 @@ void QCPPainter::save()
   
   \note this function hides the non-virtual base class implementation.
   
-  \see save
+   \sa save
 */
 void QCPPainter::restore()
 {
@@ -462,8 +462,8 @@ void QCPPainter::restore()
 }
 
 /*!
-  Changes the pen width to 1 if it currently is 0. This function is called in the \ref setPen
-  overrides when the \ref pmNonCosmetic mode is set.
+  Changes the pen width to 1 if it currently is 0. This function is called in the setPen
+  overrides when the pmNonCosmetic mode is set.
 */
 void QCPPainter::makeNonCosmetic()
 {
@@ -491,31 +491,31 @@ void QCPPainter::makeNonCosmetic()
   order to be usable by QCustomPlot.
 
   A paint buffer manages both a surface to draw onto, and the matching paint device. The size of
-  the surface can be changed via \ref setSize. External classes (\ref QCustomPlot and \ref
-  QCPLayer) request a painter via \ref startPainting and then perform the draw calls. Once the
-  painting is complete, \ref donePainting is called, so the paint buffer implementation can do
+  the surface can be changed via setSize. External classes (QCustomPlot and
+  QCPLayer) request a painter via startPainting and then perform the draw calls. Once the
+  painting is complete, donePainting is called, so the paint buffer implementation can do
   clean up if necessary. Before rendering a frame, each paint buffer is usually filled with a color
-  using \ref clear (usually the color is \c Qt::transparent), to remove the contents of the
+  using clear (usually the color is \c Qt::transparent), to remove the contents of the
   previous frame.
 
-  The simplest paint buffer implementation is \ref QCPPaintBufferPixmap which allows regular
+  The simplest paint buffer implementation is QCPPaintBufferPixmap which allows regular
   software rendering via the raster engine. Hardware accelerated rendering via pixel buffers and
-  frame buffer objects is provided by \ref QCPPaintBufferGlPbuffer and \ref QCPPaintBufferGlFbo.
-  They are used automatically if \ref QCustomPlot::setOpenGl is enabled.
+  frame buffer objects is provided by   QCPPaintBufferGlPbuffer and   QCPPaintBufferGlFbo.
+  They are used automatically if   QCustomPlot::setOpenGl is enabled.
 */
 
 /* start documentation of pure virtual functions */
 
 /*! \fn virtual QCPPainter *QCPAbstractPaintBuffer::startPainting() = 0
 
-  Returns a \ref QCPPainter which is ready to draw to this buffer. The ownership and thus the
+  Returns a   QCPPainter which is ready to draw to this buffer. The ownership and thus the
   responsibility to delete the painter after the painting operations are complete is given to the
   caller of this method.
 
-  Once you are done using the painter, delete the painter and call \ref donePainting.
+  Once you are done using the painter, delete the painter and call   donePainting.
 
-  While a painter generated with this method is active, you must not call \ref setSize, \ref
-  setDevicePixelRatio or \ref clear.
+  While a painter generated with this method is active, you must not call   setSize,
+  setDevicePixelRatio or   clear.
 
   This method may return 0, if a painter couldn't be activated on the buffer. This usually
   indicates a problem with the respective painting backend.
@@ -532,17 +532,17 @@ void QCPPainter::makeNonCosmetic()
   Fills the entire buffer with the provided \a color. To have an empty transparent buffer, use the
   named color \c Qt::transparent.
 
-  This method must not be called if there is currently a painter (acquired with \ref startPainting)
+  This method must not be called if there is currently a painter (acquired with   startPainting)
   active.
 */
 
 /*! \fn virtual void QCPAbstractPaintBuffer::reallocateBuffer() = 0
 
-  Reallocates the internal buffer with the currently configured size (\ref setSize) and device
-  pixel ratio, if applicable (\ref setDevicePixelRatio). It is called as soon as any of those
+  Reallocates the internal buffer with the currently configured size (  setSize) and device
+  pixel ratio, if applicable (  setDevicePixelRatio). It is called as soon as any of those
   properties are changed on this paint buffer.
 
-  \note Subclasses of \ref QCPAbstractPaintBuffer must call their reimplementation of this method
+  \note Subclasses of   QCPAbstractPaintBuffer must call their reimplementation of this method
   in their constructor, to perform the first allocation (this can not be done by the base class
   because calling pure virtual methods in base class constructors is not possible).
 */
@@ -552,7 +552,7 @@ void QCPPainter::makeNonCosmetic()
 
 /*! \fn virtual void QCPAbstractPaintBuffer::donePainting()
 
-  If you have acquired a \ref QCPPainter to paint onto this paint buffer via \ref startPainting,
+  If you have acquired a   QCPPainter to paint onto this paint buffer via   startPainting,
   call this method as soon as you are done with the painting operations and have deleted the
   painter.
 
@@ -565,7 +565,7 @@ void QCPPainter::makeNonCosmetic()
 /*!
   Creates a paint buffer and initializes it with the provided \a size and \a devicePixelRatio.
 
-  Subclasses must call their \ref reallocateBuffer implementation in their respective constructors.
+  Subclasses must call their   reallocateBuffer implementation in their respective constructors.
 */
 QCPAbstractPaintBuffer::QCPAbstractPaintBuffer(const QSize &size, double devicePixelRatio) :
   mSize(size),
@@ -581,8 +581,8 @@ QCPAbstractPaintBuffer::~QCPAbstractPaintBuffer()
 /*!
   Sets the paint buffer size.
 
-  The buffer is reallocated (by calling \ref reallocateBuffer), so any painters that were obtained
-  by \ref startPainting are invalidated and must not be used after calling this method.
+  The buffer is reallocated (by calling   reallocateBuffer), so any painters that were obtained
+  by   startPainting are invalidated and must not be used after calling this method.
 
   If \a size is already the current buffer size, this method does nothing.
 */
@@ -598,15 +598,15 @@ void QCPAbstractPaintBuffer::setSize(const QSize &size)
 /*!
   Sets the invalidated flag to \a invalidated.
 
-  This mechanism is used internally in conjunction with isolated replotting of \ref QCPLayer
-  instances (in \ref QCPLayer::lmBuffered mode). If \ref QCPLayer::replot is called on a buffered
+  This mechanism is used internally in conjunction with isolated replotting of   QCPLayer
+  instances (in   QCPLayer::lmBuffered mode). If   QCPLayer::replot is called on a buffered
   layer, i.e. an isolated repaint of only that layer (and its dedicated paint buffer) is requested,
   QCustomPlot will decide depending on the invalidated flags of other paint buffers whether it also
   replots them, instead of only the layer on which the replot was called.
 
-  The invalidated flag is set to true when \ref QCPLayer association has changed, i.e. if layers
+  The invalidated flag is set to true when   QCPLayer association has changed, i.e. if layers
   were added or removed from this buffer, or if they were reordered. It is set to false as soon as
-  all associated \ref QCPLayer instances are drawn onto the buffer.
+  all associated   QCPLayer instances are drawn onto the buffer.
 
   Under normal circumstances, it is not necessary to manually call this method.
 */
@@ -619,8 +619,8 @@ void QCPAbstractPaintBuffer::setInvalidated(bool invalidated)
   Sets the the device pixel ratio to \a ratio. This is useful to render on high-DPI output devices.
   The ratio is automatically set to the device pixel ratio used by the parent QCustomPlot instance.
 
-  The buffer is reallocated (by calling \ref reallocateBuffer), so any painters that were obtained
-  by \ref startPainting are invalidated and must not be used after calling this method.
+  The buffer is reallocated (by calling   reallocateBuffer), so any painters that were obtained
+  by   startPainting are invalidated and must not be used after calling this method.
 
   \note This method is only available for Qt versions 5.4 and higher.
 */
@@ -646,7 +646,7 @@ void QCPAbstractPaintBuffer::setDevicePixelRatio(double ratio)
   \brief A paint buffer based on QPixmap, using software raster rendering
 
   This paint buffer is the default and fall-back paint buffer which uses software rendering and
-  QPixmap as internal buffer. It is used if \ref QCustomPlot::setOpenGl is false.
+  QPixmap as internal buffer. It is used if   QCustomPlot::setOpenGl is false.
 */
 
 /*!
@@ -717,14 +717,14 @@ void QCPPaintBufferPixmap::reallocateBuffer()
 
   This paint buffer is one of the OpenGL paint buffers which facilitate hardware accelerated plot
   rendering. It is based on OpenGL pixel buffers (pbuffer) and is used in Qt versions before 5.0.
-  (See \ref QCPPaintBufferGlFbo used in newer Qt versions.)
+  (See   QCPPaintBufferGlFbo used in newer Qt versions.)
 
-  The OpenGL paint buffers are used if \ref QCustomPlot::setOpenGl is set to true, and if they are
+  The OpenGL paint buffers are used if   QCustomPlot::setOpenGl is set to true, and if they are
   supported by the system.
 */
 
 /*!
-  Creates a \ref QCPPaintBufferGlPbuffer instance with the specified \a size and \a
+  Creates a   QCPPaintBufferGlPbuffer instance with the specified \a size and \a
   devicePixelRatio, if applicable.
 
   The parameter \a multisamples defines how many samples are used per pixel. Higher values thus
@@ -812,18 +812,18 @@ void QCPPaintBufferGlPbuffer::reallocateBuffer()
 
   This paint buffer is one of the OpenGL paint buffers which facilitate hardware accelerated plot
   rendering. It is based on OpenGL frame buffer objects (fbo) and is used in Qt versions 5.0 and
-  higher. (See \ref QCPPaintBufferGlPbuffer used in older Qt versions.)
+  higher. (See   QCPPaintBufferGlPbuffer used in older Qt versions.)
 
-  The OpenGL paint buffers are used if \ref QCustomPlot::setOpenGl is set to true, and if they are
+  The OpenGL paint buffers are used if   QCustomPlot::setOpenGl is set to true, and if they are
   supported by the system.
 */
 
 /*!
-  Creates a \ref QCPPaintBufferGlFbo instance with the specified \a size and \a devicePixelRatio,
+  Creates a   QCPPaintBufferGlFbo instance with the specified \a size and \a devicePixelRatio,
   if applicable.
 
   All frame buffer objects shall share one OpenGL context and paint device, which need to be set up
-  externally and passed via \a glContext and \a glPaintDevice. The set-up is done in \ref
+  externally and passed via \a glContext and \a glPaintDevice. The set-up is done in
   QCustomPlot::setupOpenGl and the context and paint device are managed by the parent QCustomPlot
   instance.
 */
@@ -975,24 +975,24 @@ void QCPPaintBufferGlFbo::reallocateBuffer()
 
   Initially, QCustomPlot has six layers: "background", "grid", "main", "axes", "legend" and
   "overlay" (in that order). On top is the "overlay" layer, which only contains the QCustomPlot's
-  selection rect (\ref QCustomPlot::selectionRect). The next two layers "axes" and "legend" contain
+  selection rect (  QCustomPlot::selectionRect). The next two layers "axes" and "legend" contain
   the default axes and legend, so they will be drawn above plottables. In the middle, there is the
   "main" layer. It is initially empty and set as the current layer (see
   QCustomPlot::setCurrentLayer). This means, all new plottables, items etc. are created on this
   layer by default. Then comes the "grid" layer which contains the QCPGrid instances (which belong
-  tightly to QCPAxis, see \ref QCPAxis::grid). The Axis rect background shall be drawn behind
+  tightly to QCPAxis, see   QCPAxis::grid). The Axis rect background shall be drawn behind
   everything else, thus the default QCPAxisRect instance is placed on the "background" layer. Of
-  course, the layer affiliation of the individual objects can be changed as required (\ref
+  course, the layer affiliation of the individual objects can be changed as required (
   QCPLayerable::setLayer).
 
   \section qcplayer-ordering Controlling the rendering order via layers
 
   Controlling the ordering of layerables in the plot is easy: Create a new layer in the position
-  you want the layerable to be in, e.g. above "main", with \ref QCustomPlot::addLayer. Then set the
-  current layer with \ref QCustomPlot::setCurrentLayer to that new layer and finally create the
+  you want the layerable to be in, e.g. above "main", with   QCustomPlot::addLayer. Then set the
+  current layer with   QCustomPlot::setCurrentLayer to that new layer and finally create the
   objects normally. They will be placed on the new layer automatically, due to the current layer
   setting. Alternatively you could have also ignored the current layer setting and just moved the
-  objects with \ref QCPLayerable::setLayer to the desired layer after creating them.
+  objects with   QCPLayerable::setLayer to the desired layer after creating them.
 
   It is also possible to move whole layers. For example, If you want the grid to be shown in front
   of all plottables/items on the "main" layer, just move it above "main" with
@@ -1006,10 +1006,10 @@ void QCPPaintBufferGlFbo::reallocateBuffer()
 
   \section qcplayer-buffering Replotting only a specific layer
 
-  If the layer mode (\ref setMode) is set to \ref lmBuffered, you can replot only this specific
-  layer by calling \ref replot. In certain situations this can provide better replot performance,
+  If the layer mode (  setMode) is set to   lmBuffered, you can replot only this specific
+  layer by calling   replot. In certain situations this can provide better replot performance,
   compared with a full replot of all layers. Upon creation of a new layer, the layer mode is
-  initialized to \ref lmLogical. The only layer that is set to \ref lmBuffered in a new \ref
+  initialized to   lmLogical. The only layer that is set to   lmBuffered in a new
   QCustomPlot instance is the "overlay" layer, containing the selection rect.
 */
 
@@ -1024,7 +1024,7 @@ void QCPPaintBufferGlFbo::reallocateBuffer()
 /*! \fn int QCPLayer::index() const
   
   Returns the index this layer has in the QCustomPlot. The index is the integer number by which this layer can be
-  accessed via \ref QCustomPlot::layer.
+  accessed via   QCustomPlot::layer.
   
   Layers with higher indices will be drawn above layers with lower indices.
 */
@@ -1034,10 +1034,10 @@ void QCPPaintBufferGlFbo::reallocateBuffer()
 /*!
   Creates a new QCPLayer instance.
   
-  Normally you shouldn't directly instantiate layers, use \ref QCustomPlot::addLayer instead.
+  Normally you shouldn't directly instantiate layers, use   QCustomPlot::addLayer instead.
   
   \warning It is not checked that \a layerName is actually a unique layer name in \a parentPlot.
-  This check is only performed by \ref QCustomPlot::addLayer.
+  This check is only performed by   QCustomPlot::addLayer.
 */
 QCPLayer::QCPLayer(QCustomPlot *parentPlot, const QString &layerName) :
   QObject(parentPlot),
@@ -1069,8 +1069,8 @@ QCPLayer::~QCPLayer()
   Sets whether this layer is visible or not. If \a visible is set to false, all layerables on this
   layer will be invisible.
 
-  This function doesn't change the visibility property of the layerables (\ref
-  QCPLayerable::setVisible), but the \ref QCPLayerable::realVisibility of each layerable takes the
+  This function doesn't change the visibility property of the layerables (
+  QCPLayerable::setVisible), but the   QCPLayerable::realVisibility of each layerable takes the
   visibility of the parent layer into account.
 */
 void QCPLayer::setVisible(bool visible)
@@ -1081,23 +1081,23 @@ void QCPLayer::setVisible(bool visible)
 /*!
   Sets the rendering mode of this layer.
 
-  If \a mode is set to \ref lmBuffered for a layer, it will be given a dedicated paint buffer by
-  the parent QCustomPlot instance. This means it may be replotted individually by calling \ref
+  If \a mode is set to   lmBuffered for a layer, it will be given a dedicated paint buffer by
+  the parent QCustomPlot instance. This means it may be replotted individually by calling
   QCPLayer::replot, without needing to replot all other layers.
 
-  Layers which are set to \ref lmLogical (the default) are used only to define the rendering order
+  Layers which are set to   lmLogical (the default) are used only to define the rendering order
   and can't be replotted individually.
 
-  Note that each layer which is set to \ref lmBuffered requires additional paint buffers for the
+  Note that each layer which is set to   lmBuffered requires additional paint buffers for the
   layers below, above and for the layer itself. This increases the memory consumption and
   (slightly) decreases the repainting speed because multiple paint buffers need to be joined. So
   you should carefully choose which layers benefit from having their own paint buffer. A typical
   example would be a layer which contains certain layerables (e.g. items) that need to be changed
   and thus replotted regularly, while all other layerables on other layers stay static. By default,
-  only the topmost layer called "overlay" is in mode \ref lmBuffered, and contains the selection
+  only the topmost layer called "overlay" is in mode   lmBuffered, and contains the selection
   rect.
 
-  \see replot
+   \sa replot
 */
 void QCPLayer::setMode(QCPLayer::LayerMode mode)
 {
@@ -1113,7 +1113,7 @@ void QCPLayer::setMode(QCPLayer::LayerMode mode)
 
   Draws the contents of this layer with the provided \a painter.
 
-  \see replot, drawToPaintBuffer
+   \sa replot, drawToPaintBuffer
 */
 void QCPLayer::draw(QCPPainter *painter)
 {
@@ -1133,10 +1133,10 @@ void QCPLayer::draw(QCPPainter *painter)
 /*! \internal
 
   Draws the contents of this layer into the paint buffer which is associated with this layer. The
-  association is established by the parent QCustomPlot, which manages all paint buffers (see \ref
+  association is established by the parent QCustomPlot, which manages all paint buffers (see
   QCustomPlot::setupPaintBuffers).
 
-  \see draw
+   \sa draw
 */
 void QCPLayer::drawToPaintBuffer()
 {
@@ -1157,17 +1157,17 @@ void QCPLayer::drawToPaintBuffer()
 }
 
 /*!
-  If the layer mode (\ref setMode) is set to \ref lmBuffered, this method allows replotting only
+  If the layer mode (  setMode) is set to   lmBuffered, this method allows replotting only
   the layerables on this specific layer, without the need to replot all other layers (as a call to
-  \ref QCustomPlot::replot would do).
+    QCustomPlot::replot would do).
 
-  If the layer mode is \ref lmLogical however, this method simply calls \ref QCustomPlot::replot on
+  If the layer mode is   lmLogical however, this method simply calls   QCustomPlot::replot on
   the parent QCustomPlot instance.
 
   QCustomPlot also makes sure to replot all layers instead of only this one, if the layer ordering
   has changed since the last full replot and the other paint buffers were thus invalidated.
 
-  \see draw
+   \sa draw
 */
 void QCPLayer::replot()
 {
@@ -1193,7 +1193,7 @@ void QCPLayer::replot()
   This function does not change the \a mLayer member of \a layerable to this layer. (Use
   QCPLayerable::setLayer to change the layer of an object, not this function.)
   
-  \see removeChild
+   \sa removeChild
 */
 void QCPLayer::addChild(QCPLayerable *layerable, bool prepend)
 {
@@ -1216,7 +1216,7 @@ void QCPLayer::addChild(QCPLayerable *layerable, bool prepend)
   This function does not change the \a mLayer member of \a layerable. (Use QCPLayerable::setLayer
   to change the layer of an object, not this function.)
   
-  \see addChild
+   \sa addChild
 */
 void QCPLayer::removeChild(QCPLayerable *layerable)
 {
@@ -1250,7 +1250,7 @@ void QCPLayer::removeChild(QCPLayerable *layerable)
 /*! \fn QCPLayerable *QCPLayerable::parentLayerable() const
  
   Returns the parent layerable of this layerable. The parent layerable is used to provide
-  visibility hierarchies in conjunction with the method \ref realVisibility. This way, layerables
+  visibility hierarchies in conjunction with the method   realVisibility. This way, layerables
   only get drawn if their parent layerables are visible, too.
   
   Note that a parent layerable is not necessarily also the QObject parent for memory management.
@@ -1267,10 +1267,10 @@ void QCPLayer::removeChild(QCPLayerable *layerable)
   \internal
   
   This function applies the default antialiasing setting to the specified \a painter, using the
-  function \ref applyAntialiasingHint. It is the antialiasing state the painter is put in, when
-  \ref draw is called on the layerable. If the layerable has multiple entities whose antialiasing
+  function   applyAntialiasingHint. It is the antialiasing state the painter is put in, when
+    draw is called on the layerable. If the layerable has multiple entities whose antialiasing
   setting may be specified individually, this function should set the antialiasing state of the
-  most prominent entity. In this case however, the \ref draw function usually calls the specialized
+  most prominent entity. In this case however, the   draw function usually calls the specialized
   versions of this function before drawing each entity, effectively overriding the setting of the
   default antialiasing hint.
   
@@ -1286,9 +1286,9 @@ void QCPLayer::removeChild(QCPLayerable *layerable)
   setting which can be controlled with QCPItemLine::setAntialiased. (This function is inherited by
   all layerables. The specialized functions, as seen on QCPGraph, must be added explicitly to the
   respective layerable subclass.) Consequently it only has the normal
-  QCPItemLine::applyDefaultAntialiasingHint. The \ref QCPItemLine::draw function doesn't need to
+  QCPItemLine::applyDefaultAntialiasingHint. The   QCPItemLine::draw function doesn't need to
   care about setting any antialiasing states, because the default antialiasing hint is already set
-  on the painter when the \ref draw function is called, and that's the state it wants to draw the
+  on the painter when the   draw function is called, and that's the state it wants to draw the
   line with.
 */
 
@@ -1296,11 +1296,11 @@ void QCPLayer::removeChild(QCPLayerable *layerable)
   \internal
   
   This function draws the layerable with the specified \a painter. It is only called by
-  QCustomPlot, if the layerable is visible (\ref setVisible).
+  QCustomPlot, if the layerable is visible (  setVisible).
   
-  Before this function is called, the painter's antialiasing state is set via \ref
+  Before this function is called, the painter's antialiasing state is set via
   applyDefaultAntialiasingHint, see the documentation there. Further, the clipping rectangle was
-  set to \ref clipRect.
+  set to   clipRect.
 */
 
 /* end documentation of pure virtual functions */
@@ -1311,7 +1311,7 @@ void QCPLayer::removeChild(QCPLayerable *layerable)
   This signal is emitted when the layer of this layerable changes, i.e. this layerable is moved to
   a different layer.
   
-  \see setLayer
+   \sa setLayer
 */
 
 /* end documentation of signals */
@@ -1323,11 +1323,11 @@ void QCPLayer::removeChild(QCPLayerable *layerable)
   derived classes.
   
   If \a plot is provided, it automatically places itself on the layer named \a targetLayer. If \a
-  targetLayer is an empty string, it places itself on the current layer of the plot (see \ref
+  targetLayer is an empty string, it places itself on the current layer of the plot (see
   QCustomPlot::setCurrentLayer).
   
   It is possible to provide 0 as \a plot. In that case, you should assign a parent plot at a later
-  time with \ref initializeParentPlot.
+  time with   initializeParentPlot.
   
   The layerable's parent layerable is set to \a parentLayerable, if provided. Direct layerable
   parents are mainly used to control visibility in a hierarchy of layerables. This means a
@@ -1425,8 +1425,8 @@ void QCPLayerable::setAntialiased(bool enabled)
   whether a layerable shall be drawn or not.
   
   If this layerable has a direct layerable parent (usually set via hierarchies implemented in
-  subclasses, like in the case of \ref QCPLayoutElement), this function returns true only if this
-  layerable has its visibility set to true and the parent layerable's \ref realVisibility returns
+  subclasses, like in the case of   QCPLayoutElement), this function returns true only if this
+  layerable has its visibility set to true and the parent layerable's   realVisibility returns
   true.
 */
 bool QCPLayerable::realVisibility() const
@@ -1442,8 +1442,8 @@ bool QCPLayerable::realVisibility() const
   distance couldn't be determined, -1.0 is returned. Further, if \a onlySelectable is true and the
   object is not selectable, -1.0 is returned, too.
 
-  If the object is represented not by single lines but by an area like a \ref QCPItemText or the
-  bars of a \ref QCPBars plottable, a click inside the area should also be considered a hit. In
+  If the object is represented not by single lines but by an area like a   QCPItemText or the
+  bars of a   QCPBars plottable, a click inside the area should also be considered a hit. In
   these cases this function thus returns a constant value greater zero but still below the parent
   plot's selection tolerance. (typically the selectionTolerance multiplied by 0.99).
   
@@ -1453,20 +1453,20 @@ bool QCPLayerable::realVisibility() const
   
   The actual setting of the selection state is not done by this function. This is handled by the
   parent QCustomPlot when the mouseReleaseEvent occurs, and the finally selected object is notified
-  via the \ref selectEvent/\ref deselectEvent methods.
+  via the   selectEvent/  deselectEvent methods.
   
   \a details is an optional output parameter. Every layerable subclass may place any information
-  in \a details. This information will be passed to \ref selectEvent when the parent QCustomPlot
+  in \a details. This information will be passed to   selectEvent when the parent QCustomPlot
   decides on the basis of this selectTest call, that the object was successfully selected. The
-  subsequent call to \ref selectEvent will carry the \a details. This is useful for multi-part
+  subsequent call to   selectEvent will carry the \a details. This is useful for multi-part
   objects (like QCPAxis). This way, a possibly complex calculation to decide which part was clicked
-  is only done once in \ref selectTest. The result (i.e. the actually clicked part) can then be
-  placed in \a details. So in the subsequent \ref selectEvent, the decision which part was
+  is only done once in   selectTest. The result (i.e. the actually clicked part) can then be
+  placed in \a details. So in the subsequent   selectEvent, the decision which part was
   selected doesn't have to be done a second time for a single selection operation.
   
   You may pass 0 as \a details to indicate that you are not interested in those selection details.
   
-  \see selectEvent, deselectEvent, mousePressEvent, wheelEvent, QCustomPlot::setInteractions
+   \sa selectEvent, deselectEvent, mousePressEvent, wheelEvent, QCustomPlot::setInteractions
 */
 double QCPLayerable::selectTest(const QPointF &pos, bool onlySelectable, QVariant *details) const
 {
@@ -1486,10 +1486,10 @@ double QCPLayerable::selectTest(const QPointF &pos, bool onlySelectable, QVarian
   make \a parentPlot the QObject-parent of this layerable. If you want this, call
   QObject::setParent(\a parentPlot) in addition to this function.
   
-  Further, you will probably want to set a layer (\ref setLayer) after calling this function, to
+  Further, you will probably want to set a layer (  setLayer) after calling this function, to
   make the layerable appear on the QCustomPlot.
   
-  The parent plot change will be propagated to subclasses via a call to \ref parentPlotInitialized
+  The parent plot change will be propagated to subclasses via a call to   parentPlotInitialized
   so they can react accordingly (e.g. also initialize the parent plot of child layerables, like
   QCPLayout does).
 */
@@ -1513,11 +1513,11 @@ void QCPLayerable::initializeParentPlot(QCustomPlot *parentPlot)
   Sets the parent layerable of this layerable to \a parentLayerable. Note that \a parentLayerable does not
   become the QObject-parent (for memory management) of this layerable.
   
-  The parent layerable has influence on the return value of the \ref realVisibility method. Only
-  layerables with a fully visible parent tree will return true for \ref realVisibility, and thus be
+  The parent layerable has influence on the return value of the   realVisibility method. Only
+  layerables with a fully visible parent tree will return true for   realVisibility, and thus be
   drawn.
   
-  \see realVisibility
+   \sa realVisibility
 */
 void QCPLayerable::setParentLayerable(QCPLayerable *parentLayerable)
 {
@@ -1559,7 +1559,7 @@ bool QCPLayerable::moveToLayer(QCPLayer *layer, bool prepend)
 /*! \internal
 
   Sets the QCPainter::setAntialiasing state on the provided \a painter, depending on the \a
-  localAntialiased value as well as the overrides \ref QCustomPlot::setAntialiasedElements and \ref
+  localAntialiased value as well as the overrides   QCustomPlot::setAntialiasedElements and
   QCustomPlot::setNotAntialiasedElements. Which override enum this function takes into account is
   controlled via \a overrideElement.
 */
@@ -1575,19 +1575,19 @@ void QCPLayerable::applyAntialiasingHint(QCPPainter *painter, bool localAntialia
 
 /*! \internal
 
-  This function is called by \ref initializeParentPlot, to allow subclasses to react on the setting
+  This function is called by   initializeParentPlot, to allow subclasses to react on the setting
   of a parent plot. This is the case when 0 was passed as parent plot in the constructor, and the
   parent plot is set at a later time.
   
   For example, QCPLayoutElement/QCPLayout hierarchies may be created independently of any
   QCustomPlot at first. When they are then added to a layout inside the QCustomPlot, the top level
-  element of the hierarchy gets its parent plot initialized with \ref initializeParentPlot. To
+  element of the hierarchy gets its parent plot initialized with   initializeParentPlot. To
   propagate the parent plot to all the children of the hierarchy, the top level element then uses
   this function to pass the parent plot on to its child elements.
   
   The default implementation does nothing.
   
-  \see initializeParentPlot
+   \sa initializeParentPlot
 */
 void QCPLayerable::parentPlotInitialized(QCustomPlot *parentPlot)
 {
@@ -1597,13 +1597,13 @@ void QCPLayerable::parentPlotInitialized(QCustomPlot *parentPlot)
 /*! \internal
 
   Returns the selection category this layerable shall belong to. The selection category is used in
-  conjunction with \ref QCustomPlot::setInteractions to control which objects are selectable and
+  conjunction with   QCustomPlot::setInteractions to control which objects are selectable and
   which aren't.
   
-  Subclasses that don't fit any of the normal \ref QCP::Interaction values can use \ref
+  Subclasses that don't fit any of the normal   QCP::Interaction values can use
   QCP::iSelectOther. This is what the default implementation returns.
   
-  \see QCustomPlot::setInteractions
+   \sa QCustomPlot::setInteractions
 */
 QCP::Interaction QCPLayerable::selectionCategory() const
 {
@@ -1634,13 +1634,13 @@ QRect QCPLayerable::clipRect() const
   implementation does nothing.
   
   \a event is the mouse event that caused the selection. \a additive indicates, whether the user
-  was holding the multi-select-modifier while performing the selection (see \ref
+  was holding the multi-select-modifier while performing the selection (see
   QCustomPlot::setMultiSelectModifier). if \a additive is true, the selection state must be toggled
   (i.e. become selected when unselected and unselected when selected).
   
-  Every selectEvent is preceded by a call to \ref selectTest, which has returned positively (i.e.
+  Every selectEvent is preceded by a call to   selectTest, which has returned positively (i.e.
   returned a value greater than 0 and less than the selection tolerance of the parent QCustomPlot).
-  The \a details data you output from \ref selectTest is fed back via \a details here. You may
+  The \a details data you output from   selectTest is fed back via \a details here. You may
   use it to transport any kind of information from the selectTest to the possibly subsequent
   selectEvent. Usually \a details is used to transfer which part was clicked, if it is a layerable
   that has multiple individually selectable parts (like QCPAxis). This way selectEvent doesn't need
@@ -1653,7 +1653,7 @@ QRect QCPLayerable::clipRect() const
   selection toggles. If \a additive is false, \a selectionStateChanged is only set to true, if the
   layerable was previously unselected and now is switched to the selected state.
   
-  \see selectTest, deselectEvent
+   \sa selectTest, deselectEvent
 */
 void QCPLayerable::selectEvent(QMouseEvent *event, bool additive, const QVariant &details, bool *selectionStateChanged)
 {
@@ -1666,14 +1666,14 @@ void QCPLayerable::selectEvent(QMouseEvent *event, bool additive, const QVariant
 /*! \internal
   
   This event is called when the layerable shall be deselected, either as consequence of a user
-  interaction or a call to \ref QCustomPlot::deselectAll. Subclasses should react to it by
+  interaction or a call to   QCustomPlot::deselectAll. Subclasses should react to it by
   unsetting their selection appropriately.
   
-  just as in \ref selectEvent, the output parameter \a selectionStateChanged (if non-null), must
+  just as in   selectEvent, the output parameter \a selectionStateChanged (if non-null), must
   return true or false when the selection state of this layerable has changed or not changed,
   respectively.
   
-  \see selectTest, selectEvent
+   \sa selectTest, selectEvent
 */
 void QCPLayerable::deselectEvent(bool *selectionStateChanged)
 {
@@ -1682,28 +1682,28 @@ void QCPLayerable::deselectEvent(bool *selectionStateChanged)
 
 /*!
   This event gets called when the user presses a mouse button while the cursor is over the
-  layerable. Whether a cursor is over the layerable is decided by a preceding call to \ref
+  layerable. Whether a cursor is over the layerable is decided by a preceding call to
   selectTest.
 
   The current pixel position of the cursor on the QCustomPlot widget is accessible via \c
   event->pos(). The parameter \a details contains layerable-specific details about the hit, which
-  were generated in the previous call to \ref selectTest. For example, One-dimensional plottables
-  like \ref QCPGraph or \ref QCPBars convey the clicked data point in the \a details parameter, as
-  \ref QCPDataSelection packed as QVariant. Multi-part objects convey the specific \c
-  SelectablePart that was hit (e.g. \ref QCPAxis::SelectablePart in the case of axes).
+  were generated in the previous call to   selectTest. For example, One-dimensional plottables
+  like   QCPGraph or   QCPBars convey the clicked data point in the \a details parameter, as
+    QCPDataSelection packed as QVariant. Multi-part objects convey the specific \c
+  SelectablePart that was hit (e.g.   QCPAxis::SelectablePart in the case of axes).
 
   QCustomPlot uses an event propagation system that works the same as Qt's system. If your
-  layerable doesn't reimplement the \ref mousePressEvent or explicitly calls \c event->ignore() in
+  layerable doesn't reimplement the   mousePressEvent or explicitly calls \c event->ignore() in
   its reimplementation, the event will be propagated to the next layerable in the stacking order.
 
-  Once a layerable has accepted the \ref mousePressEvent, it is considered the mouse grabber and
-  will receive all following calls to \ref mouseMoveEvent or \ref mouseReleaseEvent for this mouse
+  Once a layerable has accepted the   mousePressEvent, it is considered the mouse grabber and
+  will receive all following calls to   mouseMoveEvent or   mouseReleaseEvent for this mouse
   interaction (a "mouse interaction" in this context ends with the release).
 
   The default implementation does nothing except explicitly ignoring the event with \c
   event->ignore().
 
-  \see mouseMoveEvent, mouseReleaseEvent, mouseDoubleClickEvent, wheelEvent
+   \sa mouseMoveEvent, mouseReleaseEvent, mouseDoubleClickEvent, wheelEvent
 */
 void QCPLayerable::mousePressEvent(QMouseEvent *event, const QVariant &details)
 {
@@ -1713,15 +1713,15 @@ void QCPLayerable::mousePressEvent(QMouseEvent *event, const QVariant &details)
 
 /*!
   This event gets called when the user moves the mouse while holding a mouse button, after this
-  layerable has become the mouse grabber by accepting the preceding \ref mousePressEvent.
+  layerable has become the mouse grabber by accepting the preceding   mousePressEvent.
 
   The current pixel position of the cursor on the QCustomPlot widget is accessible via \c
-  event->pos(). The parameter \a startPos indicates the position where the initial \ref
+  event->pos(). The parameter \a startPos indicates the position where the initial
   mousePressEvent occured, that started the mouse interaction.
 
   The default implementation does nothing.
 
-  \see mousePressEvent, mouseReleaseEvent, mouseDoubleClickEvent, wheelEvent
+   \sa mousePressEvent, mouseReleaseEvent, mouseDoubleClickEvent, wheelEvent
 */
 void QCPLayerable::mouseMoveEvent(QMouseEvent *event, const QPointF &startPos)
 {
@@ -1731,15 +1731,15 @@ void QCPLayerable::mouseMoveEvent(QMouseEvent *event, const QPointF &startPos)
 
 /*!
   This event gets called when the user releases the mouse button, after this layerable has become
-  the mouse grabber by accepting the preceding \ref mousePressEvent.
+  the mouse grabber by accepting the preceding   mousePressEvent.
 
   The current pixel position of the cursor on the QCustomPlot widget is accessible via \c
-  event->pos(). The parameter \a startPos indicates the position where the initial \ref
+  event->pos(). The parameter \a startPos indicates the position where the initial
   mousePressEvent occured, that started the mouse interaction.
 
   The default implementation does nothing.
 
-  \see mousePressEvent, mouseMoveEvent, mouseDoubleClickEvent, wheelEvent
+   \sa mousePressEvent, mouseMoveEvent, mouseDoubleClickEvent, wheelEvent
 */
 void QCPLayerable::mouseReleaseEvent(QMouseEvent *event, const QPointF &startPos)
 {
@@ -1750,28 +1750,28 @@ void QCPLayerable::mouseReleaseEvent(QMouseEvent *event, const QPointF &startPos
 /*!
   This event gets called when the user presses the mouse button a second time in a double-click,
   while the cursor is over the layerable. Whether a cursor is over the layerable is decided by a
-  preceding call to \ref selectTest.
+  preceding call to   selectTest.
 
-  The \ref mouseDoubleClickEvent is called instead of the second \ref mousePressEvent. So in the
+  The   mouseDoubleClickEvent is called instead of the second   mousePressEvent. So in the
   case of a double-click, the event succession is
   <i>pressEvent &ndash; releaseEvent &ndash; doubleClickEvent &ndash; releaseEvent</i>.
 
   The current pixel position of the cursor on the QCustomPlot widget is accessible via \c
   event->pos(). The parameter \a details contains layerable-specific details about the hit, which
-  were generated in the previous call to \ref selectTest. For example, One-dimensional plottables
-  like \ref QCPGraph or \ref QCPBars convey the clicked data point in the \a details parameter, as
-  \ref QCPDataSelection packed as QVariant. Multi-part objects convey the specific \c
-  SelectablePart that was hit (e.g. \ref QCPAxis::SelectablePart in the case of axes).
+  were generated in the previous call to   selectTest. For example, One-dimensional plottables
+  like   QCPGraph or   QCPBars convey the clicked data point in the \a details parameter, as
+    QCPDataSelection packed as QVariant. Multi-part objects convey the specific \c
+  SelectablePart that was hit (e.g.   QCPAxis::SelectablePart in the case of axes).
 
-  Similarly to \ref mousePressEvent, once a layerable has accepted the \ref mouseDoubleClickEvent,
-  it is considered the mouse grabber and will receive all following calls to \ref mouseMoveEvent
-  and \ref mouseReleaseEvent for this mouse interaction (a "mouse interaction" in this context ends
+  Similarly to   mousePressEvent, once a layerable has accepted the   mouseDoubleClickEvent,
+  it is considered the mouse grabber and will receive all following calls to   mouseMoveEvent
+  and   mouseReleaseEvent for this mouse interaction (a "mouse interaction" in this context ends
   with the release).
 
   The default implementation does nothing except explicitly ignoring the event with \c
   event->ignore().
 
-  \see mousePressEvent, mouseMoveEvent, mouseReleaseEvent, wheelEvent
+   \sa mousePressEvent, mouseMoveEvent, mouseReleaseEvent, wheelEvent
 */
 void QCPLayerable::mouseDoubleClickEvent(QMouseEvent *event, const QVariant &details)
 {
@@ -1781,7 +1781,7 @@ void QCPLayerable::mouseDoubleClickEvent(QMouseEvent *event, const QVariant &det
 
 /*!
   This event gets called when the user turns the mouse scroll wheel while the cursor is over the
-  layerable. Whether a cursor is over the layerable is decided by a preceding call to \ref
+  layerable. Whether a cursor is over the layerable is decided by a preceding call to
   selectTest.
 
   The current pixel position of the cursor on the QCustomPlot widget is accessible via \c
@@ -1794,7 +1794,7 @@ void QCPLayerable::mouseDoubleClickEvent(QMouseEvent *event, const QVariant &det
 
   The default implementation does nothing.
 
-  \see mousePressEvent, mouseMoveEvent, mouseReleaseEvent, mouseDoubleClickEvent
+   \sa mousePressEvent, mouseMoveEvent, mouseReleaseEvent, mouseDoubleClickEvent
 */
 void QCPLayerable::wheelEvent(QWheelEvent *event)
 {
@@ -1815,7 +1815,7 @@ void QCPLayerable::wheelEvent(QWheelEvent *event)
   contains a \a lower and \a upper double value and provides convenience input, output and
   modification functions.
   
-  \see QCPAxis::setRange
+   \sa QCPAxis::setRange
 */
 
 /* start of documentation of inline functions */
@@ -1872,7 +1872,7 @@ void QCPLayerable::wheelEvent(QWheelEvent *event)
   values that will appear in the plot)! It is intended only as a bound to compare against, e.g. to
   prevent axis ranges from obtaining underflowing ranges.
 
-  \see validRange, maxRange
+   \sa validRange, maxRange
 */
 const double QCPRange::minRange = 1e-280;
 
@@ -1885,7 +1885,7 @@ const double QCPRange::minRange = 1e-280;
   values that will appear in the plot)! It is intended only as a bound to compare against, e.g. to
   prevent axis ranges from obtaining overflowing ranges.
 
-  \see validRange, minRange
+   \sa validRange, minRange
 */
 const double QCPRange::maxRange = 1e250;
 
@@ -1902,7 +1902,7 @@ QCPRange::QCPRange() :
 
   Constructs a range with the specified \a lower and \a upper values.
 
-  The resulting range will be normalized (see \ref normalize), so if \a lower is not numerically
+  The resulting range will be normalized (see   normalize), so if \a lower is not numerically
   smaller than \a upper, they will be swapped.
 */
 QCPRange::QCPRange(double lower, double upper) :
@@ -1915,14 +1915,14 @@ QCPRange::QCPRange(double lower, double upper) :
 /*! \overload
 
   Expands this range such that \a otherRange is contained in the new range. It is assumed that both
-  this range and \a otherRange are normalized (see \ref normalize).
+  this range and \a otherRange are normalized (see   normalize).
 
   If this range contains NaN as lower or upper bound, it will be replaced by the respective bound
   of \a otherRange.
 
   If \a otherRange is already inside the current range, this function does nothing.
 
-  \see expanded
+   \sa expanded
 */
 void QCPRange::expand(const QCPRange &otherRange)
 {
@@ -1935,14 +1935,14 @@ void QCPRange::expand(const QCPRange &otherRange)
 /*! \overload
 
   Expands this range such that \a includeCoord is contained in the new range. It is assumed that
-  this range is normalized (see \ref normalize).
+  this range is normalized (see   normalize).
 
   If this range contains NaN as lower or upper bound, the respective bound will be set to \a
   includeCoord.
 
   If \a includeCoord is already inside the current range, this function does nothing.
 
-  \see expand
+   \sa expand
 */
 void QCPRange::expand(double includeCoord)
 {
@@ -1956,12 +1956,12 @@ void QCPRange::expand(double includeCoord)
 /*! \overload
 
   Returns an expanded range that contains this and \a otherRange. It is assumed that both this
-  range and \a otherRange are normalized (see \ref normalize).
+  range and \a otherRange are normalized (see   normalize).
 
   If this range contains NaN as lower or upper bound, the returned range's bound will be taken from
   \a otherRange.
 
-  \see expand
+   \sa expand
 */
 QCPRange QCPRange::expanded(const QCPRange &otherRange) const
 {
@@ -1973,12 +1973,12 @@ QCPRange QCPRange::expanded(const QCPRange &otherRange) const
 /*! \overload
 
   Returns an expanded range that includes the specified \a includeCoord. It is assumed that this
-  range is normalized (see \ref normalize).
+  range is normalized (see   normalize).
 
   If this range contains NaN as lower or upper bound, the returned range's bound will be set to \a
   includeCoord.
 
-  \see expand
+   \sa expand
 */
 QCPRange QCPRange::expanded(double includeCoord) const
 {
@@ -1991,8 +1991,8 @@ QCPRange QCPRange::expanded(double includeCoord) const
   Returns this range, possibly modified to not exceed the bounds provided as \a lowerBound and \a
   upperBound. If possible, the size of the current range is preserved in the process.
   
-  If the range shall only be bounded at the lower side, you can set \a upperBound to \ref
-  QCPRange::maxRange. If it shall only be bounded at the upper side, set \a lowerBound to -\ref
+  If the range shall only be bounded at the lower side, you can set \a upperBound to
+  QCPRange::maxRange. If it shall only be bounded at the upper side, set \a lowerBound to -
   QCPRange::maxRange.
 */
 QCPRange QCPRange::bounded(double lowerBound, double upperBound) const
@@ -2135,25 +2135,25 @@ bool QCPRange::validRange(const QCPRange &range)
 /*! \class QCPDataRange
   \brief Describes a data range given by begin and end index
   
-  QCPDataRange holds two integers describing the begin (\ref setBegin) and end (\ref setEnd) index
+  QCPDataRange holds two integers describing the begin (  setBegin) and end (  setEnd) index
   of a contiguous set of data points. The end index points to the data point above the last data point that's part of
   the data range, similarly to the nomenclature used in standard iterators.
   
   Data Ranges are not bound to a certain plottable, thus they can be freely exchanged, created and
-  modified. If a non-contiguous data set shall be described, the class \ref QCPDataSelection is
-  used, which holds and manages multiple instances of \ref QCPDataRange. In most situations, \ref
+  modified. If a non-contiguous data set shall be described, the class   QCPDataSelection is
+  used, which holds and manages multiple instances of   QCPDataRange. In most situations,
   QCPDataSelection is thus used.
   
-  Both \ref QCPDataRange and \ref QCPDataSelection offer convenience methods to work with them,
-  e.g. \ref bounded, \ref expanded, \ref intersects, \ref intersection, \ref adjusted, \ref
-  contains. Further, addition and subtraction operators (defined in \ref QCPDataSelection) can be
+  Both   QCPDataRange and   QCPDataSelection offer convenience methods to work with them,
+  e.g.   bounded,   expanded,   intersects,   intersection,   adjusted,
+  contains. Further, addition and subtraction operators (defined in   QCPDataSelection) can be
   used to join/subtract data ranges and data selections (or mixtures), to retrieve a corresponding
-  \ref QCPDataSelection.
+    QCPDataSelection.
   
-  %QCustomPlot's \ref dataselection "data selection mechanism" is based on \ref QCPDataSelection and
+  %QCustomPlot's   dataselection "data selection mechanism" is based on   QCPDataSelection and
   QCPDataRange.
   
-  \note Do not confuse \ref QCPDataRange with \ref QCPRange. A \ref QCPRange describes an interval
+  \note Do not confuse   QCPDataRange with   QCPRange. A   QCPRange describes an interval
   in floating point plot coordinates, e.g. the current axis range.
 */
 
@@ -2164,12 +2164,12 @@ bool QCPRange::validRange(const QCPRange &range)
   Returns the number of data points described by this data range. This is equal to the end index
   minus the begin index.
   
-  \see length
+   \sa length
 */
 
 /*! \fn int QCPDataRange::length() const
   
-  Returns the number of data points described by this data range. Equivalent to \ref size.
+  Returns the number of data points described by this data range. Equivalent to   size.
 */
 
 /*! \fn void QCPDataRange::setBegin(int begin)
@@ -2177,9 +2177,9 @@ bool QCPRange::validRange(const QCPRange &range)
   Sets the begin of this data range. The \a begin index points to the first data point that is part
   of the data range.
   
-  No checks or corrections are made to ensure the resulting range is valid (\ref isValid).
+  No checks or corrections are made to ensure the resulting range is valid (  isValid).
   
-  \see setEnd
+   \sa setEnd
 */
 
 /*! \fn void QCPDataRange::setEnd(int end)
@@ -2187,9 +2187,9 @@ bool QCPRange::validRange(const QCPRange &range)
   Sets the end of this data range. The \a end index points to the data point just above the last
   data point that is part of the data range.
   
-  No checks or corrections are made to ensure the resulting range is valid (\ref isValid).
+  No checks or corrections are made to ensure the resulting range is valid (  isValid).
   
-  \see setBegin
+   \sa setBegin
 */
 
 /*! \fn bool QCPDataRange::isValid() const
@@ -2201,14 +2201,14 @@ bool QCPRange::validRange(const QCPRange &range)
   (unless they are themselves fed with invalid ranges). Do not pass invalid ranges to QCustomPlot's
   methods. The invalid range is not inherently prevented in QCPDataRange, to allow temporary
   invalid begin/end values while manipulating the range. An invalid range is not necessarily empty
-  (\ref isEmpty), since its \ref length can be negative and thus non-zero.
+  (  isEmpty), since its   length can be negative and thus non-zero.
 */
 
 /*! \fn bool QCPDataRange::isEmpty() const
   
   Returns whether this range is empty, i.e. whether its begin index equals its end index.
   
-  \see size, length
+   \sa size, length
 */
 
 /*! \fn QCPDataRange QCPDataRange::adjusted(int changeBegin, int changeEnd) const
@@ -2231,7 +2231,7 @@ QCPDataRange::QCPDataRange() :
 /*!
   Creates a QCPDataRange, initialized with the specified \a begin and \a end.
   
-  No checks or corrections are made to ensure the resulting range is valid (\ref isValid).
+  No checks or corrections are made to ensure the resulting range is valid (  isValid).
 */
 QCPDataRange::QCPDataRange(int begin, int end) :
   mBegin(begin),
@@ -2243,9 +2243,9 @@ QCPDataRange::QCPDataRange(int begin, int end) :
   Returns a data range that matches this data range, except that parts exceeding \a other are
   excluded.
   
-  This method is very similar to \ref intersection, with one distinction: If this range and the \a
+  This method is very similar to   intersection, with one distinction: If this range and the \a
   other range share no intersection, the returned data range will be empty with begin and end set
-  to the respective boundary side of \a other, at which this range is residing. (\ref intersection
+  to the respective boundary side of \a other, at which this range is residing. (  intersection
   would just return a range with begin and end set to 0.)
 */
 QCPDataRange QCPDataRange::bounded(const QCPDataRange &other) const
@@ -2272,12 +2272,12 @@ QCPDataRange QCPDataRange::expanded(const QCPDataRange &other) const
 /*!
   Returns the data range which is contained in both this data range and \a other.
   
-  This method is very similar to \ref bounded, with one distinction: If this range and the \a other
+  This method is very similar to   bounded, with one distinction: If this range and the \a other
   range share no intersection, the returned data range will be empty with begin and end set to 0.
-  (\ref bounded would return a range with begin and end set to one of the boundaries of \a other,
+  (  bounded would return a range with begin and end set to one of the boundaries of \a other,
   depending on which side this range is on.)
   
-  \see QCPDataSelection::intersection
+   \sa QCPDataSelection::intersection
 */
 QCPDataRange QCPDataRange::intersection(const QCPDataRange &other) const
 {
@@ -2291,7 +2291,7 @@ QCPDataRange QCPDataRange::intersection(const QCPDataRange &other) const
 /*!
   Returns whether this data range and \a other share common data points.
   
-  \see intersection, contains
+   \sa intersection, contains
 */
 bool QCPDataRange::intersects(const QCPDataRange &other) const
 {
@@ -2302,7 +2302,7 @@ bool QCPDataRange::intersects(const QCPDataRange &other) const
 /*!
   Returns whether all data points described by this data range are also in \a other.
   
-  \see intersects
+   \sa intersects
 */
 bool QCPDataRange::contains(const QCPDataRange &other) const
 {
@@ -2322,27 +2322,27 @@ bool QCPDataRange::contains(const QCPDataRange &other) const
   disjoint) set of data selection.
   
   The data selection can be modified with addition and subtraction operators which take
-  QCPDataSelection and QCPDataRange instances, as well as methods such as \ref addDataRange and
-  \ref clear. Read access is provided by \ref dataRange, \ref dataRanges, \ref dataRangeCount, etc.
+  QCPDataSelection and QCPDataRange instances, as well as methods such as   addDataRange and
+    clear. Read access is provided by   dataRange,   dataRanges,   dataRangeCount, etc.
   
-  The method \ref simplify is used to join directly adjacent or even overlapping QCPDataRange
+  The method   simplify is used to join directly adjacent or even overlapping QCPDataRange
   instances. QCPDataSelection automatically simplifies when using the addition/subtraction
-  operators. The only case when \ref simplify is left to the user, is when calling \ref
+  operators. The only case when   simplify is left to the user, is when calling
   addDataRange, with the parameter \a simplify explicitly set to false. This is useful if many data
   ranges will be added to the selection successively and the overhead for simplifying after each
-  iteration shall be avoided. In this case, you should make sure to call \ref simplify after
+  iteration shall be avoided. In this case, you should make sure to call   simplify after
   completing the operation.
   
-  Use \ref enforceType to bring the data selection into a state complying with the constraints for
-  selections defined in \ref QCP::SelectionType.
+  Use   enforceType to bring the data selection into a state complying with the constraints for
+  selections defined in   QCP::SelectionType.
   
-  %QCustomPlot's \ref dataselection "data selection mechanism" is based on QCPDataSelection and
+  %QCustomPlot's   dataselection "data selection mechanism" is based on QCPDataSelection and
   QCPDataRange.
   
   \section qcpdataselection-iterating Iterating over a data selection
   
   As an example, the following code snippet calculates the average value of a graph's data
-  \ref QCPAbstractPlottable::selection "selection":
+    QCPAbstractPlottable::selection "selection":
   
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpdataselection-iterating-1
   
@@ -2352,19 +2352,19 @@ bool QCPDataRange::contains(const QCPDataRange &other) const
 
 /*! \fn int QCPDataSelection::dataRangeCount() const
   
-  Returns the number of ranges that make up the data selection. The ranges can be accessed by \ref
+  Returns the number of ranges that make up the data selection. The ranges can be accessed by
   dataRange via their index.
   
-  \see dataRange, dataPointCount
+   \sa dataRange, dataPointCount
 */
 
 /*! \fn QList<QCPDataRange> QCPDataSelection::dataRanges() const
   
   Returns all data ranges that make up the data selection. If the data selection is simplified (the
-  usual state of the selection, see \ref simplify), the ranges are sorted by ascending data point
+  usual state of the selection, see   simplify), the ranges are sorted by ascending data point
   index.
   
-  \see dataRange
+   \sa dataRange
 */
 
 /*! \fn bool QCPDataSelection::isEmpty() const
@@ -2372,7 +2372,7 @@ bool QCPDataRange::contains(const QCPDataRange &other) const
   Returns true if there are no data ranges, and thus no data points, in this QCPDataSelection
   instance.
   
-  \see dataRangeCount
+   \sa dataRangeCount
 */
 
 /* end documentation of inline functions */
@@ -2397,7 +2397,7 @@ QCPDataSelection::QCPDataSelection(const QCPDataRange &range)
   and end indices) to \a other.
 
   Note that both data selections must be in simplified state (the usual state of the selection, see
-  \ref simplify) for this operator to return correct results.
+    simplify) for this operator to return correct results.
 */
 bool QCPDataSelection::operator==(const QCPDataSelection &other) const
 {
@@ -2413,7 +2413,7 @@ bool QCPDataSelection::operator==(const QCPDataSelection &other) const
 
 /*!
   Adds the data selection of \a other to this data selection, and then simplifies this data
-  selection (see \ref simplify).
+  selection (see   simplify).
 */
 QCPDataSelection &QCPDataSelection::operator+=(const QCPDataSelection &other)
 {
@@ -2424,7 +2424,7 @@ QCPDataSelection &QCPDataSelection::operator+=(const QCPDataSelection &other)
 
 /*!
   Adds the data range \a other to this data selection, and then simplifies this data selection (see
-  \ref simplify).
+    simplify).
 */
 QCPDataSelection &QCPDataSelection::operator+=(const QCPDataRange &other)
 {
@@ -2504,10 +2504,10 @@ int QCPDataSelection::dataPointCount() const
 /*!
   Returns the data range with the specified \a index.
   
-  If the data selection is simplified (the usual state of the selection, see \ref simplify), the
+  If the data selection is simplified (the usual state of the selection, see   simplify), the
   ranges are sorted by ascending data point index.
   
-  \see dataRangeCount
+   \sa dataRangeCount
 */
 QCPDataRange QCPDataSelection::dataRange(int index) const
 {
@@ -2522,7 +2522,7 @@ QCPDataRange QCPDataSelection::dataRange(int index) const
 }
 
 /*!
-  Returns a \ref QCPDataRange which spans the entire data selection, including possible
+  Returns a   QCPDataRange which spans the entire data selection, including possible
   intermediate segments which are not part of the original data selection.
 */
 QCPDataRange QCPDataSelection::span() const
@@ -2537,7 +2537,7 @@ QCPDataRange QCPDataSelection::span() const
   Adds the given \a dataRange to this data selection. This is equivalent to the += operator but
   allows disabling immediate simplification by setting \a simplify to false. This can improve
   performance if adding a very large amount of data ranges successively. In this case, make sure to
-  call \ref simplify manually, after the operation.
+  call   simplify manually, after the operation.
 */
 void QCPDataSelection::addDataRange(const QCPDataRange &dataRange, bool simplify)
 {
@@ -2549,7 +2549,7 @@ void QCPDataSelection::addDataRange(const QCPDataRange &dataRange, bool simplify
 /*!
   Removes all data ranges. The data selection then contains no data points.
   
-  \ref isEmpty
+    isEmpty
 */
 void QCPDataSelection::clear()
 {
@@ -2562,7 +2562,7 @@ void QCPDataSelection::clear()
   prevents possible double-counting when iterating over the data points held by the data ranges.
 
   This method is automatically called when using the addition/subtraction operators. The only case
-  when \ref simplify is left to the user, is when calling \ref addDataRange, with the parameter \a
+  when   simplify is left to the user, is when calling   addDataRange, with the parameter \a
   simplify explicitly set to false.
 */
 void QCPDataSelection::simplify()
@@ -2594,13 +2594,13 @@ void QCPDataSelection::simplify()
 
 /*!
   Makes sure this data selection conforms to the specified \a type selection type. Before the type
-  is enforced, \ref simplify is called.
+  is enforced,   simplify is called.
   
   Depending on \a type, enforcing means adding new data points that were previously not part of the
   selection, or removing data points from the selection. If the current selection already conforms
   to \a type, the data selection is not changed.
   
-  \see QCP::SelectionType
+   \sa QCP::SelectionType
 */
 void QCPDataSelection::enforceType(QCP::SelectionType type)
 {
@@ -2646,7 +2646,7 @@ void QCPDataSelection::enforceType(QCP::SelectionType type)
   Returns true if the data selection \a other is contained entirely in this data selection, i.e.
   all data point indices that are in \a other are also in this data selection.
   
-  \see QCPDataRange::contains
+   \sa QCPDataRange::contains
 */
 bool QCPDataSelection::contains(const QCPDataSelection &other) const
 {
@@ -2669,7 +2669,7 @@ bool QCPDataSelection::contains(const QCPDataSelection &other) const
   data range \a other.
 
   A common use case is to limit an unknown data selection to the valid range of a data container,
-  using \ref QCPDataContainer::dataRange as \a other. One can then safely iterate over the returned
+  using   QCPDataContainer::dataRange as \a other. One can then safely iterate over the returned
   data selection without exceeding the data container's bounds.
 */
 QCPDataSelection QCPDataSelection::intersection(const QCPDataRange &other) const
@@ -2696,7 +2696,7 @@ QCPDataSelection QCPDataSelection::intersection(const QCPDataSelection &other) c
 
 /*!
   Returns a data selection which is the exact inverse of this data selection, with \a outerRange
-  defining the base range on which to invert. If \a outerRange is smaller than the \ref span of
+  defining the base range on which to invert. If \a outerRange is smaller than the   span of
   this data selection, it is expanded accordingly.
 
   For example, this method can be used to retrieve all unselected segments by setting \a outerRange
@@ -2735,23 +2735,23 @@ QCPDataSelection QCPDataSelection::inverse(const QCPDataRange &outerRange) const
 /*! \class QCPSelectionRect
   \brief Provides rect/rubber-band data selection and range zoom interaction
   
-  QCPSelectionRect is used by QCustomPlot when the \ref QCustomPlot::setSelectionRectMode is not
-  \ref QCP::srmNone. When the user drags the mouse across the plot, the current selection rect
-  instance (\ref QCustomPlot::setSelectionRect) is forwarded these events and makes sure an
+  QCPSelectionRect is used by QCustomPlot when the   QCustomPlot::setSelectionRectMode is not
+    QCP::srmNone. When the user drags the mouse across the plot, the current selection rect
+  instance (  QCustomPlot::setSelectionRect) is forwarded these events and makes sure an
   according rect shape is drawn. At the begin, during, and after completion of the interaction, it
-  emits the corresponding signals \ref started, \ref changed, \ref canceled, and \ref accepted.
+  emits the corresponding signals   started,   changed,   canceled, and   accepted.
   
   The QCustomPlot instance connects own slots to the current selection rect instance, in order to
   react to an accepted selection rect interaction accordingly.
   
-  \ref isActive can be used to check whether the selection rect is currently active. An ongoing
-  selection interaction can be cancelled programmatically via calling \ref cancel at any time.
+    isActive can be used to check whether the selection rect is currently active. An ongoing
+  selection interaction can be cancelled programmatically via calling   cancel at any time.
   
-  The appearance of the selection rect can be controlled via \ref setPen and \ref setBrush.
+  The appearance of the selection rect can be controlled via   setPen and   setBrush.
 
   If you wish to provide custom behaviour, e.g. a different visual representation of the selection
-  rect (\ref QCPSelectionRect::draw), you can subclass QCPSelectionRect and pass an instance of
-  your subclass to \ref QCustomPlot::setSelectionRect.
+  rect (  QCPSelectionRect::draw), you can subclass QCPSelectionRect and pass an instance of
+  your subclass to   QCustomPlot::setSelectionRect.
 */
 
 /* start of documentation of inline functions */
@@ -2761,7 +2761,7 @@ QCPDataSelection QCPDataSelection::inverse(const QCPDataRange &outerRange) const
   Returns true if there is currently a selection going on, i.e. the user has started dragging a
   selection rect, but hasn't released the mouse button yet.
     
-  \see cancel
+   \sa cancel
 */
 
 /* end of documentation of inline functions */
@@ -2785,7 +2785,7 @@ QCPDataSelection QCPDataSelection::inverse(const QCPDataRange &outerRange) const
 /*! \fn void QCPSelectionRect::canceled(const QRect &rect, QInputEvent *event);
   
   This signal is emitted when the selection interaction was cancelled. Note that \a event is 0 if
-  the selection interaction was cancelled programmatically, by a call to \ref cancel.
+  the selection interaction was cancelled programmatically, by a call to   cancel.
   
   The user may cancel the selection interaction by pressing the escape key. In this case, \a event
   holds the respective input event.
@@ -2807,7 +2807,7 @@ QCPDataSelection QCPDataSelection::inverse(const QCPDataRange &outerRange) const
 
 /*!
   Creates a new QCPSelectionRect instance. To make QCustomPlot use the selection rect instance,
-  pass it to \ref QCustomPlot::setSelectionRect. \a parentPlot should be set to the same
+  pass it to   QCustomPlot::setSelectionRect. \a parentPlot should be set to the same
   QCustomPlot widget.
 */
 QCPSelectionRect::QCPSelectionRect(QCustomPlot *parentPlot) :
@@ -2845,7 +2845,7 @@ QCPRange QCPSelectionRect::range(const QCPAxis *axis) const
 /*!
   Sets the pen that will be used to draw the selection rect outline.
   
-  \see setBrush
+   \sa setBrush
 */
 void QCPSelectionRect::setPen(const QPen &pen)
 {
@@ -2856,7 +2856,7 @@ void QCPSelectionRect::setPen(const QPen &pen)
   Sets the brush that will be used to fill the selection rect. By default the selection rect is not
   filled, i.e. \a brush is <tt>Qt::NoBrush</tt>.
   
-  \see setPen
+   \sa setPen
 */
 void QCPSelectionRect::setBrush(const QBrush &brush)
 {
@@ -2864,8 +2864,8 @@ void QCPSelectionRect::setBrush(const QBrush &brush)
 }
 
 /*!
-  If there is currently a selection interaction going on (\ref isActive), the interaction is
-  canceled. The selection rect will emit the \ref canceled signal.
+  If there is currently a selection interaction going on (  isActive), the interaction is
+  canceled. The selection rect will emit the   canceled signal.
 */
 void QCPSelectionRect::cancel()
 {
@@ -2880,7 +2880,7 @@ void QCPSelectionRect::cancel()
   
   This method is called by QCustomPlot to indicate that a selection rect interaction was initiated.
   The default implementation sets the selection rect to active, initializes the selection rect
-  geometry and emits the \ref started signal.
+  geometry and emits the   started signal.
 */
 void QCPSelectionRect::startSelection(QMouseEvent *event)
 {
@@ -2892,7 +2892,7 @@ void QCPSelectionRect::startSelection(QMouseEvent *event)
 /*! \internal
   
   This method is called by QCustomPlot to indicate that an ongoing selection rect interaction needs
-  to update its geometry. The default implementation updates the rect and emits the \ref changed
+  to update its geometry. The default implementation updates the rect and emits the   changed
   signal.
 */
 void QCPSelectionRect::moveSelection(QMouseEvent *event)
@@ -2906,7 +2906,7 @@ void QCPSelectionRect::moveSelection(QMouseEvent *event)
   
   This method is called by QCustomPlot to indicate that an ongoing selection rect interaction has
   finished by the user releasing the mouse button. The default implementation deactivates the
-  selection rect and emits the \ref accepted signal.
+  selection rect and emits the   accepted signal.
 */
 void QCPSelectionRect::endSelection(QMouseEvent *event)
 {
@@ -2918,7 +2918,7 @@ void QCPSelectionRect::endSelection(QMouseEvent *event)
 /*! \internal
   
   This method is called by QCustomPlot when a key has been pressed by the user while the selection
-  rect interaction is active. The default implementation allows to \ref cancel the interaction by
+  rect interaction is active. The default implementation allows to   cancel the interaction by
   hitting the escape key.
 */
 void QCPSelectionRect::keyPressEvent(QKeyEvent *event)
@@ -2938,9 +2938,9 @@ void QCPSelectionRect::applyDefaultAntialiasingHint(QCPPainter *painter) const
 
 /*! \internal
   
-  If the selection rect is active (\ref isActive), draws the selection rect defined by \a mRect.
+  If the selection rect is active (  isActive), draws the selection rect defined by \a mRect.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 void QCPSelectionRect::draw(QCPPainter *painter)
 {
@@ -2978,9 +2978,9 @@ void QCPSelectionRect::draw(QCPPainter *painter)
   left axis of the lower axis rect, making them appear aligned. The same applies for the right
   axes. This is what QCPMarginGroup makes possible.
   
-  To add/remove a specific side of a layout element to/from a margin group, use the \ref
+  To add/remove a specific side of a layout element to/from a margin group, use the
   QCPLayoutElement::setMarginGroup method. To completely break apart the margin group, either call
-  \ref clear, or just delete the margin group.
+    clear, or just delete the margin group.
   
   \section QCPMarginGroup-example Example
   
@@ -3058,7 +3058,7 @@ void QCPMarginGroup::clear()
   Returns the synchronized common margin for \a side. This is the margin value that will be used by
   the layout element on the respective side, if it is part of this margin group.
   
-  The common margin is calculated by requesting the automatic margin (\ref
+  The common margin is calculated by requesting the automatic margin (
   QCPLayoutElement::calculateAutoMargin) of each element associated with \a side in this margin
   group, and choosing the largest returned value. (QCPLayoutElement::minimumMargins is taken into
   account, too.)
@@ -3111,20 +3111,20 @@ void QCPMarginGroup::removeChild(QCP::MarginSide side, QCPLayoutElement *element
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*! \class QCPLayoutElement
-  \brief The abstract base class for all objects that form \ref thelayoutsystem "the layout system".
+  \brief The abstract base class for all objects that form   thelayoutsystem "the layout system".
   
   This is an abstract base class. As such, it can't be instantiated directly, rather use one of its subclasses.
   
   A Layout element is a rectangular object which can be placed in layouts. It has an outer rect
-  (QCPLayoutElement::outerRect) and an inner rect (\ref QCPLayoutElement::rect). The difference
+  (QCPLayoutElement::outerRect) and an inner rect (  QCPLayoutElement::rect). The difference
   between outer and inner rect is called its margin. The margin can either be set to automatic or
-  manual (\ref setAutoMargins) on a per-side basis. If a side is set to manual, that margin can be
-  set explicitly with \ref setMargins and will stay fixed at that value. If it's set to automatic,
-  the layout element subclass will control the value itself (via \ref calculateAutoMargin).
+  manual (  setAutoMargins) on a per-side basis. If a side is set to manual, that margin can be
+  set explicitly with   setMargins and will stay fixed at that value. If it's set to automatic,
+  the layout element subclass will control the value itself (via   calculateAutoMargin).
   
   Layout elements can be placed in layouts (base class QCPLayout) like QCPLayoutGrid. The top level
-  layout is reachable via \ref QCustomPlot::plotLayout, and is a \ref QCPLayoutGrid. Since \ref
-  QCPLayout itself derives from \ref QCPLayoutElement, layouts can be nested.
+  layout is reachable via   QCustomPlot::plotLayout, and is a   QCPLayoutGrid. Since
+  QCPLayout itself derives from   QCPLayoutElement, layouts can be nested.
   
   Thus in QCustomPlot one can divide layout elements into two categories: The ones that are
   invisible by themselves, because they don't draw anything. Their only purpose is to manage the
@@ -3145,15 +3145,15 @@ void QCPMarginGroup::removeChild(QCP::MarginSide side, QCPLayoutElement *element
 
 /*! \fn QRect QCPLayoutElement::rect() const
   
-  Returns the inner rect of this layout element. The inner rect is the outer rect (\ref
-  setOuterRect) shrinked by the margins (\ref setMargins, \ref setAutoMargins).
+  Returns the inner rect of this layout element. The inner rect is the outer rect (
+  setOuterRect) shrinked by the margins (  setMargins,   setAutoMargins).
   
   In some cases, the area between outer and inner rect is left blank. In other cases the margin
   area is used to display peripheral graphics while the main content is in the inner rect. This is
   where automatic margin calculation becomes interesting because it allows the layout element to
-  adapt the margins to the peripheral graphics it wants to draw. For example, \ref QCPAxisRect
+  adapt the margins to the peripheral graphics it wants to draw. For example,   QCPAxisRect
   draws the axis labels and tick labels in the margin area, thus needs to adjust the margins (if
-  \ref setAutoMargins is enabled) according to the space required by the labels of the axes.
+    setAutoMargins is enabled) according to the space required by the labels of the axes.
 */
 
 /* end documentation of inline functions */
@@ -3189,9 +3189,9 @@ QCPLayoutElement::~QCPLayoutElement()
   Calling this function externally has no effect, since the layout will overwrite any changes to
   the outer rect upon the next replot.
   
-  The layout element will adapt its inner \ref rect by applying the margins inward to the outer rect.
+  The layout element will adapt its inner   rect by applying the margins inward to the outer rect.
   
-  \see rect
+   \sa rect
 */
 void QCPLayoutElement::setOuterRect(const QRect &rect)
 {
@@ -3203,15 +3203,15 @@ void QCPLayoutElement::setOuterRect(const QRect &rect)
 }
 
 /*!
-  Sets the margins of this layout element. If \ref setAutoMargins is disabled for some or all
+  Sets the margins of this layout element. If   setAutoMargins is disabled for some or all
   sides, this function is used to manually set the margin on those sides. Sides that are still set
   to be handled automatically are ignored and may have any value in \a margins.
   
-  The margin is the distance between the outer rect (controlled by the parent layout via \ref
-  setOuterRect) and the inner \ref rect (which usually contains the main content of this layout
+  The margin is the distance between the outer rect (controlled by the parent layout via
+  setOuterRect) and the inner   rect (which usually contains the main content of this layout
   element).
   
-  \see setAutoMargins
+   \sa setAutoMargins
 */
 void QCPLayoutElement::setMargins(const QMargins &margins)
 {
@@ -3223,13 +3223,13 @@ void QCPLayoutElement::setMargins(const QMargins &margins)
 }
 
 /*!
-  If \ref setAutoMargins is enabled on some or all margins, this function is used to provide
+  If   setAutoMargins is enabled on some or all margins, this function is used to provide
   minimum values for those margins.
   
   The minimum values are not enforced on margin sides that were set to be under manual control via
-  \ref setAutoMargins.
+    setAutoMargins.
   
-  \see setAutoMargins
+   \sa setAutoMargins
 */
 void QCPLayoutElement::setMinimumMargins(const QMargins &margins)
 {
@@ -3241,13 +3241,13 @@ void QCPLayoutElement::setMinimumMargins(const QMargins &margins)
 
 /*!
   Sets on which sides the margin shall be calculated automatically. If a side is calculated
-  automatically, a minimum margin value may be provided with \ref setMinimumMargins. If a side is
-  set to be controlled manually, the value may be specified with \ref setMargins.
+  automatically, a minimum margin value may be provided with   setMinimumMargins. If a side is
+  set to be controlled manually, the value may be specified with   setMargins.
   
-  Margin sides that are under automatic control may participate in a \ref QCPMarginGroup (see \ref
+  Margin sides that are under automatic control may participate in a   QCPMarginGroup (see
   setMarginGroup), to synchronize (align) it with other layout elements in the plot.
   
-  \see setMinimumMargins, setMargins, QCP::MarginSide
+   \sa setMinimumMargins, setMargins, QCP::MarginSide
 */
 void QCPLayoutElement::setAutoMargins(QCP::MarginSides sides)
 {
@@ -3255,7 +3255,7 @@ void QCPLayoutElement::setAutoMargins(QCP::MarginSides sides)
 }
 
 /*!
-  Sets the minimum size for the inner \ref rect of this layout element. A parent layout tries to
+  Sets the minimum size for the inner   rect of this layout element. A parent layout tries to
   respect the \a size here by changing row/column sizes in the layout accordingly.
   
   If the parent layout size is not sufficient to satisfy all minimum size constraints of its child
@@ -3275,7 +3275,7 @@ void QCPLayoutElement::setMinimumSize(const QSize &size)
 
 /*! \overload
   
-  Sets the minimum size for the inner \ref rect of this layout element.
+  Sets the minimum size for the inner   rect of this layout element.
 */
 void QCPLayoutElement::setMinimumSize(int width, int height)
 {
@@ -3283,7 +3283,7 @@ void QCPLayoutElement::setMinimumSize(int width, int height)
 }
 
 /*!
-  Sets the maximum size for the inner \ref rect of this layout element. A parent layout tries to
+  Sets the maximum size for the inner   rect of this layout element. A parent layout tries to
   respect the \a size here by changing row/column sizes in the layout accordingly.
 */
 void QCPLayoutElement::setMaximumSize(const QSize &size)
@@ -3298,7 +3298,7 @@ void QCPLayoutElement::setMaximumSize(const QSize &size)
 
 /*! \overload
   
-  Sets the maximum size for the inner \ref rect of this layout element.
+  Sets the maximum size for the inner   rect of this layout element.
 */
 void QCPLayoutElement::setMaximumSize(int width, int height)
 {
@@ -3309,14 +3309,14 @@ void QCPLayoutElement::setMaximumSize(int width, int height)
   Sets the margin \a group of the specified margin \a sides.
   
   Margin groups allow synchronizing specified margins across layout elements, see the documentation
-  of \ref QCPMarginGroup.
+  of   QCPMarginGroup.
   
   To unset the margin group of \a sides, set \a group to 0.
   
-  Note that margin groups only work for margin sides that are set to automatic (\ref
+  Note that margin groups only work for margin sides that are set to automatic (
   setAutoMargins).
   
-  \see QCP::MarginSide
+   \sa QCP::MarginSide
 */
 void QCPLayoutElement::setMarginGroup(QCP::MarginSides sides, QCPMarginGroup *group)
 {
@@ -3349,14 +3349,14 @@ void QCPLayoutElement::setMarginGroup(QCP::MarginSides sides, QCPMarginGroup *gr
 
 /*!
   Updates the layout element and sub-elements. This function is automatically called before every
-  replot by the parent layout element. It is called multiple times, once for every \ref
+  replot by the parent layout element. It is called multiple times, once for every
   UpdatePhase. The phases are run through in the order of the enum values. For details about what
-  happens at the different phases, see the documentation of \ref UpdatePhase.
+  happens at the different phases, see the documentation of   UpdatePhase.
   
-  Layout elements that have child elements should call the \ref update method of their child
+  Layout elements that have child elements should call the   update method of their child
   elements, and pass the current \a phase unchanged.
   
-  The default implementation executes the automatic margin mechanism in the \ref upMargins phase.
+  The default implementation executes the automatic margin mechanism in the   upMargins phase.
   Subclasses should make sure to call the base class implementation.
 */
 void QCPLayoutElement::update(UpdatePhase phase)
@@ -3387,9 +3387,9 @@ void QCPLayoutElement::update(UpdatePhase phase)
 }
 
 /*!
-  Returns the minimum size this layout element (the inner \ref rect) may be compressed to.
+  Returns the minimum size this layout element (the inner   rect) may be compressed to.
   
-  if a minimum size (\ref setMinimumSize) was not set manually, parent layouts consult this
+  if a minimum size (  setMinimumSize) was not set manually, parent layouts consult this
   function to determine the minimum allowed size of this layout element. (A manual minimum size is
   considered set if it is non-zero.)
 */
@@ -3399,9 +3399,9 @@ QSize QCPLayoutElement::minimumSizeHint() const
 }
 
 /*!
-  Returns the maximum size this layout element (the inner \ref rect) may be expanded to.
+  Returns the maximum size this layout element (the inner   rect) may be expanded to.
   
-  if a maximum size (\ref setMaximumSize) was not set manually, parent layouts consult this
+  if a maximum size (  setMaximumSize) was not set manually, parent layouts consult this
   function to determine the maximum allowed size of this layout element. (A manual maximum size is
   considered set if it is smaller than Qt's QWIDGETSIZE_MAX.)
 */
@@ -3429,7 +3429,7 @@ QList<QCPLayoutElement*> QCPLayoutElement::elements(bool recursive) const
   tolerance. However, layout elements are not selectable by default. So if \a onlySelectable is
   true, -1.0 is returned.
   
-  See \ref QCPLayerable::selectTest for a general explanation of this virtual method.
+  See   QCPLayerable::selectTest for a general explanation of this virtual method.
   
   QCPLayoutElement subclasses may reimplement this method to provide more specific selection test
   behaviour.
@@ -3456,7 +3456,7 @@ double QCPLayoutElement::selectTest(const QPointF &pos, bool onlySelectable, QVa
 
 /*! \internal
   
-  propagates the parent plot initialization to all child elements, by calling \ref
+  propagates the parent plot initialization to all child elements, by calling
   QCPLayerable::initializeParentPlot on them.
 */
 void QCPLayoutElement::parentPlotInitialized(QCustomPlot *parentPlot)
@@ -3471,10 +3471,10 @@ void QCPLayoutElement::parentPlotInitialized(QCustomPlot *parentPlot)
 /*! \internal
   
   Returns the margin size for this \a side. It is used if automatic margins is enabled for this \a
-  side (see \ref setAutoMargins). If a minimum margin was set with \ref setMinimumMargins, the
+  side (see   setAutoMargins). If a minimum margin was set with   setMinimumMargins, the
   returned value will not be smaller than the specified minimum margin.
   
-  The default implementation just returns the respective manual margin (\ref setMargins) or the
+  The default implementation just returns the respective manual margin (  setMargins) or the
   minimum margin, whichever is larger.
 */
 int QCPLayoutElement::calculateAutoMargin(QCP::MarginSide side)
@@ -3489,7 +3489,7 @@ int QCPLayoutElement::calculateAutoMargin(QCP::MarginSide side)
   same QCPLayout. Subclasses may use this to react accordingly.
   
   Since this method is called after the completion of the move, you can access the new parent
-  layout via \ref layout().
+  layout via   layout().
   
   The default implementation does nothing.
 */
@@ -3511,16 +3511,16 @@ void QCPLayoutElement::layoutChanged()
   QCPLayout derives from QCPLayoutElement, and thus can itself be nested in other layouts.
   
   QCPLayout introduces a common interface for accessing and manipulating the child elements. Those
-  functions are most notably \ref elementCount, \ref elementAt, \ref takeAt, \ref take, \ref
-  simplify, \ref removeAt, \ref remove and \ref clear. Individual subclasses may add more functions
-  to this interface which are more specialized to the form of the layout. For example, \ref
+  functions are most notably   elementCount,   elementAt,   takeAt,   take,
+  simplify,   removeAt,   remove and   clear. Individual subclasses may add more functions
+  to this interface which are more specialized to the form of the layout. For example,
   QCPLayoutGrid adds functions that take row and column indices to access cells of the layout grid
   more conveniently.
   
   Since this is an abstract base class, you can't instantiate it directly. Rather use one of its
   subclasses like QCPLayoutGrid or QCPLayoutInset.
   
-  For a general introduction to the layout system, see the dedicated documentation page \ref
+  For a general introduction to the layout system, see the dedicated documentation page
   thelayoutsystem "The Layout System".
 */
 
@@ -3530,7 +3530,7 @@ void QCPLayoutElement::layoutChanged()
   
   Returns the number of elements/cells in the layout.
   
-  \see elements, elementAt
+   \sa elements, elementAt
 */
 
 /*! \fn virtual QCPLayoutElement* QCPLayout::elementAt(int index) const = 0
@@ -3541,7 +3541,7 @@ void QCPLayoutElement::layoutChanged()
   QCPLayoutGrid), so this function may return 0 in those cases. You may use this function to check
   whether a cell is empty or not.
   
-  \see elements, elementCount, takeAt
+   \sa elements, elementCount, takeAt
 */
 
 /*! \fn virtual QCPLayoutElement* QCPLayout::takeAt(int index) = 0
@@ -3551,9 +3551,9 @@ void QCPLayoutElement::layoutChanged()
   If the \a index is invalid or the cell with that index is empty, returns 0.
   
   Note that some layouts don't remove the respective cell right away but leave an empty cell after
-  successful removal of the layout element. To collapse empty cells, use \ref simplify.
+  successful removal of the layout element. To collapse empty cells, use   simplify.
   
-  \see elementAt, take
+   \sa elementAt, take
 */
 
 /*! \fn virtual bool QCPLayout::take(QCPLayoutElement* element) = 0
@@ -3563,9 +3563,9 @@ void QCPLayoutElement::layoutChanged()
   If the \a element isn't in this layout, returns false.
   
   Note that some layouts don't remove the respective cell right away but leave an empty cell after
-  successful removal of the layout element. To collapse empty cells, use \ref simplify.
+  successful removal of the layout element. To collapse empty cells, use   simplify.
   
-  \see takeAt
+   \sa takeAt
 */
 
 /* end documentation of pure virtual functions */
@@ -3582,9 +3582,9 @@ QCPLayout::QCPLayout()
   First calls the QCPLayoutElement::update base class implementation to update the margins on this
   layout.
   
-  Then calls \ref updateLayout which subclasses reimplement to reposition and resize their cells.
+  Then calls   updateLayout which subclasses reimplement to reposition and resize their cells.
   
-  Finally, \ref update is called on all child elements.
+  Finally,   update is called on all child elements.
 */
 void QCPLayout::update(UpdatePhase phase)
 {
@@ -3639,12 +3639,12 @@ void QCPLayout::simplify()
   Removes and deletes the element at the provided \a index. Returns true on success. If \a index is
   invalid or points to an empty cell, returns false.
   
-  This function internally uses \ref takeAt to remove the element from the layout and then deletes
+  This function internally uses   takeAt to remove the element from the layout and then deletes
   the returned element. Note that some layouts don't remove the respective cell right away but leave an
-  empty cell after successful removal of the layout element. To collapse empty cells, use \ref
+  empty cell after successful removal of the layout element. To collapse empty cells, use
   simplify.
   
-  \see remove, takeAt
+   \sa remove, takeAt
 */
 bool QCPLayout::removeAt(int index)
 {
@@ -3660,12 +3660,12 @@ bool QCPLayout::removeAt(int index)
   Removes and deletes the provided \a element. Returns true on success. If \a element is not in the
   layout, returns false.
   
-  This function internally uses \ref takeAt to remove the element from the layout and then deletes
+  This function internally uses   takeAt to remove the element from the layout and then deletes
   the element. Note that some layouts don't remove the respective cell right away but leave an
-  empty cell after successful removal of the layout element. To collapse empty cells, use \ref
+  empty cell after successful removal of the layout element. To collapse empty cells, use
   simplify.
   
-  \see removeAt, take
+   \sa removeAt, take
 */
 bool QCPLayout::remove(QCPLayoutElement *element)
 {
@@ -3678,10 +3678,10 @@ bool QCPLayout::remove(QCPLayoutElement *element)
 }
 
 /*!
-  Removes and deletes all layout elements in this layout. Finally calls \ref simplify to make sure
+  Removes and deletes all layout elements in this layout. Finally calls   simplify to make sure
   all empty cells are collapsed.
   
-  \see remove, removeAt
+   \sa remove, removeAt
 */
 void QCPLayout::clear()
 {
@@ -3696,8 +3696,8 @@ void QCPLayout::clear()
 /*!
   Subclasses call this method to report changed (minimum/maximum) size constraints.
   
-  If the parent of this layout is again a QCPLayout, forwards the call to the parent's \ref
-  sizeConstraintsChanged. If the parent is a QWidget (i.e. is the \ref QCustomPlot::plotLayout of
+  If the parent of this layout is again a QCPLayout, forwards the call to the parent's
+  sizeConstraintsChanged. If the parent is a QWidget (i.e. is the   QCustomPlot::plotLayout of
   QCustomPlot), calls QWidget::updateGeometry, so if the QCustomPlot widget is inside a Qt QLayout,
   it may update itself and resize cells accordingly.
 */
@@ -3712,14 +3712,14 @@ void QCPLayout::sizeConstraintsChanged() const
 /*! \internal
   
   Subclasses reimplement this method to update the position and sizes of the child elements/cells
-  via calling their \ref QCPLayoutElement::setOuterRect. The default implementation does nothing.
+  via calling their   QCPLayoutElement::setOuterRect. The default implementation does nothing.
   
-  The geometry used as a reference is the inner \ref rect of this layout. Child elements should stay
+  The geometry used as a reference is the inner   rect of this layout. Child elements should stay
   within that rect.
   
-  \ref getSectionSizes may help with the reimplementation of this function.
+    getSectionSizes may help with the reimplementation of this function.
   
-  \see update
+   \sa update
 */
 void QCPLayout::updateLayout()
 {
@@ -3728,10 +3728,10 @@ void QCPLayout::updateLayout()
 
 /*! \internal
   
-  Associates \a el with this layout. This is done by setting the \ref QCPLayoutElement::layout, the
-  \ref QCPLayerable::parentLayerable and the QObject parent to this layout.
+  Associates \a el with this layout. This is done by setting the   QCPLayoutElement::layout, the
+    QCPLayerable::parentLayerable and the QObject parent to this layout.
   
-  Further, if \a el didn't previously have a parent plot, calls \ref
+  Further, if \a el didn't previously have a parent plot, calls
   QCPLayerable::initializeParentPlot on \a el to set the paret plot.
   
   This method is used by subclass specific methods that add elements to the layout. Note that this
@@ -3754,12 +3754,12 @@ void QCPLayout::adoptElement(QCPLayoutElement *el)
 
 /*! \internal
   
-  Disassociates \a el from this layout. This is done by setting the \ref QCPLayoutElement::layout
-  and the \ref QCPLayerable::parentLayerable to zero. The QObject parent is set to the parent
+  Disassociates \a el from this layout. This is done by setting the   QCPLayoutElement::layout
+  and the   QCPLayerable::parentLayerable to zero. The QObject parent is set to the parent
   QCustomPlot.
   
-  This method is used by subclass specific methods that remove elements from the layout (e.g. \ref
-  take or \ref takeAt). Note that this method only changes properties in \a el. The removal from
+  This method is used by subclass specific methods that remove elements from the layout (e.g.
+  take or   takeAt). Note that this method only changes properties in \a el. The removal from
   the old layout must be done additionally.
 */
 void QCPLayout::releaseElement(QCPLayoutElement *el)
@@ -3776,7 +3776,7 @@ void QCPLayout::releaseElement(QCPLayoutElement *el)
 
 /*! \internal
   
-  This is a helper function for the implementation of \ref updateLayout in subclasses.
+  This is a helper function for the implementation of   updateLayout in subclasses.
   
   It calculates the sizes of one-dimensional sections with provided constraints on maximum section
   sizes, minimum section sizes, relative stretch factors and the final total size of all sections.
@@ -3924,21 +3924,21 @@ QVector<int> QCPLayout::getSectionSizes(QVector<int> maxSizes, QVector<int> minS
 /*! \class QCPLayoutGrid
   \brief A layout that arranges child elements in a grid
 
-  Elements are laid out in a grid with configurable stretch factors (\ref setColumnStretchFactor,
-  \ref setRowStretchFactor) and spacing (\ref setColumnSpacing, \ref setRowSpacing).
+  Elements are laid out in a grid with configurable stretch factors (  setColumnStretchFactor,
+    setRowStretchFactor) and spacing (  setColumnSpacing,   setRowSpacing).
 
-  Elements can be added to cells via \ref addElement. The grid is expanded if the specified row or
-  column doesn't exist yet. Whether a cell contains a valid layout element can be checked with \ref
-  hasElement, that element can be retrieved with \ref element. If rows and columns that only have
-  empty cells shall be removed, call \ref simplify. Removal of elements is either done by just
-  adding the element to a different layout or by using the QCPLayout interface \ref take or \ref
+  Elements can be added to cells via   addElement. The grid is expanded if the specified row or
+  column doesn't exist yet. Whether a cell contains a valid layout element can be checked with
+  hasElement, that element can be retrieved with   element. If rows and columns that only have
+  empty cells shall be removed, call   simplify. Removal of elements is either done by just
+  adding the element to a different layout or by using the QCPLayout interface   take or
   remove.
 
-  If you use \ref addElement(QCPLayoutElement*) without explicit parameters for \a row and \a
-  column, the grid layout will choose the position according to the current \ref setFillOrder and
-  the wrapping (\ref setWrap).
+  If you use   addElement(QCPLayoutElement*) without explicit parameters for \a row and \a
+  column, the grid layout will choose the position according to the current   setFillOrder and
+  the wrapping (  setWrap).
 
-  Row and column insertion can be performed with \ref insertRow and \ref insertColumn.
+  Row and column insertion can be performed with   insertRow and   insertColumn.
 */
 
 /* start documentation of inline functions */
@@ -3947,14 +3947,14 @@ QVector<int> QCPLayout::getSectionSizes(QVector<int> maxSizes, QVector<int> minS
 
   Returns the number of rows in the layout.
 
-  \see columnCount
+   \sa columnCount
 */
 
 /*! \fn int QCPLayoutGrid::columnCount() const
 
   Returns the number of columns in the layout.
 
-  \see rowCount
+   \sa rowCount
 */
 
 /* end documentation of inline functions */
@@ -3981,9 +3981,9 @@ QCPLayoutGrid::~QCPLayoutGrid()
   Returns the element in the cell in \a row and \a column.
   
   Returns 0 if either the row/column is invalid or if the cell is empty. In those cases, a qDebug
-  message is printed. To check whether a cell exists and isn't empty, use \ref hasElement.
+  message is printed. To check whether a cell exists and isn't empty, use   hasElement.
   
-  \see addElement, hasElement
+   \sa addElement, hasElement
 */
 QCPLayoutElement *QCPLayoutGrid::element(int row, int column) const
 {
@@ -4015,7 +4015,7 @@ QCPLayoutElement *QCPLayoutGrid::element(int row, int column) const
   Use the overload of this method without explicit row/column index to place the element according
   to the configured fill order and wrapping settings.
 
-  \see element, hasElement, take, remove
+   \sa element, hasElement, take, remove
 */
 bool QCPLayoutGrid::addElement(int row, int column, QCPLayoutElement *element)
 {
@@ -4035,13 +4035,13 @@ bool QCPLayoutGrid::addElement(int row, int column, QCPLayoutElement *element)
 
 /*! \overload
 
-  Adds the \a element to the next empty cell according to the current fill order (\ref
-  setFillOrder) and wrapping (\ref setWrap). If \a element is already in a layout, it is first
+  Adds the \a element to the next empty cell according to the current fill order (
+  setFillOrder) and wrapping (  setWrap). If \a element is already in a layout, it is first
   removed from there. If necessary, the layout is expanded to hold the new element.
 
   Returns true if the element was added successfully.
 
-  \see setFillOrder, setWrap, element, hasElement, take, remove
+   \sa setFillOrder, setWrap, element, hasElement, take, remove
 */
 bool QCPLayoutGrid::addElement(QCPLayoutElement *element)
 {
@@ -4077,7 +4077,7 @@ bool QCPLayoutGrid::addElement(QCPLayoutElement *element)
   Returns whether the cell at \a row and \a column exists and contains a valid element, i.e. isn't
   empty.
   
-  \see element
+   \sa element
 */
 bool QCPLayoutGrid::hasElement(int row, int column)
 {
@@ -4091,12 +4091,12 @@ bool QCPLayoutGrid::hasElement(int row, int column)
   Sets the stretch \a factor of \a column.
   
   Stretch factors control the relative sizes of rows and columns. Cells will not be resized beyond
-  their minimum and maximum widths/heights (\ref QCPLayoutElement::setMinimumSize, \ref
+  their minimum and maximum widths/heights (  QCPLayoutElement::setMinimumSize,
   QCPLayoutElement::setMaximumSize), regardless of the stretch factor.
   
   The default stretch factor of newly created rows/columns is 1.
   
-  \see setColumnStretchFactors, setRowStretchFactor
+   \sa setColumnStretchFactors, setRowStretchFactor
 */
 void QCPLayoutGrid::setColumnStretchFactor(int column, double factor)
 {
@@ -4111,15 +4111,15 @@ void QCPLayoutGrid::setColumnStretchFactor(int column, double factor)
 }
 
 /*!
-  Sets the stretch \a factors of all columns. \a factors must have the size \ref columnCount.
+  Sets the stretch \a factors of all columns. \a factors must have the size   columnCount.
   
   Stretch factors control the relative sizes of rows and columns. Cells will not be resized beyond
-  their minimum and maximum widths/heights (\ref QCPLayoutElement::setMinimumSize, \ref
+  their minimum and maximum widths/heights (  QCPLayoutElement::setMinimumSize,
   QCPLayoutElement::setMaximumSize), regardless of the stretch factor.
   
   The default stretch factor of newly created rows/columns is 1.
   
-  \see setColumnStretchFactor, setRowStretchFactors
+   \sa setColumnStretchFactor, setRowStretchFactors
 */
 void QCPLayoutGrid::setColumnStretchFactors(const QList<double> &factors)
 {
@@ -4142,12 +4142,12 @@ void QCPLayoutGrid::setColumnStretchFactors(const QList<double> &factors)
   Sets the stretch \a factor of \a row.
   
   Stretch factors control the relative sizes of rows and columns. Cells will not be resized beyond
-  their minimum and maximum widths/heights (\ref QCPLayoutElement::setMinimumSize, \ref
+  their minimum and maximum widths/heights (  QCPLayoutElement::setMinimumSize,
   QCPLayoutElement::setMaximumSize), regardless of the stretch factor.
   
   The default stretch factor of newly created rows/columns is 1.
   
-  \see setColumnStretchFactors, setRowStretchFactor
+   \sa setColumnStretchFactors, setRowStretchFactor
 */
 void QCPLayoutGrid::setRowStretchFactor(int row, double factor)
 {
@@ -4162,15 +4162,15 @@ void QCPLayoutGrid::setRowStretchFactor(int row, double factor)
 }
 
 /*!
-  Sets the stretch \a factors of all rows. \a factors must have the size \ref rowCount.
+  Sets the stretch \a factors of all rows. \a factors must have the size   rowCount.
   
   Stretch factors control the relative sizes of rows and columns. Cells will not be resized beyond
-  their minimum and maximum widths/heights (\ref QCPLayoutElement::setMinimumSize, \ref
+  their minimum and maximum widths/heights (  QCPLayoutElement::setMinimumSize,
   QCPLayoutElement::setMaximumSize), regardless of the stretch factor.
   
   The default stretch factor of newly created rows/columns is 1.
   
-  \see setRowStretchFactor, setColumnStretchFactors
+   \sa setRowStretchFactor, setColumnStretchFactors
 */
 void QCPLayoutGrid::setRowStretchFactors(const QList<double> &factors)
 {
@@ -4192,7 +4192,7 @@ void QCPLayoutGrid::setRowStretchFactors(const QList<double> &factors)
 /*!
   Sets the gap that is left blank between columns to \a pixels.
   
-  \see setRowSpacing
+   \sa setRowSpacing
 */
 void QCPLayoutGrid::setColumnSpacing(int pixels)
 {
@@ -4202,7 +4202,7 @@ void QCPLayoutGrid::setColumnSpacing(int pixels)
 /*!
   Sets the gap that is left blank between rows to \a pixels.
   
-  \see setColumnSpacing
+   \sa setColumnSpacing
 */
 void QCPLayoutGrid::setRowSpacing(int pixels)
 {
@@ -4210,21 +4210,21 @@ void QCPLayoutGrid::setRowSpacing(int pixels)
 }
 
 /*!
-  Sets the maximum number of columns or rows that are used, before new elements added with \ref
+  Sets the maximum number of columns or rows that are used, before new elements added with
   addElement(QCPLayoutElement*) will start to fill the next row or column, respectively. It depends
-  on \ref setFillOrder, whether rows or columns are wrapped.
+  on   setFillOrder, whether rows or columns are wrapped.
 
   If \a count is set to zero, no wrapping will ever occur.
   
-  If you wish to re-wrap the elements currently in the layout, call \ref setFillOrder with \a
+  If you wish to re-wrap the elements currently in the layout, call   setFillOrder with \a
   rearrange set to true (the actual fill order doesn't need to be changed for the rearranging to be
   done).
 
-  Note that the method \ref addElement(int row, int column, QCPLayoutElement *element) with
+  Note that the method   addElement(int row, int column, QCPLayoutElement *element) with
   explicitly stated row and column is not subject to wrapping and can place elements even beyond
   the specified wrapping point.
 
-  \see setFillOrder
+   \sa setFillOrder
 */
 void QCPLayoutGrid::setWrap(int count)
 {
@@ -4233,12 +4233,12 @@ void QCPLayoutGrid::setWrap(int count)
 
 /*!
   Sets the filling order and wrapping behaviour that is used when adding new elements with the
-  method \ref addElement(QCPLayoutElement*).
+  method   addElement(QCPLayoutElement*).
 
-  The specified \a order defines whether rows or columns are filled first. Using \ref setWrap, you
+  The specified \a order defines whether rows or columns are filled first. Using   setWrap, you
   can control at which row/column count wrapping into the next column/row will occur. If you set it
   to zero, no wrapping will ever occur. Changing the fill order also changes the meaning of the
-  linear index used e.g. in \ref elementAt and \ref takeAt.
+  linear index used e.g. in   elementAt and   takeAt.
 
   If you want to have all current elements arranged in the new order, set \a rearrange to true. The
   elements will be rearranged in a way that tries to preserve their linear index. However, empty
@@ -4249,11 +4249,11 @@ void QCPLayoutGrid::setWrap(int count)
   If \a rearrange is false, the current element arrangement is not changed, which means the
   linear indexes change (because the linear index is dependent on the fill order).
 
-  Note that the method \ref addElement(int row, int column, QCPLayoutElement *element) with
+  Note that the method   addElement(int row, int column, QCPLayoutElement *element) with
   explicitly stated row and column is not subject to wrapping and can place elements even beyond
   the specified wrapping point.
 
-  \see setWrap, addElement(QCPLayoutElement*)
+   \sa setWrap, addElement(QCPLayoutElement*)
 */
 void QCPLayoutGrid::setFillOrder(FillOrder order, bool rearrange)
 {
@@ -4289,10 +4289,10 @@ void QCPLayoutGrid::setFillOrder(FillOrder order, bool rearrange)
   
   Newly created cells are empty, new rows and columns have the stretch factor 1.
   
-  Note that upon a call to \ref addElement, the layout is expanded automatically to contain the
+  Note that upon a call to   addElement, the layout is expanded automatically to contain the
   specified row and column, using this function.
   
-  \see simplify
+   \sa simplify
 */
 void QCPLayoutGrid::expandTo(int newRowCount, int newColumnCount)
 {
@@ -4317,7 +4317,7 @@ void QCPLayoutGrid::expandTo(int newRowCount, int newColumnCount)
   Inserts a new row with empty cells at the row index \a newIndex. Valid values for \a newIndex
   range from 0 (inserts a row at the top) to \a rowCount (appends a row at the bottom).
   
-  \see insertColumn
+   \sa insertColumn
 */
 void QCPLayoutGrid::insertRow(int newIndex)
 {
@@ -4343,7 +4343,7 @@ void QCPLayoutGrid::insertRow(int newIndex)
   Inserts a new column with empty cells at the column index \a newIndex. Valid values for \a
   newIndex range from 0 (inserts a row at the left) to \a rowCount (appends a row at the right).
   
-  \see insertRow
+   \sa insertRow
 */
 void QCPLayoutGrid::insertColumn(int newIndex)
 {
@@ -4364,17 +4364,17 @@ void QCPLayoutGrid::insertColumn(int newIndex)
 }
 
 /*!
-  Converts the given \a row and \a column to the linear index used by some methods of \ref
-  QCPLayoutGrid and \ref QCPLayout.
+  Converts the given \a row and \a column to the linear index used by some methods of
+  QCPLayoutGrid and   QCPLayout.
 
-  The way the cells are indexed depends on \ref setFillOrder. If it is \ref foRowsFirst, the
-  indices increase left to right and then top to bottom. If it is \ref foColumnsFirst, the indices
+  The way the cells are indexed depends on   setFillOrder. If it is   foRowsFirst, the
+  indices increase left to right and then top to bottom. If it is   foColumnsFirst, the indices
   increase top to bottom and then left to right.
 
   For the returned index to be valid, \a row and \a column must be valid indices themselves, i.e.
-  greater or equal to zero and smaller than the current \ref rowCount/\ref columnCount.
+  greater or equal to zero and smaller than the current   rowCount/  columnCount.
 
-  \see indexToRowCol
+   \sa indexToRowCol
 */
 int QCPLayoutGrid::rowColToIndex(int row, int column) const
 {
@@ -4398,16 +4398,16 @@ int QCPLayoutGrid::rowColToIndex(int row, int column) const
   Converts the linear index to row and column indices and writes the result to \a row and \a
   column.
 
-  The way the cells are indexed depends on \ref setFillOrder. If it is \ref foRowsFirst, the
-  indices increase left to right and then top to bottom. If it is \ref foColumnsFirst, the indices
+  The way the cells are indexed depends on   setFillOrder. If it is   foRowsFirst, the
+  indices increase left to right and then top to bottom. If it is   foColumnsFirst, the indices
   increase top to bottom and then left to right.
 
   If there are no cells (i.e. column or row count is zero), sets \a row and \a column to -1.
 
   For the retrieved \a row and \a column to be valid, the passed \a index must be valid itself,
-  i.e. greater or equal to zero and smaller than the current \ref elementCount.
+  i.e. greater or equal to zero and smaller than the current   elementCount.
 
-  \see rowColToIndex
+   \sa rowColToIndex
 */
 void QCPLayoutGrid::indexToRowCol(int index, int &row, int &column) const
 {
@@ -4468,12 +4468,12 @@ void QCPLayoutGrid::updateLayout()
 }
 
 /*!
-  \seebaseclassmethod
+   \sabaseclassmethod
 
   Note that the association of the linear \a index to the row/column based cells depends on the
-  current setting of \ref setFillOrder.
+  current setting of   setFillOrder.
 
-  \see rowColToIndex
+   \sa rowColToIndex
 */
 QCPLayoutElement *QCPLayoutGrid::elementAt(int index) const
 {
@@ -4487,12 +4487,12 @@ QCPLayoutElement *QCPLayoutGrid::elementAt(int index) const
 }
 
 /*!
-  \seebaseclassmethod
+   \sabaseclassmethod
 
   Note that the association of the linear \a index to the row/column based cells depends on the
-  current setting of \ref setFillOrder.
+  current setting of   setFillOrder.
 
-  \see rowColToIndex
+   \sa rowColToIndex
 */
 QCPLayoutElement *QCPLayoutGrid::takeAt(int index)
 {
@@ -4636,9 +4636,9 @@ QSize QCPLayoutGrid::maximumSizeHint() const
   The minimum height of a row is the largest minimum height of any element in that row. The minimum
   width of a column is the largest minimum width of any element in that column.
   
-  This is a helper function for \ref updateLayout.
+  This is a helper function for   updateLayout.
   
-  \see getMaximumRowColSizes
+   \sa getMaximumRowColSizes
 */
 void QCPLayoutGrid::getMinimumRowColSizes(QVector<int> *minColWidths, QVector<int> *minRowHeights) const
 {
@@ -4670,9 +4670,9 @@ void QCPLayoutGrid::getMinimumRowColSizes(QVector<int> *minColWidths, QVector<in
   The maximum height of a row is the smallest maximum height of any element in that row. The
   maximum width of a column is the smallest maximum width of any element in that column.
   
-  This is a helper function for \ref updateLayout.
+  This is a helper function for   updateLayout.
   
-  \see getMinimumRowColSizes
+   \sa getMinimumRowColSizes
 */
 void QCPLayoutGrid::getMaximumRowColSizes(QVector<int> *maxColWidths, QVector<int> *maxRowHeights) const
 {
@@ -4704,18 +4704,18 @@ void QCPLayoutGrid::getMaximumRowColSizes(QVector<int> *maxColWidths, QVector<in
   \brief A layout that places child elements aligned to the border or arbitrarily positioned
   
   Elements are placed either aligned to the border or at arbitrary position in the area of the
-  layout. Which placement applies is controlled with the \ref InsetPlacement (\ref
+  layout. Which placement applies is controlled with the   InsetPlacement (
   setInsetPlacement).
 
-  Elements are added via \ref addElement(QCPLayoutElement *element, Qt::Alignment alignment) or
+  Elements are added via   addElement(QCPLayoutElement *element, Qt::Alignment alignment) or
   addElement(QCPLayoutElement *element, const QRectF &rect). If the first method is used, the inset
-  placement will default to \ref ipBorderAligned and the element will be aligned according to the
-  \a alignment parameter. The second method defaults to \ref ipFree and allows placing elements at
+  placement will default to   ipBorderAligned and the element will be aligned according to the
+  \a alignment parameter. The second method defaults to   ipFree and allows placing elements at
   arbitrary position and size, defined by \a rect.
   
-  The alignment or rect can be set via \ref setInsetAlignment or \ref setInsetRect, respectively.
+  The alignment or rect can be set via   setInsetAlignment or   setInsetRect, respectively.
   
-  This is the layout that every QCPAxisRect has as \ref QCPAxisRect::insetLayout.
+  This is the layout that every QCPAxisRect has as   QCPAxisRect::insetLayout.
 */
 
 /* start documentation of inline functions */
@@ -4758,7 +4758,7 @@ QCPLayoutInset::InsetPlacement QCPLayoutInset::insetPlacement(int index) const
 
 /*!
   Returns the alignment of the element with the specified \a index. The alignment only has a
-  meaning, if the inset placement (\ref setInsetPlacement) is \ref ipBorderAligned.
+  meaning, if the inset placement (  setInsetPlacement) is   ipBorderAligned.
 */
 Qt::Alignment QCPLayoutInset::insetAlignment(int index) const
 {
@@ -4773,7 +4773,7 @@ Qt::Alignment QCPLayoutInset::insetAlignment(int index) const
 
 /*!
   Returns the rect of the element with the specified \a index. The rect only has a
-  meaning, if the inset placement (\ref setInsetPlacement) is \ref ipFree.
+  meaning, if the inset placement (  setInsetPlacement) is   ipFree.
 */
 QRectF QCPLayoutInset::insetRect(int index) const
 {
@@ -4789,7 +4789,7 @@ QRectF QCPLayoutInset::insetRect(int index) const
 /*!
   Sets the inset placement type of the element with the specified \a index to \a placement.
   
-  \see InsetPlacement
+   \sa InsetPlacement
 */
 void QCPLayoutInset::setInsetPlacement(int index, QCPLayoutInset::InsetPlacement placement)
 {
@@ -4800,7 +4800,7 @@ void QCPLayoutInset::setInsetPlacement(int index, QCPLayoutInset::InsetPlacement
 }
 
 /*!
-  If the inset placement (\ref setInsetPlacement) is \ref ipBorderAligned, this function
+  If the inset placement (  setInsetPlacement) is   ipBorderAligned, this function
   is used to set the alignment of the element with the specified \a index to \a alignment.
   
   \a alignment is an or combination of the following alignment flags: Qt::AlignLeft,
@@ -4816,15 +4816,15 @@ void QCPLayoutInset::setInsetAlignment(int index, Qt::Alignment alignment)
 }
 
 /*!
-  If the inset placement (\ref setInsetPlacement) is \ref ipFree, this function is used to set the
+  If the inset placement (  setInsetPlacement) is   ipFree, this function is used to set the
   position and size of the element with the specified \a index to \a rect.
   
   \a rect is given in fractions of the whole inset layout rect. So an inset with rect (0, 0, 1, 1)
   will span the entire layout. An inset with rect (0.6, 0.1, 0.35, 0.35) will be in the top right
   corner of the layout, with 35% width and height of the parent layout.
   
-  Note that the minimum and maximum sizes of the embedded element (\ref
-  QCPLayoutElement::setMinimumSize, \ref QCPLayoutElement::setMaximumSize) are enforced.
+  Note that the minimum and maximum sizes of the embedded element (
+  QCPLayoutElement::setMinimumSize,   QCPLayoutElement::setMaximumSize) are enforced.
 */
 void QCPLayoutInset::setInsetRect(int index, const QRectF &rect)
 {
@@ -4935,7 +4935,7 @@ bool QCPLayoutInset::take(QCPLayoutElement *element)
   tolerance. The inset layout is not selectable itself by default. So if \a onlySelectable is true,
   -1.0 is returned.
   
-  See \ref QCPLayerable::selectTest for a general explanation of this virtual method.
+  See   QCPLayerable::selectTest for a general explanation of this virtual method.
 */
 double QCPLayoutInset::selectTest(const QPointF &pos, bool onlySelectable, QVariant *details) const
 {
@@ -4954,15 +4954,15 @@ double QCPLayoutInset::selectTest(const QPointF &pos, bool onlySelectable, QVari
 }
 
 /*!
-  Adds the specified \a element to the layout as an inset aligned at the border (\ref
-  setInsetAlignment is initialized with \ref ipBorderAligned). The alignment is set to \a
+  Adds the specified \a element to the layout as an inset aligned at the border (
+  setInsetAlignment is initialized with   ipBorderAligned). The alignment is set to \a
   alignment.
   
   \a alignment is an or combination of the following alignment flags: Qt::AlignLeft,
   Qt::AlignHCenter, Qt::AlighRight, Qt::AlignTop, Qt::AlignVCenter, Qt::AlignBottom. Any other
   alignment flags will be ignored.
   
-  \see addElement(QCPLayoutElement *element, const QRectF &rect)
+   \sa addElement(QCPLayoutElement *element, const QRectF &rect)
 */
 void QCPLayoutInset::addElement(QCPLayoutElement *element, Qt::Alignment alignment)
 {
@@ -4980,15 +4980,15 @@ void QCPLayoutInset::addElement(QCPLayoutElement *element, Qt::Alignment alignme
 }
 
 /*!
-  Adds the specified \a element to the layout as an inset with free positioning/sizing (\ref
-  setInsetAlignment is initialized with \ref ipFree). The position and size is set to \a
+  Adds the specified \a element to the layout as an inset with free positioning/sizing (
+  setInsetAlignment is initialized with   ipFree). The position and size is set to \a
   rect.
   
   \a rect is given in fractions of the whole inset layout rect. So an inset with rect (0, 0, 1, 1)
   will span the entire layout. An inset with rect (0.6, 0.1, 0.35, 0.35) will be in the top right
   corner of the layout, with 35% width and height of the parent layout.
   
-  \see addElement(QCPLayoutElement *element, Qt::Alignment alignment)
+   \sa addElement(QCPLayoutElement *element, Qt::Alignment alignment)
 */
 void QCPLayoutInset::addElement(QCPLayoutElement *element, const QRectF &rect)
 {
@@ -5023,10 +5023,10 @@ void QCPLayoutInset::addElement(QCPLayoutElement *element, const QRectF &rect)
   has two endings which can be set with QCPItemLine::setHead and QCPItemLine::setTail.
  
   The styles themselves are defined via the enum QCPLineEnding::EndingStyle. Most decorations can
-  be modified regarding width and length, see \ref setWidth and \ref setLength. The direction of
+  be modified regarding width and length, see   setWidth and   setLength. The direction of
   the ending decoration (e.g. direction an arrow is pointing) is controlled by the line-like item.
   For example, when both endings of a QCPItemLine are set to be arrows, they will point to opposite
-  directions, e.g. "outward". This can be changed by \ref setInverted, which would make the
+  directions, e.g. "outward". This can be changed by   setInverted, which would make the
   respective arrow point inward.
   
   Note that due to the overloaded QCPLineEnding constructor, you may directly specify a
@@ -5035,7 +5035,7 @@ void QCPLayoutInset::addElement(QCPLayoutElement *element, const QRectF &rect)
 */
 
 /*!
-  Creates a QCPLineEnding instance with default values (style \ref esNone).
+  Creates a QCPLineEnding instance with default values (style   esNone).
 */
 QCPLineEnding::QCPLineEnding() :
   mStyle(esNone),
@@ -5068,7 +5068,7 @@ void QCPLineEnding::setStyle(QCPLineEnding::EndingStyle style)
   Sets the width of the ending decoration, if the style supports it. On arrows, for example, the
   width defines the size perpendicular to the arrow's pointing direction.
   
-  \see setLength
+   \sa setLength
 */
 void QCPLineEnding::setWidth(double width)
 {
@@ -5079,7 +5079,7 @@ void QCPLineEnding::setWidth(double width)
   Sets the length of the ending decoration, if the style supports it. On arrows, for example, the
   length defines the size in pointing direction.
   
-  \see setWidth
+   \sa setWidth
 */
 void QCPLineEnding::setLength(double length)
 {
@@ -5091,7 +5091,7 @@ void QCPLineEnding::setLength(double length)
   inward when \a inverted is set to true.
 
   Note that also the \a width direction is inverted. For symmetrical ending styles like arrows or
-  discs, this doesn't make a difference. However, asymmetric styles like \ref esHalfBar are
+  discs, this doesn't make a difference. However, asymmetric styles like   esHalfBar are
   affected by it, which can be used to control to which side the half bar points to.
 */
 void QCPLineEnding::setInverted(bool inverted)
@@ -5102,7 +5102,7 @@ void QCPLineEnding::setInverted(bool inverted)
 /*! \internal
   
   Returns the maximum pixel radius the ending decoration might cover, starting from the position
-  the decoration is drawn at (typically a line ending/\ref QCPItemPosition of an item).
+  the decoration is drawn at (typically a line ending/  QCPItemPosition of an item).
   
   This is relevant for clipping. Only omit painting of the decoration when the position where the
   decoration is supposed to be drawn is farther away from the clipping rect than the returned
@@ -5136,8 +5136,8 @@ double QCPLineEnding::boundingDistance() const
   Starting from the origin of this line ending (which is style specific), returns the length
   covered by the line ending symbol, in backward direction.
   
-  For example, the \ref esSpikeArrow has a shorter real length than a \ref esFlatArrow, even if
-  both have the same \ref setLength value, because the spike arrow has an inward curved back, which
+  For example, the   esSpikeArrow has a shorter real length than a   esFlatArrow, even if
+  both have the same   setLength value, because the spike arrow has an inward curved back, which
   reduces the length along its center axis (the drawing origin for arrows is at the tip).
   
   This function is used for precise, style specific placement of line endings, for example in
@@ -5316,16 +5316,16 @@ void QCPLineEnding::draw(QCPPainter *painter, const QCPVector2D &pos, double ang
   \brief The base class tick generator used by QCPAxis to create tick positions and tick labels
   
   Each QCPAxis has an internal QCPAxisTicker (or a subclass) in order to generate tick positions
-  and tick labels for the current axis range. The ticker of an axis can be set via \ref
+  and tick labels for the current axis range. The ticker of an axis can be set via
   QCPAxis::setTicker. Since that method takes a <tt>QSharedPointer<QCPAxisTicker></tt>, multiple
   axes can share the same ticker instance.
   
   This base class generates normal tick coordinates and numeric labels for linear axes. It picks a
   reasonable tick step (the separation between ticks) which results in readable tick labels. The
-  number of ticks that should be approximately generated can be set via \ref setTickCount.
-  Depending on the current tick step strategy (\ref setTickStepStrategy), the algorithm either
-  sacrifices readability to better match the specified tick count (\ref
-  QCPAxisTicker::tssMeetTickCount) or relaxes the tick count in favor of better tick steps (\ref
+  number of ticks that should be approximately generated can be set via   setTickCount.
+  Depending on the current tick step strategy (  setTickStepStrategy), the algorithm either
+  sacrifices readability to better match the specified tick count (
+  QCPAxisTicker::tssMeetTickCount) or relaxes the tick count in favor of better tick steps (
   QCPAxisTicker::tssReadability), which is the default.
   
   The following more specialized axis ticker subclasses are available, see details in the
@@ -5349,17 +5349,17 @@ void QCPLineEnding::draw(QCPPainter *painter, const QCPVector2D &pos, double ang
   reimplementing some or all of the available virtual methods.
 
   In the simplest case you might wish to just generate different tick steps than the other tickers,
-  so you only reimplement the method \ref getTickStep. If you additionally want control over the
-  string that will be shown as tick label, reimplement \ref getTickLabel.
+  so you only reimplement the method   getTickStep. If you additionally want control over the
+  string that will be shown as tick label, reimplement   getTickLabel.
   
   If you wish to have complete control, you can generate the tick vectors and tick label vectors
-  yourself by reimplementing \ref createTickVector and \ref createLabelVector. The default
-  implementations use the previously mentioned virtual methods \ref getTickStep and \ref
+  yourself by reimplementing   createTickVector and   createLabelVector. The default
+  implementations use the previously mentioned virtual methods   getTickStep and
   getTickLabel, but your reimplementations don't necessarily need to do so. For example in the case
-  of unequal tick steps, the method \ref getTickStep loses its usefulness and can be ignored.
+  of unequal tick steps, the method   getTickStep loses its usefulness and can be ignored.
   
-  The sub tick count between major ticks can be controlled with \ref getSubTickCount. Full sub tick
-  placement control is obtained by reimplementing \ref createSubTickVector.
+  The sub tick count between major ticks can be controlled with   getSubTickCount. Full sub tick
+  placement control is obtained by reimplementing   createSubTickVector.
   
   See the documentation of all these virtual methods in QCPAxisTicker for detailed information
   about the parameters and expected return values.
@@ -5383,7 +5383,7 @@ QCPAxisTicker::~QCPAxisTicker()
 
 /*!
   Sets which strategy the axis ticker follows when choosing the size of the tick step. For the
-  available strategies, see \ref TickStepStrategy.
+  available strategies, see   TickStepStrategy.
 */
 void QCPAxisTicker::setTickStepStrategy(QCPAxisTicker::TickStepStrategy strategy)
 {
@@ -5396,7 +5396,7 @@ void QCPAxisTicker::setTickStepStrategy(QCPAxisTicker::TickStepStrategy strategy
   the requested number of ticks.
 
   Whether the readability has priority over meeting the requested \a count can be specified with
-  \ref setTickStepStrategy.
+    setTickStepStrategy.
 */
 void QCPAxisTicker::setTickCount(int count)
 {
@@ -5460,11 +5460,11 @@ void QCPAxisTicker::generate(const QCPRange &range, const QLocale &locale, QChar
 /*! \internal
   
   Takes the entire currently visible axis range and returns a sensible tick step in
-  order to provide readable tick labels as well as a reasonable number of tick counts (see \ref
-  setTickCount, \ref setTickStepStrategy).
+  order to provide readable tick labels as well as a reasonable number of tick counts (see
+  setTickCount,   setTickStepStrategy).
   
   If a QCPAxisTicker subclass only wants a different tick step behaviour than the default
-  implementation, it should reimplement this method. See \ref cleanMantissa for a possible helper
+  implementation, it should reimplement this method. See   cleanMantissa for a possible helper
   function.
 */
 double QCPAxisTicker::getTickStep(const QCPRange &range)
@@ -5539,7 +5539,7 @@ int QCPAxisTicker::getSubTickCount(double tickStep)
   precision.
   
   If the returned value contains exponentials of the form "2e5" and beautifully typeset powers is
-  enabled in the QCPAxis number format (\ref QCPAxis::setNumberFormat), the exponential part will
+  enabled in the QCPAxis number format (  QCPAxis::setNumberFormat), the exponential part will
   be formatted accordingly using multiplication symbol and superscript during rendering of the
   label automatically.
 */
@@ -5577,7 +5577,7 @@ QVector<double> QCPAxisTicker::createSubTickVector(int subTickCount, const QVect
   
   Returns a vector containing all coordinates of ticks that should be drawn. The default
   implementation generates ticks with a spacing of \a tickStep (mathematically starting at the tick
-  step origin, see \ref setTickOrigin) distributed over the passed \a range.
+  step origin, see   setTickOrigin) distributed over the passed \a range.
   
   In order for the axis ticker to generate proper sub ticks, it is necessary that the first and
   last tick coordinates returned by this method are just below/above the provided \a range.
@@ -5605,11 +5605,11 @@ QVector<double> QCPAxisTicker::createTickVector(double tickStep, const QCPRange 
 /*! \internal
   
   Returns a vector containing all tick label strings corresponding to the tick coordinates provided
-  in \a ticks. The default implementation calls \ref getTickLabel to generate the respective
+  in \a ticks. The default implementation calls   getTickLabel to generate the respective
   strings.
   
   It is possible but uncommon for QCPAxisTicker subclasses to reimplement this method, as
-  reimplementing \ref getTickLabel often achieves the intended result easier.
+  reimplementing   getTickLabel often achieves the intended result easier.
 */
 QVector<QString> QCPAxisTicker::createLabelVector(const QVector<double> &ticks, const QLocale &locale, QChar formatChar, int precision)
 {
@@ -5700,7 +5700,7 @@ double QCPAxisTicker::getMantissa(double input, double *magnitude) const
   
   Returns a number that is close to \a input but has a clean, easier human readable mantissa. How
   strongly the mantissa is altered, and thus how strong the result deviates from the original \a
-  input, depends on the current tick step strategy (see \ref setTickStepStrategy).
+  input, depends on the current tick step strategy (see   setTickStepStrategy).
 */
 double QCPAxisTicker::cleanMantissa(double input) const
 {
@@ -5741,12 +5741,12 @@ double QCPAxisTicker::cleanMantissa(double input) const
   plot axis coordinate is interpreted as Unix Time, so seconds since Epoch (January 1, 1970, 00:00
   UTC). This is also used for example by QDateTime in the <tt>toTime_t()/setTime_t()</tt> methods
   with a precision of one second. Since Qt 4.7, millisecond accuracy can be obtained from QDateTime
-  by using <tt>QDateTime::fromMSecsSinceEpoch()/1000.0</tt>. The static methods \ref dateTimeToKey
-  and \ref keyToDateTime conveniently perform this conversion achieving a precision of one
+  by using <tt>QDateTime::fromMSecsSinceEpoch()/1000.0</tt>. The static methods   dateTimeToKey
+  and   keyToDateTime conveniently perform this conversion achieving a precision of one
   millisecond on all Qt versions.
   
-  The format of the date/time display in the tick labels is controlled with \ref setDateTimeFormat.
-  If a different time spec (time zone) shall be used, see \ref setDateTimeSpec.
+  The format of the date/time display in the tick labels is controlled with   setDateTimeFormat.
+  If a different time spec (time zone) shall be used, see   setDateTimeSpec.
   
   This ticker produces unequal tick spacing in order to provide intuitive date and time-of-day
   ticks. For example, if the axis range spans a few years such that there is one tick per year,
@@ -5756,7 +5756,7 @@ double QCPAxisTicker::cleanMantissa(double input) const
   ticks on the same day of each month.
   
   If you would like to change the date/time that is used as a (mathematical) starting date for the
-  ticks, use the \ref setTickOrigin(const QDateTime &origin) method overload, which takes a
+  ticks, use the   setTickOrigin(const QDateTime &origin) method overload, which takes a
   QDateTime. If you pass 15. July, 9:45 to this method, the yearly ticks will end up on 15. July at
   9:45 of every year.
   
@@ -5786,7 +5786,7 @@ QCPAxisTickerDateTime::QCPAxisTickerDateTime() :
   
   Newlines can be inserted with "\n".
   
-  \see setDateTimeSpec
+   \sa setDateTimeSpec
 */
 void QCPAxisTickerDateTime::setDateTimeFormat(const QString &format)
 {
@@ -5801,7 +5801,7 @@ void QCPAxisTickerDateTime::setDateTimeFormat(const QString &format)
   of axis ranges or keys of a plottable) are given in the UTC spec, set \a spec to <tt>Qt::UTC</tt>
   to get the correct axis labels.
   
-  \see setDateTimeFormat
+   \sa setDateTimeFormat
 */
 void QCPAxisTickerDateTime::setDateTimeSpec(Qt::TimeSpec spec)
 {
@@ -5809,9 +5809,9 @@ void QCPAxisTickerDateTime::setDateTimeSpec(Qt::TimeSpec spec)
 }
 
 /*!
-  Sets the tick origin (see \ref QCPAxisTicker::setTickOrigin) in seconds since Epoch (1. Jan 1970,
+  Sets the tick origin (see   QCPAxisTicker::setTickOrigin) in seconds since Epoch (1. Jan 1970,
   00:00 UTC). For the date time ticker it might be more intuitive to use the overload which
-  directly takes a QDateTime, see \ref setTickOrigin(const QDateTime &origin).
+  directly takes a QDateTime, see   setTickOrigin(const QDateTime &origin).
   
   This is useful to define the month/day/time recurring at greater tick interval steps. For
   example, If you pass 15. July, 9:45 to this method and the tick interval happens to be one tick
@@ -5823,7 +5823,7 @@ void QCPAxisTickerDateTime::setTickOrigin(double origin)
 }
 
 /*!
-  Sets the tick origin (see \ref QCPAxisTicker::setTickOrigin) as a QDateTime \a origin.
+  Sets the tick origin (see   QCPAxisTicker::setTickOrigin) as a QDateTime \a origin.
   
   This is useful to define the month/day/time recurring at greater tick interval steps. For
   example, If you pass 15. July, 9:45 to this method and the tick interval happens to be one tick
@@ -5839,13 +5839,13 @@ void QCPAxisTickerDateTime::setTickOrigin(const QDateTime &origin)
   Returns a sensible tick step with intervals appropriate for a date-time-display, such as weekly,
   monthly, bi-monthly, etc.
   
-  Note that this tick step isn't used exactly when generating the tick vector in \ref
+  Note that this tick step isn't used exactly when generating the tick vector in
   createTickVector, but only as a guiding value requiring some correction for each individual tick
   interval. Otherwise this would lead to unintuitive date displays, e.g. jumping between first day
   in the month to the last day in the previous month from tick to tick, due to the non-uniform
   length of months. The same problem arises with leap years.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 double QCPAxisTickerDateTime::getTickStep(const QCPRange &range)
 {
@@ -5879,7 +5879,7 @@ double QCPAxisTickerDateTime::getTickStep(const QCPRange &range)
   Returns a sensible sub tick count with intervals appropriate for a date-time-display, such as weekly,
   monthly, bi-monthly, etc.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 int QCPAxisTickerDateTime::getSubTickCount(double tickStep)
 {
@@ -5912,9 +5912,9 @@ int QCPAxisTickerDateTime::getSubTickCount(double tickStep)
 /*! \internal
   
   Generates a date/time tick label for tick coordinate \a tick, based on the currently set format
-  (\ref setDateTimeFormat) and time spec (\ref setDateTimeSpec).
+  (  setDateTimeFormat) and time spec (  setDateTimeSpec).
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 QString QCPAxisTickerDateTime::getTickLabel(double tick, const QLocale &locale, QChar formatChar, int precision)
 {
@@ -5928,7 +5928,7 @@ QString QCPAxisTickerDateTime::getTickLabel(double tick, const QLocale &locale, 
   Uses the passed \a tickStep as a guiding value and applies corrections in order to obtain
   non-uniform tick intervals but intuitive tick labels, e.g. falling on the same day of each month.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 QVector<double> QCPAxisTickerDateTime::createTickVector(double tickStep, const QCPRange &range)
 {
@@ -5973,7 +5973,7 @@ QVector<double> QCPAxisTickerDateTime::createTickVector(double tickStep, const Q
   The accuracy achieved by this method is one millisecond, irrespective of the used Qt version (it
   works around the lack of a QDateTime::fromMSecsSinceEpoch in Qt 4.6)
   
-  \see dateTimeToKey
+   \sa dateTimeToKey
 */
 QDateTime QCPAxisTickerDateTime::keyToDateTime(double key)
 {
@@ -5993,7 +5993,7 @@ QDateTime QCPAxisTickerDateTime::keyToDateTime(double key)
   The accuracy achieved by this method is one millisecond, irrespective of the used Qt version (it
   works around the lack of a QDateTime::toMSecsSinceEpoch in Qt 4.6)
   
-  \see keyToDateTime
+   \sa keyToDateTime
 */
 double QCPAxisTickerDateTime::dateTimeToKey(const QDateTime dateTime)
 {
@@ -6010,7 +6010,7 @@ double QCPAxisTickerDateTime::dateTimeToKey(const QDateTime dateTime)
   seconds since Epoch (1. Jan 1970, 00:00 UTC). This is the format used as axis coordinates by
   QCPAxisTickerDateTime.
   
-  \see keyToDateTime
+   \sa keyToDateTime
 */
 double QCPAxisTickerDateTime::dateTimeToKey(const QDate date)
 {
@@ -6036,13 +6036,13 @@ double QCPAxisTickerDateTime::dateTimeToKey(const QDate date)
   
   This QCPAxisTicker subclass generates ticks that corresponds to time intervals.
   
-  The format of the time display in the tick labels is controlled with \ref setTimeFormat and \ref
+  The format of the time display in the tick labels is controlled with   setTimeFormat and
   setFieldWidth. The time coordinate is in the unit of seconds with respect to the time coordinate
   zero. Unlike with QCPAxisTickerDateTime, the ticks don't correspond to a specific calendar date
   and time.
   
   The time can be displayed in milliseconds, seconds, minutes, hours and days. Depending on the
-  largest available unit in the format specified with \ref setTimeFormat, any time spans above will
+  largest available unit in the format specified with   setTimeFormat, any time spans above will
   be carried in that largest unit. So for example if the format string is "%m:%s" and a tick at
   coordinate value 7815 (being 2 hours, 10 minutes and 15 seconds) is created, the resulting tick
   label will show "130:15" (130 minutes, 15 seconds). If the format string is "%h:%m:%s", the hour
@@ -6053,7 +6053,7 @@ double QCPAxisTickerDateTime::dateTimeToKey(const QDate date)
   \snippet documentation/doc-image-generator/mainwindow.cpp axistickertime-creation
   
   Here is an example of a time axis providing time information in days, hours and minutes. Due to
-  the axis range spanning a few days and the wanted tick count (\ref setTickCount), the ticker
+  the axis range spanning a few days and the wanted tick count (  setTickCount), the ticker
   decided to use tick steps of 12 hours:
   
   \image html axisticker-time2.png
@@ -6098,7 +6098,7 @@ QCPAxisTickerTime::QCPAxisTickerTime() :
   - %%h for hours
   - %%d for days
   
-  The field width (zero padding) can be controlled for each unit with \ref setFieldWidth.
+  The field width (zero padding) can be controlled for each unit with   setFieldWidth.
   
   The largest unit that appears in \a format will carry all the remaining time of a certain tick
   coordinate, even if it overflows the natural limit of the unit. For example, if %%m is the
@@ -6135,7 +6135,7 @@ void QCPAxisTickerTime::setTimeFormat(const QString &format)
   label. If the number for the specific unit is shorter than \a width, it will be padded with an
   according number of zeros to the left in order to reach the field width.
   
-  \see setTimeFormat
+   \sa setTimeFormat
 */
 void QCPAxisTickerTime::setFieldWidth(QCPAxisTickerTime::TimeUnit unit, int width)
 {
@@ -6145,11 +6145,11 @@ void QCPAxisTickerTime::setFieldWidth(QCPAxisTickerTime::TimeUnit unit, int widt
 /*! \internal
 
   Returns the tick step appropriate for time displays, depending on the provided \a range and the
-  smallest available time unit in the current format (\ref setTimeFormat). For example if the unit
+  smallest available time unit in the current format (  setTimeFormat). For example if the unit
   of seconds isn't available in the format, this method will not generate steps (like 2.5 minutes)
   that require sub-minute precision to be displayed correctly.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 double QCPAxisTickerTime::getTickStep(const QCPRange &range)
 {
@@ -6200,7 +6200,7 @@ double QCPAxisTickerTime::getTickStep(const QCPRange &range)
 
   Returns the sub tick count appropriate for the provided \a tickStep and time displays.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 int QCPAxisTickerTime::getSubTickCount(double tickStep)
 {
@@ -6224,9 +6224,9 @@ int QCPAxisTickerTime::getSubTickCount(double tickStep)
 /*! \internal
   
   Returns the tick label corresponding to the provided \a tick and the configured format and field
-  widths (\ref setTimeFormat, \ref setFieldWidth).
+  widths (  setTimeFormat,   setFieldWidth).
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 QString QCPAxisTickerTime::getTickLabel(double tick, const QLocale &locale, QChar formatChar, int precision)
 {
@@ -6259,7 +6259,7 @@ QString QCPAxisTickerTime::getTickLabel(double tick, const QLocale &locale, QCha
 /*! \internal
   
   Replaces all occurrences of the format pattern belonging to \a unit in \a text with the specified
-  \a value, using the field width as specified with \ref setFieldWidth for the \a unit.
+  \a value, using the field width as specified with   setFieldWidth for the \a unit.
 */
 void QCPAxisTickerTime::replaceUnit(QString &text, QCPAxisTickerTime::TimeUnit unit, int value) const
 {
@@ -6283,15 +6283,15 @@ void QCPAxisTickerTime::replaceUnit(QString &text, QCPAxisTickerTime::TimeUnit u
   
   \image html axisticker-fixed.png
   
-  This QCPAxisTicker subclass generates ticks with a fixed tick step set with \ref setTickStep. It
+  This QCPAxisTicker subclass generates ticks with a fixed tick step set with   setTickStep. It
   is also possible to allow integer multiples and integer powers of the specified tick step with
-  \ref setScaleStrategy.
+    setScaleStrategy.
   
   A typical application of this ticker is to make an axis only display integers, by setting the
-  tick step of the ticker to 1.0 and the scale strategy to \ref ssMultiples.
+  tick step of the ticker to 1.0 and the scale strategy to   ssMultiples.
   
   Another case is when a certain number has a special meaning and axis ticks should only appear at
-  multiples of that value. In this case you might also want to consider \ref QCPAxisTickerPi
+  multiples of that value. In this case you might also want to consider   QCPAxisTickerPi
   because despite the name it is not limited to only pi symbols/values.
   
   The ticker can be created and assigned to an axis like this:
@@ -6312,9 +6312,9 @@ QCPAxisTickerFixed::QCPAxisTickerFixed() :
   Sets the fixed tick interval to \a step.
   
   The axis ticker will only use this tick step when generating axis ticks. This might cause a very
-  high tick density and overlapping labels if the axis range is zoomed out. Using \ref
+  high tick density and overlapping labels if the axis range is zoomed out. Using
   setScaleStrategy it is possible to relax the fixed step and also allow multiples or powers of \a
-  step. This will enable the ticker to reduce the number of ticks to a reasonable amount (see \ref
+  step. This will enable the ticker to reduce the number of ticks to a reasonable amount (see
   setTickCount).
 */
 void QCPAxisTickerFixed::setTickStep(double step)
@@ -6326,11 +6326,11 @@ void QCPAxisTickerFixed::setTickStep(double step)
 }
 
 /*!
-  Sets whether the specified tick step (\ref setTickStep) is absolutely fixed or whether
+  Sets whether the specified tick step (  setTickStep) is absolutely fixed or whether
   modifications may be applied to it before calculating the finally used tick step, such as
-  permitting multiples or powers. See \ref ScaleStrategy for details.
+  permitting multiples or powers. See   ScaleStrategy for details.
   
-  The default strategy is \ref ssNone, which means the tick step is absolutely fixed.
+  The default strategy is   ssNone, which means the tick step is absolutely fixed.
 */
 void QCPAxisTickerFixed::setScaleStrategy(QCPAxisTickerFixed::ScaleStrategy strategy)
 {
@@ -6339,13 +6339,13 @@ void QCPAxisTickerFixed::setScaleStrategy(QCPAxisTickerFixed::ScaleStrategy stra
 
 /*! \internal
   
-  Determines the actually used tick step from the specified tick step and scale strategy (\ref
-  setTickStep, \ref setScaleStrategy).
+  Determines the actually used tick step from the specified tick step and scale strategy (
+  setTickStep,   setScaleStrategy).
   
-  This method either returns the specified tick step exactly, or, if the scale strategy is not \ref
+  This method either returns the specified tick step exactly, or, if the scale strategy is not
   ssNone, a modification of it to allow varying the number of ticks in the current axis range.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 double QCPAxisTickerFixed::getTickStep(const QCPRange &range)
 {
@@ -6386,8 +6386,8 @@ double QCPAxisTickerFixed::getTickStep(const QCPRange &range)
   \image html axisticker-text.png
   
   This QCPAxisTicker subclass generates ticks which can be directly specified by the user as
-  coordinates and associated strings. They can be passed as a whole with \ref setTicks or one at a
-  time with \ref addTick. Alternatively you can directly access the internal storage via \ref ticks
+  coordinates and associated strings. They can be passed as a whole with   setTicks or one at a
+  time with   addTick. Alternatively you can directly access the internal storage via   ticks
   and modify the tick/label data there.
   
   This is useful for cases where the axis represents categories rather than numerical values.
@@ -6408,7 +6408,7 @@ double QCPAxisTickerFixed::getTickStep(const QCPRange &range)
   labels.
 
   You can access the map directly in order to add, remove or manipulate ticks, as an alternative to
-  using the methods provided by QCPAxisTickerText, such as \ref setTicks and \ref addTick.
+  using the methods provided by QCPAxisTickerText, such as   setTicks and   addTick.
 */
 
 /* end of documentation of inline functions */
@@ -6427,10 +6427,10 @@ QCPAxisTickerText::QCPAxisTickerText() :
   Sets the ticks that shall appear on the axis. The map key of \a ticks corresponds to the axis
   coordinate, and the map value is the string that will appear as tick label.
   
-  An alternative to manipulate ticks is to directly access the internal storage with the \ref ticks
+  An alternative to manipulate ticks is to directly access the internal storage with the   ticks
   getter.
   
-  \see addTicks, addTick, clear
+   \sa addTicks, addTick, clear
 */
 void QCPAxisTickerText::setTicks(const QMap<double, QString> &ticks)
 {
@@ -6443,7 +6443,7 @@ void QCPAxisTickerText::setTicks(const QMap<double, QString> &ticks)
   coordinates, and the entries of \a labels are the respective strings that will appear as tick
   labels.
   
-  \see addTicks, addTick, clear
+   \sa addTicks, addTick, clear
 */
 void QCPAxisTickerText::setTicks(const QVector<double> &positions, const QVector<QString> labels)
 {
@@ -6467,10 +6467,10 @@ void QCPAxisTickerText::setSubTickCount(int subTicks)
 /*!
   Clears all ticks.
   
-  An alternative to manipulate ticks is to directly access the internal storage with the \ref ticks
+  An alternative to manipulate ticks is to directly access the internal storage with the   ticks
   getter.
   
-  \see setTicks, addTicks, addTick
+   \sa setTicks, addTicks, addTick
 */
 void QCPAxisTickerText::clear()
 {
@@ -6481,7 +6481,7 @@ void QCPAxisTickerText::clear()
   Adds a single tick to the axis at the given axis coordinate \a position, with the provided tick \a
   label.
   
-  \see addTicks, setTicks, clear
+   \sa addTicks, setTicks, clear
 */
 void QCPAxisTickerText::addTick(double position, QString label)
 {
@@ -6493,10 +6493,10 @@ void QCPAxisTickerText::addTick(double position, QString label)
   Adds the provided \a ticks to the ones already existing. The map key of \a ticks corresponds to
   the axis coordinate, and the map value is the string that will appear as tick label.
   
-  An alternative to manipulate ticks is to directly access the internal storage with the \ref ticks
+  An alternative to manipulate ticks is to directly access the internal storage with the   ticks
   getter.
   
-  \see addTick, setTicks, clear
+   \sa addTick, setTicks, clear
 */
 void QCPAxisTickerText::addTicks(const QMap<double, QString> &ticks)
 {
@@ -6509,10 +6509,10 @@ void QCPAxisTickerText::addTicks(const QMap<double, QString> &ticks)
   the axis coordinates, and the entries of \a labels are the respective strings that will appear as
   tick labels.
   
-  An alternative to manipulate ticks is to directly access the internal storage with the \ref ticks
+  An alternative to manipulate ticks is to directly access the internal storage with the   ticks
   getter.
   
-  \see addTick, setTicks, clear
+   \sa addTick, setTicks, clear
 */
 void QCPAxisTickerText::addTicks(const QVector<double> &positions, const QVector<QString> &labels)
 {
@@ -6526,7 +6526,7 @@ void QCPAxisTickerText::addTicks(const QVector<double> &positions, const QVector
 /*!
   Since the tick coordinates are provided externally, this method implementation does nothing.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 double QCPAxisTickerText::getTickStep(const QCPRange &range)
 {
@@ -6536,9 +6536,9 @@ double QCPAxisTickerText::getTickStep(const QCPRange &range)
 }
 
 /*!
-  Returns the sub tick count that was configured with \ref setSubTickCount.
+  Returns the sub tick count that was configured with   setSubTickCount.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 int QCPAxisTickerText::getSubTickCount(double tickStep)
 {
@@ -6550,7 +6550,7 @@ int QCPAxisTickerText::getSubTickCount(double tickStep)
   Returns the tick label which corresponds to the key \a tick in the internal tick storage. Since
   the labels are provided externally, \a locale, \a formatChar, and \a precision are ignored.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 QString QCPAxisTickerText::getTickLabel(double tick, const QLocale &locale, QChar formatChar, int precision)
 {
@@ -6565,7 +6565,7 @@ QString QCPAxisTickerText::getTickLabel(double tick, const QLocale &locale, QCha
   available, one tick above and below the range is provided in addition, to allow possible sub tick
   calculation. The parameter \a tickStep is ignored.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 QVector<double> QCPAxisTickerText::createTickVector(double tickStep, const QCPRange &range)
 {
@@ -6599,11 +6599,11 @@ QVector<double> QCPAxisTickerText::createTickVector(double tickStep, const QCPRa
   \image html axisticker-pi.png
   
   This QCPAxisTicker subclass generates ticks that are expressed with respect to a given symbolic
-  constant with a numerical value specified with \ref setPiValue and an appearance in the tick
-  labels specified with \ref setPiSymbol.
+  constant with a numerical value specified with   setPiValue and an appearance in the tick
+  labels specified with   setPiSymbol.
   
   Ticks may be generated at fractions of the symbolic constant. How these fractions appear in the
-  tick label can be configured with \ref setFractionStyle.
+  tick label can be configured with   setFractionStyle.
   
   The ticker can be created and assigned to an axis like this:
   \snippet documentation/doc-image-generator/mainwindow.cpp axistickerpi-creation
@@ -6661,7 +6661,7 @@ void QCPAxisTickerPi::setPeriodicity(int multiplesOfPi)
 
 /*!
   Sets how the numerical/fractional part preceding the symbolic constant is displayed in tick
-  labels. See \ref FractionStyle for the various options.
+  labels. See   FractionStyle for the various options.
 */
 void QCPAxisTickerPi::setFractionStyle(QCPAxisTickerPi::FractionStyle style)
 {
@@ -6670,11 +6670,11 @@ void QCPAxisTickerPi::setFractionStyle(QCPAxisTickerPi::FractionStyle style)
 
 /*! \internal
   
-  Returns the tick step, using the constant's value (\ref setPiValue) as base unit. In consequence
+  Returns the tick step, using the constant's value (  setPiValue) as base unit. In consequence
   the numerical/fractional part preceding the symbolic constant is made to have a readable
   mantissa.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 double QCPAxisTickerPi::getTickStep(const QCPRange &range)
 {
@@ -6685,11 +6685,11 @@ double QCPAxisTickerPi::getTickStep(const QCPRange &range)
 
 /*! \internal
   
-  Returns the sub tick count, using the constant's value (\ref setPiValue) as base unit. In
+  Returns the sub tick count, using the constant's value (  setPiValue) as base unit. In
   consequence the sub ticks divide the numerical/fractional part preceding the symbolic constant
   reasonably, and not the total tick coordinate.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 int QCPAxisTickerPi::getSubTickCount(double tickStep)
 {
@@ -6699,10 +6699,10 @@ int QCPAxisTickerPi::getSubTickCount(double tickStep)
 /*! \internal
   
   Returns the tick label as a fractional/numerical part and a symbolic string as suffix. The
-  formatting of the fraction is done according to the specified \ref setFractionStyle. The appended
-  symbol is specified with \ref setPiSymbol.
+  formatting of the fraction is done according to the specified   setFractionStyle. The appended
+  symbol is specified with   setPiSymbol.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 QString QCPAxisTickerPi::getTickLabel(double tick, const QLocale &locale, QChar formatChar, int precision)
 {
@@ -6760,10 +6760,10 @@ void QCPAxisTickerPi::simplifyFraction(int &numerator, int &denominator) const
 /*! \internal
   
   Takes the fraction given by \a numerator and \a denominator and returns a string representation.
-  The result depends on the configured fraction style (\ref setFractionStyle).
+  The result depends on the configured fraction style (  setFractionStyle).
   
   This method is used to format the numerical/fractional part when generating tick labels. It
-  simplifies the passed fraction to an irreducible form using \ref simplifyFraction and factors out
+  simplifies the passed fraction to an irreducible form using   simplifyFraction and factors out
   any integer parts of the fraction (e.g. "10/4" becomes "2 1/2").
 */
 QString QCPAxisTickerPi::fractionToString(int numerator, int denominator) const
@@ -6816,8 +6816,8 @@ QString QCPAxisTickerPi::fractionToString(int numerator, int denominator) const
 /*! \internal
   
   Returns the unicode string representation of the fraction given by \a numerator and \a
-  denominator. This is the representation used in \ref fractionToString when the fraction style
-  (\ref setFractionStyle) is \ref fsUnicodeFractions.
+  denominator. This is the representation used in   fractionToString when the fraction style
+  (  setFractionStyle) is   fsUnicodeFractions.
   
   This method doesn't use the single-character common fractions but builds each fraction from a
   superscript unicode number, the unicode fraction character, and a subscript unicode number.
@@ -6830,7 +6830,7 @@ QString QCPAxisTickerPi::unicodeFraction(int numerator, int denominator) const
 /*! \internal
   
   Returns the unicode string representing \a number as superscript. This is used to build
-  unicode fractions in \ref unicodeFraction.
+  unicode fractions in   unicodeFraction.
 */
 QString QCPAxisTickerPi::unicodeSuperscript(int number) const
 {
@@ -6856,7 +6856,7 @@ QString QCPAxisTickerPi::unicodeSuperscript(int number) const
 /*! \internal
   
   Returns the unicode string representing \a number as subscript. This is used to build unicode
-  fractions in \ref unicodeFraction.
+  fractions in   unicodeFraction.
 */
 QString QCPAxisTickerPi::unicodeSubscript(int number) const
 {
@@ -6886,11 +6886,11 @@ QString QCPAxisTickerPi::unicodeSubscript(int number) const
   \image html axisticker-log.png
   
   This QCPAxisTicker subclass generates ticks with unequal tick intervals suited for logarithmic
-  axis scales. The ticks are placed at powers of the specified log base (\ref setLogBase).
+  axis scales. The ticks are placed at powers of the specified log base (  setLogBase).
   
   Especially in the case of a log base equal to 10 (the default), it might be desirable to have
   tick labels in the form of powers of ten without mantissa display. To achieve this, set the
-  number precision (\ref QCPAxis::setNumberPrecision) to zero and the number format (\ref
+  number precision (  QCPAxis::setNumberPrecision) to zero and the number format (
   QCPAxis::setNumberFormat) to scientific (exponential) display with beautifully typeset decimal
   powers, so a format string of <tt>"eb"</tt>. This will result in the following axis tick labels:
   
@@ -6948,7 +6948,7 @@ void QCPAxisTickerLog::setSubTickCount(int subTicks)
   Since logarithmic tick steps are necessarily different for each tick interval, this method does
   nothing in the case of QCPAxisTickerLog
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 double QCPAxisTickerLog::getTickStep(const QCPRange &range)
 {
@@ -6959,10 +6959,10 @@ double QCPAxisTickerLog::getTickStep(const QCPRange &range)
 
 /*! \internal
   
-  Returns the sub tick count specified in \ref setSubTickCount. For QCPAxisTickerLog, there is no
+  Returns the sub tick count specified in   setSubTickCount. For QCPAxisTickerLog, there is no
   automatic sub tick count calculation necessary.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 int QCPAxisTickerLog::getSubTickCount(double tickStep)
 {
@@ -6974,10 +6974,10 @@ int QCPAxisTickerLog::getSubTickCount(double tickStep)
   
   Creates ticks with a spacing given by the logarithm base and an increasing integer power in the
   provided \a range. The step in which the power increases tick by tick is chosen in order to keep
-  the total number of ticks as close as possible to the tick count (\ref setTickCount). The
+  the total number of ticks as close as possible to the tick count (  setTickCount). The
   parameter \a tickStep is ignored for QCPAxisTickerLog
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 QVector<double> QCPAxisTickerLog::createTickVector(double tickStep, const QCPRange &range)
 {
@@ -7027,7 +7027,7 @@ QVector<double> QCPAxisTickerLog::createTickVector(double tickStep, const QCPRan
   \brief Responsible for drawing the grid of a QCPAxis.
   
   This class is tightly bound to QCPAxis. Every axis owns a grid instance and uses it to draw the
-  grid lines, sub grid lines and zero-line. You can interact with the grid of an axis via \ref
+  grid lines, sub grid lines and zero-line. You can interact with the grid of an axis via
   QCPAxis::grid. Normally, you don't need to create an instance of QCPGrid yourself.
   
   The axis and grid drawing was split into two classes to allow them to be placed on different
@@ -7059,7 +7059,7 @@ QCPGrid::QCPGrid(QCPAxis *parentAxis) :
 /*!
   Sets whether grid lines at sub tick marks are drawn.
   
-  \see setSubGridPen
+   \sa setSubGridPen
 */
 void QCPGrid::setSubGridVisible(bool visible)
 {
@@ -7114,13 +7114,13 @@ void QCPGrid::setZeroLinePen(const QPen &pen)
   A convenience function to easily set the QPainter::Antialiased hint on the provided \a painter
   before drawing the major grid lines.
 
-  This is the antialiasing state the painter passed to the \ref draw method is in by default.
+  This is the antialiasing state the painter passed to the   draw method is in by default.
   
   This function takes into account the local setting of the antialiasing flag as well as the
-  overrides set with \ref QCustomPlot::setAntialiasedElements and \ref
+  overrides set with   QCustomPlot::setAntialiasedElements and
   QCustomPlot::setNotAntialiasedElements.
   
-  \see setAntialiased
+   \sa setAntialiased
 */
 void QCPGrid::applyDefaultAntialiasingHint(QCPPainter *painter) const
 {
@@ -7130,7 +7130,7 @@ void QCPGrid::applyDefaultAntialiasingHint(QCPPainter *painter) const
 /*! \internal
   
   Draws grid lines and sub grid lines at the positions of (sub) ticks of the parent axis, spanning
-  over the complete axis rect. Also draws the zero line, if appropriate (\ref setZeroLinePen).
+  over the complete axis rect. Also draws the zero line, if appropriate (  setZeroLinePen).
 */
 void QCPGrid::draw(QCPPainter *painter)
 {
@@ -7145,7 +7145,7 @@ void QCPGrid::draw(QCPPainter *painter)
   
   Draws the main grid lines and possibly a zero line with the specified painter.
   
-  This is a helper function called by \ref draw.
+  This is a helper function called by   draw.
 */
 void QCPGrid::drawGridLines(QCPPainter *painter) const
 {
@@ -7218,7 +7218,7 @@ void QCPGrid::drawGridLines(QCPPainter *painter) const
   
   Draws the sub grid lines with the specified painter.
   
-  This is a helper function called by \ref draw.
+  This is a helper function called by   draw.
 */
 void QCPGrid::drawSubGridLines(QCPPainter *painter) const
 {
@@ -7266,8 +7266,8 @@ void QCPGrid::drawSubGridLines(QCPPainter *painter) const
   on the left represents the QCustomPlot widget border.</center>
   
   Each axis holds an instance of QCPAxisTicker which is used to generate the tick coordinates and
-  tick labels. You can access the currently installed \ref ticker or set a new one (possibly one of
-  the specialized subclasses, or your own subclass) via \ref setTicker. For details, see the
+  tick labels. You can access the currently installed   ticker or set a new one (possibly one of
+  the specialized subclasses, or your own subclass) via   setTicker. For details, see the
   documentation of QCPAxisTicker.
 */
 
@@ -7278,12 +7278,12 @@ void QCPGrid::drawSubGridLines(QCPPainter *painter) const
   Returns the orientation of this axis. The axis orientation (horizontal or vertical) is deduced
   from the axis type (left, top, right or bottom).
 
-  \see orientation(AxisType type), pixelOrientation
+   \sa orientation(AxisType type), pixelOrientation
 */
 
 /*! \fn QCPGrid *QCPAxis::grid() const
   
-  Returns the \ref QCPGrid instance belonging to this axis. Access it to set details about the way the
+  Returns the   QCPGrid instance belonging to this axis. Access it to set details about the way the
   grid is displayed.
 */
 
@@ -7291,7 +7291,7 @@ void QCPGrid::drawSubGridLines(QCPPainter *painter) const
 
   Returns the orientation of the specified axis type
 
-  \see orientation(), pixelOrientation
+   \sa orientation(), pixelOrientation
 */
 
 /*! \fn int QCPAxis::pixelOrientation() const
@@ -7317,16 +7317,16 @@ void QCPGrid::drawSubGridLines(QCPPainter *painter) const
 
   Returns a modifiable shared pointer to the currently installed axis ticker. The axis ticker is
   responsible for generating the tick positions and tick labels of this axis. You can access the
-  \ref QCPAxisTicker with this method and modify basic properties such as the approximate tick count
-  (\ref QCPAxisTicker::setTickCount).
+    QCPAxisTicker with this method and modify basic properties such as the approximate tick count
+  (  QCPAxisTicker::setTickCount).
 
-  You can gain more control over the axis ticks by setting a different \ref QCPAxisTicker subclass, see
-  the documentation there. A new axis ticker can be set with \ref setTicker.
+  You can gain more control over the axis ticks by setting a different   QCPAxisTicker subclass, see
+  the documentation there. A new axis ticker can be set with   setTicker.
 
   Since the ticker is stored in the axis as a shared pointer, multiple axes may share the same axis
   ticker simply by passing the same shared pointer to multiple axes.
 
-  \see setTicker
+   \sa setTicker
 */
 
 /* end of documentation of inline functions */
@@ -7334,13 +7334,13 @@ void QCPGrid::drawSubGridLines(QCPPainter *painter) const
 
 /*! \fn void QCPAxis::rangeChanged(const QCPRange &newRange)
 
-  This signal is emitted when the range of this axis has changed. You can connect it to the \ref
+  This signal is emitted when the range of this axis has changed. You can connect it to the
   setRange slot of another axis to communicate the new range to the other axis, in order for it to
   be synchronized.
   
-  You may also manipulate/correct the range with \ref setRange in a slot connected to this signal.
+  You may also manipulate/correct the range with   setRange in a slot connected to this signal.
   This is useful if for example a maximum range span shall not be exceeded, or if the lower/upper
-  range shouldn't go beyond certain values (see \ref QCPRange::bounded). For example, the following
+  range shouldn't go beyond certain values (see   QCPRange::bounded). For example, the following
   slot would limit the x axis to ranges between 0 and 10:
   \code
   customPlot->xAxis->setRange(newRange.bounded(0, 10))
@@ -7356,18 +7356,18 @@ void QCPGrid::drawSubGridLines(QCPPainter *painter) const
 
 /*! \fn void QCPAxis::scaleTypeChanged(QCPAxis::ScaleType scaleType);
   
-  This signal is emitted when the scale type changes, by calls to \ref setScaleType
+  This signal is emitted when the scale type changes, by calls to   setScaleType
 */
 
 /*! \fn void QCPAxis::selectionChanged(QCPAxis::SelectableParts selection)
   
   This signal is emitted when the selection state of this axis has changed, either by user interaction
-  or by a direct call to \ref setSelectedParts.
+  or by a direct call to   setSelectedParts.
 */
 
 /*! \fn void QCPAxis::selectableChanged(const QCPAxis::SelectableParts &parts);
   
-  This signal is emitted when the selectability changes, by calls to \ref setSelectableParts
+  This signal is emitted when the selectability changes, by calls to   setSelectableParts
 */
 
 /* end of documentation of signals */
@@ -7376,8 +7376,8 @@ void QCPGrid::drawSubGridLines(QCPPainter *painter) const
   Constructs an Axis instance of Type \a type for the axis rect \a parent.
   
   Usually it isn't necessary to instantiate axes directly, because you can let QCustomPlot create
-  them for you with \ref QCPAxisRect::addAxis. If you want to use own QCPAxis-subclasses however,
-  create them manually and then inject them also via \ref QCPAxisRect::addAxis.
+  them for you with   QCPAxisRect::addAxis. If you want to use own QCPAxis-subclasses however,
+  create them manually and then inject them also via   QCPAxisRect::addAxis.
 */
 QCPAxis::QCPAxis(QCPAxisRect *parent, AxisType type) :
   QCPLayerable(parent->parentPlot(), QString(), parent),
@@ -7537,11 +7537,11 @@ QCPLineEnding QCPAxis::upperEnding() const
   Sets whether the axis uses a linear scale or a logarithmic scale.
   
   Note that this method controls the coordinate transformation. You will likely also want to use a
-  logarithmic tick spacing and labeling, which can be achieved by setting an instance of \ref
-  QCPAxisTickerLog via \ref setTicker. See the documentation of \ref QCPAxisTickerLog about the
+  logarithmic tick spacing and labeling, which can be achieved by setting an instance of
+  QCPAxisTickerLog via   setTicker. See the documentation of   QCPAxisTickerLog about the
   details of logarithmic axis tick creation.
   
-  \ref setNumberPrecision
+    setNumberPrecision
 */
 void QCPAxis::setScaleType(QCPAxis::ScaleType type)
 {
@@ -7558,10 +7558,10 @@ void QCPAxis::setScaleType(QCPAxis::ScaleType type)
 /*!
   Sets the range of the axis.
   
-  This slot may be connected with the \ref rangeChanged signal of another axis so this axis
+  This slot may be connected with the   rangeChanged signal of another axis so this axis
   is always synchronized with the other axis range, when it changes.
   
-  To invert the direction of an axis, use \ref setRangeReversed.
+  To invert the direction of an axis, use   setRangeReversed.
 */
 void QCPAxis::setRange(const QCPRange &range)
 {
@@ -7583,13 +7583,13 @@ void QCPAxis::setRange(const QCPRange &range)
 
 /*!
   Sets whether the user can (de-)select the parts in \a selectable by clicking on the QCustomPlot surface.
-  (When \ref QCustomPlot::setInteractions contains iSelectAxes.)
+  (When   QCustomPlot::setInteractions contains iSelectAxes.)
   
   However, even when \a selectable is set to a value not allowing the selection of a specific part,
-  it is still possible to set the selection of this part manually, by calling \ref setSelectedParts
+  it is still possible to set the selection of this part manually, by calling   setSelectedParts
   directly.
   
-  \see SelectablePart, setSelectedParts
+   \sa SelectablePart, setSelectedParts
 */
 void QCPAxis::setSelectableParts(const SelectableParts &selectable)
 {
@@ -7601,18 +7601,18 @@ void QCPAxis::setSelectableParts(const SelectableParts &selectable)
 }
 
 /*!
-  Sets the selected state of the respective axis parts described by \ref SelectablePart. When a part
+  Sets the selected state of the respective axis parts described by   SelectablePart. When a part
   is selected, it uses a different pen/font.
   
-  The entire selection mechanism for axes is handled automatically when \ref
+  The entire selection mechanism for axes is handled automatically when
   QCustomPlot::setInteractions contains iSelectAxes. You only need to call this function when you
   wish to change the selection state manually.
   
-  This function can change the selection state of a part, independent of the \ref setSelectableParts setting.
+  This function can change the selection state of a part, independent of the   setSelectableParts setting.
   
-  emits the \ref selectionChanged signal when \a selected is different from the previous selection state.
+  emits the   selectionChanged signal when \a selected is different from the previous selection state.
   
-  \see SelectablePart, setSelectableParts, selectTest, setSelectedBasePen, setSelectedTickPen, setSelectedSubTickPen,
+   \sa SelectablePart, setSelectableParts, selectTest, setSelectedBasePen, setSelectedTickPen, setSelectedSubTickPen,
   setSelectedTickLabelFont, setSelectedLabelFont, setSelectedTickLabelColor, setSelectedLabelColor
 */
 void QCPAxis::setSelectedParts(const SelectableParts &selected)
@@ -7629,9 +7629,9 @@ void QCPAxis::setSelectedParts(const SelectableParts &selected)
   
   Sets the lower and upper bound of the axis range.
   
-  To invert the direction of an axis, use \ref setRangeReversed.
+  To invert the direction of an axis, use   setRangeReversed.
   
-  There is also a slot to set a range, see \ref setRange(const QCPRange &range).
+  There is also a slot to set a range, see   setRange(const QCPRange &range).
 */
 void QCPAxis::setRange(double lower, double upper)
 {
@@ -7676,7 +7676,7 @@ void QCPAxis::setRange(double position, double size, Qt::AlignmentFlag alignment
 
 /*!
   Sets the lower bound of the axis range. The upper bound is not changed.
-  \see setRange
+   \sa setRange
 */
 void QCPAxis::setRangeLower(double lower)
 {
@@ -7698,7 +7698,7 @@ void QCPAxis::setRangeLower(double lower)
 
 /*!
   Sets the upper bound of the axis range. The lower bound is not changed.
-  \see setRange
+   \sa setRange
 */
 void QCPAxis::setRangeUpper(double upper)
 {
@@ -7724,7 +7724,7 @@ void QCPAxis::setRangeUpper(double upper)
   direction of increasing values is inverted.
 
   Note that the range and data interface stays the same for reversed axes, e.g. the \a lower part
-  of the \ref setRange interface will still reference the mathematically smaller number than the \a
+  of the   setRange interface will still reference the mathematically smaller number than the \a
   upper part.
 */
 void QCPAxis::setRangeReversed(bool reversed)
@@ -7738,12 +7738,12 @@ void QCPAxis::setRangeReversed(bool reversed)
   
   You can change the tick positioning/labeling behaviour of this axis by setting a different
   QCPAxisTicker subclass using this method. If you only wish to modify the currently installed axis
-  ticker, access it via \ref ticker.
+  ticker, access it via   ticker.
   
   Since the ticker is stored in the axis as a shared pointer, multiple axes may share the same axis
   ticker simply by passing the same shared pointer to multiple axes.
   
-  \see ticker
+   \sa ticker
 */
 void QCPAxis::setTicker(QSharedPointer<QCPAxisTicker> ticker)
 {
@@ -7758,9 +7758,9 @@ void QCPAxis::setTicker(QSharedPointer<QCPAxisTicker> ticker)
   Sets whether tick marks are displayed.
 
   Note that setting \a show to false does not imply that tick labels are invisible, too. To achieve
-  that, see \ref setTickLabels.
+  that, see   setTickLabels.
   
-  \see setSubTicks
+   \sa setSubTicks
 */
 void QCPAxis::setTicks(bool show)
 {
@@ -7787,7 +7787,7 @@ void QCPAxis::setTickLabels(bool show)
 
 /*!
   Sets the distance between the axis base line (including any outward ticks) and the tick labels.
-  \see setLabelPadding, setPadding
+   \sa setLabelPadding, setPadding
 */
 void QCPAxis::setTickLabelPadding(int padding)
 {
@@ -7801,7 +7801,7 @@ void QCPAxis::setTickLabelPadding(int padding)
 /*!
   Sets the font of the tick labels.
   
-  \see setTickLabels, setTickLabelColor
+   \sa setTickLabels, setTickLabelColor
 */
 void QCPAxis::setTickLabelFont(const QFont &font)
 {
@@ -7815,7 +7815,7 @@ void QCPAxis::setTickLabelFont(const QFont &font)
 /*!
   Sets the color of the tick labels.
   
-  \see setTickLabels, setTickLabelFont
+   \sa setTickLabels, setTickLabelFont
 */
 void QCPAxis::setTickLabelColor(const QColor &color)
 {
@@ -7843,8 +7843,8 @@ void QCPAxis::setTickLabelRotation(double degrees)
 /*!
   Sets whether the tick labels (numbers) shall appear inside or outside the axis rect.
   
-  The usual and default setting is \ref lsOutside. Very compact plots sometimes require tick labels
-  to be inside the axis rect, to save space. If \a side is set to \ref lsInside, the tick labels
+  The usual and default setting is   lsOutside. Very compact plots sometimes require tick labels
+  to be inside the axis rect, to save space. If \a side is set to   lsInside, the tick labels
   appear on the inside are additionally clipped to the axis rect.
 */
 void QCPAxis::setTickLabelSide(LabelSide side)
@@ -7941,7 +7941,7 @@ void QCPAxis::setNumberFormat(const QString &formatCode)
 /*!
   Sets the precision of the tick label numbers. See QLocale::toString(double i, char f, int prec)
   for details. The effect of precisions are most notably for number Formats starting with 'e', see
-  \ref setNumberFormat
+    setNumberFormat
 */
 void QCPAxis::setNumberPrecision(int precision)
 {
@@ -7958,7 +7958,7 @@ void QCPAxis::setNumberPrecision(int precision)
   zero, the tick labels and axis label will increase their distance to the axis accordingly, so
   they won't collide with the ticks.
   
-  \see setSubTickLength, setTickLengthIn, setTickLengthOut
+   \sa setSubTickLength, setTickLengthIn, setTickLengthOut
 */
 void QCPAxis::setTickLength(int inside, int outside)
 {
@@ -7970,7 +7970,7 @@ void QCPAxis::setTickLength(int inside, int outside)
   Sets the length of the inward ticks in pixels. \a inside is the length the ticks will reach
   inside the plot.
   
-  \see setTickLengthOut, setTickLength, setSubTickLength
+   \sa setTickLengthOut, setTickLength, setSubTickLength
 */
 void QCPAxis::setTickLengthIn(int inside)
 {
@@ -7985,7 +7985,7 @@ void QCPAxis::setTickLengthIn(int inside)
   outside the plot. If \a outside is greater than zero, the tick labels and axis label will
   increase their distance to the axis accordingly, so they won't collide with the ticks.
   
-  \see setTickLengthIn, setTickLength, setSubTickLength
+   \sa setTickLengthIn, setTickLength, setSubTickLength
 */
 void QCPAxis::setTickLengthOut(int outside)
 {
@@ -7999,9 +7999,9 @@ void QCPAxis::setTickLengthOut(int outside)
 /*!
   Sets whether sub tick marks are displayed.
   
-  Sub ticks are only potentially visible if (major) ticks are also visible (see \ref setTicks)
+  Sub ticks are only potentially visible if (major) ticks are also visible (see   setTicks)
   
-  \see setTicks
+   \sa setTicks
 */
 void QCPAxis::setSubTicks(bool show)
 {
@@ -8018,7 +8018,7 @@ void QCPAxis::setSubTicks(bool show)
   than zero, the tick labels and axis label will increase their distance to the axis accordingly,
   so they won't collide with the ticks.
   
-  \see setTickLength, setSubTickLengthIn, setSubTickLengthOut
+   \sa setTickLength, setSubTickLengthIn, setSubTickLengthOut
 */
 void QCPAxis::setSubTickLength(int inside, int outside)
 {
@@ -8030,7 +8030,7 @@ void QCPAxis::setSubTickLength(int inside, int outside)
   Sets the length of the inward subticks in pixels. \a inside is the length the subticks will reach inside
   the plot.
   
-  \see setSubTickLengthOut, setSubTickLength, setTickLength
+   \sa setSubTickLengthOut, setSubTickLength, setTickLength
 */
 void QCPAxis::setSubTickLengthIn(int inside)
 {
@@ -8045,7 +8045,7 @@ void QCPAxis::setSubTickLengthIn(int inside)
   outside the plot. If \a outside is greater than zero, the tick labels will increase their
   distance to the axis accordingly, so they won't collide with the ticks.
   
-  \see setSubTickLengthIn, setSubTickLength, setTickLength
+   \sa setSubTickLengthIn, setSubTickLength, setTickLength
 */
 void QCPAxis::setSubTickLengthOut(int outside)
 {
@@ -8059,7 +8059,7 @@ void QCPAxis::setSubTickLengthOut(int outside)
 /*!
   Sets the pen, the axis base line is drawn with.
   
-  \see setTickPen, setSubTickPen
+   \sa setTickPen, setSubTickPen
 */
 void QCPAxis::setBasePen(const QPen &pen)
 {
@@ -8069,7 +8069,7 @@ void QCPAxis::setBasePen(const QPen &pen)
 /*!
   Sets the pen, tick marks will be drawn with.
   
-  \see setTickLength, setBasePen
+   \sa setTickLength, setBasePen
 */
 void QCPAxis::setTickPen(const QPen &pen)
 {
@@ -8079,7 +8079,7 @@ void QCPAxis::setTickPen(const QPen &pen)
 /*!
   Sets the pen, subtick marks will be drawn with.
   
-  \see setSubTickCount, setSubTickLength, setBasePen
+   \sa setSubTickCount, setSubTickLength, setBasePen
 */
 void QCPAxis::setSubTickPen(const QPen &pen)
 {
@@ -8089,7 +8089,7 @@ void QCPAxis::setSubTickPen(const QPen &pen)
 /*!
   Sets the font of the axis label.
   
-  \see setLabelColor
+   \sa setLabelColor
 */
 void QCPAxis::setLabelFont(const QFont &font)
 {
@@ -8103,7 +8103,7 @@ void QCPAxis::setLabelFont(const QFont &font)
 /*!
   Sets the color of the axis label.
   
-  \see setLabelFont
+   \sa setLabelFont
 */
 void QCPAxis::setLabelColor(const QColor &color)
 {
@@ -8126,7 +8126,7 @@ void QCPAxis::setLabel(const QString &str)
 /*!
   Sets the distance between the tick labels and the axis label.
   
-  \see setTickLabelPadding, setPadding
+   \sa setTickLabelPadding, setPadding
 */
 void QCPAxis::setLabelPadding(int padding)
 {
@@ -8140,12 +8140,12 @@ void QCPAxis::setLabelPadding(int padding)
 /*!
   Sets the padding of the axis.
 
-  When \ref QCPAxisRect::setAutoMargins is enabled, the padding is the additional outer most space,
+  When   QCPAxisRect::setAutoMargins is enabled, the padding is the additional outer most space,
   that is left blank.
   
-  The axis padding has no meaning if \ref QCPAxisRect::setAutoMargins is disabled.
+  The axis padding has no meaning if   QCPAxisRect::setAutoMargins is disabled.
   
-  \see setLabelPadding, setTickLabelPadding
+   \sa setLabelPadding, setTickLabelPadding
 */
 void QCPAxis::setPadding(int padding)
 {
@@ -8172,7 +8172,7 @@ void QCPAxis::setOffset(int offset)
 /*!
   Sets the font that is used for tick labels when they are selected.
   
-  \see setTickLabelFont, setSelectableParts, setSelectedParts, QCustomPlot::setInteractions
+   \sa setTickLabelFont, setSelectableParts, setSelectedParts, QCustomPlot::setInteractions
 */
 void QCPAxis::setSelectedTickLabelFont(const QFont &font)
 {
@@ -8186,7 +8186,7 @@ void QCPAxis::setSelectedTickLabelFont(const QFont &font)
 /*!
   Sets the font that is used for the axis label when it is selected.
   
-  \see setLabelFont, setSelectableParts, setSelectedParts, QCustomPlot::setInteractions
+   \sa setLabelFont, setSelectableParts, setSelectedParts, QCustomPlot::setInteractions
 */
 void QCPAxis::setSelectedLabelFont(const QFont &font)
 {
@@ -8197,7 +8197,7 @@ void QCPAxis::setSelectedLabelFont(const QFont &font)
 /*!
   Sets the color that is used for tick labels when they are selected.
   
-  \see setTickLabelColor, setSelectableParts, setSelectedParts, QCustomPlot::setInteractions
+   \sa setTickLabelColor, setSelectableParts, setSelectedParts, QCustomPlot::setInteractions
 */
 void QCPAxis::setSelectedTickLabelColor(const QColor &color)
 {
@@ -8210,7 +8210,7 @@ void QCPAxis::setSelectedTickLabelColor(const QColor &color)
 /*!
   Sets the color that is used for the axis label when it is selected.
   
-  \see setLabelColor, setSelectableParts, setSelectedParts, QCustomPlot::setInteractions
+   \sa setLabelColor, setSelectableParts, setSelectedParts, QCustomPlot::setInteractions
 */
 void QCPAxis::setSelectedLabelColor(const QColor &color)
 {
@@ -8220,7 +8220,7 @@ void QCPAxis::setSelectedLabelColor(const QColor &color)
 /*!
   Sets the pen that is used to draw the axis base line when selected.
   
-  \see setBasePen, setSelectableParts, setSelectedParts, QCustomPlot::setInteractions
+   \sa setBasePen, setSelectableParts, setSelectedParts, QCustomPlot::setInteractions
 */
 void QCPAxis::setSelectedBasePen(const QPen &pen)
 {
@@ -8230,7 +8230,7 @@ void QCPAxis::setSelectedBasePen(const QPen &pen)
 /*!
   Sets the pen that is used to draw the (major) ticks when selected.
   
-  \see setTickPen, setSelectableParts, setSelectedParts, QCustomPlot::setInteractions
+   \sa setTickPen, setSelectableParts, setSelectedParts, QCustomPlot::setInteractions
 */
 void QCPAxis::setSelectedTickPen(const QPen &pen)
 {
@@ -8240,7 +8240,7 @@ void QCPAxis::setSelectedTickPen(const QPen &pen)
 /*!
   Sets the pen that is used to draw the subticks when selected.
   
-  \see setSubTickPen, setSelectableParts, setSelectedParts, QCustomPlot::setInteractions
+   \sa setSubTickPen, setSelectableParts, setSelectedParts, QCustomPlot::setInteractions
 */
 void QCPAxis::setSelectedSubTickPen(const QPen &pen)
 {
@@ -8252,10 +8252,10 @@ void QCPAxis::setSelectedSubTickPen(const QPen &pen)
   styles.
   
   For horizontal axes, this method refers to the left ending, for vertical axes the bottom ending.
-  Note that this meaning does not change when the axis range is reversed with \ref
+  Note that this meaning does not change when the axis range is reversed with
   setRangeReversed.
   
-  \see setUpperEnding
+   \sa setUpperEnding
 */
 void QCPAxis::setLowerEnding(const QCPLineEnding &ending)
 {
@@ -8267,10 +8267,10 @@ void QCPAxis::setLowerEnding(const QCPLineEnding &ending)
   styles.
   
   For horizontal axes, this method refers to the right ending, for vertical axes the top ending.
-  Note that this meaning does not change when the axis range is reversed with \ref
+  Note that this meaning does not change when the axis range is reversed with
   setRangeReversed.
   
-  \see setLowerEnding
+   \sa setLowerEnding
 */
 void QCPAxis::setUpperEnding(const QCPLineEnding &ending)
 {
@@ -8278,10 +8278,10 @@ void QCPAxis::setUpperEnding(const QCPLineEnding &ending)
 }
 
 /*!
-  If the scale type (\ref setScaleType) is \ref stLinear, \a diff is added to the lower and upper
+  If the scale type (  setScaleType) is   stLinear, \a diff is added to the lower and upper
   bounds of the range. The range is simply moved by \a diff.
   
-  If the scale type is \ref stLogarithmic, the range bounds are multiplied by \a diff. This
+  If the scale type is   stLogarithmic, the range bounds are multiplied by \a diff. This
   corresponds to an apparent "linear" move in logarithmic scaling by a distance of log(diff).
 */
 void QCPAxis::moveRange(double diff)
@@ -8307,7 +8307,7 @@ void QCPAxis::moveRange(double diff)
   the center will have moved symmetrically closer).
 
   If you wish to scale around a different coordinate than the current axis range center, use the
-  overload \ref scaleRange(double factor, double center).
+  overload   scaleRange(double factor, double center).
 */
 void QCPAxis::scaleRange(double factor)
 {
@@ -8321,7 +8321,7 @@ void QCPAxis::scaleRange(double factor)
   coordinate 1.0 won't have changed its position in the QCustomPlot widget (i.e. coordinates
   around 1.0 will have moved symmetrically closer to 1.0).
 
-  \see scaleRange(double factor)
+   \sa scaleRange(double factor)
 */
 void QCPAxis::scaleRange(double factor, double center)
 {
@@ -8384,7 +8384,7 @@ void QCPAxis::setScaleRatio(const QCPAxis *otherAxis, double ratio)
   Changes the axis range such that all plottables associated with this axis are fully visible in
   that dimension.
   
-  \see QCPAbstractPlottable::rescaleAxes, QCustomPlot::rescaleAxes
+   \sa QCPAbstractPlottable::rescaleAxes, QCustomPlot::rescaleAxes
 */
 void QCPAxis::rescale(bool onlyVisiblePlottables)
 {
@@ -8524,12 +8524,12 @@ double QCPAxis::coordToPixel(double value) const
 
 /*!
   Returns the part of the axis that is hit by \a pos (in pixels). The return value of this function
-  is independent of the user-selectable parts defined with \ref setSelectableParts. Further, this
+  is independent of the user-selectable parts defined with   setSelectableParts. Further, this
   function does not change the current selection state of the axis.
   
-  If the axis is not visible (\ref setVisible), this function always returns \ref spNone.
+  If the axis is not visible (  setVisible), this function always returns   spNone.
   
-  \see setSelectedParts, setSelectableParts, QCustomPlot::setInteractions
+   \sa setSelectedParts, setSelectableParts, QCustomPlot::setInteractions
 */
 QCPAxis::SelectablePart QCPAxis::getPartAt(const QPointF &pos) const
 {
@@ -8562,9 +8562,9 @@ double QCPAxis::selectTest(const QPointF &pos, bool onlySelectable, QVariant *de
 /*!
   Returns a list of all the plottables that have this axis as key or value axis.
   
-  If you are only interested in plottables of type QCPGraph, see \ref graphs.
+  If you are only interested in plottables of type QCPGraph, see   graphs.
   
-  \see graphs, items
+   \sa graphs, items
 */
 QList<QCPAbstractPlottable*> QCPAxis::plottables() const
 {
@@ -8582,7 +8582,7 @@ QList<QCPAbstractPlottable*> QCPAxis::plottables() const
 /*!
   Returns a list of all the graphs that have this axis as key or value axis.
   
-  \see plottables, items
+   \sa plottables, items
 */
 QList<QCPGraph*> QCPAxis::graphs() const
 {
@@ -8601,7 +8601,7 @@ QList<QCPGraph*> QCPAxis::graphs() const
   Returns a list of all the items that are associated with this axis. An item is considered
   associated with an axis if at least one of its positions uses the axis as key or value axis.
   
-  \see plottables, graphs
+   \sa plottables, graphs
 */
 QList<QCPAbstractItem*> QCPAxis::items() const
 {
@@ -8684,15 +8684,15 @@ void QCPAxis::deselectEvent(bool *selectionStateChanged)
   A convenience function to easily set the QPainter::Antialiased hint on the provided \a painter
   before drawing axis lines.
 
-  This is the antialiasing state the painter passed to the \ref draw method is in by default.
+  This is the antialiasing state the painter passed to the   draw method is in by default.
   
   This function takes into account the local setting of the antialiasing flag as well as the
-  overrides set with \ref QCustomPlot::setAntialiasedElements and \ref
+  overrides set with   QCustomPlot::setAntialiasedElements and
   QCustomPlot::setNotAntialiasedElements.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
   
-  \see setAntialiased
+   \sa setAntialiased
 */
 void QCPAxis::applyDefaultAntialiasingHint(QCPPainter *painter) const
 {
@@ -8703,7 +8703,7 @@ void QCPAxis::applyDefaultAntialiasingHint(QCPPainter *painter) const
   
   Draws the axis with the specified \a painter, using the internal QCPAxisPainterPrivate instance.
 
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 void QCPAxis::draw(QCPPainter *painter)
 {
@@ -8843,10 +8843,10 @@ QColor QCPAxis::getLabelColor() const
 
 /*! \internal
   
-  Returns the appropriate outward margin for this axis. It is needed if \ref
-  QCPAxisRect::setAutoMargins is set to true on the parent axis rect. An axis with axis type \ref
-  atLeft will return an appropriate left margin, \ref atBottom will return an appropriate bottom
-  margin and so forth. For the calculation, this function goes through similar steps as \ref draw,
+  Returns the appropriate outward margin for this axis. It is needed if
+  QCPAxisRect::setAutoMargins is set to true on the parent axis rect. An axis with axis type
+  atLeft will return an appropriate left margin,   atBottom will return an appropriate bottom
+  margin and so forth. For the calculation, this function goes through similar steps as   draw,
   so changing one function likely requires the modification of the other one as well.
   
   The margin consists of the outward tick length, tick label padding, tick label size, label
@@ -9189,8 +9189,8 @@ int QCPAxisPainterPrivate::size() const
 
 /*! \internal
   
-  Clears the internal label cache. Upon the next \ref draw, all labels will be created new. This
-  method is called automatically in \ref draw, if any parameters have changed that invalidate the
+  Clears the internal label cache. Upon the next   draw, all labels will be created new. This
+  method is called automatically in   draw, if any parameters have changed that invalidate the
   cached labels, such as font, color, etc.
 */
 void QCPAxisPainterPrivate::clearCache()
@@ -9201,7 +9201,7 @@ void QCPAxisPainterPrivate::clearCache()
 /*! \internal
   
   Returns a hash that allows uniquely identifying whether the label parameters have changed such
-  that the cached labels must be refreshed (\ref clearCache). It is used in \ref draw. If the
+  that the cached labels must be refreshed (  clearCache). It is used in   draw. If the
   return value of this method hasn't changed since the last redraw, the respective label parameters
   haven't changed and cached labels may be used.
 */
@@ -9228,13 +9228,13 @@ QByteArray QCPAxisPainterPrivate::generateLabelParameterHash() const
   at which the label should be drawn.
   
   In order to later draw the axis label in a place that doesn't overlap with the tick labels, the
-  largest tick label size is needed. This is acquired by passing a \a tickLabelsSize to the \ref
+  largest tick label size is needed. This is acquired by passing a \a tickLabelsSize to the
   drawTickLabel calls during the process of drawing all tick labels of one axis. In every call, \a
   tickLabelsSize is expanded, if the drawn label exceeds the value \a tickLabelsSize currently
   holds.
   
   The label is drawn with the font and pen that are currently set on the \a painter. To draw
-  superscripted powers, the font is temporarily made smaller by a fixed factor (see \ref
+  superscripted powers, the font is temporarily made smaller by a fixed factor (see
   getTickLabelData).
 */
 void QCPAxisPainterPrivate::placeTickLabel(QCPPainter *painter, double position, int distanceToAxis, const QString &text, QSize *tickLabelsSize)
@@ -9316,10 +9316,10 @@ void QCPAxisPainterPrivate::placeTickLabel(QCPPainter *painter, double position,
 
 /*! \internal
   
-  This is a \ref placeTickLabel helper function.
+  This is a   placeTickLabel helper function.
   
   Draws the tick label specified in \a labelData with \a painter at the pixel positions \a x and \a
-  y. This function is used by \ref placeTickLabel to create new tick labels for the cache, or to
+  y. This function is used by   placeTickLabel to create new tick labels for the cache, or to
   directly draw the labels on the QCustomPlot surface when label caching is disabled, i.e. when
   QCP::phCacheLabels plotting hint is not set.
 */
@@ -9356,10 +9356,10 @@ void QCPAxisPainterPrivate::drawTickLabel(QCPPainter *painter, double x, double 
 
 /*! \internal
   
-  This is a \ref placeTickLabel helper function.
+  This is a   placeTickLabel helper function.
   
   Transforms the passed \a text and \a font to a tickLabelData structure that can then be further
-  processed by \ref getTickLabelDrawOffset and \ref drawTickLabel. It splits the text into base and
+  processed by   getTickLabelDrawOffset and   drawTickLabel. It splits the text into base and
   exponent if necessary (member substituteExponent) and calculates appropriate bounding boxes.
 */
 QCPAxisPainterPrivate::TickLabelData QCPAxisPainterPrivate::getTickLabelData(const QFont &font, const QString &text) const
@@ -9436,7 +9436,7 @@ QCPAxisPainterPrivate::TickLabelData QCPAxisPainterPrivate::getTickLabelData(con
 
 /*! \internal
   
-  This is a \ref placeTickLabel helper function.
+  This is a   placeTickLabel helper function.
   
   Calculates the offset at which the top left corner of the specified tick label shall be drawn.
   The offset is relative to a point right next to the tick the label belongs to.
@@ -9539,7 +9539,7 @@ QPointF QCPAxisPainterPrivate::getTickLabelDrawOffset(const TickLabelData &label
 
 /*! \internal
   
-  Simulates the steps done by \ref placeTickLabel by calculating bounding boxes of the text label
+  Simulates the steps done by   placeTickLabel by calculating bounding boxes of the text label
   to be drawn, depending on number format etc. Since only the largest tick label is wanted for the
   margin calculation, the passed \a tickLabelsSize is only expanded, if it's currently set to a
   smaller width/height.
@@ -9578,12 +9578,12 @@ void QCPAxisPainterPrivate::getMaxTickLabelSize(const QFont &font, const QString
   \brief Represents the visual appearance of scatter points
   
   This class holds information about shape, color and size of scatter points. In plottables like
-  QCPGraph it is used to store how scatter points shall be drawn. For example, \ref
+  QCPGraph it is used to store how scatter points shall be drawn. For example,
   QCPGraph::setScatterStyle takes a QCPScatterStyle instance.
   
-  A scatter style consists of a shape (\ref setShape), a line color (\ref setPen) and possibly a
-  fill (\ref setBrush), if the shape provides a fillable area. Further, the size of the shape can
-  be controlled with \ref setSize.
+  A scatter style consists of a shape (  setShape), a line color (  setPen) and possibly a
+  fill (  setBrush), if the shape provides a fillable area. Further, the size of the shape can
+  be controlled with   setSize.
 
   \section QCPScatterStyle-defining Specifying a scatter style
   
@@ -9596,41 +9596,41 @@ void QCPAxisPainterPrivate::getMaxTickLabelSize(const QFont &font, const QString
   
   \section QCPScatterStyle-undefinedpen Leaving the color/pen up to the plottable
   
-  There are two constructors which leave the pen undefined: \ref QCPScatterStyle() and \ref
-  QCPScatterStyle(ScatterShape shape, double size). If those constructors are used, a call to \ref
+  There are two constructors which leave the pen undefined:   QCPScatterStyle() and
+  QCPScatterStyle(ScatterShape shape, double size). If those constructors are used, a call to
   isPenDefined will return false. It leads to scatter points that inherit the pen from the
   plottable that uses the scatter style. Thus, if such a scatter style is passed to QCPGraph, the line
-  color of the graph (\ref QCPGraph::setPen) will be used by the scatter points. This makes
+  color of the graph (  QCPGraph::setPen) will be used by the scatter points. This makes
   it very convenient to set up typical scatter settings:
   
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpscatterstyle-shortcreation
 
   Notice that it wasn't even necessary to explicitly call a QCPScatterStyle constructor. This works
-  because QCPScatterStyle provides a constructor that can transform a \ref ScatterShape directly
-  into a QCPScatterStyle instance (that's the \ref QCPScatterStyle(ScatterShape shape, double size)
-  constructor with a default for \a size). In those cases, C++ allows directly supplying a \ref
+  because QCPScatterStyle provides a constructor that can transform a   ScatterShape directly
+  into a QCPScatterStyle instance (that's the   QCPScatterStyle(ScatterShape shape, double size)
+  constructor with a default for \a size). In those cases, C++ allows directly supplying a
   ScatterShape, where actually a QCPScatterStyle is expected.
   
   \section QCPScatterStyle-custompath-and-pixmap Custom shapes and pixmaps
   
   QCPScatterStyle supports drawing custom shapes and arbitrary pixmaps as scatter points.
 
-  For custom shapes, you can provide a QPainterPath with the desired shape to the \ref
+  For custom shapes, you can provide a QPainterPath with the desired shape to the
   setCustomPath function or call the constructor that takes a painter path. The scatter shape will
-  automatically be set to \ref ssCustom.
+  automatically be set to   ssCustom.
   
-  For pixmaps, you call \ref setPixmap with the desired QPixmap. Alternatively you can use the
-  constructor that takes a QPixmap. The scatter shape will automatically be set to \ref ssPixmap.
-  Note that \ref setSize does not influence the appearance of the pixmap.
+  For pixmaps, you call   setPixmap with the desired QPixmap. Alternatively you can use the
+  constructor that takes a QPixmap. The scatter shape will automatically be set to   ssPixmap.
+  Note that   setSize does not influence the appearance of the pixmap.
 */
 
 /* start documentation of inline functions */
 
 /*! \fn bool QCPScatterStyle::isNone() const
   
-  Returns whether the scatter shape is \ref ssNone.
+  Returns whether the scatter shape is   ssNone.
   
-  \see setShape
+   \sa setShape
 */
 
 /*! \fn bool QCPScatterStyle::isPenDefined() const
@@ -9638,13 +9638,13 @@ void QCPAxisPainterPrivate::getMaxTickLabelSize(const QFont &font, const QString
   Returns whether a pen has been defined for this scatter style.
   
   The pen is undefined if a constructor is called that does not carry \a pen as parameter. Those
-  are \ref QCPScatterStyle() and \ref QCPScatterStyle(ScatterShape shape, double size). If the pen
+  are   QCPScatterStyle() and   QCPScatterStyle(ScatterShape shape, double size). If the pen
   is undefined, the pen of the respective plottable will be used for drawing scatters.
   
   If a pen was defined for this scatter style instance, and you now wish to undefine the pen, call
-  \ref undefinePen.
+    undefinePen.
   
-  \see setPen
+   \sa setPen
 */
 
 /* end documentation of inline functions */
@@ -9652,7 +9652,7 @@ void QCPAxisPainterPrivate::getMaxTickLabelSize(const QFont &font, const QString
 /*!
   Creates a new QCPScatterStyle instance with size set to 6. No shape, pen or brush is defined.
   
-  Since the pen is undefined (\ref isPenDefined returns false), the scatter color will be inherited
+  Since the pen is undefined (  isPenDefined returns false), the scatter color will be inherited
   from the plottable that uses this scatter style.
 */
 QCPScatterStyle::QCPScatterStyle() :
@@ -9668,7 +9668,7 @@ QCPScatterStyle::QCPScatterStyle() :
   Creates a new QCPScatterStyle instance with shape set to \a shape and size to \a size. No pen or
   brush is defined.
   
-  Since the pen is undefined (\ref isPenDefined returns false), the scatter color will be inherited
+  Since the pen is undefined (  isPenDefined returns false), the scatter color will be inherited
   from the plottable that uses this scatter style.
 */
 QCPScatterStyle::QCPScatterStyle(ScatterShape shape, double size) :
@@ -9715,7 +9715,7 @@ QCPScatterStyle::QCPScatterStyle(ScatterShape shape, const QColor &color, const 
   <tt>QCPScatterStyle(QCPScatterShape::ssCircle, Qt::NoPen, Qt::blue, 5)</tt>\n
   doesn't necessarily lead C++ to use this constructor in some cases, but might mistake
   <tt>Qt::NoPen</tt> for a QColor and use the
-  \ref QCPScatterStyle(ScatterShape shape, const QColor &color, const QColor &fill, double size)
+    QCPScatterStyle(ScatterShape shape, const QColor &color, const QColor &fill, double size)
   constructor instead (which will lead to an unexpected look of the scatter points). To prevent
   this, be more explicit with the parameter types. For example, use <tt>QBrush(Qt::blue)</tt>
   instead of just <tt>Qt::blue</tt>, to clearly point out to the compiler that this constructor is
@@ -9732,7 +9732,7 @@ QCPScatterStyle::QCPScatterStyle(ScatterShape shape, const QPen &pen, const QBru
 
 /*!
   Creates a new QCPScatterStyle instance which will show the specified \a pixmap. The scatter shape
-  is set to \ref ssPixmap.
+  is set to   ssPixmap.
 */
 QCPScatterStyle::QCPScatterStyle(const QPixmap &pixmap) :
   mSize(5),
@@ -9746,7 +9746,7 @@ QCPScatterStyle::QCPScatterStyle(const QPixmap &pixmap) :
 
 /*!
   Creates a new QCPScatterStyle instance with a custom shape that is defined via \a customPath. The
-  scatter shape is set to \ref ssCustom.
+  scatter shape is set to   ssCustom.
   
   The custom shape line will be drawn with \a pen and filled with \a brush. The size has a slightly
   different meaning than for built-in scatter points: The custom path will be drawn scaled by a
@@ -9791,7 +9791,7 @@ void QCPScatterStyle::setFromOther(const QCPScatterStyle &other, ScatterProperti
 /*!
   Sets the size (pixel diameter) of the drawn scatter points to \a size.
   
-  \see setShape
+   \sa setShape
 */
 void QCPScatterStyle::setSize(double size)
 {
@@ -9801,10 +9801,10 @@ void QCPScatterStyle::setSize(double size)
 /*!
   Sets the shape to \a shape.
   
-  Note that the calls \ref setPixmap and \ref setCustomPath automatically set the shape to \ref
-  ssPixmap and \ref ssCustom, respectively.
+  Note that the calls   setPixmap and   setCustomPath automatically set the shape to
+  ssPixmap and   ssCustom, respectively.
   
-  \see setSize
+   \sa setSize
 */
 void QCPScatterStyle::setShape(QCPScatterStyle::ScatterShape shape)
 {
@@ -9814,11 +9814,11 @@ void QCPScatterStyle::setShape(QCPScatterStyle::ScatterShape shape)
 /*!
   Sets the pen that will be used to draw scatter points to \a pen.
   
-  If the pen was previously undefined (see \ref isPenDefined), the pen is considered defined after
+  If the pen was previously undefined (see   isPenDefined), the pen is considered defined after
   a call to this function, even if \a pen is <tt>Qt::NoPen</tt>. If you have defined a pen
-  previously by calling this function and now wish to undefine the pen, call \ref undefinePen.
+  previously by calling this function and now wish to undefine the pen, call   undefinePen.
   
-  \see setBrush
+   \sa setBrush
 */
 void QCPScatterStyle::setPen(const QPen &pen)
 {
@@ -9828,9 +9828,9 @@ void QCPScatterStyle::setPen(const QPen &pen)
 
 /*!
   Sets the brush that will be used to fill scatter points to \a brush. Note that not all scatter
-  shapes have fillable areas. For example, \ref ssPlus does not while \ref ssCircle does.
+  shapes have fillable areas. For example,   ssPlus does not while   ssCircle does.
   
-  \see setPen
+   \sa setPen
 */
 void QCPScatterStyle::setBrush(const QBrush &brush)
 {
@@ -9840,9 +9840,9 @@ void QCPScatterStyle::setBrush(const QBrush &brush)
 /*!
   Sets the pixmap that will be drawn as scatter point to \a pixmap.
   
-  Note that \ref setSize does not influence the appearance of the pixmap.
+  Note that   setSize does not influence the appearance of the pixmap.
   
-  The scatter shape is automatically set to \ref ssPixmap.
+  The scatter shape is automatically set to   ssPixmap.
 */
 void QCPScatterStyle::setPixmap(const QPixmap &pixmap)
 {
@@ -9853,7 +9853,7 @@ void QCPScatterStyle::setPixmap(const QPixmap &pixmap)
 /*!
   Sets the custom shape that will be drawn as scatter point to \a customPath.
   
-  The scatter shape is automatically set to \ref ssCustom.
+  The scatter shape is automatically set to   ssCustom.
 */
 void QCPScatterStyle::setCustomPath(const QPainterPath &customPath)
 {
@@ -9862,10 +9862,10 @@ void QCPScatterStyle::setCustomPath(const QPainterPath &customPath)
 }
 
 /*!
-  Sets this scatter style to have an undefined pen (see \ref isPenDefined for what an undefined pen
+  Sets this scatter style to have an undefined pen (see   isPenDefined for what an undefined pen
   implies).
 
-  A call to \ref setPen will define a pen.
+  A call to   setPen will define a pen.
 */
 void QCPScatterStyle::undefinePen()
 {
@@ -9874,12 +9874,12 @@ void QCPScatterStyle::undefinePen()
 
 /*!
   Applies the pen and the brush of this scatter style to \a painter. If this scatter style has an
-  undefined pen (\ref isPenDefined), sets the pen of \a painter to \a defaultPen instead.
+  undefined pen (  isPenDefined), sets the pen of \a painter to \a defaultPen instead.
   
   This function is used by plottables (or any class that wants to draw scatters) just before a
   number of scatters with this style shall be drawn with the \a painter.
   
-  \see drawShape
+   \sa drawShape
 */
 void QCPScatterStyle::applyTo(QCPPainter *painter, const QPen &defaultPen) const
 {
@@ -9890,10 +9890,10 @@ void QCPScatterStyle::applyTo(QCPPainter *painter, const QPen &defaultPen) const
 /*!
   Draws the scatter shape with \a painter at position \a pos.
   
-  This function does not modify the pen or the brush on the painter, as \ref applyTo is meant to be
-  called before scatter points are drawn with \ref drawShape.
+  This function does not modify the pen or the brush on the painter, as   applyTo is meant to be
+  called before scatter points are drawn with   drawShape.
   
-  \see applyTo
+   \sa applyTo
 */
 void QCPScatterStyle::drawShape(QCPPainter *painter, const QPointF &pos) const
 {
@@ -10048,26 +10048,26 @@ void QCPScatterStyle::drawShape(QCPPainter *painter, double x, double y) const
 /*! \class QCPSelectionDecorator
   \brief Controls how a plottable's data selection is drawn
   
-  Each \ref QCPAbstractPlottable instance has one \ref QCPSelectionDecorator (accessible via \ref
+  Each   QCPAbstractPlottable instance has one   QCPSelectionDecorator (accessible via
   QCPAbstractPlottable::selectionDecorator) and uses it when drawing selected segments of its data.
   
-  The selection decorator controls both pen (\ref setPen) and brush (\ref setBrush), as well as the
-  scatter style (\ref setScatterStyle) if the plottable draws scatters. Since a \ref
+  The selection decorator controls both pen (  setPen) and brush (  setBrush), as well as the
+  scatter style (  setScatterStyle) if the plottable draws scatters. Since a
   QCPScatterStyle is itself composed of different properties such as color shape and size, the
   decorator allows specifying exactly which of those properties shall be used for the selected data
-  point, via \ref setUsedScatterProperties.
+  point, via   setUsedScatterProperties.
   
-  A \ref QCPSelectionDecorator subclass instance can be passed to a plottable via \ref
+  A   QCPSelectionDecorator subclass instance can be passed to a plottable via
   QCPAbstractPlottable::setSelectionDecorator, allowing greater customizability of the appearance
   of selected segments.
   
-  Use \ref copyFrom to easily transfer the settings of one decorator to another one. This is
+  Use   copyFrom to easily transfer the settings of one decorator to another one. This is
   especially useful since plottables take ownership of the passed selection decorator, and thus the
   same decorator instance can not be passed to multiple plottables.
   
-  Selection decorators can also themselves perform drawing operations by reimplementing \ref
-  drawDecoration, which is called by the plottable's draw method. The base class \ref
-  QCPSelectionDecorator does not make use of this however. For example, \ref
+  Selection decorators can also themselves perform drawing operations by reimplementing
+  drawDecoration, which is called by the plottable's draw method. The base class
+  QCPSelectionDecorator does not make use of this however. For example,
   QCPSelectionDecoratorBracket draws brackets around selected data segments.
 */
 
@@ -10108,7 +10108,7 @@ void QCPSelectionDecorator::setBrush(const QBrush &brush)
   data segments.
   
   \a usedProperties specifies which parts of the passed \a scatterStyle will be used by the
-  plottable. The used properties can also be changed via \ref setUsedScatterProperties.
+  plottable. The used properties can also be changed via   setUsedScatterProperties.
 */
 void QCPSelectionDecorator::setScatterStyle(const QCPScatterStyle &scatterStyle, QCPScatterStyle::ScatterProperties usedProperties)
 {
@@ -10117,7 +10117,7 @@ void QCPSelectionDecorator::setScatterStyle(const QCPScatterStyle &scatterStyle,
 }
 
 /*!
-  Use this method to define which properties of the scatter style (set via \ref setScatterStyle)
+  Use this method to define which properties of the scatter style (set via   setScatterStyle)
   will be used for selected data segments. All properties of the scatter style that are not
   specified in \a properties will remain as specified in the plottable's original scatter style.
 */
@@ -10129,7 +10129,7 @@ void QCPSelectionDecorator::setUsedScatterProperties(const QCPScatterStyle::Scat
 /*!
   Sets the pen of \a painter to the pen of this selection decorator.
   
-  \see applyBrush, getFinalScatterStyle
+   \sa applyBrush, getFinalScatterStyle
 */
 void QCPSelectionDecorator::applyPen(QCPPainter *painter) const
 {
@@ -10139,7 +10139,7 @@ void QCPSelectionDecorator::applyPen(QCPPainter *painter) const
 /*!
   Sets the brush of \a painter to the brush of this selection decorator.
   
-  \see applyPen, getFinalScatterStyle
+   \sa applyPen, getFinalScatterStyle
 */
 void QCPSelectionDecorator::applyBrush(QCPPainter *painter) const
 {
@@ -10149,10 +10149,10 @@ void QCPSelectionDecorator::applyBrush(QCPPainter *painter) const
 /*!
   Returns the scatter style that the parent plottable shall use for selected scatter points. The
   plottable's original (unselected) scatter style must be passed as \a unselectedStyle. Depending
-  on the setting of \ref setUsedScatterProperties, the returned scatter style is a mixture of this
-  selecion decorator's scatter style (\ref setScatterStyle), and \a unselectedStyle.
+  on the setting of   setUsedScatterProperties, the returned scatter style is a mixture of this
+  selecion decorator's scatter style (  setScatterStyle), and \a unselectedStyle.
   
-  \see applyPen, applyBrush, setScatterStyle
+   \sa applyPen, applyBrush, setScatterStyle
 */
 QCPScatterStyle QCPSelectionDecorator::getFinalScatterStyle(const QCPScatterStyle &unselectedStyle) const
 {
@@ -10184,7 +10184,7 @@ void QCPSelectionDecorator::copyFrom(const QCPSelectionDecorator *other)
   drawn. Use the passed \a painter to perform the drawing operations. \a selection carries the data
   selection for which the decoration shall be drawn.
   
-  The default base class implementation of \ref QCPSelectionDecorator has no special decoration, so
+  The default base class implementation of   QCPSelectionDecorator has no special decoration, so
   this method does nothing.
 */
 void QCPSelectionDecorator::drawDecoration(QCPPainter *painter, QCPDataSelection selection)
@@ -10196,8 +10196,8 @@ void QCPSelectionDecorator::drawDecoration(QCPPainter *painter, QCPDataSelection
 /*! \internal
   
   This method is called as soon as a selection decorator is associated with a plottable, by a call
-  to \ref QCPAbstractPlottable::setSelectionDecorator. This way the selection decorator can obtain a pointer to the plottable that uses it (e.g. to access
-  data points via the \ref QCPAbstractPlottable::interface1D interface).
+  to   QCPAbstractPlottable::setSelectionDecorator. This way the selection decorator can obtain a pointer to the plottable that uses it (e.g. to access
+  data points via the   QCPAbstractPlottable::interface1D interface).
   
   If the selection decorator was already added to a different plottable before, this method aborts
   the registration and returns false.
@@ -10227,40 +10227,40 @@ bool QCPSelectionDecorator::registerWithPlottable(QCPAbstractPlottable *plottabl
   abstract, it can't be instantiated. Use one of the subclasses or create a subclass yourself to
   create new ways of displaying data (see "Creating own plottables" below). Plottables that display
   one-dimensional data (i.e. data points have a single key dimension and one or multiple values at
-  each key) are based off of the template subclass \ref QCPAbstractPlottable1D, see details
+  each key) are based off of the template subclass   QCPAbstractPlottable1D, see details
   there.
   
   All further specifics are in the subclasses, for example:
-  \li A normal graph with possibly a line and/or scatter points \ref QCPGraph
-  (typically created with \ref QCustomPlot::addGraph)
-  \li A parametric curve: \ref QCPCurve
-  \li A bar chart: \ref QCPBars
-  \li A statistical box plot: \ref QCPStatisticalBox
-  \li A color encoded two-dimensional map: \ref QCPColorMap
-  \li An OHLC/Candlestick chart: \ref QCPFinancial
+  \li A normal graph with possibly a line and/or scatter points   QCPGraph
+  (typically created with   QCustomPlot::addGraph)
+  \li A parametric curve:   QCPCurve
+  \li A bar chart:   QCPBars
+  \li A statistical box plot:   QCPStatisticalBox
+  \li A color encoded two-dimensional map:   QCPColorMap
+  \li An OHLC/Candlestick chart:   QCPFinancial
   
   \section plottables-subclassing Creating own plottables
   
   Subclassing directly from QCPAbstractPlottable is only recommended if you wish to display
-  two-dimensional data like \ref QCPColorMap, i.e. two logical key dimensions and one (or more)
+  two-dimensional data like   QCPColorMap, i.e. two logical key dimensions and one (or more)
   data dimensions. If you want to display data with only one logical key dimension, you should
-  rather derive from \ref QCPAbstractPlottable1D.
+  rather derive from   QCPAbstractPlottable1D.
   
   If subclassing QCPAbstractPlottable directly, these are the pure virtual functions you must
   implement:
-  \li \ref selectTest
-  \li \ref draw
-  \li \ref drawLegendIcon
-  \li \ref getKeyRange
-  \li \ref getValueRange
+  \li   selectTest
+  \li   draw
+  \li   drawLegendIcon
+  \li   getKeyRange
+  \li   getValueRange
   
   See the documentation of those functions for what they need to do.
   
-  For drawing your plot, you can use the \ref coordsToPixels functions to translate a point in plot
+  For drawing your plot, you can use the   coordsToPixels functions to translate a point in plot
   coordinates to pixel coordinates. This function is quite convenient, because it takes the
   orientation of the key and value axes into account for you (x and y are swapped when the key axis
   is vertical and the value axis horizontal). If you are worried about performance (i.e. you need
-  to translate many points in a loop like QCPGraph), you can directly use \ref
+  to translate many points in a loop like QCPGraph), you can directly use
   QCPAxis::coordToPixel. However, you must then take care about the orientation of the axis
   yourself.
   
@@ -10281,22 +10281,22 @@ bool QCPSelectionDecorator::registerWithPlottable(QCPAbstractPlottable *plottabl
     <td>The generic brush of the plottable. You should use this brush for the most prominent fillable structures in the plottable
         (e.g. QCPGraph uses this brush to control filling under the graph)</td>
   </tr><tr>
-    <td>QPointer<\ref QCPAxis> \b mKeyAxis, \b mValueAxis</td>
+    <td>QPointer<  QCPAxis> \b mKeyAxis, \b mValueAxis</td>
     <td>The key and value axes this plottable is attached to. Call their QCPAxis::coordToPixel functions to translate coordinates
         to pixels in either the key or value dimension. Make sure to check whether the pointer is null before using it. If one of
         the axes is null, don't draw the plottable.</td>
   </tr><tr>
-    <td>\ref QCPSelectionDecorator \b mSelectionDecorator</td>
+    <td>  QCPSelectionDecorator \b mSelectionDecorator</td>
     <td>The currently set selection decorator which specifies how selected data of the plottable shall be drawn and decorated.
         When drawing your data, you must consult this decorator for the appropriate pen/brush before drawing unselected/selected data segments.
-        Finally, you should call its \ref QCPSelectionDecorator::drawDecoration method at the end of your \ref draw implementation.</td>
+        Finally, you should call its   QCPSelectionDecorator::drawDecoration method at the end of your   draw implementation.</td>
   </tr><tr>
-    <td>\ref QCP::SelectionType \b mSelectable</td>
+    <td>  QCP::SelectionType \b mSelectable</td>
     <td>In which composition, if at all, this plottable's data may be selected. Enforcing this setting on the data selection is done
         by QCPAbstractPlottable automatically.</td>
   </tr><tr>
-    <td>\ref QCPDataSelection \b mSelection</td>
-    <td>Holds the current selection state of the plottable's data, i.e. the selected data ranges (\ref QCPDataRange).</td>
+    <td>  QCPDataSelection \b mSelection</td>
+    <td>Holds the current selection state of the plottable's data, i.e. the selected data ranges (  QCPDataRange).</td>
   </tr>
   </table>
 */
@@ -10306,32 +10306,32 @@ bool QCPSelectionDecorator::registerWithPlottable(QCPAbstractPlottable *plottabl
 /*! \fn QCPSelectionDecorator *QCPAbstractPlottable::selectionDecorator() const
   
   Provides access to the selection decorator of this plottable. The selection decorator controls
-  how selected data ranges are drawn (e.g. their pen color and fill), see \ref
+  how selected data ranges are drawn (e.g. their pen color and fill), see
   QCPSelectionDecorator for details.
   
-  If you wish to use an own \ref QCPSelectionDecorator subclass, pass an instance of it to \ref
+  If you wish to use an own   QCPSelectionDecorator subclass, pass an instance of it to
   setSelectionDecorator.
 */
 
 /*! \fn bool QCPAbstractPlottable::selected() const
   
-  Returns true if there are any data points of the plottable currently selected. Use \ref selection
-  to retrieve the current \ref QCPDataSelection.
+  Returns true if there are any data points of the plottable currently selected. Use   selection
+  to retrieve the current   QCPDataSelection.
 */
 
 /*! \fn QCPDataSelection QCPAbstractPlottable::selection() const
   
-  Returns a \ref QCPDataSelection encompassing all the data points that are currently selected on
+  Returns a   QCPDataSelection encompassing all the data points that are currently selected on
   this plottable.
   
-  \see selected, setSelection, setSelectable
+   \sa selected, setSelection, setSelectable
 */
 
 /*! \fn virtual QCPPlottableInterface1D *QCPAbstractPlottable::interface1D()
   
-  If this plottable is a one-dimensional plottable, i.e. it implements the \ref
+  If this plottable is a one-dimensional plottable, i.e. it implements the
   QCPPlottableInterface1D, returns the \a this pointer with that type. Otherwise (e.g. in the case
-  of a \ref QCPColorMap) returns zero.
+  of a   QCPColorMap) returns zero.
   
   You can use this method to gain read access to data coordinates while holding a pointer to the
   abstract base class only.
@@ -10353,41 +10353,41 @@ bool QCPSelectionDecorator::registerWithPlottable(QCPAbstractPlottable *plottabl
 /*! \fn QCPRange QCPAbstractPlottable::getKeyRange(bool &foundRange, QCP::SignDomain inSignDomain) const = 0
   
   Returns the coordinate range that all data in this plottable span in the key axis dimension. For
-  logarithmic plots, one can set \a inSignDomain to either \ref QCP::sdNegative or \ref
+  logarithmic plots, one can set \a inSignDomain to either   QCP::sdNegative or
   QCP::sdPositive in order to restrict the returned range to that sign domain. E.g. when only
-  negative range is wanted, set \a inSignDomain to \ref QCP::sdNegative and all positive points
-  will be ignored for range calculation. For no restriction, just set \a inSignDomain to \ref
+  negative range is wanted, set \a inSignDomain to   QCP::sdNegative and all positive points
+  will be ignored for range calculation. For no restriction, just set \a inSignDomain to
   QCP::sdBoth (default). \a foundRange is an output parameter that indicates whether a range could
   be found or not. If this is false, you shouldn't use the returned range (e.g. no points in data).
 
-  Note that \a foundRange is not the same as \ref QCPRange::validRange, since the range returned by
+  Note that \a foundRange is not the same as   QCPRange::validRange, since the range returned by
   this function may have size zero (e.g. when there is only one data point). In this case \a
-  foundRange would return true, but the returned range is not a valid range in terms of \ref
+  foundRange would return true, but the returned range is not a valid range in terms of
   QCPRange::validRange.
   
-  \see rescaleAxes, getValueRange
+   \sa rescaleAxes, getValueRange
 */
 
 /*! \fn QCPRange QCPAbstractPlottable::getValueRange(bool &foundRange, QCP::SignDomain inSignDomain, const QCPRange &inKeyRange) const = 0
   
   Returns the coordinate range that the data points in the specified key range (\a inKeyRange) span
-  in the value axis dimension. For logarithmic plots, one can set \a inSignDomain to either \ref
-  QCP::sdNegative or \ref QCP::sdPositive in order to restrict the returned range to that sign
-  domain. E.g. when only negative range is wanted, set \a inSignDomain to \ref QCP::sdNegative and
+  in the value axis dimension. For logarithmic plots, one can set \a inSignDomain to either
+  QCP::sdNegative or   QCP::sdPositive in order to restrict the returned range to that sign
+  domain. E.g. when only negative range is wanted, set \a inSignDomain to   QCP::sdNegative and
   all positive points will be ignored for range calculation. For no restriction, just set \a
-  inSignDomain to \ref QCP::sdBoth (default). \a foundRange is an output parameter that indicates
+  inSignDomain to   QCP::sdBoth (default). \a foundRange is an output parameter that indicates
   whether a range could be found or not. If this is false, you shouldn't use the returned range
   (e.g. no points in data).
   
   If \a inKeyRange has both lower and upper bound set to zero (is equal to <tt>QCPRange()</tt>),
   all data points are considered, without any restriction on the keys.
 
-  Note that \a foundRange is not the same as \ref QCPRange::validRange, since the range returned by
+  Note that \a foundRange is not the same as   QCPRange::validRange, since the range returned by
   this function may have size zero (e.g. when there is only one data point). In this case \a
-  foundRange would return true, but the returned range is not a valid range in terms of \ref
+  foundRange would return true, but the returned range is not a valid range in terms of
   QCPRange::validRange.
   
-  \see rescaleAxes, getKeyRange
+   \sa rescaleAxes, getKeyRange
 */
 
 /* end of documentation of pure virtual functions */
@@ -10396,26 +10396,26 @@ bool QCPSelectionDecorator::registerWithPlottable(QCPAbstractPlottable *plottabl
 /*! \fn void QCPAbstractPlottable::selectionChanged(bool selected)
   
   This signal is emitted when the selection state of this plottable has changed, either by user
-  interaction or by a direct call to \ref setSelection. The parameter \a selected indicates whether
+  interaction or by a direct call to   setSelection. The parameter \a selected indicates whether
   there are any points selected or not.
   
-  \see selectionChanged(const QCPDataSelection &selection)
+   \sa selectionChanged(const QCPDataSelection &selection)
 */
 
 /*! \fn void QCPAbstractPlottable::selectionChanged(const QCPDataSelection &selection)
   
   This signal is emitted when the selection state of this plottable has changed, either by user
-  interaction or by a direct call to \ref setSelection. The parameter \a selection holds the
+  interaction or by a direct call to   setSelection. The parameter \a selection holds the
   currently selected data ranges.
   
-  \see selectionChanged(bool selected)
+   \sa selectionChanged(bool selected)
 */
 
 /*! \fn void QCPAbstractPlottable::selectableChanged(QCP::SelectionType selectable);
   
   This signal is emitted when the selectability of this plottable has changed.
   
-  \see setSelectable
+   \sa setSelectable
 */
 
 /* end of documentation of signals */
@@ -10429,7 +10429,7 @@ bool QCPSelectionDecorator::registerWithPlottable(QCPAbstractPlottable *plottabl
   Since QCPAbstractPlottable is an abstract class that defines the basic interface to plottables,
   it can't be directly instantiated.
   
-  You probably want one of the subclasses like \ref QCPGraph or \ref QCPCurve instead.
+  You probably want one of the subclasses like   QCPGraph or   QCPCurve instead.
 */
 QCPAbstractPlottable::QCPAbstractPlottable(QCPAxis *keyAxis, QCPAxis *valueAxis) :
   QCPLayerable(keyAxis->parentPlot(), QString(), keyAxis->axisRect()),
@@ -10463,7 +10463,7 @@ QCPAbstractPlottable::~QCPAbstractPlottable()
 
 /*!
    The name is the textual representation of this plottable as it is displayed in the legend
-   (\ref QCPLegend). It may contain any UTF-8 characters, including newlines.
+   (  QCPLegend). It may contain any UTF-8 characters, including newlines.
 */
 void QCPAbstractPlottable::setName(const QString &name)
 {
@@ -10473,7 +10473,7 @@ void QCPAbstractPlottable::setName(const QString &name)
 /*!
   Sets whether fills of this plottable are drawn antialiased or not.
   
-  Note that this setting may be overridden by \ref QCustomPlot::setAntialiasedElements and \ref
+  Note that this setting may be overridden by   QCustomPlot::setAntialiasedElements and
   QCustomPlot::setNotAntialiasedElements.
 */
 void QCPAbstractPlottable::setAntialiasedFill(bool enabled)
@@ -10484,7 +10484,7 @@ void QCPAbstractPlottable::setAntialiasedFill(bool enabled)
 /*!
   Sets whether the scatter symbols of this plottable are drawn antialiased or not.
   
-  Note that this setting may be overridden by \ref QCustomPlot::setAntialiasedElements and \ref
+  Note that this setting may be overridden by   QCustomPlot::setAntialiasedElements and
   QCustomPlot::setNotAntialiasedElements.
 */
 void QCPAbstractPlottable::setAntialiasedScatters(bool enabled)
@@ -10496,9 +10496,9 @@ void QCPAbstractPlottable::setAntialiasedScatters(bool enabled)
   The pen is used to draw basic lines that make up the plottable representation in the
   plot.
   
-  For example, the \ref QCPGraph subclass draws its graph lines with this pen.
+  For example, the   QCPGraph subclass draws its graph lines with this pen.
 
-  \see setBrush
+   \sa setBrush
 */
 void QCPAbstractPlottable::setPen(const QPen &pen)
 {
@@ -10509,10 +10509,10 @@ void QCPAbstractPlottable::setPen(const QPen &pen)
   The brush is used to draw basic fills of the plottable representation in the
   plot. The Fill can be a color, gradient or texture, see the usage of QBrush.
   
-  For example, the \ref QCPGraph subclass draws the fill under the graph with this brush, when
+  For example, the   QCPGraph subclass draws the fill under the graph with this brush, when
   it's not set to Qt::NoBrush.
 
-  \see setPen
+   \sa setPen
 */
 void QCPAbstractPlottable::setBrush(const QBrush &brush)
 {
@@ -10525,10 +10525,10 @@ void QCPAbstractPlottable::setBrush(const QBrush &brush)
   The typical mathematical choice is to use the x-axis (QCustomPlot::xAxis) as key axis and the
   y-axis (QCustomPlot::yAxis) as value axis.
   
-  Normally, the key and value axes are set in the constructor of the plottable (or \ref
+  Normally, the key and value axes are set in the constructor of the plottable (or
   QCustomPlot::addGraph when working with QCPGraphs through the dedicated graph interface).
 
-  \see setValueAxis
+   \sa setValueAxis
 */
 void QCPAbstractPlottable::setKeyAxis(QCPAxis *axis)
 {
@@ -10541,10 +10541,10 @@ void QCPAbstractPlottable::setKeyAxis(QCPAxis *axis)
   case. The typical mathematical choice is to use the x-axis (QCustomPlot::xAxis) as key axis and
   the y-axis (QCustomPlot::yAxis) as value axis.
 
-  Normally, the key and value axes are set in the constructor of the plottable (or \ref
+  Normally, the key and value axes are set in the constructor of the plottable (or
   QCustomPlot::addGraph when working with QCPGraphs through the dedicated graph interface).
   
-  \see setKeyAxis
+   \sa setKeyAxis
 */
 void QCPAbstractPlottable::setValueAxis(QCPAxis *axis)
 {
@@ -10554,21 +10554,21 @@ void QCPAbstractPlottable::setValueAxis(QCPAxis *axis)
 
 /*!
   Sets which data ranges of this plottable are selected. Selected data ranges are drawn differently
-  (e.g. color) in the plot. This can be controlled via the selection decorator (see \ref
+  (e.g. color) in the plot. This can be controlled via the selection decorator (see
   selectionDecorator).
   
-  The entire selection mechanism for plottables is handled automatically when \ref
+  The entire selection mechanism for plottables is handled automatically when
   QCustomPlot::setInteractions contains iSelectPlottables. You only need to call this function when
   you wish to change the selection state programmatically.
   
-  Using \ref setSelectable you can further specify for each plottable whether and to which
-  granularity it is selectable. If \a selection is not compatible with the current \ref
-  QCP::SelectionType set via \ref setSelectable, the resulting selection will be adjusted
-  accordingly (see \ref QCPDataSelection::enforceType).
+  Using   setSelectable you can further specify for each plottable whether and to which
+  granularity it is selectable. If \a selection is not compatible with the current
+  QCP::SelectionType set via   setSelectable, the resulting selection will be adjusted
+  accordingly (see   QCPDataSelection::enforceType).
   
-  emits the \ref selectionChanged signal when \a selected is different from the previous selection state.
+  emits the   selectionChanged signal when \a selected is different from the previous selection state.
   
-  \see setSelectable, selectTest
+   \sa setSelectable, selectTest
 */
 void QCPAbstractPlottable::setSelection(QCPDataSelection selection)
 {
@@ -10588,7 +10588,7 @@ void QCPAbstractPlottable::setSelection(QCPDataSelection selection)
   
   The plottable takes ownership of the \a decorator.
   
-  The currently set decorator can be accessed via \ref selectionDecorator.
+  The currently set decorator can be accessed via   selectionDecorator.
 */
 void QCPAbstractPlottable::setSelectionDecorator(QCPSelectionDecorator *decorator)
 {
@@ -10610,12 +10610,12 @@ void QCPAbstractPlottable::setSelectionDecorator(QCPSelectionDecorator *decorato
 /*!
   Sets whether and to which granularity this plottable can be selected.
 
-  A selection can happen by clicking on the QCustomPlot surface (When \ref
-  QCustomPlot::setInteractions contains \ref QCP::iSelectPlottables), by dragging a selection rect
-  (When \ref QCustomPlot::setSelectionRectMode is \ref QCP::srmSelect), or programmatically by
-  calling \ref setSelection.
+  A selection can happen by clicking on the QCustomPlot surface (When
+  QCustomPlot::setInteractions contains   QCP::iSelectPlottables), by dragging a selection rect
+  (When   QCustomPlot::setSelectionRectMode is   QCP::srmSelect), or programmatically by
+  calling   setSelection.
   
-  \see setSelection, QCP::SelectionType
+   \sa setSelection, QCP::SelectionType
 */
 void QCPAbstractPlottable::setSelectable(QCP::SelectionType selectable)
 {
@@ -10641,7 +10641,7 @@ void QCPAbstractPlottable::setSelectable(QCP::SelectionType selectable)
 
   \a key and \a value are transformed to the coodinates in pixels and are written to \a x and \a y.
 
-  \see pixelsToCoords, QCPAxis::coordToPixel
+   \sa pixelsToCoords, QCPAxis::coordToPixel
 */
 void QCPAbstractPlottable::coordsToPixels(double key, double value, double &x, double &y) const
 {
@@ -10683,7 +10683,7 @@ const QPointF QCPAbstractPlottable::coordsToPixels(double key, double value) con
 
   \a x and \a y are transformed to the plot coodinates and are written to \a key and \a value.
 
-  \see coordsToPixels, QCPAxis::coordToPixel
+   \sa coordsToPixels, QCPAxis::coordToPixel
 */
 void QCPAbstractPlottable::pixelsToCoords(double x, double y, double &key, double &value) const
 {
@@ -10722,7 +10722,7 @@ void QCPAbstractPlottable::pixelsToCoords(const QPointF &pixelPos, double &key, 
   multiple plottables in their entirety by multiple calls to rescaleAxes where the first call has
   \a onlyEnlarge set to false (the default), and all subsequent set to true.
   
-  \see rescaleKeyAxis, rescaleValueAxis, QCustomPlot::rescaleAxes, QCPAxis::rescale
+   \sa rescaleKeyAxis, rescaleValueAxis, QCustomPlot::rescaleAxes, QCPAxis::rescale
 */
 void QCPAbstractPlottable::rescaleAxes(bool onlyEnlarge) const
 {
@@ -10733,7 +10733,7 @@ void QCPAbstractPlottable::rescaleAxes(bool onlyEnlarge) const
 /*!
   Rescales the key axis of the plottable so the whole plottable is visible.
   
-  See \ref rescaleAxes for detailed behaviour.
+  See   rescaleAxes for detailed behaviour.
 */
 void QCPAbstractPlottable::rescaleKeyAxis(bool onlyEnlarge) const
 {
@@ -10775,7 +10775,7 @@ void QCPAbstractPlottable::rescaleKeyAxis(bool onlyEnlarge) const
   Returns true if the axis was actually scaled. This might not be the case if this plottable has an
   invalid range, e.g. because it has no data points.
 
-  See \ref rescaleAxes for detailed behaviour.
+  See   rescaleAxes for detailed behaviour.
 */
 void QCPAbstractPlottable::rescaleValueAxis(bool onlyEnlarge, bool inKeyRange) const
 {
@@ -10819,10 +10819,10 @@ void QCPAbstractPlottable::rescaleValueAxis(bool onlyEnlarge, bool inKeyRange) c
   legend.
 
   If the plottable needs a more specialized representation in the legend, you can create a
-  corresponding subclass of \ref QCPPlottableLegendItem and add it to the legend manually instead
+  corresponding subclass of   QCPPlottableLegendItem and add it to the legend manually instead
   of calling this method.
 
-  \see removeFromLegend, QCPLegend::addItem
+   \sa removeFromLegend, QCPLegend::addItem
 */
 bool QCPAbstractPlottable::addToLegend(QCPLegend *legend)
 {
@@ -10847,9 +10847,9 @@ bool QCPAbstractPlottable::addToLegend(QCPLegend *legend)
 
 /*! \overload
 
-  Adds this plottable to the legend of the parent QCustomPlot (\ref QCustomPlot::legend).
+  Adds this plottable to the legend of the parent QCustomPlot (  QCustomPlot::legend).
 
-  \see removeFromLegend
+   \sa removeFromLegend
 */
 bool QCPAbstractPlottable::addToLegend()
 {
@@ -10861,13 +10861,13 @@ bool QCPAbstractPlottable::addToLegend()
 
 /*! \overload
 
-  Removes the plottable from the specifed \a legend. This means the \ref QCPPlottableLegendItem
+  Removes the plottable from the specifed \a legend. This means the   QCPPlottableLegendItem
   that is associated with this plottable is removed.
 
   Returns true on success, i.e. if the legend exists and a legend item associated with this
   plottable was found and removed.
 
-  \see addToLegend, QCPLegend::removeItem
+   \sa addToLegend, QCPLegend::removeItem
 */
 bool QCPAbstractPlottable::removeFromLegend(QCPLegend *legend) const
 {
@@ -10887,7 +10887,7 @@ bool QCPAbstractPlottable::removeFromLegend(QCPLegend *legend) const
 
   Removes the plottable from the legend of the parent QCustomPlot.
 
-  \see addToLegend
+   \sa addToLegend
 */
 bool QCPAbstractPlottable::removeFromLegend() const
 {
@@ -10917,15 +10917,15 @@ QCP::Interaction QCPAbstractPlottable::selectionCategory() const
   A convenience function to easily set the QPainter::Antialiased hint on the provided \a painter
   before drawing plottable lines.
 
-  This is the antialiasing state the painter passed to the \ref draw method is in by default.
+  This is the antialiasing state the painter passed to the   draw method is in by default.
   
   This function takes into account the local setting of the antialiasing flag as well as the
-  overrides set with \ref QCustomPlot::setAntialiasedElements and \ref
+  overrides set with   QCustomPlot::setAntialiasedElements and
   QCustomPlot::setNotAntialiasedElements.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
   
-  \see setAntialiased, applyFillAntialiasingHint, applyScattersAntialiasingHint
+   \sa setAntialiased, applyFillAntialiasingHint, applyScattersAntialiasingHint
 */
 void QCPAbstractPlottable::applyDefaultAntialiasingHint(QCPPainter *painter) const
 {
@@ -10938,10 +10938,10 @@ void QCPAbstractPlottable::applyDefaultAntialiasingHint(QCPPainter *painter) con
   before drawing plottable fills.
   
   This function takes into account the local setting of the antialiasing flag as well as the
-  overrides set with \ref QCustomPlot::setAntialiasedElements and \ref
+  overrides set with   QCustomPlot::setAntialiasedElements and
   QCustomPlot::setNotAntialiasedElements.
   
-  \see setAntialiased, applyDefaultAntialiasingHint, applyScattersAntialiasingHint
+   \sa setAntialiased, applyDefaultAntialiasingHint, applyScattersAntialiasingHint
 */
 void QCPAbstractPlottable::applyFillAntialiasingHint(QCPPainter *painter) const
 {
@@ -10954,10 +10954,10 @@ void QCPAbstractPlottable::applyFillAntialiasingHint(QCPPainter *painter) const
   before drawing plottable scatter points.
   
   This function takes into account the local setting of the antialiasing flag as well as the
-  overrides set with \ref QCustomPlot::setAntialiasedElements and \ref
+  overrides set with   QCustomPlot::setAntialiasedElements and
   QCustomPlot::setNotAntialiasedElements.
   
-  \see setAntialiased, applyFillAntialiasingHint, applyDefaultAntialiasingHint
+   \sa setAntialiased, applyFillAntialiasingHint, applyDefaultAntialiasingHint
 */
 void QCPAbstractPlottable::applyScattersAntialiasingHint(QCPPainter *painter) const
 {
@@ -11053,7 +11053,7 @@ void QCPAbstractPlottable::deselectEvent(bool *selectionStateChanged)
 
 /*!
   Creates a new QCPItemAnchor. You shouldn't create QCPItemAnchor instances directly, even if
-  you want to make a new item subclass. Use \ref QCPAbstractItem::createAnchor instead, as
+  you want to make a new item subclass. Use   QCPAbstractItem::createAnchor instead, as
   explained in the subclassing section of the QCPAbstractItem documentation.
 */
 QCPItemAnchor::QCPItemAnchor(QCustomPlot *parentPlot, QCPAbstractItem *parentItem, const QString &name, int anchorId) :
@@ -11172,29 +11172,29 @@ void QCPItemAnchor::removeChildY(QCPItemPosition *pos)
   item on the QCustomPlot surface. Some items have multiple positions, for example QCPItemRect has two:
   \a topLeft and \a bottomRight.
 
-  QCPItemPosition has a type (\ref PositionType) that can be set with \ref setType. This type
-  defines how coordinates passed to \ref setCoords are to be interpreted, e.g. as absolute pixel
+  QCPItemPosition has a type (  PositionType) that can be set with   setType. This type
+  defines how coordinates passed to   setCoords are to be interpreted, e.g. as absolute pixel
   coordinates, as plot coordinates of certain axes, etc. For more advanced plots it is also
-  possible to assign different types per X/Y coordinate of the position (see \ref setTypeX, \ref
+  possible to assign different types per X/Y coordinate of the position (see   setTypeX,
   setTypeY). This way an item could be positioned at a fixed pixel distance from the top in the Y
   direction, while following a plot coordinate in the X direction.
 
-  A QCPItemPosition may have a parent QCPItemAnchor, see \ref setParentAnchor. This way you can tie
-  multiple items together. If the QCPItemPosition has a parent, its coordinates (\ref setCoords)
+  A QCPItemPosition may have a parent QCPItemAnchor, see   setParentAnchor. This way you can tie
+  multiple items together. If the QCPItemPosition has a parent, its coordinates (  setCoords)
   are considered to be absolute pixels in the reference frame of the parent anchor, where (0, 0)
   means directly ontop of the parent anchor. For example, You could attach the \a start position of
   a QCPItemLine to the \a bottom anchor of a QCPItemText to make the starting point of the line
   always be centered under the text label, no matter where the text is moved to. For more advanced
   plots, it is possible to assign different parent anchors per X/Y coordinate of the position, see
-  \ref setParentAnchorX, \ref setParentAnchorY. This way an item could follow another item in the X
+    setParentAnchorX,   setParentAnchorY. This way an item could follow another item in the X
   direction but stay at a fixed position in the Y direction. Or even follow item A in X, and item B
   in Y.
 
   Note that every QCPItemPosition inherits from QCPItemAnchor and thus can itself be used as parent
   anchor for other positions.
 
-  To set the apparent pixel position on the QCustomPlot surface directly, use \ref setPixelPosition. This
-  works no matter what type this QCPItemPosition is or what parent-child situation it is in, as \ref
+  To set the apparent pixel position on the QCustomPlot surface directly, use   setPixelPosition. This
+  works no matter what type this QCPItemPosition is or what parent-child situation it is in, as
   setPixelPosition transforms the coordinates appropriately, to make the position appear at the specified
   pixel values.
 */
@@ -11205,28 +11205,28 @@ void QCPItemAnchor::removeChildY(QCPItemPosition *pos)
   
   Returns the current position type.
   
-  If different types were set for X and Y (\ref setTypeX, \ref setTypeY), this method returns the
+  If different types were set for X and Y (  setTypeX,   setTypeY), this method returns the
   type of the X coordinate. In that case rather use \a typeX() and \a typeY().
   
-  \see setType
+   \sa setType
 */
 
 /*! \fn QCPItemAnchor *QCPItemPosition::parentAnchor() const
   
   Returns the current parent anchor.
   
-  If different parent anchors were set for X and Y (\ref setParentAnchorX, \ref setParentAnchorY),
+  If different parent anchors were set for X and Y (  setParentAnchorX,   setParentAnchorY),
   this method returns the parent anchor of the Y coordinate. In that case rather use \a
   parentAnchorX() and \a parentAnchorY().
   
-  \see setParentAnchor
+   \sa setParentAnchor
 */
 
 /* end documentation of inline functions */
 
 /*!
   Creates a new QCPItemPosition. You shouldn't create QCPItemPosition instances directly, even if
-  you want to make a new item subclass. Use \ref QCPAbstractItem::createPosition instead, as
+  you want to make a new item subclass. Use   QCPAbstractItem::createPosition instead, as
   explained in the subclassing section of the QCPAbstractItem documentation.
 */
 QCPItemPosition::QCPItemPosition(QCustomPlot *parentPlot, QCPAbstractItem *parentItem, const QString &name) :
@@ -11269,29 +11269,29 @@ QCPAxisRect *QCPItemPosition::axisRect() const
 }
 
 /*!
-  Sets the type of the position. The type defines how the coordinates passed to \ref setCoords
+  Sets the type of the position. The type defines how the coordinates passed to   setCoords
   should be handled and how the QCPItemPosition should behave in the plot.
   
   The possible values for \a type can be separated in two main categories:
 
-  \li The position is regarded as a point in plot coordinates. This corresponds to \ref ptPlotCoords
-  and requires two axes that define the plot coordinate system. They can be specified with \ref setAxes.
+  \li The position is regarded as a point in plot coordinates. This corresponds to   ptPlotCoords
+  and requires two axes that define the plot coordinate system. They can be specified with   setAxes.
   By default, the QCustomPlot's x- and yAxis are used.
   
   \li The position is fixed on the QCustomPlot surface, i.e. independent of axis ranges. This
-  corresponds to all other types, i.e. \ref ptAbsolute, \ref ptViewportRatio and \ref
+  corresponds to all other types, i.e.   ptAbsolute,   ptViewportRatio and
   ptAxisRectRatio. They differ only in the way the absolute position is described, see the
-  documentation of \ref PositionType for details. For \ref ptAxisRectRatio, note that you can specify
-  the axis rect with \ref setAxisRect. By default this is set to the main axis rect.
+  documentation of   PositionType for details. For   ptAxisRectRatio, note that you can specify
+  the axis rect with   setAxisRect. By default this is set to the main axis rect.
   
-  Note that the position type \ref ptPlotCoords is only available (and sensible) when the position
-  has no parent anchor (\ref setParentAnchor).
+  Note that the position type   ptPlotCoords is only available (and sensible) when the position
+  has no parent anchor (  setParentAnchor).
   
   If the type is changed, the apparent pixel position on the plot is preserved. This means
-  the coordinates as retrieved with coords() and set with \ref setCoords may change in the process.
+  the coordinates as retrieved with coords() and set with   setCoords may change in the process.
   
   This method sets the type for both X and Y directions. It is also possible to set different types
-  for X and Y, see \ref setTypeX, \ref setTypeY.
+  for X and Y, see   setTypeX,   setTypeY.
 */
 void QCPItemPosition::setType(QCPItemPosition::PositionType type)
 {
@@ -11302,9 +11302,9 @@ void QCPItemPosition::setType(QCPItemPosition::PositionType type)
 /*!
   This method sets the position type of the X coordinate to \a type.
   
-  For a detailed description of what a position type is, see the documentation of \ref setType.
+  For a detailed description of what a position type is, see the documentation of   setType.
   
-  \see setType, setTypeY
+   \sa setType, setTypeY
 */
 void QCPItemPosition::setTypeX(QCPItemPosition::PositionType type)
 {
@@ -11332,9 +11332,9 @@ void QCPItemPosition::setTypeX(QCPItemPosition::PositionType type)
 /*!
   This method sets the position type of the Y coordinate to \a type.
   
-  For a detailed description of what a position type is, see the documentation of \ref setType.
+  For a detailed description of what a position type is, see the documentation of   setType.
   
-  \see setType, setTypeX
+   \sa setType, setTypeX
 */
 void QCPItemPosition::setTypeY(QCPItemPosition::PositionType type)
 {
@@ -11363,7 +11363,7 @@ void QCPItemPosition::setTypeY(QCPItemPosition::PositionType type)
   Sets the parent of this QCPItemPosition to \a parentAnchor. This means the position will now
   follow any position changes of the anchor. The local coordinate system of positions with a parent
   anchor always is absolute pixels, with (0, 0) being exactly on top of the parent anchor. (Hence
-  the type shouldn't be set to \ref ptPlotCoords for positions with parent anchors.)
+  the type shouldn't be set to   ptPlotCoords for positions with parent anchors.)
   
   if \a keepPixelPosition is true, the current pixel position of the QCPItemPosition is preserved
   during reparenting. If it's set to false, the coordinates are set to (0, 0), i.e. the position
@@ -11371,11 +11371,11 @@ void QCPItemPosition::setTypeY(QCPItemPosition::PositionType type)
   
   To remove this QCPItemPosition from any parent anchor, set \a parentAnchor to 0.
   
-  If the QCPItemPosition previously had no parent and the type is \ref ptPlotCoords, the type is
-  set to \ref ptAbsolute, to keep the position in a valid state.
+  If the QCPItemPosition previously had no parent and the type is   ptPlotCoords, the type is
+  set to   ptAbsolute, to keep the position in a valid state.
   
   This method sets the parent anchor for both X and Y directions. It is also possible to set
-  different parents for X and Y, see \ref setParentAnchorX, \ref setParentAnchorY.
+  different parents for X and Y, see   setParentAnchorX,   setParentAnchorY.
 */
 bool QCPItemPosition::setParentAnchor(QCPItemAnchor *parentAnchor, bool keepPixelPosition)
 {
@@ -11387,9 +11387,9 @@ bool QCPItemPosition::setParentAnchor(QCPItemAnchor *parentAnchor, bool keepPixe
 /*!
   This method sets the parent anchor of the X coordinate to \a parentAnchor.
   
-  For a detailed description of what a parent anchor is, see the documentation of \ref setParentAnchor.
+  For a detailed description of what a parent anchor is, see the documentation of   setParentAnchor.
   
-  \see setParentAnchor, setParentAnchorY
+   \sa setParentAnchor, setParentAnchorY
 */
 bool QCPItemPosition::setParentAnchorX(QCPItemAnchor *parentAnchor, bool keepPixelPosition)
 {
@@ -11452,9 +11452,9 @@ bool QCPItemPosition::setParentAnchorX(QCPItemAnchor *parentAnchor, bool keepPix
 /*!
   This method sets the parent anchor of the Y coordinate to \a parentAnchor.
   
-  For a detailed description of what a parent anchor is, see the documentation of \ref setParentAnchor.
+  For a detailed description of what a parent anchor is, see the documentation of   setParentAnchor.
   
-  \see setParentAnchor, setParentAnchorX
+   \sa setParentAnchor, setParentAnchorX
 */
 bool QCPItemPosition::setParentAnchorY(QCPItemAnchor *parentAnchor, bool keepPixelPosition)
 {
@@ -11516,20 +11516,20 @@ bool QCPItemPosition::setParentAnchorY(QCPItemAnchor *parentAnchor, bool keepPix
 
 /*!
   Sets the coordinates of this QCPItemPosition. What the coordinates mean, is defined by the type
-  (\ref setType, \ref setTypeX, \ref setTypeY).
+  (  setType,   setTypeX,   setTypeY).
   
-  For example, if the type is \ref ptAbsolute, \a key and \a value mean the x and y pixel position
+  For example, if the type is   ptAbsolute, \a key and \a value mean the x and y pixel position
   on the QCustomPlot surface. In that case the origin (0, 0) is in the top left corner of the
-  QCustomPlot viewport. If the type is \ref ptPlotCoords, \a key and \a value mean a point in the
-  plot coordinate system defined by the axes set by \ref setAxes. By default those are the
-  QCustomPlot's xAxis and yAxis. See the documentation of \ref setType for other available
+  QCustomPlot viewport. If the type is   ptPlotCoords, \a key and \a value mean a point in the
+  plot coordinate system defined by the axes set by   setAxes. By default those are the
+  QCustomPlot's xAxis and yAxis. See the documentation of   setType for other available
   coordinate types and their meaning.
   
-  If different types were configured for X and Y (\ref setTypeX, \ref setTypeY), \a key and \a
+  If different types were configured for X and Y (  setTypeX,   setTypeY), \a key and \a
   value must also be provided in the different coordinate systems. Here, the X type refers to \a
   key, and the Y type refers to \a value.
 
-  \see setPixelPosition
+   \sa setPixelPosition
 */
 void QCPItemPosition::setCoords(double key, double value)
 {
@@ -11540,7 +11540,7 @@ void QCPItemPosition::setCoords(double key, double value)
 /*! \overload
 
   Sets the coordinates as a QPointF \a pos where pos.x has the meaning of \a key and pos.y the
-  meaning of \a value of the \ref setCoords(double key, double value) method.
+  meaning of \a value of the   setCoords(double key, double value) method.
 */
 void QCPItemPosition::setCoords(const QPointF &pos)
 {
@@ -11549,9 +11549,9 @@ void QCPItemPosition::setCoords(const QPointF &pos)
 
 /*!
   Returns the final absolute pixel position of the QCPItemPosition on the QCustomPlot surface. It
-  includes all effects of type (\ref setType) and possible parent anchors (\ref setParentAnchor).
+  includes all effects of type (  setType) and possible parent anchors (  setParentAnchor).
 
-  \see setPixelPosition
+   \sa setPixelPosition
 */
 QPointF QCPItemPosition::pixelPosition() const
 {
@@ -11649,8 +11649,8 @@ QPointF QCPItemPosition::pixelPosition() const
 }
 
 /*!
-  When \ref setType is \ref ptPlotCoords, this function may be used to specify the axes the
-  coordinates set with \ref setCoords relate to. By default they are set to the initial xAxis and
+  When   setType is   ptPlotCoords, this function may be used to specify the axes the
+  coordinates set with   setCoords relate to. By default they are set to the initial xAxis and
   yAxis of the QCustomPlot.
 */
 void QCPItemPosition::setAxes(QCPAxis *keyAxis, QCPAxis *valueAxis)
@@ -11660,8 +11660,8 @@ void QCPItemPosition::setAxes(QCPAxis *keyAxis, QCPAxis *valueAxis)
 }
 
 /*!
-  When \ref setType is \ref ptAxisRectRatio, this function may be used to specify the axis rect the
-  coordinates set with \ref setCoords relate to. By default this is set to the main axis rect of
+  When   setType is   ptAxisRectRatio, this function may be used to specify the axis rect the
+  coordinates set with   setCoords relate to. By default this is set to the main axis rect of
   the QCustomPlot.
 */
 void QCPItemPosition::setAxisRect(QCPAxisRect *axisRect)
@@ -11670,14 +11670,14 @@ void QCPItemPosition::setAxisRect(QCPAxisRect *axisRect)
 }
 
 /*!
-  Sets the apparent pixel position. This works no matter what type (\ref setType) this
+  Sets the apparent pixel position. This works no matter what type (  setType) this
   QCPItemPosition is or what parent-child situation it is in, as coordinates are transformed
   appropriately, to make the position finally appear at the specified pixel values.
 
-  Only if the type is \ref ptAbsolute and no parent anchor is set, this function's effect is
-  identical to that of \ref setCoords.
+  Only if the type is   ptAbsolute and no parent anchor is set, this function's effect is
+  identical to that of   setCoords.
 
-  \see pixelPosition, setCoords
+   \sa pixelPosition, setCoords
 */
 void QCPItemPosition::setPixelPosition(const QPointF &pixelPosition)
 {
@@ -11806,13 +11806,13 @@ void QCPItemPosition::setPixelPosition(const QPointF &pixelPosition)
   \section items-clipping Clipping
 
   Items are by default clipped to the main axis rect (they are only visible inside the axis rect).
-  To make an item visible outside that axis rect, disable clipping via \ref setClipToAxisRect
+  To make an item visible outside that axis rect, disable clipping via   setClipToAxisRect
   "setClipToAxisRect(false)".
 
   On the other hand if you want the item to be clipped to a different axis rect, specify it via
-  \ref setClipAxisRect. This clipAxisRect property of an item is only used for clipping behaviour, and
+    setClipAxisRect. This clipAxisRect property of an item is only used for clipping behaviour, and
   in principle is independent of the coordinate axes the item might be tied to via its position
-  members (\ref QCPItemPosition::setAxes). However, it is common that the axis rect for clipping
+  members (  QCPItemPosition::setAxes). However, it is common that the axis rect for clipping
   also contains the axes used for the item positions.
   
   \section items-using Using items
@@ -11831,15 +11831,15 @@ void QCPItemPosition::setPixelPosition(const QPointF &pixelPosition)
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpitemline-creation-5
   
   For more advanced plots, it is even possible to set different types and parent anchors per X/Y
-  coordinate of an item position, using for example \ref QCPItemPosition::setTypeX or \ref
-  QCPItemPosition::setParentAnchorX. For details, see the documentation of \ref QCPItemPosition.
+  coordinate of an item position, using for example   QCPItemPosition::setTypeX or
+  QCPItemPosition::setParentAnchorX. For details, see the documentation of   QCPItemPosition.
   
   \section items-subclassing Creating own items
   
   To create an own item, you implement a subclass of QCPAbstractItem. These are the pure
   virtual functions, you must implement:
-  \li \ref selectTest
-  \li \ref draw
+  \li   selectTest
+  \li   draw
   
   See the documentation of those functions for what they need to do.
   
@@ -11853,8 +11853,8 @@ void QCPItemPosition::setPixelPosition(const QPointF &pixelPosition)
   
   the const makes sure the pointer itself can't be modified from the user of your new item (the QCPItemPosition
   instance it points to, can be modified, of course).
-  The initialization of this pointer is made easy with the \ref createPosition function. Just assign
-  the return value of this function to each QCPItemPosition in the constructor of your item. \ref createPosition
+  The initialization of this pointer is made easy with the   createPosition function. Just assign
+  the return value of this function to each QCPItemPosition in the constructor of your item.   createPosition
   takes a string which is the name of the position, typically this is identical to the variable name.
   For example, the constructor of QCPItemExample could look like this:
   
@@ -11869,19 +11869,19 @@ void QCPItemPosition::setPixelPosition(const QPointF &pixelPosition)
   
   \subsection items-drawing The draw function
   
-  To give your item a visual representation, reimplement the \ref draw function and use the passed
+  To give your item a visual representation, reimplement the   draw function and use the passed
   QCPPainter to draw the item. You can retrieve the item position in pixel coordinates from the
-  position member(s) via \ref QCPItemPosition::pixelPosition.
+  position member(s) via   QCPItemPosition::pixelPosition.
 
   To optimize performance you should calculate a bounding rect first (don't forget to take the pen
-  width into account), check whether it intersects the \ref clipRect, and only draw the item at all
+  width into account), check whether it intersects the   clipRect, and only draw the item at all
   if this is the case.
   
   \subsection items-selection The selectTest function
   
-  Your implementation of the \ref selectTest function may use the helpers \ref
-  QCPVector2D::distanceSquaredToLine and \ref rectDistance. With these, the implementation of the
-  selection test becomes significantly simpler for most items. See the documentation of \ref
+  Your implementation of the   selectTest function may use the helpers
+  QCPVector2D::distanceSquaredToLine and   rectDistance. With these, the implementation of the
+  selection test becomes significantly simpler for most items. See the documentation of
   selectTest for what the function parameters mean and what the function should return.
   
   \subsection anchors Providing anchors
@@ -11891,10 +11891,10 @@ void QCPItemPosition::setPixelPosition(const QPointF &pixelPosition)
   
   \code QCPItemAnchor * const bottom;\endcode
 
-  and create it in the constructor with the \ref createAnchor function, assigning it a name and an
+  and create it in the constructor with the   createAnchor function, assigning it a name and an
   anchor id (an integer enumerating all anchors on the item, you may create an own enum for this).
   Since anchors can be placed anywhere, relative to the item's position(s), your item needs to
-  provide the position of every anchor with the reimplementation of the \ref anchorPixelPosition(int
+  provide the position of every anchor with the reimplementation of the   anchorPixelPosition(int
   anchorId) function.
   
   In essence the QCPItemAnchor is merely an intermediary that itself asks your item for the pixel
@@ -11907,7 +11907,7 @@ void QCPItemPosition::setPixelPosition(const QPointF &pixelPosition)
   
   Returns all positions of the item in a list.
   
-  \see anchors, position
+   \sa anchors, position
 */
 
 /*! \fn QList<QCPItemAnchor*> QCPAbstractItem::anchors() const
@@ -11915,7 +11915,7 @@ void QCPItemPosition::setPixelPosition(const QPointF &pixelPosition)
   Returns all anchors of the item in a list. Note that since a position (QCPItemPosition) is always
   also an anchor, the list will also contain the positions of this item.
   
-  \see positions, anchor
+   \sa positions, anchor
 */
 
 /* end of documentation of inline functions */
@@ -11926,9 +11926,9 @@ void QCPItemPosition::setPixelPosition(const QPointF &pixelPosition)
   
   Draws this item with the provided \a painter.
   
-  The cliprect of the provided painter is set to the rect returned by \ref clipRect before this
-  function is called. The clipRect depends on the clipping settings defined by \ref
-  setClipToAxisRect and \ref setClipAxisRect.
+  The cliprect of the provided painter is set to the rect returned by   clipRect before this
+  function is called. The clipRect depends on the clipping settings defined by
+  setClipToAxisRect and   setClipAxisRect.
 */
 
 /* end documentation of pure virtual functions */
@@ -11936,7 +11936,7 @@ void QCPItemPosition::setPixelPosition(const QPointF &pixelPosition)
 
 /*! \fn void QCPAbstractItem::selectionChanged(bool selected)
   This signal is emitted when the selection state of this item has changed, either by user interaction
-  or by a direct call to \ref setSelected.
+  or by a direct call to   setSelected.
 */
 
 /* end documentation of signals */
@@ -11974,9 +11974,9 @@ QCPAxisRect *QCPAbstractItem::clipAxisRect() const
 
 /*!
   Sets whether the item shall be clipped to an axis rect or whether it shall be visible on the
-  entire QCustomPlot. The axis rect can be set with \ref setClipAxisRect.
+  entire QCustomPlot. The axis rect can be set with   setClipAxisRect.
   
-  \see setClipAxisRect
+   \sa setClipAxisRect
 */
 void QCPAbstractItem::setClipToAxisRect(bool clip)
 {
@@ -11986,10 +11986,10 @@ void QCPAbstractItem::setClipToAxisRect(bool clip)
 }
 
 /*!
-  Sets the clip axis rect. It defines the rect that will be used to clip the item when \ref
+  Sets the clip axis rect. It defines the rect that will be used to clip the item when
   setClipToAxisRect is set to true.
   
-  \see setClipToAxisRect
+   \sa setClipToAxisRect
 */
 void QCPAbstractItem::setClipAxisRect(QCPAxisRect *rect)
 {
@@ -12000,12 +12000,12 @@ void QCPAbstractItem::setClipAxisRect(QCPAxisRect *rect)
 
 /*!
   Sets whether the user can (de-)select this item by clicking on the QCustomPlot surface.
-  (When \ref QCustomPlot::setInteractions contains QCustomPlot::iSelectItems.)
+  (When   QCustomPlot::setInteractions contains QCustomPlot::iSelectItems.)
   
   However, even when \a selectable was set to false, it is possible to set the selection manually,
-  by calling \ref setSelected.
+  by calling   setSelected.
   
-  \see QCustomPlot::setInteractions, setSelected
+   \sa QCustomPlot::setInteractions, setSelected
 */
 void QCPAbstractItem::setSelectable(bool selectable)
 {
@@ -12020,15 +12020,15 @@ void QCPAbstractItem::setSelectable(bool selectable)
   Sets whether this item is selected or not. When selected, it might use a different visual
   appearance (e.g. pen and brush), this depends on the specific item though.
 
-  The entire selection mechanism for items is handled automatically when \ref
+  The entire selection mechanism for items is handled automatically when
   QCustomPlot::setInteractions contains QCustomPlot::iSelectItems. You only need to call this
   function when you wish to change the selection state manually.
   
-  This function can change the selection state even when \ref setSelectable was set to false.
+  This function can change the selection state even when   setSelectable was set to false.
   
-  emits the \ref selectionChanged signal when \a selected is different from the previous selection state.
+  emits the   selectionChanged signal when \a selected is different from the previous selection state.
   
-  \see setSelectable, selectTest
+   \sa setSelectable, selectTest
 */
 void QCPAbstractItem::setSelected(bool selected)
 {
@@ -12047,7 +12047,7 @@ void QCPAbstractItem::setSelected(bool selected)
   positions direcly by their member pointers (which typically have the same variable name as \a
   name).
   
-  \see positions, anchor
+   \sa positions, anchor
 */
 QCPItemPosition *QCPAbstractItem::position(const QString &name) const
 {
@@ -12068,7 +12068,7 @@ QCPItemPosition *QCPAbstractItem::position(const QString &name) const
   anchors direcly by their member pointers (which typically have the same variable name as \a
   name).
   
-  \see anchors, position
+   \sa anchors, position
 */
 QCPItemAnchor *QCPAbstractItem::anchor(const QString &name) const
 {
@@ -12087,7 +12087,7 @@ QCPItemAnchor *QCPAbstractItem::anchor(const QString &name) const
   Note that you can check for positions with this function, too. This is because every position is
   also an anchor (QCPItemPosition inherits from QCPItemAnchor).
   
-  \see anchor, position
+   \sa anchor, position
 */
 bool QCPAbstractItem::hasAnchor(const QString &name) const
 {
@@ -12102,11 +12102,11 @@ bool QCPAbstractItem::hasAnchor(const QString &name) const
 /*! \internal
   
   Returns the rect the visual representation of this item is clipped to. This depends on the
-  current setting of \ref setClipToAxisRect as well as the axis rect set with \ref setClipAxisRect.
+  current setting of   setClipToAxisRect as well as the axis rect set with   setClipAxisRect.
   
   If the item is not clipped to an axis rect, QCustomPlot's viewport rect is returned.
   
-  \see draw
+   \sa draw
 */
 QRect QCPAbstractItem::clipRect() const
 {
@@ -12121,13 +12121,13 @@ QRect QCPAbstractItem::clipRect() const
   A convenience function to easily set the QPainter::Antialiased hint on the provided \a painter
   before drawing item lines.
 
-  This is the antialiasing state the painter passed to the \ref draw method is in by default.
+  This is the antialiasing state the painter passed to the   draw method is in by default.
   
   This function takes into account the local setting of the antialiasing flag as well as the
-  overrides set with \ref QCustomPlot::setAntialiasedElements and \ref
+  overrides set with   QCustomPlot::setAntialiasedElements and
   QCustomPlot::setNotAntialiasedElements.
   
-  \see setAntialiased
+   \sa setAntialiased
 */
 void QCPAbstractItem::applyDefaultAntialiasingHint(QCPPainter *painter) const
 {
@@ -12140,11 +12140,11 @@ void QCPAbstractItem::applyDefaultAntialiasingHint(QCPPainter *painter) const
   click position \a pos. \a filledRect defines whether a click inside the rect should also be
   considered a hit or whether only the rect border is sensitive to hits.
   
-  This function may be used to help with the implementation of the \ref selectTest function for
+  This function may be used to help with the implementation of the   selectTest function for
   specific items.
   
   For example, if your item consists of four rects, call this function four times, once for each
-  rect, in your \ref selectTest reimplementation. Finally, return the minimum (non -1) of all four
+  rect, in your   selectTest reimplementation. Finally, return the minimum (non -1) of all four
   returned values.
 */
 double QCPAbstractItem::rectDistance(const QRectF &rect, const QPointF &pos, bool filledRect) const
@@ -12181,7 +12181,7 @@ double QCPAbstractItem::rectDistance(const QRectF &rect, const QPointF &pos, boo
   For example, if the item has two anchors with id 0 and 1, this function takes one of these anchor
   ids and returns the respective pixel points of the specified anchor.
   
-  \see createAnchor
+   \sa createAnchor
 */
 QPointF QCPAbstractItem::anchorPixelPosition(int anchorId) const
 {
@@ -12193,7 +12193,7 @@ QPointF QCPAbstractItem::anchorPixelPosition(int anchorId) const
 
   Creates a QCPItemPosition, registers it with this item and returns a pointer to it. The specified
   \a name must be a unique string that is usually identical to the variable name of the position
-  member (This is needed to provide the name-based \ref position access to positions).
+  member (This is needed to provide the name-based   position access to positions).
   
   Don't delete positions created by this function manually, as the item will take care of it.
   
@@ -12201,7 +12201,7 @@ QPointF QCPAbstractItem::anchorPixelPosition(int anchorId) const
   create each position member. Don't create QCPItemPositions with \b new yourself, because they
   won't be registered with the item properly.
   
-  \see createAnchor
+   \sa createAnchor
 */
 QCPItemPosition *QCPAbstractItem::createPosition(const QString &name)
 {
@@ -12222,7 +12222,7 @@ QCPItemPosition *QCPAbstractItem::createPosition(const QString &name)
 
   Creates a QCPItemAnchor, registers it with this item and returns a pointer to it. The specified
   \a name must be a unique string that is usually identical to the variable name of the anchor
-  member (This is needed to provide the name based \ref anchor access to anchors).
+  member (This is needed to provide the name based   anchor access to anchors).
   
   The \a anchorId must be a number identifying the created anchor. It is recommended to create an
   enum (e.g. "AnchorIndex") for this on each item that uses anchors. This id is used by the anchor
@@ -12235,7 +12235,7 @@ QCPItemPosition *QCPAbstractItem::createPosition(const QString &name)
   create each anchor member. Don't create QCPItemAnchors with \b new yourself, because then they
   won't be registered with the item properly.
   
-  \see createPosition
+   \sa createPosition
 */
 QCPItemAnchor *QCPAbstractItem::createAnchor(const QString &name, int anchorId)
 {
@@ -12301,14 +12301,14 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
 /*! \fn QCPSelectionRect *QCustomPlot::selectionRect() const
   
   Allows access to the currently used QCPSelectionRect instance (or subclass thereof), that is used
-  to handle and draw selection rect interactions (see \ref setSelectionRectMode).
+  to handle and draw selection rect interactions (see   setSelectionRectMode).
   
-  \see setSelectionRect
+   \sa setSelectionRect
 */
 
 /*! \fn QCPLayoutGrid *QCustomPlot::plotLayout() const
   
-  Returns the top level layout of this QCustomPlot instance. It is a \ref QCPLayoutGrid, initially containing just
+  Returns the top level layout of this QCustomPlot instance. It is a   QCPLayoutGrid, initially containing just
   one cell with the main QCPAxisRect inside.
 */
 
@@ -12325,7 +12325,7 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
   This signal is emitted when the QCustomPlot receives a mouse press event.
   
   It is emitted before QCustomPlot handles any other mechanism like range dragging. So a slot
-  connected to this signal can still influence the behaviour e.g. with \ref QCPAxisRect::setRangeDrag or \ref
+  connected to this signal can still influence the behaviour e.g. with   QCPAxisRect::setRangeDrag or
   QCPAxisRect::setRangeDragAxes.
 */
 
@@ -12334,13 +12334,13 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
   This signal is emitted when the QCustomPlot receives a mouse move event.
   
   It is emitted before QCustomPlot handles any other mechanism like range dragging. So a slot
-  connected to this signal can still influence the behaviour e.g. with \ref QCPAxisRect::setRangeDrag or \ref
+  connected to this signal can still influence the behaviour e.g. with   QCPAxisRect::setRangeDrag or
   QCPAxisRect::setRangeDragAxes.
   
-  \warning It is discouraged to change the drag-axes with \ref QCPAxisRect::setRangeDragAxes here,
+  \warning It is discouraged to change the drag-axes with   QCPAxisRect::setRangeDragAxes here,
   because the dragging starting point was saved the moment the mouse was pressed. Thus it only has
   a meaning for the range drag axes that were set at that moment. If you want to change the drag
-  axes, consider doing this in the \ref mousePress signal instead.
+  axes, consider doing this in the   mousePress signal instead.
 */
 
 /*! \fn void QCustomPlot::mouseRelease(QMouseEvent *event)
@@ -12348,8 +12348,8 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
   This signal is emitted when the QCustomPlot receives a mouse release event.
   
   It is emitted before QCustomPlot handles any other mechanisms like object selection. So a
-  slot connected to this signal can still influence the behaviour e.g. with \ref setInteractions or
-  \ref QCPAbstractPlottable::setSelectable.
+  slot connected to this signal can still influence the behaviour e.g. with   setInteractions or
+    QCPAbstractPlottable::setSelectable.
 */
 
 /*! \fn void QCustomPlot::mouseWheel(QMouseEvent *event)
@@ -12357,8 +12357,8 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
   This signal is emitted when the QCustomPlot receives a mouse wheel event.
   
   It is emitted before QCustomPlot handles any other mechanisms like range zooming. So a slot
-  connected to this signal can still influence the behaviour e.g. with \ref QCPAxisRect::setRangeZoom, \ref
-  QCPAxisRect::setRangeZoomAxes or \ref QCPAxisRect::setRangeZoomFactor.
+  connected to this signal can still influence the behaviour e.g. with   QCPAxisRect::setRangeZoom,
+  QCPAxisRect::setRangeZoomAxes or   QCPAxisRect::setRangeZoomFactor.
 */
 
 /*! \fn void QCustomPlot::plottableClick(QCPAbstractPlottable *plottable, int dataIndex, QMouseEvent *event)
@@ -12369,7 +12369,7 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
   the click. The parameter \a dataIndex indicates the data point that was closest to the click
   position.
 
-  \see plottableDoubleClick
+   \sa plottableDoubleClick
 */
 
 /*! \fn void QCustomPlot::plottableDoubleClick(QCPAbstractPlottable *plottable, int dataIndex, QMouseEvent *event)
@@ -12380,7 +12380,7 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
   the click. The parameter \a dataIndex indicates the data point that was closest to the click
   position.
 
-  \see plottableClick
+   \sa plottableClick
 */
 
 /*! \fn void QCustomPlot::itemClick(QCPAbstractItem *item, QMouseEvent *event)
@@ -12390,7 +12390,7 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
   \a event is the mouse event that caused the click and \a item is the item that received the
   click.
   
-  \see itemDoubleClick
+   \sa itemDoubleClick
 */
 
 /*! \fn void QCustomPlot::itemDoubleClick(QCPAbstractItem *item, QMouseEvent *event)
@@ -12400,7 +12400,7 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
   \a event is the mouse event that caused the click and \a item is the item that received the
   click.
   
-  \see itemClick
+   \sa itemClick
 */
 
 /*! \fn void QCustomPlot::axisClick(QCPAxis *axis, QCPAxis::SelectablePart part, QMouseEvent *event)
@@ -12410,7 +12410,7 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
   \a event is the mouse event that caused the click, \a axis is the axis that received the click and
   \a part indicates the part of the axis that was clicked.
   
-  \see axisDoubleClick
+   \sa axisDoubleClick
 */
 
 /*! \fn void QCustomPlot::axisDoubleClick(QCPAxis *axis, QCPAxis::SelectablePart part, QMouseEvent *event)
@@ -12420,7 +12420,7 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
   \a event is the mouse event that caused the click, \a axis is the axis that received the click and
   \a part indicates the part of the axis that was clicked.
   
-  \see axisClick
+   \sa axisClick
 */
 
 /*! \fn void QCustomPlot::legendClick(QCPLegend *legend, QCPAbstractLegendItem *item, QMouseEvent *event)
@@ -12432,7 +12432,7 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
   clicked, \a item is 0. This happens for a click inside the legend padding or the space between
   two items.
   
-  \see legendDoubleClick
+   \sa legendDoubleClick
 */
 
 /*! \fn void QCustomPlot::legendDoubleClick(QCPLegend *legend,  QCPAbstractLegendItem *item, QMouseEvent *event)
@@ -12444,45 +12444,45 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
   clicked, \a item is 0. This happens for a click inside the legend padding or the space between
   two items.
   
-  \see legendClick
+   \sa legendClick
 */
 
 /*! \fn void QCustomPlot::selectionChangedByUser()
   
   This signal is emitted after the user has changed the selection in the QCustomPlot, e.g. by
   clicking. It is not emitted when the selection state of an object has changed programmatically by
-  a direct call to <tt>setSelected()</tt>/<tt>setSelection()</tt> on an object or by calling \ref
+  a direct call to <tt>setSelected()</tt>/<tt>setSelection()</tt> on an object or by calling
   deselectAll.
   
-  In addition to this signal, selectable objects also provide individual signals, for example \ref
-  QCPAxis::selectionChanged or \ref QCPAbstractPlottable::selectionChanged. Note that those signals
+  In addition to this signal, selectable objects also provide individual signals, for example
+  QCPAxis::selectionChanged or   QCPAbstractPlottable::selectionChanged. Note that those signals
   are emitted even if the selection state is changed programmatically.
   
-  See the documentation of \ref setInteractions for details about the selection mechanism.
+  See the documentation of   setInteractions for details about the selection mechanism.
   
-  \see selectedPlottables, selectedGraphs, selectedItems, selectedAxes, selectedLegends
+   \sa selectedPlottables, selectedGraphs, selectedItems, selectedAxes, selectedLegends
 */
 
 /*! \fn void QCustomPlot::beforeReplot()
   
-  This signal is emitted immediately before a replot takes place (caused by a call to the slot \ref
+  This signal is emitted immediately before a replot takes place (caused by a call to the slot
   replot).
   
   It is safe to mutually connect the replot slot with this signal on two QCustomPlots to make them
   replot synchronously, it won't cause an infinite recursion.
   
-  \see replot, afterReplot
+   \sa replot, afterReplot
 */
 
 /*! \fn void QCustomPlot::afterReplot()
   
-  This signal is emitted immediately after a replot has taken place (caused by a call to the slot \ref
+  This signal is emitted immediately after a replot has taken place (caused by a call to the slot
   replot).
   
   It is safe to mutually connect the replot slot with this signal on two QCustomPlots to make them
   replot synchronously, it won't cause an infinite recursion.
   
-  \see replot, beforeReplot
+   \sa replot, beforeReplot
 */
 
 /* end of documentation of signals */
@@ -12492,17 +12492,17 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
 
   A pointer to the primary x Axis (bottom) of the main axis rect of the plot.
   
-  QCustomPlot offers convenient pointers to the axes (\ref xAxis, \ref yAxis, \ref xAxis2, \ref
-  yAxis2) and the \ref legend. They make it very easy working with plots that only have a single
+  QCustomPlot offers convenient pointers to the axes (  xAxis,   yAxis,   xAxis2,
+  yAxis2) and the   legend. They make it very easy working with plots that only have a single
   axis rect and at most one axis at each axis rect side. If you use \link thelayoutsystem the
-  layout system\endlink to add multiple axis rects or multiple axes to one side, use the \ref
+  layout system\endlink to add multiple axis rects or multiple axes to one side, use the
   QCPAxisRect::axis interface to access the new axes. If one of the four default axes or the
   default legend is removed due to manipulation of the layout system (e.g. by removing the main
   axis rect), the corresponding pointers become 0.
   
   If an axis convenience pointer is currently zero and a new axis rect or a corresponding axis is
   added in the place of the main axis rect, QCustomPlot resets the convenience pointers to the
-  according new axes. Similarly the \ref legend convenience pointer will be reset if a legend is
+  according new axes. Similarly the   legend convenience pointer will be reset if a legend is
   added after the main legend was removed before.
 */
 
@@ -12510,57 +12510,57 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
 
   A pointer to the primary y Axis (left) of the main axis rect of the plot.
   
-  QCustomPlot offers convenient pointers to the axes (\ref xAxis, \ref yAxis, \ref xAxis2, \ref
-  yAxis2) and the \ref legend. They make it very easy working with plots that only have a single
+  QCustomPlot offers convenient pointers to the axes (  xAxis,   yAxis,   xAxis2,
+  yAxis2) and the   legend. They make it very easy working with plots that only have a single
   axis rect and at most one axis at each axis rect side. If you use \link thelayoutsystem the
-  layout system\endlink to add multiple axis rects or multiple axes to one side, use the \ref
+  layout system\endlink to add multiple axis rects or multiple axes to one side, use the
   QCPAxisRect::axis interface to access the new axes. If one of the four default axes or the
   default legend is removed due to manipulation of the layout system (e.g. by removing the main
   axis rect), the corresponding pointers become 0.
   
   If an axis convenience pointer is currently zero and a new axis rect or a corresponding axis is
   added in the place of the main axis rect, QCustomPlot resets the convenience pointers to the
-  according new axes. Similarly the \ref legend convenience pointer will be reset if a legend is
+  according new axes. Similarly the   legend convenience pointer will be reset if a legend is
   added after the main legend was removed before.
 */
 
 /*! \var QCPAxis *QCustomPlot::xAxis2
 
   A pointer to the secondary x Axis (top) of the main axis rect of the plot. Secondary axes are
-  invisible by default. Use QCPAxis::setVisible to change this (or use \ref
+  invisible by default. Use QCPAxis::setVisible to change this (or use
   QCPAxisRect::setupFullAxesBox).
   
-  QCustomPlot offers convenient pointers to the axes (\ref xAxis, \ref yAxis, \ref xAxis2, \ref
-  yAxis2) and the \ref legend. They make it very easy working with plots that only have a single
+  QCustomPlot offers convenient pointers to the axes (  xAxis,   yAxis,   xAxis2,
+  yAxis2) and the   legend. They make it very easy working with plots that only have a single
   axis rect and at most one axis at each axis rect side. If you use \link thelayoutsystem the
-  layout system\endlink to add multiple axis rects or multiple axes to one side, use the \ref
+  layout system\endlink to add multiple axis rects or multiple axes to one side, use the
   QCPAxisRect::axis interface to access the new axes. If one of the four default axes or the
   default legend is removed due to manipulation of the layout system (e.g. by removing the main
   axis rect), the corresponding pointers become 0.
   
   If an axis convenience pointer is currently zero and a new axis rect or a corresponding axis is
   added in the place of the main axis rect, QCustomPlot resets the convenience pointers to the
-  according new axes. Similarly the \ref legend convenience pointer will be reset if a legend is
+  according new axes. Similarly the   legend convenience pointer will be reset if a legend is
   added after the main legend was removed before.
 */
 
 /*! \var QCPAxis *QCustomPlot::yAxis2
 
   A pointer to the secondary y Axis (right) of the main axis rect of the plot. Secondary axes are
-  invisible by default. Use QCPAxis::setVisible to change this (or use \ref
+  invisible by default. Use QCPAxis::setVisible to change this (or use
   QCPAxisRect::setupFullAxesBox).
   
-  QCustomPlot offers convenient pointers to the axes (\ref xAxis, \ref yAxis, \ref xAxis2, \ref
-  yAxis2) and the \ref legend. They make it very easy working with plots that only have a single
+  QCustomPlot offers convenient pointers to the axes (  xAxis,   yAxis,   xAxis2,
+  yAxis2) and the   legend. They make it very easy working with plots that only have a single
   axis rect and at most one axis at each axis rect side. If you use \link thelayoutsystem the
-  layout system\endlink to add multiple axis rects or multiple axes to one side, use the \ref
+  layout system\endlink to add multiple axis rects or multiple axes to one side, use the
   QCPAxisRect::axis interface to access the new axes. If one of the four default axes or the
   default legend is removed due to manipulation of the layout system (e.g. by removing the main
   axis rect), the corresponding pointers become 0.
   
   If an axis convenience pointer is currently zero and a new axis rect or a corresponding axis is
   added in the place of the main axis rect, QCustomPlot resets the convenience pointers to the
-  according new axes. Similarly the \ref legend convenience pointer will be reset if a legend is
+  according new axes. Similarly the   legend convenience pointer will be reset if a legend is
   added after the main legend was removed before.
 */
 
@@ -12569,18 +12569,18 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
   A pointer to the default legend of the main axis rect. The legend is invisible by default. Use
   QCPLegend::setVisible to change this.
   
-  QCustomPlot offers convenient pointers to the axes (\ref xAxis, \ref yAxis, \ref xAxis2, \ref
-  yAxis2) and the \ref legend. They make it very easy working with plots that only have a single
+  QCustomPlot offers convenient pointers to the axes (  xAxis,   yAxis,   xAxis2,
+  yAxis2) and the   legend. They make it very easy working with plots that only have a single
   axis rect and at most one axis at each axis rect side. If you use \link thelayoutsystem the
   layout system\endlink to add multiple legends to the plot, use the layout system interface to
-  access the new legend. For example, legends can be placed inside an axis rect's \ref
+  access the new legend. For example, legends can be placed inside an axis rect's
   QCPAxisRect::insetLayout "inset layout", and must then also be accessed via the inset layout. If
   the default legend is removed due to manipulation of the layout system (e.g. by removing the main
   axis rect), the corresponding pointer becomes 0.
   
   If an axis convenience pointer is currently zero and a new axis rect or a corresponding axis is
   added in the place of the main axis rect, QCustomPlot resets the convenience pointers to the
-  according new axes. Similarly the \ref legend convenience pointer will be reset if a legend is
+  according new axes. Similarly the   legend convenience pointer will be reset if a legend is
   added after the main legend was removed before.
 */
 
@@ -12702,17 +12702,17 @@ QCustomPlot::~QCustomPlot()
   
   This overrides the antialiasing settings for whole element groups, normally controlled with the
   \a setAntialiasing function on the individual elements. If an element is neither specified in
-  \ref setAntialiasedElements nor in \ref setNotAntialiasedElements, the antialiasing setting on
+    setAntialiasedElements nor in   setNotAntialiasedElements, the antialiasing setting on
   each individual element instance is used.
   
-  For example, if \a antialiasedElements contains \ref QCP::aePlottables, all plottables will be
+  For example, if \a antialiasedElements contains   QCP::aePlottables, all plottables will be
   drawn antialiased, no matter what the specific QCPAbstractPlottable::setAntialiased value was set
   to.
   
-  if an element in \a antialiasedElements is already set in \ref setNotAntialiasedElements, it is
+  if an element in \a antialiasedElements is already set in   setNotAntialiasedElements, it is
   removed from there.
   
-  \see setNotAntialiasedElements
+   \sa setNotAntialiasedElements
 */
 void QCustomPlot::setAntialiasedElements(const QCP::AntialiasedElements &antialiasedElements)
 {
@@ -12726,9 +12726,9 @@ void QCustomPlot::setAntialiasedElements(const QCP::AntialiasedElements &antiali
 /*!
   Sets whether the specified \a antialiasedElement is forcibly drawn antialiased.
   
-  See \ref setAntialiasedElements for details.
+  See   setAntialiasedElements for details.
   
-  \see setNotAntialiasedElement
+   \sa setNotAntialiasedElement
 */
 void QCustomPlot::setAntialiasedElement(QCP::AntialiasedElement antialiasedElement, bool enabled)
 {
@@ -12748,17 +12748,17 @@ void QCustomPlot::setAntialiasedElement(QCP::AntialiasedElement antialiasedEleme
   
   This overrides the antialiasing settings for whole element groups, normally controlled with the
   \a setAntialiasing function on the individual elements. If an element is neither specified in
-  \ref setAntialiasedElements nor in \ref setNotAntialiasedElements, the antialiasing setting on
+    setAntialiasedElements nor in   setNotAntialiasedElements, the antialiasing setting on
   each individual element instance is used.
   
-  For example, if \a notAntialiasedElements contains \ref QCP::aePlottables, no plottables will be
+  For example, if \a notAntialiasedElements contains   QCP::aePlottables, no plottables will be
   drawn antialiased, no matter what the specific QCPAbstractPlottable::setAntialiased value was set
   to.
   
-  if an element in \a notAntialiasedElements is already set in \ref setAntialiasedElements, it is
+  if an element in \a notAntialiasedElements is already set in   setAntialiasedElements, it is
   removed from there.
   
-  \see setAntialiasedElements
+   \sa setAntialiasedElements
 */
 void QCustomPlot::setNotAntialiasedElements(const QCP::AntialiasedElements &notAntialiasedElements)
 {
@@ -12772,9 +12772,9 @@ void QCustomPlot::setNotAntialiasedElements(const QCP::AntialiasedElements &notA
 /*!
   Sets whether the specified \a notAntialiasedElement is forcibly drawn not antialiased.
   
-  See \ref setNotAntialiasedElements for details.
+  See   setNotAntialiasedElements for details.
   
-  \see setAntialiasedElement
+   \sa setAntialiasedElement
 */
 void QCustomPlot::setNotAntialiasedElement(QCP::AntialiasedElement notAntialiasedElement, bool enabled)
 {
@@ -12792,7 +12792,7 @@ void QCustomPlot::setNotAntialiasedElement(QCP::AntialiasedElement notAntialiase
   If set to true, adding a plottable (e.g. a graph) to the QCustomPlot automatically also adds the
   plottable to the legend (QCustomPlot::legend).
   
-  \see addGraph, QCPLegend::addItem
+   \sa addGraph, QCPLegend::addItem
 */
 void QCustomPlot::setAutoAddPlottableToLegend(bool on)
 {
@@ -12800,58 +12800,58 @@ void QCustomPlot::setAutoAddPlottableToLegend(bool on)
 }
 
 /*!
-  Sets the possible interactions of this QCustomPlot as an or-combination of \ref QCP::Interaction
+  Sets the possible interactions of this QCustomPlot as an or-combination of   QCP::Interaction
   enums. There are the following types of interactions:
   
-  <b>Axis range manipulation</b> is controlled via \ref QCP::iRangeDrag and \ref QCP::iRangeZoom. When the
+  <b>Axis range manipulation</b> is controlled via   QCP::iRangeDrag and   QCP::iRangeZoom. When the
   respective interaction is enabled, the user may drag axes ranges and zoom with the mouse wheel.
-  For details how to control which axes the user may drag/zoom and in what orientations, see \ref
-  QCPAxisRect::setRangeDrag, \ref QCPAxisRect::setRangeZoom, \ref QCPAxisRect::setRangeDragAxes,
-  \ref QCPAxisRect::setRangeZoomAxes.
+  For details how to control which axes the user may drag/zoom and in what orientations, see
+  QCPAxisRect::setRangeDrag,   QCPAxisRect::setRangeZoom,   QCPAxisRect::setRangeDragAxes,
+    QCPAxisRect::setRangeZoomAxes.
   
-  <b>Plottable data selection</b> is controlled by \ref QCP::iSelectPlottables. If \ref
+  <b>Plottable data selection</b> is controlled by   QCP::iSelectPlottables. If
   QCP::iSelectPlottables is set, the user may select plottables (graphs, curves, bars,...) and
-  their data by clicking on them or in their vicinity (\ref setSelectionTolerance). Whether the
-  user can actually select a plottable and its data can further be restricted with the \ref
+  their data by clicking on them or in their vicinity (  setSelectionTolerance). Whether the
+  user can actually select a plottable and its data can further be restricted with the
   QCPAbstractPlottable::setSelectable method on the specific plottable. For details, see the
-  special page about the \ref dataselection "data selection mechanism". To retrieve a list of all
-  currently selected plottables, call \ref selectedPlottables. If you're only interested in
-  QCPGraphs, you may use the convenience function \ref selectedGraphs.
+  special page about the   dataselection "data selection mechanism". To retrieve a list of all
+  currently selected plottables, call   selectedPlottables. If you're only interested in
+  QCPGraphs, you may use the convenience function   selectedGraphs.
   
-  <b>Item selection</b> is controlled by \ref QCP::iSelectItems. If \ref QCP::iSelectItems is set, the user
+  <b>Item selection</b> is controlled by   QCP::iSelectItems. If   QCP::iSelectItems is set, the user
   may select items (QCPItemLine, QCPItemText,...) by clicking on them or in their vicinity. To find
   out whether a specific item is selected, call QCPAbstractItem::selected(). To retrieve a list of
-  all currently selected items, call \ref selectedItems.
+  all currently selected items, call   selectedItems.
   
-  <b>Axis selection</b> is controlled with \ref QCP::iSelectAxes. If \ref QCP::iSelectAxes is set, the user
+  <b>Axis selection</b> is controlled with   QCP::iSelectAxes. If   QCP::iSelectAxes is set, the user
   may select parts of the axes by clicking on them. What parts exactly (e.g. Axis base line, tick
-  labels, axis label) are selectable can be controlled via \ref QCPAxis::setSelectableParts for
-  each axis. To retrieve a list of all axes that currently contain selected parts, call \ref
+  labels, axis label) are selectable can be controlled via   QCPAxis::setSelectableParts for
+  each axis. To retrieve a list of all axes that currently contain selected parts, call
   selectedAxes. Which parts of an axis are selected, can be retrieved with QCPAxis::selectedParts().
   
-  <b>Legend selection</b> is controlled with \ref QCP::iSelectLegend. If this is set, the user may
+  <b>Legend selection</b> is controlled with   QCP::iSelectLegend. If this is set, the user may
   select the legend itself or individual items by clicking on them. What parts exactly are
-  selectable can be controlled via \ref QCPLegend::setSelectableParts. To find out whether the
+  selectable can be controlled via   QCPLegend::setSelectableParts. To find out whether the
   legend or any of its child items are selected, check the value of QCPLegend::selectedParts. To
-  find out which child items are selected, call \ref QCPLegend::selectedItems.
+  find out which child items are selected, call   QCPLegend::selectedItems.
   
   <b>All other selectable elements</b> The selection of all other selectable objects (e.g.
-  QCPTextElement, or your own layerable subclasses) is controlled with \ref QCP::iSelectOther. If set, the
+  QCPTextElement, or your own layerable subclasses) is controlled with   QCP::iSelectOther. If set, the
   user may select those objects by clicking on them. To find out which are currently selected, you
   need to check their selected state explicitly.
   
-  If the selection state has changed by user interaction, the \ref selectionChangedByUser signal is
+  If the selection state has changed by user interaction, the   selectionChangedByUser signal is
   emitted. Each selectable object additionally emits an individual selectionChanged signal whenever
   their selection state has changed, i.e. not only by user interaction.
   
-  To allow multiple objects to be selected by holding the selection modifier (\ref
-  setMultiSelectModifier), set the flag \ref QCP::iMultiSelect.
+  To allow multiple objects to be selected by holding the selection modifier (
+  setMultiSelectModifier), set the flag   QCP::iMultiSelect.
   
   \note In addition to the selection mechanism presented here, QCustomPlot always emits
-  corresponding signals, when an object is clicked or double clicked. see \ref plottableClick and
-  \ref plottableDoubleClick for example.
+  corresponding signals, when an object is clicked or double clicked. see   plottableClick and
+    plottableDoubleClick for example.
   
-  \see setInteraction, setSelectionTolerance
+   \sa setInteraction, setSelectionTolerance
 */
 void QCustomPlot::setInteractions(const QCP::Interactions &interactions)
 {
@@ -12861,9 +12861,9 @@ void QCustomPlot::setInteractions(const QCP::Interactions &interactions)
 /*!
   Sets the single \a interaction of this QCustomPlot to \a enabled.
   
-  For details about the interaction system, see \ref setInteractions.
+  For details about the interaction system, see   setInteractions.
   
-  \see setInteractions
+   \sa setInteractions
 */
 void QCustomPlot::setInteraction(const QCP::Interaction &interaction, bool enabled)
 {
@@ -12884,7 +12884,7 @@ void QCustomPlot::setInteraction(const QCP::Interaction &interaction, bool enabl
   for parts of objects that are too thin to exactly hit with a click and thus need such a
   tolerance.
   
-  \see setInteractions, QCPLayerable::selectTest
+   \sa setInteractions, QCPLayerable::selectTest
 */
 void QCustomPlot::setSelectionTolerance(int pixels)
 {
@@ -12898,7 +12898,7 @@ void QCustomPlot::setSelectionTolerance(int pixels)
   user stops dragging, the last replot is done with normal antialiasing, to restore high image
   quality.
   
-  \see setAntialiasedElements, setNotAntialiasedElements
+   \sa setAntialiasedElements, setNotAntialiasedElements
 */
 void QCustomPlot::setNoAntialiasingOnDrag(bool enabled)
 {
@@ -12908,7 +12908,7 @@ void QCustomPlot::setNoAntialiasingOnDrag(bool enabled)
 /*!
   Sets the plotting hints for this QCustomPlot instance as an \a or combination of QCP::PlottingHint.
   
-  \see setPlottingHint
+   \sa setPlottingHint
 */
 void QCustomPlot::setPlottingHints(const QCP::PlottingHints &hints)
 {
@@ -12918,7 +12918,7 @@ void QCustomPlot::setPlottingHints(const QCP::PlottingHints &hints)
 /*!
   Sets the specified plotting \a hint to \a enabled.
   
-  \see setPlottingHints
+   \sa setPlottingHints
 */
 void QCustomPlot::setPlottingHint(QCP::PlottingHint hint, bool enabled)
 {
@@ -12935,12 +12935,12 @@ void QCustomPlot::setPlottingHint(QCP::PlottingHint hint, bool enabled)
 /*!
   Sets the keyboard modifier that will be recognized as multi-select-modifier.
   
-  If \ref QCP::iMultiSelect is specified in \ref setInteractions, the user may select multiple
+  If   QCP::iMultiSelect is specified in   setInteractions, the user may select multiple
   objects (or data points) by clicking on them one after the other while holding down \a modifier.
   
   By default the multi-select-modifier is set to Qt::ControlModifier.
   
-  \see setInteractions
+   \sa setInteractions
 */
 void QCustomPlot::setMultiSelectModifier(Qt::KeyboardModifier modifier)
 {
@@ -12950,22 +12950,22 @@ void QCustomPlot::setMultiSelectModifier(Qt::KeyboardModifier modifier)
 /*!
   Sets how QCustomPlot processes mouse click-and-drag interactions by the user.
 
-  If \a mode is \ref QCP::srmNone, the mouse drag is forwarded to the underlying objects. For
-  example, QCPAxisRect may process a mouse drag by dragging axis ranges, see \ref
-  QCPAxisRect::setRangeDrag. If \a mode is not \ref QCP::srmNone, the current selection rect (\ref
+  If \a mode is   QCP::srmNone, the mouse drag is forwarded to the underlying objects. For
+  example, QCPAxisRect may process a mouse drag by dragging axis ranges, see
+  QCPAxisRect::setRangeDrag. If \a mode is not   QCP::srmNone, the current selection rect (
   selectionRect) becomes activated and allows e.g. rect zooming and data point selection.
   
   If you wish to provide your user both with axis range dragging and data selection/range zooming,
   use this method to switch between the modes just before the interaction is processed, e.g. in
-  reaction to the \ref mousePress or \ref mouseMove signals. For example you could check whether
+  reaction to the   mousePress or   mouseMove signals. For example you could check whether
   the user is holding a certain keyboard modifier, and then decide which \a mode shall be set.
   
-  If a selection rect interaction is currently active, and \a mode is set to \ref QCP::srmNone, the
-  interaction is canceled (\ref QCPSelectionRect::cancel). Switching between any of the other modes
+  If a selection rect interaction is currently active, and \a mode is set to   QCP::srmNone, the
+  interaction is canceled (  QCPSelectionRect::cancel). Switching between any of the other modes
   will keep the selection rect active. Upon completion of the interaction, the behaviour is as
   defined by the currently set \a mode, not the mode that was set when the interaction started.
   
-  \see setInteractions, setSelectionRect, QCPSelectionRect
+   \sa setInteractions, setSelectionRect, QCPSelectionRect
 */
 void QCustomPlot::setSelectionRectMode(QCP::SelectionRectMode mode)
 {
@@ -12991,14 +12991,14 @@ void QCustomPlot::setSelectionRectMode(QCP::SelectionRectMode mode)
 }
 
 /*!
-  Sets the \ref QCPSelectionRect instance that QCustomPlot will use if \a mode is not \ref
+  Sets the   QCPSelectionRect instance that QCustomPlot will use if \a mode is not
   QCP::srmNone and the user performs a click-and-drag interaction. QCustomPlot takes ownership of
-  the passed \a selectionRect. It can be accessed later via \ref selectionRect.
+  the passed \a selectionRect. It can be accessed later via   selectionRect.
   
   This method is useful if you wish to replace the default QCPSelectionRect instance with an
   instance of a QCPSelectionRect subclass, to introduce custom behaviour of the selection rect.
   
-  \see setSelectionRectMode
+   \sa setSelectionRectMode
 */
 void QCustomPlot::setSelectionRect(QCPSelectionRect *selectionRect)
 {
@@ -13032,9 +13032,9 @@ void QCustomPlot::setSelectionRect(QCPSelectionRect *selectionRect)
   rendering continues with the regular software rasterizer, and an according qDebug output is
   generated.
 
-  If switching to OpenGL was successful, this method disables label caching (\ref setPlottingHint
+  If switching to OpenGL was successful, this method disables label caching (  setPlottingHint
   "setPlottingHint(QCP::phCacheLabels, false)") and turns on QCustomPlot's antialiasing override
-  for all elements (\ref setAntialiasedElements "setAntialiasedElements(QCP::aeAll)"), leading to a
+  for all elements (  setAntialiasedElements "setAntialiasedElements(QCP::aeAll)"), leading to a
   higher quality output. The antialiasing override allows for pixel-grid aligned drawing in the
   OpenGL paint device. As stated before, in OpenGL rendering the actual antialiasing of the plot is
   controlled with \a multisampling. If \a enabled is set to false, the antialiasing/label caching
@@ -13100,7 +13100,7 @@ void QCustomPlot::setOpenGl(bool enabled, int multisampling)
   and contains also the axes themselves, their tick numbers, their labels, or even additional axis
   rects, color scales and other layout elements.
 
-  This function is used to allow arbitrary size exports with \ref toPixmap, \ref savePng, \ref
+  This function is used to allow arbitrary size exports with   toPixmap,   savePng,
   savePdf, etc. by temporarily changing the viewport size.
 */
 void QCustomPlot::setViewport(const QRect &rect)
@@ -13138,19 +13138,19 @@ void QCustomPlot::setBufferDevicePixelRatio(double ratio)
 }
 
 /*!
-  Sets \a pm as the viewport background pixmap (see \ref setViewport). The pixmap is always drawn
+  Sets \a pm as the viewport background pixmap (see   setViewport). The pixmap is always drawn
   below all other objects in the plot.
 
   For cases where the provided pixmap doesn't have the same size as the viewport, scaling can be
-  enabled with \ref setBackgroundScaled and the scaling mode (whether and how the aspect ratio is
-  preserved) can be set with \ref setBackgroundScaledMode. To set all these options in one call,
+  enabled with   setBackgroundScaled and the scaling mode (whether and how the aspect ratio is
+  preserved) can be set with   setBackgroundScaledMode. To set all these options in one call,
   consider using the overloaded version of this function.
   
-  If a background brush was set with \ref setBackground(const QBrush &brush), the viewport will
+  If a background brush was set with   setBackground(const QBrush &brush), the viewport will
   first be filled with that brush, before drawing the background pixmap. This can be useful for
   background pixmaps with translucent areas.
 
-  \see setBackgroundScaled, setBackgroundScaledMode
+   \sa setBackgroundScaled, setBackgroundScaledMode
 */
 void QCustomPlot::setBackground(const QPixmap &pm)
 {
@@ -13159,17 +13159,17 @@ void QCustomPlot::setBackground(const QPixmap &pm)
 }
 
 /*!
-  Sets the background brush of the viewport (see \ref setViewport).
+  Sets the background brush of the viewport (see   setViewport).
 
   Before drawing everything else, the background is filled with \a brush. If a background pixmap
-  was set with \ref setBackground(const QPixmap &pm), this brush will be used to fill the viewport
+  was set with   setBackground(const QPixmap &pm), this brush will be used to fill the viewport
   before the background pixmap is drawn. This can be useful for background pixmaps with translucent
   areas.
   
   Set \a brush to Qt::NoBrush or Qt::Transparent to leave background transparent. This can be
-  useful for exporting to image formats which support transparency, e.g. \ref savePng.
+  useful for exporting to image formats which support transparency, e.g.   savePng.
 
-  \see setBackgroundScaled, setBackgroundScaledMode
+   \sa setBackgroundScaled, setBackgroundScaledMode
 */
 void QCustomPlot::setBackground(const QBrush &brush)
 {
@@ -13181,7 +13181,7 @@ void QCustomPlot::setBackground(const QBrush &brush)
   Allows setting the background pixmap of the viewport, whether it shall be scaled and how it
   shall be scaled in one call.
 
-  \see setBackground(const QPixmap &pm), setBackgroundScaled, setBackgroundScaledMode
+   \sa setBackground(const QPixmap &pm), setBackgroundScaled, setBackgroundScaledMode
 */
 void QCustomPlot::setBackground(const QPixmap &pm, bool scaled, Qt::AspectRatioMode mode)
 {
@@ -13194,12 +13194,12 @@ void QCustomPlot::setBackground(const QPixmap &pm, bool scaled, Qt::AspectRatioM
 /*!
   Sets whether the viewport background pixmap shall be scaled to fit the viewport. If \a scaled is
   set to true, control whether and how the aspect ratio of the original pixmap is preserved with
-  \ref setBackgroundScaledMode.
+    setBackgroundScaledMode.
   
   Note that the scaled version of the original pixmap is buffered, so there is no performance
   penalty on replots. (Except when the viewport dimensions are changed continuously.)
   
-  \see setBackground, setBackgroundScaledMode
+   \sa setBackground, setBackgroundScaledMode
 */
 void QCustomPlot::setBackgroundScaled(bool scaled)
 {
@@ -13207,10 +13207,10 @@ void QCustomPlot::setBackgroundScaled(bool scaled)
 }
 
 /*!
-  If scaling of the viewport background pixmap is enabled (\ref setBackgroundScaled), use this
+  If scaling of the viewport background pixmap is enabled (  setBackgroundScaled), use this
   function to define whether and how the aspect ratio of the original pixmap is preserved.
   
-  \see setBackground, setBackgroundScaled
+   \sa setBackground, setBackgroundScaled
 */
 void QCustomPlot::setBackgroundScaledMode(Qt::AspectRatioMode mode)
 {
@@ -13223,7 +13223,7 @@ void QCustomPlot::setBackgroundScaledMode(Qt::AspectRatioMode mode)
   There is an overloaded version of this function with no parameter which returns the last added
   plottable, see QCustomPlot::plottable()
   
-  \see plottableCount
+   \sa plottableCount
 */
 QCPAbstractPlottable *QCustomPlot::plottable(int index)
 {
@@ -13242,7 +13242,7 @@ QCPAbstractPlottable *QCustomPlot::plottable(int index)
   Returns the last plottable that was added to the plot. If there are no plottables in the plot,
   returns 0.
   
-  \see plottableCount
+   \sa plottableCount
 */
 QCPAbstractPlottable *QCustomPlot::plottable()
 {
@@ -13259,7 +13259,7 @@ QCPAbstractPlottable *QCustomPlot::plottable()
   
   Returns true on success.
   
-  \see clearPlottables
+   \sa clearPlottables
 */
 bool QCustomPlot::removePlottable(QCPAbstractPlottable *plottable)
 {
@@ -13301,7 +13301,7 @@ bool QCustomPlot::removePlottable(int index)
   
   Returns the number of plottables removed.
   
-  \see removePlottable
+   \sa removePlottable
 */
 int QCustomPlot::clearPlottables()
 {
@@ -13314,7 +13314,7 @@ int QCustomPlot::clearPlottables()
 /*!
   Returns the number of currently existing plottables in the plot
   
-  \see plottable
+   \sa plottable
 */
 int QCustomPlot::plottableCount() const
 {
@@ -13324,9 +13324,9 @@ int QCustomPlot::plottableCount() const
 /*!
   Returns a list of the selected plottables. If no plottables are currently selected, the list is empty.
   
-  There is a convenience function if you're only interested in selected graphs, see \ref selectedGraphs.
+  There is a convenience function if you're only interested in selected graphs, see   selectedGraphs.
   
-  \see setInteractions, QCPAbstractPlottable::setSelectable, QCPAbstractPlottable::setSelection
+   \sa setInteractions, QCPAbstractPlottable::setSelectable, QCPAbstractPlottable::setSelection
 */
 QList<QCPAbstractPlottable*> QCustomPlot::selectedPlottables() const
 {
@@ -13341,7 +13341,7 @@ QList<QCPAbstractPlottable*> QCustomPlot::selectedPlottables() const
 
 /*!
   Returns the plottable at the pixel position \a pos. Plottables that only consist of single lines
-  (like graphs) have a tolerance band around them, see \ref setSelectionTolerance. If multiple
+  (like graphs) have a tolerance band around them, see   setSelectionTolerance. If multiple
   plottables come into consideration, the one closest to \a pos is returned.
   
   If \a onlySelectable is true, only plottables that are selectable
@@ -13349,7 +13349,7 @@ QList<QCPAbstractPlottable*> QCustomPlot::selectedPlottables() const
   
   If there is no plottable at \a pos, the return value is 0.
   
-  \see itemAt, layoutElementAt
+   \sa itemAt, layoutElementAt
 */
 QCPAbstractPlottable *QCustomPlot::plottableAt(const QPointF &pos, bool onlySelectable) const
 {
@@ -13388,7 +13388,7 @@ bool QCustomPlot::hasPlottable(QCPAbstractPlottable *plottable) const
   There is an overloaded version of this function with no parameter which returns the last created
   graph, see QCustomPlot::graph()
   
-  \see graphCount, addGraph
+   \sa graphCount, addGraph
 */
 QCPGraph *QCustomPlot::graph(int index) const
 {
@@ -13404,10 +13404,10 @@ QCPGraph *QCustomPlot::graph(int index) const
 
 /*! \overload
   
-  Returns the last graph, that was created with \ref addGraph. If there are no graphs in the plot,
+  Returns the last graph, that was created with   addGraph. If there are no graphs in the plot,
   returns 0.
   
-  \see graphCount, addGraph
+   \sa graphCount, addGraph
 */
 QCPGraph *QCustomPlot::graph() const
 {
@@ -13428,7 +13428,7 @@ QCPGraph *QCustomPlot::graph() const
   
   Returns a pointer to the newly created graph, or 0 if adding the graph failed.
   
-  \see graph, graphCount, removeGraph, clearGraphs
+   \sa graph, graphCount, removeGraph, clearGraphs
 */
 QCPGraph *QCustomPlot::addGraph(QCPAxis *keyAxis, QCPAxis *valueAxis)
 {
@@ -13458,7 +13458,7 @@ QCPGraph *QCustomPlot::addGraph(QCPAxis *keyAxis, QCPAxis *valueAxis)
   
   Returns true on success.
   
-  \see clearGraphs
+   \sa clearGraphs
 */
 bool QCustomPlot::removeGraph(QCPGraph *graph)
 {
@@ -13483,7 +13483,7 @@ bool QCustomPlot::removeGraph(int index)
 
   Returns the number of graphs removed.
   
-  \see removeGraph
+   \sa removeGraph
 */
 int QCustomPlot::clearGraphs()
 {
@@ -13496,7 +13496,7 @@ int QCustomPlot::clearGraphs()
 /*!
   Returns the number of currently existing graphs in the plot
   
-  \see graph, addGraph
+   \sa graph, addGraph
 */
 int QCustomPlot::graphCount() const
 {
@@ -13507,9 +13507,9 @@ int QCustomPlot::graphCount() const
   Returns a list of the selected graphs. If no graphs are currently selected, the list is empty.
   
   If you are not only interested in selected graphs but other plottables like QCPCurve, QCPBars,
-  etc., use \ref selectedPlottables.
+  etc., use   selectedPlottables.
   
-  \see setInteractions, selectedPlottables, QCPAbstractPlottable::setSelectable, QCPAbstractPlottable::setSelection
+   \sa setInteractions, selectedPlottables, QCPAbstractPlottable::setSelectable, QCPAbstractPlottable::setSelection
 */
 QList<QCPGraph*> QCustomPlot::selectedGraphs() const
 {
@@ -13528,7 +13528,7 @@ QList<QCPGraph*> QCustomPlot::selectedGraphs() const
   There is an overloaded version of this function with no parameter which returns the last added
   item, see QCustomPlot::item()
   
-  \see itemCount
+   \sa itemCount
 */
 QCPAbstractItem *QCustomPlot::item(int index) const
 {
@@ -13547,7 +13547,7 @@ QCPAbstractItem *QCustomPlot::item(int index) const
   Returns the last item that was added to this plot. If there are no items in the plot,
   returns 0.
   
-  \see itemCount
+   \sa itemCount
 */
 QCPAbstractItem *QCustomPlot::item() const
 {
@@ -13563,7 +13563,7 @@ QCPAbstractItem *QCustomPlot::item() const
   
   Returns true on success.
   
-  \see clearItems
+   \sa clearItems
 */
 bool QCustomPlot::removeItem(QCPAbstractItem *item)
 {
@@ -13599,7 +13599,7 @@ bool QCustomPlot::removeItem(int index)
   
   Returns the number of items removed.
   
-  \see removeItem
+   \sa removeItem
 */
 int QCustomPlot::clearItems()
 {
@@ -13612,7 +13612,7 @@ int QCustomPlot::clearItems()
 /*!
   Returns the number of currently existing items in the plot
   
-  \see item
+   \sa item
 */
 int QCustomPlot::itemCount() const
 {
@@ -13622,7 +13622,7 @@ int QCustomPlot::itemCount() const
 /*!
   Returns a list of the selected items. If no items are currently selected, the list is empty.
   
-  \see setInteractions, QCPAbstractItem::setSelectable, QCPAbstractItem::setSelected
+   \sa setInteractions, QCPAbstractItem::setSelectable, QCPAbstractItem::setSelected
 */
 QList<QCPAbstractItem*> QCustomPlot::selectedItems() const
 {
@@ -13636,8 +13636,8 @@ QList<QCPAbstractItem*> QCustomPlot::selectedItems() const
 }
 
 /*!
-  Returns the item at the pixel position \a pos. Items that only consist of single lines (e.g. \ref
-  QCPItemLine or \ref QCPItemCurve) have a tolerance band around them, see \ref
+  Returns the item at the pixel position \a pos. Items that only consist of single lines (e.g.
+  QCPItemLine or   QCPItemCurve) have a tolerance band around them, see
   setSelectionTolerance. If multiple items come into consideration, the one closest to \a pos is
   returned.
   
@@ -13646,7 +13646,7 @@ QList<QCPAbstractItem*> QCustomPlot::selectedItems() const
   
   If there is no item at \a pos, the return value is 0.
   
-  \see plottableAt, layoutElementAt
+   \sa plottableAt, layoutElementAt
 */
 QCPAbstractItem *QCustomPlot::itemAt(const QPointF &pos, bool onlySelectable) const
 {
@@ -13674,7 +13674,7 @@ QCPAbstractItem *QCustomPlot::itemAt(const QPointF &pos, bool onlySelectable) co
 /*!
   Returns whether this QCustomPlot contains the \a item.
   
-  \see item
+   \sa item
 */
 bool QCustomPlot::hasItem(QCPAbstractItem *item) const
 {
@@ -13687,7 +13687,7 @@ bool QCustomPlot::hasItem(QCPAbstractItem *item) const
   
   Layer names are case-sensitive.
   
-  \see addLayer, moveLayer, removeLayer
+   \sa addLayer, moveLayer, removeLayer
 */
 QCPLayer *QCustomPlot::layer(const QString &name) const
 {
@@ -13703,7 +13703,7 @@ QCPLayer *QCustomPlot::layer(const QString &name) const
   
   Returns the layer by \a index. If the index is invalid, 0 is returned.
   
-  \see addLayer, moveLayer, removeLayer
+   \sa addLayer, moveLayer, removeLayer
 */
 QCPLayer *QCustomPlot::layer(int index) const
 {
@@ -13718,7 +13718,7 @@ QCPLayer *QCustomPlot::layer(int index) const
 }
 
 /*!
-  Returns the layer that is set as current layer (see \ref setCurrentLayer).
+  Returns the layer that is set as current layer (see   setCurrentLayer).
 */
 QCPLayer *QCustomPlot::currentLayer() const
 {
@@ -13726,14 +13726,14 @@ QCPLayer *QCustomPlot::currentLayer() const
 }
 
 /*!
-  Sets the layer with the specified \a name to be the current layer. All layerables (\ref
+  Sets the layer with the specified \a name to be the current layer. All layerables (
   QCPLayerable), e.g. plottables and items, are created on the current layer.
   
   Returns true on success, i.e. if there is a layer with the specified \a name in the QCustomPlot.
   
   Layer names are case-sensitive.
   
-  \see addLayer, moveLayer, removeLayer, QCPLayerable::setLayer
+   \sa addLayer, moveLayer, removeLayer, QCPLayerable::setLayer
 */
 bool QCustomPlot::setCurrentLayer(const QString &name)
 {
@@ -13753,7 +13753,7 @@ bool QCustomPlot::setCurrentLayer(const QString &name)
   
   Returns true on success, i.e. when \a layer is a valid layer in the QCustomPlot.
   
-  \see addLayer, moveLayer, removeLayer
+   \sa addLayer, moveLayer, removeLayer
 */
 bool QCustomPlot::setCurrentLayer(QCPLayer *layer)
 {
@@ -13770,7 +13770,7 @@ bool QCustomPlot::setCurrentLayer(QCPLayer *layer)
 /*!
   Returns the number of currently existing layers in the plot
   
-  \see layer, addLayer
+   \sa layer, addLayer
 */
 int QCustomPlot::layerCount() const
 {
@@ -13786,9 +13786,9 @@ int QCustomPlot::layerCount() const
   
   If \a otherLayer is 0, the highest layer in the QCustomPlot will be used.
   
-  For an explanation of what layers are in QCustomPlot, see the documentation of \ref QCPLayer.
+  For an explanation of what layers are in QCustomPlot, see the documentation of   QCPLayer.
   
-  \see layer, moveLayer, removeLayer
+   \sa layer, moveLayer, removeLayer
 */
 bool QCustomPlot::addLayer(const QString &name, QCPLayer *otherLayer, QCustomPlot::LayerInsertMode insertMode)
 {
@@ -13819,12 +13819,12 @@ bool QCustomPlot::addLayer(const QString &name, QCPLayer *otherLayer, QCustomPlo
   \a layer. If \a layer is the bottom layer, the layerables are moved to the layer above. In both
   cases, the total rendering order of all layerables in the QCustomPlot is preserved.
   
-  If \a layer is the current layer (\ref setCurrentLayer), the layer below (or above, if bottom
+  If \a layer is the current layer (  setCurrentLayer), the layer below (or above, if bottom
   layer) becomes the new current layer.
   
   It is not possible to remove the last layer of the plot.
   
-  \see layer, addLayer, moveLayer
+   \sa layer, addLayer, moveLayer
 */
 bool QCustomPlot::removeLayer(QCPLayer *layer)
 {
@@ -13873,7 +13873,7 @@ bool QCustomPlot::removeLayer(QCPLayer *layer)
   Returns true on success, i.e. when both \a layer and \a otherLayer are valid layers in the
   QCustomPlot.
   
-  \see layer, addLayer, moveLayer
+   \sa layer, addLayer, moveLayer
 */
 bool QCustomPlot::moveLayer(QCPLayer *layer, QCPLayer *otherLayer, QCustomPlot::LayerInsertMode insertMode)
 {
@@ -13910,7 +13910,7 @@ bool QCustomPlot::moveLayer(QCPLayer *layer, QCPLayer *otherLayer, QCustomPlot::
   
   Initially, only one axis rect exists in the plot.
   
-  \see axisRect, axisRects
+   \sa axisRect, axisRects
 */
 int QCustomPlot::axisRectCount() const
 {
@@ -13924,7 +13924,7 @@ int QCustomPlot::axisRectCount() const
   added, all of them may be accessed with this function in a linear fashion (even when they are
   nested in a layout hierarchy or inside other axis rects via QCPAxisRect::insetLayout).
   
-  \see axisRectCount, axisRects
+   \sa axisRectCount, axisRects
 */
 QCPAxisRect *QCustomPlot::axisRect(int index) const
 {
@@ -13942,7 +13942,7 @@ QCPAxisRect *QCustomPlot::axisRect(int index) const
 /*!
   Returns all axis rects in the plot.
   
-  \see axisRectCount, axisRect
+   \sa axisRectCount, axisRect
 */
 QList<QCPAxisRect*> QCustomPlot::axisRects() const
 {
@@ -13971,10 +13971,10 @@ QList<QCPAxisRect*> QCustomPlot::axisRects() const
   Returns the layout element at pixel position \a pos. If there is no element at that position,
   returns 0.
   
-  Only visible elements are used. If \ref QCPLayoutElement::setVisible on the element itself or on
+  Only visible elements are used. If   QCPLayoutElement::setVisible on the element itself or on
   any of its parent elements is set to false, it will not be considered.
   
-  \see itemAt, plottableAt
+   \sa itemAt, plottableAt
 */
 QCPLayoutElement *QCustomPlot::layoutElementAt(const QPointF &pos) const
 {
@@ -13997,14 +13997,14 @@ QCPLayoutElement *QCustomPlot::layoutElementAt(const QPointF &pos) const
 }
 
 /*!
-  Returns the layout element of type \ref QCPAxisRect at pixel position \a pos. This method ignores
-  other layout elements even if they are visually in front of the axis rect (e.g. a \ref
+  Returns the layout element of type   QCPAxisRect at pixel position \a pos. This method ignores
+  other layout elements even if they are visually in front of the axis rect (e.g. a
   QCPLegend). If there is no axis rect at that position, returns 0.
 
-  Only visible axis rects are used. If \ref QCPLayoutElement::setVisible on the axis rect itself or
+  Only visible axis rects are used. If   QCPLayoutElement::setVisible on the axis rect itself or
   on any of its parent elements is set to false, it will not be considered.
 
-  \see layoutElementAt
+   \sa layoutElementAt
 */
 QCPAxisRect *QCustomPlot::axisRectAt(const QPointF &pos) const
 {
@@ -14030,10 +14030,10 @@ QCPAxisRect *QCustomPlot::axisRectAt(const QPointF &pos) const
 }
 
 /*!
-  Returns the axes that currently have selected parts, i.e. whose selection state is not \ref
+  Returns the axes that currently have selected parts, i.e. whose selection state is not
   QCPAxis::spNone.
   
-  \see selectedPlottables, selectedLegends, setInteractions, QCPAxis::setSelectedParts,
+   \sa selectedPlottables, selectedLegends, setInteractions, QCPAxis::setSelectedParts,
   QCPAxis::setSelectableParts
 */
 QList<QCPAxis*> QCustomPlot::selectedAxes() const
@@ -14052,10 +14052,10 @@ QList<QCPAxis*> QCustomPlot::selectedAxes() const
 }
 
 /*!
-  Returns the legends that currently have selected parts, i.e. whose selection state is not \ref
+  Returns the legends that currently have selected parts, i.e. whose selection state is not
   QCPLegend::spNone.
   
-  \see selectedPlottables, selectedAxes, setInteractions, QCPLegend::setSelectedParts,
+   \sa selectedPlottables, selectedAxes, setInteractions, QCPLegend::setSelectedParts,
   QCPLegend::setSelectableParts, QCPLegend::selectedItems
 */
 QList<QCPLegend*> QCustomPlot::selectedLegends() const
@@ -14088,11 +14088,11 @@ QList<QCPLegend*> QCustomPlot::selectedLegends() const
 /*!
   Deselects all layerables (plottables, items, axes, legends,...) of the QCustomPlot.
   
-  Since calling this function is not a user interaction, this does not emit the \ref
+  Since calling this function is not a user interaction, this does not emit the
   selectionChangedByUser signal. The individual selectionChanged signals are emitted though, if the
   objects were previously selected.
   
-  \see setInteractions, selectedPlottables, selectedItems, selectedAxes, selectedLegends
+   \sa setInteractions, selectedPlottables, selectedItems, selectedAxes, selectedLegends
 */
 void QCustomPlot::deselectAll()
 {
@@ -14109,23 +14109,23 @@ void QCustomPlot::deselectAll()
   the plot, e.g. on the axis ranges or data points of graphs, visible.
 
   The parameter \a refreshPriority can be used to fine-tune the timing of the replot. For example
-  if your application calls \ref replot very quickly in succession (e.g. multiple independent
+  if your application calls   replot very quickly in succession (e.g. multiple independent
   functions change some aspects of the plot and each wants to make sure the change gets replotted),
-  it is advisable to set \a refreshPriority to \ref QCustomPlot::rpQueuedReplot. This way, the
-  actual replotting is deferred to the next event loop iteration. Multiple successive calls of \ref
+  it is advisable to set \a refreshPriority to   QCustomPlot::rpQueuedReplot. This way, the
+  actual replotting is deferred to the next event loop iteration. Multiple successive calls of
   replot with this priority will only cause a single replot, avoiding redundant replots and
   improving performance.
 
   Under a few circumstances, QCustomPlot causes a replot by itself. Those are resize events of the
   QCustomPlot widget and user interactions (object selection and range dragging/zooming).
 
-  Before the replot happens, the signal \ref beforeReplot is emitted. After the replot, \ref
+  Before the replot happens, the signal   beforeReplot is emitted. After the replot,
   afterReplot is emitted. It is safe to mutually connect the replot slot with any of those two
   signals on two QCustomPlots to make them replot synchronously, it won't cause an infinite
   recursion.
 
-  If a layer is in mode \ref QCPLayer::lmBuffered (\ref QCPLayer::setMode), it is also possible to
-  replot only that specific layer via \ref QCPLayer::replot. See the documentation there for
+  If a layer is in mode   QCPLayer::lmBuffered (  QCPLayer::setMode), it is also possible to
+  replot only that specific layer via   QCPLayer::replot. See the documentation there for
   details.
 */
 void QCustomPlot::replot(QCustomPlot::RefreshPriority refreshPriority)
@@ -14169,7 +14169,7 @@ void QCustomPlot::replot(QCustomPlot::RefreshPriority refreshPriority)
   if \a onlyVisiblePlottables is set to true, only the plottables that have their visibility set to true
   (QCPLayerable::setVisible), will be used to rescale the axes.
   
-  \see QCPAbstractPlottable::rescaleAxes, QCPAxis::rescale
+   \sa QCPAbstractPlottable::rescaleAxes, QCPAxis::rescale
 */
 void QCustomPlot::rescaleAxes(bool onlyVisiblePlottables)
 {
@@ -14188,20 +14188,20 @@ void QCustomPlot::rescaleAxes(bool onlyVisiblePlottables)
   pixel width and height. If either \a width or \a height is zero, the exported image will have the
   same dimensions as the QCustomPlot widget currently has.
 
-  Setting \a exportPen to \ref QCP::epNoCosmetic allows to disable the use of cosmetic pens when
+  Setting \a exportPen to   QCP::epNoCosmetic allows to disable the use of cosmetic pens when
   drawing to the PDF file. Cosmetic pens are pens with numerical width 0, which are always drawn as
   a one pixel wide line, no matter what zoom factor is set in the PDF-Viewer. For more information
   about cosmetic pens, see the QPainter and QPen documentation.
 
   The objects of the plot will appear in the current selection state. If you don't want any
-  selected objects to be painted in their selected look, deselect everything with \ref deselectAll
+  selected objects to be painted in their selected look, deselect everything with   deselectAll
   before calling this function.
 
   Returns true on success.
 
   \warning
   \li If you plan on editing the exported PDF file with a vector graphics editor like Inkscape, it
-  is advised to set \a exportPen to \ref QCP::epNoCosmetic to avoid losing those cosmetic lines
+  is advised to set \a exportPen to   QCP::epNoCosmetic to avoid losing those cosmetic lines
   (which might be quite many, because cosmetic pens are the default for e.g. axes and tick marks).
   \li If calling this function inside the constructor of the parent of the QCustomPlot widget
   (i.e. the MainWindow constructor, if QCustomPlot is inside the MainWindow), always provide
@@ -14216,7 +14216,7 @@ void QCustomPlot::rescaleAxes(bool onlyVisiblePlottables)
   \note On Android systems, this method does nothing and issues an according qDebug warning
   message. This is also the case if for other reasons the define flag \c QT_NO_PRINTER is set.
 
-  \see savePng, saveBmp, saveJpg, saveRastered
+   \sa savePng, saveBmp, saveJpg, saveRastered
 */
 bool QCustomPlot::savePdf(const QString &fileName, int width, int height, QCP::ExportPen exportPen, const QString &pdfCreator, const QString &pdfTitle)
 {
@@ -14294,7 +14294,7 @@ bool QCustomPlot::savePdf(const QString &fileName, int width, int height, QCP::E
   200*200 pixel resolution.
 
   If you use a high scaling factor, it is recommended to enable antialiasing for all elements by
-  temporarily setting \ref QCustomPlot::setAntialiasedElements to \ref QCP::aeAll as this allows
+  temporarily setting   QCustomPlot::setAntialiasedElements to   QCP::aeAll as this allows
   QCustomPlot to place objects with sub-pixel accuracy.
 
   image compression can be controlled with the \a quality parameter which must be between 0 and 100
@@ -14311,10 +14311,10 @@ bool QCustomPlot::savePdf(const QString &fileName, int width, int height, QCP::E
   the system, see Qt docs about QImageWriter::supportedImageFormats().
 
   The objects of the plot will appear in the current selection state. If you don't want any selected
-  objects to be painted in their selected look, deselect everything with \ref deselectAll before calling
+  objects to be painted in their selected look, deselect everything with   deselectAll before calling
   this function.
 
-  If you want the PNG to have a transparent background, call \ref setBackground(const QBrush &brush)
+  If you want the PNG to have a transparent background, call   setBackground(const QBrush &brush)
   with no brush (Qt::NoBrush) or a transparent color (Qt::transparent), before saving.
 
   \warning If calling this function inside the constructor of the parent of the QCustomPlot widget
@@ -14324,7 +14324,7 @@ bool QCustomPlot::savePdf(const QString &fileName, int width, int height, QCP::E
   aren't defined yet inside the constructor, so you would get an image that has strange
   widths/heights.
 
-  \see savePdf, saveBmp, saveJpg, saveRastered
+   \sa savePdf, saveBmp, saveJpg, saveRastered
 */
 bool QCustomPlot::savePng(const QString &fileName, int width, int height, double scale, int quality, int resolution, QCP::ResolutionUnit resolutionUnit)
 {
@@ -14344,7 +14344,7 @@ bool QCustomPlot::savePng(const QString &fileName, int width, int height, double
   200*200 pixel resolution.
 
   If you use a high scaling factor, it is recommended to enable antialiasing for all elements by
-  temporarily setting \ref QCustomPlot::setAntialiasedElements to \ref QCP::aeAll as this allows
+  temporarily setting   QCustomPlot::setAntialiasedElements to   QCP::aeAll as this allows
   QCustomPlot to place objects with sub-pixel accuracy.
 
   image compression can be controlled with the \a quality parameter which must be between 0 and 100
@@ -14361,7 +14361,7 @@ bool QCustomPlot::savePng(const QString &fileName, int width, int height, double
   the system, see Qt docs about QImageWriter::supportedImageFormats().
 
   The objects of the plot will appear in the current selection state. If you don't want any selected
-  objects to be painted in their selected look, deselect everything with \ref deselectAll before calling
+  objects to be painted in their selected look, deselect everything with   deselectAll before calling
   this function.
 
   \warning If calling this function inside the constructor of the parent of the QCustomPlot widget
@@ -14371,7 +14371,7 @@ bool QCustomPlot::savePng(const QString &fileName, int width, int height, double
   aren't defined yet inside the constructor, so you would get an image that has strange
   widths/heights.
 
-  \see savePdf, savePng, saveBmp, saveRastered
+   \sa savePdf, savePng, saveBmp, saveRastered
 */
 bool QCustomPlot::saveJpg(const QString &fileName, int width, int height, double scale, int quality, int resolution, QCP::ResolutionUnit resolutionUnit)
 {
@@ -14391,7 +14391,7 @@ bool QCustomPlot::saveJpg(const QString &fileName, int width, int height, double
   200*200 pixel resolution.
 
   If you use a high scaling factor, it is recommended to enable antialiasing for all elements by
-  temporarily setting \ref QCustomPlot::setAntialiasedElements to \ref QCP::aeAll as this allows
+  temporarily setting   QCustomPlot::setAntialiasedElements to   QCP::aeAll as this allows
   QCustomPlot to place objects with sub-pixel accuracy.
 
   The \a resolution will be written to the image file header and has no direct consequence for the
@@ -14405,7 +14405,7 @@ bool QCustomPlot::saveJpg(const QString &fileName, int width, int height, double
   the system, see Qt docs about QImageWriter::supportedImageFormats().
 
   The objects of the plot will appear in the current selection state. If you don't want any selected
-  objects to be painted in their selected look, deselect everything with \ref deselectAll before calling
+  objects to be painted in their selected look, deselect everything with   deselectAll before calling
   this function.
 
   \warning If calling this function inside the constructor of the parent of the QCustomPlot widget
@@ -14415,7 +14415,7 @@ bool QCustomPlot::saveJpg(const QString &fileName, int width, int height, double
   aren't defined yet inside the constructor, so you would get an image that has strange
   widths/heights.
 
-  \see savePdf, savePng, saveJpg, saveRastered
+   \sa savePdf, savePng, saveJpg, saveRastered
 */
 bool QCustomPlot::saveBmp(const QString &fileName, int width, int height, double scale, int resolution, QCP::ResolutionUnit resolutionUnit)
 {
@@ -14425,7 +14425,7 @@ bool QCustomPlot::saveBmp(const QString &fileName, int width, int height, double
 /*! \internal
   
   Returns a minimum size hint that corresponds to the minimum size of the top level layout
-  (\ref plotLayout). To prevent QCustomPlot from being collapsed to size/width zero, set a minimum
+  (  plotLayout). To prevent QCustomPlot from being collapsed to size/width zero, set a minimum
   size (setMinimumSize) either on the whole QCustomPlot or on any layout elements inside the plot.
   This is especially important, when placed in a QLayout where other components try to take in as
   much space as possible (e.g. QMdiArea).
@@ -14437,7 +14437,7 @@ QSize QCustomPlot::minimumSizeHint() const
 
 /*! \internal
   
-  Returns a size hint that is the same as \ref minimumSizeHint.
+  Returns a size hint that is the same as   minimumSizeHint.
   
 */
 QSize QCustomPlot::sizeHint() const
@@ -14447,7 +14447,7 @@ QSize QCustomPlot::sizeHint() const
 
 /*! \internal
   
-  Event handler for when the QCustomPlot widget needs repainting. This does not cause a \ref replot, but
+  Event handler for when the QCustomPlot widget needs repainting. This does not cause a   replot, but
   draws the internal buffer on the widget surface.
 */
 void QCustomPlot::paintEvent(QPaintEvent *event)
@@ -14468,7 +14468,7 @@ void QCustomPlot::paintEvent(QPaintEvent *event)
 /*! \internal
   
   Event handler for a resize of the QCustomPlot widget. The viewport (which becomes the outer rect
-  of mPlotLayout) is resized appropriately. Finally a \ref replot is performed.
+  of mPlotLayout) is resized appropriately. Finally a   replot is performed.
 */
 void QCustomPlot::resizeEvent(QResizeEvent *event)
 {
@@ -14480,12 +14480,12 @@ void QCustomPlot::resizeEvent(QResizeEvent *event)
 
 /*! \internal
   
- Event handler for when a double click occurs. Emits the \ref mouseDoubleClick signal, then
+ Event handler for when a double click occurs. Emits the   mouseDoubleClick signal, then
  determines the layerable under the cursor and forwards the event to it. Finally, emits the
- specialized signals when certain objecs are clicked (e.g. \ref plottableDoubleClick, \ref
+ specialized signals when certain objecs are clicked (e.g.   plottableDoubleClick,
  axisDoubleClick, etc.).
  
- \see mousePressEvent, mouseReleaseEvent
+  \sa mousePressEvent, mouseReleaseEvent
 */
 void QCustomPlot::mouseDoubleClickEvent(QMouseEvent *event)
 {
@@ -14534,10 +14534,10 @@ void QCustomPlot::mouseDoubleClickEvent(QMouseEvent *event)
   
   Event handler for when a mouse button is pressed. Emits the mousePress signal.
 
-  If the current \ref setSelectionRectMode is not \ref QCP::srmNone, passes the event to the
+  If the current   setSelectionRectMode is not   QCP::srmNone, passes the event to the
   selection rect. Otherwise determines the layerable under the cursor and forwards the event to it.
   
-  \see mouseMoveEvent, mouseReleaseEvent
+   \sa mouseMoveEvent, mouseReleaseEvent
 */
 void QCustomPlot::mousePressEvent(QMouseEvent *event)
 {
@@ -14573,15 +14573,15 @@ void QCustomPlot::mousePressEvent(QMouseEvent *event)
 
 /*! \internal
   
-  Event handler for when the cursor is moved. Emits the \ref mouseMove signal.
+  Event handler for when the cursor is moved. Emits the   mouseMove signal.
 
-  If the selection rect (\ref setSelectionRect) is currently active, the event is forwarded to it
+  If the selection rect (  setSelectionRect) is currently active, the event is forwarded to it
   in order to update the rect geometry.
   
   Otherwise, if a layout element has mouse capture focus (a mousePressEvent happened on top of the
   layout element before), the mouseMoveEvent is forwarded to that element.
   
-  \see mousePressEvent, mouseReleaseEvent
+   \sa mousePressEvent, mouseReleaseEvent
 */
 void QCustomPlot::mouseMoveEvent(QMouseEvent *event)
 {
@@ -14600,17 +14600,17 @@ void QCustomPlot::mouseMoveEvent(QMouseEvent *event)
 
 /*! \internal
 
-  Event handler for when a mouse button is released. Emits the \ref mouseRelease signal.
+  Event handler for when a mouse button is released. Emits the   mouseRelease signal.
 
-  If the mouse was moved less than a certain threshold in any direction since the \ref
+  If the mouse was moved less than a certain threshold in any direction since the
   mousePressEvent, it is considered a click which causes the selection mechanism (if activated via
-  \ref setInteractions) to possibly change selection states accordingly. Further, specialized mouse
-  click signals are emitted (e.g. \ref plottableClick, \ref axisClick, etc.)
+    setInteractions) to possibly change selection states accordingly. Further, specialized mouse
+  click signals are emitted (e.g.   plottableClick,   axisClick, etc.)
 
-  If a layerable is the mouse capturer (a \ref mousePressEvent happened on top of the layerable
-  before), the \ref mouseReleaseEvent is forwarded to that element.
+  If a layerable is the mouse capturer (a   mousePressEvent happened on top of the layerable
+  before), the   mouseReleaseEvent is forwarded to that element.
 
-  \see mousePressEvent, mouseMoveEvent
+   \sa mousePressEvent, mouseMoveEvent
 */
 void QCustomPlot::mouseReleaseEvent(QMouseEvent *event)
 {
@@ -14662,7 +14662,7 @@ void QCustomPlot::mouseReleaseEvent(QMouseEvent *event)
 
 /*! \internal
 
-  Event handler for mouse wheel events. First, the \ref mouseWheel signal is emitted. Then
+  Event handler for mouse wheel events. First, the   mouseWheel signal is emitted. Then
   determines the affected layerable and forwards the event to it.
 */
 void QCustomPlot::wheelEvent(QWheelEvent *event)
@@ -14683,11 +14683,11 @@ void QCustomPlot::wheelEvent(QWheelEvent *event)
 /*! \internal
   
   This function draws the entire plot, including background pixmap, with the specified \a painter.
-  It does not make use of the paint buffers like \ref replot, so this is the function typically
-  used by saving/exporting methods such as \ref savePdf or \ref toPainter.
+  It does not make use of the paint buffers like   replot, so this is the function typically
+  used by saving/exporting methods such as   savePdf or   toPainter.
 
   Note that it does not fill the background with the background brush (as the user may specify with
-  \ref setBackground(const QBrush &brush)), this is up to the respective functions calling this
+    setBackground(const QBrush &brush)), this is up to the respective functions calling this
   method.
 */
 void QCustomPlot::draw(QCPPainter *painter)
@@ -14715,7 +14715,7 @@ void QCustomPlot::draw(QCPPainter *painter)
 
 /*! \internal
 
-  Performs the layout update steps defined by \ref QCPLayoutElement::UpdatePhase, by calling \ref
+  Performs the layout update steps defined by   QCPLayoutElement::UpdatePhase, by calling
   QCPLayoutElement::update on the main plot layout.
 
   Here, the layout elements calculate their positions and margins, and prepare for the following
@@ -14733,18 +14733,18 @@ void QCustomPlot::updateLayout()
   
   Draws the viewport background pixmap of the plot.
   
-  If a pixmap was provided via \ref setBackground, this function buffers the scaled version
-  depending on \ref setBackgroundScaled and \ref setBackgroundScaledMode and then draws it inside
+  If a pixmap was provided via   setBackground, this function buffers the scaled version
+  depending on   setBackgroundScaled and   setBackgroundScaledMode and then draws it inside
   the viewport with the provided \a painter. The scaled version is buffered in
   mScaledBackgroundPixmap to prevent expensive rescaling at every redraw. It is only updated, when
   the axis rect has changed in a way that requires a rescale of the background pixmap (this is
-  dependent on the \ref setBackgroundScaledMode), or when a differend axis background pixmap was
+  dependent on the   setBackgroundScaledMode), or when a differend axis background pixmap was
   set.
   
   Note that this function does not draw a fill with the background brush
-  (\ref setBackground(const QBrush &brush)) beneath the pixmap.
+  (  setBackground(const QBrush &brush)) beneath the pixmap.
   
-  \see setBackground, setBackgroundScaled, setBackgroundScaledMode
+   \sa setBackground, setBackgroundScaled, setBackgroundScaledMode
 */
 void QCustomPlot::drawBackground(QCPPainter *painter)
 {
@@ -14774,16 +14774,16 @@ void QCustomPlot::drawBackground(QCPPainter *painter)
   paint buffers and that they have the correct configuration (size, pixel ratio, etc.).
   Allocations, reallocations and deletions of paint buffers are performed as necessary. It also
   associates the paint buffers with the layers, so they draw themselves into the right buffer when
-  \ref QCPLayer::drawToPaintBuffer is called. This means it associates adjacent \ref
+    QCPLayer::drawToPaintBuffer is called. This means it associates adjacent
   QCPLayer::lmLogical layers to a mutual paint buffer and creates dedicated paint buffers for
-  layers in \ref QCPLayer::lmBuffered mode.
+  layers in   QCPLayer::lmBuffered mode.
 
-  This method uses \ref createPaintBuffer to create new paint buffers.
+  This method uses   createPaintBuffer to create new paint buffers.
 
   After this method, the paint buffers are empty (filled with \c Qt::transparent) and invalidated
   (so an attempt to replot only a single buffered layer causes a full replot).
 
-  This method is called in every \ref replot call, prior to actually drawing the layers (into their
+  This method is called in every   replot call, prior to actually drawing the layers (into their
   associated paint buffer). If the paint buffers don't need changing/reallocating, this method
   basically leaves them alone and thus finishes very fast.
 */
@@ -14827,10 +14827,10 @@ void QCustomPlot::setupPaintBuffers()
 
 /*! \internal
 
-  This method is used by \ref setupPaintBuffers when it needs to create new paint buffers.
+  This method is used by   setupPaintBuffers when it needs to create new paint buffers.
 
-  Depending on the current setting of \ref setOpenGl, and the current Qt version, different
-  backends (subclasses of \ref QCPAbstractPaintBuffer) are created, initialized with the proper
+  Depending on the current setting of   setOpenGl, and the current Qt version, different
+  backends (subclasses of   QCPAbstractPaintBuffer) are created, initialized with the proper
   size and device pixel ratio, and returned.
 */
 QCPAbstractPaintBuffer *QCustomPlot::createPaintBuffer()
@@ -14853,12 +14853,12 @@ QCPAbstractPaintBuffer *QCustomPlot::createPaintBuffer()
   This method returns whether any of the paint buffers held by this QCustomPlot instance are
   invalidated.
 
-  If any buffer is invalidated, a partial replot (\ref QCPLayer::replot) is not allowed and always
-  causes a full replot (\ref QCustomPlot::replot) of all layers. This is the case when for example
+  If any buffer is invalidated, a partial replot (  QCPLayer::replot) is not allowed and always
+  causes a full replot (  QCustomPlot::replot) of all layers. This is the case when for example
   the layer order has changed, new layers were added, layers were removed, or layer modes were
-  changed (\ref QCPLayer::setMode).
+  changed (  QCPLayer::setMode).
 
-  \see QCPAbstractPaintBuffer::setInvalidated
+   \sa QCPAbstractPaintBuffer::setInvalidated
 */
 bool QCustomPlot::hasInvalidatedPaintBuffers()
 {
@@ -14872,16 +14872,16 @@ bool QCustomPlot::hasInvalidatedPaintBuffers()
 
 /*! \internal
 
-  When \ref setOpenGl is set to true, this method is used to initialize OpenGL (create a context,
+  When   setOpenGl is set to true, this method is used to initialize OpenGL (create a context,
   surface, paint device).
 
   Returns true on success.
 
   If this method is successful, all paint buffers should be deleted and then reallocated by calling
-  \ref setupPaintBuffers, so the OpenGL-based paint buffer subclasses (\ref
-  QCPPaintBufferGlPbuffer, \ref QCPPaintBufferGlFbo) are used for subsequent replots.
+    setupPaintBuffers, so the OpenGL-based paint buffer subclasses (
+  QCPPaintBufferGlPbuffer,   QCPPaintBufferGlFbo) are used for subsequent replots.
 
-  \see freeOpenGl
+   \sa freeOpenGl
 */
 bool QCustomPlot::setupOpenGl()
 {
@@ -14932,14 +14932,14 @@ bool QCustomPlot::setupOpenGl()
 
 /*! \internal
 
-  When \ref setOpenGl is set to false, this method is used to deinitialize OpenGL (releases the
+  When   setOpenGl is set to false, this method is used to deinitialize OpenGL (releases the
   context and frees resources).
 
   After OpenGL is disabled, all paint buffers should be deleted and then reallocated by calling
-  \ref setupPaintBuffers, so the standard software rendering paint buffer subclass (\ref
+    setupPaintBuffers, so the standard software rendering paint buffer subclass (
   QCPPaintBufferPixmap) is used for subsequent replots.
 
-  \see setupOpenGl
+   \sa setupOpenGl
 */
 void QCustomPlot::freeOpenGl()
 {
@@ -14952,7 +14952,7 @@ void QCustomPlot::freeOpenGl()
 
 /*! \internal
   
-  This method is used by \ref QCPAxisRect::removeAxis to report removed axes to the QCustomPlot
+  This method is used by   QCPAxisRect::removeAxis to report removed axes to the QCustomPlot
   so it may clear its QCustomPlot::xAxis, yAxis, xAxis2 and yAxis2 members accordingly.
 */
 void QCustomPlot::axisRemoved(QCPAxis *axis)
@@ -14982,20 +14982,20 @@ void QCustomPlot::legendRemoved(QCPLegend *legend)
 
 /*! \internal
   
-  This slot is connected to the selection rect's \ref QCPSelectionRect::accepted signal when \ref
-  setSelectionRectMode is set to \ref QCP::srmSelect.
+  This slot is connected to the selection rect's   QCPSelectionRect::accepted signal when
+  setSelectionRectMode is set to   QCP::srmSelect.
 
   First, it determines which axis rect was the origin of the selection rect judging by the starting
-  point of the selection. Then it goes through the plottables (\ref QCPAbstractPlottable1D to be
+  point of the selection. Then it goes through the plottables (  QCPAbstractPlottable1D to be
   precise) associated with that axis rect and finds the data points that are in \a rect. It does
-  this by querying their \ref QCPAbstractPlottable1D::selectTestRect method.
+  this by querying their   QCPAbstractPlottable1D::selectTestRect method.
   
-  Then, the actual selection is done by calling the plottables' \ref
+  Then, the actual selection is done by calling the plottables'
   QCPAbstractPlottable::selectEvent, placing the found selected data points in the \a details
-  parameter as <tt>QVariant(\ref QCPDataSelection)</tt>. All plottables that weren't touched by \a
-  rect receive a \ref QCPAbstractPlottable::deselectEvent.
+  parameter as <tt>QVariant(  QCPDataSelection)</tt>. All plottables that weren't touched by \a
+  rect receive a   QCPAbstractPlottable::deselectEvent.
   
-  \see processRectZoom
+   \sa processRectZoom
 */
 void QCustomPlot::processRectSelection(QRect rect, QMouseEvent *event)
 {
@@ -15073,14 +15073,14 @@ void QCustomPlot::processRectSelection(QRect rect, QMouseEvent *event)
 
 /*! \internal
   
-  This slot is connected to the selection rect's \ref QCPSelectionRect::accepted signal when \ref
-  setSelectionRectMode is set to \ref QCP::srmZoom.
+  This slot is connected to the selection rect's   QCPSelectionRect::accepted signal when
+  setSelectionRectMode is set to   QCP::srmZoom.
 
   It determines which axis rect was the origin of the selection rect judging by the starting point
-  of the selection, and then zooms the axes defined via \ref QCPAxisRect::setRangeZoomAxes to the
-  provided \a rect (see \ref QCPAxisRect::zoom).
+  of the selection, and then zooms the axes defined via   QCPAxisRect::setRangeZoomAxes to the
+  provided \a rect (see   QCPAxisRect::zoom).
   
-  \see processRectSelection
+   \sa processRectSelection
 */
 void QCustomPlot::processRectZoom(QRect rect, QMouseEvent *event)
 {
@@ -15098,18 +15098,18 @@ void QCustomPlot::processRectZoom(QRect rect, QMouseEvent *event)
 
   This method is called when a simple left mouse click was detected on the QCustomPlot surface.
 
-  It first determines the layerable that was hit by the click, and then calls its \ref
+  It first determines the layerable that was hit by the click, and then calls its
   QCPLayerable::selectEvent. All other layerables receive a QCPLayerable::deselectEvent (unless the
-  multi-select modifier was pressed, see \ref setMultiSelectModifier).
+  multi-select modifier was pressed, see   setMultiSelectModifier).
 
-  In this method the hit layerable is determined a second time using \ref layerableAt (after the
-  one in \ref mousePressEvent), because we want \a onlySelectable set to true this time. This
+  In this method the hit layerable is determined a second time using   layerableAt (after the
+  one in   mousePressEvent), because we want \a onlySelectable set to true this time. This
   implies that the mouse event grabber (mMouseEventLayerable) may be a different one from the
   clicked layerable determined here. For example, if a non-selectable layerable is in front of a
   selectable layerable at the click position, the front layerable will receive mouse events but the
-  selectable one in the back will receive the \ref QCPLayerable::selectEvent.
+  selectable one in the back will receive the   QCPLayerable::selectEvent.
 
-  \see processRectSelection, QCPLayerable::selectTest
+   \sa processRectSelection, QCPLayerable::selectTest
 */
 void QCustomPlot::processPointSelection(QMouseEvent *event)
 {
@@ -15149,7 +15149,7 @@ void QCustomPlot::processPointSelection(QMouseEvent *event)
 
 /*! \internal
   
-  Registers the specified plottable with this QCustomPlot and, if \ref setAutoAddPlottableToLegend
+  Registers the specified plottable with this QCustomPlot and, if   setAutoAddPlottableToLegend
   is enabled, adds it to the legend (QCustomPlot::legend). QCustomPlot takes ownership of the
   plottable.
   
@@ -15186,7 +15186,7 @@ bool QCustomPlot::registerPlottable(QCPAbstractPlottable *plottable)
   QCPGraph constructor to register itself with this QCustomPlot's internal graph list. Returns true
   on success, i.e. if \a graph is valid and wasn't already registered with this QCustomPlot.
   
-  This graph specific registration happens in addition to the call to \ref registerPlottable by the
+  This graph specific registration happens in addition to the call to   registerPlottable by the
   QCPAbstractPlottable base class.
 */
 bool QCustomPlot::registerGraph(QCPGraph *graph)
@@ -15255,12 +15255,12 @@ void QCustomPlot::updateLayerIndices() const
 
   \a selectionDetails is an output parameter that contains selection specifics of the affected
   layerable. This is useful if the respective layerable shall be given a subsequent
-  QCPLayerable::selectEvent (like in \ref mouseReleaseEvent). \a selectionDetails usually contains
+  QCPLayerable::selectEvent (like in   mouseReleaseEvent). \a selectionDetails usually contains
   information about which part of the layerable was hit, in multi-part layerables (e.g.
-  QCPAxis::SelectablePart). If the layerable is a plottable, \a selectionDetails contains a \ref
+  QCPAxis::SelectablePart). If the layerable is a plottable, \a selectionDetails contains a
   QCPDataSelection instance with the single data point which is closest to \a pos.
   
-  \see layerableListAt, layoutElementAt, axisRectAt
+   \sa layerableListAt, layoutElementAt, axisRectAt
 */
 QCPLayerable *QCustomPlot::layerableAt(const QPointF &pos, bool onlySelectable, QVariant *selectionDetails) const
 {
@@ -15281,16 +15281,16 @@ QCPLayerable *QCustomPlot::layerableAt(const QPointF &pos, bool onlySelectable, 
   selectability via the QCPLayerable::selectTest method, by returning -1.)
 
   The returned list is sorted by the layerable/drawing order. If you only need to know the top-most
-  layerable, rather use \ref layerableAt.
+  layerable, rather use   layerableAt.
 
   \a selectionDetails is an output parameter that contains selection specifics of the affected
   layerable. This is useful if the respective layerable shall be given a subsequent
-  QCPLayerable::selectEvent (like in \ref mouseReleaseEvent). \a selectionDetails usually contains
+  QCPLayerable::selectEvent (like in   mouseReleaseEvent). \a selectionDetails usually contains
   information about which part of the layerable was hit, in multi-part layerables (e.g.
-  QCPAxis::SelectablePart). If the layerable is a plottable, \a selectionDetails contains a \ref
+  QCPAxis::SelectablePart). If the layerable is a plottable, \a selectionDetails contains a
   QCPDataSelection instance with the single data point which is closest to \a pos.
   
-  \see layerableAt, layoutElementAt, axisRectAt
+   \sa layerableAt, layoutElementAt, axisRectAt
 */
 QList<QCPLayerable*> QCustomPlot::layerableListAt(const QPointF &pos, bool onlySelectable, QList<QVariant> *selectionDetails) const
 {
@@ -15331,7 +15331,7 @@ QList<QCPLayerable*> QCustomPlot::layerableListAt(const QPointF &pos, bool onlyS
   which units \a resolution is given, by setting \a resolutionUnit. The \a resolution is converted
   to the format's expected resolution unit internally.
 
-  \see saveBmp, saveJpg, savePng, savePdf
+   \sa saveBmp, saveJpg, savePng, savePdf
 */
 bool QCustomPlot::saveRastered(const QString &fileName, int width, int height, double scale, const char *format, int quality, int resolution, QCP::ResolutionUnit resolutionUnit)
 {
@@ -15358,7 +15358,7 @@ bool QCustomPlot::saveRastered(const QString &fileName, int width, int height, d
   The plot is sized to \a width and \a height in pixels and scaled with \a scale. (width 100 and
   scale 2.0 lead to a full resolution pixmap with width 200.)
   
-  \see toPainter, saveRastered, saveBmp, savePng, saveJpg, savePdf
+   \sa toPainter, saveRastered, saveBmp, savePng, saveJpg, savePdf
 */
 QPixmap QCustomPlot::toPixmap(int width, int height, double scale)
 {
@@ -15411,10 +15411,10 @@ QPixmap QCustomPlot::toPixmap(int width, int height, double scale)
   appear scaled accordingly.
   
   \note If you are restricted to using a QPainter (instead of QCPPainter), create a temporary QPicture and open a QCPPainter
-  on it. Then call \ref toPainter with this QCPPainter. After ending the paint operation on the picture, draw it with
+  on it. Then call   toPainter with this QCPPainter. After ending the paint operation on the picture, draw it with
   the QPainter. This will reproduce the painter actions the QCPPainter took, with a QPainter.
   
-  \see toPixmap
+   \sa toPixmap
 */
 void QCustomPlot::toPainter(QCPPainter *painter, int width, int height)
 {
@@ -15455,15 +15455,15 @@ void QCustomPlot::toPainter(QCPPainter *painter, int width, int height)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*! \class QCPColorGradient
-  \brief Defines a color gradient for use with e.g. \ref QCPColorMap
+  \brief Defines a color gradient for use with e.g.   QCPColorMap
   
   This class describes a color gradient which can be used to encode data with color. For example,
-  QCPColorMap and QCPColorScale have \ref QCPColorMap::setGradient "setGradient" methods which
-  take an instance of this class. Colors are set with \ref setColorStopAt(double position, const QColor &color)
+  QCPColorMap and QCPColorScale have   QCPColorMap::setGradient "setGradient" methods which
+  take an instance of this class. Colors are set with   setColorStopAt(double position, const QColor &color)
   with a \a position from 0 to 1. In between these defined color positions, the
-  color will be interpolated linearly either in RGB or HSV space, see \ref setColorInterpolation.
+  color will be interpolated linearly either in RGB or HSV space, see   setColorInterpolation.
 
-  Alternatively, load one of the preset color gradients shown in the image below, with \ref
+  Alternatively, load one of the preset color gradients shown in the image below, with
   loadPreset, or by directly specifying the preset in the constructor.
   
   Apart from red, green and blue components, the gradient also interpolates the alpha values of the
@@ -15472,19 +15472,19 @@ void QCustomPlot::toPainter(QCPPainter *painter, int width, int height)
   
   \image html QCPColorGradient.png
   
-  The \ref QCPColorGradient(GradientPreset preset) constructor allows directly converting a \ref
-  GradientPreset to a QCPColorGradient. This means that you can directly pass \ref GradientPreset
+  The   QCPColorGradient(GradientPreset preset) constructor allows directly converting a
+  GradientPreset to a QCPColorGradient. This means that you can directly pass   GradientPreset
   to all the \a setGradient methods, e.g.:
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpcolorgradient-setgradient
   
-  The total number of levels used in the gradient can be set with \ref setLevelCount. Whether the
+  The total number of levels used in the gradient can be set with   setLevelCount. Whether the
   color gradient shall be applied periodically (wrapping around) to data values that lie outside
-  the data range specified on the plottable instance can be controlled with \ref setPeriodic.
+  the data range specified on the plottable instance can be controlled with   setPeriodic.
 */
 
 /*!
   Constructs a new, empty QCPColorGradient with no predefined color stops. You can add own color
-  stops with \ref setColorStopAt.
+  stops with   setColorStopAt.
 
   The color level count is initialized to 350.
 */
@@ -15545,13 +15545,13 @@ void QCPColorGradient::setLevelCount(int n)
 /*!
   Sets at which positions from 0 to 1 which color shall occur. The positions are the keys, the
   colors are the values of the passed QMap \a colorStops. In between these color stops, the color
-  is interpolated according to \ref setColorInterpolation.
+  is interpolated according to   setColorInterpolation.
   
-  A more convenient way to create a custom gradient may be to clear all color stops with \ref
+  A more convenient way to create a custom gradient may be to clear all color stops with
   clearColorStops (or creating a new, empty QCPColorGradient) and then adding them one by one with
-  \ref setColorStopAt.
+    setColorStopAt.
   
-  \see clearColorStops
+   \sa clearColorStops
 */
 void QCPColorGradient::setColorStops(const QMap<double, QColor> &colorStops)
 {
@@ -15561,9 +15561,9 @@ void QCPColorGradient::setColorStops(const QMap<double, QColor> &colorStops)
 
 /*!
   Sets the \a color the gradient will have at the specified \a position (from 0 to 1). In between
-  these color stops, the color is interpolated according to \ref setColorInterpolation.
+  these color stops, the color is interpolated according to   setColorInterpolation.
   
-  \see setColorStops, clearColorStops
+   \sa setColorStops, clearColorStops
 */
 void QCPColorGradient::setColorStopAt(double position, const QColor &color)
 {
@@ -15572,7 +15572,7 @@ void QCPColorGradient::setColorStopAt(double position, const QColor &color)
 }
 
 /*!
-  Sets whether the colors in between the configured color stops (see \ref setColorStopAt) shall be
+  Sets whether the colors in between the configured color stops (see   setColorStopAt) shall be
   interpolated linearly in RGB or in HSV color space.
   
   For example, a sweep in RGB space from red to green will have a muddy brown intermediate color,
@@ -15588,7 +15588,7 @@ void QCPColorGradient::setColorInterpolation(QCPColorGradient::ColorInterpolatio
 }
 
 /*!
-  Sets whether data points that are outside the configured data range (e.g. \ref
+  Sets whether data points that are outside the configured data range (e.g.
   QCPColorMap::setDataRange) are colored by periodically repeating the color gradient or whether
   they all have the same color, corresponding to the respective gradient boundary color.
   
@@ -15596,7 +15596,7 @@ void QCPColorGradient::setColorInterpolation(QCPColorGradient::ColorInterpolatio
   
   As shown in the image above, gradients that have the same start and end color are especially
   suitable for a periodic gradient mapping, since they produce smooth color transitions throughout
-  the color map. A preset that has this property is \ref gpHues.
+  the color map. A preset that has this property is   gpHues.
   
   In practice, using periodic color gradients makes sense when the data corresponds to a periodic
   dimension, such as an angle or a phase. If this is not the case, the color encoding might become
@@ -15693,7 +15693,7 @@ void QCPColorGradient::colorize(const double *data, const QCPRange &range, QRgb 
 
 /*! \overload
 
-  Additionally to the other overload of \ref colorize, this method takes the array \a alpha, which
+  Additionally to the other overload of   colorize, this method takes the array \a alpha, which
   has the same size and structure as \a data and encodes the alpha information per data point.
 
   The QRgb values that are placed in \a scanLine have their r, g and b components premultiplied
@@ -15808,7 +15808,7 @@ void QCPColorGradient::colorize(const double *data, const unsigned char *alpha, 
   range that shall be used for mapping the data value to the gradient is passed in \a range. \a
   logarithmic indicates whether the data value shall be mapped to a color logarithmically.
 
-  If an entire array of data values shall be converted, rather use \ref colorize, for better
+  If an entire array of data values shall be converted, rather use   colorize, for better
   performance.
 
   The returned QRgb has its r, g and b components premultiplied with alpha (see
@@ -15953,7 +15953,7 @@ void QCPColorGradient::loadPreset(GradientPreset preset)
 /*!
   Clears all color stops.
   
-  \see setColorStops, setColorStopAt
+   \sa setColorStops, setColorStopAt
 */
 void QCPColorGradient::clearColorStops()
 {
@@ -15962,10 +15962,10 @@ void QCPColorGradient::clearColorStops()
 }
 
 /*!
-  Returns an inverted gradient. The inverted gradient has all properties as this \ref
+  Returns an inverted gradient. The inverted gradient has all properties as this
   QCPColorGradient, but the order of the color stops is inverted.
   
-  \see setColorStops, setColorStopAt
+   \sa setColorStops, setColorStopAt
 */
 QCPColorGradient QCPColorGradient::inverted() const
 {
@@ -15993,7 +15993,7 @@ bool QCPColorGradient::stopsUseAlpha() const
 
 /*! \internal
   
-  Updates the internal color buffer which will be used by \ref colorize and \ref color, to quickly
+  Updates the internal color buffer which will be used by   colorize and   color, to quickly
   convert positions to colors. This is where the interpolation between color stops is calculated.
 */
 void QCPColorGradient::updateColorBuffer()
@@ -16097,15 +16097,15 @@ void QCPColorGradient::updateColorBuffer()
   \brief A selection decorator which draws brackets around each selected data segment
   
   Additionally to the regular highlighting of selected segments via color, fill and scatter style,
-  this \ref QCPSelectionDecorator subclass draws markers at the begin and end of each selected data
+  this   QCPSelectionDecorator subclass draws markers at the begin and end of each selected data
   segment of the plottable.
   
-  The shape of the markers can be controlled with \ref setBracketStyle, \ref setBracketWidth and
-  \ref setBracketHeight. The color/fill can be controlled with \ref setBracketPen and \ref
+  The shape of the markers can be controlled with   setBracketStyle,   setBracketWidth and
+    setBracketHeight. The color/fill can be controlled with   setBracketPen and
   setBracketBrush.
   
-  To introduce custom bracket styles, it is only necessary to sublcass \ref
-  QCPSelectionDecoratorBracket and reimplement \ref drawBracket. The rest will be managed by the
+  To introduce custom bracket styles, it is only necessary to sublcass
+  QCPSelectionDecoratorBracket and reimplement   drawBracket. The rest will be managed by the
   base class.
 */
 
@@ -16148,7 +16148,7 @@ void QCPSelectionDecoratorBracket::setBracketBrush(const QBrush &brush)
 
 /*!
   Sets the width of the drawn bracket. The width dimension is always parallel to the key axis of
-  the data, or the tangent direction of the current data slope, if \ref setTangentToData is
+  the data, or the tangent direction of the current data slope, if   setTangentToData is
   enabled.
 */
 void QCPSelectionDecoratorBracket::setBracketWidth(int width)
@@ -16158,7 +16158,7 @@ void QCPSelectionDecoratorBracket::setBracketWidth(int width)
 
 /*!
   Sets the height of the drawn bracket. The height dimension is always perpendicular to the key axis
-  of the data, or the tangent direction of the current data slope, if \ref setTangentToData is
+  of the data, or the tangent direction of the current data slope, if   setTangentToData is
   enabled.
 */
 void QCPSelectionDecoratorBracket::setBracketHeight(int height)
@@ -16169,7 +16169,7 @@ void QCPSelectionDecoratorBracket::setBracketHeight(int height)
 /*!
   Sets the shape that the bracket/marker will have.
   
-  \see setBracketWidth, setBracketHeight
+   \sa setBracketWidth, setBracketHeight
 */
 void QCPSelectionDecoratorBracket::setBracketStyle(QCPSelectionDecoratorBracket::BracketStyle style)
 {
@@ -16181,7 +16181,7 @@ void QCPSelectionDecoratorBracket::setBracketStyle(QCPSelectionDecoratorBracket:
   position that they appear in.
   
   For noisy data, it might be more visually appealing to average the slope over multiple data
-  points. This can be configured via \ref setTangentAverage.
+  points. This can be configured via   setTangentAverage.
 */
 void QCPSelectionDecoratorBracket::setTangentToData(bool enabled)
 {
@@ -16190,11 +16190,11 @@ void QCPSelectionDecoratorBracket::setTangentToData(bool enabled)
 
 /*!
   Controls over how many data points the slope shall be averaged, when brackets shall be aligned
-  with the data (if \ref setTangentToData is true).
+  with the data (if   setTangentToData is true).
   
   From the position of the bracket, \a pointCount points towards the selected data range will be
   taken into account. The smallest value of \a pointCount is 1, which is effectively equivalent to
-  disabling \ref setTangentToData.
+  disabling   setTangentToData.
 */
 void QCPSelectionDecoratorBracket::setTangentAverage(int pointCount)
 {
@@ -16212,8 +16212,8 @@ void QCPSelectionDecoratorBracket::setTangentAverage(int pointCount)
   rotate the bracket appropriately. Painting operations can be performed as if drawing upright
   brackets on flat data with horizontal key axis, with (0, 0) being the center of the bracket.
   
-  If you wish to sublcass \ref QCPSelectionDecoratorBracket in order to provide custom bracket
-  shapes (see \ref QCPSelectionDecoratorBracket::bsUserStyle), this is the method you should
+  If you wish to sublcass   QCPSelectionDecoratorBracket in order to provide custom bracket
+  shapes (see   QCPSelectionDecoratorBracket::bsUserStyle), this is the method you should
   reimplement.
 */
 void QCPSelectionDecoratorBracket::drawBracket(QCPPainter *painter, int direction) const
@@ -16255,9 +16255,9 @@ void QCPSelectionDecoratorBracket::drawBracket(QCPPainter *painter, int directio
   Draws the bracket decoration on the data points at the begin and end of each selected data
   segment given in \a seletion.
   
-  It uses the method \ref drawBracket to actually draw the shapes.
+  It uses the method   drawBracket to actually draw the shapes.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 void QCPSelectionDecoratorBracket::drawDecoration(QCPPainter *painter, QCPDataSelection selection)
 {
@@ -16300,14 +16300,14 @@ void QCPSelectionDecoratorBracket::drawDecoration(QCPPainter *painter, QCPDataSe
 
 /*! \internal
   
-  If \ref setTangentToData is enabled, brackets need to be rotated according to the data slope.
+  If   setTangentToData is enabled, brackets need to be rotated according to the data slope.
   This method returns the angle in radians by which a bracket at the given \a dataIndex must be
   rotated.
   
   The parameter \a direction must be set to either -1 or 1, representing whether it is an opening
   or closing bracket. Since for slope calculation multiple data points are required, this defines
   the direction in which the algorithm walks, starting at \a dataIndex, to average those data
-  points. (see \ref setTangentToData and \ref setTangentAverage)
+  points. (see   setTangentToData and   setTangentAverage)
   
   \a interface1d is the interface to the plottable's data which is used to query data coordinates.
 */
@@ -16391,25 +16391,25 @@ QPointF QCPSelectionDecoratorBracket::getPixelCoordinates(const QCPPlottableInte
   (QCustomPlot::plotLayout).
   
   By default, QCPAxisRect comes with four axes, at bottom, top, left and right. They can be
-  accessed via \ref axis by providing the respective axis type (\ref QCPAxis::AxisType) and index.
-  If you need all axes in the axis rect, use \ref axes. The top and right axes are set to be
-  invisible initially (QCPAxis::setVisible). To add more axes to a side, use \ref addAxis or \ref
-  addAxes. To remove an axis, use \ref removeAxis.
+  accessed via   axis by providing the respective axis type (  QCPAxis::AxisType) and index.
+  If you need all axes in the axis rect, use   axes. The top and right axes are set to be
+  invisible initially (QCPAxis::setVisible). To add more axes to a side, use   addAxis or
+  addAxes. To remove an axis, use   removeAxis.
   
-  The axis rect layerable itself only draws a background pixmap or color, if specified (\ref
-  setBackground). It is placed on the "background" layer initially (see \ref QCPLayer for an
+  The axis rect layerable itself only draws a background pixmap or color, if specified (
+  setBackground). It is placed on the "background" layer initially (see   QCPLayer for an
   explanation of the QCustomPlot layer system). The axes that are held by the axis rect can be
   placed on other layers, independently of the axis rect.
   
-  Every axis rect has a child layout of type \ref QCPLayoutInset. It is accessible via \ref
+  Every axis rect has a child layout of type   QCPLayoutInset. It is accessible via
   insetLayout and can be used to have other layout elements (or even other layouts with multiple
   elements) hovering inside the axis rect.
   
   If an axis rect is clicked and dragged, it processes this by moving certain axis ranges. The
-  behaviour can be controlled with \ref setRangeDrag and \ref setRangeDragAxes. If the mouse wheel
+  behaviour can be controlled with   setRangeDrag and   setRangeDragAxes. If the mouse wheel
   is scrolled while the cursor is on the axis rect, certain axes are scaled. This is controllable
-  via \ref setRangeZoom, \ref setRangeZoomAxes and \ref setRangeZoomFactor. These interactions are
-  only enabled if \ref QCustomPlot::setInteractions contains \ref QCP::iRangeDrag and \ref
+  via   setRangeZoom,   setRangeZoomAxes and   setRangeZoomFactor. These interactions are
+  only enabled if   QCustomPlot::setInteractions contains   QCP::iRangeDrag and
   QCP::iRangeZoom.
   
   \image html AxisRectSpacingOverview.png
@@ -16424,79 +16424,79 @@ QPointF QCPSelectionDecoratorBracket::getPixelCoordinates(const QCPPlottableInte
   Returns the inset layout of this axis rect. It can be used to place other layout elements (or
   even layouts with multiple other elements) inside/on top of an axis rect.
   
-  \see QCPLayoutInset
+   \sa QCPLayoutInset
 */
 
 /*! \fn int QCPAxisRect::left() const
   
   Returns the pixel position of the left border of this axis rect. Margins are not taken into
-  account here, so the returned value is with respect to the inner \ref rect.
+  account here, so the returned value is with respect to the inner   rect.
 */
 
 /*! \fn int QCPAxisRect::right() const
   
   Returns the pixel position of the right border of this axis rect. Margins are not taken into
-  account here, so the returned value is with respect to the inner \ref rect.
+  account here, so the returned value is with respect to the inner   rect.
 */
 
 /*! \fn int QCPAxisRect::top() const
   
   Returns the pixel position of the top border of this axis rect. Margins are not taken into
-  account here, so the returned value is with respect to the inner \ref rect.
+  account here, so the returned value is with respect to the inner   rect.
 */
 
 /*! \fn int QCPAxisRect::bottom() const
   
   Returns the pixel position of the bottom border of this axis rect. Margins are not taken into
-  account here, so the returned value is with respect to the inner \ref rect.
+  account here, so the returned value is with respect to the inner   rect.
 */
 
 /*! \fn int QCPAxisRect::width() const
   
   Returns the pixel width of this axis rect. Margins are not taken into account here, so the
-  returned value is with respect to the inner \ref rect.
+  returned value is with respect to the inner   rect.
 */
 
 /*! \fn int QCPAxisRect::height() const
   
   Returns the pixel height of this axis rect. Margins are not taken into account here, so the
-  returned value is with respect to the inner \ref rect.
+  returned value is with respect to the inner   rect.
 */
 
 /*! \fn QSize QCPAxisRect::size() const
   
   Returns the pixel size of this axis rect. Margins are not taken into account here, so the
-  returned value is with respect to the inner \ref rect.
+  returned value is with respect to the inner   rect.
 */
 
 /*! \fn QPoint QCPAxisRect::topLeft() const
   
   Returns the top left corner of this axis rect in pixels. Margins are not taken into account here,
-  so the returned value is with respect to the inner \ref rect.
+  so the returned value is with respect to the inner   rect.
 */
 
 /*! \fn QPoint QCPAxisRect::topRight() const
   
   Returns the top right corner of this axis rect in pixels. Margins are not taken into account
-  here, so the returned value is with respect to the inner \ref rect.
+  here, so the returned value is with respect to the inner   rect.
 */
 
 /*! \fn QPoint QCPAxisRect::bottomLeft() const
   
   Returns the bottom left corner of this axis rect in pixels. Margins are not taken into account
-  here, so the returned value is with respect to the inner \ref rect.
+  here, so the returned value is with respect to the inner   rect.
 */
 
 /*! \fn QPoint QCPAxisRect::bottomRight() const
   
   Returns the bottom right corner of this axis rect in pixels. Margins are not taken into account
-  here, so the returned value is with respect to the inner \ref rect.
+  here, so the returned value is with respect to the inner   rect.
 */
 
 /*! \fn QPoint QCPAxisRect::center() const
   
   Returns the center of this axis rect in pixels. Margins are not taken into account here, so the
-  returned value is with respect to the inner \ref rect.
+  returned value is with respect to the inner   rect.
 */
 
 /* end documentation of inline functions */
@@ -16562,7 +16562,7 @@ QCPAxisRect::~QCPAxisRect()
 /*!
   Returns the number of axes on the axis rect side specified with \a type.
   
-  \see axis
+   \sa axis
 */
 int QCPAxisRect::axisCount(QCPAxis::AxisType type) const
 {
@@ -16572,7 +16572,7 @@ int QCPAxisRect::axisCount(QCPAxis::AxisType type) const
 /*!
   Returns the axis with the given \a index on the axis rect side specified with \a type.
   
-  \see axisCount, axes
+   \sa axisCount, axes
 */
 QCPAxis *QCPAxisRect::axis(QCPAxis::AxisType type, int index) const
 {
@@ -16590,10 +16590,10 @@ QCPAxis *QCPAxisRect::axis(QCPAxis::AxisType type, int index) const
 /*!
   Returns all axes on the axis rect sides specified with \a types.
   
-  \a types may be a single \ref QCPAxis::AxisType or an <tt>or</tt>-combination, to get the axes of
+  \a types may be a single   QCPAxis::AxisType or an <tt>or</tt>-combination, to get the axes of
   multiple sides.
   
-  \see axis
+   \sa axis
 */
 QList<QCPAxis*> QCPAxisRect::axes(QCPAxis::AxisTypes types) const
 {
@@ -16628,7 +16628,7 @@ QList<QCPAxis*> QCPAxisRect::axes() const
 /*!
   Adds a new axis to the axis rect side specified with \a type, and returns it. If \a axis is 0, a
   new QCPAxis instance is created internally. QCustomPlot owns the returned axis, so if you want to
-  remove an axis, use \ref removeAxis instead of deleting it manually.
+  remove an axis, use   removeAxis instead of deleting it manually.
 
   You may inject QCPAxis instances (or sublasses of QCPAxis) by setting \a axis to an axis that was
   previously created outside QCustomPlot. It is important to note that QCustomPlot takes ownership
@@ -16640,10 +16640,10 @@ QList<QCPAxis*> QCPAxisRect::axes() const
   not be added multiple times to the same or different axis rects.
 
   If an axis rect side already contains one or more axes, the lower and upper endings of the new
-  axis (\ref QCPAxis::setLowerEnding, \ref QCPAxis::setUpperEnding) are set to \ref
+  axis (  QCPAxis::setLowerEnding,   QCPAxis::setUpperEnding) are set to
   QCPLineEnding::esHalfBar.
 
-  \see addAxes, setupFullAxesBox
+   \sa addAxes, setupFullAxesBox
 */
 QCPAxis *QCPAxisRect::addAxis(QCPAxis::AxisType type, QCPAxis *axis)
 {
@@ -16693,12 +16693,12 @@ QCPAxis *QCPAxisRect::addAxis(QCPAxis::AxisType type, QCPAxis *axis)
 }
 
 /*!
-  Adds a new axis with \ref addAxis to each axis rect side specified in \a types. This may be an
+  Adds a new axis with   addAxis to each axis rect side specified in \a types. This may be an
   <tt>or</tt>-combination of QCPAxis::AxisType, so axes can be added to multiple sides at once.
   
   Returns a list of the added axes.
   
-  \see addAxis, setupFullAxesBox
+   \sa addAxis, setupFullAxesBox
 */
 QList<QCPAxis*> QCPAxisRect::addAxes(QCPAxis::AxisTypes types)
 {
@@ -16719,7 +16719,7 @@ QList<QCPAxis*> QCPAxisRect::addAxes(QCPAxis::AxisTypes types)
   
   Returns true on success, i.e. if \a axis was a valid axis in this axis rect.
   
-  \see addAxis
+   \sa addAxis
 */
 bool QCPAxisRect::removeAxis(QCPAxis *axis)
 {
@@ -16747,7 +16747,7 @@ bool QCPAxisRect::removeAxis(QCPAxis *axis)
   All axes of this axis rect will have their range zoomed accordingly. If you only wish to zoom
   specific axes, use the overloaded version of this method.
   
-  \see QCustomPlot::setSelectionRectMode
+   \sa QCustomPlot::setSelectionRectMode
 */
 void QCPAxisRect::zoom(const QRectF &pixelRect)
 {
@@ -16760,7 +16760,7 @@ void QCPAxisRect::zoom(const QRectF &pixelRect)
   
   Only the axes passed in \a affectedAxes will have their ranges zoomed accordingly.
   
-  \see QCustomPlot::setSelectionRectMode
+   \sa QCustomPlot::setSelectionRectMode
 */
 void QCPAxisRect::zoom(const QRectF &pixelRect, const QList<QCPAxis*> &affectedAxes)
 {
@@ -16785,19 +16785,19 @@ void QCPAxisRect::zoom(const QRectF &pixelRect, const QList<QCPAxis*> &affectedA
   visibility to true. Further, the top/right axes are assigned the following properties of the
   bottom/left axes:
 
-  \li range (\ref QCPAxis::setRange)
-  \li range reversed (\ref QCPAxis::setRangeReversed)
-  \li scale type (\ref QCPAxis::setScaleType)
-  \li tick visibility (\ref QCPAxis::setTicks)
-  \li number format (\ref QCPAxis::setNumberFormat)
-  \li number precision (\ref QCPAxis::setNumberPrecision)
-  \li tick count of ticker (\ref QCPAxisTicker::setTickCount)
-  \li tick origin of ticker (\ref QCPAxisTicker::setTickOrigin)
+  \li range (  QCPAxis::setRange)
+  \li range reversed (  QCPAxis::setRangeReversed)
+  \li scale type (  QCPAxis::setScaleType)
+  \li tick visibility (  QCPAxis::setTicks)
+  \li number format (  QCPAxis::setNumberFormat)
+  \li number precision (  QCPAxis::setNumberPrecision)
+  \li tick count of ticker (  QCPAxisTicker::setTickCount)
+  \li tick origin of ticker (  QCPAxisTicker::setTickOrigin)
 
-  Tick label visibility (\ref QCPAxis::setTickLabels) of the right and top axes are set to false.
+  Tick label visibility (  QCPAxis::setTickLabels) of the right and top axes are set to false.
 
-  If \a connectRanges is true, the \ref QCPAxis::rangeChanged "rangeChanged" signals of the bottom
-  and left axes are connected to the \ref QCPAxis::setRange slots of the top and right axes.
+  If \a connectRanges is true, the   QCPAxis::rangeChanged "rangeChanged" signals of the bottom
+  and left axes are connected to the   QCPAxis::setRange slots of the top and right axes.
 */
 void QCPAxisRect::setupFullAxesBox(bool connectRanges)
 {
@@ -16860,7 +16860,7 @@ void QCPAxisRect::setupFullAxesBox(bool connectRanges)
   A plottable is considered associated with an axis rect if its key or value axis (or both) is in
   this axis rect.
   
-  \see graphs, items
+   \sa graphs, items
 */
 QList<QCPAbstractPlottable*> QCPAxisRect::plottables() const
 {
@@ -16880,7 +16880,7 @@ QList<QCPAbstractPlottable*> QCPAxisRect::plottables() const
   A graph is considered associated with an axis rect if its key or value axis (or both) is in
   this axis rect.
   
-  \see plottables, items
+   \sa plottables, items
 */
 QList<QCPGraph*> QCPAxisRect::graphs() const
 {
@@ -16898,11 +16898,11 @@ QList<QCPGraph*> QCPAxisRect::graphs() const
   Returns a list of all the items that are associated with this axis rect.
   
   An item is considered associated with an axis rect if any of its positions has key or value axis
-  set to an axis that is in this axis rect, or if any of its positions has \ref
-  QCPItemPosition::setAxisRect set to the axis rect, or if the clip axis rect (\ref
+  set to an axis that is in this axis rect, or if any of its positions has
+  QCPItemPosition::setAxisRect set to the axis rect, or if the clip axis rect (
   QCPAbstractItem::setClipAxisRect) is set to this axis rect.
   
-  \see plottables, graphs
+   \sa plottables, graphs
 */
 QList<QCPAbstractItem *> QCPAxisRect::items() const
 {
@@ -16935,11 +16935,11 @@ QList<QCPAbstractItem *> QCPAxisRect::items() const
   This method is called automatically upon replot and doesn't need to be called by users of
   QCPAxisRect.
   
-  Calls the base class implementation to update the margins (see \ref QCPLayoutElement::update),
-  and finally passes the \ref rect to the inset layout (\ref insetLayout) and calls its
+  Calls the base class implementation to update the margins (see   QCPLayoutElement::update),
+  and finally passes the   rect to the inset layout (  insetLayout) and calls its
   QCPInsetLayout::update function.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 void QCPAxisRect::update(UpdatePhase phase)
 {
@@ -16997,14 +16997,14 @@ void QCPAxisRect::draw(QCPPainter *painter)
   backgrounds are usually drawn below everything else.
 
   For cases where the provided pixmap doesn't have the same size as the axis rect, scaling can be
-  enabled with \ref setBackgroundScaled and the scaling mode (i.e. whether and how the aspect ratio
-  is preserved) can be set with \ref setBackgroundScaledMode. To set all these options in one call,
+  enabled with   setBackgroundScaled and the scaling mode (i.e. whether and how the aspect ratio
+  is preserved) can be set with   setBackgroundScaledMode. To set all these options in one call,
   consider using the overloaded version of this function.
 
-  Below the pixmap, the axis rect may be optionally filled with a brush, if specified with \ref
+  Below the pixmap, the axis rect may be optionally filled with a brush, if specified with
   setBackground(const QBrush &brush).
   
-  \see setBackgroundScaled, setBackgroundScaledMode, setBackground(const QBrush &brush)
+   \sa setBackgroundScaled, setBackgroundScaledMode, setBackground(const QBrush &brush)
 */
 void QCPAxisRect::setBackground(const QPixmap &pm)
 {
@@ -17018,12 +17018,12 @@ void QCPAxisRect::setBackground(const QPixmap &pm)
   Since axis rects place themselves on the "background" layer by default, the axis rect backgrounds
   are usually drawn below everything else.
 
-  The brush will be drawn before (under) any background pixmap, which may be specified with \ref
+  The brush will be drawn before (under) any background pixmap, which may be specified with
   setBackground(const QPixmap &pm).
 
   To disable drawing of a background brush, set \a brush to Qt::NoBrush.
   
-  \see setBackground(const QPixmap &pm)
+   \sa setBackground(const QPixmap &pm)
 */
 void QCPAxisRect::setBackground(const QBrush &brush)
 {
@@ -17035,7 +17035,7 @@ void QCPAxisRect::setBackground(const QBrush &brush)
   Allows setting the background pixmap of the axis rect, whether it shall be scaled and how it
   shall be scaled in one call.
 
-  \see setBackground(const QPixmap &pm), setBackgroundScaled, setBackgroundScaledMode
+   \sa setBackground(const QPixmap &pm), setBackgroundScaled, setBackgroundScaledMode
 */
 void QCPAxisRect::setBackground(const QPixmap &pm, bool scaled, Qt::AspectRatioMode mode)
 {
@@ -17048,12 +17048,12 @@ void QCPAxisRect::setBackground(const QPixmap &pm, bool scaled, Qt::AspectRatioM
 /*!
   Sets whether the axis background pixmap shall be scaled to fit the axis rect or not. If \a scaled
   is set to true, you may control whether and how the aspect ratio of the original pixmap is
-  preserved with \ref setBackgroundScaledMode.
+  preserved with   setBackgroundScaledMode.
   
   Note that the scaled version of the original pixmap is buffered, so there is no performance
   penalty on replots. (Except when the axis rect dimensions are changed continuously.)
   
-  \see setBackground, setBackgroundScaledMode
+   \sa setBackground, setBackgroundScaledMode
 */
 void QCPAxisRect::setBackgroundScaled(bool scaled)
 {
@@ -17061,9 +17061,9 @@ void QCPAxisRect::setBackgroundScaled(bool scaled)
 }
 
 /*!
-  If scaling of the axis background pixmap is enabled (\ref setBackgroundScaled), use this function to
-  define whether and how the aspect ratio of the original pixmap passed to \ref setBackground is preserved.
-  \see setBackground, setBackgroundScaled
+  If scaling of the axis background pixmap is enabled (  setBackgroundScaled), use this function to
+  define whether and how the aspect ratio of the original pixmap passed to   setBackground is preserved.
+   \sa setBackground, setBackgroundScaled
 */
 void QCPAxisRect::setBackgroundScaledMode(Qt::AspectRatioMode mode)
 {
@@ -17072,9 +17072,9 @@ void QCPAxisRect::setBackgroundScaledMode(Qt::AspectRatioMode mode)
 
 /*!
   Returns the range drag axis of the \a orientation provided. If multiple axes were set, returns
-  the first one (use \ref rangeDragAxes to retrieve a list with all set axes).
+  the first one (use   rangeDragAxes to retrieve a list with all set axes).
 
-  \see setRangeDragAxes
+   \sa setRangeDragAxes
 */
 QCPAxis *QCPAxisRect::rangeDragAxis(Qt::Orientation orientation)
 {
@@ -17086,9 +17086,9 @@ QCPAxis *QCPAxisRect::rangeDragAxis(Qt::Orientation orientation)
 
 /*!
   Returns the range zoom axis of the \a orientation provided. If multiple axes were set, returns
-  the first one (use \ref rangeZoomAxes to retrieve a list with all set axes).
+  the first one (use   rangeZoomAxes to retrieve a list with all set axes).
 
-  \see setRangeZoomAxes
+   \sa setRangeZoomAxes
 */
 QCPAxis *QCPAxisRect::rangeZoomAxis(Qt::Orientation orientation)
 {
@@ -17101,7 +17101,7 @@ QCPAxis *QCPAxisRect::rangeZoomAxis(Qt::Orientation orientation)
 /*!
   Returns all range drag axes of the \a orientation provided.
 
-  \see rangeZoomAxis, setRangeZoomAxes
+   \sa rangeZoomAxis, setRangeZoomAxes
 */
 QList<QCPAxis*> QCPAxisRect::rangeDragAxes(Qt::Orientation orientation)
 {
@@ -17127,7 +17127,7 @@ QList<QCPAxis*> QCPAxisRect::rangeDragAxes(Qt::Orientation orientation)
 /*!
   Returns all range zoom axes of the \a orientation provided.
 
-  \see rangeDragAxis, setRangeDragAxes
+   \sa rangeDragAxis, setRangeDragAxes
 */
 QList<QCPAxis*> QCPAxisRect::rangeZoomAxes(Qt::Orientation orientation)
 {
@@ -17153,7 +17153,7 @@ QList<QCPAxis*> QCPAxisRect::rangeZoomAxes(Qt::Orientation orientation)
 /*!
   Returns the range zoom factor of the \a orientation provided.
   
-  \see setRangeZoomFactor
+   \sa setRangeZoomFactor
 */
 double QCPAxisRect::rangeZoomFactor(Qt::Orientation orientation)
 {
@@ -17163,18 +17163,18 @@ double QCPAxisRect::rangeZoomFactor(Qt::Orientation orientation)
 /*!
   Sets which axis orientation may be range dragged by the user with mouse interaction.
   What orientation corresponds to which specific axis can be set with
-  \ref setRangeDragAxes(QCPAxis *horizontal, QCPAxis *vertical). By
+    setRangeDragAxes(QCPAxis *horizontal, QCPAxis *vertical). By
   default, the horizontal axis is the bottom axis (xAxis) and the vertical axis
   is the left axis (yAxis).
   
-  To disable range dragging entirely, pass 0 as \a orientations or remove \ref QCP::iRangeDrag from \ref
+  To disable range dragging entirely, pass 0 as \a orientations or remove   QCP::iRangeDrag from
   QCustomPlot::setInteractions. To enable range dragging for both directions, pass <tt>Qt::Horizontal |
   Qt::Vertical</tt> as \a orientations.
   
-  In addition to setting \a orientations to a non-zero value, make sure \ref QCustomPlot::setInteractions
-  contains \ref QCP::iRangeDrag to enable the range dragging interaction.
+  In addition to setting \a orientations to a non-zero value, make sure   QCustomPlot::setInteractions
+  contains   QCP::iRangeDrag to enable the range dragging interaction.
   
-  \see setRangeZoom, setRangeDragAxes, QCustomPlot::setNoAntialiasingOnDrag
+   \sa setRangeZoom, setRangeDragAxes, QCustomPlot::setNoAntialiasingOnDrag
 */
 void QCPAxisRect::setRangeDrag(Qt::Orientations orientations)
 {
@@ -17183,18 +17183,18 @@ void QCPAxisRect::setRangeDrag(Qt::Orientations orientations)
 
 /*!
   Sets which axis orientation may be zoomed by the user with the mouse wheel. What orientation
-  corresponds to which specific axis can be set with \ref setRangeZoomAxes(QCPAxis *horizontal,
+  corresponds to which specific axis can be set with   setRangeZoomAxes(QCPAxis *horizontal,
   QCPAxis *vertical). By default, the horizontal axis is the bottom axis (xAxis) and the vertical
   axis is the left axis (yAxis).
 
-  To disable range zooming entirely, pass 0 as \a orientations or remove \ref QCP::iRangeZoom from \ref
+  To disable range zooming entirely, pass 0 as \a orientations or remove   QCP::iRangeZoom from
   QCustomPlot::setInteractions. To enable range zooming for both directions, pass <tt>Qt::Horizontal |
   Qt::Vertical</tt> as \a orientations.
   
-  In addition to setting \a orientations to a non-zero value, make sure \ref QCustomPlot::setInteractions
-  contains \ref QCP::iRangeZoom to enable the range zooming interaction.
+  In addition to setting \a orientations to a non-zero value, make sure   QCustomPlot::setInteractions
+  contains   QCP::iRangeZoom to enable the range zooming interaction.
   
-  \see setRangeZoomFactor, setRangeZoomAxes, setRangeDrag
+   \sa setRangeZoomFactor, setRangeZoomAxes, setRangeDrag
 */
 void QCPAxisRect::setRangeZoom(Qt::Orientations orientations)
 {
@@ -17203,13 +17203,13 @@ void QCPAxisRect::setRangeZoom(Qt::Orientations orientations)
 
 /*! \overload
   
-  Sets the axes whose range will be dragged when \ref setRangeDrag enables mouse range dragging on
+  Sets the axes whose range will be dragged when   setRangeDrag enables mouse range dragging on
   the QCustomPlot widget. Pass 0 if no axis shall be dragged in the respective orientation.
 
   Use the overload taking a list of axes, if multiple axes (more than one per orientation) shall
   react to dragging interactions.
 
-  \see setRangeZoomAxes
+   \sa setRangeZoomAxes
 */
 void QCPAxisRect::setRangeDragAxes(QCPAxis *horizontal, QCPAxis *vertical)
 {
@@ -17224,7 +17224,7 @@ void QCPAxisRect::setRangeDragAxes(QCPAxis *horizontal, QCPAxis *vertical)
 /*! \overload
 
   This method allows to set up multiple axes to react to horizontal and vertical dragging. The drag
-  orientation that the respective axis will react to is deduced from its orientation (\ref
+  orientation that the respective axis will react to is deduced from its orientation (
   QCPAxis::orientation).
 
   In the unusual case that you wish to e.g. drag a vertically oriented axis with a horizontal drag
@@ -17272,16 +17272,16 @@ void QCPAxisRect::setRangeDragAxes(QList<QCPAxis*> horizontal, QList<QCPAxis*> v
 }
 
 /*!
-  Sets the axes whose range will be zoomed when \ref setRangeZoom enables mouse wheel zooming on
+  Sets the axes whose range will be zoomed when   setRangeZoom enables mouse wheel zooming on
   the QCustomPlot widget. Pass 0 if no axis shall be zoomed in the respective orientation.
 
-  The two axes can be zoomed with different strengths, when different factors are passed to \ref
+  The two axes can be zoomed with different strengths, when different factors are passed to
   setRangeZoomFactor(double horizontalFactor, double verticalFactor).
 
   Use the overload taking a list of axes, if multiple axes (more than one per orientation) shall
   react to zooming interactions.
 
-  \see setRangeDragAxes
+   \sa setRangeDragAxes
 */
 void QCPAxisRect::setRangeZoomAxes(QCPAxis *horizontal, QCPAxis *vertical)
 {
@@ -17296,7 +17296,7 @@ void QCPAxisRect::setRangeZoomAxes(QCPAxis *horizontal, QCPAxis *vertical)
 /*! \overload
 
   This method allows to set up multiple axes to react to horizontal and vertical range zooming. The
-  zoom orientation that the respective axis will react to is deduced from its orientation (\ref
+  zoom orientation that the respective axis will react to is deduced from its orientation (
   QCPAxis::orientation).
 
   In the unusual case that you wish to e.g. zoom a vertically oriented axis with a horizontal zoom
@@ -17345,9 +17345,9 @@ void QCPAxisRect::setRangeZoomAxes(QList<QCPAxis*> horizontal, QList<QCPAxis*> v
 
 /*!
   Sets how strong one rotation step of the mouse wheel zooms, when range zoom was activated with
-  \ref setRangeZoom. The two parameters \a horizontalFactor and \a verticalFactor provide a way to
+    setRangeZoom. The two parameters \a horizontalFactor and \a verticalFactor provide a way to
   let the horizontal axis zoom at different rates than the vertical axis. Which axis is horizontal
-  and which is vertical, can be set with \ref setRangeZoomAxes.
+  and which is vertical, can be set with   setRangeZoomAxes.
 
   When the zoom factor is greater than one, scrolling the mouse wheel backwards (towards the user)
   will zoom in (make the currently visible range smaller). For zoom factors smaller than one, the
@@ -17374,18 +17374,18 @@ void QCPAxisRect::setRangeZoomFactor(double factor)
   Draws the background of this axis rect. It may consist of a background fill (a QBrush) and a
   pixmap.
   
-  If a brush was given via \ref setBackground(const QBrush &brush), this function first draws an
+  If a brush was given via   setBackground(const QBrush &brush), this function first draws an
   according filling inside the axis rect with the provided \a painter.
   
-  Then, if a pixmap was provided via \ref setBackground, this function buffers the scaled version
-  depending on \ref setBackgroundScaled and \ref setBackgroundScaledMode and then draws it inside
+  Then, if a pixmap was provided via   setBackground, this function buffers the scaled version
+  depending on   setBackgroundScaled and   setBackgroundScaledMode and then draws it inside
   the axis rect with the provided \a painter. The scaled version is buffered in
   mScaledBackgroundPixmap to prevent expensive rescaling at every redraw. It is only updated, when
   the axis rect has changed in a way that requires a rescale of the background pixmap (this is
-  dependent on the \ref setBackgroundScaledMode), or when a differend axis background pixmap was
+  dependent on the   setBackgroundScaledMode), or when a differend axis background pixmap was
   set.
   
-  \see setBackground, setBackgroundScaled, setBackgroundScaledMode
+   \sa setBackground, setBackgroundScaled, setBackgroundScaledMode
 */
 void QCPAxisRect::drawBackground(QCPPainter *painter)
 {
@@ -17416,10 +17416,10 @@ void QCPAxisRect::drawBackground(QCPPainter *painter)
   This function makes sure multiple axes on the side specified with \a type don't collide, but are
   distributed according to their respective space requirement (QCPAxis::calculateMargin).
   
-  It does this by setting an appropriate offset (\ref QCPAxis::setOffset) on all axes except the
+  It does this by setting an appropriate offset (  QCPAxis::setOffset) on all axes except the
   one with index zero.
   
-  This function is called by \ref calculateAutoMargin.
+  This function is called by   calculateAutoMargin.
 */
 void QCPAxisRect::updateAxesOffset(QCPAxis::AxisType type)
 {
@@ -17459,8 +17459,8 @@ int QCPAxisRect::calculateAutoMargin(QCP::MarginSide side)
 
 /*! \internal
   
-  Reacts to a change in layout to potentially set the convenience axis pointers \ref
-  QCustomPlot::xAxis, \ref QCustomPlot::yAxis, etc. of the parent QCustomPlot to the respective
+  Reacts to a change in layout to potentially set the convenience axis pointers
+  QCustomPlot::xAxis,   QCustomPlot::yAxis, etc. of the parent QCustomPlot to the respective
   axes of this axis rect. This is only done if the respective convenience pointer is currently zero
   and if there is no QCPAxisRect at position (0, 0) of the plot layout.
   
@@ -17486,12 +17486,12 @@ void QCPAxisRect::layoutChanged()
   
   Event handler for when a mouse button is pressed on the axis rect. If the left mouse button is
   pressed, the range dragging interaction is initialized (the actual range manipulation happens in
-  the \ref mouseMoveEvent).
+  the   mouseMoveEvent).
 
   The mDragging flag is set to true and some anchor points are set that are needed to determine the
   distance the mouse was dragged in the mouse move/release events later.
   
-  \see mouseMoveEvent, mouseReleaseEvent
+   \sa mouseMoveEvent, mouseReleaseEvent
 */
 void QCPAxisRect::mousePressEvent(QMouseEvent *event, const QVariant &details)
 {
@@ -17522,9 +17522,9 @@ void QCPAxisRect::mousePressEvent(QMouseEvent *event, const QVariant &details)
 /*! \internal
   
   Event handler for when the mouse is moved on the axis rect. If range dragging was activated in a
-  preceding \ref mousePressEvent, the range is moved accordingly.
+  preceding   mousePressEvent, the range is moved accordingly.
   
-  \see mousePressEvent, mouseReleaseEvent
+   \sa mousePressEvent, mouseReleaseEvent
 */
 void QCPAxisRect::mouseMoveEvent(QMouseEvent *event, const QPointF &startPos)
 {
@@ -17604,7 +17604,7 @@ void QCPAxisRect::mouseReleaseEvent(QMouseEvent *event, const QPointF &startPos)
   ranges of the axes defined as rangeZoomHorzAxis and rangeZoomVertAxis are scaled. The center of
   the scaling operation is the current cursor position inside the axis rect. The scaling factor is
   dependent on the mouse wheel delta (which direction the wheel was rotated) to provide a natural
-  zooming feel. The Strength of the zoom can be controlled via \ref setRangeZoomFactor.
+  zooming feel. The Strength of the zoom can be controlled via   setRangeZoomFactor.
   
   Note, that event->delta() is usually +/-120 for single rotation steps. However, if the mouse
   wheel is turned rapidly, many steps may bunch up to one event, so the event->delta() may then be
@@ -17657,13 +17657,13 @@ void QCPAxisRect::wheelEvent(QWheelEvent *event)
   \brief The abstract base class for all entries in a QCPLegend.
   
   It defines a very basic interface for entries in a QCPLegend. For representing plottables in the
-  legend, the subclass \ref QCPPlottableLegendItem is more suitable.
+  legend, the subclass   QCPPlottableLegendItem is more suitable.
   
   Only derive directly from this class when you need absolute freedom (e.g. a custom legend entry
   that's not even associated with a plottable).
 
   You must implement the following pure virtual functions:
-  \li \ref draw (from QCPLayerable)
+  \li   draw (from QCPLayerable)
   
   You inherit the following members you may use:
   <table>
@@ -17682,14 +17682,14 @@ void QCPAxisRect::wheelEvent(QWheelEvent *event)
 /*! \fn void QCPAbstractLegendItem::selectionChanged(bool selected)
   
   This signal is emitted when the selection state of this legend item has changed, either by user
-  interaction or by a direct call to \ref setSelected.
+  interaction or by a direct call to   setSelected.
 */
 
 /* end of documentation of signals */
 
 /*!
   Constructs a QCPAbstractLegendItem and associates it with the QCPLegend \a parent. This does not
-  cause the item to be added to \a parent, so \ref QCPLegend::addItem must be called separately.
+  cause the item to be added to \a parent, so   QCPLegend::addItem must be called separately.
 */
 QCPAbstractLegendItem::QCPAbstractLegendItem(QCPLegend *parent) :
   QCPLayoutElement(parent->parentPlot()),
@@ -17708,7 +17708,7 @@ QCPAbstractLegendItem::QCPAbstractLegendItem(QCPLegend *parent) :
 /*!
   Sets the default font of this specific legend item to \a font.
   
-  \see setTextColor, QCPLegend::setFont
+   \sa setTextColor, QCPLegend::setFont
 */
 void QCPAbstractLegendItem::setFont(const QFont &font)
 {
@@ -17718,7 +17718,7 @@ void QCPAbstractLegendItem::setFont(const QFont &font)
 /*!
   Sets the default text color of this specific legend item to \a color.
   
-  \see setFont, QCPLegend::setTextColor
+   \sa setFont, QCPLegend::setTextColor
 */
 void QCPAbstractLegendItem::setTextColor(const QColor &color)
 {
@@ -17727,9 +17727,9 @@ void QCPAbstractLegendItem::setTextColor(const QColor &color)
 
 /*!
   When this legend item is selected, \a font is used to draw generic text, instead of the normal
-  font set with \ref setFont.
+  font set with   setFont.
   
-  \see setFont, QCPLegend::setSelectedFont
+   \sa setFont, QCPLegend::setSelectedFont
 */
 void QCPAbstractLegendItem::setSelectedFont(const QFont &font)
 {
@@ -17738,9 +17738,9 @@ void QCPAbstractLegendItem::setSelectedFont(const QFont &font)
 
 /*!
   When this legend item is selected, \a color is used to draw generic text, instead of the normal
-  color set with \ref setTextColor.
+  color set with   setTextColor.
   
-  \see setTextColor, QCPLegend::setSelectedTextColor
+   \sa setTextColor, QCPLegend::setSelectedTextColor
 */
 void QCPAbstractLegendItem::setSelectedTextColor(const QColor &color)
 {
@@ -17750,7 +17750,7 @@ void QCPAbstractLegendItem::setSelectedTextColor(const QColor &color)
 /*!
   Sets whether this specific legend item is selectable.
   
-  \see setSelectedParts, QCustomPlot::setInteractions
+   \sa setSelectedParts, QCustomPlot::setInteractions
 */
 void QCPAbstractLegendItem::setSelectable(bool selectable)
 {
@@ -17767,7 +17767,7 @@ void QCPAbstractLegendItem::setSelectable(bool selectable)
   It is possible to set the selection state of this item by calling this function directly, even if
   setSelectable is set to false.
   
-  \see setSelectableParts, QCustomPlot::setInteractions
+   \sa setSelectableParts, QCustomPlot::setInteractions
 */
 void QCPAbstractLegendItem::setSelected(bool selected)
 {
@@ -17838,17 +17838,17 @@ void QCPAbstractLegendItem::deselectEvent(bool *selectionStateChanged)
   \brief A legend item representing a plottable with an icon and the plottable name.
   
   This is the standard legend item for plottables. It displays an icon of the plottable next to the
-  plottable name. The icon is drawn by the respective plottable itself (\ref
+  plottable name. The icon is drawn by the respective plottable itself (
   QCPAbstractPlottable::drawLegendIcon), and tries to give an intuitive symbol for the plottable.
   For example, the QCPGraph draws a centered horizontal line and/or a single scatter point in the
   middle.
   
   Legend items of this type are always associated with one plottable (retrievable via the
   plottable() function and settable with the constructor). You may change the font of the plottable
-  name with \ref setFont. Icon padding and border pen is taken from the parent QCPLegend, see \ref
-  QCPLegend::setIconBorderPen and \ref QCPLegend::setIconTextPadding.
+  name with   setFont. Icon padding and border pen is taken from the parent QCPLegend, see
+  QCPLegend::setIconBorderPen and   QCPLegend::setIconTextPadding.
 
-  The function \ref QCPAbstractPlottable::addToLegend/\ref QCPAbstractPlottable::removeFromLegend
+  The function   QCPAbstractPlottable::addToLegend/  QCPAbstractPlottable::removeFromLegend
   creates/removes legend items of this type in the default implementation. However, these functions
   may be reimplemented such that a different kind of legend item (e.g a direct subclass of
   QCPAbstractLegendItem) is used for that plottable.
@@ -17856,16 +17856,16 @@ void QCPAbstractLegendItem::deselectEvent(bool *selectionStateChanged)
   Since QCPLegend is based on QCPLayoutGrid, a legend item itself is just a subclass of
   QCPLayoutElement. While it could be added to a legend (or any other layout) via the normal layout
   interface, QCPLegend has specialized functions for handling legend items conveniently, see the
-  documentation of \ref QCPLegend.
+  documentation of   QCPLegend.
 */
 
 /*!
   Creates a new legend item associated with \a plottable.
   
-  Once it's created, it can be added to the legend via \ref QCPLegend::addItem.
+  Once it's created, it can be added to the legend via   QCPLegend::addItem.
   
-  A more convenient way of adding/removing a plottable to/from the legend is via the functions \ref
-  QCPAbstractPlottable::addToLegend and \ref QCPAbstractPlottable::removeFromLegend.
+  A more convenient way of adding/removing a plottable to/from the legend is via the functions
+  QCPAbstractPlottable::addToLegend and   QCPAbstractPlottable::removeFromLegend.
 */
 QCPPlottableLegendItem::QCPPlottableLegendItem(QCPLegend *parent, QCPAbstractPlottable *plottable) :
   QCPAbstractLegendItem(parent),
@@ -17907,7 +17907,7 @@ QFont QCPPlottableLegendItem::getFont() const
 /*! \internal
   
   Draws the item with \a painter. The size and position of the drawn legend item is defined by the
-  parent layout (typically a \ref QCPLegend) and the \ref minimumSizeHint and \ref maximumSizeHint
+  parent layout (typically a   QCPLegend) and the   minimumSizeHint and   maximumSizeHint
   of this legend item.
 */
 void QCPPlottableLegendItem::draw(QCPPainter *painter)
@@ -17941,7 +17941,7 @@ void QCPPlottableLegendItem::draw(QCPPainter *painter)
   Calculates and returns the size of this item. This includes the icon, the text and the padding in
   between.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 QSize QCPPlottableLegendItem::minimumSizeHint() const
 {
@@ -17966,28 +17966,28 @@ QSize QCPPlottableLegendItem::minimumSizeHint() const
 
   A legend is a small box somewhere in the plot which lists plottables with their name and icon.
 
-  Normally, the legend is populated by calling \ref QCPAbstractPlottable::addToLegend. The
-  respective legend item can be removed with \ref QCPAbstractPlottable::removeFromLegend. However,
-  QCPLegend also offers an interface to add and manipulate legend items directly: \ref item, \ref
-  itemWithPlottable, \ref itemCount, \ref addItem, \ref removeItem, etc.
+  Normally, the legend is populated by calling   QCPAbstractPlottable::addToLegend. The
+  respective legend item can be removed with   QCPAbstractPlottable::removeFromLegend. However,
+  QCPLegend also offers an interface to add and manipulate legend items directly:   item,
+  itemWithPlottable,   itemCount,   addItem,   removeItem, etc.
 
-  Since \ref QCPLegend derives from \ref QCPLayoutGrid, it can be placed in any position a \ref
-  QCPLayoutElement may be positioned. The legend items are themselves \ref QCPLayoutElement
-  "QCPLayoutElements" which are placed in the grid layout of the legend. \ref QCPLegend only adds
-  an interface specialized for handling child elements of type \ref QCPAbstractLegendItem, as
+  Since   QCPLegend derives from   QCPLayoutGrid, it can be placed in any position a
+  QCPLayoutElement may be positioned. The legend items are themselves   QCPLayoutElement
+  "QCPLayoutElements" which are placed in the grid layout of the legend.   QCPLegend only adds
+  an interface specialized for handling child elements of type   QCPAbstractLegendItem, as
   mentioned above. In principle, any other layout elements may also be added to a legend via the
-  normal \ref QCPLayoutGrid interface. See the special page about \link thelayoutsystem The Layout
+  normal   QCPLayoutGrid interface. See the special page about \link thelayoutsystem The Layout
   System\endlink for examples on how to add other elements to the legend and move it outside the axis
   rect.
 
-  Use the methods \ref setFillOrder and \ref setWrap inherited from \ref QCPLayoutGrid to control
-  in which order (column first or row first) the legend is filled up when calling \ref addItem, and
+  Use the methods   setFillOrder and   setWrap inherited from   QCPLayoutGrid to control
+  in which order (column first or row first) the legend is filled up when calling   addItem, and
   at which column or row wrapping occurs.
 
-  By default, every QCustomPlot has one legend (\ref QCustomPlot::legend) which is placed in the
-  inset layout of the main axis rect (\ref QCPAxisRect::insetLayout). To move the legend to another
-  position inside the axis rect, use the methods of the \ref QCPLayoutInset. To move the legend
-  outside of the axis rect, place it anywhere else with the \ref QCPLayout/\ref QCPLayoutElement
+  By default, every QCustomPlot has one legend (  QCustomPlot::legend) which is placed in the
+  inset layout of the main axis rect (  QCPAxisRect::insetLayout). To move the legend to another
+  position inside the axis rect, use the methods of the   QCPLayoutInset. To move the legend
+  outside of the axis rect, place it anywhere else with the   QCPLayout/  QCPLayoutElement
   interface.
 */
 
@@ -17997,7 +17997,7 @@ QSize QCPPlottableLegendItem::minimumSizeHint() const
 
   This signal is emitted when the selection state of this legend has changed.
   
-  \see setSelectedParts, setSelectableParts
+   \sa setSelectedParts, setSelectableParts
 */
 
 /* end of documentation of signals */
@@ -18005,7 +18005,7 @@ QSize QCPPlottableLegendItem::minimumSizeHint() const
 /*!
   Constructs a new QCPLegend instance with default values.
   
-  Note that by default, QCustomPlot already contains a legend ready to be used as \ref
+  Note that by default, QCustomPlot already contains a legend ready to be used as
   QCustomPlot::legend
 */
 QCPLegend::QCPLegend()
@@ -18083,7 +18083,7 @@ void QCPLegend::setBrush(const QBrush &brush)
   
   This function will also set \a font on all already existing legend items.
   
-  \see QCPAbstractLegendItem::setFont
+   \sa QCPAbstractLegendItem::setFont
 */
 void QCPLegend::setFont(const QFont &font)
 {
@@ -18102,7 +18102,7 @@ void QCPLegend::setFont(const QFont &font)
   
   This function will also set \a color on all already existing legend items.
   
-  \see QCPAbstractLegendItem::setTextColor
+   \sa QCPAbstractLegendItem::setTextColor
 */
 void QCPLegend::setTextColor(const QColor &color)
 {
@@ -18154,13 +18154,13 @@ void QCPLegend::setIconBorderPen(const QPen &pen)
 
 /*!
   Sets whether the user can (de-)select the parts in \a selectable by clicking on the QCustomPlot surface.
-  (When \ref QCustomPlot::setInteractions contains \ref QCP::iSelectLegend.)
+  (When   QCustomPlot::setInteractions contains   QCP::iSelectLegend.)
   
   However, even when \a selectable is set to a value not allowing the selection of a specific part,
-  it is still possible to set the selection of this part manually, by calling \ref setSelectedParts
+  it is still possible to set the selection of this part manually, by calling   setSelectedParts
   directly.
   
-  \see SelectablePart, setSelectedParts
+   \sa SelectablePart, setSelectedParts
 */
 void QCPLegend::setSelectableParts(const SelectableParts &selectable)
 {
@@ -18172,24 +18172,24 @@ void QCPLegend::setSelectableParts(const SelectableParts &selectable)
 }
 
 /*!
-  Sets the selected state of the respective legend parts described by \ref SelectablePart. When a part
+  Sets the selected state of the respective legend parts described by   SelectablePart. When a part
   is selected, it uses a different pen/font and brush. If some legend items are selected and \a selected
-  doesn't contain \ref spItems, those items become deselected.
+  doesn't contain   spItems, those items become deselected.
   
-  The entire selection mechanism is handled automatically when \ref QCustomPlot::setInteractions
+  The entire selection mechanism is handled automatically when   QCustomPlot::setInteractions
   contains iSelectLegend. You only need to call this function when you wish to change the selection
   state manually.
   
-  This function can change the selection state of a part even when \ref setSelectableParts was set to a
+  This function can change the selection state of a part even when   setSelectableParts was set to a
   value that actually excludes the part.
   
-  emits the \ref selectionChanged signal when \a selected is different from the previous selection state.
+  emits the   selectionChanged signal when \a selected is different from the previous selection state.
   
-  Note that it doesn't make sense to set the selected state \ref spItems here when it wasn't set
+  Note that it doesn't make sense to set the selected state   spItems here when it wasn't set
   before, because there's no way to specify which exact items to newly select. Do this by calling
-  \ref QCPAbstractLegendItem::setSelected directly on the legend item you wish to select.
+    QCPAbstractLegendItem::setSelected directly on the legend item you wish to select.
   
-  \see SelectablePart, setSelectableParts, selectTest, setSelectedBorderPen, setSelectedIconBorderPen, setSelectedBrush,
+   \sa SelectablePart, setSelectableParts, selectTest, setSelectedBorderPen, setSelectedIconBorderPen, setSelectedBrush,
   setSelectedFont
 */
 void QCPLegend::setSelectedParts(const SelectableParts &selected)
@@ -18219,9 +18219,9 @@ void QCPLegend::setSelectedParts(const SelectableParts &selected)
 
 /*!
   When the legend box is selected, this pen is used to draw the border instead of the normal pen
-  set via \ref setBorderPen.
+  set via   setBorderPen.
 
-  \see setSelectedParts, setSelectableParts, setSelectedBrush
+   \sa setSelectedParts, setSelectableParts, setSelectedBrush
 */
 void QCPLegend::setSelectedBorderPen(const QPen &pen)
 {
@@ -18231,7 +18231,7 @@ void QCPLegend::setSelectedBorderPen(const QPen &pen)
 /*!
   Sets the pen legend items will use to draw their icon borders, when they are selected.
 
-  \see setSelectedParts, setSelectableParts, setSelectedFont
+   \sa setSelectedParts, setSelectableParts, setSelectedFont
 */
 void QCPLegend::setSelectedIconBorderPen(const QPen &pen)
 {
@@ -18240,9 +18240,9 @@ void QCPLegend::setSelectedIconBorderPen(const QPen &pen)
 
 /*!
   When the legend box is selected, this brush is used to draw the legend background instead of the normal brush
-  set via \ref setBrush.
+  set via   setBrush.
 
-  \see setSelectedParts, setSelectableParts, setSelectedBorderPen
+   \sa setSelectedParts, setSelectableParts, setSelectedBorderPen
 */
 void QCPLegend::setSelectedBrush(const QBrush &brush)
 {
@@ -18254,7 +18254,7 @@ void QCPLegend::setSelectedBrush(const QBrush &brush)
   
   This function will also set \a font on all already existing legend items.
 
-  \see setFont, QCPAbstractLegendItem::setSelectedFont
+   \sa setFont, QCPAbstractLegendItem::setSelectedFont
 */
 void QCPLegend::setSelectedFont(const QFont &font)
 {
@@ -18271,7 +18271,7 @@ void QCPLegend::setSelectedFont(const QFont &font)
   
   This function will also set \a color on all already existing legend items.
 
-  \see setTextColor, QCPAbstractLegendItem::setSelectedTextColor
+   \sa setTextColor, QCPAbstractLegendItem::setSelectedTextColor
 */
 void QCPLegend::setSelectedTextColor(const QColor &color)
 {
@@ -18286,9 +18286,9 @@ void QCPLegend::setSelectedTextColor(const QColor &color)
 /*!
   Returns the item with index \a i.
 
-  Note that the linear index depends on the current fill order (\ref setFillOrder).
+  Note that the linear index depends on the current fill order (  setFillOrder).
 
-  \see itemCount, addItem, itemWithPlottable
+   \sa itemCount, addItem, itemWithPlottable
 */
 QCPAbstractLegendItem *QCPLegend::item(int index) const
 {
@@ -18296,10 +18296,10 @@ QCPAbstractLegendItem *QCPLegend::item(int index) const
 }
 
 /*!
-  Returns the QCPPlottableLegendItem which is associated with \a plottable (e.g. a \ref QCPGraph*).
+  Returns the QCPPlottableLegendItem which is associated with \a plottable (e.g. a   QCPGraph*).
   If such an item isn't in the legend, returns 0.
   
-  \see hasItemWithPlottable
+   \sa hasItemWithPlottable
 */
 QCPPlottableLegendItem *QCPLegend::itemWithPlottable(const QCPAbstractPlottable *plottable) const
 {
@@ -18317,10 +18317,10 @@ QCPPlottableLegendItem *QCPLegend::itemWithPlottable(const QCPAbstractPlottable 
 /*!
   Returns the number of items currently in the legend.
 
-  Note that if empty cells are in the legend (e.g. by calling methods of the \ref QCPLayoutGrid
+  Note that if empty cells are in the legend (e.g. by calling methods of the   QCPLayoutGrid
   base class which allows creating empty cells), they are included in the returned count.
 
-  \see item
+   \sa item
 */
 int QCPLegend::itemCount() const
 {
@@ -18330,7 +18330,7 @@ int QCPLegend::itemCount() const
 /*!
   Returns whether the legend contains \a item.
   
-  \see hasItemWithPlottable
+   \sa hasItemWithPlottable
 */
 bool QCPLegend::hasItem(QCPAbstractLegendItem *item) const
 {
@@ -18343,10 +18343,10 @@ bool QCPLegend::hasItem(QCPAbstractLegendItem *item) const
 }
 
 /*!
-  Returns whether the legend contains a QCPPlottableLegendItem which is associated with \a plottable (e.g. a \ref QCPGraph*).
+  Returns whether the legend contains a QCPPlottableLegendItem which is associated with \a plottable (e.g. a   QCPGraph*).
   If such an item isn't in the legend, returns false.
   
-  \see itemWithPlottable
+   \sa itemWithPlottable
 */
 bool QCPLegend::hasItemWithPlottable(const QCPAbstractPlottable *plottable) const
 {
@@ -18355,13 +18355,13 @@ bool QCPLegend::hasItemWithPlottable(const QCPAbstractPlottable *plottable) cons
 
 /*!
   Adds \a item to the legend, if it's not present already. The element is arranged according to the
-  current fill order (\ref setFillOrder) and wrapping (\ref setWrap).
+  current fill order (  setFillOrder) and wrapping (  setWrap).
 
   Returns true on sucess, i.e. if the item wasn't in the list already and has been successfuly added.
 
   The legend takes ownership of the item.
 
-  \see removeItem, item, hasItem
+   \sa removeItem, item, hasItem
 */
 bool QCPLegend::addItem(QCPAbstractLegendItem *item)
 {
@@ -18372,14 +18372,14 @@ bool QCPLegend::addItem(QCPAbstractLegendItem *item)
 
   Removes the item with the specified \a index from the legend and deletes it.
 
-  After successful removal, the legend is reordered according to the current fill order (\ref
-  setFillOrder) and wrapping (\ref setWrap), so no empty cell remains where the removed \a item
-  was. If you don't want this, rather use the raw element interface of \ref QCPLayoutGrid.
+  After successful removal, the legend is reordered according to the current fill order (
+  setFillOrder) and wrapping (  setWrap), so no empty cell remains where the removed \a item
+  was. If you don't want this, rather use the raw element interface of   QCPLayoutGrid.
 
-  Returns true, if successful. Unlike \ref QCPLayoutGrid::removeAt, this method only removes
-  elements derived from \ref QCPAbstractLegendItem.
+  Returns true, if successful. Unlike   QCPLayoutGrid::removeAt, this method only removes
+  elements derived from   QCPAbstractLegendItem.
 
-  \see itemCount, clearItems
+   \sa itemCount, clearItems
 */
 bool QCPLegend::removeItem(int index)
 {
@@ -18397,13 +18397,13 @@ bool QCPLegend::removeItem(int index)
 
   Removes \a item from the legend and deletes it.
 
-  After successful removal, the legend is reordered according to the current fill order (\ref
-  setFillOrder) and wrapping (\ref setWrap), so no empty cell remains where the removed \a item
-  was. If you don't want this, rather use the raw element interface of \ref QCPLayoutGrid.
+  After successful removal, the legend is reordered according to the current fill order (
+  setFillOrder) and wrapping (  setWrap), so no empty cell remains where the removed \a item
+  was. If you don't want this, rather use the raw element interface of   QCPLayoutGrid.
 
   Returns true, if successful.
 
-  \see clearItems
+   \sa clearItems
 */
 bool QCPLegend::removeItem(QCPAbstractLegendItem *item)
 {
@@ -18426,7 +18426,7 @@ void QCPLegend::clearItems()
   Returns the legend items that are currently selected. If no items are selected,
   the list is empty.
   
-  \see QCPAbstractLegendItem::setSelected, setSelectable
+   \sa QCPAbstractLegendItem::setSelected, setSelectable
 */
 QList<QCPAbstractLegendItem *> QCPLegend::selectedItems() const
 {
@@ -18447,15 +18447,15 @@ QList<QCPAbstractLegendItem *> QCPLegend::selectedItems() const
   A convenience function to easily set the QPainter::Antialiased hint on the provided \a painter
   before drawing main legend elements.
 
-  This is the antialiasing state the painter passed to the \ref draw method is in by default.
+  This is the antialiasing state the painter passed to the   draw method is in by default.
   
   This function takes into account the local setting of the antialiasing flag as well as the
-  overrides set with \ref QCustomPlot::setAntialiasedElements and \ref
+  overrides set with   QCustomPlot::setAntialiasedElements and
   QCustomPlot::setNotAntialiasedElements.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
   
-  \see setAntialiased
+   \sa setAntialiased
 */
 void QCPLegend::applyDefaultAntialiasingHint(QCPPainter *painter) const
 {
@@ -18568,8 +18568,8 @@ void QCPLegend::parentPlotInitialized(QCustomPlot *parentPlot)
 /*! \class QCPTextElement
   \brief A layout element displaying a text
 
-  The text may be specified with \ref setText, the formatting can be controlled with \ref setFont,
-  \ref setTextColor, and \ref setTextFlags.
+  The text may be specified with   setText, the formatting can be controlled with   setFont,
+    setTextColor, and   setTextFlags.
 
   A text element can be added as follows:
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcptextelement-creation
@@ -18580,30 +18580,30 @@ void QCPLegend::parentPlotInitialized(QCustomPlot *parentPlot)
 /*! \fn void QCPTextElement::selectionChanged(bool selected)
   
   This signal is emitted when the selection state has changed to \a selected, either by user
-  interaction or by a direct call to \ref setSelected.
+  interaction or by a direct call to   setSelected.
   
-  \see setSelected, setSelectable
+   \sa setSelected, setSelectable
 */
 
 /*! \fn void QCPTextElement::clicked(QMouseEvent *event)
 
   This signal is emitted when the text element is clicked.
 
-  \see doubleClicked, selectTest
+   \sa doubleClicked, selectTest
 */
 
 /*! \fn void QCPTextElement::doubleClicked(QMouseEvent *event)
 
   This signal is emitted when the text element is double clicked.
 
-  \see clicked, selectTest
+   \sa clicked, selectTest
 */
 
 /* end documentation of signals */
 
 /*! \overload
   
-  Creates a new QCPTextElement instance and sets default values. The initial text is empty (\ref
+  Creates a new QCPTextElement instance and sets default values. The initial text is empty (
   setText).
 */
 QCPTextElement::QCPTextElement(QCustomPlot *parentPlot) :
@@ -18720,7 +18720,7 @@ QCPTextElement::QCPTextElement(QCustomPlot *parentPlot, const QString &text, con
 /*!
   Sets the text that will be displayed to \a text. Multiple lines can be created by insertion of "\n".
   
-  \see setFont, setTextColor, setTextFlags
+   \sa setFont, setTextColor, setTextFlags
 */
 void QCPTextElement::setText(const QString &text)
 {
@@ -18755,7 +18755,7 @@ void QCPTextElement::setTextFlags(int flags)
 /*!
   Sets the \a font of the text.
   
-  \see setTextColor, setSelectedFont
+   \sa setTextColor, setSelectedFont
 */
 void QCPTextElement::setFont(const QFont &font)
 {
@@ -18765,7 +18765,7 @@ void QCPTextElement::setFont(const QFont &font)
 /*!
   Sets the \a color of the text.
   
-  \see setFont, setSelectedTextColor
+   \sa setFont, setSelectedTextColor
 */
 void QCPTextElement::setTextColor(const QColor &color)
 {
@@ -18773,9 +18773,9 @@ void QCPTextElement::setTextColor(const QColor &color)
 }
 
 /*!
-  Sets the \a font of the text that will be used if the text element is selected (\ref setSelected).
+  Sets the \a font of the text that will be used if the text element is selected (  setSelected).
   
-  \see setFont
+   \sa setFont
 */
 void QCPTextElement::setSelectedFont(const QFont &font)
 {
@@ -18783,9 +18783,9 @@ void QCPTextElement::setSelectedFont(const QFont &font)
 }
 
 /*!
-  Sets the \a color of the text that will be used if the text element is selected (\ref setSelected).
+  Sets the \a color of the text that will be used if the text element is selected (  setSelected).
   
-  \see setTextColor
+   \sa setTextColor
 */
 void QCPTextElement::setSelectedTextColor(const QColor &color)
 {
@@ -18796,7 +18796,7 @@ void QCPTextElement::setSelectedTextColor(const QColor &color)
   Sets whether the user may select this text element.
 
   Note that even when \a selectable is set to <tt>false</tt>, the selection state may be changed
-  programmatically via \ref setSelected.
+  programmatically via   setSelected.
 */
 void QCPTextElement::setSelectable(bool selectable)
 {
@@ -18808,10 +18808,10 @@ void QCPTextElement::setSelectable(bool selectable)
 }
 
 /*!
-  Sets the selection state of this text element to \a selected. If the selection has changed, \ref
+  Sets the selection state of this text element to \a selected. If the selection has changed,
   selectionChanged is emitted.
   
-  Note that this function can change the selection state independently of the current \ref
+  Note that this function can change the selection state independently of the current
   setSelectable state.
 */
 void QCPTextElement::setSelected(bool selected)
@@ -18884,14 +18884,14 @@ void QCPTextElement::deselectEvent(bool *selectionStateChanged)
 }
 
 /*!
-  Returns 0.99*selectionTolerance (see \ref QCustomPlot::setSelectionTolerance) when \a pos is
+  Returns 0.99*selectionTolerance (see   QCustomPlot::setSelectionTolerance) when \a pos is
   within the bounding box of the text element's text. Note that this bounding box is updated in the
   draw call.
 
   If \a pos is outside the text's bounding box or if \a onlySelectable is true and this text
-  element is not selectable (\ref setSelectable), returns -1.
+  element is not selectable (  setSelectable), returns -1.
 
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 double QCPTextElement::selectTest(const QPointF &pos, bool onlySelectable, QVariant *details) const
 {
@@ -18906,10 +18906,10 @@ double QCPTextElement::selectTest(const QPointF &pos, bool onlySelectable, QVari
 }
 
 /*!
-  Accepts the mouse event in order to emit the according click signal in the \ref
+  Accepts the mouse event in order to emit the according click signal in the
   mouseReleaseEvent.
 
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 void QCPTextElement::mousePressEvent(QMouseEvent *event, const QVariant &details)
 {
@@ -18918,10 +18918,10 @@ void QCPTextElement::mousePressEvent(QMouseEvent *event, const QVariant &details
 }
 
 /*!
-  Emits the \ref clicked signal if the cursor hasn't moved by more than a few pixels since the \ref
+  Emits the   clicked signal if the cursor hasn't moved by more than a few pixels since the
   mousePressEvent.
 
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 void QCPTextElement::mouseReleaseEvent(QMouseEvent *event, const QPointF &startPos)
 {
@@ -18930,9 +18930,9 @@ void QCPTextElement::mouseReleaseEvent(QMouseEvent *event, const QPointF &startP
 }
 
 /*!
-  Emits the \ref doubleClicked signal.
+  Emits the   doubleClicked signal.
 
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 void QCPTextElement::mouseDoubleClickEvent(QMouseEvent *event, const QVariant &details)
 {
@@ -18942,7 +18942,7 @@ void QCPTextElement::mouseDoubleClickEvent(QMouseEvent *event, const QVariant &d
 
 /*! \internal
   
-  Returns the main font to be used. This is mSelectedFont if \ref setSelected is set to
+  Returns the main font to be used. This is mSelectedFont if   setSelected is set to
   <tt>true</tt>, else mFont is returned.
 */
 QFont QCPTextElement::mainFont() const
@@ -18952,7 +18952,7 @@ QFont QCPTextElement::mainFont() const
 
 /*! \internal
   
-  Returns the main color to be used. This is mSelectedTextColor if \ref setSelected is set to
+  Returns the main color to be used. This is mSelectedTextColor if   setSelected is set to
   <tt>true</tt>, else mTextColor is returned.
 */
 QColor QCPTextElement::mainTextColor() const
@@ -18974,37 +18974,37 @@ QColor QCPTextElement::mainTextColor() const
   \brief A color scale for use with color coding data such as QCPColorMap
   
   This layout element can be placed on the plot to correlate a color gradient with data values. It
-  is usually used in combination with one or multiple \ref QCPColorMap "QCPColorMaps".
+  is usually used in combination with one or multiple   QCPColorMap "QCPColorMaps".
 
   \image html QCPColorScale.png
   
   The color scale can be either horizontal or vertical, as shown in the image above. The
-  orientation and the side where the numbers appear is controlled with \ref setType.
+  orientation and the side where the numbers appear is controlled with   setType.
   
-  Use \ref QCPColorMap::setColorScale to connect a color map with a color scale. Once they are
-  connected, they share their gradient, data range and data scale type (\ref setGradient, \ref
-  setDataRange, \ref setDataScaleType). Multiple color maps may be associated with a single color
+  Use   QCPColorMap::setColorScale to connect a color map with a color scale. Once they are
+  connected, they share their gradient, data range and data scale type (  setGradient,
+  setDataRange,   setDataScaleType). Multiple color maps may be associated with a single color
   scale, to make them all synchronize these properties.
   
   To have finer control over the number display and axis behaviour, you can directly access the
-  \ref axis. See the documentation of QCPAxis for details about configuring axes. For example, if
+    axis. See the documentation of QCPAxis for details about configuring axes. For example, if
   you want to change the number of automatically generated ticks, call
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpcolorscale-tickcount
   
   Placing a color scale next to the main axis rect works like with any other layout element:
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpcolorscale-creation
   In this case we have placed it to the right of the default axis rect, so it wasn't necessary to
-  call \ref setType, since \ref QCPAxis::atRight is already the default. The text next to the color
-  scale can be set with \ref setLabel.
+  call   setType, since   QCPAxis::atRight is already the default. The text next to the color
+  scale can be set with   setLabel.
   
   For optimum appearance (like in the image above), it may be desirable to line up the axis rect and
-  the borders of the color scale. Use a \ref QCPMarginGroup to achieve this:
+  the borders of the color scale. Use a   QCPMarginGroup to achieve this:
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpcolorscale-margingroup
   
-  Color scales are initialized with a non-zero minimum top and bottom margin (\ref
+  Color scales are initialized with a non-zero minimum top and bottom margin (
   setMinimumMargins), because vertical color scales are most common and the minimum top/bottom
   margin makes sure it keeps some distance to the top/bottom widget border. So if you change to a
-  horizontal color scale by setting \ref setType to \ref QCPAxis::atBottom or \ref QCPAxis::atTop, you
+  horizontal color scale by setting   setType to   QCPAxis::atBottom or   QCPAxis::atTop, you
   might want to also change the minimum margins accordingly, e.g. <tt>setMinimumMargins(QMargins(6, 0, 6, 0))</tt>.
 */
 
@@ -19012,14 +19012,14 @@ QColor QCPTextElement::mainTextColor() const
 
 /*! \fn QCPAxis *QCPColorScale::axis() const
   
-  Returns the internal \ref QCPAxis instance of this color scale. You can access it to alter the
-  appearance and behaviour of the axis. \ref QCPColorScale duplicates some properties in its
-  interface for convenience. Those are \ref setDataRange (\ref QCPAxis::setRange), \ref
-  setDataScaleType (\ref QCPAxis::setScaleType), and the method \ref setLabel (\ref
+  Returns the internal   QCPAxis instance of this color scale. You can access it to alter the
+  appearance and behaviour of the axis.   QCPColorScale duplicates some properties in its
+  interface for convenience. Those are   setDataRange (  QCPAxis::setRange),
+  setDataScaleType (  QCPAxis::setScaleType), and the method   setLabel (
   QCPAxis::setLabel). As they each are connected, it does not matter whether you use the method on
   the QCPColorScale or on its QCPAxis.
   
-  If the type of the color scale is changed with \ref setType, the axis returned by this method
+  If the type of the color scale is changed with   setType, the axis returned by this method
   will change, too, to either the left, right, bottom or top axis, depending on which type was set.
 */
 
@@ -19030,21 +19030,21 @@ QColor QCPTextElement::mainTextColor() const
   
   This signal is emitted when the data range changes.
   
-  \see setDataRange
+   \sa setDataRange
 */
 
 /*! \fn void QCPColorScale::dataScaleTypeChanged(QCPAxis::ScaleType scaleType);
   
   This signal is emitted when the data scale type changes.
   
-  \see setDataScaleType
+   \sa setDataScaleType
 */
 
 /*! \fn void QCPColorScale::gradientChanged(const QCPColorGradient &newGradient);
   
   This signal is emitted when the gradient changes.
   
-  \see setGradient
+   \sa setGradient
 */
 
 /* end documentation of signals */
@@ -19112,7 +19112,7 @@ bool QCPColorScale::rangeZoom() const
 /*!
   Sets at which side of the color scale the axis is placed, and thus also its orientation.
   
-  Note that after setting \a type to a different value, the axis returned by \ref axis() will
+  Note that after setting \a type to a different value, the axis returned by   axis() will
   be a different one. The new axis will adopt the following properties from the previous axis: The
   range, scale type, label and ticker (the latter will be shared and not copied).
 */
@@ -19165,10 +19165,10 @@ void QCPColorScale::setType(QCPAxis::AxisType type)
   Sets the range spanned by the color gradient and that is shown by the axis in the color scale.
   
   It is equivalent to calling QCPColorMap::setDataRange on any of the connected color maps. It is
-  also equivalent to directly accessing the \ref axis and setting its range with \ref
+  also equivalent to directly accessing the   axis and setting its range with
   QCPAxis::setRange.
   
-  \see setDataScaleType, setGradient, rescaleDataRange
+   \sa setDataScaleType, setGradient, rescaleDataRange
 */
 void QCPColorScale::setDataRange(const QCPRange &dataRange)
 {
@@ -19186,10 +19186,10 @@ void QCPColorScale::setDataRange(const QCPRange &dataRange)
   or logarithmically.
   
   It is equivalent to calling QCPColorMap::setDataScaleType on any of the connected color maps. It is
-  also equivalent to directly accessing the \ref axis and setting its scale type with \ref
+  also equivalent to directly accessing the   axis and setting its scale type with
   QCPAxis::setScaleType.
   
-  \see setDataRange, setGradient
+   \sa setDataRange, setGradient
 */
 void QCPColorScale::setDataScaleType(QCPAxis::ScaleType scaleType)
 {
@@ -19209,7 +19209,7 @@ void QCPColorScale::setDataScaleType(QCPAxis::ScaleType scaleType)
   
   It is equivalent to calling QCPColorMap::setGradient on any of the connected color maps.
   
-  \see setDataRange, setDataScaleType
+   \sa setDataRange, setDataScaleType
 */
 void QCPColorScale::setGradient(const QCPColorGradient &gradient)
 {
@@ -19223,8 +19223,8 @@ void QCPColorScale::setGradient(const QCPColorGradient &gradient)
 }
 
 /*!
-  Sets the axis label of the color scale. This is equivalent to calling \ref QCPAxis::setLabel on
-  the internal \ref axis.
+  Sets the axis label of the color scale. This is equivalent to calling   QCPAxis::setLabel on
+  the internal   axis.
 */
 void QCPColorScale::setLabel(const QString &str)
 {
@@ -19247,9 +19247,9 @@ void QCPColorScale::setBarWidth(int width)
 }
 
 /*!
-  Sets whether the user can drag the data range (\ref setDataRange).
+  Sets whether the user can drag the data range (  setDataRange).
   
-  Note that \ref QCP::iRangeDrag must be in the QCustomPlot's interactions (\ref
+  Note that   QCP::iRangeDrag must be in the QCustomPlot's interactions (
   QCustomPlot::setInteractions) to allow range dragging.
 */
 void QCPColorScale::setRangeDrag(bool enabled)
@@ -19267,9 +19267,9 @@ void QCPColorScale::setRangeDrag(bool enabled)
 }
 
 /*!
-  Sets whether the user can zoom the data range (\ref setDataRange) by scrolling the mouse wheel.
+  Sets whether the user can zoom the data range (  setDataRange) by scrolling the mouse wheel.
   
-  Note that \ref QCP::iRangeZoom must be in the QCustomPlot's interactions (\ref
+  Note that   QCP::iRangeZoom must be in the QCustomPlot's interactions (
   QCustomPlot::setInteractions) to allow range dragging.
 */
 void QCPColorScale::setRangeZoom(bool enabled)
@@ -19305,7 +19305,7 @@ QList<QCPColorMap*> QCPColorScale::colorMaps() const
   Changes the data range such that all color maps associated with this color scale are fully mapped
   to the gradient in the data dimension.
   
-  \see setDataRange
+   \sa setDataRange
 */
 void QCPColorScale::rescaleDataRange(bool onlyVisibleMaps)
 {
@@ -19505,10 +19505,10 @@ QCPColorScaleAxisRectPrivate::QCPColorScaleAxisRectPrivate(QCPColorScale *parent
 
 /*! \internal
   
-  Updates the color gradient image if necessary, by calling \ref updateGradientImage, then draws
-  it. Then the axes are drawn by calling the \ref QCPAxisRect::draw base class implementation.
+  Updates the color gradient image if necessary, by calling   updateGradientImage, then draws
+  it. Then the axes are drawn by calling the   QCPAxisRect::draw base class implementation.
   
-  \seebaseclassmethod
+   \sabaseclassmethod
 */
 void QCPColorScaleAxisRectPrivate::draw(QCPPainter *painter)
 {
@@ -19529,8 +19529,8 @@ void QCPColorScaleAxisRectPrivate::draw(QCPPainter *painter)
 
 /*! \internal
 
-  Uses the current gradient of the parent \ref QCPColorScale (specified in the constructor) to
-  generate a gradient image. This gradient image will be used in the \ref draw method.
+  Uses the current gradient of the parent   QCPColorScale (specified in the constructor) to
+  generate a gradient image. This gradient image will be used in the   draw method.
 */
 void QCPColorScaleAxisRectPrivate::updateGradientImage()
 {
@@ -19636,11 +19636,11 @@ void QCPColorScaleAxisRectPrivate::axisSelectableChanged(QCPAxis::SelectablePart
   \li \a key: coordinate on the key axis of this data point (this is the \a mainKey and the \a sortKey)
   \li \a value: coordinate on the value axis of this data point (this is the \a mainValue)
   
-  The container for storing multiple data points is \ref QCPGraphDataContainer. It is a typedef for
-  \ref QCPDataContainer with \ref QCPGraphData as the DataType template parameter. See the
+  The container for storing multiple data points is   QCPGraphDataContainer. It is a typedef for
+    QCPDataContainer with   QCPGraphData as the DataType template parameter. See the
   documentation there for an explanation regarding the data type's generic methods.
   
-  \see QCPGraphDataContainer
+   \sa QCPGraphDataContainer
 */
 
 /* start documentation of inline functions */
@@ -19650,7 +19650,7 @@ void QCPColorScaleAxisRectPrivate::axisSelectableChanged(QCPAxis::SelectablePart
   Returns the \a key member of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn static QCPGraphData QCPGraphData::fromSortKey(double sortKey)
@@ -19658,7 +19658,7 @@ void QCPColorScaleAxisRectPrivate::axisSelectableChanged(QCPAxis::SelectablePart
   Returns a data point with the specified \a sortKey. All other members are set to zero.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn static static bool QCPGraphData::sortKeyIsMainKey()
@@ -19667,7 +19667,7 @@ void QCPColorScaleAxisRectPrivate::axisSelectableChanged(QCPAxis::SelectablePart
   this method returns true.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn double QCPGraphData::mainKey() const
@@ -19675,7 +19675,7 @@ void QCPColorScaleAxisRectPrivate::axisSelectableChanged(QCPAxis::SelectablePart
   Returns the \a key member of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn double QCPGraphData::mainValue() const
@@ -19683,7 +19683,7 @@ void QCPColorScaleAxisRectPrivate::axisSelectableChanged(QCPAxis::SelectablePart
   Returns the \a value member of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn QCPRange QCPGraphData::valueRange() const
@@ -19691,7 +19691,7 @@ void QCPColorScaleAxisRectPrivate::axisSelectableChanged(QCPAxis::SelectablePart
   Returns a QCPRange with both lower and upper boundary set to \a value of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /* end documentation of inline functions */
@@ -19727,9 +19727,9 @@ QCPGraphData::QCPGraphData(double key, double value) :
   Usually you create new graphs by calling QCustomPlot::addGraph. The resulting instance can be
   accessed via QCustomPlot::graph.
 
-  To plot data, assign it with the \ref setData or \ref addData functions. Alternatively, you can
-  also access and modify the data via the \ref data method, which returns a pointer to the internal
-  \ref QCPGraphDataContainer.
+  To plot data, assign it with the   setData or   addData functions. Alternatively, you can
+  also access and modify the data via the   data method, which returns a pointer to the internal
+    QCPGraphDataContainer.
   
   Graphs are used to display single-valued data. Single-valued means that there should only be one
   data point per unique key coordinate. In other words, the graph can't have \a loops. If you do
@@ -19742,28 +19742,28 @@ QCPGraphData::QCPGraphData(double key, double value) :
   \section qcpgraph-appearance Changing the appearance
   
   The appearance of the graph is mainly determined by the line style, scatter style, brush and pen
-  of the graph (\ref setLineStyle, \ref setScatterStyle, \ref setBrush, \ref setPen).
+  of the graph (  setLineStyle,   setScatterStyle,   setBrush,   setPen).
   
   \subsection filling Filling under or between graphs
   
   QCPGraph knows two types of fills: Normal graph fills towards the zero-value-line parallel to
   the key axis of the graph, and fills between two graphs, called channel fills. To enable a fill,
-  just set a brush with \ref setBrush which is neither Qt::NoBrush nor fully transparent.
+  just set a brush with   setBrush which is neither Qt::NoBrush nor fully transparent.
   
   By default, a normal fill towards the zero-value-line will be drawn. To set up a channel fill
-  between this graph and another one, call \ref setChannelFillGraph with the other graph as
+  between this graph and another one, call   setChannelFillGraph with the other graph as
   parameter.
 
-  \see QCustomPlot::addGraph, QCustomPlot::graph
+   \sa QCustomPlot::addGraph, QCustomPlot::graph
 */
 
 /* start of documentation of inline functions */
 
 /*! \fn QSharedPointer<QCPGraphDataContainer> QCPGraph::data() const
   
-  Returns a shared pointer to the internal data storage of type \ref QCPGraphDataContainer. You may
+  Returns a shared pointer to the internal data storage of type   QCPGraphDataContainer. You may
   use it to directly manipulate the data, which may be more convenient and faster than using the
-  regular \ref setData or \ref addData methods.
+  regular   setData or   addData methods.
 */
 
 /* end of documentation of inline functions */
@@ -19809,10 +19809,10 @@ QCPGraph::~QCPGraph()
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpgraph-datasharing-1
   
   If you do not wish to share containers, but create a copy from an existing container, rather use
-  the \ref QCPDataContainer<DataType>::set method on the graph's data container directly:
+  the   QCPDataContainer<DataType>::set method on the graph's data container directly:
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpgraph-datasharing-2
   
-  \see addData
+   \sa addData
 */
 void QCPGraph::setData(QSharedPointer<QCPGraphDataContainer> data)
 {
@@ -19828,7 +19828,7 @@ void QCPGraph::setData(QSharedPointer<QCPGraphDataContainer> data)
   If you can guarantee that the passed data points are sorted by \a keys in ascending order, you
   can set \a alreadySorted to true, to improve performance by saving a sorting run.
   
-  \see addData
+   \sa addData
 */
 void QCPGraph::setData(const QVector<double> &keys, const QVector<double> &values, bool alreadySorted)
 {
@@ -19838,9 +19838,9 @@ void QCPGraph::setData(const QVector<double> &keys, const QVector<double> &value
 
 /*!
   Sets how the single data points are connected in the plot. For scatter-only plots, set \a ls to
-  \ref lsNone and \ref setScatterStyle to the desired scatter style.
+    lsNone and   setScatterStyle to the desired scatter style.
   
-  \see setScatterStyle
+   \sa setScatterStyle
 */
 void QCPGraph::setLineStyle(LineStyle ls)
 {
@@ -19848,10 +19848,10 @@ void QCPGraph::setLineStyle(LineStyle ls)
 }
 
 /*!
-  Sets the visual appearance of single data points in the plot. If set to \ref QCPScatterStyle::ssNone, no scatter points
+  Sets the visual appearance of single data points in the plot. If set to   QCPScatterStyle::ssNone, no scatter points
   are drawn (e.g. for line-only-plots with appropriate line style).
   
-  \see QCPScatterStyle, setLineStyle
+   \sa QCPScatterStyle, setLineStyle
 */
 void QCPGraph::setScatterStyle(const QCPScatterStyle &style)
 {
@@ -19859,7 +19859,7 @@ void QCPGraph::setScatterStyle(const QCPScatterStyle &style)
 }
 
 /*!
-  If scatters are displayed (scatter style not \ref QCPScatterStyle::ssNone), \a skip number of
+  If scatters are displayed (scatter style not   QCPScatterStyle::ssNone), \a skip number of
   scatter points are skipped/not drawn after every drawn scatter point.
 
   This can be used to make the data appear sparser while for example still having a smooth line,
@@ -19867,7 +19867,7 @@ void QCPGraph::setScatterStyle(const QCPScatterStyle &style)
 
   If \a skip is set to 0 (default), all scatter points are drawn.
 
-  \see setScatterStyle
+   \sa setScatterStyle
 */
 void QCPGraph::setScatterSkip(int skip)
 {
@@ -19876,12 +19876,12 @@ void QCPGraph::setScatterSkip(int skip)
 
 /*!
   Sets the target graph for filling the area between this graph and \a targetGraph with the current
-  brush (\ref setBrush).
+  brush (  setBrush).
   
   When \a targetGraph is set to 0, a normal graph fill to the zero-value-line will be shown. To
   disable any filling, set the brush to Qt::NoBrush.
 
-  \see setBrush
+   \sa setBrush
 */
 void QCPGraph::setChannelFillGraph(QCPGraph *targetGraph)
 {
@@ -19931,7 +19931,7 @@ void QCPGraph::setChannelFillGraph(QCPGraph *targetGraph)
   
   For some situations with scatter plots it might thus be desirable to manually turn adaptive
   sampling off. For example, when saving the plot to disk. This can be achieved by setting \a
-  enabled to false before issuing a command like \ref QCustomPlot::savePng, and setting \a enabled
+  enabled to false before issuing a command like   QCustomPlot::savePng, and setting \a enabled
   back to true afterwards.
 */
 void QCPGraph::setAdaptiveSampling(bool enabled)
@@ -19948,7 +19948,7 @@ void QCPGraph::setAdaptiveSampling(bool enabled)
   If you can guarantee that the passed data points are sorted by \a keys in ascending order, you
   can set \a alreadySorted to true, to improve performance by saving a sorting run.
   
-  Alternatively, you can also access and modify the data directly via the \ref data method, which
+  Alternatively, you can also access and modify the data directly via the   data method, which
   returns a pointer to the internal data container.
 */
 void QCPGraph::addData(const QVector<double> &keys, const QVector<double> &values, bool alreadySorted)
@@ -19974,7 +19974,7 @@ void QCPGraph::addData(const QVector<double> &keys, const QVector<double> &value
   
   Adds the provided data point as \a key and \a value to the current data.
   
-  Alternatively, you can also access and modify the data directly via the \ref data method, which
+  Alternatively, you can also access and modify the data directly via the   data method, which
   returns a pointer to the internal data container.
 */
 void QCPGraph::addData(double key, double value)
@@ -20121,23 +20121,23 @@ void QCPGraph::drawLegendIcon(QCPPainter *painter, const QRectF &rect) const
 
 /*! \internal
 
-  This method retrieves an optimized set of data points via \ref getOptimizedLineData, an branches
-  out to the line style specific functions such as \ref dataToLines, \ref dataToStepLeftLines, etc.
+  This method retrieves an optimized set of data points via   getOptimizedLineData, an branches
+  out to the line style specific functions such as   dataToLines,   dataToStepLeftLines, etc.
   according to the line style of the graph.
 
   \a lines will be filled with points in pixel coordinates, that can be drawn with the according
-  draw functions like \ref drawLinePlot and \ref drawImpulsePlot. The points returned in \a lines
+  draw functions like   drawLinePlot and   drawImpulsePlot. The points returned in \a lines
   aren't necessarily the original data points. For example, step line styles require additional
-  points to form the steps when drawn. If the line style of the graph is \ref lsNone, the \a
+  points to form the steps when drawn. If the line style of the graph is   lsNone, the \a
   lines vector will be empty.
 
   \a dataRange specifies the beginning and ending data indices that will be taken into account for
   conversion. In this function, the specified range may exceed the total data bounds without harm:
   a correspondingly trimmed data range will be used. This takes the burden off the user of this
-  function to check for valid indices in \a dataRange, e.g. when extending ranges coming from \ref
+  function to check for valid indices in \a dataRange, e.g. when extending ranges coming from
   getDataSegments.
 
-  \see getScatters
+   \sa getScatters
 */
 void QCPGraph::getLines(QVector<QPointF> *lines, const QCPDataRange &dataRange) const
 {
@@ -20167,14 +20167,14 @@ void QCPGraph::getLines(QVector<QPointF> *lines, const QCPDataRange &dataRange) 
 
 /*! \internal
 
-  This method retrieves an optimized set of data points via \ref getOptimizedScatterData and then
+  This method retrieves an optimized set of data points via   getOptimizedScatterData and then
   converts them to pixel coordinates. The resulting points are returned in \a scatters, and can be
-  passed to \ref drawScatterPlot.
+  passed to   drawScatterPlot.
 
   \a dataRange specifies the beginning and ending data indices that will be taken into account for
   conversion. In this function, the specified range may exceed the total data bounds without harm:
   a correspondingly trimmed data range will be used. This takes the burden off the user of this
-  function to check for valid indices in \a dataRange, e.g. when extending ranges coming from \ref
+  function to check for valid indices in \a dataRange, e.g. when extending ranges coming from
   getDataSegments.
 */
 void QCPGraph::getScatters(QVector<QPointF> *scatters, const QCPDataRange &dataRange) const
@@ -20221,12 +20221,12 @@ void QCPGraph::getScatters(QVector<QPointF> *scatters, const QCPDataRange &dataR
 /*! \internal
 
   Takes raw data points in plot coordinates as \a data, and returns a vector containing pixel
-  coordinate points which are suitable for drawing the line style \ref lsLine.
+  coordinate points which are suitable for drawing the line style   lsLine.
   
-  The source of \a data is usually \ref getOptimizedLineData, and this method is called in \a
+  The source of \a data is usually   getOptimizedLineData, and this method is called in \a
   getLines if the line style is set accordingly.
 
-  \see dataToStepLeftLines, dataToStepRightLines, dataToStepCenterLines, dataToImpulseLines, getLines, drawLinePlot
+   \sa dataToStepLeftLines, dataToStepRightLines, dataToStepCenterLines, dataToImpulseLines, getLines, drawLinePlot
 */
 QVector<QPointF> QCPGraph::dataToLines(const QVector<QCPGraphData> &data) const
 {
@@ -20260,12 +20260,12 @@ QVector<QPointF> QCPGraph::dataToLines(const QVector<QCPGraphData> &data) const
 /*! \internal
 
   Takes raw data points in plot coordinates as \a data, and returns a vector containing pixel
-  coordinate points which are suitable for drawing the line style \ref lsStepLeft.
+  coordinate points which are suitable for drawing the line style   lsStepLeft.
   
-  The source of \a data is usually \ref getOptimizedLineData, and this method is called in \a
+  The source of \a data is usually   getOptimizedLineData, and this method is called in \a
   getLines if the line style is set accordingly.
 
-  \see dataToLines, dataToStepRightLines, dataToStepCenterLines, dataToImpulseLines, getLines, drawLinePlot
+   \sa dataToLines, dataToStepRightLines, dataToStepCenterLines, dataToImpulseLines, getLines, drawLinePlot
 */
 QVector<QPointF> QCPGraph::dataToStepLeftLines(const QVector<QCPGraphData> &data) const
 {
@@ -20309,12 +20309,12 @@ QVector<QPointF> QCPGraph::dataToStepLeftLines(const QVector<QCPGraphData> &data
 /*! \internal
 
   Takes raw data points in plot coordinates as \a data, and returns a vector containing pixel
-  coordinate points which are suitable for drawing the line style \ref lsStepRight.
+  coordinate points which are suitable for drawing the line style   lsStepRight.
   
-  The source of \a data is usually \ref getOptimizedLineData, and this method is called in \a
+  The source of \a data is usually   getOptimizedLineData, and this method is called in \a
   getLines if the line style is set accordingly.
 
-  \see dataToLines, dataToStepLeftLines, dataToStepCenterLines, dataToImpulseLines, getLines, drawLinePlot
+   \sa dataToLines, dataToStepLeftLines, dataToStepCenterLines, dataToImpulseLines, getLines, drawLinePlot
 */
 QVector<QPointF> QCPGraph::dataToStepRightLines(const QVector<QCPGraphData> &data) const
 {
@@ -20358,12 +20358,12 @@ QVector<QPointF> QCPGraph::dataToStepRightLines(const QVector<QCPGraphData> &dat
 /*! \internal
 
   Takes raw data points in plot coordinates as \a data, and returns a vector containing pixel
-  coordinate points which are suitable for drawing the line style \ref lsStepCenter.
+  coordinate points which are suitable for drawing the line style   lsStepCenter.
   
-  The source of \a data is usually \ref getOptimizedLineData, and this method is called in \a
+  The source of \a data is usually   getOptimizedLineData, and this method is called in \a
   getLines if the line style is set accordingly.
 
-  \see dataToLines, dataToStepLeftLines, dataToStepRightLines, dataToImpulseLines, getLines, drawLinePlot
+   \sa dataToLines, dataToStepLeftLines, dataToStepRightLines, dataToImpulseLines, getLines, drawLinePlot
 */
 QVector<QPointF> QCPGraph::dataToStepCenterLines(const QVector<QCPGraphData> &data) const
 {
@@ -20419,12 +20419,12 @@ QVector<QPointF> QCPGraph::dataToStepCenterLines(const QVector<QCPGraphData> &da
 /*! \internal
 
   Takes raw data points in plot coordinates as \a data, and returns a vector containing pixel
-  coordinate points which are suitable for drawing the line style \ref lsImpulse.
+  coordinate points which are suitable for drawing the line style   lsImpulse.
   
-  The source of \a data is usually \ref getOptimizedLineData, and this method is called in \a
+  The source of \a data is usually   getOptimizedLineData, and this method is called in \a
   getLines if the line style is set accordingly.
 
-  \see dataToLines, dataToStepLeftLines, dataToStepRightLines, dataToStepCenterLines, getLines, drawImpulsePlot
+   \sa dataToLines, dataToStepLeftLines, dataToStepRightLines, dataToStepCenterLines, getLines, drawImpulsePlot
 */
 QVector<QPointF> QCPGraph::dataToImpulseLines(const QVector<QCPGraphData> &data) const
 {
@@ -20467,14 +20467,14 @@ QVector<QPointF> QCPGraph::dataToImpulseLines(const QVector<QCPGraphData> &data)
   \a lines contains the points of the graph line, in pixel coordinates.
 
   If the fill is a normal fill towards the zero-value-line, only the points in \a lines are
-  required and two extra points at the zero-value-line, which are added by \ref addFillBasePoints
-  and removed by \ref removeFillBasePoints after the fill drawing is done.
+  required and two extra points at the zero-value-line, which are added by   addFillBasePoints
+  and removed by   removeFillBasePoints after the fill drawing is done.
 
   On the other hand if the fill is a channel fill between this QCPGraph and another QCPGraph (\a
-  mChannelFillGraph), the more complex polygon is calculated with the \ref getChannelFillPolygon
+  mChannelFillGraph), the more complex polygon is calculated with the   getChannelFillPolygon
   function, and then drawn.
 
-  \see drawLinePlot, drawImpulsePlot, drawScatterPlot
+   \sa drawLinePlot, drawImpulsePlot, drawScatterPlot
 */
 void QCPGraph::drawFill(QCPPainter *painter, QVector<QPointF> *lines) const
 {
@@ -20500,7 +20500,7 @@ void QCPGraph::drawFill(QCPPainter *painter, QVector<QPointF> *lines) const
   Draws scatter symbols at every point passed in \a scatters, given in pixel coordinates. The
   scatters will be drawn with \a painter and have the appearance as specified in \a style.
 
-  \see drawLinePlot, drawImpulsePlot
+   \sa drawLinePlot, drawImpulsePlot
 */
 void QCPGraph::drawScatterPlot(QCPPainter *painter, const QVector<QPointF> &scatters, const QCPScatterStyle &style) const
 {
@@ -20514,7 +20514,7 @@ void QCPGraph::drawScatterPlot(QCPPainter *painter, const QVector<QPointF> &scat
   
   Draws lines between the points in \a lines, given in pixel coordinates.
   
-  \see drawScatterPlot, drawImpulsePlot, QCPAbstractPlottable1D::drawPolyline
+   \sa drawScatterPlot, drawImpulsePlot, QCPAbstractPlottable1D::drawPolyline
 */
 void QCPGraph::drawLinePlot(QCPPainter *painter, const QVector<QPointF> &lines) const
 {
@@ -20528,10 +20528,10 @@ void QCPGraph::drawLinePlot(QCPPainter *painter, const QVector<QPointF> &lines) 
 /*! \internal
 
   Draws impulses from the provided data, i.e. it connects all line pairs in \a lines, given in
-  pixel coordinates. The \a lines necessary for impulses are generated by \ref dataToImpulseLines
+  pixel coordinates. The \a lines necessary for impulses are generated by   dataToImpulseLines
   from the regular graph data points.
 
-  \see drawLinePlot, drawScatterPlot
+   \sa drawLinePlot, drawScatterPlot
 */
 void QCPGraph::drawImpulsePlot(QCPPainter *painter, const QVector<QPointF> &lines) const
 {
@@ -20550,14 +20550,14 @@ void QCPGraph::drawImpulsePlot(QCPPainter *painter, const QVector<QPointF> &line
 /*! \internal
 
   Returns via \a lineData the data points that need to be visualized for this graph when plotting
-  graph lines, taking into consideration the currently visible axis ranges and, if \ref
+  graph lines, taking into consideration the currently visible axis ranges and, if
   setAdaptiveSampling is enabled, local point densities. The considered data can be restricted
-  further by \a begin and \a end, e.g. to only plot a certain segment of the data (see \ref
+  further by \a begin and \a end, e.g. to only plot a certain segment of the data (see
   getDataSegments).
 
-  This method is used by \ref getLines to retrieve the basic working set of data.
+  This method is used by   getLines to retrieve the basic working set of data.
 
-  \see getOptimizedScatterData
+   \sa getOptimizedScatterData
 */
 void QCPGraph::getOptimizedLineData(QVector<QCPGraphData> *lineData, const QCPGraphDataContainer::const_iterator &begin, const QCPGraphDataContainer::const_iterator &end) const
 {
@@ -20647,14 +20647,14 @@ void QCPGraph::getOptimizedLineData(QVector<QCPGraphData> *lineData, const QCPGr
 /*! \internal
 
   Returns via \a scatterData the data points that need to be visualized for this graph when
-  plotting scatter points, taking into consideration the currently visible axis ranges and, if \ref
+  plotting scatter points, taking into consideration the currently visible axis ranges and, if
   setAdaptiveSampling is enabled, local point densities. The considered data can be restricted
-  further by \a begin and \a end, e.g. to only plot a certain segment of the data (see \ref
+  further by \a begin and \a end, e.g. to only plot a certain segment of the data (see
   getDataSegments).
 
-  This method is used by \ref getScatters to retrieve the basic working set of data.
+  This method is used by   getScatters to retrieve the basic working set of data.
 
-  \see getOptimizedLineData
+   \sa getOptimizedLineData
 */
 void QCPGraph::getOptimizedScatterData(QVector<QCPGraphData> *scatterData, QCPGraphDataContainer::const_iterator begin, QCPGraphDataContainer::const_iterator end) const
 {
@@ -20858,7 +20858,7 @@ void QCPGraph::getVisibleDataBounds(QCPGraphDataContainer::const_iterator &begin
 
 /*! \internal
   
-  The line vector generated by e.g. \ref getLines describes only the line that connects the data
+  The line vector generated by e.g.   getLines describes only the line that connects the data
   points. If the graph needs to be filled, two additional points need to be added at the
   value-zero-line in the lower and upper key positions of the graph. This function calculates these
   points and adds them to the end of \a lineData. Since the fill is typically drawn before the line
@@ -20866,10 +20866,10 @@ void QCPGraph::getVisibleDataBounds(QCPGraphDataContainer::const_iterator &begin
   removeFillBasePoints function.
 
   The expanding of \a lines by two points will not cause unnecessary memory reallocations, because
-  the data vector generation functions (e.g. \ref getLines) reserve two extra points when they
+  the data vector generation functions (e.g.   getLines) reserve two extra points when they
   allocate memory for \a lines.
   
-  \see removeFillBasePoints, lowerFillBasePoint, upperFillBasePoint
+   \sa removeFillBasePoints, lowerFillBasePoint, upperFillBasePoint
 */
 void QCPGraph::addFillBasePoints(QVector<QPointF> *lines) const
 {
@@ -20891,9 +20891,9 @@ void QCPGraph::addFillBasePoints(QVector<QPointF> *lines) const
 
 /*! \internal
   
-  removes the two points from \a lines that were added by \ref addFillBasePoints.
+  removes the two points from \a lines that were added by   addFillBasePoints.
   
-  \see addFillBasePoints, lowerFillBasePoint, upperFillBasePoint
+   \sa addFillBasePoints, lowerFillBasePoint, upperFillBasePoint
 */
 void QCPGraph::removeFillBasePoints(QVector<QPointF> *lines) const
 {
@@ -20905,7 +20905,7 @@ void QCPGraph::removeFillBasePoints(QVector<QPointF> *lines) const
 
 /*! \internal
   
-  called by \ref addFillBasePoints to conveniently assign the point which closes the fill polygon
+  called by   addFillBasePoints to conveniently assign the point which closes the fill polygon
   on the lower side of the zero-value-line parallel to the key axis. The logarithmic axis scale
   case is a bit special, since the zero-value-line in pixel coordinates is in positive or negative
   infinity. So this case is handled separately by just closing the fill polygon on the axis which
@@ -20915,7 +20915,7 @@ void QCPGraph::removeFillBasePoints(QVector<QPointF> *lines) const
   axis is horizontal or vertical, \a lowerKey will end up as the x or y value of the returned
   point, respectively.
   
-  \see upperFillBasePoint, addFillBasePoints
+   \sa upperFillBasePoint, addFillBasePoints
 */
 QPointF QCPGraph::lowerFillBasePoint(double lowerKey) const
 {
@@ -20970,7 +20970,7 @@ QPointF QCPGraph::lowerFillBasePoint(double lowerKey) const
 
 /*! \internal
   
-  called by \ref addFillBasePoints to conveniently assign the point which closes the fill
+  called by   addFillBasePoints to conveniently assign the point which closes the fill
   polygon on the upper side of the zero-value-line parallel to the key axis. The logarithmic axis
   scale case is a bit special, since the zero-value-line in pixel coordinates is in positive or
   negative infinity. So this case is handled separately by just closing the fill polygon on the
@@ -20980,7 +20980,7 @@ QPointF QCPGraph::lowerFillBasePoint(double lowerKey) const
   axis is horizontal or vertical, \a upperKey will end up as the x or y value of the returned
   point, respectively.
   
-  \see lowerFillBasePoint, addFillBasePoints
+   \sa lowerFillBasePoint, addFillBasePoints
 */
 QPointF QCPGraph::upperFillBasePoint(double upperKey) const
 {
@@ -21036,9 +21036,9 @@ QPointF QCPGraph::upperFillBasePoint(double upperKey) const
 /*! \internal
   
   Generates the polygon needed for drawing channel fills between this graph and the graph specified
-  in \a mChannelFillGraph (see \ref setChannelFillGraph). The data points representing the line of
+  in \a mChannelFillGraph (see   setChannelFillGraph). The data points representing the line of
   this graph in pixel coordinates must be passed in \a lines, the corresponding points of the other
-  graph are generated by calling its \ref getLines method.
+  graph are generated by calling its   getLines method.
 
   This method may return an empty polygon if the key ranges of the two graphs have no overlap of if
   they don't have the same orientation (e.g. one key axis vertical, the other horizontal). For
@@ -21185,7 +21185,7 @@ const QPolygonF QCPGraph::getChannelFillPolygon(const QVector<QPointF> *lines) c
   Finds the smallest index of \a data, whose points x value is just above \a x. Assumes x values in
   \a data points are ordered ascending, as is the case when plotting with horizontal key axis.
 
-  Used to calculate the channel fill polygon, see \ref getChannelFillPolygon.
+  Used to calculate the channel fill polygon, see   getChannelFillPolygon.
 */
 int QCPGraph::findIndexAboveX(const QVector<QPointF> *data, double x) const
 {
@@ -21207,7 +21207,7 @@ int QCPGraph::findIndexAboveX(const QVector<QPointF> *data, double x) const
   Finds the highest index of \a data, whose points x value is just below \a x. Assumes x values in
   \a data points are ordered ascending, as is the case when plotting with horizontal key axis.
   
-  Used to calculate the channel fill polygon, see \ref getChannelFillPolygon.
+  Used to calculate the channel fill polygon, see   getChannelFillPolygon.
 */
 int QCPGraph::findIndexBelowX(const QVector<QPointF> *data, double x) const
 {
@@ -21229,7 +21229,7 @@ int QCPGraph::findIndexBelowX(const QVector<QPointF> *data, double x) const
   Finds the smallest index of \a data, whose points y value is just above \a y. Assumes y values in
   \a data points are ordered descending, as is the case when plotting with vertical key axis.
   
-  Used to calculate the channel fill polygon, see \ref getChannelFillPolygon.
+  Used to calculate the channel fill polygon, see   getChannelFillPolygon.
 */
 int QCPGraph::findIndexAboveY(const QVector<QPointF> *data, double y) const
 {
@@ -21249,13 +21249,13 @@ int QCPGraph::findIndexAboveY(const QVector<QPointF> *data, double y) const
 /*! \internal
   
   Calculates the minimum distance in pixels the graph's representation has from the given \a
-  pixelPoint. This is used to determine whether the graph was clicked or not, e.g. in \ref
+  pixelPoint. This is used to determine whether the graph was clicked or not, e.g. in
   selectTest. The closest data point to \a pixelPoint is returned in \a closestData. Note that if
   the graph has a line representation, the returned distance may be smaller than the distance to
   the \a closestData point, since the distance to the graph line is also taken into account.
   
-  If either the graph has no data or if the line style is \ref lsNone and the scatter style's shape
-  is \ref QCPScatterStyle::ssNone (i.e. there is no visual representation of the graph), returns -1.0.
+  If either the graph has no data or if the line style is   lsNone and the scatter style's shape
+  is   QCPScatterStyle::ssNone (i.e. there is no visual representation of the graph), returns -1.0.
 */
 double QCPGraph::pointDistance(const QPointF &pixelPoint, QCPGraphDataContainer::const_iterator &closestData) const
 {
@@ -21311,7 +21311,7 @@ double QCPGraph::pointDistance(const QPointF &pixelPoint, QCPGraphDataContainer:
   \a data points are ordered descending, as is the case when plotting with vertical key axis (since
   keys are ordered ascending).
 
-  Used to calculate the channel fill polygon, see \ref getChannelFillPolygon.
+  Used to calculate the channel fill polygon, see   getChannelFillPolygon.
 */
 int QCPGraph::findIndexBelowY(const QVector<QPointF> *data, double y) const
 {
@@ -21345,11 +21345,11 @@ int QCPGraph::findIndexBelowY(const QVector<QPointF> *data, double y) const
   \li \a key: coordinate on the key axis of this curve point (this is the \a mainKey)
   \li \a value: coordinate on the value axis of this curve point (this is the \a mainValue)
   
-  The container for storing multiple data points is \ref QCPCurveDataContainer. It is a typedef for
-  \ref QCPDataContainer with \ref QCPCurveData as the DataType template parameter. See the
+  The container for storing multiple data points is   QCPCurveDataContainer. It is a typedef for
+    QCPDataContainer with   QCPCurveData as the DataType template parameter. See the
   documentation there for an explanation regarding the data type's generic methods.
   
-  \see QCPCurveDataContainer
+   \sa QCPCurveDataContainer
 */
 
 /* start documentation of inline functions */
@@ -21359,7 +21359,7 @@ int QCPGraph::findIndexBelowY(const QVector<QPointF> *data, double y) const
   Returns the \a t member of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn static QCPCurveData QCPCurveData::fromSortKey(double sortKey)
@@ -21368,7 +21368,7 @@ int QCPGraph::findIndexBelowY(const QVector<QPointF> *data, double y) const
   All other members are set to zero.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn static static bool QCPCurveData::sortKeyIsMainKey()
@@ -21377,7 +21377,7 @@ int QCPGraph::findIndexBelowY(const QVector<QPointF> *data, double y) const
   parameter, this method returns false.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn double QCPCurveData::mainKey() const
@@ -21385,7 +21385,7 @@ int QCPGraph::findIndexBelowY(const QVector<QPointF> *data, double y) const
   Returns the \a key member of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn double QCPCurveData::mainValue() const
@@ -21393,7 +21393,7 @@ int QCPGraph::findIndexBelowY(const QVector<QPointF> *data, double y) const
   Returns the \a value member of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn QCPRange QCPCurveData::valueRange() const
@@ -21401,7 +21401,7 @@ int QCPGraph::findIndexBelowY(const QVector<QPointF> *data, double y) const
   Returns a QCPRange with both lower and upper boundary set to \a value of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /* end documentation of inline functions */
@@ -21441,9 +21441,9 @@ QCPCurveData::QCPCurveData(double t, double key, double value) :
   coordinate \a t, which defines the order of the points described by the other two coordinates \a
   x and \a y.
 
-  To plot data, assign it with the \ref setData or \ref addData functions. Alternatively, you can
-  also access and modify the curve's data via the \ref data method, which returns a pointer to the
-  internal \ref QCPCurveDataContainer.
+  To plot data, assign it with the   setData or   addData functions. Alternatively, you can
+  also access and modify the curve's data via the   data method, which returns a pointer to the
+  internal   QCPCurveDataContainer.
   
   Gaps in the curve can be created by adding data points with NaN as key and value
   (<tt>qQNaN()</tt> or <tt>std::numeric_limits<double>::quiet_NaN()</tt>) in between the two data points that shall be
@@ -21451,7 +21451,7 @@ QCPCurveData::QCPCurveData(double t, double key, double value) :
   
   \section qcpcurve-appearance Changing the appearance
   
-  The appearance of the curve is determined by the pen and the brush (\ref setPen, \ref setBrush).
+  The appearance of the curve is determined by the pen and the brush (  setPen,   setBrush).
   
   \section qcpcurve-usage Usage
   
@@ -21471,9 +21471,9 @@ QCPCurveData::QCPCurveData(double t, double key, double value) :
 
 /*! \fn QSharedPointer<QCPCurveDataContainer> QCPCurve::data() const
   
-  Returns a shared pointer to the internal data storage of type \ref QCPCurveDataContainer. You may
+  Returns a shared pointer to the internal data storage of type   QCPCurveDataContainer. You may
   use it to directly manipulate the data, which may be more convenient and faster than using the
-  regular \ref setData or \ref addData methods.
+  regular   setData or   addData methods.
 */
 
 /* end of documentation of inline functions */
@@ -21513,10 +21513,10 @@ QCPCurve::~QCPCurve()
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpcurve-datasharing-1
   
   If you do not wish to share containers, but create a copy from an existing container, rather use
-  the \ref QCPDataContainer<DataType>::set method on the curve's data container directly:
+  the   QCPDataContainer<DataType>::set method on the curve's data container directly:
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpcurve-datasharing-2
   
-  \see addData
+   \sa addData
 */
 void QCPCurve::setData(QSharedPointer<QCPCurveDataContainer> data)
 {
@@ -21532,7 +21532,7 @@ void QCPCurve::setData(QSharedPointer<QCPCurveDataContainer> data)
   If you can guarantee that the passed data points are sorted by \a t in ascending order, you can
   set \a alreadySorted to true, to improve performance by saving a sorting run.
   
-  \see addData
+   \sa addData
 */
 void QCPCurve::setData(const QVector<double> &t, const QVector<double> &keys, const QVector<double> &values, bool alreadySorted)
 {
@@ -21550,7 +21550,7 @@ void QCPCurve::setData(const QVector<double> &t, const QVector<double> &keys, co
   The t parameter of each data point will be set to the integer index of the respective key/value
   pair.
   
-  \see addData
+   \sa addData
 */
 void QCPCurve::setData(const QVector<double> &keys, const QVector<double> &values)
 {
@@ -21559,11 +21559,11 @@ void QCPCurve::setData(const QVector<double> &keys, const QVector<double> &value
 }
 
 /*!
-  Sets the visual appearance of single data points in the plot. If set to \ref
+  Sets the visual appearance of single data points in the plot. If set to
   QCPScatterStyle::ssNone, no scatter points are drawn (e.g. for line-only plots with appropriate
   line style).
   
-  \see QCPScatterStyle, setLineStyle
+   \sa QCPScatterStyle, setLineStyle
 */
 void QCPCurve::setScatterStyle(const QCPScatterStyle &style)
 {
@@ -21571,7 +21571,7 @@ void QCPCurve::setScatterStyle(const QCPScatterStyle &style)
 }
 
 /*!
-  If scatters are displayed (scatter style not \ref QCPScatterStyle::ssNone), \a skip number of
+  If scatters are displayed (scatter style not   QCPScatterStyle::ssNone), \a skip number of
   scatter points are skipped/not drawn after every drawn scatter point.
 
   This can be used to make the data appear sparser while for example still having a smooth line,
@@ -21579,7 +21579,7 @@ void QCPCurve::setScatterStyle(const QCPScatterStyle &style)
 
   If \a skip is set to 0 (default), all scatter points are drawn.
 
-  \see setScatterStyle
+   \sa setScatterStyle
 */
 void QCPCurve::setScatterSkip(int skip)
 {
@@ -21588,10 +21588,10 @@ void QCPCurve::setScatterSkip(int skip)
 
 /*!
   Sets how the single data points are connected in the plot or how they are represented visually
-  apart from the scatter symbol. For scatter-only plots, set \a style to \ref lsNone and \ref
+  apart from the scatter symbol. For scatter-only plots, set \a style to   lsNone and
   setScatterStyle to the desired scatter style.
   
-  \see setScatterStyle
+   \sa setScatterStyle
 */
 void QCPCurve::setLineStyle(QCPCurve::LineStyle style)
 {
@@ -21607,7 +21607,7 @@ void QCPCurve::setLineStyle(QCPCurve::LineStyle style)
   If you can guarantee that the passed data points are sorted by \a keys in ascending order, you
   can set \a alreadySorted to true, to improve performance by saving a sorting run.
   
-  Alternatively, you can also access and modify the data directly via the \ref data method, which
+  Alternatively, you can also access and modify the data directly via the   data method, which
   returns a pointer to the internal data container.
 */
 void QCPCurve::addData(const QVector<double> &t, const QVector<double> &keys, const QVector<double> &values, bool alreadySorted)
@@ -21639,7 +21639,7 @@ void QCPCurve::addData(const QVector<double> &t, const QVector<double> &keys, co
   The t parameter of each data point will be set to the integer index of the respective key/value
   pair.
   
-  Alternatively, you can also access and modify the data directly via the \ref data method, which
+  Alternatively, you can also access and modify the data directly via the   data method, which
   returns a pointer to the internal data container.
 */
 void QCPCurve::addData(const QVector<double> &keys, const QVector<double> &values)
@@ -21670,7 +21670,7 @@ void QCPCurve::addData(const QVector<double> &keys, const QVector<double> &value
 /*! \overload
   Adds the provided data point as \a t, \a key and \a value to the current data.
   
-  Alternatively, you can also access and modify the data directly via the \ref data method, which
+  Alternatively, you can also access and modify the data directly via the   data method, which
   returns a pointer to the internal data container.
 */
 void QCPCurve::addData(double t, double key, double value)
@@ -21685,7 +21685,7 @@ void QCPCurve::addData(double t, double key, double value)
   The t parameter is generated automatically by increments of 1 for each point, starting at the
   highest t of previously existing data or 0, if the curve data is empty.
   
-  Alternatively, you can also access and modify the data directly via the \ref data method, which
+  Alternatively, you can also access and modify the data directly via the   data method, which
   returns a pointer to the internal data container.
 */
 void QCPCurve::addData(double key, double value)
@@ -21837,7 +21837,7 @@ void QCPCurve::drawLegendIcon(QCPPainter *painter, const QRectF &rect) const
 
   Draws lines between the points in \a lines, given in pixel coordinates.
 
-  \see drawScatterPlot, getCurveLines
+   \sa drawScatterPlot, getCurveLines
 */
 void QCPCurve::drawCurveLine(QCPPainter *painter, const QVector<QPointF> &lines) const
 {
@@ -21853,7 +21853,7 @@ void QCPCurve::drawCurveLine(QCPPainter *painter, const QVector<QPointF> &lines)
   Draws scatter symbols at every point passed in \a points, given in pixel coordinates. The
   scatters will be drawn with \a painter and have the appearance as specified in \a style.
 
-  \see drawCurveLine, getCurveLines
+   \sa drawCurveLine, getCurveLines
 */
 void QCPCurve::drawScatterPlot(QCPPainter *painter, const QVector<QPointF> &points, const QCPScatterStyle &style) const
 {
@@ -21867,7 +21867,7 @@ void QCPCurve::drawScatterPlot(QCPPainter *painter, const QVector<QPointF> &poin
 
 /*! \internal
 
-  Called by \ref draw to generate points in pixel coordinates which represent the line of the
+  Called by   draw to generate points in pixel coordinates which represent the line of the
   curve.
 
   Line segments that aren't visible in the current axis rect are handled in an optimized way. They
@@ -21875,23 +21875,23 @@ void QCPCurve::drawScatterPlot(QCPPainter *painter, const QVector<QPointF> &poin
   regarding point count. The algorithm makes sure to preserve appearance of lines and fills inside
   the visible axis rect by generating new temporary points on the outer rect if necessary.
 
-  \a lines will be filled with points in pixel coordinates, that can be drawn with \ref
+  \a lines will be filled with points in pixel coordinates, that can be drawn with
   drawCurveLine.
 
   \a dataRange specifies the beginning and ending data indices that will be taken into account for
   conversion. In this function, the specified range may exceed the total data bounds without harm:
   a correspondingly trimmed data range will be used. This takes the burden off the user of this
-  function to check for valid indices in \a dataRange, e.g. when extending ranges coming from \ref
+  function to check for valid indices in \a dataRange, e.g. when extending ranges coming from
   getDataSegments.
 
   \a penWidth specifies the pen width that will be used to later draw the lines generated by this
   function. This is needed here to calculate an accordingly wider margin around the axis rect when
   performing the line optimization.
 
-  Methods that are also involved in the algorithm are: \ref getRegion, \ref getOptimizedPoint, \ref
-  getOptimizedCornerPoints \ref mayTraverse, \ref getTraverse, \ref getTraverseCornerPoints.
+  Methods that are also involved in the algorithm are:   getRegion,   getOptimizedPoint,
+  getOptimizedCornerPoints   mayTraverse,   getTraverse,   getTraverseCornerPoints.
 
-  \see drawCurveLine, drawScatterPlot
+   \sa drawCurveLine, drawScatterPlot
 */
 void QCPCurve::getCurveLines(QVector<QPointF> *lines, const QCPDataRange &dataRange, double penWidth) const
 {
@@ -21978,13 +21978,13 @@ void QCPCurve::getCurveLines(QVector<QPointF> *lines, const QCPDataRange &dataRa
 
 /*! \internal
 
-  Called by \ref draw to generate points in pixel coordinates which represent the scatters of the
-  curve. If a scatter skip is configured (\ref setScatterSkip), the returned points are accordingly
+  Called by   draw to generate points in pixel coordinates which represent the scatters of the
+  curve. If a scatter skip is configured (  setScatterSkip), the returned points are accordingly
   sparser.
 
   Scatters that aren't visible in the current axis rect are optimized away.
 
-  \a scatters will be filled with points in pixel coordinates, that can be drawn with \ref
+  \a scatters will be filled with points in pixel coordinates, that can be drawn with
   drawScatterPlot.
 
   \a dataRange specifies the beginning and ending data indices that will be taken into account for
@@ -21994,7 +21994,7 @@ void QCPCurve::getCurveLines(QVector<QPointF> *lines, const QCPDataRange &dataRa
   coordinates generated by this function. This is needed here to calculate an accordingly wider
   margin around the axis rect when performing the data point reduction.
 
-  \see draw, drawScatterPlot
+   \sa draw, drawScatterPlot
 */
 void QCPCurve::getScatters(QVector<QPointF> *scatters, const QCPDataRange &dataRange, double scatterWidth) const
 {
@@ -22077,7 +22077,7 @@ void QCPCurve::getScatters(QVector<QPointF> *scatters, const QCPDataRange &dataR
 
 /*! \internal
 
-  This function is part of the curve optimization algorithm of \ref getCurveLines.
+  This function is part of the curve optimization algorithm of   getCurveLines.
 
   It returns the region of the given point (\a key, \a value) with respect to a rectangle defined
   by \a keyMin, \a keyMax, \a valueMin, and \a valueMax.
@@ -22125,10 +22125,10 @@ int QCPCurve::getRegion(double key, double value, double keyMin, double valueMax
 
 /*! \internal
   
-  This function is part of the curve optimization algorithm of \ref getCurveLines.
+  This function is part of the curve optimization algorithm of   getCurveLines.
   
   This method is used in case the current segment passes from inside the visible rect (region 5,
-  see \ref getRegion) to any of the outer regions (\a otherRegion). The current segment is given by
+  see   getRegion) to any of the outer regions (\a otherRegion). The current segment is given by
   the line connecting (\a key, \a value) with (\a otherKey, \a otherValue).
   
   It returns the intersection point of the segment with the border of region 5.
@@ -22222,14 +22222,14 @@ QPointF QCPCurve::getOptimizedPoint(int otherRegion, double otherKey, double oth
 
 /*! \internal
   
-  This function is part of the curve optimization algorithm of \ref getCurveLines.
+  This function is part of the curve optimization algorithm of   getCurveLines.
   
   In situations where a single segment skips over multiple regions it might become necessary to add
-  extra points at the corners of region 5 (see \ref getRegion) such that the optimized segment
+  extra points at the corners of region 5 (see   getRegion) such that the optimized segment
   doesn't unintentionally cut through the visible area of the axis rect and create plot artifacts.
   This method provides these points that must be added, assuming the original segment doesn't
   start, end, or traverse region 5. (Corner points where region 5 is traversed are calculated by
-  \ref getTraverseCornerPoints.)
+    getTraverseCornerPoints.)
   
   For example, consider a segment which directly goes from region 4 to 2 but originally is far out
   to the top left such that it doesn't cross region 5. Naively optimizing these points by
@@ -22392,14 +22392,14 @@ QVector<QPointF> QCPCurve::getOptimizedCornerPoints(int prevRegion, int currentR
 
 /*! \internal
   
-  This function is part of the curve optimization algorithm of \ref getCurveLines.
+  This function is part of the curve optimization algorithm of   getCurveLines.
   
-  This method returns whether a segment going from \a prevRegion to \a currentRegion (see \ref
+  This method returns whether a segment going from \a prevRegion to \a currentRegion (see
   getRegion) may traverse the visible region 5. This function assumes that neither \a prevRegion
   nor \a currentRegion is 5 itself.
   
   If this method returns false, the segment for sure doesn't pass region 5. If it returns true, the
-  segment may or may not pass region 5 and a more fine-grained calculation must be used (\ref
+  segment may or may not pass region 5 and a more fine-grained calculation must be used (
   getTraverse).
 */
 bool QCPCurve::mayTraverse(int prevRegion, int currentRegion) const
@@ -22494,9 +22494,9 @@ bool QCPCurve::mayTraverse(int prevRegion, int currentRegion) const
 
 /*! \internal
   
-  This function is part of the curve optimization algorithm of \ref getCurveLines.
+  This function is part of the curve optimization algorithm of   getCurveLines.
   
-  This method assumes that the \ref mayTraverse test has returned true, so there is a chance the
+  This method assumes that the   mayTraverse test has returned true, so there is a chance the
   segment defined by (\a prevKey, \a prevValue) and (\a key, \a value) goes through the visible
   region 5.
   
@@ -22578,15 +22578,15 @@ bool QCPCurve::getTraverse(double prevKey, double prevValue, double key, double 
 
 /*! \internal
   
-  This function is part of the curve optimization algorithm of \ref getCurveLines.
+  This function is part of the curve optimization algorithm of   getCurveLines.
   
-  This method assumes that the \ref getTraverse test has returned true, so the segment definitely
+  This method assumes that the   getTraverse test has returned true, so the segment definitely
   traverses the visible region 5 when going from \a prevRegion to \a currentRegion.
   
   In certain situations it is not sufficient to merely generate the entry and exit points of the
-  segment into/out of region 5, as \ref getTraverse provides. It may happen that a single segment, in
+  segment into/out of region 5, as   getTraverse provides. It may happen that a single segment, in
   addition to traversing region 5, skips another region outside of region 5, which makes it
-  necessary to add an optimized corner point there (very similar to the job \ref
+  necessary to add an optimized corner point there (very similar to the job
   getOptimizedCornerPoints does for segments that are completely in outside regions and don't
   traverse 5).
   
@@ -22689,12 +22689,12 @@ void QCPCurve::getTraverseCornerPoints(int prevRegion, int currentRegion, double
   
   Calculates the (minimum) distance (in pixels) the curve's representation has from the given \a
   pixelPoint in pixels. This is used to determine whether the curve was clicked or not, e.g. in
-  \ref selectTest. The closest data point to \a pixelPoint is returned in \a closestData. Note that
+    selectTest. The closest data point to \a pixelPoint is returned in \a closestData. Note that
   if the curve has a line representation, the returned distance may be smaller than the distance to
   the \a closestData point, since the distance to the curve line is also taken into account.
   
-  If either the curve has no data or if the line style is \ref lsNone and the scatter style's shape
-  is \ref QCPScatterStyle::ssNone (i.e. there is no visual representation of the curve), returns
+  If either the curve has no data or if the line style is   lsNone and the scatter style's shape
+  is   QCPScatterStyle::ssNone (i.e. there is no visual representation of the curve), returns
   -1.0.
 */
 double QCPCurve::pointDistance(const QPointF &pixelPoint, QCPCurveDataContainer::const_iterator &closestData) const
@@ -22761,7 +22761,7 @@ double QCPCurve::pointDistance(const QPointF &pixelPoint, QCPCurveDataContainer:
   When showing multiple QCPBars in one plot which have bars at identical keys, it may be desirable
   to have them appearing next to each other at each key. This is what adding the respective QCPBars
   plottables to a QCPBarsGroup achieves. (An alternative approach is to stack them on top of each
-  other, see \ref QCPBars::moveAbove.)
+  other, see   QCPBars::moveAbove.)
   
   \section qcpbarsgroup-usage Usage
   
@@ -22769,17 +22769,17 @@ double QCPCurve::pointDistance(const QPointF &pixelPoint, QCPCurveDataContainer:
   intances:
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpbarsgroup-creation
   Alternatively to appending to the group like shown above, you can also set the group on the
-  QCPBars plottable via \ref QCPBars::setBarsGroup.
+  QCPBars plottable via   QCPBars::setBarsGroup.
   
-  The spacing between the bars can be configured via \ref setSpacingType and \ref setSpacing. The
+  The spacing between the bars can be configured via   setSpacingType and   setSpacing. The
   bars in this group appear in the plot in the order they were appended. To insert a bars plottable
   at a certain index position, or to reposition a bars plottable which is already in the group, use
-  \ref insert.
+    insert.
   
-  To remove specific bars from the group, use either \ref remove or call \ref
+  To remove specific bars from the group, use either   remove or call
   QCPBars::setBarsGroup "QCPBars::setBarsGroup(0)" on the respective bars plottable.
   
-  To clear the entire group, call \ref clear, or simply delete the group.
+  To clear the entire group, call   clear, or simply delete the group.
   
   \section qcpbarsgroup-example Example
   
@@ -22793,7 +22793,7 @@ double QCPCurve::pointDistance(const QPointF &pixelPoint, QCPCurveDataContainer:
   
   Returns all bars currently in this group.
   
-  \see bars(int index)
+   \sa bars(int index)
 */
 
 /*! \fn int QCPBarsGroup::size() const
@@ -22806,7 +22806,7 @@ double QCPCurve::pointDistance(const QPointF &pixelPoint, QCPCurveDataContainer:
   
   Returns whether this bars group is empty.
   
-  \see size
+   \sa size
 */
 
 /*! \fn bool QCPBarsGroup::contains(QCPBars *bars)
@@ -22834,11 +22834,11 @@ QCPBarsGroup::~QCPBarsGroup()
 }
 
 /*!
-  Sets how the spacing between adjacent bars is interpreted. See \ref SpacingType.
+  Sets how the spacing between adjacent bars is interpreted. See   SpacingType.
   
-  The actual spacing can then be specified with \ref setSpacing.
+  The actual spacing can then be specified with   setSpacing.
 
-  \see setSpacing
+   \sa setSpacing
 */
 void QCPBarsGroup::setSpacingType(SpacingType spacingType)
 {
@@ -22847,9 +22847,9 @@ void QCPBarsGroup::setSpacingType(SpacingType spacingType)
 
 /*!
   Sets the spacing between adjacent bars. What the number passed as \a spacing actually means, is
-  defined by the current \ref SpacingType, which can be set with \ref setSpacingType.
+  defined by the current   SpacingType, which can be set with   setSpacingType.
 
-  \see setSpacingType
+   \sa setSpacingType
 */
 void QCPBarsGroup::setSpacing(double spacing)
 {
@@ -22860,7 +22860,7 @@ void QCPBarsGroup::setSpacing(double spacing)
   Returns the QCPBars instance with the specified \a index in this group. If no such QCPBars
   exists, returns 0.
 
-  \see bars(), size
+   \sa bars(), size
 */
 QCPBars *QCPBarsGroup::bars(int index) const
 {
@@ -22877,7 +22877,7 @@ QCPBars *QCPBarsGroup::bars(int index) const
 /*!
   Removes all QCPBars plottables from this group.
 
-  \see isEmpty
+   \sa isEmpty
 */
 void QCPBarsGroup::clear()
 {
@@ -22886,10 +22886,10 @@ void QCPBarsGroup::clear()
 }
 
 /*!
-  Adds the specified \a bars plottable to this group. Alternatively, you can also use \ref
+  Adds the specified \a bars plottable to this group. Alternatively, you can also use
   QCPBars::setBarsGroup on the \a bars instance.
 
-  \see insert, remove
+   \sa insert, remove
 */
 void QCPBarsGroup::append(QCPBars *bars)
 {
@@ -22912,7 +22912,7 @@ void QCPBarsGroup::append(QCPBars *bars)
   \a bars may already be part of this group. In that case, \a bars is just moved to the new index
   position.
 
-  \see append, remove
+   \sa append, remove
 */
 void QCPBarsGroup::insert(int i, QCPBars *bars)
 {
@@ -22932,7 +22932,7 @@ void QCPBarsGroup::insert(int i, QCPBars *bars)
 /*!
   Removes the specified \a bars plottable from this group.
   
-  \see contains, clear
+   \sa contains, clear
 */
 void QCPBarsGroup::remove(QCPBars *bars)
 {
@@ -22953,7 +22953,7 @@ void QCPBarsGroup::remove(QCPBars *bars)
   Adds the specified \a bars to the internal mBars list of bars. This method does not change the
   barsGroup property on \a bars.
   
-  \see unregisterBars
+   \sa unregisterBars
 */
 void QCPBarsGroup::registerBars(QCPBars *bars)
 {
@@ -22966,7 +22966,7 @@ void QCPBarsGroup::registerBars(QCPBars *bars)
   Removes the specified \a bars from the internal mBars list of bars. This method does not change
   the barsGroup property on \a bars.
   
-  \see registerBars
+   \sa registerBars
 */
 void QCPBarsGroup::unregisterBars(QCPBars *bars)
 {
@@ -23041,9 +23041,9 @@ double QCPBarsGroup::keyPixelOffset(const QCPBars *bars, double keyCoord)
   key coordinate \a keyCoord.
   
   \note Typically the returned value doesn't depend on \a bars or \a keyCoord. \a bars is only
-  needed to get access to the key axis transformation and axis rect for the modes \ref
-  stAxisRectRatio and \ref stPlotCoords. The \a keyCoord is only relevant for spacings given in
-  \ref stPlotCoords on a logarithmic axis.
+  needed to get access to the key axis transformation and axis rect for the modes
+  stAxisRectRatio and   stPlotCoords. The \a keyCoord is only relevant for spacings given in
+    stPlotCoords on a logarithmic axis.
 */
 double QCPBarsGroup::getPixelSpacing(const QCPBars *bars, double keyCoord)
 {
@@ -23081,11 +23081,11 @@ double QCPBarsGroup::getPixelSpacing(const QCPBars *bars, double keyCoord)
   \li \a key: coordinate on the key axis of this bar (this is the \a mainKey and the \a sortKey)
   \li \a value: height coordinate on the value axis of this bar (this is the \a mainValue)
   
-  The container for storing multiple data points is \ref QCPBarsDataContainer. It is a typedef for
-  \ref QCPDataContainer with \ref QCPBarsData as the DataType template parameter. See the
+  The container for storing multiple data points is   QCPBarsDataContainer. It is a typedef for
+    QCPDataContainer with   QCPBarsData as the DataType template parameter. See the
   documentation there for an explanation regarding the data type's generic methods.
   
-  \see QCPBarsDataContainer
+   \sa QCPBarsDataContainer
 */
 
 /* start documentation of inline functions */
@@ -23095,7 +23095,7 @@ double QCPBarsGroup::getPixelSpacing(const QCPBars *bars, double keyCoord)
   Returns the \a key member of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn static QCPBarsData QCPBarsData::fromSortKey(double sortKey)
@@ -23103,7 +23103,7 @@ double QCPBarsGroup::getPixelSpacing(const QCPBars *bars, double keyCoord)
   Returns a data point with the specified \a sortKey. All other members are set to zero.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn static static bool QCPBarsData::sortKeyIsMainKey()
@@ -23112,7 +23112,7 @@ double QCPBarsGroup::getPixelSpacing(const QCPBars *bars, double keyCoord)
   this method returns true.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn double QCPBarsData::mainKey() const
@@ -23120,7 +23120,7 @@ double QCPBarsGroup::getPixelSpacing(const QCPBars *bars, double keyCoord)
   Returns the \a key member of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn double QCPBarsData::mainValue() const
@@ -23128,7 +23128,7 @@ double QCPBarsGroup::getPixelSpacing(const QCPBars *bars, double keyCoord)
   Returns the \a value member of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn QCPRange QCPBarsData::valueRange() const
@@ -23136,7 +23136,7 @@ double QCPBarsGroup::getPixelSpacing(const QCPBars *bars, double keyCoord)
   Returns a QCPRange with both lower and upper boundary set to \a value of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /* end documentation of inline functions */
@@ -23169,15 +23169,15 @@ QCPBarsData::QCPBarsData(double key, double value) :
 
   \image html QCPBars.png
   
-  To plot data, assign it with the \ref setData or \ref addData functions.
+  To plot data, assign it with the   setData or   addData functions.
   
   \section qcpbars-appearance Changing the appearance
   
-  The appearance of the bars is determined by the pen and the brush (\ref setPen, \ref setBrush).
-  The width of the individual bars can be controlled with \ref setWidthType and \ref setWidth.
+  The appearance of the bars is determined by the pen and the brush (  setPen,   setBrush).
+  The width of the individual bars can be controlled with   setWidthType and   setWidth.
   
   Bar charts are stackable. This means, two QCPBars plottables can be placed on top of each other
-  (see \ref QCPBars::moveAbove). So when two bars are at the same key position, they will appear
+  (see   QCPBars::moveAbove). So when two bars are at the same key position, they will appear
   stacked.
   
   If you would like to group multiple QCPBars plottables together so they appear side by side as
@@ -23203,23 +23203,23 @@ QCPBarsData::QCPBarsData(double key, double value) :
 
 /*! \fn QSharedPointer<QCPBarsDataContainer> QCPBars::data() const
   
-  Returns a shared pointer to the internal data storage of type \ref QCPBarsDataContainer. You may
+  Returns a shared pointer to the internal data storage of type   QCPBarsDataContainer. You may
   use it to directly manipulate the data, which may be more convenient and faster than using the
-  regular \ref setData or \ref addData methods.
+  regular   setData or   addData methods.
 */
 
 /*! \fn QCPBars *QCPBars::barBelow() const
   Returns the bars plottable that is directly below this bars plottable.
   If there is no such plottable, returns 0.
   
-  \see barAbove, moveBelow, moveAbove
+   \sa barAbove, moveBelow, moveAbove
 */
 
 /*! \fn QCPBars *QCPBars::barAbove() const
   Returns the bars plottable that is directly above this bars plottable.
   If there is no such plottable, returns 0.
   
-  \see barBelow, moveBelow, moveAbove
+   \sa barBelow, moveBelow, moveAbove
 */
 
 /* end of documentation of inline functions */
@@ -23267,10 +23267,10 @@ QCPBars::~QCPBars()
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpbars-datasharing-1
   
   If you do not wish to share containers, but create a copy from an existing container, rather use
-  the \ref QCPDataContainer<DataType>::set method on the bar's data container directly:
+  the   QCPDataContainer<DataType>::set method on the bar's data container directly:
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpbars-datasharing-2
   
-  \see addData
+   \sa addData
 */
 void QCPBars::setData(QSharedPointer<QCPBarsDataContainer> data)
 {
@@ -23286,7 +23286,7 @@ void QCPBars::setData(QSharedPointer<QCPBarsDataContainer> data)
   If you can guarantee that the passed data points are sorted by \a keys in ascending order, you
   can set \a alreadySorted to true, to improve performance by saving a sorting run.
   
-  \see addData
+   \sa addData
 */
 void QCPBars::setData(const QVector<double> &keys, const QVector<double> &values, bool alreadySorted)
 {
@@ -23298,7 +23298,7 @@ void QCPBars::setData(const QVector<double> &keys, const QVector<double> &values
   Sets the width of the bars.
 
   How the number passed as \a width is interpreted (e.g. screen pixels, plot coordinates,...),
-  depends on the currently set width type, see \ref setWidthType and \ref WidthType.
+  depends on the currently set width type, see   setWidthType and   WidthType.
 */
 void QCPBars::setWidth(double width)
 {
@@ -23306,12 +23306,12 @@ void QCPBars::setWidth(double width)
 }
 
 /*!
-  Sets how the width of the bars is defined. See the documentation of \ref WidthType for an
+  Sets how the width of the bars is defined. See the documentation of   WidthType for an
   explanation of the possible values for \a widthType.
   
-  The default value is \ref wtPlotCoords.
+  The default value is   wtPlotCoords.
   
-  \see setWidth
+   \sa setWidth
 */
 void QCPBars::setWidthType(QCPBars::WidthType widthType)
 {
@@ -23319,7 +23319,7 @@ void QCPBars::setWidthType(QCPBars::WidthType widthType)
 }
 
 /*!
-  Sets to which QCPBarsGroup this QCPBars instance belongs to. Alternatively, you can also use \ref
+  Sets to which QCPBarsGroup this QCPBars instance belongs to. Alternatively, you can also use
   QCPBarsGroup::append.
   
   To remove this QCPBars from any group, set \a barsGroup to 0.
@@ -23353,7 +23353,7 @@ void QCPBars::setBaseValue(double baseValue)
 }
 
 /*!
-  If this bars plottable is stacked on top of another bars plottable (\ref moveAbove), this method
+  If this bars plottable is stacked on top of another bars plottable (  moveAbove), this method
   allows specifying a distance in \a pixels, by which the drawn bar rectangles will be separated by
   the bars below it.
 */
@@ -23371,7 +23371,7 @@ void QCPBars::setStackingGap(double pixels)
   If you can guarantee that the passed data points are sorted by \a keys in ascending order, you
   can set \a alreadySorted to true, to improve performance by saving a sorting run.
   
-  Alternatively, you can also access and modify the data directly via the \ref data method, which
+  Alternatively, you can also access and modify the data directly via the   data method, which
   returns a pointer to the internal data container.
 */
 void QCPBars::addData(const QVector<double> &keys, const QVector<double> &values, bool alreadySorted)
@@ -23396,7 +23396,7 @@ void QCPBars::addData(const QVector<double> &keys, const QVector<double> &values
 /*! \overload
   Adds the provided data point as \a key and \a value to the current data.
   
-  Alternatively, you can also access and modify the data directly via the \ref data method, which
+  Alternatively, you can also access and modify the data directly via the   data method, which
   returns a pointer to the internal data container.
 */
 void QCPBars::addData(double key, double value)
@@ -23416,7 +23416,7 @@ void QCPBars::addData(double key, double value)
   
   To remove this bars plottable from any stacking, set \a bars to 0.
   
-  \see moveBelow, barAbove, barBelow
+   \sa moveBelow, barAbove, barBelow
 */
 void QCPBars::moveBelow(QCPBars *bars)
 {
@@ -23449,7 +23449,7 @@ void QCPBars::moveBelow(QCPBars *bars)
   
   To remove this bars plottable from any stacking, set \a bars to 0.
   
-  \see moveBelow, barBelow, barAbove
+   \sa moveBelow, barBelow, barAbove
 */
 void QCPBars::moveAbove(QCPBars *bars)
 {
@@ -23688,7 +23688,7 @@ void QCPBars::drawLegendIcon(QCPPainter *painter, const QRectF &rect) const
 
 /*!  \internal
   
-  called by \ref draw to determine which data (key) range is visible at the current key axis range
+  called by   draw to determine which data (key) range is visible at the current key axis range
   setting, so only that needs to be processed. It also takes into account the bar width.
   
   \a begin returns an iterator to the lowest data point that needs to be taken into account when
@@ -23757,7 +23757,7 @@ void QCPBars::getVisibleDataBounds(QCPBarsDataContainer::const_iterator &begin, 
 /*! \internal
   
   Returns the rect in pixel coordinates of a single bar with the specified \a key and \a value. The
-  rect is shifted according to the bar stacking (see \ref moveAbove) and base value (see \ref
+  rect is shifted according to the bar stacking (see   moveAbove) and base value (see
   setBaseValue), and to have non-overlapping border lines with the bars stacked below.
 */
 QRectF QCPBars::getBarRect(double key, double value) const
@@ -23791,7 +23791,7 @@ QRectF QCPBars::getBarRect(double key, double value) const
 /*! \internal
   
   This function is used to determine the width of the bar at coordinate \a key, according to the
-  specified width (\ref setWidth) and width type (\ref setWidthType).
+  specified width (  setWidth) and width type (  setWidthType).
   
   The output parameters \a lower and \a upper return the number of pixels the bar extends to lower
   and higher keys, relative to the \a key coordinate (so with a non-reversed horizontal axis, \a
@@ -23841,7 +23841,7 @@ void QCPBars::getPixelWidth(double key, double &lower, double &upper) const
 /*! \internal
   
   This function is called to find at which value to start drawing the base of a bar at \a key, when
-  it is stacked on top of another QCPBars (e.g. with \ref moveAbove).
+  it is stacked on top of another QCPBars (e.g. with   moveAbove).
   
   positive and negative bars are separated per stack (positive are stacked above baseValue upwards,
   negative are stacked below baseValue downwards). This can be indicated with \a positive. So if the
@@ -23945,14 +23945,14 @@ void QCPBars::connectBars(QCPBars *lower, QCPBars *upper)
   sample that's not considered an outlier.
   
   \li \a outliers: a QVector of outlier values that will be drawn as scatter points at the \a key
-  coordinate of this data point (see \ref QCPStatisticalBox::setOutlierStyle)
+  coordinate of this data point (see   QCPStatisticalBox::setOutlierStyle)
   
-  The container for storing multiple data points is \ref QCPStatisticalBoxDataContainer. It is a
-  typedef for \ref QCPDataContainer with \ref QCPStatisticalBoxData as the DataType template
+  The container for storing multiple data points is   QCPStatisticalBoxDataContainer. It is a
+  typedef for   QCPDataContainer with   QCPStatisticalBoxData as the DataType template
   parameter. See the documentation there for an explanation regarding the data type's generic
   methods.
   
-  \see QCPStatisticalBoxDataContainer
+   \sa QCPStatisticalBoxDataContainer
 */
 
 /* start documentation of inline functions */
@@ -23962,7 +23962,7 @@ void QCPBars::connectBars(QCPBars *lower, QCPBars *upper)
   Returns the \a key member of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn static QCPStatisticalBoxData QCPStatisticalBoxData::fromSortKey(double sortKey)
@@ -23970,7 +23970,7 @@ void QCPBars::connectBars(QCPBars *lower, QCPBars *upper)
   Returns a data point with the specified \a sortKey. All other members are set to zero.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn static static bool QCPStatisticalBoxData::sortKeyIsMainKey()
@@ -23979,7 +23979,7 @@ void QCPBars::connectBars(QCPBars *lower, QCPBars *upper)
   this method returns true.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn double QCPStatisticalBoxData::mainKey() const
@@ -23987,7 +23987,7 @@ void QCPBars::connectBars(QCPBars *lower, QCPBars *upper)
   Returns the \a key member of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn double QCPStatisticalBoxData::mainValue() const
@@ -23995,7 +23995,7 @@ void QCPBars::connectBars(QCPBars *lower, QCPBars *upper)
   Returns the \a median member of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn QCPRange QCPStatisticalBoxData::valueRange() const
@@ -24004,7 +24004,7 @@ void QCPBars::connectBars(QCPBars *lower, QCPBars *upper)
   data point, possibly further expanded by outliers.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /* end documentation of inline functions */
@@ -24047,34 +24047,34 @@ QCPStatisticalBoxData::QCPStatisticalBoxData(double key, double minimum, double 
 
   \image html QCPStatisticalBox.png
   
-  To plot data, assign it with the \ref setData or \ref addData functions. Alternatively, you can
-  also access and modify the data via the \ref data method, which returns a pointer to the internal
-  \ref QCPStatisticalBoxDataContainer.
+  To plot data, assign it with the   setData or   addData functions. Alternatively, you can
+  also access and modify the data via the   data method, which returns a pointer to the internal
+    QCPStatisticalBoxDataContainer.
   
   Additionally each data point can itself have a list of outliers, drawn as scatter points at the
   key coordinate of the respective statistical box data point. They can either be set by using the
-  respective \ref addData(double,double,double,double,double,double,const QVector<double>&)
-  "addData" method or accessing the individual data points through \ref data, and setting the
+  respective   addData(double,double,double,double,double,double,const QVector<double>&)
+  "addData" method or accessing the individual data points through   data, and setting the
   <tt>QVector<double> outliers</tt> of the data points directly.
   
   \section qcpstatisticalbox-appearance Changing the appearance
   
   The appearance of each data point box, ranging from the lower to the upper quartile, is
-  controlled via \ref setPen and \ref setBrush. You may change the width of the boxes with \ref
+  controlled via   setPen and   setBrush. You may change the width of the boxes with
   setWidth in plot coordinates.
 
   Each data point's visual representation also consists of two whiskers. Whiskers are the lines
   which reach from the upper quartile to the maximum, and from the lower quartile to the minimum.
-  The appearance of the whiskers can be modified with: \ref setWhiskerPen, \ref setWhiskerBarPen,
-  \ref setWhiskerWidth. The whisker width is the width of the bar perpendicular to the whisker at
+  The appearance of the whiskers can be modified with:   setWhiskerPen,   setWhiskerBarPen,
+    setWhiskerWidth. The whisker width is the width of the bar perpendicular to the whisker at
   the top (for maximum) and bottom (for minimum). If the whisker pen is changed, make sure to set
   the \c capStyle to \c Qt::FlatCap. Otherwise the backbone line might exceed the whisker bars by a
   few pixels due to the pen cap being not perfectly flat.
   
-  The median indicator line inside the box has its own pen, \ref setMedianPen.
+  The median indicator line inside the box has its own pen,   setMedianPen.
   
   The outlier data points are drawn as normal scatter points. Their look can be controlled with
-  \ref setOutlierStyle
+    setOutlierStyle
   
   \section qcpstatisticalbox-usage Usage
   
@@ -24094,9 +24094,9 @@ QCPStatisticalBoxData::QCPStatisticalBoxData(double key, double minimum, double 
 
 /*! \fn QSharedPointer<QCPStatisticalBoxDataContainer> QCPStatisticalBox::data() const
   
-  Returns a shared pointer to the internal data storage of type \ref
+  Returns a shared pointer to the internal data storage of type
   QCPStatisticalBoxDataContainer. You may use it to directly manipulate the data, which may be more
-  convenient and faster than using the regular \ref setData or \ref addData methods.
+  convenient and faster than using the regular   setData or   addData methods.
 */
 
 /* end documentation of inline functions */
@@ -24136,10 +24136,10 @@ QCPStatisticalBox::QCPStatisticalBox(QCPAxis *keyAxis, QCPAxis *valueAxis) :
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpstatisticalbox-datasharing-1
   
   If you do not wish to share containers, but create a copy from an existing container, rather use
-  the \ref QCPDataContainer<DataType>::set method on the statistical box data container directly:
+  the   QCPDataContainer<DataType>::set method on the statistical box data container directly:
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpstatisticalbox-datasharing-2
   
-  \see addData
+   \sa addData
 */
 void QCPStatisticalBox::setData(QSharedPointer<QCPStatisticalBoxDataContainer> data)
 {
@@ -24154,7 +24154,7 @@ void QCPStatisticalBox::setData(QSharedPointer<QCPStatisticalBoxDataContainer> d
   If you can guarantee that the passed data points are sorted by \a keys in ascending order, you
   can set \a alreadySorted to true, to improve performance by saving a sorting run.
   
-  \see addData
+   \sa addData
 */
 void QCPStatisticalBox::setData(const QVector<double> &keys, const QVector<double> &minimum, const QVector<double> &lowerQuartile, const QVector<double> &median, const QVector<double> &upperQuartile, const QVector<double> &maximum, bool alreadySorted)
 {
@@ -24165,7 +24165,7 @@ void QCPStatisticalBox::setData(const QVector<double> &keys, const QVector<doubl
 /*!
   Sets the width of the boxes in key coordinates.
   
-  \see setWhiskerWidth
+   \sa setWhiskerWidth
 */
 void QCPStatisticalBox::setWidth(double width)
 {
@@ -24178,7 +24178,7 @@ void QCPStatisticalBox::setWidth(double width)
   Whiskers are the lines which reach from the upper quartile to the maximum, and from the lower
   quartile to the minimum.
   
-  \see setWidth
+   \sa setWidth
 */
 void QCPStatisticalBox::setWhiskerWidth(double width)
 {
@@ -24194,7 +24194,7 @@ void QCPStatisticalBox::setWhiskerWidth(double width)
   Make sure to set the \c capStyle of the passed \a pen to \c Qt::FlatCap. Otherwise the backbone
   line might exceed the whisker bars by a few pixels due to the pen cap being not perfectly flat.
   
-  \see setWhiskerBarPen
+   \sa setWhiskerBarPen
 */
 void QCPStatisticalBox::setWhiskerPen(const QPen &pen)
 {
@@ -24208,7 +24208,7 @@ void QCPStatisticalBox::setWhiskerPen(const QPen &pen)
   Whiskers are the lines which reach from the upper quartile to the maximum, and from the lower
   quartile to the minimum.
   
-  \see setWhiskerPen
+   \sa setWhiskerPen
 */
 void QCPStatisticalBox::setWhiskerBarPen(const QPen &pen)
 {
@@ -24238,7 +24238,7 @@ void QCPStatisticalBox::setMedianPen(const QPen &pen)
   Sets the appearance of the outlier data points.
 
   Outliers can be specified with the method
-  \ref addData(double key, double minimum, double lowerQuartile, double median, double upperQuartile, double maximum, const QVector<double> &outliers)
+    addData(double key, double minimum, double lowerQuartile, double median, double upperQuartile, double maximum, const QVector<double> &outliers)
 */
 void QCPStatisticalBox::setOutlierStyle(const QCPScatterStyle &style)
 {
@@ -24254,7 +24254,7 @@ void QCPStatisticalBox::setOutlierStyle(const QCPScatterStyle &style)
   If you can guarantee that the passed data points are sorted by \a keys in ascending order, you
   can set \a alreadySorted to true, to improve performance by saving a sorting run.
    
-  Alternatively, you can also access and modify the data directly via the \ref data method, which
+  Alternatively, you can also access and modify the data directly via the   data method, which
   returns a pointer to the internal data container.
 */
 void QCPStatisticalBox::addData(const QVector<double> &keys, const QVector<double> &minimum, const QVector<double> &lowerQuartile, const QVector<double> &median, const QVector<double> &upperQuartile, const QVector<double> &maximum, bool alreadySorted)
@@ -24287,7 +24287,7 @@ void QCPStatisticalBox::addData(const QVector<double> &keys, const QVector<doubl
   Adds the provided data point as \a key, \a minimum, \a lowerQuartile, \a median, \a upperQuartile
   and \a maximum to the current data.
   
-  Alternatively, you can also access and modify the data directly via the \ref data method, which
+  Alternatively, you can also access and modify the data directly via the   data method, which
   returns a pointer to the internal data container.
 */
 void QCPStatisticalBox::addData(double key, double minimum, double lowerQuartile, double median, double upperQuartile, double maximum, const QVector<double> &outliers)
@@ -24465,7 +24465,7 @@ void QCPStatisticalBox::drawLegendIcon(QCPPainter *painter, const QRectF &rect) 
 
   If the statistical box has a set of outlier data points, they are drawn with \a outlierStyle.
 
-  \see getQuartileBox, getWhiskerBackboneLines, getWhiskerBarLines
+   \sa getQuartileBox, getWhiskerBackboneLines, getWhiskerBarLines
 */
 void QCPStatisticalBox::drawStatisticalBox(QCPPainter *painter, QCPStatisticalBoxDataContainer::const_iterator it, const QCPScatterStyle &outlierStyle) const
 {
@@ -24494,7 +24494,7 @@ void QCPStatisticalBox::drawStatisticalBox(QCPPainter *painter, QCPStatisticalBo
 
 /*!  \internal
   
-  called by \ref draw to determine which data (key) range is visible at the current key axis range
+  called by   draw to determine which data (key) range is visible at the current key axis range
   setting, so only that needs to be processed. It also takes into account the bar width.
   
   \a begin returns an iterator to the lowest data point that needs to be taken into account when
@@ -24524,7 +24524,7 @@ void QCPStatisticalBox::getVisibleDataBounds(QCPStatisticalBoxDataContainer::con
   Returns the box in plot coordinates (keys in x, values in y of the returned rect) that covers the
   value range from the lower to the upper quartile, of the data given by \a it.
 
-  \see drawStatisticalBox, getWhiskerBackboneLines, getWhiskerBarLines
+   \sa drawStatisticalBox, getWhiskerBackboneLines, getWhiskerBarLines
 */
 QRectF QCPStatisticalBox::getQuartileBox(QCPStatisticalBoxDataContainer::const_iterator it) const
 {
@@ -24540,7 +24540,7 @@ QRectF QCPStatisticalBox::getQuartileBox(QCPStatisticalBoxDataContainer::const_i
   range from the minimum to the lower quartile, and from the upper quartile to the maximum of the
   data given by \a it.
 
-  \see drawStatisticalBox, getQuartileBox, getWhiskerBarLines
+   \sa drawStatisticalBox, getQuartileBox, getWhiskerBarLines
 */
 QVector<QLineF> QCPStatisticalBox::getWhiskerBackboneLines(QCPStatisticalBoxDataContainer::const_iterator it) const
 {
@@ -24555,7 +24555,7 @@ QVector<QLineF> QCPStatisticalBox::getWhiskerBackboneLines(QCPStatisticalBoxData
   Returns the whisker bars (keys in x, values in y of the returned lines) that are placed at the
   end of the whisker backbones, at the minimum and maximum of the data given by \a it.
 
-  \see drawStatisticalBox, getQuartileBox, getWhiskerBackboneLines
+   \sa drawStatisticalBox, getQuartileBox, getWhiskerBackboneLines
 */
 QVector<QLineF> QCPStatisticalBox::getWhiskerBarLines(QCPStatisticalBoxDataContainer::const_iterator it) const
 {
@@ -24577,23 +24577,23 @@ QVector<QLineF> QCPStatisticalBox::getWhiskerBarLines(QCPStatisticalBoxDataConta
 /*! \class QCPColorMapData
   \brief Holds the two-dimensional data of a QCPColorMap plottable.
   
-  This class is a data storage for \ref QCPColorMap. It holds a two-dimensional array, which \ref
+  This class is a data storage for   QCPColorMap. It holds a two-dimensional array, which
   QCPColorMap then displays as a 2D image in the plot, where the array values are represented by a
   color, depending on the value.
   
-  The size of the array can be controlled via \ref setSize (or \ref setKeySize, \ref setValueSize).
-  Which plot coordinates these cells correspond to can be configured with \ref setRange (or \ref
-  setKeyRange, \ref setValueRange).
+  The size of the array can be controlled via   setSize (or   setKeySize,   setValueSize).
+  Which plot coordinates these cells correspond to can be configured with   setRange (or
+  setKeyRange,   setValueRange).
   
   The data cells can be accessed in two ways: They can be directly addressed by an integer index
-  with \ref setCell. This is the fastest method. Alternatively, they can be addressed by their plot
-  coordinate with \ref setData. plot coordinate to cell index transformations and vice versa are
-  provided by the functions \ref coordToCell and \ref cellToCoord.
+  with   setCell. This is the fastest method. Alternatively, they can be addressed by their plot
+  coordinate with   setData. plot coordinate to cell index transformations and vice versa are
+  provided by the functions   coordToCell and   cellToCoord.
   
-  A \ref QCPColorMapData also holds an on-demand two-dimensional array of alpha values which (if
-  allocated) has the same size as the data map. It can be accessed via \ref setAlpha, \ref
-  fillAlpha and \ref clearAlpha. The memory for the alpha map is only allocated if needed, i.e. on
-  the first call of \ref setAlpha. \ref clearAlpha restores full opacity and frees the alpha map.
+  A   QCPColorMapData also holds an on-demand two-dimensional array of alpha values which (if
+  allocated) has the same size as the data map. It can be accessed via   setAlpha,
+  fillAlpha and   clearAlpha. The memory for the alpha map is only allocated if needed, i.e. on
+  the first call of   setAlpha.   clearAlpha restores full opacity and frees the alpha map.
   
   This class also buffers the minimum and maximum values that are in the data set, to provide
   QCPColorMap::rescaleDataRange with the necessary information quickly. Setting a cell to a value
@@ -24601,9 +24601,9 @@ QVector<QLineF> QCPStatisticalBox::getWhiskerBarLines(QCPStatisticalBoxDataConta
   setting the cell that currently holds the maximum value to a smaller value doesn't decrease the
   maximum again, because finding the true new maximum would require going through the entire data
   array, which might be time consuming. The same holds for the data minimum. This functionality is
-  given by \ref recalculateDataBounds, such that you can decide when it is sensible to find the
+  given by   recalculateDataBounds, such that you can decide when it is sensible to find the
   true current minimum and maximum. The method QCPColorMap::rescaleDataRange offers a convenience
-  parameter \a recalculateDataBounds which may be set to true to automatically call \ref
+  parameter \a recalculateDataBounds which may be set to true to automatically call
   recalculateDataBounds internally.
 */
 
@@ -24612,17 +24612,17 @@ QVector<QLineF> QCPStatisticalBox::getWhiskerBarLines(QCPStatisticalBoxDataConta
 /*! \fn bool QCPColorMapData::isEmpty() const
   
   Returns whether this instance carries no data. This is equivalent to having a size where at least
-  one of the dimensions is 0 (see \ref setSize).
+  one of the dimensions is 0 (see   setSize).
 */
 
 /* end of documentation of inline functions */
 
 /*!
   Constructs a new QCPColorMapData instance. The instance has \a keySize cells in the key direction
-  and \a valueSize cells in the value direction. These cells will be displayed by the \ref QCPColorMap
+  and \a valueSize cells in the value direction. These cells will be displayed by the   QCPColorMap
   at the coordinates \a keyRange and \a valueRange.
   
-  \see setSize, setKeySize, setValueSize, setRange, setKeyRange, setValueRange
+   \sa setSize, setKeySize, setValueSize, setRange, setKeyRange, setValueRange
 */
 QCPColorMapData::QCPColorMapData(int keySize, int valueSize, const QCPRange &keyRange, const QCPRange &valueRange) :
   mKeySize(0),
@@ -24711,10 +24711,10 @@ double QCPColorMapData::cell(int keyIndex, int valueIndex)
 /*!
   Returns the alpha map value of the cell with the indices \a keyIndex and \a valueIndex.
 
-  If this color map data doesn't have an alpha map (because \ref setAlpha was never called after
-  creation or after a call to \ref clearAlpha), returns 255, which corresponds to full opacity.
+  If this color map data doesn't have an alpha map (because   setAlpha was never called after
+  creation or after a call to   clearAlpha), returns 255, which corresponds to full opacity.
 
-  \see setAlpha
+   \sa setAlpha
 */
 unsigned char QCPColorMapData::alpha(int keyIndex, int valueIndex)
 {
@@ -24731,10 +24731,10 @@ unsigned char QCPColorMapData::alpha(int keyIndex, int valueIndex)
   The current data is discarded and the map cells are set to 0, unless the map had already the
   requested size.
   
-  Setting at least one of \a keySize or \a valueSize to zero frees the internal data array and \ref
+  Setting at least one of \a keySize or \a valueSize to zero frees the internal data array and
   isEmpty returns true.
 
-  \see setRange, setKeySize, setValueSize
+   \sa setRange, setKeySize, setValueSize
 */
 void QCPColorMapData::setSize(int keySize, int valueSize)
 {
@@ -24774,9 +24774,9 @@ void QCPColorMapData::setSize(int keySize, int valueSize)
   The current data is discarded and the map cells are set to 0, unless the map had already the
   requested size.
   
-  Setting \a keySize to zero frees the internal data array and \ref isEmpty returns true.
+  Setting \a keySize to zero frees the internal data array and   isEmpty returns true.
 
-  \see setKeyRange, setSize, setValueSize
+   \sa setKeyRange, setSize, setValueSize
 */
 void QCPColorMapData::setKeySize(int keySize)
 {
@@ -24789,9 +24789,9 @@ void QCPColorMapData::setKeySize(int keySize)
   The current data is discarded and the map cells are set to 0, unless the map had already the
   requested size.
   
-  Setting \a valueSize to zero frees the internal data array and \ref isEmpty returns true.
+  Setting \a valueSize to zero frees the internal data array and   isEmpty returns true.
 
-  \see setValueRange, setSize, setKeySize
+   \sa setValueRange, setSize, setKeySize
 */
 void QCPColorMapData::setValueSize(int valueSize)
 {
@@ -24803,10 +24803,10 @@ void QCPColorMapData::setValueSize(int valueSize)
   covered by the color map in plot coordinates.
   
   The outer cells will be centered on the range boundaries given to this function. For example, if
-  the key size (\ref setKeySize) is 3 and \a keyRange is set to <tt>QCPRange(2, 3)</tt> there will
+  the key size (  setKeySize) is 3 and \a keyRange is set to <tt>QCPRange(2, 3)</tt> there will
   be cells centered on the key coordinates 2, 2.5 and 3.
  
-  \see setSize
+   \sa setSize
 */
 void QCPColorMapData::setRange(const QCPRange &keyRange, const QCPRange &valueRange)
 {
@@ -24819,10 +24819,10 @@ void QCPColorMapData::setRange(const QCPRange &keyRange, const QCPRange &valueRa
   the value range, This defines the rectangular area covered by the color map in plot coordinates.
   
   The outer cells will be centered on the range boundaries given to this function. For example, if
-  the key size (\ref setKeySize) is 3 and \a keyRange is set to <tt>QCPRange(2, 3)</tt> there will
+  the key size (  setKeySize) is 3 and \a keyRange is set to <tt>QCPRange(2, 3)</tt> there will
   be cells centered on the key coordinates 2, 2.5 and 3.
  
-  \see setRange, setValueRange, setSize
+   \sa setRange, setValueRange, setSize
 */
 void QCPColorMapData::setKeyRange(const QCPRange &keyRange)
 {
@@ -24834,10 +24834,10 @@ void QCPColorMapData::setKeyRange(const QCPRange &keyRange)
   the key range, This defines the rectangular area covered by the color map in plot coordinates.
   
   The outer cells will be centered on the range boundaries given to this function. For example, if
-  the value size (\ref setValueSize) is 3 and \a valueRange is set to <tt>QCPRange(2, 3)</tt> there
+  the value size (  setValueSize) is 3 and \a valueRange is set to <tt>QCPRange(2, 3)</tt> there
   will be cells centered on the value coordinates 2, 2.5 and 3.
  
-  \see setRange, setKeyRange, setSize
+   \sa setRange, setKeyRange, setSize
 */
 void QCPColorMapData::setValueRange(const QCPRange &valueRange)
 {
@@ -24850,11 +24850,11 @@ void QCPColorMapData::setValueRange(const QCPRange &valueRange)
   
   \note The QCPColorMap always displays the data at equal key/value intervals, even if the key or
   value axis is set to a logarithmic scaling. If you want to use QCPColorMap with logarithmic axes,
-  you shouldn't use the \ref QCPColorMapData::setData method as it uses a linear transformation to
-  determine the cell index. Rather directly access the cell index with \ref
+  you shouldn't use the   QCPColorMapData::setData method as it uses a linear transformation to
+  determine the cell index. Rather directly access the cell index with
   QCPColorMapData::setCell.
  
-  \see setCell, setRange
+   \sa setCell, setRange
 */
 void QCPColorMapData::setData(double key, double value, double z)
 {
@@ -24874,13 +24874,13 @@ void QCPColorMapData::setData(double key, double value, double z)
 /*!
   Sets the data of the cell with indices \a keyIndex and \a valueIndex to \a z. The indices
   enumerate the cells starting from zero, up to the map's size-1 in the respective dimension (see
-  \ref setSize).
+    setSize).
   
   In the standard plot configuration (horizontal key axis and vertical value axis, both not
   range-reversed), the cell with indices (0, 0) is in the bottom left corner and the cell with
   indices (keySize-1, valueSize-1) is in the top right corner of the color map.
   
-  \see setData, setSize
+   \sa setData, setSize
 */
 void QCPColorMapData::setCell(int keyIndex, int valueIndex, double z)
 {
@@ -24902,14 +24902,14 @@ void QCPColorMapData::setCell(int keyIndex, int valueIndex, double z)
   opaque cell.
 
   If an alpha map doesn't exist yet for this color map data, it will be created here. If you wish
-  to restore full opacity and free any allocated memory of the alpha map, call \ref clearAlpha.
+  to restore full opacity and free any allocated memory of the alpha map, call   clearAlpha.
 
   Note that the cell-wise alpha which can be configured here is independent of any alpha configured
-  in the color map's gradient (\ref QCPColorGradient). If a cell is affected both by the cell-wise
+  in the color map's gradient (  QCPColorGradient). If a cell is affected both by the cell-wise
   and gradient alpha, the alpha values will be blended accordingly during rendering of the color
   map.
 
-  \see fillAlpha, clearAlpha
+   \sa fillAlpha, clearAlpha
 */
 void QCPColorMapData::setAlpha(int keyIndex, int valueIndex, unsigned char alpha)
 {
@@ -24927,13 +24927,13 @@ void QCPColorMapData::setAlpha(int keyIndex, int valueIndex, unsigned char alpha
 /*!
   Goes through the data and updates the buffered minimum and maximum data values.
   
-  Calling this method is only advised if you are about to call \ref QCPColorMap::rescaleDataRange
+  Calling this method is only advised if you are about to call   QCPColorMap::rescaleDataRange
   and can not guarantee that the cells holding the maximum or minimum data haven't been overwritten
   with a smaller or larger value respectively, since the buffered maximum/minimum values have been
-  updated the last time. Why this is the case is explained in the class description (\ref
+  updated the last time. Why this is the case is explained in the class description (
   QCPColorMapData).
   
-  Note that the method \ref QCPColorMap::rescaleDataRange provides a parameter \a
+  Note that the method   QCPColorMap::rescaleDataRange provides a parameter \a
   recalculateDataBounds for convenience. Setting this to true will call this method for you, before
   doing the rescale.
 */
@@ -24959,7 +24959,7 @@ void QCPColorMapData::recalculateDataBounds()
 /*!
   Frees the internal data memory.
   
-  This is equivalent to calling \ref setSize "setSize(0, 0)".
+  This is equivalent to calling   setSize "setSize(0, 0)".
 */
 void QCPColorMapData::clear()
 {
@@ -24996,9 +24996,9 @@ void QCPColorMapData::fill(double z)
   transparent color map, and a value of 255 results in a fully opaque color map.
 
   If you wish to restore opacity to 100% and free any used memory for the alpha map, rather use
-  \ref clearAlpha.
+    clearAlpha.
 
-  \see setAlpha
+   \sa setAlpha
 */
 void QCPColorMapData::fillAlpha(unsigned char alpha)
 {
@@ -25016,17 +25016,17 @@ void QCPColorMapData::fillAlpha(unsigned char alpha)
   instance. The resulting cell indices are returned via the output parameters \a keyIndex and \a
   valueIndex.
   
-  The retrieved key/value cell indices can then be used for example with \ref setCell.
+  The retrieved key/value cell indices can then be used for example with   setCell.
   
   If you are only interested in a key or value index, you may pass 0 as \a valueIndex or \a
   keyIndex.
   
   \note The QCPColorMap always displays the data at equal key/value intervals, even if the key or
   value axis is set to a logarithmic scaling. If you want to use QCPColorMap with logarithmic axes,
-  you shouldn't use the \ref QCPColorMapData::coordToCell method as it uses a linear transformation to
+  you shouldn't use the   QCPColorMapData::coordToCell method as it uses a linear transformation to
   determine the cell index.
   
-  \see cellToCoord, QCPAxis::coordToPixel
+   \sa cellToCoord, QCPAxis::coordToPixel
 */
 void QCPColorMapData::coordToCell(double key, double value, int *keyIndex, int *valueIndex) const
 {
@@ -25046,10 +25046,10 @@ void QCPColorMapData::coordToCell(double key, double value, int *keyIndex, int *
   
   \note The QCPColorMap always displays the data at equal key/value intervals, even if the key or
   value axis is set to a logarithmic scaling. If you want to use QCPColorMap with logarithmic axes,
-  you shouldn't use the \ref QCPColorMapData::cellToCoord method as it uses a linear transformation to
+  you shouldn't use the   QCPColorMapData::cellToCoord method as it uses a linear transformation to
   determine the cell index.
   
-  \see coordToCell, QCPAxis::pixelToCoord
+   \sa coordToCell, QCPAxis::pixelToCoord
 */
 void QCPColorMapData::cellToCoord(int keyIndex, int valueIndex, double *key, double *value) const
 {
@@ -25064,10 +25064,10 @@ void QCPColorMapData::cellToCoord(int keyIndex, int valueIndex, double *key, dou
   Allocates the internal alpha map with the current data map key/value size and, if \a
   initializeOpaque is true, initializes all values to 255. If \a initializeOpaque is false, the
   values are not initialized at all. In this case, the alpha map should be initialized manually,
-  e.g. with \ref fillAlpha.
+  e.g. with   fillAlpha.
 
   If an alpha map exists already, it is deleted first. If this color map is empty (has either key
-  or value size zero, see \ref isEmpty), the alpha map is cleared.
+  or value size zero, see   isEmpty), the alpha map is cleared.
 
   The return value indicates the existence of the alpha map after the call. So this method returns
   true if the data map isn't empty and an alpha map was successfully allocated.
@@ -25107,7 +25107,7 @@ bool QCPColorMapData::createAlpha(bool initializeOpaque)
 
   \image html QCPColorMap.png
   
-  The data is stored in the class \ref QCPColorMapData, which can be accessed via the data()
+  The data is stored in the class   QCPColorMapData, which can be accessed via the data()
   method.
   
   A color map has three dimensions to represent a data point: The \a key dimension, the \a value
@@ -25116,42 +25116,42 @@ bool QCPColorMapData::createAlpha(bool initializeOpaque)
   constructor. The \a data dimension however is encoded as the color of the point at (\a key, \a
   value).
 
-  Set the number of points (or \a cells) in the key/value dimension via \ref
+  Set the number of points (or \a cells) in the key/value dimension via
   QCPColorMapData::setSize. The plot coordinate range over which these points will be displayed is
-  specified via \ref QCPColorMapData::setRange. The first cell will be centered on the lower range
+  specified via   QCPColorMapData::setRange. The first cell will be centered on the lower range
   boundary and the last cell will be centered on the upper range boundary. The data can be set by
   either accessing the cells directly with QCPColorMapData::setCell or by addressing the cells via
-  their plot coordinates with \ref QCPColorMapData::setData. If possible, you should prefer
+  their plot coordinates with   QCPColorMapData::setData. If possible, you should prefer
   setCell, since it doesn't need to do any coordinate transformation and thus performs a bit
   better.
   
   The cell with index (0, 0) is at the bottom left, if the color map uses normal (i.e. not reversed)
   key and value axes.
   
-  To show the user which colors correspond to which \a data values, a \ref QCPColorScale is
+  To show the user which colors correspond to which \a data values, a   QCPColorScale is
   typically placed to the right of the axis rect. See the documentation there for details on how to
   add and use a color scale.
   
   \section qcpcolormap-appearance Changing the appearance
   
-  The central part of the appearance is the color gradient, which can be specified via \ref
-  setGradient. See the documentation of \ref QCPColorGradient for details on configuring a color
+  The central part of the appearance is the color gradient, which can be specified via
+  setGradient. See the documentation of   QCPColorGradient for details on configuring a color
   gradient.
   
-  The \a data range that is mapped to the colors of the gradient can be specified with \ref
-  setDataRange. To make the data range encompass the whole data set minimum to maximum, call \ref
+  The \a data range that is mapped to the colors of the gradient can be specified with
+  setDataRange. To make the data range encompass the whole data set minimum to maximum, call
   rescaleDataRange.
   
   \section qcpcolormap-transparency Transparency
   
   Transparency in color maps can be achieved by two mechanisms. On one hand, you can specify alpha
-  values for color stops of the \ref QCPColorGradient, via the regular QColor interface. This will
+  values for color stops of the   QCPColorGradient, via the regular QColor interface. This will
   cause the color map data which gets mapped to colors around those color stops to appear with the
   accordingly interpolated transparency.
   
   On the other hand you can also directly apply an alpha value to each cell independent of its
-  data, by using the alpha map feature of \ref QCPColorMapData. The relevant methods are \ref
-  QCPColorMapData::setAlpha, QCPColorMapData::fillAlpha and \ref QCPColorMapData::clearAlpha().
+  data, by using the alpha map feature of   QCPColorMapData. The relevant methods are
+  QCPColorMapData::setAlpha, QCPColorMapData::fillAlpha and   QCPColorMapData::clearAlpha().
   
   The two transparencies will be joined together in the plot and otherwise not interfere with each
   other. They are mixed in a multiplicative matter, so an alpha of e.g. 50% (128/255) in both modes
@@ -25172,8 +25172,8 @@ bool QCPColorMapData::createAlpha(bool initializeOpaque)
   
   \note The QCPColorMap always displays the data at equal key/value intervals, even if the key or
   value axis is set to a logarithmic scaling. If you want to use QCPColorMap with logarithmic axes,
-  you shouldn't use the \ref QCPColorMapData::setData method as it uses a linear transformation to
-  determine the cell index. Rather directly access the cell index with \ref
+  you shouldn't use the   QCPColorMapData::setData method as it uses a linear transformation to
+  determine the cell index. Rather directly access the cell index with
   QCPColorMapData::setCell.
 */
 
@@ -25181,10 +25181,10 @@ bool QCPColorMapData::createAlpha(bool initializeOpaque)
 
 /*! \fn QCPColorMapData *QCPColorMap::data() const
   
-  Returns a pointer to the internal data storage of type \ref QCPColorMapData. Access this to
+  Returns a pointer to the internal data storage of type   QCPColorMapData. Access this to
   modify data points (cells) and the color map key/value range.
   
-  \see setData
+   \sa setData
 */
 
 /* end documentation of inline functions */
@@ -25195,21 +25195,21 @@ bool QCPColorMapData::createAlpha(bool initializeOpaque)
   
   This signal is emitted when the data range changes.
   
-  \see setDataRange
+   \sa setDataRange
 */
 
 /*! \fn void QCPColorMap::dataScaleTypeChanged(QCPAxis::ScaleType scaleType);
   
   This signal is emitted when the data scale type changes.
   
-  \see setDataScaleType
+   \sa setDataScaleType
 */
 
 /*! \fn void QCPColorMap::gradientChanged(const QCPColorGradient &newGradient);
   
   This signal is emitted when the gradient changes.
   
-  \see setGradient
+   \sa setGradient
 */
 
 /* end documentation of signals */
@@ -25237,7 +25237,7 @@ QCPColorMap::~QCPColorMap()
 }
 
 /*!
-  Replaces the current \ref data with the provided \a data.
+  Replaces the current   data with the provided \a data.
   
   If \a copy is set to true, the \a data object will only be copied. if false, the color map
   takes ownership of the passed data and replaces the internal data pointer with it. This is
@@ -25265,9 +25265,9 @@ void QCPColorMap::setData(QCPColorMapData *data, bool copy)
   Sets the data range of this color map to \a dataRange. The data range defines which data values
   are mapped to the color gradient.
   
-  To make the data range span the full range of the data set, use \ref rescaleDataRange.
+  To make the data range span the full range of the data set, use   rescaleDataRange.
   
-  \see QCPColorScale::setDataRange
+   \sa QCPColorScale::setDataRange
 */
 void QCPColorMap::setDataRange(const QCPRange &dataRange)
 {
@@ -25286,7 +25286,7 @@ void QCPColorMap::setDataRange(const QCPRange &dataRange)
 /*!
   Sets whether the data is correlated with the color gradient linearly or logarithmically.
   
-  \see QCPColorScale::setDataScaleType
+   \sa QCPColorScale::setDataScaleType
 */
 void QCPColorMap::setDataScaleType(QCPAxis::ScaleType scaleType)
 {
@@ -25302,14 +25302,14 @@ void QCPColorMap::setDataScaleType(QCPAxis::ScaleType scaleType)
 
 /*!
   Sets the color gradient that is used to represent the data. For more details on how to create an
-  own gradient or use one of the preset gradients, see \ref QCPColorGradient.
+  own gradient or use one of the preset gradients, see   QCPColorGradient.
   
   The colors defined by the gradient will be used to represent data values in the currently set
-  data range, see \ref setDataRange. Data points that are outside this data range will either be
+  data range, see   setDataRange. Data points that are outside this data range will either be
   colored uniformly with the respective gradient boundary color, or the gradient will repeat,
-  depending on \ref QCPColorGradient::setPeriodic.
+  depending on   QCPColorGradient::setPeriodic.
   
-  \see QCPColorScale::setGradient
+   \sa QCPColorScale::setGradient
 */
 void QCPColorMap::setGradient(const QCPColorGradient &gradient)
 {
@@ -25335,7 +25335,7 @@ void QCPColorMap::setInterpolate(bool enabled)
 
 /*!
   Sets whether the outer most data rows and columns are clipped to the specified key and value
-  range (see \ref QCPColorMapData::setKeyRange, \ref QCPColorMapData::setValueRange).
+  range (see   QCPColorMapData::setKeyRange,   QCPColorMapData::setValueRange).
   
   if \a enabled is set to false, the data points at the border of the color map are drawn with the
   same width and height as all other data points. Since the data points are represented by
@@ -25353,7 +25353,7 @@ void QCPColorMap::setTightBoundary(bool enabled)
   Associates the color scale \a colorScale with this color map.
   
   This means that both the color scale and the color map synchronize their gradient, data range and
-  data scale type (\ref setGradient, \ref setDataRange, \ref setDataScaleType). Multiple color maps
+  data scale type (  setGradient,   setDataRange,   setDataScaleType). Multiple color maps
   can be associated with one single color scale. This causes the color maps to also synchronize
   those properties, via the mutual color scale.
   
@@ -25390,12 +25390,12 @@ void QCPColorMap::setColorScale(QCPColorScale *colorScale)
 }
 
 /*!
-  Sets the data range (\ref setDataRange) to span the minimum and maximum values that occur in the
-  current data set. This corresponds to the \ref rescaleKeyAxis or \ref rescaleValueAxis methods,
+  Sets the data range (  setDataRange) to span the minimum and maximum values that occur in the
+  current data set. This corresponds to the   rescaleKeyAxis or   rescaleValueAxis methods,
   only for the third data dimension of the color map.
   
   The minimum and maximum values of the data set are buffered in the internal QCPColorMapData
-  instance (\ref data). As data is updated via its \ref QCPColorMapData::setCell or \ref
+  instance (  data). As data is updated via its   QCPColorMapData::setCell or
   QCPColorMapData::setData, the buffered minimum and maximum values are updated, too. For
   performance reasons, however, they are only updated in an expanding fashion. So the buffered
   maximum can only increase and the buffered minimum can only decrease. In consequence, changes to
@@ -25407,7 +25407,7 @@ void QCPColorMap::setColorScale(QCPColorScale *colorScale)
   recalculateDataBounds calls this method before setting the data range to the buffered minimum and
   maximum.
   
-  \see setDataRange
+   \sa setDataRange
 */
 void QCPColorMap::rescaleDataRange(bool recalculateDataBounds)
 {
@@ -25418,17 +25418,17 @@ void QCPColorMap::rescaleDataRange(bool recalculateDataBounds)
 
 /*!
   Takes the current appearance of the color map and updates the legend icon, which is used to
-  represent this color map in the legend (see \ref QCPLegend).
+  represent this color map in the legend (see   QCPLegend).
   
   The \a transformMode specifies whether the rescaling is done by a faster, low quality image
   scaling algorithm (Qt::FastTransformation) or by a slower, higher quality algorithm
   (Qt::SmoothTransformation).
   
   The current color map appearance is scaled down to \a thumbSize. Ideally, this should be equal to
-  the size of the legend icon (see \ref QCPLegend::setIconSize). If it isn't exactly the configured
+  the size of the legend icon (see   QCPLegend::setIconSize). If it isn't exactly the configured
   legend icon size, the thumb will be rescaled during drawing of the legend item.
   
-  \see setDataRange
+   \sa setDataRange
 */
 void QCPColorMap::updateLegendIcon(Qt::TransformationMode transformMode, const QSize &thumbSize)
 {
@@ -25521,16 +25521,16 @@ QCPRange QCPColorMap::getValueRange(bool &foundRange, QCP::SignDomain inSignDoma
 
 /*! \internal
   
-  Updates the internal map image buffer by going through the internal \ref QCPColorMapData and
-  turning the data values into color pixels with \ref QCPColorGradient::colorize.
+  Updates the internal map image buffer by going through the internal   QCPColorMapData and
+  turning the data values into color pixels with   QCPColorGradient::colorize.
   
-  This method is called by \ref QCPColorMap::draw if either the data has been modified or the map image
-  has been invalidated for a different reason (e.g. a change of the data range with \ref
+  This method is called by   QCPColorMap::draw if either the data has been modified or the map image
+  has been invalidated for a different reason (e.g. a change of the data range with
   setDataRange).
   
   If the map cell count is low, the image created will be oversampled in order to avoid a
   QPainter::drawImage bug which makes inner pixel boundaries jitter when stretch-drawing images
-  without smooth transform enabled. Accordingly, oversampling isn't performed if \ref
+  without smooth transform enabled. Accordingly, oversampling isn't performed if
   setInterpolate is true.
 */
 void QCPColorMap::updateMapImage()
@@ -25710,11 +25710,11 @@ void QCPColorMap::drawLegendIcon(QCPPainter *painter, const QRectF &rect) const
   \li \a low: The low/minimum value at the data point
   \li \a close: The closing value at the data point
   
-  The container for storing multiple data points is \ref QCPFinancialDataContainer. It is a typedef
-  for \ref QCPDataContainer with \ref QCPFinancialData as the DataType template parameter. See the
+  The container for storing multiple data points is   QCPFinancialDataContainer. It is a typedef
+  for   QCPDataContainer with   QCPFinancialData as the DataType template parameter. See the
   documentation there for an explanation regarding the data type's generic methods.
   
-  \see QCPFinancialDataContainer
+   \sa QCPFinancialDataContainer
 */
 
 /* start documentation of inline functions */
@@ -25724,7 +25724,7 @@ void QCPColorMap::drawLegendIcon(QCPPainter *painter, const QRectF &rect) const
   Returns the \a key member of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn static QCPFinancialData QCPFinancialData::fromSortKey(double sortKey)
@@ -25732,7 +25732,7 @@ void QCPColorMap::drawLegendIcon(QCPPainter *painter, const QRectF &rect) const
   Returns a data point with the specified \a sortKey. All other members are set to zero.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn static static bool QCPFinancialData::sortKeyIsMainKey()
@@ -25741,7 +25741,7 @@ void QCPColorMap::drawLegendIcon(QCPPainter *painter, const QRectF &rect) const
   this method returns true.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn double QCPFinancialData::mainKey() const
@@ -25749,7 +25749,7 @@ void QCPColorMap::drawLegendIcon(QCPPainter *painter, const QRectF &rect) const
   Returns the \a key member of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn double QCPFinancialData::mainValue() const
@@ -25757,7 +25757,7 @@ void QCPColorMap::drawLegendIcon(QCPPainter *painter, const QRectF &rect) const
   Returns the \a open member of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /*! \fn QCPRange QCPFinancialData::valueRange() const
@@ -25765,7 +25765,7 @@ void QCPColorMap::drawLegendIcon(QCPPainter *painter, const QRectF &rect) const
   Returns a QCPRange spanning from the \a low to the \a high value of this data point.
   
   For a general explanation of what this method is good for in the context of the data container,
-  see the documentation of \ref QCPDataContainer.
+  see the documentation of   QCPDataContainer.
 */
 
 /* end documentation of inline functions */
@@ -25806,28 +25806,28 @@ QCPFinancialData::QCPFinancialData(double key, double open, double high, double 
 
   This plottable represents time series data binned to certain intervals, mainly used for stock
   charts. The two common representations OHLC (Open-High-Low-Close) bars and Candlesticks can be
-  set via \ref setChartStyle.
+  set via   setChartStyle.
 
-  The data is passed via \ref setData as a set of open/high/low/close values at certain keys
+  The data is passed via   setData as a set of open/high/low/close values at certain keys
   (typically times). This means the data must be already binned appropriately. If data is only
   available as a series of values (e.g. \a price against \a time), you can use the static
-  convenience function \ref timeSeriesToOhlc to generate binned OHLC-data which can then be passed
-  to \ref setData.
+  convenience function   timeSeriesToOhlc to generate binned OHLC-data which can then be passed
+  to   setData.
 
-  The width of the OHLC bars/candlesticks can be controlled with \ref setWidth and \ref
-  setWidthType. A typical choice is to set the width type to \ref wtPlotCoords (the default) and
+  The width of the OHLC bars/candlesticks can be controlled with   setWidth and
+  setWidthType. A typical choice is to set the width type to   wtPlotCoords (the default) and
   the width to (or slightly less than) one time bin interval width.
 
   \section qcpfinancial-appearance Changing the appearance
 
-  Charts can be either single- or two-colored (\ref setTwoColored). If set to be single-colored,
-  lines are drawn with the plottable's pen (\ref setPen) and fills with the brush (\ref setBrush).
+  Charts can be either single- or two-colored (  setTwoColored). If set to be single-colored,
+  lines are drawn with the plottable's pen (  setPen) and fills with the brush (  setBrush).
 
   If set to two-colored, positive changes of the value during an interval (\a close >= \a open) are
   represented with a different pen and brush than negative changes (\a close < \a open). These can
-  be configured with \ref setPenPositive, \ref setPenNegative, \ref setBrushPositive, and \ref
+  be configured with   setPenPositive,   setPenNegative,   setBrushPositive, and
   setBrushNegative. In two-colored mode, the normal plottable pen/brush is ignored. Upon selection
-  however, the normal selected pen/brush (provided by the \ref selectionDecorator) is used,
+  however, the normal selected pen/brush (provided by the   selectionDecorator) is used,
   irrespective of whether the chart is single- or two-colored.
 
   \section qcpfinancial-usage Usage
@@ -25844,7 +25844,7 @@ QCPFinancialData::QCPFinancialData(double key, double open, double high, double 
   QCustomPlot::removePlottable() instead. The newly created plottable can be modified, e.g.:
 
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpfinancial-creation-2
-  Here we have used the static helper method \ref timeSeriesToOhlc, to turn a time-price data
+  Here we have used the static helper method   timeSeriesToOhlc, to turn a time-price data
   series into a 24-hour binned open-high-low-close data series as QCPFinancial uses.
 */
 
@@ -25852,9 +25852,9 @@ QCPFinancialData::QCPFinancialData(double key, double open, double high, double 
 
 /*! \fn QCPFinancialDataContainer *QCPFinancial::data() const
   
-  Returns a pointer to the internal data storage of type \ref QCPFinancialDataContainer. You may
+  Returns a pointer to the internal data storage of type   QCPFinancialDataContainer. You may
   use it to directly manipulate the data, which may be more convenient and faster than using the
-  regular \ref setData or \ref addData methods, in certain situations.
+  regular   setData or   addData methods, in certain situations.
 */
 
 /* end of documentation of inline functions */
@@ -25897,10 +25897,10 @@ QCPFinancial::~QCPFinancial()
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpfinancial-datasharing-1
   
   If you do not wish to share containers, but create a copy from an existing container, rather use
-  the \ref QCPDataContainer<DataType>::set method on the financial's data container directly:
+  the   QCPDataContainer<DataType>::set method on the financial's data container directly:
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpfinancial-datasharing-2
   
-  \see addData, timeSeriesToOhlc
+   \sa addData, timeSeriesToOhlc
 */
 void QCPFinancial::setData(QSharedPointer<QCPFinancialDataContainer> data)
 {
@@ -25916,7 +25916,7 @@ void QCPFinancial::setData(QSharedPointer<QCPFinancialDataContainer> data)
   If you can guarantee that the passed data points are sorted by \a keys in ascending order, you
   can set \a alreadySorted to true, to improve performance by saving a sorting run.
   
-  \see addData, timeSeriesToOhlc
+   \sa addData, timeSeriesToOhlc
 */
 void QCPFinancial::setData(const QVector<double> &keys, const QVector<double> &open, const QVector<double> &high, const QVector<double> &low, const QVector<double> &close, bool alreadySorted)
 {
@@ -25943,12 +25943,12 @@ void QCPFinancial::setWidth(double width)
 }
 
 /*!
-  Sets how the width of the financial bars is defined. See the documentation of \ref WidthType for
+  Sets how the width of the financial bars is defined. See the documentation of   WidthType for
   an explanation of the possible values for \a widthType.
 
-  The default value is \ref wtPlotCoords.
+  The default value is   wtPlotCoords.
 
-  \see setWidth
+   \sa setWidth
 */
 void QCPFinancial::setWidthType(QCPFinancial::WidthType widthType)
 {
@@ -25959,10 +25959,10 @@ void QCPFinancial::setWidthType(QCPFinancial::WidthType widthType)
   Sets whether this chart shall contrast positive from negative trends per data point by using two
   separate colors to draw the respective bars/candlesticks.
   
-  If \a twoColored is false, the normal plottable's pen and brush are used (\ref setPen, \ref
+  If \a twoColored is false, the normal plottable's pen and brush are used (  setPen,
   setBrush).
   
-  \see setPenPositive, setPenNegative, setBrushPositive, setBrushNegative
+   \sa setPenPositive, setPenNegative, setBrushPositive, setBrushNegative
 */
 void QCPFinancial::setTwoColored(bool twoColored)
 {
@@ -25970,13 +25970,13 @@ void QCPFinancial::setTwoColored(bool twoColored)
 }
 
 /*!
-  If \ref setTwoColored is set to true, this function controls the brush that is used to draw fills
+  If   setTwoColored is set to true, this function controls the brush that is used to draw fills
   of data points with a positive trend (i.e. bars/candlesticks with close >= open).
   
-  If \a twoColored is false, the normal plottable's pen and brush are used (\ref setPen, \ref
+  If \a twoColored is false, the normal plottable's pen and brush are used (  setPen,
   setBrush).
   
-  \see setBrushNegative, setPenPositive, setPenNegative
+   \sa setBrushNegative, setPenPositive, setPenNegative
 */
 void QCPFinancial::setBrushPositive(const QBrush &brush)
 {
@@ -25984,13 +25984,13 @@ void QCPFinancial::setBrushPositive(const QBrush &brush)
 }
 
 /*!
-  If \ref setTwoColored is set to true, this function controls the brush that is used to draw fills
+  If   setTwoColored is set to true, this function controls the brush that is used to draw fills
   of data points with a negative trend (i.e. bars/candlesticks with close < open).
   
-  If \a twoColored is false, the normal plottable's pen and brush are used (\ref setPen, \ref
+  If \a twoColored is false, the normal plottable's pen and brush are used (  setPen,
   setBrush).
   
-  \see setBrushPositive, setPenNegative, setPenPositive
+   \sa setBrushPositive, setPenNegative, setPenPositive
 */
 void QCPFinancial::setBrushNegative(const QBrush &brush)
 {
@@ -25998,13 +25998,13 @@ void QCPFinancial::setBrushNegative(const QBrush &brush)
 }
 
 /*!
-  If \ref setTwoColored is set to true, this function controls the pen that is used to draw
+  If   setTwoColored is set to true, this function controls the pen that is used to draw
   outlines of data points with a positive trend (i.e. bars/candlesticks with close >= open).
   
-  If \a twoColored is false, the normal plottable's pen and brush are used (\ref setPen, \ref
+  If \a twoColored is false, the normal plottable's pen and brush are used (  setPen,
   setBrush).
   
-  \see setPenNegative, setBrushPositive, setBrushNegative
+   \sa setPenNegative, setBrushPositive, setBrushNegative
 */
 void QCPFinancial::setPenPositive(const QPen &pen)
 {
@@ -26012,13 +26012,13 @@ void QCPFinancial::setPenPositive(const QPen &pen)
 }
 
 /*!
-  If \ref setTwoColored is set to true, this function controls the pen that is used to draw
+  If   setTwoColored is set to true, this function controls the pen that is used to draw
   outlines of data points with a negative trend (i.e. bars/candlesticks with close < open).
   
-  If \a twoColored is false, the normal plottable's pen and brush are used (\ref setPen, \ref
+  If \a twoColored is false, the normal plottable's pen and brush are used (  setPen,
   setBrush).
   
-  \see setPenPositive, setBrushNegative, setBrushPositive
+   \sa setPenPositive, setBrushNegative, setBrushPositive
 */
 void QCPFinancial::setPenNegative(const QPen &pen)
 {
@@ -26034,10 +26034,10 @@ void QCPFinancial::setPenNegative(const QPen &pen)
   If you can guarantee that the passed data points are sorted by \a keys in ascending order, you
   can set \a alreadySorted to true, to improve performance by saving a sorting run.
   
-  Alternatively, you can also access and modify the data directly via the \ref data method, which
+  Alternatively, you can also access and modify the data directly via the   data method, which
   returns a pointer to the internal data container.
   
-  \see timeSeriesToOhlc
+   \sa timeSeriesToOhlc
 */
 void QCPFinancial::addData(const QVector<double> &keys, const QVector<double> &open, const QVector<double> &high, const QVector<double> &low, const QVector<double> &close, bool alreadySorted)
 {
@@ -26066,10 +26066,10 @@ void QCPFinancial::addData(const QVector<double> &keys, const QVector<double> &o
   Adds the provided data point as \a key, \a open, \a high, \a low and \a close to the current
   data.
   
-  Alternatively, you can also access and modify the data directly via the \ref data method, which
+  Alternatively, you can also access and modify the data directly via the   data method, which
   returns a pointer to the internal data container.
   
-  \see timeSeriesToOhlc
+   \sa timeSeriesToOhlc
 */
 void QCPFinancial::addData(double key, double open, double high, double low, double close)
 {
@@ -26157,7 +26157,7 @@ QCPRange QCPFinancial::getValueRange(bool &foundRange, QCP::SignDomain inSignDom
 
 /*!
   A convenience function that converts time series data (\a value against \a time) to OHLC binned
-  data points. The return value can then be passed on to \ref QCPFinancialDataContainer::set(const
+  data points. The return value can then be passed on to   QCPFinancialDataContainer::set(const
   QCPFinancialDataContainer&).
   
   The size of the bins can be controlled with \a timeBinSize in the same units as \a time is given.
@@ -26306,7 +26306,7 @@ void QCPFinancial::drawLegendIcon(QCPPainter *painter, const QRectF &rect) const
   
   Draws the data from \a begin to \a end-1 as OHLC bars with the provided \a painter.
 
-  This method is a helper function for \ref draw. It is used when the chart style is \ref csOhlc.
+  This method is a helper function for   draw. It is used when the chart style is   csOhlc.
 */
 void QCPFinancial::drawOhlcPlot(QCPPainter *painter, const QCPFinancialDataContainer::const_iterator &begin, const QCPFinancialDataContainer::const_iterator &end, bool isSelected)
 {
@@ -26363,7 +26363,7 @@ void QCPFinancial::drawOhlcPlot(QCPPainter *painter, const QCPFinancialDataConta
   
   Draws the data from \a begin to \a end-1 as Candlesticks with the provided \a painter.
 
-  This method is a helper function for \ref draw. It is used when the chart style is \ref csCandlestick.
+  This method is a helper function for   draw. It is used when the chart style is   csCandlestick.
 */
 void QCPFinancial::drawCandlestickPlot(QCPPainter *painter, const QCPFinancialDataContainer::const_iterator &begin, const QCPFinancialDataContainer::const_iterator &end, bool isSelected)
 {
@@ -26433,14 +26433,14 @@ void QCPFinancial::drawCandlestickPlot(QCPPainter *painter, const QCPFinancialDa
 /*! \internal
 
   This function is used to determine the width of the bar at coordinate \a key, according to the
-  specified width (\ref setWidth) and width type (\ref setWidthType). Provide the pixel position of
-  \a key in \a keyPixel (because usually this was already calculated via \ref QCPAxis::coordToPixel
+  specified width (  setWidth) and width type (  setWidthType). Provide the pixel position of
+  \a key in \a keyPixel (because usually this was already calculated via   QCPAxis::coordToPixel
   when this function is called).
 
   It returns the number of pixels the bar extends to higher keys, relative to the \a key
   coordinate. So with a non-reversed horizontal axis, the return value is positive. With a reversed
   horizontal axis, the return value is negative. This is important so the open/close flags on the
-  \ref csOhlc bar are drawn to the correct side.
+    csOhlc bar are drawn to the correct side.
 */
 double QCPFinancial::getPixelWidth(double key, double keyPixel) const
 {
@@ -26479,10 +26479,10 @@ double QCPFinancial::getPixelWidth(double key, double keyPixel) const
 
 /*! \internal
 
-  This method is a helper function for \ref selectTest. It is used to test for selection when the
-  chart style is \ref csOhlc. It only tests against the data points between \a begin and \a end.
+  This method is a helper function for   selectTest. It is used to test for selection when the
+  chart style is   csOhlc. It only tests against the data points between \a begin and \a end.
   
-  Like \ref selectTest, this method returns the shortest distance of \a pos to the graphical
+  Like   selectTest, this method returns the shortest distance of \a pos to the graphical
   representation of the plottable, and \a closestDataPoint will point to the respective data point.
 */
 double QCPFinancial::ohlcSelectTest(const QPointF &pos, const QCPFinancialDataContainer::const_iterator &begin, const QCPFinancialDataContainer::const_iterator &end, QCPFinancialDataContainer::const_iterator &closestDataPoint) const
@@ -26525,11 +26525,11 @@ double QCPFinancial::ohlcSelectTest(const QPointF &pos, const QCPFinancialDataCo
 
 /*! \internal
   
-  This method is a helper function for \ref selectTest. It is used to test for selection when the
-  chart style is \ref csCandlestick. It only tests against the data points between \a begin and \a
+  This method is a helper function for   selectTest. It is used to test for selection when the
+  chart style is   csCandlestick. It only tests against the data points between \a begin and \a
   end.
   
-  Like \ref selectTest, this method returns the shortest distance of \a pos to the graphical
+  Like   selectTest, this method returns the shortest distance of \a pos to the graphical
   representation of the plottable, and \a closestDataPoint will point to the respective data point.
 */
 double QCPFinancial::candlestickSelectTest(const QPointF &pos, const QCPFinancialDataContainer::const_iterator &begin, const QCPFinancialDataContainer::const_iterator &end, QCPFinancialDataContainer::const_iterator &closestDataPoint) const
@@ -26628,7 +26628,7 @@ void QCPFinancial::getVisibleDataBounds(QCPFinancialDataContainer::const_iterato
 /*!  \internal
 
   Returns the hit box in pixel coordinates that will be used for data selection with the selection
-  rect (\ref selectTestRect), of the data point given by \a it.
+  rect (  selectTestRect), of the data point given by \a it.
 */
 QRectF QCPFinancial::selectionHitBox(QCPFinancialDataContainer::const_iterator it) const
 {
@@ -26664,10 +26664,10 @@ QRectF QCPFinancial::selectionHitBox(QCPFinancialDataContainer::const_iterator i
   \li \a errorPlus: how much the error bar extends towards positive coordinates from the data point
   position
 
-  The container for storing the error bar information is \ref QCPErrorBarsDataContainer. It is a
-  typedef for <tt>QVector<\ref QCPErrorBarsData></tt>.
+  The container for storing the error bar information is   QCPErrorBarsDataContainer. It is a
+  typedef for <tt>QVector<  QCPErrorBarsData></tt>.
 
-  \see QCPErrorBarsDataContainer
+   \sa QCPErrorBarsDataContainer
 */
 
 /*!
@@ -26708,17 +26708,17 @@ QCPErrorBarsData::QCPErrorBarsData(double errorMinus, double errorPlus) :
 
   \image html QCPErrorBars.png
 
-  The \ref QCPErrorBars plottable can be attached to other one-dimensional plottables (e.g. \ref
-  QCPGraph, \ref QCPCurve, \ref QCPBars, etc.) and equips them with error bars.
+  The   QCPErrorBars plottable can be attached to other one-dimensional plottables (e.g.
+  QCPGraph,   QCPCurve,   QCPBars, etc.) and equips them with error bars.
 
-  Use \ref setDataPlottable to define for which plottable the \ref QCPErrorBars shall display the
-  error bars. The orientation of the error bars can be controlled with \ref setErrorType.
+  Use   setDataPlottable to define for which plottable the   QCPErrorBars shall display the
+  error bars. The orientation of the error bars can be controlled with   setErrorType.
 
-  By using \ref setData, you can supply the actual error data, either as symmetric error or
-  plus/minus asymmetric errors. \ref QCPErrorBars only stores the error data. The absolute
+  By using   setData, you can supply the actual error data, either as symmetric error or
+  plus/minus asymmetric errors.   QCPErrorBars only stores the error data. The absolute
   key/value position of each error bar will be adopted from the configured data plottable. The
-  error data of the \ref QCPErrorBars are associated one-to-one via their index to the data points
-  of the data plottable. You can directly access and manipulate the error bar data via \ref data.
+  error data of the   QCPErrorBars are associated one-to-one via their index to the data points
+  of the data plottable. You can directly access and manipulate the error bar data via   data.
 
   Set either of the plus/minus errors to NaN (<tt>qQNaN()</tt> or
   <tt>std::numeric_limits<double>::quiet_NaN()</tt>) to not show the respective error bar on the data point at
@@ -26726,19 +26726,19 @@ QCPErrorBarsData::QCPErrorBarsData(double errorMinus, double errorPlus) :
 
   \section qcperrorbars-appearance Changing the appearance
 
-  The appearance of the error bars is defined by the pen (\ref setPen), and the width of the
-  whiskers (\ref setWhiskerWidth). Further, the error bar backbones may leave a gap around the data
+  The appearance of the error bars is defined by the pen (  setPen), and the width of the
+  whiskers (  setWhiskerWidth). Further, the error bar backbones may leave a gap around the data
   point center to prevent that error bars are drawn too close to or even through scatter points.
-  This gap size can be controlled via \ref setSymbolGap.
+  This gap size can be controlled via   setSymbolGap.
 */
 
 /* start of documentation of inline functions */
 
 /*! \fn QSharedPointer<QCPErrorBarsDataContainer> QCPErrorBars::data() const
 
-  Returns a shared pointer to the internal data storage of type \ref QCPErrorBarsDataContainer. You
+  Returns a shared pointer to the internal data storage of type   QCPErrorBarsDataContainer. You
   may use it to directly manipulate the error values, which may be more convenient and faster than
-  using the regular \ref setData methods.
+  using the regular   setData methods.
 */
 
 /* end of documentation of inline functions */
@@ -26750,11 +26750,11 @@ QCPErrorBarsData::QCPErrorBarsData(double errorMinus, double errorPlus) :
   printed to the debug output (qDebug), the construction is not aborted, though.
 
   It is also important that the \a keyAxis and \a valueAxis are the same for the error bars
-  plottable and the data plottable that the error bars shall be drawn on (\ref setDataPlottable).
+  plottable and the data plottable that the error bars shall be drawn on (  setDataPlottable).
 
-  The created \ref QCPErrorBars is automatically registered with the QCustomPlot instance inferred
-  from \a keyAxis. This QCustomPlot instance takes ownership of the \ref QCPErrorBars, so do not
-  delete it manually but use \ref QCustomPlot::removePlottable() instead.
+  The created   QCPErrorBars is automatically registered with the QCustomPlot instance inferred
+  from \a keyAxis. This QCustomPlot instance takes ownership of the   QCPErrorBars, so do not
+  delete it manually but use   QCustomPlot::removePlottable() instead.
 */
 QCPErrorBars::QCPErrorBars(QCPAxis *keyAxis, QCPAxis *valueAxis) :
   QCPAbstractPlottable(keyAxis, valueAxis),
@@ -26775,8 +26775,8 @@ QCPErrorBars::~QCPErrorBars()
 
   Replaces the current data container with the provided \a data container.
 
-  Since a QSharedPointer is used, multiple \ref QCPErrorBars instances may share the same data
-  container safely. Modifying the data in the container will then affect all \ref QCPErrorBars
+  Since a QSharedPointer is used, multiple   QCPErrorBars instances may share the same data
+  container safely. Modifying the data in the container will then affect all   QCPErrorBars
   instances that share the container. Sharing can be achieved by simply exchanging the data
   containers wrapped in shared pointers:
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcperrorbars-datasharing-1
@@ -26784,10 +26784,10 @@ QCPErrorBars::~QCPErrorBars()
   If you do not wish to share containers, but create a copy from an existing container, assign the
   data containers directly:
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcperrorbars-datasharing-2
-  (This uses different notation compared with other plottables, because the \ref QCPErrorBars
-  uses a \c QVector<QCPErrorBarsData> as its data container, instead of a \ref QCPDataContainer.)
+  (This uses different notation compared with other plottables, because the   QCPErrorBars
+  uses a \c QVector<QCPErrorBarsData> as its data container, instead of a   QCPDataContainer.)
 
-  \see addData
+   \sa addData
 */
 void QCPErrorBars::setData(QSharedPointer<QCPErrorBarsDataContainer> data)
 {
@@ -26797,11 +26797,11 @@ void QCPErrorBars::setData(QSharedPointer<QCPErrorBarsDataContainer> data)
 /*! \overload
 
   Sets symmetrical error values as specified in \a error. The errors will be associated one-to-one
-  by the data point index to the associated data plottable (\ref setDataPlottable).
+  by the data point index to the associated data plottable (  setDataPlottable).
 
-  You can directly access and manipulate the error bar data via \ref data.
+  You can directly access and manipulate the error bar data via   data.
 
-  \see addData
+   \sa addData
 */
 void QCPErrorBars::setData(const QVector<double> &error)
 {
@@ -26812,12 +26812,12 @@ void QCPErrorBars::setData(const QVector<double> &error)
 /*! \overload
 
   Sets asymmetrical errors as specified in \a errorMinus and \a errorPlus. The errors will be
-  associated one-to-one by the data point index to the associated data plottable (\ref
+  associated one-to-one by the data point index to the associated data plottable (
   setDataPlottable).
 
-  You can directly access and manipulate the error bar data via \ref data.
+  You can directly access and manipulate the error bar data via   data.
 
-  \see addData
+   \sa addData
 */
 void QCPErrorBars::setData(const QVector<double> &errorMinus, const QVector<double> &errorPlus)
 {
@@ -26827,17 +26827,17 @@ void QCPErrorBars::setData(const QVector<double> &errorMinus, const QVector<doub
 
 /*!
   Sets the data plottable to which the error bars will be applied. The error values specified e.g.
-  via \ref setData will be associated one-to-one by the data point index to the data points of \a
+  via   setData will be associated one-to-one by the data point index to the data points of \a
   plottable. This means that the error bars will adopt the key/value coordinates of the data point
   with the same index.
 
-  The passed \a plottable must be a one-dimensional plottable, i.e. it must implement the \ref
-  QCPPlottableInterface1D. Further, it must not be a \ref QCPErrorBars instance itself. If either
+  The passed \a plottable must be a one-dimensional plottable, i.e. it must implement the
+  QCPPlottableInterface1D. Further, it must not be a   QCPErrorBars instance itself. If either
   of these restrictions is violated, a corresponding qDebug output is generated, and the data
-  plottable of this \ref QCPErrorBars instance is set to zero.
+  plottable of this   QCPErrorBars instance is set to zero.
 
   For proper display, care must also be taken that the key and value axes of the \a plottable match
-  those configured for this \ref QCPErrorBars instance.
+  those configured for this   QCPErrorBars instance.
 */
 void QCPErrorBars::setDataPlottable(QCPAbstractPlottable *plottable)
 {
@@ -26859,7 +26859,7 @@ void QCPErrorBars::setDataPlottable(QCPAbstractPlottable *plottable)
 
 /*!
   Sets in which orientation the error bars shall appear on the data points. If your data needs both
-  error dimensions, create two \ref QCPErrorBars with different \a type.
+  error dimensions, create two   QCPErrorBars with different \a type.
 */
 void QCPErrorBars::setErrorType(ErrorType type)
 {
@@ -26888,11 +26888,11 @@ void QCPErrorBars::setSymbolGap(double pixels)
 /*! \overload
 
   Adds symmetrical error values as specified in \a error. The errors will be associated one-to-one
-  by the data point index to the associated data plottable (\ref setDataPlottable).
+  by the data point index to the associated data plottable (  setDataPlottable).
 
-  You can directly access and manipulate the error bar data via \ref data.
+  You can directly access and manipulate the error bar data via   data.
 
-  \see setData
+   \sa setData
 */
 void QCPErrorBars::addData(const QVector<double> &error)
 {
@@ -26902,12 +26902,12 @@ void QCPErrorBars::addData(const QVector<double> &error)
 /*! \overload
 
   Adds asymmetrical errors as specified in \a errorMinus and \a errorPlus. The errors will be
-  associated one-to-one by the data point index to the associated data plottable (\ref
+  associated one-to-one by the data point index to the associated data plottable (
   setDataPlottable).
 
-  You can directly access and manipulate the error bar data via \ref data.
+  You can directly access and manipulate the error bar data via   data.
 
-  \see setData
+   \sa setData
 */
 void QCPErrorBars::addData(const QVector<double> &errorMinus, const QVector<double> &errorPlus)
 {
@@ -26922,11 +26922,11 @@ void QCPErrorBars::addData(const QVector<double> &errorMinus, const QVector<doub
 /*! \overload
 
   Adds a single symmetrical error bar as specified in \a error. The errors will be associated
-  one-to-one by the data point index to the associated data plottable (\ref setDataPlottable).
+  one-to-one by the data point index to the associated data plottable (  setDataPlottable).
 
-  You can directly access and manipulate the error bar data via \ref data.
+  You can directly access and manipulate the error bar data via   data.
 
-  \see setData
+   \sa setData
 */
 void QCPErrorBars::addData(double error)
 {
@@ -26936,12 +26936,12 @@ void QCPErrorBars::addData(double error)
 /*! \overload
 
   Adds a single asymmetrical error bar as specified in \a errorMinus and \a errorPlus. The errors
-  will be associated one-to-one by the data point index to the associated data plottable (\ref
+  will be associated one-to-one by the data point index to the associated data plottable (
   setDataPlottable).
 
-  You can directly access and manipulate the error bar data via \ref data.
+  You can directly access and manipulate the error bar data via   data.
 
-  \see setData
+   \sa setData
 */
 void QCPErrorBars::addData(double errorMinus, double errorPlus)
 {
@@ -27364,7 +27364,7 @@ QCPRange QCPErrorBars::getValueRange(bool &foundRange, QCP::SignDomain inSignDom
   calling this method with different \a it but the same \a backbones and \a whiskers allows to
   accumulate lines for multiple data points.
 
-  This method assumes that \a it is a valid iterator within the bounds of this \ref QCPErrorBars
+  This method assumes that \a it is a valid iterator within the bounds of this   QCPErrorBars
   instance and within the bounds of the associated data plottable.
 */
 void QCPErrorBars::getErrorBarLines(QCPErrorBarsDataContainer::const_iterator it, QVector<QLineF> &backbones, QVector<QLineF> &whiskers) const
@@ -27423,18 +27423,18 @@ void QCPErrorBars::getErrorBarLines(QCPErrorBarsDataContainer::const_iterator it
   This method outputs the currently visible data range via \a begin and \a end. The returned range
   will also never exceed \a rangeRestriction.
 
-  Since error bars with type \ref etKeyError may extend to arbitrarily positive and negative key
+  Since error bars with type   etKeyError may extend to arbitrarily positive and negative key
   coordinates relative to their data point key, this method checks all outer error bars whether
-  they truly don't reach into the visible portion of the axis rect, by calling \ref
-  errorBarVisible. On the other hand error bars with type \ref etValueError that are associated
-  with data plottables whose sort key is equal to the main key (see \ref qcpdatacontainer-datatype
+  they truly don't reach into the visible portion of the axis rect, by calling
+  errorBarVisible. On the other hand error bars with type   etValueError that are associated
+  with data plottables whose sort key is equal to the main key (see   qcpdatacontainer-datatype
   "QCPDataContainer DataType") can be handled very efficiently by finding the visible range of
-  error bars through binary search (\ref QCPPlottableInterface1D::findBegin and \ref
+  error bars through binary search (  QCPPlottableInterface1D::findBegin and
   QCPPlottableInterface1D::findEnd).
 
   If the plottable's sort key is not equal to the main key, this method returns the full data
   range, only restricted by \a rangeRestriction. Drawing optimization then has to be done on a
-  point-by-point basis in the \ref draw method.
+  point-by-point basis in the   draw method.
 */
 void QCPErrorBars::getVisibleDataBounds(QCPErrorBarsDataContainer::const_iterator &begin, QCPErrorBarsDataContainer::const_iterator &end, const QCPDataRange &rangeRestriction) const
 {
@@ -27492,7 +27492,7 @@ void QCPErrorBars::getVisibleDataBounds(QCPErrorBarsDataContainer::const_iterato
 /*! \internal
 
   Calculates the minimum distance in pixels the error bars' representation has from the given \a
-  pixelPoint. This is used to determine whether the error bar was clicked or not, e.g. in \ref
+  pixelPoint. This is used to determine whether the error bar was clicked or not, e.g. in
   selectTest. The closest data point to \a pixelPoint is returned in \a closestData.
 */
 double QCPErrorBars::pointDistance(const QPointF &pixelPoint, QCPErrorBarsDataContainer::const_iterator &closestData) const
@@ -27525,9 +27525,9 @@ double QCPErrorBars::pointDistance(const QPointF &pixelPoint, QCPErrorBarsDataCo
 
 /*! \internal
 
-  \note This method is identical to \ref QCPAbstractPlottable1D::getDataSegments but needs to be
-  reproduced here since the \ref QCPErrorBars plottable, as a special case that doesn't have its
-  own key/value data coordinates, doesn't derive from \ref QCPAbstractPlottable1D. See the
+  \note This method is identical to   QCPAbstractPlottable1D::getDataSegments but needs to be
+  reproduced here since the   QCPErrorBars plottable, as a special case that doesn't have its
+  own key/value data coordinates, doesn't derive from   QCPAbstractPlottable1D. See the
   documentation there for details.
 */
 void QCPErrorBars::getDataSegments(QList<QCPDataRange> &selectedSegments, QList<QCPDataRange> &unselectedSegments) const
@@ -27555,8 +27555,8 @@ void QCPErrorBars::getDataSegments(QList<QCPDataRange> &selectedSegments, QList<
   range.
 
   This method assumes for performance reasons without checking that the key axis, the value axis,
-  and the data plottable (\ref setDataPlottable) are not zero and that \a index is within valid
-  bounds of this \ref QCPErrorBars instance and the bounds of the data plottable.
+  and the data plottable (  setDataPlottable) are not zero and that \a index is within valid
+  bounds of this   QCPErrorBars instance and the bounds of the data plottable.
 */
 bool QCPErrorBars::errorBarVisible(int index) const
 {
@@ -27644,7 +27644,7 @@ QCPItemStraightLine::~QCPItemStraightLine()
 /*!
   Sets the pen that will be used to draw the line
   
-  \see setSelectedPen
+   \sa setSelectedPen
 */
 void QCPItemStraightLine::setPen(const QPen &pen)
 {
@@ -27654,7 +27654,7 @@ void QCPItemStraightLine::setPen(const QPen &pen)
 /*!
   Sets the pen that will be used to draw the line when selected
   
-  \see setPen, setSelected
+   \sa setPen, setSelected
 */
 void QCPItemStraightLine::setSelectedPen(const QPen &pen)
 {
@@ -27692,7 +27692,7 @@ void QCPItemStraightLine::draw(QCPPainter *painter)
   Returns the section of the straight line defined by \a base and direction vector \a
   vec, that is visible in the specified \a rect.
   
-  This is a helper function for \ref draw.
+  This is a helper function for   draw.
 */
 QLineF QCPItemStraightLine::getRectClippedStraightLine(const QCPVector2D &base, const QCPVector2D &vec, const QRect &rect) const
 {
@@ -27799,7 +27799,7 @@ QPen QCPItemStraightLine::mainPen() const
 
   It has two positions, \a start and \a end, which define the end points of the line.
   
-  With \ref setHead and \ref setTail you may set different line ending styles, e.g. to create an arrow.
+  With   setHead and   setTail you may set different line ending styles, e.g. to create an arrow.
 */
 
 /*!
@@ -27827,7 +27827,7 @@ QCPItemLine::~QCPItemLine()
 /*!
   Sets the pen that will be used to draw the line
   
-  \see setSelectedPen
+   \sa setSelectedPen
 */
 void QCPItemLine::setPen(const QPen &pen)
 {
@@ -27837,7 +27837,7 @@ void QCPItemLine::setPen(const QPen &pen)
 /*!
   Sets the pen that will be used to draw the line when selected
   
-  \see setPen, setSelected
+   \sa setPen, setSelected
 */
 void QCPItemLine::setSelectedPen(const QPen &pen)
 {
@@ -27850,7 +27850,7 @@ void QCPItemLine::setSelectedPen(const QPen &pen)
   Note that due to the overloaded QCPLineEnding constructor, you may directly specify
   a QCPLineEnding::EndingStyle here, e.g. \code setHead(QCPLineEnding::esSpikeArrow) \endcode
   
-  \see setTail
+   \sa setTail
 */
 void QCPItemLine::setHead(const QCPLineEnding &head)
 {
@@ -27863,7 +27863,7 @@ void QCPItemLine::setHead(const QCPLineEnding &head)
   Note that due to the overloaded QCPLineEnding constructor, you may directly specify
   a QCPLineEnding::EndingStyle here, e.g. \code setTail(QCPLineEnding::esSpikeArrow) \endcode
   
-  \see setHead
+   \sa setHead
 */
 void QCPItemLine::setTail(const QCPLineEnding &tail)
 {
@@ -27909,7 +27909,7 @@ void QCPItemLine::draw(QCPPainter *painter)
   Returns the section of the line defined by \a start and \a end, that is visible in the specified
   \a rect.
   
-  This is a helper function for \ref draw.
+  This is a helper function for   draw.
 */
 QLineF QCPItemLine::getRectClippedLine(const QCPVector2D &start, const QCPVector2D &end, const QRect &rect) const
 {
@@ -28032,7 +28032,7 @@ QPen QCPItemLine::mainPen() const
   control points which define the direction the line exits from the start and the direction from
   which it approaches the end: \a startDir and \a endDir.
   
-  With \ref setHead and \ref setTail you may set different line ending styles, e.g. to create an
+  With   setHead and   setTail you may set different line ending styles, e.g. to create an
   arrow.
   
   Often it is desirable for the control points to stay at fixed relative positions to the start/end
@@ -28069,7 +28069,7 @@ QCPItemCurve::~QCPItemCurve()
 /*!
   Sets the pen that will be used to draw the line
   
-  \see setSelectedPen
+   \sa setSelectedPen
 */
 void QCPItemCurve::setPen(const QPen &pen)
 {
@@ -28079,7 +28079,7 @@ void QCPItemCurve::setPen(const QPen &pen)
 /*!
   Sets the pen that will be used to draw the line when selected
   
-  \see setPen, setSelected
+   \sa setPen, setSelected
 */
 void QCPItemCurve::setSelectedPen(const QPen &pen)
 {
@@ -28092,7 +28092,7 @@ void QCPItemCurve::setSelectedPen(const QPen &pen)
   Note that due to the overloaded QCPLineEnding constructor, you may directly specify
   a QCPLineEnding::EndingStyle here, e.g. \code setHead(QCPLineEnding::esSpikeArrow) \endcode
   
-  \see setTail
+   \sa setTail
 */
 void QCPItemCurve::setHead(const QCPLineEnding &head)
 {
@@ -28105,7 +28105,7 @@ void QCPItemCurve::setHead(const QCPLineEnding &head)
   Note that due to the overloaded QCPLineEnding constructor, you may directly specify
   a QCPLineEnding::EndingStyle here, e.g. \code setTail(QCPLineEnding::esSpikeArrow) \endcode
   
-  \see setHead
+   \sa setHead
 */
 void QCPItemCurve::setTail(const QCPLineEnding &tail)
 {
@@ -28229,7 +28229,7 @@ QCPItemRect::~QCPItemRect()
 /*!
   Sets the pen that will be used to draw the line of the rectangle
   
-  \see setSelectedPen, setBrush
+   \sa setSelectedPen, setBrush
 */
 void QCPItemRect::setPen(const QPen &pen)
 {
@@ -28239,7 +28239,7 @@ void QCPItemRect::setPen(const QPen &pen)
 /*!
   Sets the pen that will be used to draw the line of the rectangle when selected
   
-  \see setPen, setSelected
+   \sa setPen, setSelected
 */
 void QCPItemRect::setSelectedPen(const QPen &pen)
 {
@@ -28250,7 +28250,7 @@ void QCPItemRect::setSelectedPen(const QPen &pen)
   Sets the brush that will be used to fill the rectangle. To disable filling, set \a brush to
   Qt::NoBrush.
   
-  \see setSelectedBrush, setPen
+   \sa setSelectedBrush, setPen
 */
 void QCPItemRect::setBrush(const QBrush &brush)
 {
@@ -28261,7 +28261,7 @@ void QCPItemRect::setBrush(const QBrush &brush)
   Sets the brush that will be used to fill the rectangle when selected. To disable filling, set \a
   brush to Qt::NoBrush.
   
-  \see setBrush
+   \sa setBrush
 */
 void QCPItemRect::setSelectedBrush(const QBrush &brush)
 {
@@ -28350,13 +28350,13 @@ QBrush QCPItemRect::mainBrush() const
 
   \image html QCPItemText.png "Text example. Blue dotted circles are anchors, solid blue discs are positions."
 
-  Its position is defined by the member \a position and the setting of \ref setPositionAlignment.
+  Its position is defined by the member \a position and the setting of   setPositionAlignment.
   The latter controls which part of the text rect shall be aligned with \a position.
   
-  The text alignment itself (i.e. left, center, right) can be controlled with \ref
+  The text alignment itself (i.e. left, center, right) can be controlled with
   setTextAlignment.
   
-  The text may be rotated around the \a position point with \ref setRotation.
+  The text may be rotated around the \a position point with   setRotation.
 */
 
 /*!
@@ -28415,7 +28415,7 @@ void QCPItemText::setSelectedColor(const QColor &color)
   Sets the pen that will be used do draw a rectangular border around the text. To disable the
   border, set \a pen to Qt::NoPen.
   
-  \see setSelectedPen, setBrush, setPadding
+   \sa setSelectedPen, setBrush, setPadding
 */
 void QCPItemText::setPen(const QPen &pen)
 {
@@ -28426,7 +28426,7 @@ void QCPItemText::setPen(const QPen &pen)
   Sets the pen that will be used do draw a rectangular border around the text, when the item is
   selected. To disable the border, set \a pen to Qt::NoPen.
   
-  \see setPen
+   \sa setPen
 */
 void QCPItemText::setSelectedPen(const QPen &pen)
 {
@@ -28437,7 +28437,7 @@ void QCPItemText::setSelectedPen(const QPen &pen)
   Sets the brush that will be used do fill the background of the text. To disable the
   background, set \a brush to Qt::NoBrush.
   
-  \see setSelectedBrush, setPen, setPadding
+   \sa setSelectedBrush, setPen, setPadding
 */
 void QCPItemText::setBrush(const QBrush &brush)
 {
@@ -28448,7 +28448,7 @@ void QCPItemText::setBrush(const QBrush &brush)
   Sets the brush that will be used do fill the background of the text, when the item is selected. To disable the
   background, set \a brush to Qt::NoBrush.
   
-  \see setBrush
+   \sa setBrush
 */
 void QCPItemText::setSelectedBrush(const QBrush &brush)
 {
@@ -28458,7 +28458,7 @@ void QCPItemText::setSelectedBrush(const QBrush &brush)
 /*!
   Sets the font of the text.
   
-  \see setSelectedFont, setColor
+   \sa setSelectedFont, setColor
 */
 void QCPItemText::setFont(const QFont &font)
 {
@@ -28468,7 +28468,7 @@ void QCPItemText::setFont(const QFont &font)
 /*!
   Sets the font of the text that will be used when the item is selected.
   
-  \see setFont
+   \sa setFont
 */
 void QCPItemText::setSelectedFont(const QFont &font)
 {
@@ -28479,7 +28479,7 @@ void QCPItemText::setSelectedFont(const QFont &font)
   Sets the text that will be displayed. Multi-line texts are supported by inserting a line break
   character, e.g. '\n'.
   
-  \see setFont, setColor, setTextAlignment
+   \sa setFont, setColor, setTextAlignment
 */
 void QCPItemText::setText(const QString &text)
 {
@@ -28495,7 +28495,7 @@ void QCPItemText::setText(const QString &text)
   \li If \a alignment is <tt>Qt::AlignLeft | Qt::AlignBottom</tt>, \a position will indicate the
   bottom left corner of the text rect.
   
-  If you want to control the alignment of (multi-lined) text within the text rect, use \ref
+  If you want to control the alignment of (multi-lined) text within the text rect, use
   setTextAlignment.
 */
 void QCPItemText::setPositionAlignment(Qt::Alignment alignment)
@@ -28522,7 +28522,7 @@ void QCPItemText::setRotation(double degrees)
 
 /*!
   Sets the distance between the border of the text rectangle and the text. The appearance (and
-  visibility) of the text rectangle can be controlled with \ref setPen and \ref setBrush.
+  visibility) of the text rectangle can be controlled with   setPen and   setBrush.
 */
 void QCPItemText::setPadding(const QMargins &padding)
 {
@@ -28737,7 +28737,7 @@ QCPItemEllipse::~QCPItemEllipse()
 /*!
   Sets the pen that will be used to draw the line of the ellipse
   
-  \see setSelectedPen, setBrush
+   \sa setSelectedPen, setBrush
 */
 void QCPItemEllipse::setPen(const QPen &pen)
 {
@@ -28747,7 +28747,7 @@ void QCPItemEllipse::setPen(const QPen &pen)
 /*!
   Sets the pen that will be used to draw the line of the ellipse when selected
   
-  \see setPen, setSelected
+   \sa setPen, setSelected
 */
 void QCPItemEllipse::setSelectedPen(const QPen &pen)
 {
@@ -28758,7 +28758,7 @@ void QCPItemEllipse::setSelectedPen(const QPen &pen)
   Sets the brush that will be used to fill the ellipse. To disable filling, set \a brush to
   Qt::NoBrush.
   
-  \see setSelectedBrush, setPen
+   \sa setSelectedBrush, setPen
 */
 void QCPItemEllipse::setBrush(const QBrush &brush)
 {
@@ -28769,7 +28769,7 @@ void QCPItemEllipse::setBrush(const QBrush &brush)
   Sets the brush that will be used to fill the ellipse when selected. To disable filling, set \a
   brush to Qt::NoBrush.
   
-  \see setBrush
+   \sa setBrush
 */
 void QCPItemEllipse::setSelectedBrush(const QBrush &brush)
 {
@@ -28887,7 +28887,7 @@ QBrush QCPItemEllipse::mainBrush() const
   \image html QCPItemPixmap.png "Pixmap example. Blue dotted circles are anchors, solid blue discs are positions."
 
   It has two positions, \a topLeft and \a bottomRight, which define the rectangle the pixmap will
-  be drawn in. Depending on the scale setting (\ref setScaled), the pixmap will be either scaled to
+  be drawn in. Depending on the scale setting (  setScaled), the pixmap will be either scaled to
   fit the rectangle or be drawn aligned to the topLeft position.
   
   If scaling is enabled and \a topLeft is further to the bottom/right than \a bottomRight (as shown
@@ -28953,7 +28953,7 @@ void QCPItemPixmap::setScaled(bool scaled, Qt::AspectRatioMode aspectRatioMode, 
 /*!
   Sets the pen that will be used to draw a border around the pixmap.
   
-  \see setSelectedPen, setBrush
+   \sa setSelectedPen, setBrush
 */
 void QCPItemPixmap::setPen(const QPen &pen)
 {
@@ -28963,7 +28963,7 @@ void QCPItemPixmap::setPen(const QPen &pen)
 /*!
   Sets the pen that will be used to draw a border around the pixmap when selected
   
-  \see setPen, setSelected
+   \sa setPen, setSelected
 */
 void QCPItemPixmap::setSelectedPen(const QPen &pen)
 {
@@ -29037,7 +29037,7 @@ QPointF QCPItemPixmap::anchorPixelPosition(int anchorId) const
   bottomRight.)
   
   This function only creates the scaled pixmap when the buffered pixmap has a different size than
-  the expected result, so calling this function repeatedly, e.g. in the \ref draw function, does
+  the expected result, so calling this function repeatedly, e.g. in the   draw function, does
   not cause expensive rescaling every time.
   
   If scaling is disabled, sets mScaledPixmap to a null QPixmap.
@@ -29156,28 +29156,28 @@ QPen QCPItemPixmap::mainPen() const
 
   \image html QCPItemTracer.png "Tracer example. Blue dotted circles are anchors, solid blue discs are positions."
 
-  The tracer can be connected with a QCPGraph via \ref setGraph. Then it will automatically adopt
+  The tracer can be connected with a QCPGraph via   setGraph. Then it will automatically adopt
   the coordinate axes of the graph and update its \a position to be on the graph's data. This means
-  the key stays controllable via \ref setGraphKey, but the value will follow the graph data. If a
+  the key stays controllable via   setGraphKey, but the value will follow the graph data. If a
   QCPGraph is connected, note that setting the coordinates of the tracer item directly via \a
   position will have no effect because they will be overriden in the next redraw (this is when the
   coordinate update happens).
   
-  If the specified key in \ref setGraphKey is outside the key bounds of the graph, the tracer will
+  If the specified key in   setGraphKey is outside the key bounds of the graph, the tracer will
   stay at the corresponding end of the graph.
   
-  With \ref setInterpolating you may specify whether the tracer may only stay exactly on data
+  With   setInterpolating you may specify whether the tracer may only stay exactly on data
   points or whether it interpolates data points linearly, if given a key that lies between two data
   points of the graph.
   
-  The tracer has different visual styles, see \ref setStyle. It is also possible to make the tracer
-  have no own visual appearance (set the style to \ref tsNone), and just connect other item
-  positions to the tracer \a position (used as an anchor) via \ref
+  The tracer has different visual styles, see   setStyle. It is also possible to make the tracer
+  have no own visual appearance (set the style to   tsNone), and just connect other item
+  positions to the tracer \a position (used as an anchor) via
   QCPItemPosition::setParentAnchor.
   
   \note The tracer position is only automatically updated upon redraws. So when the data of the
   graph changes and immediately afterwards (without a redraw) the position coordinates of the
-  tracer are retrieved, they will not reflect the updated data of the graph. In this case \ref
+  tracer are retrieved, they will not reflect the updated data of the graph. In this case
   updatePosition must be called manually, prior to reading the tracer coordinates.
 */
 
@@ -29211,7 +29211,7 @@ QCPItemTracer::~QCPItemTracer()
 /*!
   Sets the pen that will be used to draw the line of the tracer
   
-  \see setSelectedPen, setBrush
+   \sa setSelectedPen, setBrush
 */
 void QCPItemTracer::setPen(const QPen &pen)
 {
@@ -29221,7 +29221,7 @@ void QCPItemTracer::setPen(const QPen &pen)
 /*!
   Sets the pen that will be used to draw the line of the tracer when selected
   
-  \see setPen, setSelected
+   \sa setPen, setSelected
 */
 void QCPItemTracer::setSelectedPen(const QPen &pen)
 {
@@ -29231,7 +29231,7 @@ void QCPItemTracer::setSelectedPen(const QPen &pen)
 /*!
   Sets the brush that will be used to draw any fills of the tracer
   
-  \see setSelectedBrush, setPen
+   \sa setSelectedBrush, setPen
 */
 void QCPItemTracer::setBrush(const QBrush &brush)
 {
@@ -29241,7 +29241,7 @@ void QCPItemTracer::setBrush(const QBrush &brush)
 /*!
   Sets the brush that will be used to draw any fills of the tracer, when selected.
   
-  \see setBrush, setSelected
+   \sa setBrush, setSelected
 */
 void QCPItemTracer::setSelectedBrush(const QBrush &brush)
 {
@@ -29249,8 +29249,8 @@ void QCPItemTracer::setSelectedBrush(const QBrush &brush)
 }
 
 /*!
-  Sets the size of the tracer in pixels, if the style supports setting a size (e.g. \ref tsSquare
-  does, \ref tsCrosshair does not).
+  Sets the size of the tracer in pixels, if the style supports setting a size (e.g.   tsSquare
+  does,   tsCrosshair does not).
 */
 void QCPItemTracer::setSize(double size)
 {
@@ -29261,7 +29261,7 @@ void QCPItemTracer::setSize(double size)
   Sets the style/visual appearance of the tracer.
   
   If you only want to use the tracer \a position as an anchor for other items, set \a style to
-  \ref tsNone.
+    tsNone.
 */
 void QCPItemTracer::setStyle(QCPItemTracer::TracerStyle style)
 {
@@ -29276,7 +29276,7 @@ void QCPItemTracer::setStyle(QCPItemTracer::TracerStyle style)
   freely like any other item position. This is the state the tracer will assume when its graph gets
   deleted while still attached to it.
   
-  \see setGraphKey
+   \sa setGraphKey
 */
 void QCPItemTracer::setGraph(QCPGraph *graph)
 {
@@ -29300,10 +29300,10 @@ void QCPItemTracer::setGraph(QCPGraph *graph)
   Sets the key of the graph's data point the tracer will be positioned at. This is the only free
   coordinate of a tracer when attached to a graph.
   
-  Depending on \ref setInterpolating, the tracer will be either positioned on the data point
+  Depending on   setInterpolating, the tracer will be either positioned on the data point
   closest to \a key, or will stay exactly at \a key and interpolate the value linearly.
   
-  \see setGraph, setInterpolating
+   \sa setGraph, setInterpolating
 */
 void QCPItemTracer::setGraphKey(double key)
 {
@@ -29314,12 +29314,12 @@ void QCPItemTracer::setGraphKey(double key)
   Sets whether the value of the graph's data points shall be interpolated, when positioning the
   tracer.
   
-  If \a enabled is set to false and a key is given with \ref setGraphKey, the tracer is placed on
+  If \a enabled is set to false and a key is given with   setGraphKey, the tracer is placed on
   the data point of the graph which is closest to the key, but which is not necessarily exactly
   there. If \a enabled is true, the tracer will be positioned exactly at the specified key, and
   the appropriate value will be interpolated from the graph's data points linearly.
   
-  \see setGraph, setGraphKey
+   \sa setGraph, setGraphKey
 */
 void QCPItemTracer::setInterpolating(bool enabled)
 {
@@ -29431,12 +29431,12 @@ void QCPItemTracer::draw(QCPPainter *painter)
 }
 
 /*!
-  If the tracer is connected with a graph (\ref setGraph), this function updates the tracer's \a
-  position to reside on the graph data, depending on the configured key (\ref setGraphKey).
+  If the tracer is connected with a graph (  setGraph), this function updates the tracer's \a
+  position to reside on the graph data, depending on the configured key (  setGraphKey).
   
   It is called automatically on every redraw and normally doesn't need to be called manually. One
   exception is when you want to read the tracer coordinates via \a position and are not sure that
-  the graph's data (or the tracer key with \ref setGraphKey) hasn't changed since the last redraw.
+  the graph's data (or the tracer key with   setGraphKey) hasn't changed since the last redraw.
   In that situation, call this function before accessing \a position, to make sure you don't get
   out-of-date coordinates.
   
@@ -29530,12 +29530,12 @@ QBrush QCPItemTracer::mainBrush() const
   actually farther to the left than \a right, the bracket is opened to the bottom, as shown in the
   example image.
   
-  The bracket supports multiple styles via \ref setStyle. The length, i.e. how far the bracket
-  stretches away from the embraced span, can be controlled with \ref setLength.
+  The bracket supports multiple styles via   setStyle. The length, i.e. how far the bracket
+  stretches away from the embraced span, can be controlled with   setLength.
   
   \image html QCPItemBracket-length.png
-  <center>Demonstrating the effect of different values for \ref setLength, for styles \ref
-  bsCalligraphic and \ref bsSquare. Anchors and positions are displayed for reference.</center>
+  <center>Demonstrating the effect of different values for   setLength, for styles
+  bsCalligraphic and   bsSquare. Anchors and positions are displayed for reference.</center>
   
   It provides an anchor \a center, to allow connection of other items, e.g. an arrow (QCPItemLine
   or QCPItemCurve) or a text label (QCPItemText), to the bracket.
@@ -29569,11 +29569,11 @@ QCPItemBracket::~QCPItemBracket()
 /*!
   Sets the pen that will be used to draw the bracket.
   
-  Note that when the style is \ref bsCalligraphic, only the color will be taken from the pen, the
+  Note that when the style is   bsCalligraphic, only the color will be taken from the pen, the
   stroke and width are ignored. To change the apparent stroke width of a calligraphic bracket, use
-  \ref setLength, which has a similar effect.
+    setLength, which has a similar effect.
   
-  \see setSelectedPen
+   \sa setSelectedPen
 */
 void QCPItemBracket::setPen(const QPen &pen)
 {
@@ -29583,7 +29583,7 @@ void QCPItemBracket::setPen(const QPen &pen)
 /*!
   Sets the pen that will be used to draw the bracket when selected
   
-  \see setPen, setSelected
+   \sa setPen, setSelected
 */
 void QCPItemBracket::setSelectedPen(const QPen &pen)
 {
@@ -29595,8 +29595,8 @@ void QCPItemBracket::setSelectedPen(const QPen &pen)
   span of the bracket (i.e. perpendicular to the <i>left</i>-<i>right</i>-direction)
   
   \image html QCPItemBracket-length.png
-  <center>Demonstrating the effect of different values for \ref setLength, for styles \ref
-  bsCalligraphic and \ref bsSquare. Anchors and positions are displayed for reference.</center>
+  <center>Demonstrating the effect of different values for   setLength, for styles
+  bsCalligraphic and   bsSquare. Anchors and positions are displayed for reference.</center>
 */
 void QCPItemBracket::setLength(double length)
 {
@@ -29606,7 +29606,7 @@ void QCPItemBracket::setLength(double length)
 /*!
   Sets the style of the bracket, i.e. the shape/visual appearance.
   
-  \see setPen
+   \sa setPen
 */
 void QCPItemBracket::setStyle(QCPItemBracket::BracketStyle style)
 {

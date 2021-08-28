@@ -1,3 +1,6 @@
+/*
+ * It is used for git functionality and set configuration for project.xml file.
+ */
 #include "Project.h"
 #include "TreeItem.h"
 #include "TreeModel.h"
@@ -27,13 +30,24 @@ void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 
 }
 
-pugi::xml_node Project::FindFile(QFile & file,pugi::xml_node  & n) {
+/*!
+ * \fn Project::FindFile
+ * \brief It searches for the passed file name and
+ * returns the filename and its next consecutive file name from project.xml
+ * \param file
+ * \param n
+ * \return FindFile(file, next)
+ */
+pugi::xml_node Project::FindFile(QFile & file,pugi::xml_node  & n)
+{
     auto ch = n.child("File");
     if (!ch) return ch;
     auto key =  mProjectDir.relativeFilePath(file.fileName()).toStdString();
-    while (ch) {
-        std::string filename = ch.attribute("Include").as_string();
-        if (filename == key) {
+    while (ch)
+    {
+        std::string filename = ch.attribute("Include").as_string();    // Include attribute contains the file name in xml
+        if (filename == key)
+        {
             return ch;
         }
         ch = ch.next_sibling();
@@ -41,12 +55,27 @@ pugi::xml_node Project::FindFile(QFile & file,pugi::xml_node  & n) {
     auto next = n.next_sibling();
     return FindFile(file, next);
 }
-void Project::set_stage_verifier() {
+
+/*!
+ * \fn Project::set_stage_verifier
+ * \brief Updates the stage value in xml file to 'Verifier'
+ */
+void Project::set_stage_verifier()
+{
     auto c = doc.child("Project").child("Metadata");
     bool s = c.child("Stage").first_child().set_value("Verifier");
     save_xml();
 }
-bool Project::enable_push(bool increment) {
+
+/*!
+ * \fn Project::enable_push
+ * \brief Increments the version value by one if passed value is true
+ * and sets stage value as corrector in xml file
+ * \param boolean
+ * \return true if version updated successfully
+ */
+bool Project::enable_push(bool increment)
+{
     auto c = doc.child("Project").child("Metadata");
     bool s = c.child("Stage").first_child().set_value("Corrector");
     int ver = std::stoi(c.child("Version").child_value());
@@ -57,20 +86,41 @@ bool Project::enable_push(bool increment) {
     return true;
 }
 
-void Project::set_version(int ver) {
+/*!
+ * \fn Project::set_version
+ * \brief Sets the passed value as version in xml file
+ * \param ver
+ */
+void Project::set_version(int ver)
+{
     auto c = doc.child("Project").child("Metadata");
     c.child("Version").first_child().set_value(std::to_string(ver).c_str());
     save_xml();
 }
 
-void Project::set_configuration(QString val) {
+/*!
+ * \brief Project::set_configuration
+ * \param val
+ */
+void Project::set_configuration(QString val)
+{
     std::string value = val.toUtf8().constData();
     auto c = doc.child("Project").child("Configuration");
     c.child("Prefixmatch").first_child().set_value(value.c_str());
     save_xml();
 }
 
-void Project::removeFile(QModelIndex & idx,Filter & pFilter, QFile & pFile) {
+/*!
+ * \fn Project::removeFile
+ * \brief Removes the file name from project.xml and the hierarchial project tree view in ui window
+ * \param idx
+ * \param pFilter
+ * \param pFile
+ *
+ * \sa FindFile()
+ */
+void Project::removeFile(QModelIndex & idx,Filter & pFilter, QFile & pFile)
+{
     auto first = doc.child("Project").child("ItemGroup");
 
     auto ch = first.next_sibling();
@@ -89,15 +139,23 @@ void Project::removeFile(QModelIndex & idx,Filter & pFilter, QFile & pFile) {
 
     mTreeModel->layoutChanged();
 }
+
+/*!
+ * \brief Project::process_node
+ * \param pNode
+ * \param parent
+ */
 void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
 {
     if (pNode) {
         std::string node_name = pNode->name();
-        if (node_name == "ItemGroup") {
+        if (node_name == "ItemGroup")
+        {
             pugi::xml_node p = pNode->first_child();
             process_node(&p, parent);
         }
-        else if (node_name == "Filter") {
+        else if (node_name == "Filter")
+        {
             /*   Example
                  <Filter Include="Image">
                     <Extensions>jpeg;jpg;png;</Extensions>
@@ -120,8 +178,8 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
             auto p = pNode->next_sibling();
             process_node(&p, parent);
         }
-        else if (node_name == "File") {
-
+        else if (node_name == "File")
+        {
             /*
                 Example:
                 <File Include="page-1.jpeg">
@@ -157,11 +215,14 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
         setProjectOpen(false);
     }
 }
-/*
-* Give XML file path and the content will be stored inside the class
-* and processed by rapidxml
-*/
-void Project::process_xml(QFile & pFile) {
+
+/*!
+ * \brief Project::process_xml
+ * \param pFile
+ * Give XML file path and the content will be stored inside the class and processed by rapidxml
+ */
+void Project::process_xml(QFile & pFile)
+{
     if (mTreeModel)delete mTreeModel;
     /*if (mRoot) delete mRoot;*/
     setProjectOpen(true);
@@ -190,10 +251,17 @@ void Project::process_xml(QFile & pFile) {
         mTreeModel->layoutChanged();
     }
 }
-QDir Project::GetDir() {
+
+QDir Project::GetDir()
+{
     return mProjectDir;
 }
 
+/*!
+ * \brief Project::addFile
+ * \param f
+ * \param pFile
+ */
 void Project::addFile(Filter &f,QFile & pFile)
 {
     auto node = doc.child("Project").child("ItemGroup").next_sibling();
@@ -216,6 +284,13 @@ void Project::addFile(Filter &f,QFile & pFile)
     process_node(&chnode, mRoot);
     mTreeModel->layoutChanged();
 }
+
+/*!
+ * \brief Project::AddTemp
+ * \param filter
+ * \param file
+ * \param prefix
+ */
 void Project::AddTemp(Filter * filter, QFile & file,QString prefix) {
     QString name = filter->name();
     TreeItem * t = mRoot->find(name);
@@ -223,7 +298,8 @@ void Project::AddTemp(Filter * filter, QFile & file,QString prefix) {
 
     // Add only required files(ingore all except html and txt) to the tree view
     QString suff = finfo.completeSuffix();
-    if (name == "Document" && suff != "txt" && suff != "html") {
+    if (name == "Document" && suff != "txt" && suff != "html")
+    {
         return ;
     }
 
@@ -237,8 +313,14 @@ void Project::AddTemp(Filter * filter, QFile & file,QString prefix) {
     t->append_child(f);
     mTreeModel->layoutChanged();
 }
-void Project::save_xml() {
-    try {
+
+/*!
+ * \brief Project::save_xml
+ */
+void Project::save_xml()
+{
+    try
+    {
         std::string str = mFileName.toStdString();
         bool isSaved = doc.save_file(str.c_str());
     }
@@ -255,16 +337,33 @@ void Project::save_xml() {
         std::cerr << "An unknown error occurred." << std::endl;
     }
 }
+
+/*!
+ * \brief Project::getFile
+ * \param pFileName
+ */
 void Project::getFile(const QString & pFileName)
 {
 }
 
-TreeModel * Project::getModel() {
+/*!
+ * \brief Project::getModel
+ * \return
+ */
+TreeModel * Project::getModel()
+{
     return mTreeModel;
 }
 
-
-
+/*!
+ * \brief make_opts
+ * \param bare
+ * \param templ
+ * \param shared
+ * \param gitdir
+ * \param dir
+ * \return
+ */
 git_repository_init_options make_opts(bool bare, const char * templ,
     uint32_t shared,
     const char * gitdir,
@@ -297,6 +396,10 @@ git_repository_init_options make_opts(bool bare, const char * templ,
     return opts;
 }
 
+/*!
+ * \brief create_initial_commit
+ * \param repo
+ */
 void create_initial_commit(git_repository * repo) {
     git_signature *sig;
     git_index *index;
@@ -339,6 +442,7 @@ void create_initial_commit(git_repository * repo) {
     git_tree_free(tree);
     git_signature_free(sig);
 }
+
 enum index_mode {
     INDEX_NONE,
     INDEX_ADD,
@@ -354,6 +458,16 @@ struct index_options {
 
 static int login_tries = 1;
 static bool is_cred_cached = false;
+
+/*!
+ * \brief credentials_cb
+ * \param out
+ * \param url
+ * \param username_from_url
+ * \param allowed_types
+ * \param payload
+ * \return
+ */
 int credentials_cb(git_cred ** out, const char *url, const char *username_from_url,
     unsigned int allowed_types, void *payload)
 {
@@ -410,6 +524,11 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
     }
     return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
+
+/*!
+ * \brief Project::push
+ * \return
+ */
 bool Project::push() {
 //    lg2_add();
     git_libgit2_init();
@@ -479,6 +598,7 @@ bool Project::push() {
         if(error)
             goto cleanup;
     }
+
     error = git_push_init_options(&push_opts, GIT_PUSH_OPTIONS_VERSION);
     push_opts.callbacks.credentials = credentials_cb;
     error = git_remote_push(remote, &refspecs, &push_opts);
@@ -518,10 +638,12 @@ static int update_cb(const char *refname, const git_oid *a, const git_oid *b, vo
     git_oid_fmt(b_str, b);
     b_str[GIT_OID_HEXSZ] = '\0';
 
-    if (git_oid_iszero(a)) {
+    if (git_oid_iszero(a))
+    {
         printf("[new]     %.20s %s\n", b_str, refname);
     }
-    else {
+    else
+    {
         git_oid_fmt(a_str, a);
         a_str[GIT_OID_HEXSZ] = '\0';
         printf("[updated] %.10s..%.10s %s\n", a_str, b_str, refname);
@@ -533,15 +655,19 @@ static int transfer_progress_cb(const git_transfer_progress *stats, void *payloa
 {
     (void)payload;
 
-    if (stats->received_objects == stats->total_objects) {
+    if (stats->received_objects == stats->total_objects)
+    {
 
     }
-    else if (stats->total_objects > 0) {
-
-
+    else if (stats->total_objects > 0)
+    {
     }
     return 0;
 }
+
+/*!
+ * \brief Project::fetch
+ */
 void Project::fetch() {
 
     QDir::setCurrent(mProjectDir.absolutePath());
@@ -551,8 +677,13 @@ void Project::fetch() {
 
 }
 
-
-bool Project::commit(std::string message) {
+/*!
+ * \brief Project::commit
+ * \param message
+ * \return
+ */
+bool Project::commit(std::string message)
+{
     lg2_add();
     git_signature *sig;
     git_index *index;
@@ -571,7 +702,8 @@ bool Project::commit(std::string message) {
 
     }
     klass = check_lg2(git_revparse_ext(&parent, &ref, repo, "HEAD"),"Head not found","");
-    if (klass > 0) {
+    if (klass > 0)
+    {
         return 0;
     }
     /* Now let's create an empty tree for this commit */
@@ -588,17 +720,20 @@ bool Project::commit(std::string message) {
      */
 
     klass = check_lg2(git_index_write_tree(&tree_id, index), "Could not write tree", "");;
-    if (klass > 0) {
+    if (klass > 0)
+    {
         return 0;
     }
 
     klass = check_lg2(git_index_write(index), "Could not write index", "");;
-    if (klass > 0) {
+    if (klass > 0)
+    {
         return 0;
     }
 
     klass = check_lg2(git_tree_lookup(&tree, repo, &tree_id), "Error looking up tree", "");
-    if (klass > 0) {
+    if (klass > 0)
+    {
         return 0;
     }
 
@@ -630,6 +765,11 @@ bool Project::commit(std::string message) {
     git_index_free(index);
     return 1;
 }
+
+/*!
+ * \brief Project::add_config
+ * \return
+ */
 bool Project::add_config() {
     git_config * cfg = NULL;
     git_config* sys_cfg = NULL;
@@ -689,6 +829,7 @@ bool Project::add_config() {
     git_config_free(sys_cfg);
     return true;
 }
+
 int match_cb(const char *path, const char *spec, void *payload) {
 
     //match_data *d = (match_data*)payload;
@@ -700,7 +841,13 @@ int match_cb(const char *path, const char *spec, void *payload) {
     std::string spath = path;
     return 0;
 }
-void Project::lg2_add(QString workingFolder) {
+
+/*!
+ * \brief Project::lg2_add
+ * \param workingFolder
+ */
+void Project::lg2_add(QString workingFolder)
+{
     const char * paths[] = { "/Dicts" ,"/Comments","/Images", workingFolder.toUtf8().constData()};
     git_strarray arr = { (char**)paths,1 };
     git_index *idx = NULL;
@@ -713,6 +860,10 @@ void Project::lg2_add(QString workingFolder) {
     git_index_write(idx);
     git_index_free(idx);
 }
+
+/*!
+ * \brief Project::lg2_add
+ */
 void Project::lg2_add() {
     const char * paths[] = { "/*"};
     git_strarray arr = { (char**)paths,1 };
@@ -726,10 +877,13 @@ void Project::lg2_add() {
     git_index_write(idx);
     git_index_free(idx);
 }
+
 void Project::add_and_commit() {
 
 }
-Filter * Project::getFilter(QString str) {
+
+Filter * Project::getFilter(QString str)
+{
     for (auto * p : mFilters) {
         if (p->name() == str) {
             return p;
@@ -738,50 +892,87 @@ Filter * Project::getFilter(QString str) {
     return nullptr;
 }
 
-QString Project::get_configuration() {
+/*!
+ * \brief Project::get_configuration
+ * \return
+ */
+QString Project::get_configuration()
+{
     auto c = doc.child("Project").child("Configuration");
     QString PMatch = c.child("Prefixmatch").child_value();
     return PMatch;
 }
 
-QString Project::get_stage() {
+/*!
+ * \brief Project::get_stage
+ * \return
+ */
+QString Project::get_stage()
+{
     auto c = doc.child("Project").child("Metadata");
     QString stage = c.child("Stage").child_value();
     return stage;
 }
 
-QString Project::get_version() {
+QString Project::get_version()
+{
     auto c = doc.child("Project").child("Metadata");
     QString version = c.child("Version").child_value();
     return version;
 }
-QString Project::get_pmEmail() {
+
+/*!
+ * \brief Project::get_pmEmail
+ * \return
+ */
+QString Project::get_pmEmail()
+{
     auto c = doc.child("Project").child("Metadata");
     QString stage = c.child("ProjectManagerEmail").child_value();
     return stage;
 }
+
+/*!
+ * \brief Project::get_bookId
+ * \return
+ */
 QString Project::get_bookId() {
     auto c = doc.child("Project").child("Metadata");
     QString version = c.child("BookId").child_value();
     return version;
 }
-QString Project::get_setId() {
+
+/*!
+ * \brief Project::get_setId
+ * \return
+ */
+QString Project::get_setId()
+{
     auto c = doc.child("Project").child("Metadata");
     QString stage = c.child("SetId").child_value();
     return stage;
 }
-QString Project::get_repo() {
+
+/*!
+ * \brief Project::get_repo
+ * \return
+ */
+QString Project::get_repo()
+{
     auto c = doc.child("Project").child("Metadata");
     QString stage = c.child("RepositoryLink").child_value();
     return stage;
 }
 
-void Project::open_git_repo() {
+/*!
+ * \brief Project::open_git_repo
+ */
+void Project::open_git_repo()
+{
     std::string dir = mProjectDir.path().toStdString();
     QString gitpath = mProjectDir.path() + "/.git";
     QDir gitdir(gitpath);
     git_signature * out;
-
 
     if (gitdir.exists())
     {

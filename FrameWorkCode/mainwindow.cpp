@@ -2980,7 +2980,10 @@ void MainWindow::on_actionFilterOutGT50EditDisPairs_triggered()
         }
     }
 }
-
+/*!
+ * \brief MainWindow::on_actionPrepareFeatures_triggered()
+ * deprecated; crashing
+ */
 void MainWindow::on_actionPrepareFeatures_triggered()
 {
     QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
@@ -3045,6 +3048,10 @@ void MainWindow::on_actionPrepareFeatures_triggered()
     }
 }
 
+/*!
+ * \brief MainWindow::on_actionFetch_2_triggered()
+ * Not using this function
+ */
 void MainWindow::on_actionFetch_2_triggered()
 {
     QString stage = mProject.get_stage();
@@ -3081,9 +3088,16 @@ void MainWindow::on_actionFetch_2_triggered()
         return;
 }
 
-//Corrector-only
+/*!
+ * \fn MainWindow::on_actionTurn_In_triggered()
+ * \brief To turn-in the corrector's file to git repository when user clicks "submit corrector" button.
+ *
+ * \note This function turn-in files only for corrector and not for verifier.
+ * \sa checkUnsavedWork(), saveAllWork(), get_version(), commit(), push(), set_stage_verifier() and enable_push()
+ */
 void MainWindow::on_actionTurn_In_triggered()
 {
+    //! Checking if the files are saved or not.
     if (checkUnsavedWork())
     {
         QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Unsaved Work",
@@ -3097,9 +3111,11 @@ void MainWindow::on_actionTurn_In_triggered()
         }
         else
         {
-            saveAllWork();
+            saveAllWork();      //saves all the file
         }
     }
+
+    //!Checking whether all the file are there in CorrectorOutput directory.
     if(mProject.get_version().toInt())
     {
         if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/CorrectorOutput/)")
@@ -3108,16 +3124,18 @@ void MainWindow::on_actionTurn_In_triggered()
             QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in CorrectorOutput directory");
             return;
         }
-        QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();
+        QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();     // append current version
 
         int btn = QMessageBox::question(this, "Submit ?", "Are you ready to submit your changes?",
                                         QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
         if (btn == QMessageBox::StandardButton::Yes)
         {
-            mProject.set_stage_verifier();
+            mProject.set_stage_verifier();    // set_stage_verifier()inherited from project.cpp updates the stage in xml file to "verifier"
+
+            //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
             if(!mProject.commit(commit_msg.toStdString()) || !mProject.push())
             {
-                mProject.enable_push(false);
+                mProject.enable_push(false);      // enable_push() increments version and sets stage in xml file
                 QMessageBox::information(0, "Turn In", "Turn In Cancelled");
                 return;
             }
@@ -3128,13 +3146,13 @@ void MainWindow::on_actionTurn_In_triggered()
             return;
         }
 
-        ui->lineEdit_2->setText("Version " + mProject.get_version());
+        ui->lineEdit_2->setText("Version " + mProject.get_version());      //Update the version of file on ui.
 
         QString emailText =  "Book ID: " + mProject.get_bookId()
                 + "\nSet ID: " + mProject.get_setId()
-                + "\n" + commit_msg ;
+                + "\n" + commit_msg ;       //Send an email if turn-in failed
 
-        ui->actionTurn_In->setEnabled(false);
+        ui->actionTurn_In->setEnabled(false);        // Deactivating the "Submit Corrector" button on ui
         QMessageBox::information(0, "Turn In", "Turned In Successfully");
     }
     else
@@ -3143,9 +3161,21 @@ void MainWindow::on_actionTurn_In_triggered()
     }
 }
 
-//Verifier-only
+/*!
+ * \fn MainWindow::on_actionVerifier_Turn_In_triggered
+ * \brief To turn-in the verifier's file to git repository when user clicks ""Submit Verifier" button.
+ *
+ * \note This function turn-in files for verifiers not correctors.
+ * \sa checkUnsavedWork(), saveAllWork(), get_version(), get_stage(), readJsonFile(), writeJsonFile(),set_stage_verifier() and enable_push.
+ */
 void MainWindow::on_actionVerifier_Turn_In_triggered()
 {
+    /*!
+     * \fn checkUnsavedWork
+     * If there's unsaved work, a message box will appear on the screen
+     * asking to save the usaved work or not.
+     * \return boolean value, true if there is unsaved work and false if not.
+    */
     if (checkUnsavedWork())
     {
 
@@ -3163,6 +3193,15 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
             saveAllWork();
         }
     }
+
+    /*
+     * \description
+     * 1. Checks if any project is opened or not.
+     * 2. Reads the comments.json file in Comments folder in the opened project.
+     * 3. Calculates AverageCharAccuracy.
+     * 4. mRoleCheck
+     * 5. Sets the rating and formatting.
+    */
     if(mProject.get_version().toInt())
     {
 
@@ -3177,6 +3216,8 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         QJsonObject mainObj = readJsonFile(commentFilename);
 
         avgcharacc = mainObj["AverageCharAccuracy"].toDouble();
+
+        //! Calcuates the rating for the current set.
         if(mProject.get_stage() != mRole)
             rating = mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)].toInt();
         else
@@ -3184,7 +3225,11 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         if(((!mainObj["Formatting"].isNull())) || (! mainObj["Formatting"].isUndefined()))
             formatting = mainObj["Formatting"].toBool();
 
-
+        /*
+         * \description
+         * 1. Check formatting dialog box will be opened
+         * 2. Dialog box will show the current rating out of 4 and a checkbox.
+        */
         QDialog dialog(this);
         dialog.setWindowTitle("Check Formatting");
 
@@ -3198,12 +3243,16 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
                                    Qt::Horizontal, &dialog);
         form.addRow(&buttonBox);
-        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+        //! Checking which signal has been passed i.e. accept or reject.
+        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));     //when ok is pressed.
+        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));     //when cancel is pressed.
 
         if (dialog.exec() == QDialog::Accepted)
         {
             formatting = cb->isChecked();
+
+            //! If the checkbox is checked, increment rating by 1 else decrement the rating value by 1.
             if(rating == 4 && formatting)
                 rating = 5;
             else if(rating == 5 && (!formatting))
@@ -3215,7 +3264,10 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
             return;
         }
 
+        //! Updating the formatting and rating parameters value in the comments.json file, if any
         mainObj["Formatting"] = formatting;
+
+        //! Calcuates the rating for the current set.
         if(mProject.get_stage() != mRole)
             mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;
         else
@@ -3258,6 +3310,12 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         QAbstractButton *cancelButton =
                 messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
 
+        /*
+             * \description
+             * 1.Checks if the project content is added to the staging area or not
+             * 2. If no, display \a msg1 and remove the resubmit button.
+             * 3. If yes, display \a msg2.
+        */
         if(mRole != mProject.get_stage())
         {
             messageBox.setText(msg1);
@@ -3269,8 +3327,23 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         }
 
         messageBox.exec();
+
+        /*!
+         * \enum class SubmissionType
+         *
+         * This enum describes the type of submission type.
+         *
+         * \value resubmit To turn in without incrementing version.
+         * \value return_set To turn-in and increment the version.
+         * \value finalise To approve the set as the final version.
+        */
         enum class SubmissionType {resubmit, return_set, finalise};
         SubmissionType s ;
+
+        /*
+            * Checking the condition: CorrectorOutputFiles != 2*IndsFiles
+            * If true, then \a s and \a commit_msg are updated.
+        */
         if (messageBox.clickedButton() == resubmitButton)
         {
             //mProject.enable_push( false ); //Increment = false
@@ -3283,12 +3356,20 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
             s = SubmissionType::resubmit;
             commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
         }
+
+        //! \a s and \a commit_msg are updated
         else if (messageBox.clickedButton() == returnSetButton)
         {
             //mProject.enable_push( true ); //Increment = true
             s = SubmissionType::return_set;
             commit_msg = "Verifier has Turned in the Next Version:" + mProject.get_version();
         }
+
+        /*
+         * Checking the condition: CorrectorOutputFiles != 2*IndsFiles
+         * If true, a message box of \value Couldn't Turn in will be displayed,
+         * else \a s and \a commit_msg are updated.
+        */
         else if (messageBox.clickedButton() == finaliseButton)
         {
             //mProject.enable_push( false ); //Increment = false
@@ -3311,11 +3392,11 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
                                         QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
         if (btn == QMessageBox::StandardButton::Yes)
         {
-            if(s == SubmissionType::return_set)
+            if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
             {
                 mProject.enable_push( true );
             }
-            else if (s == SubmissionType::resubmit)
+            else if (s == SubmissionType::resubmit)    //If yes button is clicked and submission type is resubmit then enable push
             {
                 mProject.enable_push( false );
             }
@@ -3336,6 +3417,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
             return;
         }
 
+        //! Sending email with the following information
         QString emailText =  "Book ID: " + mProject.get_bookId()
                 + "\nSet ID: " + mProject.get_setId()
                 + "\nRating Provided: " + QString::number(rating)
@@ -3345,6 +3427,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
             return;
         } */
 
+        //! Updating the Project Version
         ui->lineEdit_2->setText("Version " + mProject.get_version());
         QMessageBox::information(0, "Turn In", "Turned In Successfully");
     }
@@ -3354,6 +3437,39 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
     }
 }
 
+/*!
+ * \brief MainWindow::on_actionSymbols_triggered
+ * It shows the table for various symbols
+ * \sa Symbols.cpp
+ */
+void MainWindow::on_actionSymbols_triggered()
+{
+    SymbolsView *dialog = SymbolsView::openSymbolTable(this);
+    dialog->show();
+}
+
+/*!
+ * \brief MainWindow::on_actionZoom_In_triggered
+ * for zoom-in operation
+ */
+void MainWindow::on_actionZoom_In_triggered()
+{
+    if (z)
+        z->gentle_zoom(1.1);
+}
+
+/*!
+ * \brief MainWindow::on_actionZoom_Out_triggered
+ * for zoom-out operation
+ */
+void MainWindow::on_actionZoom_Out_triggered()
+{
+    if (z)
+        z->gentle_zoom(0.9);
+}
+//end
+
+//start extra functions
 /*!
  * \fn MainWindow::eventFilter
  * \brief event: ToolTip and ImageMarkingRegion
@@ -3374,17 +3490,15 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     //! Tooltip documentation
     if (event->type() == QEvent::ToolTip)
     {
-
           //qDebug() << "Tooltip "<<QEvent :: ToolTip;
           event->accept();
 
          if(QToolTip::isVisible())
          {
 
-              QString qs =  QToolTip :: text();
+             QString qs =  QToolTip :: text();
 
              int x0, y0, x1, y1;
-
 
              QStringList list;
              list=qs.split(" ");
@@ -3406,13 +3520,11 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
                      item1->setRect(x0, y0, x1-x0, y1-y0);
                   }
-                 }
-        }
-
+             }
+          }
       }
 
     //! ImageMarkingRegion feature
-
     if(loadimage)                   //Check image is loaded or not.
     {
      static int x1, y1;             //top & left coordinate values
@@ -3808,8 +3920,7 @@ void MainWindow::createImageInfoXMLFile()
         }
     }
 }
-
-//end
+//end extra functions
 
 void MainWindow::on_actionCreateSuggestionLog_triggered()
 {
@@ -4218,25 +4329,6 @@ void MainWindow::on_actionLineSpace_triggered() //Not used, does not work as int
         format.setLineHeight(inputLineSpace*100, 1);
         cursor.setBlockFormat(format);
     }
-}
-
-void MainWindow::on_actionZoom_In_triggered()
-{
-    if (z)
-        z->gentle_zoom(1.1);
-}
-
-void MainWindow::on_actionZoom_Out_triggered()
-{
-    if (z)
-        z->gentle_zoom(0.9);
-}
-
-void MainWindow::on_actionSymbols_triggered()
-{
-
-    SymbolsView *dialog = SymbolsView::openSymbolTable(this);
-    dialog->show();
 }
 
 void MainWindow::on_actionAdd_Image_triggered()
