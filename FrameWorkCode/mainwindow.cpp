@@ -209,6 +209,7 @@ bool MainWindow::setRole(QString role)
 }
 MainWindow::~MainWindow()
 {
+    deleteEditedFilesLog();
     delete ui;
 }
 
@@ -1741,7 +1742,10 @@ void MainWindow::on_actionSave_triggered()
             }
         }
     }
-    iteratorReplace(globalFileName, optimalPath);
+
+    QString currentDirAbsolutePath = gDirTwoLevelUp + "/" + gCurrentDirName;
+    iteratorReplace(currentDirAbsolutePath, optimalPath);
+
     ConvertSlpDevFlag =0;
 
 }
@@ -5537,59 +5541,150 @@ void MainWindow::on_pushButton_clicked()
      }
 }
 
-void MainWindow::iteratorReplace(QString str , QVector <QString> optimalPath)
-{
-    QMap <QString, QString> globalReplacementMap;
-    QMap<QString, QString>::iterator j;
-    QStringList list, changesList;
-    list=str.split("/");
-    str="";
-    for (int i=0; i<list.size()-1; i++)
-    {
-        str+=list[i];
-        str+="/";
+// dumps given QString to file at file_path
+void MainWindow::dumpStringToFile(QString file_path, QString string){
+    QFile file(file_path);
+    if(file.open(QIODevice::WriteOnly | QIODevice::Append)){
+            QTextStream outputStream(&file);
+            outputStream << string << endl;
     }
+    file.close();
+}
 
-    str.chop(1);
+// checks if a QString is in file at file_path
+bool MainWindow::isStringInFile(QString file_path, QString searchString){
 
-    QDirIterator it(str,QDirIterator::Subdirectories);
-    for (int i=0; i<optimalPath.size(); i++)
-    {
-        changesList = optimalPath[i].split(" ");
-        QMessageBox messageBox(this);
-        messageBox.setWindowTitle("Global Replace");
-        QString msg = "Do you want to replace " + changesList[1] + " with " + changesList[3] + " Globally?\n" ;
-        QAbstractButton *replaceButton = messageBox.addButton(tr("Replace"), QMessageBox::ActionRole);
-        QAbstractButton *cancelButton = messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
-        messageBox.setText(msg);
-        messageBox.exec();
-        if (messageBox.clickedButton() == replaceButton)
-        {
-            globalReplacementMap[changesList[1]] = changesList[3];
+    QFile fileToSearchIn(file_path);
+    bool textFound = false;
 
-        }
+    if(fileToSearchIn.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream in(&fileToSearchIn);
+        QString line;
+        /*! Check in everyline if string exists*/
+        do{
+            line = in.readLine();
+            if(line.contains(searchString)){
+                textFound = true;
+                break;
+            }
+        }while(!line.isNull());
     }
-    while (it.hasNext())
+    fileToSearchIn.close();
+
+    return textFound;
+
+}
+
+// adds currently opened file in editor in .EditedFiles.txt to mark it as dirty
+void MainWindow::addCurrentlyOpenFileToEditedFilesLog(){
+    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+    QString currentFilePath = gDirTwoLevelUp + "/" + gCurrentDirName+ "/" + gCurrentPageName;
+
+    bool fileFound = isStringInFile(editedFilesLogPath, currentFilePath);
+
+    if(fileFound)
+        qDebug() << gCurrentPageName <<" already found in Edited Files Log. No need to update.";
+    else
     {
-        QString s = it.next();
-        QFile *f = new QFile(s);
-        f->open(QIODevice::ReadOnly);
-        QTextStream in(f);
-        QString s1 = in.readAll();
-        f->close();
+        qDebug() << gCurrentPageName <<" not found in Edited Files Log."<<endl;
+        qDebug()<< "Writing" <<currentFilePath << " to file." << endl;
+        dumpStringToFile(editedFilesLogPath, currentFilePath);
+    }
+}
 
-        f->open(QIODevice::WriteOnly);
-        for (j = globalReplacementMap.begin(); j != globalReplacementMap.end(); ++j)
-        {
-//            QRegExp rx("\b"(j.key())"\b");
+// for now I am calling this everytime window closes
+void MainWindow::deleteEditedFilesLog(){
+    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+    QFile file(editedFilesLogPath);
+    file.remove();
+}
 
-            if (s1.contains(j.key()))
-            {
+// writes CPairs by iterating over all files
+void MainWindow::writeGlobalCPairsToCleanFiles(QString file_path, QMap <QString, QString> globalReplacementMap){
+    QMap <QString, QString>::iterator j;
+    QFile *f = new QFile(file_path);
+
+    f->open(QIODevice::ReadOnly);
+
+    QTextStream in(f);
+    QString s1 = in.readAll();
+
+    f->close();
+
+    f->open(QIODevice::WriteOnly);
+
+    for (j = globalReplacementMap.begin(); j != globalReplacementMap.end(); ++j)
+    {
+        // For Regex String Matching, currently not working
+//        QString pattern = ("\\b")+j.key()+("\\b");
+//        QString replacementString = "\\1" + j.value() + "\\2";
+//        qDebug()<< pattern;
+//        qDebug()<< replacementString;
+
+//        s1.replace(QRegularExpression(pattern), j.value());
+
+        if (s1.contains(j.key()))
                 s1.replace(j.key() , j.value());
 
-            }
-        }
         in << s1;
         f->close();
+
     }
+}
+
+// spawns a MessageBox and returns true if Replace is chosen
+bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word){
+
+    QMessageBox messageBox(this);
+
+    QAbstractButton *replaceButton = messageBox.addButton(tr("Replace"), QMessageBox::ActionRole);
+    QAbstractButton *cancelButton = messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+
+    QString msg = "Do you want to replace " + old_word + " with " + new_word + " Globally?\n" ;
+
+    messageBox.setWindowTitle("Global Replace");
+    messageBox.setText(msg);
+    messageBox.exec();
+
+    if (messageBox.clickedButton() == replaceButton)
+        return true;
+    return false;
+
+}
+
+
+void MainWindow::iteratorReplace(QString currentFileDirectory , QVector <QString> optimalPath)
+{
+    QMap <QString, QString> globalReplacementMap;
+    QStringList changesList;
+
+    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+
+    for (int i=0; i<optimalPath.size(); i++){
+
+        changesList = optimalPath[i].split(" ");
+        bool updateCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3]);
+
+        if (updateCPairs)
+            globalReplacementMap[changesList[1]] = changesList[3];
+
+    }
+
+    QDirIterator it(currentFileDirectory, QDirIterator::Subdirectories);
+    if(globalReplacementMap.size()>0){
+        while (it.hasNext()){
+
+            QString it_file_path = it.next();
+            bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
+
+            if(isFileInEditedFilesLog){
+                continue;
+            }
+
+            else{
+                writeGlobalCPairsToCleanFiles(it_file_path, globalReplacementMap);
+            }
+        }
+    }
+    addCurrentlyOpenFileToEditedFilesLog();
 }

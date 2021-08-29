@@ -299,9 +299,18 @@ private slots:
     bool checkUnsavedWork();
     void saveAllWork();
     void setMFilename( QString );
+
     void iteratorReplace( QString , QVector<QString> );
+    bool globalReplaceQueryMessageBox(QString old_word, QString new_word);
+    void writeGlobalCPairsToCleanFiles(QString file_path, QMap <QString, QString> globalReplacementMap);
 
     void on_pushButton_clicked();
+
+    void addCurrentlyOpenFileToEditedFilesLog();
+    void deleteEditedFilesLog();
+
+    bool isStringInFile(QString file_path, QString searchString);
+    void dumpStringToFile(QString file_path, QString string);
 
 private:
     bool mExitStatus = false;
