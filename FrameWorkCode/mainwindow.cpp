@@ -5587,7 +5587,7 @@ void MainWindow::addCurrentlyOpenFileToEditedFilesLog(){
     else
     {
         qDebug() << gCurrentPageName <<" not found in Edited Files Log."<<endl;
-        qDebug()<< "Writing" <<currentFilePath << " to file." << endl;
+        qDebug()<< "Writing " <<currentFilePath << " to file." << endl;
         dumpStringToFile(editedFilesLogPath, currentFilePath);
     }
 }
@@ -5600,8 +5600,8 @@ void MainWindow::deleteEditedFilesLog(){
 }
 
 // writes CPairs by iterating over all files
-void MainWindow::writeGlobalCPairsToCleanFiles(QString file_path, QMap <QString, QString> globalReplacementMap){
-    QMap <QString, QString>::iterator j;
+void MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap){
+    QMap <QString, QString>::iterator grmIterator;
     QFile *f = new QFile(file_path);
 
     f->open(QIODevice::ReadOnly);
@@ -5613,23 +5613,14 @@ void MainWindow::writeGlobalCPairsToCleanFiles(QString file_path, QMap <QString,
 
     f->open(QIODevice::WriteOnly);
 
-    for (j = globalReplacementMap.begin(); j != globalReplacementMap.end(); ++j)
+    for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
     {
-        // For Regex String Matching, currently not working
-//        QString pattern = ("\\b")+j.key()+("\\b");
-//        QString replacementString = "\\1" + j.value() + "\\2";
-//        qDebug()<< pattern;
-//        qDebug()<< replacementString;
-
-//        s1.replace(QRegularExpression(pattern), j.value());
-
-        if (s1.contains(j.key()))
-                s1.replace(j.key() , j.value());
-
-        in << s1;
-        f->close();
-
+        if (s1.contains(grmIterator.key()))
+                s1.replace(grmIterator.key() , grmIterator.value());
     }
+
+    in << s1;
+    f->close();
 }
 
 // spawns a MessageBox and returns true if Replace is chosen
@@ -5652,39 +5643,35 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
 
 }
 
-
+// Replace words iteratively
 void MainWindow::iteratorReplace(QString currentFileDirectory , QVector <QString> optimalPath)
 {
     QMap <QString, QString> globalReplacementMap;
     QStringList changesList;
-
     QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
 
     for (int i=0; i<optimalPath.size(); i++){
 
         changesList = optimalPath[i].split(" ");
-        bool updateCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3]);
+        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3]);
 
-        if (updateCPairs)
+        if (updateGlobalCPairs)
             globalReplacementMap[changesList[1]] = changesList[3];
 
     }
 
-    QDirIterator it(currentFileDirectory, QDirIterator::Subdirectories);
-    if(globalReplacementMap.size()>0){
-        while (it.hasNext()){
+    QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
 
-            QString it_file_path = it.next();
-            bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
+    while (dirIterator.hasNext()){
 
-            if(isFileInEditedFilesLog){
-                continue;
-            }
+        QString it_file_path = dirIterator.next();
+        bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
 
-            else{
-                writeGlobalCPairsToCleanFiles(it_file_path, globalReplacementMap);
-            }
+        if(!isFileInEditedFilesLog){
+            writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
         }
     }
+
     addCurrentlyOpenFileToEditedFilesLog();
 }
+
