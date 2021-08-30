@@ -4428,7 +4428,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     //graphic->removeItem(crop_rect);
 
                     //!Saving Image Regions to their respective folder(Figure/Table/Equation)
-                    saveImageRegion(cropped,a,s1,i);
+                    saveImageRegion(cropped,a,s1,i,x2-x1,y2-y1);
 
                     i++;       //increment values when a figure is inserted in the textBrowser
 
@@ -4452,7 +4452,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     //graphic->removeItem(crop_rect);
 
                     //!Saving Image Regions to their respective folder(Figure/Table/Equation)
-                    saveImageRegion(cropped,a,s1,j);
+                    saveImageRegion(cropped,a,s1,j,x2-x1,y2-y1);
 
                     j++;         //increment values when a table is inserted in the textBrowser
 
@@ -4476,7 +4476,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     //graphic->removeItem(crop_rect);
 
                     //!Saving Image Regions to their respective folder(Figure/Table/Equation)
-                    saveImageRegion(cropped,a,s1,k);
+                    saveImageRegion(cropped,a,s1,k,x2-x1,y2-y1);
 
                     k++;       //increment values when a equation is inserted in the textBrowser
 
@@ -4527,9 +4527,8 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 }
 
 //!Saving Image Regions to their respective folder(Figure/Table/Equation)
-void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z)
-{
-    if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
+void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, int h, int w)
+{   if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
     {
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Figures");
@@ -4546,7 +4545,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z)
             //QString placeholder = "["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]";
 
             QString src = gDirTwoLevelUp+path;
-            QString html = QString("\n <img src='%1'>").arg(src);
+            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h);
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
         }
@@ -4557,7 +4556,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z)
             cropped.save(gDirTwoLevelUp+path,"JPG", 100);
 
             QString src = gDirTwoLevelUp+path;
-            QString html = QString("<img src='%1'>").arg(src);
+            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h);
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
 
@@ -4569,7 +4568,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z)
             cropped.save(gDirTwoLevelUp+path,"JPG",100);
 
             QString src = gDirTwoLevelUp+path;
-            QString html = QString("<img src='%1'>").arg(src);
+            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h);
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
         }
@@ -4584,7 +4583,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z)
 void MainWindow::displayHolder(QString s1,QString s2,QString a,int x1,int y1,int x2,int y2,int i)
 {
     QTextCursor cursor = curr_browser->textCursor();       //getting the cursor position
-    cursor.insertText("["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");         //insert placeholder
+    //cursor.insertText("["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");         //insert placeholder
     return;
 }
 
