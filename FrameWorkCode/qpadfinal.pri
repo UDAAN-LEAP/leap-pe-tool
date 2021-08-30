@@ -27,6 +27,7 @@ HEADERS += ./Filters.h \
     $$PWD/SimpleMail/serverreply_p.h \
     $$PWD/SimpleMail/smtpexports.h \
     $$PWD/editdistance.h \
+    $$PWD/secdialog.h \
     $$PWD/textfinder.h \
     ./Project.h \
     ./TreeItem.h \
@@ -88,6 +89,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/SimpleMail/server.cpp \
     $$PWD/SimpleMail/serverreply.cpp \
     $$PWD/editdistance.cpp \
+    $$PWD/secdialog.cpp \
     $$PWD/textfinder.cpp \
     ./Filters.cpp \
     ./Project.cpp \
@@ -109,6 +111,7 @@ SOURCES += ./DiffView.cpp \
     ./ProjectWizard.cpp \
     ./CreateProjectPage.cpp
 FORMS += ./DiffView.ui \
+    $$PWD/secdialog.ui \
     $$PWD/textfinder.ui \
     ./ProjectHierarchyWindow.ui \
     ./Symbols.ui \
@@ -121,5 +124,7 @@ FORMS += ./DiffView.ui \
 RESOURCES += AppResources.qrc
 
 DISTFILES += \
+    $$PWD/ProjectJson.json \
     $$PWD/SimpleMail/CMakeLists.txt \
-    $$PWD/SimpleMail/simplemail-qt5.pc.in
+    $$PWD/SimpleMail/simplemail-qt5.pc.in \
+    $$PWD/UserJson.json

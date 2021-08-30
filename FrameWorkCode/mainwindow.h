@@ -55,6 +55,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
     Project & GetProject() {
         return mProject;
     }
@@ -68,12 +69,13 @@ public:
     QTextBrowser * getCurrentBrowser() {
         return curr_browser;
     };
+    //void display();
 
 private slots:
     void DisplayJsonDict(void);
 
     bool eventFilter(QObject *, QEvent *);
-    void saveImageRegion(QPixmap, QString, QString,int,int,int);
+    void saveImageRegion(QPixmap, QString, QString,int);
     void displayHolder(QString,QString,QString,int,int,int,int,int);
     void updateEntries(QDomDocument, QString, QString, QString, int);
     void createImageInfoXMLFile();
@@ -304,6 +306,8 @@ private slots:
 
     void on_pushButton_clicked();
 
+public:
+    QTextBrowser * curr_browser = nullptr;
 private:
     bool mExitStatus = false;
     QString mRole;
@@ -315,7 +319,7 @@ private:
     QString current_folder;
     QString currentTabPageName="";
     int currentTabIndex;
-    QTextBrowser * curr_browser = nullptr;
+    //QTextBrowser * curr_browser = nullptr;
     QGraphicsScene * graphic =nullptr;
     Graphics_view_zoom * z = nullptr;
     QModelIndex curr_idx;
