@@ -5615,8 +5615,11 @@ void MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStr
 
     for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
     {
-        if (s1.contains(grmIterator.key()))
-                s1.replace(grmIterator.key() , grmIterator.value());
+        
+        QString pattern = ("(\\b)")+grmIterator.key()+("(\\b)"); // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
+        QString replacementString = "\\1" + grmIterator.value() + "\\2"; // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
+
+        s1.replace(QRegularExpression(pattern), replacementString);
     }
 
     in << s1;

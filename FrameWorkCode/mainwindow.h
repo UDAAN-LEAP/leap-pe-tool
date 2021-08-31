@@ -302,7 +302,7 @@ private slots:
 
     void iteratorReplace( QString , QVector<QString> );
     bool globalReplaceQueryMessageBox(QString old_word, QString new_word);
-    void writeGlobalCPairsToCleanFiles(QString file_path, QMap <QString, QString> globalReplacementMap);
+    void writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap);
 
     void on_pushButton_clicked();
 
