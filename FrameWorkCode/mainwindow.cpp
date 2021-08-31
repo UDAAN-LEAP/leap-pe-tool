@@ -210,7 +210,7 @@ bool MainWindow::setRole(QString role)
 }
 MainWindow::~MainWindow()
 {
-    deleteEditedFilesLog();
+
     delete ui;
 }
 
@@ -4410,6 +4410,7 @@ void MainWindow::on_actionTurn_In_triggered() {  //Corrector-only
 
         ui->actionTurn_In->setEnabled(false);
         QMessageBox::information(0, "Turn In", "Turned In Successfully");
+        deleteEditedFilesLog();
     }
     else{
         QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
@@ -4628,6 +4629,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered() { //Verifier-only
 
         ui->lineEdit_2->setText("Version " + mProject.get_version());
         QMessageBox::information(0, "Turn In", "Turned In Successfully");
+        deleteEditedFilesLog();
     }
     else{
         QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
