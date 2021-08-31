@@ -41,5 +41,4 @@ HEADERS +=
 SOURCES +=
 
 DISTFILES += \
-    ProjectJson.json \
     UserJson.json

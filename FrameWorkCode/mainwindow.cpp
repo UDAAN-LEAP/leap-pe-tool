@@ -376,8 +376,8 @@ string selectedStr ="";
 //GIVE EVENT TO TEXT BROWZER INSTEAD OF MAINWINDOW
 void MainWindow::mousePressEvent(QMouseEvent *ev)
 {
-
-    if (curr_browser) {
+    if (curr_browser)
+    {
         curr_browser->cursorForPosition(ev->pos());
 
         DisplayTimeLog();
@@ -387,6 +387,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
             QTextCursor cursor = curr_browser->textCursor();
             cursor.select(QTextCursor::WordUnderCursor);
+            //BlockUnderCursor
             // code to copy selected string:-
             QString str1 = cursor.selectedText();
             selectedStr = str1.toUtf8().constData();
@@ -5917,4 +5918,31 @@ bool MainWindow::sendEmail(QString emailText)
         return 0;
 
     return 1;
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    auto cursor = curr_browser->textCursor();
+    auto selected = cursor.selection();
+    QString sel = selected.toHtml();
+    //qDebug()<<sel<<endl;
+    QRegularExpression re("<img[^>]*?src\=[\x27\x22](?<Url>[^\x27\x22]*)[\x27\x22][^>]*?width\=[\x27\x22](?<width>[^\x27\x22]*)[\x27\x22][^>]*?height\=[\x27\x22](?<height>[^\x27\x22]*)[\x27\x22][^>]*?>");
+    QRegularExpressionMatch match = re.match(sel, 0);
+    int height = match.captured(3).toInt();
+    int width = match.captured(2).toInt();
+    QString imgname = match.captured(1);
+    //qDebug()<<match.captured(0)<<endl;
+    //qDebug()<<match<<endl;
+
+    int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
+    int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
+    //qDebug()<<n;
+
+    if(n>0 && n1>0)
+    {
+        cursor.removeSelectedText();
+        QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(n).arg(n1);
+        QTextCursor cursor1 = curr_browser->textCursor();
+        cursor1.insertHtml(html);
+    }
 }

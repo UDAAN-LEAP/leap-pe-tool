@@ -157,7 +157,6 @@ OBJECTS       = DiffView.o \
 		moc_CreateProjectPage.o
 DIST          = SimpleMail/CMakeLists.txt \
 		SimpleMail/simplemail-qt5.pc.in \
-		ProjectJson.json \
 		UserJson.json \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
