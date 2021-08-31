@@ -4546,7 +4546,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
             //QString placeholder = "["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]";
 
             QString src = gDirTwoLevelUp+path;
-            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h);
+            QString html = QString("\n <img src='%1' height='%2' width='%3'>").arg(src).arg(w).arg(h);
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
         }
@@ -4557,7 +4557,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
             cropped.save(gDirTwoLevelUp+path,"JPG", 100);
 
             QString src = gDirTwoLevelUp+path;
-            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h);
+            QString html = QString("\n <img src='%1' height='%2' width='%3'>").arg(src).arg(w).arg(h);
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
 
@@ -4569,7 +4569,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
             cropped.save(gDirTwoLevelUp+path,"JPG",100);
 
             QString src = gDirTwoLevelUp+path;
-            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h);
+            QString html = QString("\n <img src='%1' height='%2' width='%3'>").arg(src).arg(w).arg(h);
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
         }
