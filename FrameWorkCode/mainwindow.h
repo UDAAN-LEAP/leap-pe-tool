@@ -40,8 +40,8 @@
 #include<QDomDocument>
 #include <QFileSystemWatcher>
 #include<QGraphicsRectItem>
+#include "globalreplacedialog.h"
 
-//#include <set>
 using namespace std;
 
 namespace Ui {
@@ -300,7 +300,7 @@ private slots:
     void saveAllWork();
     void setMFilename( QString );
 
-    void iteratorReplace( QString , QVector<QString> );
+    void runGlobalReplace(QString, QVector<QString>);
     bool globalReplaceQueryMessageBox(QString old_word, QString new_word);
     void writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap);
 
@@ -311,21 +311,26 @@ private slots:
 
     bool isStringInFile(QString file_path, QString searchString);
     void dumpStringToFile(QString file_path, QString string);
+    QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords);
 
 private:
+    Ui::MainWindow *ui;
+
     bool mExitStatus = false;
     QString mRole;
     bool isVerifier;
-    Ui::MainWindow *ui;
+
     Project mProject;
     QString mFilename;
     QString mFilenameImage;
     QString current_folder;
     QString currentTabPageName="";
     int currentTabIndex;
+
     QTextBrowser * curr_browser = nullptr;
     QGraphicsScene * graphic =nullptr;
     Graphics_view_zoom * z = nullptr;
+
     QModelIndex curr_idx;
     QSet<QString> corrector_set;
     QSet<QString> verifier_set;

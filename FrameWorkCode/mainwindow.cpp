@@ -52,6 +52,7 @@
 #endif
 #include <editdistance.h>
 
+
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
 trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
@@ -1530,7 +1531,7 @@ void MainWindow::on_actionSave_triggered()
 {
     SaveTimeLog();
     DisplayTimeLog();
-    QVector <QString> optimalPath;
+    QVector <QString> changedWords;
     //! When changes are made by the verifier the following values are also updated.
     if(isVerifier)
     {
@@ -1582,11 +1583,10 @@ void MainWindow::on_actionSave_triggered()
         s1 = doc.toPlainText();          //before Saving
         s2 = curr_browser->toPlainText();       //after Saving
 
-        optimalPath = editDistance(s1, s2);           // Update CPair by editdistance
+        changedWords = editDistance(s1, s2);           // Update CPair by editdistance
         //! Do commit when there are some changes in previous and new html file on the basis of distance.
-//        iteratorReplace(globalFileName, optimalPath);
 
-        if(optimalPath.size())
+        if(changedWords.size())
         {
             if(mProject.get_version().toInt())     //Check version number
             {
@@ -1744,7 +1744,7 @@ void MainWindow::on_actionSave_triggered()
     }
 
     QString currentDirAbsolutePath = gDirTwoLevelUp + "/" + gCurrentDirName;
-    iteratorReplace(currentDirAbsolutePath, optimalPath);
+    runGlobalReplace(currentDirAbsolutePath, changedWords);
 
     ConvertSlpDevFlag =0;
 
@@ -5617,9 +5617,11 @@ void MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStr
     {
         
         QString pattern = ("(\\b)")+grmIterator.key()+("(\\b)"); // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
-        QString replacementString = "\\1" + grmIterator.value() + "\\2"; // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
-
-        s1.replace(QRegularExpression(pattern), replacementString);
+        QRegExp re(pattern);
+        QString replacementString = re.cap(1) + grmIterator.value() + re.cap(2); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
+        qDebug() << pattern;
+        qDebug() << replacementString;
+        s1.replace(re, replacementString);
     }
 
     in << s1;
@@ -5646,32 +5648,58 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
 
 }
 
+// spawns a checklist and returns a Qmap of selected pairs
+QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords){
+    QMap <QString, QString> globalReplacementMap;
+    GlobalReplaceDialog grDialog(changedWords, this);
+
+    grDialog.setModal(true);
+    grDialog.exec();
+
+    if(grDialog.on_applyButton_clicked())
+        globalReplacementMap = grDialog.getFilteredGlobalReplacementMap();
+    return globalReplacementMap;
+
+}
+
 // Replace words iteratively
-void MainWindow::iteratorReplace(QString currentFileDirectory , QVector <QString> optimalPath)
+void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QString> changedWords)
 {
     QMap <QString, QString> globalReplacementMap;
-    QStringList changesList;
+
     QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
 
-    for (int i=0; i<optimalPath.size(); i++){
+    int noOfChangedWords = changedWords.size();
 
-        changesList = optimalPath[i].split(" ");
+    //! if only one change spawn checkbox
+    if (noOfChangedWords == 1){
+
+        QStringList changesList = changedWords[0].split(" ");
         bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3]);
 
         if (updateGlobalCPairs)
             globalReplacementMap[changesList[1]] = changesList[3];
+    }
+    //! if there is more than 1 change spawn a checklist and get the checked pairs only
+    else if(noOfChangedWords > 1){
+
+       globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords);
 
     }
 
-    QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
 
-    while (dirIterator.hasNext()){
+    if(!globalReplacementMap.isEmpty())
+    {
+        QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
 
-        QString it_file_path = dirIterator.next();
-        bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
+        while (dirIterator.hasNext()){
 
-        if(!isFileInEditedFilesLog){
-            writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+            QString it_file_path = dirIterator.next();
+            bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
+
+            if(!isFileInEditedFilesLog){
+                writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+            }
         }
     }
 
