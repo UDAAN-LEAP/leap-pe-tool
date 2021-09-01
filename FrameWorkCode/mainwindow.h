@@ -40,6 +40,7 @@
 #include<QDomDocument>
 #include <QFileSystemWatcher>
 #include<QGraphicsRectItem>
+#include "globalreplacedialog.h"
 
 //#include <set>
 using namespace std;
@@ -305,6 +306,18 @@ private slots:
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
+
+    void runGlobalReplace(QString, QVector<QString>);
+    bool globalReplaceQueryMessageBox(QString old_word, QString new_word);
+    void writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap);
+
+    void addCurrentlyOpenFileToEditedFilesLog();
+    void deleteEditedFilesLog();
+
+    bool isStringInFile(QString file_path, QString searchString);
+    void dumpStringToFile(QString file_path, QString string);
+
+    QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords);
 
 private:
     bool mExitStatus = false;

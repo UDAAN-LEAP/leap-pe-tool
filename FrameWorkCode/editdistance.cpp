@@ -10,7 +10,7 @@ using  namespace std;
 
 map<string, string> CPair_editDis;
 
-int editDistance(QString a, QString b)
+QVector <QString> editDistance(QString a, QString b)
 {
     QStringList s1,s2;
 
@@ -123,12 +123,12 @@ int editDistance(QString a, QString b)
 
             //Collections.reverse(optimalPath);
 //            qDebug() << optimalPath;
-            int ret = solution[s1.count()][s2.count()];
+//            int ret = solution[s1.count()][s2.count()];
             for (int i = 0;i < s1.count()+1;i++)
                 delete[] solution[i];
             delete[] solution;
 
-            return ret;
+            return optimalPath;
 
 
 

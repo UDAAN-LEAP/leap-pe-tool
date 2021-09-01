@@ -43,7 +43,7 @@
 #include <QTextDocumentFragment>
 #include <sstream>
 #include <QVector>
-#include<vector>
+#include <vector>
 #include <QJsonValue>
 #include <QGraphicsRectItem>
 #include <QToolTip>
@@ -1014,7 +1014,7 @@ void MainWindow::on_actionSave_triggered()
 {
     SaveTimeLog();
     DisplayTimeLog();
-
+    QVector <QString> changedWords;
     //! When changes are made by the verifier the following values are also updated.
     if(isVerifier)
     {
@@ -1067,10 +1067,10 @@ void MainWindow::on_actionSave_triggered()
         s1 = doc.toPlainText();          //before Saving
         s2 = curr_browser->toPlainText();       //after Saving
 
-        editDistance(s1, s2);           // Update CPair by editdistance
+        changedWords = editDistance(s1, s2);             // Update CPair by editdistance
 
         //! Do commit when there are some changes in previous and new html file on the basis of editdistance.
-        if(editDistance(s1,s2))
+        if(changedWords.size())
         {
             if(mProject.get_version().toInt())     //Check version number
             {
@@ -1235,6 +1235,10 @@ void MainWindow::on_actionSave_triggered()
             }
         }
     }
+
+    QString currentDirAbsolutePath = gDirTwoLevelUp + "/" + gCurrentDirName;
+    runGlobalReplace(currentDirAbsolutePath, changedWords);
+
     ConvertSlpDevFlag =0;
 }
 
@@ -3918,6 +3922,7 @@ void MainWindow::on_actionTurn_In_triggered()
 
         ui->actionTurn_In->setEnabled(false);        // Deactivating the "Submit Corrector" button on ui
         QMessageBox::information(0, "Turn In", "Turned In Successfully");
+        deleteEditedFilesLog();
     }
     else
     {
@@ -4190,6 +4195,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         //! Updating the Project Version
         ui->lineEdit_2->setText("Version " + mProject.get_version());
         QMessageBox::information(0, "Turn In", "Turned In Successfully");
+        deleteEditedFilesLog();
     }
     else
     {
@@ -5945,4 +5951,170 @@ void MainWindow::on_pushButton_2_clicked()
         QTextCursor cursor1 = curr_browser->textCursor();
         cursor1.insertHtml(html);
     }
+}
+
+
+// dumps given QString to file at file_path
+void MainWindow::dumpStringToFile(QString file_path, QString string){
+    QFile file(file_path);
+    if(file.open(QIODevice::WriteOnly | QIODevice::Append)){
+            QTextStream outputStream(&file);
+            outputStream << string << endl;
+    }
+    file.close();
+}
+
+// checks if a QString is in file at file_path
+bool MainWindow::isStringInFile(QString file_path, QString searchString){
+
+    QFile fileToSearchIn(file_path);
+    bool textFound = false;
+
+    if(fileToSearchIn.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream in(&fileToSearchIn);
+        QString line;
+        /*! Check in everyline if string exists*/
+        do{
+            line = in.readLine();
+            if(line.contains(searchString)){
+                textFound = true;
+                break;
+            }
+        }while(!line.isNull());
+    }
+    fileToSearchIn.close();
+
+    return textFound;
+
+}
+
+// adds currently opened file in editor in .EditedFiles.txt to mark it as dirty
+void MainWindow::addCurrentlyOpenFileToEditedFilesLog(){
+    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+    QString currentFilePath = gDirTwoLevelUp + "/" + gCurrentDirName+ "/" + gCurrentPageName;
+
+    bool fileFound = isStringInFile(editedFilesLogPath, currentFilePath);
+
+    if(fileFound)
+        qDebug() << gCurrentPageName <<" already found in Edited Files Log. No need to update.";
+    else
+    {
+        qDebug() << gCurrentPageName <<" not found in Edited Files Log."<<endl;
+        qDebug()<< "Writing " <<currentFilePath << " to file." << endl;
+        dumpStringToFile(editedFilesLogPath, currentFilePath);
+    }
+}
+
+// for now I am calling this everytime window closes
+void MainWindow::deleteEditedFilesLog(){
+    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+    QFile file(editedFilesLogPath);
+    file.remove();
+}
+
+// writes CPairs by iterating over all files
+void MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap){
+    QMap <QString, QString>::iterator grmIterator;
+    QFile *f = new QFile(file_path);
+
+    f->open(QIODevice::ReadOnly);
+
+    QTextStream in(f);
+    QString s1 = in.readAll();
+
+    f->close();
+
+    f->open(QIODevice::WriteOnly);
+
+    for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
+    {
+
+        QString pattern = ("(\\b)")+grmIterator.key()+("(\\b)"); // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
+        QRegExp re(pattern);
+        QString replacementString = re.cap(1) + grmIterator.value() + re.cap(2); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
+        qDebug() << pattern;
+        qDebug() << replacementString;
+        s1.replace(re, replacementString);
+    }
+
+    in << s1;
+    f->close();
+}
+
+// spawns a MessageBox and returns true if Replace is chosen
+bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word){
+
+    QMessageBox messageBox(this);
+
+    QAbstractButton *replaceButton = messageBox.addButton(tr("Replace"), QMessageBox::ActionRole);
+    QAbstractButton *cancelButton = messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+
+    QString msg = "Do you want to replace " + old_word + " with " + new_word + " Globally?\n" ;
+
+    messageBox.setWindowTitle("Global Replace");
+    messageBox.setText(msg);
+    messageBox.exec();
+
+    if (messageBox.clickedButton() == replaceButton)
+        return true;
+    return false;
+
+}
+
+// spawns a checklist and returns a Qmap of selected pairs
+QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords){
+    QMap <QString, QString> globalReplacementMap;
+    GlobalReplaceDialog grDialog(changedWords, this);
+
+    grDialog.setModal(true);
+    grDialog.exec();
+
+    if(grDialog.on_applyButton_clicked())
+        globalReplacementMap = grDialog.getFilteredGlobalReplacementMap();
+    return globalReplacementMap;
+
+}
+
+// Replace words iteratively
+void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QString> changedWords)
+{
+    QMap <QString, QString> globalReplacementMap;
+
+    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+
+    int noOfChangedWords = changedWords.size();
+
+    //! if only one change spawn checkbox
+    if (noOfChangedWords == 1){
+
+        QStringList changesList = changedWords[0].split(" ");
+        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3]);
+
+        if (updateGlobalCPairs)
+            globalReplacementMap[changesList[1]] = changesList[3];
+    }
+    //! if there is more than 1 change spawn a checklist and get the checked pairs only
+    else if(noOfChangedWords > 1){
+
+       globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords);
+
+    }
+
+
+    if(!globalReplacementMap.isEmpty())
+    {
+        QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
+
+        while (dirIterator.hasNext()){
+
+            QString it_file_path = dirIterator.next();
+            bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
+
+            if(!isFileInEditedFilesLog){
+                writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+            }
+        }
+    }
+
+    addCurrentlyOpenFileToEditedFilesLog();
 }

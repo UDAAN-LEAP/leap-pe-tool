@@ -28,6 +28,7 @@ HEADERS += ./Filters.h \
     $$PWD/SimpleMail/smtpexports.h \
     $$PWD/editdistance.h \
     $$PWD/textfinder.h \
+    $$PWD/globalreplacedialog.h \
     ./Project.h \
     ./TreeItem.h \
     ./tesseract/apitypes.h \
@@ -89,6 +90,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/SimpleMail/serverreply.cpp \
     $$PWD/editdistance.cpp \
     $$PWD/textfinder.cpp \
+    $$PWD/globalreplacedialog.cpp \
     ./Filters.cpp \
     ./Project.cpp \
     ./ProjectHierarchyWindow.cpp \
@@ -110,6 +112,7 @@ SOURCES += ./DiffView.cpp \
     ./CreateProjectPage.cpp
 FORMS += ./DiffView.ui \
     $$PWD/textfinder.ui \
+    $$PWD/globalreplacedialog.ui \
     ./ProjectHierarchyWindow.ui \
     ./Symbols.ui \
     ./averageaccuracies.ui \
