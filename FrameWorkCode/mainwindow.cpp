@@ -4423,9 +4423,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     QString s1 = "IMGHOLDER";
                     QString s2 = "Figure";
 
-//                    //! for placing a figure placeholder
-//                    displayHolder(s1,s2,a,x1,y1,x2,y2,i);
-
                     //graphic->removeItem(crop_rect);
 
                     //!Saving Image Regions to their respective folder(Figure/Table/Equation)
@@ -4446,9 +4443,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 {
                     QString s1 = "TBHOLDER";
                     QString s2 = "Table";
-
-//                    //! for placing a table placeholder
-//                    displayHolder(s1,s2,a,x1,y1,x2,y2,j);
 
                     //graphic->removeItem(crop_rect);
 
@@ -4593,13 +4587,6 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
     }
 }
 
-// //!Setting for placeholder for figure/table/equation
-//void MainWindow::displayHolder(QString s1,QString s2,QString a,int x1,int y1,int x2,int y2,int i)
-//{
-//    QTextCursor cursor = curr_browser->textCursor();       //getting the cursor position
-//    //cursor.insertText("["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");         //insert placeholder
-//    return;
-//}
 
 //! Updating entries for figure/table/equation pagewise in image.xml
 void MainWindow::updateEntries(QDomDocument document, QString filename,QString PageNo, QString s2, int i)
