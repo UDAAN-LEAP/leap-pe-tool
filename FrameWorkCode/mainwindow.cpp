@@ -4423,8 +4423,8 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     QString s1 = "IMGHOLDER";
                     QString s2 = "Figure";
 
-                    //! for placing a figure placeholder
-                    displayHolder(s1,s2,a,x1,y1,x2,y2,i);
+//                    //! for placing a figure placeholder
+//                    displayHolder(s1,s2,a,x1,y1,x2,y2,i);
 
                     //graphic->removeItem(crop_rect);
 
@@ -4447,8 +4447,8 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     QString s1 = "TBHOLDER";
                     QString s2 = "Table";
 
-                    //! for placing a table placeholder
-                    displayHolder(s1,s2,a,x1,y1,x2,y2,j);
+//                    //! for placing a table placeholder
+//                    displayHolder(s1,s2,a,x1,y1,x2,y2,j);
 
                     //graphic->removeItem(crop_rect);
 
@@ -4471,8 +4471,8 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     QString s1 = "EQHOLDER";
                     QString s2 = "Equation";
 
-                    //! for placing a equation placeholder
-                    displayHolder(s1,s2,a,x1,y1,x2,y2,k);
+//                    //! for placing a equation placeholder
+//                    (s1,s2,a,x1,y1,x2,y2,k);
 
                     //graphic->removeItem(crop_rect);
 
@@ -4526,27 +4526,40 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     }
     return QMainWindow::eventFilter(object, event);
 }
-
-//!Saving Image Regions to their respective folder(Figure/Table/Equation)
-void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, int h, int w)
-{   if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
+/*!
+ * \fn MainWindow::saveImageRegion
+ * \brief Saving Image  cropped regions to their respective folder(Figure/Table/Equation)
+ * \param cropped
+ * \param a
+ * \param s1
+ * \param z
+ * \param h
+ * \param w
+ */
+void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, int w, int h)
+{
+    //! If directory exists then create the folders
+    if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
     {
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Figures");
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Tables");
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Equations");
     }
+
+    //! Adding picture to the respective directory
     if(QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
     {
         if(s1 == "IMGHOLDER")
         {
             QString path = "/Cropped_Images/Figures/Figure"+a+"-"+QString::number(z)+".jpg";
 
-            cropped.save(gDirTwoLevelUp+path,"JPG",100);       //100:storing the image in uncompressed high resolution
+            cropped.save(gDirTwoLevelUp+path,"JPG",100);       //100 is storing the image in uncompressed high resolution
+
             //QString placeholder = "["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]";
 
             QString src = gDirTwoLevelUp+path;
-            QString html = QString("\n <img src='%1' height='%2' width='%3'>").arg(src).arg(w).arg(h);
+             QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h); //Creating an img tag for image resize in latek
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
         }
@@ -4557,7 +4570,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
             cropped.save(gDirTwoLevelUp+path,"JPG", 100);
 
             QString src = gDirTwoLevelUp+path;
-            QString html = QString("\n <img src='%1' height='%2' width='%3'>").arg(src).arg(w).arg(h);
+             QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h);
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
 
@@ -4569,7 +4582,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
             cropped.save(gDirTwoLevelUp+path,"JPG",100);
 
             QString src = gDirTwoLevelUp+path;
-            QString html = QString("\n <img src='%1' height='%2' width='%3'>").arg(src).arg(w).arg(h);
+            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h);
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
         }
@@ -4580,13 +4593,13 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
     }
 }
 
-//!Setting for placeholder for figure/table/equation
-void MainWindow::displayHolder(QString s1,QString s2,QString a,int x1,int y1,int x2,int y2,int i)
-{
-    QTextCursor cursor = curr_browser->textCursor();       //getting the cursor position
-    //cursor.insertText("["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");         //insert placeholder
-    return;
-}
+// //!Setting for placeholder for figure/table/equation
+//void MainWindow::displayHolder(QString s1,QString s2,QString a,int x1,int y1,int x2,int y2,int i)
+//{
+//    QTextCursor cursor = curr_browser->textCursor();       //getting the cursor position
+//    //cursor.insertText("["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]");         //insert placeholder
+//    return;
+//}
 
 //! Updating entries for figure/table/equation pagewise in image.xml
 void MainWindow::updateEntries(QDomDocument document, QString filename,QString PageNo, QString s2, int i)
