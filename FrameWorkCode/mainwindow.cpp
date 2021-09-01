@@ -5543,7 +5543,12 @@ void MainWindow::on_pushButton_clicked()
      }
 }
 
-// dumps given QString to file at file_path
+/*!
+ * \fn MainWindow::dumpStringToFile
+ * \brief Dumps the given QString to a file at file_path
+ * \param file_path
+ * \param string
+ */
 void MainWindow::dumpStringToFile(QString file_path, QString string){
     QFile file(file_path);
     if(file.open(QIODevice::WriteOnly | QIODevice::Append)){
@@ -5553,7 +5558,13 @@ void MainWindow::dumpStringToFile(QString file_path, QString string){
     file.close();
 }
 
-// checks if a QString is in file at file_path
+/*!
+ * \fn MainWindow::isStringInFile
+ * \brief Returns true if the string exists in the file at file_path else returns false
+ * \param file_path
+ * \param searchString
+ * \return textFound
+ */
 bool MainWindow::isStringInFile(QString file_path, QString searchString){
 
     QFile fileToSearchIn(file_path);
@@ -5562,7 +5573,7 @@ bool MainWindow::isStringInFile(QString file_path, QString searchString){
     if(fileToSearchIn.open(QIODevice::ReadOnly | QIODevice::Text)){
         QTextStream in(&fileToSearchIn);
         QString line;
-        /*! Check in everyline if string exists*/
+        //!break in everyline if string exists
         do{
             line = in.readLine();
             if(line.contains(searchString)){
@@ -5577,7 +5588,13 @@ bool MainWindow::isStringInFile(QString file_path, QString searchString){
 
 }
 
-// adds currently opened file in editor in .EditedFiles.txt to mark it as dirty
+/*!
+ * \fn MainWindow::addCurrentlyOpenFileToEditedFilesLog
+ * \brief Adds the file path of currently opened file in text editor(UI) to EditedFiles.txt
+ * \note EditedFiles.txt is a hidden dirty file created at the dicts folder to keep track
+ * of the user edited files
+ * \sa isStringInFile(), dumpStringToFile()
+ */
 void MainWindow::addCurrentlyOpenFileToEditedFilesLog(){
     QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
     QString currentFilePath = gDirTwoLevelUp + "/" + gCurrentDirName+ "/" + gCurrentPageName;
@@ -5594,14 +5611,22 @@ void MainWindow::addCurrentlyOpenFileToEditedFilesLog(){
     }
 }
 
-// for now I am calling this everytime window closes
+/*!
+ * \fn MainWindow::deleteEditedFilesLog
+ * \brief Deletes the dirty file named EditedFiles.txt under Dicts folder
+ */
 void MainWindow::deleteEditedFilesLog(){
     QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
     QFile file(editedFilesLogPath);
     file.remove();
 }
 
-// writes CPairs by iterating over all files
+/*!
+ * \fn MainWindow::writeGlobalCPairsToFiles
+ * \brief Writes CPairs by iterating over all files
+ * \param file_path
+ * \param globalReplacementMap
+ */
 void MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap){
     QMap <QString, QString>::iterator grmIterator;
     QFile *f = new QFile(file_path);
@@ -5617,7 +5642,7 @@ void MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStr
 
     for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
     {
-        
+
         QString pattern = ("(\\b)")+grmIterator.key()+("(\\b)"); // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
         QRegExp re(pattern);
         QString replacementString = re.cap(1) + grmIterator.value() + re.cap(2); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
@@ -5630,7 +5655,13 @@ void MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStr
     f->close();
 }
 
-// spawns a MessageBox and returns true if Replace is chosen
+/*!
+ * \fn MainWindow::globalReplaceQueryMessageBox
+ * \brief Spawns a MessageBox and returns true if Replace is chosen
+ * \param old_word
+ * \param new_word
+ * \return boolean
+ */
 bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word){
 
     QMessageBox messageBox(this);
@@ -5650,7 +5681,12 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
 
 }
 
-// spawns a checklist and returns a Qmap of selected pairs
+/*!
+ * \fn MainWindow::getGlobalReplacementMapFromChecklistDialog
+ * \brief Spawns a checklist and returns a Qmap of selected pairs
+ * \param changedWords
+ * \return globalReplacementMap
+ */
 QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords){
     QMap <QString, QString> globalReplacementMap;
     GlobalReplaceDialog grDialog(changedWords, this);
@@ -5664,7 +5700,13 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
 
 }
 
-// Replace words iteratively
+/*!
+ * \fn MainWindow::runGlobalReplace
+ * \brief User selected incorrect words via checkbox in all the files are replaced by global CPair(correct word)
+ * \param currentFileDirectory
+ * \param changedWords
+ * \sa getGlobalReplacementMapFromChecklistDialog(), globalReplaceQueryMessageBox(), writeGlobalCPairsToFiles(),isStringInFile(), writeGlobalCPairsToFiles(), addCurrentlyOpenFileToEditedFilesLog()
+ */
 void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QString> changedWords)
 {
     QMap <QString, QString> globalReplacementMap;
@@ -5673,7 +5715,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
     int noOfChangedWords = changedWords.size();
 
-    //! if only one change spawn checkbox
+    //! if only one change, spawn checkbox
     if (noOfChangedWords == 1){
 
         QStringList changesList = changedWords[0].split(" ");
@@ -5682,7 +5724,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         if (updateGlobalCPairs)
             globalReplacementMap[changesList[1]] = changesList[3];
     }
-    //! if there is more than 1 change spawn a checklist and get the checked pairs only
+    //! if there is more than 1 change, spawn a checklist and get the checked pairs only
     else if(noOfChangedWords > 1){
 
        globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords);
@@ -5707,4 +5749,3 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
     addCurrentlyOpenFileToEditedFilesLog();
 }
-
