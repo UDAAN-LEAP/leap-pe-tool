@@ -47,6 +47,7 @@
 #include <QJsonValue>
 #include <QGraphicsRectItem>
 #include <QToolTip>
+#include <QPrinter>
 #ifdef __unix__
 #include <unistd.h>
 #endif
@@ -6117,4 +6118,21 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     }
 
     addCurrentlyOpenFileToEditedFilesLog();
+}
+
+void MainWindow::on_actionas_PDF_triggered()
+{
+    QTextDocument *document = new QTextDocument();
+    document->setHtml(gInitialTextHtml[currentTabPageName]);
+
+    QPrinter printer(QPrinter::PrinterResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setPaperSize(QPrinter::A4);
+    printer.setPageMargins(QMarginsF(15, 15, 15, 15));
+    printer.setOutputFileName(gDirTwoLevelUp+"/neww.pdf");
+
+    document->setPageSize(printer.pageRect().size());
+    document->print(&printer);
+
+    qDebug()<<"heman";
 }

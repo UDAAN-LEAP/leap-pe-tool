@@ -319,6 +319,8 @@ private slots:
 
     QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords);
 
+    void on_actionas_PDF_triggered();
+
 private:
     bool mExitStatus = false;
     QString mRole;

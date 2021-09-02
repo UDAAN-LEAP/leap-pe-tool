@@ -527,6 +527,12 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="actionFind_and_Replace"/>
    </widget>
+   <widget class="QMenu" name="menuDownload">
+    <property name="title">
+     <string>Download</string>
+    </property>
+    <addaction name="actionas_PDF"/>
+   </widget>
    <addaction name="menuSelectLanguage"/>
    <addaction name="menuOCR_Correction_Window"/>
    <addaction name="menuEdit"/>
@@ -536,6 +542,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="menuConvertFiles"/>
    <addaction name="menuFeatureExtraction"/>
    <addaction name="menuGit"/>
+   <addaction name="menuDownload"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -1248,6 +1255,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="actionas_PDF">
+   <property name="text">
+    <string>as PDF</string>
    </property>
   </action>
  </widget>
