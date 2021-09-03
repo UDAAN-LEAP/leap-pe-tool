@@ -6124,11 +6124,33 @@ void MainWindow::on_actionas_PDF_triggered()
 {
     QTextDocument *document = new QTextDocument();
     document->setHtml(gInitialTextHtml[currentTabPageName]);
+    //qDebug()<<currentTabPageName<<"enddddd";
+
+    QString currentDirAbsolutePath = gDirTwoLevelUp + "/VerifierOutput/";
+    QDirIterator dirIterator(currentDirAbsolutePath);
+
+    while (dirIterator.hasNext())
+    {
+        QString it_file_path = dirIterator.next();
+        //qDebug()<<it_file_path;
+        if(it_file_path.contains("."))
+        {
+            QStringList html_files = it_file_path.split(QRegExp("[.]"));
+            //qDebug()<<html_files;
+            if(html_files[1]=="html")
+            {
+                qDebug()<<it_file_path;
+            }
+            else {
+                continue;
+            }
+        }
+    }
 
     QPrinter printer(QPrinter::PrinterResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QPrinter::A4);
-    printer.setPageMargins(QMarginsF(15, 15, 15, 15));
+    printer.setPageMargins(QMarginsF(5, 5, 5, 5));
     printer.setOutputFileName(gDirTwoLevelUp+"/neww.pdf");
 
     document->setPageSize(printer.pageRect().size());
