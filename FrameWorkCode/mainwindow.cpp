@@ -4540,7 +4540,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, int w, int h)
 {
     //! If directory exists then create the folders
-    if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
+    if(!QDir("../Cropped_Images").exists())
     {
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Figures");
@@ -4582,7 +4582,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
 
             cropped.save(gDirTwoLevelUp+path,"JPG",100);
 
-            QString src = gDirTwoLevelUp+path;
+            QString src = ".."+path;
             QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h);
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
@@ -6123,35 +6123,47 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 void MainWindow::on_actionas_PDF_triggered()
 {
     QTextDocument *document = new QTextDocument();
-    document->setHtml(gInitialTextHtml[currentTabPageName]);
-    //qDebug()<<currentTabPageName<<"enddddd";
-
-    QString currentDirAbsolutePath = gDirTwoLevelUp + "/VerifierOutput/";
+     QString currentDirAbsolutePath;
+    if(mRole=="Verifier")
+    currentDirAbsolutePath = gDirTwoLevelUp + "/VerifierOutput/";
+    else if (mRole=="Corrector") {
+        currentDirAbsolutePath = gDirTwoLevelUp + "/CorrectorOutput/";
+    }
     QDirIterator dirIterator(currentDirAbsolutePath);
-
+    QString html_contents="";
+    QString mainHtml;
     while (dirIterator.hasNext())
     {
         QString it_file_path = dirIterator.next();
-        //qDebug()<<it_file_path;
+      //  qDebug()<<gInitialTextHtml[it_file_path];
         if(it_file_path.contains("."))
         {
             QStringList html_files = it_file_path.split(QRegExp("[.]"));
-            //qDebug()<<html_files;
+
+
             if(html_files[1]=="html")
             {
-                qDebug()<<it_file_path;
+                QFile file(it_file_path);
+                    if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
+                    QTextStream stream(&file);
+                    mainHtml=stream.readAll();
+                    file.close();
+
+
+              html_contents.append(mainHtml);
+
             }
             else {
                 continue;
             }
         }
     }
-
+    document->setHtml(html_contents);
     QPrinter printer(QPrinter::PrinterResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
-    printer.setPaperSize(QPrinter::A4);
+    printer.setPaperSize(QPrinter::A3);
     printer.setPageMargins(QMarginsF(5, 5, 5, 5));
-    printer.setOutputFileName(gDirTwoLevelUp+"/neww.pdf");
+    printer.setOutputFileName(gDirTwoLevelUp+"/BookSet.pdf");
 
     document->setPageSize(printer.pageRect().size());
     document->print(&printer);
