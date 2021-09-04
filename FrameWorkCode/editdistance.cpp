@@ -130,9 +130,6 @@ QVector <QString> editDistance(QString a, QString b)
 
             return optimalPath;
 
-
-
-
 }
 
 

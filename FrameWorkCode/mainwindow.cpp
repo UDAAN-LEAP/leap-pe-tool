@@ -2304,6 +2304,9 @@ void MainWindow::on_actionCreateSuggestionLogNearestPriority_triggered()
 /*!
  * \fn MainWindow::on_actionErrorDetectionRep_triggered
  * \brief
+ * \brief Detects if there's an error is loaded file or not
+ *  Checks correct marked words if they are correct or incorrect and after mapping it adds them in PWords file.
+ *  Additionally, it creates an error detection report.
  * \sa searchS1inGVec(), toslp1()
  */
 void MainWindow::on_actionErrorDetectionRep_triggered()
@@ -2450,6 +2453,9 @@ void MainWindow::on_actionErrorDetectionRep_triggered()
  * \fn MainWindow::on_actionErrorDetectWithoutAdaptation_triggered
  * \brief
  * \sa toslp1(),
+ * \brief Detects error in loaded file
+ *  It checks correct marked words are correct or incorrect and after mapping it add them in PWords file.
+ * \sa toslp1()
  */
 void MainWindow::on_actionErrorDetectWithoutAdaptation_triggered()
 {
@@ -4526,6 +4532,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     }
     return QMainWindow::eventFilter(object, event);
 }
+
 /*!
  * \fn MainWindow::saveImageRegion
  * \brief Saving Image  cropped regions to their respective folder(Figure/Table/Equation)
@@ -4592,7 +4599,6 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
         }
     }
 }
-
 
 //! Updating entries for figure/table/equation pagewise in image.xml
 void MainWindow::updateEntries(QDomDocument document, QString filename,QString PageNo, QString s2, int i)
@@ -4699,6 +4705,857 @@ void MainWindow::createImageInfoXMLFile()
         }
     }
 }
+
+/*!
+ * \brief MainWindow::on_pushButton_2_clicked
+ * Button for resizing an image
+ * Captures src, width and height attributes, modifies height and width and change the image size
+ * it does not chnage the quality of an image
+ */
+void MainWindow::on_pushButton_2_clicked()
+{
+    auto cursor = curr_browser->textCursor();
+    auto selected = cursor.selection();
+    QString sel = selected.toHtml();
+
+    QRegularExpression re("<img[^>]*?src\=[\x27\x22](?<Url>[^\x27\x22]*)[\x27\x22][^>]*?width\=[\x27\x22](?<width>[^\x27\x22]*)[\x27\x22][^>]*?height\=[\x27\x22](?<height>[^\x27\x22]*)[\x27\x22][^>]*?>");
+    QRegularExpressionMatch match = re.match(sel, 0);
+    int height = match.captured(3).toInt();
+    int width = match.captured(2).toInt();
+    QString imgname = match.captured(1);
+
+    //!setting width
+    int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
+    //!setting height
+    int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
+
+    if(n>0 && n1>0)
+    {
+        cursor.removeSelectedText();   //remove old image
+        QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(n).arg(n1);
+        QTextCursor cursor1 = curr_browser->textCursor();
+        cursor1.insertHtml(html);      //insert new image with modified attributes height and width
+    }
+}
+
+/*!
+ * \brief MainWindow::on_viewComments_clicked
+ */
+void MainWindow::on_viewComments_clicked()
+{
+    if (curr_browser)
+    {
+        QString correctorOutput,currentpagetext;
+        QString correctorText = gDirTwoLevelUp + "/CorrectorOutput/" + gCurrentPageName;
+        QFile sFile(correctorText);
+        if(sFile.open(QFile::ReadOnly | QFile::Text))
+        {
+            QTextStream in(&sFile);
+            in.setCodec("UTF-8");
+            correctorOutput = in.readAll().simplified();
+            sFile.close();
+        }
+
+        map<int, int> wordCount;
+        QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
+        QString pageName = gCurrentPageName;
+        pageName.replace(".txt", "");
+        pageName.replace(".html", "");
+        int totalCharErrors = 0, totalWordErrors = 0, rating = 0;
+        QString comments = "";
+        QString avgAcc = "100%";
+        float wordAccuracy=100, charAccuracy=100, avgCharAcc = 100;
+        QString version = mProject.get_version();
+
+        QJsonObject mainObj = readJsonFile(commentFilename);
+        QJsonObject pages = mainObj.value("pages").toObject();
+        QJsonObject page = pages.value(pageName).toObject();
+
+        if( !mainObj.isEmpty() )
+        {
+            rating = mainObj["Rating-V"+ mProject.get_version()].toInt();
+            avgCharAcc = mainObj["AverageCharAccuracy"].toDouble();
+            avgAcc = QString::number((((float)lround(avgCharAcc*100))/100)) + "%";
+
+            if(!page.isEmpty())
+            {
+                comments = page.value("comments").toString();
+                totalCharErrors = page.value("charerrors").toInt();
+                totalWordErrors = page.value("worderrors").toInt();
+                wordAccuracy = page.value("wordaccuracy").toDouble();
+                charAccuracy = page.value("characcuracy").toDouble();
+            }
+        }
+
+        if(!isVerifier)
+        {
+            CommentsView *cv = new CommentsView(totalWordErrors,totalCharErrors,wordAccuracy,charAccuracy,comments,commentFilename, pageName, rating, avgAcc, mRole,version);
+            cv->show();
+            return;
+        }
+
+        //HIGHLIGHTS FOR Accuracy Calculation
+        auto textCursor = curr_browser->textCursor();
+        QString textBrowserText = curr_browser->toPlainText();
+        textCursor.setPosition(0);
+        QString highlightedChars = "", selectedChar; // to store all the highlighted characters
+        int prevHighlightPos = -2; // Used as an indicator to separate non contigous highlighted text with a space
+
+        while(!textCursor.atEnd())
+        {
+            int anchor = textCursor.position();
+            QTextCharFormat format = textCursor.charFormat();
+            if(anchor!=0)
+                selectedChar = QString(textBrowserText[anchor-1]);
+            if(!selectedChar.contains(" "))
+            {
+                textCursor.select(QTextCursor::WordUnderCursor);
+                QString wordundercursor = textCursor.selectedText();
+                int key = textCursor.selectionStart();
+
+                if(format.background() == Qt::yellow && anchor>=(key+1))
+                {
+                    //totalCharErrors++;
+                    if((prevHighlightPos != -2) && (anchor != prevHighlightPos + 1))
+                        highlightedChars += " ";
+                    highlightedChars += selectedChar;
+                    wordCount[key]++;
+                    prevHighlightPos = anchor;
+                }
+            }
+            textCursor.setPosition(anchor+1);
+            //textCursor.movePosition(QTextCursor::NextCharacter , QTextCursor::MoveAnchor, 1);
+        }
+        totalCharErrors = GetGraphemesCount(highlightedChars);
+
+        int totalChars=0;
+        QString currentText = curr_browser->toPlainText();
+        int totalWords = currentText.simplified().count(" ") + 1;
+        QTextBoundaryFinder finder1 = QTextBoundaryFinder(QTextBoundaryFinder::BoundaryType::Grapheme, currentText);
+        while (finder1.toNextBoundary() != -1)
+        {
+            totalChars++;
+        }
+
+        totalWordErrors = wordCount.size();
+        charAccuracy = (float)(totalChars - totalCharErrors)/(float)totalChars*100;
+        wordAccuracy = (float)(totalWords - totalWordErrors)/(float)totalWords*100 ;
+        wordAccuracy = ((float)lround(wordAccuracy*100))/100;
+        charAccuracy = ((float)lround(charAccuracy*100))/100;
+
+        page["comments"] = comments;
+        page["charerrors"] = totalCharErrors;
+        page["worderrors"] = totalWordErrors;
+        page["characcuracy"] = charAccuracy;
+        page["wordaccuracy"] = wordAccuracy;
+        page["pagename"] = pageName;
+
+        pages.remove(pageName);
+        pages.insert(pageName, page);
+        mainObj.remove("pages");
+        mainObj.insert("pages",pages);
+
+        mainObj = getAverageAccuracies(mainObj);
+
+        if(mProject.get_stage() != mRole)
+            rating = mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)].toInt();
+        else
+            rating = mainObj["Rating-V"+ mProject.get_version()].toInt();
+        avgCharAcc = mainObj["AverageCharAccuracy"].toDouble();
+        avgAcc = QString::number((((float)lround(avgCharAcc*100))/100)) + "%";
+
+        writeJsonFile(commentFilename, mainObj);
+
+        if(!gSaveTriggered)
+        {
+            CommentsView *cv = new CommentsView(totalWordErrors,totalCharErrors,wordAccuracy,charAccuracy,comments,commentFilename,pageName, rating, avgAcc, mRole, version);
+            cv->show();
+        }
+    }
+}
+
+/*!
+ * \fn MainWindow::on_compareCorrectorOutput_clicked
+ * \brief Compares the changes made by the Corrector in OCR generated text file.
+ * \sa InternDiffView(), LevenshteinWithGraphemes(), GetGraphemesCount()
+ */
+void MainWindow::on_compareCorrectorOutput_clicked()
+{
+    QString qs1="", qs2="";
+
+    //! Open a Corrector's Output File
+    file = QFileDialog::getOpenFileName(this,"Open Corrector's Output File");
+
+    //! Opens corresponding OCR text file and image
+    if(!file.isEmpty())
+    {
+        QString correctortext = file;
+        QString ocrtext = file;
+        ocrtext.replace("CorrectorOutput","Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+        ocrtext.replace(".html",".txt");
+        QString ocrimage = ocrtext;
+        ocrimage.replace("Inds", "Images");
+        QString temp = ocrimage;
+        int flag=0;
+        temp.replace(".txt", ".jpeg");
+        if (QFile::exists(temp) && flag==0)
+        {
+            ocrimage=temp;
+            flag=1;
+
+        }
+        else
+        {
+            temp=ocrimage;
+        }
+        temp.replace(".html", ".jpeg");
+        if (QFile::exists(temp) && flag==0)
+        {
+            ocrimage=temp;
+            flag=1;
+
+        }
+        else
+        {
+            temp=ocrimage;
+        }
+        temp.replace(".txt", ".png");
+        if (QFile::exists(temp) && flag==0)
+        {
+            ocrimage=temp;
+            flag=1;
+
+        }
+        else
+        {
+            temp=ocrimage;
+        }
+        temp.replace(".html", ".png");
+        if (QFile::exists(temp) && flag==0)
+        {
+            ocrimage=temp;
+            flag=1;
+
+        }
+        else
+        {
+            temp=ocrimage;
+        }
+        temp.replace(".txt", ".jpg");
+        if (QFile::exists(temp) && flag==0)
+        {
+            ocrimage=temp;
+            flag=1;
+
+        }
+        else
+        {
+            temp=ocrimage;
+        }
+        temp.replace(".html", ".jpg");
+        if (QFile::exists(temp) && flag==0)
+        {
+            ocrimage=temp;
+            flag=1;
+
+        }
+        else
+        {
+            temp=ocrimage;
+        }
+
+        //! select the image. look for jpeg, jpg and png(select first whichever is found)
+        QFileInfo check_file(ocrimage);
+        if (!(check_file.exists() && check_file.isFile()))
+        {
+            ocrimage.replace(".jpeg", ".jpg");
+            check_file.setFile(ocrimage);
+            if (!(check_file.exists() && check_file.isFile()))
+            {
+                ocrimage.replace(".jpg", ".png");
+                check_file.setFile(ocrimage);
+            }
+        }
+
+        //! Reads the OCR text file
+        if(!ocrtext.isEmpty())
+        {
+            QFile sFile(ocrtext);
+            if(sFile.open(QFile::ReadOnly | QFile::Text))
+            {
+                QTextStream in(&sFile);
+                in.setCodec("UTF-8");
+                qs1 = in.readAll().replace(" \n","\n");
+                //! Displays an error if OCR text file is empty
+                if(qs1=="")
+                {
+                    DisplayError("Error in Displaying File: "+ ocrtext+ "is Empty");
+                    return;
+                }
+                sFile.close();
+            }
+        }
+
+        //! Reads the Corrector's Output file
+        if(!correctortext.isEmpty())
+        {
+            QFile sFile(correctortext);
+            if(sFile.open(QFile::ReadOnly | QFile::Text))
+            {
+                QTextStream in(&sFile);
+                in.setCodec("UTF-8");
+                qs2 = in.readAll();
+
+                //! Displays an error if Corrector's Output file is empty
+                if(qs2=="")
+                {
+                    DisplayError("Error in Displaying File: "+ correctortext + "is Empty");
+                    return;
+                }
+                sFile.close();
+            }
+
+        }
+        QTextDocument doc;
+        doc.setHtml(qs2);
+        qs2 = doc.toPlainText().replace(" \n", "\n");
+
+        int l1,l2, DiffOcr_Corrector; float correctorChangesPerc;
+
+        l1 = GetGraphemesCount(qs1); l2 = GetGraphemesCount(qs2);
+
+        diff_match_patch dmp;
+        auto diffs1 = dmp.diff_main(qs1,qs2);
+
+        //! Calculates the percentage of changes made by the corrector in OCR text file
+        DiffOcr_Corrector = LevenshteinWithGraphemes(diffs1);
+        correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l2)*100;
+        if(correctorChangesPerc>100) correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l1)*100;
+        correctorChangesPerc = (((float)lround(correctorChangesPerc*100))/100);
+
+        InternDiffView *dv = new InternDiffView(qs1,qs2,ocrimage,QString::number(correctorChangesPerc));   //Fetch OCR Image in DiffView2 and Set
+        dv->show();
+    }
+}
+
+/*!
+ * \fn MainWindow::on_compareVerifierOutput_clicked
+ * \brief Compares Verifier's Output, Corrector's Output and OCR text.
+ * This function also displays the percentage of changes made by the Corrector and Verifier, and the accuracy of the OCR text w.r.t. the verified text.
+ * \sa GetGraphemesCount(), LevenshteinWithGraphemes(), DiffView()
+ */
+void MainWindow::on_compareVerifierOutput_clicked() //Verifier-Version
+{
+
+    QString qs1="", qs2="",qs3="";
+
+    //! Open a Verifier's Output File
+    file = QFileDialog::getOpenFileName(this,"Open Verifier's Output File");
+
+    //! Opens corresponding Corrector's Output and OCR text file
+    if(!file.isEmpty())
+    {
+        QString verifierText = file;
+        QString correctorText = file.replace("VerifierOutput","CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+        QString ocrText = file.replace("CorrectorOutput","Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+        ocrText.replace(".html",".txt");
+
+        //! Reads OCR text file
+        if(!ocrText.isEmpty())
+        {
+            QFile sFile(ocrText);
+            if(sFile.open(QFile::ReadOnly | QFile::Text))
+            {
+                QTextStream in(&sFile);
+                in.setCodec("UTF-8");
+                qs1 = in.readAll().replace(" \n","\n");
+
+                //! Displays an error if OCR text file is empty
+                if(qs1=="")
+                {
+                    DisplayError("Error in Displaying File: "+ ocrText + "is Empty");
+                    return;
+                }
+                sFile.close();
+            }
+        }
+
+        //! Reads Corrector's Output file
+        if(!correctorText.isEmpty())
+        {
+            QFile sFile(correctorText);
+            if(sFile.open(QFile::ReadOnly | QFile::Text))
+            {
+                QTextStream in(&sFile);
+                in.setCodec("UTF-8");
+                qs2 = in.readAll();
+
+                //! Displays an error if Corrector's Output file is empty
+                if(qs2=="")
+                {
+                    DisplayError("Error in Displaying File: "+ correctorText + "is Empty");
+                    return;
+                }
+                sFile.close();
+            }
+        }
+
+        //! Reads Verifier's Output file
+        if(!verifierText.isEmpty())
+        {
+            QFile sFile(verifierText);
+            if(sFile.open(QFile::ReadOnly | QFile::Text))
+            {
+                QTextStream in(&sFile);
+                in.setCodec("UTF-8");
+                qs3 = in.readAll();
+
+                 //! Displays an error if Verifier's Output file is empty
+                if(qs3=="")
+                {
+                    DisplayError("Error in Displaying File: "+ verifierText + "is Empty");
+                    return;
+                }
+                sFile.close();
+            }
+
+        }
+        QTextDocument doc;
+
+        doc.setHtml(qs2);
+        qs2 = doc.toPlainText().replace(" \n","\n");
+
+        doc.setHtml(qs3);
+        qs3 = doc.toPlainText().replace(" \n","\n");
+
+        int l1,l2,l3, DiffOcr_Corrector,DiffCorrector_Verifier,DiffOcr_Verifier; float correctorChangesPerc,verifierChangesPerc,ocrErrorPerc;
+
+        l1 = GetGraphemesCount(qs1); l2 = GetGraphemesCount(qs2); l3 = GetGraphemesCount(qs3);
+
+        diff_match_patch dmp;
+
+        //! Calculates the percentage of changes made by the corrector in OCR text file
+        auto diffs1 = dmp.diff_main(qs1,qs2);
+        DiffOcr_Corrector = LevenshteinWithGraphemes(diffs1);
+        correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l2)*100;
+        if(correctorChangesPerc>100) correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l1)*100;
+        correctorChangesPerc = (((float)lround(correctorChangesPerc*100))/100);
+
+        //! Calculates the percentage of changes made by the verifier in Corrector's Output file
+        auto diffs2 = dmp.diff_main(qs2,qs3);
+        DiffCorrector_Verifier = LevenshteinWithGraphemes(diffs2);
+        verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l3)*100;
+        if(verifierChangesPerc>100) verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l2)*100;
+        verifierChangesPerc = (((float)lround(verifierChangesPerc*100))/100);
+
+        //! Calculates the accuracy of OCR text w.r.t. Verified text
+        auto diffs3 = dmp.diff_main(qs1,qs3);
+        DiffOcr_Verifier = LevenshteinWithGraphemes(diffs3);
+        ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l3)*100;
+        if(ocrErrorPerc>100) ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l1)*100;
+        float ocrAcc = 100 - (((float)lround(ocrErrorPerc*100))/100);
+
+        DiffView *dv = new DiffView(qs1,qs2,qs3,QString::number(correctorChangesPerc),QString::number(verifierChangesPerc),QString::number(ocrAcc));
+        qDebug()<<correctorChangesPerc<<verifierChangesPerc<<ocrAcc;
+        dv->show();
+    }
+}
+
+//Global CPair Start
+/*!
+ * \brief MainWindow::dumpStringToFile
+ * \param file_path
+ * \param string
+ * dumps given QString to file at file_path
+ */
+void MainWindow::dumpStringToFile(QString file_path, QString string){
+    QFile file(file_path);
+    if(file.open(QIODevice::WriteOnly | QIODevice::Append)){
+            QTextStream outputStream(&file);
+            outputStream << string << endl;
+    }
+    file.close();
+}
+
+/*!
+ * \brief MainWindow::isStringInFile
+ * \param file_path
+ * \param searchString
+ * \return
+ * checks if a QString is in file at file_path
+ */
+bool MainWindow::isStringInFile(QString file_path, QString searchString){
+
+    QFile fileToSearchIn(file_path);
+    bool textFound = false;
+
+    if(fileToSearchIn.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream in(&fileToSearchIn);
+        QString line;
+        // Check in everyline if string exists*/
+        do{
+            line = in.readLine();
+            if(line.contains(searchString)){
+                textFound = true;
+                break;
+            }
+        }while(!line.isNull());
+    }
+    fileToSearchIn.close();
+
+    return textFound;
+
+}
+
+/*!
+ * \brief MainWindow::addCurrentlyOpenFileToEditedFilesLog
+ * adds currently opened file in editor in .EditedFiles.txt to mark it as dirty
+ */
+void MainWindow::addCurrentlyOpenFileToEditedFilesLog(){
+    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+    QString currentFilePath = gDirTwoLevelUp + "/" + gCurrentDirName+ "/" + gCurrentPageName;
+
+    bool fileFound = isStringInFile(editedFilesLogPath, currentFilePath);
+
+    if(fileFound)
+        qDebug() << gCurrentPageName <<" already found in Edited Files Log. No need to update.";
+    else
+    {
+        qDebug() << gCurrentPageName <<" not found in Edited Files Log."<<endl;
+        qDebug()<< "Writing " <<currentFilePath << " to file." << endl;
+        dumpStringToFile(editedFilesLogPath, currentFilePath);
+    }
+}
+
+/*!
+ * \brief MainWindow::deleteEditedFilesLog
+ * for now I am calling this everytime window closes
+ */
+void MainWindow::deleteEditedFilesLog(){
+    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+    QFile file(editedFilesLogPath);
+    file.remove();
+}
+
+/*!
+ * \brief MainWindow::writeGlobalCPairsToFiles
+ * \param file_path
+ * \param globalReplacementMap
+ * writes CPairs by iterating over all files
+ */
+void MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap){
+    QMap <QString, QString>::iterator grmIterator;
+    QFile *f = new QFile(file_path);
+
+    f->open(QIODevice::ReadOnly);
+
+    QTextStream in(f);
+    QString s1 = in.readAll();
+
+    f->close();
+
+    f->open(QIODevice::WriteOnly);
+
+    for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
+    {
+
+        QString pattern = ("(\\b)")+grmIterator.key()+("(\\b)"); // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
+        QRegExp re(pattern);
+        QString replacementString = re.cap(1) + grmIterator.value() + re.cap(2); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
+        qDebug() << pattern;
+        qDebug() << replacementString;
+        s1.replace(re, replacementString);
+    }
+
+    in << s1;
+    f->close();
+}
+
+/*!
+ * \brief MainWindow::globalReplaceQueryMessageBox
+ * \param old_word
+ * \param new_word
+ * \return
+ * spawns a MessageBox and returns true if Replace is chosen
+ */
+bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word){
+
+    QMessageBox messageBox(this);
+
+    QAbstractButton *replaceButton = messageBox.addButton(tr("Replace"), QMessageBox::ActionRole);
+    QAbstractButton *cancelButton = messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+
+    QString msg = "Do you want to replace " + old_word + " with " + new_word + " Globally?\n" ;
+
+    messageBox.setWindowTitle("Global Replace");
+    messageBox.setText(msg);
+    messageBox.exec();
+
+    if (messageBox.clickedButton() == replaceButton)
+        return true;
+    return false;
+
+}
+
+/*!
+ * \brief MainWindow::getGlobalReplacementMapFromChecklistDialog
+ * \param changedWords
+ * \return
+ * spawns a checklist and returns a Qmap of selected pairs
+ */
+QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords){
+    QMap <QString, QString> globalReplacementMap;
+    GlobalReplaceDialog grDialog(changedWords, this);
+
+    grDialog.setModal(true);
+    grDialog.exec();
+
+    if(grDialog.on_applyButton_clicked())
+        globalReplacementMap = grDialog.getFilteredGlobalReplacementMap();
+    return globalReplacementMap;
+
+}
+
+/*!
+ * \brief MainWindow::runGlobalReplace
+ * \param currentFileDirectory
+ * \param changedWords
+ * Replace words iteratively
+ */
+void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QString> changedWords)
+{
+    QMap <QString, QString> globalReplacementMap;
+
+    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+
+    int noOfChangedWords = changedWords.size();
+
+    //! if only one change spawn checkbox
+    if (noOfChangedWords == 1){
+
+        QStringList changesList = changedWords[0].split(" ");
+        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3]);
+
+        if (updateGlobalCPairs)
+            globalReplacementMap[changesList[1]] = changesList[3];
+    }
+    //! if there is more than 1 change spawn a checklist and get the checked pairs only
+    else if(noOfChangedWords > 1){
+
+       globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords);
+
+    }
+
+    if(!globalReplacementMap.isEmpty())
+    {
+        QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
+
+        while (dirIterator.hasNext()){
+
+            QString it_file_path = dirIterator.next();
+            bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
+
+            if(!isFileInEditedFilesLog){
+                writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+            }
+        }
+    }
+
+    addCurrentlyOpenFileToEditedFilesLog();
+}
+//Global CPair End
+
+/*!
+ * \brief MainWindow::DisplayJsonDict
+ * Load and display *.dict files
+ */
+void MainWindow::DisplayJsonDict(void)
+{
+    QJsonDocument doc;
+    QJsonObject obj;
+    QByteArray data_json;
+
+    //! Get dict file from current opened file
+    QString dictFilename;
+    if(mRole=="Verifier")
+    {
+        dictFilename = gDirTwoLevelUp + "/" + "VerifierOutput" + "/" + gCurrentPageName;
+    }
+    else if(mRole=="Corrector")
+    {
+        dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
+    }
+    dictFilename.replace(".txt", ".dict");
+    dictFilename.replace(".html", ".dict");
+    QFile dictQFile(dictFilename);
+
+    ui->textEdit_dict->clear();
+
+    //! Open the dict file and display it in textedit view
+    if(QFile::exists(dictFilename))
+    {
+            QFile dictQFile(dictFilename);
+            if(dictQFile.open(QIODevice::ReadOnly | QIODevice::Text))
+            {
+               data_json = dictQFile.readAll();
+               dictQFile.close();
+               doc = doc.fromJson(data_json);
+               obj = doc.object();
+               QJsonValue jv = obj.value(obj.keys().at(0));
+               QJsonObject item = jv.toObject();
+               for(int i = 0; i < item.count(); i++)
+               {
+                  ui->textEdit_dict->append(item.keys().at(i)+":");
+                  QJsonValue subobj = item.value(item.keys().at(i));;
+                  QJsonArray test = subobj.toArray();
+                  for(int k = 0; k < test.count(); k++)
+                  {
+                     ui->textEdit_dict->moveCursor(QTextCursor::End);
+                     ui->textEdit_dict->insertPlainText(" "+test[k].toString());
+                     if(k<test.count()-1)
+                     {
+                        ui->textEdit_dict->insertPlainText(",");
+                     }
+                     ui->textEdit_dict->moveCursor(QTextCursor::End);
+                   }
+               }
+          }
+    }
+}
+
+/*!
+ * \brief MainWindow::getAverageAccuracies
+ * \param mainObj
+ * \return
+ */
+QJsonObject MainWindow::getAverageAccuracies(QJsonObject mainObj)
+{
+    float totalcharacc=0, totalwordacc = 0; int totalcharerrors = 0, totalworderrors = 0, count = 0, rating = 0;
+
+    //!Navigate to the Json object named "pages" and extract the parent object within them
+    QJsonObject pages = mainObj.value("pages").toObject();
+    QJsonObject page;
+
+    //!for every parent object or pages in json file
+    foreach(const QJsonValue &val, pages)
+    {
+        //!Extract the values from Json file
+        QString page = val.toObject().value("pagename").toString();
+        float charAccuracy    = val.toObject().value("characcuracy").toDouble();
+        float wordAccuracy    = val.toObject().value("wordaccuracy").toDouble();
+        int charerrors = val.toObject().value("charerrors").toInt();
+        int worderrors = val.toObject().value("worderrors").toInt();
+
+        //!Store the fetched values from Json locally for calculating average and error values
+        totalcharacc    += charAccuracy;
+        totalwordacc    += wordAccuracy;
+        totalcharerrors += charerrors;
+        totalworderrors += worderrors;
+
+        count++;
+    }
+    if(count)
+    {
+        //!Rate the average character accuracy and update it to csv file as 4,3,2 and 1
+        double avgcharacc = totalcharacc/count;
+        if(avgcharacc>98.5) rating = 4;
+        else if(avgcharacc > 97.5) rating = 3;
+        else if(avgcharacc > 96.5) rating = 2;
+        else if(avgcharacc <= 96.5) rating = 1;
+
+        if(mProject.get_stage() != mRole)
+            mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;    //Decreases version and updates rating if stage in xml file and currect user is same
+        else
+            mainObj["Rating-V"+ mProject.get_version()] = rating;     //Update the rating in csv if stage in project.xml is different from current user Eg: "Rating-V1": 1
+
+        //!Calculate and update the value of average accuracy and error to Json on Character and Word level
+        mainObj["AverageCharAccuracy"] = avgcharacc;
+        mainObj["AverageWordAccuracy"] = totalwordacc/count;
+        mainObj["AverageCharErrors"] = totalcharerrors/count;
+        mainObj["AverageWordErrors"] = totalworderrors/count;
+
+    }
+    return mainObj;
+}
+
+/*!
+ * \fn MainWindow::updateAverageAccuracies
+ * \brief The function updates accuracy and error on word and charater level to
+ * the files named comments.json and AverageAccuracies.csv
+ *
+ * \sa readJsonFile(), writeJsonFile()
+ */
+void MainWindow::updateAverageAccuracies() //Verifier only
+{
+    //! Get the file path of comments.json and AverageAccuracies.csv
+    QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
+
+    string csvfolder = gDirTwoLevelUp.toUtf8().constData();
+    csvfolder += "/Comments/AverageAccuracies.csv";
+
+    //!Write the column name to AverageAccuracies.csv
+    std::ofstream csvFile(csvfolder);
+    csvFile<<"Page Name,"<< "Word-Level Accuracy,"<<"Character-Level Accuracy," <<"Word-Level Errors,"<<"Character-Level Errors"<<"\n";
+
+    //!Read the Json Objects and terminates functions if the file is empty
+    QJsonObject mainObj = readJsonFile(commentFilename);
+    if(mainObj.isEmpty())
+        return;
+    float totalcharacc=0, totalwordacc = 0; int totalcharerrors = 0, totalworderrors = 0, count = 0, rating = 0;
+
+    //!Navigate to the Json object named "pages" and extract the parent object within them
+    QJsonObject pages = mainObj.value("pages").toObject();
+    QJsonObject page;
+
+    //!for every parent object or pages in json file
+    foreach(const QJsonValue &val, pages)
+    {
+        //!Extract the values from Json file
+        QString page = val.toObject().value("pagename").toString();
+        float charAccuracy = val.toObject().value("characcuracy").toDouble();
+        float wordAccuracy = val.toObject().value("wordaccuracy").toDouble();
+        int charerrors = val.toObject().value("charerrors").toInt();
+        int worderrors = val.toObject().value("worderrors").toInt();
+
+        //!Write those fetched values from Json to csv
+        csvFile << page.toUtf8().constData() <<"," << wordAccuracy << "," << charAccuracy << "," << worderrors<< "," << charerrors<<"\n";
+
+        //!Store the fetched values from Json locally for calculating average and error values
+        totalcharacc    += charAccuracy;
+        totalwordacc    += wordAccuracy;
+        totalcharerrors += charerrors;
+        totalworderrors += worderrors;
+
+        count++;
+    }
+    if(count)
+    {
+        //!Rate the average character accuracy and update it to csv file as 4,3,2 and 1
+        double avgcharacc = totalcharacc/count;
+        if(avgcharacc>98.5) rating = 4;
+        else if(avgcharacc > 97.5) rating = 3;
+        else if(avgcharacc > 96.5) rating = 2;
+        else if(avgcharacc <= 96.5) rating = 1;
+
+        if(mProject.get_stage() != mRole)
+            mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;   //Decreases version and updates rating if stage in xml file and currect user is same
+        else
+            mainObj["Rating-V"+ mProject.get_version()] = rating;    //Update the rating in csv if stage in project.xml is different from current user Eg: "Rating-V1": 1
+
+        //!Calculate and update the value of average accuracy and error to Json on Character and Word level
+        mainObj["AverageCharAccuracy"] = avgcharacc;
+        mainObj["AverageWordAccuracy"] = totalwordacc/count;
+        mainObj["AverageCharErrors"] = totalcharerrors/count;
+        mainObj["AverageWordErrors"] = totalworderrors/count;
+
+        //!Calculate and update the value of accuracy and error to csv on Character and Word level
+        csvFile<<" ,"<< "Average Accuracy (Word level),"<<"Average Accuracy (Character-Level)," <<"Average Errors (Word level),"<<"Average Errors (Character-Level),"<<"\n";
+        csvFile <<" " <<"," << totalwordacc/count << "," << totalcharacc/count << "," << totalworderrors/count<< "," << totalcharerrors/count<<"\n";
+        writeJsonFile(commentFilename, mainObj);
+
+    }
+}
+
 //end
 
 void MainWindow::on_sanButton_toggled(bool checked)
@@ -4709,7 +5566,6 @@ void MainWindow::on_sanButton_toggled(bool checked)
 
 void MainWindow::on_hinButton_toggled(bool checked)
 {
-
     if(checked)
         on_actionHindi_triggered();
 }
@@ -4811,513 +5667,6 @@ void MainWindow::on_actionResize_Image_triggered()
     }
 }
 
-QJsonObject MainWindow::getAverageAccuracies(QJsonObject mainObj)
-{
-    float totalcharacc=0, totalwordacc = 0; int totalcharerrors = 0, totalworderrors = 0, count = 0, rating = 0;
-
-    QJsonObject pages = mainObj.value("pages").toObject();
-    QJsonObject page;
-
-    foreach(const QJsonValue &val, pages)
-    {
-        QString page = val.toObject().value("pagename").toString();
-        float charAccuracy    = val.toObject().value("characcuracy").toDouble();
-        float wordAccuracy    = val.toObject().value("wordaccuracy").toDouble();
-        int charerrors = val.toObject().value("charerrors").toInt();
-        int worderrors = val.toObject().value("worderrors").toInt();
-
-        totalcharacc    += charAccuracy;
-        totalwordacc    += wordAccuracy;
-        totalcharerrors += charerrors;
-        totalworderrors += worderrors;
-
-        count++;
-    }
-    if(count)
-    {
-
-        double avgcharacc = totalcharacc/count;
-        if(avgcharacc>98.5) rating = 4;
-        else if(avgcharacc > 97.5) rating = 3;
-        else if(avgcharacc > 96.5) rating = 2;
-        else if(avgcharacc <= 96.5) rating = 1;
-
-        if(mProject.get_stage() != mRole)
-            mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;
-        else
-            mainObj["Rating-V"+ mProject.get_version()] = rating;
-        mainObj["AverageCharAccuracy"] = avgcharacc;
-        mainObj["AverageWordAccuracy"] = totalwordacc/count;
-        mainObj["AverageCharErrors"] = totalcharerrors/count;
-        mainObj["AverageWordErrors"] = totalworderrors/count;
-
-    }
-    return mainObj;
-}
-
-void MainWindow::updateAverageAccuracies() //Verifier only
-{
-    QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
-
-    string csvfolder = gDirTwoLevelUp.toUtf8().constData();
-    csvfolder += "/Comments/AverageAccuracies.csv";
-    std::ofstream csvFile(csvfolder);
-    csvFile<<"Page Name,"<< "Word-Level Accuracy,"<<"Character-Level Accuracy," <<"Word-Level Errors,"<<"Character-Level Errors"<<"\n";
-
-    QJsonObject mainObj = readJsonFile(commentFilename);
-    if(mainObj.isEmpty())
-        return;
-    float totalcharacc=0, totalwordacc = 0; int totalcharerrors = 0, totalworderrors = 0, count = 0, rating = 0;
-
-
-    QJsonObject pages = mainObj.value("pages").toObject();
-    QJsonObject page;
-
-    foreach(const QJsonValue &val, pages)
-    {
-        QString page = val.toObject().value("pagename").toString();
-        float charAccuracy    = val.toObject().value("characcuracy").toDouble();
-        float wordAccuracy    = val.toObject().value("wordaccuracy").toDouble();
-        int charerrors = val.toObject().value("charerrors").toInt();
-        int worderrors = val.toObject().value("worderrors").toInt();
-
-        csvFile << page.toUtf8().constData() <<"," << wordAccuracy << "," << charAccuracy << "," << worderrors<< "," << charerrors<<"\n";
-
-        totalcharacc    += charAccuracy;
-        totalwordacc    += wordAccuracy;
-        totalcharerrors += charerrors;
-        totalworderrors += worderrors;
-
-        count++;
-    }
-    if(count)
-    {
-
-        double avgcharacc = totalcharacc/count;
-        if(avgcharacc>98.5) rating = 4;
-        else if(avgcharacc > 97.5) rating = 3;
-        else if(avgcharacc > 96.5) rating = 2;
-        else if(avgcharacc <= 96.5) rating = 1;
-
-        if(mProject.get_stage() != mRole)
-            mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;
-        else
-            mainObj["Rating-V"+ mProject.get_version()] = rating;
-        mainObj["AverageCharAccuracy"] = avgcharacc;
-        mainObj["AverageWordAccuracy"] = totalwordacc/count;
-        mainObj["AverageCharErrors"] = totalcharerrors/count;
-        mainObj["AverageWordErrors"] = totalworderrors/count;
-
-        csvFile<<" ,"<< "Average Accuracy (Word level),"<<"Average Accuracy (Character-Level)," <<"Average Errors (Word level),"<<"Average Errors (Character-Level),"<<"\n";
-        csvFile <<" " <<"," << totalwordacc/count << "," << totalcharacc/count << "," << totalworderrors/count<< "," << totalcharerrors/count<<"\n";
-
-
-        writeJsonFile(commentFilename, mainObj);
-
-    }
-
-}
-
-void MainWindow::on_viewComments_clicked() //Version Based
-{
-    if (curr_browser) {
-        QString correctorOutput,currentpagetext;
-        QString correctorText = gDirTwoLevelUp + "/CorrectorOutput/" + gCurrentPageName;
-        QFile sFile(correctorText);
-        if(sFile.open(QFile::ReadOnly | QFile::Text))
-        {
-            QTextStream in(&sFile);
-            in.setCodec("UTF-8");
-            correctorOutput = in.readAll().simplified();
-            sFile.close();
-        }
-
-        map<int, int> wordCount;
-        QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
-        QString pageName = gCurrentPageName;
-        pageName.replace(".txt", "");
-        pageName.replace(".html", "");
-        int totalCharErrors = 0, totalWordErrors = 0, rating = 0;
-        QString comments = "";
-        QString avgAcc = "100%";
-        float wordAccuracy=100, charAccuracy=100, avgCharAcc = 100;
-        QString version = mProject.get_version();
-
-        QJsonObject mainObj = readJsonFile(commentFilename);
-        QJsonObject pages = mainObj.value("pages").toObject();
-        QJsonObject page = pages.value(pageName).toObject();
-
-        if( !mainObj.isEmpty() ) {
-
-            rating = mainObj["Rating-V"+ mProject.get_version()].toInt();
-            avgCharAcc = mainObj["AverageCharAccuracy"].toDouble();
-            avgAcc = QString::number((((float)lround(avgCharAcc*100))/100)) + "%";
-
-            if(!page.isEmpty()) {
-                comments = page.value("comments").toString();
-                totalCharErrors = page.value("charerrors").toInt();
-                totalWordErrors = page.value("worderrors").toInt();
-                wordAccuracy = page.value("wordaccuracy").toDouble();
-                charAccuracy = page.value("characcuracy").toDouble();
-            }
-        }
-
-        if(!isVerifier) {
-
-            CommentsView *cv = new CommentsView(totalWordErrors,totalCharErrors,wordAccuracy,charAccuracy,comments,commentFilename, pageName, rating, avgAcc, mRole,version);
-            cv->show();
-            return;
-        }
-        /*
-                //      Character Changes for Accuracy Calculation
-
-                QTextDocument doc;
-                doc.setHtml(correctorOutput);
-                correctorOutput = doc.toPlainText().simplified();
-                currentpagetext = curr_browser->toPlainText().simplified();
-
-                int l1 = correctorOutput.length(), l2 = currentpagetext.length();
-
-
-                diff_match_patch dmp;
-                auto diffs1 = dmp.diff_main(correctorOutput,currentpagetext);
-                totalCharErrors = LevenshteinWithGraphemes(diffs1);
-
-                auto diffs2 = dmp.diff_linesToChars(correctorOutput, currentpagetext); //LinesToChars modifed for WordstoChar in diff_match_patch.cpp
-                auto lineText1 = diffs2[0].toString();
-                auto lineText2 = diffs2[1].toString();
-                auto lineArray = diffs2[2].toStringList();
-                int totalwords = lineArray.count();
-                auto diffs3 = dmp.diff_main(lineText1, lineText2);
-                totalWordErrors= LevenshteinWithGraphemes(diffs3);
-                dmp.diff_charsToLines(diffs3, lineArray);
-
-
-                charAccuracy = (float)(l1 - totalCharErrors)/(float)l1*100;
-                if(charAccuracy<0) charAccuracy = ((float)(l2 - totalCharErrors)/(float)l2)*100;
-                charAccuracy = (((float)lround(charAccuracy*100))/100);
-
-                wordAccuracy = (float)(totalwords - totalWordErrors)/(float)totalwords*100;
-                wordAccuracy = (((float)lround(wordAccuracy*100))/100);
-                */
-
-        //HIGHLIGHTS FOR Accuracy Calculation
-        auto textCursor = curr_browser->textCursor();
-        QString textBrowserText = curr_browser->toPlainText();
-        textCursor.setPosition(0);
-        QString highlightedChars = "", selectedChar; // to store all the highlighted characters
-        int prevHighlightPos = -2; // Used as an indicator to separate non contigous highlighted text with a space
-        while(!textCursor.atEnd()) {
-            int anchor = textCursor.position();
-            QTextCharFormat format = textCursor.charFormat();
-            if(anchor!=0)
-                selectedChar = QString(textBrowserText[anchor-1]);
-            if(!selectedChar.contains(" ")) {
-                textCursor.select(QTextCursor::WordUnderCursor);
-                QString wordundercursor = textCursor.selectedText();
-                int key = textCursor.selectionStart();
-
-                if(format.background() == Qt::yellow && anchor>=(key+1)) {
-                    //totalCharErrors++;
-                    if((prevHighlightPos != -2) && (anchor != prevHighlightPos + 1))
-                        highlightedChars += " ";
-                    highlightedChars += selectedChar;
-                    wordCount[key]++;
-                    prevHighlightPos = anchor;
-                }
-            }
-            textCursor.setPosition(anchor+1);
-            //textCursor.movePosition(QTextCursor::NextCharacter , QTextCursor::MoveAnchor, 1);
-        }
-        totalCharErrors = GetGraphemesCount(highlightedChars);
-
-        int totalChars=0;
-        QString currentText = curr_browser->toPlainText();
-        int totalWords = currentText.simplified().count(" ") + 1;
-        QTextBoundaryFinder finder1 = QTextBoundaryFinder(QTextBoundaryFinder::BoundaryType::Grapheme, currentText);
-        while (finder1.toNextBoundary() != -1) {
-            totalChars++;
-        }
-
-        totalWordErrors = wordCount.size();
-        charAccuracy = (float)(totalChars - totalCharErrors)/(float)totalChars*100;
-        wordAccuracy = (float)(totalWords - totalWordErrors)/(float)totalWords*100 ;
-        wordAccuracy = ((float)lround(wordAccuracy*100))/100;
-        charAccuracy = ((float)lround(charAccuracy*100))/100;
-
-        page["comments"] = comments;
-        page["charerrors"] = totalCharErrors;
-        page["worderrors"] = totalWordErrors;
-        page["characcuracy"] = charAccuracy;
-        page["wordaccuracy"] = wordAccuracy;
-        page["pagename"] = pageName;
-
-        pages.remove(pageName);
-        pages.insert(pageName, page);
-        mainObj.remove("pages");
-        mainObj.insert("pages",pages);
-
-        mainObj = getAverageAccuracies(mainObj);
-
-        if(mProject.get_stage() != mRole)
-            rating = mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)].toInt();
-        else
-            rating = mainObj["Rating-V"+ mProject.get_version()].toInt();
-        avgCharAcc = mainObj["AverageCharAccuracy"].toDouble();
-        avgAcc = QString::number((((float)lround(avgCharAcc*100))/100)) + "%";
-
-        writeJsonFile(commentFilename, mainObj);
-
-        if(!gSaveTriggered)
-        {
-            CommentsView *cv = new CommentsView(totalWordErrors,totalCharErrors,wordAccuracy,charAccuracy,comments,commentFilename,pageName, rating, avgAcc, mRole, version);
-            cv->show();
-        }
-    }
-}
-
-
-void MainWindow::on_compareCorrectorOutput_clicked()
-{
-    QString qs1="", qs2="";
-    file = QFileDialog::getOpenFileName(this,"Open Corrector's Output File");
-    if(!file.isEmpty())
-    {
-        QString correctortext = file;
-        QString ocrtext = file;
-        ocrtext.replace("CorrectorOutput","Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-        ocrtext.replace(".html",".txt");
-        QString ocrimage = ocrtext;
-        ocrimage.replace("Inds", "Images");
-        QString temp = ocrimage;
-        int flag=0;
-        temp.replace(".txt", ".jpeg");
-        if (QFile::exists(temp) && flag==0)
-        {
-            ocrimage=temp;
-            flag=1;
-
-        }
-        else
-        {
-            temp=ocrimage;
-        }
-        temp.replace(".html", ".jpeg");
-        if (QFile::exists(temp) && flag==0)
-        {
-            ocrimage=temp;
-            flag=1;
-
-        }
-        else
-        {
-            temp=ocrimage;
-        }
-        temp.replace(".txt", ".png");
-        if (QFile::exists(temp) && flag==0)
-        {
-            ocrimage=temp;
-            flag=1;
-
-        }
-        else
-        {
-            temp=ocrimage;
-        }
-        temp.replace(".html", ".png");
-        if (QFile::exists(temp) && flag==0)
-        {
-            ocrimage=temp;
-            flag=1;
-
-        }
-        else
-        {
-            temp=ocrimage;
-        }
-        temp.replace(".txt", ".jpg");
-        if (QFile::exists(temp) && flag==0)
-        {
-            ocrimage=temp;
-            flag=1;
-
-        }
-        else
-        {
-            temp=ocrimage;
-        }
-        temp.replace(".html", ".jpg");
-        if (QFile::exists(temp) && flag==0)
-        {
-            ocrimage=temp;
-            flag=1;
-
-        }
-        else
-        {
-            temp=ocrimage;
-        }
-
-        // select the image. look for jpeg, jpg and png(select first whichever is found)
-        QFileInfo check_file(ocrimage);
-        if (!(check_file.exists() && check_file.isFile()))
-        {
-            ocrimage.replace(".jpeg", ".jpg");
-            check_file.setFile(ocrimage);
-            if (!(check_file.exists() && check_file.isFile()))
-            {
-                ocrimage.replace(".jpg", ".png");
-                check_file.setFile(ocrimage);
-            }
-        }
-
-        if(!ocrtext.isEmpty())
-        {
-            QFile sFile(ocrtext);
-            if(sFile.open(QFile::ReadOnly | QFile::Text))
-            {
-                QTextStream in(&sFile);
-                in.setCodec("UTF-8");
-                qs1 = in.readAll().replace(" \n","\n");
-                if(qs1=="") {
-                    DisplayError("Error in Displaying File: "+ ocrtext+ "is Empty");
-                    return;      }
-                sFile.close();
-            }
-
-        }
-        if(!correctortext.isEmpty())
-        {
-            QFile sFile(correctortext);
-            if(sFile.open(QFile::ReadOnly | QFile::Text))
-            {
-                QTextStream in(&sFile);
-                in.setCodec("UTF-8");
-                qs2 = in.readAll();
-                if(qs2=="") {
-                    DisplayError("Error in Displaying File: "+ correctortext + "is Empty");
-                    return;      }
-                sFile.close();
-            }
-
-        }
-        QTextDocument doc;
-        doc.setHtml(qs2);
-        qs2 = doc.toPlainText().replace(" \n", "\n");
-
-        int l1,l2, DiffOcr_Corrector; float correctorChangesPerc;
-
-        l1 = GetGraphemesCount(qs1); l2 = GetGraphemesCount(qs2);
-
-        diff_match_patch dmp;
-        auto diffs1 = dmp.diff_main(qs1,qs2);
-        DiffOcr_Corrector = LevenshteinWithGraphemes(diffs1);
-        correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l2)*100;
-        if(correctorChangesPerc>100) correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l1)*100;
-        correctorChangesPerc = (((float)lround(correctorChangesPerc*100))/100);
-
-        InternDiffView *dv = new InternDiffView(qs1,qs2,ocrimage,QString::number(correctorChangesPerc)); //Fetch OCR Image in DiffView2 and Set
-        dv->show();
-    }
-}
-
-void MainWindow::on_compareVerifierOutput_clicked() //Verifier-Version
-{
-
-    QString qs1="", qs2="",qs3="";
-    file = QFileDialog::getOpenFileName(this,"Open Verifier's Output File");
-    if(!file.isEmpty())
-    {
-        QString verifierText = file;
-        QString correctorText = file.replace("VerifierOutput","CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-        QString ocrText = file.replace("CorrectorOutput","Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-        ocrText.replace(".html",".txt");
-        //        ocrText.replace("V1_","");
-        //        ocrText.replace("V2_","");
-        //        ocrText.replace("V3_","");
-        if(!ocrText.isEmpty())
-        {
-            QFile sFile(ocrText);
-            if(sFile.open(QFile::ReadOnly | QFile::Text))
-            {
-                QTextStream in(&sFile);
-                in.setCodec("UTF-8");
-                qs1 = in.readAll().replace(" \n","\n");
-                if(qs1=="") {
-                    DisplayError("Error in Displaying File: "+ ocrText + "is Empty");
-                    return;      }
-                sFile.close();
-            }
-
-        }
-        if(!correctorText.isEmpty())
-        {
-            QFile sFile(correctorText);
-            if(sFile.open(QFile::ReadOnly | QFile::Text))
-            {
-                QTextStream in(&sFile);
-                in.setCodec("UTF-8");
-                qs2 = in.readAll();
-                if(qs2=="") {
-                    DisplayError("Error in Displaying File: "+ correctorText + "is Empty");
-                    return;      }
-                sFile.close();
-            }
-
-        }
-        if(!verifierText.isEmpty())
-        {
-            QFile sFile(verifierText);
-            if(sFile.open(QFile::ReadOnly | QFile::Text))
-            {
-                QTextStream in(&sFile);
-                in.setCodec("UTF-8");
-                qs3 = in.readAll();
-                if(qs3=="") {
-                    DisplayError("Error in Displaying File: "+ verifierText + "is Empty");
-                    return;      }
-                sFile.close();
-            }
-
-        }
-        QTextDocument doc;
-
-        doc.setHtml(qs2);
-        qs2 = doc.toPlainText().replace(" \n","\n");
-
-        doc.setHtml(qs3);
-        qs3 = doc.toPlainText().replace(" \n","\n");
-
-        int l1,l2,l3, DiffOcr_Corrector,DiffCorrector_Verifier,DiffOcr_Verifier; float correctorChangesPerc,verifierChangesPerc,ocrErrorPerc;
-
-        l1 = GetGraphemesCount(qs1); l2 = GetGraphemesCount(qs2); l3 = GetGraphemesCount(qs3);
-
-        diff_match_patch dmp;
-
-        auto diffs1 = dmp.diff_main(qs1,qs2);
-        DiffOcr_Corrector = LevenshteinWithGraphemes(diffs1);
-        correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l2)*100;
-        if(correctorChangesPerc>100) correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l1)*100;
-        correctorChangesPerc = (((float)lround(correctorChangesPerc*100))/100);
-
-        auto diffs2 = dmp.diff_main(qs2,qs3);
-        DiffCorrector_Verifier = LevenshteinWithGraphemes(diffs2);
-        verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l3)*100;
-        if(verifierChangesPerc>100) verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l2)*100;
-        verifierChangesPerc = (((float)lround(verifierChangesPerc*100))/100);
-
-        auto diffs3 = dmp.diff_main(qs1,qs3);
-        DiffOcr_Verifier = LevenshteinWithGraphemes(diffs3);
-        ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l3)*100;
-        if(ocrErrorPerc>100) ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l1)*100;
-        float ocrAcc = 100 - (((float)lround(ocrErrorPerc*100))/100);
-
-        DiffView *dv = new DiffView(qs1,qs2,qs3,QString::number(correctorChangesPerc),QString::number(verifierChangesPerc),QString::number(ocrAcc));
-        qDebug()<<correctorChangesPerc<<verifierChangesPerc<<ocrAcc;
-        dv->show();
-    }
-}
-
 void MainWindow::on_actionPush_triggered()
 {
     mProject.push();
@@ -5340,60 +5689,6 @@ QString GetFilter(QString & Name, const QStringList &list) {
     }
     Filter += ")";
     return Filter;
-}
-
-// Load and display *.dict files
-void MainWindow::DisplayJsonDict(void) {
-    QJsonDocument doc;
-    QJsonObject obj;
-    QByteArray data_json;
-
-    // Get dict file from current opened file
-    QString dictFilename;
-    if(mRole=="Verifier")
-    {
-        dictFilename = gDirTwoLevelUp + "/" + "VerifierOutput" + "/" + gCurrentPageName;
-    }
-    else if(mRole=="Corrector")
-    {
-        dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
-    }
-    dictFilename.replace(".txt", ".dict");
-    dictFilename.replace(".html", ".dict");
-    QFile dictQFile(dictFilename);
-
-    ui->textEdit_dict->clear();
-
-    // Open the dict file and display it in textedit view
-    if(QFile::exists(dictFilename))
-    {
-            QFile dictQFile(dictFilename);
-            if(dictQFile.open(QIODevice::ReadOnly | QIODevice::Text))
-            {
-               data_json = dictQFile.readAll();
-               dictQFile.close();
-               doc = doc.fromJson(data_json);
-               obj = doc.object();
-               QJsonValue jv = obj.value(obj.keys().at(0));
-               QJsonObject item = jv.toObject();
-               for(int i = 0; i < item.count(); i++)
-               {
-                  ui->textEdit_dict->append(item.keys().at(i)+":");
-                  QJsonValue subobj = item.value(item.keys().at(i));;
-                  QJsonArray test = subobj.toArray();
-                  for(int k = 0; k < test.count(); k++)
-                  {
-                     ui->textEdit_dict->moveCursor(QTextCursor::End);
-                     ui->textEdit_dict->insertPlainText(" "+test[k].toString());
-                     if(k<test.count()-1)
-                     {
-                        ui->textEdit_dict->insertPlainText(",");
-                     }
-                     ui->textEdit_dict->moveCursor(QTextCursor::End);
-                   }
-               }
-          }
-    }
 }
 
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
@@ -5924,197 +6219,4 @@ bool MainWindow::sendEmail(QString emailText)
         return 0;
 
     return 1;
-}
-
-void MainWindow::on_pushButton_2_clicked()
-{
-    auto cursor = curr_browser->textCursor();
-    auto selected = cursor.selection();
-    QString sel = selected.toHtml();
-    //qDebug()<<sel<<endl;
-    QRegularExpression re("<img[^>]*?src\=[\x27\x22](?<Url>[^\x27\x22]*)[\x27\x22][^>]*?width\=[\x27\x22](?<width>[^\x27\x22]*)[\x27\x22][^>]*?height\=[\x27\x22](?<height>[^\x27\x22]*)[\x27\x22][^>]*?>");
-    QRegularExpressionMatch match = re.match(sel, 0);
-    int height = match.captured(3).toInt();
-    int width = match.captured(2).toInt();
-    QString imgname = match.captured(1);
-    //qDebug()<<match.captured(0)<<endl;
-    //qDebug()<<match<<endl;
-
-    int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
-    int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
-    //qDebug()<<n;
-
-    if(n>0 && n1>0)
-    {
-        cursor.removeSelectedText();
-        QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(n).arg(n1);
-        QTextCursor cursor1 = curr_browser->textCursor();
-        cursor1.insertHtml(html);
-    }
-}
-
-
-// dumps given QString to file at file_path
-void MainWindow::dumpStringToFile(QString file_path, QString string){
-    QFile file(file_path);
-    if(file.open(QIODevice::WriteOnly | QIODevice::Append)){
-            QTextStream outputStream(&file);
-            outputStream << string << endl;
-    }
-    file.close();
-}
-
-// checks if a QString is in file at file_path
-bool MainWindow::isStringInFile(QString file_path, QString searchString){
-
-    QFile fileToSearchIn(file_path);
-    bool textFound = false;
-
-    if(fileToSearchIn.open(QIODevice::ReadOnly | QIODevice::Text)){
-        QTextStream in(&fileToSearchIn);
-        QString line;
-        /*! Check in everyline if string exists*/
-        do{
-            line = in.readLine();
-            if(line.contains(searchString)){
-                textFound = true;
-                break;
-            }
-        }while(!line.isNull());
-    }
-    fileToSearchIn.close();
-
-    return textFound;
-
-}
-
-// adds currently opened file in editor in .EditedFiles.txt to mark it as dirty
-void MainWindow::addCurrentlyOpenFileToEditedFilesLog(){
-    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
-    QString currentFilePath = gDirTwoLevelUp + "/" + gCurrentDirName+ "/" + gCurrentPageName;
-
-    bool fileFound = isStringInFile(editedFilesLogPath, currentFilePath);
-
-    if(fileFound)
-        qDebug() << gCurrentPageName <<" already found in Edited Files Log. No need to update.";
-    else
-    {
-        qDebug() << gCurrentPageName <<" not found in Edited Files Log."<<endl;
-        qDebug()<< "Writing " <<currentFilePath << " to file." << endl;
-        dumpStringToFile(editedFilesLogPath, currentFilePath);
-    }
-}
-
-// for now I am calling this everytime window closes
-void MainWindow::deleteEditedFilesLog(){
-    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
-    QFile file(editedFilesLogPath);
-    file.remove();
-}
-
-// writes CPairs by iterating over all files
-void MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap){
-    QMap <QString, QString>::iterator grmIterator;
-    QFile *f = new QFile(file_path);
-
-    f->open(QIODevice::ReadOnly);
-
-    QTextStream in(f);
-    QString s1 = in.readAll();
-
-    f->close();
-
-    f->open(QIODevice::WriteOnly);
-
-    for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
-    {
-
-        QString pattern = ("(\\b)")+grmIterator.key()+("(\\b)"); // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
-        QRegExp re(pattern);
-        QString replacementString = re.cap(1) + grmIterator.value() + re.cap(2); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
-        qDebug() << pattern;
-        qDebug() << replacementString;
-        s1.replace(re, replacementString);
-    }
-
-    in << s1;
-    f->close();
-}
-
-// spawns a MessageBox and returns true if Replace is chosen
-bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word){
-
-    QMessageBox messageBox(this);
-
-    QAbstractButton *replaceButton = messageBox.addButton(tr("Replace"), QMessageBox::ActionRole);
-    QAbstractButton *cancelButton = messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
-
-    QString msg = "Do you want to replace " + old_word + " with " + new_word + " Globally?\n" ;
-
-    messageBox.setWindowTitle("Global Replace");
-    messageBox.setText(msg);
-    messageBox.exec();
-
-    if (messageBox.clickedButton() == replaceButton)
-        return true;
-    return false;
-
-}
-
-// spawns a checklist and returns a Qmap of selected pairs
-QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords){
-    QMap <QString, QString> globalReplacementMap;
-    GlobalReplaceDialog grDialog(changedWords, this);
-
-    grDialog.setModal(true);
-    grDialog.exec();
-
-    if(grDialog.on_applyButton_clicked())
-        globalReplacementMap = grDialog.getFilteredGlobalReplacementMap();
-    return globalReplacementMap;
-
-}
-
-// Replace words iteratively
-void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QString> changedWords)
-{
-    QMap <QString, QString> globalReplacementMap;
-
-    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
-
-    int noOfChangedWords = changedWords.size();
-
-    //! if only one change spawn checkbox
-    if (noOfChangedWords == 1){
-
-        QStringList changesList = changedWords[0].split(" ");
-        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3]);
-
-        if (updateGlobalCPairs)
-            globalReplacementMap[changesList[1]] = changesList[3];
-    }
-    //! if there is more than 1 change spawn a checklist and get the checked pairs only
-    else if(noOfChangedWords > 1){
-
-       globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords);
-
-    }
-
-
-    if(!globalReplacementMap.isEmpty())
-    {
-        QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
-
-        while (dirIterator.hasNext()){
-
-            QString it_file_path = dirIterator.next();
-            bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
-
-            if(!isFileInEditedFilesLog){
-                writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
-            }
-        }
-    }
-
-    addCurrentlyOpenFileToEditedFilesLog();
 }
