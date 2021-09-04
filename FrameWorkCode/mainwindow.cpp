@@ -229,6 +229,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+/*!
+ * \brief readJsonFile
+ * \param filepath
+ * \return
+ */
 QJsonObject readJsonFile(QString filepath)
 {
     QFile jsonFile(filepath);
@@ -242,6 +247,11 @@ QJsonObject readJsonFile(QString filepath)
     return mainObj;
 }
 
+/*!
+ * \brief writeJsonFile
+ * \param filepath
+ * \param mainObj
+ */
 void writeJsonFile(QString filepath, QJsonObject mainObj)
 {
     QJsonDocument document1(mainObj);
@@ -257,6 +267,9 @@ QElapsedTimer myTimer;
 int secs;
 int gSeconds;
 
+/*!
+ * \brief MainWindow::SaveTimeLog
+ */
 void MainWindow::SaveTimeLog()
 {
     QJsonObject mainObj;
@@ -270,6 +283,9 @@ void MainWindow::SaveTimeLog()
     writeJsonFile(gTimeLogLocation, mainObj);
 }
 
+/*!
+ * \brief MainWindow::DisplayTimeLog
+ */
 void MainWindow::DisplayTimeLog()
 {
     QString currentVersion = mProject.get_version();
@@ -285,6 +301,9 @@ void MainWindow::DisplayTimeLog()
                           " secs elapsed on this page(Right Click to update)");
 }
 
+/*!
+ * \brief MainWindow::UpdateFileBrekadown
+ */
 void MainWindow::UpdateFileBrekadown()
 {
     QFileInfo finfo(mFilename);
@@ -293,6 +312,11 @@ void MainWindow::UpdateFileBrekadown()
     gCurrentDirName = finfo.dir().dirName();
     gDirOneLevelUp = gDirTwoLevelUp + "/" + gCurrentDirName;
 }
+
+/*!
+ * \brief DisplayError
+ * \param error
+ */
 void DisplayError(QString error)
 {
     QMessageBox msgBox;
@@ -300,8 +324,14 @@ void DisplayError(QString error)
     msgBox.exec();
 }
 
-
-//bool OPENSPELLFLAG = 1;// TO NOT CONVERT ASCII STRINGS TO DEVANAGARI ON OPENING WHEN SPELLCHECK IS CLICKED
+/*!
+ * \brief GetPageNumber
+ * \param localFilename
+ * \param no
+ * \param loc
+ * \param ext
+ * \return
+ */
 int GetPageNumber(string localFilename, string *no, size_t *loc, QString *ext)
 {
 
@@ -322,6 +352,11 @@ int GetPageNumber(string localFilename, string *no, size_t *loc, QString *ext)
     return 1;
 }
 
+/*!
+ * \brief GetGraphemesCount
+ * \param string
+ * \return
+ */
 int GetGraphemesCount(QString string)
 {
     int count = 0;
@@ -333,6 +368,11 @@ int GetGraphemesCount(QString string)
     return count - spaces;
 }
 
+/*!
+ * \brief LevenshteinWithGraphemes
+ * \param diffs
+ * \return
+ */
 int LevenshteinWithGraphemes(QList<Diff> diffs)
 {
     int levenshtein = 0;
@@ -371,9 +411,20 @@ vector<string> vGPage, vIPage, vCPage; // for calculating WER
 
 vector<string> vBest;
 
+/*!
+\fn mousePressEvent()
+\param event
+\brief Checks if the right click is pressed on the mouse and loads suggestion changes
+Custom mouse event is created which loads a suggestion and translation menu for the string on which the current string
+highlight is present. These are loaded with the help of dictionary files which are loaded with the help of loaddata
+function. Works with the help of a flag.
+\sa print5NearestEntries(), print2OCRSugg(), loadWConfusionsNindex1(), editDist(), make_pair()
+*/
+
 bool RightclickFlag = 0;
 string selectedStr ="";
-//GIVE EVENT TO TEXT BROWZER INSTEAD OF MAINWINDOW
+
+//!GIVE EVENT TO TEXT BROWZER INSTEAD OF MAINWINDOW
 void MainWindow::mousePressEvent(QMouseEvent *ev)
 {
     if (curr_browser)
@@ -382,6 +433,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
         DisplayTimeLog();
 
+        //! if right click
         if ((ev->button() == Qt::RightButton) || (RightclickFlag))
         {
             QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
@@ -405,9 +457,9 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 font.setPointSize(12);
                 spell_menu->setFont(font);
                 translate_menu->setFont(font);
-                //QAction* action = tr("tihor");
+
                 QAction* act;
-                //vector<string> Words =  print5NearestEntries(TGPage,selectedStr);
+
                 vector<string>  Words1 = print5NearestEntries(TGBook, selectedStr);
                 if (Words1.empty()) return;
                 vector<string> Alligned = print5NearestEntries(TGBookP, selectedStr);
@@ -420,21 +472,20 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 if (PairSugg.empty())return;
                 vector<string>  Words = print1OCRNearestEntries(toslp1(selectedStr), vIBook);
                 if (Words.empty())return;
-                //cout <<" here " << toDev(Words[0]) << endl;
 
-
-                // find nearest confirming to OCR Sugg from Book
+                //! find nearest confirming to OCR Sugg from Book
                 string nearestCOnfconfirmingSuggvec;
                 vector<string> vec = Words1;
                 int min = 100;
-                for (size_t t = 0; t < vec.size(); t++) {
+                for (size_t t = 0; t < vec.size(); t++)
+                {
                     vector<string> wordConfusions; vector<int> wCindex;
                     int minFactor = loadWConfusionsNindex1(selectedStr, vec[t], ConfPmap, wordConfusions, wCindex);
                     wordConfusions.clear(); wCindex.clear();
                     if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvec = vec[t]; }
                 }
 
-                // find nearest confirming to OCR Sugg from PWords
+                //! find nearest confirming to OCR Sugg from PWords
                 string nearestCOnfconfirmingSuggvec1;
                 vector<string> vec1 = PWords1;
                 min = 100;
@@ -451,6 +502,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 vector<string> out;
                 map<string, set<string>>::iterator itr;
                 set<string>::iterator set_it;
+
                 for (itr = CPairs.begin(); itr != CPairs.end(); ++itr)
                 {
                     if(toslp1(itr->first) == toslp1(selectedStr))
@@ -468,7 +520,6 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 }
                 for (size_t ksugg1 = 0; ksugg1 < 6; ksugg1++)
                 {
-                        //qDebug()<< mProject.get_configuration();
                     if (out.size() > ksugg1)  mapSugg[toslp1(out[ksugg1])]++;
                 }
 
@@ -482,7 +533,8 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                     string s1 = toslp1(selectedStr);
                     string nearestCOnfconfirmingSuggvecFont = "";
                     min = 100;
-                    for (size_t t = 0; t < vec.size(); t++) {
+                    for (size_t t = 0; t < vec.size(); t++)
+                    {
                         vector<string> wordConfusions; vector<int> wCindex;
                         int minFactor = loadWConfusionsNindex1(s1, vec[t], ConfPmapFont, wordConfusions, wCindex);
                         wordConfusions.clear(); wCindex.clear();
@@ -500,7 +552,6 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
                     cout<<"selected string: "<<toslp1(selectedStr)<<endl;
                     cout<<"Mapped Suggestion 0: "<<endl; //(string,int) Words, last no. of occuring, create single entry for single same word
-                    //cout<<"From CPair: "<<CSugg<<endl;
 
                     cout<<"From Primary OCR: ";
                     for(auto& it : Words){
@@ -517,59 +568,13 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
     //                cout<<"One suggestion from ConfusionPair and secondary OCR Trie Pattern Data by converting the string in English "<<toslp1(PairSuggFont)<<endl;
     //                cout<<"One suggestion from TopConfusion and SandhiRules by converting the string in English "<<sugg9<<endl;
                 }
-//                map<string, int> mapSugg1;
-//                for (size_t ksugg1 = 0; ksugg1 < 5; ksugg1++) {
-//                    if (Words.size() > ksugg1)  mapSugg1[toslp1(Words[ksugg1])]++;
-//                    if (Words1.size() > ksugg1) mapSugg1[toslp1(Words1[ksugg1])]++;
-//                    if (PWords1.size() > ksugg1) mapSugg1[toslp1(PWords1[ksugg1])]++;
-//                }
 
-//                cout<<"Mapped Suggestion 1: "<<endl;
-//                cout<<"From Primary OCR: ";
-//                for(auto& it : Words){
-//                    for(uint i = 0;i<it.size();i++){
-//                         cout << it[i];
-//                    }
-//                    cout<<"\n";
-//                }
-//                cout<<"From Secondary OCR: ";
-//                for(auto& it : Words1){
-//                    for(uint i = 0;i<it.size();i++){
-//                         cout << it[i];
-//                    }
-//                    cout<<"\n";
-//                }
-//                cout<<"From PWords: ";
-//                for(auto& it : PWords1){
-//                    for(uint i = 0;i<it.size();i++){
-//                         cout << it[i];
-//                    }
-//                    cout<<"\n";
-//                }
-
-
-                for (map<string, int>::const_iterator eptr = mapSugg.begin(); eptr != mapSugg.end(); eptr++) {
+                for (map<string, int>::const_iterator eptr = mapSugg.begin(); eptr != mapSugg.end(); eptr++)
+                {
                     vecSugg.push_back(make_pair(editDist(toslp1(eptr->first), toslp1(selectedStr)), eptr->first));
                 }
 
-//                for (map<string, int>::const_iterator eptr = mapSugg1.begin(); eptr != mapSugg1.end(); eptr++) {
-//                    vecSugg1.push_back(make_pair(editDist(toslp1(eptr->first), toslp1(selectedStr)), eptr->first));
-//                }
-
-
-                //vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),selectedStr),selectedStr));
-                //if(Words.size() > 0) vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),toslp1(Words[0])),Words[0]));
-                //vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),toslp1(Words1[0])),Words1[0]));
-                //vecSugg.push_back(make_pair(editDist(toslp1(selectedStr),toslp1(PairSugg)),PairSugg));
                 sort(vecSugg.begin(), vecSugg.end());
-                //sort(vecSugg1.begin(), vecSugg1.end());
-
-//                cout << "\n Filtered Vector Suggestions 1\n"; //With the mapsugg0
-//                cout << "MappingNum0\t MappingNum1\t Word\n";
-
-//                for (uint i = 0; i < vecSugg1.size(); i++){
-//                    cout<<mapSugg[vecSugg1[i].second]<<"\t"<<mapSugg1[vecSugg1[i].second]<<"\t"<<toDev(vecSugg1[i].second)<<endl;
-//                }
 
                 cout << "\nVector Suggestions 0\n";
                 cout << "MappingNum\t vector_int\t Word\n";
@@ -577,41 +582,22 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                     cout<<mapSugg[vecSugg[i].second]<<"\t"<<vecSugg[i].first<<"\t"<<toDev(vecSugg[i].second)<<endl;
                 }
 
-//                cout << "\nVector Suggestions 1\n";
-//                cout << "MappingNum\t vector_int\t Word\n";
-//                for (uint i = 0; i < vecSugg1.size(); i++){
-//                    cout<<mapSugg1[vecSugg1[i].second]<<"\t"<<vecSugg1[i].first<<"\t"<<toDev(vecSugg1[i].second)<<endl;
-//                }
-
-                //cout << vec[0]  << " " << vec[1]  << " " << vec[2]  << " " << newtrie.next.size() << endl;
-                //Words = suggestions((selectedStr));
-                for (uint bitarrayi = 0; bitarrayi < vecSugg.size(); bitarrayi++) {
+                for (uint bitarrayi = 0; bitarrayi < vecSugg.size(); bitarrayi++)
+                {
                     act = new QAction(QString::fromStdString(toDev(vecSugg[bitarrayi].second)), spell_menu);
-                    //cout<<vecSugg[bitarrayi].first<<endl;
                     spell_menu->addAction(act);
                 }
 
-//                for (uint bitarrayi = 0; bitarrayi < vecSugg1.size(); bitarrayi++) {
-//                    if (mapSugg[vecSugg1[bitarrayi].second] < 1) {
-//                        act = new QAction(QString::fromStdString(toDev(vecSugg1[bitarrayi].second)), spell_menu);
-//                        //cout<<vecSugg1[bitarrayi].first<<endl;
-//                        spell_menu->addAction(act);
-//                    }
-//                }
-                /*Words =  print5NearestEntries(TDict,selectedStr);
-                if (Words.size() > 0) {
-                    act = new QAction(QString::fromStdString(toDev(Words[0])), spell_menu);
-
-                    spell_menu->addAction(act);
-
-                }*/
                 selectedStr.erase(remove(selectedStr.begin(), selectedStr.end(), ' '), selectedStr.end());
                 vector<string> translate;
                 vector<int>& syn = synonym[selectedStr];
-                for(int i=0; i < syn.size(); i++){
+                for(int i=0; i < syn.size(); i++)
+                {
                     vector<string>& rowit = synrows[syn[i]];
-                    for(int j=0; j < rowit.size(); j++){
-                        if(rowit[j] != selectedStr){
+                    for(int j=0; j < rowit.size(); j++)
+                    {
+                        if(rowit[j] != selectedStr)
+                        {
                             translate.push_back(rowit[j]);
                             cout << rowit[j] << endl;
                         }
@@ -621,9 +607,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 for (uint bitarrayi = 0; bitarrayi < translate.size(); bitarrayi++) {
 
                     act = new QAction(QString::fromStdString(translate[bitarrayi]), translate_menu);
-                    //cout<<vecSugg1[bitarrayi].first<<endl;
                     translate_menu->addAction(act);
-
                 }
 
                 popup_menu->insertSeparator(popup_menu->actions()[0]);
@@ -638,13 +622,12 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
                 popup_menu->exec(ev->globalPos());
                 popup_menu->close(); popup_menu->clear();
-                //curr_browser->createStandardContextMenu()->clear();
-                //cursor.select(QTextCursor::WordUnderCursor);
+
                 vecSugg.clear(); Words1.clear(); Words.clear(); Alligned.clear(); PairSugg.clear();
                 translate.clear();
             }
-            else {
-
+            else
+            {
                 DisplayTimeLog();
 
                 QMenu* popup_menu = curr_browser->createStandardContextMenu();
@@ -655,124 +638,44 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
     }
 }// if mouse event
 
+/*!
+ * \brief MainWindow::menuSelection
+ * \param action
+ */
 void MainWindow::menuSelection(QAction* action)
 {
-    if (curr_browser) {
+    if (curr_browser)
+    {
         QTextCursor cursor = curr_browser->textCursor();
         cursor.select(QTextCursor::WordUnderCursor);
         cursor.beginEditBlock();
         cursor.removeSelectedText();
-
-        //cursor.insertHtml("</body></html><font color=\'purple\'>" + action->text() + "</font><html><body>");
 
         string target = (action->text().toUtf8().constData());
         CPair[toslp1(selectedStr)] = toslp1(target);
-        PWords[toslp1(target)]++; //CPairRight[toslp1(target)]++;
+        PWords[toslp1(target)]++;
         cursor.insertText(action->text());
-        //cout <<target << CPair.size() << " "<< GBook.size() << " " << IBook.size() << endl;
-        //on_actionSpell_Check_triggered();
-        //cout << selectedStr << " to " << target << " " << CPair[toslp1(selectedStr)] <<" " << IBook[toslp1(selectedStr)] + 1 << "Corrections made"<< endl;
 
-        // replace words with name same as selectedStr and are underlined
-        // underlined:-
-        //strHtml += "<a href='xxx'>";
-        //strHtml += word;
-        //strHtml += "</a>";
-
-        //QTextDocument *doc=curr_browser->document();
-        //QString html=doc->toHtml();
-        //string html0=html.toUtf8().constData();
-
-        //cout<<selectedStr<<endl;
         cursor.endEditBlock();
-
-        /*
-        QString textBrowserText = curr_browser->toPlainText();
-        string alltext=(textBrowserText.toUtf8().constData()); //toslp1
-        istringstream ss(alltext);
-        string word="";
-        //int len = alltext.length(),a=0;
-        int noCorr = 0;
-        ss >> word;
-        cursor.setPosition(0,QTextCursor::MoveAnchor);
-        size_t cnt = 1;
-        while( ss >> word) cnt++;
-        for(size_t c1 = 0; c1 < cnt + 10; c1++){ cursor.movePosition(QTextCursor::NextWord, QTextCursor::KeepAnchor);
-            cursor.select(QTextCursor::WordUnderCursor);
-            QString str1 = cursor.selectedText();
-            word = str1.toUtf8().constData();
-            if(word==(selectedStr)){
-            //cursor.movePosition(QTextCursor::NextWord, QTextCursor::KeepAnchor);
-            //cursor.select(QTextCursor::WordUnderCursor);
-            cursor.beginEditBlock();
-            cursor.removeSelectedText();
-            cursor.insertHtml("</body></html><font color=\'purple\'>" + action->text() + "</font><html><body>");
-            noCorr++;
-            cursor.endEditBlock();
-            }
-            }
-        cout << "noCOrr made on this Page " << noCorr << endl;
-        */
-        /*
-        while(a<len)
-        {
-            if(alltext[a]==' ')
-            {
-                if(word==toslp1(selectedStr))
-                {   cursor.setPosition(a-1,QTextCursor::MoveAnchor);
-                    cursor.setPosition(a-1,QTextCursor::MoveAnchor);
-                    cursor.select(QTextCursor::WordUnderCursor);
-                    cursor.beginEditBlock();
-                    cursor.removeSelectedText();
-                    cursor.insertHtml("</body></html><font color=\'purple\'>" + action->text() + "</font><html><body>");
-                    noCorr++;
-                    cursor.endEditBlock();
-                }
-                word="";
-            }
-            else
-                word+=alltext[a];
-            a++;
-        }*/
-
-
-        // write code to pick word one by one in string word
-        /*
-        // code to search for a string in another string
-        // say word has 1st word from Text Browzer
-        int pos = word.find("</a>", 0);
-        if(pos != static_cast<int>(string::npos)){
-            // then delete extra things that underline the word
-            //if this remaining string matches selectedStr(rohlt) replace it with action->text()
-                //action->text() might be Qstring
-                alltextnew + = action->text();// convert this Qstring to string it has rohit
-            else  alltextnew + = word;
-        }else alltextnew + = word;
-        */
-        //qDebug() << "Triggered: " << action->text();
     }
 }
 
-
+/*!
+ * \brief MainWindow::translate_replace
+ * \param action
+ */
 void MainWindow::translate_replace(QAction* action)
 {
-
-    if (curr_browser) {
+    if (curr_browser)
+    {
         QTextCursor cursor = curr_browser->textCursor();
         cursor.select(QTextCursor::WordUnderCursor);
         cursor.beginEditBlock();
         cursor.removeSelectedText();
 
-
         string target = (action->text().toUtf8().constData());
-//        CPair[toslp1(selectedStr)] = toslp1(target);
-//        PWords[toslp1(target)]++; //CPairRight[toslp1(target)]++;
         cursor.insertText(action->text());
-
-
-
         cursor.endEditBlock();
-
     }
 }
 
@@ -5558,24 +5461,38 @@ void MainWindow::updateAverageAccuracies() //Verifier only
 
 //end
 
+/*!
+ * \brief MainWindow::on_sanButton_toggled
+ * \param checked
+ */
 void MainWindow::on_sanButton_toggled(bool checked)
 {
     if(checked)
         on_actionSanskrit_triggered();
 }
 
+/*!
+ * \brief MainWindow::on_hinButton_toggled
+ * \param checked
+ */
 void MainWindow::on_hinButton_toggled(bool checked)
 {
     if(checked)
         on_actionHindi_triggered();
 }
 
+/*!
+ * \brief MainWindow::on_actionNew_Project_triggered
+ */
 void MainWindow::on_actionNew_Project_triggered()
 {
     ProjectWizard* wiz = new ProjectWizard();
     wiz->show();
 }
 
+/*!
+ * \brief MainWindow::on_actionLineSpace_triggered
+ */
 void MainWindow::on_actionLineSpace_triggered() //Not used, does not work as intended
 {
     if(!curr_browser)
@@ -5596,6 +5513,9 @@ void MainWindow::on_actionLineSpace_triggered() //Not used, does not work as int
     }
 }
 
+/*!
+ * \brief MainWindow::on_actionAdd_Image_triggered
+ */
 void MainWindow::on_actionAdd_Image_triggered()
 {
     if(curr_browser) {
@@ -5638,6 +5558,9 @@ void MainWindow::on_actionAdd_Image_triggered()
     }
 }
 
+/*!
+ * \brief MainWindow::on_actionResize_Image_triggered
+ */
 void MainWindow::on_actionResize_Image_triggered()
 {
     QTextBlock currentBlock = curr_browser->textCursor().block();
@@ -5667,11 +5590,20 @@ void MainWindow::on_actionResize_Image_triggered()
     }
 }
 
+/*!
+ * \brief MainWindow::on_actionPush_triggered
+ */
 void MainWindow::on_actionPush_triggered()
 {
     mProject.push();
 }
 
+/*!
+ * \brief GetFilter
+ * \param Name
+ * \param list
+ * \return
+ */
 QString GetFilter(QString & Name, const QStringList &list) {
 
     QString Filter = Name;
@@ -5691,6 +5623,12 @@ QString GetFilter(QString & Name, const QStringList &list) {
     return Filter;
 }
 
+/*!
+ * \brief MainWindow::LoadDocument
+ * \param f
+ * \param ext
+ * \param name
+ */
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
     f->open(QIODevice::ReadOnly);
@@ -5834,28 +5772,31 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     {
         temp = imageFilePath;
     }
-
-
 }
 
-void MainWindow::LoadImageFromFile(QFile * f) {
+/*!
+ * \brief MainWindow::LoadImageFromFile
+ * \param f
+ */
+void MainWindow::LoadImageFromFile(QFile * f)
+{
     QString localFileName = f->fileName();
     loadimage = true;
-//    qDebug() << "local file name" << localFileName;
+
     imageOrig.load(localFileName);
     if (graphic)delete graphic;
     graphic = new QGraphicsScene(this);
     graphic->addPixmap(QPixmap::fromImage(imageOrig));
-    //graphic->setPos(0, 0);
+
     ui->graphicsView->setScene(graphic);
     ui->graphicsView->fitInView(graphic->itemsBoundingRect(), Qt::KeepAspectRatio);
     if (z)delete z;
     z = new Graphics_view_zoom(ui->graphicsView);
     z->set_modifiers(Qt::NoModifier);
-//    z->gentle_zoom(2.0);
 
     item1 =new QGraphicsRectItem(0, 0, 1, 1);
     graphic->addItem(item1);
+
     //! while loading an image; create crop_rect and add it to graphic; so we can track & capture mouse press and mouse release event
     crop_rect = new QGraphicsRectItem(0, 0, 1, 1);
     graphic->addItem(crop_rect);
@@ -5863,8 +5804,8 @@ void MainWindow::LoadImageFromFile(QFile * f) {
     ui->graphicsView->viewport()->installEventFilter(this);
 }
 
-void MainWindow::file_click(const QModelIndex & indx) {
-    //std::cout << "Test";
+void MainWindow::file_click(const QModelIndex & indx)
+{
     auto item = (TreeItem*)indx.internalPointer();
     auto qvar = item->data(0).toString();
     if(qvar == "Document" || qvar == "Image")
@@ -5882,19 +5823,22 @@ void MainWindow::file_click(const QModelIndex & indx) {
             LoadDocument(file,suff,qvar);
         }
 
-        if (suff == "jpeg" || suff == "jpg" || suff == "png") {
+        if (suff == "jpeg" || suff == "jpg" || suff == "png")
+        {
             LoadImageFromFile(file);
-//            qDebug() << "here";
         }
         break;
     }
     default:
         break;
-
     }
-    //auto data = qvar.data();;
 }
-void MainWindow::OpenDirectory() {
+
+/*!
+ * \brief MainWindow::OpenDirectory
+ */
+void MainWindow::OpenDirectory()
+{
     auto item = (TreeItem*)curr_idx.internalPointer();
     auto filtr = item->GetFilter();
     auto name = filtr->name();
@@ -5907,17 +5851,28 @@ void MainWindow::OpenDirectory() {
         mProject.addFile(*filtr, f);
     }
 }
-void MainWindow::RemoveFile() {
+
+/*!
+ * \brief MainWindow::RemoveFile
+ */
+void MainWindow::RemoveFile()
+{
     //std::cout << "Test";
     auto item = (TreeItem*)curr_idx.internalPointer();
     Filter * filtr = item->GetFilter();
     QFile * file = item->GetFile();
-    if (file->exists()) {
+    if (file->exists())
+    {
         mProject.removeFile(curr_idx, *filtr, *file);
         ui->treeView->reset();
     }
 }
-void MainWindow::AddNewFile() {
+
+/*!
+ * \brief MainWindow::AddNewFile
+ */
+void MainWindow::AddNewFile()
+{
     auto item = (TreeItem*)curr_idx.internalPointer();
     Filter * filtr = item->GetFilter();
     QString name = filtr->name();
@@ -5925,19 +5880,27 @@ void MainWindow::AddNewFile() {
     QString filter = GetFilter(name, list);
     std::string str = filter.toStdString();
     QFile fileo(QFileDialog::getOpenFileName(this, "Open File", "./", tr(str.c_str())));
-    if (fileo.exists()) {
-        //Add it to project
+    if (fileo.exists())
+    {
         mProject.addFile(*filtr, fileo);
     }
 }
 
-void MainWindow::CustomContextMenuTriggered(const QPoint & p) {
+/*!
+ * \brief MainWindow::CustomContextMenuTriggered
+ * \param p
+ */
+void MainWindow::CustomContextMenuTriggered(const QPoint & p)
+{
     curr_idx = ui->treeView->indexAt(p);
 
-    if (curr_idx.isValid()) {
+    if (curr_idx.isValid())
+    {
         auto item = (TreeItem*)curr_idx.internalPointer();
-        switch (item->GetNodeType()) {
-        case _FILETYPE: {
+        switch (item->GetNodeType())
+        {
+        case _FILETYPE:
+        {
             QMenu * m = new QMenu(this);
             QAction * act = new QAction("Remove File", this);
             connect(act, &QAction::triggered, this, &MainWindow::RemoveFile);
@@ -5964,13 +5927,19 @@ void MainWindow::CustomContextMenuTriggered(const QPoint & p) {
     }
 }
 
-void MainWindow::closetab(int idx) {
+/*!
+ * \brief MainWindow::closetab
+ * \param idx
+ */
+void MainWindow::closetab(int idx)
+{
 
     QTextBrowser *closing_browser = (QTextBrowser*)ui->tabWidget_2->widget(idx);
     QString closing_browserHtml = closing_browser->toHtml();
     QString closingTabPageName = ui->tabWidget_2->tabText(idx);
 
-    if(!closing_browser->isReadOnly() && (closing_browserHtml != gInitialTextHtml[closingTabPageName])) {
+    if(!closing_browser->isReadOnly() && (closing_browserHtml != gInitialTextHtml[closingTabPageName]))
+    {
         int btn = QMessageBox::question(this, "Save?", "Do you want to save " + closingTabPageName + " file?",
                                         QMessageBox::StandardButton::Ok, QMessageBox::StandardButton::No);
         if (btn == QMessageBox::StandardButton::Ok)
@@ -5979,7 +5948,12 @@ void MainWindow::closetab(int idx) {
     delete ui->tabWidget_2->widget(idx);
 }
 
-void MainWindow::tabchanged(int idx) {
+/*!
+ * \brief MainWindow::tabchanged
+ * \param idx
+ */
+void MainWindow::tabchanged(int idx)
+{
     currentTabIndex = idx;
     curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
     currentTabPageName = ui->tabWidget_2->tabText(currentTabIndex);
@@ -6045,15 +6019,16 @@ void MainWindow::tabchanged(int idx) {
         temp=imagePathFile;
     }
 
-
-
-//       qDebug() << imagePathFile;
     myTimer.start();
     DisplayTimeLog();
     DisplayJsonDict();
 }
 
-// sets current file and image
+/*!
+ * \brief MainWindow::setMFilename
+ * \param name
+ * sets current file and image
+ */
 void MainWindow::setMFilename( QString name )
 {
     mFilename = name;
@@ -6090,21 +6065,29 @@ void MainWindow::setMFilename( QString name )
     }
 }
 
-void MainWindow::directoryChanged(const QString &path) {
+/*!
+ * \brief MainWindow::directoryChanged
+ * \param path
+ */
+void MainWindow::directoryChanged(const QString &path)
+{
 
     QDir d(path);
     QString dirstr = d.dirName();
     auto list = d.entryList(QDir::Files);
     QSet<QString> s;
-    for (auto file : list) {
+    for (auto file : list)
+    {
         s.insert(file);
     }
-    if (dirstr == "CorrectorOutput") {
+    if (dirstr == "CorrectorOutput")
+    {
         QSet<QString> added = s - corrector_set;
         QSet<QString> removed = corrector_set - s;
         QString str = mProject.GetDir().absolutePath() + "/CorrectorOutput/";
         Filter * filter = mProject.getFilter("Document");
-        for (auto f : added) {
+        for (auto f : added)
+        {
             QString t = str + "/" + f;
             QFile f2(t);
             mProject.AddTemp(filter, f2, "CorrectorOutput/");
@@ -6116,7 +6099,8 @@ void MainWindow::directoryChanged(const QString &path) {
         QSet<QString> added = s - verifier_set;
         QString str = mProject.GetDir().absolutePath() + "/VerifierOutput/";
         Filter * filter = mProject.getFilter("Document");
-        for (auto f : added) {
+        for (auto f : added)
+        {
             QString t = str + "/" + f;
             QFile f2(t);
             mProject.AddTemp(filter, f2, "VerifierOutput/");
@@ -6144,8 +6128,13 @@ bool MainWindow::checkUnsavedWork() {
     return false;
 }
 
-void MainWindow::saveAllWork() {
-    for (int i = 0; i < ui->tabWidget_2->count(); ++i) {
+/*!
+ * \brief MainWindow::saveAllWork
+ */
+void MainWindow::saveAllWork()
+{
+    for (int i = 0; i < ui->tabWidget_2->count(); ++i)
+    {
         ui->tabWidget_2->setCurrentIndex(i);
         QTextBrowser *closing_browser = (QTextBrowser*)ui->tabWidget_2->widget(i);
         QString closing_browserHtml = closing_browser->toHtml();
@@ -6153,7 +6142,8 @@ void MainWindow::saveAllWork() {
         QFile f(mFilename);
         QFileInfo fileInfo(f.fileName());
         QString filename(fileInfo.fileName());
-        if (filename == "Untitled") {
+        if (filename == "Untitled")
+        {
             continue;
         }
         if(!closing_browser->isReadOnly() && closing_browserHtml != gInitialTextHtml[closingTabPageName]) {
@@ -6162,10 +6152,15 @@ void MainWindow::saveAllWork() {
     }
 }
 
+/*!
+ * \brief MainWindow::on_actionSave_All_triggered
+ */
 void MainWindow::on_actionSave_All_triggered()  //enable when required
 {
-    if(ui->tabWidget_2->count()!=0){
-        for(int i=0;i<ui->tabWidget_2->count();i++){
+    if(ui->tabWidget_2->count()!=0)
+    {
+        for(int i=0;i<ui->tabWidget_2->count();i++)
+        {
             ui->tabWidget_2->setCurrentIndex(i);
             UpdateFileBrekadown();
             on_actionSave_triggered();
@@ -6174,28 +6169,41 @@ void MainWindow::on_actionSave_All_triggered()  //enable when required
 
 }
 
+/*!
+ * \brief MainWindow::closeEvent
+ * \param event
+ */
 void MainWindow::closeEvent (QCloseEvent *event)
 {
     bool isUnsaved = checkUnsavedWork();
 
-    if (isUnsaved) {
+    if (isUnsaved)
+    {
         QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Close",
                                                                     tr("You have unsaved files. Your changes will be lost if you don't save them.\n"),
                                                                     QMessageBox::Discard | QMessageBox::Cancel | QMessageBox::Save,
                                                                     QMessageBox::Save);
-        if (resBtn == QMessageBox::Cancel) {
+        if (resBtn == QMessageBox::Cancel)
+        {
             event->ignore();
         }
-        else if (resBtn == QMessageBox::Discard) {
+        else if (resBtn == QMessageBox::Discard)
+        {
             event->accept();
         }
-        else {
+        else
+        {
             saveAllWork();
             event->accept();
         }
     }
 }
 
+/*!
+ * \brief MainWindow::sendEmail
+ * \param emailText
+ * \return
+ */
 bool MainWindow::sendEmail(QString emailText)
 {
     QString pmEmail = mProject.get_pmEmail();
