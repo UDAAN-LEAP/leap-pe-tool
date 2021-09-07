@@ -321,6 +321,14 @@ private slots:
 
     void on_actionas_PDF_triggered();
 
+    void on_actionGet_Help_triggered();
+
+    void on_actionLinux_triggered();
+
+    void on_actionWindows_triggered();
+
+    void on_actionTutorial_triggered();
+
 private:
     bool mExitStatus = false;
     QString mRole;

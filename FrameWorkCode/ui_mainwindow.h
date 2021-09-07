@@ -121,6 +121,10 @@ public:
     QAction *actionSave_All;
     QAction *actionFind_and_Replace;
     QAction *actionas_PDF;
+    QAction *actionGet_Help;
+    QAction *actionTutorial;
+    QAction *actionLinux;
+    QAction *actionWindows;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_5;
     QVBoxLayout *verticalLayout_4;
@@ -164,6 +168,8 @@ public:
     QMenu *menuGit;
     QMenu *menuEdit;
     QMenu *menuDownload;
+    QMenu *menuHelp;
+    QMenu *menuInstallation_Guide;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -431,6 +437,17 @@ public:
         actionFind_and_Replace->setIcon(icon24);
         actionas_PDF = new QAction(MainWindow);
         actionas_PDF->setObjectName(QString::fromUtf8("actionas_PDF"));
+        actionGet_Help = new QAction(MainWindow);
+        actionGet_Help->setObjectName(QString::fromUtf8("actionGet_Help"));
+        QIcon icon25;
+        icon25.addFile(QString::fromUtf8(":/Images/Help.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionGet_Help->setIcon(icon25);
+        actionTutorial = new QAction(MainWindow);
+        actionTutorial->setObjectName(QString::fromUtf8("actionTutorial"));
+        actionLinux = new QAction(MainWindow);
+        actionLinux->setObjectName(QString::fromUtf8("actionLinux"));
+        actionWindows = new QAction(MainWindow);
+        actionWindows->setObjectName(QString::fromUtf8("actionWindows"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         verticalLayout_5 = new QVBoxLayout(centralWidget);
@@ -665,6 +682,10 @@ public:
         menuEdit->setObjectName(QString::fromUtf8("menuEdit"));
         menuDownload = new QMenu(menuBar);
         menuDownload->setObjectName(QString::fromUtf8("menuDownload"));
+        menuHelp = new QMenu(menuBar);
+        menuHelp->setObjectName(QString::fromUtf8("menuHelp"));
+        menuInstallation_Guide = new QMenu(menuHelp);
+        menuInstallation_Guide->setObjectName(QString::fromUtf8("menuInstallation_Guide"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -683,6 +704,7 @@ public:
         menuBar->addAction(menuFeatureExtraction->menuAction());
         menuBar->addAction(menuGit->menuAction());
         menuBar->addAction(menuDownload->menuAction());
+        menuBar->addAction(menuHelp->menuAction());
         menuOCR_Correction_Window->addAction(actionNew);
         menuOCR_Correction_Window->addAction(actionNew_Project);
         menuOCR_Correction_Window->addAction(actionOpen_Project);
@@ -754,6 +776,11 @@ public:
         menuEdit->addSeparator();
         menuEdit->addAction(actionFind_and_Replace);
         menuDownload->addAction(actionas_PDF);
+        menuHelp->addAction(actionGet_Help);
+        menuHelp->addAction(menuInstallation_Guide->menuAction());
+        menuHelp->addAction(actionTutorial);
+        menuInstallation_Guide->addAction(actionLinux);
+        menuInstallation_Guide->addAction(actionWindows);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen_Project);
         mainToolBar->addAction(actionSave);
@@ -985,6 +1012,10 @@ public:
         actionFind_and_Replace->setShortcut(QApplication::translate("MainWindow", "Ctrl+F", nullptr));
 #endif // QT_NO_SHORTCUT
         actionas_PDF->setText(QApplication::translate("MainWindow", "as PDF", nullptr));
+        actionGet_Help->setText(QApplication::translate("MainWindow", "Get Help", nullptr));
+        actionTutorial->setText(QApplication::translate("MainWindow", "Tutorial", nullptr));
+        actionLinux->setText(QApplication::translate("MainWindow", "Linux", nullptr));
+        actionWindows->setText(QApplication::translate("MainWindow", "Windows", nullptr));
         pushButton_2->setText(QApplication::translate("MainWindow", "Resize Image", nullptr));
         pushButton->setText(QApplication::translate("MainWindow", "Mark Regions", nullptr));
         viewComments->setText(QApplication::translate("MainWindow", "Comments & Accuracy", nullptr));
@@ -1011,6 +1042,8 @@ public:
         menuGit->setTitle(QApplication::translate("MainWindow", "Version Control", nullptr));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", nullptr));
         menuDownload->setTitle(QApplication::translate("MainWindow", "Download", nullptr));
+        menuHelp->setTitle(QApplication::translate("MainWindow", "Help", nullptr));
+        menuInstallation_Guide->setTitle(QApplication::translate("MainWindow", "Installation Guide", nullptr));
     } // retranslateUi
 
 };
