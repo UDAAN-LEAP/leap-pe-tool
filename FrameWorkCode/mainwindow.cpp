@@ -5469,11 +5469,14 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     }
     b->setFont(font);
     if(fileFlag) {
+        currentTabIndex = ui->tabWidget_2->addTab(b, name);
         curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
-
+        //curr_browser = ui->tabWidget_2->addTab(b, name);
         curr_browser->setDocument(b->document());
-        ui->tabWidget_2->setTabText(currentTabIndex, name);
-        tabchanged(currentTabIndex);
+        //ui->tabWidget_2->setCurrentIndex(currentTabIndex);
+       ui->tabWidget_2->setTabText(currentTabIndex, name);
+       ui->tabWidget_2->setCurrentIndex(currentTabIndex);
+       tabchanged(currentTabIndex);
     }
     else {
         currentTabIndex = ui->tabWidget_2->addTab(b, name);
