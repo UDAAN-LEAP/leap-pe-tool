@@ -5278,14 +5278,16 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
  * \brief MainWindow::DisplayJsonDict
  * Load and display *.dict files
  */
-void MainWindow::DisplayJsonDict(void)
-{   QTextBrowser *b;
+void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
+{
     QVector<QString> dictionary;
     QJsonDocument doc;
     QJsonObject obj;
     QByteArray data_json;
-    QTextCharFormat fmt;
-    fmt.setBackground(Qt::yellow);
+    QStringList list1;
+    QSet<QString> dict_set;
+    QSet<QString> dict_set1;
+
     //! Get dict file from current opened file
     QString dictFilename;
     if(mRole=="Verifier")
@@ -5318,18 +5320,19 @@ void MainWindow::DisplayJsonDict(void)
                {
                   ui->textEdit_dict->append(item.keys().at(i)+":");
                   QJsonValue subobj = item.value(item.keys().at(i));
-                 // qDebug()<<item.value(item.keys().at(i))<<"HIII"<<endl;
                   QJsonArray test = subobj.toArray();
                   for(int k = 0; k < test.count(); k++)
                   {
                      if(test[k].toString()!=NULL){
                          QString jsonDi;
-                         for(int i=0;i<test[k].toString().length();i++)
-                             if(test[k].toString()[i]!="(" && test[k].toString()[i]!=")" && test[k].toString()[i]!=","){
-                                 QString newStr;
-                                newStr.append(test[k].toString()[i]);
-                             }
+
+                         for(int i=0;i<test[k].toString().length();i++){
+                             QString newStr=test[k].toString();
+                             list1 = newStr.split(",");
+                         }
+
                      }
+
                      ui->textEdit_dict->moveCursor(QTextCursor::End);
                      ui->textEdit_dict->insertPlainText(" "+test[k].toString());
 
@@ -5339,9 +5342,73 @@ void MainWindow::DisplayJsonDict(void)
                      }
                      ui->textEdit_dict->moveCursor(QTextCursor::End);
                    }
+                  foreach(auto &x,list1){
+                      dict_set.insert(x);
+                  }
+
                }
+
+               foreach(auto &x,dict_set){
+                   std::string string1= x.toStdString();
+                   std::string string2;
+                   string2=string1.substr(0, string1.find("(", 0));
+                   QString qstr = QString::fromStdString(string2);
+                   dict_set1.insert(qstr);
+               }
+               foreach(auto &x,dict_set1){
+                   qDebug()<<x;
+               }
+
           }
     }
+
+    QTextCharFormat fmt;
+    fmt.setBackground(Qt::green);
+    QTextCursor cursor(b->document());
+    int indexOfReplacedWord;
+    int from=0;
+    int count;
+    int numReplaced=0;
+    foreach(auto &x, dict_set1)
+    {
+        count = input.count(x, Qt::CaseInsensitive);
+
+        numReplaced=0;
+        from=0;
+        int flag=0;
+
+        while(numReplaced<count)
+        {
+
+            int endIndex;
+            indexOfReplacedWord = input.indexOf(x,from , Qt::CaseInsensitive);
+            endIndex = indexOfReplacedWord;
+//            qDebug() << indexOfReplacedWord << " " <<endIndex;
+//            while(input[endIndex]!=" ")
+//                endIndex++;
+            qDebug() << indexOfReplacedWord << " " <<endIndex;
+            int len = x.length();
+            qDebug()<<x<<x.length()<<endl;
+
+            while(len > 0)
+            {
+                endIndex++;
+                len--;
+            }
+            if(input[endIndex]!=" ")
+                flag=1;
+            if(flag==0)
+            {
+                cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
+                cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
+                cursor.setCharFormat(fmt);
+            }
+            from = endIndex;
+            numReplaced+=1;
+            flag=0;
+        }
+    }
+
 }
 
 /*!
@@ -5671,7 +5738,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     UpdateFileBrekadown();
     QTextBrowser * b = new QTextBrowser(this);
     b->setReadOnly(false);
-    DisplayJsonDict();
+
     if (!isVerifier && current_folder == "Inds") {
         QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
         output_file.replace(".txt", ".html");
@@ -5689,6 +5756,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
     QTextStream stream(f);
     QString input = stream.readAll();
+
 //    qDebug() << input;
     stream.setCodec("UTF-8");
     QFont font("Shobhika Regular");
@@ -5722,7 +5790,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     input = b->toPlainText();
 //    qDebug() << input;
     highlight(b , input);
-
+    DisplayJsonDict(b,input);
     if(fileFlag) {
         curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
 
@@ -6044,7 +6112,7 @@ void MainWindow::tabchanged(int idx)
 
     myTimer.start();
     DisplayTimeLog();
-    DisplayJsonDict();
+    //DisplayJsonDict(b);
 }
 
 /*!
@@ -6263,10 +6331,6 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
     int from=0;
     int count;
     int numReplaced=0;
-    QJsonDocument doc;
-    QJsonObject obj;
-    QByteArray data_json;
-    QVector<QString> dic;
     for (grmIterator = mapOfReplacements.begin(); grmIterator != mapOfReplacements.end(); ++grmIterator)
     {
 
