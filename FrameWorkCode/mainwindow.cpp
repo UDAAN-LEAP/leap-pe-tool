@@ -5279,11 +5279,13 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
  * Load and display *.dict files
  */
 void MainWindow::DisplayJsonDict(void)
-{
+{   QTextBrowser *b;
+    QVector<QString> dictionary;
     QJsonDocument doc;
     QJsonObject obj;
     QByteArray data_json;
-
+    QTextCharFormat fmt;
+    fmt.setBackground(Qt::yellow);
     //! Get dict file from current opened file
     QString dictFilename;
     if(mRole=="Verifier")
@@ -5315,12 +5317,22 @@ void MainWindow::DisplayJsonDict(void)
                for(int i = 0; i < item.count(); i++)
                {
                   ui->textEdit_dict->append(item.keys().at(i)+":");
-                  QJsonValue subobj = item.value(item.keys().at(i));;
+                  QJsonValue subobj = item.value(item.keys().at(i));
+                 // qDebug()<<item.value(item.keys().at(i))<<"HIII"<<endl;
                   QJsonArray test = subobj.toArray();
                   for(int k = 0; k < test.count(); k++)
                   {
+                     if(test[k].toString()!=NULL){
+                         QString jsonDi;
+                         for(int i=0;i<test[k].toString().length();i++)
+                             if(test[k].toString()[i]!="(" && test[k].toString()[i]!=")" && test[k].toString()[i]!=","){
+                                 QString newStr;
+                                newStr.append(test[k].toString()[i]);
+                             }
+                     }
                      ui->textEdit_dict->moveCursor(QTextCursor::End);
                      ui->textEdit_dict->insertPlainText(" "+test[k].toString());
+
                      if(k<test.count()-1)
                      {
                         ui->textEdit_dict->insertPlainText(",");
@@ -6251,7 +6263,10 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
     int from=0;
     int count;
     int numReplaced=0;
-
+    QJsonDocument doc;
+    QJsonObject obj;
+    QByteArray data_json;
+    QVector<QString> dic;
     for (grmIterator = mapOfReplacements.begin(); grmIterator != mapOfReplacements.end(); ++grmIterator)
     {
 

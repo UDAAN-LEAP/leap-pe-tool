@@ -313,11 +313,13 @@ private slots:
 
     void addCurrentlyOpenFileToEditedFilesLog();
     void deleteEditedFilesLog();
-
+   // void highlight_dict(QTextBrowser *b);
     bool isStringInFile(QString file_path, QString searchString);
     void dumpStringToFile(QString file_path, QString string);
     void highlight(QTextBrowser *b , QString input);
     QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords);
+
+    //void on_textEdit_dict_copyAvailable(bool b);
 
 private:
     bool mExitStatus = false;
