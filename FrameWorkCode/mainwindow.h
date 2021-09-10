@@ -71,7 +71,7 @@ public:
     };
 
 private slots:
-    void DisplayJsonDict(void);
+    void DisplayJsonDict(QTextBrowser *b , QString input);
 
     bool eventFilter(QObject *, QEvent *);
     void saveImageRegion(QPixmap, QString, QString,int,int,int);
@@ -82,7 +82,7 @@ private slots:
     void on_actionNew_triggered();
 
     //void on_actionOpen_triggered();
-
+    void on_actionHighlight_triggered();
     void on_actionSave_triggered();
 
     void on_actionSave_As_triggered();
