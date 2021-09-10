@@ -47,10 +47,12 @@
 #include <QJsonValue>
 #include <QGraphicsRectItem>
 #include <QToolTip>
+#include <QSyntaxHighlighter>
 #ifdef __unix__
 #include <unistd.h>
 #endif
 #include <editdistance.h>
+#include <QRegularExpressionMatch>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -82,6 +84,7 @@ int openedFileChars;
 int openedFileWords;
 bool gSaveTriggered = 0;
 map<QString, QString> filestructure_fw;
+QMap <QString, QString> mapOfReplacements;
 
 map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
                                            {"CorrectorOutput","Inds"},
@@ -4196,7 +4199,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
              {
 
                  x0 = list[1].toInt();
-                 y0 =list[2].toInt();
+                 y0 = list[2].toInt();
                  x1 = list[3].toInt();
                  y1 = list[4].replace(";", "").toInt();
                  //qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
@@ -5165,8 +5168,10 @@ void MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStr
         QString pattern = ("(\\b)")+grmIterator.key()+("(\\b)"); // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
         QRegExp re(pattern);
         QString replacementString = re.cap(1) + grmIterator.value() + re.cap(2); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
-        qDebug() << pattern;
-        qDebug() << replacementString;
+//        if(!mapOfReplacements.contains(grmIterator.key()))
+            mapOfReplacements[grmIterator.key()] = grmIterator.value();
+//        qDebug() << pattern;
+//        qDebug() << replacementString;
         s1.replace(re, replacementString);
     }
 
@@ -5251,6 +5256,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
     if(!globalReplacementMap.isEmpty())
     {
+//        mapOfReplacements = globalReplacementMap;
         QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
 
         while (dirIterator.hasNext()){
@@ -5670,12 +5676,14 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     }
 
     QTextStream stream(f);
+    QString input = stream.readAll();
+//    qDebug() << input;
     stream.setCodec("UTF-8");
     QFont font("Shobhika Regular");
     setWindowTitle(name);
     font.setPointSize(16);
     if(ext == "txt") {
-        istringstream iss(stream.readAll().toUtf8().constData());
+        istringstream iss(input.toUtf8().constData());
         string strHtml = "<html><body><p>";
         string line;
         while (getline(iss, line)) {
@@ -5694,12 +5702,15 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         font.setFamily("Shobhika");
         b->setFont(font);
         b->setHtml(qstrHtml);
-        b->setFont(font);
     }
     if (ext == "html") {
-        b->setHtml(stream.readAll());
+        b->setHtml(input);
     }
     b->setFont(font);
+    input = b->toPlainText();
+//    qDebug() << input;
+    highlight(b , input);
+
     if(fileFlag) {
         curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
 
@@ -6227,4 +6238,60 @@ bool MainWindow::sendEmail(QString emailText)
         return 0;
 
     return 1;
+}
+
+void MainWindow:: highlight(QTextBrowser *b , QString input)
+{
+
+    QMap <QString, QString>::iterator grmIterator;
+    QTextCharFormat fmt;
+    fmt.setBackground(Qt::yellow);
+    QTextCursor cursor(b->document());
+    int indexOfReplacedWord;
+    int from=0;
+    int count;
+    int numReplaced=0;
+
+    for (grmIterator = mapOfReplacements.begin(); grmIterator != mapOfReplacements.end(); ++grmIterator)
+    {
+
+//        qDebug() << grmIterator.value();
+        count = input.count(grmIterator.value(),Qt::CaseInsensitive);
+
+        numReplaced=0;
+        from=0;
+        int flag=0;
+
+        while(numReplaced<count)
+        {
+
+            int endIndex;
+            indexOfReplacedWord = input.indexOf(grmIterator.value(),from , Qt::CaseInsensitive);
+            endIndex = indexOfReplacedWord;
+//            qDebug() << indexOfReplacedWord << " " <<endIndex;
+//            while(input[endIndex]!=" ")
+//                endIndex++;
+//            qDebug() << indexOfReplacedWord << " " <<endIndex;
+            int len = grmIterator.value().length();
+            qDebug() << len;
+            while(len > 0)
+            {
+                endIndex++;
+                len--;
+            }
+            if(input[endIndex]!=" ")
+                flag=1;
+            if(flag==0)
+            {
+                cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
+                cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
+                cursor.setCharFormat(fmt);
+            }
+            from = endIndex;
+            numReplaced+=1;
+            flag=0;
+        }
+    }
+
+
 }
