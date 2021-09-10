@@ -5344,12 +5344,17 @@ QString GetFilter(QString & Name, const QStringList &list) {
 }
 
 // Load and display *.dict files
-void MainWindow::DisplayJsonDict(void) {
+void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
+{
+    QVector<QString> dictionary;
     QJsonDocument doc;
     QJsonObject obj;
     QByteArray data_json;
+    QStringList list1;
+    QSet<QString> dict_set;
+    QSet<QString> dict_set1;
 
-    // Get dict file from current opened file
+    //! Get dict file from current opened file
     QString dictFilename;
     if(mRole=="Verifier")
     {
@@ -5365,7 +5370,7 @@ void MainWindow::DisplayJsonDict(void) {
 
     ui->textEdit_dict->clear();
 
-    // Open the dict file and display it in textedit view
+    //! Open the dict file and display it in textedit view
     if(QFile::exists(dictFilename))
     {
             QFile dictQFile(dictFilename);
@@ -5380,23 +5385,103 @@ void MainWindow::DisplayJsonDict(void) {
                for(int i = 0; i < item.count(); i++)
                {
                   ui->textEdit_dict->append(item.keys().at(i)+":");
-                  QJsonValue subobj = item.value(item.keys().at(i));;
+                  QJsonValue subobj = item.value(item.keys().at(i));
                   QJsonArray test = subobj.toArray();
                   for(int k = 0; k < test.count(); k++)
                   {
+                     if(test[k].toString()!=NULL){
+                         QString jsonDi;
+
+                         for(int i=0;i<test[k].toString().length();i++){
+                             QString newStr=test[k].toString();
+                             list1 = newStr.split(",");
+                         }
+
+                     }
+
                      ui->textEdit_dict->moveCursor(QTextCursor::End);
                      ui->textEdit_dict->insertPlainText(" "+test[k].toString());
+
                      if(k<test.count()-1)
                      {
                         ui->textEdit_dict->insertPlainText(",");
                      }
                      ui->textEdit_dict->moveCursor(QTextCursor::End);
                    }
+                  foreach(auto &x,list1){
+                      dict_set.insert(x);
+                  }
+
                }
+
+               foreach(auto &x,dict_set){
+                   std::string string1= x.toStdString();
+                   std::string string2;
+                   string2=string1.substr(0, string1.find("(", 0));
+                   QString qstr = QString::fromStdString(string2);
+                   dict_set1.insert(qstr);
+               }
+               foreach(auto &x,dict_set1){
+                   qDebug()<<x;
+               }
+
           }
     }
-}
 
+    QTextCharFormat fmt;
+    fmt.setBackground(Qt::green);
+    QTextCursor cursor(b->document());
+    int indexOfReplacedWord;
+    int from=0;
+    int count;
+    int numReplaced=0;
+    foreach(auto &x, dict_set1)
+    {
+        count = input.count(x, Qt::CaseInsensitive);
+
+        numReplaced=0;
+        from=0;
+        int flag=0;
+
+        while(numReplaced<count)
+        {
+
+            int endIndex;
+            indexOfReplacedWord = input.indexOf(x,from , Qt::CaseInsensitive);
+            endIndex = indexOfReplacedWord;
+//            qDebug() << indexOfReplacedWord << " " <<endIndex;
+//            while(input[endIndex]!=" ")
+//                endIndex++;
+            qDebug() << indexOfReplacedWord << " " <<endIndex;
+            int len = x.length();
+            qDebug()<<x<<x.length()<<endl;
+
+            while(len > 0)
+            {
+                endIndex++;
+                len--;
+            }
+            if(input[endIndex]!=" ")
+                flag=1;
+            if(flag==0)
+            {
+                cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
+                cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
+                cursor.setCharFormat(fmt);
+            }
+            from = endIndex;
+            numReplaced+=1;
+            flag=0;
+        }
+    }
+
+}
+/*!
+ * \brief MainWindow::LoadDocument
+ * \param f
+ * \param ext
+ * \param name
+ */
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
     f->open(QIODevice::ReadOnly);
@@ -5421,7 +5506,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     UpdateFileBrekadown();
     QTextBrowser * b = new QTextBrowser(this);
     b->setReadOnly(false);
-    DisplayJsonDict();
+
     if (!isVerifier && current_folder == "Inds") {
         QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
         output_file.replace(".txt", ".html");
@@ -5438,12 +5523,15 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     }
 
     QTextStream stream(f);
+    QString input = stream.readAll();
+
+//    qDebug() << input;
     stream.setCodec("UTF-8");
     QFont font("Shobhika Regular");
     setWindowTitle(name);
     font.setPointSize(16);
     if(ext == "txt") {
-        istringstream iss(stream.readAll().toUtf8().constData());
+        istringstream iss(input.toUtf8().constData());
         string strHtml = "<html><body><p>";
         string line;
         while (getline(iss, line)) {
@@ -5462,12 +5550,15 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         font.setFamily("Shobhika");
         b->setFont(font);
         b->setHtml(qstrHtml);
-        b->setFont(font);
     }
     if (ext == "html") {
-        b->setHtml(stream.readAll());
+        b->setHtml(input);
     }
     b->setFont(font);
+    input = b->toPlainText();
+//    qDebug() << input;
+    highlight(b , input);
+    DisplayJsonDict(b,input);
     if(fileFlag) {
         currentTabIndex = ui->tabWidget_2->addTab(b, name);
         curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
@@ -5543,8 +5634,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     {
         temp = imageFilePath;
     }
-
-
 }
 
 void MainWindow::LoadImageFromFile(QFile * f) {
@@ -5759,7 +5848,7 @@ void MainWindow::tabchanged(int idx) {
 //       qDebug() << imagePathFile;
     myTimer.start();
     DisplayTimeLog();
-    DisplayJsonDict();
+    //DisplayJsonDict();
 }
 
 // sets current file and image
@@ -6192,4 +6281,59 @@ void MainWindow::on_actionWindows_triggered()
 void MainWindow::on_actionTutorial_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://www.youtube.com/channel/UCrViL9ay1RO9lS7FIlnh8BQ", QUrl::TolerantMode));
+}
+
+void MainWindow:: highlight(QTextBrowser *b , QString input)
+{
+
+    QMap <QString, QString>::iterator grmIterator;
+    QTextCharFormat fmt;
+    fmt.setBackground(Qt::yellow);
+    QTextCursor cursor(b->document());
+    int indexOfReplacedWord;
+    int from=0;
+    int count;
+    int numReplaced=0;
+    for (grmIterator = mapOfReplacements.begin(); grmIterator != mapOfReplacements.end(); ++grmIterator)
+    {
+
+//        qDebug() << grmIterator.value();
+        count = input.count(grmIterator.value(),Qt::CaseInsensitive);
+
+        numReplaced=0;
+        from=0;
+        int flag=0;
+
+        while(numReplaced<count)
+        {
+
+            int endIndex;
+            indexOfReplacedWord = input.indexOf(grmIterator.value(),from , Qt::CaseInsensitive);
+            endIndex = indexOfReplacedWord;
+//            qDebug() << indexOfReplacedWord << " " <<endIndex;
+//            while(input[endIndex]!=" ")
+//                endIndex++;
+//            qDebug() << indexOfReplacedWord << " " <<endIndex;
+            int len = grmIterator.value().length();
+            qDebug() << len;
+            while(len > 0)
+            {
+                endIndex++;
+                len--;
+            }
+            if(input[endIndex]!=" ")
+                flag=1;
+            if(flag==0)
+            {
+                cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
+                cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
+                cursor.setCharFormat(fmt);
+            }
+            from = endIndex;
+            numReplaced+=1;
+            flag=0;
+        }
+    }
+
+
 }
