@@ -47,6 +47,7 @@
 #include <QJsonValue>
 #include <QGraphicsRectItem>
 #include <QToolTip>
+#include <QDateTime>
 #ifdef __unix__
 #include <unistd.h>
 #endif
@@ -915,6 +916,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 bool ConvertSlpDevFlag = 0;
 void MainWindow::on_actionSave_triggered()
 {
+    //codehere-save
     SaveTimeLog();
     DisplayTimeLog();
     QVector <QString> changedWords;
@@ -1142,6 +1144,11 @@ void MainWindow::on_actionSave_triggered()
     QString currentDirAbsolutePath = gDirTwoLevelUp + "/" + gCurrentDirName;
     runGlobalReplace(currentDirAbsolutePath, changedWords);
 
+    //!Tracking the errors, changes and accuracies on ocr, corrector and verifier level
+    if(mRole == "Verifier")
+     {
+       TrackAvgAccuracies(gCurrentPageName);
+     }
     ConvertSlpDevFlag =0;
 }
 
@@ -5233,7 +5240,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
     int noOfChangedWords = changedWords.size();
 
-    //! if only one change spawn checkbox
+    //! if only one change spawn Message box
     if (noOfChangedWords == 1){
 
         QStringList changesList = changedWords[0].split(" ");
@@ -6227,4 +6234,180 @@ bool MainWindow::sendEmail(QString emailText)
         return 0;
 
     return 1;
+}
+
+void MainWindow::TrackAvgAccuracies(QString PageName)
+{
+ if(PageName != " " || PageName != NULL)
+  {  QString qs1="", qs2="",qs3="";
+
+    //! Open a Verifier's Output File
+    //file = QFileDialog::getOpenFileName(this,"Open Verifier's Output File");
+      QString file = gDirTwoLevelUp + "/VerifierOutput/" + PageName;
+
+    //! Opens corresponding Corrector's Output and OCR text file
+        QString verifierText = file;
+        QString correctorText = file.replace("VerifierOutput","CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+        QString ocrText = file.replace("CorrectorOutput","Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
+        ocrText.replace(".html",".txt");
+
+        //! Reads OCR text file
+        if(!ocrText.isEmpty())
+        {
+            QFile sFile(ocrText);
+            if(sFile.open(QFile::ReadOnly | QFile::Text))
+            {
+                QTextStream in(&sFile);
+                in.setCodec("UTF-8");
+                qs1 = in.readAll().replace(" \n","\n");
+
+                //! Displays an error if OCR text file is empty
+                if(qs1=="")
+                {
+                    DisplayError("Error in Displaying File: "+ ocrText + "is Empty");
+                    return;
+                }
+                sFile.close();
+            }
+        }
+
+        //! Reads Corrector's Output file
+        if(!correctorText.isEmpty())
+        {
+            QFile sFile(correctorText);
+            if(sFile.open(QFile::ReadOnly | QFile::Text))
+            {
+                QTextStream in(&sFile);
+                in.setCodec("UTF-8");
+                qs2 = in.readAll();
+
+                //! Displays an error if Corrector's Output file is empty
+                if(qs2=="")
+                {
+                    DisplayError("Error in Displaying File: "+ correctorText + "is Empty");
+                    return;
+                }
+                sFile.close();
+            }
+        }
+
+        //! Reads Verifier's Output file
+        if(!verifierText.isEmpty())
+        {
+            QFile sFile(verifierText);
+            if(sFile.open(QFile::ReadOnly | QFile::Text))
+            {
+                QTextStream in(&sFile);
+                in.setCodec("UTF-8");
+                qs3 = in.readAll();
+
+                 //! Displays an error if Verifier's Output file is empty
+                if(qs3=="")
+                {
+                    DisplayError("Error in Displaying File: "+ verifierText + "is Empty");
+                    return;
+                }
+                sFile.close();
+            }
+
+        }
+        QTextDocument doc;
+
+        doc.setHtml(qs2);
+        qs2 = doc.toPlainText().replace(" \n","\n");
+
+        doc.setHtml(qs3);
+        qs3 = doc.toPlainText().replace(" \n","\n");
+
+        int l1,l2,l3, DiffOcr_Corrector,DiffCorrector_Verifier,DiffOcr_Verifier; float correctorChangesPerc,verifierChangesPerc,ocrErrorPerc;
+
+        l1 = GetGraphemesCount(qs1); l2 = GetGraphemesCount(qs2); l3 = GetGraphemesCount(qs3);
+
+        diff_match_patch dmp;
+
+        //! Calculates the percentage of changes made by the corrector in OCR text file
+        auto diffs1 = dmp.diff_main(qs1,qs2);
+        DiffOcr_Corrector = LevenshteinWithGraphemes(diffs1);
+        correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l2)*100;
+        if(correctorChangesPerc>100) correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l1)*100;
+        correctorChangesPerc = (((float)lround(correctorChangesPerc*100))/100);
+
+        //! Calculates the percentage of changes made by the verifier in Corrector's Output file
+        auto diffs2 = dmp.diff_main(qs2,qs3);
+        DiffCorrector_Verifier = LevenshteinWithGraphemes(diffs2);
+        verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l3)*100;
+        if(verifierChangesPerc>100) verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l2)*100;
+        verifierChangesPerc = (((float)lround(verifierChangesPerc*100))/100);
+        float correctorCharAcc =100- (((float)lround(verifierChangesPerc*100))/100); //Corrector accuracy = 100-changes mabe by Verfier
+
+        //! Calculates the accuracy of OCR text w.r.t. Verified text
+        auto diffs3 = dmp.diff_main(qs1,qs3);
+        DiffOcr_Verifier = LevenshteinWithGraphemes(diffs3);
+        ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l3)*100;
+        if(ocrErrorPerc>100) ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l1)*100;
+        float ocrAcc = 100 - (((float)lround(ocrErrorPerc*100))/100);
+        float ocrCharAcc= 100 - (((float)lround(ocrErrorPerc*100))/100);
+
+        //!Corrector and verifier
+        auto a = dmp.diff_linesToChars(qs2, qs3); //LinesToChars modifed for WordstoChar in diff_match_patch.cpp
+        auto lineText1 = a[0].toString();
+        auto lineText2 = a[1].toString();
+        auto lineArray = a[2].toStringList();
+        int wordCount2 = qs2.simplified().count(" ");
+        int wordCount3 = qs3.simplified().count(" ");
+        auto diffs = dmp.diff_main(lineText1, lineText2);
+        int worderrors = dmp.diff_levenshtein(diffs);
+        dmp.diff_charsToLines(diffs, lineArray);
+
+        float correctorwordaccuracy = (float)(worderrors)/(float)wordCount3*100;
+        if(correctorwordaccuracy>100)
+            correctorwordaccuracy = (float)(worderrors)/(float)wordCount2*100;
+        correctorwordaccuracy = (((float)lround(correctorwordaccuracy*100))/100);
+
+        //! OCR and verifier
+        auto b = dmp.diff_linesToChars(qs1, qs3); //LinesToChars modifed for WordstoChar in diff_match_patch.cpp
+        auto lineText3 = b[0].toString();
+        auto lineText4 = b[1].toString();
+        auto lineArray1 = b[2].toStringList();
+        int wordCount4 = qs2.simplified().count(" ");
+        int wordCount5 = qs3.simplified().count(" ");
+        auto OCRVerifierDiffs = dmp.diff_main(lineText3, lineText4);
+        int ocrWordErrors = dmp.diff_levenshtein(OCRVerifierDiffs);
+        dmp.diff_charsToLines(OCRVerifierDiffs, lineArray1);
+
+        float OCRWordAccuracy = (float)(ocrWordErrors)/(float)wordCount5*100;
+        if(OCRWordAccuracy>100)
+            OCRWordAccuracy = (float)(ocrWordErrors)/(float)wordCount4*100;
+        OCRWordAccuracy = (((float)lround(OCRWordAccuracy*100))/100);
+
+
+    QString PageNumber;
+    QString csvfolder = gDirTwoLevelUp.toUtf8().constData();
+    csvfolder += "/Comments/DynamicAccuracies.csv";
+    QFile csv(csvfolder);
+
+    if(!QFileInfo::exists(csvfolder))
+    {
+       std::ofstream csvFile(csvfolder.toStdString());
+       csvFile<<"Page No,"<<"OCR Accuracy,"<<"Word Error Rate(OCR),"<<"Character Error Rate(OCR),";
+       csvFile<<"Corrector Changes(%),"<<"Accuracy of Corrector (Character-Level)(%),"<<"Accuracy of Corrector (Word-Level)(%),";
+       csvFile<<"Word Error Rate(corrector) ,"<< "Character Error Rate(corrector),";
+       csvFile<<"Verifier Changes(%),"<<"Time Stamp" "\n";
+    }
+
+
+    if (csv.open(QIODevice::WriteOnly | QIODevice::Append))
+    {
+        QStringList PageNo=gCurrentPageName.split(QRegExp("[-.]"));
+        PageNumber = PageNo[1];
+        QDateTime currDateTime = QDateTime::currentDateTimeUtc();
+        QString sysTime = currDateTime.toString();
+
+        QTextStream out(&csv);
+        out << PageNumber.toInt() << ","<< QString::number(ocrAcc)<<"," << ocrWordErrors << ","<<DiffOcr_Verifier<<",";
+        out << QString::number(correctorChangesPerc) << "," <<correctorCharAcc <<","<<correctorwordaccuracy<<",";
+        out << worderrors<<","<<DiffCorrector_Verifier<<",";
+        out << QString::number(verifierChangesPerc)<<","<< sysTime <<"\n";
+     }
+ }
 }

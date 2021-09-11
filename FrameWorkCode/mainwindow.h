@@ -317,6 +317,8 @@ private slots:
     bool isStringInFile(QString file_path, QString searchString);
     void dumpStringToFile(QString file_path, QString string);
 
+    void TrackAvgAccuracies(QString PageName);
+
     QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords);
 
 private:
