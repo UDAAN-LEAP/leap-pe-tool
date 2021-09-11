@@ -120,6 +120,7 @@ public:
     QAction *actionNonitalic;
     QAction *actionSave_All;
     QAction *actionFind_and_Replace;
+    QAction *actionas_PDF;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_5;
     QVBoxLayout *verticalLayout_4;
@@ -162,6 +163,7 @@ public:
     QMenu *menuTables;
     QMenu *menuGit;
     QMenu *menuEdit;
+    QMenu *menuDownload;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -427,6 +429,8 @@ public:
         QIcon icon24;
         icon24.addFile(QString::fromUtf8(":/Images/find-and-replace.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionFind_and_Replace->setIcon(icon24);
+        actionas_PDF = new QAction(MainWindow);
+        actionas_PDF->setObjectName(QString::fromUtf8("actionas_PDF"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         verticalLayout_5 = new QVBoxLayout(centralWidget);
@@ -659,6 +663,8 @@ public:
         menuGit->setObjectName(QString::fromUtf8("menuGit"));
         menuEdit = new QMenu(menuBar);
         menuEdit->setObjectName(QString::fromUtf8("menuEdit"));
+        menuDownload = new QMenu(menuBar);
+        menuDownload->setObjectName(QString::fromUtf8("menuDownload"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -676,6 +682,7 @@ public:
         menuBar->addAction(menuConvertFiles->menuAction());
         menuBar->addAction(menuFeatureExtraction->menuAction());
         menuBar->addAction(menuGit->menuAction());
+        menuBar->addAction(menuDownload->menuAction());
         menuOCR_Correction_Window->addAction(actionNew);
         menuOCR_Correction_Window->addAction(actionNew_Project);
         menuOCR_Correction_Window->addAction(actionOpen_Project);
@@ -746,6 +753,7 @@ public:
         menuEdit->addAction(actionRedo);
         menuEdit->addSeparator();
         menuEdit->addAction(actionFind_and_Replace);
+        menuDownload->addAction(actionas_PDF);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen_Project);
         mainToolBar->addAction(actionSave);
@@ -976,6 +984,7 @@ public:
 #ifndef QT_NO_SHORTCUT
         actionFind_and_Replace->setShortcut(QApplication::translate("MainWindow", "Ctrl+F", nullptr));
 #endif // QT_NO_SHORTCUT
+        actionas_PDF->setText(QApplication::translate("MainWindow", "as PDF", nullptr));
         pushButton_2->setText(QApplication::translate("MainWindow", "Resize Image", nullptr));
         pushButton->setText(QApplication::translate("MainWindow", "Mark Regions", nullptr));
         viewComments->setText(QApplication::translate("MainWindow", "Comments & Accuracy", nullptr));
@@ -1001,6 +1010,7 @@ public:
         menuTables->setTitle(QApplication::translate("MainWindow", "Tables", nullptr));
         menuGit->setTitle(QApplication::translate("MainWindow", "Version Control", nullptr));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", nullptr));
+        menuDownload->setTitle(QApplication::translate("MainWindow", "Download", nullptr));
     } // retranslateUi
 
 };

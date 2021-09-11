@@ -321,6 +321,8 @@ private slots:
 
     //void on_textEdit_dict_copyAvailable(bool b);
 
+    void on_actionas_PDF_triggered();
+
 private:
     bool mExitStatus = false;
     QString mRole;

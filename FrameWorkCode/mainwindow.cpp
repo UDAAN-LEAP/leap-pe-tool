@@ -6,6 +6,7 @@
 #include "trieEditdis.h"
 #include "meanStdPage.h"
 #include <math.h>
+#include <QPrinter>
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
 #include "DiffView.h"
@@ -6373,4 +6374,55 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
     }
 
 
+}
+
+void MainWindow::on_actionas_PDF_triggered()
+{
+    QTextDocument *document = new QTextDocument();
+     QString currentDirAbsolutePath;
+    if(mRole=="Verifier")
+    currentDirAbsolutePath = gDirTwoLevelUp + "/VerifierOutput/";
+    else if (mRole=="Corrector") {
+        currentDirAbsolutePath = gDirTwoLevelUp + "/CorrectorOutput/";
+    }
+    QDirIterator dirIterator(currentDirAbsolutePath);
+    QString html_contents="";
+    QString mainHtml;
+    while (dirIterator.hasNext())
+    {
+        QString it_file_path = dirIterator.next();
+      //  qDebug()<<gInitialTextHtml[it_file_path];
+        if(it_file_path.contains("."))
+        {
+            QStringList html_files = it_file_path.split(QRegExp("[.]"));
+
+
+            if(html_files[1]=="html")
+            {
+                QFile file(it_file_path);
+                    if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
+                    QTextStream stream(&file);
+                    mainHtml=stream.readAll();
+                    file.close();
+
+
+              html_contents.append(mainHtml);
+
+            }
+            else {
+                continue;
+            }
+        }
+    }
+    document->setHtml(html_contents);
+    QPrinter printer(QPrinter::PrinterResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setPaperSize(QPrinter::A3);
+    printer.setPageMargins(QMarginsF(5, 5, 5, 5));
+    printer.setOutputFileName(gDirTwoLevelUp+"/BookSet.pdf");
+
+    document->setPageSize(printer.pageRect().size());
+    document->print(&printer);
+
+    qDebug()<<"heman";
 }
