@@ -6424,5 +6424,25 @@ void MainWindow::on_actionas_PDF_triggered()
     document->setPageSize(printer.pageRect().size());
     document->print(&printer);
 
-    qDebug()<<"heman";
+    //qDebug()<<"heman";
+}
+
+void MainWindow::on_actionGet_Help_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/1PAQKz3Vwu5EN850uxZUeSejvmwF2293j/edit?usp=sharing&ouid=114703528031965332802&rtpof=true&sd=true", QUrl::TolerantMode));
+}
+
+void MainWindow::on_actionTutorial_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://www.youtube.com/channel/UCrViL9ay1RO9lS7FIlnh8BQ", QUrl::TolerantMode));
+}
+
+void MainWindow::on_actionLinux_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/15PbeYfdMl1eMypAMoqibG6Z5dxipfx_aZBSAhifTlec/edit?usp=sharing", QUrl::TolerantMode));
+}
+
+void MainWindow::on_actionWindows_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/1xcXsNU03d-1RneksUzCHRyC4jm1mBF-N/edit?usp=sharing&ouid=114703528031965332802&rtpof=true&sd=true", QUrl::TolerantMode));
 }

@@ -586,6 +586,7 @@ qrc_AppResources.cpp: AppResources.qrc \
 		SaveLoadPwords1.png \
 		AlignRight.png \
 		toDevangari.png \
+		Help.png \
 		highlight-icon.png \
 		save.png \
 		redo.png \
@@ -620,6 +621,7 @@ qrc_AppResources.cpp: AppResources.qrc \
 		SaveLoadPwords1.png \
 		AlignRight.png \
 		toDevangari.png \
+		Help.png \
 		highlight-icon.png \
 		save.png \
 		redo.png \
@@ -8726,6 +8728,10 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		slpNPatternDict.h \
 		trieEditdis.h \
 		meanStdPage.h \
+		/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport/QPrinter \
+		/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport/qprinter.h \
+		/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport/qtprintsupportglobal.h \
+		/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport/qtprintsupport-config.h \
 		tesseract/baseapi.h \
 		tesseract/version.h \
 		tesseract/apitypes.h \
