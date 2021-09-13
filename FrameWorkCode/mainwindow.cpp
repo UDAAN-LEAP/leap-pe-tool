@@ -6385,13 +6385,21 @@ void MainWindow::on_actionas_PDF_triggered()
     else if (mRole=="Corrector") {
         currentDirAbsolutePath = gDirTwoLevelUp + "/CorrectorOutput/";
     }
-    QDirIterator dirIterator(currentDirAbsolutePath);
+
+    QDir dir(currentDirAbsolutePath);
+    dir.setSorting(QDir::SortFlag::DirsFirst | QDir::SortFlag::Name);
+    QDirIterator dirIterator(dir,QDirIterator::NoIteratorFlags);
+    qDebug()<<dir.entryList()<<endl;
+
+   // QDirIterator dirIterator(currentDirAbsolutePath);
     QString html_contents="";
     QString mainHtml;
-    while (dirIterator.hasNext())
+
+    for(auto a : dir.entryList())
     {
-        QString it_file_path = dirIterator.next();
+        QString it_file_path = a;
       //  qDebug()<<gInitialTextHtml[it_file_path];
+        qDebug() << it_file_path<<"HIII"<<endl;
         if(it_file_path.contains("."))
         {
             QStringList html_files = it_file_path.split(QRegExp("[.]"));
