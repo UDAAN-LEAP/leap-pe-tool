@@ -9,7 +9,7 @@ GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidge
 {
 
     ui->setupUi(this);
-    setWindowTitle("Select the words you want to replace globally");
+    setWindowTitle("Select the words you want to replace in all pages");
     displayOriginalList(replacedWords);
     QObject::connect(ui->listWidget, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(highlightChecked(QListWidgetItem*)));
 
