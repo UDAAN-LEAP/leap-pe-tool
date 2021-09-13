@@ -826,19 +826,23 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
         //!To Display tree view for Document
         QDir cdir(str1);
-        Filter * filter = mProject.getFilter("Document");
 
+        Filter * filter = mProject.getFilter("CorrectorOutput");
+        //Filter * filter2 = mProject.getFilter("CorrectorOutput");
+        //Filter * filter1 = mProject.getFilter("VerifierOutput");
         //!Adds each file present in CorrectorOutput directory to treeView
         auto list = cdir.entryList(QDir::Filter::Files);
+
         for (auto f : list)
-        {
+        {   qDebug()<<"HERE"<<endl;
             QString t = str1 + "/" + f;
             QFile f2(t);
-            mProject.AddTemp(filter,f2, "CorrectorOutput/" );
+            mProject.AddTemp(filter,f2," ");
             corrector_set.insert(f);
         }
-
+        qDebug()<<"NOW"<<endl;
         //!Adds each file present in VerifierOutput directory to treeView
+        filter = mProject.getFilter("VerifierOutput");
         cdir.setPath(str2);
         list = cdir.entryList(QDir::Files);
         for (auto f : list)
@@ -846,9 +850,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             verifier_set.insert(f);
             QString t = str2 + "/" + f;
             QFile f2(t);
-            mProject.AddTemp(filter, f2, "VerifierOutput/");
+            mProject.AddTemp(filter, f2, "");
         }
-
+        filter = mProject.getFilter("Document");
         //!Adds the files from inds folder to treeView
         cdir.setPath(str3);
         list = cdir.entryList(QDir::Filter::Files);
@@ -5756,10 +5760,11 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     }
 
     QTextStream stream(f);
+    stream.setCodec("UTF-8");
     QString input = stream.readAll();
 
-//    qDebug() << input;
-    stream.setCodec("UTF-8");
+//qDebug() << input;
+
     QFont font("Shobhika Regular");
     setWindowTitle(name);
     font.setPointSize(16);
@@ -5900,7 +5905,7 @@ void MainWindow::file_click(const QModelIndex & indx)
 {
     auto item = (TreeItem*)indx.internalPointer();
     auto qvar = item->data(0).toString();
-    if(qvar == "Document" || qvar == "Image")
+    if(qvar == "Document" || qvar == "Image"||qvar=="CorrectorOutput"||qvar=="VerifierOutput")
         return;
     auto file = item->GetFile();
     QString fileName = file->fileName();
@@ -6177,12 +6182,12 @@ void MainWindow::directoryChanged(const QString &path)
         QSet<QString> added = s - corrector_set;
         QSet<QString> removed = corrector_set - s;
         QString str = mProject.GetDir().absolutePath() + "/CorrectorOutput/";
-        Filter * filter = mProject.getFilter("Document");
+        Filter * filter = mProject.getFilter("CorrectorOutput");
         for (auto f : added)
         {
             QString t = str + "/" + f;
             QFile f2(t);
-            mProject.AddTemp(filter, f2, "CorrectorOutput/");
+            mProject.AddTemp(filter, f2, "");
             corrector_set.insert(f);
         }
     }
@@ -6190,12 +6195,12 @@ void MainWindow::directoryChanged(const QString &path)
     {
         QSet<QString> added = s - verifier_set;
         QString str = mProject.GetDir().absolutePath() + "/VerifierOutput/";
-        Filter * filter = mProject.getFilter("Document");
+        Filter * filter = mProject.getFilter("VerifierOutput");
         for (auto f : added)
         {
             QString t = str + "/" + f;
             QFile f2(t);
-            mProject.AddTemp(filter, f2, "VerifierOutput/");
+            mProject.AddTemp(filter, f2, "");
             verifier_set.insert(f);
         }
     }
@@ -6399,7 +6404,7 @@ void MainWindow::on_actionas_PDF_triggered()
     {
         QString it_file_path = a;
       //  qDebug()<<gInitialTextHtml[it_file_path];
-        qDebug() << it_file_path<<"HIII"<<endl;
+       // qDebug() << it_file_path<<"HIII"<<endl;
         if(it_file_path.contains("."))
         {
             QStringList html_files = it_file_path.split(QRegExp("[.]"));
@@ -6432,7 +6437,7 @@ void MainWindow::on_actionas_PDF_triggered()
     document->setPageSize(printer.pageRect().size());
     document->print(&printer);
 
-    //qDebug()<<"heman";
+    qDebug()<<"heman";
 }
 
 void MainWindow::on_actionGet_Help_triggered()

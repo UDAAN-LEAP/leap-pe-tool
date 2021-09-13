@@ -1309,6 +1309,7 @@ p, li { white-space: pre-wrap; }
  <resources>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
+  <include location="AppResources.qrc"/>
  </resources>
  <connections/>
 </ui>
