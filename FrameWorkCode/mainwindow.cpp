@@ -834,13 +834,17 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         auto list = cdir.entryList(QDir::Filter::Files);
 
         for (auto f : list)
-        {   qDebug()<<"HERE"<<endl;
+        {   QStringList x = f.split(QRegExp("[.]"));
+            if(x[1]=="html" || x[1]=="txt"){
+            //qDebug()<<"HERE"<<endl;
             QString t = str1 + "/" + f;
             QFile f2(t);
             mProject.AddTemp(filter,f2," ");
             corrector_set.insert(f);
+            }
+
         }
-        qDebug()<<"NOW"<<endl;
+        //qDebug()<<"NOW"<<endl;
         //!Adds each file present in VerifierOutput directory to treeView
         filter = mProject.getFilter("VerifierOutput");
         cdir.setPath(str2);
@@ -898,9 +902,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             timeLog[directory] = seconds;
         }
 
-        bool isSet = QDir::setCurrent(mProject.GetDir().absolutePath() + "/CorrectorOutput") ; //Change application Directory to any subfolder of mProject folder for Image Insertion feature.
-        if(!QDir(mProject.GetDir().absolutePath() + "/Images/Inserted").exists())
-            QDir().mkdir(mProject.GetDir().absolutePath() + "/Images/Inserted");
+        //bool isSet = QDir::setCurrent(mProject.GetDir().absolutePath() + "/CorrectorOutput") ; //Change application Directory to any subfolder of mProject folder for Image Insertion feature.
+        //if(!QDir(mProject.GetDir().absolutePath() + "/Images/Inserted").exists())
+        //    QDir().mkdir(mProject.GetDir().absolutePath() + "/Images/Inserted");
 
         QMessageBox::information(0, "Success", "Project opened successfully.");
 
@@ -5817,13 +5821,20 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
     f->close();
 
-    QString imageFilePath = mProject.GetDir().absolutePath()+"/Images/" + gCurrentPageName;
+    string str = gCurrentPageName.toStdString();
+    str.erase(remove(str.begin(), str.end(), ' '), str.end());
+    QString qstr = QString::fromStdString(str);
+
+    QString imageFilePath = mProject.GetDir().absolutePath()+"/Images/" + qstr;
+    //qDebug()<<"PRINT"<<imageFilePath<<endl;
+
     QString temp = imageFilePath;
     int flag=0;
     temp.replace(".txt", ".jpeg");
     if (QFile::exists(temp) && flag==0)
     {
         imageFilePath=temp;
+
         QFile *pImageFile = new QFile(imageFilePath);
         flag=1;
         LoadImageFromFile(pImageFile);
@@ -5837,6 +5848,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     if (QFile::exists(temp) && flag==0)
     {
         imageFilePath=temp;
+        qDebug()<<"PRINT"<<imageFilePath<<endl;
         QFile *pImageFile = new QFile(imageFilePath);
         flag=1;
         LoadImageFromFile(pImageFile);
@@ -5849,6 +5861,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     if (QFile::exists(temp) && flag==0)
     {
         imageFilePath=temp;
+        qDebug()<<"PRINT"<<imageFilePath<<endl;
         QFile *pImageFile = new QFile(imageFilePath);
         flag=1;
         LoadImageFromFile(pImageFile);
@@ -5861,6 +5874,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     if (QFile::exists(temp) && flag==0)
     {
         imageFilePath=temp;
+        qDebug()<<"PRINT"<<imageFilePath<<endl;
         QFile *pImageFile = new QFile(imageFilePath);
         flag=1;
         LoadImageFromFile(pImageFile);
@@ -5905,17 +5919,20 @@ void MainWindow::file_click(const QModelIndex & indx)
 {
     auto item = (TreeItem*)indx.internalPointer();
     auto qvar = item->data(0).toString();
-    if(qvar == "Document" || qvar == "Image"||qvar=="CorrectorOutput"||qvar=="VerifierOutput")
+    qDebug()<<qvar<<"Print"<<endl;
+    if(qvar == "Document" || qvar == "Image" || qvar=="CorrectorOutput" || qvar=="VerifierOutput")
         return;
     auto file = item->GetFile();
     QString fileName = file->fileName();
 
     NodeType type = item->GetNodeType();
     switch (type) {
+
     case NodeType::_FILETYPE:
     {
         QFileInfo f(*file);
         QString suff = f.completeSuffix();
+        qDebug()<<"Print"<<suff<<endl;
         if (suff == "txt" || suff == "html") {
             LoadDocument(file,suff,qvar);
         }
@@ -6170,7 +6187,9 @@ void MainWindow::directoryChanged(const QString &path)
 {
 
     QDir d(path);
+
     QString dirstr = d.dirName();
+    //qDebug()<<"PATH "<<*path<<" Dir "<<dirstr<<endl;
     auto list = d.entryList(QDir::Files);
     QSet<QString> s;
     for (auto file : list)
