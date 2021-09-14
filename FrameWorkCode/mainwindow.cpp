@@ -6422,22 +6422,22 @@ void MainWindow::on_actionas_PDF_triggered()
     for(auto a : dir.entryList())
     {
         QString it_file_path = a;
+        QString x=currentDirAbsolutePath+a;
       //  qDebug()<<gInitialTextHtml[it_file_path];
        // qDebug() << it_file_path<<"HIII"<<endl;
-        if(it_file_path.contains("."))
+        if(x.contains("."))
         {
-            QStringList html_files = it_file_path.split(QRegExp("[.]"));
+            QStringList html_files = x.split(QRegExp("[.]"));
 
-
+            //qDebug()<<it_file_path<<"PATHH"<<endl;
             if(html_files[1]=="html")
             {
-                QFile file(it_file_path);
+                QFile file(x);
                     if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
                     QTextStream stream(&file);
+                    stream.setCodec("UTF-8");
                     mainHtml=stream.readAll();
                     file.close();
-
-
               html_contents.append(mainHtml);
 
             }
@@ -6449,7 +6449,7 @@ void MainWindow::on_actionas_PDF_triggered()
     document->setHtml(html_contents);
     QPrinter printer(QPrinter::PrinterResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
-    printer.setPaperSize(QPrinter::A3);
+    printer.setPaperSize(QPrinter::A4);
     printer.setPageMargins(QMarginsF(5, 5, 5, 5));
     printer.setOutputFileName(gDirTwoLevelUp+"/BookSet.pdf");
 
