@@ -842,7 +842,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         //!Adds each file present in CorrectorOutput directory to treeView
         auto list = cdir.entryList(QDir::Filter::Files);
 
-        for (auto f : list)
+for (auto f : list)
         {   QStringList x = f.split(QRegExp("[.]"));
 
             QString t = str1 + "/" + f;
@@ -866,6 +866,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             QFile f2(t);
             if(x1[1]=="html")
             mProject.AddTemp(filter, f2, "");
+
         }
         filter = mProject.getFilter("Document");
         //!Adds the files from inds folder to treeView
