@@ -71,7 +71,7 @@ public:
     };
 
 private slots:
-    void DisplayJsonDict(QTextBrowser *b , QString input);
+    void DisplayJsonDict(QTextBrowser *b, QString input);
 
     bool eventFilter(QObject *, QEvent *);
     void saveImageRegion(QPixmap, QString, QString,int,int,int);
@@ -82,7 +82,7 @@ private slots:
     void on_actionNew_triggered();
 
     //void on_actionOpen_triggered();
-    void on_actionHighlight_triggered();
+
     void on_actionSave_triggered();
 
     void on_actionSave_As_triggered();
@@ -313,21 +313,23 @@ private slots:
 
     void addCurrentlyOpenFileToEditedFilesLog();
     void deleteEditedFilesLog();
-
+   // void highlight_dict(QTextBrowser *b);
     bool isStringInFile(QString file_path, QString searchString);
     void dumpStringToFile(QString file_path, QString string);
-
+    void highlight(QTextBrowser *b , QString input);
     QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords);
+
+    //void on_textEdit_dict_copyAvailable(bool b);
 
     void on_actionas_PDF_triggered();
 
     void on_actionGet_Help_triggered();
 
+    void on_actionTutorial_triggered();
+
     void on_actionLinux_triggered();
 
     void on_actionWindows_triggered();
-
-    void on_actionTutorial_triggered();
 
 private:
     bool mExitStatus = false;
