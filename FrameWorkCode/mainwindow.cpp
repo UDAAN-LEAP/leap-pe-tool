@@ -777,7 +777,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     QFile xml(QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)")));   //Opens only if the file name is Project.xml
     QFileInfo finfo(xml);
     QString basedir = finfo.absoluteDir().absolutePath();
-
+    qDebug()<<basedir<<"THIS"<<endl;
     //!Initializes the string with directory name
     QString s1 = basedir + "/Images/";
     QString s2 = basedir + "/Inds/";
@@ -4489,8 +4489,9 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
             cropped.save(gDirTwoLevelUp+path,"JPG",100);       //100 is storing the image in uncompressed high resolution
 
             //QString placeholder = "["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]";
-
-            QString src = "../../DBSysConcep7-1_15-master"+path;
+            QDir direc(".");
+            qDebug() << direc.absolutePath()<<"direc" << endl;
+            QString src = gDirTwoLevelUp+path;
             qDebug()<<"2 up"<<src<<endl;
              QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h); //Creating an img tag for image resize in latek
             QTextCursor cursor = curr_browser->textCursor();
@@ -4502,7 +4503,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
 
             cropped.save(gDirTwoLevelUp+path,"JPG", 100);
 
-            QString src = ".."+path;
+            QString src = gDirTwoLevelUp+path;
             qDebug()<<"Current"<<gCurrentDirName<<endl;
             qDebug()<<"Current"<<gCurrentDirName<<endl;
              QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h);
@@ -4516,7 +4517,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
 
             cropped.save(gDirTwoLevelUp+path,"JPG",100);
 
-            QString src = ".."+path;
+            QString src = gDirTwoLevelUp+path;
             QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h);
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
@@ -6453,6 +6454,7 @@ void MainWindow::on_actionas_PDF_triggered()
                     QTextStream stream(&file);
                     stream.setCodec("UTF-8");
                     mainHtml=stream.readAll();
+                    mainHtml+="<P style=\"page-break-before: always\"></P>";
                     file.close();
               html_contents.append(mainHtml);
 
