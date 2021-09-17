@@ -860,11 +860,10 @@ for (auto f : list)
         list = cdir.entryList(QDir::Files);
         for (auto f : list)
         {
-            QStringList x1 = f.split(QRegExp("[.]"));
+            //QStringList x1 = f.split(QRegExp("[.]"));
             verifier_set.insert(f);
             QString t = str2 + "/" + f;
             QFile f2(t);
-            if(x1[1]=="html")
             mProject.AddTemp(filter, f2, "");
 
         }
