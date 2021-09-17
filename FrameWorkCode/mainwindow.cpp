@@ -319,8 +319,11 @@ void MainWindow::UpdateFileBrekadown()
     //qDebug()<<"FILE"<<gCurrentPageName<<endl;
 
     gDirTwoLevelUp = mProject.GetDir().absolutePath();
+  //  qDebug()<<"2 up"<<gDirTwoLevelUp<<endl;
     gCurrentDirName = finfo.dir().dirName();
+    // qDebug()<<"Current"<<gCurrentDirName<<endl;
     gDirOneLevelUp = gDirTwoLevelUp + "/" + gCurrentDirName;
+
 }
 
 /*!
@@ -4370,7 +4373,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     updateEntries(document, filename12, PageNo[1], s2, i);
 
                     shouldIDraw=false;
-                    ui->pushButton->setStyleSheet("");     //remove the style once the operation is done
+                    //ui->pushButton->setStyleSheet("");     //remove the style once the operation is done
                 }
                 //! settings for a tableholder
                 else if (messageBox.clickedButton() == tableButton)
@@ -4391,7 +4394,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     updateEntries(document, filename12, PageNo[1], s2, j);
 
                     shouldIDraw=false;
-                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
+                   // ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
                 }
                 //! settings for a equationholder
                 else if(messageBox.clickedButton() == equationButton)
@@ -4415,7 +4418,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     updateEntries(document, filename12, PageNo[1], s2, k);
 
                     shouldIDraw=false;
-                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
+                   // ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
                 }
                 //! setting for cancelbutton
                 else
@@ -4487,7 +4490,8 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
 
             //QString placeholder = "["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]";
 
-            QString src = ".."+path;
+            QString src = "../../DBSysConcep7-1_15-master"+path;
+            qDebug()<<"2 up"<<src<<endl;
              QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h); //Creating an img tag for image resize in latek
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
@@ -4499,6 +4503,8 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
             cropped.save(gDirTwoLevelUp+path,"JPG", 100);
 
             QString src = ".."+path;
+            qDebug()<<"Current"<<gCurrentDirName<<endl;
+            qDebug()<<"Current"<<gCurrentDirName<<endl;
              QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h);
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
@@ -5899,6 +5905,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 void MainWindow::LoadImageFromFile(QFile * f)
 {
     QString localFileName = f->fileName();
+    //qDebug()<<localFileName<<"Local"<<endl;
     loadimage = true;
 
     imageOrig.load(localFileName);
