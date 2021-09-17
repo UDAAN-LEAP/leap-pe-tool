@@ -844,13 +844,13 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
         for (auto f : list)
         {   QStringList x = f.split(QRegExp("[.]"));
-            if(x[1]=="html" || x[1]=="txt"){
-            //qDebug()<<"HERE"<<endl;
+
             QString t = str1 + "/" + f;
             QFile f2(t);
+            if(x[1]=="html")
             mProject.AddTemp(filter,f2," ");
             corrector_set.insert(f);
-            }
+
 
         }
         //qDebug()<<"NOW"<<endl;
@@ -860,9 +860,11 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         list = cdir.entryList(QDir::Files);
         for (auto f : list)
         {
+            QStringList x1 = f.split(QRegExp("[.]"));
             verifier_set.insert(f);
             QString t = str2 + "/" + f;
             QFile f2(t);
+            if(x1[1]=="html")
             mProject.AddTemp(filter, f2, "");
         }
         filter = mProject.getFilter("Document");
@@ -6435,7 +6437,9 @@ void MainWindow::on_actionas_PDF_triggered()
    // QDirIterator dirIterator(currentDirAbsolutePath);
     QString html_contents="";
     QString mainHtml;
-
+    int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
+    qDebug()<<"COUNT"<<count<<endl;
+    int counter=0;
     for(auto a : dir.entryList())
     {
         QString it_file_path = a;
@@ -6454,7 +6458,10 @@ void MainWindow::on_actionas_PDF_triggered()
                     QTextStream stream(&file);
                     stream.setCodec("UTF-8");
                     mainHtml=stream.readAll();
-                    mainHtml+="<P style=\"page-break-before: always\"></P>";
+                    counter++;
+                    if(counter<count){
+                        mainHtml+="<P style=\"page-break-before: always\"></P>";
+                    }
                     file.close();
               html_contents.append(mainHtml);
 
