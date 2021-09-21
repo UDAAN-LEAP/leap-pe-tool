@@ -1326,6 +1326,7 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
 
         string localFilename = mFilename.toUtf8().constData();
         string localCurrentTabPageName = currentTabPageName.toUtf8().constData();
+         //qDebug()<<"CURR"<<currentTabPageName<<endl;
 
         //! Adding entries in Timelog.json about the elapsed time
         int nMilliseconds = myTimer.elapsed();
@@ -1340,25 +1341,29 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
 
         //! Extract page number from the localFilename and checks if the incremented page exists
         string no = "";
+
         size_t loc;
         QString ext = "";
+         qDebug()<<"CURR2"<<currentTabPageName<<endl;
         if(!GetPageNumber(localFilename, &no, &loc, &ext))
             return;
+
         localFilename.replace(loc,no.size(),to_string(stoi(no) + 1));   //Increments page number by one
         QFile *file = new QFile(QString::fromStdString(localFilename));
         QFileInfo finfo(file->fileName());
         if(!(finfo.exists() && finfo.isFile()))
             return;
-
+         qDebug()<<"CURR1"<<currentTabPageName<<endl;
         //!Extract page number from tab name and set the incremented page number as a new tab name and Loads the file
         if(!GetPageNumber(localCurrentTabPageName, &no, &loc, &ext))
             return;
         localCurrentTabPageName.replace(loc,no.size(),to_string(stoi(no) + 1));  //Increments page number by one
         currentTabPageName = QString::fromStdString(localCurrentTabPageName);
-
+        qDebug()<<"CURR"<<currentTabPageName<<endl;
         fileFlag = 1;
         LoadDocument(file, ext, currentTabPageName);    //loads the new file
         fileFlag = 0;
+        qDebug()<<"FF"<<fileFlag<<endl;
     }
 }
 
@@ -5766,13 +5771,16 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
     if (!isVerifier && current_folder == "Inds") {
         QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
+        qDebug()<<"CURR"<<output_file<<endl;
         output_file.replace(".txt", ".html");
         if (QFile::exists(output_file)) {
             b->setReadOnly(true);
         }
     }
+    //qDebug()<<"CURR"<<filestructure_fw[current_folder]<<endl;
     if (isVerifier && (current_folder == "Inds" || current_folder == "CorrectorOutput")) {
         QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
+        qDebug()<<"CURR"<<output_file<<endl;
         output_file.replace(".txt", ".html");
         if (QFile::exists(output_file)) {
             b->setReadOnly(true);
@@ -5828,7 +5836,13 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         currentTabIndex = ui->tabWidget_2->addTab(b, name);
         ui->tabWidget_2->setCurrentIndex(currentTabIndex);
     }
-    currentTabPageName = ui->tabWidget_2->tabText(currentTabIndex);
+    QString qstr = ui->tabWidget_2->tabText(currentTabIndex);
+    string str = qstr.toStdString();
+    str.erase(remove(str.begin(), str.end(), ' '), str.end());
+    currentTabPageName=QString::fromStdString(str);
+
+  //  currentTabPageName = ui->tabWidget_2->tabText(currentTabIndex);
+   // qDebug()<<"AVI"<<currentTabPageName<<endl;
     gInitialTextHtml[currentTabPageName] = b->toHtml();
 
     b->setMouseTracking(true);
@@ -6087,7 +6101,11 @@ void MainWindow::tabchanged(int idx)
 {
     currentTabIndex = idx;
     curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
-    currentTabPageName = ui->tabWidget_2->tabText(currentTabIndex);
+   QString qstr = ui->tabWidget_2->tabText(currentTabIndex);
+    string str = qstr.toStdString();
+    str.erase(remove(str.begin(), str.end(), ' '), str.end());
+    currentTabPageName=QString::fromStdString(str);
+    qDebug()<<"C"<<currentTabPageName<<endl;
     if(currentTabPageName.contains("CorrectorOutput/") | currentTabPageName.contains("VerifierOutput/"))
         setMFilename(mProject.GetDir().absolutePath() + "/" + currentTabPageName);
     else{
