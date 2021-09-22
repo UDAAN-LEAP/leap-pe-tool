@@ -316,12 +316,12 @@ void MainWindow::UpdateFileBrekadown()
     string str = qstr.toStdString();
     str.erase(remove(str.begin(), str.end(), ' '), str.end());
     gCurrentPageName = QString::fromStdString(str);
-    //qDebug()<<"FILE"<<gCurrentPageName<<endl;
+    //qDebug()<<"gCurrentPageName"<<gCurrentPageName;
 
     gDirTwoLevelUp = mProject.GetDir().absolutePath();
-  //  qDebug()<<"2 up"<<gDirTwoLevelUp<<endl;
+    //qDebug()<<"2 up"<<gDirTwoLevelUp<<endl;
     gCurrentDirName = finfo.dir().dirName();
-    // qDebug()<<"Current"<<gCurrentDirName<<endl;
+    //qDebug()<<"gCurrentDirName"<<gCurrentDirName;
     gDirOneLevelUp = gDirTwoLevelUp + "/" + gCurrentDirName;
 
 }
@@ -777,7 +777,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     QFile xml(QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)")));   //Opens only if the file name is Project.xml
     QFileInfo finfo(xml);
     QString basedir = finfo.absoluteDir().absolutePath();
-    qDebug()<<basedir<<"THIS"<<endl;
+    qDebug()<<"Base Dir"<<basedir<<endl;
     //!Initializes the string with directory name
     QString s1 = basedir + "/Images/";
     QString s2 = basedir + "/Inds/";
@@ -898,7 +898,7 @@ for (auto f : list)
                 ui->actionTurn_In->setEnabled(false);
             }
         }
-
+        qDebug()<<"Opening Project";
         UpdateFileBrekadown();    //Reset the current file and dir levels
 
         //!Get the elapsed time in Timelog.json file under Comments folder
@@ -5393,7 +5393,7 @@ void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
                    dict_set1.insert(qstr);
                }
                foreach(auto &x,dict_set1){
-                   qDebug()<<x;
+                   //qDebug()<<x;
                }
 
           }
@@ -5423,9 +5423,9 @@ void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
 //            qDebug() << indexOfReplacedWord << " " <<endIndex;
 //            while(input[endIndex]!=" ")
 //                endIndex++;
-            qDebug() << indexOfReplacedWord << " " <<endIndex;
+            //qDebug() << indexOfReplacedWord << " " <<endIndex;
             int len = x.length();
-            qDebug()<<x<<x.length()<<endl;
+            //qDebug()<<x<<x.length()<<endl;
 
             while(len > 0)
             {
@@ -5758,16 +5758,16 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
     if(!(finfo.exists() && finfo.isFile())){
         cout<<"YOYO"<<endl;
-        return; }
+        return;
+    }
     current_folder = finfo.dir().dirName();
-    //qDebug()<<"OP"<<current_folder<<endl;
+    qDebug()<<"current_folder"<<current_folder;
     QString fileName = finfo.fileName();
-  // qDebug()<<"GG"<<fileName<<endl;
+    //qDebug()<<"GG"<<fileName<<endl;
     if (ui->tabWidget_2->count() != 0) {
         for (int i = 0; i < ui->tabWidget_2->count(); i++) {
             if (name == ui->tabWidget_2->tabText(i)) {
                 ui->tabWidget_2->setCurrentIndex(i);
-                //qDebug()<<"BG"<<f->fileName()<<endl;
                 setMFilename(f->fileName());
                 UpdateFileBrekadown();
                 f->close();
@@ -5776,22 +5776,20 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         }
     }
     setMFilename(mFilename = f->fileName());
-    UpdateFileBrekadown();
+    UpdateFileBrekadown();//works fine
     QTextBrowser * b = new QTextBrowser(this);
     b->setReadOnly(false);
 
     if (!isVerifier && current_folder == "Inds") {
         QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
-        qDebug()<<"CURR"<<output_file<<endl;
         output_file.replace(".txt", ".html");
         if (QFile::exists(output_file)) {
             b->setReadOnly(true);
         }
     }
-    //qDebug()<<"CURR"<<filestructure_fw[current_folder]<<endl;
     if (isVerifier && (current_folder == "Inds" || current_folder == "CorrectorOutput")) {
         QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
-        qDebug()<<"CURR"<<output_file<<endl;
+        //qDebug()<<"CURR"<<output_file<<endl;
         output_file.replace(".txt", ".html");
         if (QFile::exists(output_file)) {
             b->setReadOnly(true);
@@ -5801,9 +5799,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     QTextStream stream(f);
     stream.setCodec("UTF-8");
     QString input = stream.readAll();
-
-//qDebug() << input;
-
     QFont font("Shobhika Regular");
     setWindowTitle(name);
     font.setPointSize(16);
@@ -5833,15 +5828,16 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     }
     b->setFont(font);
     input = b->toPlainText();
-//    qDebug() << input;
+
     highlight(b , input);
     DisplayJsonDict(b,input);
+
     if(fileFlag) {
         curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
-
         curr_browser->setDocument(b->document());
         ui->tabWidget_2->setTabText(currentTabIndex, name);
         tabchanged(currentTabIndex);
+
     }
     else {
         currentTabIndex = ui->tabWidget_2->addTab(b, name);
@@ -5852,8 +5848,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     str.erase(remove(str.begin(), str.end(), ' '), str.end());
     currentTabPageName=QString::fromStdString(str);
 
-  //  currentTabPageName = ui->tabWidget_2->tabText(currentTabIndex);
-   // qDebug()<<"AVI"<<currentTabPageName<<endl;
+    //qDebug()<<"currentTabPageName"<<currentTabPageName;
     gInitialTextHtml[currentTabPageName] = b->toHtml();
 
     b->setMouseTracking(true);
@@ -5967,7 +5962,7 @@ void MainWindow::file_click(const QModelIndex & indx)
     auto file = item->GetFile();
 
     QString fileName = file->fileName();
-   // qDebug()<<"qw"<<fileName<<endl;
+    //qDebug()<<"qw"<<fileName<<endl;
     NodeType type = item->GetNodeType();
     switch (type) {
 
@@ -6120,15 +6115,18 @@ void MainWindow::tabchanged(int idx)
 {
     currentTabIndex = idx;
     curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
-   QString qstr = ui->tabWidget_2->tabText(currentTabIndex);
+    QString qstr = ui->tabWidget_2->tabText(currentTabIndex);
     string str = qstr.toStdString();
     str.erase(remove(str.begin(), str.end(), ' '), str.end());
     currentTabPageName=QString::fromStdString(str);
     //qDebug()<<"C"<<currentTabPageName<<endl;
-    if(currentTabPageName.contains("CorrectorOutput/") | currentTabPageName.contains("VerifierOutput/"))
-        setMFilename(mProject.GetDir().absolutePath() + "/" + currentTabPageName);
+    if(mRole=="Corrector" | mRole=="Verifier"){
+        setMFilename(mProject.GetDir().absolutePath() + "/" + gCurrentDirName + "/" + currentTabPageName);
+        qDebug()<<"Corrector or Verifier folder";
+    }
     else{
         setMFilename(mProject.GetDir().absolutePath() + "/Inds/" + currentTabPageName);
+        qDebug()<<"Inds Folder";
           }
     UpdateFileBrekadown();
     //qDebug()<<"FILE"<<gCurrentPageName<<endl;
