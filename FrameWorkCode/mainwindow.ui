@@ -1302,9 +1302,15 @@ p, li { white-space: pre-wrap; }
     <string>Windows</string>
    </property>
   </action>
+  <action name="actionas_Doc">
+   <property name="text">
+    <string>as Doc</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
+  <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
  </resources>

@@ -125,6 +125,7 @@ public:
     QAction *actionTutorial;
     QAction *actionLinux;
     QAction *actionWindows;
+    QAction *actionas_Doc;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_5;
     QVBoxLayout *verticalLayout_4;
@@ -448,6 +449,8 @@ public:
         actionLinux->setObjectName(QString::fromUtf8("actionLinux"));
         actionWindows = new QAction(MainWindow);
         actionWindows->setObjectName(QString::fromUtf8("actionWindows"));
+        actionas_Doc = new QAction(MainWindow);
+        actionas_Doc->setObjectName(QString::fromUtf8("actionas_Doc"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         verticalLayout_5 = new QVBoxLayout(centralWidget);
@@ -1016,6 +1019,7 @@ public:
         actionTutorial->setText(QApplication::translate("MainWindow", "Tutorial", nullptr));
         actionLinux->setText(QApplication::translate("MainWindow", "Linux", nullptr));
         actionWindows->setText(QApplication::translate("MainWindow", "Windows", nullptr));
+        actionas_Doc->setText(QApplication::translate("MainWindow", "as Doc", nullptr));
         pushButton_2->setText(QApplication::translate("MainWindow", "Resize Image", nullptr));
         pushButton->setText(QApplication::translate("MainWindow", "Mark Regions", nullptr));
         viewComments->setText(QApplication::translate("MainWindow", "Comments & Accuracy", nullptr));

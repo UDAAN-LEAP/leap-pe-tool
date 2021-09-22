@@ -966,6 +966,7 @@ void MainWindow::on_actionSave_triggered()
         //! Selecting the location where file is to be saved
         QString changefiledir = filestructure_fw[gCurrentDirName];
         QString localFilename = gDirTwoLevelUp + "/" +changefiledir +"/" + tempPageName;
+        qDebug()<<"LF"<<localFilename<<endl;
         localFilename.replace(".txt",".html");
 
         //! Don't create and save new file if output file already exists.
@@ -994,7 +995,9 @@ void MainWindow::on_actionSave_triggered()
         s2 = curr_browser->toPlainText();       //after Saving
 
         changedWords = editDistance(s1, s2);             // Update CPair by editdistance
-
+        QVectorIterator<QString> i(changedWords);
+        while (i.hasNext())
+            qDebug() << i.next()<<"MEE"<<endl;
         //! Do commit when there are some changes in previous and new html file on the basis of editdistance.
         if(changedWords.size())
         {
@@ -1344,22 +1347,26 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
 
         size_t loc;
         QString ext = "";
-         qDebug()<<"CURR2"<<currentTabPageName<<endl;
+         //qDebug()<<"CURR2"<<localFilename<<endl;
         if(!GetPageNumber(localFilename, &no, &loc, &ext))
             return;
 
         localFilename.replace(loc,no.size(),to_string(stoi(no) + 1));   //Increments page number by one
+        cout<<"local"<<localFilename<<endl;
         QFile *file = new QFile(QString::fromStdString(localFilename));
+        qDebug()<<"FN"<<file->fileName();
         QFileInfo finfo(file->fileName());
-        if(!(finfo.exists() && finfo.isFile()))
-            return;
-         qDebug()<<"CURR1"<<currentTabPageName<<endl;
+//       QString na= finfo.fileName();
+//       qDebug()<<"AV"<<na<<endl;
+        if(!(finfo.exists() && finfo.isFile())){
+            return; }
+         //qDebug()<<"CURR1"<<localFilename<<endl;
         //!Extract page number from tab name and set the incremented page number as a new tab name and Loads the file
         if(!GetPageNumber(localCurrentTabPageName, &no, &loc, &ext))
             return;
         localCurrentTabPageName.replace(loc,no.size(),to_string(stoi(no) + 1));  //Increments page number by one
         currentTabPageName = QString::fromStdString(localCurrentTabPageName);
-        qDebug()<<"CURR"<<currentTabPageName<<endl;
+        //qDebug()<<"CURR"<<localFilename<<endl;
         fileFlag = 1;
         LoadDocument(file, ext, currentTabPageName);    //loads the new file
         fileFlag = 0;
@@ -5749,14 +5756,18 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     f->open(QIODevice::ReadOnly);
     QFileInfo finfo(f->fileName());
 
-    if(!(finfo.exists() && finfo.isFile()))
-        return;
+    if(!(finfo.exists() && finfo.isFile())){
+        cout<<"YOYO"<<endl;
+        return; }
     current_folder = finfo.dir().dirName();
+    //qDebug()<<"OP"<<current_folder<<endl;
     QString fileName = finfo.fileName();
+  // qDebug()<<"GG"<<fileName<<endl;
     if (ui->tabWidget_2->count() != 0) {
         for (int i = 0; i < ui->tabWidget_2->count(); i++) {
             if (name == ui->tabWidget_2->tabText(i)) {
                 ui->tabWidget_2->setCurrentIndex(i);
+                //qDebug()<<"BG"<<f->fileName()<<endl;
                 setMFilename(f->fileName());
                 UpdateFileBrekadown();
                 f->close();
@@ -5954,8 +5965,9 @@ void MainWindow::file_click(const QModelIndex & indx)
     if(qvar == "Document" || qvar == "Image" || qvar=="CorrectorOutput" || qvar=="VerifierOutput")
         return;
     auto file = item->GetFile();
-    QString fileName = file->fileName();
 
+    QString fileName = file->fileName();
+   // qDebug()<<"qw"<<fileName<<endl;
     NodeType type = item->GetNodeType();
     switch (type) {
 
@@ -6081,8 +6093,15 @@ void MainWindow::closetab(int idx)
 
     QTextBrowser *closing_browser = (QTextBrowser*)ui->tabWidget_2->widget(idx);
     QString closing_browserHtml = closing_browser->toHtml();
-    QString closingTabPageName = ui->tabWidget_2->tabText(idx);
+    QString qstr = ui->tabWidget_2->tabText(idx);
 
+    string str = qstr.toStdString();
+    str.erase(remove(str.begin(), str.end(), ' '), str.end());
+   QString closingTabPageName = QString::fromStdString(str);
+
+    //qDebug()<<"CTPN"<<closingTabPageName<<endl;
+    //qDebug()<<"CBH"<<closing_browserHtml<<endl;
+    //qDebug()<<"GINI"<<gInitialTextHtml[closingTabPageName]<<endl;
     if(!closing_browser->isReadOnly() && (closing_browserHtml != gInitialTextHtml[closingTabPageName]))
     {
         int btn = QMessageBox::question(this, "Save?", "Do you want to save " + closingTabPageName + " file?",
@@ -6105,13 +6124,12 @@ void MainWindow::tabchanged(int idx)
     string str = qstr.toStdString();
     str.erase(remove(str.begin(), str.end(), ' '), str.end());
     currentTabPageName=QString::fromStdString(str);
-    qDebug()<<"C"<<currentTabPageName<<endl;
+    //qDebug()<<"C"<<currentTabPageName<<endl;
     if(currentTabPageName.contains("CorrectorOutput/") | currentTabPageName.contains("VerifierOutput/"))
         setMFilename(mProject.GetDir().absolutePath() + "/" + currentTabPageName);
     else{
         setMFilename(mProject.GetDir().absolutePath() + "/Inds/" + currentTabPageName);
-        qDebug()<<"File Name"<<endl;
-    }
+          }
     UpdateFileBrekadown();
     //qDebug()<<"FILE"<<gCurrentPageName<<endl;
 
