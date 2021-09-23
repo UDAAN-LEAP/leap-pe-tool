@@ -898,7 +898,7 @@ for (auto f : list)
                 ui->actionTurn_In->setEnabled(false);
             }
         }
-        qDebug()<<"Opening Project";
+        //qDebug()<<"Opening Project";
         UpdateFileBrekadown();    //Reset the current file and dir levels
 
         //!Get the elapsed time in Timelog.json file under Comments folder
@@ -6122,11 +6122,11 @@ void MainWindow::tabchanged(int idx)
     //qDebug()<<"C"<<currentTabPageName<<endl;
     if(mRole=="Corrector" | mRole=="Verifier"){
         setMFilename(mProject.GetDir().absolutePath() + "/" + gCurrentDirName + "/" + currentTabPageName);
-        qDebug()<<"Corrector or Verifier folder";
+        //qDebug()<<"Corrector or Verifier folder";
     }
     else{
         setMFilename(mProject.GetDir().absolutePath() + "/Inds/" + currentTabPageName);
-        qDebug()<<"Inds Folder";
+        //qDebug()<<"Inds Folder";
           }
     UpdateFileBrekadown();
     //qDebug()<<"FILE"<<gCurrentPageName<<endl;
