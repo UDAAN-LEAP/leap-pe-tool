@@ -4,59 +4,25 @@
 		<Filter Include="Image">
 			<Extensions>jpeg;jpg;png;</Extensions>
 		</Filter>
+		<Filter Include="CorrectorOutput">
+			<Extensions>docx;txt;html</Extensions>
+		</Filter>
+		<Filter Include="VerifierOutput">
+			<Extensions>docx;txt;html</Extensions>
+		</Filter>
 		<Filter Include="Document">
 			<Extensions>docx;txt;html</Extensions>
 		</Filter>
 	</ItemGroup>
-	<ItemGroup>
-		<File Include="Inds/page-1.txt">
-			<Filter>Document</Filter>
-		</File>
-		<File Include="Inds/page-2.txt">
-			<Filter>Document</Filter>
-		</File>
-		<File Include="Inds/page-3.txt">
-			<Filter>Document</Filter>
-		</File>
-		<File Include="Inds/page-4.txt">
-			<Filter>Document</Filter>
-		</File>
-		<File Include="Inds/page-5.txt">
-			<Filter>Document</Filter>
-		</File>
-		<File Include="Inds/page-6.txt">
-			<Filter>Document</Filter>
-		</File>
-		<File Include="Inds/page-7.txt">
-			<Filter>Document</Filter>
-		</File>
-		<File Include="Images/page-1.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="Images/page-2.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="Images/page-3.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="Images/page-4.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="Images/page-5.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="Images/page-6.jpeg">
-			<Filter>Image</Filter>
-		</File>
-		<File Include="Images/page-7.jpeg">
-			<Filter>Image</Filter>
-		</File>
-	</ItemGroup>
+	<Configuration>
+		<Prefixmatch>False</Prefixmatch>
+	</Configuration>
 	<Metadata>
 		<Version>1</Version>
 		<Stage>Verifier</Stage>
 		<Corrector>None</Corrector>
 		<SanityChecker>None</SanityChecker>
 		<Verifier>None</Verifier>
+		
 	</Metadata>
 </Project>
