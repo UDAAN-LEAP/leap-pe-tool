@@ -323,6 +323,8 @@ private slots:
 
     void on_actionas_PDF_triggered();
 
+    void generatePDF();
+
     void on_actionGet_Help_triggered();
 
     void on_actionTutorial_triggered();

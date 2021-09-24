@@ -35,7 +35,7 @@
 #include <QAction>
 #include "ProjectWizard.h"
 #include <SimpleMail/SimpleMail>
-//# include <QTask>
+#include <QThread>
 #include <QDebug>
 #include<QtCore>
 #include<QtXml>
@@ -54,6 +54,7 @@
 #endif
 #include <editdistance.h>
 #include <QRegularExpressionMatch>
+#include <QtConcurrent>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -1163,9 +1164,11 @@ void MainWindow::on_actionSave_triggered()
     }
 
     QString currentDirAbsolutePath = gDirTwoLevelUp + "/" + gCurrentDirName;
-    runGlobalReplace(currentDirAbsolutePath, changedWords);
-
+    QtConcurrent::run (this, &MainWindow::runGlobalReplace ,currentDirAbsolutePath, changedWords);
+//    runGlobalReplace(currentDirAbsolutePath,changedWords);
     ConvertSlpDevFlag =0;
+    qDebug() <<"main thread is free krvalo kaam!!";
+
 }
 
 
@@ -5252,6 +5255,7 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
         globalReplacementMap = grDialog.getFilteredGlobalReplacementMap();
     return globalReplacementMap;
 
+
 }
 
 /*!
@@ -5294,12 +5298,14 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
             QString it_file_path = dirIterator.next();
             bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
 
-            if(!isFileInEditedFilesLog){
-                writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+            if(!isFileInEditedFilesLog)
+            {
+                 writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+//                QtConcurrent::run (this, &MainWindow::writeGlobalCPairsToFiles ,it_file_path, globalReplacementMap);
+
             }
         }
     }
-
     addCurrentlyOpenFileToEditedFilesLog();
 }
 //Global CPair End
@@ -6409,10 +6415,7 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
             int endIndex;
             indexOfReplacedWord = input.indexOf(grmIterator.value(),from , Qt::CaseInsensitive);
             endIndex = indexOfReplacedWord;
-//            qDebug() << indexOfReplacedWord << " " <<endIndex;
-//            while(input[endIndex]!=" ")
-//                endIndex++;
-//            qDebug() << indexOfReplacedWord << " " <<endIndex;
+
             int len = grmIterator.value().length();
             qDebug() << len;
             while(len > 0)
@@ -6438,6 +6441,11 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
 }
 
 void MainWindow::on_actionas_PDF_triggered()
+{
+     QtConcurrent::run (this, &MainWindow::generatePDF);
+//     qDebug() << "mein theead is free";
+}
+void MainWindow :: generatePDF()
 {
     QTextDocument *document = new QTextDocument();
      QString currentDirAbsolutePath;
@@ -6498,10 +6506,7 @@ void MainWindow::on_actionas_PDF_triggered()
 
     document->setPageSize(printer.pageRect().size());
     document->print(&printer);
-
-    qDebug()<<"heman";
 }
-
 void MainWindow::on_actionGet_Help_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/1PAQKz3Vwu5EN850uxZUeSejvmwF2293j/edit?usp=sharing&ouid=114703528031965332802&rtpof=true&sd=true", QUrl::TolerantMode));
