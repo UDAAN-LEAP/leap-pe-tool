@@ -6105,6 +6105,7 @@ void MainWindow::closetab(int idx)
             on_actionSave_triggered();
     }
     delete ui->tabWidget_2->widget(idx);
+    deleteEditedFilesLog();
 }
 
 /*!
