@@ -5862,9 +5862,10 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     //QString qstr = QString::fromStdString(str);
 
     QString imageFilePath = mProject.GetDir().absolutePath()+"/Images/" + gCurrentPageName;
-    //qDebug()<<"PRINT"<<imageFilePath<<endl;
+   // qDebug()<<"PRINT"<<imageFilePath<<endl;
 
     QString temp = imageFilePath;
+    qDebug()<<"PRINT10"<<temp<<endl;
     int flag=0;
     temp.replace(".txt", ".jpeg");
     if (QFile::exists(temp) && flag==0)
@@ -5876,47 +5877,49 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         LoadImageFromFile(pImageFile);
     }
     else
-    {
+    {  // qDebug()<<"PRINT2"<<imageFilePath<<endl;
         temp=imageFilePath;
     }
 
     temp.replace(".html", ".jpeg");
     if (QFile::exists(temp) && flag==0)
     {
+
         imageFilePath=temp;
-        //qDebug()<<"PRINT"<<imageFilePath<<endl;
+        //qDebug()<<"PRINT3"<<imageFilePath<<endl;
         QFile *pImageFile = new QFile(imageFilePath);
         flag=1;
         LoadImageFromFile(pImageFile);
     }
     else
-    {
+    {   int x=QFile::exists(temp);
+        qDebug()<<"PRINT4"<<x<<endl;
         temp = imageFilePath;
     }
     temp.replace(".html", ".png");
     if (QFile::exists(temp) && flag==0)
     {
         imageFilePath=temp;
-        //qDebug()<<"PRINT"<<imageFilePath<<endl;
+        //qDebug()<<"PRINT5"<<imageFilePath<<endl;
         QFile *pImageFile = new QFile(imageFilePath);
         flag=1;
         LoadImageFromFile(pImageFile);
     }
     else
-    {
+    {   //qDebug()<<"PRINT6"<<imageFilePath<<endl;
         temp = imageFilePath;
     }
     temp.replace(".html", ".jpg");
     if (QFile::exists(temp) && flag==0)
     {
         imageFilePath=temp;
-        //qDebug()<<"PRINT"<<imageFilePath<<endl;
+       // qDebug()<<"PRINT7"<<imageFilePath<<endl;
         QFile *pImageFile = new QFile(imageFilePath);
         flag=1;
         LoadImageFromFile(pImageFile);
     }
     else
-    {
+    {   //qDebug()<<"PRINT8"<<imageFilePath<<endl;
         temp = imageFilePath;
     }
 }
@@ -5928,7 +5931,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 void MainWindow::LoadImageFromFile(QFile * f)
 {
     QString localFileName = f->fileName();
-    //qDebug()<<localFileName<<"Local"<<endl;
+    qDebug()<<localFileName<<"Local"<<endl;
     loadimage = true;
 
     imageOrig.load(localFileName);
