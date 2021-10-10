@@ -6,15 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1271</width>
-    <height>508</height>
+    <width>1280</width>
+    <height>516</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>DiffView</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_4">
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <item>
+     <widget class="QPushButton" name="PrevButton">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../../../../Downloads/previous.png</normaloff>../../../../Downloads/previous.png</iconset>
+      </property>
+     </widget>
+    </item>
     <item>
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
@@ -23,10 +34,10 @@
       <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QLabel" name="VerifierLabel">
+         <widget class="QLabel" name="OCRLabel">
           <property name="text">
-           <string>&lt;p&gt;&lt;b&gt;Verified Text&lt;/b&gt;&lt;/p&gt;
-Changes Made by Verifier: </string>
+           <string>&lt;p&gt;&lt;b&gt;1. Initial Text &lt;/b&gt;&lt;/p&gt;
+Accuracy of OCR Text (w.r.t Verified Text): </string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -34,7 +45,7 @@ Changes Made by Verifier: </string>
          </widget>
         </item>
         <item>
-         <widget class="QTextEdit" name="VerifierText">
+         <widget class="QTextEdit" name="OCRText">
           <property name="font">
            <font>
             <family>Shobhika</family>
@@ -59,7 +70,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QLabel" name="InternLabel">
           <property name="text">
-           <string>&lt;b&gt;&lt;p&gt;Corrector's Output Text&lt;/b&gt;&lt;/p&gt;Changes Made by Corrector: </string>
+           <string>&lt;b&gt;&lt;p&gt;2. Corrector's Output Text&lt;/b&gt;&lt;/p&gt;Changes Made by Corrector: </string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -90,10 +101,10 @@ p, li { white-space: pre-wrap; }
       <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QLabel" name="OCRLabel">
+         <widget class="QLabel" name="VerifierLabel">
           <property name="text">
-           <string>&lt;p&gt;&lt;b&gt;OCR Text &lt;/b&gt;&lt;/p&gt;
-Accuracy of OCR Text (w.r.t Verified Text): </string>
+           <string>&lt;p&gt;&lt;b&gt;3. Verified Text&lt;/b&gt;&lt;/p&gt;
+Changes Made by Verifier: </string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -101,7 +112,7 @@ Accuracy of OCR Text (w.r.t Verified Text): </string>
          </widget>
         </item>
         <item>
-         <widget class="QTextEdit" name="OCRText">
+         <widget class="QTextEdit" name="VerifierText">
           <property name="font">
            <font>
             <family>Shobhika</family>
@@ -123,6 +134,20 @@ p, li { white-space: pre-wrap; }
       </widget>
      </widget>
     </item>
+    <item>
+     <widget class="QPushButton" name="NextButton">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../../../../Downloads/next.png</normaloff>../../../../Downloads/next.png</iconset>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -130,18 +155,10 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1271</width>
+     <width>1280</width>
      <height>22</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>

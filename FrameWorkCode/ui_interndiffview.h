@@ -19,10 +19,10 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -33,120 +33,134 @@ class Ui_InternDiffView
 public:
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
+    QPushButton *prevButton;
     QSplitter *splitter;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout_3;
-    QLabel *InternLabel;
-    QTextBrowser *current;
-    QWidget *widget1;
+    QLabel *label;
+    QGraphicsView *graphicsView;
+    QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout;
     QLabel *OCRtextLabel;
     QTextBrowser *ocroutput;
-    QWidget *widget2;
+    QWidget *layoutWidget2;
     QVBoxLayout *verticalLayout_2;
-    QLabel *label;
-    QGraphicsView *graphicsView;
+    QLabel *InternLabel;
+    QTextBrowser *current;
+    QPushButton *NextButton;
     QMenuBar *menuBar;
-    QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *InternDiffView)
     {
         if (InternDiffView->objectName().isEmpty())
             InternDiffView->setObjectName(QStringLiteral("InternDiffView"));
-        InternDiffView->resize(1175, 576);
+        InternDiffView->resize(1157, 576);
         centralWidget = new QWidget(InternDiffView);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         horizontalLayout = new QHBoxLayout(centralWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        prevButton = new QPushButton(centralWidget);
+        prevButton->setObjectName(QStringLiteral("prevButton"));
+        QIcon icon;
+        icon.addFile(QStringLiteral("../../../../Downloads/previous.png"), QSize(), QIcon::Normal, QIcon::Off);
+        prevButton->setIcon(icon);
+
+        horizontalLayout->addWidget(prevButton);
+
         splitter = new QSplitter(centralWidget);
         splitter->setObjectName(QStringLiteral("splitter"));
         splitter->setOrientation(Qt::Horizontal);
-        widget = new QWidget(splitter);
-        widget->setObjectName(QStringLiteral("widget"));
-        verticalLayout_3 = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(splitter);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        verticalLayout_3 = new QVBoxLayout(layoutWidget);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
-        InternLabel = new QLabel(widget);
-        InternLabel->setObjectName(QStringLiteral("InternLabel"));
-        InternLabel->setAlignment(Qt::AlignCenter);
+        label = new QLabel(layoutWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setAlignment(Qt::AlignCenter);
 
-        verticalLayout_3->addWidget(InternLabel);
+        verticalLayout_3->addWidget(label);
 
-        current = new QTextBrowser(widget);
-        current->setObjectName(QStringLiteral("current"));
+        graphicsView = new QGraphicsView(layoutWidget);
+        graphicsView->setObjectName(QStringLiteral("graphicsView"));
         QFont font;
         font.setFamily(QStringLiteral("Shobhika"));
-        font.setPointSize(11);
+        font.setPointSize(10);
         font.setBold(true);
         font.setWeight(75);
-        current->setFont(font);
+        graphicsView->setFont(font);
+        graphicsView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+        graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
 
-        verticalLayout_3->addWidget(current);
+        verticalLayout_3->addWidget(graphicsView);
 
-        splitter->addWidget(widget);
-        widget1 = new QWidget(splitter);
-        widget1->setObjectName(QStringLiteral("widget1"));
-        verticalLayout = new QVBoxLayout(widget1);
+        splitter->addWidget(layoutWidget);
+        layoutWidget1 = new QWidget(splitter);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        verticalLayout = new QVBoxLayout(layoutWidget1);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        OCRtextLabel = new QLabel(widget1);
+        OCRtextLabel = new QLabel(layoutWidget1);
         OCRtextLabel->setObjectName(QStringLiteral("OCRtextLabel"));
         OCRtextLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(OCRtextLabel);
 
-        ocroutput = new QTextBrowser(widget1);
+        ocroutput = new QTextBrowser(layoutWidget1);
         ocroutput->setObjectName(QStringLiteral("ocroutput"));
-        ocroutput->setFont(font);
+        QFont font1;
+        font1.setFamily(QStringLiteral("Shobhika"));
+        font1.setPointSize(11);
+        font1.setBold(true);
+        font1.setWeight(75);
+        ocroutput->setFont(font1);
 
         verticalLayout->addWidget(ocroutput);
 
-        splitter->addWidget(widget1);
-        widget2 = new QWidget(splitter);
-        widget2->setObjectName(QStringLiteral("widget2"));
-        verticalLayout_2 = new QVBoxLayout(widget2);
+        splitter->addWidget(layoutWidget1);
+        layoutWidget2 = new QWidget(splitter);
+        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
+        verticalLayout_2 = new QVBoxLayout(layoutWidget2);
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        label = new QLabel(widget2);
-        label->setObjectName(QStringLiteral("label"));
-        label->setAlignment(Qt::AlignCenter);
+        InternLabel = new QLabel(layoutWidget2);
+        InternLabel->setObjectName(QStringLiteral("InternLabel"));
+        InternLabel->setAlignment(Qt::AlignCenter);
 
-        verticalLayout_2->addWidget(label);
+        verticalLayout_2->addWidget(InternLabel);
 
-        graphicsView = new QGraphicsView(widget2);
-        graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        QFont font1;
-        font1.setFamily(QStringLiteral("Shobhika"));
-        font1.setPointSize(10);
-        font1.setBold(true);
-        font1.setWeight(75);
-        graphicsView->setFont(font1);
-        graphicsView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
-        graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
+        current = new QTextBrowser(layoutWidget2);
+        current->setObjectName(QStringLiteral("current"));
+        current->setFont(font1);
 
-        verticalLayout_2->addWidget(graphicsView);
+        verticalLayout_2->addWidget(current);
 
-        splitter->addWidget(widget2);
+        splitter->addWidget(layoutWidget2);
 
         horizontalLayout->addWidget(splitter);
+
+        NextButton = new QPushButton(centralWidget);
+        NextButton->setObjectName(QStringLiteral("NextButton"));
+        QIcon icon1;
+        icon1.addFile(QStringLiteral("../../../../Downloads/next.png"), QSize(), QIcon::Normal, QIcon::Off);
+        NextButton->setIcon(icon1);
+
+        horizontalLayout->addWidget(NextButton);
 
         InternDiffView->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(InternDiffView);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1175, 22));
+        menuBar->setGeometry(QRect(0, 0, 1157, 22));
         InternDiffView->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(InternDiffView);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        InternDiffView->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(InternDiffView);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         InternDiffView->setStatusBar(statusBar);
@@ -159,21 +173,23 @@ public:
     void retranslateUi(QMainWindow *InternDiffView)
     {
         InternDiffView->setWindowTitle(QApplication::translate("InternDiffView", "InternDiffView", Q_NULLPTR));
-        InternLabel->setText(QApplication::translate("InternDiffView", "<p><b>Corrector's Output Text</b></p>Changes made by Corrector: ", Q_NULLPTR));
-        current->setHtml(QApplication::translate("InternDiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Shobhika'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;\"><br /></p></body></html>", Q_NULLPTR));
-        OCRtextLabel->setText(QApplication::translate("InternDiffView", "<p><b>OCR Text<b></p>\n"
+        prevButton->setText(QString());
+        label->setText(QApplication::translate("InternDiffView", "<p><b>1. OCR Image<b></p>\n"
+"<p> </p>", Q_NULLPTR));
+        OCRtextLabel->setText(QApplication::translate("InternDiffView", "<p><b>2. Initial Text<b></p>\n"
 "<p> </p>", Q_NULLPTR));
         ocroutput->setHtml(QApplication::translate("InternDiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Shobhika'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;\"><br /></p></body></html>", Q_NULLPTR));
-        label->setText(QApplication::translate("InternDiffView", "<p><b>OCR Image<b></p>\n"
-"<p> </p>", Q_NULLPTR));
+        InternLabel->setText(QApplication::translate("InternDiffView", "<p><b>3. Corrector's Output Text</b></p>Changes made by Corrector: ", Q_NULLPTR));
+        current->setHtml(QApplication::translate("InternDiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Shobhika'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;\"><br /></p></body></html>", Q_NULLPTR));
+        NextButton->setText(QString());
     } // retranslateUi
 
 };

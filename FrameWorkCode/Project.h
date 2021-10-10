@@ -7,6 +7,8 @@
 #include <pugixml.hpp>
 #include <git2.h>
 #include <string>
+#include <diff_match_patch.h>
+#include <qlist.h>
 
 class Project {
 public:
@@ -31,6 +33,8 @@ public:
     bool enable_push(bool increment);
 	void AddTemp(Filter * f, QFile &pFile,QString prefix);
     int findNumberOfFilesInDirectory(std::string);
+    int LevenshteinWithGraphemes(QList<Diff> diffs);
+    int GetGraphemesCount(QString string);
 
 	~Project() {
 		for (auto p : mFiles) {

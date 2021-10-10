@@ -989,6 +989,62 @@ void Project::open_git_repo()
     }
 }
 
+/*!
+ * \brief GetGraphemesCount
+ * \param string
+ * \return
+ */
+int Project::GetGraphemesCount(QString string)
+{
+    int count = 0;
+    QTextBoundaryFinder finder = QTextBoundaryFinder(QTextBoundaryFinder::BoundaryType::Grapheme, string);
+    while (finder.toNextBoundary() != -1) {
+        count++;
+    }
+    int spaces = string.count(' ');
+    return count - spaces;
+}
+
+/*!
+ * \brief LevenshteinWithGraphemes
+ * \param diffs
+ * \return
+ */
+int Project::LevenshteinWithGraphemes(QList<Diff> diffs)
+{
+    int levenshtein = 0;
+    QString diffChars = "";
+    QString insertions = "";
+    QString deletions = "";
+    foreach(Diff aDiff, diffs) {
+        switch (aDiff.operation) {
+        case INSERT:
+            insertions += aDiff.text;
+            break;
+        case DELETE:
+            deletions += aDiff.text;
+            break;
+        case EQUAL:
+            // A deletion and an insertion is one substitution.
+            if(GetGraphemesCount(insertions)> GetGraphemesCount(deletions))
+                levenshtein += insertions.length();
+            else
+                levenshtein += deletions.length();
+            insertions = "";
+            deletions = "";
+            break;
+        default:
+            break;
+        }
+    }
+    if(GetGraphemesCount(insertions)> GetGraphemesCount(deletions))
+        levenshtein += insertions.length();
+    else
+        levenshtein += deletions.length();
+    return levenshtein;
+}
+
+
 #ifdef _WIN32
 int Project::findNumberOfFilesInDirectory(std::string path)
 {

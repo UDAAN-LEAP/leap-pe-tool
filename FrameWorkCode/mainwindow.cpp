@@ -4824,11 +4824,22 @@ void MainWindow::on_viewComments_clicked()
  */
 void MainWindow::on_compareCorrectorOutput_clicked()
 {
+
+    if(mProject.get_version().toInt())   //checks if a project is open or not
+    {
     QString qs1="", qs2="";
+    QString page = gCurrentPageName;
 
-    //! Open a Corrector's Output File
-    file = QFileDialog::getOpenFileName(this,"Open Corrector's Output File");
+    //!checks whether users have selected a page
+    if(page.isEmpty())
+      {
+           QMessageBox::information(0, "Error", "Please open a page ");
+           return;
+      }
 
+    QString fpath = gDirTwoLevelUp;
+    QString file = gDirTwoLevelUp + "/CorrectorOutput/" + page;
+    qDebug()<<"compare "<<file;
     //! Opens corresponding OCR text file and image
     if(!file.isEmpty())
     {
@@ -4976,8 +4987,12 @@ void MainWindow::on_compareCorrectorOutput_clicked()
         if(correctorChangesPerc>100) correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l1)*100;
         correctorChangesPerc = (((float)lround(correctorChangesPerc*100))/100);
 
-        InternDiffView *dv = new InternDiffView(qs1,qs2,ocrimage,QString::number(correctorChangesPerc));   //Fetch OCR Image in DiffView2 and Set
+        InternDiffView *dv = new InternDiffView(qs1,qs2,ocrimage,fpath,page,QString::number(correctorChangesPerc));   //Fetch OCR Image in DiffView2 and Set
         dv->show();
+      }
+    }
+    else{
+         QMessageBox::information(0, "Error", "Please Open a Project");
     }
 }
 
@@ -4990,10 +5005,21 @@ void MainWindow::on_compareCorrectorOutput_clicked()
 void MainWindow::on_compareVerifierOutput_clicked() //Verifier-Version
 {
 
+  if(mProject.get_version().toInt())
+   {
     QString qs1="", qs2="",qs3="";
+    QString page =gCurrentPageName;
+
+    //!Check whether the user has clicked a page
+    if(page.isEmpty())
+      {
+           QMessageBox::information(0, "Error", "Please open a page ");
+           return;
+      }
 
     //! Open a Verifier's Output File
-    file = QFileDialog::getOpenFileName(this,"Open Verifier's Output File");
+    QString fpath = gDirTwoLevelUp;
+    QString file = gDirTwoLevelUp + "/VerifierOutput/" + page;
 
     //! Opens corresponding Corrector's Output and OCR text file
     if(!file.isEmpty())
@@ -5098,10 +5124,14 @@ void MainWindow::on_compareVerifierOutput_clicked() //Verifier-Version
         if(ocrErrorPerc>100) ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l1)*100;
         float ocrAcc = 100 - (((float)lround(ocrErrorPerc*100))/100);
 
-        DiffView *dv = new DiffView(qs1,qs2,qs3,QString::number(correctorChangesPerc),QString::number(verifierChangesPerc),QString::number(ocrAcc));
+        DiffView *dv = new DiffView(qs1,qs2,qs3,page,fpath,QString::number(correctorChangesPerc),QString::number(verifierChangesPerc),QString::number(ocrAcc));
         qDebug()<<correctorChangesPerc<<verifierChangesPerc<<ocrAcc;
         dv->show();
     }
+  }
+  else{
+       QMessageBox::information(0, "Error", "Please Open a Project");
+  }
 }
 
 //Global CPair Start
@@ -5862,10 +5892,9 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     //QString qstr = QString::fromStdString(str);
 
     QString imageFilePath = mProject.GetDir().absolutePath()+"/Images/" + gCurrentPageName;
-   // qDebug()<<"PRINT"<<imageFilePath<<endl;
+    //qDebug()<<"PRINT"<<imageFilePath<<endl;
 
     QString temp = imageFilePath;
-    qDebug()<<"PRINT10"<<temp<<endl;
     int flag=0;
     temp.replace(".txt", ".jpeg");
     if (QFile::exists(temp) && flag==0)
@@ -5877,49 +5906,47 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         LoadImageFromFile(pImageFile);
     }
     else
-    {  // qDebug()<<"PRINT2"<<imageFilePath<<endl;
+    {
         temp=imageFilePath;
     }
 
     temp.replace(".html", ".jpeg");
     if (QFile::exists(temp) && flag==0)
     {
-
         imageFilePath=temp;
-        //qDebug()<<"PRINT3"<<imageFilePath<<endl;
+        //qDebug()<<"PRINT"<<imageFilePath<<endl;
         QFile *pImageFile = new QFile(imageFilePath);
         flag=1;
         LoadImageFromFile(pImageFile);
     }
     else
-    {   int x=QFile::exists(temp);
-        qDebug()<<"PRINT4"<<x<<endl;
+    {
         temp = imageFilePath;
     }
     temp.replace(".html", ".png");
     if (QFile::exists(temp) && flag==0)
     {
         imageFilePath=temp;
-        //qDebug()<<"PRINT5"<<imageFilePath<<endl;
+        //qDebug()<<"PRINT"<<imageFilePath<<endl;
         QFile *pImageFile = new QFile(imageFilePath);
         flag=1;
         LoadImageFromFile(pImageFile);
     }
     else
-    {   //qDebug()<<"PRINT6"<<imageFilePath<<endl;
+    {
         temp = imageFilePath;
     }
     temp.replace(".html", ".jpg");
     if (QFile::exists(temp) && flag==0)
     {
         imageFilePath=temp;
-       // qDebug()<<"PRINT7"<<imageFilePath<<endl;
+        //qDebug()<<"PRINT"<<imageFilePath<<endl;
         QFile *pImageFile = new QFile(imageFilePath);
         flag=1;
         LoadImageFromFile(pImageFile);
     }
     else
-    {   //qDebug()<<"PRINT8"<<imageFilePath<<endl;
+    {
         temp = imageFilePath;
     }
 }
@@ -5931,7 +5958,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 void MainWindow::LoadImageFromFile(QFile * f)
 {
     QString localFileName = f->fileName();
-    qDebug()<<localFileName<<"Local"<<endl;
+    //qDebug()<<localFileName<<"Local"<<endl;
     loadimage = true;
 
     imageOrig.load(localFileName);
