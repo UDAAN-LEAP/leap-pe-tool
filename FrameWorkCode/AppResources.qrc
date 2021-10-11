@@ -31,5 +31,7 @@
         <file>horizontal-line.png</file>
         <file>toSlp1.png</file>
         <file>Help.png</file>
+        <file>previous.png</file>
+        <file>next.png</file>
     </qresource>
 </RCC>
