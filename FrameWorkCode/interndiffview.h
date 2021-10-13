@@ -14,7 +14,7 @@ class InternDiffView : public QMainWindow
 	Q_OBJECT
 
 public:
-    InternDiffView(QWidget *parent,QString page,QString fpath);
+    InternDiffView( QWidget *parent,  QString page, QString fpath);
 	~InternDiffView();
    string pageNo;
    QString gDirTwoLevelUp;

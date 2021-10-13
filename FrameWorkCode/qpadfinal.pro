@@ -42,3 +42,6 @@ SOURCES +=
 
 DISTFILES += \
     UserJson.json
+
+#Windows icon
+#win32:RC_FILE += qpadfinal.rc

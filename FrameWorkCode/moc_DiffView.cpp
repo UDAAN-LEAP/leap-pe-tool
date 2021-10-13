@@ -32,18 +32,18 @@ struct qt_meta_stringdata_DiffView_t {
 static const qt_meta_stringdata_DiffView_t qt_meta_stringdata_DiffView = {
     {
 QT_MOC_LITERAL(0, 0, 8), // "DiffView"
-QT_MOC_LITERAL(1, 9, 21), // "on_PrevButton_clicked"
-QT_MOC_LITERAL(2, 31, 0), // ""
-QT_MOC_LITERAL(3, 32, 16), // "Load_comparePage"
-QT_MOC_LITERAL(4, 49, 6), // "string"
-QT_MOC_LITERAL(5, 56, 4), // "page"
-QT_MOC_LITERAL(6, 61, 21), // "on_NextButton_clicked"
-QT_MOC_LITERAL(7, 83, 8) // "UpdateUI"
+QT_MOC_LITERAL(1, 9, 8), // "UpdateUI"
+QT_MOC_LITERAL(2, 18, 0), // ""
+QT_MOC_LITERAL(3, 19, 21), // "on_PrevButton_clicked"
+QT_MOC_LITERAL(4, 41, 16), // "Load_comparePage"
+QT_MOC_LITERAL(5, 58, 6), // "string"
+QT_MOC_LITERAL(6, 65, 4), // "page"
+QT_MOC_LITERAL(7, 70, 21) // "on_NextButton_clicked"
 
     },
-    "DiffView\0on_PrevButton_clicked\0\0"
+    "DiffView\0UpdateUI\0\0on_PrevButton_clicked\0"
     "Load_comparePage\0string\0page\0"
-    "on_NextButton_clicked\0UpdateUI"
+    "on_NextButton_clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -62,14 +62,14 @@ static const uint qt_meta_data_DiffView[] = {
 
  // slots: name, argc, parameters, tag, flags
        1,    0,   34,    2, 0x08 /* Private */,
-       3,    1,   35,    2, 0x08 /* Private */,
-       6,    0,   38,    2, 0x08 /* Private */,
+       3,    0,   35,    2, 0x08 /* Private */,
+       4,    1,   36,    2, 0x08 /* Private */,
        7,    0,   39,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 4,    5,
     QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 5,    6,
     QMetaType::Void,
 
        0        // eod
@@ -81,10 +81,10 @@ void DiffView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         DiffView *_t = static_cast<DiffView *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->on_PrevButton_clicked(); break;
-        case 1: _t->Load_comparePage((*reinterpret_cast< string(*)>(_a[1]))); break;
-        case 2: _t->on_NextButton_clicked(); break;
-        case 3: _t->UpdateUI(); break;
+        case 0: _t->UpdateUI(); break;
+        case 1: _t->on_PrevButton_clicked(); break;
+        case 2: _t->Load_comparePage((*reinterpret_cast< string(*)>(_a[1]))); break;
+        case 3: _t->on_NextButton_clicked(); break;
         default: ;
         }
     }

@@ -212,7 +212,6 @@ void DiffView::on_PrevButton_clicked()
          if(fverifier.exists())
          {
            pageNo.replace(loc,no.size(),to_string(stoi(no) - 1)); //Decrement the page number
-           QString nos = QString::fromStdString(to_string(stoi(no)-1));
            Load_comparePage(pageNo);
            UpdateUI();
          }

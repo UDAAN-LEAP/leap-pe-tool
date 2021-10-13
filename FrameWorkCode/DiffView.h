@@ -20,15 +20,15 @@ public:
     QString html1;
     QString html2;
     QString html3;
-    float correctorChangesPerc=0;
-    float OcrAcc=0;
-    float verifierChangesPerc=0;
+    float verifierChangesPerc;
+    float correctorChangesPerc;
+    float OcrAcc;
 
 private slots:
+    void UpdateUI();
     void on_PrevButton_clicked();
     void Load_comparePage(string page);
     void on_NextButton_clicked();
-    void UpdateUI();
 
 private:
 	Ui::DiffView *ui;
