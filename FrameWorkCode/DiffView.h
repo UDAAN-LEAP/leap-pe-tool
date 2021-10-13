@@ -13,17 +13,22 @@ class DiffView : public QMainWindow
 	Q_OBJECT
 
 public:
-    DiffView(QString &str1, QString &str2, QString &str3,QString page, QString fpath, const QString &acc1, const QString &acc2, const QString &acc3,QWidget *parent = Q_NULLPTR);
+    DiffView(QWidget *parent,QString page, QString fpath);
 	~DiffView();
     string pageNo;
     QString gDirTwoLevelUp;
-   // QGraphicsScene *scene = new QGraphicsScene(this);
+    QString html1;
+    QString html2;
+    QString html3;
+    float correctorChangesPerc=0;
+    float OcrAcc=0;
+    float verifierChangesPerc=0;
 
 private slots:
     void on_PrevButton_clicked();
     void Load_comparePage(string page);
-    int GetPageNumber(string localFilename, string *no, size_t *loc, QString *ext);
     void on_NextButton_clicked();
+    void UpdateUI();
 
 private:
 	Ui::DiffView *ui;

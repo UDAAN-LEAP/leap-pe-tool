@@ -1045,6 +1045,28 @@ int Project::LevenshteinWithGraphemes(QList<Diff> diffs)
 }
 
 
+int Project::GetPageNumber(std::string localFilename, std::string *no, size_t *loc, QString *ext)
+{
+
+    std::string nos = "0123456789";
+    *no = "";
+    *loc = localFilename.find(".txt");
+    *ext = "txt";
+    if(*loc == std::string::npos) {
+        *loc = localFilename.find(".html");
+        *ext = "html";
+    }
+    if(*loc == std::string::npos)
+        return 0;
+    std::string s = localFilename.substr((*loc)-1,1);
+    while(nos.find(s) != std::string::npos) {
+        *no = s + *no; (*loc)--; s = localFilename.substr((*loc)-1,1);
+    }
+    return 1;
+}
+
+
+
 #ifdef _WIN32
 int Project::findNumberOfFilesInDirectory(std::string path)
 {

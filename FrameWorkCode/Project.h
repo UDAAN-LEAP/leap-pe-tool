@@ -35,6 +35,7 @@ public:
     int findNumberOfFilesInDirectory(std::string);
     int LevenshteinWithGraphemes(QList<Diff> diffs);
     int GetGraphemesCount(QString string);
+    int GetPageNumber(std::string localFilename, std::string *no, size_t *loc, QString *ext);
 
 	~Project() {
 		for (auto p : mFiles) {

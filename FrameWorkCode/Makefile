@@ -591,8 +591,10 @@ qrc_AppResources.cpp: AppResources.qrc \
 		AlignRight.png \
 		toDevangari.png \
 		Help.png \
+		previous.png \
 		highlight-icon.png \
 		save.png \
+		next.png \
 		redo.png \
 		cut.png \
 		Zoom-Out-icon.png \
@@ -626,8 +628,10 @@ qrc_AppResources.cpp: AppResources.qrc \
 		AlignRight.png \
 		toDevangari.png \
 		Help.png \
+		previous.png \
 		highlight-icon.png \
 		save.png \
+		next.png \
 		redo.png \
 		cut.png \
 		Zoom-Out-icon.png \

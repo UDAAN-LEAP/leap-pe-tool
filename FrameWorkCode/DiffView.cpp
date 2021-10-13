@@ -6,56 +6,27 @@
 #include <Project.h>
 #include <QMessageBox>
 
-DiffView::DiffView( QString &ocrtext,  QString &interntext,  QString &verifiertext, QString page,QString fpath, const QString &InternAcc, const QString &VerifierAcc, const QString &OcrAcc, QWidget *parent)
+DiffView::DiffView(QWidget *parent, QString page,QString fpath)
 	: QMainWindow(parent)
 {
-
-    ui = new Ui::DiffView();
-	ui->setupUi(this);
-    setWindowTitle("Verifier Output Difference " + page);
     pageNo = page.toStdString();
     gDirTwoLevelUp=fpath;
+    ui = new Ui::DiffView();
+    ui->setupUi(this);
+    setWindowTitle("Verifier Output Difference " + page);
 
-    QTextDocument doc;
-    doc.setHtml(interntext);
-    interntext = doc.toPlainText();
 
-    doc.setHtml(ocrtext);
-    ocrtext = doc.toPlainText();
+    //!check if file exists
+    QFile fverifier(gDirTwoLevelUp+ "/VerifierOutput/"+ page );
 
-    doc.setHtml(verifiertext);
-    verifiertext = doc.toPlainText();
-
-	diff_match_patch dmp;
-    auto diffs = dmp.diff_main(ocrtext,interntext);
-    QString textcolor = "ffd13d";
-    QList<QString> htmlList1 = dmp.diff_prettyHtml(diffs, textcolor);
-    QString html1 = htmlList1.first();
-    QString html2 = htmlList1.last();
-
-     diffs = dmp.diff_main(interntext,verifiertext);
-    textcolor = "90ff90";
-    QList<QString> htmlList2 = dmp.diff_prettyHtml(diffs, textcolor);
-    QString html3 = htmlList2.first();
-    html1.remove("&para;");
-    html2.remove("&para;");
-    html3.remove("&para;");
-
-    ui->InternText->setHtml(html1);
-    ui->OCRText->setHtml(html2);
-    ui->VerifierText->setHtml(html3);
-
-    QString InternLabel = ui->InternLabel->text();
-    InternLabel.append(InternAcc+"%");
-    ui->InternLabel->setText(InternLabel);
-
-    QString VerifierLabel = ui->VerifierLabel->text();
-    VerifierLabel.append(VerifierAcc+"%");
-    ui->VerifierLabel->setText(VerifierLabel);
-
-    QString OCRLabel = ui->OCRLabel->text();
-    OCRLabel.append(OcrAcc+"%");
-    ui->OCRLabel->setText(OCRLabel);
+     if(fverifier.exists())
+     {
+       Load_comparePage(page.toStdString());
+       UpdateUI();
+     }
+     else{
+          QMessageBox::information(0, "Error", "File Doesn't Exist");
+     }
 }
 
 DiffView::~DiffView()
@@ -150,9 +121,8 @@ void DiffView::Load_comparePage(string page)
         doc.setHtml(qs3);
         qs3 = doc.toPlainText().replace(" \n","\n");
 
-        QString title = "Compare Verifier Output " + QString::fromStdString(page) ;
-
-        int l1,l2,l3, DiffOcr_Corrector,DiffCorrector_Verifier,DiffOcr_Verifier; float correctorChangesPerc,verifierChangesPerc,ocrErrorPerc;
+        int l1,l2,l3, DiffOcr_Corrector,DiffCorrector_Verifier,DiffOcr_Verifier;
+        float ocrErrorPerc;
 
         l1 = mProject.GetGraphemesCount(qs1); l2 = mProject.GetGraphemesCount(qs2); l3 = mProject.GetGraphemesCount(qs3);
 
@@ -177,7 +147,7 @@ void DiffView::Load_comparePage(string page)
         DiffOcr_Verifier = mProject.LevenshteinWithGraphemes(diffs3);
         ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l3)*100;
         if(ocrErrorPerc>100) ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l1)*100;
-        float ocrAcc = 100 - (((float)lround(ocrErrorPerc*100))/100);
+        OcrAcc = 100 - (((float)lround(ocrErrorPerc*100))/100);
 
         doc.setHtml(qs1);
         QString interntext = doc.toPlainText();
@@ -191,32 +161,36 @@ void DiffView::Load_comparePage(string page)
         auto diffs = dmp.diff_main(ocrtext,interntext);
         QString textcolor = "ffd13d";
         QList<QString> htmlList1 = dmp.diff_prettyHtml(diffs, textcolor);
-        QString html1 = htmlList1.first();
-        QString html2 = htmlList1.last();
+        html1 = htmlList1.first();
+        html2 = htmlList1.last();
 
         diffs = dmp.diff_main(interntext,verifiertext);
         textcolor = "90ff90";
         QList<QString> htmlList2 = dmp.diff_prettyHtml(diffs, textcolor);
-        QString html3 = htmlList2.first();
+        html3 = htmlList2.first();
         html1.remove("&para;");
         html2.remove("&para;");
         html3.remove("&para;");
-
-        ui->InternText->setHtml(html1);
-        ui->OCRText->setHtml(html2);
-        ui->VerifierText->setHtml(html3);
+        QString title = "Compare Verifier Output " + QString::fromStdString(page) ;
         setWindowTitle(title);
-
-        //Updating calculated percentages into UI
-        QString corrChanges = QString::number(correctorChangesPerc,'f',2) + "%";
-        ui->InternLabel->setText("<b><p>2. Corrector's Output Text</b></p>Changes Made by Corrector:  " + corrChanges);
-
-        QString VerifierLabel = QString::number(verifierChangesPerc,'f',2) + "%";
-        ui->VerifierLabel->setText("<p><b>3. Verified Text</b></p>Changes Made by Verifier: " + VerifierLabel);
-
-        QString OCRLabel = QString::number(ocrAcc,'f',2) + "%";
-        ui->OCRLabel->setText("<p><b>1. Initial Text </b></p>Accuracy of OCR Text (w.r.t Verified Text): " +OCRLabel);
      }
+}
+
+void DiffView::UpdateUI()
+{
+    ui->InternText->setHtml(html1);
+    ui->OCRText->setHtml(html2);
+    ui->VerifierText->setHtml(html3);
+
+    //!Updating calculated percentages into UI
+    QString corrChanges = QString::number(correctorChangesPerc,'f',2) + "%";
+    ui->InternLabel->setText("<b><p>2. Corrector's Output Text</b></p>Changes Made by Corrector:  " + corrChanges);
+
+    QString VerifierLabel = QString::number(verifierChangesPerc,'f',2) + "%";
+    ui->VerifierLabel->setText("<p><b>3. Verified Text</b></p>Changes Made by Verifier: " + VerifierLabel);
+
+    QString OCRLabel = QString::number(OcrAcc,'f',2) + "%";
+    ui->OCRLabel->setText("<p><b>1. Initial Text </b></p>Accuracy of OCR Text (w.r.t Verified Text): " +OCRLabel);
 }
 
 void DiffView::on_PrevButton_clicked()
@@ -225,7 +199,7 @@ void DiffView::on_PrevButton_clicked()
     string no = "";
     size_t loc;
     QString ext = "";
-    if(!DiffView::GetPageNumber(pageNo, &no, &loc, &ext))
+    if(!mProject.GetPageNumber(pageNo, &no, &loc, &ext))
         return;
 
     if(stoi(no)-1>0)   //to avoid negative page numbers
@@ -240,6 +214,7 @@ void DiffView::on_PrevButton_clicked()
            pageNo.replace(loc,no.size(),to_string(stoi(no) - 1)); //Decrement the page number
            QString nos = QString::fromStdString(to_string(stoi(no)-1));
            Load_comparePage(pageNo);
+           UpdateUI();
          }
          else{
              return ;
@@ -253,9 +228,8 @@ void DiffView::on_NextButton_clicked()
     string no = "";
     size_t loc;
     QString ext = "";
-    if(!DiffView::GetPageNumber(pageNo, &no, &loc, &ext))
+    if(!mProject.GetPageNumber(pageNo, &no, &loc, &ext))
         return;
-
     //!check if file exists
     string pages = pageNo;
     pages.replace(loc,no.size(),to_string(stoi(no) + 1));
@@ -265,28 +239,10 @@ void DiffView::on_NextButton_clicked()
      {
        pageNo.replace(loc,no.size(),to_string(stoi(no) + 1)); //Increment the page number
        Load_comparePage(pageNo);
+       UpdateUI();
      }
      else{
          return ;
      }
 }
 
-int DiffView::GetPageNumber(string localFilename, string *no, size_t *loc, QString *ext)
-{
-
-    string nos = "0123456789";
-    *no = "";
-    *loc = localFilename.find(".txt");
-    *ext = "txt";
-    if(*loc == string::npos) {
-        *loc = localFilename.find(".html");
-        *ext = "html";
-    }
-    if(*loc == string::npos)
-        return 0;
-    string s = localFilename.substr((*loc)-1,1);
-    while(nos.find(s) != string::npos) {
-        *no = s + *no; (*loc)--; s = localFilename.substr((*loc)-1,1);
-    }
-    return 1;
-}

@@ -21,8 +21,8 @@
        <string/>
       </property>
       <property name="icon">
-       <iconset>
-        <normaloff>../../../../Downloads/previous.png</normaloff>../../../../Downloads/previous.png</iconset>
+       <iconset resource="AppResources.qrc">
+        <normaloff>:/Images/previous.png</normaloff>:/Images/previous.png</iconset>
       </property>
      </widget>
     </item>
@@ -139,8 +139,8 @@ p, li { white-space: pre-wrap; }
        <string/>
       </property>
       <property name="icon">
-       <iconset>
-        <normaloff>../../../../Downloads/next.png</normaloff>../../../../Downloads/next.png</iconset>
+       <iconset resource="AppResources.qrc">
+        <normaloff>:/Images/next.png</normaloff>:/Images/next.png</iconset>
       </property>
      </widget>
     </item>
@@ -159,6 +159,10 @@ p, li { white-space: pre-wrap; }
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="AppResources.qrc"/>
+  <include location="AppResources.qrc"/>
+  <include location="AppResources.qrc"/>
+ </resources>
  <connections/>
 </ui>

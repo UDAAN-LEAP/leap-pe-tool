@@ -337,89 +337,6 @@ void DisplayError(QString error)
     msgBox.exec();
 }
 
-/*!
- * \brief GetPageNumber
- * \param localFilename
- * \param no
- * \param loc
- * \param ext
- * \return
- */
-int GetPageNumber(string localFilename, string *no, size_t *loc, QString *ext)
-{
-
-    string nos = "0123456789";
-    *no = "";
-    *loc = localFilename.find(".txt");
-    *ext = "txt";
-    if(*loc == string::npos) {
-        *loc = localFilename.find(".html");
-        *ext = "html";
-    }
-    if(*loc == string::npos)
-        return 0;
-    string s = localFilename.substr((*loc)-1,1);
-    while(nos.find(s) != string::npos) {
-        *no = s + *no; (*loc)--; s = localFilename.substr((*loc)-1,1);
-    }
-    return 1;
-}
-
-/*!
- * \brief GetGraphemesCount
- * \param string
- * \return
- */
-int GetGraphemesCount(QString string)
-{
-    int count = 0;
-    QTextBoundaryFinder finder = QTextBoundaryFinder(QTextBoundaryFinder::BoundaryType::Grapheme, string);
-    while (finder.toNextBoundary() != -1) {
-        count++;
-    }
-    int spaces = string.count(' ');
-    return count - spaces;
-}
-
-/*!
- * \brief LevenshteinWithGraphemes
- * \param diffs
- * \return
- */
-int LevenshteinWithGraphemes(QList<Diff> diffs)
-{
-    int levenshtein = 0;
-    QString diffChars = "";
-    QString insertions = "";
-    QString deletions = "";
-    foreach(Diff aDiff, diffs) {
-        switch (aDiff.operation) {
-        case INSERT:
-            insertions += aDiff.text;
-            break;
-        case DELETE:
-            deletions += aDiff.text;
-            break;
-        case EQUAL:
-            // A deletion and an insertion is one substitution.
-            if(GetGraphemesCount(insertions)> GetGraphemesCount(deletions))
-                levenshtein += insertions.length();
-            else
-                levenshtein += deletions.length();
-            insertions = "";
-            deletions = "";
-            break;
-        default:
-            break;
-        }
-    }
-    if(GetGraphemesCount(insertions)> GetGraphemesCount(deletions))
-        levenshtein += insertions.length();
-    else
-        levenshtein += deletions.length();
-    return levenshtein;
-}
-
 vector<string> vGPage, vIPage, vCPage; // for calculating WER
 
 vector<string> vBest;
@@ -1347,8 +1264,8 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
 
         size_t loc;
         QString ext = "";
-         //qDebug()<<"CURR2"<<localFilename<<endl;
-        if(!GetPageNumber(localFilename, &no, &loc, &ext))
+
+        if(!mProject.GetPageNumber(localFilename, &no, &loc, &ext))
             return;
 
         localFilename.replace(loc,no.size(),to_string(stoi(no) + 1));   //Increments page number by one
@@ -1356,13 +1273,12 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
         QFile *file = new QFile(QString::fromStdString(localFilename));
         qDebug()<<"FN"<<file->fileName();
         QFileInfo finfo(file->fileName());
-//       QString na= finfo.fileName();
-//       qDebug()<<"AV"<<na<<endl;
+
         if(!(finfo.exists() && finfo.isFile())){
             return; }
-         //qDebug()<<"CURR1"<<localFilename<<endl;
+
         //!Extract page number from tab name and set the incremented page number as a new tab name and Loads the file
-        if(!GetPageNumber(localCurrentTabPageName, &no, &loc, &ext))
+        if(!mProject.GetPageNumber(localCurrentTabPageName, &no, &loc, &ext))
             return;
         localCurrentTabPageName.replace(loc,no.size(),to_string(stoi(no) + 1));  //Increments page number by one
         currentTabPageName = QString::fromStdString(localCurrentTabPageName);
@@ -1417,7 +1333,7 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
         string no = "";
         size_t loc;
         QString ext = "";
-        if(!GetPageNumber(localFilename, &no, &loc, &ext))
+        if(!mProject.GetPageNumber(localFilename, &no, &loc, &ext))
             return;
         localFilename.replace(loc,no.size(),to_string(stoi(no) - 1));    //Version is decremented for Verifier
 
@@ -1428,7 +1344,7 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
             return;
 
         //!Extract page number from tab name and set the decremented page number as a new tab name and Loads the file
-        if(!GetPageNumber(localCurrentTabPageName, &no, &loc, &ext))
+        if(!mProject.GetPageNumber(localCurrentTabPageName, &no, &loc, &ext))
             return;
         localCurrentTabPageName.replace(loc,no.size(),to_string(stoi(no) - 1));
         currentTabPageName = QString::fromStdString(localCurrentTabPageName);  //sets the decremented page number
@@ -2758,7 +2674,7 @@ void MainWindow::on_actionErrorDetectionRepUniq_triggered()
  * Percent Change made by Corrector wrt OCR Text
  * Percent Word Errors
  * Percent Accuracy of OCR
- * \sa diff_match_patch::diff_main(), MainWindow::LevenshteinWithGraphemes(), MainWindow::GetGraphemesCount()
+ * \sa diff_match_patch::diff_main(),  Project::LevenshteinWithGraphemes(), Project::GetGraphemesCount()
 */
 void MainWindow::on_actionAccuracyLog_triggered()
 {
@@ -2837,7 +2753,7 @@ void MainWindow::on_actionAccuracyLog_triggered()
         doc.setHtml(qs3);
         qs3 = doc.toPlainText().replace(" \n","\n");
 
-        l1 = GetGraphemesCount(qs1); l2 = GetGraphemesCount(qs2); l3 = GetGraphemesCount(qs3);
+        l1 = mProject.GetGraphemesCount(qs1); l2 = mProject.GetGraphemesCount(qs2); l3 = mProject.GetGraphemesCount(qs3);
         if(qs1=="" | qs2 == "" | qs3 == "")
         {
             continue;
@@ -2846,14 +2762,14 @@ void MainWindow::on_actionAccuracyLog_triggered()
         diff_match_patch dmp;
 
         auto diffs1 = dmp.diff_main(qs1,qs2);
-        DiffOcr_Corrector = LevenshteinWithGraphemes(diffs1);
+        DiffOcr_Corrector = mProject.LevenshteinWithGraphemes(diffs1);
         correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l2)*100;
         if(correctorChangesPerc>100)
             correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l1)*100;
         correctorChangesPerc = (((float)lround(correctorChangesPerc*100))/100);
 
         auto diffs2 = dmp.diff_main(qs2,qs3);
-        DiffCorrector_Verifier = LevenshteinWithGraphemes(diffs2);
+        DiffCorrector_Verifier = mProject.LevenshteinWithGraphemes(diffs2);
         verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l3)*100;
         if(verifierChangesPerc>100)
             verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l2)*100;
@@ -2861,7 +2777,7 @@ void MainWindow::on_actionAccuracyLog_triggered()
         float correctorCharAcc =100- (((float)lround(verifierChangesPerc*100))/100); //Corrector accuracy = 100-changes mabe by Verfier
 
         auto diffs3 = dmp.diff_main(qs1,qs3);
-        DiffOcr_Verifier = LevenshteinWithGraphemes(diffs3);
+        DiffOcr_Verifier = mProject.LevenshteinWithGraphemes(diffs3);
         ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l3)*100;
         if(ocrErrorPerc>100)
             ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l1)*100;
@@ -3085,18 +3001,61 @@ void MainWindow::on_actionAllFontProperties_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
     QFont initialFont = curr_browser->font();      // initial font face
+    QTextCursor cursor = curr_browser->textCursor();
+
     auto pointsize = curr_browser->fontPointSize();
 
     if(pointsize) initialFont.setPointSize(pointsize);      // initial font size
     bool ok;
     QFont font = QFontDialog::getFont(&ok, initialFont, this);
 
+    //!Filter the font properities
+      QTextCharFormat applyFont;
+      qreal wgt = font.pointSize();
+      QString fam = font.family();
+      bool strike = font.strikeOut();
+      bool underline = font.underline();
+      qreal LetterSpacing=font.letterSpacing();
+      qreal WordSpacing = font.wordSpacing();
+      int stretch = font.stretch();
+      auto styleHint = font.styleHint();
+      auto styleStrategy = font.styleStrategy();
+      auto letterSpacingType = font.letterSpacingType();
+      bool overline = font.overline();
+      bool fixedpitch = font.fixedPitch();
+      auto hintingpref = font.hintingPreference();
+
+      applyFont.setFontPointSize(wgt);
+      applyFont.setFontFamily(fam);
+      applyFont.setFontStrikeOut(strike);
+      applyFont.setFontUnderline(underline);
+      applyFont.setFontLetterSpacing(LetterSpacing);
+      applyFont.setFontWordSpacing(WordSpacing);
+      applyFont.setFontStretch(stretch);
+      applyFont.setFontStyleHint(styleHint,styleStrategy);
+      applyFont.setFontLetterSpacingType(letterSpacingType);
+      applyFont.setFontOverline(overline);
+      applyFont.setFontFixedPitch(fixedpitch);
+      applyFont.setFontHintingPreference(hintingpref);
+
+
+      //! Apply bold and italics if present
+      if(font.bold())
+      {
+          qreal weight  =font.weight();
+          applyFont.setFontWeight(weight);
+      }
+      if(font.italic())
+      {
+          bool Italics = font.italic();
+          applyFont.setFontItalic(Italics);
+      }
+
     /*! If user clicks OK then change to selected font with properties*/
     if(ok)
     {
-        QTextCharFormat newFont;
-        newFont.setFont(font);
-        curr_browser->textCursor().mergeCharFormat(newFont);
+        cursor.mergeCharFormat(applyFont);
+        curr_browser->textCursor().mergeCharFormat(applyFont);
     }
 }
 
@@ -3118,6 +3077,8 @@ void MainWindow::on_actionBold_triggered()
     fmt.setFontWeight(isBold ? QFont::Normal : QFont::Bold);
     cursor.mergeCharFormat(fmt);
     curr_browser->mergeCurrentCharFormat(fmt);
+  //  curr_browser->setFont(QFontDialog::getFont(0,QFont::Bold,curr_browser->font()));
+   // cursor.setCharFormat(QFontDialog::getFont(0,QFont::Bold,curr_browser->font()));
 }
 
 /*!
@@ -4769,7 +4730,7 @@ void MainWindow::on_viewComments_clicked()
             textCursor.setPosition(anchor+1);
             //textCursor.movePosition(QTextCursor::NextCharacter , QTextCursor::MoveAnchor, 1);
         }
-        totalCharErrors = GetGraphemesCount(highlightedChars);
+        totalCharErrors = mProject.GetGraphemesCount(highlightedChars);
 
         int totalChars=0;
         QString currentText = curr_browser->toPlainText();
@@ -4827,7 +4788,7 @@ void MainWindow::on_compareCorrectorOutput_clicked()
 
     if(mProject.get_version().toInt())   //checks if a project is open or not
     {
-    QString qs1="", qs2="";
+    //QString qs1="", qs2="";
     QString page = gCurrentPageName;
 
     //!checks whether users have selected a page
@@ -4839,155 +4800,11 @@ void MainWindow::on_compareCorrectorOutput_clicked()
 
     QString fpath = gDirTwoLevelUp;
     QString file = gDirTwoLevelUp + "/CorrectorOutput/" + page;
-    qDebug()<<"compare "<<file;
+
     //! Opens corresponding OCR text file and image
     if(!file.isEmpty())
     {
-        QString correctortext = file;
-        QString ocrtext = file;
-        ocrtext.replace("CorrectorOutput","Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-        ocrtext.replace(".html",".txt");
-        QString ocrimage = ocrtext;
-        ocrimage.replace("Inds", "Images");
-        QString temp = ocrimage;
-        int flag=0;
-        temp.replace(".txt", ".jpeg");
-        if (QFile::exists(temp) && flag==0)
-        {
-            ocrimage=temp;
-            flag=1;
-
-        }
-        else
-        {
-            temp=ocrimage;
-        }
-        temp.replace(".html", ".jpeg");
-        if (QFile::exists(temp) && flag==0)
-        {
-            ocrimage=temp;
-            flag=1;
-
-        }
-        else
-        {
-            temp=ocrimage;
-        }
-        temp.replace(".txt", ".png");
-        if (QFile::exists(temp) && flag==0)
-        {
-            ocrimage=temp;
-            flag=1;
-
-        }
-        else
-        {
-            temp=ocrimage;
-        }
-        temp.replace(".html", ".png");
-        if (QFile::exists(temp) && flag==0)
-        {
-            ocrimage=temp;
-            flag=1;
-
-        }
-        else
-        {
-            temp=ocrimage;
-        }
-        temp.replace(".txt", ".jpg");
-        if (QFile::exists(temp) && flag==0)
-        {
-            ocrimage=temp;
-            flag=1;
-
-        }
-        else
-        {
-            temp=ocrimage;
-        }
-        temp.replace(".html", ".jpg");
-        if (QFile::exists(temp) && flag==0)
-        {
-            ocrimage=temp;
-            flag=1;
-
-        }
-        else
-        {
-            temp=ocrimage;
-        }
-
-        //! select the image. look for jpeg, jpg and png(select first whichever is found)
-        QFileInfo check_file(ocrimage);
-        if (!(check_file.exists() && check_file.isFile()))
-        {
-            ocrimage.replace(".jpeg", ".jpg");
-            check_file.setFile(ocrimage);
-            if (!(check_file.exists() && check_file.isFile()))
-            {
-                ocrimage.replace(".jpg", ".png");
-                check_file.setFile(ocrimage);
-            }
-        }
-
-        //! Reads the OCR text file
-        if(!ocrtext.isEmpty())
-        {
-            QFile sFile(ocrtext);
-            if(sFile.open(QFile::ReadOnly | QFile::Text))
-            {
-                QTextStream in(&sFile);
-                in.setCodec("UTF-8");
-                qs1 = in.readAll().replace(" \n","\n");
-                //! Displays an error if OCR text file is empty
-                if(qs1=="")
-                {
-                    DisplayError("Error in Displaying File: "+ ocrtext+ "is Empty");
-                    return;
-                }
-                sFile.close();
-            }
-        }
-
-        //! Reads the Corrector's Output file
-        if(!correctortext.isEmpty())
-        {
-            QFile sFile(correctortext);
-            if(sFile.open(QFile::ReadOnly | QFile::Text))
-            {
-                QTextStream in(&sFile);
-                in.setCodec("UTF-8");
-                qs2 = in.readAll();
-
-                //! Displays an error if Corrector's Output file is empty
-                if(qs2=="")
-                {
-                    DisplayError("Error in Displaying File: "+ correctortext + "is Empty");
-                    return;
-                }
-                sFile.close();
-            }
-
-        }
-        QTextDocument doc;
-        doc.setHtml(qs2);
-        qs2 = doc.toPlainText().replace(" \n", "\n");
-
-        int l1,l2, DiffOcr_Corrector; float correctorChangesPerc;
-
-        l1 = GetGraphemesCount(qs1); l2 = GetGraphemesCount(qs2);
-
-        diff_match_patch dmp;
-        auto diffs1 = dmp.diff_main(qs1,qs2);
-
-        //! Calculates the percentage of changes made by the corrector in OCR text file
-        DiffOcr_Corrector = LevenshteinWithGraphemes(diffs1);
-        correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l2)*100;
-        if(correctorChangesPerc>100) correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l1)*100;
-        correctorChangesPerc = (((float)lround(correctorChangesPerc*100))/100);
-
-        InternDiffView *dv = new InternDiffView(qs1,qs2,ocrimage,fpath,page,QString::number(correctorChangesPerc));   //Fetch OCR Image in DiffView2 and Set
+        InternDiffView *dv = new InternDiffView(this, page, fpath);   //Fetch OCR Image in DiffView2 and Set
         dv->show();
       }
     }
@@ -5000,14 +4817,13 @@ void MainWindow::on_compareCorrectorOutput_clicked()
  * \fn MainWindow::on_compareVerifierOutput_clicked
  * \brief Compares Verifier's Output, Corrector's Output and OCR text.
  * This function also displays the percentage of changes made by the Corrector and Verifier, and the accuracy of the OCR text w.r.t. the verified text.
- * \sa GetGraphemesCount(), LevenshteinWithGraphemes(), DiffView()
+ * \sa DiffView()
  */
 void MainWindow::on_compareVerifierOutput_clicked() //Verifier-Version
 {
 
   if(mProject.get_version().toInt())
    {
-    QString qs1="", qs2="",qs3="";
     QString page =gCurrentPageName;
 
     //!Check whether the user has clicked a page
@@ -5024,108 +4840,7 @@ void MainWindow::on_compareVerifierOutput_clicked() //Verifier-Version
     //! Opens corresponding Corrector's Output and OCR text file
     if(!file.isEmpty())
     {
-        QString verifierText = file;
-        QString correctorText = file.replace("VerifierOutput","CorrectorOutput"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-        QString ocrText = file.replace("CorrectorOutput","Inds"); //CAN CHANGE ACCORDING TO FILE STRUCTURE
-        ocrText.replace(".html",".txt");
-
-        //! Reads OCR text file
-        if(!ocrText.isEmpty())
-        {
-            QFile sFile(ocrText);
-            if(sFile.open(QFile::ReadOnly | QFile::Text))
-            {
-                QTextStream in(&sFile);
-                in.setCodec("UTF-8");
-                qs1 = in.readAll().replace(" \n","\n");
-
-                //! Displays an error if OCR text file is empty
-                if(qs1=="")
-                {
-                    DisplayError("Error in Displaying File: "+ ocrText + "is Empty");
-                    return;
-                }
-                sFile.close();
-            }
-        }
-
-        //! Reads Corrector's Output file
-        if(!correctorText.isEmpty())
-        {
-            QFile sFile(correctorText);
-            if(sFile.open(QFile::ReadOnly | QFile::Text))
-            {
-                QTextStream in(&sFile);
-                in.setCodec("UTF-8");
-                qs2 = in.readAll();
-
-                //! Displays an error if Corrector's Output file is empty
-                if(qs2=="")
-                {
-                    DisplayError("Error in Displaying File: "+ correctorText + "is Empty");
-                    return;
-                }
-                sFile.close();
-            }
-        }
-
-        //! Reads Verifier's Output file
-        if(!verifierText.isEmpty())
-        {
-            QFile sFile(verifierText);
-            if(sFile.open(QFile::ReadOnly | QFile::Text))
-            {
-                QTextStream in(&sFile);
-                in.setCodec("UTF-8");
-                qs3 = in.readAll();
-
-                 //! Displays an error if Verifier's Output file is empty
-                if(qs3=="")
-                {
-                    DisplayError("Error in Displaying File: "+ verifierText + "is Empty");
-                    return;
-                }
-                sFile.close();
-            }
-
-        }
-        QTextDocument doc;
-
-        doc.setHtml(qs2);
-        qs2 = doc.toPlainText().replace(" \n","\n");
-
-        doc.setHtml(qs3);
-        qs3 = doc.toPlainText().replace(" \n","\n");
-
-        int l1,l2,l3, DiffOcr_Corrector,DiffCorrector_Verifier,DiffOcr_Verifier; float correctorChangesPerc,verifierChangesPerc,ocrErrorPerc;
-
-        l1 = GetGraphemesCount(qs1); l2 = GetGraphemesCount(qs2); l3 = GetGraphemesCount(qs3);
-
-        diff_match_patch dmp;
-
-        //! Calculates the percentage of changes made by the corrector in OCR text file
-        auto diffs1 = dmp.diff_main(qs1,qs2);
-        DiffOcr_Corrector = LevenshteinWithGraphemes(diffs1);
-        correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l2)*100;
-        if(correctorChangesPerc>100) correctorChangesPerc = ((float)(DiffOcr_Corrector)/(float)l1)*100;
-        correctorChangesPerc = (((float)lround(correctorChangesPerc*100))/100);
-
-        //! Calculates the percentage of changes made by the verifier in Corrector's Output file
-        auto diffs2 = dmp.diff_main(qs2,qs3);
-        DiffCorrector_Verifier = LevenshteinWithGraphemes(diffs2);
-        verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l3)*100;
-        if(verifierChangesPerc>100) verifierChangesPerc = ((float)(DiffCorrector_Verifier)/(float)l2)*100;
-        verifierChangesPerc = (((float)lround(verifierChangesPerc*100))/100);
-
-        //! Calculates the accuracy of OCR text w.r.t. Verified text
-        auto diffs3 = dmp.diff_main(qs1,qs3);
-        DiffOcr_Verifier = LevenshteinWithGraphemes(diffs3);
-        ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l3)*100;
-        if(ocrErrorPerc>100) ocrErrorPerc = ((float)(DiffOcr_Verifier)/(float)l1)*100;
-        float ocrAcc = 100 - (((float)lround(ocrErrorPerc*100))/100);
-
-        DiffView *dv = new DiffView(qs1,qs2,qs3,page,fpath,QString::number(correctorChangesPerc),QString::number(verifierChangesPerc),QString::number(ocrAcc));
-        qDebug()<<correctorChangesPerc<<verifierChangesPerc<<ocrAcc;
+        DiffView *dv = new DiffView(this,page,fpath);
         dv->show();
     }
   }

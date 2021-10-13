@@ -28,7 +28,6 @@ TextFinder::TextFinder(QWidget *parent) :
     this->setFixedSize(this->size());
     ui->findLineEdit->installEventFilter(this);
     ui->replaceLineEdit->installEventFilter(this);
-
 }
 
 TextFinder::~TextFinder()

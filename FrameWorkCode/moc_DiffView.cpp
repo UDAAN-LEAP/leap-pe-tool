@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_DiffView_t {
-    QByteArrayData data[15];
-    char stringdata0[147];
+    QByteArrayData data[8];
+    char stringdata0[92];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,21 +37,13 @@ QT_MOC_LITERAL(2, 31, 0), // ""
 QT_MOC_LITERAL(3, 32, 16), // "Load_comparePage"
 QT_MOC_LITERAL(4, 49, 6), // "string"
 QT_MOC_LITERAL(5, 56, 4), // "page"
-QT_MOC_LITERAL(6, 61, 13), // "GetPageNumber"
-QT_MOC_LITERAL(7, 75, 13), // "localFilename"
-QT_MOC_LITERAL(8, 89, 7), // "string*"
-QT_MOC_LITERAL(9, 97, 2), // "no"
-QT_MOC_LITERAL(10, 100, 7), // "size_t*"
-QT_MOC_LITERAL(11, 108, 3), // "loc"
-QT_MOC_LITERAL(12, 112, 8), // "QString*"
-QT_MOC_LITERAL(13, 121, 3), // "ext"
-QT_MOC_LITERAL(14, 125, 21) // "on_NextButton_clicked"
+QT_MOC_LITERAL(6, 61, 21), // "on_NextButton_clicked"
+QT_MOC_LITERAL(7, 83, 8) // "UpdateUI"
 
     },
     "DiffView\0on_PrevButton_clicked\0\0"
-    "Load_comparePage\0string\0page\0GetPageNumber\0"
-    "localFilename\0string*\0no\0size_t*\0loc\0"
-    "QString*\0ext\0on_NextButton_clicked"
+    "Load_comparePage\0string\0page\0"
+    "on_NextButton_clicked\0UpdateUI"
 };
 #undef QT_MOC_LITERAL
 
@@ -71,13 +63,13 @@ static const uint qt_meta_data_DiffView[] = {
  // slots: name, argc, parameters, tag, flags
        1,    0,   34,    2, 0x08 /* Private */,
        3,    1,   35,    2, 0x08 /* Private */,
-       6,    4,   38,    2, 0x08 /* Private */,
-      14,    0,   47,    2, 0x08 /* Private */,
+       6,    0,   38,    2, 0x08 /* Private */,
+       7,    0,   39,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 4,    5,
-    QMetaType::Int, 0x80000000 | 4, 0x80000000 | 8, 0x80000000 | 10, 0x80000000 | 12,    7,    9,   11,   13,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -91,9 +83,8 @@ void DiffView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         switch (_id) {
         case 0: _t->on_PrevButton_clicked(); break;
         case 1: _t->Load_comparePage((*reinterpret_cast< string(*)>(_a[1]))); break;
-        case 2: { int _r = _t->GetPageNumber((*reinterpret_cast< string(*)>(_a[1])),(*reinterpret_cast< string*(*)>(_a[2])),(*reinterpret_cast< size_t*(*)>(_a[3])),(*reinterpret_cast< QString*(*)>(_a[4])));
-            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 3: _t->on_NextButton_clicked(); break;
+        case 2: _t->on_NextButton_clicked(); break;
+        case 3: _t->UpdateUI(); break;
         default: ;
         }
     }

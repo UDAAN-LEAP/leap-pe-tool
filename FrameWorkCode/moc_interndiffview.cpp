@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_InternDiffView_t {
-    QByteArrayData data[15];
-    char stringdata0[153];
+    QByteArrayData data[8];
+    char stringdata0[99];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,21 +38,12 @@ QT_MOC_LITERAL(3, 38, 16), // "Load_comparePage"
 QT_MOC_LITERAL(4, 55, 6), // "string"
 QT_MOC_LITERAL(5, 62, 4), // "page"
 QT_MOC_LITERAL(6, 67, 21), // "on_prevButton_clicked"
-QT_MOC_LITERAL(7, 89, 13), // "GetPageNumber"
-QT_MOC_LITERAL(8, 103, 13), // "localFilename"
-QT_MOC_LITERAL(9, 117, 7), // "string*"
-QT_MOC_LITERAL(10, 125, 2), // "no"
-QT_MOC_LITERAL(11, 128, 7), // "size_t*"
-QT_MOC_LITERAL(12, 136, 3), // "loc"
-QT_MOC_LITERAL(13, 140, 8), // "QString*"
-QT_MOC_LITERAL(14, 149, 3) // "ext"
+QT_MOC_LITERAL(7, 89, 9) // "Update_UI"
 
     },
     "InternDiffView\0on_NextButton_clicked\0"
     "\0Load_comparePage\0string\0page\0"
-    "on_prevButton_clicked\0GetPageNumber\0"
-    "localFilename\0string*\0no\0size_t*\0loc\0"
-    "QString*\0ext"
+    "on_prevButton_clicked\0Update_UI"
 };
 #undef QT_MOC_LITERAL
 
@@ -73,13 +64,13 @@ static const uint qt_meta_data_InternDiffView[] = {
        1,    0,   34,    2, 0x08 /* Private */,
        3,    1,   35,    2, 0x08 /* Private */,
        6,    0,   38,    2, 0x08 /* Private */,
-       7,    4,   39,    2, 0x08 /* Private */,
+       7,    0,   39,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 4,    5,
     QMetaType::Void,
-    QMetaType::Int, 0x80000000 | 4, 0x80000000 | 9, 0x80000000 | 11, 0x80000000 | 13,    8,   10,   12,   14,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -93,8 +84,7 @@ void InternDiffView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 0: _t->on_NextButton_clicked(); break;
         case 1: _t->Load_comparePage((*reinterpret_cast< string(*)>(_a[1]))); break;
         case 2: _t->on_prevButton_clicked(); break;
-        case 3: { int _r = _t->GetPageNumber((*reinterpret_cast< string(*)>(_a[1])),(*reinterpret_cast< string*(*)>(_a[2])),(*reinterpret_cast< size_t*(*)>(_a[3])),(*reinterpret_cast< QString*(*)>(_a[4])));
-            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
+        case 3: _t->Update_UI(); break;
         default: ;
         }
     }
