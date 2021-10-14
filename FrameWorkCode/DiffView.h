@@ -15,14 +15,6 @@ class DiffView : public QMainWindow
 public:
     DiffView(QWidget *parent,QString page, QString fpath);
 	~DiffView();
-    string pageNo;
-    QString gDirTwoLevelUp;
-    QString html1;
-    QString html2;
-    QString html3;
-    float verifierChangesPerc;
-    float correctorChangesPerc;
-    float OcrAcc;
 
 private slots:
     void UpdateUI();
@@ -33,4 +25,12 @@ private slots:
 private:
 	Ui::DiffView *ui;
     Project mProject;
+    string pageNo;
+    QString gDirTwoLevelUp;
+    QString html1;
+    QString html2;
+    QString html3;
+    float verifierChangesPerc;
+    float correctorChangesPerc;
+    float OcrAcc;
 };

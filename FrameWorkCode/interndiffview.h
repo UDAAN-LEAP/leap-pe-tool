@@ -16,13 +16,6 @@ class InternDiffView : public QMainWindow
 public:
     InternDiffView( QWidget *parent,  QString page, QString fpath);
 	~InternDiffView();
-   string pageNo;
-   QString gDirTwoLevelUp;
-   QGraphicsScene *scene = new QGraphicsScene(this);
-   QString html1;
-   QString html2;
-   QString ocrimage;
-   float correctorChangesPerc;
 
 private slots:
     void on_NextButton_clicked();
@@ -34,4 +27,11 @@ private:
 	Ui::InternDiffView *ui;
 	QImage img;
     Project mProject;
+    string pageNo;
+    QString gDirTwoLevelUp;
+    QGraphicsScene *scene = new QGraphicsScene(this);
+    QString html1;
+    QString html2;
+    QString ocrimage;
+    float correctorChangesPerc;
 };
