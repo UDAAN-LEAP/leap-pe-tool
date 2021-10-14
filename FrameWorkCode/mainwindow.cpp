@@ -615,37 +615,37 @@ void MainWindow::translate_replace(QAction* action)
  * \fn MainWindow::on_actionSanskrit_triggered()
  * \brief Sets the language of the current broweser to Sanskrit by by passing the SanFlag as true
  * \sa setText()
- */
 void MainWindow::on_actionSanskrit_triggered()
 {
     HinFlag = 0, SanFlag = 1;
     ui->textEdit->setText(gSanskrit);//whenever language change is required it will be converted to Sanskrit using the slpNPatternDict.h
     ui->hinButton->setChecked(HinFlag);
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionHindi_triggered
  * \brief Sets the language of the current broweser to Hindi by by passing the HinFlag as true
  * \sa setText()
- */
 void MainWindow::on_actionHindi_triggered()
 {
     HinFlag = 1, SanFlag = 0;
     ui->textEdit->setText(gHindi);  //whenever language change is required it will be converted to Hindi using the slpNPatternDict.h
     ui->sanButton->setChecked(SanFlag);
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionEnglish_triggered()
  * \brief Sets the language of the current broweser to Hindi by passing the HinFlag and the SanFlag as false
  * \sa setText()
- */
 void MainWindow::on_actionEnglish_triggered()
 {
     HinFlag = 0, SanFlag = 0;
     ui->hinButton->setChecked(HinFlag);//whenever language change is required it will be left as it is
     ui->sanButton->setChecked(SanFlag);
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionNew_triggered
@@ -1652,7 +1652,6 @@ void MainWindow::on_actionFind_and_Replace_triggered()
  * The new file contains the best strings of two OCR by their their edit distance
  *
  * \note vGBook and vIBook contain the loaded words from both OCR
- */
 void MainWindow::on_actionCreateBest2OCR_triggered()
 {
     if (curr_browser)
@@ -1697,12 +1696,11 @@ void MainWindow::on_actionCreateBest2OCR_triggered()
         best2 << endl;
     }
 }
-
+*/
 /*!
  * \fn MainWindow::on_actionCreateSuggestionLog_triggered
  * \brief The application crashes when CreateSuggestionLog is clicked under reports
  * \bug
- */
 void MainWindow::on_actionCreateSuggestionLog_triggered()
 {
     map<size_t, size_t> mapCorrect, mapinCorrect, mapTyping, mapSugg1, mapSugg2, mapSugg3, mapSugg4, mapSugg5, mapSugg6, mapSugg7, mapSugg8, mapSugg9, mapSugg10;
@@ -1787,10 +1785,11 @@ void MainWindow::on_actionCreateSuggestionLog_triggered()
                 string sCt1 = vecpC[t1];
                 size_t mineditIC = editDist(s1, sCt1);
                 if (mineditIC < minedit) { minedit = mineditIC; sC = sCt1; }
-                if (sCt1 == s1) {/*WER++;*/ break; }
+                //if (sCt1 == s1) {WER++;
+                                break; }
             }
 
-            //! now we have IndsWord in s1 and correct word in sC
+            // now we have IndsWord in s1 and correct word in sC
             if ((sC == (s1)))
             {
                 mapCorrect[page_no]++; //cout<< " in correct words ke liye if" << endl;
@@ -1822,7 +1821,7 @@ void MainWindow::on_actionCreateSuggestionLog_triggered()
                 {
                     mapSugg2[page_no]++;
                 }
-                /*else*/
+                //else
                 {
                     vector<string> Alligned = print5NearestEntries(TGBookP, s1);
                     if (Alligned.size() == 0) Alligned.push_back("");
@@ -1834,7 +1833,7 @@ void MainWindow::on_actionCreateSuggestionLog_triggered()
                     {
                         mapSugg3[page_no]++;
                     }
-                    /*else*/
+                    //else
                     {
                         vector<string>  Words = print1OCRNearestEntries(toslp1(s1), vIBook);
                         if (Words.size() == 0) Words.push_back("");
@@ -1842,11 +1841,11 @@ void MainWindow::on_actionCreateSuggestionLog_triggered()
                         {
                             mapSugg4[page_no]++;
                         }
-                        /*else*/
+                        //else
                         {
                             string samassugg = SamasBreakLRCorrect(toslp1(s1), Dict, PWords, TPWords, TPWordsP);
                             if (samassugg == sC) { mapSugg5[page_no]++; }
-                            /*else*/
+                            //else
                             {
                                 vector<string> PWords1 = print5NearestEntries(TPWords, s1);
                                 if (PWords1.size() == 0) PWords1.push_back("");
@@ -1854,7 +1853,7 @@ void MainWindow::on_actionCreateSuggestionLog_triggered()
                                 {
                                     mapSugg6[page_no]++;
                                 }
-                                /*else*/
+                                //else
                                 {
                                     string nearestCOnfconfirmingSuggvecFont;
                                     int min = 100;
@@ -1869,7 +1868,7 @@ void MainWindow::on_actionCreateSuggestionLog_triggered()
                                     {
                                         mapSugg7[page_no]++;
                                     }
-                                    /*else*/
+                                    //else
                                     {
                                         vector<string> Wordsdict;
                                         {
@@ -1879,14 +1878,14 @@ void MainWindow::on_actionCreateSuggestionLog_triggered()
                                         {
                                             mapSugg8[page_no]++;
                                         }
-                                        /*else*/
+                                        //else
                                         {
                                             string sugg9 = generatePossibilitesNsuggest(s1, TopConfusions, TopConfusionsMask, Dict, SRules);
                                             if (sugg9 == sC)
                                             {
                                                 mapSugg9[page_no]++;
                                             }
-                                            /*else*/
+                                            //else
                                             {
                                                 if (LSTM[s1] == sC)
                                                 {
@@ -1949,12 +1948,12 @@ void MainWindow::on_actionCreateSuggestionLog_triggered()
     rep << "TotalSuggestions =" << "sum(y3+y4+y5+y6+y7+y8+y9+y10+y11)" << endl;
     rep << "TotalSuggestionsWithLSTM =" << "sum(y3+y4+y5+y6+y7+y8+y9+y10+y11+y12)" << endl;
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionCreateSuggestionLogNearestPriority_triggered
  * \badcode Application crashes when CreateSuggestionLogNearestPriority is clicked under reports
  * \bug
- */
 void MainWindow::on_actionCreateSuggestionLogNearestPriority_triggered()
 {
     map<size_t, size_t> mapCorrect, mapinCorrect, mapTyping, mapSugg1, mapSugg2, mapSugg3, mapSugg4, mapSugg5, mapSugg6, mapSugg7, mapSugg8, mapSugg9, mapSugg10;
@@ -2037,7 +2036,7 @@ void MainWindow::on_actionCreateSuggestionLogNearestPriority_triggered()
                     minedit = mineditIC; sC = sCt1;
                 }
                 if (sCt1 == s1)
-                {/*WER++;*/
+                {//WER++;
                     break;
                 }
             }
@@ -2155,6 +2154,7 @@ void MainWindow::on_actionCreateSuggestionLogNearestPriority_triggered()
     rep << "x = 1:" << page_no << ";" << endl << "plot(x,y0,x,y1,x,y2,x,y3,x,y4,x,y5,x,y6,x,y7,x,y8);" << endl;
     rep << "legend(\'IncorrectWords\',\'CorrectWords\', \'#TypingCorrections\', \'#UniqueCorrectSugg1\',\'#UniqueCorrectSugg2\',\'#UniqueCorrectSugg3\',\'#UniqueCorrectSugg4\',\'#UniqueCorrectSugg5\',\'#UniqueCorrectSugg6\' )" << endl;
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionErrorDetectionRep_triggered
@@ -2163,7 +2163,6 @@ void MainWindow::on_actionCreateSuggestionLogNearestPriority_triggered()
  *  Checks correct marked words if they are correct or incorrect and after mapping it adds them in PWords file.
  *  Additionally, it creates an error detection report.
  * \sa searchS1inGVec(), toslp1()
- */
 void MainWindow::on_actionErrorDetectionRep_triggered()
 {
     //! Load foders in strC and strI
@@ -2268,7 +2267,7 @@ void MainWindow::on_actionErrorDetectionRep_triggered()
                     minedit = mineditIC; sC = sCt1;
                 }
                 if (sCt1 == s1)
-                {/*WER++;*/
+                {//WER++;
                     break;
                 }
             }
@@ -2303,6 +2302,7 @@ void MainWindow::on_actionErrorDetectionRep_triggered()
     rep << "legend(\'CorrectA\',\'InCorrectA\',\'CorrectMarkedcorrectA\', \'InCorrectMarkedCorrectA\')" << endl;
 
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionErrorDetectWithoutAdaptation_triggered
@@ -2311,7 +2311,6 @@ void MainWindow::on_actionErrorDetectionRep_triggered()
  * \brief Detects error in loaded file
  *  It checks correct marked words are correct or incorrect and after mapping it add them in PWords file.
  * \sa toslp1()
- */
 void MainWindow::on_actionErrorDetectWithoutAdaptation_triggered()
 {
     //! Load foders in strC and strI
@@ -2389,7 +2388,7 @@ void MainWindow::on_actionErrorDetectWithoutAdaptation_triggered()
                     minedit = mineditIC; sC = sCt1;
                 }
                 if (sCt1 == s1)
-                {/*WER++;*/
+                {//WER++;
                     break;
                 }
             }
@@ -2426,7 +2425,6 @@ void MainWindow::on_actionErrorDetectWithoutAdaptation_triggered()
  * \fn MainWindow::on_actionErrorDetectionRepUniq_triggered()
  * \brief Creates Report in CorrectorOutput named SuggRepUniq.txt of all unique suggestions for current file incorrect words
  * \sa hasM40PerAsci(), loadWConfusionsNindex1(), loadMap(), loadMaptoTrie(), loadConfusionsFont(), loadTopConfusions()
-*/
 void MainWindow::on_actionErrorDetectionRepUniq_triggered()
 {
     map<size_t, size_t> mapCorrect, mapinCorrect, mapTyping, mapSugg1, mapSugg2, mapSugg3, mapSugg4, mapSugg5, mapSugg6, mapSugg7, mapSugg8, mapSugg9, mapSugg10;
@@ -2662,6 +2660,7 @@ void MainWindow::on_actionErrorDetectionRepUniq_triggered()
     rep << "TotalSuggestions =" << "sum(y3+y4+y5+y6+y7+y8+y9+y10+y11)" << endl;
     rep << "TotalSuggestionsWithLSTM =" << "sum(y3+y4+y5+y6+y7+y8+y9+y10+y11+y12)" << endl;
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionAccuracyLog_triggered()
@@ -2839,7 +2838,6 @@ void MainWindow::on_actionViewAverageAccuracies_triggered()
  * \brief generates a wrong to right pair
  * A pair of 1 wrong word to 1 right word
  * \sa slpNPatternDict::generatePairs()
-*/
 void MainWindow::on_actionCPair_triggered()
 {
     QString strI = mFilename;
@@ -2899,6 +2897,7 @@ void MainWindow::on_actionCPair_triggered()
         }
     }
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionPrimarySecOCRPair_triggered()
@@ -2906,7 +2905,6 @@ void MainWindow::on_actionCPair_triggered()
  * and generates pairs with the help of generatePairsSpaced which generates
  * words with a space in betwen.
  * \sa slpNPatternDict::generatePairsSpaced()
-*/
 void MainWindow::on_actionPrimarySecOCRPair_triggered()
 {
     QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
@@ -2934,13 +2932,13 @@ void MainWindow::on_actionPrimarySecOCRPair_triggered()
         }
     }
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionCPairIEROcrVsCorrect_triggered()
  * \brief CPairs based upon Inds are generated with the help of
  * IEROCR files and these words are generated with the help of generatePairsIEROCR()
  * \sa slpNPatternDict::generatePairsIEROCR
-*/
 void MainWindow::on_actionCPairIEROcrVsCorrect_triggered()
 {
     QString strI1 = mFilename;    // Load foders in strC and strI
@@ -2960,13 +2958,13 @@ void MainWindow::on_actionCPairIEROcrVsCorrect_triggered()
     vector<string> wrong1, right1;
     generatePairsIEROCR(strI, strC, sRepx, sRepy);
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionCPairGEROcrVsCorrect_triggered()
  * \brief CPairs based upon Inds are generated with the help of
  * GEROCR files and these words are generated with the help of generatePairsGEROCR()
  * \sa slpNPatternDict::generatePairsGEROCR
-*/
 void MainWindow::on_actionCPairGEROcrVsCorrect_triggered()
 {
     QString strI1 = mFilename;       // Load foders in strC and strI
@@ -2986,6 +2984,7 @@ void MainWindow::on_actionCPairGEROcrVsCorrect_triggered()
     vector<string> wrong1, right1;
     generatePairsIEROCR(strI, strC, sRepx, sRepy);
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionAllFontProperties_triggered()
@@ -3486,7 +3485,6 @@ void MainWindow::on_actionRemove_Row_triggered()
  * This function opens a file open dialogue asking you to open a devnagri text file.
  * The output is a new file containing translitrated text
  * The output is saved as input_file_nameDev.txt
-*/
 void MainWindow::on_actionToSlp1_2_triggered()
 {
     QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
@@ -3503,6 +3501,7 @@ void MainWindow::on_actionToSlp1_2_triggered()
         }
     }
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionToDev_triggered()
@@ -3510,7 +3509,6 @@ void MainWindow::on_actionToSlp1_2_triggered()
  * Transliterated here means Hindi/ Sanskrit written in English.
  * This function opens a file open dialogue asking you to open a transliterated text file.
  * The output is saved as input_file_nameDev.txt
-*/
 void MainWindow::on_actionToDev_triggered()
 {
     QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
@@ -3527,6 +3525,7 @@ void MainWindow::on_actionToDev_triggered()
         }
     }
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionExtractDev_triggered()
@@ -3535,7 +3534,6 @@ void MainWindow::on_actionToDev_triggered()
  * The output is all words in the file seperated by newline
  * The output is saved as input_file_nameDev.txt
  * \sa slpNPatternDict::toDev()
-*/
 void MainWindow::on_actionExtractDev_triggered()
 {
     QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
@@ -3552,13 +3550,13 @@ void MainWindow::on_actionExtractDev_triggered()
         }
     }
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionEditDistRep_triggered
  * \brief Creates a new file that contains the edit distance values for each line present in the user opened file.
  * \note The new file is named as EditDistRep Which is appended to its original file name that user opened via OpenFileDialog window
  * \sa editDist()
- */
 void MainWindow::on_actionEditDistRep_triggered()
 {
     QString file1 = QFileDialog::getOpenFileName(this, "Open a File");        //Prompts a Open File Dialog window
@@ -3586,6 +3584,7 @@ void MainWindow::on_actionEditDistRep_triggered()
         }
     }
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionConfusionFreqHist_triggered()
@@ -3593,7 +3592,6 @@ void MainWindow::on_actionEditDistRep_triggered()
  * other Octaves which are neccesary to form a histogram to show the frequency of items. The alternate lines are
  * stored in two files.
  * \note The two new files are named as HistOCtaveRep and HistXaxisRep and the names are appended to its original filename.
- */
 void MainWindow::on_actionConfusionFreqHist_triggered()
 {
     QString file1 = QFileDialog::getOpenFileName(this, "Open a File");     //Prompts a Open File Dialog window
@@ -3621,6 +3619,7 @@ void MainWindow::on_actionConfusionFreqHist_triggered()
         }
     }
 }
+*/
 
 /*!
  * \fn MainWindow::on_actionFilterOutGT50EditDisPairs_triggered
@@ -3629,7 +3628,6 @@ void MainWindow::on_actionConfusionFreqHist_triggered()
  * comes out to be more than 50 then the words are not printed, else they are printed in the file which is created
  * with the same name as of project file with "EditDisLE50FilteredRep" at the end.
  * \sa editdistance::editDist()
- */
 void MainWindow::on_actionFilterOutGT50EditDisPairs_triggered()
 {
     QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
@@ -3654,10 +3652,11 @@ void MainWindow::on_actionFilterOutGT50EditDisPairs_triggered()
         }
     }
 }
+*/
+
 /*!
  * \brief MainWindow::on_actionPrepareFeatures_triggered()
  * deprecated; crashing
- */
 void MainWindow::on_actionPrepareFeatures_triggered()
 {
     QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
@@ -3721,6 +3720,7 @@ void MainWindow::on_actionPrepareFeatures_triggered()
         }
     }
 }
+*/
 
 /*!
  * \brief MainWindow::on_actionFetch_2_triggered()
@@ -5331,22 +5331,21 @@ void MainWindow::updateAverageAccuracies() //Verifier only
 /*!
  * \brief MainWindow::on_sanButton_toggled
  * \param checked
- */
 void MainWindow::on_sanButton_toggled(bool checked)
 {
     if(checked)
         on_actionSanskrit_triggered();
 }
-
+*/
 /*!
  * \brief MainWindow::on_hinButton_toggled
  * \param checked
- */
 void MainWindow::on_hinButton_toggled(bool checked)
 {
     if(checked)
         on_actionHindi_triggered();
 }
+*/
 
 /*!
  * \brief MainWindow::on_actionNew_Project_triggered

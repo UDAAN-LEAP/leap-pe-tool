@@ -117,49 +117,49 @@ private slots:
 
     void on_actionSugg_triggered();
 
-    void on_actionCreateBest2OCR_triggered();
+    //void on_actionCreateBest2OCR_triggered();
 
     void on_actionToSlp1_triggered();
 
-    void on_actionCreateSuggestionLog_triggered();
+    //void on_actionCreateSuggestionLog_triggered();
 
-    void on_actionCreateSuggestionLogNearestPriority_triggered();
+    //void on_actionCreateSuggestionLogNearestPriority_triggered();
 
-    void on_actionErrorDetectionRep_triggered();
+    //void on_actionErrorDetectionRep_triggered();
 
-    void on_actionErrorDetectWithoutAdaptation_triggered();
+    //void on_actionErrorDetectWithoutAdaptation_triggered();
 
-    void on_actionCPair_triggered();
+    //void on_actionCPair_triggered();
 
-    void on_actionToSlp1_2_triggered();
+    //void on_actionToSlp1_2_triggered();
 
-    void on_actionToDev_triggered();
+    //void on_actionToDev_triggered();
 
-    void on_actionExtractDev_triggered();
+    //void on_actionExtractDev_triggered();
 
-    void on_actionPrimarySecOCRPair_triggered();
+    //void on_actionPrimarySecOCRPair_triggered();
 
-    void on_actionCPairIEROcrVsCorrect_triggered();
+    //void on_actionCPairIEROcrVsCorrect_triggered();
 
-    void on_actionEditDistRep_triggered();
+    //void on_actionEditDistRep_triggered();
 
-    void on_actionConfusionFreqHist_triggered();
+    //void on_actionConfusionFreqHist_triggered();
 
-    void on_actionCPairGEROcrVsCorrect_triggered();
+    //void on_actionCPairGEROcrVsCorrect_triggered();
 
     //void on_actionCPairGEROcrVsCorrectSeparate_triggered();
 
-    void on_actionFilterOutGT50EditDisPairs_triggered();
+    //void on_actionFilterOutGT50EditDisPairs_triggered();
 
-    void on_actionPrepareFeatures_triggered();
+    //void on_actionPrepareFeatures_triggered();
 
-    void on_actionErrorDetectionRepUniq_triggered();
+    //void on_actionErrorDetectionRepUniq_triggered();
 
-    void on_actionSanskrit_triggered();
+    //void on_actionSanskrit_triggered();
 
-    void on_actionHindi_triggered();
+    //void on_actionHindi_triggered();
 
-    void on_actionEnglish_triggered();
+    //void on_actionEnglish_triggered();
 
     void on_actionBold_triggered();
 
@@ -259,9 +259,9 @@ private slots:
 
     void on_compareVerifierOutput_clicked();
 
-    void on_sanButton_toggled(bool checked);
+    //void on_sanButton_toggled(bool checked);
 
-    void on_hinButton_toggled(bool checked);
+    //void on_hinButton_toggled(bool checked);
 
     void on_actionLineSpace_triggered();
 

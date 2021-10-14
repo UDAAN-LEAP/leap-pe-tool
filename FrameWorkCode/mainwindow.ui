@@ -435,48 +435,8 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Reports</string>
     </property>
-    <addaction name="actionCreateBest2OCR"/>
-    <addaction name="actionCreateSuggestionLog"/>
-    <addaction name="actionCreateSuggestionLogNearestPriority"/>
-    <addaction name="actionErrorDetectionRep"/>
-    <addaction name="actionErrorDetectWithoutAdaptation"/>
-    <addaction name="actionErrorDetectionRepUniq"/>
     <addaction name="actionAccuracyLog"/>
     <addaction name="actionViewAverageAccuracies"/>
-   </widget>
-   <widget class="QMenu" name="menuSaveVariables">
-    <property name="title">
-     <string>SaveVariables</string>
-    </property>
-    <addaction name="actionCPair"/>
-    <addaction name="actionPrimarySecOCRPair"/>
-    <addaction name="actionCPairIEROcrVsCorrect"/>
-    <addaction name="actionCPairGEROcrVsCorrect"/>
-   </widget>
-   <widget class="QMenu" name="menuConvertFiles">
-    <property name="title">
-     <string>ConvertFiles</string>
-    </property>
-    <addaction name="actionToSlp1_2"/>
-    <addaction name="actionToDev"/>
-    <addaction name="actionExtractDev"/>
-    <addaction name="actionEditDistRep"/>
-    <addaction name="actionConfusionFreqHist"/>
-    <addaction name="actionFilterOutGT50EditDisPairs"/>
-   </widget>
-   <widget class="QMenu" name="menuFeatureExtraction">
-    <property name="title">
-     <string>FeatureExtraction</string>
-    </property>
-    <addaction name="actionPrepareFeatures"/>
-   </widget>
-   <widget class="QMenu" name="menuSelectLanguage">
-    <property name="title">
-     <string>SelectLanguage</string>
-    </property>
-    <addaction name="actionSanskrit"/>
-    <addaction name="actionHindi"/>
-    <addaction name="actionEnglish"/>
    </widget>
    <widget class="QMenu" name="menuFontAndLayout">
     <property name="title">
@@ -548,14 +508,10 @@ p, li { white-space: pre-wrap; }
     <addaction name="menuInstallation_Guide"/>
     <addaction name="actionTutorial"/>
    </widget>
-   <addaction name="menuSelectLanguage"/>
    <addaction name="menuOCR_Correction_Window"/>
    <addaction name="menuEdit"/>
    <addaction name="menuCreateReports"/>
-   <addaction name="menuSaveVariables"/>
    <addaction name="menuFontAndLayout"/>
-   <addaction name="menuConvertFiles"/>
-   <addaction name="menuFeatureExtraction"/>
    <addaction name="menuGit"/>
    <addaction name="menuDownload"/>
    <addaction name="menuHelp"/>
@@ -868,32 +824,9 @@ p, li { white-space: pre-wrap; }
     <string>FilterOutGT50EditDisPairs</string>
    </property>
   </action>
-  <action name="actionPrepareFeatures">
-   <property name="text">
-    <string>PrepareFeatures</string>
-   </property>
-  </action>
   <action name="actionErrorDetectionRepUniq">
    <property name="text">
     <string>ErrorSuggRepUniq</string>
-   </property>
-  </action>
-  <action name="actionSanskrit">
-   <property name="text">
-    <string>Sanskrit</string>
-   </property>
-  </action>
-  <action name="actionHindi">
-   <property name="text">
-    <string>Hindi/Marathi</string>
-   </property>
-  </action>
-  <action name="actionEnglish">
-   <property name="text">
-    <string>English</string>
-   </property>
-   <property name="toolTip">
-    <string>English</string>
    </property>
   </action>
   <action name="actionAllFontProperties">
