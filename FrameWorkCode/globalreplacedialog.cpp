@@ -72,3 +72,4 @@ void GlobalReplaceDialog::on_cancelButton_clicked()
 {
     this->close();
 }
+

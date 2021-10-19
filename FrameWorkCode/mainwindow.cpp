@@ -4972,8 +4972,9 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
 
     QMessageBox messageBox(this);
 
-    QAbstractButton *replaceButton = messageBox.addButton(tr("Replace"), QMessageBox::ActionRole);
-    QAbstractButton *cancelButton = messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+    //QAbstractButton *escButton = messageBox.addButton(tr("Esc"), QMessageBox::ActionRole);
+    QAbstractButton *replaceButton = messageBox.addButton(tr("Yes"), QMessageBox::ActionRole);
+    QAbstractButton *cancelButton = messageBox.addButton(tr("No"), QMessageBox::RejectRole);
 
     QString msg = "Do you want to replace " + old_word + " with " + new_word + " in rest of the pages?\n" ;
 
@@ -5849,7 +5850,7 @@ void MainWindow::closetab(int idx)
             on_actionSave_triggered();
     }
     delete ui->tabWidget_2->widget(idx);
-    deleteEditedFilesLog();
+    //deleteEditedFilesLog();
 }
 
 /*!

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'globalreplacedialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,12 +10,9 @@
 #define UI_GLOBALREPLACEDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
@@ -36,28 +33,28 @@ public:
     void setupUi(QDialog *GlobalReplaceDialog)
     {
         if (GlobalReplaceDialog->objectName().isEmpty())
-            GlobalReplaceDialog->setObjectName(QStringLiteral("GlobalReplaceDialog"));
+            GlobalReplaceDialog->setObjectName(QString::fromUtf8("GlobalReplaceDialog"));
         GlobalReplaceDialog->resize(400, 300);
         verticalLayout = new QVBoxLayout(GlobalReplaceDialog);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         listWidget = new QListWidget(GlobalReplaceDialog);
-        listWidget->setObjectName(QStringLiteral("listWidget"));
+        listWidget->setObjectName(QString::fromUtf8("listWidget"));
 
         verticalLayout->addWidget(listWidget);
 
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
 
         applyButton = new QPushButton(GlobalReplaceDialog);
-        applyButton->setObjectName(QStringLiteral("applyButton"));
+        applyButton->setObjectName(QString::fromUtf8("applyButton"));
 
         horizontalLayout->addWidget(applyButton);
 
         cancelButton = new QPushButton(GlobalReplaceDialog);
-        cancelButton->setObjectName(QStringLiteral("cancelButton"));
+        cancelButton->setObjectName(QString::fromUtf8("cancelButton"));
 
         horizontalLayout->addWidget(cancelButton);
 
@@ -72,9 +69,9 @@ public:
 
     void retranslateUi(QDialog *GlobalReplaceDialog)
     {
-        GlobalReplaceDialog->setWindowTitle(QApplication::translate("GlobalReplaceDialog", "Dialog", Q_NULLPTR));
-        applyButton->setText(QApplication::translate("GlobalReplaceDialog", "Apply", Q_NULLPTR));
-        cancelButton->setText(QApplication::translate("GlobalReplaceDialog", "Cancel", Q_NULLPTR));
+        GlobalReplaceDialog->setWindowTitle(QApplication::translate("GlobalReplaceDialog", "Dialog", nullptr));
+        applyButton->setText(QApplication::translate("GlobalReplaceDialog", "Yes", nullptr));
+        cancelButton->setText(QApplication::translate("GlobalReplaceDialog", "No", nullptr));
     } // retranslateUi
 
 };
