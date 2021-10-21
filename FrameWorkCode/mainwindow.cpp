@@ -4976,7 +4976,9 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     QAbstractButton *replaceButton = messageBox.addButton(tr("Yes"), QMessageBox::ActionRole);
     QAbstractButton *cancelButton = messageBox.addButton(tr("No"), QMessageBox::RejectRole);
 
-    QString msg = "Do you want to replace " + old_word + " with " + new_word + " in rest of the pages?\n" ;
+    QString msg = "Do you want to replace " + old_word + " with " + new_word + " in rest of the pages?\n"
+                + "\n\nClick \"Yes\" to save the changes and replace the word in the unedited pages."
+                + "\nClick \"No\" to save the changes and not replace the word in the unedited page.";
 
     messageBox.setWindowTitle("Global Replace");
     messageBox.setText(msg);

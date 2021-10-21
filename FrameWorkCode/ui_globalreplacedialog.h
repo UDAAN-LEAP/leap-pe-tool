@@ -16,6 +16,7 @@
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
@@ -25,6 +26,7 @@ class Ui_GlobalReplaceDialog
 public:
     QVBoxLayout *verticalLayout;
     QListWidget *listWidget;
+    QTextBrowser *textBrowser;
     QHBoxLayout *horizontalLayout;
     QSpacerItem *horizontalSpacer;
     QPushButton *applyButton;
@@ -41,6 +43,13 @@ public:
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
 
         verticalLayout->addWidget(listWidget);
+
+        textBrowser = new QTextBrowser(GlobalReplaceDialog);
+        textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
+        textBrowser->setMinimumSize(QSize(382, 122));
+        textBrowser->setAutoFillBackground(false);
+
+        verticalLayout->addWidget(textBrowser);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -70,6 +79,12 @@ public:
     void retranslateUi(QDialog *GlobalReplaceDialog)
     {
         GlobalReplaceDialog->setWindowTitle(QApplication::translate("GlobalReplaceDialog", "Dialog", nullptr));
+        textBrowser->setHtml(QApplication::translate("GlobalReplaceDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#000000;\">Click &quot;Yes&quot; to save the changes and replace the word in the unedited pages.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#000000;\">Click &quot;No&quot; to save the changes and not replace the word in the unedited pages.</span></p></body></html>", nullptr));
         applyButton->setText(QApplication::translate("GlobalReplaceDialog", "Yes", nullptr));
         cancelButton->setText(QApplication::translate("GlobalReplaceDialog", "No", nullptr));
     } // retranslateUi
