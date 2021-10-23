@@ -315,15 +315,11 @@ void MainWindow::UpdateFileBrekadown()
 
     string str = qstr.toStdString();
     str.erase(remove(str.begin(), str.end(), ' '), str.end());
+
     gCurrentPageName = QString::fromStdString(str);
-    //qDebug()<<"gCurrentPageName"<<gCurrentPageName;
-
     gDirTwoLevelUp = mProject.GetDir().absolutePath();
-    //qDebug()<<"2 up"<<gDirTwoLevelUp<<endl;
     gCurrentDirName = finfo.dir().dirName();
-    //qDebug()<<"gCurrentDirName"<<gCurrentDirName;
     gDirOneLevelUp = gDirTwoLevelUp + "/" + gCurrentDirName;
-
 }
 
 /*!
@@ -694,7 +690,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     QFile xml(QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)")));   //Opens only if the file name is Project.xml
     QFileInfo finfo(xml);
     QString basedir = finfo.absoluteDir().absolutePath();
-    qDebug()<<"Base Dir"<<basedir<<endl;
+
     //!Initializes the string with directory name
     QString s1 = basedir + "/Images/";
     QString s2 = basedir + "/Inds/";
@@ -770,7 +766,6 @@ for (auto f : list)
 
 
         }
-        //qDebug()<<"NOW"<<endl;
         //!Adds each file present in VerifierOutput directory to treeView
         filter = mProject.getFilter("VerifierOutput");
         cdir.setPath(str2);
@@ -815,7 +810,6 @@ for (auto f : list)
                 ui->actionTurn_In->setEnabled(false);
             }
         }
-        //qDebug()<<"Opening Project";
         UpdateFileBrekadown();    //Reset the current file and dir levels
 
         //!Get the elapsed time in Timelog.json file under Comments folder
@@ -883,7 +877,7 @@ void MainWindow::on_actionSave_triggered()
         //! Selecting the location where file is to be saved
         QString changefiledir = filestructure_fw[gCurrentDirName];
         QString localFilename = gDirTwoLevelUp + "/" +changefiledir +"/" + tempPageName;
-        qDebug()<<"LF"<<localFilename<<endl;
+
         localFilename.replace(".txt",".html");
 
         //! Don't create and save new file if output file already exists.
@@ -914,7 +908,7 @@ void MainWindow::on_actionSave_triggered()
         changedWords = editDistance(s1, s2);             // Update CPair by editdistance
         QVectorIterator<QString> i(changedWords);
         while (i.hasNext())
-            qDebug() << i.next()<<"MEE"<<endl;
+            qDebug() << i.next()<<endl;
         //! Do commit when there are some changes in previous and new html file on the basis of editdistance.
         if(changedWords.size())
         {
@@ -1246,7 +1240,6 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
 
         string localFilename = mFilename.toUtf8().constData();
         string localCurrentTabPageName = currentTabPageName.toUtf8().constData();
-         //qDebug()<<"CURR"<<currentTabPageName<<endl;
 
         //! Adding entries in Timelog.json about the elapsed time
         int nMilliseconds = myTimer.elapsed();
@@ -1269,9 +1262,8 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
             return;
 
         localFilename.replace(loc,no.size(),to_string(stoi(no) + 1));   //Increments page number by one
-        cout<<"local"<<localFilename<<endl;
+
         QFile *file = new QFile(QString::fromStdString(localFilename));
-        qDebug()<<"FN"<<file->fileName();
         QFileInfo finfo(file->fileName());
 
         if(!(finfo.exists() && finfo.isFile())){
@@ -1282,11 +1274,11 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
             return;
         localCurrentTabPageName.replace(loc,no.size(),to_string(stoi(no) + 1));  //Increments page number by one
         currentTabPageName = QString::fromStdString(localCurrentTabPageName);
-        //qDebug()<<"CURR"<<localFilename<<endl;
+
         fileFlag = 1;
         LoadDocument(file, ext, currentTabPageName);    //loads the new file
         fileFlag = 0;
-        qDebug()<<"FF"<<fileFlag<<endl;
+
     }
 }
 
@@ -4176,7 +4168,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     //! Tooltip documentation
     if (event->type() == QEvent::ToolTip)
     {
-          //qDebug() << "Tooltip "<<QEvent :: ToolTip;
           event->accept();
 
          if(QToolTip::isVisible())
@@ -4196,7 +4187,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                  y0 = list[2].toInt();
                  x1 = list[3].toInt();
                  y1 = list[4].replace(";", "").toInt();
-                 //qDebug() << x0 << " " << y0 << " " << x1-x0 << " " << y1-y0 << "\n";
                  if(x1!=0 && x0!=0 && y1!=0 && y0!=0)
                  {
                      QColor blue40 = Qt::blue;
@@ -4258,7 +4248,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 //! first reading the file
                 QDomDocument document;
                 QString filename12 = mProject.GetDir().absolutePath() + "/image.xml";
-                qDebug()<<"Image"<<filename12<<endl;
                 QFile f(filename12);
 
                 //! throws an error if file is not in readonly mode
@@ -4281,7 +4270,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     if (Component.tagName()=="page"+PageNo[1])
                     {
                         a = Component.attribute("count");        //get counter value for each page starts with 1.
-                        //qDebug() << a << "hel" <<endl;
                         QDomElement Child=Component.firstChild().toElement();      //Item: figure
                         while (!Child.isNull())
                         {
@@ -4463,12 +4451,8 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
 
             cropped.save(gDirTwoLevelUp+path,"JPG",100);       //100 is storing the image in uncompressed high resolution
 
-            //QString placeholder = "["+s1+" "+s2+"-"+a+"."+QString::number(i)+" "+QString::number(x1)+","+QString::number(y1)+","+QString::number(x2)+","+QString::number(y2)+"]";
-            QDir direc(".");
-            qDebug() << direc.absolutePath()<<"direc" << endl;
-            QString src = gDirTwoLevelUp+path;
-            qDebug()<<"2 up"<<src<<endl;
-             QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h); //Creating an img tag for image resize in latek
+            QString src = ".."+path;
+            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h); //Creating an img tag for image resize in latek
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
         }
@@ -4478,10 +4462,9 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
 
             cropped.save(gDirTwoLevelUp+path,"JPG", 100);
 
-            QString src = gDirTwoLevelUp+path;
-            qDebug()<<"Current"<<gCurrentDirName<<endl;
-            qDebug()<<"Current"<<gCurrentDirName<<endl;
-             QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h);
+            QString src = ".."+path;
+
+            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h);
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
 
@@ -4492,7 +4475,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
 
             cropped.save(gDirTwoLevelUp+path,"JPG",100);
 
-            QString src = gDirTwoLevelUp+path;
+            QString src = ".."+path;
             QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(src).arg(w).arg(h);
             QTextCursor cursor = curr_browser->textCursor();
             cursor.insertHtml(html);
@@ -4562,13 +4545,11 @@ void MainWindow::createImageInfoXMLFile()
     //add some elements
     QString strI = gDirTwoLevelUp + "/Inds";
     QDir directory(strI);
-    //qDebug()<<"str"<<strI;
     QStringList list1 = directory.entryList(QStringList() << "*.txt",QDir::Files);
     int counter_i = 1;
     for ( const auto& i : list1 )
     {
         QStringList PageNo = i.split(QRegExp("[-.]"));
-        //qDebug()<<PageNo;
         QDomElement tagPage = document.createElement("page"+PageNo[1]);
         tagPage.setAttribute("count", counter_i);
         root.appendChild(tagPage);
@@ -4589,8 +4570,6 @@ void MainWindow::createImageInfoXMLFile()
         tagEquation.appendChild(NoEquation);
         counter_i++;
     }
-
-    //qDebug()<<"xxml file" << strI <<"pageno" << list1;
 
     QString filename12 = mProject.GetDir().absolutePath() + "/image.xml";
     if(!QFileInfo::exists(filename12))
@@ -4952,8 +4931,6 @@ void MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStr
         QString replacementString = re.cap(1) + grmIterator.value() + re.cap(2); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
 //        if(!mapOfReplacements.contains(grmIterator.key()))
             mapOfReplacements[grmIterator.key()] = grmIterator.value();
-//        qDebug() << pattern;
-//        qDebug() << replacementString;
         s1.replace(re, replacementString);
     }
 
@@ -5504,13 +5481,10 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     QFileInfo finfo(f->fileName());
 
     if(!(finfo.exists() && finfo.isFile())){
-        cout<<"YOYO"<<endl;
         return;
     }
     current_folder = finfo.dir().dirName();
-    qDebug()<<"current_folder"<<current_folder;
     QString fileName = finfo.fileName();
-    //qDebug()<<"GG"<<fileName<<endl;
     if (ui->tabWidget_2->count() != 0) {
         for (int i = 0; i < ui->tabWidget_2->count(); i++) {
             if (name == ui->tabWidget_2->tabText(i)) {
@@ -5523,7 +5497,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         }
     }
     setMFilename(mFilename = f->fileName());
-    UpdateFileBrekadown();//works fine
+    UpdateFileBrekadown();
     QTextBrowser * b = new QTextBrowser(this);
     b->setReadOnly(false);
 
@@ -5536,7 +5510,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     }
     if (isVerifier && (current_folder == "Inds" || current_folder == "CorrectorOutput")) {
         QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
-        //qDebug()<<"CURR"<<output_file<<endl;
         output_file.replace(".txt", ".html");
         if (QFile::exists(output_file)) {
             b->setReadOnly(true);
@@ -5573,6 +5546,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     if (ext == "html") {
         b->setHtml(input);
     }
+    QDir::setCurrent(gDirOneLevelUp);   //changing application path to load document in a relative path
     b->setFont(font);
     input = b->toPlainText();
 
@@ -5595,7 +5569,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     str.erase(remove(str.begin(), str.end(), ' '), str.end());
     currentTabPageName=QString::fromStdString(str);
 
-    //qDebug()<<"currentTabPageName"<<currentTabPageName;
     gInitialTextHtml[currentTabPageName] = b->toHtml();
 
     b->setMouseTracking(true);
@@ -5604,12 +5577,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
     f->close();
 
-    //string str = gCurrentPageName.toStdString();
-    //str.erase(remove(str.begin(), str.end(), ' '), str.end());
-    //QString qstr = QString::fromStdString(str);
-
     QString imageFilePath = mProject.GetDir().absolutePath()+"/Images/" + gCurrentPageName;
-    //qDebug()<<"PRINT"<<imageFilePath<<endl;
 
     QString temp = imageFilePath;
     int flag=0;
@@ -5631,7 +5599,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     if (QFile::exists(temp) && flag==0)
     {
         imageFilePath=temp;
-        //qDebug()<<"PRINT"<<imageFilePath<<endl;
         QFile *pImageFile = new QFile(imageFilePath);
         flag=1;
         LoadImageFromFile(pImageFile);
@@ -5644,7 +5611,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     if (QFile::exists(temp) && flag==0)
     {
         imageFilePath=temp;
-        //qDebug()<<"PRINT"<<imageFilePath<<endl;
         QFile *pImageFile = new QFile(imageFilePath);
         flag=1;
         LoadImageFromFile(pImageFile);
@@ -5657,7 +5623,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     if (QFile::exists(temp) && flag==0)
     {
         imageFilePath=temp;
-        //qDebug()<<"PRINT"<<imageFilePath<<endl;
         QFile *pImageFile = new QFile(imageFilePath);
         flag=1;
         LoadImageFromFile(pImageFile);
@@ -5675,7 +5640,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 void MainWindow::LoadImageFromFile(QFile * f)
 {
     QString localFileName = f->fileName();
-    //qDebug()<<localFileName<<"Local"<<endl;
     loadimage = true;
 
     imageOrig.load(localFileName);
@@ -5703,13 +5667,11 @@ void MainWindow::file_click(const QModelIndex & indx)
 {
     auto item = (TreeItem*)indx.internalPointer();
     auto qvar = item->data(0).toString();
-    //qDebug()<<qvar<<"Print"<<endl;
     if(qvar == "Document" || qvar == "Image" || qvar=="CorrectorOutput" || qvar=="VerifierOutput")
         return;
     auto file = item->GetFile();
 
     QString fileName = file->fileName();
-    //qDebug()<<"qw"<<fileName<<endl;
     NodeType type = item->GetNodeType();
     switch (type) {
 
@@ -5717,7 +5679,6 @@ void MainWindow::file_click(const QModelIndex & indx)
     {
         QFileInfo f(*file);
         QString suff = f.completeSuffix();
-        //qDebug()<<"Print"<<suff<<endl;
         if (suff == "txt" || suff == "html") {
             LoadDocument(file,suff,qvar);
         }
@@ -5841,9 +5802,6 @@ void MainWindow::closetab(int idx)
     str.erase(remove(str.begin(), str.end(), ' '), str.end());
    QString closingTabPageName = QString::fromStdString(str);
 
-    //qDebug()<<"CTPN"<<closingTabPageName<<endl;
-    //qDebug()<<"CBH"<<closing_browserHtml<<endl;
-    //qDebug()<<"GINI"<<gInitialTextHtml[closingTabPageName]<<endl;
     if(!closing_browser->isReadOnly() && (closing_browserHtml != gInitialTextHtml[closingTabPageName]))
     {
         int btn = QMessageBox::question(this, "Save?", "Do you want to save " + closingTabPageName + " file?",
@@ -5867,17 +5825,14 @@ void MainWindow::tabchanged(int idx)
     string str = qstr.toStdString();
     str.erase(remove(str.begin(), str.end(), ' '), str.end());
     currentTabPageName=QString::fromStdString(str);
-    //qDebug()<<"C"<<currentTabPageName<<endl;
     if(mRole=="Corrector" | mRole=="Verifier"){
         setMFilename(mProject.GetDir().absolutePath() + "/" + gCurrentDirName + "/" + currentTabPageName);
-        //qDebug()<<"Corrector or Verifier folder";
     }
     else{
         setMFilename(mProject.GetDir().absolutePath() + "/Inds/" + currentTabPageName);
-        //qDebug()<<"Inds Folder";
           }
     UpdateFileBrekadown();
-    //qDebug()<<"FILE"<<gCurrentPageName<<endl;
+
 
     QString imagePathFile = mFilename;
     imagePathFile.replace("CorrectorOutput", "Images");
@@ -5990,7 +5945,6 @@ void MainWindow::directoryChanged(const QString &path)
     QDir d(path);
 
     QString dirstr = d.dirName();
-    //qDebug()<<"PATH "<<*path<<" Dir "<<dirstr<<endl;
     auto list = d.entryList(QDir::Files);
     QSet<QString> s;
     for (auto file : list)
@@ -6159,8 +6113,6 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
     int numReplaced=0;
     for (grmIterator = mapOfReplacements.begin(); grmIterator != mapOfReplacements.end(); ++grmIterator)
     {
-
-//        qDebug() << grmIterator.value();
         count = input.count(grmIterator.value(),Qt::CaseInsensitive);
 
         numReplaced=0;
@@ -6178,7 +6130,6 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
 //                endIndex++;
 //            qDebug() << indexOfReplacedWord << " " <<endIndex;
             int len = grmIterator.value().length();
-            qDebug() << len;
             while(len > 0)
             {
                 endIndex++;
@@ -6214,25 +6165,21 @@ void MainWindow::on_actionas_PDF_triggered()
     QDir dir(currentDirAbsolutePath);
     dir.setSorting(QDir::SortFlag::DirsFirst | QDir::SortFlag::Name);
     QDirIterator dirIterator(dir,QDirIterator::NoIteratorFlags);
-    //qDebug()<<dir.entryList()<<endl;
 
    // QDirIterator dirIterator(currentDirAbsolutePath);
     QString html_contents="";
     QString mainHtml;
     int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
-    qDebug()<<"COUNT"<<count<<endl;
     int counter=0;
     for(auto a : dir.entryList())
     {
         QString it_file_path = a;
         QString x=currentDirAbsolutePath+a;
-      //  qDebug()<<gInitialTextHtml[it_file_path];
-       // qDebug() << it_file_path<<"HIII"<<endl;
+
         if(x.contains("."))
         {
             QStringList html_files = x.split(QRegExp("[.]"));
-
-            //qDebug()<<it_file_path<<"PATHH"<<endl;
+;
             if(html_files[1]=="html")
             {
                 QFile file(x);
@@ -6262,8 +6209,6 @@ void MainWindow::on_actionas_PDF_triggered()
 
     document->setPageSize(printer.pageRect().size());
     document->print(&printer);
-
-    qDebug()<<"heman";
 }
 
 void MainWindow::on_actionGet_Help_triggered()
