@@ -4040,12 +4040,12 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         else if (messageBox.clickedButton() == finaliseButton)
         {
             //mProject.enable_push( false ); //Increment = false
-            if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
-                    != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
-            {
-                QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
-                return;
-            }
+//             if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
+//                     != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
+//             {
+//                 QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
+//                 return;
+//             }
             s = SubmissionType::finalise;
             commit_msg = "Verifier Finalised Version:" + mProject.get_version();
         }
