@@ -3786,10 +3786,10 @@ void MainWindow::on_actionTurn_In_triggered()
     {
 //         if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/CorrectorOutput/)")
 //                 != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
-        {
-            QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in CorrectorOutput directory");
-            return;
-        }
+//         {
+//             QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in CorrectorOutput directory");
+//             return;
+//         }
         QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();     // append current version
 
         int btn = QMessageBox::question(this, "Submit ?", "Are you ready to submit your changes?",
@@ -4016,10 +4016,10 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
             //mProject.enable_push( false ); //Increment = false
 //             if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
 //                     != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
-            {
-                QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
-                return;
-            }
+//             {
+//                 QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
+//                 return;
+//             }
             s = SubmissionType::resubmit;
             commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
         }
