@@ -1,18 +1,18 @@
 {
-    "AverageCharAccuracy": 94.92375183105469,
-    "AverageCharErrors": 51,
-    "AverageWordAccuracy": 94.45499420166016,
-    "AverageWordErrors": 6,
-    "Rating-V1": 1,
+    "AverageCharAccuracy": 97.89624786376953,
+    "AverageCharErrors": 22,
+    "AverageWordAccuracy": 97.16999816894531,
+    "AverageWordErrors": 4,
+    "Rating-V1": 3,
     "pages": {
         "page-1": {
-            "characcuracy": 83.05999755859375,
-            "charerrors": 62,
+            "characcuracy": 97.66999816894531,
+            "charerrors": 6,
             "comments": "test2",
             "pagename": "page-1",
             "rating": 2,
-            "wordaccuracy": 86.11000061035156,
-            "worderrors": 5
+            "wordaccuracy": 97.66999816894531,
+            "worderrors": 1
         },
         "page-12": {
             "characcuracy": 95.2300033569336,
@@ -42,13 +42,13 @@
             "worderrors": 2
         },
         "page-2": {
-            "characcuracy": 91.16000366210938,
-            "charerrors": 132,
+            "characcuracy": 99.26000213623047,
+            "charerrors": 6,
             "comments": "test 5",
             "pagename": "page-2",
             "rating": 5,
-            "wordaccuracy": 90.08999633789062,
-            "worderrors": 11
+            "wordaccuracy": 99.0999984741211,
+            "worderrors": 1
         },
         "page-3": {
             "characcuracy": 99.2699966430664,
@@ -60,21 +60,21 @@
             "worderrors": 3
         },
         "page-4": {
-            "characcuracy": 94.41999816894531,
-            "charerrors": 72,
+            "characcuracy": 97.0999984741211,
+            "charerrors": 20,
             "comments": "jjjjkl",
             "pagename": "page-4",
             "rating": 5,
-            "wordaccuracy": 94.91999816894531,
-            "worderrors": 6
+            "wordaccuracy": 97.5,
+            "worderrors": 3
         },
         "page-6": {
-            "characcuracy": 100,
-            "charerrors": 0,
+            "characcuracy": 98.38999938964844,
+            "charerrors": 6,
             "comments": "",
             "pagename": "page-6",
-            "wordaccuracy": 100,
-            "worderrors": 0
+            "wordaccuracy": 98.56999969482422,
+            "worderrors": 1
         }
     }
 }

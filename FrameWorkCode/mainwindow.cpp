@@ -4917,21 +4917,22 @@ void MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStr
     f->open(QIODevice::ReadOnly);
 
     QTextStream in(f);
+    in.setCodec("UTF-8");
     QString s1 = in.readAll();
-
     f->close();
-
     f->open(QIODevice::WriteOnly);
 
     for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
     {
-
         QString pattern = ("(\\b)")+grmIterator.key()+("(\\b)"); // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
         QRegExp re(pattern);
         QString replacementString = re.cap(1) + grmIterator.value() + re.cap(2); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
-//        if(!mapOfReplacements.contains(grmIterator.key()))
-            mapOfReplacements[grmIterator.key()] = grmIterator.value();
-        s1.replace(re, replacementString);
+        //   if(!mapOfReplacements.contains(grmIterator.key()))
+        string str = replacementString.toStdString();
+        QString::fromStdString(str).toUtf8();
+        QString replacementString1 = QString::fromStdString(str);
+        mapOfReplacements[grmIterator.key()] = grmIterator.value();
+        s1.replace(re, replacementString1);
     }
 
     in << s1;
