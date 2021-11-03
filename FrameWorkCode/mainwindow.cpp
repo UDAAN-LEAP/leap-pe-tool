@@ -5468,7 +5468,7 @@ void MainWindow::on_actionResize_Image_triggered()
  */
 void MainWindow::on_actionPush_triggered()
 {
-    mProject.push();
+    mProject.push(branchName);
 }
 
 /*!
