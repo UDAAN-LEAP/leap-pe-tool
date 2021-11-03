@@ -27,7 +27,7 @@ public:
     void lg2_add(QString workingFolder);
     void lg2_add();
     bool commit(std::string message);
-    bool push();
+    bool push(QString branchName);
 	bool add_config();
 	void fetch();
     bool enable_push(bool increment);
