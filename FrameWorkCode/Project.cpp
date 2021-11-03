@@ -529,13 +529,22 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
  * \brief Project::push
  * \return
  */
-bool Project::push() {
+bool Project::push(QString branchName) {
 //    lg2_add();
     git_libgit2_init();
     login_tries = 1;
     git_remote * remote = NULL;
-    char * refspec = (char*)"refs/heads/master";
-    const git_strarray refspecs = { &refspec,1 };
+
+    QByteArray array = branchName.toLocal8Bit();
+    char* char_arr = array.data();
+    char * refspec = (char*)"refs/heads/";
+    char buffer[256];
+    strncpy(buffer, refspec, sizeof(buffer));
+    strncat(buffer, char_arr, sizeof(buffer));
+    qDebug()<<"Buffer"<<buffer<<endl;
+    char * d= (char*)buffer;
+    const git_strarray refspecs = { &d,1 };
+
     git_fetch_options fetch_opts;
     git_merge_options merge_opts = GIT_MERGE_OPTIONS_INIT;
     git_checkout_options checkout_opts = GIT_CHECKOUT_OPTIONS_INIT;
@@ -551,8 +560,10 @@ bool Project::push() {
 
     // Store remote info from repo
     int error = git_remote_lookup(&remote, repo, "origin");
-    if(error)
-        goto cleanup;
+    if(error){
+        std::cout<<0<<endl;
+        //goto cleanup;
+    }
 
     /* Fetch objects from remote repository
      * Direct pull is not available via libgit2
@@ -560,22 +571,33 @@ bool Project::push() {
     git_fetch_init_options(&fetch_opts, GIT_FETCH_OPTIONS_VERSION);
     fetch_opts.callbacks.credentials = credentials_cb;
     error = git_remote_fetch( remote, NULL, &fetch_opts, NULL );
-    if(error)
-        goto cleanup;
+    if(error){
+        std::cout<<1<<endl;
+        //goto cleanup;
+    }
     // cache the credentials
     is_cred_cached = true;
 
     /* Merge fetched objects with local branch
      * It will update index and current working area
      */
+    /*char* string=(char*)"refs/remotes/origin/";
+    char buffer1[256];
+    strncpy(buffer1, string, sizeof(buffer1));
+    strncat(buffer1, char_arr, sizeof(buffer1));
+    qDebug()<<"Buffer1"<<buffer1<<endl;
+*/
     error = (git_reference_lookup(&theirs_ref, repo, "refs/remotes/origin/master") != GIT_OK);
+    qDebug()<<"Error"<<error<<endl;
     if (!error)
     {
         error = (git_annotated_commit_from_ref(heads, repo, theirs_ref) != GIT_OK)
              || (git_merge(repo, (const git_annotated_commit **)heads, 1, &merge_opts, &checkout_opts) != GIT_OK);
 
-        if(error)
-            goto cleanup;
+        if(error){
+            std::cout<<2<<endl;
+            //goto cleanup;
+        }
 
         /* Get the needed ref, index, sign and tree
          */
@@ -585,8 +607,10 @@ bool Project::push() {
              || (git_index_write_tree(&tree_oid, index))
              || (git_tree_lookup(&tree, repo, &tree_oid));
 
-        if(error)
-            goto cleanup;
+        if(error){
+            std::cout<<3<<endl;
+            //goto cleanup;
+        }
 
         /* Commit the merge and cleanup repo state
          */
@@ -595,15 +619,20 @@ bool Project::push() {
              || (git_commit_create(&id, repo, "HEAD", signature, signature, NULL, "Merge commit - OpenOCRCorrect", tree, 2, (const git_commit **)parents))
              || (git_repository_state_cleanup(repo));
 
-        if(error)
-            goto cleanup;
+        if(error){
+            std::cout<<4<<endl;
+            //goto cleanup;
+        }
     }
 
     error = git_push_init_options(&push_opts, GIT_PUSH_OPTIONS_VERSION);
     push_opts.callbacks.credentials = credentials_cb;
-    error = git_remote_push(remote, &refspecs, &push_opts);
-
-    cleanup:
+    //std::string str="refs/remotes/origin/master";
+    //char * c = (char*)"refs/heads/master";
+    //const git_strarray abc = { &c,1 };
+    error = git_remote_push(remote, &refspecs , &push_opts);
+    qDebug()<<"Error"<<error<<endl;
+    /*cleanup:
     if(remote)
         git_remote_free(remote);
     if(heads[0])
@@ -620,7 +649,7 @@ bool Project::push() {
         git_tree_free(tree);
     if(parents)
         free(parents);
-
+    */
     if (error)
         return false;
     return true;//No errors
