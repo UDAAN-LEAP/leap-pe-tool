@@ -102,6 +102,7 @@ bool shouldIDraw=false;         //button functioning over marking a region for f
 
 int pressedFlag;            //Resposible for dynamic rectangular drawing
 
+QString branchName;
 //Constructor
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
@@ -3796,15 +3797,28 @@ void MainWindow::on_actionTurn_In_triggered()
                                         QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
         if (btn == QMessageBox::StandardButton::Yes)
         {
-            mProject.set_stage_verifier();    // set_stage_verifier()inherited from project.cpp updates the stage in xml file to "verifier"
+            bool ok;
+            branchName = QInputDialog::getText(this, tr("Branch Name"),
+                                               tr("Enter the branch name:"), QLineEdit::Normal,
+                                               "", &ok );
+            if ( ok && !branchName.isEmpty() ) {
+                // user entered something and pressed OK
 
-            //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
-            if(!mProject.commit(commit_msg.toStdString()) || !mProject.push())
-            {
-                mProject.enable_push(false);      // enable_push() increments version and sets stage in xml file
+                // mProject.set_stage_verifier();    // set_stage_verifier()inherited from project.cpp updates the stage in xml file to "verifier"
+
+                //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
+                if(!mProject.commit(commit_msg.toStdString()) || !mProject.push(branchName))
+                {
+                    mProject.enable_push(false);      // enable_push() increments version and sets stage in xml file
+                    QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+                    return;
+                }
+            } else {
+                // user entered nothing or pressed Cancel
                 QMessageBox::information(0, "Turn In", "Turn In Cancelled");
                 return;
             }
+
         }
         else
         {
@@ -4057,23 +4071,35 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
 
         int btn = QMessageBox::question(this, "Submit ?", "Are you ready to submit your changes?",
                                         QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
-        if (btn == QMessageBox::StandardButton::Yes)
-        {
-            if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
-            {
-                mProject.enable_push( true );
-            }
-            else if (s == SubmissionType::resubmit)    //If yes button is clicked and submission type is resubmit then enable push
-            {
-                mProject.enable_push( false );
-            }
-            if(!mProject.commit(commit_msg.toStdString()) || !mProject.push())
-            {
-                if(s == SubmissionType::return_set)
+       if (btn == QMessageBox::StandardButton::Yes)
+       {
+            bool ok;
+            branchName = QInputDialog::getText(this, tr("Branch Name"),
+                                                 tr("Enter the branch name:"), QLineEdit::Normal,
+                                                 "", &ok );
+            if ( ok && !branchName.isEmpty() ) {
+                // user entered something and pressed OK
+                if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
                 {
-                    mProject.set_version( mProject.get_version().toInt() - 1 );
+                    mProject.enable_push( true );
                 }
-                mProject.set_stage_verifier();
+                else if (s == SubmissionType::resubmit)    //If yes button is clicked and submission type is resubmit then enable push
+                {
+                    mProject.enable_push( false );
+                }
+                if(!mProject.commit(commit_msg.toStdString()) || !mProject.push(branchName))
+                {
+                    if(s == SubmissionType::return_set)
+                    {
+                        mProject.set_version( mProject.get_version().toInt() - 1 );
+                    }
+                   // mProject.set_stage_verifier();
+                    QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+                    return;
+                }
+            }
+            else {
+                // user entered nothing or pressed Cancel
                 QMessageBox::information(0, "Turn In", "Turn In Cancelled");
                 return;
             }
