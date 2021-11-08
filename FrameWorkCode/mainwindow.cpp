@@ -803,14 +803,14 @@ for (auto f : list)
             mProject.AddTemp(filter, f2, "");
         }
 
-        //!Disable Corrector Turn In once the Corrector has Turned in until the next version is fetched.
-        if(!isVerifier)
-        {
-            if (stage != "Corrector")
-            {
-                ui->actionTurn_In->setEnabled(false);
-            }
-        }
+//        //!Disable Corrector Turn In once the Corrector has Turned in until the next version is fetched.
+//        if(!isVerifier)
+//        {
+//            if (stage != "Corrector")
+//            {
+//                ui->actionTurn_In->setEnabled(false);
+//            }
+//        }
         UpdateFileBrekadown();    //Reset the current file and dir levels
 
         //!Get the elapsed time in Timelog.json file under Comments folder
@@ -3738,17 +3738,17 @@ void MainWindow::on_actionFetch_2_triggered()
         {
             QMessageBox::information(0, "Pull Error", "Pull Un-succesful, Please Check Your Internet Connection");
         }
-        if(!isVerifier)
-        {
-            if (mProject.get_stage() == "Corrector")
-            {
-                ui->actionTurn_In->setEnabled(true);
-            }
-            else
-            {
-                ui->actionTurn_In->setEnabled(false);
-            }
-        }
+//        if(!isVerifier)
+//        {
+//            if (mProject.get_stage() == "Corrector")
+//            {
+//                ui->actionTurn_In->setEnabled(true);
+//            }
+//            else
+//            {
+//                ui->actionTurn_In->setEnabled(false);
+//            }
+//        }
         ui->lineEdit_2->setText("Version " + mProject.get_version());
     }
     else
@@ -3832,7 +3832,7 @@ void MainWindow::on_actionTurn_In_triggered()
                 + "\nSet ID: " + mProject.get_setId()
                 + "\n" + commit_msg ;       //Send an email if turn-in failed
 
-        ui->actionTurn_In->setEnabled(false);        // Deactivating the "Submit Corrector" button on ui
+       // ui->actionTurn_In->setEnabled(false);        // Deactivating the "Submit Corrector" button on ui
         QMessageBox::information(0, "Turn In", "Turned In Successfully");
         deleteEditedFilesLog();
     }
