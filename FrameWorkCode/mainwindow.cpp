@@ -110,7 +110,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
     ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
-    ui->tabWidget_2->tabBar()->hide();
+    //ui->tabWidget_2->tabBar()->hide();
     QString password  = "";
     QString passwordFilePath = QDir::currentPath() + "/pass.txt";
     QFile passwordFile(passwordFilePath);
@@ -1277,6 +1277,7 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
         currentTabPageName = QString::fromStdString(localCurrentTabPageName);
 
         fileFlag = 1;
+        NextPrevTrig =1;
         LoadDocument(file, ext, currentTabPageName);    //loads the new file
         fileFlag = 0;
 
@@ -1342,6 +1343,7 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
         localCurrentTabPageName.replace(loc,no.size(),to_string(stoi(no) - 1));
         currentTabPageName = QString::fromStdString(localCurrentTabPageName);  //sets the decremented page number
         fileFlag = 1;
+        NextPrevTrig =1;
         LoadDocument(file, ext, currentTabPageName);          //loads the file with the decremented page name
         fileFlag = 0;
     }
@@ -5504,11 +5506,11 @@ QString GetFilter(QString & Name, const QStringList &list) {
  */
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
-    if(ui->tabWidget_2->currentIndex() >=0 )
+    if(ui->tabWidget_2->currentIndex() >=0 && NextPrevTrig ==0)
     {
         closetab(ui->tabWidget_2->currentIndex());
+        ui->tabWidget_2->removeTab(0);
     }
-    ui->tabWidget_2->removeTab(0);
 
     f->open(QIODevice::ReadOnly);
     QFileInfo finfo(f->fileName());
@@ -5664,6 +5666,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     {
         temp = imageFilePath;
     }
+    NextPrevTrig =0;
 }
 
 /*!

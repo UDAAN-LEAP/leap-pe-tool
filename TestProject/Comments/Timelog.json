@@ -51,6 +51,10 @@
         "directory": "Verifier:page-2.txt:V-0",
         "seconds": 0
     },
+    "Verifier:page-3.html:V-0": {
+        "directory": "Verifier:page-3.html:V-0",
+        "seconds": 0
+    },
     "Verifier:page-3.txt:V-0": {
         "directory": "Verifier:page-3.txt:V-0",
         "seconds": 0
@@ -61,6 +65,10 @@
     },
     "Verifier:page-4.txt:V-0": {
         "directory": "Verifier:page-4.txt:V-0",
+        "seconds": 0
+    },
+    "Verifier:page-5.html:V-0": {
+        "directory": "Verifier:page-5.html:V-0",
         "seconds": 0
     },
     "Verifier:page-6.html:V-0": {

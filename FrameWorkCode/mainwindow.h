@@ -362,6 +362,7 @@ private:
     QGraphicsRectItem* item1;
     QGraphicsRectItem* crop_rect;
     QString s1, s2;
+    int NextPrevTrig = 0;
 };
 
 #endif // MAINWINDOW_H
