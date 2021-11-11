@@ -110,7 +110,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
     ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
-    //ui->tabWidget_2->tabBar()->hide();
+    ui->tabWidget_2->tabBar()->hide();
     QString password  = "";
     QString passwordFilePath = QDir::currentPath() + "/pass.txt";
     QFile passwordFile(passwordFilePath);
