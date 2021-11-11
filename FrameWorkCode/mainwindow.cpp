@@ -5504,6 +5504,10 @@ QString GetFilter(QString & Name, const QStringList &list) {
  */
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
+    if(ui->tabWidget_2->currentIndex() >=0 )
+    {
+        closetab(ui->tabWidget_2->currentIndex());
+    }
     ui->tabWidget_2->removeTab(0);
 
     f->open(QIODevice::ReadOnly);

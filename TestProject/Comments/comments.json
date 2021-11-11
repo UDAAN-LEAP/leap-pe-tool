@@ -1,5 +1,5 @@
 {
-    "AverageCharAccuracy": 97.89624786376953,
+    "AverageCharAccuracy": 97.8324966430664,
     "AverageCharErrors": 22,
     "AverageWordAccuracy": 97.16999816894531,
     "AverageWordErrors": 4,
@@ -69,8 +69,8 @@
             "worderrors": 3
         },
         "page-6": {
-            "characcuracy": 98.38999938964844,
-            "charerrors": 6,
+            "characcuracy": 97.87999725341797,
+            "charerrors": 8,
             "comments": "",
             "pagename": "page-6",
             "wordaccuracy": 98.56999969482422,

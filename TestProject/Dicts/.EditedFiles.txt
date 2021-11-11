@@ -1,1 +1,3 @@
 /home/mush/ocr/global-replace/iitb-openocr-digit-tool/TestProject/VerifierOutput/page-1.html
+/home/mush/ocr/rmv-tab/iitb-openocr-digit-tool/TestProject/VerifierOutput/page-1.html
+/home/mush/ocr/rmv-tab/iitb-openocr-digit-tool/TestProject/VerifierOutput/page-6.html
