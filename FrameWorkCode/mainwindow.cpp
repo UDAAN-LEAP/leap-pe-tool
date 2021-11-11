@@ -110,7 +110,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
     ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
-
+    ui->tabWidget_2->tabBar()->hide();
     QString password  = "";
     QString passwordFilePath = QDir::currentPath() + "/pass.txt";
     QFile passwordFile(passwordFilePath);
@@ -5504,6 +5504,8 @@ QString GetFilter(QString & Name, const QStringList &list) {
  */
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
+    ui->tabWidget_2->removeTab(0);
+
     f->open(QIODevice::ReadOnly);
     QFileInfo finfo(f->fileName());
 
@@ -5666,6 +5668,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
  */
 void MainWindow::LoadImageFromFile(QFile * f)
 {
+
     QString localFileName = f->fileName();
     loadimage = true;
 
