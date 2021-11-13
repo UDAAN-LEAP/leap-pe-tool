@@ -2,3 +2,5 @@
 /home/mush/ocr/rmv-tab/iitb-openocr-digit-tool/TestProject/VerifierOutput/page-1.html
 /home/mush/ocr/rmv-tab/iitb-openocr-digit-tool/TestProject/VerifierOutput/page-6.html
 /home/mush/ocr/rmv-tab/iitb-openocr-digit-tool/TestProject/VerifierOutput/page-2.html
+/home/mush/ocr/rmv-tab/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-7.html
+/home/mush/ocr/rmv-tab/iitb-openocr-digit-tool/TestProject/VerifierOutput/page-7.html

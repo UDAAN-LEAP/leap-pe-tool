@@ -830,7 +830,7 @@ for (auto f : list)
         //    QDir().mkdir(mProject.GetDir().absolutePath() + "/Images/Inserted");
 
         QMessageBox::information(0, "Success", "Project opened successfully.");
-
+        ui->tabWidget_2->removeTab(0);
         //!Genearte image.xml for figure/table/equation entries and initialize these values by 1.
         createImageInfoXMLFile();
 
@@ -5667,6 +5667,39 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         temp = imageFilePath;
     }
     NextPrevTrig =0;
+
+    // Enabling Selection in treeView
+    ui->treeView->selectionModel()->clearSelection();
+    QModelIndex currentTreeItemIndex = ui->treeView->selectionModel()->currentIndex();
+    QModelIndex parentIndex = currentTreeItemIndex.parent();
+    auto model = ui->treeView->model();
+    int rowCount = ui->treeView->model()->rowCount(parentIndex);
+
+    QString treeItemLabel;
+    for (int i = 0; i < rowCount; i++)
+    {
+        QModelIndex index = model->index(i, 0, parentIndex);
+        treeItemLabel = index.data(Qt::DisplayRole).toString();
+
+        if (index.isValid())
+        {
+            if (treeItemLabel == currentTabPageName)
+            {
+                ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+                break;
+            }
+            else
+            {
+                // Removing the space from each Label which was present at the starting of every label in the CorrectorOutput Folder
+                treeItemLabel.remove(0, 1);
+                if (treeItemLabel == currentTabPageName)
+                {
+                    ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+                    break;
+                }
+            }
+        }
+    }
 }
 
 /*!

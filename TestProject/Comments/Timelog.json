@@ -23,16 +23,52 @@
         "directory": "C:/Users/raman/source/repos/OpenOCRCorrect/data/Book1Sanskrit/VerifierOutput/page-1.html",
         "seconds": 0
     },
+    "Corrector::V-1": {
+        "directory": "Corrector::V-1",
+        "seconds": 0
+    },
     "Corrector:Untitled:V-": {
         "directory": "Corrector:Untitled:V-",
+        "seconds": 0
+    },
+    "Corrector:page-1.html:V-1": {
+        "directory": "Corrector:page-1.html:V-1",
         "seconds": 0
     },
     "Corrector:page-1.txt:V-1": {
         "directory": "Corrector:page-1.txt:V-1",
         "seconds": 0
     },
+    "Corrector:page-2.html:V-1": {
+        "directory": "Corrector:page-2.html:V-1",
+        "seconds": 0
+    },
+    "Corrector:page-3.html:V-1": {
+        "directory": "Corrector:page-3.html:V-1",
+        "seconds": 0
+    },
+    "Corrector:page-4.html:V-1": {
+        "directory": "Corrector:page-4.html:V-1",
+        "seconds": 0
+    },
+    "Corrector:page-5.html:V-1": {
+        "directory": "Corrector:page-5.html:V-1",
+        "seconds": 0
+    },
+    "Corrector:page-6.html:V-1": {
+        "directory": "Corrector:page-6.html:V-1",
+        "seconds": 0
+    },
+    "Corrector:page-7.html:V-1": {
+        "directory": "Corrector:page-7.html:V-1",
+        "seconds": 0
+    },
     "Verifier::V-0": {
         "directory": "Verifier::V-0",
+        "seconds": 0
+    },
+    "Verifier:Untitled:V--1": {
+        "directory": "Verifier:Untitled:V--1",
         "seconds": 0
     },
     "Verifier:page-1.html:V-0": {
@@ -69,6 +105,10 @@
     },
     "Verifier:page-5.html:V-0": {
         "directory": "Verifier:page-5.html:V-0",
+        "seconds": 0
+    },
+    "Verifier:page-5.txt:V-0": {
+        "directory": "Verifier:page-5.txt:V-0",
         "seconds": 0
     },
     "Verifier:page-6.html:V-0": {
