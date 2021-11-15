@@ -28,6 +28,7 @@
 #include <QTreeView>
 #include <QFont>
 #include <git2.h>
+#include "shortcutguidedialog.h"
 #include <QFileSystemWatcher>
 #include <set>
 #include <algorithm>
@@ -6305,3 +6306,11 @@ void MainWindow::on_actionWindows_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/1xcXsNU03d-1RneksUzCHRyC4jm1mBF-N/edit?usp=sharing&ouid=114703528031965332802&rtpof=true&sd=true", QUrl::TolerantMode));
 }
+
+void MainWindow::on_actionShortcut_Guide_triggered()
+{
+    ShortcutGuideDialog dialog;
+    dialog.setModal(true);
+    dialog.exec();
+}
+

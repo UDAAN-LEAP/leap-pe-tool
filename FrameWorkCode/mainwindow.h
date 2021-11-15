@@ -341,6 +341,8 @@ private slots:
 
     void on_actionWindows_triggered();
 
+    void on_actionShortcut_Guide_triggered();
+
 private:
     bool mExitStatus = false;
     QString mRole;

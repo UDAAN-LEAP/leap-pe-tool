@@ -33,5 +33,6 @@
         <file>Help.png</file>
         <file>previous.png</file>
         <file>next.png</file>
+        <file>ShortcutGuide.jpg</file>
     </qresource>
 </RCC>

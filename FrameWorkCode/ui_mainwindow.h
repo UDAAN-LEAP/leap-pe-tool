@@ -125,6 +125,7 @@ public:
     QAction *actionSanskrit;
     QAction *actionHindi;
     QAction *actionEnglish;
+    QAction *actionShortcut_Guide;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_5;
     QVBoxLayout *verticalLayout_4;
@@ -445,6 +446,8 @@ public:
         actionHindi->setObjectName(QString::fromUtf8("actionHindi"));
         actionEnglish = new QAction(MainWindow);
         actionEnglish->setObjectName(QString::fromUtf8("actionEnglish"));
+        actionShortcut_Guide = new QAction(MainWindow);
+        actionShortcut_Guide->setObjectName(QString::fromUtf8("actionShortcut_Guide"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         verticalLayout_5 = new QVBoxLayout(centralWidget);
@@ -747,6 +750,7 @@ public:
         menuHelp->addAction(actionGet_Help);
         menuHelp->addAction(menuInstallation_Guide->menuAction());
         menuHelp->addAction(actionTutorial);
+        menuHelp->addAction(actionShortcut_Guide);
         menuInstallation_Guide->addAction(actionLinux);
         menuInstallation_Guide->addAction(actionWindows);
         menuSelectLanguage->addAction(actionSanskrit);
@@ -984,6 +988,7 @@ public:
         actionSanskrit->setText(QApplication::translate("MainWindow", "Sanskrit", nullptr));
         actionHindi->setText(QApplication::translate("MainWindow", "Hindi/Marathi", nullptr));
         actionEnglish->setText(QApplication::translate("MainWindow", "English", nullptr));
+        actionShortcut_Guide->setText(QApplication::translate("MainWindow", "Shortcut Guide", nullptr));
         pushButton_2->setText(QApplication::translate("MainWindow", "Resize Image", nullptr));
         pushButton->setText(QApplication::translate("MainWindow", "Mark Regions", nullptr));
         viewComments->setText(QApplication::translate("MainWindow", "Comments & Accuracy", nullptr));

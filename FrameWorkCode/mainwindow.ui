@@ -507,6 +507,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionGet_Help"/>
     <addaction name="menuInstallation_Guide"/>
     <addaction name="actionTutorial"/>
+    <addaction name="actionShortcut_Guide"/>
    </widget>
    <widget class="QMenu" name="menuSelectLanguage">
     <property name="title">
@@ -1262,6 +1263,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionEnglish">
    <property name="text">
     <string>English</string>
+   </property>
+  </action>
+  <action name="actionShortcut_Guide">
+   <property name="text">
+    <string>Shortcut Guide</string>
    </property>
   </action>
  </widget>
