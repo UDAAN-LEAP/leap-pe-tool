@@ -155,11 +155,11 @@ private slots:
 
     //void on_actionErrorDetectionRepUniq_triggered();
 
-    //void on_actionSanskrit_triggered();
+    void on_actionSanskrit_triggered();
 
-    //void on_actionHindi_triggered();
+    void on_actionHindi_triggered();
 
-    //void on_actionEnglish_triggered();
+    void on_actionEnglish_triggered();
 
     void on_actionBold_triggered();
 
@@ -259,9 +259,9 @@ private slots:
 
     void on_compareVerifierOutput_clicked();
 
-    //void on_sanButton_toggled(bool checked);
+    void on_sanButton_toggled(bool checked);
 
-    //void on_hinButton_toggled(bool checked);
+    void on_hinButton_toggled(bool checked);
 
     void on_actionLineSpace_triggered();
 

@@ -612,37 +612,40 @@ void MainWindow::translate_replace(QAction* action)
  * \fn MainWindow::on_actionSanskrit_triggered()
  * \brief Sets the language of the current broweser to Sanskrit by by passing the SanFlag as true
  * \sa setText()
+*/
 void MainWindow::on_actionSanskrit_triggered()
 {
     HinFlag = 0, SanFlag = 1;
     ui->textEdit->setText(gSanskrit);//whenever language change is required it will be converted to Sanskrit using the slpNPatternDict.h
     ui->hinButton->setChecked(HinFlag);
 }
-*/
+
 
 /*!
  * \fn MainWindow::on_actionHindi_triggered
  * \brief Sets the language of the current broweser to Hindi by by passing the HinFlag as true
  * \sa setText()
+*/
 void MainWindow::on_actionHindi_triggered()
 {
     HinFlag = 1, SanFlag = 0;
     ui->textEdit->setText(gHindi);  //whenever language change is required it will be converted to Hindi using the slpNPatternDict.h
     ui->sanButton->setChecked(SanFlag);
 }
-*/
+
 
 /*!
  * \fn MainWindow::on_actionEnglish_triggered()
  * \brief Sets the language of the current broweser to Hindi by passing the HinFlag and the SanFlag as false
  * \sa setText()
+*/
 void MainWindow::on_actionEnglish_triggered()
 {
     HinFlag = 0, SanFlag = 0;
     ui->hinButton->setChecked(HinFlag);//whenever language change is required it will be left as it is
     ui->sanButton->setChecked(SanFlag);
 }
-*/
+
 
 /*!
  * \fn MainWindow::on_actionNew_triggered
@@ -5340,21 +5343,23 @@ void MainWindow::updateAverageAccuracies() //Verifier only
 /*!
  * \brief MainWindow::on_sanButton_toggled
  * \param checked
+*/
 void MainWindow::on_sanButton_toggled(bool checked)
 {
     if(checked)
         on_actionSanskrit_triggered();
 }
-*/
+
 /*!
  * \brief MainWindow::on_hinButton_toggled
  * \param checked
+*/
 void MainWindow::on_hinButton_toggled(bool checked)
 {
     if(checked)
         on_actionHindi_triggered();
 }
-*/
+
 
 /*!
  * \brief MainWindow::on_actionNew_Project_triggered

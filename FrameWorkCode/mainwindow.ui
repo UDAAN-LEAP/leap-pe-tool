@@ -508,6 +508,15 @@ p, li { white-space: pre-wrap; }
     <addaction name="menuInstallation_Guide"/>
     <addaction name="actionTutorial"/>
    </widget>
+   <widget class="QMenu" name="menuSelectLanguage">
+    <property name="title">
+     <string>SelectLanguage</string>
+    </property>
+    <addaction name="actionSanskrit"/>
+    <addaction name="actionHindi"/>
+    <addaction name="actionEnglish"/>
+   </widget>
+   <addaction name="menuSelectLanguage"/>
    <addaction name="menuOCR_Correction_Window"/>
    <addaction name="menuEdit"/>
    <addaction name="menuCreateReports"/>
@@ -1238,6 +1247,21 @@ p, li { white-space: pre-wrap; }
   <action name="actionas_Doc">
    <property name="text">
     <string>as Doc</string>
+   </property>
+  </action>
+  <action name="actionSanskrit">
+   <property name="text">
+    <string>Sanskrit</string>
+   </property>
+  </action>
+  <action name="actionHindi">
+   <property name="text">
+    <string>Hindi/Marathi</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="text">
+    <string>English</string>
    </property>
   </action>
  </widget>
