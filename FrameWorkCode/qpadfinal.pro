@@ -34,14 +34,11 @@ RESOURCES += \
 
 CONFIG += c++11
 
-FORMS += \
-    shortcutguidedialog.ui
+FORMS +=
 
-HEADERS += \
-    shortcutguidedialog.h
+HEADERS +=
 
-SOURCES += \
-    shortcutguidedialog.cpp
+SOURCES +=
 
 DISTFILES += \
     UserJson.json
