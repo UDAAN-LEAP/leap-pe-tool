@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <BookSet>
     <page1 count="1">
-        <figure>2</figure>
-        <table>1</table>
-        <equation>1</equation>
+        <figure>14</figure>
+        <table>7</table>
+        <equation>8</equation>
     </page1>
     <page2 count="2">
         <figure>1</figure>

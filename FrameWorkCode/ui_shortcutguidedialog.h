@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'shortcutguidedialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.8
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,8 +10,11 @@
 #define UI_SHORTCUTGUIDEDIALOG_H
 
 #include <QtCore/QVariant>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QWidget>
@@ -28,17 +31,17 @@ public:
     void setupUi(QDialog *ShortcutGuideDialog)
     {
         if (ShortcutGuideDialog->objectName().isEmpty())
-            ShortcutGuideDialog->setObjectName(QString::fromUtf8("ShortcutGuideDialog"));
+            ShortcutGuideDialog->setObjectName(QStringLiteral("ShortcutGuideDialog"));
         ShortcutGuideDialog->resize(576, 408);
         label = new QLabel(ShortcutGuideDialog);
-        label->setObjectName(QString::fromUtf8("label"));
+        label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(0, 0, 571, 691));
         scrollArea = new QScrollArea(ShortcutGuideDialog);
-        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+        scrollArea->setObjectName(QStringLiteral("scrollArea"));
         scrollArea->setGeometry(QRect(550, -10, 20, 411));
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
-        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
         scrollAreaWidgetContents->setGeometry(QRect(0, 0, 18, 409));
         scrollArea->setWidget(scrollAreaWidgetContents);
 
@@ -49,8 +52,8 @@ public:
 
     void retranslateUi(QDialog *ShortcutGuideDialog)
     {
-        ShortcutGuideDialog->setWindowTitle(QApplication::translate("ShortcutGuideDialog", " Shortcut Guide", nullptr));
-        label->setText(QApplication::translate("ShortcutGuideDialog", "TextLabel", nullptr));
+        ShortcutGuideDialog->setWindowTitle(QApplication::translate("ShortcutGuideDialog", " Shortcut Guide", Q_NULLPTR));
+        label->setText(QApplication::translate("ShortcutGuideDialog", "TextLabel", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -4173,6 +4173,7 @@ void MainWindow::on_pushButton_clicked()
 {
     if(loadimage)                   //Check image is loaded or not.
     {
+        ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         shouldIDraw=true;
         auto p = (QPushButton*)ui->pushButton;       //get the pushButton
         p->setStyleSheet("QPushButton { background-color: grey; }\n"
@@ -4257,7 +4258,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             }
             //! Capturing mouse release event on graphicsview
             if (event->type() == QEvent::MouseButtonRelease)
-            {
+            {       
                 //! reponsible for preventing the event second time.
                 if(drawRectangleFlag==true)
                 {
@@ -4423,7 +4424,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     shouldIDraw=false;
                     ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
                 }
-
+                ui->graphicsView->setDragMode( QGraphicsView::DragMode::ScrollHandDrag );
                 event->accept();
                 //return true;
             }
@@ -4450,6 +4451,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
          event->accept();
       }
     }
+
     return QMainWindow::eventFilter(object, event);
 }
 
