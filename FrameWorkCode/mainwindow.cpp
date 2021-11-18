@@ -6249,10 +6249,18 @@ void MainWindow::on_actionas_PDF_triggered()
     QString mainHtml;
     int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
     int counter=0;
+
+    int stIndex, startFrom = 0;
+    QString searchString = "background-color:#"; // string to be searched
+    int l = searchString.length();
+    QString whiteColor = "ffffff";
+
     for(auto a : dir.entryList())
     {
         QString it_file_path = a;
         QString x=currentDirAbsolutePath+a;
+
+        startFrom = 0; // The position from which searchString will be scanned
 
         if(x.contains("."))
         {
@@ -6265,6 +6273,15 @@ void MainWindow::on_actionas_PDF_triggered()
                     QTextStream stream(&file);
                     stream.setCodec("UTF-8");
                     mainHtml=stream.readAll();
+                    // Changing Background of text as white
+                    while (true){
+                        stIndex = mainHtml.indexOf(searchString, startFrom);
+                        if (stIndex == -1)
+                            break;
+                        stIndex += l;
+                        mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
+                        startFrom = stIndex + 6;
+                    }
                     counter++;
                     if(counter<count){
                         mainHtml+="<P style=\"page-break-before: always\"></P>";
