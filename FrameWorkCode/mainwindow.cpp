@@ -5159,8 +5159,8 @@ void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
           }
     }
 
-    QTextCharFormat fmt;
-    fmt.setBackground(Qt::green);
+//    QTextCharFormat fmt;
+//    fmt.setBackground(Qt::green);
     QTextCursor cursor(b->document());
     int indexOfReplacedWord;
     int from=0;
@@ -5198,7 +5198,9 @@ void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
             {
                 cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
                 cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
-                cursor.setCharFormat(fmt);
+                //cursor.setCharFormat(fmt);
+                QTextEdit::ExtraSelection h;
+                h.format.setBackground(Qt::green);
             }
             from = endIndex;
             numReplaced+=1;
@@ -6182,8 +6184,8 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
 {
 
     QMap <QString, QString>::iterator grmIterator;
-    QTextCharFormat fmt;
-    fmt.setBackground(Qt::yellow);
+//    QTextCharFormat fmt;
+//    fmt.setBackground(Qt::yellow);
     QTextCursor cursor(b->document());
     int indexOfReplacedWord;
     int from=0;
@@ -6219,7 +6221,9 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
             {
                 cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
                 cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
-                cursor.setCharFormat(fmt);
+                //cursor.setCharFormat(fmt);
+                QTextEdit::ExtraSelection h;
+                h.format.setBackground(Qt::yellow);
             }
             from = endIndex;
             numReplaced+=1;
