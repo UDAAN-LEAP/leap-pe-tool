@@ -5593,9 +5593,9 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     b->setFont(font);
     input = b->toPlainText();
 
-    highlight(b , input);
     DisplayJsonDict(b,input);
-
+    highlight(b , input);
+    
     if(fileFlag) {
         curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
         curr_browser->setDocument(b->document());
