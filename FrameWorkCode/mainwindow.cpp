@@ -5100,7 +5100,7 @@ void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
     QFile dictQFile(dictFilename);
 
     ui->textEdit_dict->clear();
-
+    ui->textEdit_dict->setFontPointSize(15);
     //! Open the dict file and display it in textedit view
     if(QFile::exists(dictFilename))
     {
