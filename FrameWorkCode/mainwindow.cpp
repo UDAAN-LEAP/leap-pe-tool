@@ -5595,8 +5595,8 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     b->setFont(font);
     input = b->toPlainText();
 
-    highlight(b , input);
     DisplayJsonDict(b,input);
+    highlight(b , input);
     
     if(fileFlag) {
         curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
@@ -6184,8 +6184,8 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
 {
 
     QMap <QString, QString>::iterator grmIterator;
-//    QTextCharFormat fmt;
-//    fmt.setBackground(Qt::yellow);
+    QTextCharFormat fmt;
+    fmt.setBackground(Qt::yellow);
     QTextCursor cursor(b->document());
     int indexOfReplacedWord;
     int from=0;
@@ -6221,7 +6221,7 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
             {
                 cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
                 cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
-                //cursor.setCharFormat(fmt);
+                cursor.setCharFormat(fmt);
                 QTextEdit::ExtraSelection h;
                 h.format.setBackground(Qt::yellow);
             }
