@@ -1,7 +1,7 @@
 {
-    "AverageCharAccuracy": 98.30555725097656,
-    "AverageCharErrors": 19,
-    "AverageWordAccuracy": 97.74333190917969,
+    "AverageCharAccuracy": 98.13888549804688,
+    "AverageCharErrors": 20,
+    "AverageWordAccuracy": 97.59222412109375,
     "AverageWordErrors": 3,
     "Rating-V1": 3,
     "pages": {
@@ -47,7 +47,7 @@
             "comments": "test 5",
             "pagename": "page-2",
             "rating": 5,
-            "wordaccuracy": 99.0999984741211,
+            "wordaccuracy": 99.11000061035156,
             "worderrors": 1
         },
         "page-3": {
@@ -60,21 +60,21 @@
             "worderrors": 3
         },
         "page-4": {
-            "characcuracy": 97.0999984741211,
-            "charerrors": 20,
+            "characcuracy": 96.86000061035156,
+            "charerrors": 22,
             "comments": "jjjjkl",
             "pagename": "page-4",
             "rating": 5,
-            "wordaccuracy": 97.5,
+            "wordaccuracy": 97.5199966430664,
             "worderrors": 3
         },
         "page-6": {
-            "characcuracy": 97.87999725341797,
-            "charerrors": 8,
+            "characcuracy": 96.62000274658203,
+            "charerrors": 13,
             "comments": "",
             "pagename": "page-6",
-            "wordaccuracy": 98.56999969482422,
-            "worderrors": 1
+            "wordaccuracy": 97.18000030517578,
+            "worderrors": 2
         },
         "page-7": {
             "characcuracy": 100,

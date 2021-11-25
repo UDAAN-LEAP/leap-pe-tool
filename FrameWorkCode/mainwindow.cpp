@@ -6184,9 +6184,9 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
 {
 
     QMap <QString, QString>::iterator grmIterator;
-    QTextCharFormat fmt;
-    fmt.setBackground(Qt::yellow);
     QTextCursor cursor(b->document());
+    QTextCharFormat fmt = cursor.charFormat();
+    fmt.setBackground(Qt::yellow);
     int indexOfReplacedWord;
     int from=0;
     int count;
@@ -6222,8 +6222,6 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
                 cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
                 cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
                 cursor.setCharFormat(fmt);
-                QTextEdit::ExtraSelection h;
-                h.format.setBackground(Qt::yellow);
             }
             from = endIndex;
             numReplaced+=1;
