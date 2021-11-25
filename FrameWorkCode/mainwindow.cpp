@@ -5566,7 +5566,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     QString input = stream.readAll();
     QFont font("Shobhika Regular");
     setWindowTitle(name);
-    font.setPointSize(16);
+    //font.setPointSize(16);
     if(ext == "txt") {
         istringstream iss(input.toUtf8().constData());
         string strHtml = "<html><body><p>";
@@ -6185,7 +6185,7 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
 
     QMap <QString, QString>::iterator grmIterator;
     QTextCursor cursor(b->document());
-    QTextCharFormat fmt = cursor.charFormat();
+    QTextCharFormat fmt;
     fmt.setBackground(Qt::yellow);
     int indexOfReplacedWord;
     int from=0;
@@ -6221,7 +6221,7 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
             {
                 cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
                 cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
-                cursor.setCharFormat(fmt);
+                cursor.mergeCharFormat(fmt);
             }
             from = endIndex;
             numReplaced+=1;
