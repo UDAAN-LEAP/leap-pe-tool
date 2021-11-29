@@ -82,14 +82,22 @@ private slots:
     void DisplayJsonDict(QTextBrowser *b, QString input);
 
     bool eventFilter(QObject *, QEvent *);
+
     void saveImageRegion(QPixmap, QString, QString,int,int,int);
+
  //   void displayHolder(QString,QString,QString,int,int,int,int,int);
+
     void updateEntries(QDomDocument, QString, QString, QString, int);
+
     void createImageInfoXMLFile();
 
     void on_actionNew_triggered();
 
     //void on_actionOpen_triggered();
+
+    void AddRecentProjects();
+
+    void on_actionRecent_Project_clicked();
 
     void on_actionSave_triggered();
 
@@ -374,6 +382,8 @@ private:
     QGraphicsRectItem* crop_rect;
     QString s1, s2;
     int NextPrevTrig = 0;
+    bool isRecentProjclick =false;
+    QString RecentProjFile;
 };
 
 #endif // MAINWINDOW_H

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'sender.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.8)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.5)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -13,7 +13,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'sender.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.12.8. It"
+#error "This file was generated using the moc from 5.9.5. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -85,7 +85,7 @@ QT_MOC_LITERAL(32, 455, 10) // "VerifyPeer"
 static const uint qt_meta_data_SimpleMail__Sender[] = {
 
  // content:
-       8,       // revision
+       7,       // revision
        0,       // classname
        0,    0, // classinfo
        5,   14, // methods
@@ -113,11 +113,11 @@ static const uint qt_meta_data_SimpleMail__Sender[] = {
     QMetaType::Void, 0x80000000 | 12,   13,
     QMetaType::Void,
 
- // enums: name, alias, flags, count, data
-      15,   15, 0x0,    4,   72,
-       3,    3, 0x0,    6,   80,
-      26,   26, 0x0,    3,   92,
-      30,   30, 0x0,    2,   98,
+ // enums: name, flags, count, data
+      15, 0x0,    4,   68,
+       3, 0x0,    6,   76,
+      26, 0x0,    3,   88,
+      30, 0x0,    2,   94,
 
  // enum data: key, value
       16, uint(SimpleMail::Sender::AuthNone),
@@ -142,7 +142,7 @@ static const uint qt_meta_data_SimpleMail__Sender[] = {
 void SimpleMail::Sender::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<Sender *>(_o);
+        Sender *_t = static_cast<Sender *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->smtpError((*reinterpret_cast< SmtpError(*)>(_a[1]))); break;
@@ -180,14 +180,14 @@ void SimpleMail::Sender::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (Sender::*)(SmtpError );
+            typedef void (Sender::*_t)(SmtpError );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Sender::smtpError)) {
                 *result = 0;
                 return;
             }
         }
         {
-            using _t = void (Sender::*)(const QList<QSslError> & );
+            typedef void (Sender::*_t)(const QList<QSslError> & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Sender::sslErrors)) {
                 *result = 1;
                 return;
@@ -196,14 +196,10 @@ void SimpleMail::Sender::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject SimpleMail::Sender::staticMetaObject = { {
-    &QObject::staticMetaObject,
-    qt_meta_stringdata_SimpleMail__Sender.data,
-    qt_meta_data_SimpleMail__Sender,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
+const QMetaObject SimpleMail::Sender::staticMetaObject = {
+    { &QObject::staticMetaObject, qt_meta_stringdata_SimpleMail__Sender.data,
+      qt_meta_data_SimpleMail__Sender,  qt_static_metacall, nullptr, nullptr}
+};
 
 
 const QMetaObject *SimpleMail::Sender::metaObject() const

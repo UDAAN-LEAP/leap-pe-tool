@@ -160,6 +160,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
 
     qApp->installEventFilter(this);
+    AddRecentProjects();
 }
 
 /*!
@@ -696,7 +697,16 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
      * 6. Get the value for time elapsed from Timelog.json.
      */
 
-    QFile xml(QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)")));   //Opens only if the file name is Project.xml
+    QString ProjFile;
+
+    if(isRecentProjclick == true)
+    {
+      ProjFile = RecentProjFile;
+    }
+    else{
+      ProjFile = QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)"));   //Opens only if the file name is Project.xml
+    }
+    QFile xml(ProjFile);
     QFileInfo finfo(xml);
     QString basedir = finfo.absoluteDir().absolutePath();
 
@@ -842,12 +852,36 @@ for (auto f : list)
         //!Genearte image.xml for figure/table/equation entries and initialize these values by 1.
         createImageInfoXMLFile();
 
+        //!save project paths for showing it on recent projects
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("RecentProjects");
+        settings.setValue("Project",finfo.path()+"/project.xml" );
+        settings.endGroup();
+        isRecentProjclick = false;
     }
     else
     {
         QMessageBox::warning(0, "Project Error", "Couldn't open project. Please check your project.");
         return;
     }
+}
+
+/*!
+ * \brief MainWindow::AddRecentProjects
+ */
+void MainWindow::AddRecentProjects()
+{
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("RecentProjects");
+    RecentProjFile = settings.value("Project").toString();
+    qDebug()<< RecentProjFile;
+    QAction *FileAction = new QAction(this);
+    FileAction->setIconText("1| ~"+ RecentProjFile);
+
+    ui->menuRecent_Project->clear();
+    ui->menuRecent_Project->addAction(FileAction);
+
+    connect(FileAction, &QAction::triggered, this , &MainWindow::on_actionRecent_Project_clicked);
 }
 
 /*!
@@ -6354,6 +6388,13 @@ void MainWindow::on_actionShortcut_Guide_triggered()
     dialog.setWindowFlags(Qt::FramelessWindowHint);
     dialog.exec();
 }
+
+void MainWindow::on_actionRecent_Project_clicked()
+{
+   isRecentProjclick = true;
+   on_actionOpen_Project_triggered();
+}
+
 //class Thread1 : public QThread, public MainWindow
 //{
 //private:

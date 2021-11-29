@@ -411,9 +411,16 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>File</string>
     </property>
+    <widget class="QMenu" name="menuRecent_Project">
+     <property name="title">
+      <string>Recent Project</string>
+     </property>
+     <addaction name="action1"/>
+    </widget>
     <addaction name="actionNew"/>
     <addaction name="actionNew_Project"/>
     <addaction name="actionOpen_Project"/>
+    <addaction name="menuRecent_Project"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
     <addaction name="actionSpell_Check"/>
@@ -1268,6 +1275,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionShortcut_Guide">
    <property name="text">
     <string>Shortcut Guide</string>
+   </property>
+  </action>
+  <action name="action1">
+   <property name="text">
+    <string>1| </string>
    </property>
   </action>
  </widget>

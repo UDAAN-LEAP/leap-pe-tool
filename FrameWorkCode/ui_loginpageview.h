@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'loginpageview.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.8
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,10 +10,13 @@
 #define UI_LOGINPAGEVIEW_H
 
 #include <QtCore/QVariant>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
@@ -39,29 +42,29 @@ public:
     void setupUi(QDialog *LoginPageView)
     {
         if (LoginPageView->objectName().isEmpty())
-            LoginPageView->setObjectName(QString::fromUtf8("LoginPageView"));
+            LoginPageView->setObjectName(QStringLiteral("LoginPageView"));
         LoginPageView->resize(530, 443);
         groupBox = new QGroupBox(LoginPageView);
-        groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        groupBox->setObjectName(QStringLiteral("groupBox"));
         groupBox->setGeometry(QRect(50, 160, 421, 261));
         loginButton = new QPushButton(groupBox);
-        loginButton->setObjectName(QString::fromUtf8("loginButton"));
+        loginButton->setObjectName(QStringLiteral("loginButton"));
         loginButton->setGeometry(QRect(160, 210, 89, 25));
         widget = new QWidget(groupBox);
-        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setObjectName(QStringLiteral("widget"));
         widget->setGeometry(QRect(80, 50, 261, 141));
         verticalLayout = new QVBoxLayout(widget);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         unameLabel = new QLabel(widget);
-        unameLabel->setObjectName(QString::fromUtf8("unameLabel"));
+        unameLabel->setObjectName(QStringLiteral("unameLabel"));
 
         horizontalLayout->addWidget(unameLabel);
 
         usernameEdit = new QLineEdit(widget);
-        usernameEdit->setObjectName(QString::fromUtf8("usernameEdit"));
+        usernameEdit->setObjectName(QStringLiteral("usernameEdit"));
 
         horizontalLayout->addWidget(usernameEdit);
 
@@ -69,14 +72,14 @@ public:
         verticalLayout->addLayout(horizontalLayout);
 
         horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         pwdLabel = new QLabel(widget);
-        pwdLabel->setObjectName(QString::fromUtf8("pwdLabel"));
+        pwdLabel->setObjectName(QStringLiteral("pwdLabel"));
 
         horizontalLayout_2->addWidget(pwdLabel);
 
         passwordEdit = new QLineEdit(widget);
-        passwordEdit->setObjectName(QString::fromUtf8("passwordEdit"));
+        passwordEdit->setObjectName(QStringLiteral("passwordEdit"));
 
         horizontalLayout_2->addWidget(passwordEdit);
 
@@ -91,11 +94,11 @@ public:
 
     void retranslateUi(QDialog *LoginPageView)
     {
-        LoginPageView->setWindowTitle(QApplication::translate("LoginPageView", "Dialog", nullptr));
-        groupBox->setTitle(QApplication::translate("LoginPageView", "Log-In", nullptr));
-        loginButton->setText(QApplication::translate("LoginPageView", "Login", nullptr));
-        unameLabel->setText(QApplication::translate("LoginPageView", "Username:", nullptr));
-        pwdLabel->setText(QApplication::translate("LoginPageView", "Password:", nullptr));
+        LoginPageView->setWindowTitle(QApplication::translate("LoginPageView", "Dialog", Q_NULLPTR));
+        groupBox->setTitle(QApplication::translate("LoginPageView", "Log-In", Q_NULLPTR));
+        loginButton->setText(QApplication::translate("LoginPageView", "Login", Q_NULLPTR));
+        unameLabel->setText(QApplication::translate("LoginPageView", "Username:", Q_NULLPTR));
+        pwdLabel->setText(QApplication::translate("LoginPageView", "Password:", Q_NULLPTR));
     } // retranslateUi
 
 };
