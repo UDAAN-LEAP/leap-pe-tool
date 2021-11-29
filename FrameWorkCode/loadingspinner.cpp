@@ -11,8 +11,6 @@ LoadingSpinner::LoadingSpinner(QWidget *parent) :
 {
     ui->setupUi(this);
     this->move(425,300);
-    setWindowFlags( Qt::CustomizeWindowHint );
-    this->setStyleSheet("background-color: #d7d6d5;");
     QMovie *mv = new QMovie(":/Images/spinbar-tp.gif");
     ui->labelspin->setAttribute(Qt::WA_NoSystemBackground);
     ui->labelspin->setMovie(mv);

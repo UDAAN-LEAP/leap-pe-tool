@@ -1499,7 +1499,7 @@ void MainWindow::on_actionLoadData_triggered()
         if (LoadDataFlag)
         {
             LoadingSpinner *spinner = new LoadingSpinner(this);
-            spinner->setWindowFlags(Qt::FramelessWindowHint);
+            spinner->setWindowTitle("Loading Data");
             spinner->setModal(false);
             QtConcurrent::run(this, &MainWindow::load_data, spinner);
             spinner->exec();
