@@ -774,29 +774,30 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         //!Adds each file present in CorrectorOutput directory to treeView
         auto list = cdir.entryList(QDir::Filter::Files);
 
-for (auto f : list)
+        for (auto f : list)
         {   QStringList x = f.split(QRegExp("[.]"));
 
             QString t = str1 + "/" + f;
             QFile f2(t);
             if(x[1]=="html")
-            mProject.AddTemp(filter,f2," ");
+            mProject.AddTemp(filter,f2,"");
             corrector_set.insert(f);
 
 
         }
         //!Adds each file present in VerifierOutput directory to treeView
-        filter = mProject.getFilter("VerifierOutput");
         cdir.setPath(str2);
-        list = cdir.entryList(QDir::Files);
+        filter = mProject.getFilter("VerifierOutput");
+        list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list)
         {
-            //QStringList x1 = f.split(QRegExp("[.]"));
-            verifier_set.insert(f);
+            QStringList x = f.split(QRegExp("[.]"));
+
             QString t = str2 + "/" + f;
             QFile f2(t);
+            if(x[1]=="html")
             mProject.AddTemp(filter, f2, "");
-
+            verifier_set.insert(f);
         }
         filter = mProject.getFilter("Document");
         //!Adds the files from inds folder to treeView
@@ -5153,7 +5154,7 @@ void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
     QFile dictQFile(dictFilename);
 
     ui->textEdit_dict->clear();
-    ui->textEdit_dict->setFontPointSize(15);
+    ui->textEdit_dict->setFontPointSize(14);
     //! Open the dict file and display it in textedit view
     if(QFile::exists(dictFilename))
     {
