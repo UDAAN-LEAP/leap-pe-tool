@@ -6,14 +6,17 @@
 #include "trieEditdis.h"
 #include "meanStdPage.h"
 #include <math.h>
+#include "QProgressBar"
 #include <QPrinter>
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
 #include "DiffView.h"
+#include <QtConcurrent/QtConcurrent>
 #include "diff_match_patch.h"
 #include "interndiffview.h"
 #include "commentsview.h"
 #include "Symbols.h"
+#include "loadingspinner.h"
 #include "textfinder.h"
 #include "resizeimageview.h"
 #include <string>
@@ -45,6 +48,7 @@
 #include <QTextDocumentFragment>
 #include <sstream>
 #include <QVector>
+#include <QThread>
 #include <vector>
 #include <QJsonValue>
 #include <QGraphicsRectItem>
@@ -104,11 +108,11 @@ bool shouldIDraw=false;         //button functioning over marking a region for f
 int pressedFlag;            //Resposible for dynamic rectangular drawing
 
 QString branchName;
+
 //Constructor
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
     ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
     ui->tabWidget_2->tabBar()->hide();
@@ -1457,35 +1461,50 @@ void MainWindow::on_actionLoadGDocPage_triggered()
  */
 bool LoadDataFlag = 1; //To load data only once
 QString mFilename1, loadStr, loadStr1;
+
+
+void MainWindow::load_data(LoadingSpinner *spin){
+    ui->actionLoadData->setDisabled(true);
+    ui->actionLoadData->setDisabled(true);
+    QString initialText = ui->lineEdit->text();
+    ui->lineEdit->setText("Loading Data...");
+    QString  localmFilename1 = mFilename;
+    string localmFilename1n = localmFilename1.toUtf8().constData();
+    localmFilename1n = localmFilename1n.substr(0, localmFilename1n.find("page"));
+    localmFilename1 = QString::fromStdString(localmFilename1n);
+
+    on_actionLoadDict_triggered();       //sanskrit dictionary files are called
+    loadStr += "\n";
+
+    //!GEROCR IEROCR PWords and CPair files are loaded and reflected in terminal
+    on_actionLoadOCRWords_triggered();
+    on_actionLoadDomain_triggered();
+    on_actionLoadSubPS_triggered();
+    on_actionLoadConfusions_triggered();
+    QString filepath = mProject.GetDir().absolutePath() + "/Dicts/synonyms.csv" ;
+    loadFileCSV(synonym, synrows, filepath.toUtf8().constData());
+    ui->lineEdit->setText(initialText);
+    LoadDataFlag = 0;
+    qDebug() << "done loading ....";
+    spin->close();
+
+    QMessageBox messageBox;
+    messageBox.information(0, "Load Data", "Data has been loaded.");
+
+}
 void MainWindow::on_actionLoadData_triggered()
 {
     if (mProject.isProjectOpen())
     {
         if (LoadDataFlag)
         {
-            QString initialText = ui->lineEdit->text();
-            ui->lineEdit->setText("Loading Data...");
-            QString  localmFilename1 = mFilename;
-            string localmFilename1n = localmFilename1.toUtf8().constData();
-            localmFilename1n = localmFilename1n.substr(0, localmFilename1n.find("page"));
-            localmFilename1 = QString::fromStdString(localmFilename1n);
+            LoadingSpinner *spinner = new LoadingSpinner(this);
+            spinner->setWindowFlags(Qt::FramelessWindowHint);
+            spinner->setModal(false);
+            QtConcurrent::run(this, &MainWindow::load_data, spinner);
+            spinner->exec();
+            QApplication::processEvents();
 
-            on_actionLoadDict_triggered();       //sanskrit dictionary files are called
-            loadStr += "\n";
-
-            //!GEROCR IEROCR PWords and CPair files are loaded and reflected in terminal
-            on_actionLoadOCRWords_triggered();
-            on_actionLoadDomain_triggered();
-            on_actionLoadSubPS_triggered();
-            on_actionLoadConfusions_triggered();
-
-            QString filepath = mProject.GetDir().absolutePath() + "/Dicts/synonyms.csv" ;
-            loadFileCSV(synonym, synrows, filepath.toUtf8().constData());
-
-            ui->lineEdit->setText(initialText);
-            LoadDataFlag = 0;
-            QMessageBox messageBox;
-            messageBox.information(0, "Load Data", "Data has been loaded.");
         }
     }
 }
@@ -6332,6 +6351,27 @@ void MainWindow::on_actionShortcut_Guide_triggered()
 {
     ShortcutGuideDialog dialog;
     dialog.setModal(true);
+    dialog.setWindowFlags(Qt::FramelessWindowHint);
     dialog.exec();
 }
+//class Thread1 : public QThread, public MainWindow
+//{
+//private:
+//    void run() override{
 
+//        MainWindow::load_data();
+
+//    }
+//};
+
+//class Thread2 : public QThread
+//{
+//private:
+//    void run() override{
+//        LoadingSpinner spinner;
+//        spinner.setWindowFlags(Qt::FramelessWindowHint);
+//        spinner.setModal(true);
+//        spinner.exec();
+
+//    }
+//};

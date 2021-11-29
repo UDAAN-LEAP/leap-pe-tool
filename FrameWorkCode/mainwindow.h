@@ -41,7 +41,7 @@
 #include <QFileSystemWatcher>
 #include<QGraphicsRectItem>
 #include "globalreplacedialog.h"
-
+#include "loadingspinner.h"
 //#include <set>
 using namespace std;
 
@@ -68,7 +68,15 @@ public:
     }
     QTextBrowser * getCurrentBrowser() {
         return curr_browser;
+
+
+
+
     };
+
+    void load_data(LoadingSpinner *spin);
+
+
 
 private slots:
     void DisplayJsonDict(QTextBrowser *b, QString input);
@@ -114,6 +122,7 @@ private slots:
     void on_actionLoadSubPS_triggered();
 
     void on_actionLoadConfusions_triggered();
+
 
     void on_actionSugg_triggered();
 

@@ -27,6 +27,7 @@ HEADERS += ./Filters.h \
     $$PWD/SimpleMail/serverreply_p.h \
     $$PWD/SimpleMail/smtpexports.h \
     $$PWD/editdistance.h \
+    $$PWD/loadingspinner.h \
     $$PWD/shortcutguidedialog.h \
     $$PWD/textfinder.h \
     $$PWD/globalreplacedialog.h \
@@ -91,6 +92,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/SimpleMail/server.cpp \
     $$PWD/SimpleMail/serverreply.cpp \
     $$PWD/editdistance.cpp \
+    $$PWD/loadingspinner.cpp \
     $$PWD/shortcutguidedialog.cpp \
     $$PWD/textfinder.cpp \
     $$PWD/globalreplacedialog.cpp \
@@ -114,6 +116,7 @@ SOURCES += ./DiffView.cpp \
     ./ProjectWizard.cpp \
     ./CreateProjectPage.cpp
 FORMS += ./DiffView.ui \
+    $$PWD/loadingspinner.ui \
     $$PWD/shortcutguidedialog.ui \
     $$PWD/textfinder.ui \
     $$PWD/globalreplacedialog.ui \
