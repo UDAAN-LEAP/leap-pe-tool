@@ -875,14 +875,15 @@ void MainWindow::AddRecentProjects()
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("RecentProjects");
     RecentProjFile = settings.value("Project").toString();
-    qDebug()<< RecentProjFile;
-    QAction *FileAction = new QAction(this);
-    FileAction->setIconText("1| ~"+ RecentProjFile);
-
     ui->menuRecent_Project->clear();
-    ui->menuRecent_Project->addAction(FileAction);
 
-    connect(FileAction, &QAction::triggered, this , &MainWindow::on_actionRecent_Project_clicked);
+    if(RecentProjFile!="")
+     {
+      QAction *FileAction = new QAction(this);
+      FileAction->setIconText("~"+ RecentProjFile);
+      ui->menuRecent_Project->addAction(FileAction);
+      connect(FileAction, &QAction::triggered, this , &MainWindow::actionRecent_Project_clicked);
+     }
 }
 
 /*!
@@ -6390,7 +6391,7 @@ void MainWindow::on_actionShortcut_Guide_triggered()
     dialog.exec();
 }
 
-void MainWindow::on_actionRecent_Project_clicked()
+void MainWindow::actionRecent_Project_clicked()
 {
    isRecentProjclick = true;
    on_actionOpen_Project_triggered();

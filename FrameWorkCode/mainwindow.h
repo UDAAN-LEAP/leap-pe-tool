@@ -97,7 +97,7 @@ private slots:
 
     void AddRecentProjects();
 
-    void on_actionRecent_Project_clicked();
+    void actionRecent_Project_clicked();
 
     void on_actionSave_triggered();
 
