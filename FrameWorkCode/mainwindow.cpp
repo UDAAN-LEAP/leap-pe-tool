@@ -161,6 +161,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     qApp->installEventFilter(this);
     AddRecentProjects();
+
+    if (!isVerifier)
+    {
+        ui->actionHighlight->setEnabled(false);
+    }
 }
 
 /*!
@@ -4424,7 +4429,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     updateEntries(document, filename12, PageNo[1], s2, i);
 
                     shouldIDraw=false;
-                    //ui->pushButton->setStyleSheet("");     //remove the style once the operation is done
+                    ui->pushButton->setStyleSheet("");     //remove the style once the operation is done
                 }
                 //! settings for a tableholder
                 else if (messageBox.clickedButton() == tableButton)
@@ -4445,7 +4450,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     updateEntries(document, filename12, PageNo[1], s2, j);
 
                     shouldIDraw=false;
-                   // ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
+                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
                 }
                 //! settings for a equationholder
                 else if(messageBox.clickedButton() == equationButton)
@@ -4469,7 +4474,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     updateEntries(document, filename12, PageNo[1], s2, k);
 
                     shouldIDraw=false;
-                   // ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
+                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
                 }
                 //! setting for cancelbutton
                 else
@@ -6387,7 +6392,14 @@ void MainWindow::on_actionShortcut_Guide_triggered()
 {
     ShortcutGuideDialog dialog;
     dialog.setModal(true);
-    dialog.setWindowFlags(Qt::FramelessWindowHint);
+//    dialog.setWindowFlags(Qt::FramelessWindowHint);
+
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QRect  screenGeometry = screen->geometry();
+    float height = screenGeometry.height() * 0.5;
+    float width = screenGeometry.width() * 0.5;
+
+    dialog.setFixedSize(width, height);
     dialog.exec();
 }
 
@@ -6418,3 +6430,4 @@ void MainWindow::actionRecent_Project_clicked()
 
 //    }
 //};
+
