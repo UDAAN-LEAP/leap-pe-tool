@@ -59,6 +59,7 @@
 #endif
 #include <editdistance.h>
 #include <QRegularExpressionMatch>
+#include<QStatusBar>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -363,7 +364,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
     if (curr_browser)
     {
         curr_browser->cursorForPosition(ev->pos());
-
+        WordCount();
         DisplayTimeLog();
 
         //! if right click
@@ -1526,6 +1527,23 @@ void MainWindow::load_data(LoadingSpinner *spin){
 
     QMessageBox messageBox;
     messageBox.information(0, "Load Data", "Data has been loaded.");
+
+}
+
+void MainWindow::WordCount()
+{
+    QString extText = curr_browser->toPlainText();
+       extText.remove("?");
+       extText.remove("|");
+       extText.remove("`");
+       extText.remove("[");
+       extText.remove("]");
+       extText.remove("'");
+       extText.remove(",");
+
+       int wordcnt = extText.split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
+    QString toshow = "Total word count = "+ QString::number(wordcnt);
+    statusBar()->showMessage(toshow);
 
 }
 void MainWindow::on_actionLoadData_triggered()
@@ -5570,6 +5588,14 @@ QString GetFilter(QString & Name, const QStringList &list) {
  * \param name
  */
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
+    QTimer* timer = new QTimer();
+        timer->setInterval(800);
+
+        connect(timer, &QTimer::timeout, this, [=](){
+           WordCount();
+        });
+
+        timer->start();
 
     if(ui->tabWidget_2->currentIndex() >=0 && NextPrevTrig ==0)
     {
