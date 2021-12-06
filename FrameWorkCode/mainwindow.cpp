@@ -1528,10 +1528,7 @@ void MainWindow::load_data(LoadingSpinner *spin){
     ui->lineEdit->setText(initialText);
     LoadDataFlag = 0;
     qDebug() << "done loading ....";
-    spin->close();
-
-    QMessageBox messageBox;
-    messageBox.information(0, "Load Data", "Data has been loaded.");
+    emit closeSignal();
 
 }
 
@@ -1550,6 +1547,7 @@ void MainWindow::WordCount()
     QString toshow = "Total word count = "+ QString::number(wordcnt);
     statusBar()->showMessage(toshow);
 
+
 }
 void MainWindow::on_actionLoadData_triggered()
 {
@@ -1560,9 +1558,11 @@ void MainWindow::on_actionLoadData_triggered()
             LoadingSpinner *spinner = new LoadingSpinner(this);
             spinner->setWindowTitle("Loading Data");
             spinner->setModal(false);
-            QtConcurrent::run(this, &MainWindow::load_data, spinner);
+            QtConcurrent::run(this,&MainWindow::load_data, spinner);
+            connect(this, &MainWindow::closeSignal, spinner, &LoadingSpinner::close);
             spinner->exec();
-            QApplication::processEvents();
+            QMessageBox messageBox;
+            messageBox.information(0, "Load Data", "Data has been loaded.");
 
         }
     }

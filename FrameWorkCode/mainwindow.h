@@ -53,6 +53,9 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+signals:
+    void closeSignal();
+
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();

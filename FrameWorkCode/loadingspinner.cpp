@@ -9,6 +9,7 @@ LoadingSpinner::LoadingSpinner(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LoadingSpinner)
 {
+    this->setStyleSheet("background-color: white;");
     ui->setupUi(this);
     this->move(425,300);
     QMovie *mv = new QMovie(":/Images/spinbar-tp.gif");
