@@ -77,7 +77,7 @@ public:
 
     };
 
-    void load_data(LoadingSpinner *spin);
+    void load_data();
 
 
 
@@ -118,6 +118,8 @@ private slots:
     void on_actionLoad_Next_Page_triggered();
 
     void on_actionLoad_Prev_Page_triggered();
+
+    void SaveFile();
 
     void on_actionLoadGDocPage_triggered();
 

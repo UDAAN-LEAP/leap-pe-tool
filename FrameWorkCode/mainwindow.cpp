@@ -898,8 +898,8 @@ void MainWindow::AddRecentProjects()
  * \sa SaveTimeLog(), DisplayTimeLog()
 */
 bool ConvertSlpDevFlag = 0;
-void MainWindow::on_actionSave_triggered()
-{
+
+void MainWindow::SaveFile(){
     SaveTimeLog();
     DisplayTimeLog();
     QVector <QString> changedWords;
@@ -1127,9 +1127,25 @@ void MainWindow::on_actionSave_triggered()
         }
     }
 
+    emit closeSignal();
+
+}
+
+
+
+void MainWindow::on_actionSave_triggered()
+{
+
+    LoadingSpinner *spinner = new LoadingSpinner(this);
+    spinner->setWindowTitle("Loading Data");
+    spinner->setModal(false);
+    QtConcurrent::run(this,&MainWindow::SaveFile);
+    connect(this, &MainWindow::closeSignal, spinner, &LoadingSpinner::close);
+    spinner->exec();
+    QVector <QString> changedWords;
+    changedWords = editDistance(s1, s2);             // Update CPair by editdistance
     QString currentDirAbsolutePath = gDirTwoLevelUp + "/" + gCurrentDirName;
     runGlobalReplace(currentDirAbsolutePath, changedWords);
-
     ConvertSlpDevFlag =0;
 }
 
@@ -1505,7 +1521,7 @@ bool LoadDataFlag = 1; //To load data only once
 QString mFilename1, loadStr, loadStr1;
 
 
-void MainWindow::load_data(LoadingSpinner *spin){
+void MainWindow::load_data(){
     ui->actionLoadData->setDisabled(true);
     ui->actionLoadData->setDisabled(true);
     QString initialText = ui->lineEdit->text();
@@ -1558,7 +1574,7 @@ void MainWindow::on_actionLoadData_triggered()
             LoadingSpinner *spinner = new LoadingSpinner(this);
             spinner->setWindowTitle("Loading Data");
             spinner->setModal(false);
-            QtConcurrent::run(this,&MainWindow::load_data, spinner);
+            QtConcurrent::run(this,&MainWindow::load_data);
             connect(this, &MainWindow::closeSignal, spinner, &LoadingSpinner::close);
             spinner->exec();
             QMessageBox messageBox;
