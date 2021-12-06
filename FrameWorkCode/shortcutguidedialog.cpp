@@ -7,13 +7,14 @@ ShortcutGuideDialog::ShortcutGuideDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     //display guide
-    QPixmap pm(":/Images/ShortcutGuide.jpg");
-    ui->label->setPixmap(pm);
-    ui->label->setScaledContents(true);
-    QScrollArea *scrollarea = new QScrollArea(this);
-    scrollarea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    scrollarea->setBackgroundRole(QPalette :: Dark);
-    scrollarea->setWidget(ui->label);
+//    QPixmap pm(":/Images/ShortcutGuide.jpg");
+//    ui->label->setPixmap(pm);
+//    ui->label->setScaledContents(true);
+//    QScrollArea *scrollarea = new QScrollArea(this);
+//    scrollarea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    scrollarea->setBackgroundRole(QPalette :: Dark);
+//    scrollarea->setWidget(ui->label);
+    ui->textBrowser->setTextInteractionFlags(Qt::NoTextInteraction);
 }
 
 ShortcutGuideDialog::~ShortcutGuideDialog()

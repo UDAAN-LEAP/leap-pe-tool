@@ -6422,8 +6422,8 @@ void MainWindow::on_actionShortcut_Guide_triggered()
 
     QScreen *screen = QGuiApplication::primaryScreen();
     QRect  screenGeometry = screen->geometry();
-    float height = screenGeometry.height() * 0.5;
-    float width = screenGeometry.width() * 0.5;
+    float height = screenGeometry.height() * 0.6;
+    float width = screenGeometry.width() * 0.6;
 
     dialog.setFixedSize(width, height);
     dialog.exec();
