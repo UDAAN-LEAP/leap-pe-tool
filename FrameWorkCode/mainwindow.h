@@ -366,6 +366,10 @@ private slots:
 
     void on_actionShortcut_Guide_triggered();
 
+
+
+    void on_textBrowser_textChanged();
+
 private:
     bool mExitStatus = false;
     QString mRole;
