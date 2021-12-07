@@ -336,7 +336,7 @@ private slots:
 
     bool globalReplaceQueryMessageBox(QString old_word, QString new_word);
 
-    void writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap);
+    int writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap);
 
 
     void addCurrentlyOpenFileToEditedFilesLog();

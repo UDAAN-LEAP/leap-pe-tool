@@ -5038,7 +5038,7 @@ void MainWindow::deleteEditedFilesLog(){
  * \param globalReplacementMap
  * writes CPairs by iterating over all files
  */
-void MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap){
+int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap){
     QMap <QString, QString>::iterator grmIterator;
     QFile *f = new QFile(file_path);
 
@@ -5049,6 +5049,8 @@ void MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStr
     QString s1 = in.readAll();
     f->close();
     f->open(QIODevice::WriteOnly);
+
+    int replaced = 0, tot_replaced = 0;
 
     for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
     {
@@ -5061,10 +5063,13 @@ void MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStr
         QString replacementString1 = QString::fromStdString(str);
         mapOfReplacements[grmIterator.key()] = grmIterator.value();
         s1.replace(re, replacementString1);
+        replaced = s1.count(replacementString1);
+        tot_replaced = tot_replaced + replaced;
     }
 
     in << s1;
     f->close();
+    return tot_replaced;
 }
 
 /*!
@@ -5129,6 +5134,10 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
     int noOfChangedWords = changedWords.size();
 
+    int files = 0;
+    int r1 = 0, r2 = 0;
+    int x1 = 0;
+
     //! if only one change spawn checkbox
     if (noOfChangedWords == 1){
 
@@ -5154,12 +5163,23 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
             QString it_file_path = dirIterator.next();
             bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
-
+            QString suff = dirIterator.fileInfo().completeSuffix();
             if(!isFileInEditedFilesLog){
-                writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                if(suff == "html"){
+                r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                r2 = r2 + r1;
+                if(r1 > 0)
+                files++;
+                }
+                else
+                    x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
             }
         }
     }
+
+    QString msg  = QString::fromStdString(std::to_string(globalReplacementMap.values().length()) + " words changed" + "\n" + std::to_string(r2) + " replacements done" + "\n" + std::to_string(files) + " files replaced");
+    QMessageBox messageBox;
+    messageBox.information(0, "Replacement Successful", msg);
 
     addCurrentlyOpenFileToEditedFilesLog();
 }

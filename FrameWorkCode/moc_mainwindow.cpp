@@ -519,7 +519,7 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString, 0x80000000 | 127,    2,    2,
     QMetaType::Bool, QMetaType::QString, QMetaType::QString,  129,  130,
-    QMetaType::Void, QMetaType::QString, 0x80000000 | 133,  132,  134,
+    QMetaType::Int, QMetaType::QString, 0x80000000 | 133,  132,  134,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Bool, QMetaType::QString, QMetaType::QString,  132,  138,
@@ -649,7 +649,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 100: _t->runGlobalReplace((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QVector<QString>(*)>(_a[2]))); break;
         case 101: { bool _r = _t->globalReplaceQueryMessageBox((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 102: _t->writeGlobalCPairsToFiles((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QMap<QString,QString>(*)>(_a[2]))); break;
+        case 102: { int _r = _t->writeGlobalCPairsToFiles((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QMap<QString,QString>(*)>(_a[2])));
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         case 103: _t->addCurrentlyOpenFileToEditedFilesLog(); break;
         case 104: _t->deleteEditedFilesLog(); break;
         case 105: { bool _r = _t->isStringInFile((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
