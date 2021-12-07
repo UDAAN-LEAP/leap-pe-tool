@@ -5190,7 +5190,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         }
     }
 
-    QString msg  = QString::fromStdString(std::to_string(globalReplacementMap.values().length()) + " words changed" + "\n" + std::to_string(r2) + " replacements done" + "\n" + std::to_string(files) + " files replaced");
+    QString msg  = QString::fromStdString(std::to_string(globalReplacementMap.values().length()) + " words changed" + "\n" + std::to_string(r2) + " instances replaced" + "\n" + std::to_string(files) + " files modified");
     QMessageBox messageBox;
     messageBox.information(0, "Replacement Successful", msg);
 
