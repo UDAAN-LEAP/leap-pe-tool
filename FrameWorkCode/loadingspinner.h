@@ -15,6 +15,8 @@ public:
     explicit LoadingSpinner(QWidget *parent = nullptr);
     ~LoadingSpinner();
 
+    void SetSave();
+
 private:
 
     Ui::LoadingSpinner *ui;

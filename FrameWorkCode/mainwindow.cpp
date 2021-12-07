@@ -1137,7 +1137,7 @@ void MainWindow::on_actionSave_triggered()
 {
 
     LoadingSpinner *spinner = new LoadingSpinner(this);
-    spinner->setWindowTitle("Loading Data");
+    spinner->SetSave();
     spinner->setModal(false);
     QtConcurrent::run(this,&MainWindow::SaveFile);
     connect(this, &MainWindow::closeSignal, spinner, &LoadingSpinner::close);

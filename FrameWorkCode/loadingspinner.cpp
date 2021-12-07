@@ -20,6 +20,12 @@ LoadingSpinner::LoadingSpinner(QWidget *parent) :
 }
 
 
+void LoadingSpinner::SetSave(){
+    ui->label_2->setText("Saving...");
+    this->setWindowTitle("Saving File");
+
+}
+
 LoadingSpinner::~LoadingSpinner()
 {
     delete ui;
