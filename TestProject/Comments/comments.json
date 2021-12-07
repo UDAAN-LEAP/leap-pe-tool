@@ -1,8 +1,8 @@
 {
-    "AverageCharAccuracy": 97.88443756103516,
+    "AverageCharAccuracy": 97.97221374511719,
     "AverageCharErrors": 21,
-    "AverageWordAccuracy": 97.23332977294922,
-    "AverageWordErrors": 4,
+    "AverageWordAccuracy": 97.43999481201172,
+    "AverageWordErrors": 3,
     "Rating-V1": 3,
     "pages": {
         "page-1": {
@@ -51,21 +51,21 @@
             "worderrors": 2
         },
         "page-3": {
-            "characcuracy": 99.2699966430664,
-            "charerrors": 6,
+            "characcuracy": 100,
+            "charerrors": 0,
             "comments": "yolo",
             "pagename": "page-3",
             "rating": 5,
-            "wordaccuracy": 98.18000030517578,
-            "worderrors": 3
+            "wordaccuracy": 100,
+            "worderrors": 0
         },
         "page-4": {
-            "characcuracy": 96.86000061035156,
+            "characcuracy": 96.91999816894531,
             "charerrors": 22,
             "comments": "jjjjkl",
             "pagename": "page-4",
             "rating": 5,
-            "wordaccuracy": 97.5199966430664,
+            "wordaccuracy": 97.55999755859375,
             "worderrors": 3
         },
         "page-6": {

@@ -1,2 +1,4 @@
 /home/mush/ocr/error-correct/iitb-openocr-digit-tool/TestProject/VerifierOutput/page-1.html
 /home/mush/ocr/error-correct/iitb-openocr-digit-tool/TestProject/VerifierOutput/page-2.html
+/home/aman/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-3.html
+/home/aman/Desktop/iitb-openocr-digit-tool/TestProject/VerifierOutput/page-4.html

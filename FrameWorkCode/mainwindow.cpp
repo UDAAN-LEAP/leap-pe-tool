@@ -369,7 +369,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
     if (curr_browser)
     {
         curr_browser->cursorForPosition(ev->pos());
-        WordCount();
+
         DisplayTimeLog();
 
         //! if right click
@@ -1550,6 +1550,8 @@ void MainWindow::load_data(){
 
 void MainWindow::WordCount()
 {
+
+    if(curr_browser){
     QString extText = curr_browser->toPlainText();
        extText.remove("?");
        extText.remove("|");
@@ -1564,6 +1566,7 @@ void MainWindow::WordCount()
     statusBar()->showMessage(toshow);
 
 
+}
 }
 void MainWindow::on_actionLoadData_triggered()
 {
@@ -4546,6 +4549,16 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
       }
     }
 
+    if (event->type() == QEvent::ShortcutOverride) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+        if ( keyEvent->key()) {
+            //keyPressEvent(keyEvent);
+//            event->ignore();
+            WordCount();
+        }
+    }
+
     return QMainWindow::eventFilter(object, event);
 }
 
@@ -5608,15 +5621,11 @@ QString GetFilter(QString & Name, const QStringList &list) {
  * \param ext
  * \param name
  */
+
+
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
-    QTimer* timer = new QTimer();
-        timer->setInterval(800);
 
-        connect(timer, &QTimer::timeout, this, [=](){
-           WordCount();
-        });
 
-        timer->start();
 
     if(ui->tabWidget_2->currentIndex() >=0 && NextPrevTrig ==0)
     {
@@ -5812,6 +5821,8 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
             }
         }
     }
+   WordCount();
+
 }
 
 /*!
@@ -5820,6 +5831,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
  */
 void MainWindow::LoadImageFromFile(QFile * f)
 {
+
 
     QString localFileName = f->fileName();
     loadimage = true;
@@ -6451,6 +6463,7 @@ void MainWindow::actionRecent_Project_clicked()
    on_actionOpen_Project_triggered();
 }
 
+
 //class Thread1 : public QThread, public MainWindow
 //{
 //private:
@@ -6472,4 +6485,13 @@ void MainWindow::actionRecent_Project_clicked()
 
 //    }
 //};
+
+
+void MainWindow::on_textBrowser_textChanged()
+{
+    WordCount();
+}
+
+
+
 
