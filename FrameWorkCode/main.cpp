@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
 {
 	git_libgit2_init();
     QApplication a(argc, argv);
-    a.setWindowIcon(QIcon("./logo.png"));
+    a.setWindowIcon(QIcon("./logonew.png"));
     MainWindow w;
     if(w.exitStatus()) {
         QMessageBox msgBox;
