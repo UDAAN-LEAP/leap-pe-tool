@@ -53,6 +53,7 @@ public:
         if (DiffView->objectName().isEmpty())
             DiffView->setObjectName(QString::fromUtf8("DiffView"));
         DiffView->resize(1280, 516);
+        DiffView->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
         centralWidget = new QWidget(DiffView);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         horizontalLayout_3 = new QHBoxLayout(centralWidget);
@@ -86,10 +87,11 @@ public:
         OCRText = new QTextEdit(layoutWidget);
         OCRText->setObjectName(QString::fromUtf8("OCRText"));
         QFont font;
-        font.setFamily(QString::fromUtf8("Shobhika"));
+        font.setFamily(QString::fromUtf8("Work Sans"));
         font.setPointSize(11);
-        font.setBold(true);
-        font.setWeight(75);
+        font.setBold(false);
+        font.setItalic(false);
+        font.setWeight(50);
         OCRText->setFont(font);
 
         verticalLayout_3->addWidget(OCRText);
@@ -150,7 +152,7 @@ public:
         DiffView->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(DiffView);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1280, 22));
+        menuBar->setGeometry(QRect(0, 0, 1280, 23));
         DiffView->setMenuBar(menuBar);
         statusBar = new QStatusBar(DiffView);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
@@ -170,21 +172,21 @@ public:
         OCRText->setHtml(QApplication::translate("DiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Shobhika'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika Regular'; font-weight:400;\"><br /></p></body></html>", nullptr));
+"</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika Regular';\"><br /></p></body></html>", nullptr));
         InternLabel->setText(QApplication::translate("DiffView", "<b><p>2. Corrector's Output Text</b></p>Changes Made by Corrector: ", nullptr));
         InternText->setHtml(QApplication::translate("DiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Shobhika'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika Regular'; font-weight:400;\"><br /></p></body></html>", nullptr));
+"</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika Regular';\"><br /></p></body></html>", nullptr));
         VerifierLabel->setText(QApplication::translate("DiffView", "<p><b>3. Verified Text</b></p>\n"
 "Changes Made by Verifier: ", nullptr));
         VerifierText->setHtml(QApplication::translate("DiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Shobhika'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika Regular'; font-weight:400;\"><br /></p></body></html>", nullptr));
+"</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika Regular';\"><br /></p></body></html>", nullptr));
         NextButton->setText(QString());
     } // retranslateUi
 

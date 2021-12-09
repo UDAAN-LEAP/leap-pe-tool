@@ -27,7 +27,7 @@ class Ui_LoginPageView
 public:
     QGroupBox *groupBox;
     QPushButton *loginButton;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
     QLabel *unameLabel;
@@ -41,26 +41,27 @@ public:
         if (LoginPageView->objectName().isEmpty())
             LoginPageView->setObjectName(QString::fromUtf8("LoginPageView"));
         LoginPageView->resize(530, 443);
+        LoginPageView->setStyleSheet(QString::fromUtf8("font: 57 11pt \"Work Sans\";"));
         groupBox = new QGroupBox(LoginPageView);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         groupBox->setGeometry(QRect(50, 160, 421, 261));
         loginButton = new QPushButton(groupBox);
         loginButton->setObjectName(QString::fromUtf8("loginButton"));
         loginButton->setGeometry(QRect(160, 210, 89, 25));
-        widget = new QWidget(groupBox);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(80, 50, 261, 141));
-        verticalLayout = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(groupBox);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(80, 50, 261, 141));
+        verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        unameLabel = new QLabel(widget);
+        unameLabel = new QLabel(layoutWidget);
         unameLabel->setObjectName(QString::fromUtf8("unameLabel"));
 
         horizontalLayout->addWidget(unameLabel);
 
-        usernameEdit = new QLineEdit(widget);
+        usernameEdit = new QLineEdit(layoutWidget);
         usernameEdit->setObjectName(QString::fromUtf8("usernameEdit"));
 
         horizontalLayout->addWidget(usernameEdit);
@@ -70,12 +71,12 @@ public:
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        pwdLabel = new QLabel(widget);
+        pwdLabel = new QLabel(layoutWidget);
         pwdLabel->setObjectName(QString::fromUtf8("pwdLabel"));
 
         horizontalLayout_2->addWidget(pwdLabel);
 
-        passwordEdit = new QLineEdit(widget);
+        passwordEdit = new QLineEdit(layoutWidget);
         passwordEdit->setObjectName(QString::fromUtf8("passwordEdit"));
 
         horizontalLayout_2->addWidget(passwordEdit);

@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>View Comments</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">font: 11pt &quot;Work Sans&quot;;</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_7">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -221,9 +224,10 @@
      </property>
      <property name="font">
       <font>
-       <family>Shobhika</family>
-       <pointsize>14</pointsize>
+       <family>Work Sans</family>
+       <pointsize>11</pointsize>
        <weight>50</weight>
+       <italic>false</italic>
        <bold>false</bold>
       </font>
      </property>
@@ -239,9 +243,11 @@
     <widget class="QPushButton" name="pushButton">
      <property name="font">
       <font>
+       <family>Work Sans</family>
        <pointsize>11</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
        <underline>false</underline>
       </font>
      </property>

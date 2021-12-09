@@ -179,6 +179,7 @@ public:
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(1366, 1190);
         MainWindow->setMouseTracking(true);
+        MainWindow->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
         actionOpen_Project = new QAction(MainWindow);
         actionOpen_Project->setObjectName(QString::fromUtf8("actionOpen_Project"));
         QIcon icon;
@@ -444,6 +445,9 @@ public:
         actionas_Doc->setObjectName(QString::fromUtf8("actionas_Doc"));
         actionSanskrit = new QAction(MainWindow);
         actionSanskrit->setObjectName(QString::fromUtf8("actionSanskrit"));
+        QFont font;
+        font.setFamily(QString::fromUtf8("Sans"));
+        actionSanskrit->setFont(font);
         actionHindi = new QAction(MainWindow);
         actionHindi->setObjectName(QString::fromUtf8("actionHindi"));
         actionEnglish = new QAction(MainWindow);
@@ -567,10 +571,13 @@ public:
         textEdit->setSizePolicy(sizePolicy1);
         textEdit->setMinimumSize(QSize(0, 0));
         textEdit->setMaximumSize(QSize(16777215, 16777215));
-        QFont font;
-        font.setFamily(QString::fromUtf8("FreeSans"));
-        font.setItalic(true);
-        textEdit->setFont(font);
+        QFont font1;
+        font1.setFamily(QString::fromUtf8("Work Sans"));
+        font1.setPointSize(11);
+        font1.setBold(false);
+        font1.setItalic(false);
+        font1.setWeight(50);
+        textEdit->setFont(font1);
         textEdit->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
         textEdit->setReadOnly(true);
 
@@ -625,10 +632,6 @@ public:
         sizePolicy2.setHeightForWidth(textBrowser->sizePolicy().hasHeightForWidth());
         textBrowser->setSizePolicy(sizePolicy2);
         textBrowser->setMinimumSize(QSize(400, 0));
-        QFont font1;
-        font1.setFamily(QString::fromUtf8("Shobhika"));
-        font1.setPointSize(16);
-        font1.setItalic(false);
         textBrowser->setFont(font1);
         textBrowser->setMouseTracking(true);
         textBrowser->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
@@ -663,7 +666,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1366, 22));
+        menuBar->setGeometry(QRect(0, 0, 1366, 23));
         menuOCR_Correction_Window = new QMenu(menuBar);
         menuOCR_Correction_Window->setObjectName(QString::fromUtf8("menuOCR_Correction_Window"));
         menuRecent_Project = new QMenu(menuOCR_Correction_Window);
@@ -799,7 +802,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
         tabWidget_2->setCurrentIndex(0);
 
 
@@ -1010,8 +1013,8 @@ public:
         textBrowser->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Shobhika'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", nullptr));
+"</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu';\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab_5), QApplication::translate("MainWindow", "Tab 1", nullptr));
         menuOCR_Correction_Window->setTitle(QApplication::translate("MainWindow", "File", nullptr));
         menuRecent_Project->setTitle(QApplication::translate("MainWindow", "Recent Project", nullptr));

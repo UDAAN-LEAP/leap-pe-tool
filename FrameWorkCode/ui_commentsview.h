@@ -68,6 +68,7 @@ public:
         if (CommentsView->objectName().isEmpty())
             CommentsView->setObjectName(QString::fromUtf8("CommentsView"));
         CommentsView->resize(509, 385);
+        CommentsView->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
         verticalLayout_7 = new QVBoxLayout(CommentsView);
         verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
         horizontalLayout_3 = new QHBoxLayout();
@@ -244,9 +245,10 @@ public:
         commentTextBrowser->setObjectName(QString::fromUtf8("commentTextBrowser"));
         commentTextBrowser->setMaximumSize(QSize(604, 16777215));
         QFont font;
-        font.setFamily(QString::fromUtf8("Shobhika"));
-        font.setPointSize(14);
+        font.setFamily(QString::fromUtf8("Work Sans"));
+        font.setPointSize(11);
         font.setBold(false);
+        font.setItalic(false);
         font.setWeight(50);
         commentTextBrowser->setFont(font);
         commentTextBrowser->setReadOnly(false);
@@ -257,10 +259,12 @@ public:
         pushButton = new QPushButton(CommentsView);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
         QFont font1;
+        font1.setFamily(QString::fromUtf8("Work Sans"));
         font1.setPointSize(11);
-        font1.setBold(true);
+        font1.setBold(false);
+        font1.setItalic(false);
         font1.setUnderline(false);
-        font1.setWeight(75);
+        font1.setWeight(50);
         pushButton->setFont(font1);
 
         verticalLayout_7->addWidget(pushButton);

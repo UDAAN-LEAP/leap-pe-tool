@@ -29,6 +29,7 @@ public:
         if (ProjectHierarchyWindow->objectName().isEmpty())
             ProjectHierarchyWindow->setObjectName(QString::fromUtf8("ProjectHierarchyWindow"));
         ProjectHierarchyWindow->resize(714, 525);
+        ProjectHierarchyWindow->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
         gridLayout = new QGridLayout(ProjectHierarchyWindow);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);

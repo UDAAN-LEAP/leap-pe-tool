@@ -46,8 +46,13 @@ public:
             TextFinder->setObjectName(QString::fromUtf8("TextFinder"));
         TextFinder->resize(377, 189);
         QFont font;
+        font.setFamily(QString::fromUtf8("Work Sans"));
         font.setPointSize(11);
+        font.setBold(false);
+        font.setItalic(false);
+        font.setWeight(50);
         TextFinder->setFont(font);
+        TextFinder->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
         TextFinder->setSizeGripEnabled(false);
         horizontalLayout_3 = new QHBoxLayout(TextFinder);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));

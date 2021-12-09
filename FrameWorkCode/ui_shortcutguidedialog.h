@@ -28,10 +28,12 @@ public:
         if (ShortcutGuideDialog->objectName().isEmpty())
             ShortcutGuideDialog->setObjectName(QString::fromUtf8("ShortcutGuideDialog"));
         ShortcutGuideDialog->resize(760, 444);
+        ShortcutGuideDialog->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
         horizontalLayout = new QHBoxLayout(ShortcutGuideDialog);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         textBrowser = new QTextBrowser(ShortcutGuideDialog);
         textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
+        textBrowser->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
 
         horizontalLayout->addWidget(textBrowser);
 
@@ -47,7 +49,7 @@ public:
         textBrowser->setHtml(QApplication::translate("ShortcutGuideDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"docs-internal-guid-207f323b-7fff-f7c8-e38e-64c168e8249e\"></a><span style=\" font-family:'Arial'; font-size:24pt; color:#000000; background-color:transparent;\">O</span><span style=\" font-family:'Arial'; font-size:24pt; color:#000000; background-color:transparent;\">penOCRCorrect - Shortcut Guide</span></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Arial'; font-size:24pt; color:#000000;\"><br /></p>\n"
 ""

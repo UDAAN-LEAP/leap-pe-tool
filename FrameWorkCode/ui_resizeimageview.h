@@ -43,6 +43,7 @@ public:
         if (ResizeImageView->objectName().isEmpty())
             ResizeImageView->setObjectName(QString::fromUtf8("ResizeImageView"));
         ResizeImageView->resize(310, 192);
+        ResizeImageView->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
         verticalLayout_3 = new QVBoxLayout(ResizeImageView);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_2 = new QVBoxLayout();

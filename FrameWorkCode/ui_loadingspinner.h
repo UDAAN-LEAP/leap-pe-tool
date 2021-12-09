@@ -28,6 +28,7 @@ public:
         if (LoadingSpinner->objectName().isEmpty())
             LoadingSpinner->setObjectName(QString::fromUtf8("LoadingSpinner"));
         LoadingSpinner->resize(248, 88);
+        LoadingSpinner->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
         labelspin = new QLabel(LoadingSpinner);
         labelspin->setObjectName(QString::fromUtf8("labelspin"));
         labelspin->setGeometry(QRect(10, 10, 81, 71));

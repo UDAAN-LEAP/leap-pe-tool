@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">font: 11pt &quot;Work Sans&quot;;</string>
+  </property>
   <widget class="QLabel" name="labelspin">
    <property name="geometry">
     <rect>

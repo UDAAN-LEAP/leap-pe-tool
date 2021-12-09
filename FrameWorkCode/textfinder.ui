@@ -12,11 +12,18 @@
   </property>
   <property name="font">
    <font>
+    <family>Work Sans</family>
     <pointsize>11</pointsize>
+    <weight>50</weight>
+    <italic>false</italic>
+    <bold>false</bold>
    </font>
   </property>
   <property name="windowTitle">
    <string>Find and Replace</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">font: 11pt &quot;Work Sans&quot;;</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -122,7 +129,11 @@
           <widget class="QPushButton" name="replaceButton">
            <property name="font">
             <font>
+             <family>Work Sans</family>
              <pointsize>11</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
             </font>
            </property>
            <property name="text">
@@ -134,7 +145,11 @@
           <widget class="QPushButton" name="replaceAllButton">
            <property name="font">
             <font>
+             <family>Work Sans</family>
              <pointsize>11</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
             </font>
            </property>
            <property name="text">
