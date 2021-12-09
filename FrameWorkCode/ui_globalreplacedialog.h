@@ -49,6 +49,7 @@ public:
         textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
         textBrowser->setMinimumSize(QSize(382, 122));
         textBrowser->setAutoFillBackground(false);
+        textBrowser->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
 
         verticalLayout->addWidget(textBrowser);
 
