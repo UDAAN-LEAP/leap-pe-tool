@@ -17,9 +17,12 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 11pt &quot;Work Sans&quot;;</string>
+   <string notr="true">font: 11pt &quot;Work Sans&quot;; background:rgb(32, 33, 72); color:white;</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="styleSheet">
+    <string notr="true">mainToolBar{background:rgb(143, 89, 2)}</string>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout_5">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -45,6 +48,9 @@
             <height>20</height>
            </size>
           </property>
+          <property name="styleSheet">
+           <string notr="true">background-color:white;</string>
+          </property>
          </widget>
         </item>
         <item>
@@ -60,6 +66,9 @@
             <width>16777215</width>
             <height>20</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color:white;</string>
           </property>
          </widget>
         </item>
@@ -78,6 +87,10 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_2">
+          <property name="styleSheet">
+           <string notr="true">background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;
+</string>
+          </property>
           <property name="text">
            <string>Resize Image</string>
           </property>
@@ -85,6 +98,10 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton">
+          <property name="styleSheet">
+           <string notr="true">background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;
+</string>
+          </property>
           <property name="text">
            <string>Mark Regions</string>
           </property>
@@ -92,13 +109,21 @@
         </item>
         <item>
          <widget class="QPushButton" name="viewComments">
+          <property name="styleSheet">
+           <string notr="true">background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 176.03px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;
+</string>
+          </property>
           <property name="text">
-           <string>Comments &amp; Accuracy</string>
+           <string>Comments Accuracy</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="compareCorrectorOutput">
+          <property name="styleSheet">
+           <string notr="true">background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 210.62px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;
+</string>
+          </property>
           <property name="text">
            <string>Compare Corrector Output</string>
           </property>
@@ -111,6 +136,10 @@
             <width>0</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 210.62px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;
+</string>
           </property>
           <property name="text">
            <string>Comapre Verifier Output</string>
@@ -148,7 +177,7 @@
            </size>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -225,6 +254,9 @@
                   <bold>false</bold>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color:white; color:rgb(32, 33, 72);</string>
+                </property>
                 <property name="sizeAdjustPolicy">
                  <enum>QAbstractScrollArea::AdjustToContents</enum>
                 </property>
@@ -262,12 +294,18 @@
                 <height>16777215</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-color:white; color:rgb(32, 33, 72);</string>
+              </property>
              </widget>
             </item>
            </layout>
           </widget>
          </widget>
          <widget class="QTextEdit" name="textEdit_dict">
+          <property name="styleSheet">
+           <string notr="true">background-color:white</string>
+          </property>
           <property name="readOnly">
            <bool>true</bool>
           </property>
@@ -291,6 +329,9 @@
            <width>16777215</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:white; color:black;</string>
          </property>
          <property name="currentIndex">
           <number>0</number>
@@ -335,6 +376,9 @@
              <property name="mouseTracking">
               <bool>true</bool>
              </property>
+             <property name="styleSheet">
+              <string notr="true">background-color:white;</string>
+             </property>
              <property name="sizeAdjustPolicy">
               <enum>QAbstractScrollArea::AdjustToContents</enum>
              </property>
@@ -348,7 +392,7 @@
               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="acceptRichText">
@@ -380,6 +424,9 @@ p, li { white-space: pre-wrap; }
            <width>16777215</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:white</string>
          </property>
          <property name="sizeAdjustPolicy">
           <enum>QAbstractScrollArea::AdjustIgnored</enum>
