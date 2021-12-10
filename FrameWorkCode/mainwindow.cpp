@@ -167,6 +167,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     {
         ui->actionHighlight->setEnabled(false);
     }
+
 }
 
 /*!
@@ -1562,8 +1563,9 @@ void MainWindow::WordCount()
        extText.remove(",");
 
        int wordcnt = extText.split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
-    QString toshow = "Total word count = "+ QString::number(wordcnt);
-    statusBar()->showMessage(toshow);
+    QString toshow = QString::number(wordcnt)+" Words";
+    ui->lineEdit_3->setText(toshow);
+
 
 
 }
@@ -3852,6 +3854,7 @@ void MainWindow::on_actionFetch_2_triggered()
 //                ui->actionTurn_In->setEnabled(false);
 //            }
 //        }
+
         ui->lineEdit_2->setText("Version " + mProject.get_version());
     }
     else
