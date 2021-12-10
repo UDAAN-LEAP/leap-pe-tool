@@ -88,8 +88,8 @@
         <item>
          <widget class="QPushButton" name="pushButton_2">
           <property name="styleSheet">
-           <string notr="true">background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;
-</string>
+           <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
+} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
           </property>
           <property name="text">
            <string>Resize Image</string>
@@ -99,8 +99,7 @@
         <item>
          <widget class="QPushButton" name="pushButton">
           <property name="styleSheet">
-           <string notr="true">background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;
-</string>
+           <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;}QPushButton:checked{background-color: rgb(136, 138, 133);}QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
           </property>
           <property name="text">
            <string>Mark Regions</string>
@@ -110,7 +109,7 @@
         <item>
          <widget class="QPushButton" name="viewComments">
           <property name="styleSheet">
-           <string notr="true">background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 176.03px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;
+           <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 176.03px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;} QPushButton:checked{background-color: rgb(136, 138, 133);}QPushButton:pressed {background-color: rgb(136, 138, 133);}
 </string>
           </property>
           <property name="text">
@@ -121,7 +120,7 @@
         <item>
          <widget class="QPushButton" name="compareCorrectorOutput">
           <property name="styleSheet">
-           <string notr="true">background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 210.62px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;
+           <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 210.62px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;} QPushButton:checked{background-color: rgb(136, 138, 133);}QPushButton:pressed {background-color: rgb(136, 138, 133);}
 </string>
           </property>
           <property name="text">
@@ -138,7 +137,7 @@
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 210.62px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;
+           <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 210.62px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;}QPushButton:checked{background-color: rgb(136, 138, 133);}QPushButton:pressed {background-color: rgb(136, 138, 133);}
 </string>
           </property>
           <property name="text">

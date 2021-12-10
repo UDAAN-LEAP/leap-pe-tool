@@ -94,6 +94,7 @@ public:
         font.setBold(true);
         font.setWeight(75);
         graphicsView->setFont(font);
+        graphicsView->setStyleSheet(QStringLiteral("background-color:white; color:black;"));
         graphicsView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
         graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
 
@@ -121,6 +122,7 @@ public:
         font1.setBold(true);
         font1.setWeight(75);
         ocroutput->setFont(font1);
+        ocroutput->setStyleSheet(QStringLiteral("background-color:white; color:black;"));
 
         verticalLayout->addWidget(ocroutput);
 
@@ -141,6 +143,7 @@ public:
         current = new QTextBrowser(layoutWidget2);
         current->setObjectName(QStringLiteral("current"));
         current->setFont(font1);
+        current->setStyleSheet(QStringLiteral("background-color:white; color:black;"));
 
         verticalLayout_2->addWidget(current);
 

@@ -95,6 +95,7 @@ public:
         font.setItalic(false);
         font.setWeight(50);
         OCRText->setFont(font);
+        OCRText->setStyleSheet(QStringLiteral("background-color:white; color:black;"));
 
         verticalLayout_3->addWidget(OCRText);
 
@@ -115,6 +116,7 @@ public:
         InternText = new QTextEdit(layoutWidget1);
         InternText->setObjectName(QStringLiteral("InternText"));
         InternText->setFont(font);
+        InternText->setStyleSheet(QStringLiteral("background-color:white; color:black;"));
 
         verticalLayout_2->addWidget(InternText);
 
@@ -135,6 +137,7 @@ public:
         VerifierText = new QTextEdit(layoutWidget2);
         VerifierText->setObjectName(QStringLiteral("VerifierText"));
         VerifierText->setFont(font);
+        VerifierText->setStyleSheet(QStringLiteral("background-color:white; color:black;"));
 
         verticalLayout->addWidget(VerifierText);
 

@@ -114,7 +114,7 @@ QString branchName;
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->textBrowser->setStyleSheet("background-color:white;");
+//    ui->textBrowser->setStyleSheet("background-color:white;");
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
     ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
     ui->tabWidget_2->tabBar()->hide();
@@ -4273,8 +4273,8 @@ void MainWindow::on_pushButton_clicked()
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         shouldIDraw=true;
         auto p = (QPushButton*)ui->pushButton;       //get the pushButton
-        p->setStyleSheet("QPushButton { background-color: grey; }\n"
-                          "QPushButton:enabled { background-color: rgb(200,205,180); }\n");      //apply style on button when it is triggered
+        p->setStyleSheet("QPushButton { background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; }\n"
+                          "QPushButton:enabled { background-color: rgb(136, 138, 133);color:white; }\n");      //apply style on button when it is triggered
      }
 }
 
@@ -4466,7 +4466,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     updateEntries(document, filename12, PageNo[1], s2, i);
 
                     shouldIDraw=false;
-                    ui->pushButton->setStyleSheet("");     //remove the style once the operation is done
+                    ui->pushButton->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");     //remove the style once the operation is done
                 }
                 //! settings for a tableholder
                 else if (messageBox.clickedButton() == tableButton)
@@ -4487,7 +4487,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     updateEntries(document, filename12, PageNo[1], s2, j);
 
                     shouldIDraw=false;
-                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
+                    ui->pushButton->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");       //remove the style once the operation is done
                 }
                 //! settings for a equationholder
                 else if(messageBox.clickedButton() == equationButton)
@@ -4511,7 +4511,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     updateEntries(document, filename12, PageNo[1], s2, k);
 
                     shouldIDraw=false;
-                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
+                    ui->pushButton->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");       //remove the style once the operation is done
                 }
                 //! setting for cancelbutton
                 else
@@ -4519,7 +4519,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     QMessageBox::information(0, "Not saved", "Cancelled");
                     crop_rect->setRect(0,0,1,1);
                     shouldIDraw=false;
-                    ui->pushButton->setStyleSheet("");       //remove the style once the operation is done
+                    ui->pushButton->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");       //remove the style once the operation is done
                 }
                 ui->graphicsView->setDragMode( QGraphicsView::DragMode::ScrollHandDrag );
                 event->accept();

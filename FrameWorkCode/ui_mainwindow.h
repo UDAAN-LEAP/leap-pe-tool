@@ -497,28 +497,27 @@ public:
 
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setStyleSheet(QLatin1String("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;\n"
-""));
+        pushButton_2->setStyleSheet(QLatin1String("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
+"} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}"));
 
         horizontalLayout->addWidget(pushButton_2);
 
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setStyleSheet(QLatin1String("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;\n"
-""));
+        pushButton->setStyleSheet(QStringLiteral("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;}QPushButton:checked{background-color: rgb(136, 138, 133);}QPushButton:pressed {background-color: rgb(136, 138, 133);}"));
 
         horizontalLayout->addWidget(pushButton);
 
         viewComments = new QPushButton(centralWidget);
         viewComments->setObjectName(QStringLiteral("viewComments"));
-        viewComments->setStyleSheet(QLatin1String("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 176.03px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;\n"
+        viewComments->setStyleSheet(QLatin1String("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 176.03px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;} QPushButton:checked{background-color: rgb(136, 138, 133);}QPushButton:pressed {background-color: rgb(136, 138, 133);}\n"
 ""));
 
         horizontalLayout->addWidget(viewComments);
 
         compareCorrectorOutput = new QPushButton(centralWidget);
         compareCorrectorOutput->setObjectName(QStringLiteral("compareCorrectorOutput"));
-        compareCorrectorOutput->setStyleSheet(QLatin1String("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 210.62px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;\n"
+        compareCorrectorOutput->setStyleSheet(QLatin1String("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 210.62px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;} QPushButton:checked{background-color: rgb(136, 138, 133);}QPushButton:pressed {background-color: rgb(136, 138, 133);}\n"
 ""));
 
         horizontalLayout->addWidget(compareCorrectorOutput);
@@ -526,7 +525,7 @@ public:
         compareVerifierOutput = new QPushButton(centralWidget);
         compareVerifierOutput->setObjectName(QStringLiteral("compareVerifierOutput"));
         compareVerifierOutput->setMinimumSize(QSize(0, 0));
-        compareVerifierOutput->setStyleSheet(QLatin1String("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 210.62px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;\n"
+        compareVerifierOutput->setStyleSheet(QLatin1String("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 210.62px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;}QPushButton:checked{background-color: rgb(136, 138, 133);}QPushButton:pressed {background-color: rgb(136, 138, 133);}\n"
 ""));
 
         horizontalLayout->addWidget(compareVerifierOutput);
