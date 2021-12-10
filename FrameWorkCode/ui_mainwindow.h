@@ -14,8 +14,10 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
+#include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
@@ -162,7 +164,12 @@ public:
     QLineEdit *lineEdit_3;
     QLineEdit *lineEdit_2;
     QSpacerItem *horizontalSpacer_2;
+    QGroupBox *groupBox;
+    QHBoxLayout *horizontalLayout_3;
+    QPushButton *zoom_Out_Button;
     QSlider *horizontalSlider;
+    QPushButton *zoom_In_Button;
+    QLabel *zoom_level_value;
     QMenuBar *menuBar;
     QMenu *menuOCR_Correction_Window;
     QMenu *menuRecent_Project;
@@ -531,6 +538,36 @@ public:
         tabWidget->setSizePolicy(sizePolicy);
         tabWidget->setMinimumSize(QSize(0, 0));
         tabWidget->setMaximumSize(QSize(16777215, 16777215));
+        tabWidget->setStyleSheet(QString::fromUtf8("QTabBar::tab {\n"
+"	border-radius: 0px;\n"
+"	padding: 5px 15px;\n"
+"	color: #1F2046;\n"
+"\n"
+"}\n"
+"\n"
+"QTabBar::tab:selected {\n"
+"	background-color: #BCBDBD;\n"
+"}\n"
+"\n"
+"QTabBar::tab:!selected {\n"
+"	background-color: #E3E4E4;\n"
+"}\n"
+"\n"
+"QTabWidget::pane {\n"
+"	top: -1px;\n"
+"	bottom: 0px;\n"
+"	border: 0px solid #BCBDBD;\n"
+"	padding: 0px;\n"
+"	margin: -10px -9px -10px -9px;\n"
+"}\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+""));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
         verticalLayout_2 = new QVBoxLayout(tab);
@@ -545,14 +582,35 @@ public:
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         hinButton = new QPushButton(tab);
         hinButton->setObjectName(QString::fromUtf8("hinButton"));
-        hinButton->setMaximumSize(QSize(16777215, 20));
+        hinButton->setMaximumSize(QSize(16777215, 16777215));
+        hinButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
+"background-color:rgb(227, 228, 228);\n"
+"border:0px;\n"
+"color: rgb(32, 33, 72);\n"
+"height:26.96px;\n"
+"width: 113.5px; \n"
+"padding-top:1px; \n"
+"border-radius:4.8px; \n"
+"padding-left:1.3px; \n"
+"selection-color: rgb(32, 33, 72);\n"
+" selection-background-color: rgb(136, 138, 133);\n"
+"margin-top: 5px;\n"
+"} \n"
+"QPushButton:checked{\n"
+"background-color: rgb(136, 138, 133);\n"
+"}\n"
+"QPushButton:pressed {\n"
+"background-color: rgb(136, 138, 133);\n"
+"}"));
         hinButton->setCheckable(true);
 
         horizontalLayout_2->addWidget(hinButton);
 
         sanButton = new QPushButton(tab);
         sanButton->setObjectName(QString::fromUtf8("sanButton"));
-        sanButton->setMaximumSize(QSize(16777215, 20));
+        sanButton->setMaximumSize(QSize(16777215, 16777215));
+        sanButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); width: 113.5px;height:26.96px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133); margin-top: 5px;\n"
+"} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}"));
         sanButton->setCheckable(true);
         sanButton->setChecked(false);
 
@@ -596,7 +654,12 @@ public:
         treeView->setSizePolicy(sizePolicy);
         treeView->setMinimumSize(QSize(0, 0));
         treeView->setMaximumSize(QSize(16777215, 16777215));
-        treeView->setStyleSheet(QString::fromUtf8("background-color:white; color:rgb(32, 33, 72);"));
+        treeView->setStyleSheet(QString::fromUtf8("#treeView {\n"
+"	color:rgb(32, 33, 72);\n"
+"	border: 5px solid #BCBDBD;\n"
+"	background-color:white;\n"
+"	margin: 0px;\n"
+"}"));
 
         verticalLayout_3->addWidget(treeView);
 
@@ -604,7 +667,11 @@ public:
         splitter_2->addWidget(tabWidget);
         textEdit_dict = new QTextEdit(splitter_2);
         textEdit_dict->setObjectName(QString::fromUtf8("textEdit_dict"));
-        textEdit_dict->setStyleSheet(QString::fromUtf8("background-color:white"));
+        textEdit_dict->setStyleSheet(QString::fromUtf8("#textEdit_dict {\n"
+"	border: 5px solid #BCBDBD;\n"
+"	background-color:white;\n"
+"}\n"
+""));
         textEdit_dict->setReadOnly(true);
         splitter_2->addWidget(textEdit_dict);
         splitter->addWidget(splitter_2);
@@ -671,13 +738,13 @@ public:
         Buttom_Slider->setSizeConstraint(QLayout::SetDefaultConstraint);
         lineEdit = new QLineEdit(centralWidget);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
         lineEdit->setSizePolicy(sizePolicy2);
-        lineEdit->setMinimumSize(QSize(400, 20));
-        lineEdit->setMaximumSize(QSize(400, 20));
+        lineEdit->setMinimumSize(QSize(0, 0));
+        lineEdit->setMaximumSize(QSize(16777215, 16777215));
         lineEdit->setStyleSheet(QString::fromUtf8("background-color:white;\n"
 "color: rgb(0, 0, 0);"));
 
@@ -693,8 +760,8 @@ public:
 
         lineEdit_2 = new QLineEdit(centralWidget);
         lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
-        lineEdit_2->setMinimumSize(QSize(0, 20));
-        lineEdit_2->setMaximumSize(QSize(16777215, 20));
+        lineEdit_2->setMinimumSize(QSize(0, 0));
+        lineEdit_2->setMaximumSize(QSize(16777215, 16777215));
         lineEdit_2->setStyleSheet(QString::fromUtf8("background-color:white;\n"
 "color: rgb(0, 0, 0);"));
 
@@ -704,11 +771,110 @@ public:
 
         Buttom_Slider->addItem(horizontalSpacer_2);
 
-        horizontalSlider = new QSlider(centralWidget);
+        groupBox = new QGroupBox(centralWidget);
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
+        groupBox->setSizePolicy(sizePolicy3);
+        groupBox->setStyleSheet(QString::fromUtf8("QGroupBox {\n"
+"	background: white;\n"
+"	padding-top:15px;\n"
+"	margin-top:-15px;\n"
+"}\n"
+""));
+        horizontalLayout_3 = new QHBoxLayout(groupBox);
+        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        zoom_Out_Button = new QPushButton(groupBox);
+        zoom_Out_Button->setObjectName(QString::fromUtf8("zoom_Out_Button"));
+        zoom_Out_Button->setStyleSheet(QString::fromUtf8("#zoom_Out_Button {\n"
+"	color: #202148;\n"
+"	background: white;\n"
+"	font-size: 24px;\n"
+"	padding-right: 12px;\n"
+"	padding-left: 12px;\n"
+"	border: none;\n"
+"}"));
+
+        horizontalLayout_3->addWidget(zoom_Out_Button);
+
+        horizontalSlider = new QSlider(groupBox);
         horizontalSlider->setObjectName(QString::fromUtf8("horizontalSlider"));
+        horizontalSlider->setStyleSheet(QString::fromUtf8("QSlider {\n"
+"	background: white;\n"
+"}\n"
+"\n"
+"QSlider::groove:horizontal {\n"
+"border: none;\n"
+"background: rgba(1, 22, 51, 0.72);\n"
+"height: 10px;\n"
+"border-radius: 4px;\n"
+"}\n"
+"\n"
+"QSlider::sub-page:horizontal {\n"
+"height: 10px;\n"
+"border-radius: 4px;\n"
+"}\n"
+"\n"
+"QSlider::add-page:horizontal {\n"
+"height: 10px;\n"
+"border-radius: 4px;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal {\n"
+"background: #202148;\n"
+"border-radius: 1.7px;\n"
+"width:  10px;\n"
+"height: 26px;\n"
+"margin-top: -10px;\n"
+"margin-bottom: -10px;\n"
+"}\n"
+"\n"
+"QSlider::sub-page:horizontal:disabled {\n"
+"background: grey;\n"
+"}\n"
+"\n"
+"QSlider::add-page:horizontal:disabled {\n"
+"background: grey;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:disabled {\n"
+"background: grey;\n"
+"}\n"
+""));
         horizontalSlider->setOrientation(Qt::Horizontal);
 
-        Buttom_Slider->addWidget(horizontalSlider);
+        horizontalLayout_3->addWidget(horizontalSlider);
+
+        zoom_In_Button = new QPushButton(groupBox);
+        zoom_In_Button->setObjectName(QString::fromUtf8("zoom_In_Button"));
+        zoom_In_Button->setStyleSheet(QString::fromUtf8("#zoom_In_Button {\n"
+"	color: #202148;\n"
+"	background: white;\n"
+"	font-size: 24px;\n"
+"	padding-right: 12px;\n"
+"	padding-left: 12px;\n"
+"	border: none;\n"
+"}"));
+
+        horizontalLayout_3->addWidget(zoom_In_Button);
+
+        zoom_level_value = new QLabel(groupBox);
+        zoom_level_value->setObjectName(QString::fromUtf8("zoom_level_value"));
+        sizePolicy3.setHeightForWidth(zoom_level_value->sizePolicy().hasHeightForWidth());
+        zoom_level_value->setSizePolicy(sizePolicy3);
+        zoom_level_value->setStyleSheet(QString::fromUtf8("#zoom_level_value {\n"
+"	color: #202148;\n"
+"	background: white;\n"
+"}"));
+
+        horizontalLayout_3->addWidget(zoom_level_value);
+
+
+        Buttom_Slider->addWidget(groupBox);
 
 
         verticalLayout_5->addLayout(Buttom_Slider);
@@ -1067,6 +1233,10 @@ public:
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu';\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab_5), QApplication::translate("MainWindow", "Tab 1", nullptr));
         lineEdit_3->setText(QApplication::translate("MainWindow", "Words 0", nullptr));
+        groupBox->setTitle(QString());
+        zoom_Out_Button->setText(QApplication::translate("MainWindow", "-", nullptr));
+        zoom_In_Button->setText(QApplication::translate("MainWindow", "+", nullptr));
+        zoom_level_value->setText(QApplication::translate("MainWindow", "100%", nullptr));
         menuOCR_Correction_Window->setTitle(QApplication::translate("MainWindow", "File", nullptr));
         menuRecent_Project->setTitle(QApplication::translate("MainWindow", "Recent Project", nullptr));
         menuCreateReports->setTitle(QApplication::translate("MainWindow", "Reports", nullptr));

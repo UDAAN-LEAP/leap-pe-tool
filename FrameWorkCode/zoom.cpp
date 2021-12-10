@@ -26,6 +26,10 @@ Graphics_view_zoom::Graphics_view_zoom(QGraphicsView* view)
  * \param factor
  */
 void Graphics_view_zoom::gentle_zoom(double factor) {
+  if ( zoom_level >= 200 && factor >= 1.1 )
+      return;
+  else if ( zoom_level <= 0 && factor <= 0.9 )
+      return;
   _view->scale(factor, factor);
   _view->centerOn(target_scene_pos);
   QPointF delta_viewport_pos = target_viewport_pos - QPointF(_view->viewport()->width() / 2.0,
@@ -33,6 +37,13 @@ void Graphics_view_zoom::gentle_zoom(double factor) {
   QPointF viewport_center = _view->mapFromScene(target_scene_pos) - delta_viewport_pos;
   _view->centerOn(_view->mapToScene(viewport_center.toPoint()));
   emit zoomed();
+
+  // Calculating zoom level which should be between 0 - 200
+
+  if ( factor >= 1.1 )
+      zoom_level += 10;
+  else if ( factor <= 0.9 )
+      zoom_level -= 10;
 }
 
 /*!

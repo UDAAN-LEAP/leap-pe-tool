@@ -160,6 +160,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(CustomContextMenuTriggered(const QPoint&)));
     connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
 
+    ui->horizontalSlider->setMinimum(0);
+    ui->horizontalSlider->setMaximum(200);
+    ui->horizontalSlider->setValue(100);
+    ui->horizontalSlider->setEnabled(false);
+
+    connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(zoom_slider_valueChanged(int)));
+    connect(ui->horizontalSlider, SIGNAL(sliderMoved(int)), this, SLOT(zoom_slider_moved(int)));
+
     qApp->installEventFilter(this);
     AddRecentProjects();
 
@@ -5858,6 +5866,9 @@ void MainWindow::LoadImageFromFile(QFile * f)
 
     QString localFileName = f->fileName();
     loadimage = true;
+    ui->horizontalSlider->setEnabled(true);
+    ui->horizontalSlider->setValue(100);
+    ui->zoom_level_value->setText("100%");
 
     imageOrig.load(localFileName);
     if (graphic)delete graphic;
@@ -5869,6 +5880,8 @@ void MainWindow::LoadImageFromFile(QFile * f)
     if (z)delete z;
     z = new Graphics_view_zoom(ui->graphicsView);
     z->set_modifiers(Qt::NoModifier);
+    z->zoom_level = 100;
+    connect(z, SIGNAL(zoomed()), this, SLOT(zoomedUsingScroll()));
 
     item1 =new QGraphicsRectItem(0, 0, 1, 1);
     graphic->addItem(item1);
@@ -6516,5 +6529,64 @@ void MainWindow::on_textBrowser_textChanged()
 }
 
 
+void MainWindow::on_zoom_Out_Button_clicked()
+{
+    if (z)
+        z->gentle_zoom(0.9);
+}
+
+
+void MainWindow::on_zoom_In_Button_clicked()
+{
+    if (z)
+        z->gentle_zoom(1.1);
+}
+
+
+void MainWindow::zoom_slider_valueChanged(int value)
+{
+    int zoomPercent;
+    float zoom_factor;
+    ui->zoom_level_value->setText(QString::number(value) + "%");
+    if (loadimage)
+    {
+        if ( z->zoom_level == value )
+            return;
+
+        zoomPercent = (value - z->zoom_level) / 10;
+        if ( zoomPercent < 0 )
+        {
+            zoomPercent *= -1;
+            zoom_factor = 0.9;
+        }
+        else if ( zoomPercent > 0 )
+        {
+            zoom_factor = 1.1;
+        }
+        for (int i = 0; i < zoomPercent; i++)
+        {
+            z->gentle_zoom(zoom_factor);
+        }
+    }
+}
+
+
+void MainWindow::zoom_slider_moved(int value)
+{
+    int setNewValue;
+
+    if ( value % 10 != 0 )
+    {
+        setNewValue = (value / 10)*10 + 10;
+        ui->horizontalSlider->setValue(setNewValue);
+    }
+}
+
+
+void MainWindow::zoomedUsingScroll()
+{
+    ui->zoom_level_value->setText(QString::number(z->zoom_level) + "%");
+    ui->horizontalSlider->setValue(z->zoom_level);
+}
 
 

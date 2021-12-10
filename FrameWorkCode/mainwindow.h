@@ -366,9 +366,17 @@ private slots:
 
     void on_actionShortcut_Guide_triggered();
 
-
-
     void on_textBrowser_textChanged();
+
+    void on_zoom_Out_Button_clicked();
+
+    void on_zoom_In_Button_clicked();
+
+    void zoom_slider_valueChanged(int value);
+
+    void zoom_slider_moved(int value);
+
+    void zoomedUsingScroll();
 
 private:
     bool mExitStatus = false;

@@ -131,8 +131,40 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QTabBar::tab {
+	border-radius: 0px;
+	padding: 5px 15px;
+	color: #1F2046;
+
+}
+
+QTabBar::tab:selected {
+	background-color: #BCBDBD;
+}
+
+QTabBar::tab:!selected {
+	background-color: #E3E4E4;
+}
+
+QTabWidget::pane {
+	top: -1px;
+	bottom: 0px;
+	border: 0px solid #BCBDBD;
+	padding: 0px;
+	margin: -10px -9px -10px -9px;
+}
+
+
+
+
+
+
+
+</string>
+          </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -148,8 +180,29 @@
                   <property name="maximumSize">
                    <size>
                     <width>16777215</width>
-                    <height>20</height>
+                    <height>16777215</height>
                    </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color:rgb(227, 228, 228);
+border:0px;
+color: rgb(32, 33, 72);
+height:26.96px;
+width: 113.5px; 
+padding-top:1px; 
+border-radius:4.8px; 
+padding-left:1.3px; 
+selection-color: rgb(32, 33, 72);
+ selection-background-color: rgb(136, 138, 133);
+margin-top: 5px;
+} 
+QPushButton:checked{
+background-color: rgb(136, 138, 133);
+}
+QPushButton:pressed {
+background-color: rgb(136, 138, 133);
+}</string>
                   </property>
                   <property name="text">
                    <string>Hindi/Marathi</string>
@@ -164,8 +217,12 @@
                   <property name="maximumSize">
                    <size>
                     <width>16777215</width>
-                    <height>20</height>
+                    <height>16777215</height>
                    </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); width: 113.5px;height:26.96px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133); margin-top: 5px;
+} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
                   </property>
                   <property name="text">
                    <string>Sanskrit</string>
@@ -250,7 +307,12 @@
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">background-color:white; color:rgb(32, 33, 72);</string>
+               <string notr="true">#treeView {
+	color:rgb(32, 33, 72);
+	border: 5px solid #BCBDBD;
+	background-color:white;
+	margin: 0px;
+}</string>
               </property>
              </widget>
             </item>
@@ -259,7 +321,11 @@
          </widget>
          <widget class="QTextEdit" name="textEdit_dict">
           <property name="styleSheet">
-           <string notr="true">background-color:white</string>
+           <string notr="true">#textEdit_dict {
+	border: 5px solid #BCBDBD;
+	background-color:white;
+}
+</string>
           </property>
           <property name="readOnly">
            <bool>true</bool>
@@ -414,21 +480,21 @@ p, li { white-space: pre-wrap; }
       <item>
        <widget class="QLineEdit" name="lineEdit">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>400</width>
-          <height>20</height>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>400</width>
-          <height>20</height>
+          <width>16777215</width>
+          <height>16777215</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -456,13 +522,13 @@ background-color: rgb(255, 255, 255);</string>
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>20</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>20</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -485,10 +551,130 @@ color: rgb(0, 0, 0);</string>
        </spacer>
       </item>
       <item>
-       <widget class="QSlider" name="horizontalSlider">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QGroupBox {
+	background: white;
+	padding-top:15px;
+	margin-top:-15px;
+}
+</string>
+        </property>
+        <property name="title">
+         <string/>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QPushButton" name="zoom_Out_Button">
+           <property name="styleSheet">
+            <string notr="true">#zoom_Out_Button {
+	color: #202148;
+	background: white;
+	font-size: 24px;
+	padding-right: 12px;
+	padding-left: 12px;
+	border: none;
+}</string>
+           </property>
+           <property name="text">
+            <string>-</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="horizontalSlider">
+           <property name="styleSheet">
+            <string notr="true">QSlider {
+	background: white;
+}
+
+QSlider::groove:horizontal {
+border: none;
+background: rgba(1, 22, 51, 0.72);
+height: 10px;
+border-radius: 4px;
+}
+
+QSlider::sub-page:horizontal {
+height: 10px;
+border-radius: 4px;
+}
+
+QSlider::add-page:horizontal {
+height: 10px;
+border-radius: 4px;
+}
+
+QSlider::handle:horizontal {
+background: #202148;
+border-radius: 1.7px;
+width:  10px;
+height: 26px;
+margin-top: -10px;
+margin-bottom: -10px;
+}
+
+QSlider::sub-page:horizontal:disabled {
+background: grey;
+}
+
+QSlider::add-page:horizontal:disabled {
+background: grey;
+}
+
+QSlider::handle:horizontal:disabled {
+background: grey;
+}
+</string>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="zoom_In_Button">
+           <property name="styleSheet">
+            <string notr="true">#zoom_In_Button {
+	color: #202148;
+	background: white;
+	font-size: 24px;
+	padding-right: 12px;
+	padding-left: 12px;
+	border: none;
+}</string>
+           </property>
+           <property name="text">
+            <string>+</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="zoom_level_value">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">#zoom_level_value {
+	color: #202148;
+	background: white;
+}</string>
+           </property>
+           <property name="text">
+            <string>100%</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
