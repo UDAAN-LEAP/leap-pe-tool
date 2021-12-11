@@ -164,7 +164,7 @@ QTabWidget::pane {
 </string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -398,7 +398,7 @@ background-color: rgb(136, 138, 133);
               <bool>true</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color:white;</string>
+              <string notr="true">background-color:white; border: 0px;</string>
              </property>
              <property name="sizeAdjustPolicy">
               <enum>QAbstractScrollArea::AdjustToContents</enum>
@@ -499,18 +499,24 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="styleSheet">
          <string notr="true">background-color:white;
-color: rgb(0, 0, 0);</string>
+color: rgb(0, 0, 0); height:37.39px; width: 469.37px; border:0px; padding-left:7.81px;</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLineEdit" name="lineEdit_3">
+        <property name="maximumSize">
+         <size>
+          <width>119</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="autoFillBackground">
          <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
+background-color: rgb(255, 255, 255);  height:37.39px; width:32.73px; border:0px; padding-left:7.81px;</string>
         </property>
         <property name="text">
          <string>Words 0</string>
@@ -527,13 +533,13 @@ background-color: rgb(255, 255, 255);</string>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
+          <width>184</width>
           <height>16777215</height>
          </size>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color:white;
-color: rgb(0, 0, 0);</string>
+color: rgb(0, 0, 0); height:37.39px; border:0px; width:184.8px; padding-left:7.81px;</string>
         </property>
        </widget>
       </item>
@@ -558,11 +564,24 @@ color: rgb(0, 0, 0);</string>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>264</width>
+          <height>37</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>264</width>
+          <height>37</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">QGroupBox {
 	background: white;
 	padding-top:15px;
-	margin-top:-15px;
+	margin-top:-15px; 
+   height:37.9px;
 }
 </string>
         </property>
@@ -597,7 +616,7 @@ color: rgb(0, 0, 0);</string>
 QSlider::groove:horizontal {
 border: none;
 background: rgba(1, 22, 51, 0.72);
-height: 10px;
+height: 3.47px;
 border-radius: 4px;
 }
 
