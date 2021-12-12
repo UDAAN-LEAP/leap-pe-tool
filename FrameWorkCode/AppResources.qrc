@@ -1,39 +1,37 @@
 <RCC>
     <qresource prefix="/Images">
-        <file>undo.png</file>
-        <file>save.png</file>
-        <file>save-as.png</file>
-        <file>redo.png</file>
-        <file>paste.png</file>
-        <file>open.png</file>
-        <file>New.png</file>
-        <file>cut.png</file>
-        <file>copy.png</file>
         <file>AppResources.qrc</file>
-        <file>next-page.png</file>
-        <file>previous-page.png</file>
-        <file>spellcheck.png</file>
-        <file>LoadData.png</file>
-        <file>SaveLoadPwords1.png</file>
-        <file>AlignCenter.png</file>
-        <file>AlignLeft.png</file>
-        <file>AlignRight.png</file>
-        <file>AllFont.png</file>
-        <file>toDevangari.png</file>
-        <file>JustifiedAlign.png</file>
-        <file>highlight-icon.png</file>
-        <file>icon_diacritics.png</file>
-        <file>Zoom-Out-icon.png</file>
-        <file>Zoom-In-icon.png</file>
-        <file>linespacing.png</file>
-        <file>symbols.png</file>
-        <file>find-and-replace.png</file>
-        <file>horizontal-line.png</file>
-        <file>toSlp1.png</file>
-        <file>Help.png</file>
-        <file>previous.png</file>
-        <file>next.png</file>
         <file>ShortcutGuide.jpg</file>
         <file>spinbar-tp.gif</file>
+        <file>Resources/zoom out.png</file>
+        <file>Resources/zoom in.png</file>
+        <file>Resources/undo.png</file>
+        <file>Resources/underline  2.png</file>
+        <file>Resources/underline 1.png</file>
+        <file>Resources/spl symbol.png</file>
+        <file>Resources/save as.png</file>
+        <file>Resources/save.png</file>
+        <file>Resources/redo.png</file>
+        <file>Resources/preivious page.png</file>
+        <file>Resources/open file.png</file>
+        <file>Resources/next page.png</file>
+        <file>Resources/load data.png</file>
+        <file>Resources/ittalic.png</file>
+        <file>Resources/highlighter.png</file>
+        <file>Resources/help.png</file>
+        <file>Resources/font black.png</file>
+        <file>Resources/find 2.png</file>
+        <file>Resources/find 1.png</file>
+        <file>Resources/english to hindi.png</file>
+        <file>Resources/bold.png</file>
+        <file>Resources/allign left.png</file>
+        <file>Resources/align right.png</file>
+        <file>Resources/align para.png</file>
+        <file>Resources/align center.png</file>
+        <file>Resources/add.png</file>
+        <file>Resources/Old Icons/toSlp1.png</file>
+        <file>Resources/Old Icons/spellcheck.png</file>
+        <file>Resources/Old Icons/AllFont.png</file>
+        <file>Resources/Old Icons/SaveLoadPwords1.png</file>
     </qresource>
 </RCC>

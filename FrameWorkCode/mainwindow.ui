@@ -706,8 +706,13 @@ background: grey;
      <x>0</x>
      <y>0</y>
      <width>1366</width>
-     <height>23</height>
+     <height>33</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QMenuBar{
+padding: 5px;
+}</string>
    </property>
    <widget class="QMenu" name="menuOCR_Correction_Window">
     <property name="title">
@@ -749,7 +754,7 @@ background: grey;
    </widget>
    <widget class="QMenu" name="menuFontAndLayout">
     <property name="title">
-     <string>FontAndLayout</string>
+     <string>View</string>
     </property>
     <widget class="QMenu" name="menuTables">
      <property name="title">
@@ -781,7 +786,7 @@ background: grey;
    </widget>
    <widget class="QMenu" name="menuGit">
     <property name="title">
-     <string>Version Control</string>
+     <string>Versions</string>
     </property>
     <addaction name="actionFetch_2"/>
     <addaction name="actionVerifier_Turn_In"/>
@@ -820,15 +825,15 @@ background: grey;
    </widget>
    <widget class="QMenu" name="menuSelectLanguage">
     <property name="title">
-     <string>SelectLanguage</string>
+     <string>Language</string>
     </property>
     <addaction name="actionSanskrit"/>
     <addaction name="actionHindi"/>
     <addaction name="actionEnglish"/>
    </widget>
-   <addaction name="menuSelectLanguage"/>
    <addaction name="menuOCR_Correction_Window"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuSelectLanguage"/>
    <addaction name="menuCreateReports"/>
    <addaction name="menuFontAndLayout"/>
    <addaction name="menuGit"/>
@@ -864,6 +869,7 @@ background: grey;
    <addaction name="actionUnBold"/>
    <addaction name="actionItalic"/>
    <addaction name="actionFontBlack"/>
+   <addaction name="separator"/>
    <addaction name="actionLeftAlign"/>
    <addaction name="actionCentreAlign"/>
    <addaction name="actionRightAlign"/>
@@ -874,12 +880,14 @@ background: grey;
    <addaction name="separator"/>
    <addaction name="actionZoom_In"/>
    <addaction name="actionZoom_Out"/>
+   <addaction name="separator"/>
+   <addaction name="actionGet_Help"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen_Project">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/open.png</normaloff>:/Images/open.png</iconset>
+     <normaloff>:/Images/Resources/open file.png</normaloff>:/Images/Resources/open file.png</iconset>
    </property>
    <property name="text">
     <string>Open Project</string>
@@ -891,7 +899,7 @@ background: grey;
   <action name="actionSave">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/save.png</normaloff>:/Images/save.png</iconset>
+     <normaloff>:/Images/Resources/save.png</normaloff>:/Images/Resources/save.png</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -903,7 +911,7 @@ background: grey;
   <action name="actionSave_As">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/save-as.png</normaloff>:/Images/save-as.png</iconset>
+     <normaloff>:/Images/Resources/save as.png</normaloff>:/Images/Resources/save as.png</iconset>
    </property>
    <property name="text">
     <string>Save As</string>
@@ -915,7 +923,7 @@ background: grey;
   <action name="actionNew">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/New.png</normaloff>:/Images/New.png</iconset>
+     <normaloff>:/Images/Resources/add.png</normaloff>:/Images/Resources/add.png</iconset>
    </property>
    <property name="text">
     <string>New</string>
@@ -932,9 +940,9 @@ background: grey;
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normalon>:/Images/spellcheck.png</normalon>
-    </iconset>
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/Old Icons/spellcheck.png</normaloff>
+     <normalon>:/Images/spellcheck.png</normalon>:/Images/Resources/Old Icons/spellcheck.png</iconset>
    </property>
    <property name="text">
     <string>Spell Check(CntrlShftC)</string>
@@ -948,9 +956,9 @@ background: grey;
   </action>
   <action name="actionLoad_Next_Page">
    <property name="icon">
-    <iconset>
-     <normalon>:/Images/next-page.png</normalon>
-    </iconset>
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/preivious page.png</normaloff>
+     <normalon>:/Images/next-page.png</normalon>:/Images/Resources/preivious page.png</iconset>
    </property>
    <property name="text">
     <string>Page(CntlShiftR)&gt;&gt;</string>
@@ -964,9 +972,9 @@ background: grey;
   </action>
   <action name="actionLoad_Prev_Page">
    <property name="icon">
-    <iconset>
-     <normalon>:/Images/previous-page.png</normalon>
-    </iconset>
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/next page.png</normaloff>
+     <normalon>:/Images/previous-page.png</normalon>:/Images/Resources/next page.png</iconset>
    </property>
    <property name="text">
     <string>&lt;&lt;Page(CntrlShftL)</string>
@@ -980,9 +988,9 @@ background: grey;
   </action>
   <action name="actionLoadGDocPage">
    <property name="icon">
-    <iconset>
-     <normalon>:/Images/SaveLoadPwords1.png</normalon>
-    </iconset>
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/Old Icons/SaveLoadPwords1.png</normaloff>
+     <normalon>:/Images/SaveLoadPwords1.png</normalon>:/Images/Resources/Old Icons/SaveLoadPwords1.png</iconset>
    </property>
    <property name="text">
     <string>Save&amp;LoadPWords(CntrlShftP)</string>
@@ -993,9 +1001,9 @@ background: grey;
   </action>
   <action name="actionToDevanagari">
    <property name="icon">
-    <iconset>
-     <normalon>:/Images/toDevangari.png</normalon>
-    </iconset>
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/english to hindi.png</normaloff>
+     <normalon>:/Images/toDevangari.png</normalon>:/Images/Resources/english to hindi.png</iconset>
    </property>
    <property name="text">
     <string>toDevanagari(CntrlD)</string>
@@ -1009,9 +1017,9 @@ background: grey;
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normalon>:/Images/LoadData.png</normalon>
-    </iconset>
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/load data.png</normaloff>
+     <normalon>:/Images/LoadData.png</normalon>:/Images/Resources/load data.png</iconset>
    </property>
    <property name="text">
     <string>LoadData</string>
@@ -1061,7 +1069,7 @@ background: grey;
   <action name="actionToSlp1">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/toSlp1.png</normaloff>:/Images/toSlp1.png</iconset>
+     <normaloff>:/Images/Resources/Old Icons/toSlp1.png</normaloff>:/Images/Resources/Old Icons/toSlp1.png</iconset>
    </property>
    <property name="text">
     <string>toSlp1(CntrlG)</string>
@@ -1150,15 +1158,19 @@ background: grey;
   </action>
   <action name="actionAllFontProperties">
    <property name="icon">
-    <iconset>
-     <normalon>:/Images/AllFont.png</normalon>
-    </iconset>
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/Old Icons/AllFont.png</normaloff>
+     <normalon>:/Images/AllFont.png</normalon>:/Images/Resources/Old Icons/AllFont.png</iconset>
    </property>
    <property name="text">
     <string>AllFontProperties</string>
    </property>
   </action>
   <action name="actionBold">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/bold.png</normaloff>:/Images/Resources/bold.png</iconset>
+   </property>
    <property name="text">
     <string>Bold</string>
    </property>
@@ -1185,9 +1197,9 @@ background: grey;
   </action>
   <action name="actionLeftAlign">
    <property name="icon">
-    <iconset>
-     <normalon>:/Images/AlignLeft.png</normalon>
-    </iconset>
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/allign left.png</normaloff>
+     <normalon>:/Images/AlignLeft.png</normalon>:/Images/Resources/allign left.png</iconset>
    </property>
    <property name="text">
     <string>LeftAlign</string>
@@ -1196,8 +1208,8 @@ background: grey;
   <action name="actionRightAlign">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/AlignRight.png</normaloff>
-     <normalon>:/Images/AlignCenter.png</normalon>:/Images/AlignRight.png</iconset>
+     <normaloff>:/Images/Resources/align right.png</normaloff>
+     <normalon>:/Images/AlignCenter.png</normalon>:/Images/Resources/align right.png</iconset>
    </property>
    <property name="text">
     <string>RightAlign</string>
@@ -1205,9 +1217,9 @@ background: grey;
   </action>
   <action name="actionCentreAlign">
    <property name="icon">
-    <iconset>
-     <normalon>:/Images/AlignCenter.png</normalon>
-    </iconset>
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/align center.png</normaloff>
+     <normalon>:/Images/AlignCenter.png</normalon>:/Images/Resources/align center.png</iconset>
    </property>
    <property name="text">
     <string>CentreAlign</string>
@@ -1215,9 +1227,9 @@ background: grey;
   </action>
   <action name="actionJusitfiedAlign">
    <property name="icon">
-    <iconset>
-     <normalon>:/Images/JustifiedAlign.png</normalon>
-    </iconset>
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/align para.png</normaloff>
+     <normalon>:/Images/JustifiedAlign.png</normalon>:/Images/Resources/align para.png</iconset>
    </property>
    <property name="text">
     <string>JusitfiedAlign</string>
@@ -1294,9 +1306,9 @@ background: grey;
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normalon>:/Images/highlight-icon.png</normalon>
-    </iconset>
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/highlighter.png</normaloff>
+     <normalon>:/Images/highlight-icon.png</normalon>:/Images/Resources/highlighter.png</iconset>
    </property>
    <property name="text">
     <string>Highlight</string>
@@ -1314,7 +1326,7 @@ background: grey;
   <action name="actionZoom_In">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Zoom-In-icon.png</normaloff>:/Images/Zoom-In-icon.png</iconset>
+     <normaloff>:/Images/Resources/zoom in.png</normaloff>:/Images/Resources/zoom in.png</iconset>
    </property>
    <property name="text">
     <string>Zoom In</string>
@@ -1329,7 +1341,7 @@ background: grey;
   <action name="actionZoom_Out">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Zoom-Out-icon.png</normaloff>:/Images/Zoom-Out-icon.png</iconset>
+     <normaloff>:/Images/Resources/zoom out.png</normaloff>:/Images/Resources/zoom out.png</iconset>
    </property>
    <property name="text">
     <string>Zoom_Out</string>
@@ -1344,8 +1356,8 @@ background: grey;
   <action name="actionSymbols">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/symbols.png</normaloff>
-     <normalon>:/Images/symbols.png</normalon>:/Images/symbols.png</iconset>
+     <normaloff>:/Images/Resources/spl symbol.png</normaloff>
+     <normalon>:/Images/symbols.png</normalon>:/Images/Resources/spl symbol.png</iconset>
    </property>
    <property name="text">
     <string>Symbols</string>
@@ -1373,7 +1385,7 @@ background: grey;
   <action name="actionInsert_Horizontal_Line">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/horizontal-line.png</normaloff>:/Images/horizontal-line.png</iconset>
+     <normaloff>:/Images/Resources/underline  2.png</normaloff>:/Images/Resources/underline  2.png</iconset>
    </property>
    <property name="text">
     <string>Horizontal Line</string>
@@ -1383,6 +1395,10 @@ background: grey;
    </property>
   </action>
   <action name="actionFontBlack">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/font black.png</normaloff>:/Images/Resources/font black.png</iconset>
+   </property>
    <property name="text">
     <string>FontBlack</string>
    </property>
@@ -1428,9 +1444,9 @@ background: grey;
   </action>
   <action name="actionUndo">
    <property name="icon">
-    <iconset>
-     <normalon>:/Images/undo.png</normalon>
-    </iconset>
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/undo.png</normaloff>
+     <normalon>:/Images/undo.png</normalon>:/Images/Resources/undo.png</iconset>
    </property>
    <property name="text">
     <string>Undo</string>
@@ -1441,9 +1457,9 @@ background: grey;
   </action>
   <action name="actionRedo">
    <property name="icon">
-    <iconset>
-     <normalon>:/Images/redo.png</normalon>
-    </iconset>
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/redo.png</normaloff>
+     <normalon>:/Images/redo.png</normalon>:/Images/Resources/redo.png</iconset>
    </property>
    <property name="text">
     <string>Redo</string>
@@ -1496,6 +1512,10 @@ background: grey;
    </property>
   </action>
   <action name="actionItalic">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/ittalic.png</normaloff>:/Images/Resources/ittalic.png</iconset>
+   </property>
    <property name="text">
     <string>Italic</string>
    </property>
@@ -1516,7 +1536,7 @@ background: grey;
   <action name="actionFind_and_Replace">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/find-and-replace.png</normaloff>:/Images/find-and-replace.png</iconset>
+     <normaloff>:/Images/Resources/find 1.png</normaloff>:/Images/Resources/find 1.png</iconset>
    </property>
    <property name="text">
     <string>Find and Replace</string>
@@ -1533,7 +1553,7 @@ background: grey;
   <action name="actionGet_Help">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Help.png</normaloff>:/Images/Help.png</iconset>
+     <normaloff>:/Images/Resources/help.png</normaloff>:/Images/Resources/help.png</iconset>
    </property>
    <property name="text">
     <string>Get Help</string>
@@ -1592,7 +1612,6 @@ background: grey;
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
  </resources>
