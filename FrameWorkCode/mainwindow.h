@@ -82,6 +82,7 @@ public:
 
 
 private slots:
+    void createActions();
     void WordCount();
     void DisplayJsonDict(QTextBrowser *b, QString input);
 

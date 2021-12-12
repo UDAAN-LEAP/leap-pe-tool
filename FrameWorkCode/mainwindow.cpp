@@ -2526,7 +2526,7 @@ void MainWindow::on_actionErrorDetectWithoutAdaptation_triggered()
     rep << "x = 1:" << page_no << ";" << endl << "plot(x,y2,x,y3,x,y0,x,y1);" << endl;
     rep << "legend(\'Correct\',\'InCorrect\',\'CorrectMarkedcorrect\', \'InCorrectMarkedCorrect\')" << endl;
 }
-
+*/
 /*!
  * \fn MainWindow::on_actionErrorDetectionRepUniq_triggered()
  * \brief Creates Report in CorrectorOutput named SuggRepUniq.txt of all unique suggestions for current file incorrect words
@@ -6589,4 +6589,7 @@ void MainWindow::zoomedUsingScroll()
     ui->horizontalSlider->setValue(z->zoom_level);
 }
 
-
+void MainWindow::createActions()
+{
+    ui->mainToolBar->setIconSize(QSize(100, 100));
+}

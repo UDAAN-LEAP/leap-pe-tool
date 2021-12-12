@@ -130,6 +130,7 @@ public:
     QAction *actionEnglish;
     QAction *actionShortcut_Guide;
     QAction *action1;
+    QAction *actionSanskrit_2;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_5;
     QVBoxLayout *verticalLayout_4;
@@ -490,6 +491,8 @@ public:
         actionShortcut_Guide->setObjectName(QString::fromUtf8("actionShortcut_Guide"));
         action1 = new QAction(MainWindow);
         action1->setObjectName(QString::fromUtf8("action1"));
+        actionSanskrit_2 = new QAction(MainWindow);
+        actionSanskrit_2->setObjectName(QString::fromUtf8("actionSanskrit_2"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         centralWidget->setStyleSheet(QString::fromUtf8("mainToolBar{background:rgb(143, 89, 2)}"));
@@ -908,35 +911,50 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1366, 33));
-        menuBar->setStyleSheet(QString::fromUtf8("QMenuBar{\n"
+        menuBar->setGeometry(QRect(0, 0, 1366, 46));
+        menuBar->setStyleSheet(QString::fromUtf8("font-size: 17px;\n"
 "padding: 5px;\n"
-"}"));
+"margin: 5px;\n"
+"\n"
+"\n"
+""));
         menuOCR_Correction_Window = new QMenu(menuBar);
         menuOCR_Correction_Window->setObjectName(QString::fromUtf8("menuOCR_Correction_Window"));
+        menuOCR_Correction_Window->setStyleSheet(QString::fromUtf8("font-size: 17px;"));
         menuRecent_Project = new QMenu(menuOCR_Correction_Window);
         menuRecent_Project->setObjectName(QString::fromUtf8("menuRecent_Project"));
+        menuRecent_Project->setStyleSheet(QString::fromUtf8("font-size: 17px;"));
         menuCreateReports = new QMenu(menuBar);
         menuCreateReports->setObjectName(QString::fromUtf8("menuCreateReports"));
+        menuCreateReports->setStyleSheet(QString::fromUtf8("font-size: 17px;"));
         menuFontAndLayout = new QMenu(menuBar);
         menuFontAndLayout->setObjectName(QString::fromUtf8("menuFontAndLayout"));
+        menuFontAndLayout->setStyleSheet(QString::fromUtf8("font-size: 17px;"));
         menuTables = new QMenu(menuFontAndLayout);
         menuTables->setObjectName(QString::fromUtf8("menuTables"));
+        menuTables->setStyleSheet(QString::fromUtf8("font-size: 17px;"));
         menuGit = new QMenu(menuBar);
         menuGit->setObjectName(QString::fromUtf8("menuGit"));
+        menuGit->setStyleSheet(QString::fromUtf8("font-size: 17px;"));
         menuEdit = new QMenu(menuBar);
         menuEdit->setObjectName(QString::fromUtf8("menuEdit"));
+        menuEdit->setStyleSheet(QString::fromUtf8("font-size: 17px;"));
         menuDownload = new QMenu(menuBar);
         menuDownload->setObjectName(QString::fromUtf8("menuDownload"));
+        menuDownload->setStyleSheet(QString::fromUtf8("font-size: 17px;"));
         menuHelp = new QMenu(menuBar);
         menuHelp->setObjectName(QString::fromUtf8("menuHelp"));
+        menuHelp->setStyleSheet(QString::fromUtf8("font-size: 17px;"));
         menuInstallation_Guide = new QMenu(menuHelp);
         menuInstallation_Guide->setObjectName(QString::fromUtf8("menuInstallation_Guide"));
+        menuInstallation_Guide->setStyleSheet(QString::fromUtf8("font-size: 17px;"));
         menuSelectLanguage = new QMenu(menuBar);
         menuSelectLanguage->setObjectName(QString::fromUtf8("menuSelectLanguage"));
+        menuSelectLanguage->setStyleSheet(QString::fromUtf8("font-size: 17px;"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
+        mainToolBar->setStyleSheet(QString::fromUtf8(""));
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
@@ -1009,7 +1027,7 @@ public:
         menuHelp->addAction(actionShortcut_Guide);
         menuInstallation_Guide->addAction(actionLinux);
         menuInstallation_Guide->addAction(actionWindows);
-        menuSelectLanguage->addAction(actionSanskrit);
+        menuSelectLanguage->addAction(actionSanskrit_2);
         menuSelectLanguage->addAction(actionHindi);
         menuSelectLanguage->addAction(actionEnglish);
         mainToolBar->addAction(actionNew);
@@ -1249,11 +1267,12 @@ public:
         actionEnglish->setText(QApplication::translate("MainWindow", "English", nullptr));
         actionShortcut_Guide->setText(QApplication::translate("MainWindow", "Shortcut Guide", nullptr));
         action1->setText(QApplication::translate("MainWindow", "1| ", nullptr));
+        actionSanskrit_2->setText(QApplication::translate("MainWindow", "Sanskrit", nullptr));
         pushButton_2->setText(QApplication::translate("MainWindow", "Resize Image", nullptr));
         pushButton->setText(QApplication::translate("MainWindow", "Mark Regions", nullptr));
         viewComments->setText(QApplication::translate("MainWindow", "Comments Accuracy", nullptr));
         compareCorrectorOutput->setText(QApplication::translate("MainWindow", "Compare Corrector Output", nullptr));
-        compareVerifierOutput->setText(QApplication::translate("MainWindow", "Comapre Verifier Output", nullptr));
+        compareVerifierOutput->setText(QApplication::translate("MainWindow", "Compare Verifier Output", nullptr));
         hinButton->setText(QApplication::translate("MainWindow", "Hindi/Marathi", nullptr));
         sanButton->setText(QApplication::translate("MainWindow", "Sanskrit", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "SLP", nullptr));

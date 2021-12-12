@@ -97,7 +97,7 @@
 </string>
           </property>
           <property name="text">
-           <string>Comapre Verifier Output</string>
+           <string>Compare Verifier Output</string>
           </property>
          </widget>
         </item>
@@ -706,19 +706,28 @@ background: grey;
      <x>0</x>
      <y>0</y>
      <width>1366</width>
-     <height>33</height>
+     <height>46</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QMenuBar{
+    <string notr="true">font-size: 17px;
 padding: 5px;
-}</string>
+margin: 5px;
+
+
+</string>
    </property>
    <widget class="QMenu" name="menuOCR_Correction_Window">
+    <property name="styleSheet">
+     <string notr="true">font-size: 17px;</string>
+    </property>
     <property name="title">
      <string>File</string>
     </property>
     <widget class="QMenu" name="menuRecent_Project">
+     <property name="styleSheet">
+      <string notr="true">font-size: 17px;</string>
+     </property>
      <property name="title">
       <string>Recent Project</string>
      </property>
@@ -746,6 +755,9 @@ padding: 5px;
     <addaction name="actionSugg"/>
    </widget>
    <widget class="QMenu" name="menuCreateReports">
+    <property name="styleSheet">
+     <string notr="true">font-size: 17px;</string>
+    </property>
     <property name="title">
      <string>Reports</string>
     </property>
@@ -753,10 +765,16 @@ padding: 5px;
     <addaction name="actionViewAverageAccuracies"/>
    </widget>
    <widget class="QMenu" name="menuFontAndLayout">
+    <property name="styleSheet">
+     <string notr="true">font-size: 17px;</string>
+    </property>
     <property name="title">
      <string>View</string>
     </property>
     <widget class="QMenu" name="menuTables">
+     <property name="styleSheet">
+      <string notr="true">font-size: 17px;</string>
+     </property>
      <property name="title">
       <string>Tables</string>
      </property>
@@ -785,6 +803,9 @@ padding: 5px;
     <addaction name="menuTables"/>
    </widget>
    <widget class="QMenu" name="menuGit">
+    <property name="styleSheet">
+     <string notr="true">font-size: 17px;</string>
+    </property>
     <property name="title">
      <string>Versions</string>
     </property>
@@ -793,6 +814,9 @@ padding: 5px;
     <addaction name="actionTurn_In"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
+    <property name="styleSheet">
+     <string notr="true">font-size: 17px;</string>
+    </property>
     <property name="title">
      <string>Edit</string>
     </property>
@@ -802,16 +826,25 @@ padding: 5px;
     <addaction name="actionFind_and_Replace"/>
    </widget>
    <widget class="QMenu" name="menuDownload">
+    <property name="styleSheet">
+     <string notr="true">font-size: 17px;</string>
+    </property>
     <property name="title">
      <string>Download</string>
     </property>
     <addaction name="actionas_PDF"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
+    <property name="styleSheet">
+     <string notr="true">font-size: 17px;</string>
+    </property>
     <property name="title">
      <string>Help</string>
     </property>
     <widget class="QMenu" name="menuInstallation_Guide">
+     <property name="styleSheet">
+      <string notr="true">font-size: 17px;</string>
+     </property>
      <property name="title">
       <string>Installation Guide</string>
      </property>
@@ -824,10 +857,13 @@ padding: 5px;
     <addaction name="actionShortcut_Guide"/>
    </widget>
    <widget class="QMenu" name="menuSelectLanguage">
+    <property name="styleSheet">
+     <string notr="true">font-size: 17px;</string>
+    </property>
     <property name="title">
      <string>Language</string>
     </property>
-    <addaction name="actionSanskrit"/>
+    <addaction name="actionSanskrit_2"/>
     <addaction name="actionHindi"/>
     <addaction name="actionEnglish"/>
    </widget>
@@ -841,6 +877,9 @@ padding: 5px;
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -1607,6 +1646,11 @@ padding: 5px;
   <action name="action1">
    <property name="text">
     <string>1| </string>
+   </property>
+  </action>
+  <action name="actionSanskrit_2">
+   <property name="text">
+    <string>Sanskrit</string>
    </property>
   </action>
  </widget>
