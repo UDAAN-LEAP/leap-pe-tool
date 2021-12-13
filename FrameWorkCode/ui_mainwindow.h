@@ -192,7 +192,7 @@ public:
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(1366, 1190);
         MainWindow->setMouseTracking(true);
-        MainWindow->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\"; background:rgb(32, 33, 72); color:white;"));
+        MainWindow->setStyleSheet(QString::fromUtf8("font: 15px \"Work Sans\"; background:rgb(32, 33, 72); color:white;"));
         actionOpen_Project = new QAction(MainWindow);
         actionOpen_Project->setObjectName(QString::fromUtf8("actionOpen_Project"));
         QIcon icon;
@@ -652,7 +652,6 @@ public:
         textEdit->setMaximumSize(QSize(16777215, 16777215));
         QFont font1;
         font1.setFamily(QString::fromUtf8("Work Sans"));
-        font1.setPointSize(11);
         font1.setBold(false);
         font1.setItalic(false);
         font1.setWeight(50);
@@ -954,7 +953,8 @@ public:
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
-        mainToolBar->setStyleSheet(QString::fromUtf8(""));
+        mainToolBar->setStyleSheet(QString::fromUtf8("padding: 3px;"));
+        mainToolBar->setIconSize(QSize(32, 32));
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
@@ -1280,8 +1280,8 @@ public:
         textBrowser->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\" bgcolor=\"#ffffff\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu';\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", nullptr));
+"</style></head><body style=\" font-family:'Work Sans'; font-size:15px; font-weight:400; font-style:normal;\" bgcolor=\"#ffffff\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab_5), QApplication::translate("MainWindow", "Tab 1", nullptr));
         lineEdit_3->setText(QApplication::translate("MainWindow", "Words 0", nullptr));
         groupBox->setTitle(QString());
