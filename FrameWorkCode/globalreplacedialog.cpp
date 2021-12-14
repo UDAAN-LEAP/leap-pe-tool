@@ -2,6 +2,8 @@
 #include "ui_globalreplacedialog.h"
 #include <QDialogButtonBox>
 #include <QDebug>
+#include "globalreplacepreview.h"
+#include "ui_globalreplacepreview.h"
 
 GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidget *parent) :
     QDialog(parent),
@@ -73,3 +75,9 @@ void GlobalReplaceDialog::on_cancelButton_clicked()
     this->close();
 }
 
+
+void GlobalReplaceDialog::on_pushButton_clicked()
+{
+    globalReplacePreview dialog;
+    dialog.exec();
+}

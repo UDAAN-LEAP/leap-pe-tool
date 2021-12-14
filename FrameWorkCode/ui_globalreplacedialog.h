@@ -31,6 +31,7 @@ public:
     QListWidget *listWidget;
     QTextBrowser *textBrowser;
     QHBoxLayout *horizontalLayout;
+    QPushButton *pushButton;
     QSpacerItem *horizontalSpacer;
     QPushButton *applyButton;
     QPushButton *cancelButton;
@@ -58,6 +59,11 @@ public:
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        pushButton = new QPushButton(GlobalReplaceDialog);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+
+        horizontalLayout->addWidget(pushButton);
+
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
@@ -90,6 +96,7 @@ public:
 "</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; color:#000000;\">Click &quot;Yes&quot; to save the changes and replace the word in the unedited pages.</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; color:#000000;\">Click &quot;No&quot; to save the changes and not replace the word in the unedited pages.</span></p></body></html>", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("GlobalReplaceDialog", "Preview", Q_NULLPTR));
         applyButton->setText(QApplication::translate("GlobalReplaceDialog", "Yes", Q_NULLPTR));
         cancelButton->setText(QApplication::translate("GlobalReplaceDialog", "No", Q_NULLPTR));
     } // retranslateUi

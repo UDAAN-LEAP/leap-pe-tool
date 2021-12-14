@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'undoglobalreplace.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.8
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,9 +10,12 @@
 #define UI_UNDOGLOBALREPLACE_H
 
 #include <QtCore/QVariant>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
@@ -35,33 +38,33 @@ public:
     void setupUi(QDialog *UndoGlobalReplace)
     {
         if (UndoGlobalReplace->objectName().isEmpty())
-            UndoGlobalReplace->setObjectName(QString::fromUtf8("UndoGlobalReplace"));
+            UndoGlobalReplace->setObjectName(QStringLiteral("UndoGlobalReplace"));
         UndoGlobalReplace->resize(680, 439);
         verticalLayout = new QVBoxLayout(UndoGlobalReplace);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         listWidget = new QListWidget(UndoGlobalReplace);
-        listWidget->setObjectName(QString::fromUtf8("listWidget"));
+        listWidget->setObjectName(QStringLiteral("listWidget"));
 
         verticalLayout->addWidget(listWidget);
 
         textBrowser = new QTextBrowser(UndoGlobalReplace);
-        textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
+        textBrowser->setObjectName(QStringLiteral("textBrowser"));
 
         verticalLayout->addWidget(textBrowser);
 
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
 
         applyButton = new QPushButton(UndoGlobalReplace);
-        applyButton->setObjectName(QString::fromUtf8("applyButton"));
+        applyButton->setObjectName(QStringLiteral("applyButton"));
 
         horizontalLayout->addWidget(applyButton);
 
         cancelButton = new QPushButton(UndoGlobalReplace);
-        cancelButton->setObjectName(QString::fromUtf8("cancelButton"));
+        cancelButton->setObjectName(QStringLiteral("cancelButton"));
 
         horizontalLayout->addWidget(cancelButton);
 
@@ -76,9 +79,9 @@ public:
 
     void retranslateUi(QDialog *UndoGlobalReplace)
     {
-        UndoGlobalReplace->setWindowTitle(QApplication::translate("UndoGlobalReplace", "Dialog", nullptr));
-        applyButton->setText(QApplication::translate("UndoGlobalReplace", "Yes", nullptr));
-        cancelButton->setText(QApplication::translate("UndoGlobalReplace", "No", nullptr));
+        UndoGlobalReplace->setWindowTitle(QApplication::translate("UndoGlobalReplace", "Dialog", Q_NULLPTR));
+        applyButton->setText(QApplication::translate("UndoGlobalReplace", "Yes", Q_NULLPTR));
+        cancelButton->setText(QApplication::translate("UndoGlobalReplace", "No", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -21,6 +21,8 @@ private slots:
     void displayOriginalList(QVector <QString> replacedWords);
 
 
+    void on_pushButton_clicked();
+
 public slots:
     bool on_applyButton_clicked();
     void highlightChecked(QListWidgetItem* item);

@@ -76,7 +76,8 @@ HEADERS += ./Filters.h \
     ./resizeimageview.h \
     ./zoom.h \
     ./ProjectWizard.h \
-    ./CreateProjectPage.h
+    ./CreateProjectPage.h \
+    $$PWD/globalreplacepreview.h
 SOURCES += ./DiffView.cpp \
     $$PWD/SimpleMail/emailaddress.cpp \
     $$PWD/SimpleMail/mimeattachment.cpp \
@@ -116,7 +117,8 @@ SOURCES += ./DiffView.cpp \
     ./resizeimageview.cpp \
     ./zoom.cpp \
     ./ProjectWizard.cpp \
-    ./CreateProjectPage.cpp
+    ./CreateProjectPage.cpp \
+    $$PWD/globalreplacepreview.cpp
 FORMS += ./DiffView.ui \
     $$PWD/loadingspinner.ui \
     $$PWD/shortcutguidedialog.ui \
@@ -130,7 +132,8 @@ FORMS += ./DiffView.ui \
     ./interndiffview.ui \
     ./loginpageview.ui \
     ./mainwindow.ui \
-    ./resizeimageview.ui
+    ./resizeimageview.ui \
+    $$PWD/globalreplacepreview.ui
 RESOURCES += AppResources.qrc
 
 DISTFILES += \
