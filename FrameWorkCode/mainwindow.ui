@@ -824,6 +824,8 @@ margin: 5px;
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
     <addaction name="actionFind_and_Replace"/>
+    <addaction name="separator"/>
+    <addaction name="actionUndo_Global_Replace"/>
    </widget>
    <widget class="QMenu" name="menuDownload">
     <property name="styleSheet">
@@ -1657,6 +1659,11 @@ margin: 5px;
   <action name="actionSanskrit_2">
    <property name="text">
     <string>Sanskrit</string>
+   </property>
+  </action>
+  <action name="actionUndo_Global_Replace">
+   <property name="text">
+    <string>Undo Global Replace</string>
    </property>
   </action>
  </widget>

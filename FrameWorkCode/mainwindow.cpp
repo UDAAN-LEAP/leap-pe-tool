@@ -60,6 +60,7 @@
 #include <editdistance.h>
 #include <QRegularExpressionMatch>
 #include<QStatusBar>
+#include "undoglobalreplace.h"
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -109,6 +110,10 @@ bool shouldIDraw=false;         //button functioning over marking a region for f
 int pressedFlag;            //Resposible for dynamic rectangular drawing
 
 QString branchName;
+
+QMap<QString, QString> globallyReplacedWords;
+
+QList<QString> filesChangedUsingGlobalReplace;
 
 //Constructor
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
@@ -5181,6 +5186,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     if(!globalReplacementMap.isEmpty())
     {
 //        mapOfReplacements = globalReplacementMap;
+        globallyReplacedWords = globalReplacementMap;
         QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
 
         while (dirIterator.hasNext()){
@@ -5189,6 +5195,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
             bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
             QString suff = dirIterator.fileInfo().completeSuffix();
             if(!isFileInEditedFilesLog){
+                filesChangedUsingGlobalReplace.append(it_file_path);
                 if(suff == "html"){
                 r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
                 r2 = r2 + r1;
@@ -6593,3 +6600,83 @@ void MainWindow::createActions()
 {
     ui->mainToolBar->setIconSize(QSize(100, 100));
 }
+
+void MainWindow::on_actionUndo_Global_Replace_triggered()
+{
+    QMap<QString, QString> undoGRMap;
+
+    reverseGlobalReplacedWordsMap();
+    if ( globallyReplacedWords.size() == 1 )
+    {
+        QString oldWord = globallyReplacedWords.firstKey();
+        QString newWord = globallyReplacedWords.value(oldWord);
+        bool replace = undoGlobalReplace_Single_Word(oldWord, newWord);
+
+        if ( replace )
+            undoGRMap.insert(oldWord, newWord);
+    }
+    else if ( globallyReplacedWords.size() > 1 )
+    {
+        qDebug() << "For Multiple Words";
+        undoGRMap = getUndoGlobalReplaceMap_Multiple_Words(globallyReplacedWords);
+    }
+
+    if ( !undoGRMap.isEmpty() )
+    {
+        for (auto itFile : filesChangedUsingGlobalReplace)
+        {
+            writeGlobalCPairsToFiles(itFile, undoGRMap);
+        }
+    }
+}
+
+
+void MainWindow::reverseGlobalReplacedWordsMap()
+{
+    QMap<QString, QString>::iterator i;
+    QMap<QString, QString> reversedMap;
+
+    for (i = globallyReplacedWords.begin(); i != globallyReplacedWords.end(); ++i)
+        reversedMap[i.value()] = i.key();
+
+    globallyReplacedWords = reversedMap;
+}
+
+
+bool MainWindow::undoGlobalReplace_Single_Word(QString oldWord, QString newWord)
+{
+    QMessageBox messageBox(this);
+
+    QAbstractButton *undo = messageBox.addButton(tr("Yes"), QMessageBox::ActionRole);
+    QAbstractButton *cancel = messageBox.addButton(tr("No"), QMessageBox::RejectRole);
+
+    QString msg = "Do you want to undo the changes you made previously using global replace feature ?\nUndo by replacing " + oldWord + " with " + newWord + "\n";
+
+    messageBox.setWindowTitle("Undo Global Replace");
+    messageBox.setText(msg);
+    messageBox.setModal(true);
+    messageBox.exec();
+
+    if ( messageBox.clickedButton() == undo )
+        return true;
+    return false;
+}
+
+
+QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<QString, QString> GRMap)
+{
+    QMap<QString, QString> undoGRMap;
+    UndoGlobalReplace ugrWindow(GRMap, this);
+
+    ugrWindow.setModal(true);
+    ugrWindow.exec();
+
+    if ( ugrWindow.on_applyButton_clicked() )
+        undoGRMap = ugrWindow.getFinalUndoMap();
+
+    return undoGRMap;
+}
+
+
+
+

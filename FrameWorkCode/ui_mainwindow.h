@@ -131,6 +131,7 @@ public:
     QAction *actionShortcut_Guide;
     QAction *action1;
     QAction *actionSanskrit_2;
+    QAction *actionUndo_Global_Replace;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_5;
     QVBoxLayout *verticalLayout_4;
@@ -493,6 +494,8 @@ public:
         action1->setObjectName(QString::fromUtf8("action1"));
         actionSanskrit_2 = new QAction(MainWindow);
         actionSanskrit_2->setObjectName(QString::fromUtf8("actionSanskrit_2"));
+        actionUndo_Global_Replace = new QAction(MainWindow);
+        actionUndo_Global_Replace->setObjectName(QString::fromUtf8("actionUndo_Global_Replace"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         centralWidget->setStyleSheet(QString::fromUtf8("mainToolBar{background:rgb(143, 89, 2)}"));
@@ -1020,6 +1023,8 @@ public:
         menuEdit->addAction(actionRedo);
         menuEdit->addSeparator();
         menuEdit->addAction(actionFind_and_Replace);
+        menuEdit->addSeparator();
+        menuEdit->addAction(actionUndo_Global_Replace);
         menuDownload->addAction(actionas_PDF);
         menuHelp->addAction(actionGet_Help);
         menuHelp->addAction(menuInstallation_Guide->menuAction());
@@ -1268,6 +1273,7 @@ public:
         actionShortcut_Guide->setText(QApplication::translate("MainWindow", "Shortcut Guide", nullptr));
         action1->setText(QApplication::translate("MainWindow", "1| ", nullptr));
         actionSanskrit_2->setText(QApplication::translate("MainWindow", "Sanskrit", nullptr));
+        actionUndo_Global_Replace->setText(QApplication::translate("MainWindow", "Undo Global Replace", nullptr));
         pushButton_2->setText(QApplication::translate("MainWindow", "Resize Image", nullptr));
         pushButton->setText(QApplication::translate("MainWindow", "Mark Regions", nullptr));
         viewComments->setText(QApplication::translate("MainWindow", "Comments Accuracy", nullptr));

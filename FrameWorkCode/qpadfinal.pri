@@ -32,6 +32,7 @@ HEADERS += ./Filters.h \
     $$PWD/textfinder.h \
     $$PWD/globalreplacedialog.h \
     $$PWD/ui_shortcutguidedialog.h \
+    $$PWD/undoglobalreplace.h \
     ./Project.h \
     ./TreeItem.h \
     ./tesseract/apitypes.h \
@@ -96,6 +97,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/shortcutguidedialog.cpp \
     $$PWD/textfinder.cpp \
     $$PWD/globalreplacedialog.cpp \
+    $$PWD/undoglobalreplace.cpp \
     ./Filters.cpp \
     ./Project.cpp \
     ./ProjectHierarchyWindow.cpp \
@@ -120,6 +122,7 @@ FORMS += ./DiffView.ui \
     $$PWD/shortcutguidedialog.ui \
     $$PWD/textfinder.ui \
     $$PWD/globalreplacedialog.ui \
+    $$PWD/undoglobalreplace.ui \
     ./ProjectHierarchyWindow.ui \
     ./Symbols.ui \
     ./averageaccuracies.ui \

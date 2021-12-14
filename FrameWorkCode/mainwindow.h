@@ -379,6 +379,14 @@ private slots:
 
     void zoomedUsingScroll();
 
+    void on_actionUndo_Global_Replace_triggered();
+
+    bool undoGlobalReplace_Single_Word(QString oldWord, QString newWord);
+
+    void reverseGlobalReplacedWordsMap();
+
+    QMap<QString, QString> getUndoGlobalReplaceMap_Multiple_Words(QMap<QString, QString>);
+
 private:
     bool mExitStatus = false;
     QString mRole;
