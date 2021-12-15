@@ -335,7 +335,7 @@ private slots:
 
     void runGlobalReplace(QString, QVector<QString>);
 
-    bool globalReplaceQueryMessageBox(QString old_word, QString new_word);
+    bool globalReplaceQueryMessageBox(QString old_word, QString new_word, int &chk);
 
     int writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap);
 

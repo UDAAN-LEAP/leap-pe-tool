@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'Symbols.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.15.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,11 +10,8 @@
 #define UI_SYMBOLS_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextEdit>
@@ -42,27 +39,27 @@ public:
     void setupUi(QDialog *SymbolsView)
     {
         if (SymbolsView->objectName().isEmpty())
-            SymbolsView->setObjectName(QStringLiteral("SymbolsView"));
+            SymbolsView->setObjectName(QString::fromUtf8("SymbolsView"));
         SymbolsView->resize(744, 428);
-        SymbolsView->setStyleSheet(QStringLiteral("font: 11pt \"Work Sans\";"));
+        SymbolsView->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
         verticalLayout_4 = new QVBoxLayout(SymbolsView);
-        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         copyButton = new QPushButton(SymbolsView);
-        copyButton->setObjectName(QStringLiteral("copyButton"));
+        copyButton->setObjectName(QString::fromUtf8("copyButton"));
 
         verticalLayout_4->addWidget(copyButton);
 
         tabWidget = new QTabWidget(SymbolsView);
-        tabWidget->setObjectName(QStringLiteral("tabWidget"));
+        tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         tab_1 = new QWidget();
-        tab_1->setObjectName(QStringLiteral("tab_1"));
+        tab_1->setObjectName(QString::fromUtf8("tab_1"));
         verticalLayout_2 = new QVBoxLayout(tab_1);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         Diacritics = new QTextEdit(tab_1);
-        Diacritics->setObjectName(QStringLiteral("Diacritics"));
+        Diacritics->setObjectName(QString::fromUtf8("Diacritics"));
         Diacritics->setEnabled(true);
         QFont font;
-        font.setFamily(QStringLiteral("Work Sans"));
+        font.setFamily(QString::fromUtf8("Work Sans"));
         font.setPointSize(11);
         font.setBold(false);
         font.setItalic(false);
@@ -74,11 +71,11 @@ public:
 
         tabWidget->addTab(tab_1, QString());
         tab_2 = new QWidget();
-        tab_2->setObjectName(QStringLiteral("tab_2"));
+        tab_2->setObjectName(QString::fromUtf8("tab_2"));
         verticalLayout = new QVBoxLayout(tab_2);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         SpecialCharacters = new QTextEdit(tab_2);
-        SpecialCharacters->setObjectName(QStringLiteral("SpecialCharacters"));
+        SpecialCharacters->setObjectName(QString::fromUtf8("SpecialCharacters"));
         SpecialCharacters->setFont(font);
         SpecialCharacters->setReadOnly(true);
 
@@ -86,13 +83,13 @@ public:
 
         tabWidget->addTab(tab_2, QString());
         tab_3 = new QWidget();
-        tab_3->setObjectName(QStringLiteral("tab_3"));
+        tab_3->setObjectName(QString::fromUtf8("tab_3"));
         verticalLayout_3 = new QVBoxLayout(tab_3);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         MathematicalSymbols = new QTextEdit(tab_3);
-        MathematicalSymbols->setObjectName(QStringLiteral("MathematicalSymbols"));
+        MathematicalSymbols->setObjectName(QString::fromUtf8("MathematicalSymbols"));
         QFont font1;
-        font1.setFamily(QStringLiteral("Work Sans"));
+        font1.setFamily(QString::fromUtf8("Work Sans"));
         font1.setPointSize(11);
         font1.setBold(false);
         font1.setItalic(false);
@@ -120,27 +117,27 @@ public:
 
     void retranslateUi(QDialog *SymbolsView)
     {
-        SymbolsView->setWindowTitle(QApplication::translate("SymbolsView", "Dialog", Q_NULLPTR));
-        copyButton->setText(QApplication::translate("SymbolsView", "Copy", Q_NULLPTR));
-        Diacritics->setHtml(QApplication::translate("SymbolsView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        SymbolsView->setWindowTitle(QCoreApplication::translate("SymbolsView", "Dialog", nullptr));
+        copyButton->setText(QCoreApplication::translate("SymbolsView", "Copy", nullptr));
+        Diacritics->setHtml(QCoreApplication::translate("SymbolsView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-size:16pt;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-size:16pt;\"><br /></p></body></html>", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(tab_1), QApplication::translate("SymbolsView", "Diacritics", Q_NULLPTR));
-        SpecialCharacters->setHtml(QApplication::translate("SymbolsView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-size:16pt;\"><br /></p></body></html>", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_1), QCoreApplication::translate("SymbolsView", "Diacritics", nullptr));
+        SpecialCharacters->setHtml(QCoreApplication::translate("SymbolsView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-size:16pt;\"><br /></p></body></html>", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("SymbolsView", "Special Characters", Q_NULLPTR));
-        MathematicalSymbols->setHtml(QApplication::translate("SymbolsView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-size:16pt;\"><br /></p></body></html>", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("SymbolsView", "Special Characters", nullptr));
+        MathematicalSymbols->setHtml(QCoreApplication::translate("SymbolsView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-size:16pt;\"><br /></p></body></html>", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("SymbolsView", "Mathematical Symbols", Q_NULLPTR));
+"<p style=\"-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-size:16pt;\"><br /></p></body></html>", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("SymbolsView", "Mathematical Symbols", nullptr));
     } // retranslateUi
 
 };

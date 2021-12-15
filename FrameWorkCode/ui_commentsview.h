@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'commentsview.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.15.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,13 +10,10 @@
 #define UI_COMMENTSVIEW_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
@@ -69,38 +66,38 @@ public:
     void setupUi(QDialog *CommentsView)
     {
         if (CommentsView->objectName().isEmpty())
-            CommentsView->setObjectName(QStringLiteral("CommentsView"));
+            CommentsView->setObjectName(QString::fromUtf8("CommentsView"));
         CommentsView->resize(509, 385);
-        CommentsView->setStyleSheet(QStringLiteral("font: 11pt \"Work Sans\";"));
+        CommentsView->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
         verticalLayout_7 = new QVBoxLayout(CommentsView);
-        verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
+        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
         horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         label = new QLabel(CommentsView);
-        label->setObjectName(QStringLiteral("label"));
+        label->setObjectName(QString::fromUtf8("label"));
 
         verticalLayout_3->addWidget(label);
 
         line_3 = new QFrame(CommentsView);
-        line_3->setObjectName(QStringLiteral("line_3"));
+        line_3->setObjectName(QString::fromUtf8("line_3"));
         line_3->setFrameShape(QFrame::HLine);
         line_3->setFrameShadow(QFrame::Sunken);
 
         verticalLayout_3->addWidget(line_3);
 
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         label_2 = new QLabel(CommentsView);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setObjectName(QString::fromUtf8("label_2"));
 
         verticalLayout->addWidget(label_2);
 
         h_words = new QLineEdit(CommentsView);
-        h_words->setObjectName(QStringLiteral("h_words"));
+        h_words->setObjectName(QString::fromUtf8("h_words"));
 
         verticalLayout->addWidget(h_words);
 
@@ -108,14 +105,14 @@ public:
         horizontalLayout->addLayout(verticalLayout);
 
         verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         label_4 = new QLabel(CommentsView);
-        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setObjectName(QString::fromUtf8("label_4"));
 
         verticalLayout_2->addWidget(label_4);
 
         h_characters = new QLineEdit(CommentsView);
-        h_characters->setObjectName(QStringLiteral("h_characters"));
+        h_characters->setObjectName(QString::fromUtf8("h_characters"));
 
         verticalLayout_2->addWidget(h_characters);
 
@@ -133,7 +130,7 @@ public:
         horizontalLayout_3->addItem(horizontalSpacer_2);
 
         line_2 = new QFrame(CommentsView);
-        line_2->setObjectName(QStringLiteral("line_2"));
+        line_2->setObjectName(QString::fromUtf8("line_2"));
         line_2->setFrameShape(QFrame::VLine);
         line_2->setFrameShadow(QFrame::Sunken);
 
@@ -144,30 +141,30 @@ public:
         horizontalLayout_3->addItem(horizontalSpacer);
 
         verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         label_6 = new QLabel(CommentsView);
-        label_6->setObjectName(QStringLiteral("label_6"));
+        label_6->setObjectName(QString::fromUtf8("label_6"));
 
         verticalLayout_4->addWidget(label_6);
 
         line = new QFrame(CommentsView);
-        line->setObjectName(QStringLiteral("line"));
+        line->setObjectName(QString::fromUtf8("line"));
         line->setFrameShape(QFrame::HLine);
         line->setFrameShadow(QFrame::Sunken);
 
         verticalLayout_4->addWidget(line);
 
         horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         verticalLayout_5 = new QVBoxLayout();
-        verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
+        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
         label_7 = new QLabel(CommentsView);
-        label_7->setObjectName(QStringLiteral("label_7"));
+        label_7->setObjectName(QString::fromUtf8("label_7"));
 
         verticalLayout_5->addWidget(label_7);
 
         acc_word = new QLineEdit(CommentsView);
-        acc_word->setObjectName(QStringLiteral("acc_word"));
+        acc_word->setObjectName(QString::fromUtf8("acc_word"));
 
         verticalLayout_5->addWidget(acc_word);
 
@@ -175,14 +172,14 @@ public:
         horizontalLayout_2->addLayout(verticalLayout_5);
 
         verticalLayout_6 = new QVBoxLayout();
-        verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
+        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
         label_8 = new QLabel(CommentsView);
-        label_8->setObjectName(QStringLiteral("label_8"));
+        label_8->setObjectName(QString::fromUtf8("label_8"));
 
         verticalLayout_6->addWidget(label_8);
 
         acc_character = new QLineEdit(CommentsView);
-        acc_character->setObjectName(QStringLiteral("acc_character"));
+        acc_character->setObjectName(QString::fromUtf8("acc_character"));
 
         verticalLayout_6->addWidget(acc_character);
 
@@ -199,25 +196,25 @@ public:
         verticalLayout_7->addLayout(horizontalLayout_3);
 
         ratingsAccLayout = new QHBoxLayout();
-        ratingsAccLayout->setObjectName(QStringLiteral("ratingsAccLayout"));
+        ratingsAccLayout->setObjectName(QString::fromUtf8("ratingsAccLayout"));
         ratingLabel = new QLabel(CommentsView);
-        ratingLabel->setObjectName(QStringLiteral("ratingLabel"));
+        ratingLabel->setObjectName(QString::fromUtf8("ratingLabel"));
 
         ratingsAccLayout->addWidget(ratingLabel);
 
         rating = new QLineEdit(CommentsView);
-        rating->setObjectName(QStringLiteral("rating"));
+        rating->setObjectName(QString::fromUtf8("rating"));
         rating->setReadOnly(true);
 
         ratingsAccLayout->addWidget(rating);
 
         avgAccLabel = new QLabel(CommentsView);
-        avgAccLabel->setObjectName(QStringLiteral("avgAccLabel"));
+        avgAccLabel->setObjectName(QString::fromUtf8("avgAccLabel"));
 
         ratingsAccLayout->addWidget(avgAccLabel);
 
         avgAcc = new QLineEdit(CommentsView);
-        avgAcc->setObjectName(QStringLiteral("avgAcc"));
+        avgAcc->setObjectName(QString::fromUtf8("avgAcc"));
         avgAcc->setReadOnly(true);
 
         ratingsAccLayout->addWidget(avgAcc);
@@ -226,14 +223,14 @@ public:
         verticalLayout_7->addLayout(ratingsAccLayout);
 
         horizontalLayout_5 = new QHBoxLayout();
-        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
+        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
         label_3 = new QLabel(CommentsView);
-        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setObjectName(QString::fromUtf8("label_3"));
 
         horizontalLayout_5->addWidget(label_3);
 
         horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         horizontalSpacer_10 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_4->addItem(horizontalSpacer_10);
@@ -245,10 +242,10 @@ public:
         verticalLayout_7->addLayout(horizontalLayout_5);
 
         commentTextBrowser = new QTextBrowser(CommentsView);
-        commentTextBrowser->setObjectName(QStringLiteral("commentTextBrowser"));
+        commentTextBrowser->setObjectName(QString::fromUtf8("commentTextBrowser"));
         commentTextBrowser->setMaximumSize(QSize(604, 16777215));
         QFont font;
-        font.setFamily(QStringLiteral("Work Sans"));
+        font.setFamily(QString::fromUtf8("Work Sans"));
         font.setPointSize(11);
         font.setBold(false);
         font.setItalic(false);
@@ -260,9 +257,9 @@ public:
         verticalLayout_7->addWidget(commentTextBrowser);
 
         pushButton = new QPushButton(CommentsView);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
         QFont font1;
-        font1.setFamily(QStringLiteral("Work Sans"));
+        font1.setFamily(QString::fromUtf8("Work Sans"));
         font1.setPointSize(11);
         font1.setBold(false);
         font1.setItalic(false);
@@ -280,17 +277,17 @@ public:
 
     void retranslateUi(QDialog *CommentsView)
     {
-        CommentsView->setWindowTitle(QApplication::translate("CommentsView", "View Comments", Q_NULLPTR));
-        label->setText(QApplication::translate("CommentsView", "<b>Total Highlights</b>", Q_NULLPTR));
-        label_2->setText(QApplication::translate("CommentsView", "Words", Q_NULLPTR));
-        label_4->setText(QApplication::translate("CommentsView", "Characters", Q_NULLPTR));
-        label_6->setText(QApplication::translate("CommentsView", "<b>Accuracy</b>", Q_NULLPTR));
-        label_7->setText(QApplication::translate("CommentsView", "Word-Level", Q_NULLPTR));
-        label_8->setText(QApplication::translate("CommentsView", "Character-Level", Q_NULLPTR));
-        ratingLabel->setText(QApplication::translate("CommentsView", "<html><head/><body><p><span style=\" font-weight:600;\">Rating for</span></p></body></html>", Q_NULLPTR));
-        avgAccLabel->setText(QApplication::translate("CommentsView", "<html><head/><body><p><span style=\" font-weight:600;\">Avg. Char. Accuracy for</span></p></body></html>", Q_NULLPTR));
-        label_3->setText(QApplication::translate("CommentsView", "<html><head/><body><p><span style=\" font-weight:600;\">Add Comments</span></p></body></html>", Q_NULLPTR));
-        pushButton->setText(QApplication::translate("CommentsView", "Save", Q_NULLPTR));
+        CommentsView->setWindowTitle(QCoreApplication::translate("CommentsView", "View Comments", nullptr));
+        label->setText(QCoreApplication::translate("CommentsView", "<b>Total Highlights</b>", nullptr));
+        label_2->setText(QCoreApplication::translate("CommentsView", "Words", nullptr));
+        label_4->setText(QCoreApplication::translate("CommentsView", "Characters", nullptr));
+        label_6->setText(QCoreApplication::translate("CommentsView", "<b>Accuracy</b>", nullptr));
+        label_7->setText(QCoreApplication::translate("CommentsView", "Word-Level", nullptr));
+        label_8->setText(QCoreApplication::translate("CommentsView", "Character-Level", nullptr));
+        ratingLabel->setText(QCoreApplication::translate("CommentsView", "<html><head/><body><p><span style=\" font-weight:600;\">Rating for</span></p></body></html>", nullptr));
+        avgAccLabel->setText(QCoreApplication::translate("CommentsView", "<html><head/><body><p><span style=\" font-weight:600;\">Avg. Char. Accuracy for</span></p></body></html>", nullptr));
+        label_3->setText(QCoreApplication::translate("CommentsView", "<html><head/><body><p><span style=\" font-weight:600;\">Add Comments</span></p></body></html>", nullptr));
+        pushButton->setText(QCoreApplication::translate("CommentsView", "Save", nullptr));
     } // retranslateUi
 
 };

@@ -5108,27 +5108,40 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
  * \return
  * spawns a MessageBox and returns true if Replace is chosen
  */
-bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word){
-
+bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word, int &chk){
+    chk=0;
     QMessageBox messageBox(this);
-
+   // QDialog dialog(this);
+    QCheckBox *cb = new QCheckBox("Make changes to all pages");
+    //dialog.setWindowTitle("Check Formatting");
     //QAbstractButton *escButton = messageBox.addButton(tr("Esc"), QMessageBox::ActionRole);
     QAbstractButton *replaceButton = messageBox.addButton(tr("Yes"), QMessageBox::ActionRole);
     QAbstractButton *cancelButton = messageBox.addButton(tr("No"), QMessageBox::RejectRole);
 
+    messageBox.setCheckBox(cb);
     QString msg = "Do you want to replace " + old_word + " with " + new_word + " in rest of the pages?\n"
                 + "\n\nClick \"Yes\" to save the changes and replace the word in the unedited pages."
                 + "\nClick \"No\" to save the changes and not replace the word in the unedited page.";
 
+
+
+
     messageBox.setWindowTitle("Global Replace");
     messageBox.setText(msg);
     messageBox.exec();
+    if(cb->checkState() == Qt::Checked){
+        chk=1;
+    }
+    //qDebug()<<"Check"<<checker;
+   // dialog.exec();
 
     if (messageBox.clickedButton() == replaceButton)
         return true;
     return false;
 
 }
+
+
 
 /*!
  * \brief MainWindow::getGlobalReplacementMapFromChecklistDialog
@@ -5166,13 +5179,13 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     int files = 0;
     int r1 = 0, r2 = 0;
     int x1 = 0;
-
+    int check=2;
     //! if only one change spawn checkbox
     if (noOfChangedWords == 1){
 
         QStringList changesList = changedWords[0].split(" ");
-        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3]);
-
+        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3], check);
+        qDebug()<<"Check"<<check;
         if (updateGlobalCPairs)
             globalReplacementMap[changesList[1]] = changesList[3];
     }
@@ -5194,16 +5207,30 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
             QString it_file_path = dirIterator.next();
             bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
             QString suff = dirIterator.fileInfo().completeSuffix();
-            if(!isFileInEditedFilesLog){
-                filesChangedUsingGlobalReplace.append(it_file_path);
-                if(suff == "html"){
-                r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
-                r2 = r2 + r1;
-                if(r1 > 0)
-                files++;
-                }
-                else
-                    x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+            if(check==0){
+                if(!isFileInEditedFilesLog){
+                    filesChangedUsingGlobalReplace.append(it_file_path);
+                    if(suff == "html"){
+                    r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                    r2 = r2 + r1;
+                    if(r1 > 0)
+                    files++;
+                    }
+                    else
+                        x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+            }
+
+            }
+            else if(check==1){
+                    filesChangedUsingGlobalReplace.append(it_file_path);
+                    if(suff == "html"){
+                    r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                    r2 = r2 + r1;
+                    if(r1 > 0)
+                    files++;
+                    }
+                    else
+                        x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
             }
         }
     }
