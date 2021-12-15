@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "averageaccuracies.h"
 #include "eddis.h"
@@ -5149,15 +5149,25 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
  * \return
  * spawns a checklist and returns a Qmap of selected pairs
  */
-QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords){
+QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords, QVector<int> *replaceInAllPages){
     QMap <QString, QString> globalReplacementMap;
     GlobalReplaceDialog grDialog(changedWords, this);
 
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QRect  screenGeometry = screen->geometry();
+    float height = screenGeometry.height() * 0.5;
+    float width = screenGeometry.width() * 0.5;
+
     grDialog.setModal(true);
+    grDialog.setFixedSize(width, height);
     grDialog.exec();
 
     if(grDialog.on_applyButton_clicked())
+    {
+        *replaceInAllPages = grDialog.getStatesOfCheckboxes();
         globalReplacementMap = grDialog.getFilteredGlobalReplacementMap();
+    }
+    qDebug() << "getting checkbox function working fine";
     return globalReplacementMap;
 
 }
@@ -5172,6 +5182,15 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 {
     QMap <QString, QString> globalReplacementMap;
 
+    QMap<QString, QString> replaceInAllPages_Map;
+    QMap<QString, QString> replaceInUneditedPages_Map;
+
+    /*
+     * Stores values in 0s and 1s. Eg: {1, 0, 0, 1}. 1 means that the word corresponding the map should be replaced in all pages
+     * and if 0 then replace in unedited pages
+    */
+    QVector<int> replaceInAllPages;
+
     QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
 
     int noOfChangedWords = changedWords.size();
@@ -5185,15 +5204,25 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
         QStringList changesList = changedWords[0].split(" ");
         bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3], check);
-        qDebug()<<"Check"<<check;
+//        qDebug()<<"Check"<<check;
         if (updateGlobalCPairs)
             globalReplacementMap[changesList[1]] = changesList[3];
     }
     //! if there is more than 1 change spawn a checklist and get the checked pairs only
     else if(noOfChangedWords > 1){
 
-       globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords);
+        globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords, &replaceInAllPages);
 
+        QMap<QString, QString>::iterator it;
+        it = globalReplacementMap.begin();
+        for (int i = 0; i < replaceInAllPages.size(); i++)
+        {
+            if (replaceInAllPages.at(i) == 1)
+                replaceInAllPages_Map.insert(it.key(), it.value());
+            else
+                replaceInUneditedPages_Map.insert(it.key(), it.value());
+            it++;
+        }
     }
 
     if(!globalReplacementMap.isEmpty())
@@ -5202,35 +5231,82 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         globallyReplacedWords = globalReplacementMap;
         QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
 
-        while (dirIterator.hasNext()){
-
-            QString it_file_path = dirIterator.next();
-            bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
-            QString suff = dirIterator.fileInfo().completeSuffix();
-            if(check==0){
-                if(!isFileInEditedFilesLog){
+        if (noOfChangedWords == 1)
+        {
+            if (check == 0)
+            {
+                while (dirIterator.hasNext()) {
+                    QString it_file_path = dirIterator.next();
+                    bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
+                    QString suff = dirIterator.fileInfo().completeSuffix();
+                    if(!isFileInEditedFilesLog)
+                    {
+                        filesChangedUsingGlobalReplace.append(it_file_path);
+                        if(suff == "html") {
+                            r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                            r2 = r2 + r1;
+                            if(r1 > 0)
+                            files++;
+                        }
+                        else
+                            x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                    }
+                }
+            }
+            else if (check == 1)
+            {
+                while (dirIterator.hasNext()) {
+                    QString it_file_path = dirIterator.next();
+                    QString suff = dirIterator.fileInfo().completeSuffix();
                     filesChangedUsingGlobalReplace.append(it_file_path);
-                    if(suff == "html"){
-                    r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
-                    r2 = r2 + r1;
-                    if(r1 > 0)
-                    files++;
+                    if(suff == "html") {
+                        r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                        r2 = r2 + r1;
+                        if(r1 > 0)
+                        files++;
                     }
                     else
                         x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                }
             }
-
-            }
-            else if(check==1){
+        }
+        else if (noOfChangedWords > 1)
+        {
+            // Replacing in Unedited pages
+            while (dirIterator.hasNext())
+            {
+                QString it_file_path = dirIterator.next();
+                bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
+                QString suff = dirIterator.fileInfo().completeSuffix();
+                if (!isFileInEditedFilesLog)
+                {
                     filesChangedUsingGlobalReplace.append(it_file_path);
-                    if(suff == "html"){
-                    r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                    if(suff == "html") {
+                        r1 = writeGlobalCPairsToFiles(it_file_path, replaceInUneditedPages_Map);
+                        r2 = r2 + r1;
+                        if(r1 > 0)
+                        files++;
+                    }
+                    else
+                        x1 = writeGlobalCPairsToFiles(it_file_path, replaceInUneditedPages_Map);
+                }
+            }
+            QDirIterator dirIterator_2(currentFileDirectory, QDirIterator::Subdirectories);
+
+            // Replacing in all pages
+            while (dirIterator_2.hasNext())
+            {
+                QString it_file_path = dirIterator_2.next();
+                QString suff = dirIterator_2.fileInfo().completeSuffix();
+                filesChangedUsingGlobalReplace.append(it_file_path);
+                if(suff == "html") {
+                    r1 = writeGlobalCPairsToFiles(it_file_path, replaceInAllPages_Map);
                     r2 = r2 + r1;
                     if(r1 > 0)
                     files++;
-                    }
-                    else
-                        x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                }
+                else
+                    x1 = writeGlobalCPairsToFiles(it_file_path, replaceInAllPages_Map);
             }
         }
     }

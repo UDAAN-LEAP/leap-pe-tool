@@ -351,7 +351,7 @@ private slots:
 
     void highlight(QTextBrowser *b , QString input);
 
-    QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords);
+    QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords, QVector<int> *);
 
     //void on_textEdit_dict_copyAvailable(bool b);
 

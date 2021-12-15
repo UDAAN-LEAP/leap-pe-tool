@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'globalreplacedialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.2
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QPushButton>
@@ -25,7 +26,9 @@ class Ui_GlobalReplaceDialog
 {
 public:
     QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout_2;
     QListWidget *listWidget;
+    QGroupBox *groupBox;
     QTextBrowser *textBrowser;
     QHBoxLayout *horizontalLayout;
     QPushButton *pushButton;
@@ -37,14 +40,24 @@ public:
     {
         if (GlobalReplaceDialog->objectName().isEmpty())
             GlobalReplaceDialog->setObjectName(QString::fromUtf8("GlobalReplaceDialog"));
-        GlobalReplaceDialog->resize(400, 300);
+        GlobalReplaceDialog->resize(540, 394);
         GlobalReplaceDialog->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
         verticalLayout = new QVBoxLayout(GlobalReplaceDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         listWidget = new QListWidget(GlobalReplaceDialog);
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
 
-        verticalLayout->addWidget(listWidget);
+        horizontalLayout_2->addWidget(listWidget);
+
+        groupBox = new QGroupBox(GlobalReplaceDialog);
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
+
+        horizontalLayout_2->addWidget(groupBox);
+
+
+        verticalLayout->addLayout(horizontalLayout_2);
 
         textBrowser = new QTextBrowser(GlobalReplaceDialog);
         textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
@@ -86,16 +99,17 @@ public:
 
     void retranslateUi(QDialog *GlobalReplaceDialog)
     {
-        GlobalReplaceDialog->setWindowTitle(QCoreApplication::translate("GlobalReplaceDialog", "Dialog", nullptr));
-        textBrowser->setHtml(QCoreApplication::translate("GlobalReplaceDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        GlobalReplaceDialog->setWindowTitle(QApplication::translate("GlobalReplaceDialog", "Dialog", nullptr));
+        groupBox->setTitle(QString());
+        textBrowser->setHtml(QApplication::translate("GlobalReplaceDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; color:#000000;\">Click &quot;Yes&quot; to save the changes and replace the word in the unedited pages.</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; color:#000000;\">Click &quot;No&quot; to save the changes and not replace the word in the unedited pages.</span></p></body></html>", nullptr));
-        pushButton->setText(QCoreApplication::translate("GlobalReplaceDialog", "Preview", nullptr));
-        applyButton->setText(QCoreApplication::translate("GlobalReplaceDialog", "Yes", nullptr));
-        cancelButton->setText(QCoreApplication::translate("GlobalReplaceDialog", "No", nullptr));
+        pushButton->setText(QApplication::translate("GlobalReplaceDialog", "Preview", nullptr));
+        applyButton->setText(QApplication::translate("GlobalReplaceDialog", "Yes", nullptr));
+        cancelButton->setText(QApplication::translate("GlobalReplaceDialog", "No", nullptr));
     } // retranslateUi
 
 };

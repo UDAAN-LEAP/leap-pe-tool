@@ -1,12 +1,11 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.15.2)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.8)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include <memory>
 #include "mainwindow.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
@@ -14,7 +13,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'mainwindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.15.2. It"
+#error "This file was generated using the moc from 5.12.8. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -23,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[166];
-    char stringdata0[3496];
+    QByteArrayData data[167];
+    char stringdata0[3510];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -180,25 +179,26 @@ QT_MOC_LITERAL(143, 2953, 6), // "string"
 QT_MOC_LITERAL(144, 2960, 9), // "highlight"
 QT_MOC_LITERAL(145, 2970, 42), // "getGlobalReplacementMapFromCh..."
 QT_MOC_LITERAL(146, 3013, 13), // "replacedWords"
-QT_MOC_LITERAL(147, 3027, 25), // "on_actionas_PDF_triggered"
-QT_MOC_LITERAL(148, 3053, 27), // "on_actionGet_Help_triggered"
-QT_MOC_LITERAL(149, 3081, 27), // "on_actionTutorial_triggered"
-QT_MOC_LITERAL(150, 3109, 24), // "on_actionLinux_triggered"
-QT_MOC_LITERAL(151, 3134, 26), // "on_actionWindows_triggered"
-QT_MOC_LITERAL(152, 3161, 33), // "on_actionShortcut_Guide_trigg..."
-QT_MOC_LITERAL(153, 3195, 26), // "on_textBrowser_textChanged"
-QT_MOC_LITERAL(154, 3222, 26), // "on_zoom_Out_Button_clicked"
-QT_MOC_LITERAL(155, 3249, 25), // "on_zoom_In_Button_clicked"
-QT_MOC_LITERAL(156, 3275, 24), // "zoom_slider_valueChanged"
-QT_MOC_LITERAL(157, 3300, 5), // "value"
-QT_MOC_LITERAL(158, 3306, 17), // "zoom_slider_moved"
-QT_MOC_LITERAL(159, 3324, 17), // "zoomedUsingScroll"
-QT_MOC_LITERAL(160, 3342, 38), // "on_actionUndo_Global_Replace_..."
-QT_MOC_LITERAL(161, 3381, 29), // "undoGlobalReplace_Single_Word"
-QT_MOC_LITERAL(162, 3411, 7), // "oldWord"
-QT_MOC_LITERAL(163, 3419, 7), // "newWord"
-QT_MOC_LITERAL(164, 3427, 29), // "reverseGlobalReplacedWordsMap"
-QT_MOC_LITERAL(165, 3457, 38) // "getUndoGlobalReplaceMap_Multi..."
+QT_MOC_LITERAL(147, 3027, 13), // "QVector<int>*"
+QT_MOC_LITERAL(148, 3041, 25), // "on_actionas_PDF_triggered"
+QT_MOC_LITERAL(149, 3067, 27), // "on_actionGet_Help_triggered"
+QT_MOC_LITERAL(150, 3095, 27), // "on_actionTutorial_triggered"
+QT_MOC_LITERAL(151, 3123, 24), // "on_actionLinux_triggered"
+QT_MOC_LITERAL(152, 3148, 26), // "on_actionWindows_triggered"
+QT_MOC_LITERAL(153, 3175, 33), // "on_actionShortcut_Guide_trigg..."
+QT_MOC_LITERAL(154, 3209, 26), // "on_textBrowser_textChanged"
+QT_MOC_LITERAL(155, 3236, 26), // "on_zoom_Out_Button_clicked"
+QT_MOC_LITERAL(156, 3263, 25), // "on_zoom_In_Button_clicked"
+QT_MOC_LITERAL(157, 3289, 24), // "zoom_slider_valueChanged"
+QT_MOC_LITERAL(158, 3314, 5), // "value"
+QT_MOC_LITERAL(159, 3320, 17), // "zoom_slider_moved"
+QT_MOC_LITERAL(160, 3338, 17), // "zoomedUsingScroll"
+QT_MOC_LITERAL(161, 3356, 38), // "on_actionUndo_Global_Replace_..."
+QT_MOC_LITERAL(162, 3395, 29), // "undoGlobalReplace_Single_Word"
+QT_MOC_LITERAL(163, 3425, 7), // "oldWord"
+QT_MOC_LITERAL(164, 3433, 7), // "newWord"
+QT_MOC_LITERAL(165, 3441, 29), // "reverseGlobalReplacedWordsMap"
+QT_MOC_LITERAL(166, 3471, 38) // "getUndoGlobalReplaceMap_Multi..."
 
     },
     "MainWindow\0closeSignal\0\0createActions\0"
@@ -290,7 +290,8 @@ QT_MOC_LITERAL(165, 3457, 38) // "getUndoGlobalReplaceMap_Multi..."
     "deleteEditedFilesLog\0isStringInFile\0"
     "searchString\0dumpStringToFile\0string\0"
     "highlight\0getGlobalReplacementMapFromChecklistDialog\0"
-    "replacedWords\0on_actionas_PDF_triggered\0"
+    "replacedWords\0QVector<int>*\0"
+    "on_actionas_PDF_triggered\0"
     "on_actionGet_Help_triggered\0"
     "on_actionTutorial_triggered\0"
     "on_actionLinux_triggered\0"
@@ -433,23 +434,23 @@ static const uint qt_meta_data_MainWindow[] = {
      140,    2,  832,    2, 0x08 /* Private */,
      142,    2,  837,    2, 0x08 /* Private */,
      144,    2,  842,    2, 0x08 /* Private */,
-     145,    1,  847,    2, 0x08 /* Private */,
-     147,    0,  850,    2, 0x08 /* Private */,
-     148,    0,  851,    2, 0x08 /* Private */,
-     149,    0,  852,    2, 0x08 /* Private */,
-     150,    0,  853,    2, 0x08 /* Private */,
-     151,    0,  854,    2, 0x08 /* Private */,
-     152,    0,  855,    2, 0x08 /* Private */,
-     153,    0,  856,    2, 0x08 /* Private */,
-     154,    0,  857,    2, 0x08 /* Private */,
-     155,    0,  858,    2, 0x08 /* Private */,
-     156,    1,  859,    2, 0x08 /* Private */,
-     158,    1,  862,    2, 0x08 /* Private */,
-     159,    0,  865,    2, 0x08 /* Private */,
-     160,    0,  866,    2, 0x08 /* Private */,
-     161,    2,  867,    2, 0x08 /* Private */,
-     164,    0,  872,    2, 0x08 /* Private */,
-     165,    1,  873,    2, 0x08 /* Private */,
+     145,    2,  847,    2, 0x08 /* Private */,
+     148,    0,  852,    2, 0x08 /* Private */,
+     149,    0,  853,    2, 0x08 /* Private */,
+     150,    0,  854,    2, 0x08 /* Private */,
+     151,    0,  855,    2, 0x08 /* Private */,
+     152,    0,  856,    2, 0x08 /* Private */,
+     153,    0,  857,    2, 0x08 /* Private */,
+     154,    0,  858,    2, 0x08 /* Private */,
+     155,    0,  859,    2, 0x08 /* Private */,
+     156,    0,  860,    2, 0x08 /* Private */,
+     157,    1,  861,    2, 0x08 /* Private */,
+     159,    1,  864,    2, 0x08 /* Private */,
+     160,    0,  867,    2, 0x08 /* Private */,
+     161,    0,  868,    2, 0x08 /* Private */,
+     162,    2,  869,    2, 0x08 /* Private */,
+     165,    0,  874,    2, 0x08 /* Private */,
+     166,    1,  875,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
@@ -563,7 +564,7 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Bool, QMetaType::QString, QMetaType::QString,  135,  141,
     QMetaType::Void, QMetaType::QString, QMetaType::QString,  135,  143,
     QMetaType::Void, 0x80000000 | 6, QMetaType::QString,    7,    8,
-    0x80000000 | 136, 0x80000000 | 128,  146,
+    0x80000000 | 136, 0x80000000 | 128, 0x80000000 | 147,  146,    2,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -573,11 +574,11 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,  157,
-    QMetaType::Void, QMetaType::Int,  157,
+    QMetaType::Void, QMetaType::Int,  158,
+    QMetaType::Void, QMetaType::Int,  158,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Bool, QMetaType::QString, QMetaType::QString,  162,  163,
+    QMetaType::Bool, QMetaType::QString, QMetaType::QString,  163,  164,
     QMetaType::Void,
     0x80000000 | 136, 0x80000000 | 136,    2,
 
@@ -706,7 +707,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
         case 107: _t->dumpStringToFile((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         case 108: _t->highlight((*reinterpret_cast< QTextBrowser*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 109: { QMap<QString,QString> _r = _t->getGlobalReplacementMapFromChecklistDialog((*reinterpret_cast< QVector<QString>(*)>(_a[1])));
+        case 109: { QMap<QString,QString> _r = _t->getGlobalReplacementMapFromChecklistDialog((*reinterpret_cast< QVector<QString>(*)>(_a[1])),(*reinterpret_cast< QVector<int>*(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< QMap<QString,QString>*>(_a[0]) = std::move(_r); }  break;
         case 110: _t->on_actionas_PDF_triggered(); break;
         case 111: _t->on_actionGet_Help_triggered(); break;
@@ -801,7 +802,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
 }
 
 QT_INIT_METAOBJECT const QMetaObject MainWindow::staticMetaObject = { {
-    QMetaObject::SuperData::link<QMainWindow::staticMetaObject>(),
+    &QMainWindow::staticMetaObject,
     qt_meta_stringdata_MainWindow.data,
     qt_meta_data_MainWindow,
     qt_static_metacall,

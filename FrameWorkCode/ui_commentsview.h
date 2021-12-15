@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'commentsview.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.2
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -277,17 +277,17 @@ public:
 
     void retranslateUi(QDialog *CommentsView)
     {
-        CommentsView->setWindowTitle(QCoreApplication::translate("CommentsView", "View Comments", nullptr));
-        label->setText(QCoreApplication::translate("CommentsView", "<b>Total Highlights</b>", nullptr));
-        label_2->setText(QCoreApplication::translate("CommentsView", "Words", nullptr));
-        label_4->setText(QCoreApplication::translate("CommentsView", "Characters", nullptr));
-        label_6->setText(QCoreApplication::translate("CommentsView", "<b>Accuracy</b>", nullptr));
-        label_7->setText(QCoreApplication::translate("CommentsView", "Word-Level", nullptr));
-        label_8->setText(QCoreApplication::translate("CommentsView", "Character-Level", nullptr));
-        ratingLabel->setText(QCoreApplication::translate("CommentsView", "<html><head/><body><p><span style=\" font-weight:600;\">Rating for</span></p></body></html>", nullptr));
-        avgAccLabel->setText(QCoreApplication::translate("CommentsView", "<html><head/><body><p><span style=\" font-weight:600;\">Avg. Char. Accuracy for</span></p></body></html>", nullptr));
-        label_3->setText(QCoreApplication::translate("CommentsView", "<html><head/><body><p><span style=\" font-weight:600;\">Add Comments</span></p></body></html>", nullptr));
-        pushButton->setText(QCoreApplication::translate("CommentsView", "Save", nullptr));
+        CommentsView->setWindowTitle(QApplication::translate("CommentsView", "View Comments", nullptr));
+        label->setText(QApplication::translate("CommentsView", "<b>Total Highlights</b>", nullptr));
+        label_2->setText(QApplication::translate("CommentsView", "Words", nullptr));
+        label_4->setText(QApplication::translate("CommentsView", "Characters", nullptr));
+        label_6->setText(QApplication::translate("CommentsView", "<b>Accuracy</b>", nullptr));
+        label_7->setText(QApplication::translate("CommentsView", "Word-Level", nullptr));
+        label_8->setText(QApplication::translate("CommentsView", "Character-Level", nullptr));
+        ratingLabel->setText(QApplication::translate("CommentsView", "<html><head/><body><p><span style=\" font-weight:600;\">Rating for</span></p></body></html>", nullptr));
+        avgAccLabel->setText(QApplication::translate("CommentsView", "<html><head/><body><p><span style=\" font-weight:600;\">Avg. Char. Accuracy for</span></p></body></html>", nullptr));
+        label_3->setText(QApplication::translate("CommentsView", "<html><head/><body><p><span style=\" font-weight:600;\">Add Comments</span></p></body></html>", nullptr));
+        pushButton->setText(QApplication::translate("CommentsView", "Save", nullptr));
     } // retranslateUi
 
 };

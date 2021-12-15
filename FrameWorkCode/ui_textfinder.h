@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'textfinder.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.2
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -138,13 +138,13 @@ public:
 
     void retranslateUi(QDialog *TextFinder)
     {
-        TextFinder->setWindowTitle(QCoreApplication::translate("TextFinder", "Find and Replace", nullptr));
-        findLabel->setText(QCoreApplication::translate("TextFinder", "Find:", nullptr));
-        replaceLabel->setText(QCoreApplication::translate("TextFinder", "Replace:", nullptr));
-        findPreviousButton->setText(QCoreApplication::translate("TextFinder", "Find Previous", nullptr));
-        findNextButton->setText(QCoreApplication::translate("TextFinder", "Find Next", nullptr));
-        replaceButton->setText(QCoreApplication::translate("TextFinder", "Replace", nullptr));
-        replaceAllButton->setText(QCoreApplication::translate("TextFinder", "Replace All", nullptr));
+        TextFinder->setWindowTitle(QApplication::translate("TextFinder", "Find and Replace", nullptr));
+        findLabel->setText(QApplication::translate("TextFinder", "Find:", nullptr));
+        replaceLabel->setText(QApplication::translate("TextFinder", "Replace:", nullptr));
+        findPreviousButton->setText(QApplication::translate("TextFinder", "Find Previous", nullptr));
+        findNextButton->setText(QApplication::translate("TextFinder", "Find Next", nullptr));
+        replaceButton->setText(QApplication::translate("TextFinder", "Replace", nullptr));
+        replaceAllButton->setText(QApplication::translate("TextFinder", "Replace All", nullptr));
     } // retranslateUi
 
 };
