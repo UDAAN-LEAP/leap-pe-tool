@@ -19,6 +19,7 @@ GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidge
     ui->listWidget->setLayout(listLayout);
     ui->groupBox->setVisible(false);
     ui->groupBox->setLayout(vbox);
+    ui->horizontalLayout_2->setAlignment(ui->groupBox, Qt::AlignTop);
     vbox->setAlignment(ui->groupBox, Qt::AlignTop);
     vbox->setSpacing(3);
     vbox->setMargin(0);
