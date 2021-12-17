@@ -312,6 +312,42 @@ background-color: rgb(136, 138, 133);
 	border: 5px solid #BCBDBD;
 	background-color:white;
 	margin: 0px;
+}
+
+QHeaderView {
+	background-color: #ffffff;
+}
+
+QHeaderView::section {
+	background-color: #ffffff;
+	color: #202148;
+	font-size: 15px;
+	line-height: 18px;
+	border: none;
+	margin: 11px 242px 13px 20px;
+}
+
+QTreeView::item {
+	padding: 12px 100px 12px 17px;
+	border: 0.5px solid #202148;
+	color: #202148;
+	font-size: 15px;
+}
+
+QTreeView::branch {
+    background-color: white;
+}
+
+QTreeView::item:selected:active{
+    background: #ffffff;
+}
+
+QTreeView::branch:open {
+    image: url(&quot;https://doc.qt.io/qt-5/images/stylesheet-branch-closed.png&quot;);
+}
+
+QTreeView::branch:closed:has-children {
+    image: url(&quot;https://doc.qt.io/qt-5/images/stylesheet-branch-closed.png&quot;);
 }</string>
               </property>
              </widget>
