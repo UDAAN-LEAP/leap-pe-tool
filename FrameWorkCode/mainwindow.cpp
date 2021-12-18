@@ -503,9 +503,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                     cout<<"Nearest confirming from PWords "<<nearestCOnfconfirmingSuggvec1<<endl;
                     cout<<"One suggestion from ConfusionPair and secondary OCR Trie Pattern Data "<<toslp1(PairSugg)<<endl;
                     cout<<"One suggestion from Pwords which is present in Dict "<<SamasBreakLRCorrect(toslp1(selectedStr), Dict, PWords, TPWords, TPWordsP)<<endl;
-    //                cout<<"Nearest confirming from Secondary OCR by converting the string in English "<<nearestCOnfconfirmingSuggvecFont<<endl;
-    //                cout<<"One suggestion from ConfusionPair and secondary OCR Trie Pattern Data by converting the string in English "<<toslp1(PairSuggFont)<<endl;
-    //                cout<<"One suggestion from TopConfusion and SandhiRules by converting the string in English "<<sugg9<<endl;
+
                 }
 
                 for (map<string, int>::const_iterator eptr = mapSugg.begin(); eptr != mapSugg.end(); eptr++)
@@ -828,14 +826,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             mProject.AddTemp(filter, f2, "");
         }
 
-//        //!Disable Corrector Turn In once the Corrector has Turned in until the next version is fetched.
-//        if(!isVerifier)
-//        {
-//            if (stage != "Corrector")
-//            {
-//                ui->actionTurn_In->setEnabled(false);
-//            }
-//        }
+
         UpdateFileBrekadown();    //Reset the current file and dir levels
 
         //!Get the elapsed time in Timelog.json file under Comments folder
@@ -6466,7 +6457,6 @@ void MainWindow::on_actionShortcut_Guide_triggered()
 {
     ShortcutGuideDialog dialog;
     dialog.setModal(true);
-//    dialog.setWindowFlags(Qt::FramelessWindowHint);
 
     QScreen *screen = QGuiApplication::primaryScreen();
     QRect  screenGeometry = screen->geometry();
@@ -6483,28 +6473,6 @@ void MainWindow::actionRecent_Project_clicked()
    on_actionOpen_Project_triggered();
 }
 
-
-//class Thread1 : public QThread, public MainWindow
-//{
-//private:
-//    void run() override{
-
-//        MainWindow::load_data();
-
-//    }
-//};
-
-//class Thread2 : public QThread
-//{
-//private:
-//    void run() override{
-//        LoadingSpinner spinner;
-//        spinner.setWindowFlags(Qt::FramelessWindowHint);
-//        spinner.setModal(true);
-//        spinner.exec();
-
-//    }
-//};
 
 
 void MainWindow::on_textBrowser_textChanged()

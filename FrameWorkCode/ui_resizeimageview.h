@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'resizeimageview.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.8
+** Created by: Qt User Interface Compiler version 5.9.7
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,11 +10,14 @@
 #define UI_RESIZEIMAGEVIEW_H
 
 #include <QtCore/QVariant>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
@@ -41,23 +44,23 @@ public:
     void setupUi(QDialog *ResizeImageView)
     {
         if (ResizeImageView->objectName().isEmpty())
-            ResizeImageView->setObjectName(QString::fromUtf8("ResizeImageView"));
+            ResizeImageView->setObjectName(QStringLiteral("ResizeImageView"));
         ResizeImageView->resize(310, 192);
         verticalLayout_3 = new QVBoxLayout(ResizeImageView);
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         label = new QLabel(ResizeImageView);
-        label->setObjectName(QString::fromUtf8("label"));
+        label->setObjectName(QStringLiteral("label"));
 
         horizontalLayout_2->addWidget(label);
 
         widthSpinBox = new QDoubleSpinBox(ResizeImageView);
-        widthSpinBox->setObjectName(QString::fromUtf8("widthSpinBox"));
+        widthSpinBox->setObjectName(QStringLiteral("widthSpinBox"));
 
         horizontalLayout_2->addWidget(widthSpinBox);
 
@@ -65,14 +68,14 @@ public:
         verticalLayout->addLayout(horizontalLayout_2);
 
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         label_2 = new QLabel(ResizeImageView);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setObjectName(QStringLiteral("label_2"));
 
         horizontalLayout->addWidget(label_2);
 
         hightSpinBox = new QDoubleSpinBox(ResizeImageView);
-        hightSpinBox->setObjectName(QString::fromUtf8("hightSpinBox"));
+        hightSpinBox->setObjectName(QStringLiteral("hightSpinBox"));
 
         horizontalLayout->addWidget(hightSpinBox);
 
@@ -83,7 +86,7 @@ public:
         verticalLayout_2->addLayout(verticalLayout);
 
         checkBox = new QCheckBox(ResizeImageView);
-        checkBox->setObjectName(QString::fromUtf8("checkBox"));
+        checkBox->setObjectName(QStringLiteral("checkBox"));
 
         verticalLayout_2->addWidget(checkBox);
 
@@ -91,14 +94,14 @@ public:
         verticalLayout_3->addLayout(verticalLayout_2);
 
         horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
         Cancel = new QPushButton(ResizeImageView);
-        Cancel->setObjectName(QString::fromUtf8("Cancel"));
+        Cancel->setObjectName(QStringLiteral("Cancel"));
 
         horizontalLayout_3->addWidget(Cancel);
 
         Ok = new QPushButton(ResizeImageView);
-        Ok->setObjectName(QString::fromUtf8("Ok"));
+        Ok->setObjectName(QStringLiteral("Ok"));
 
         horizontalLayout_3->addWidget(Ok);
 
@@ -113,12 +116,12 @@ public:
 
     void retranslateUi(QDialog *ResizeImageView)
     {
-        ResizeImageView->setWindowTitle(QApplication::translate("ResizeImageView", "Dialog", nullptr));
-        label->setText(QApplication::translate("ResizeImageView", "Image Width", nullptr));
-        label_2->setText(QApplication::translate("ResizeImageView", "Image Height", nullptr));
-        checkBox->setText(QApplication::translate("ResizeImageView", "Keep Aspect Ratio", nullptr));
-        Cancel->setText(QApplication::translate("ResizeImageView", "Cancel", nullptr));
-        Ok->setText(QApplication::translate("ResizeImageView", "Ok", nullptr));
+        ResizeImageView->setWindowTitle(QApplication::translate("ResizeImageView", "Dialog", Q_NULLPTR));
+        label->setText(QApplication::translate("ResizeImageView", "Image Width", Q_NULLPTR));
+        label_2->setText(QApplication::translate("ResizeImageView", "Image Height", Q_NULLPTR));
+        checkBox->setText(QApplication::translate("ResizeImageView", "Keep Aspect Ratio", Q_NULLPTR));
+        Cancel->setText(QApplication::translate("ResizeImageView", "Cancel", Q_NULLPTR));
+        Ok->setText(QApplication::translate("ResizeImageView", "Ok", Q_NULLPTR));
     } // retranslateUi
 
 };
