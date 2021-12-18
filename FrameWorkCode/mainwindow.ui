@@ -164,7 +164,7 @@ QTabWidget::pane {
 </string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -267,7 +267,37 @@ background-color: rgb(136, 138, 133);
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color:white; color:rgb(32, 33, 72);</string>
+                 <string notr="true">QTextEdit{
+	color:rgb(32, 33, 72);
+
+	background-color:white;
+}
+QScrollBar:vertical { 
+                                                border: none;
+                                                background: white;
+                                                width: 9.81px;
+														
+                                                
+                                            }
+QScrollBar::handle:vertical { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+                                                min-height: 273.41px;
+														border: 0px solid red; 
+														border-radius:4.905px;
+                                            }
+QScrollBar::add-line:vertical {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:vertical { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+								
+                        }
+</string>
                 </property>
                 <property name="sizeAdjustPolicy">
                  <enum>QAbstractScrollArea::AdjustToContents</enum>
@@ -348,7 +378,33 @@ QTreeView::branch:open {
 
 QTreeView::branch:closed:has-children {
     image: url(&quot;https://doc.qt.io/qt-5/images/stylesheet-branch-closed.png&quot;);
-}</string>
+}
+QScrollBar:vertical { 
+                                                border: none;
+                                                background: white;
+                                                width: 9.81px;
+														
+                                                
+                                            }
+QScrollBar::handle:vertical { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+                                                min-height: 273.41px;
+														border: 0px solid red; 
+														border-radius:4.905px;
+                                            }
+QScrollBar::add-line:vertical {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:vertical { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+								
+                        }
+</string>
               </property>
              </widget>
             </item>
@@ -361,6 +417,32 @@ QTreeView::branch:closed:has-children {
 	border: 5px solid #BCBDBD;
 	background-color:white;
 }
+QScrollBar:vertical { 
+                                                border: none;
+                                                background: white;
+                                                width: 9.81px;
+														
+                                                
+                                            }
+QScrollBar::handle:vertical { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+                                                min-height: 273.41px;
+														border: 0px solid red; 
+														border-radius:4.905px;
+                                            }
+QScrollBar::add-line:vertical {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:vertical { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+								
+                        }
+
 </string>
           </property>
           <property name="readOnly">
@@ -434,7 +516,13 @@ QTreeView::branch:closed:has-children {
               <bool>true</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color:white; border: 0px;</string>
+              <string notr="true">
+QTextBrowser{
+	border: 0px;
+
+	background-color:white;
+}
+</string>
              </property>
              <property name="sizeAdjustPolicy">
               <enum>QAbstractScrollArea::AdjustToContents</enum>
