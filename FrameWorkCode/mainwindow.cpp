@@ -5852,7 +5852,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     
     if(fileFlag) {
         curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
-        curr_browser->setDocument(b->document());
+        curr_browser->setHtml(b->toHtml());
         ui->tabWidget_2->setTabText(currentTabIndex, name);
         tabchanged(currentTabIndex);
 
