@@ -5849,10 +5849,14 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
     DisplayJsonDict(b,input);
     highlight(b , input);
+
+    b->setMouseTracking(true);
+    b->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
+    b->setUndoRedoEnabled(true);
     
     if(fileFlag) {
         curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
-        curr_browser->setHtml(b->toHtml());
+        curr_browser->setDocument(b->document());
         ui->tabWidget_2->setTabText(currentTabIndex, name);
         tabchanged(currentTabIndex);
 
@@ -5867,10 +5871,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     currentTabPageName=QString::fromStdString(str);
 
     gInitialTextHtml[currentTabPageName] = b->toHtml();
-
-    b->setMouseTracking(true);
-    b->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
-    b->setUndoRedoEnabled(true);
 
     f->close();
 
