@@ -19,18 +19,17 @@ class GlobalReplaceDialog : public QDialog
 public:
     explicit GlobalReplaceDialog(QVector <QString> replacedWords,QWidget *parent = nullptr);
     QVector<int> getStatesOfCheckboxes();
+    bool clicked_applyButton();
     ~GlobalReplaceDialog();
 
 private slots:
     void on_cancelButton_clicked();
+    void on_applyButton_clicked();
     void displayOriginalList(QVector <QString> replacedWords);
-
-
     void on_pushButton_clicked();
     void leftCheckBoxStateChanged(QListWidgetItem*);
 
 public slots:
-    bool on_applyButton_clicked();
     void highlightChecked(QListWidgetItem* item);
     QMap <QString, QString> getFilteredGlobalReplacementMap();
 
@@ -41,6 +40,7 @@ private:
     QVector<int> wordSelection_CheckboxesState; // State of checkboxes on left side
     QCheckBox *box;
     QVBoxLayout *vbox = new QVBoxLayout;
+    bool applyButtonIsClicked = false;
 };
 
 #endif // GLOBALREPLACEDIALOG_H

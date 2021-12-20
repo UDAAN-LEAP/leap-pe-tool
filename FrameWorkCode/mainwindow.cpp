@@ -5162,12 +5162,11 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
     grDialog.setFixedSize(width, height);
     grDialog.exec();
 
-    if(grDialog.on_applyButton_clicked())
+    if(grDialog.clicked_applyButton())
     {
         *replaceInAllPages = grDialog.getStatesOfCheckboxes();
         globalReplacementMap = grDialog.getFilteredGlobalReplacementMap();
     }
-    qDebug() << "getting checkbox function working fine";
     return globalReplacementMap;
 
 }

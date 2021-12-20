@@ -77,8 +77,9 @@ void GlobalReplaceDialog::highlightChecked(QListWidgetItem *item){
         item->setBackgroundColor(QColor("#ffffff"));
 }
 
-bool GlobalReplaceDialog::on_applyButton_clicked()
+void GlobalReplaceDialog::on_applyButton_clicked()
 {
+    applyButtonIsClicked = true;
     QList<QListWidgetItem *> items = ui->listWidget->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard); //get all items
 
     foreach (QListWidgetItem *item, items){
@@ -86,12 +87,9 @@ bool GlobalReplaceDialog::on_applyButton_clicked()
             QStringList string = item->text().split(" ");
             this->filteredGlobalReplacementMap[string[0]] = string[2];
         }
-
     }
 
     this->close();
-    return true;
-
 }
 
 void GlobalReplaceDialog::on_cancelButton_clicked()
@@ -170,3 +168,10 @@ QVector<int> GlobalReplaceDialog::getStatesOfCheckboxes()
     }
     return statesOfRightCheckboxes;
 }
+
+bool GlobalReplaceDialog::clicked_applyButton()
+{
+    return applyButtonIsClicked;
+}
+
+
