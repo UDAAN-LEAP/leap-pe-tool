@@ -14,11 +14,16 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 11pt &quot;Work Sans&quot;;</string>
+   <string notr="true">font: 11pt &quot;Work Sans&quot;;
+background-color: rgb(32, 33, 72);</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
     <widget class="QPushButton" name="copyButton">
+     <property name="styleSheet">
+      <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
+} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
+     </property>
      <property name="text">
       <string>Copy</string>
      </property>
@@ -26,8 +31,40 @@
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidget">
+     <property name="styleSheet">
+      <string notr="true">QTabBar::tab {
+	border-radius: 0px;
+	padding: 5px 15px;
+	color: #1F2046;
+
+}
+
+QTabBar::tab:selected {
+	background-color: #BCBDBD;
+}
+
+QTabBar::tab:!selected {
+	background-color: #E3E4E4;
+}
+
+QTabWidget::pane {
+	top: -1px;
+	bottom: 0px;
+	border: 0px solid #BCBDBD;
+	padding: 0px;
+	margin: -10px -9px -10px -9px;
+}
+
+
+
+
+
+
+
+</string>
+     </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -47,6 +84,9 @@
            <italic>false</italic>
            <bold>false</bold>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255); color: black;</string>
          </property>
          <property name="readOnly">
           <bool>true</bool>
@@ -79,6 +119,9 @@ p, li { white-space: pre-wrap; }
            <bold>false</bold>
           </font>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255); color: black;</string>
+         </property>
          <property name="readOnly">
           <bool>true</bool>
          </property>
@@ -109,6 +152,9 @@ p, li { white-space: pre-wrap; }
            <bold>false</bold>
            <kerning>false</kerning>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: black; background-color: rgb(255, 255, 255);</string>
          </property>
          <property name="readOnly">
           <bool>true</bool>

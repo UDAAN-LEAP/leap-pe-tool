@@ -276,8 +276,6 @@ QScrollBar:vertical {
                                                 border: none;
                                                 background: white;
                                                 width: 9.81px;
-														
-                                                
                                             }
 QScrollBar::handle:vertical { 
                                                 background-color:  rgba(1, 22, 51, 0.5);
@@ -295,7 +293,6 @@ QScrollBar::sub-line:vertical {
                             height: 0 px; 
                             subcontrol-position: top; 
                             subcontrol-origin: margin; 
-								
                         }
 </string>
                 </property>
@@ -516,10 +513,8 @@ QScrollBar::sub-line:vertical {
               <bool>true</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">
-QTextBrowser{
+              <string notr="true">QTextBrowser{
 	border: 0px;
-
 	background-color:white;
 }
 </string>
@@ -571,7 +566,7 @@ p, li { white-space: pre-wrap; }
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color:white</string>
+          <string notr="true">background-color:white;</string>
          </property>
          <property name="sizeAdjustPolicy">
           <enum>QAbstractScrollArea::AdjustIgnored</enum>

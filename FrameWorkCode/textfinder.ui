@@ -23,7 +23,8 @@
    <string>Find and Replace</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 11pt &quot;Work Sans&quot;;</string>
+   <string notr="true">font: 11pt &quot;Work Sans&quot;; 
+background-color: rgb(32, 33, 72);</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -59,23 +60,37 @@
        </property>
        <item row="0" column="0">
         <widget class="QLabel" name="findLabel">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);</string>
+         </property>
          <property name="text">
           <string>Find:</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLineEdit" name="findLineEdit"/>
+        <widget class="QLineEdit" name="findLineEdit">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255); color: black;</string>
+         </property>
+        </widget>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="replaceLabel">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);</string>
+         </property>
          <property name="text">
           <string>Replace:</string>
          </property>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLineEdit" name="replaceLineEdit"/>
+        <widget class="QLineEdit" name="replaceLineEdit">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255); color: black;</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -97,6 +112,10 @@
          </property>
          <item>
           <widget class="QPushButton" name="findPreviousButton">
+           <property name="styleSheet">
+            <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
+} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
+           </property>
            <property name="text">
             <string>Find Previous</string>
            </property>
@@ -104,6 +123,10 @@
          </item>
          <item>
           <widget class="QPushButton" name="findNextButton">
+           <property name="styleSheet">
+            <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
+} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
+           </property>
            <property name="text">
             <string>Find Next</string>
            </property>
@@ -136,6 +159,10 @@
              <bold>false</bold>
             </font>
            </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
+} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
+           </property>
            <property name="text">
             <string>Replace</string>
            </property>
@@ -151,6 +178,10 @@
              <italic>false</italic>
              <bold>false</bold>
             </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
+} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
            </property>
            <property name="text">
             <string>Replace All</string>

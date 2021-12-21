@@ -175,3 +175,8 @@ bool GlobalReplaceDialog::clicked_applyButton()
 }
 
 
+
+void GlobalReplaceDialog::on_Preview_clicked()
+{
+
+}

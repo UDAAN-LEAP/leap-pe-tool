@@ -14,7 +14,8 @@
    <string>DiffView</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 11pt &quot;Work Sans&quot;;</string>
+   <string notr="true">font: 11pt &quot;Work Sans&quot;;
+background-color: rgb(32, 33, 72);</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -24,7 +25,7 @@
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="AppResources.qrc">
+       <iconset>
         <normaloff>:/Images/previous.png</normaloff>:/Images/previous.png</iconset>
       </property>
      </widget>
@@ -38,6 +39,9 @@
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <widget class="QLabel" name="OCRLabel">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);</string>
+          </property>
           <property name="text">
            <string>&lt;p&gt;&lt;b&gt;1. Initial Text &lt;/b&gt;&lt;/p&gt;
 Accuracy of OCR Text (w.r.t Verified Text): </string>
@@ -76,6 +80,9 @@ p, li { white-space: pre-wrap; }
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QLabel" name="InternLabel">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);</string>
+          </property>
           <property name="text">
            <string>&lt;b&gt;&lt;p&gt;2. Corrector's Output Text&lt;/b&gt;&lt;/p&gt;Changes Made by Corrector: </string>
           </property>
@@ -113,6 +120,9 @@ p, li { white-space: pre-wrap; }
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QLabel" name="VerifierLabel">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);</string>
+          </property>
           <property name="text">
            <string>&lt;p&gt;&lt;b&gt;3. Verified Text&lt;/b&gt;&lt;/p&gt;
 Changes Made by Verifier: </string>
@@ -155,7 +165,7 @@ p, li { white-space: pre-wrap; }
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="AppResources.qrc">
+       <iconset>
         <normaloff>:/Images/next.png</normaloff>:/Images/next.png</iconset>
       </property>
       <property name="autoDefault">
@@ -165,23 +175,9 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1280</width>
-     <height>23</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="AppResources.qrc"/>
-  <include location="AppResources.qrc"/>
-  <include location="AppResources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

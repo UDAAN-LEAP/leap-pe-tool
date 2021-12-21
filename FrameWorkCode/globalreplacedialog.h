@@ -29,6 +29,8 @@ private slots:
     void on_pushButton_clicked();
     void leftCheckBoxStateChanged(QListWidgetItem*);
 
+    void on_Preview_clicked();
+
 public slots:
     void highlightChecked(QListWidgetItem* item);
     QMap <QString, QString> getFilteredGlobalReplacementMap();
