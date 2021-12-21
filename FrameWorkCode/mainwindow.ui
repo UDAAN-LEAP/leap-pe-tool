@@ -17,7 +17,7 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 15px &quot;Work Sans&quot;; background:rgb(32, 33, 72); color:white;</string>
+   <string notr="true">font: 15px &quot;Work Sans&quot;; background:rgb(32, 33, 72); color:white; </string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">

@@ -115,6 +115,7 @@ QMap<QString, QString> globallyReplacedWords;
 
 QList<QString> filesChangedUsingGlobalReplace;
 
+
 //Constructor
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
@@ -195,6 +196,7 @@ bool MainWindow::setRole(QString role)
     //! Checking role
     if(mRole == "Admin")
     {
+
         int button = QMessageBox::question(this, "Select Role", "Which Role do you want to Load?",
                                            "Verifier", "Corrector","Project Manager", 0);
         if(button == 0)
