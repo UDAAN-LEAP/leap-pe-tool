@@ -5110,13 +5110,14 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
  * \return
  * spawns a MessageBox and returns true if Replace is chosen
  */
-bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word, int &chk){
+bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word, int &chk, int&chkglobal, QVector <QString> &changedWrds){
     chk=0;
     QMessageBox messageBox(this);
    // QDialog dialog(this);
     QCheckBox *cb = new QCheckBox("Make changes to all pages");
     //dialog.setWindowTitle("Check Formatting");
     //QAbstractButton *escButton = messageBox.addButton(tr("Esc"), QMessageBox::ActionRole);
+    QAbstractButton *uploadButton = messageBox.addButton(tr("Upload"), QMessageBox::ActionRole);
     QAbstractButton *replaceButton = messageBox.addButton(tr("Yes"), QMessageBox::ActionRole);
     QAbstractButton *cancelButton = messageBox.addButton(tr("No"), QMessageBox::RejectRole);
 
@@ -5136,7 +5137,31 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     }
     //qDebug()<<"Check"<<checker;
    // dialog.exec();
+    if (messageBox.clickedButton() == uploadButton)
+    {
+    QMessageBox messageBox2(this);
+    QAbstractButton *okButton = messageBox2.addButton(tr("Okay"), QMessageBox::ActionRole);
+    QAbstractButton *noButton = messageBox2.addButton(tr("No"), QMessageBox::RejectRole);
 
+    QStringList changesList = changedWrds[0].split(" ");
+    QCheckBox *cb = new QCheckBox(changesList[1]+"->"+changesList[3]);
+    if(chk==1)
+    {
+    cb->setChecked(true);
+    }
+
+    messageBox2.setWindowTitle("Upload to CSV file");
+    cb->setEnabled(false);
+    messageBox2.setCheckBox(cb);
+    messageBox2.exec();
+
+    if(messageBox2.clickedButton() == okButton)
+    {
+        chkglobal=1;
+        return true;
+    }
+
+    }
     if (messageBox.clickedButton() == replaceButton)
         return true;
     return false;
@@ -5200,7 +5225,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
 
     int noOfChangedWords = changedWords.size();
-
+    int checkglobal=0;
     int files = 0;
     int r1 = 0, r2 = 0;
     int x1 = 0;
@@ -5209,7 +5234,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     if (noOfChangedWords == 1){
 
         QStringList changesList = changedWords[0].split(" ");
-        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3], check);
+        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3], check,checkglobal,changedWords);
 //        qDebug()<<"Check"<<check;
         if (updateGlobalCPairs)
             globalReplacementMap[changesList[1]] = changesList[3];
@@ -5324,7 +5349,13 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     QString msg  = QString::fromStdString(std::to_string(globalReplacementMap.values().length()) + " words changed" + "\n" + std::to_string(r2) + " instances replaced" + "\n" + std::to_string(files) + " files modified");
     QMessageBox messageBox;
     messageBox.information(0, "Replacement Successful", msg);
-
+   // qDebug()<<"check0"<<checkglobal;
+    if(checkglobal==1)
+    {
+    QVector<int> integerVector(1);
+    integerVector[0]=check;
+    writeToGlobalReplaceCSVfile( globalReplacementMap, integerVector);
+    }
     addCurrentlyOpenFileToEditedFilesLog();
 }
 //Global CPair End
