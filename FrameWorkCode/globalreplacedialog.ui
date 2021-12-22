@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
-    <height>394</height>
+    <width>714</width>
+    <height>516</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -74,6 +74,17 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="text">
         <string>Preview</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="uploadButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
+} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
+       </property>
+       <property name="text">
+        <string>Upload</string>
        </property>
       </widget>
      </item>

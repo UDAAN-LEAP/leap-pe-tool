@@ -351,7 +351,7 @@ private slots:
 
     void highlight(QTextBrowser *b , QString input);
 
-    QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords, QVector<int> *);
+    QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords, QVector<int> *, bool *saveInCSVfile);
 
     //void on_textEdit_dict_copyAvailable(bool b);
 
@@ -386,6 +386,8 @@ private slots:
     void reverseGlobalReplacedWordsMap();
 
     QMap<QString, QString> getUndoGlobalReplaceMap_Multiple_Words(QMap<QString, QString>);
+
+    void writeToGlobalReplaceCSVfile(QMap<QString, QString>, QVector<int>);
 
 private:
     bool mExitStatus = false;

@@ -5151,7 +5151,7 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
  * \return
  * spawns a checklist and returns a Qmap of selected pairs
  */
-QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords, QVector<int> *replaceInAllPages){
+QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords, QVector<int> *replaceInAllPages, bool *saveInCSVfile){
     QMap <QString, QString> globalReplacementMap;
     GlobalReplaceDialog grDialog(changedWords, this);
 
@@ -5168,6 +5168,10 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
     {
         *replaceInAllPages = grDialog.getStatesOfCheckboxes();
         globalReplacementMap = grDialog.getFilteredGlobalReplacementMap();
+        if (grDialog.saveInCSV_File())
+        {
+            *saveInCSVfile = true;
+        }
     }
     return globalReplacementMap;
 
@@ -5185,6 +5189,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
     QMap<QString, QString> replaceInAllPages_Map;
     QMap<QString, QString> replaceInUneditedPages_Map;
+    bool saveInCSVfile = false;
 
     /*
      * Stores values in 0s and 1s. Eg: {1, 0, 0, 1}. 1 means that the word corresponding the map should be replaced in all pages
@@ -5212,7 +5217,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     //! if there is more than 1 change spawn a checklist and get the checked pairs only
     else if(noOfChangedWords > 1){
 
-        globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords, &replaceInAllPages);
+        globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords, &replaceInAllPages, &saveInCSVfile);
 
         QMap<QString, QString>::iterator it;
         it = globalReplacementMap.begin();
@@ -5225,6 +5230,10 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
             it++;
         }
     }
+
+    // Writing data to GlobalReplaceLog.csv
+    if (saveInCSVfile)
+        writeToGlobalReplaceCSVfile(globalReplacementMap, replaceInAllPages);
 
     if(!globalReplacementMap.isEmpty())
     {
@@ -6781,6 +6790,33 @@ QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<Q
     return undoGRMap;
 }
 
+
+void MainWindow::writeToGlobalReplaceCSVfile(QMap<QString, QString> globalReplacementMap, QVector<int> replaceInAllPages)
+{
+    QString csvFilePath = gDirTwoLevelUp + "/Dicts/GlobalReplace.csv";
+    QString heading = "";
+    QFile file(csvFilePath);
+    QMap<QString, QString>::iterator it = globalReplacementMap.begin();
+
+    if (!file.exists())
+        heading = "Source,Target,Filename,Replacement_In_All_Pages(True or False)\n";
+
+    if (!file.open(QIODevice::Append | QIODevice::Text))
+        return;
+    QTextStream out(&file);
+
+    out << heading;
+    for (int i = 0; i < replaceInAllPages.size(); i++)
+    {
+        out << it.key() << "," << it.value() << "," << gCurrentPageName << ",";
+        if (replaceInAllPages.at(i) == 1)
+            out << "True\n";
+        else
+            out << "False\n";
+        it++;
+    }
+    file.close();
+}
 
 
 
