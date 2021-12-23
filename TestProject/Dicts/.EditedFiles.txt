@@ -5,3 +5,4 @@
 /home/mush/ocr/global-replace/iitb-openocr-digit-tool/TestProject/VerifierOutput/page-1.html
 /home/mush/ocr/global-replace/iitb-openocr-digit-tool/TestProject/VerifierOutput/page-2.html
 /home/aman/Desktop/globa/iitb-openocr-digit-tool/TestProject/VerifierOutput/page-1.html
+/home/aman/Desktop/globa/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-1.html
