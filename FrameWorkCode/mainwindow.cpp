@@ -5405,10 +5405,63 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
             }
         }
     }
+    if(globalReplacementMap.values().length()>0)
+    {
+        QMap <QString, QString>::iterator grmIterator;
+
+        QDir directory(gDirTwoLevelUp);
+        QString setName=directory.dirName();
+        QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
+        QFile csvFile(filename);
+        if(!csvFile.exists())
+        {
+            csvFile.open(QFile::ReadWrite);
+            QTextStream output(&csvFile);
+            output << "Source Word,Target Word,Type of Replacement,Time of Replacement,Page Name,Set name";
+            qDebug() << output.readAll();
+
+        }
+
+        else
+        {
+            csvFile.open(QFile::ReadWrite);
+        }
+
+        for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
+        {
+            QString sourceString = grmIterator.key();
+            QString replaceString= grmIterator.value();
+            QString typeOfReplacement;
+            if(replaceInAllPages_Map.contains(sourceString)||check==1)
+            {
+               typeOfReplacement="All Pages";
+            }
+            else if(replaceInUneditedPages_Map.contains(sourceString)||check==0)
+            {
+               typeOfReplacement="Unedited Pages";
+            }
+
+            QDateTime current = QDateTime::currentDateTime();
+            QString time = current.toString();
+
+            QTextStream output(&csvFile);
+            qDebug() << output.readAll();
+            output << "\n";
+            output<<sourceString<<","<<replaceString<<","<<typeOfReplacement<<","<<time<<","<<gCurrentPageName<<","<<setName;
+            qDebug()<<"directory"<<gDirTwoLevelUp;
+
+            qDebug() << output.readAll();
+
+        }
+        csvFile.close();
+        check=2;
+
+    }
 
     QString msg  = QString::fromStdString(std::to_string(globalReplacementMap.values().length()) + " words changed" + "\n" + std::to_string(r2) + " instances replaced" + "\n" + std::to_string(files) + " files modified");
     QMessageBox messageBox;
-    messageBox.information(0, "Replacement Successful", msg);
+    if(globalReplacementMap.values().length()>0)
+        messageBox.information(0, "Replacement Successful", msg);
    // qDebug()<<"check0"<<checkglobal;
     if(checkglobal==1)
     {
