@@ -47,7 +47,7 @@ QVector <QString> editDistance(QString a, QString b)
     {
         for (int j = 1; j <= n; j++)
         {
-            //solution [i,j] is the cost of transforming 0 to i of s1 and o to j of s2
+            //solution [i,j] is the cost of transforming 0 to i of s1 and 0 to j of s2
             if (s1[i - 1]==(s2[j - 1]))
                    solution[i][j] = solution[i - 1][j - 1];
              else
@@ -64,10 +64,11 @@ QVector <QString> editDistance(QString a, QString b)
     }
 
     backtrace(s1,s2,solution);
-    QVector <QString> something = phrase_heuristics(s1,s2);
+    QVector <QString> optimalPath = phrase_heuristics(s1,s2);
 //    qDebug("here now");
-
-    return something;
+//    qDebug() << optimalPath;
+//    qDebug() << CPair_editDis;
+    return optimalPath;
 //    qDebug()<<solution[s1.count()][s2.count()];
             //find the optimal path
 
@@ -143,7 +144,6 @@ void backtrace(QStringList s1, QStringList s2, int **solution)
 {
     int si= s1.count();
     int sj= s2.count();
-//    QVector<QString> optimalPath;
 
 
 
@@ -270,7 +270,9 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
                  st2 += " ";
             }
             optimalPath.append(st1 + " => " + st2 );
+//            CPair_editDis[s1[si-1].toStdString()] = s2[sj-1].toStdString();
 //            qDebug() << st1 << " => " << st2;
+              CPair_editDis[st1.toStdString()] = st2.toStdString();
         }
         else
         {
@@ -287,6 +289,8 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
                      st1 += " ";
                 }
                 optimalPath.append(st1 + " => " + st2 );
+                CPair_editDis[st1.toStdString()] = st2.toStdString();
+
 //                qDebug() << st1 << " => " << st2;
             }
             else if (se[0] == "insertion")
@@ -302,13 +306,12 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
                      st2 += " ";
                 }
                 optimalPath.append(st1 + " => " + st2 );
+                CPair_editDis[st1.toStdString()] = st2.toStdString();
+
 //                qDebug() << st1 << " => " << st2;
             }
         }
 
-//        qDebug()<<"hello i am here";
-//        qDebug()<<segments_operations;
-//        qDebug()<<segments_positions[seg][0];
 
 
     }
