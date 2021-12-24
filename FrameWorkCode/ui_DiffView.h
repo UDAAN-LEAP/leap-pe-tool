@@ -69,6 +69,30 @@ public:
 
         splitter = new QSplitter(centralWidget);
         splitter->setObjectName(QString::fromUtf8("splitter"));
+        splitter->setStyleSheet(QString::fromUtf8("QScrollBar:vertical { \n"
+"                                                border: none;\n"
+"                                                background: white;\n"
+"                                                width: 9.81px;\n"
+"                                            }\n"
+"QScrollBar::handle:vertical { \n"
+"                                                background-color:  rgba(1, 22, 51, 0.5);\n"
+"                                                min-height: 273.41px;\n"
+"														border: 0px solid red; \n"
+"														border-radius:4.905px;\n"
+"                                            }\n"
+"QScrollBar::add-line:vertical {       \n"
+"                            height: 0px;\n"
+"                            subcontrol-position: bottom; \n"
+"                            subcontrol-origin: margin; \n"
+"								\n"
+"                        } \n"
+"QScrollBar::sub-line:vertical { \n"
+"                            height: 0 px; \n"
+"                            subcontrol-position: top; \n"
+"            "
+                        "                subcontrol-origin: margin; \n"
+"                        }\n"
+""));
         splitter->setOrientation(Qt::Horizontal);
         layoutWidget = new QWidget(splitter);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));

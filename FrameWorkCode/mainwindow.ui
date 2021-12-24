@@ -17,7 +17,9 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 15px &quot;Work Sans&quot;; background:rgb(32, 33, 72); color:white; </string>
+   <string notr="true">
+font: 15px &quot;Work Sans&quot;; background:rgb(32, 33, 72); color:white; 
+</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
@@ -105,6 +107,58 @@
       </item>
       <item>
        <widget class="QSplitter" name="splitter">
+        <property name="styleSheet">
+         <string notr="true">QSplitter{
+QGraphicsView{background-color:white;}
+}
+QScrollBar:vertical { 
+                                                border: none;
+                                                background: white;
+                                                width: 9.81px;
+                                            }
+QScrollBar::handle:vertical { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+                                                min-height: 273.41px;
+														border: 0px solid red; 
+														border-radius:4.905px;
+														
+                                            }
+QScrollBar::add-line:vertical {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:vertical { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+                        }
+
+QScrollBar:horizontal { 
+                                                border: none;
+                                                background: white;
+                                             		
+                                            }
+QScrollBar::handle:horizontal { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+														border: 0px solid red; 
+														border-radius:4.905px;
+                                            }
+QScrollBar::add-line:horizontal {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:horizontal { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+                        }
+
+</string>
+        </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -282,6 +336,7 @@ QScrollBar::handle:vertical {
                                                 min-height: 273.41px;
 														border: 0px solid red; 
 														border-radius:4.905px;
+														
                                             }
 QScrollBar::add-line:vertical {       
                             height: 0px;
@@ -345,6 +400,7 @@ QHeaderView {
 	background-color: #ffffff;
 }
 
+
 QHeaderView::section {
 	background-color: #ffffff;
 	color: #202148;
@@ -380,14 +436,13 @@ QScrollBar:vertical {
                                                 border: none;
                                                 background: white;
                                                 width: 9.81px;
-														
-                                                
                                             }
 QScrollBar::handle:vertical { 
                                                 background-color:  rgba(1, 22, 51, 0.5);
                                                 min-height: 273.41px;
 														border: 0px solid red; 
 														border-radius:4.905px;
+														
                                             }
 QScrollBar::add-line:vertical {       
                             height: 0px;
@@ -399,8 +454,9 @@ QScrollBar::sub-line:vertical {
                             height: 0 px; 
                             subcontrol-position: top; 
                             subcontrol-origin: margin; 
-								
                         }
+
+
 </string>
               </property>
              </widget>
@@ -410,7 +466,7 @@ QScrollBar::sub-line:vertical {
          </widget>
          <widget class="QTextEdit" name="textEdit_dict">
           <property name="styleSheet">
-           <string notr="true">#textEdit_dict {
+           <string notr="true">QTextEdit{
 	border: 5px solid #BCBDBD;
 	background-color:white;
 }
@@ -418,14 +474,13 @@ QScrollBar:vertical {
                                                 border: none;
                                                 background: white;
                                                 width: 9.81px;
-														
-                                                
                                             }
 QScrollBar::handle:vertical { 
                                                 background-color:  rgba(1, 22, 51, 0.5);
                                                 min-height: 273.41px;
 														border: 0px solid red; 
 														border-radius:4.905px;
+														
                                             }
 QScrollBar::add-line:vertical {       
                             height: 0px;
@@ -437,8 +492,8 @@ QScrollBar::sub-line:vertical {
                             height: 0 px; 
                             subcontrol-position: top; 
                             subcontrol-origin: margin; 
-								
                         }
+
 
 </string>
           </property>
@@ -467,7 +522,8 @@ QScrollBar::sub-line:vertical {
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color:white; color:black;</string>
+          <string notr="true">background-color:white; color:black;
+</string>
          </property>
          <property name="currentIndex">
           <number>0</number>
@@ -513,10 +569,10 @@ QScrollBar::sub-line:vertical {
               <bool>true</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">QTextBrowser{
+              <string notr="true">
 	border: 0px;
 	background-color:white;
-}
+
 </string>
              </property>
              <property name="sizeAdjustPolicy">
@@ -566,7 +622,54 @@ p, li { white-space: pre-wrap; }
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color:white;</string>
+          <string notr="true">QGraphicsView{background-color:white;}
+QScrollBar:vertical { 
+                                                border: none;
+                                                background: white;
+                                                width: 9.81px;
+                                            }
+QScrollBar::handle:vertical { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+                                                min-height: 273.41px;
+														border: 0px solid red; 
+														border-radius:4.905px;
+														
+                                            }
+QScrollBar::add-line:vertical {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:vertical { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+                        }
+
+QScrollBar:horizontal { 
+                                                border: none;
+                                                background: white;
+                                             		
+                                            }
+QScrollBar::handle:horizontal { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+														border: 0px solid red; 
+														border-radius:4.905px;
+                                            }
+QScrollBar::add-line:horizontal {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:horizontal { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+                        }
+
+</string>
          </property>
          <property name="sizeAdjustPolicy">
           <enum>QAbstractScrollArea::AdjustIgnored</enum>

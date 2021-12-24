@@ -121,6 +121,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 {
     ui->setupUi(this);
 //    ui->textBrowser->setStyleSheet("background-color:white;");
+
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
     ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
     ui->tabWidget_2->tabBar()->hide();

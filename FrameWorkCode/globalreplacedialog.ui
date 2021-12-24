@@ -14,8 +14,34 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 11pt &quot;Work Sans&quot;; 
-background-color: rgb(32, 33, 72);</string>
+   <string notr="true">QDialog{font: 11pt &quot;Work Sans&quot;; 
+background-color: rgb(32, 33, 72);
+}
+QGraphicsView{background-color:white;}
+QScrollBar:vertical { 
+                                                border: none;
+                                                background: white;
+                                                width: 9.81px;
+                                            }
+QScrollBar::handle:vertical { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+														border: 0px solid red; 
+														border-radius:4.905px;
+														
+                                            }
+QScrollBar::add-line:vertical {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:vertical { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+                        }
+
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -23,7 +49,9 @@ background-color: rgb(32, 33, 72);</string>
      <item>
       <widget class="QListWidget" name="listWidget">
        <property name="styleSheet">
-        <string notr="true">background-color: white; color:black;</string>
+        <string notr="true">QListWidget{background-color: white; color:black;}
+QGraphicsView{background-color:white;}
+</string>
        </property>
       </widget>
      </item>

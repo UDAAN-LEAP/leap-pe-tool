@@ -42,15 +42,44 @@ public:
         if (GlobalReplaceDialog->objectName().isEmpty())
             GlobalReplaceDialog->setObjectName(QString::fromUtf8("GlobalReplaceDialog"));
         GlobalReplaceDialog->resize(714, 516);
-        GlobalReplaceDialog->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\"; \n"
-"background-color: rgb(32, 33, 72);"));
+        GlobalReplaceDialog->setStyleSheet(QString::fromUtf8("QDialog{font: 11pt \"Work Sans\"; \n"
+"background-color: rgb(32, 33, 72);\n"
+"}\n"
+"QGraphicsView{background-color:white;}\n"
+"QScrollBar:vertical { \n"
+"                                                border: none;\n"
+"                                                background: white;\n"
+"                                                width: 9.81px;\n"
+"                                            }\n"
+"QScrollBar::handle:vertical { \n"
+"                                                background-color:  rgba(1, 22, 51, 0.5);\n"
+"														border: 0px solid red; \n"
+"														border-radius:4.905px;\n"
+"														\n"
+"                                            }\n"
+"QScrollBar::add-line:vertical {       \n"
+"                            height: 0px;\n"
+"                            subcontrol-position: bottom; \n"
+"                            subcontrol-origin: margin; \n"
+"								\n"
+"                        } \n"
+"QScrollBar::sub-line:vertical { \n"
+"                            height: 0 px; \n"
+""
+                        "                            subcontrol-position: top; \n"
+"                            subcontrol-origin: margin; \n"
+"                        }\n"
+"\n"
+""));
         verticalLayout = new QVBoxLayout(GlobalReplaceDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         listWidget = new QListWidget(GlobalReplaceDialog);
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
-        listWidget->setStyleSheet(QString::fromUtf8("background-color: white; color:black;"));
+        listWidget->setStyleSheet(QString::fromUtf8("QListWidget{background-color: white; color:black;}\n"
+"QGraphicsView{background-color:white;}\n"
+""));
 
         horizontalLayout_2->addWidget(listWidget);
 
