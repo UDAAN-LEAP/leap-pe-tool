@@ -26,7 +26,6 @@
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSplitter>
-#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QTextEdit>
@@ -185,7 +184,7 @@ public:
     QMenu *menuInstallation_Guide;
     QMenu *menuSelectLanguage;
     QToolBar *mainToolBar;
-    QStatusBar *statusBar;
+    QToolBar *toolBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -558,16 +557,17 @@ public:
         splitter->setStyleSheet(QString::fromUtf8("QSplitter{\n"
 "QGraphicsView{background-color:white;}\n"
 "}\n"
+"QGraphicsView{background-color:white;}\n"
 "QScrollBar:vertical { \n"
 "                                                border: none;\n"
 "                                                background: white;\n"
-"                                                width: 9.81px;\n"
+"                                                 width: 9.81px;\n"
 "                                            }\n"
 "QScrollBar::handle:vertical { \n"
 "                                                background-color:  rgba(1, 22, 51, 0.5);\n"
-"                                                min-height: 273.41px;\n"
+"                                                border-radius:4.905px;\n"
 "														border: 0px solid red; \n"
-"														border-radius:4.905px;\n"
+"													\n"
 "														\n"
 "                                            }\n"
 "QScrollBar::add-line:vertical {       \n"
@@ -577,8 +577,8 @@ public:
 "								\n"
 "                        } \n"
 "QScrollBar::sub-line:vertical { \n"
-"                            height:"
-                        " 0 px; \n"
+"             "
+                        "               height: 0 px; \n"
 "                            subcontrol-position: top; \n"
 "                            subcontrol-origin: margin; \n"
 "                        }\n"
@@ -586,12 +586,14 @@ public:
 "QScrollBar:horizontal { \n"
 "                                                border: none;\n"
 "                                                background: white;\n"
+" 													   \n"
 "                                             		\n"
 "                                            }\n"
 "QScrollBar::handle:horizontal { \n"
 "                                                background-color:  rgba(1, 22, 51, 0.5);\n"
 "														border: 0px solid red; \n"
 "														border-radius:4.905px;\n"
+"														\n"
 "                                            }\n"
 "QScrollBar::add-line:horizontal {       \n"
 "                            height: 0px;\n"
@@ -599,9 +601,9 @@ public:
 "                            subcontrol-origin: margin; \n"
 "								\n"
 "                        } \n"
-"QScrollBar::sub-line:horizontal { \n"
-"                            heigh"
-                        "t: 0 px; \n"
+"QScrollBa"
+                        "r::sub-line:horizontal { \n"
+"                            height: 0 px; \n"
 "                            subcontrol-position: top; \n"
 "                            subcontrol-origin: margin; \n"
 "                        }\n"
@@ -721,14 +723,13 @@ public:
 "QScrollBar:vertical { \n"
 "                                                border: none;\n"
 "                                                background: white;\n"
-"                                                width: 9.81px;\n"
+"                                             \n"
 "                                            }\n"
 "QScrollBar::handle:vertical { \n"
 "                                                background-color:  rgba(1, 22, 51, 0.5);\n"
 "                                                min-height: 273.41px;\n"
 "														border: 0px solid red; \n"
 "														border-radius:4.905px;\n"
-"														\n"
 "                                            }\n"
 "QScrollBar::add-line:vertical {       \n"
 "                            height: 0px;\n"
@@ -737,9 +738,9 @@ public:
 "								\n"
 "                        } \n"
 "QScrollBar::sub-line:vertical { \n"
-"                "
-                        "            height: 0 px; \n"
-"                            subcontrol-position: top; \n"
+"                            height: 0 px; \n"
+"     "
+                        "                       subcontrol-position: top; \n"
 "                            subcontrol-origin: margin; \n"
 "                        }\n"
 ""));
@@ -811,14 +812,13 @@ public:
 "                                                border: no"
                         "ne;\n"
 "                                                background: white;\n"
-"                                                width: 9.81px;\n"
+"                                             \n"
 "                                            }\n"
 "QScrollBar::handle:vertical { \n"
 "                                                background-color:  rgba(1, 22, 51, 0.5);\n"
 "                                                min-height: 273.41px;\n"
 "														border: 0px solid red; \n"
 "														border-radius:4.905px;\n"
-"														\n"
 "                                            }\n"
 "QScrollBar::add-line:vertical {       \n"
 "                            height: 0px;\n"
@@ -830,10 +830,7 @@ public:
 "                            height: 0 px; \n"
 "                            subcontrol-position: top; \n"
 "                            subcontrol-origin: margin; \n"
-"                  "
-                        "      }\n"
-"\n"
-"\n"
+"                        }\n"
 ""));
 
         verticalLayout_3->addWidget(treeView);
@@ -849,7 +846,7 @@ public:
 "QScrollBar:vertical { \n"
 "                                                border: none;\n"
 "                                                background: white;\n"
-"                                                width: 9.81px;\n"
+"                                                \n"
 "                                            }\n"
 "QScrollBar::handle:vertical { \n"
 "                                                background-color:  rgba(1, 22, 51, 0.5);\n"
@@ -865,8 +862,8 @@ public:
 "								\n"
 "                        } \n"
 "QScrollBar::sub-line:vertical { \n"
-"                 "
-                        "           height: 0 px; \n"
+"                            hei"
+                        "ght: 0 px; \n"
 "                            subcontrol-position: top; \n"
 "                            subcontrol-origin: margin; \n"
 "                        }\n"
@@ -903,10 +900,34 @@ public:
         textBrowser->setMinimumSize(QSize(400, 0));
         textBrowser->setFont(font1);
         textBrowser->setMouseTracking(true);
-        textBrowser->setStyleSheet(QString::fromUtf8("\n"
+        textBrowser->setStyleSheet(QString::fromUtf8("QTextBrowser{\n"
 "	border: 0px;\n"
 "	background-color:white;\n"
-"\n"
+"}\n"
+"QScrollBar:vertical { \n"
+"                                                border: none;\n"
+"                                                background: white;\n"
+"                                               \n"
+"                                            }\n"
+"QScrollBar::handle:vertical { \n"
+"                                                background-color:  rgba(1, 22, 51, 0.5);\n"
+"                                              \n"
+"														border: 0px solid red; \n"
+"														\n"
+"														\n"
+"                                            }\n"
+"QScrollBar::add-line:vertical {       \n"
+"                            height: 0px;\n"
+"                            subcontrol-position: bottom; \n"
+"                            subcontrol-origin: margin; \n"
+"								\n"
+"                        } \n"
+"QScrollBar::sub-line:vertical { \n"
+"                            height: 0 px; \n"
+"                            subcontrol-po"
+                        "sition: top; \n"
+"                            subcontrol-origin: margin; \n"
+"                        }\n"
 ""));
         textBrowser->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
         textBrowser->setUndoRedoEnabled(true);
@@ -928,13 +949,13 @@ public:
 "QScrollBar:vertical { \n"
 "                                                border: none;\n"
 "                                                background: white;\n"
-"                                                width: 9.81px;\n"
+"                                                \n"
 "                                            }\n"
 "QScrollBar::handle:vertical { \n"
 "                                                background-color:  rgba(1, 22, 51, 0.5);\n"
-"                                                min-height: 273.41px;\n"
+"                                                \n"
 "														border: 0px solid red; \n"
-"														border-radius:4.905px;\n"
+"													\n"
 "														\n"
 "                                            }\n"
 "QScrollBar::add-line:vertical {       \n"
@@ -945,9 +966,9 @@ public:
 "                        } \n"
 "QScrollBar::sub-line:vertical { \n"
 "                            height: 0 px; \n"
-"         "
-                        "                   subcontrol-position: top; \n"
-"                            subcontrol-origin: margin; \n"
+"                            subcontrol-position: top; \n"
+"        "
+                        "                    subcontrol-origin: margin; \n"
 "                        }\n"
 "\n"
 "QScrollBar:horizontal { \n"
@@ -958,7 +979,7 @@ public:
 "QScrollBar::handle:horizontal { \n"
 "                                                background-color:  rgba(1, 22, 51, 0.5);\n"
 "														border: 0px solid red; \n"
-"														border-radius:4.905px;\n"
+"													\n"
 "                                            }\n"
 "QScrollBar::add-line:horizontal {       \n"
 "                            height: 0px;\n"
@@ -968,9 +989,9 @@ public:
 "                        } \n"
 "QScrollBar::sub-line:horizontal { \n"
 "                            height: 0 px; \n"
-"       "
-                        "                     subcontrol-position: top; \n"
-"                            subcontrol-origin: margin; \n"
+"                            subcontrol-position: top; \n"
+"                            s"
+                        "ubcontrol-origin: margin; \n"
 "                        }\n"
 "\n"
 ""));
@@ -1187,9 +1208,9 @@ public:
         mainToolBar->setStyleSheet(QString::fromUtf8("padding: 3px;"));
         mainToolBar->setIconSize(QSize(32, 32));
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        statusBar = new QStatusBar(MainWindow);
-        statusBar->setObjectName(QString::fromUtf8("statusBar"));
-        MainWindow->setStatusBar(statusBar);
+        toolBar = new QToolBar(MainWindow);
+        toolBar->setObjectName(QString::fromUtf8("toolBar"));
+        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
 
         menuBar->addAction(menuOCR_Correction_Window->menuAction());
         menuBar->addAction(menuEdit->menuAction());
@@ -1301,7 +1322,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
         tabWidget_2->setCurrentIndex(0);
 
 
@@ -1533,6 +1554,7 @@ public:
         menuHelp->setTitle(QCoreApplication::translate("MainWindow", "Help", nullptr));
         menuInstallation_Guide->setTitle(QCoreApplication::translate("MainWindow", "Installation Guide", nullptr));
         menuSelectLanguage->setTitle(QCoreApplication::translate("MainWindow", "Language", nullptr));
+        toolBar->setWindowTitle(QCoreApplication::translate("MainWindow", "toolBar", nullptr));
     } // retranslateUi
 
 };
