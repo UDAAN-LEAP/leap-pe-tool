@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'uploaddialogbox.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.2
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -69,9 +69,9 @@ public:
 
     void retranslateUi(QDialog *uploadDialogBox)
     {
-        uploadDialogBox->setWindowTitle(QCoreApplication::translate("uploadDialogBox", "Dialog", nullptr));
-        cancelButton->setText(QCoreApplication::translate("uploadDialogBox", "Cancel", nullptr));
-        okButton->setText(QCoreApplication::translate("uploadDialogBox", "OK", nullptr));
+        uploadDialogBox->setWindowTitle(QApplication::translate("uploadDialogBox", "Dialog", nullptr));
+        cancelButton->setText(QApplication::translate("uploadDialogBox", "Cancel", nullptr));
+        okButton->setText(QApplication::translate("uploadDialogBox", "OK", nullptr));
     } // retranslateUi
 
 };

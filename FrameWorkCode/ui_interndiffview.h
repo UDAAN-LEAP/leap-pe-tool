@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'interndiffview.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.2
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -220,19 +220,19 @@ public:
 
     void retranslateUi(QMainWindow *InternDiffView)
     {
-        InternDiffView->setWindowTitle(QCoreApplication::translate("InternDiffView", "InternDiffView", nullptr));
+        InternDiffView->setWindowTitle(QApplication::translate("InternDiffView", "InternDiffView", nullptr));
         prevButton->setText(QString());
-        label->setText(QCoreApplication::translate("InternDiffView", "<p><b>1. OCR Image<b></p>\n"
+        label->setText(QApplication::translate("InternDiffView", "<p><b>1. OCR Image<b></p>\n"
 "<p> </p>", nullptr));
-        OCRtextLabel->setText(QCoreApplication::translate("InternDiffView", "<p><b>2. Initial Text<b></p>\n"
+        OCRtextLabel->setText(QApplication::translate("InternDiffView", "<p><b>2. Initial Text<b></p>\n"
 "<p> </p>", nullptr));
-        ocroutput->setHtml(QCoreApplication::translate("InternDiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        ocroutput->setHtml(QApplication::translate("InternDiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Shobhika'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;\"><br /></p></body></html>", nullptr));
-        InternLabel->setText(QCoreApplication::translate("InternDiffView", "<p><b>3. Corrector's Output Text</b></p>Changes made by Corrector: ", nullptr));
-        current->setHtml(QCoreApplication::translate("InternDiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        InternLabel->setText(QApplication::translate("InternDiffView", "<p><b>3. Corrector's Output Text</b></p>Changes made by Corrector: ", nullptr));
+        current->setHtml(QApplication::translate("InternDiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Shobhika'; font-size:11pt; font-weight:600; font-style:normal;\">\n"

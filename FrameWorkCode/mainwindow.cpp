@@ -1323,15 +1323,15 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
     if(curr_browser) {
         if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {    //fetching the text from the key(tab name) and comparing it to current browser text
 
-            QMessageBox currBox;                         //needAman
+            QMessageBox currBox;
             currBox.setWindowTitle("Save?");
             currBox.setIcon(QMessageBox::Question);
             currBox.setInformativeText("Do you want to save this file?");
             QPushButton *okButton = currBox.addButton(QMessageBox::StandardButton::Ok);
             QPushButton *noButton = currBox.addButton(QMessageBox::StandardButton::No);
             currBox.exec();
-//            int btn = QMessageBox::question(this, "Save?", "Do you want to save this file?",
-//                                            QMessageBox::StandardButton::Ok, QMessageBox::StandardButton::No);
+
+
             if (currBox.clickedButton() == okButton)
                 on_actionSave_triggered();
         }
@@ -1403,15 +1403,15 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
     if(curr_browser) {
         if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
 
-            QMessageBox currBox2;                         //needAman
+            QMessageBox currBox2;
             currBox2.setWindowTitle("Save?");
             currBox2.setIcon(QMessageBox::Question);
             currBox2.setInformativeText("Do you want to save " + currentTabPageName + " file?");
             QPushButton *okButton2 = currBox2.addButton(QMessageBox::StandardButton::Ok);
             QPushButton *noButton2 = currBox2.addButton(QMessageBox::StandardButton::No);
             currBox2.exec();
-//            int btn = QMessageBox::question(this, "Save?", "Do you want to save " + currentTabPageName + " file?",
-//                                            QMessageBox::StandardButton::Ok, QMessageBox::StandardButton::No);
+
+
             if (currBox2.clickedButton() == okButton2)
                 on_actionSave_triggered();
         }
@@ -3868,15 +3868,15 @@ void MainWindow::on_actionFetch_2_triggered()
     QString prvs_stage = (stage=="Verifier")?"Verifier":"Corrector";
     QString prvs_output_dir = prvs_stage + "Output"; //"VerifierOutput" or "CorrectorOutput"
 
-    QMessageBox forPullBox;                         //needAman
+    QMessageBox forPullBox;
     forPullBox.setWindowTitle("Pull ?");
     forPullBox.setIcon(QMessageBox::Question);
     forPullBox.setInformativeText("This will overwrite files in " + prvs_output_dir + " directory. Do you want to Continue?");
     QPushButton *okButton = forPullBox.addButton(QMessageBox::StandardButton::Yes);
     QPushButton *noButton = forPullBox.addButton(QMessageBox::StandardButton::No);
     forPullBox.exec();
-//    int btn = QMessageBox::question(this, "Pull ?", "This will overwrite files in " + prvs_output_dir + " directory. Do you want to Continue?",
-//                                    QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
+
+
     if (forPullBox.clickedButton() == okButton)
     {
         mProject.fetch();
@@ -3918,17 +3918,16 @@ void MainWindow::on_actionTurn_In_triggered()
     //! Checking if the files are saved or not.
     if (checkUnsavedWork())
     {
-        QMessageBox checkUnsavedBox;                         //needAman
+        QMessageBox checkUnsavedBox;
         checkUnsavedBox.setWindowTitle("Unsaved Work");
         checkUnsavedBox.setIcon(QMessageBox::Question);
         checkUnsavedBox.setInformativeText("You have unsaved files. Save it before turn-in.\n");
         QPushButton *cancelButton = checkUnsavedBox.addButton(QMessageBox::Cancel);
         QPushButton *saveButton = checkUnsavedBox.addButton(QMessageBox::Save);
         checkUnsavedBox.exec();
-//        QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Unsaved Work",
-//                                                                    tr("You have unsaved files. Save it before turn-in.\n"),
-//                                                                    QMessageBox::Cancel | QMessageBox::Save,
-//                                                                    QMessageBox::Save);
+
+
+
         if (checkUnsavedBox.clickedButton() == cancelButton)
         {
             QMessageBox::information(0, "Turn In", "Turn In Cancelled");
@@ -3951,7 +3950,7 @@ void MainWindow::on_actionTurn_In_triggered()
 //         }
         QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();     // append current version
 
-        QMessageBox submitBox;                         //needAman
+        QMessageBox submitBox;
         submitBox.setWindowTitle("Submit ?");
         submitBox.setIcon(QMessageBox::Question);
         submitBox.setInformativeText("Are you ready to submit your changes?");
@@ -3959,8 +3958,8 @@ void MainWindow::on_actionTurn_In_triggered()
         QPushButton *nButton = submitBox.addButton(QMessageBox::StandardButton::No);
         submitBox.exec();
 
-//        int btn = QMessageBox::question(this, "Submit ?", "Are you ready to submit your changes?",
-//                                        QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
+
+
         if (submitBox.clickedButton() == yButton)
         {
             bool ok;
@@ -4026,7 +4025,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
     if (checkUnsavedWork())
     {
 
-        QMessageBox checkUnsavedBox2;                         //needAman
+        QMessageBox checkUnsavedBox2;
         checkUnsavedBox2.setWindowTitle("Unsaved Work");
         checkUnsavedBox2.setIcon(QMessageBox::Question);
         checkUnsavedBox2.setInformativeText("You have unsaved files. Save it before turn-in.\n");
@@ -4034,10 +4033,8 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         QPushButton *saveButton2 = checkUnsavedBox2.addButton(QMessageBox::Save);
         checkUnsavedBox2.exec();
 
-//        QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Unsaved Work",
-//                                                                    tr("You have unsaved files. Save it before turn-in.\n"),
-//                                                                    QMessageBox::Cancel | QMessageBox::Save,
-//                                                                    QMessageBox::Save);
+
+
         if (checkUnsavedBox2.clickedButton() == cancelButton2)
         {
             QMessageBox::information(0, "Turn In", "Turn In Cancelled");
@@ -4243,7 +4240,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
             return;
         }
 
-        QMessageBox submitBox2;                         //needAman
+        QMessageBox submitBox2;
         submitBox2.setWindowTitle("Submit ?");
         submitBox2.setIcon(QMessageBox::Question);
         submitBox2.setInformativeText("Are you ready to submit your changes?");
@@ -4251,8 +4248,8 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         QPushButton *nButton2 = submitBox2.addButton(QMessageBox::StandardButton::No);
         submitBox2.exec();
 
-//        int btn = QMessageBox::question(this, "Submit ?", "Are you ready to submit your changes?",
-//                                        QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
+
+
        if (submitBox2.clickedButton() == yButton2)
        {
             bool ok;
@@ -6300,7 +6297,7 @@ void MainWindow::closetab(int idx)
     if(!closing_browser->isReadOnly() && (closing_browserHtml != gInitialTextHtml[closingTabPageName]))
     {
 
-        QMessageBox saveBox2;                         //needAman
+        QMessageBox saveBox2;
         saveBox2.setWindowTitle("Save ?");
         saveBox2.setIcon(QMessageBox::Question);
         saveBox2.setInformativeText("Do you want to save " + closingTabPageName + " file?");
@@ -6308,8 +6305,8 @@ void MainWindow::closetab(int idx)
         QPushButton *NOButton = saveBox2.addButton(QMessageBox::StandardButton::No);
         saveBox2.exec();
 
-//        int btn = QMessageBox::question(this, "Save?", "Do you want to save " + closingTabPageName + " file?",
-//                                        QMessageBox::StandardButton::Ok, QMessageBox::StandardButton::No);
+
+
         if (saveBox2.clickedButton() == OKButton)
             on_actionSave_triggered();
     }
@@ -6557,7 +6554,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
 
         //confusion
 
-        QMessageBox saveBox;                         //needAman
+        QMessageBox saveBox;
         saveBox.setWindowTitle("Close");
         saveBox.setIcon(QMessageBox::Question);
         saveBox.setInformativeText("You have unsaved files. Your changes will be lost if you don't save them.\n");
@@ -6566,10 +6563,8 @@ void MainWindow::closeEvent (QCloseEvent *event)
         QPushButton *cncButton = saveBox.addButton(QMessageBox::Cancel);
         saveBox.exec();
 
-//        QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Close",
-//                                                                    tr("You have unsaved files. Your changes will be lost if you don't save them.\n"),
-//                                                                    QMessageBox::Discard | QMessageBox::Cancel | QMessageBox::Save,
-//                                                                    QMessageBox::Save);
+
+
         if (saveBox.clickedButton() == cncButton)
         {
             event->ignore();
