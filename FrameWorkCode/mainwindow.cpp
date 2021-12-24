@@ -5168,7 +5168,7 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
  * \return
  * spawns a MessageBox and returns true if Replace is chosen
  */
-bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word, int &chk, int&chkglobal, QVector <QString> &changedWrds){
+bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word, int &chk, bool &replaceFromTSVfile){
     chk=0;
     QMessageBox messageBox(this);
    // QDialog dialog(this);
@@ -5190,38 +5190,20 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     messageBox.setWindowTitle("Global Replace");
     messageBox.setText(msg);
     messageBox.exec();
+
     if(cb->checkState() == Qt::Checked){
         chk=1;
     }
-    //qDebug()<<"Check"<<checker;
-   // dialog.exec();
+
     if (messageBox.clickedButton() == uploadButton)
     {
-    QMessageBox messageBox2(this);
-    QAbstractButton *okButton = messageBox2.addButton(tr("Okay"), QMessageBox::ActionRole);
-    QAbstractButton *noButton = messageBox2.addButton(tr("No"), QMessageBox::RejectRole);
-
-    QStringList changesList = changedWrds[0].split(" ");
-    QCheckBox *cb = new QCheckBox(changesList[1]+"->"+changesList[3]);
-    if(chk==1)
-    {
-    cb->setChecked(true);
-    }
-
-    messageBox2.setWindowTitle("Upload to CSV file");
-    cb->setEnabled(false);
-    messageBox2.setCheckBox(cb);
-    messageBox2.exec();
-
-    if(messageBox2.clickedButton() == okButton)
-    {
-        chkglobal=1;
-        return true;
-    }
-
+        replaceFromTSVfile = true;
+        messageBox.close();
+        return false;
     }
     if (messageBox.clickedButton() == replaceButton)
         return true;
+
     return false;
 
 }
@@ -5234,7 +5216,7 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
  * \return
  * spawns a checklist and returns a Qmap of selected pairs
  */
-QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords, QVector<int> *replaceInAllPages, bool *saveInCSVfile){
+QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords, QVector<int> *replaceInAllPages, bool *replaceFromTSVfile){
     QMap <QString, QString> globalReplacementMap;
     GlobalReplaceDialog grDialog(changedWords, this);
 
@@ -5251,10 +5233,11 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
     {
         *replaceInAllPages = grDialog.getStatesOfCheckboxes();
         globalReplacementMap = grDialog.getFilteredGlobalReplacementMap();
-        if (grDialog.saveInCSV_File())
-        {
-            *saveInCSVfile = true;
-        }
+    }
+
+    if (grDialog.uploadFromTSVfile())
+    {
+        *replaceFromTSVfile = true;
     }
     return globalReplacementMap;
 
@@ -5272,7 +5255,8 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
     QMap<QString, QString> replaceInAllPages_Map;
     QMap<QString, QString> replaceInUneditedPages_Map;
-    bool saveInCSVfile = false;
+
+    bool replaceFromTSVfile = false;
 
     /*
      * Stores values in 0s and 1s. Eg: {1, 0, 0, 1}. 1 means that the word corresponding the map should be replaced in all pages
@@ -5283,16 +5267,16 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
 
     int noOfChangedWords = changedWords.size();
-    int checkglobal=0;
     int files = 0;
     int r1 = 0, r2 = 0;
     int x1 = 0;
     int check=2;
+
     //! if only one change spawn checkbox
     if (noOfChangedWords == 1){
 
         QStringList changesList = changedWords[0].split(" ");
-        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3], check,checkglobal,changedWords);
+        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3], check, replaceFromTSVfile);
 //        qDebug()<<"Check"<<check;
         if (updateGlobalCPairs)
             globalReplacementMap[changesList[1]] = changesList[3];
@@ -5300,7 +5284,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     //! if there is more than 1 change spawn a checklist and get the checked pairs only
     else if(noOfChangedWords > 1){
 
-        globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords, &replaceInAllPages, &saveInCSVfile);
+        globalReplacementMap = globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords, &replaceInAllPages, &replaceFromTSVfile);
 
         QMap<QString, QString>::iterator it;
         it = globalReplacementMap.begin();
@@ -5314,9 +5298,10 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         }
     }
 
-    // Writing data to GlobalReplaceLog.csv
-    if (saveInCSVfile)
-        writeToGlobalReplaceCSVfile(globalReplacementMap, replaceInAllPages);
+    if (replaceFromTSVfile)
+    {
+        replaceInAllFilesFromTSVfile();
+    }
 
     if(!globalReplacementMap.isEmpty())
     {
@@ -5460,13 +5445,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     QMessageBox messageBox;
     if(globalReplacementMap.values().length()>0)
         messageBox.information(0, "Replacement Successful", msg);
-   // qDebug()<<"check0"<<checkglobal;
-    if(checkglobal==1)
-    {
-    QVector<int> integerVector(1);
-    integerVector[0]=check;
-    writeToGlobalReplaceCSVfile( globalReplacementMap, integerVector);
-    }
+
     addCurrentlyOpenFileToEditedFilesLog();
 }
 //Global CPair End
@@ -6952,32 +6931,99 @@ QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<Q
 }
 
 
-void MainWindow::writeToGlobalReplaceCSVfile(QMap<QString, QString> globalReplacementMap, QVector<int> replaceInAllPages)
+void MainWindow::replaceInAllFilesFromTSVfile()
 {
-    QString csvFilePath = gDirTwoLevelUp + "/Dicts/GlobalReplace.csv";
-    QString heading = "";
-    QFile file(csvFilePath);
-    QMap<QString, QString>::iterator it = globalReplacementMap.begin();
+    QMap<QString, QString> globalReplacementMap_allPages;
+    QString msgBoxText = ""; // Text to be displayed in the message box
 
-    if (!file.exists())
-        heading = "Source,Target,Filename,Replacement_In_All_Pages(True or False)\n";
+    QString filename = QFileDialog::getOpenFileName(this, "Open a file", gDirTwoLevelUp);
+    QFile file(filename);
 
-    if (!file.open(QIODevice::Append | QIODevice::Text))
-        return;
-    QTextStream out(&file);
-
-    out << heading;
-    for (int i = 0; i < replaceInAllPages.size(); i++)
+    if (( !file.exists() ) || ( !checkForValidTSVfile(file) ))
     {
-        out << it.key() << "," << it.value() << "," << gCurrentPageName << ",";
-        if (replaceInAllPages.at(i) == 1)
-            out << "True\n";
-        else
-            out << "False\n";
-        it++;
+        QMessageBox::warning(this, "Error", "Invalid file", QMessageBox::Ok, QMessageBox::Ok);
+        return;
+    }
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QMessageBox::warning(this, "Error", "Error in opening file", QMessageBox::Ok, QMessageBox::Ok);
+        return;
+    }
+
+    QTextStream in(&file);
+    QStringList header = in.readLine().split("\t");
+    if (header[0] != "Source" || header[1] != "Target")
+    {
+        file.close();
+        QMessageBox::warning(this, "Error", "Invalid file", QMessageBox::Ok, QMessageBox::Ok);
+        return;
+    }
+
+    while (!in.atEnd())
+    {
+        QString line = in.readLine();
+        if (line == "")
+            continue;
+        QStringList words = line.split("\t");
+        globalReplacementMap_allPages.insert(words[0], words[1]);
+        msgBoxText.append(words[0] + " -> " + words[1] + "\n");
     }
     file.close();
+
+    // Displaying message box
+    QMessageBox msgBox;
+    msgBox.setText(msgBoxText);
+    msgBox.setInformativeText("Do you want to make these replacements(in all pages)?");
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    int ret = msgBox.exec();
+
+    if (ret == QMessageBox::Cancel)
+        return;
+
+    QString currentDirAbsPath = gDirTwoLevelUp + "/" + gCurrentDirName;
+    QDirIterator dirIterator(currentDirAbsPath, QDirIterator::Subdirectories);
+
+    while (dirIterator.hasNext())
+    {
+        QString file_path = dirIterator.next();
+        writeGlobalCPairsToFiles(file_path, globalReplacementMap_allPages);
+    }
+
+    qDebug() << "Done replacement from TSV file";
+    QMessageBox::information(this, "Completed replacement", "All replacements done", QMessageBox::Ok, QMessageBox::Ok);
 }
+
+
+bool MainWindow::checkForValidTSVfile(QFile & file)
+{
+    int singleSpaces, tabSpaces;
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return false;
+
+    QTextStream in(&file);
+
+    while (!in.atEnd())
+    {
+        QString line = in.readLine();
+        if (line == "")
+            continue;
+
+        singleSpaces = line.count(' ');
+        tabSpaces = line.count('\t');
+        if (singleSpaces != 0 || tabSpaces != 1)
+        {
+            file.close();
+            return false;
+        }
+    }
+    file.close();
+
+    return true;
+}
+
 
 
 

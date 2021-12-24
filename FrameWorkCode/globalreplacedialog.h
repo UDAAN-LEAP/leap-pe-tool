@@ -20,7 +20,7 @@ public:
     explicit GlobalReplaceDialog(QVector <QString> replacedWords,QWidget *parent = nullptr);
     QVector<int> getStatesOfCheckboxes();
     bool clicked_applyButton();
-    bool saveInCSV_File();
+    bool uploadFromTSVfile();
     ~GlobalReplaceDialog();
 
 private slots:
@@ -46,7 +46,7 @@ private:
     QCheckBox *box;
     QVBoxLayout *vbox = new QVBoxLayout;
     bool applyButtonIsClicked = false;
-    bool saveCSV_file = false;
+    bool isUploadFromTSVfile = false;
 };
 
 #endif // GLOBALREPLACEDIALOG_H

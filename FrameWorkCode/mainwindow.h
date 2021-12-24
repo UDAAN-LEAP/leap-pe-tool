@@ -335,10 +335,9 @@ private slots:
 
     void runGlobalReplace(QString, QVector<QString>);
 
-    bool globalReplaceQueryMessageBox(QString old_word, QString new_word, int &chk,int&chkglobal, QVector <QString> &changedWrds);
+    bool globalReplaceQueryMessageBox(QString old_word, QString new_word, int &chk, bool &replaceFromTSVfile);
 
     int writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap);
-
 
     void addCurrentlyOpenFileToEditedFilesLog();
 
@@ -351,7 +350,7 @@ private slots:
 
     void highlight(QTextBrowser *b , QString input);
 
-    QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords, QVector<int> *, bool *saveInCSVfile);
+    QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords, QVector<int> *, bool *replaceFromTSVfile);
 
     //void on_textEdit_dict_copyAvailable(bool b);
 
@@ -387,7 +386,9 @@ private slots:
 
     QMap<QString, QString> getUndoGlobalReplaceMap_Multiple_Words(QMap<QString, QString>);
 
-    void writeToGlobalReplaceCSVfile(QMap<QString, QString>, QVector<int>);
+    void replaceInAllFilesFromTSVfile();
+
+    bool checkForValidTSVfile(QFile & file);
 
 private:
     bool mExitStatus = false;

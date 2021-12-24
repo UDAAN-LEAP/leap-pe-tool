@@ -4,7 +4,6 @@
 #include <QDebug>
 #include "globalreplacepreview.h"
 #include "ui_globalreplacepreview.h"
-#include "uploaddialogbox.h"
 
 
 GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidget *parent) :
@@ -184,47 +183,13 @@ void GlobalReplaceDialog::on_Preview_clicked()
 
 void GlobalReplaceDialog::on_uploadButton_clicked()
 {
-    QList<QListWidgetItem *> items = ui->listWidget->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
-    QVector<bool> stateOfReplaceInAllPagesCheckbox;
-
-    // Filtering the global replacement map
-    QStringList str;
-    foreach (QListWidgetItem *item, items)
-    {
-        if (item->checkState() == Qt::Checked)
-        {
-            str = item->text().split(" ");
-            this->filteredGlobalReplacementMap[str[0]] = str[2];
-        }
-    }
-
-    for (int i = 0; i < wordSelection_CheckboxesState.size(); i++)
-    {
-        if (wordSelection_CheckboxesState.at(i) == 1)
-        {
-            if (replaceInAllFiles_Checkboxes.at(i)->checkState() == Qt::Checked)
-                stateOfReplaceInAllPagesCheckbox.push_back(true);
-            else
-                stateOfReplaceInAllPagesCheckbox.push_back(false);
-        }
-    }
-
-    uploadDialogBox uDialogBox(filteredGlobalReplacementMap, stateOfReplaceInAllPagesCheckbox, this);
-    uDialogBox.setModal(true);
-    uDialogBox.setFixedSize(600, 400);
-    uDialogBox.exec();
-
-    if (uDialogBox.saveInCSVfile())
-    {
-        saveCSV_file = true;
-        applyButtonIsClicked = true;
-        // Saving data in csv file
-        this->close();
-    }
+    isUploadFromTSVfile = true;
+    applyButtonIsClicked = false;
+    this->close();
 }
 
-bool GlobalReplaceDialog::saveInCSV_File()
+bool GlobalReplaceDialog::uploadFromTSVfile()
 {
-    return saveCSV_file;
+    return isUploadFromTSVfile;
 }
 

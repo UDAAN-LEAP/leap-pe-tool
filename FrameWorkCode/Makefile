@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = qpadfinal1.0.0
-DISTDIR = /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/.tmp/qpadfinal1.0.0
+DISTDIR = /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/.tmp/qpadfinal1.0.0
 LINK          = g++
 LFLAGS        = 
 LIBS          = $(SUBLIBS) -L/usr/include/tesseract -L/usr/include/leptonica -L/usr/include/pugixml -ltesseract -llept -lpugixml -L/usr/include/git2 -lgit2 /usr/lib/x86_64-linux-gnu/libQt5PrintSupport.so /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Xml.so /usr/lib/x86_64-linux-gnu/libQt5Network.so /usr/lib/x86_64-linux-gnu/libQt5Core.so /usr/lib/x86_64-linux-gnu/libGL.so -lpthread   
@@ -73,7 +73,6 @@ SOURCES       = DiffView.cpp \
 		textfinder.cpp \
 		globalreplacedialog.cpp \
 		undoglobalreplace.cpp \
-		uploaddialogbox.cpp \
 		Filters.cpp \
 		Project.cpp \
 		ProjectHierarchyWindow.cpp \
@@ -99,7 +98,6 @@ SOURCES       = DiffView.cpp \
 		moc_textfinder.cpp \
 		moc_globalreplacedialog.cpp \
 		moc_undoglobalreplace.cpp \
-		moc_uploaddialogbox.cpp \
 		moc_DiffView.cpp \
 		moc_ProjectHierarchyWindow.cpp \
 		moc_Symbols.cpp \
@@ -136,7 +134,6 @@ OBJECTS       = DiffView.o \
 		textfinder.o \
 		globalreplacedialog.o \
 		undoglobalreplace.o \
-		uploaddialogbox.o \
 		Filters.o \
 		Project.o \
 		ProjectHierarchyWindow.o \
@@ -163,7 +160,6 @@ OBJECTS       = DiffView.o \
 		moc_textfinder.o \
 		moc_globalreplacedialog.o \
 		moc_undoglobalreplace.o \
-		moc_uploaddialogbox.o \
 		moc_DiffView.o \
 		moc_ProjectHierarchyWindow.o \
 		moc_Symbols.o \
@@ -191,6 +187,13 @@ DIST          = SimpleMail/CMakeLists.txt \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-base.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/qconfig.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KConfigCore.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KConfigGui.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KCoreAddons.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KDBusAddons.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KI18n.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KService.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KWindowSystem.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_accessibility_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent.pri \
@@ -222,6 +225,8 @@ DIST          = SimpleMail/CMakeLists.txt \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_platformcompositor_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_printsupport.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_printsupport_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_script.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_scripttools.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_service_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql_private.pri \
@@ -289,7 +294,6 @@ DIST          = SimpleMail/CMakeLists.txt \
 		globalreplacedialog.h \
 		ui_shortcutguidedialog.h \
 		undoglobalreplace.h \
-		uploaddialogbox.h \
 		Project.h \
 		TreeItem.h \
 		tesseract/apitypes.h \
@@ -355,7 +359,6 @@ DIST          = SimpleMail/CMakeLists.txt \
 		textfinder.cpp \
 		globalreplacedialog.cpp \
 		undoglobalreplace.cpp \
-		uploaddialogbox.cpp \
 		Filters.cpp \
 		Project.cpp \
 		ProjectHierarchyWindow.cpp \
@@ -384,7 +387,7 @@ TARGET        = qpadfinal
 first: all
 ####### Build rules
 
-qpadfinal: ui_DiffView.h ui_loadingspinner.h ui_shortcutguidedialog.h ui_textfinder.h ui_globalreplacedialog.h ui_undoglobalreplace.h ui_uploaddialogbox.h ui_ProjectHierarchyWindow.h ui_Symbols.h ui_averageaccuracies.h ui_commentsview.h ui_interndiffview.h ui_loginpageview.h ui_mainwindow.h ui_resizeimageview.h ui_globalreplacepreview.h $(OBJECTS)  
+qpadfinal: ui_DiffView.h ui_loadingspinner.h ui_shortcutguidedialog.h ui_textfinder.h ui_globalreplacedialog.h ui_undoglobalreplace.h ui_ProjectHierarchyWindow.h ui_Symbols.h ui_averageaccuracies.h ui_commentsview.h ui_interndiffview.h ui_loginpageview.h ui_mainwindow.h ui_resizeimageview.h ui_globalreplacepreview.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: qpadfinal.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -396,6 +399,13 @@ Makefile: qpadfinal.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.co
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-base.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/qconfig.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KConfigCore.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KConfigGui.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KCoreAddons.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KDBusAddons.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KI18n.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KService.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KWindowSystem.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_accessibility_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent.pri \
@@ -427,6 +437,8 @@ Makefile: qpadfinal.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.co
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_platformcompositor_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_printsupport.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_printsupport_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_script.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_scripttools.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_service_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql_private.pri \
@@ -475,6 +487,13 @@ Makefile: qpadfinal.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.co
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-base.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-unix.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/qconfig.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KConfigCore.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KConfigGui.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KCoreAddons.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KDBusAddons.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KI18n.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KService.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KWindowSystem.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_accessibility_support_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent.pri:
@@ -506,6 +525,8 @@ Makefile: qpadfinal.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.co
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_platformcompositor_support_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_printsupport.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_printsupport_private.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_script.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_scripttools.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_service_support_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql_private.pri:
@@ -560,9 +581,9 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents AppResources.qrc AppResources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Filters.h SimpleMail/SimpleMail SimpleMail/emailaddress.h SimpleMail/emailaddress_p.h SimpleMail/mimeattachment.h SimpleMail/mimecontentformatter.h SimpleMail/mimefile.h SimpleMail/mimehtml.h SimpleMail/mimeinlinefile.h SimpleMail/mimemessage.h SimpleMail/mimemessage_p.h SimpleMail/mimemultipart.h SimpleMail/mimemultipart_p.h SimpleMail/mimepart.h SimpleMail/mimepart_p.h SimpleMail/mimetext.h SimpleMail/quotedprintable.h SimpleMail/sender.h SimpleMail/sender_p.h SimpleMail/server.h SimpleMail/server_p.h SimpleMail/serverreply.h SimpleMail/serverreply_p.h SimpleMail/smtpexports.h editdistance.h loadingspinner.h shortcutguidedialog.h textfinder.h globalreplacedialog.h ui_shortcutguidedialog.h undoglobalreplace.h uploaddialogbox.h Project.h TreeItem.h tesseract/apitypes.h tesseract/baseapi.h tesseract/capi.h diff_match_patch.h eddis.h tesseract/genericvector.h tesseract/helpers.h lg2_common.h tesseract/ltrresultiterator.h meanStdPage.h tesseract/ocrclass.h tesseract/osdetect.h tesseract/pageiterator.h tesseract/platform.h tesseract/publictypes.h 3rdParty/RapidXML/rapidxml.hpp 3rdParty/RapidXML/rapidxml_iterators.hpp 3rdParty/RapidXML/rapidxml_print.hpp 3rdParty/RapidXML/rapidxml_utils.hpp tesseract/renderer.h tesseract/resultiterator.h tesseract/serialis.h slpNPatternDict.h tesseract/strngs.h tesseract/thresholder.h trieEditdis.h tesseract/unichar.h tesseract/version.h DiffView.h ProjectHierarchyWindow.h Symbols.h TreeModel.h averageaccuracies.h commentsview.h interndiffview.h loginpageview.h mainwindow.h qcustomplot.h resizeimageview.h zoom.h ProjectWizard.h CreateProjectPage.h globalreplacepreview.h $(DISTDIR)/
-	$(COPY_FILE) --parents DiffView.cpp SimpleMail/emailaddress.cpp SimpleMail/mimeattachment.cpp SimpleMail/mimecontentformatter.cpp SimpleMail/mimefile.cpp SimpleMail/mimehtml.cpp SimpleMail/mimeinlinefile.cpp SimpleMail/mimemessage.cpp SimpleMail/mimemultipart.cpp SimpleMail/mimepart.cpp SimpleMail/mimetext.cpp SimpleMail/quotedprintable.cpp SimpleMail/sender.cpp SimpleMail/server.cpp SimpleMail/serverreply.cpp editdistance.cpp loadingspinner.cpp shortcutguidedialog.cpp textfinder.cpp globalreplacedialog.cpp undoglobalreplace.cpp uploaddialogbox.cpp Filters.cpp Project.cpp ProjectHierarchyWindow.cpp Symbols.cpp TreeItem.cpp TreeModel.cpp averageaccuracies.cpp commentsview.cpp diff_match_patch.cpp interndiffview.cpp lg2_common.cpp loginpageview.cpp main.cpp mainwindow.cpp qcustomplot.cpp resizeimageview.cpp zoom.cpp ProjectWizard.cpp CreateProjectPage.cpp globalreplacepreview.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents DiffView.ui loadingspinner.ui shortcutguidedialog.ui textfinder.ui globalreplacedialog.ui undoglobalreplace.ui uploaddialogbox.ui ProjectHierarchyWindow.ui Symbols.ui averageaccuracies.ui commentsview.ui interndiffview.ui loginpageview.ui mainwindow.ui resizeimageview.ui globalreplacepreview.ui $(DISTDIR)/
+	$(COPY_FILE) --parents Filters.h SimpleMail/SimpleMail SimpleMail/emailaddress.h SimpleMail/emailaddress_p.h SimpleMail/mimeattachment.h SimpleMail/mimecontentformatter.h SimpleMail/mimefile.h SimpleMail/mimehtml.h SimpleMail/mimeinlinefile.h SimpleMail/mimemessage.h SimpleMail/mimemessage_p.h SimpleMail/mimemultipart.h SimpleMail/mimemultipart_p.h SimpleMail/mimepart.h SimpleMail/mimepart_p.h SimpleMail/mimetext.h SimpleMail/quotedprintable.h SimpleMail/sender.h SimpleMail/sender_p.h SimpleMail/server.h SimpleMail/server_p.h SimpleMail/serverreply.h SimpleMail/serverreply_p.h SimpleMail/smtpexports.h editdistance.h loadingspinner.h shortcutguidedialog.h textfinder.h globalreplacedialog.h ui_shortcutguidedialog.h undoglobalreplace.h Project.h TreeItem.h tesseract/apitypes.h tesseract/baseapi.h tesseract/capi.h diff_match_patch.h eddis.h tesseract/genericvector.h tesseract/helpers.h lg2_common.h tesseract/ltrresultiterator.h meanStdPage.h tesseract/ocrclass.h tesseract/osdetect.h tesseract/pageiterator.h tesseract/platform.h tesseract/publictypes.h 3rdParty/RapidXML/rapidxml.hpp 3rdParty/RapidXML/rapidxml_iterators.hpp 3rdParty/RapidXML/rapidxml_print.hpp 3rdParty/RapidXML/rapidxml_utils.hpp tesseract/renderer.h tesseract/resultiterator.h tesseract/serialis.h slpNPatternDict.h tesseract/strngs.h tesseract/thresholder.h trieEditdis.h tesseract/unichar.h tesseract/version.h DiffView.h ProjectHierarchyWindow.h Symbols.h TreeModel.h averageaccuracies.h commentsview.h interndiffview.h loginpageview.h mainwindow.h qcustomplot.h resizeimageview.h zoom.h ProjectWizard.h CreateProjectPage.h globalreplacepreview.h $(DISTDIR)/
+	$(COPY_FILE) --parents DiffView.cpp SimpleMail/emailaddress.cpp SimpleMail/mimeattachment.cpp SimpleMail/mimecontentformatter.cpp SimpleMail/mimefile.cpp SimpleMail/mimehtml.cpp SimpleMail/mimeinlinefile.cpp SimpleMail/mimemessage.cpp SimpleMail/mimemultipart.cpp SimpleMail/mimepart.cpp SimpleMail/mimetext.cpp SimpleMail/quotedprintable.cpp SimpleMail/sender.cpp SimpleMail/server.cpp SimpleMail/serverreply.cpp editdistance.cpp loadingspinner.cpp shortcutguidedialog.cpp textfinder.cpp globalreplacedialog.cpp undoglobalreplace.cpp Filters.cpp Project.cpp ProjectHierarchyWindow.cpp Symbols.cpp TreeItem.cpp TreeModel.cpp averageaccuracies.cpp commentsview.cpp diff_match_patch.cpp interndiffview.cpp lg2_common.cpp loginpageview.cpp main.cpp mainwindow.cpp qcustomplot.cpp resizeimageview.cpp zoom.cpp ProjectWizard.cpp CreateProjectPage.cpp globalreplacepreview.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents DiffView.ui loadingspinner.ui shortcutguidedialog.ui textfinder.ui globalreplacedialog.ui undoglobalreplace.ui ProjectHierarchyWindow.ui Symbols.ui averageaccuracies.ui commentsview.ui interndiffview.ui loginpageview.ui mainwindow.ui resizeimageview.ui globalreplacepreview.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -669,9 +690,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_sender.cpp moc_server.cpp moc_serverreply.cpp moc_loadingspinner.cpp moc_shortcutguidedialog.cpp moc_textfinder.cpp moc_globalreplacedialog.cpp moc_undoglobalreplace.cpp moc_uploaddialogbox.cpp moc_DiffView.cpp moc_ProjectHierarchyWindow.cpp moc_Symbols.cpp moc_TreeModel.cpp moc_averageaccuracies.cpp moc_commentsview.cpp moc_interndiffview.cpp moc_loginpageview.cpp moc_mainwindow.cpp moc_qcustomplot.cpp moc_resizeimageview.cpp moc_zoom.cpp moc_ProjectWizard.cpp moc_CreateProjectPage.cpp moc_globalreplacepreview.cpp
+compiler_moc_header_make_all: moc_sender.cpp moc_server.cpp moc_serverreply.cpp moc_loadingspinner.cpp moc_shortcutguidedialog.cpp moc_textfinder.cpp moc_globalreplacedialog.cpp moc_undoglobalreplace.cpp moc_DiffView.cpp moc_ProjectHierarchyWindow.cpp moc_Symbols.cpp moc_TreeModel.cpp moc_averageaccuracies.cpp moc_commentsview.cpp moc_interndiffview.cpp moc_loginpageview.cpp moc_mainwindow.cpp moc_qcustomplot.cpp moc_resizeimageview.cpp moc_zoom.cpp moc_ProjectWizard.cpp moc_CreateProjectPage.cpp moc_globalreplacepreview.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_sender.cpp moc_server.cpp moc_serverreply.cpp moc_loadingspinner.cpp moc_shortcutguidedialog.cpp moc_textfinder.cpp moc_globalreplacedialog.cpp moc_undoglobalreplace.cpp moc_uploaddialogbox.cpp moc_DiffView.cpp moc_ProjectHierarchyWindow.cpp moc_Symbols.cpp moc_TreeModel.cpp moc_averageaccuracies.cpp moc_commentsview.cpp moc_interndiffview.cpp moc_loginpageview.cpp moc_mainwindow.cpp moc_qcustomplot.cpp moc_resizeimageview.cpp moc_zoom.cpp moc_ProjectWizard.cpp moc_CreateProjectPage.cpp moc_globalreplacepreview.cpp
+	-$(DEL_FILE) moc_sender.cpp moc_server.cpp moc_serverreply.cpp moc_loadingspinner.cpp moc_shortcutguidedialog.cpp moc_textfinder.cpp moc_globalreplacedialog.cpp moc_undoglobalreplace.cpp moc_DiffView.cpp moc_ProjectHierarchyWindow.cpp moc_Symbols.cpp moc_TreeModel.cpp moc_averageaccuracies.cpp moc_commentsview.cpp moc_interndiffview.cpp moc_loginpageview.cpp moc_mainwindow.cpp moc_qcustomplot.cpp moc_resizeimageview.cpp moc_zoom.cpp moc_ProjectWizard.cpp moc_CreateProjectPage.cpp moc_globalreplacepreview.cpp
 moc_sender.cpp: SimpleMail/sender.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QObject \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/qobject.h \
@@ -753,7 +774,7 @@ moc_sender.cpp: SimpleMail/sender.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QtGlobal \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' SimpleMail/sender.h -o moc_sender.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' SimpleMail/sender.h -o moc_sender.cpp
 
 moc_server.cpp: SimpleMail/server.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QObject \
@@ -810,7 +831,7 @@ moc_server.cpp: SimpleMail/server.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QtGlobal \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' SimpleMail/server.h -o moc_server.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' SimpleMail/server.h -o moc_server.cpp
 
 moc_serverreply.cpp: SimpleMail/serverreply.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QObject \
@@ -867,7 +888,7 @@ moc_serverreply.cpp: SimpleMail/serverreply.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QtGlobal \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' SimpleMail/serverreply.h -o moc_serverreply.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' SimpleMail/serverreply.h -o moc_serverreply.cpp
 
 moc_loadingspinner.cpp: loadingspinner.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
@@ -976,7 +997,7 @@ moc_loadingspinner.cpp: loadingspinner.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtGui/qtouchdevice.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' loadingspinner.h -o moc_loadingspinner.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' loadingspinner.h -o moc_loadingspinner.cpp
 
 moc_shortcutguidedialog.cpp: shortcutguidedialog.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
@@ -1085,7 +1106,7 @@ moc_shortcutguidedialog.cpp: shortcutguidedialog.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtGui/qtouchdevice.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' shortcutguidedialog.h -o moc_shortcutguidedialog.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' shortcutguidedialog.h -o moc_shortcutguidedialog.cpp
 
 moc_textfinder.cpp: textfinder.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
@@ -1195,7 +1216,7 @@ moc_textfinder.cpp: textfinder.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QString \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' textfinder.h -o moc_textfinder.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' textfinder.h -o moc_textfinder.cpp
 
 moc_globalreplacedialog.cpp: globalreplacedialog.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
@@ -1335,7 +1356,7 @@ moc_globalreplacedialog.cpp: globalreplacedialog.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qgridlayout.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' globalreplacedialog.h -o moc_globalreplacedialog.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' globalreplacedialog.h -o moc_globalreplacedialog.cpp
 
 moc_undoglobalreplace.cpp: undoglobalreplace.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
@@ -1464,116 +1485,7 @@ moc_undoglobalreplace.cpp: undoglobalreplace.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qrubberband.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' undoglobalreplace.h -o moc_undoglobalreplace.cpp
-
-moc_uploaddialogbox.cpp: uploaddialogbox.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
-		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qdialog.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtwidgetsglobal.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qtguiglobal.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qglobal.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qconfig-bootstrapped.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qconfig.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qtcore-config.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qsystemdetection.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qprocessordetection.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qcompilerdetection.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qtypeinfo.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qsysinfo.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qlogging.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qflags.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qbasicatomic.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic_bootstrap.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qgenericatomic.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic_cxx11.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic_msvc.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qglobalstatic.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qmutex.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qnumeric.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qversiontagging.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qtgui-config.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtwidgets-config.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qwidget.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qwindowdefs.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qobjectdefs.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qnamespace.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qobjectdefs_impl.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qwindowdefs_win.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qobject.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qstring.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qchar.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qbytearray.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qrefcount.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qarraydata.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qstringliteral.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qstringalgorithms.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qstringview.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qstringbuilder.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qalgorithms.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qiterator.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qhashfunctions.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qpair.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qbytearraylist.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qstringlist.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qregexp.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qstringmatcher.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qcoreevent.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qscopedpointer.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qmetatype.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qvarlengtharray.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qcontainerfwd.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qobject_impl.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qmargins.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qpaintdevice.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qrect.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qsize.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qpoint.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qpalette.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qcolor.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qrgb.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qrgba64.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qbrush.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qvector.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qmatrix.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qpolygon.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qregion.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qdatastream.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qiodevice.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qline.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qtransform.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qpainterpath.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qimage.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qpixelformat.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qpixmap.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qsharedpointer.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qshareddata.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qhash.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qsharedpointer_impl.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qfont.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qfontmetrics.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qfontinfo.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qsizepolicy.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qcursor.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qkeysequence.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qevent.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qvariant.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qmap.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qdebug.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qtextstream.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qlocale.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qset.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qcontiguouscache.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qurl.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qurlquery.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qfile.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qfiledevice.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qvector2d.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qtouchdevice.h \
-		moc_predefs.h \
-		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' uploaddialogbox.h -o moc_uploaddialogbox.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' undoglobalreplace.h -o moc_undoglobalreplace.cpp
 
 moc_DiffView.cpp: DiffView.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QMainWindow \
@@ -1820,7 +1732,7 @@ moc_DiffView.cpp: DiffView.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QMap \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' DiffView.h -o moc_DiffView.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' DiffView.h -o moc_DiffView.cpp
 
 moc_ProjectHierarchyWindow.cpp: ProjectHierarchyWindow.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QWidget \
@@ -2065,7 +1977,7 @@ moc_ProjectHierarchyWindow.cpp: ProjectHierarchyWindow.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QMap \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' ProjectHierarchyWindow.h -o moc_ProjectHierarchyWindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' ProjectHierarchyWindow.h -o moc_ProjectHierarchyWindow.cpp
 
 moc_Symbols.cpp: Symbols.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
@@ -2183,7 +2095,7 @@ moc_Symbols.cpp: Symbols.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtGui/qpen.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' Symbols.h -o moc_Symbols.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' Symbols.h -o moc_Symbols.cpp
 
 moc_TreeModel.cpp: TreeModel.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QAbstractItemModel \
@@ -2264,7 +2176,7 @@ moc_TreeModel.cpp: TreeModel.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QMetaType \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' TreeModel.h -o moc_TreeModel.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' TreeModel.h -o moc_TreeModel.cpp
 
 moc_averageaccuracies.cpp: averageaccuracies.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
@@ -2379,7 +2291,7 @@ moc_averageaccuracies.cpp: averageaccuracies.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QTextStream \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' averageaccuracies.h -o moc_averageaccuracies.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' averageaccuracies.h -o moc_averageaccuracies.cpp
 
 moc_commentsview.cpp: commentsview.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
@@ -2488,7 +2400,7 @@ moc_commentsview.cpp: commentsview.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtGui/qtouchdevice.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' commentsview.h -o moc_commentsview.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' commentsview.h -o moc_commentsview.cpp
 
 moc_interndiffview.cpp: interndiffview.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QMainWindow \
@@ -2738,7 +2650,7 @@ moc_interndiffview.cpp: interndiffview.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtGui/qpen.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' interndiffview.h -o moc_interndiffview.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' interndiffview.h -o moc_interndiffview.cpp
 
 moc_loginpageview.cpp: loginpageview.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
@@ -3151,7 +3063,7 @@ moc_loginpageview.cpp: loginpageview.h \
 		loadingspinner.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' loginpageview.h -o moc_loginpageview.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' loginpageview.h -o moc_loginpageview.cpp
 
 moc_mainwindow.cpp: mainwindow.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QInputDialog \
@@ -3563,7 +3475,7 @@ moc_mainwindow.cpp: mainwindow.h \
 		loadingspinner.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' mainwindow.h -o moc_mainwindow.cpp
 
 moc_qcustomplot.cpp: qcustomplot.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/qglobal.h \
@@ -4065,7 +3977,7 @@ moc_qcustomplot.cpp: qcustomplot.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport/qtprintsupportversion.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' qcustomplot.h -o moc_qcustomplot.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' qcustomplot.h -o moc_qcustomplot.cpp
 
 moc_resizeimageview.cpp: resizeimageview.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
@@ -4194,7 +4106,7 @@ moc_resizeimageview.cpp: resizeimageview.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qcheckbox.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' resizeimageview.h -o moc_resizeimageview.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' resizeimageview.h -o moc_resizeimageview.cpp
 
 moc_zoom.cpp: zoom.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QObject \
@@ -4311,7 +4223,7 @@ moc_zoom.cpp: zoom.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qgraphicsscene.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' zoom.h -o moc_zoom.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' zoom.h -o moc_zoom.cpp
 
 moc_ProjectWizard.cpp: ProjectWizard.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QWizard \
@@ -4436,7 +4348,7 @@ moc_ProjectWizard.cpp: ProjectWizard.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtGui/qicon.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' ProjectWizard.h -o moc_ProjectWizard.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' ProjectWizard.h -o moc_ProjectWizard.cpp
 
 moc_CreateProjectPage.cpp: CreateProjectPage.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QWizardPage \
@@ -4559,7 +4471,7 @@ moc_CreateProjectPage.cpp: CreateProjectPage.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtGui/qicon.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' CreateProjectPage.h -o moc_CreateProjectPage.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' CreateProjectPage.h -o moc_CreateProjectPage.cpp
 
 moc_globalreplacepreview.cpp: globalreplacepreview.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
@@ -4668,15 +4580,15 @@ moc_globalreplacepreview.cpp: globalreplacepreview.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtGui/qtouchdevice.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/aman/Desktop/globa/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' globalreplacepreview.h -o moc_globalreplacepreview.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ajit/Documents/OCR/iitb-openocr-digit-tool/FrameWorkCode -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include' -I'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include' -I'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt' -I'C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt' globalreplacepreview.h -o moc_globalreplacepreview.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_DiffView.h ui_loadingspinner.h ui_shortcutguidedialog.h ui_textfinder.h ui_globalreplacedialog.h ui_undoglobalreplace.h ui_uploaddialogbox.h ui_ProjectHierarchyWindow.h ui_Symbols.h ui_averageaccuracies.h ui_commentsview.h ui_interndiffview.h ui_loginpageview.h ui_mainwindow.h ui_resizeimageview.h ui_globalreplacepreview.h
+compiler_uic_make_all: ui_DiffView.h ui_loadingspinner.h ui_shortcutguidedialog.h ui_textfinder.h ui_globalreplacedialog.h ui_undoglobalreplace.h ui_ProjectHierarchyWindow.h ui_Symbols.h ui_averageaccuracies.h ui_commentsview.h ui_interndiffview.h ui_loginpageview.h ui_mainwindow.h ui_resizeimageview.h ui_globalreplacepreview.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_DiffView.h ui_loadingspinner.h ui_shortcutguidedialog.h ui_textfinder.h ui_globalreplacedialog.h ui_undoglobalreplace.h ui_uploaddialogbox.h ui_ProjectHierarchyWindow.h ui_Symbols.h ui_averageaccuracies.h ui_commentsview.h ui_interndiffview.h ui_loginpageview.h ui_mainwindow.h ui_resizeimageview.h ui_globalreplacepreview.h
+	-$(DEL_FILE) ui_DiffView.h ui_loadingspinner.h ui_shortcutguidedialog.h ui_textfinder.h ui_globalreplacedialog.h ui_undoglobalreplace.h ui_ProjectHierarchyWindow.h ui_Symbols.h ui_averageaccuracies.h ui_commentsview.h ui_interndiffview.h ui_loginpageview.h ui_mainwindow.h ui_resizeimageview.h ui_globalreplacepreview.h
 ui_DiffView.h: DiffView.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic DiffView.ui -o ui_DiffView.h
@@ -4700,10 +4612,6 @@ ui_globalreplacedialog.h: globalreplacedialog.ui \
 ui_undoglobalreplace.h: undoglobalreplace.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic undoglobalreplace.ui -o ui_undoglobalreplace.h
-
-ui_uploaddialogbox.h: uploaddialogbox.ui \
-		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic uploaddialogbox.ui -o ui_uploaddialogbox.h
 
 ui_ProjectHierarchyWindow.h: ProjectHierarchyWindow.ui \
 		/usr/lib/qt5/bin/uic
@@ -7087,8 +6995,7 @@ globalreplacedialog.o: globalreplacedialog.cpp globalreplacedialog.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qdialogbuttonbox.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QDebug \
 		globalreplacepreview.h \
-		ui_globalreplacepreview.h \
-		uploaddialogbox.h
+		ui_globalreplacepreview.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o globalreplacedialog.o globalreplacedialog.cpp
 
 undoglobalreplace.o: undoglobalreplace.cpp undoglobalreplace.h \
@@ -7218,114 +7125,6 @@ undoglobalreplace.o: undoglobalreplace.cpp undoglobalreplace.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qrubberband.h \
 		ui_undoglobalreplace.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o undoglobalreplace.o undoglobalreplace.cpp
-
-uploaddialogbox.o: uploaddialogbox.cpp uploaddialogbox.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
-		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qdialog.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtwidgetsglobal.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qtguiglobal.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qglobal.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qconfig-bootstrapped.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qconfig.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qtcore-config.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qsystemdetection.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qprocessordetection.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qcompilerdetection.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qtypeinfo.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qsysinfo.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qlogging.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qflags.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qbasicatomic.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic_bootstrap.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qgenericatomic.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic_cxx11.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic_msvc.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qglobalstatic.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qmutex.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qnumeric.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qversiontagging.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qtgui-config.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtwidgets-config.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qwidget.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qwindowdefs.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qobjectdefs.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qnamespace.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qobjectdefs_impl.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qwindowdefs_win.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qobject.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qstring.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qchar.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qbytearray.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qrefcount.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qarraydata.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qstringliteral.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qstringalgorithms.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qstringview.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qstringbuilder.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qalgorithms.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qiterator.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qhashfunctions.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qpair.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qbytearraylist.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qstringlist.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qregexp.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qstringmatcher.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qcoreevent.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qscopedpointer.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qmetatype.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qvarlengtharray.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qcontainerfwd.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qobject_impl.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qmargins.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qpaintdevice.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qrect.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qsize.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qpoint.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qpalette.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qcolor.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qrgb.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qrgba64.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qbrush.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qvector.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qmatrix.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qpolygon.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qregion.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qdatastream.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qiodevice.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qline.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qtransform.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qpainterpath.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qimage.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qpixelformat.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qpixmap.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qsharedpointer.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qshareddata.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qhash.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qsharedpointer_impl.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qfont.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qfontmetrics.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qfontinfo.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qsizepolicy.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qcursor.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qkeysequence.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qevent.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qvariant.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qmap.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qdebug.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qtextstream.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qlocale.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qset.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qcontiguouscache.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qurl.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qurlquery.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qfile.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtCore/qfiledevice.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qvector2d.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtGui/qtouchdevice.h \
-		ui_uploaddialogbox.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o uploaddialogbox.o uploaddialogbox.cpp
 
 Filters.o: Filters.cpp Filters.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QString \
@@ -11762,9 +11561,6 @@ moc_globalreplacedialog.o: moc_globalreplacedialog.cpp
 
 moc_undoglobalreplace.o: moc_undoglobalreplace.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_undoglobalreplace.o moc_undoglobalreplace.cpp
-
-moc_uploaddialogbox.o: moc_uploaddialogbox.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_uploaddialogbox.o moc_uploaddialogbox.cpp
 
 moc_DiffView.o: moc_DiffView.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_DiffView.o moc_DiffView.cpp
