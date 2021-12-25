@@ -10,6 +10,7 @@
 #include <limits>
 #include <QMap>
 #include <QMapIterator>
+#include <iostream>
 using  namespace std;
 
 map<string, string> CPair_editDis;
@@ -47,7 +48,7 @@ QVector <QString> editDistance(QString a, QString b)
     {
         for (int j = 1; j <= n; j++)
         {
-            //solution [i,j] is the cost of transforming 0 to i of s1 and 0 to j of s2
+            //solution [i,j] is the cost of transforming 0 to i of s1 and o to j of s2
             if (s1[i - 1]==(s2[j - 1]))
                    solution[i][j] = solution[i - 1][j - 1];
              else
@@ -64,88 +65,17 @@ QVector <QString> editDistance(QString a, QString b)
     }
 
     backtrace(s1,s2,solution);
-    QVector <QString> optimalPath = phrase_heuristics(s1,s2);
-//    qDebug("here now");
-//    qDebug() << optimalPath;
-//    qDebug() << CPair_editDis;
-    return optimalPath;
-//    qDebug()<<solution[s1.count()][s2.count()];
-            //find the optimal path
+    QVector <QString> something = phrase_heuristics(s1,s2);
+    qDebug()<<"test"<<something;
 
-
-
-//    while(si>0 && sj >0){
-//                int current = solution[si][sj];
-
-//                // edge cases
-//                if (si - 1 < 0)
-//                {
-////                    optimalPath.append("Delete '" + s1[si] + "'");
-//                    si--;
-//                    continue;
-//                }
-
-//                if (sj - 1 < 0)
-//                {
-////                    optimalPath.append("Insert '" + s2[sj] + "'");
-//                    sj--;
-//                    continue;
-//                }
-
-//                // horizontal is for tracking insertion, vertical is for tracking deletion, diagonal is for substitution
-//                int horizontal = solution[si][sj-1];
-//                int vertical = solution[si-1][sj];
-//                int diagonal = solution[si-1][sj-1];
-
-
-
-
-//                if((diagonal <= horizontal && diagonal <= vertical) && (diagonal == current-1 || diagonal == current)){
-//                    // we never expect the diagonal < current - 1 otherwise current would have been diagonal + 1
-//                    if(diagonal == current -1){
-//                        //add to the Cword
-//                        optimalPath.append("Replace: "+s1[si-1]+" by "+s2[sj-1]);
-//                        CPair_editDis[s1[si-1].toStdString()] = s2[sj-1].toStdString();
-//                        si = si - 1;
-//                        sj = sj - 1;
-
-//                    }
-//                    else{
-////                        optimalPath.append("Keep: "+s1[si-1]);
-//                        si=si-1;
-//                        sj=sj-1;
-
-//                    }
-//                }
-//                else if(horizontal <= diagonal && horizontal <= current-1){
-////                    optimalPath.append("Insert: "+s2[sj-1]);
-//                    sj=sj-1;
-//                }
-//                else{
-////                    optimalPath.append("Delete: "+s1[si-1]);
-//                    si=si-1;
-
-//                }
-
-
-//            }
-
-//            //Collections.reverse(optimalPath);
-////            qDebug() << optimalPath;
-////            int ret = solution[s1.count()][s2.count()];
-//            for (int i = 0;i < s1.count()+1;i++)
-//                delete[] solution[i];
-//            delete[] solution;
-
-//            return optimalPath;
+    return something;
 }
 
 void backtrace(QStringList s1, QStringList s2, int **solution)
 {
     int si= s1.count();
     int sj= s2.count();
-
-
+//    QVector<QString> optimalPath;
 
     while (!(si==0 && sj==0))
     {
@@ -269,10 +199,11 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
                  st2 += s2[itr];
                  st2 += " ";
             }
-            optimalPath.append(st1 + " => " + st2 );
-//            CPair_editDis[s1[si-1].toStdString()] = s2[sj-1].toStdString();
-//            qDebug() << st1 << " => " << st2;
-              CPair_editDis[st1.toStdString()] = st2.toStdString();
+            if(!optimalPath.contains(st1 + " => " + st2)){
+                optimalPath.append(st1 + " => " + st2 );
+            }
+            //qDebug() <<"Substitution"<< st1 << " => " << st2;
+            CPair_editDis[st1.toStdString()] = st2.toStdString();
         }
         else
         {
@@ -288,9 +219,9 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
                      st1 += s1[itr];
                      st1 += " ";
                 }
-                optimalPath.append(st1 + " => " + st2 );
-                CPair_editDis[st1.toStdString()] = st2.toStdString();
-
+                if(!optimalPath.contains(st1 + " => " + st2)){
+                    optimalPath.append(st1 + " => " + st2 );
+                }
 //                qDebug() << st1 << " => " << st2;
             }
             else if (se[0] == "insertion")
@@ -305,13 +236,16 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
                      st2 += s2[itr];
                      st2 += " ";
                 }
-                optimalPath.append(st1 + " => " + st2 );
-                CPair_editDis[st1.toStdString()] = st2.toStdString();
-
+                if(!optimalPath.contains(st1 + " => " + st2)){
+                    optimalPath.append(st1 + " => " + st2 );
+                }
 //                qDebug() << st1 << " => " << st2;
             }
         }
 
+//        qDebug()<<"hello i am here";
+//        qDebug()<<segments_operations;
+//        qDebug()<<segments_positions[seg][0];
 
 
     }
@@ -325,4 +259,3 @@ int min(int a,int b)
     else
         return b;
 }
-

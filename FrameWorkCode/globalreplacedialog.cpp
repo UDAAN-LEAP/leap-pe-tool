@@ -2,6 +2,7 @@
 #include "ui_globalreplacedialog.h"
 #include <QDialogButtonBox>
 #include <QDebug>
+#include <string>
 
 GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidget *parent) :
     QDialog(parent),
@@ -30,8 +31,14 @@ QMap <QString, QString> GlobalReplaceDialog::getFilteredGlobalReplacementMap(){
 void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords){
 
     for (int i = 0; i < replacedWords.size(); ++i){
-        QStringList changedList = replacedWords[i].split(" ");
-        ui -> listWidget ->addItem(changedList[1]+ " -> " + changedList[3]);
+        QString si=replacedWords.value(i);
+        std::string str=si.toStdString();
+        std::string str1=str.substr(0,str.find("=>"));          //Original String
+        int pos=str.find("=>");
+        std::string str2=str.substr(pos+2);                     //Replaced String
+        QString s1=QString::fromStdString(str1);
+        QString s2=QString::fromStdString(str2);
+        ui -> listWidget ->addItem(s1+ " -> " + s2);
     }
 
     //! spawn  checkboxes for list
@@ -57,8 +64,14 @@ bool GlobalReplaceDialog::on_applyButton_clicked()
 
     foreach (QListWidgetItem *item, items){
         if(item->checkState() == Qt::Checked){
-            QStringList string = item->text().split(" ");
-            this->filteredGlobalReplacementMap[string[0]] = string[2];
+            QString si=item->text();
+            std::string str=si.toStdString();
+            std::string str1=str.substr(0,str.find("=>"));          //Original String
+            int pos=str.find("=>");
+            std::string str2=str.substr(pos+2);                     //Replaced String
+            QString s1=QString::fromStdString(str1);
+            QString s2=QString::fromStdString(str2);
+            this->filteredGlobalReplacementMap[s1] = s2;
         }
 
     }

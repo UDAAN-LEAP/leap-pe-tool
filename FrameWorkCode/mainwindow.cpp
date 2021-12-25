@@ -5061,6 +5061,7 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
         QString pattern = ("(\\b)")+grmIterator.key()+("(\\b)"); // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
         QRegExp re(pattern);
         QString replacementString = re.cap(1) + grmIterator.value() + re.cap(2); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
+
         //   if(!mapOfReplacements.contains(grmIterator.key()))
         string str = replacementString.toStdString();
         QString::fromStdString(str).toUtf8();
@@ -5144,12 +5145,16 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
     //! if only one change spawn checkbox
     if (noOfChangedWords == 1){
-
-        QStringList changesList = changedWords[0].split(" ");
-        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3]);
-
+        QString si=changedWords[0];
+        string str=si.toStdString();
+        string str1=str.substr(0,str.find("=>"));          //Original String
+        int pos=str.find("=>");
+        string str2=str.substr(pos+2);                     //Replaced String
+        QString s1=QString::fromStdString(str1);
+        QString s2=QString::fromStdString(str2);
+        bool updateGlobalCPairs = globalReplaceQueryMessageBox(s1, s2);
         if (updateGlobalCPairs)
-            globalReplacementMap[changesList[1]] = changesList[3];
+            globalReplacementMap[s1] = s2;
     }
     //! if there is more than 1 change spawn a checklist and get the checked pairs only
     else if(noOfChangedWords > 1){
@@ -5168,6 +5173,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
             QString it_file_path = dirIterator.next();
             bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
             QString suff = dirIterator.fileInfo().completeSuffix();
+            qDebug()<<"it_file_path"<<it_file_path;
             if(!isFileInEditedFilesLog){
                 if(suff == "html"){
                 r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
