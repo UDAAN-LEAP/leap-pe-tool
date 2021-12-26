@@ -61,6 +61,8 @@
 #include <QRegularExpressionMatch>
 #include<QStatusBar>
 #include "undoglobalreplace.h"
+#include "globalreplacepreview.h"
+#include "qtextdocumentfragment.h"
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -5175,6 +5177,7 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     QCheckBox *cb = new QCheckBox("Make changes to all pages");
     //dialog.setWindowTitle("Check Formatting");
     //QAbstractButton *escButton = messageBox.addButton(tr("Esc"), QMessageBox::ActionRole);
+    //QAbstractButton *previewButton = messageBox.addButton(tr("Preview"), QMessageBox::ActionRole);
     QAbstractButton *uploadButton = messageBox.addButton(tr("Upload"), QMessageBox::ActionRole);
     QAbstractButton *replaceButton = messageBox.addButton(tr("Yes"), QMessageBox::ActionRole);
     QAbstractButton *cancelButton = messageBox.addButton(tr("No"), QMessageBox::RejectRole);
@@ -5401,8 +5404,6 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
             csvFile.open(QFile::ReadWrite);
             QTextStream output(&csvFile);
             output << "Source Word,Target Word,Type of Replacement,Time of Replacement,Page Name,Set name";
-            qDebug() << output.readAll();
-
         }
 
         else
@@ -5428,13 +5429,8 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
             QString time = current.toString();
 
             QTextStream output(&csvFile);
-            qDebug() << output.readAll();
             output << "\n";
             output<<sourceString<<","<<replaceString<<","<<typeOfReplacement<<","<<time<<","<<gCurrentPageName<<","<<setName;
-            qDebug()<<"directory"<<gDirTwoLevelUp;
-
-            qDebug() << output.readAll();
-
         }
         csvFile.close();
         check=2;
@@ -5448,6 +5444,145 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
     addCurrentlyOpenFileToEditedFilesLog();
 }
+
+void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVector<int> allPages)
+{
+  QStandardItemModel *model = new QStandardItemModel;
+  int lineindex = 0;
+
+  //  ..... qdebug Preview
+//  QMap <QString, QString>::iterator grmIterator;
+//  int i=0;
+//  for (grmIterator = previewMap.begin(); grmIterator != previewMap.end(); ++grmIterator)
+//  {
+//      QString sourceString = grmIterator.key();
+//      QString replaceString= grmIterator.value();
+//      qDebug()<<sourceString<<"    "<<replaceString<<"   "<<allPages.at(i)<<endl;
+//      i++;
+//  }
+ //  ..... Preview
+
+  if(previewMap.size() == 0)
+  {
+       QMessageBox::warning(this, "Error", "No words are selected for replacement");
+  }
+  else {
+
+      QMap<QString, QString> replaceInAllPages_Map;
+      QMap<QString, QString> replaceInUneditedPages_Map;
+      QMap<QString, QString>::iterator it = previewMap.begin();
+      for (int i = 0; i < allPages.size(); i++)
+      {
+          if (allPages.at(i) == 1)
+            { replaceInAllPages_Map.insert(it.key(), it.value());}
+          else
+            { replaceInUneditedPages_Map.insert(it.key(), it.value());}
+          it++;
+      }
+
+    if(previewMap.size() == 1){
+
+
+      }
+     else if(previewMap.size() > 1)
+     {
+        QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+        QString currentFileDirectory =gDirTwoLevelUp + "/" + gCurrentDirName;;
+        QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
+        QMap<QString,QStringList> lines;
+        //Unedited pages
+        while (dirIterator.hasNext())
+        {
+            QString it_file_path = dirIterator.next();
+
+            bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
+            QString suff = dirIterator.fileInfo().completeSuffix();
+            if (!isFileInEditedFilesLog)
+            {
+                if(suff == "html")
+                {
+                  lines.unite(getBeforeAndAfterWords(it_file_path, replaceInUneditedPages_Map));
+                }
+             }
+        }
+
+        QDirIterator dirIterator_2(currentFileDirectory, QDirIterator::Subdirectories);
+        //all pages
+        while (dirIterator_2.hasNext())
+        {
+            QString it_file_path = dirIterator_2.next();
+            QString suff = dirIterator_2.fileInfo().completeSuffix();
+            if(suff == "html")
+            {
+               lines.unite(getBeforeAndAfterWords(it_file_path, replaceInAllPages_Map));
+            }
+         }
+
+           QMap<QString,QStringList>::iterator ite;
+            for(ite=lines.begin(); ite!=lines.end();++ite )
+            {
+                QString pages = ite.key();
+                QStringList sentences = ite.value();
+                for(int i=0;i<sentences.size();i++)
+                {
+                    QStandardItem *Item = new QStandardItem(pages);
+                    model->setItem(lineindex, 0,Item);
+                    QStandardItem *Item1 = new QStandardItem(sentences.at(i));
+                    model->setItem(lineindex, 1,Item1);
+                    lineindex++;
+                }
+            }
+            model->setHeaderData (0,Qt::Horizontal, QObject::tr ("Page"));
+            model->setHeaderData (1,Qt::Horizontal, QObject::tr ("Sentences"));
+      }
+  globalReplacePreview gp(this, model);
+  gp.exec();
+  }
+}
+
+QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap <QString, QString> globalReplacementMap)
+{
+  QStringList sentences;
+  QMap <QString, QString>::iterator grmIterator;
+  QFile *f = new QFile(fPath);
+  QMap <QString, QStringList> previewPagesMap;
+
+  f->open(QIODevice::ReadOnly);
+  QTextStream in(f);
+  in.setCodec("UTF-8");
+  QString s1 = in.readAll();
+  QTextDocumentFragment fragment;
+  QString plain = fragment.fromHtml(s1).toPlainText();
+  f->close();
+
+  for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
+  {
+      QString oldWord = grmIterator.key();
+      QRegularExpression rx(".*"+oldWord+".*");
+
+      for(int i=0;i<rx.captureCount()+1;++i)
+      {
+         QRegularExpressionMatchIterator match = rx.globalMatch(plain);
+          while(match.hasNext())
+           {
+              QRegularExpressionMatch Extmatch = match.next();
+              QString matched = Extmatch.captured(i);
+              if(matched.length() >0 )
+              {
+                  sentences << matched;
+              }
+           }
+       }
+  }
+  QFile file(fPath);
+  QFileInfo fileInfo(file);
+  QString fileName = fileInfo.fileName();
+
+  previewPagesMap[fileName] = sentences;
+
+  return previewPagesMap;
+}
+
 //Global CPair End
 
 /*!

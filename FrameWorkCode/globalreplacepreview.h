@@ -2,6 +2,7 @@
 #define GLOBALREPLACEPREVIEW_H
 
 #include <QDialog>
+#include <QStandardItemModel>
 
 namespace Ui {
 class globalReplacePreview;
@@ -12,7 +13,7 @@ class globalReplacePreview : public QDialog
     Q_OBJECT
 
 public:
-    explicit globalReplacePreview(QWidget *parent = 0);
+    globalReplacePreview(QWidget *parent,QStandardItemModel *model);
     ~globalReplacePreview();
 
 private:

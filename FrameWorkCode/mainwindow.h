@@ -42,6 +42,8 @@
 #include<QGraphicsRectItem>
 #include "globalreplacedialog.h"
 #include "loadingspinner.h"
+#include "globalreplacepreview.h"
+
 //#include <set>
 using namespace std;
 
@@ -389,6 +391,10 @@ private slots:
     void replaceInAllFilesFromTSVfile();
 
     bool checkForValidTSVfile(QFile & file);
+
+    void globalReplacePreviewfn(QMap <QString, QString>,QVector<int>);
+
+    QMap<QString,QStringList> getBeforeAndAfterWords(QString fPath,QMap <QString, QString> globalReplacementMap);
 
 private:
     bool mExitStatus = false;

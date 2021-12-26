@@ -22,17 +22,16 @@ public:
     bool clicked_applyButton();
     bool uploadFromTSVfile();
     ~GlobalReplaceDialog();
+signals:
+    void fetchCheckedlist(QMap <QString, QString>,QVector<int> allPages);
 
 private slots:
     void on_cancelButton_clicked();
     void on_applyButton_clicked();
     void displayOriginalList(QVector <QString> replacedWords);
-    void on_pushButton_clicked();
     void leftCheckBoxStateChanged(QListWidgetItem*);
-
-    void on_Preview_clicked();
-
     void on_uploadButton_clicked();
+    void on_previewButton_clicked();
 
 public slots:
     void highlightChecked(QListWidgetItem* item);

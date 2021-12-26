@@ -15,6 +15,7 @@ GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidge
     setWindowTitle("Select the words you want to replace globally");
     displayOriginalList(replacedWords);
     QObject::connect(ui->listWidget, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(highlightChecked(QListWidgetItem*)));
+    QObject::connect(this , SIGNAL(fetchCheckedlist(QMap<QString,QString>,  QVector<int>)), parent, SLOT(globalReplacePreviewfn(QMap<QString,QString>,QVector<int>)));
     QVBoxLayout *listLayout = new QVBoxLayout;
     ui->listWidget->setLayout(listLayout);
     ui->groupBox->setVisible(false);
@@ -97,13 +98,6 @@ void GlobalReplaceDialog::on_cancelButton_clicked()
     this->close();
 }
 
-
-void GlobalReplaceDialog::on_pushButton_clicked()
-{
-    globalReplacePreview dialog;
-    dialog.exec();
-}
-
 /*!
  * \fn "GlobalReplaceDialog::leftCheckBoxStateChanged"
  * \brief "This function is a SLOT which receives signal from listWidget when an item is selected"
@@ -174,13 +168,6 @@ bool GlobalReplaceDialog::clicked_applyButton()
     return applyButtonIsClicked;
 }
 
-
-
-void GlobalReplaceDialog::on_Preview_clicked()
-{
-
-}
-
 void GlobalReplaceDialog::on_uploadButton_clicked()
 {
     isUploadFromTSVfile = true;
@@ -193,3 +180,25 @@ bool GlobalReplaceDialog::uploadFromTSVfile()
     return isUploadFromTSVfile;
 }
 
+void GlobalReplaceDialog::on_previewButton_clicked()
+{
+    QMap <QString, QString> obj;
+    QList<QListWidgetItem *> items = ui->listWidget->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard); //get all items
+    QVector<int> allPages;
+
+    foreach (QListWidgetItem *item, items)
+    {
+        if(item->checkState() == Qt::Checked)
+          {
+            QStringList string = item->text().split(" ");
+            obj[string[0]] = string[2];
+          }
+    }
+
+    if(obj.size()>0)
+    {
+      allPages= getStatesOfCheckboxes();
+    }
+
+    emit fetchCheckedlist(obj,allPages);
+}
