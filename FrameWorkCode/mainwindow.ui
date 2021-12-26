@@ -10,6 +10,15 @@
     <height>1190</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>WorkSans,Sans</family>
+    <pointsize>-1</pointsize>
+    <weight>50</weight>
+    <italic>false</italic>
+    <bold>false</bold>
+   </font>
+  </property>
   <property name="mouseTracking">
    <bool>true</bool>
   </property>
@@ -17,8 +26,10 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-font: 15px &quot;Work Sans&quot;; background:rgb(32, 33, 72); color:white; 
+   <string notr="true">font: 15px &quot;WorkSans&quot;,  &quot;Sans&quot;;
+background:rgb(32, 33, 72); 
+color:white;
+
 </string>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -221,7 +232,7 @@ QTabWidget::pane {
 </string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -316,7 +327,7 @@ background-color: rgb(136, 138, 133);
                 </property>
                 <property name="font">
                  <font>
-                  <family>Work Sans</family>
+                  <family>WorkSans,Sans</family>
                   <pointsize>-1</pointsize>
                   <weight>50</weight>
                   <italic>false</italic>
@@ -466,6 +477,7 @@ QScrollBar::sub-line:vertical {
          <widget class="QTextEdit" name="textEdit_dict">
           <property name="styleSheet">
            <string notr="true">QTextEdit{
+color:#18182F;
 	border: 5px solid #BCBDBD;
 	background-color:white;
 }
@@ -557,7 +569,7 @@ QScrollBar::sub-line:vertical {
              </property>
              <property name="font">
               <font>
-               <family>Work Sans</family>
+               <family>WorkSans,Sans</family>
                <pointsize>-1</pointsize>
                <weight>50</weight>
                <italic>false</italic>
@@ -610,7 +622,7 @@ QScrollBar::sub-line:vertical {
               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Work Sans'; font-size:15px; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'WorkSans,Sans'; font-size:15px; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="acceptRichText">
@@ -950,54 +962,40 @@ background: grey;
      <x>0</x>
      <y>0</y>
      <width>1366</width>
-     <height>46</height>
+     <height>51</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font-size: 17px;
-padding: 5px;
-margin: 5px;
+    <string notr="true">QMenuBar{
+font-size:17px;
+}
+QMenuBar::item{
+ /* spacing between menu bar items */
+padding: 15px 15px 15px 15px;
+background: transparent;
+}
+QMenuBar::item:selected{
+    background-color: rgb(52,73,94);
+}
+QMenu::item {
+    spacing: 2px; /* spacing between menu bar items */
+    padding: 10px 85px 10px 20px;
+    background: transparent;
+}
+QMenu::item:selected{
+    background-color: rgb(52,73,94);
+    border-top: none;
+    border-left:none;
+    border-bottom:none;
+    border-left:3px solid  #EEF0F2;
+}
+
+
+
 
 
 </string>
    </property>
-   <widget class="QMenu" name="menuOCR_Correction_Window">
-    <property name="styleSheet">
-     <string notr="true">font-size: 17px;</string>
-    </property>
-    <property name="title">
-     <string>File</string>
-    </property>
-    <widget class="QMenu" name="menuRecent_Project">
-     <property name="styleSheet">
-      <string notr="true">font-size: 17px;</string>
-     </property>
-     <property name="title">
-      <string>Recent Project</string>
-     </property>
-     <addaction name="action1"/>
-    </widget>
-    <addaction name="actionNew"/>
-    <addaction name="actionNew_Project"/>
-    <addaction name="actionOpen_Project"/>
-    <addaction name="menuRecent_Project"/>
-    <addaction name="actionSave"/>
-    <addaction name="actionSave_As"/>
-    <addaction name="actionSpell_Check"/>
-    <addaction name="actionLoad_Next_Page"/>
-    <addaction name="actionLoad_Prev_Page"/>
-    <addaction name="separator"/>
-    <addaction name="actionToDevanagari"/>
-    <addaction name="actionToSlp1"/>
-    <addaction name="actionLoadGDocPage"/>
-    <addaction name="actionLoadData"/>
-    <addaction name="actionLoadDict"/>
-    <addaction name="actionLoadOCRWords"/>
-    <addaction name="actionLoadDomain"/>
-    <addaction name="actionLoadSubPS"/>
-    <addaction name="actionLoadConfusions"/>
-    <addaction name="actionSugg"/>
-   </widget>
    <widget class="QMenu" name="menuCreateReports">
     <property name="styleSheet">
      <string notr="true">font-size: 17px;</string>
@@ -1113,6 +1111,48 @@ margin: 5px;
     <addaction name="actionHindi"/>
     <addaction name="actionEnglish"/>
    </widget>
+   <widget class="QMenu" name="menuOCR_Correction_Window">
+    <property name="styleSheet">
+     <string notr="true">font-size: 17px;
+
+</string>
+    </property>
+    <property name="title">
+     <string>File</string>
+    </property>
+    <property name="toolTipsVisible">
+     <bool>true</bool>
+    </property>
+    <widget class="QMenu" name="menuRecent_Project">
+     <property name="styleSheet">
+      <string notr="true">font-size: 17px;</string>
+     </property>
+     <property name="title">
+      <string>Recent Project</string>
+     </property>
+     <addaction name="action1"/>
+    </widget>
+    <addaction name="actionNew"/>
+    <addaction name="actionNew_Project"/>
+    <addaction name="actionOpen_Project"/>
+    <addaction name="menuRecent_Project"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_As"/>
+    <addaction name="actionSpell_Check"/>
+    <addaction name="actionLoad_Next_Page"/>
+    <addaction name="actionLoad_Prev_Page"/>
+    <addaction name="separator"/>
+    <addaction name="actionToDevanagari"/>
+    <addaction name="actionToSlp1"/>
+    <addaction name="actionLoadGDocPage"/>
+    <addaction name="actionLoadData"/>
+    <addaction name="actionLoadDict"/>
+    <addaction name="actionLoadOCRWords"/>
+    <addaction name="actionLoadDomain"/>
+    <addaction name="actionLoadSubPS"/>
+    <addaction name="actionLoadConfusions"/>
+    <addaction name="actionSugg"/>
+   </widget>
    <addaction name="menuOCR_Correction_Window"/>
    <addaction name="menuEdit"/>
    <addaction name="menuSelectLanguage"/>
@@ -1124,7 +1164,10 @@ margin: 5px;
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="styleSheet">
-    <string notr="true">padding: 3px;</string>
+    <string notr="true">QToolBar {
+spacing: 3px; /* spacing between items in the tool bar */
+padding: 5px; 	
+}</string>
    </property>
    <property name="iconSize">
     <size>
@@ -1152,14 +1195,15 @@ margin: 5px;
    <addaction name="actionFind_and_Replace"/>
    <addaction name="separator"/>
    <addaction name="actionLoadGDocPage"/>
-   <addaction name="separator"/>
    <addaction name="actionToDevanagari"/>
    <addaction name="separator"/>
    <addaction name="actionAllFontProperties"/>
    <addaction name="actionBold"/>
-   <addaction name="actionUnBold"/>
    <addaction name="actionItalic"/>
+   <addaction name="actionUnBold"/>
    <addaction name="actionFontBlack"/>
+   <addaction name="actionSuperscript"/>
+   <addaction name="actionSubscript"/>
    <addaction name="separator"/>
    <addaction name="actionLeftAlign"/>
    <addaction name="actionCentreAlign"/>
@@ -1168,9 +1212,6 @@ margin: 5px;
    <addaction name="separator"/>
    <addaction name="actionHighlight"/>
    <addaction name="actionSymbols"/>
-   <addaction name="separator"/>
-   <addaction name="actionZoom_In"/>
-   <addaction name="actionZoom_Out"/>
    <addaction name="separator"/>
    <addaction name="actionGet_Help"/>
   </widget>
@@ -1242,8 +1283,8 @@ margin: 5px;
    </property>
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Resources/Old Icons/spellcheck.png</normaloff>
-     <normalon>:/Images/spellcheck.png</normalon>:/Images/Resources/Old Icons/spellcheck.png</iconset>
+     <normaloff>:/Images/Resources/spell check.png</normaloff>
+     <normalon>:/Images/spellcheck.png</normalon>:/Images/Resources/spell check.png</iconset>
    </property>
    <property name="text">
     <string>Spell Check(CntrlShftC)</string>
@@ -1290,8 +1331,8 @@ margin: 5px;
   <action name="actionLoadGDocPage">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Resources/Old Icons/SaveLoadPwords1.png</normaloff>
-     <normalon>:/Images/SaveLoadPwords1.png</normalon>:/Images/Resources/Old Icons/SaveLoadPwords1.png</iconset>
+     <normaloff>:/Images/Resources/save &amp;load p words.png</normaloff>
+     <normalon>:/Images/SaveLoadPwords1.png</normalon>:/Images/Resources/save &amp;load p words.png</iconset>
    </property>
    <property name="text">
     <string>Save&amp;LoadPWords(CntrlShftP)</string>
@@ -1370,7 +1411,7 @@ margin: 5px;
   <action name="actionToSlp1">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Resources/Old Icons/toSlp1.png</normaloff>:/Images/Resources/Old Icons/toSlp1.png</iconset>
+     <normaloff>:/Images/Resources/tospl.png</normaloff>:/Images/Resources/tospl.png</iconset>
    </property>
    <property name="text">
     <string>toSlp1(CntrlG)</string>
@@ -1460,8 +1501,8 @@ margin: 5px;
   <action name="actionAllFontProperties">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Resources/Old Icons/AllFont.png</normaloff>
-     <normalon>:/Images/AllFont.png</normalon>:/Images/Resources/Old Icons/AllFont.png</iconset>
+     <normaloff>:/Images/Resources/all font properties 2.png</normaloff>
+     <normalon>:/Images/AllFont.png</normalon>:/Images/Resources/all font properties 2.png</iconset>
    </property>
    <property name="text">
     <string>AllFontProperties</string>
@@ -1668,6 +1709,10 @@ margin: 5px;
    </property>
   </action>
   <action name="actionSuperscript">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/superscrpt.png</normaloff>:/Images/Resources/superscrpt.png</iconset>
+   </property>
    <property name="text">
     <string>Superscript</string>
    </property>
@@ -1676,6 +1721,10 @@ margin: 5px;
    </property>
   </action>
   <action name="actionSubscript">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/subscpt.png</normaloff>:/Images/Resources/subscpt.png</iconset>
+   </property>
    <property name="text">
     <string>Subscript</string>
    </property>

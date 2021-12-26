@@ -35,5 +35,14 @@
         <file>Resources/Old Icons/SaveLoadPwords1.png</file>
         <file>Resources/next.png</file>
         <file>Resources/Previous.png</file>
+        <file>Resources/all font properties 2.png</file>
+        <file>Resources/NExt.png</file>
+        <file>Resources/preivious.png</file>
+        <file>Resources/subscpt.png</file>
+        <file>Resources/superscrpt.png</file>
+        <file>Resources/tospl.png</file>
+        <file>Resources/all font properties 1.png</file>
+        <file>Resources/save &amp;load p words.png</file>
+        <file>Resources/spell check.png</file>
     </qresource>
 </RCC>

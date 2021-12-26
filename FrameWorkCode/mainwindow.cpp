@@ -5305,6 +5305,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         replaceInAllFilesFromTSVfile();
     }
 
+
     if(!globalReplacementMap.isEmpty())
     {
 //        mapOfReplacements = globalReplacementMap;
@@ -6083,7 +6084,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     QString input = stream.readAll();
     QFont font("Shobhika Regular");
     setWindowTitle(name);
-    //font.setPointSize(16);
+    font.setPointSize(16);
     if(ext == "txt") {
         istringstream iss(input.toUtf8().constData());
         string strHtml = "<html><body><p>";

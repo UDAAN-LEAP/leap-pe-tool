@@ -134,7 +134,7 @@ FORMS += ./DiffView.ui \
     ./mainwindow.ui \
     ./resizeimageview.ui \
     $$PWD/globalreplacepreview.ui
-RESOURCES += AppResources.qrc
+RESOURCES +=
 
 DISTFILES += \
     $$PWD/SimpleMail/CMakeLists.txt \
