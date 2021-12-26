@@ -21,12 +21,15 @@ background-color: rgb(32, 33, 72);</string>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
      <widget class="QPushButton" name="PrevButton">
+      <property name="styleSheet">
+       <string notr="true">border: 0px; </string>
+      </property>
       <property name="text">
        <string/>
       </property>
       <property name="icon">
-       <iconset>
-        <normaloff>:/Images/previous.png</normaloff>:/Images/previous.png</iconset>
+       <iconset resource="AppResources.qrc">
+        <normaloff>:/Images/Resources/Previous.png</normaloff>:/Images/Resources/Previous.png</iconset>
       </property>
      </widget>
     </item>
@@ -186,12 +189,15 @@ p, li { white-space: pre-wrap; }
     </item>
     <item>
      <widget class="QPushButton" name="NextButton">
+      <property name="styleSheet">
+       <string notr="true">border:0px;</string>
+      </property>
       <property name="text">
        <string/>
       </property>
       <property name="icon">
-       <iconset>
-        <normaloff>:/Images/next.png</normaloff>:/Images/next.png</iconset>
+       <iconset resource="AppResources.qrc">
+        <normaloff>:/Images/Resources/next.png</normaloff>:/Images/Resources/next.png</iconset>
       </property>
       <property name="autoDefault">
        <bool>false</bool>
@@ -203,6 +209,9 @@ p, li { white-space: pre-wrap; }
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="AppResources.qrc"/>
+  <include location="AppResources.qrc"/>
+ </resources>
  <connections/>
 </ui>

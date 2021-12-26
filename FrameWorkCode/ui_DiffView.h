@@ -63,8 +63,9 @@ public:
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
         PrevButton = new QPushButton(centralWidget);
         PrevButton->setObjectName(QStringLiteral("PrevButton"));
+        PrevButton->setStyleSheet(QStringLiteral("border: 0px; "));
         QIcon icon;
-        icon.addFile(QStringLiteral(":/Images/previous.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/Images/Resources/Previous.png"), QSize(), QIcon::Normal, QIcon::Off);
         PrevButton->setIcon(icon);
 
         horizontalLayout_3->addWidget(PrevButton);
@@ -173,8 +174,9 @@ public:
 
         NextButton = new QPushButton(centralWidget);
         NextButton->setObjectName(QStringLiteral("NextButton"));
+        NextButton->setStyleSheet(QStringLiteral("border:0px;"));
         QIcon icon1;
-        icon1.addFile(QStringLiteral(":/Images/next.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QStringLiteral(":/Images/Resources/next.png"), QSize(), QIcon::Normal, QIcon::Off);
         NextButton->setIcon(icon1);
         NextButton->setAutoDefault(false);
 

@@ -33,5 +33,7 @@
         <file>Resources/Old Icons/spellcheck.png</file>
         <file>Resources/Old Icons/AllFont.png</file>
         <file>Resources/Old Icons/SaveLoadPwords1.png</file>
+        <file>Resources/next.png</file>
+        <file>Resources/Previous.png</file>
     </qresource>
 </RCC>
