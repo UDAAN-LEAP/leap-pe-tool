@@ -59,7 +59,6 @@
 #endif
 #include <editdistance.h>
 #include <QRegularExpressionMatch>
-#include<QStatusBar>
 #include "undoglobalreplace.h"
 #include "globalreplacepreview.h"
 #include "qtextdocumentfragment.h"
@@ -4611,7 +4610,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
              QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
              if (pressedFlag == 1)
              {
-                 statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
+                 //statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
                  QPointF position =  ui->graphicsView->mapToScene( mEvent->pos() );
                  QRgb rgb = imageOrig.pixel( ( int )position.x(), ( int )position.y() );
 
