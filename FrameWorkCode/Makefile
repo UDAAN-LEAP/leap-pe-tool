@@ -591,43 +591,41 @@ qrc_AppResources.cpp: AppResources.qrc \
 		ShortcutGuide.jpg \
 		AppResources.qrc \
 		spinbar-tp.gif \
-		Resources/underline\ 1.png \
-		Resources/save.png \
-		Resources/all\ font\ properties\ 2.png \
-		Resources/add.png \
-		Resources/next.png \
-		Resources/underline\ \ 2.png \
-		Resources/redo.png \
-		Resources/align\ para.png \
-		Resources/all\ font\ properties\ 1.png \
-		Resources/Previous.png \
-		Resources/NExt.png \
-		Resources/spl\ symbol.png \
-		Resources/next\ page.png \
-		Resources/align\ right.png \
-		Resources/preivious.png \
-		Resources/ittalic.png \
-		Resources/subscpt.png \
-		Resources/preivious\ page.png \
-		Resources/bold.png \
-		Resources/tospl.png \
 		Resources/help.png \
-		Resources/highlighter.png \
-		Resources/zoom\ in.png \
-		Resources/save\ &load\ p\ words.png \
-		Resources/superscrpt.png \
-		Resources/spell\ check.png \
+		Resources/underline\ \ 2.png \
+		Resources/save\ as.png \
+		Resources/ittalic.png \
 		Resources/undo.png \
 		Resources/allign\ left.png \
+		Resources/highlighter.png \
 		Resources/align\ center.png \
-		Resources/find\ 2.png \
-		Resources/zoom\ out.png \
-		Resources/save\ as.png \
-		Resources/load\ data.png \
+		Resources/tospl.png \
+		Resources/bold.png \
+		Resources/spl\ symbol.png \
+		Resources/subscpt.png \
+		Resources/align\ para.png \
 		Resources/open\ file.png \
-		Resources/find\ 1.png \
-		Resources/english\ to\ hindi.png \
+		Resources/save\ &load\ p\ words.png \
+		Resources/align\ right.png \
+		Resources/add.png \
 		Resources/font\ black.png \
+		Resources/next\ page.png \
+		Resources/Previous.png \
+		Resources/all\ font\ properties\ 1.png \
+		Resources/all\ font\ properties\ 2.png \
+		Resources/underline\ 1.png \
+		Resources/superscrpt.png \
+		Resources/preivious\ page.png \
+		Resources/save.png \
+		Resources/find\ 1.png \
+		Resources/find\ 2.png \
+		Resources/next.png \
+		Resources/redo.png \
+		Resources/zoom\ in.png \
+		Resources/load\ data.png \
+		Resources/zoom\ out.png \
+		Resources/spell\ check.png \
+		Resources/english\ to\ hindi.png \
 		Resources/Old\ Icons/toSlp1.png \
 		Resources/Old\ Icons/spellcheck.png \
 		Resources/Old\ Icons/AllFont.png \
@@ -10677,8 +10675,6 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QApplication \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qapplication.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qdesktopwidget.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QButtonGroup \
-		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qbuttongroup.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QGridLayout \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QHBoxLayout \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QHeaderView \
@@ -10753,6 +10749,8 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qspinbox.h \
 		ProjectHierarchyWindow.h \
 		ui_ProjectHierarchyWindow.h \
+		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QButtonGroup \
+		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qbuttongroup.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QFormLayout \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qformlayout.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QLayout \
