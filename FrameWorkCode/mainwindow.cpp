@@ -5169,15 +5169,14 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
  * \return
  * spawns a MessageBox and returns true if Replace is chosen
  */
-bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word, int &chk, bool &replaceFromTSVfile){
+bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word, int &chk){
     chk=0;
     QMessageBox messageBox(this);
    // QDialog dialog(this);
     QCheckBox *cb = new QCheckBox("Make changes to all pages");
     //dialog.setWindowTitle("Check Formatting");
     //QAbstractButton *escButton = messageBox.addButton(tr("Esc"), QMessageBox::ActionRole);
-    //QAbstractButton *previewButton = messageBox.addButton(tr("Preview"), QMessageBox::ActionRole);
-    QAbstractButton *uploadButton = messageBox.addButton(tr("Upload"), QMessageBox::ActionRole);
+    //QAbstractButton *previewButton = messageBox.addButton(tr("Preview"), QMessageBox::ActionRole);   
     QAbstractButton *replaceButton = messageBox.addButton(tr("Yes"), QMessageBox::ActionRole);
     QAbstractButton *cancelButton = messageBox.addButton(tr("No"), QMessageBox::RejectRole);
 
@@ -5197,12 +5196,6 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
         chk=1;
     }
 
-    if (messageBox.clickedButton() == uploadButton)
-    {
-        replaceFromTSVfile = true;
-        messageBox.close();
-        return false;
-    }
     if (messageBox.clickedButton() == replaceButton)
         return true;
 
@@ -5218,7 +5211,7 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
  * \return
  * spawns a checklist and returns a Qmap of selected pairs
  */
-QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords, QVector<int> *replaceInAllPages, bool *replaceFromTSVfile){
+QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords, QVector<int> *replaceInAllPages){
     QMap <QString, QString> globalReplacementMap;
     GlobalReplaceDialog grDialog(changedWords, this);
 
@@ -5237,10 +5230,6 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
         globalReplacementMap = grDialog.getFilteredGlobalReplacementMap();
     }
 
-    if (grDialog.uploadFromTSVfile())
-    {
-        *replaceFromTSVfile = true;
-    }
     return globalReplacementMap;
 
 }
@@ -5257,8 +5246,6 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
     QMap<QString, QString> replaceInAllPages_Map;
     QMap<QString, QString> replaceInUneditedPages_Map;
-
-    bool replaceFromTSVfile = false;
 
     /*
      * Stores values in 0s and 1s. Eg: {1, 0, 0, 1}. 1 means that the word corresponding the map should be replaced in all pages
@@ -5278,7 +5265,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     if (noOfChangedWords == 1){
 
         QStringList changesList = changedWords[0].split(" ");
-        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3], check, replaceFromTSVfile);
+        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3], check);
 //        qDebug()<<"Check"<<check;
         if (updateGlobalCPairs)
             globalReplacementMap[changesList[1]] = changesList[3];
@@ -5286,7 +5273,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     //! if there is more than 1 change spawn a checklist and get the checked pairs only
     else if(noOfChangedWords > 1){
 
-        globalReplacementMap = globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords, &replaceInAllPages, &replaceFromTSVfile);
+        globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords, &replaceInAllPages);
 
         QMap<QString, QString>::iterator it;
         it = globalReplacementMap.begin();
@@ -5298,11 +5285,6 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
                 replaceInUneditedPages_Map.insert(it.key(), it.value());
             it++;
         }
-    }
-
-    if (replaceFromTSVfile)
-    {
-        replaceInAllFilesFromTSVfile();
     }
 
 
@@ -7160,5 +7142,8 @@ bool MainWindow::checkForValidTSVfile(QFile & file)
 }
 
 
-
+void MainWindow::on_actionUpload_triggered()
+{
+    replaceInAllFilesFromTSVfile();
+}
 

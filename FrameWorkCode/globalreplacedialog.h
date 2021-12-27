@@ -20,7 +20,6 @@ public:
     explicit GlobalReplaceDialog(QVector <QString> replacedWords,QWidget *parent = nullptr);
     QVector<int> getStatesOfCheckboxes();
     bool clicked_applyButton();
-    bool uploadFromTSVfile();
     ~GlobalReplaceDialog();
 signals:
     void fetchCheckedlist(QMap <QString, QString>,QVector<int> allPages);
@@ -30,7 +29,6 @@ private slots:
     void on_applyButton_clicked();
     void displayOriginalList(QVector <QString> replacedWords);
     void leftCheckBoxStateChanged(QListWidgetItem*);
-    void on_uploadButton_clicked();
     void on_previewButton_clicked();
 
 public slots:
@@ -45,7 +43,6 @@ private:
     QCheckBox *box;
     QVBoxLayout *vbox = new QVBoxLayout;
     bool applyButtonIsClicked = false;
-    bool isUploadFromTSVfile = false;
 };
 
 #endif // GLOBALREPLACEDIALOG_H

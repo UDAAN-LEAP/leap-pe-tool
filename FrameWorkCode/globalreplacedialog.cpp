@@ -168,17 +168,6 @@ bool GlobalReplaceDialog::clicked_applyButton()
     return applyButtonIsClicked;
 }
 
-void GlobalReplaceDialog::on_uploadButton_clicked()
-{
-    isUploadFromTSVfile = true;
-    applyButtonIsClicked = false;
-    this->close();
-}
-
-bool GlobalReplaceDialog::uploadFromTSVfile()
-{
-    return isUploadFromTSVfile;
-}
 
 void GlobalReplaceDialog::on_previewButton_clicked()
 {

@@ -12,9 +12,7 @@
   </property>
   <property name="font">
    <font>
-    <family>WorkSans,Sans</family>
     <pointsize>-1</pointsize>
-    <weight>50</weight>
     <italic>false</italic>
     <bold>false</bold>
    </font>
@@ -232,7 +230,7 @@ QTabWidget::pane {
 </string>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -327,9 +325,7 @@ background-color: rgb(136, 138, 133);
                 </property>
                 <property name="font">
                  <font>
-                  <family>WorkSans,Sans</family>
                   <pointsize>-1</pointsize>
-                  <weight>50</weight>
                   <italic>false</italic>
                   <bold>false</bold>
                  </font>
@@ -569,9 +565,7 @@ QScrollBar::sub-line:vertical {
              </property>
              <property name="font">
               <font>
-               <family>WorkSans,Sans</family>
                <pointsize>-1</pointsize>
-               <weight>50</weight>
                <italic>false</italic>
                <bold>false</bold>
               </font>
@@ -620,9 +614,9 @@ QScrollBar::sub-line:vertical {
              </property>
              <property name="html">
               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'WorkSans,Sans'; font-size:15px; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'WorkSans','Sans'; font-size:15px; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="acceptRichText">
@@ -710,9 +704,6 @@ QScrollBar::sub-line:horizontal {
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
-         </property>
-         <property name="renderHints">
-          <set>QPainter::NonCosmeticDefaultPen</set>
          </property>
          <property name="dragMode">
           <enum>QGraphicsView::ScrollHandDrag</enum>
@@ -962,7 +953,7 @@ background: grey;
      <x>0</x>
      <y>0</y>
      <width>1366</width>
-     <height>51</height>
+     <height>50</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1068,6 +1059,7 @@ QMenu::item:selected{
     <addaction name="actionFind_and_Replace"/>
     <addaction name="separator"/>
     <addaction name="actionUndo_Global_Replace"/>
+    <addaction name="actionUpload"/>
    </widget>
    <widget class="QMenu" name="menuDownload">
     <property name="styleSheet">
@@ -1934,9 +1926,7 @@ padding: 5px;
     <string>Sanskrit</string>
    </property>
    <property name="font">
-    <font>
-     <family>Sans</family>
-    </font>
+    <font/>
    </property>
   </action>
   <action name="actionHindi">
@@ -1969,10 +1959,14 @@ padding: 5px;
     <string>Undo Global Replace</string>
    </property>
   </action>
+  <action name="actionUpload">
+   <property name="text">
+    <string>Upload</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
  </resources>
