@@ -5263,12 +5263,20 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
     //! if only one change spawn checkbox
     if (noOfChangedWords == 1){
-
-        QStringList changesList = changedWords[0].split(" ");
-        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3], check);
-//        qDebug()<<"Check"<<check;
+        QRegExp sep("\\s*=>*");
+        QStringList changesList = changedWords[0].split(sep);
+        qDebug()<<"Separator"<<sep;
+        qDebug()<<"changesList[0]"<<changesList[0];
+        qDebug()<<"changesList[1]"<<changesList[1];
+        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[0], changesList[1],check);
         if (updateGlobalCPairs)
-            globalReplacementMap[changesList[1]] = changesList[3];
+            globalReplacementMap[changesList[0]] = changesList[1];
+
+//        QStringList changesList = changedWords[0].split(" ");
+//        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3], check);
+////        qDebug()<<"Check"<<check;
+//        if (updateGlobalCPairs)
+//            globalReplacementMap[changesList[1]] = changesList[3];
     }
     //! if there is more than 1 change spawn a checklist and get the checked pairs only
     else if(noOfChangedWords > 1){

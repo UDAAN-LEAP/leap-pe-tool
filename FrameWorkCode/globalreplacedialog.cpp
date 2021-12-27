@@ -44,8 +44,10 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords){
     ui->groupBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     for (int i = 0; i < replacedWords.size(); ++i){
-        QStringList changedList = replacedWords[i].split(" ");
-        ui -> listWidget ->addItem(changedList[1]+ " -> " + changedList[3]);
+        QRegExp sep("\\s*=>*");
+        QStringList changedList = replacedWords[i].split(sep);
+        //QStringList changedList = replacedWords[i].split(" ");
+        ui -> listWidget ->addItem(changedList[0]+ " -> " + changedList[1]);
 
         // Creating & adding checkboxes in the groupbox
         box = new QCheckBox(this);
@@ -85,8 +87,10 @@ void GlobalReplaceDialog::on_applyButton_clicked()
 
     foreach (QListWidgetItem *item, items){
         if(item->checkState() == Qt::Checked){
-            QStringList string = item->text().split(" ");
-            this->filteredGlobalReplacementMap[string[0]] = string[2];
+            QRegExp sep("\\s*->*");
+            QStringList string = item->text().split(sep);
+            //QStringList string = item->text().split(" ");
+            this->filteredGlobalReplacementMap[string[0]] = string[1];
         }
     }
 
