@@ -13,6 +13,7 @@ GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidge
 {
 
     ui->setupUi(this);
+
     setWindowTitle("Select the words you want to replace globally");
     displayOriginalList(replacedWords);
     QObject::connect(ui->listWidget, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(highlightChecked(QListWidgetItem*)));
@@ -42,7 +43,7 @@ QMap <QString, QString> GlobalReplaceDialog::getFilteredGlobalReplacementMap(){
 
 
 void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords){
-    ui->groupBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    ui->groupBox->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 
     for (int i = 0; i < replacedWords.size(); ++i){
         QRegExp sep("\\s*=>*");
@@ -121,16 +122,18 @@ void GlobalReplaceDialog::on_applyButton_clicked()
 void GlobalReplaceDialog::leftCheckBoxStateChanged(QListWidgetItem* item)
 {
     int itemRow;
-
     itemRow = ui->listWidget->row(item);
     if (item->checkState() == Qt::Checked)
     {
         wordSelection_CheckboxesState[itemRow] = 1;
         ui->groupBox->setVisible(true);
-        ui->groupBox->setTitle("Replace in all pages");
+        replaceInAllFiles_Checkboxes.at(itemRow)->setText(item->text());
+        ui->groupBox->setTitle("Replace in all pages?");
         replaceInAllFiles_Checkboxes.at(itemRow)->setEnabled(true);
-        replaceInAllFiles_Checkboxes.at(itemRow)->setStyleSheet("QCheckBox::indicator:unchecked {border: 1px solid white}");
-        return;
+        replaceInAllFiles_Checkboxes.at(itemRow)->setStyleSheet("color: black;"
+                                                                "background-color: white;");
+        ui->groupBox->setStyleSheet("background-color : white;"
+                                    "color: black;");
     }
     else if (item->checkState() == Qt::Unchecked)
     {

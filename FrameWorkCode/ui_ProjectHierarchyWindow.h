@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ProjectHierarchyWindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,9 +10,7 @@
 #define UI_PROJECTHIERARCHYWINDOW_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QTreeView>
@@ -29,15 +27,15 @@ public:
     void setupUi(QWidget *ProjectHierarchyWindow)
     {
         if (ProjectHierarchyWindow->objectName().isEmpty())
-            ProjectHierarchyWindow->setObjectName(QStringLiteral("ProjectHierarchyWindow"));
+            ProjectHierarchyWindow->setObjectName(QString::fromUtf8("ProjectHierarchyWindow"));
         ProjectHierarchyWindow->resize(714, 525);
-        ProjectHierarchyWindow->setStyleSheet(QStringLiteral("font: 11pt \"Work Sans\";"));
+        ProjectHierarchyWindow->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
         gridLayout = new QGridLayout(ProjectHierarchyWindow);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         treeView = new QTreeView(ProjectHierarchyWindow);
-        treeView->setObjectName(QStringLiteral("treeView"));
+        treeView->setObjectName(QString::fromUtf8("treeView"));
 
         gridLayout->addWidget(treeView, 0, 0, 1, 1);
 
@@ -49,7 +47,7 @@ public:
 
     void retranslateUi(QWidget *ProjectHierarchyWindow)
     {
-        ProjectHierarchyWindow->setWindowTitle(QApplication::translate("ProjectHierarchyWindow", "ProjectHierarchyWindow", Q_NULLPTR));
+        ProjectHierarchyWindow->setWindowTitle(QApplication::translate("ProjectHierarchyWindow", "ProjectHierarchyWindow", nullptr));
     } // retranslateUi
 
 };

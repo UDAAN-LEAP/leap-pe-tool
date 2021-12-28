@@ -45,6 +45,18 @@ QScrollBar::sub-line:vertical {
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <widget class="QLabel" name="mylabel">
+     <property name="styleSheet">
+      <string notr="true">background-color:rgb(255, 255, 255);
+color: black;
+</string>
+     </property>
+     <property name="text">
+      <string>Select words to replace</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QListWidget" name="listWidget">
