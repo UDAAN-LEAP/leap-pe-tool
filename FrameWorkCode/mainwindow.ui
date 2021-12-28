@@ -1323,11 +1323,10 @@ padding: 5px;
   <action name="actionLoadGDocPage">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Resources/save &amp;load p words.png</normaloff>
-     <normalon>:/Images/SaveLoadPwords1.png</normalon>:/Images/Resources/save &amp;load p words.png</iconset>
+     <normaloff>:/Images/Resources/save load p words.png</normaloff>:/Images/Resources/save load p words.png</iconset>
    </property>
    <property name="text">
-    <string>Save&amp;LoadPWords(CntrlShftP)</string>
+    <string>SaveLoadPWords(CntrlShftP)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+P</string>
