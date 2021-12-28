@@ -25,11 +25,12 @@ signals:
     void fetchCheckedlist(QMap <QString, QString>,QVector<int> allPages);
 
 private slots:
-    void on_cancelButton_clicked();
+   // void on_cancelButton_clicked();
     void on_applyButton_clicked();
     void displayOriginalList(QVector <QString> replacedWords);
     void leftCheckBoxStateChanged(QListWidgetItem*);
     void on_previewButton_clicked();
+    void on_pushButton_clicked();
 
 public slots:
     void highlightChecked(QListWidgetItem* item);

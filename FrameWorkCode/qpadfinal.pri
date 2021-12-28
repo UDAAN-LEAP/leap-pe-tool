@@ -77,7 +77,8 @@ HEADERS += ./Filters.h \
     ./zoom.h \
     ./ProjectWizard.h \
     ./CreateProjectPage.h \
-    $$PWD/globalreplacepreview.h
+    $$PWD/globalreplacepreview.h \
+    $$PWD/globalreplaceinformation.h
 SOURCES += ./DiffView.cpp \
     $$PWD/SimpleMail/emailaddress.cpp \
     $$PWD/SimpleMail/mimeattachment.cpp \
@@ -118,7 +119,8 @@ SOURCES += ./DiffView.cpp \
     ./zoom.cpp \
     ./ProjectWizard.cpp \
     ./CreateProjectPage.cpp \
-    $$PWD/globalreplacepreview.cpp
+    $$PWD/globalreplacepreview.cpp \
+    $$PWD/globalreplaceinformation.cpp
 FORMS += ./DiffView.ui \
     $$PWD/loadingspinner.ui \
     $$PWD/shortcutguidedialog.ui \
@@ -133,7 +135,8 @@ FORMS += ./DiffView.ui \
     ./loginpageview.ui \
     ./mainwindow.ui \
     ./resizeimageview.ui \
-    $$PWD/globalreplacepreview.ui
+    $$PWD/globalreplacepreview.ui \
+    $$PWD/globalreplaceinformation.ui
 RESOURCES +=
 
 DISTFILES += \

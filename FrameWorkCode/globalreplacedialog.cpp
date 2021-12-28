@@ -4,7 +4,8 @@
 #include <QDebug>
 #include "globalreplacepreview.h"
 #include "ui_globalreplacepreview.h"
-
+#include "globalreplaceinformation.h"
+#include <QMessageBox>
 
 GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidget *parent) :
     QDialog(parent),
@@ -82,25 +83,33 @@ void GlobalReplaceDialog::highlightChecked(QListWidgetItem *item){
 
 void GlobalReplaceDialog::on_applyButton_clicked()
 {
-    applyButtonIsClicked = true;
-    QList<QListWidgetItem *> items = ui->listWidget->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard); //get all items
+    QMessageBox replace;
+    replace.setWindowTitle("Save and Replace");
+    replace.setIcon(QMessageBox::Question);
+    replace.setInformativeText("Selected words will be saved and replaced");
+    QPushButton *confirmButton = replace.addButton(tr("Confirm"),QMessageBox::AcceptRole);
+    replace.exec();
+    if(replace.clickedButton() == confirmButton)
+    {
+      applyButtonIsClicked = true;
+      QList<QListWidgetItem *> items = ui->listWidget->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard); //get all items
 
-    foreach (QListWidgetItem *item, items){
-        if(item->checkState() == Qt::Checked){
-            QRegExp sep("\\s*->*");
-            QStringList string = item->text().split(sep);
-            //QStringList string = item->text().split(" ");
-            this->filteredGlobalReplacementMap[string[0]] = string[1];
-        }
+      foreach (QListWidgetItem *item, items){
+          if(item->checkState() == Qt::Checked){
+              QRegExp sep("\\s*->*");
+              QStringList string = item->text().split(sep);
+              //QStringList string = item->text().split(" ");
+              this->filteredGlobalReplacementMap[string[0]] = string[1];
+         }
+     }
+      this->close();
     }
-
-    this->close();
 }
 
-void GlobalReplaceDialog::on_cancelButton_clicked()
-{
-    this->close();
-}
+//void GlobalReplaceDialog::on_cancelButton_clicked()
+//{
+//    this->close();
+//}
 
 /*!
  * \fn "GlobalReplaceDialog::leftCheckBoxStateChanged"
@@ -194,4 +203,10 @@ void GlobalReplaceDialog::on_previewButton_clicked()
     }
 
     emit fetchCheckedlist(obj,allPages);
+}
+
+void GlobalReplaceDialog::on_pushButton_clicked()
+{
+    globalReplaceInformation info(this);
+    info.exec();
 }
