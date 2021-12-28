@@ -47,7 +47,7 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords){
 
     for (int i = 0; i < replacedWords.size(); ++i){
         QRegExp sep("\\s*=>*");
-        QStringList changedList = replacedWords[i].split(sep);
+        QStringList changedList = replacedWords[i].split(sep, QString::SkipEmptyParts );
         //QStringList changedList = replacedWords[i].split(" ");
         ui -> listWidget ->addItem(changedList[0]+ " -> " + changedList[1]);
 
@@ -98,13 +98,13 @@ void GlobalReplaceDialog::on_applyButton_clicked()
       foreach (QListWidgetItem *item, items){
           if(item->checkState() == Qt::Checked){
               QRegExp sep("\\s*->*");
-              QStringList string = item->text().split(sep);
+              QStringList string = item->text().split(sep, QString::SkipEmptyParts );
               //QStringList string = item->text().split(" ");
               this->filteredGlobalReplacementMap[string[0]] = string[1];
          }
-     }
-      this->close();
+     }      
     }
+    this->close();
 }
 
 //void GlobalReplaceDialog::on_cancelButton_clicked()
@@ -195,8 +195,9 @@ void GlobalReplaceDialog::on_previewButton_clicked()
     {
         if(item->checkState() == Qt::Checked)
           {
-            QStringList string = item->text().split(" ");
-            obj[string[0]] = string[2];
+            QRegExp sep("\\s*->*");
+            QStringList string = item->text().split(sep, QString::SkipEmptyParts );
+            obj[string[0]] = string[1];
           }
     }
 

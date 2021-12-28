@@ -1561,7 +1561,7 @@ public:
         action1->setText(QApplication::translate("MainWindow", "1| ", nullptr));
         actionSanskrit_2->setText(QApplication::translate("MainWindow", "Sanskrit", nullptr));
         actionUndo_Global_Replace->setText(QApplication::translate("MainWindow", "Undo Global Replace", nullptr));
-        actionUpload->setText(QApplication::translate("MainWindow", "Upload", nullptr));
+        actionUpload->setText(QApplication::translate("MainWindow", "Upload and Replace", nullptr));
         pushButton_2->setText(QApplication::translate("MainWindow", "Resize Image", nullptr));
         pushButton->setText(QApplication::translate("MainWindow", "Mark Regions", nullptr));
         viewComments->setText(QApplication::translate("MainWindow", "Comments Accuracy", nullptr));

@@ -5264,7 +5264,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     //! if only one change spawn checkbox
     if (noOfChangedWords == 1){
         QRegExp sep("\\s*=>*");
-        QStringList changesList = changedWords[0].split(sep);
+        QStringList changesList = changedWords[0].split(sep, QString::SkipEmptyParts );
         qDebug()<<"Separator"<<sep;
         qDebug()<<"changesList[0]"<<changesList[0];
         qDebug()<<"changesList[1]"<<changesList[1];
@@ -7066,7 +7066,7 @@ void MainWindow::replaceInAllFilesFromTSVfile()
 
     if (( !file.exists() ) || ( !checkForValidTSVfile(file) ))
     {
-        QMessageBox::warning(this, "Error", "Invalid file", QMessageBox::Ok, QMessageBox::Ok);
+        QMessageBox::warning(this, "Error", "Incorrect file format", QMessageBox::Ok, QMessageBox::Ok);
         return;
     }
 
@@ -7081,7 +7081,7 @@ void MainWindow::replaceInAllFilesFromTSVfile()
     if (header[0] != "Source" || header[1] != "Target")
     {
         file.close();
-        QMessageBox::warning(this, "Error", "Invalid file", QMessageBox::Ok, QMessageBox::Ok);
+        QMessageBox::warning(this, "Error", "Incorrect file format", QMessageBox::Ok, QMessageBox::Ok);
         return;
     }
 

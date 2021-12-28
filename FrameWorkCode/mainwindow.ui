@@ -1966,12 +1966,13 @@ padding: 5px;
   </action>
   <action name="actionUpload">
    <property name="text">
-    <string>Upload</string>
+    <string>Upload and Replace</string>
    </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
+  <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
  </resources>
