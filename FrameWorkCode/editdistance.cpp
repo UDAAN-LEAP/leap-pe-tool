@@ -67,9 +67,12 @@ QVector <QString> editDistance(QString a, QString b)
     backtrace(s1,s2,solution);
     QVector <QString> something = phrase_heuristics(s1,s2);
     qDebug()<<"test"<<something;
-   /* for (int i = 0;i < s1.count()+1;i++)
+    for (int i = 0;i < s1.count()+1;i++)
         delete[] solution[i];
-    delete[] solution;*/
+    delete[] solution;
+
+
+
     return something;
 }
 
@@ -202,6 +205,7 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
                  st2 += " ";
             }
             if(!optimalPath.contains(st1 + "=>" + st2)){
+                if(!(st1 == st2))
                 optimalPath.append(st1 + "=>" + st2 );
             }
             //qDebug() <<"Substitution"<< st1 << " => " << st2;
@@ -222,6 +226,7 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
                      st1 += " ";
                 }
                 if(!optimalPath.contains(st1 + "=>" + st2)){
+                    if(!(st1 == st2))
                     optimalPath.append(st1 + "=>" + st2 );
                 }
                 //CPair_editDis[st1.toStdString()] = st2.toStdString();
@@ -240,6 +245,7 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
                      st2 += " ";
                 }
                 if(!optimalPath.contains(st1 + "=>" + st2)){
+                    if(!(st1 == st2))
                     optimalPath.append(st1 + "=>" + st2 );
                 }
                 //CPair_editDis[st1.toStdString()] = st2.toStdString();
@@ -253,6 +259,7 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
 
 
     }
+    qDebug() << "optimal =>>> " << optimalPath;
     return optimalPath;
 }
 
