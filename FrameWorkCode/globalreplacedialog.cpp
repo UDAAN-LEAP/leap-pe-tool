@@ -16,6 +16,7 @@ GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidge
 
     setWindowTitle("Select the words you want to replace globally");
     displayOriginalList(replacedWords);
+    //ui->listWidget->insertItem(,"Replacement Words");
     QObject::connect(ui->listWidget, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(highlightChecked(QListWidgetItem*)));
     QObject::connect(this , SIGNAL(fetchCheckedlist(QMap<QString,QString>,  QVector<int>)), parent, SLOT(globalReplacePreviewfn(QMap<QString,QString>,QVector<int>)));
     QVBoxLayout *listLayout = new QVBoxLayout;
@@ -24,9 +25,9 @@ GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidge
     ui->groupBox->setLayout(vbox);
     ui->horizontalLayout_2->setAlignment(ui->groupBox, Qt::AlignTop);
     vbox->setAlignment(ui->groupBox, Qt::AlignTop);
-    vbox->setSpacing(3);
-    vbox->setMargin(0);
-    vbox->setContentsMargins(0, 0, 0, 0);
+    vbox->setSpacing(12);
+    vbox->setMargin(12);
+   // vbox->setContentsMargins(0, 0, 0, 0);
 }
 
 GlobalReplaceDialog::~GlobalReplaceDialog()
@@ -43,11 +44,11 @@ QMap <QString, QString> GlobalReplaceDialog::getFilteredGlobalReplacementMap(){
 
 
 void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords){
-    ui->groupBox->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    //ui->groupBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     for (int i = 0; i < replacedWords.size(); ++i){
         QRegExp sep("\\s*=>*");
-        QStringList changedList = replacedWords[i].split(sep, QString::SkipEmptyParts );
+        QStringList changedList = replacedWords[i].split(sep);
         //QStringList changedList = replacedWords[i].split(" ");
         ui -> listWidget ->addItem(changedList[0]+ " -> " + changedList[1]);
 
@@ -57,6 +58,7 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords){
         box->setCheckState(Qt::Unchecked);
         box->setStyleSheet("QCheckBox::indicator:unchecked {border: 0px solid white}");
         box->setEnabled(false);
+
         vbox->addWidget(box);
         vbox->setAlignment(box, Qt::AlignTop);
         // Inserting addresses of checkboxes in the vector so that we can change the state of the same accordingly
@@ -98,13 +100,13 @@ void GlobalReplaceDialog::on_applyButton_clicked()
       foreach (QListWidgetItem *item, items){
           if(item->checkState() == Qt::Checked){
               QRegExp sep("\\s*->*");
-              QStringList string = item->text().split(sep, QString::SkipEmptyParts );
+              QStringList string = item->text().split(sep);
               //QStringList string = item->text().split(" ");
               this->filteredGlobalReplacementMap[string[0]] = string[1];
          }
-     }      
+     }
+      this->close();
     }
-    this->close();
 }
 
 //void GlobalReplaceDialog::on_cancelButton_clicked()
@@ -127,16 +129,18 @@ void GlobalReplaceDialog::leftCheckBoxStateChanged(QListWidgetItem* item)
     {
         wordSelection_CheckboxesState[itemRow] = 1;
         ui->groupBox->setVisible(true);
-        replaceInAllFiles_Checkboxes.at(itemRow)->setText(item->text());
-        ui->groupBox->setTitle("Replace in all pages?");
+        ui->groupBox->setMinimumHeight(ui->groupBox_2->height());
+        vbox->addStretch(1);
+        ui->groupBox->setTitle("Replace in all pages");
         replaceInAllFiles_Checkboxes.at(itemRow)->setEnabled(true);
         replaceInAllFiles_Checkboxes.at(itemRow)->setStyleSheet("color: black;"
-                                                                "background-color: white;");
+                                                                "background-color: white; padding-left:75px");
         ui->groupBox->setStyleSheet("background-color : white;"
                                     "color: black;");
     }
     else if (item->checkState() == Qt::Unchecked)
     {
+        ui->groupBox->setMaximumHeight(ui->listWidget->height());
         wordSelection_CheckboxesState[itemRow] = 0;
         replaceInAllFiles_Checkboxes.at(itemRow)->setCheckState(Qt::Unchecked);
         replaceInAllFiles_Checkboxes.at(itemRow)->setEnabled(false);
@@ -195,9 +199,8 @@ void GlobalReplaceDialog::on_previewButton_clicked()
     {
         if(item->checkState() == Qt::Checked)
           {
-            QRegExp sep("\\s*->*");
-            QStringList string = item->text().split(sep, QString::SkipEmptyParts );
-            obj[string[0]] = string[1];
+            QStringList string = item->text().split(" ");
+            obj[string[0]] = string[2];
           }
     }
 

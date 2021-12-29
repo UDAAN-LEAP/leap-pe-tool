@@ -7,7 +7,8 @@ globalReplaceInformation::globalReplaceInformation(QWidget *parent) :
     ui(new Ui::globalReplaceInformation)
 {
     ui->setupUi(this);
-  //  ui->tableWidget->horizontalHeader()->resizeSection(1,400);
+    this->setFixedSize(1080,230);
+    ui->tableWidget->setFocusPolicy(Qt::NoFocus);
     ui->tableWidget->resizeColumnsToContents();
     ui->tableWidget->resizeRowsToContents();
  }

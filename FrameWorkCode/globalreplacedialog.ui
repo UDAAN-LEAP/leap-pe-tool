@@ -45,26 +45,33 @@ QScrollBar::sub-line:vertical {
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="mylabel">
-     <property name="styleSheet">
-      <string notr="true">background-color:rgb(255, 255, 255);
-color: black;
-</string>
-     </property>
-     <property name="text">
-      <string>Select words to replace</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QListWidget" name="listWidget">
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>1</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="styleSheet">
-        <string notr="true">QListWidget{background-color: white; color:black;}
+        <string notr="true">color:black;
+background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="title">
+        <string>Choose the words to be replaced</string>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QListWidget" name="listWidget">
+          <property name="styleSheet">
+           <string notr="true">QListWidget{background-color: white; color:black; border:0px;}
 QGraphicsView{background-color:white;}
 </string>
-       </property>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
      <item>
