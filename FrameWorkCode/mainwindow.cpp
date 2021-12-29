@@ -72,6 +72,7 @@ QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName;
 map<QString, QString> gInitialTextHtml;
 QString gTimeLogLocation;
 map<QString, int> timeLog;
+QMap<QString, QJsonArray> newTimeLog; // Introducing newTimeLog for storing more than one jsonvalue.
 vector<QString> vs; vector<int> vx, vy, vw, vh, vright;
 map<string, vector<string>> SRules;
 map<string, string> TopConfusions;
@@ -315,14 +316,20 @@ void MainWindow::SaveTimeLog()
 {
     QJsonObject mainObj;
     QJsonObject page;
-    QDateTime current = QDateTime::currentDateTime();
-    QString time = current.toString();
-    for (auto i = timeLog.begin(); i!=timeLog.end(); i++ )
+
+//    for (auto i = timeLog.begin(); i!=timeLog.end(); i++ )
+//    {
+//        page["directory"] = i->first;
+//        page["seconds"] = i->second;
+//        page["Date/Time"]=time;
+//        mainObj.insert(i->first, page);
+//    }
+    for (auto i = newTimeLog.begin(); i != newTimeLog.end(); i++)
     {
-        page["directory"] = i->first;
-        page["seconds"] = i->second;
-        page["Date/Time"]=time;
-        mainObj.insert(i->first, page);
+        page["directory"] = i.key();
+        page["seconds"] = i.value().at(0).toInt();
+        page["Date/Time"] = i.value().at(1).toString();
+        mainObj.insert(i.key(), page);
     }
     writeJsonFile(gTimeLogLocation, mainObj);
 }
@@ -336,7 +343,8 @@ void MainWindow::DisplayTimeLog()
     if(mRole == "Verifier" && mRole != currentVersion)
         currentVersion = QString::number(currentVersion.toInt() - 1);
 
-    gSeconds = timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion];
+//    gSeconds = timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion];
+    gSeconds = newTimeLog.value(mRole +":"+ gCurrentPageName +":V-"+ currentVersion).at(0).toInt();
     int nMilliseconds = myTimer.elapsed();
     gSeconds += nMilliseconds / 1000;
     int mins = gSeconds / 60;
@@ -874,7 +882,10 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         {
             QString directory = val.toObject().value("directory").toString();
             int seconds    = val.toObject().value("seconds").toInt();
-            timeLog[directory] = seconds;
+            QString dateTime = val.toObject().value("Date/Time").toString();
+
+            newTimeLog[directory] = {seconds, dateTime};
+//            timeLog[directory] = seconds;
         }
 
         //bool isSet = QDir::setCurrent(mProject.GetDir().absolutePath() + "/CorrectorOutput") ; //Change application Directory to any subfolder of mProject folder for Image Insertion feature.
@@ -1168,7 +1179,9 @@ void MainWindow::on_actionSave_triggered()
     if(mRole == "Verifier" && mRole != currentVersion)
         currentVersion = QString::number(currentVersion.toInt() - 1);   //Version is decremented for Verifier
 
-    timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion]=gSeconds;
+//    timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion]=gSeconds;
+    QString dateTime = QDateTime::currentDateTime().toString();
+    newTimeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion] = {gSeconds, dateTime};
 
     SaveTimeLog();
 
