@@ -315,10 +315,13 @@ void MainWindow::SaveTimeLog()
 {
     QJsonObject mainObj;
     QJsonObject page;
+    QDateTime current = QDateTime::currentDateTime();
+    QString time = current.toString();
     for (auto i = timeLog.begin(); i!=timeLog.end(); i++ )
     {
         page["directory"] = i->first;
         page["seconds"] = i->second;
+        page["Date/Time"]=time;
         mainObj.insert(i->first, page);
     }
     writeJsonFile(gTimeLogLocation, mainObj);
@@ -924,7 +927,7 @@ void MainWindow::AddRecentProjects()
 bool ConvertSlpDevFlag = 0;
 
 void MainWindow::SaveFile(){
-    SaveTimeLog();
+    //SaveTimeLog();
     DisplayTimeLog();
     QVector <QString> changedWords;
     //! When changes are made by the verifier the following values are also updated.
@@ -1158,7 +1161,16 @@ void MainWindow::SaveFile(){
 
 
 void MainWindow::on_actionSave_triggered()
-{
+{   //! Adding entries in Timelog.json about the elapsed time
+    int nMilliseconds = myTimer.elapsed();
+    gSeconds = nMilliseconds/1000;                                 //Converting milliseconds to seconds
+    QString currentVersion = mProject.get_version();
+    if(mRole == "Verifier" && mRole != currentVersion)
+        currentVersion = QString::number(currentVersion.toInt() - 1);   //Version is decremented for Verifier
+
+    timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion]=gSeconds;
+
+    SaveTimeLog();
 
     LoadingSpinner *spinner = new LoadingSpinner(this);
     spinner->SetSave();
@@ -1340,16 +1352,7 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
         string localFilename = mFilename.toUtf8().constData();
         string localCurrentTabPageName = currentTabPageName.toUtf8().constData();
 
-        //! Adding entries in Timelog.json about the elapsed time
-        int nMilliseconds = myTimer.elapsed();
-        gSeconds = nMilliseconds/1000;                                 //Converting milliseconds to seconds
-        QString currentVersion = mProject.get_version();
-        if(mRole == "Verifier" && mRole != currentVersion)
-            currentVersion = QString::number(currentVersion.toInt() - 1);   //Version is decremented for Verifier
 
-        gSeconds = timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion];
-
-        SaveTimeLog();
 
         //! Extract page number from the localFilename and checks if the incremented page exists
         string no = "";
@@ -1419,16 +1422,6 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
 
         string localFilename = mFilename.toUtf8().constData();
         string localCurrentTabPageName = currentTabPageName.toUtf8().constData();
-
-        //! Adding entries in Timelog.json about the elapsed time
-        int nMilliseconds = myTimer.elapsed();
-        gSeconds = nMilliseconds/1000;                           //Converting milliseconds to seconds
-        QString currentVersion = mProject.get_version();
-        if(mRole == "Verifier" && mRole != currentVersion)
-            currentVersion = QString::number(currentVersion.toInt() - 1);  //Version is decremented for Verifier
-        gSeconds = timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion];
-        SaveTimeLog();
-
         //! Extract page number from the localFilename
         string no = "";
         size_t loc;

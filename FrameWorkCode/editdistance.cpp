@@ -67,9 +67,9 @@ QVector <QString> editDistance(QString a, QString b)
     backtrace(s1,s2,solution);
     QVector <QString> something = phrase_heuristics(s1,s2);
     qDebug()<<"test"<<something;
-    for (int i = 0;i < s1.count()+1;i++)
+   /* for (int i = 0;i < s1.count()+1;i++)
         delete[] solution[i];
-    delete[] solution;
+    delete[] solution;*/
     return something;
 }
 

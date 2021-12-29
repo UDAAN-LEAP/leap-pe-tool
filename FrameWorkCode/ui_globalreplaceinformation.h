@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'globalreplaceinformation.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.8
+** Created by: Qt User Interface Compiler version 5.15.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -128,50 +128,50 @@ public:
 
     void retranslateUi(QDialog *globalReplaceInformation)
     {
-        globalReplaceInformation->setWindowTitle(QApplication::translate("globalReplaceInformation", "Global Replacement", nullptr));
+        globalReplaceInformation->setWindowTitle(QCoreApplication::translate("globalReplaceInformation", "Global Replacement", nullptr));
         QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
-        ___qtablewidgetitem->setText(QApplication::translate("globalReplaceInformation", "New Column", nullptr));
+        ___qtablewidgetitem->setText(QCoreApplication::translate("globalReplaceInformation", "New Column", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);
-        ___qtablewidgetitem1->setText(QApplication::translate("globalReplaceInformation", "New Column", nullptr));
+        ___qtablewidgetitem1->setText(QCoreApplication::translate("globalReplaceInformation", "New Column", nullptr));
         QTableWidgetItem *___qtablewidgetitem2 = tableWidget->verticalHeaderItem(0);
-        ___qtablewidgetitem2->setText(QApplication::translate("globalReplaceInformation", "New Row", nullptr));
+        ___qtablewidgetitem2->setText(QCoreApplication::translate("globalReplaceInformation", "New Row", nullptr));
         QTableWidgetItem *___qtablewidgetitem3 = tableWidget->verticalHeaderItem(1);
-        ___qtablewidgetitem3->setText(QApplication::translate("globalReplaceInformation", "New Row", nullptr));
+        ___qtablewidgetitem3->setText(QCoreApplication::translate("globalReplaceInformation", "New Row", nullptr));
         QTableWidgetItem *___qtablewidgetitem4 = tableWidget->verticalHeaderItem(2);
-        ___qtablewidgetitem4->setText(QApplication::translate("globalReplaceInformation", "New Row", nullptr));
+        ___qtablewidgetitem4->setText(QCoreApplication::translate("globalReplaceInformation", "New Row", nullptr));
         QTableWidgetItem *___qtablewidgetitem5 = tableWidget->verticalHeaderItem(3);
-        ___qtablewidgetitem5->setText(QApplication::translate("globalReplaceInformation", "New Row", nullptr));
+        ___qtablewidgetitem5->setText(QCoreApplication::translate("globalReplaceInformation", "New Row", nullptr));
         QTableWidgetItem *___qtablewidgetitem6 = tableWidget->verticalHeaderItem(4);
-        ___qtablewidgetitem6->setText(QApplication::translate("globalReplaceInformation", "New Row", nullptr));
+        ___qtablewidgetitem6->setText(QCoreApplication::translate("globalReplaceInformation", "New Row", nullptr));
         QTableWidgetItem *___qtablewidgetitem7 = tableWidget->verticalHeaderItem(5);
-        ___qtablewidgetitem7->setText(QApplication::translate("globalReplaceInformation", "New Row", nullptr));
+        ___qtablewidgetitem7->setText(QCoreApplication::translate("globalReplaceInformation", "New Row", nullptr));
 
         const bool __sortingEnabled = tableWidget->isSortingEnabled();
         tableWidget->setSortingEnabled(false);
         QTableWidgetItem *___qtablewidgetitem8 = tableWidget->item(0, 0);
-        ___qtablewidgetitem8->setText(QApplication::translate("globalReplaceInformation", "Global replacement", nullptr));
+        ___qtablewidgetitem8->setText(QCoreApplication::translate("globalReplaceInformation", "Global replacement", nullptr));
         QTableWidgetItem *___qtablewidgetitem9 = tableWidget->item(0, 1);
-        ___qtablewidgetitem9->setText(QApplication::translate("globalReplaceInformation", "The words which need to be replaced throughout the whole file can be changed with this option.", nullptr));
+        ___qtablewidgetitem9->setText(QCoreApplication::translate("globalReplaceInformation", "The words which need to be replaced throughout the whole file can be changed with this option.", nullptr));
         QTableWidgetItem *___qtablewidgetitem10 = tableWidget->item(1, 0);
-        ___qtablewidgetitem10->setText(QApplication::translate("globalReplaceInformation", "Original Words", nullptr));
+        ___qtablewidgetitem10->setText(QCoreApplication::translate("globalReplaceInformation", "Original Words", nullptr));
         QTableWidgetItem *___qtablewidgetitem11 = tableWidget->item(1, 1);
-        ___qtablewidgetitem11->setText(QApplication::translate("globalReplaceInformation", "The words which are originally translated by the tool", nullptr));
+        ___qtablewidgetitem11->setText(QCoreApplication::translate("globalReplaceInformation", "The words which are originally translated by the tool", nullptr));
         QTableWidgetItem *___qtablewidgetitem12 = tableWidget->item(2, 0);
-        ___qtablewidgetitem12->setText(QApplication::translate("globalReplaceInformation", "Replaced Words", nullptr));
+        ___qtablewidgetitem12->setText(QCoreApplication::translate("globalReplaceInformation", "Replaced Words", nullptr));
         QTableWidgetItem *___qtablewidgetitem13 = tableWidget->item(2, 1);
-        ___qtablewidgetitem13->setText(QApplication::translate("globalReplaceInformation", "The words which are corrected by the user.", nullptr));
+        ___qtablewidgetitem13->setText(QCoreApplication::translate("globalReplaceInformation", "The words which are corrected by the user.", nullptr));
         QTableWidgetItem *___qtablewidgetitem14 = tableWidget->item(3, 0);
-        ___qtablewidgetitem14->setText(QApplication::translate("globalReplaceInformation", "Replace in all pages", nullptr));
+        ___qtablewidgetitem14->setText(QCoreApplication::translate("globalReplaceInformation", "Replace in all pages", nullptr));
         QTableWidgetItem *___qtablewidgetitem15 = tableWidget->item(3, 1);
-        ___qtablewidgetitem15->setText(QApplication::translate("globalReplaceInformation", "Checking these tick box will replace the words in already edited pages also.", nullptr));
+        ___qtablewidgetitem15->setText(QCoreApplication::translate("globalReplaceInformation", "Checking these tick box will replace the words in already edited pages also.", nullptr));
         QTableWidgetItem *___qtablewidgetitem16 = tableWidget->item(4, 0);
-        ___qtablewidgetitem16->setText(QApplication::translate("globalReplaceInformation", "Preview", nullptr));
+        ___qtablewidgetitem16->setText(QCoreApplication::translate("globalReplaceInformation", "Preview", nullptr));
         QTableWidgetItem *___qtablewidgetitem17 = tableWidget->item(4, 1);
-        ___qtablewidgetitem17->setText(QApplication::translate("globalReplaceInformation", "Click the preview button to see how the changes will reflect in the document.", nullptr));
+        ___qtablewidgetitem17->setText(QCoreApplication::translate("globalReplaceInformation", "Click the preview button to see how the changes will reflect in the document.", nullptr));
         QTableWidgetItem *___qtablewidgetitem18 = tableWidget->item(5, 0);
-        ___qtablewidgetitem18->setText(QApplication::translate("globalReplaceInformation", "Save and Replace", nullptr));
+        ___qtablewidgetitem18->setText(QCoreApplication::translate("globalReplaceInformation", "Save and Replace", nullptr));
         QTableWidgetItem *___qtablewidgetitem19 = tableWidget->item(5, 1);
-        ___qtablewidgetitem19->setText(QApplication::translate("globalReplaceInformation", "Click the button to save and replace the changes made.", nullptr));
+        ___qtablewidgetitem19->setText(QCoreApplication::translate("globalReplaceInformation", "Click the button to save and replace the changes made.", nullptr));
         tableWidget->setSortingEnabled(__sortingEnabled);
 
     } // retranslateUi

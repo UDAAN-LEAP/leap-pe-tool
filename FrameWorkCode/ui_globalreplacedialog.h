@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'globalreplacedialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.8
+** Created by: Qt User Interface Compiler version 5.15.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -141,12 +141,12 @@ public:
 
     void retranslateUi(QDialog *GlobalReplaceDialog)
     {
-        GlobalReplaceDialog->setWindowTitle(QApplication::translate("GlobalReplaceDialog", "Dialog", nullptr));
-        mylabel->setText(QApplication::translate("GlobalReplaceDialog", "Select words to replace", nullptr));
+        GlobalReplaceDialog->setWindowTitle(QCoreApplication::translate("GlobalReplaceDialog", "Dialog", nullptr));
+        mylabel->setText(QCoreApplication::translate("GlobalReplaceDialog", "Select words to replace", nullptr));
         groupBox->setTitle(QString());
         pushButton->setText(QString());
-        previewButton->setText(QApplication::translate("GlobalReplaceDialog", "Preview", nullptr));
-        applyButton->setText(QApplication::translate("GlobalReplaceDialog", "Save and Replace", nullptr));
+        previewButton->setText(QCoreApplication::translate("GlobalReplaceDialog", "Preview", nullptr));
+        applyButton->setText(QCoreApplication::translate("GlobalReplaceDialog", "Save and Replace", nullptr));
     } // retranslateUi
 
 };

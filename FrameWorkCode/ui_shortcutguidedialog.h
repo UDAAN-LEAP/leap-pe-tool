@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'shortcutguidedialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.8
+** Created by: Qt User Interface Compiler version 5.15.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -45,8 +45,8 @@ public:
 
     void retranslateUi(QDialog *ShortcutGuideDialog)
     {
-        ShortcutGuideDialog->setWindowTitle(QApplication::translate("ShortcutGuideDialog", " Shortcut Guide", nullptr));
-        textBrowser->setHtml(QApplication::translate("ShortcutGuideDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        ShortcutGuideDialog->setWindowTitle(QCoreApplication::translate("ShortcutGuideDialog", " Shortcut Guide", nullptr));
+        textBrowser->setHtml(QCoreApplication::translate("ShortcutGuideDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
