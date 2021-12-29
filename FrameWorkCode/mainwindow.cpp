@@ -5670,8 +5670,8 @@ void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
           }
     }
 
-//    QTextCharFormat fmt;
-//    fmt.setBackground(Qt::green);
+    QTextCharFormat fmt;
+    fmt.setBackground(Qt::green);
     QTextCursor cursor(b->document());
     int indexOfReplacedWord;
     int from=0;
@@ -6097,8 +6097,8 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         qstrHtml.replace("<br /></p>", "</p>");
 
         QFont font("Shobhika-Regular");
-        font.setWeight(14);
-        font.setPointSize(14);
+        font.setWeight(16);
+        font.setPointSize(16);
         font.setFamily("Shobhika");
         b->setFont(font);
         b->setHtml(qstrHtml);
