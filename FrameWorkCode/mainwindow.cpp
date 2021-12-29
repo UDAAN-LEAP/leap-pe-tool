@@ -5419,6 +5419,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
             QString time = current.toString();
 
             QTextStream output(&csvFile);
+            qDebug() << "csv Contents" << output.readAll();
             output << "\n";
             output<<sourceString<<","<<replaceString<<","<<typeOfReplacement<<","<<time<<","<<gCurrentPageName<<","<<setName;
         }
