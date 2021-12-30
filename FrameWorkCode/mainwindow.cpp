@@ -975,6 +975,7 @@ void MainWindow::SaveFile(){
             QFileInfo check_file(localFilename);
             if (check_file.exists() && check_file.isFile())
             {
+                emit closeSignal();
                 return ;
             }
         }
@@ -1008,6 +1009,7 @@ void MainWindow::SaveFile(){
                 if(!mProject.commit(commit_msg.toStdString()))
                 {
                     cout<<"Commit Unsuccessful"<<endl;
+                    emit closeSignal();
                     return;
                 }
                 else
