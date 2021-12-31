@@ -1174,7 +1174,9 @@ void MainWindow::SaveFile(){
 
 
 void MainWindow::on_actionSave_triggered()
-{   //! Adding entries in Timelog.json about the elapsed time
+{   if (!mProject.isProjectOpen())
+        return;
+    //! Adding entries in Timelog.json about the elapsed time
     int nMilliseconds = myTimer.elapsed();
     gSeconds = nMilliseconds/1000;                                 //Converting milliseconds to seconds
     QString currentVersion = mProject.get_version();
