@@ -205,7 +205,7 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
                  st2 += " ";
             }
             if(!optimalPath.contains(st1 + "=>" + st2)){
-                if(!(st1 == st2))
+                if(!(st1 == st2) && (st1 != "" && st2 != ""))
                 optimalPath.append(st1 + "=>" + st2 );
             }
             //qDebug() <<"Substitution"<< st1 << " => " << st2;
@@ -226,7 +226,7 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
                      st1 += " ";
                 }
                 if(!optimalPath.contains(st1 + "=>" + st2)){
-                    if(!(st1 == st2))
+                    if(!(st1 == st2) && (st1 != "" && st2 != ""))
                     optimalPath.append(st1 + "=>" + st2 );
                 }
                 //CPair_editDis[st1.toStdString()] = st2.toStdString();
@@ -245,7 +245,7 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
                      st2 += " ";
                 }
                 if(!optimalPath.contains(st1 + "=>" + st2)){
-                    if(!(st1 == st2))
+                    if(!(st1 == st2) && (st1 != "" && st2 != ""))
                     optimalPath.append(st1 + "=>" + st2 );
                 }
                 //CPair_editDis[st1.toStdString()] = st2.toStdString();

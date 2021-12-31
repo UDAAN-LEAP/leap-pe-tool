@@ -43,5 +43,7 @@
         <file>Resources/save load p words.png</file>
         <file>Resources/spell check.png</file>
         <file>Resources/information.png</file>
+        <file>Resources/stylesheet-branch-closed.png</file>
+        <file>Resources/stylesheet-branch-open.png</file>
     </qresource>
 </RCC>
