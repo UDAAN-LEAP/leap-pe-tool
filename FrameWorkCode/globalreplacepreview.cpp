@@ -8,6 +8,7 @@ globalReplacePreview::globalReplacePreview(QWidget *parent,QStandardItemModel *m
 {
     ui->setupUi(this);
     setWindowTitle("Preview of word replacement");
+    ui->tableView->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->tableView->setModel(model);
     ui->tableView->resizeColumnsToContents();
 }
