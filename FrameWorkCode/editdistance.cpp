@@ -66,7 +66,7 @@ QVector <QString> editDistance(QString a, QString b)
 
     backtrace(s1,s2,solution);
     QVector <QString> something = phrase_heuristics(s1,s2);
-    qDebug()<<"test"<<something;
+//    qDebug()<<"test"<<something;
     for (int i = 0;i < s1.count()+1;i++)
         delete[] solution[i];
     delete[] solution;
@@ -171,6 +171,9 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
             }
             segments_operations.push_back(final_operations_list);
             segments_positions.push_back(final_positions_list);
+            final_operations_list.clear();
+            final_positions_list.clear();
+
         }
     }
 
@@ -188,16 +191,16 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
             int replace_i_first = itr.key();
             int replace_j_first = itr.value();
             itr = segments_positions[seg][segments_positions[seg].size() - 1].begin();
-            int replace_i_second = itr.key();
-            int replace_j_second = itr.value();
+            int replace_i_second = itr.key()+1;
+            int replace_j_second = itr.value()+1;
             QString st1,st2;
-            for (int itr=replace_i_first; itr<=replace_i_second; itr++)
+            for (int itr=replace_i_first; itr<replace_i_second; itr++)
             {
 
                 st1 += s1[itr];
                 st1 += " ";
             }
-            for (int itr=replace_j_first; itr<=replace_j_second; itr++)
+            for (int itr=replace_j_first; itr<replace_j_second; itr++)
             {
                  st2 += s2[itr];
                  st2 += " ";
@@ -251,13 +254,14 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
             }
         }
 
-//        qDebug()<<"hello i am here";
-//        qDebug()<<segments_operations;
-//        qDebug()<<segments_positions[seg][0];
+
 
 
     }
-    //qDebug() << "optimal =>>> " << optimalPath;
+    segments_operations.clear();
+    segments_positions.clear();
+    map_operations_list.clear();
+    map_positions_list.clear();
     return optimalPath;
 }
 
