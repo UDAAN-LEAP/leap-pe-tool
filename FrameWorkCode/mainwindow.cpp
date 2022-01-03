@@ -5334,7 +5334,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
             QString time = current.toString();
 
             QTextStream output(&csvFile);
-            qDebug() << "csv Contents" << output.readAll();
+            //qDebug() << "csv Contents" << output.readAll();
             output << "\n";
             output<<sourceString<<","<<replaceString<<","<<typeOfReplacement<<","<<time<<","<<gCurrentPageName<<","<<setName;
         }
@@ -5618,7 +5618,7 @@ void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
             {
                 cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
                 cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
-                //cursor.setCharFormat(fmt);
+                cursor.mergeCharFormat(fmt);
                 QTextEdit::ExtraSelection h;
                 h.format.setBackground(Qt::green);
             }
@@ -6019,8 +6019,8 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     b->setFont(font);
     input = b->toPlainText();
 
-    DisplayJsonDict(b,input);
     highlight(b , input);
+    DisplayJsonDict(b,input);
 
     b->setMouseTracking(true);
     b->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
