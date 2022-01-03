@@ -1768,7 +1768,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionInsert_Tab_Space">
    <property name="text">
-    <string>Insert Tab Space(Ctrl+T)</string>
+    <string>Insert Tab Space</string>
    </property>
    <property name="toolTip">
     <string>Insert Tab Space (Ctrl+T)</string>

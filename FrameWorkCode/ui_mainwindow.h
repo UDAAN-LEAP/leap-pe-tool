@@ -1527,7 +1527,7 @@ public:
         actionFontBlack->setText(QApplication::translate("MainWindow", "FontBlack", nullptr));
         actionLineSpace->setText(QApplication::translate("MainWindow", "LineSpace", nullptr));
         actionViewAverageAccuracies->setText(QApplication::translate("MainWindow", "ViewAverageAccuracies", nullptr));
-        actionInsert_Tab_Space->setText(QApplication::translate("MainWindow", "Insert Tab Space(Ctrl+T)", nullptr));
+        actionInsert_Tab_Space->setText(QApplication::translate("MainWindow", "Insert Tab Space", nullptr));
 #ifndef QT_NO_TOOLTIP
         actionInsert_Tab_Space->setToolTip(QApplication::translate("MainWindow", "Insert Tab Space (Ctrl+T)", nullptr));
 #endif // QT_NO_TOOLTIP
