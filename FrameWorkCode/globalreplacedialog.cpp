@@ -163,23 +163,18 @@ QVector<int> GlobalReplaceDialog::getStatesOfCheckboxes()
 {
     QVector<int> statesOfRightCheckboxes;
 
-    // Removing elements from replaceInAllFiles_Checkboxes whose word_selection is unchecked
-    QVector<QCheckBox *>::iterator it;
-    it = replaceInAllFiles_Checkboxes.begin();
+    qDebug() << "Before Size of leftCheckbox Vector = " << wordSelection_CheckboxesState.size();
+    qDebug() << "Before Size of rightCheckbox Vector = " << replaceInAllFiles_Checkboxes.size();
     for (int i = 0; i < wordSelection_CheckboxesState.size(); i++)
     {
-        if (wordSelection_CheckboxesState.at(i) == 0)
-            replaceInAllFiles_Checkboxes.erase(it);
-        it++;
+        if (wordSelection_CheckboxesState.at(i) == 1) {
+            if (replaceInAllFiles_Checkboxes.at(i)->checkState() == Qt::Checked)
+                statesOfRightCheckboxes.push_back(1);
+            else
+                statesOfRightCheckboxes.push_back(0);
+        }
     }
-
-    for (int i = 0; i < replaceInAllFiles_Checkboxes.size(); i++)
-    {
-        if (replaceInAllFiles_Checkboxes.at(i)->checkState() == Qt::Checked)
-            statesOfRightCheckboxes.push_back(1);
-        else
-            statesOfRightCheckboxes.push_back(0);
-    }
+    qDebug() << "Size = " << statesOfRightCheckboxes.size();
     return statesOfRightCheckboxes;
 }
 
