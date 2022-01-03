@@ -903,6 +903,12 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         settings.setValue("Project",finfo.path()+"/project.xml" );
         settings.endGroup();
         isRecentProjclick = false;
+
+        // Setting Project window size and dict window size = 50% - 50%
+        QList<int> list1 = ui->splitter_2->sizes();
+        int totalHeight;
+        totalHeight = list1.at(0) + list1.at(1);
+        ui->splitter_2->setSizes(QList<int>() << totalHeight/2 << totalHeight/2);
     }
     else
     {
