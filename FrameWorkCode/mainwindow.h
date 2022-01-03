@@ -43,6 +43,7 @@
 #include "globalreplacedialog.h"
 #include "loadingspinner.h"
 #include "globalreplacepreview.h"
+#include<markRegion.h>
 
 //#include <set>
 using namespace std;
@@ -94,9 +95,6 @@ private slots:
 
  //   void displayHolder(QString,QString,QString,int,int,int,int,int);
 
-    void updateEntries(QDomDocument, QString, QString, QString, int);
-
-    void createImageInfoXMLFile();
 
     void on_actionNew_triggered();
 
@@ -399,6 +397,7 @@ private slots:
     void on_actionUpload_triggered();
 
 private:
+    markRegion objectMarkRegion;
     bool mExitStatus = false;
     QString mRole;
     bool isVerifier;
