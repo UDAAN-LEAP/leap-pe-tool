@@ -69,7 +69,7 @@ QVector <QString> editDistance(QString a, QString b)
     qDebug()<<"test"<<something;
     for (int i = 0;i < s1.count()+1;i++)
         delete[] solution[i];
-    delete solution;
+    delete[] solution;
 
     return something;
 }

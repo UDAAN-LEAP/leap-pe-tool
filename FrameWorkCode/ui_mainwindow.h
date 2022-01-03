@@ -198,8 +198,7 @@ public:
         font.setWeight(50);
         MainWindow->setFont(font);
         MainWindow->setMouseTracking(true);
-        MainWindow->setStyleSheet(QString::fromUtf8("font: 15px \"WorkSans\",  \"Sans\";\n"
-"background:rgb(32, 33, 72); \n"
+        MainWindow->setStyleSheet(QString::fromUtf8("background:rgb(32, 33, 72); \n"
 "color:white;\n"
 "\n"
 ""));
@@ -912,11 +911,18 @@ public:
         sizePolicy1.setHeightForWidth(textBrowser->sizePolicy().hasHeightForWidth());
         textBrowser->setSizePolicy(sizePolicy1);
         textBrowser->setMinimumSize(QSize(400, 0));
-        textBrowser->setFont(font);
+        QFont font2;
+        font2.setFamily(QString::fromUtf8("WorkSans,Sans"));
+        font2.setPointSize(20);
+        font2.setBold(false);
+        font2.setItalic(false);
+        font2.setWeight(50);
+        textBrowser->setFont(font2);
         textBrowser->setMouseTracking(true);
         textBrowser->setStyleSheet(QString::fromUtf8("QTextBrowser{\n"
 "	border: 0px;\n"
 "	background-color:white;\n"
+"font-size: 20pt;\n"
 "}\n"
 "QScrollBar:vertical { \n"
 "                                                border: none;\n"
@@ -938,8 +944,8 @@ public:
 "                        } \n"
 "QScrollBar::sub-line:vertical { \n"
 "                            height: 0 px; \n"
-"                            subcontrol-po"
-                        "sition: top; \n"
+"                    "
+                        "        subcontrol-position: top; \n"
 "                            subcontrol-origin: margin; \n"
 "                        }\n"
 ""));
@@ -1175,7 +1181,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1366, 51));
+        menuBar->setGeometry(QRect(0, 0, 1366, 50));
         menuBar->setStyleSheet(QString::fromUtf8("QMenuBar{\n"
 "font-size:17px;\n"
 "}\n"
@@ -1582,7 +1588,7 @@ public:
         textBrowser->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'WorkSans,Sans'; font-size:15px; font-weight:400; font-style:normal;\" bgcolor=\"#ffffff\">\n"
+"</style></head><body style=\" font-family:'WorkSans,Sans'; font-size:20pt; font-weight:400; font-style:normal;\" bgcolor=\"#ffffff\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab_5), QApplication::translate("MainWindow", "Tab 1", nullptr));
         lineEdit_3->setText(QApplication::translate("MainWindow", "Words 0", nullptr));

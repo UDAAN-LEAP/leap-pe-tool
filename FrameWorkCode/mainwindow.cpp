@@ -5997,7 +5997,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         string line;
         while (getline(iss, line)) {
             QString qline = QString::fromStdString(line);
-            if(line == "\n" | line == "" | qline.contains("\r") )
+            if((line == "\n") | (line == "") | (qline.contains("\r")) )
                 strHtml+=line + "</p><p>";
             else strHtml += line + "<br />";
         }

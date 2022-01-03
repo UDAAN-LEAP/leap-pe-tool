@@ -112,12 +112,12 @@ public:
         Diacritics->setEnabled(true);
         QFont font;
         font.setFamily(QString::fromUtf8("Work Sans"));
-        font.setPointSize(11);
         font.setBold(false);
         font.setItalic(false);
         font.setWeight(50);
         Diacritics->setFont(font);
-        Diacritics->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255); color: black;"));
+        Diacritics->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255); color: black;\n"
+"font-size:30px;"));
         Diacritics->setReadOnly(true);
 
         verticalLayout_2->addWidget(Diacritics);
@@ -130,7 +130,7 @@ public:
         SpecialCharacters = new QTextEdit(tab_2);
         SpecialCharacters->setObjectName(QString::fromUtf8("SpecialCharacters"));
         SpecialCharacters->setFont(font);
-        SpecialCharacters->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255); color: black;"));
+        SpecialCharacters->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255); color: black; font-size:30px;"));
         SpecialCharacters->setReadOnly(true);
 
         verticalLayout->addWidget(SpecialCharacters);
@@ -144,13 +144,12 @@ public:
         MathematicalSymbols->setObjectName(QString::fromUtf8("MathematicalSymbols"));
         QFont font1;
         font1.setFamily(QString::fromUtf8("Work Sans"));
-        font1.setPointSize(11);
         font1.setBold(false);
         font1.setItalic(false);
         font1.setWeight(50);
         font1.setKerning(false);
         MathematicalSymbols->setFont(font1);
-        MathematicalSymbols->setStyleSheet(QString::fromUtf8("color: black; background-color: rgb(255, 255, 255);"));
+        MathematicalSymbols->setStyleSheet(QString::fromUtf8("color: black; background-color: rgb(255, 255, 255); font-size: 30px;"));
         MathematicalSymbols->setReadOnly(true);
         MathematicalSymbols->setAcceptRichText(false);
         MathematicalSymbols->setTextInteractionFlags(Qt::TextSelectableByMouse);
@@ -164,7 +163,7 @@ public:
 
         retranslateUi(SymbolsView);
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(SymbolsView);
@@ -177,20 +176,20 @@ public:
         Diacritics->setHtml(QApplication::translate("SymbolsView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:'Work Sans'; font-size:30px; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-size:16pt;\"><br /></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-size:16pt;\"><br /></p></body></html>", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_1), QApplication::translate("SymbolsView", "Diacritics", nullptr));
         SpecialCharacters->setHtml(QApplication::translate("SymbolsView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:'Work Sans'; font-size:30px; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-size:16pt;\"><br /></p></body></html>", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("SymbolsView", "Special Characters", nullptr));
         MathematicalSymbols->setHtml(QApplication::translate("SymbolsView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:'Work Sans'; font-size:30px; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-size:16pt;\"><br /></p></body></html>", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("SymbolsView", "Mathematical Symbols", nullptr));
     } // retranslateUi
