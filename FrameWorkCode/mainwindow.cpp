@@ -5386,11 +5386,8 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
           it++;
       }
 
-    if(previewMap.size() == 1){
 
-
-      }
-     else if(previewMap.size() > 1)
+     if(previewMap.size() >= 1)
      {
         QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
         QString currentFileDirectory =gDirTwoLevelUp + "/" + gCurrentDirName;;
@@ -5487,8 +5484,8 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
   previewPagesMap[fileName] = sentences;
 
   return previewPagesMap;
-}
 
+}
 //Global CPair End
 
 /*!
