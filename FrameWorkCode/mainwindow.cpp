@@ -5066,7 +5066,7 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
         string str = replacementString.toStdString();
         QString::fromStdString(str).toUtf8();
         QString replacementString1 = QString::fromStdString(str);
-        mapOfReplacements[grmIterator.key()] = grmIterator.value();
+        mapOfReplacements[grmIterator.key()] = grmIterator.value().trimmed();
         s1.replace(re, replacementString1);
         replaced = s1.count(replacementString1);
         tot_replaced = tot_replaced + replaced;
@@ -6016,11 +6016,14 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     b->setFont(font);
     input = b->toPlainText();
 
-    highlight(b , input);
+
     DisplayJsonDict(b,input);
+    highlight(b , input);
 
+    b->setMouseTracking(true);
+    b->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
+    b->setUndoRedoEnabled(true);
 
-    
     if(fileFlag) {
         curr_browser = (QTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
         curr_browser->setDocument(b->document());
@@ -6038,10 +6041,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     currentTabPageName=QString::fromStdString(str);
 
     gInitialTextHtml[currentTabPageName] = b->toHtml();
-
-    b->setMouseTracking(true);
-    b->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
-    b->setUndoRedoEnabled(true);
 
     f->close();
 
@@ -6641,10 +6640,11 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
     int from=0;
     int count;
     int numReplaced=0;
+    //qDebug()<<"mapOfReplacements"<<mapOfReplacements;
     for (grmIterator = mapOfReplacements.begin(); grmIterator != mapOfReplacements.end(); ++grmIterator)
     {
         count = input.count(grmIterator.value(),Qt::CaseInsensitive);
-
+        qDebug()<<"Word for highlighting"<<grmIterator.value();
         numReplaced=0;
         from=0;
         int flag=0;
