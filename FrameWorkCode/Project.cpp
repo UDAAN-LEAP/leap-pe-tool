@@ -67,6 +67,13 @@ void Project::set_stage_verifier()
     save_xml();
 }
 
+void Project::set_stage(QString mRole){
+    std::string role = mRole.toUtf8().constData();
+    auto c = doc.child("Project").child("Metadata");
+    c.child("Stage").first_child().set_value(role.c_str());
+    save_xml();
+}
+
 /*!
  * \fn Project::enable_push
  * \brief Increments the version value by one if passed value is true

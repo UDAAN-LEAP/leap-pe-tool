@@ -792,6 +792,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
 
         QString stage = mProject.get_stage();                          //fetches the stage from project.xml file
+        mProject.set_stage(mRole);
         QString version = mProject.get_version();                      //Fetches version from project.xml file
         ui->lineEdit_2->setText("Version: " + version);                //Updates version in ui
 
@@ -7073,6 +7074,5 @@ void MainWindow::on_actionInsert_Vertical_Line_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
             return;
-
-
 }
+
