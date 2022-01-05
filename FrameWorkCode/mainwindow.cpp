@@ -427,8 +427,8 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 spell_menu = new QMenu("suggestions", this);
                 translate_menu = new QMenu("translate", this);
                 QFont font("Shobhika-Regular");
-                font.setWeight(14);
-                font.setPointSize(12);
+                font.setWeight(16);
+                font.setPointSize(16);
                 spell_menu->setFont(font);
                 translate_menu->setFont(font);
 
@@ -1017,14 +1017,14 @@ void MainWindow::SaveFile(){
                 //!Check commit condition
                 if(!mProject.commit(commit_msg.toStdString()))
                 {
-                    cout<<"Commit Unsuccessful"<<endl;
+                    //cout<<"Commit Unsuccessful"<<endl;
                     emit closeSignal();
                     return;
                 }
                 else
                 {
                     mProject.commit(commit_msg.toStdString());
-                    cout<<"Commit Successful"<<endl;
+                    //cout<<"Commit Successful"<<endl;
                 }
             }
         }
@@ -5101,7 +5101,7 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     QAbstractButton *cancelButton = messageBox.addButton(tr("No"), QMessageBox::RejectRole);
 
     messageBox.setCheckBox(cb);
-    QString msg = "Do you want to replace " + old_word + " with " + new_word + " in rest of the pages?\n"
+    QString msg = "Do you want to replace \"" + old_word + "\" with \"" + new_word + "\" in rest of the pages?\n"
                 + "\n\nClick \"Yes\" to save the changes and replace the word in the unedited pages."
                 + "\nClick \"No\" to save the changes and not replace the word in the unedited page.";
 
@@ -5185,18 +5185,12 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     if (noOfChangedWords == 1){
         QRegExp sep("\\s*=>*");
         QStringList changesList = changedWords[0].split(sep, QString::SkipEmptyParts );
-        qDebug()<<"Separator"<<sep;
-        qDebug()<<"changesList[0]"<<changesList[0];
-        qDebug()<<"changesList[1]"<<changesList[1];
+//        qDebug()<<"Separator"<<sep;
+//        qDebug()<<"changesList[0]"<<changesList[0];
+//        qDebug()<<"changesList[1]"<<changesList[1];
         bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[0], changesList[1],check);
         if (updateGlobalCPairs)
             globalReplacementMap[changesList[0]] = changesList[1];
-
-//        QStringList changesList = changedWords[0].split(" ");
-//        bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[1], changesList[3], check);
-////        qDebug()<<"Check"<<check;
-//        if (updateGlobalCPairs)
-//            globalReplacementMap[changesList[1]] = changesList[3];
     }
     //! if there is more than 1 change spawn a checklist and get the checked pairs only
     else if(noOfChangedWords > 1){
@@ -6649,7 +6643,6 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
     for (grmIterator = mapOfReplacements.begin(); grmIterator != mapOfReplacements.end(); ++grmIterator)
     {
         count = input.count(grmIterator.value(),Qt::CaseInsensitive);
-        qDebug()<<"Word for highlighting"<<grmIterator.value();
         numReplaced=0;
         from=0;
         int flag=0;
@@ -6915,7 +6908,7 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
     }
     else if ( globallyReplacedWords.size() > 1 )
     {
-        qDebug() << "For Multiple Words";
+        //qDebug() << "For Multiple Words";
         undoGRMap = getUndoGlobalReplaceMap_Multiple_Words(globallyReplacedWords);
     }
 
