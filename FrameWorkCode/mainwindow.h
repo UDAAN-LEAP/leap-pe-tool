@@ -397,7 +397,7 @@ private slots:
     void on_actionUpload_triggered();
 
 private:
-    markRegion objectMarkRegion;
+
     bool mExitStatus = false;
     QString mRole;
     bool isVerifier;

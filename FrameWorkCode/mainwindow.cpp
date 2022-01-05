@@ -895,7 +895,10 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         QMessageBox::information(0, "Success", "Project opened successfully.");
         ui->tabWidget_2->removeTab(0);
         //!Genearte image.xml for figure/table/equation entries and initialize these values by 1.
-     objectMarkRegion.createImageInfoXMLFile();
+
+        markRegion objectMarkRegion;
+
+        objectMarkRegion.createImageInfoXMLFile();
 
         //!save project paths for showing it on recent projects
         QSettings settings("IIT-B", "OpenOCRCorrect");
@@ -4389,6 +4392,8 @@ void MainWindow::on_pushButton_clicked()
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
     //! Tooltip documentation
+
+    markRegion objectMarkRegion;
     if (event->type() == QEvent::ToolTip)
     {
           event->accept();
