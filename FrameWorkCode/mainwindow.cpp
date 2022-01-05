@@ -7075,3 +7075,11 @@ void MainWindow::on_actionUpload_triggered()
     replaceInAllFilesFromTSVfile();
 }
 
+
+void MainWindow::on_actionInsert_Vertical_Line_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+            return;
+
+
+}

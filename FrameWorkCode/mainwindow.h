@@ -396,6 +396,8 @@ private slots:
 
     void on_actionUpload_triggered();
 
+    void on_actionInsert_Vertical_Line_triggered();
+
 private:
 
     bool mExitStatus = false;

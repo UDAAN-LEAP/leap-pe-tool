@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'globalreplacepreview.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.15.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,9 +10,7 @@
 #define UI_GLOBALREPLACEPREVIEW_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -29,9 +27,9 @@ public:
     void setupUi(QDialog *globalReplacePreview)
     {
         if (globalReplacePreview->objectName().isEmpty())
-            globalReplacePreview->setObjectName(QStringLiteral("globalReplacePreview"));
+            globalReplacePreview->setObjectName(QString::fromUtf8("globalReplacePreview"));
         globalReplacePreview->resize(669, 509);
-        globalReplacePreview->setStyleSheet(QLatin1String("QDialog{background-color: rgb(32, 33, 72);}\n"
+        globalReplacePreview->setStyleSheet(QString::fromUtf8("QDialog{background-color: rgb(32, 33, 72);}\n"
 "QScrollBar:vertical { \n"
 "                                                border: none;\n"
 "                                                background: white;\n"
@@ -82,10 +80,10 @@ public:
 "\n"
 ""));
         horizontalLayout = new QHBoxLayout(globalReplacePreview);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         tableView = new QTableView(globalReplacePreview);
-        tableView->setObjectName(QStringLiteral("tableView"));
-        tableView->setStyleSheet(QLatin1String("color:black; \n"
+        tableView->setObjectName(QString::fromUtf8("tableView"));
+        tableView->setStyleSheet(QString::fromUtf8("color:black; \n"
 "background-color: rgb(255, 255, 255);"));
 
         horizontalLayout->addWidget(tableView);
@@ -98,7 +96,7 @@ public:
 
     void retranslateUi(QDialog *globalReplacePreview)
     {
-        globalReplacePreview->setWindowTitle(QApplication::translate("globalReplacePreview", "Dialog", Q_NULLPTR));
+        globalReplacePreview->setWindowTitle(QCoreApplication::translate("globalReplacePreview", "Dialog", nullptr));
     } // retranslateUi
 
 };

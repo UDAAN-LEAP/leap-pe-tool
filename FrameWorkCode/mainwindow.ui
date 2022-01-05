@@ -1038,6 +1038,7 @@ QMenu::item:selected{
     <addaction name="actionSuperscript"/>
     <addaction name="actionSubscript"/>
     <addaction name="actionInsert_Horizontal_Line"/>
+    <addaction name="actionInsert_Vertical_Line"/>
     <addaction name="actionFontBlack"/>
     <addaction name="actionInsert_Tab_Space"/>
     <addaction name="menuTables"/>
@@ -1965,6 +1966,14 @@ background-color: #EEF0F2;
   <action name="actionUpload">
    <property name="text">
     <string>Upload and Replace</string>
+   </property>
+  </action>
+  <action name="actionInsert_Vertical_Line">
+   <property name="text">
+    <string>Vertical Line</string>
+   </property>
+   <property name="toolTip">
+    <string>Vertical Line</string>
    </property>
   </action>
  </widget>
