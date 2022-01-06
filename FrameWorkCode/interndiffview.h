@@ -15,6 +15,7 @@ class InternDiffView : public QMainWindow
 
 public:
     InternDiffView( QWidget *parent,  QString page, QString fpath);
+    bool validFilePath();
 	~InternDiffView();
 
 private slots:
@@ -34,4 +35,5 @@ private:
     QString html2;
     QString ocrimage;
     float correctorChangesPerc;
+    bool isValidFile;
 };

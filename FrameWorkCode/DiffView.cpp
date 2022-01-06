@@ -21,10 +21,12 @@ DiffView::DiffView(QWidget *parent, QString page,QString fpath)
 
      if(fverifier.exists())
      {
+       isValidFile = true;
        Load_comparePage(page.toStdString());
        UpdateUI();
      }
      else{
+          isValidFile = false;
           QMessageBox::information(0, "Error", "File Doesn't Exist");
      }
 }
@@ -32,6 +34,11 @@ DiffView::DiffView(QWidget *parent, QString page,QString fpath)
 DiffView::~DiffView()
 {
 	delete ui;
+}
+
+bool DiffView::validFilePath()
+{
+    return isValidFile;
 }
 
 void DiffView::Load_comparePage(string page)

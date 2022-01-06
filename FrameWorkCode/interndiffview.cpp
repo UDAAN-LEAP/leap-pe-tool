@@ -16,10 +16,11 @@ InternDiffView::InternDiffView( QWidget *parent, QString page, QString fpath)
     ui->setupUi(this);
 
     //!check if file exists
-    QFile fcorrector(gDirTwoLevelUp+ "/VerifierOutput/"+ page );
+    QFile fcorrector(gDirTwoLevelUp+ "/CorrectorOutput/"+ page );
 
      if(fcorrector.exists())
      {
+       isValidFile = true;
        Load_comparePage(page.toStdString());
 
        ui->current->setHtml(html1);
@@ -41,12 +42,18 @@ InternDiffView::InternDiffView( QWidget *parent, QString page, QString fpath)
      }
      else{
         QMessageBox::information(0, "Error", "File Doesn't Exist");
+        isValidFile = false;
      }
 }
 
 InternDiffView::~InternDiffView()
 {
 	delete ui;
+}
+
+bool InternDiffView::validFilePath()
+{
+    return isValidFile;
 }
 
 void InternDiffView::Load_comparePage(string page)

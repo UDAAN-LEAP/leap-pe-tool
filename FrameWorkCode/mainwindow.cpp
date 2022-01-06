@@ -4923,7 +4923,10 @@ void MainWindow::on_compareCorrectorOutput_clicked()
     if(!file.isEmpty())
     {
         InternDiffView *dv = new InternDiffView(this, page, fpath);   //Fetch OCR Image in DiffView2 and Set
-        dv->show();
+        if (dv->validFilePath())
+            dv->show();
+        else
+            dv->close();
       }
     }
     else{
@@ -4959,7 +4962,10 @@ void MainWindow::on_compareVerifierOutput_clicked() //Verifier-Version
     if(!file.isEmpty())
     {
         DiffView *dv = new DiffView(this,page,fpath);
-        dv->show();
+        if (dv->validFilePath())
+            dv->show();
+        else
+            dv->close();
     }
   }
   else{

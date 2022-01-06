@@ -14,6 +14,7 @@ class DiffView : public QMainWindow
 
 public:
     DiffView(QWidget *parent,QString page, QString fpath);
+    bool validFilePath();
 	~DiffView();
 
 private slots:
@@ -33,4 +34,5 @@ private:
     float verifierChangesPerc;
     float correctorChangesPerc;
     float OcrAcc;
+    bool isValidFile;
 };
