@@ -3,6 +3,7 @@
 # ------------------------------------------------------
 
 HEADERS += ./Filters.h \
+    $$PWD/CrashReport.h \
     $$PWD/SimpleMail/SimpleMail \
     $$PWD/SimpleMail/emailaddress.h \
     $$PWD/SimpleMail/emailaddress_p.h \
@@ -81,6 +82,7 @@ HEADERS += ./Filters.h \
     $$PWD/globalreplacepreview.h \
     $$PWD/globalreplaceinformation.h
 SOURCES += ./DiffView.cpp \
+    $$PWD/CrashReport.cpp \
     $$PWD/SimpleMail/emailaddress.cpp \
     $$PWD/SimpleMail/mimeattachment.cpp \
     $$PWD/SimpleMail/mimecontentformatter.cpp \
