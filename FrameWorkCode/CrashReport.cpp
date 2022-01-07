@@ -76,7 +76,7 @@ namespace CrashReport
       if ( file.open( QIODevice::WriteOnly | QIODevice::Text ) )
       {
          QTextStream stream( &file );
-
+         stream.setCodec("UTF-8");
          for ( const QString &data : cReportHeader + inFrameInfoList )
          {
             stream << data << endl;

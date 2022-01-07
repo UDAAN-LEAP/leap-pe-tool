@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'DiffView.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.2
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -192,24 +192,24 @@ public:
 
     void retranslateUi(QMainWindow *DiffView)
     {
-        DiffView->setWindowTitle(QCoreApplication::translate("DiffView", "DiffView", nullptr));
+        DiffView->setWindowTitle(QApplication::translate("DiffView", "DiffView", nullptr));
         PrevButton->setText(QString());
-        OCRLabel->setText(QCoreApplication::translate("DiffView", "<p><b>1. Initial Text </b></p>\n"
+        OCRLabel->setText(QApplication::translate("DiffView", "<p><b>1. Initial Text </b></p>\n"
 "Accuracy of OCR Text (w.r.t Verified Text): ", nullptr));
-        OCRText->setHtml(QCoreApplication::translate("DiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        OCRText->setHtml(QApplication::translate("DiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika Regular';\"><br /></p></body></html>", nullptr));
-        InternLabel->setText(QCoreApplication::translate("DiffView", "<b><p>2. Corrector's Output Text</b></p>Changes Made by Corrector: ", nullptr));
-        InternText->setHtml(QCoreApplication::translate("DiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        InternLabel->setText(QApplication::translate("DiffView", "<b><p>2. Corrector's Output Text</b></p>Changes Made by Corrector: ", nullptr));
+        InternText->setHtml(QApplication::translate("DiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika Regular';\"><br /></p></body></html>", nullptr));
-        VerifierLabel->setText(QCoreApplication::translate("DiffView", "<p><b>3. Verified Text</b></p>\n"
+        VerifierLabel->setText(QApplication::translate("DiffView", "<p><b>3. Verified Text</b></p>\n"
 "Changes Made by Verifier: ", nullptr));
-        VerifierText->setHtml(QCoreApplication::translate("DiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        VerifierText->setHtml(QApplication::translate("DiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Work Sans'; font-size:11pt; font-weight:400; font-style:normal;\">\n"

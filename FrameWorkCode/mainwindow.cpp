@@ -5314,6 +5314,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         {
             csvFile.open(QFile::ReadWrite);
             QTextStream output(&csvFile);
+            output.setCodec("UTF-8");
             output << "Source Word,Target Word,Type of Replacement,Time of Replacement,Page Name,Set name";
         }
 
@@ -5340,6 +5341,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
             QString time = current.toString();
 
             QTextStream output(&csvFile);
+            output.setCodec("UTF-8");
             //qDebug() << "csv Contents" << output.readAll();
             output << "\n";
             output<<sourceString<<","<<replaceString<<","<<typeOfReplacement<<","<<time<<","<<gCurrentPageName<<","<<setName;
