@@ -88,6 +88,7 @@ void GlobalReplaceDialog::on_applyButton_clicked()
 {
     QMessageBox replace;
     replace.setWindowTitle("Save and Replace");
+    replace.setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint);
     replace.setIcon(QMessageBox::Question);
     replace.setInformativeText("Selected words will be saved and replaced");
     QPushButton *confirmButton = replace.addButton(tr("Confirm"),QMessageBox::AcceptRole);
