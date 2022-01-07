@@ -1,11 +1,12 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.8)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.15.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
+#include <memory>
 #include "mainwindow.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
@@ -13,7 +14,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'mainwindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.12.8. It"
+#error "This file was generated using the moc from 5.15.2. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -23,7 +24,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[175];
-    char stringdata0[3692];
+    char stringdata0[3673];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -206,7 +207,7 @@ QT_MOC_LITERAL(170, 3571, 22), // "getBeforeAndAfterWords"
 QT_MOC_LITERAL(171, 3594, 25), // "QMap<QString,QStringList>"
 QT_MOC_LITERAL(172, 3620, 5), // "fPath"
 QT_MOC_LITERAL(173, 3626, 25), // "on_actionUpload_triggered"
-QT_MOC_LITERAL(174, 3652, 39) // "on_actionInsert_Vertical_Line..."
+QT_MOC_LITERAL(174, 3652, 20) // "on_justify_triggered"
 
     },
     "MainWindow\0closeSignal\0\0createActions\0"
@@ -318,7 +319,7 @@ QT_MOC_LITERAL(174, 3652, 39) // "on_actionInsert_Vertical_Line..."
     "globalReplacePreviewfn\0QVector<int>\0"
     "getBeforeAndAfterWords\0QMap<QString,QStringList>\0"
     "fPath\0on_actionUpload_triggered\0"
-    "on_actionInsert_Vertical_Line_triggered"
+    "on_justify_triggered"
 };
 #undef QT_MOC_LITERAL
 
@@ -753,7 +754,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 127: { QMap<QString,QStringList> _r = _t->getBeforeAndAfterWords((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QMap<QString,QString>(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< QMap<QString,QStringList>*>(_a[0]) = std::move(_r); }  break;
         case 128: _t->on_actionUpload_triggered(); break;
-        case 129: _t->on_actionInsert_Vertical_Line_triggered(); break;
+        case 129: _t->on_justify_triggered(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -836,7 +837,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
 }
 
 QT_INIT_METAOBJECT const QMetaObject MainWindow::staticMetaObject = { {
-    &QMainWindow::staticMetaObject,
+    QMetaObject::SuperData::link<QMainWindow::staticMetaObject>(),
     qt_meta_stringdata_MainWindow.data,
     qt_meta_data_MainWindow,
     qt_static_metacall,

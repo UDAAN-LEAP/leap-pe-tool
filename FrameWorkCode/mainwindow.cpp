@@ -7076,9 +7076,9 @@ void MainWindow::on_actionUpload_triggered()
 }
 
 
-void MainWindow::on_actionInsert_Vertical_Line_triggered()
+void MainWindow::on_justify_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
-            return;
+        return;
+    curr_browser->setAlignment(Qt::AlignJustify);
 }
-

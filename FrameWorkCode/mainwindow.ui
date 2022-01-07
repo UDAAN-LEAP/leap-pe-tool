@@ -1038,7 +1038,6 @@ QMenu::item:selected{
     <addaction name="actionSuperscript"/>
     <addaction name="actionSubscript"/>
     <addaction name="actionInsert_Horizontal_Line"/>
-    <addaction name="actionInsert_Vertical_Line"/>
     <addaction name="actionFontBlack"/>
     <addaction name="actionInsert_Tab_Space"/>
     <addaction name="menuTables"/>
@@ -1213,6 +1212,7 @@ background-color: #EEF0F2;
    <addaction name="actionLeftAlign"/>
    <addaction name="actionCentreAlign"/>
    <addaction name="actionRightAlign"/>
+   <addaction name="justify"/>
    <addaction name="actionInsert_Horizontal_Line"/>
    <addaction name="separator"/>
    <addaction name="actionHighlight"/>
@@ -1968,12 +1968,13 @@ background-color: #EEF0F2;
     <string>Upload and Replace</string>
    </property>
   </action>
-  <action name="actionInsert_Vertical_Line">
-   <property name="text">
-    <string>Vertical Line</string>
+  <action name="justify">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/align para.png</normaloff>:/Images/Resources/align para.png</iconset>
    </property>
-   <property name="toolTip">
-    <string>Vertical Line</string>
+   <property name="text">
+    <string>AlignJustify</string>
    </property>
   </action>
  </widget>

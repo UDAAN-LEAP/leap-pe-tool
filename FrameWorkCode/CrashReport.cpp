@@ -292,6 +292,7 @@ namespace CrashReport
    constexpr int  MAX_STACK_FRAMES = 64;
    static void    *sStackTraces[MAX_STACK_FRAMES];
    static uint8_t sAlternateStack[SIGSTKSZ];
+   //static uint8_t sAlternateStack[1024];
 
    QStringList  _stackTrace()
    {

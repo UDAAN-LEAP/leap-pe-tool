@@ -396,8 +396,7 @@ private slots:
 
     void on_actionUpload_triggered();
 
-    void on_actionInsert_Vertical_Line_triggered();
-
+    void on_justify_triggered();
 
 private:
 
