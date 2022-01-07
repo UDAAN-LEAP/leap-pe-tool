@@ -1,4 +1,5 @@
 /*
+ *
  * It is used for git functionality and set configuration for project.xml file.
  */
 #include "Project.h"

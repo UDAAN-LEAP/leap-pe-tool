@@ -23,6 +23,7 @@
 #include <QDateTime>
 #include <QDir>
 #include <QProcess>
+#include <QDebug>
 #include <QRegularExpression>
 #include <QStandardPaths>
 #include <QStringList>
@@ -291,9 +292,11 @@ namespace CrashReport
 #else
    constexpr int  MAX_STACK_FRAMES = 64;
    static void    *sStackTraces[MAX_STACK_FRAMES];
+#ifdef SIGSTKSZ
    static uint8_t sAlternateStack[SIGSTKSZ];
-   //static uint8_t sAlternateStack[1024];
-
+#else
+   static uint8_t sAlternateStack[8192];
+#endif
    QStringList  _stackTrace()
    {
       int   traceSize = backtrace( sStackTraces, MAX_STACK_FRAMES );
