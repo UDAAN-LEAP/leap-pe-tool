@@ -26,6 +26,8 @@
 #include <QDialogButtonBox>
 #include <QFormLayout>
 
+QString user_id;
+
 void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 {
 
@@ -68,6 +70,10 @@ void Project::set_stage_verifier()
     save_xml();
 }
 
+/*!
+ * \brief Project::set_stage
+ * \param mRole
+ */
 void Project::set_stage(QString mRole){
     std::string role = mRole.toUtf8().constData();
     auto c = doc.child("Project").child("Metadata");
@@ -518,6 +524,7 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
 
         if (dialog.exec() == QDialog::Accepted) {
             user = userfield->text().toStdString();
+            user_id=user_id.fromStdString(user);
             pass = passfield->text().toStdString();
             ok = true;
         }
@@ -531,6 +538,28 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
         delete passfield;
     }
     return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
+}
+
+/*!
+ * \brief Project::set_corrector
+ */
+void Project::set_corrector(){
+    QString id=user_id;
+    std::string role = id.toUtf8().constData();
+    auto c = doc.child("Project").child("Metadata");
+    c.child("Corrector").first_child().set_value(role.c_str());
+    save_xml();
+}
+
+/*!
+ * \brief Project::set_verifier
+ */
+void Project::set_verifier(){
+    QString id=user_id;
+    std::string role = id.toUtf8().constData();
+    auto c = doc.child("Project").child("Metadata");
+    c.child("Verifier").first_child().set_value(role.c_str());
+    save_xml();
 }
 
 /*!

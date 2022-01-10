@@ -4004,7 +4004,7 @@ void MainWindow::on_actionTurn_In_triggered()
                 QMessageBox::information(0, "Turn In", "Turn In Cancelled");
                 return;
             }
-
+            mProject.set_corrector();
         }
         else
         {
@@ -4303,6 +4303,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
                 QMessageBox::information(0, "Turn In", "Turn In Cancelled");
                 return;
             }
+            mProject.set_verifier();
         }
         else
         {

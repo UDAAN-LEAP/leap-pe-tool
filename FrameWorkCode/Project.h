@@ -50,6 +50,8 @@ public:
 	void add_and_commit();
     void set_stage_verifier();
     void set_stage(QString mRole);
+    void set_verifier();
+    void set_corrector();
 	QString get_stage();
     QString get_version();
     QString get_configuration();
