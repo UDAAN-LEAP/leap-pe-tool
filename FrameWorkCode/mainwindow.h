@@ -376,7 +376,9 @@ private slots:
 
     void zoom_slider_moved(int value);
 
-    void zoomedUsingScroll();
+    void zoomedUsingScroll(); // Slot for signal zoomed() emitted from zoom.cpp
+
+    void handleZoomLimitCrossed();  // Slot for signal zoomLimitCrossed() emitted from zoom.cpp
 
     void on_actionUndo_Global_Replace_triggered();
 

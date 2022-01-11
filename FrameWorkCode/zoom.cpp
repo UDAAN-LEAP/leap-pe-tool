@@ -25,25 +25,45 @@ Graphics_view_zoom::Graphics_view_zoom(QGraphicsView* view)
  * \brief Graphics_view_zoom::gentle_zoom
  * \param factor
  */
-void Graphics_view_zoom::gentle_zoom(double factor) {
-  if ( zoom_level >= 200 && factor >= 1.1 )
+void Graphics_view_zoom::gentle_zoom(double factor)
+{
+  // After using zoom more than 10 times image will be resetted to its original size
+  if (zoomCount > 10) {
+    zoomCount = 0;
+    emit zoomLimitCrossed();
+    return;
+  }
+
+  // Restricting the zoom value between 0 and 200
+  if ( zoom_level >= 200 && factor > 1 )
       return;
-  else if ( zoom_level <= 0 && factor <= 0.9 )
+  else if ( zoom_level <= 0 && factor < 1 )
       return;
+
+  // Calculating zoom level
+  if ( factor > 1 )
+      zoom_level += (factor - 1)*100;
+  else if ( factor < 1 )
+      zoom_level -= (1 - factor)*100;
+
   _view->scale(factor, factor);
   _view->centerOn(target_scene_pos);
   QPointF delta_viewport_pos = target_viewport_pos - QPointF(_view->viewport()->width() / 2.0,
                                                              _view->viewport()->height() / 2.0);
   QPointF viewport_center = _view->mapFromScene(target_scene_pos) - delta_viewport_pos;
   _view->centerOn(_view->mapToScene(viewport_center.toPoint()));
+  zoomCount++;
   emit zoomed();
+}
 
-  // Calculating zoom level which should be between 0 - 200
+double Graphics_view_zoom::getDefaultZoomInFactor()
+{
+    return defaultZoomInFactor;
+}
 
-  if ( factor >= 1.1 )
-      zoom_level += 10;
-  else if ( factor <= 0.9 )
-      zoom_level -= 10;
+double Graphics_view_zoom::getDefaultZoomOutFactor()
+{
+    return defaultZoomOutFactor;
 }
 
 /*!
@@ -93,7 +113,12 @@ bool Graphics_view_zoom::eventFilter(QObject *object, QEvent *event)
       if (wheel_event->orientation() == Qt::Vertical)
       {
         double angle = wheel_event->angleDelta().y();
-        double factor = qPow(_zoom_factor_base, angle);
+//        double factor = qPow(_zoom_factor_base, angle);
+        double factor = 1;
+        if (angle > 0)
+            factor = defaultZoomInFactor;
+        else if (angle < 0)
+            factor = defaultZoomOutFactor;
         gentle_zoom(factor);
         return true;
       }
