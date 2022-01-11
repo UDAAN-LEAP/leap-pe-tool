@@ -1061,7 +1061,7 @@ void MainWindow::SaveFile(){
         }
 
         //! Insert entries in Correct Formatting Hello (/t) hi,(comma)hiii
-        if (file12.open(QIODevice::WriteOnly | QIODevice::Text))
+        if (file12.open(QIODevice::ReadWrite  | QIODevice::Text | QIODevice::Append))
         {
             QTextStream out(&file12);
             out.setCodec("UTF-8");

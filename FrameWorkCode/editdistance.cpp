@@ -210,7 +210,7 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
                 optimalPath.append(st1 + "=>" + st2 );
             }
             //qDebug() <<"Substitution"<< st1 << " => " << st2;
-            CPair_editDis[st1.toStdString()] = st2.toStdString();
+            CPair_editDis[st1.trimmed().toStdString()] = st2.trimmed().toStdString();
         }
         else
         {
@@ -224,7 +224,7 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
                 for (int itr=replace_i_first; itr<=replace_i_second; itr++)
                 {
                      st1 += s1[itr];
-                     st1 += " ";
+                     //st1 += " ";
                 }
                 if(!optimalPath.contains(st1 + "=>" + st2)){
                     if(!(st1 == st2) && (st1 != "" && st2 != ""))
