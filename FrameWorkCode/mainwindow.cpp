@@ -740,6 +740,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
     QString ProjFile;
 
+    int totalFileCountInDir = 0;
+    QMap<QString, int> fileCountInDir;
+
     if(isRecentProjclick == true)
     {
       ProjFile = RecentProjFile;
@@ -821,14 +824,17 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
             QString t = str1 + "/" + f;
             QFile f2(t);
-            if(x[1]=="html")
-            mProject.AddTemp(filter,f2,"");
+            if(x[1]=="html") {
+                totalFileCountInDir++;
+                mProject.AddTemp(filter,f2,"");
+            }
             corrector_set.insert(f);
-
-
         }
+        fileCountInDir["Corrector"] = totalFileCountInDir;
+        totalFileCountInDir = 0;
         //!Adds each file present in VerifierOutput directory to treeView
         cdir.setPath(str2);
+
         filter = mProject.getFilter("VerifierOutput");
         list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list)
@@ -837,32 +843,86 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
             QString t = str2 + "/" + f;
             QFile f2(t);
-            if(x[1]=="html")
-            mProject.AddTemp(filter, f2, "");
+            if(x[1]=="html") {
+                totalFileCountInDir++;
+                mProject.AddTemp(filter, f2, "");
+            }
             verifier_set.insert(f);
         }
+        fileCountInDir["Verifier"] = totalFileCountInDir;
+        totalFileCountInDir = 0;
+
         filter = mProject.getFilter("Document");
         //!Adds the files from inds folder to treeView
         cdir.setPath(str3);
+
         list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list)
         {
             QString t = str3 + "/" + f;
             QFile f2(t);
             mProject.AddTemp(filter, f2, "");
+            totalFileCountInDir++;
         }
+        fileCountInDir["Inds"] = totalFileCountInDir;
+        totalFileCountInDir = 0;
 
         //!To Display treeView for Image
         filter = mProject.getFilter("Image");
 
         //!Adds the files from Image folder to treeView
         cdir.setPath(str4);
+
         list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list) {
             QString t = str4 + "/" + f;
             QFile f2(t);
             mProject.AddTemp(filter, f2, "");
+            totalFileCountInDir++;
         }
+        fileCountInDir["Image"] = totalFileCountInDir;
+        totalFileCountInDir = 0; // Resetting variable to 0
+
+        // Resizing scroll bar for project window
+
+        int maxFilesInDir = 0;
+        for (auto fileCount : fileCountInDir.values())
+        {
+            if (fileCount > maxFilesInDir)
+                maxFilesInDir = fileCount;
+        }
+
+        QString heightValue;
+        if (maxFilesInDir < 50) {
+            heightValue = "200px";
+        }
+        else if (maxFilesInDir < 200) {
+            heightValue = "60px";
+        }
+        else {
+            heightValue = "50px";
+        }
+
+        QString projectWindowStylesheet = ui->treeView->styleSheet();
+        int indexOfScrollBarProp = projectWindowStylesheet.indexOf("QScrollBar::handle:vertical");
+        int heightProp = projectWindowStylesheet.indexOf("height:", indexOfScrollBarProp);
+
+        if (heightProp != -1) {
+            int startIndex = heightProp + 7; // here, 7 is the length of "height:" string
+            int endIndex;
+            for (int i = startIndex; projectWindowStylesheet[i] != ';'; i++)
+                endIndex = i;
+
+            int replaceSize = endIndex - startIndex + 1;
+            projectWindowStylesheet.replace(startIndex, replaceSize, heightValue);
+        }
+        else {
+            int insertHeightProp = projectWindowStylesheet.indexOf("{", indexOfScrollBarProp) + 1;
+            projectWindowStylesheet.insert(insertHeightProp, "height:" + heightValue);
+        }
+        ui->treeView->setStyleSheet(projectWindowStylesheet);
+
+
 
 //        //!Disable Corrector Turn In once the Corrector has Turned in until the next version is fetched.
 //        if(!isVerifier)
