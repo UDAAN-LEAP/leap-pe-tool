@@ -62,6 +62,7 @@
 #include "undoglobalreplace.h"
 #include "globalreplacepreview.h"
 #include "qtextdocumentfragment.h"
+#include <QColorDialog>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -1053,7 +1054,7 @@ void MainWindow::SaveFile(){
         QFile sFile(localFilename);
 
         QTextCharFormat fmt;
-        fmt.setForeground(QBrush(QColor(0,0,0)));           //Setting foreground brush to render text
+        //fmt.setForeground(QBrush(QColor(0,0,0)));           //Setting foreground brush to render text
         QTextCursor cursor = curr_browser->textCursor();
         cursor.select(QTextCursor::Document);
         cursor.mergeCharFormat(fmt);
@@ -7137,4 +7138,20 @@ void MainWindow::on_justify_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->setAlignment(Qt::AlignJustify);
+}
+
+void MainWindow::on_actionFont_Color_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+      {
+        QMessageBox::information(0, "Error", "Please check whether the page is opened and you are editing in appropriate role.");
+        return;
+      }
+
+    QTextCursor cursor = curr_browser->textCursor();
+    QColor choosencolor = QColorDialog::getColor();
+
+    QTextCharFormat charFormat;
+    charFormat.setForeground(QBrush(choosencolor));
+    cursor.mergeCharFormat(charFormat);
 }

@@ -1213,6 +1213,7 @@ background-color: #EEF0F2;
    <addaction name="actionToDevanagari"/>
    <addaction name="separator"/>
    <addaction name="actionAllFontProperties"/>
+   <addaction name="actionFont_Color"/>
    <addaction name="actionBold"/>
    <addaction name="actionItalic"/>
    <addaction name="actionUnBold"/>
@@ -1986,6 +1987,15 @@ background-color: #EEF0F2;
    </property>
    <property name="text">
     <string>AlignJustify</string>
+   </property>
+  </action>
+  <action name="actionFont_Color">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/font color.png</normaloff>:/Images/Resources/font color.png</iconset>
+   </property>
+   <property name="text">
+    <string>Font Color</string>
    </property>
   </action>
  </widget>

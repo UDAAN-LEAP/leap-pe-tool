@@ -134,6 +134,7 @@ public:
     QAction *actionUndo_Global_Replace;
     QAction *actionUpload;
     QAction *justify;
+    QAction *actionFont_Color;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_5;
     QVBoxLayout *verticalLayout_4;
@@ -517,6 +518,11 @@ public:
         QIcon icon31;
         icon31.addFile(QStringLiteral(":/Images/Resources/align para.png"), QSize(), QIcon::Normal, QIcon::Off);
         justify->setIcon(icon31);
+        actionFont_Color = new QAction(MainWindow);
+        actionFont_Color->setObjectName(QStringLiteral("actionFont_Color"));
+        QIcon icon32;
+        icon32.addFile(QStringLiteral(":/Images/Resources/font color.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionFont_Color->setIcon(icon32);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setStyleSheet(QStringLiteral("mainToolBar{background:rgb(143, 89, 2)}"));
@@ -1364,6 +1370,7 @@ public:
         mainToolBar->addAction(actionToDevanagari);
         mainToolBar->addSeparator();
         mainToolBar->addAction(actionAllFontProperties);
+        mainToolBar->addAction(actionFont_Color);
         mainToolBar->addAction(actionBold);
         mainToolBar->addAction(actionItalic);
         mainToolBar->addAction(actionUnBold);
@@ -1590,6 +1597,7 @@ public:
         actionUndo_Global_Replace->setText(QApplication::translate("MainWindow", "Undo Global Replace", Q_NULLPTR));
         actionUpload->setText(QApplication::translate("MainWindow", "Upload and Replace", Q_NULLPTR));
         justify->setText(QApplication::translate("MainWindow", "AlignJustify", Q_NULLPTR));
+        actionFont_Color->setText(QApplication::translate("MainWindow", "Font Color", Q_NULLPTR));
         pushButton_2->setText(QApplication::translate("MainWindow", "Resize Image", Q_NULLPTR));
         pushButton->setText(QApplication::translate("MainWindow", "Mark Regions", Q_NULLPTR));
         viewComments->setText(QApplication::translate("MainWindow", "Comments Accuracy", Q_NULLPTR));

@@ -400,6 +400,8 @@ private slots:
 
     void on_justify_triggered();
 
+    void on_actionFont_Color_triggered();
+
 private:
 
     bool mExitStatus = false;

@@ -45,5 +45,6 @@
         <file>Resources/information.png</file>
         <file>Resources/stylesheet-branch-closed.png</file>
         <file>Resources/stylesheet-branch-open.png</file>
+        <file>Resources/font color.png</file>
     </qresource>
 </RCC>
