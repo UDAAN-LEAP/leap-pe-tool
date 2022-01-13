@@ -1056,8 +1056,10 @@ void MainWindow::SaveFile(){
         QTextCharFormat fmt;
         //fmt.setForeground(QBrush(QColor(0,0,0)));           //Setting foreground brush to render text
         QTextCursor cursor = curr_browser->textCursor();
+        cursor.beginEditBlock();
         cursor.select(QTextCursor::Document);
         cursor.mergeCharFormat(fmt);
+        cursor.endEditBlock();
 
         QString output = curr_browser->toHtml();
 
