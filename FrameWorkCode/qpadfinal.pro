@@ -28,6 +28,7 @@ LIBS += -lgit2
 
 include(qpadfinal.pri)
 
+DEFINES += QT_MESSAGELOGCONTEXT
 
 RESOURCES += \
     AppResources.qrc

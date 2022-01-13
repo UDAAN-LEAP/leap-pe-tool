@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'textfinder.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.11
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,14 +10,11 @@
 #define UI_TEXTFINDER_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
@@ -46,50 +43,50 @@ public:
     void setupUi(QDialog *TextFinder)
     {
         if (TextFinder->objectName().isEmpty())
-            TextFinder->setObjectName(QStringLiteral("TextFinder"));
+            TextFinder->setObjectName(QString::fromUtf8("TextFinder"));
         TextFinder->resize(377, 189);
         QFont font;
-        font.setFamily(QStringLiteral("Work Sans"));
+        font.setFamily(QString::fromUtf8("Work Sans"));
         font.setPointSize(11);
         font.setBold(false);
         font.setItalic(false);
         font.setWeight(50);
         TextFinder->setFont(font);
-        TextFinder->setStyleSheet(QLatin1String("font: 11pt \"Work Sans\"; \n"
+        TextFinder->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\"; \n"
 "background-color: rgb(32, 33, 72);"));
         TextFinder->setSizeGripEnabled(false);
         horizontalLayout_3 = new QHBoxLayout(TextFinder);
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         formLayout = new QFormLayout();
-        formLayout->setObjectName(QStringLiteral("formLayout"));
+        formLayout->setObjectName(QString::fromUtf8("formLayout"));
         formLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
         formLayout->setFormAlignment(Qt::AlignCenter);
         formLayout->setHorizontalSpacing(10);
         formLayout->setVerticalSpacing(12);
         formLayout->setContentsMargins(10, 10, 10, 10);
         findLabel = new QLabel(TextFinder);
-        findLabel->setObjectName(QStringLiteral("findLabel"));
-        findLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
+        findLabel->setObjectName(QString::fromUtf8("findLabel"));
+        findLabel->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
 
         formLayout->setWidget(0, QFormLayout::LabelRole, findLabel);
 
         findLineEdit = new QLineEdit(TextFinder);
-        findLineEdit->setObjectName(QStringLiteral("findLineEdit"));
-        findLineEdit->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255); color: black;"));
+        findLineEdit->setObjectName(QString::fromUtf8("findLineEdit"));
+        findLineEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255); color: black;"));
 
         formLayout->setWidget(0, QFormLayout::FieldRole, findLineEdit);
 
         replaceLabel = new QLabel(TextFinder);
-        replaceLabel->setObjectName(QStringLiteral("replaceLabel"));
-        replaceLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
+        replaceLabel->setObjectName(QString::fromUtf8("replaceLabel"));
+        replaceLabel->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
 
         formLayout->setWidget(1, QFormLayout::LabelRole, replaceLabel);
 
         replaceLineEdit = new QLineEdit(TextFinder);
-        replaceLineEdit->setObjectName(QStringLiteral("replaceLineEdit"));
-        replaceLineEdit->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255); color: black;"));
+        replaceLineEdit->setObjectName(QString::fromUtf8("replaceLineEdit"));
+        replaceLineEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255); color: black;"));
 
         formLayout->setWidget(1, QFormLayout::FieldRole, replaceLineEdit);
 
@@ -97,20 +94,20 @@ public:
         verticalLayout->addLayout(formLayout);
 
         gridLayout = new QGridLayout();
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(10, 3, 10, 2);
         findPreviousButton = new QPushButton(TextFinder);
-        findPreviousButton->setObjectName(QStringLiteral("findPreviousButton"));
-        findPreviousButton->setStyleSheet(QLatin1String("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
+        findPreviousButton->setObjectName(QString::fromUtf8("findPreviousButton"));
+        findPreviousButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
 "} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}"));
 
         horizontalLayout->addWidget(findPreviousButton);
 
         findNextButton = new QPushButton(TextFinder);
-        findNextButton->setObjectName(QStringLiteral("findNextButton"));
-        findNextButton->setStyleSheet(QLatin1String("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
+        findNextButton->setObjectName(QString::fromUtf8("findNextButton"));
+        findNextButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
 "} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}"));
 
         horizontalLayout->addWidget(findNextButton);
@@ -119,20 +116,20 @@ public:
         gridLayout->addLayout(horizontalLayout, 0, 0, 1, 1);
 
         horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(10, 2, 10, 3);
         replaceButton = new QPushButton(TextFinder);
-        replaceButton->setObjectName(QStringLiteral("replaceButton"));
+        replaceButton->setObjectName(QString::fromUtf8("replaceButton"));
         replaceButton->setFont(font);
-        replaceButton->setStyleSheet(QLatin1String("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
+        replaceButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
 "} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}"));
 
         horizontalLayout_2->addWidget(replaceButton);
 
         replaceAllButton = new QPushButton(TextFinder);
-        replaceAllButton->setObjectName(QStringLiteral("replaceAllButton"));
+        replaceAllButton->setObjectName(QString::fromUtf8("replaceAllButton"));
         replaceAllButton->setFont(font);
-        replaceAllButton->setStyleSheet(QLatin1String("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
+        replaceAllButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
 "} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}"));
 
         horizontalLayout_2->addWidget(replaceAllButton);
@@ -154,13 +151,13 @@ public:
 
     void retranslateUi(QDialog *TextFinder)
     {
-        TextFinder->setWindowTitle(QApplication::translate("TextFinder", "Find and Replace", Q_NULLPTR));
-        findLabel->setText(QApplication::translate("TextFinder", "Find:", Q_NULLPTR));
-        replaceLabel->setText(QApplication::translate("TextFinder", "Replace:", Q_NULLPTR));
-        findPreviousButton->setText(QApplication::translate("TextFinder", "Find Previous", Q_NULLPTR));
-        findNextButton->setText(QApplication::translate("TextFinder", "Find Next", Q_NULLPTR));
-        replaceButton->setText(QApplication::translate("TextFinder", "Replace", Q_NULLPTR));
-        replaceAllButton->setText(QApplication::translate("TextFinder", "Replace All", Q_NULLPTR));
+        TextFinder->setWindowTitle(QApplication::translate("TextFinder", "Find and Replace", nullptr));
+        findLabel->setText(QApplication::translate("TextFinder", "Find:", nullptr));
+        replaceLabel->setText(QApplication::translate("TextFinder", "Replace:", nullptr));
+        findPreviousButton->setText(QApplication::translate("TextFinder", "Find Previous", nullptr));
+        findNextButton->setText(QApplication::translate("TextFinder", "Find Next", nullptr));
+        replaceButton->setText(QApplication::translate("TextFinder", "Replace", nullptr));
+        replaceAllButton->setText(QApplication::translate("TextFinder", "Replace All", nullptr));
     } // retranslateUi
 
 };

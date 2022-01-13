@@ -1,3 +1,39 @@
-Debug: App crashed
-Debug: App crashed
-Debug: mwindow
+OpenOCRCorrect Crash Log
+Date: 14 Jan 2022 @ 00:23:42
+
+User : Username:sujay
+Application Log:
+Warning   OpenType support missing for "Ubuntu", script 11 ()
+Fatal ASSERT failure in QList<T>::operator[]: "index out of range", file ../../../Qt5.12.11/5.12.11/gcc_64/include/QtCore/qlist.h, line 552 (../../../Qt5.12.11/5.12.11/gcc_64/include/QtCore/qlist.h)
+Debug App crashed (main.cpp)
+OpenOCRCorrect Crash Log
+
+Date: 14 Jan 2022 @ 00:26:27
+
+User : Username:sujay
+
+Application Log:
+Warning   OpenType support missing for "Ubuntu", script 11 ()
+Debug "मे =>म " 
+ (mainwindow.cpp)
+Warning QIODevice::read (QFile, "/home/sujay/Downloads/AIML-master/CorrectorOutput/."): device not open ()
+Warning QIODevice::read (QFile, "/home/sujay/Downloads/AIML-master/CorrectorOutput/.."): device not open ()
+Debug "AIML-all_0001-002.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Warning QBackingStore::endPaint() called with active painter; did you forget to destroy it or call QPainter::end() on it? ()
+Debug "/home/sujay/Downloads/AIML-master/Dicts/CPair" exists (mainwindow.cpp)
+Fatal ASSERT failure in QList<T>::operator[]: "index out of range", file ../../../Qt5.12.11/5.12.11/gcc_64/include/QtCore/qlist.h, line 552 (../../../Qt5.12.11/5.12.11/gcc_64/include/QtCore/qlist.h)
+Debug App crashed (main.cpp)
+
+OpenOCRCorrect Crash Log
+Date: 14 Jan 2022 @ 00:28:44
+User : Username:sujay
+Application Log:
+Warning   OpenType support missing for "Ubuntu", script 11 ()
+Debug "ह =>हा " 
+ (mainwindow.cpp)
+Debug "/home/sujay/Downloads/AIML-master/Dicts/CPair" exists (mainwindow.cpp)
+Warning QIODevice::read (QFile, "/home/sujay/Downloads/AIML-master/CorrectorOutput/."): device not open ()
+Warning QIODevice::read (QFile, "/home/sujay/Downloads/AIML-master/CorrectorOutput/.."): device not open ()
+Debug "AIML-all_0001-003.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Fatal ASSERT failure in QList<T>::operator[]: "index out of range", file ../../../Qt5.12.11/5.12.11/gcc_64/include/QtCore/qlist.h, line 552 (../../../Qt5.12.11/5.12.11/gcc_64/include/QtCore/qlist.h)
+Debug App crashed (main.cpp)

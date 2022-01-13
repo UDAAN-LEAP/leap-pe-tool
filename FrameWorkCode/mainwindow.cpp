@@ -23,6 +23,7 @@
 #include <fstream>
 #include <vector>
 #include <utility>
+#include "crashlog.h"
 #include "ProjectHierarchyWindow.h"
 #include "3rdParty/RapidXML/rapidxml.hpp"
 #include <QDomDocument>
@@ -123,6 +124,7 @@ QList<QString> filesChangedUsingGlobalReplace;
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    qInstallMessageHandler(crashlog::myMessageHandler);
 //    ui->textBrowser->setStyleSheet("background-color:white;");
 
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
@@ -180,6 +182,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     qApp->installEventFilter(this);
     AddRecentProjects();
+
 
     if (!isVerifier)
     {

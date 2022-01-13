@@ -6,14 +6,14 @@
 #include "ui_globalreplacepreview.h"
 #include "globalreplaceinformation.h"
 #include <QMessageBox>
-
+#include "crashlog.h"
 GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GlobalReplaceDialog)
 {
 
     ui->setupUi(this);
-
+    qInstallMessageHandler(crashlog::myMessageHandler);
     setWindowTitle("Select the words you want to replace globally");
     displayOriginalList(replacedWords);
     //ui->listWidget->insertItem(,"Replacement Words");

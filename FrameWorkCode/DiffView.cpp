@@ -5,7 +5,7 @@
 #include <qstring.h>
 #include <Project.h>
 #include <QMessageBox>
-
+#include "crashlog.h"
 DiffView::DiffView(QWidget *parent, QString page,QString fpath)
 	: QMainWindow(parent)
 {
@@ -15,7 +15,7 @@ DiffView::DiffView(QWidget *parent, QString page,QString fpath)
     ui->setupUi(this);
     setWindowTitle("Verifier Output Difference " + page);
 
-
+    qInstallMessageHandler(crashlog::myMessageHandler);
     //!check if file exists
     QFile fverifier(gDirTwoLevelUp+ "/VerifierOutput/"+ page );
 
