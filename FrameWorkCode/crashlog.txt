@@ -1,0 +1,3 @@
+Debug: App crashed
+Debug: App crashed
+Debug: mwindow

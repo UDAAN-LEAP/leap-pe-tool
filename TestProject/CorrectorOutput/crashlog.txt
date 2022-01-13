@@ -1,0 +1,16 @@
+Debug: "आर्यपटीयंकिऋग्ह:  =>आर्यपटीयंकिऋग्ह: : " 
+
+Debug: "/home/sujay/Documents/iitb-openocr-digit-tool/TestProject/Dicts/CPair" exists
+Warning: QIODevice::read (QFile, "/home/sujay/Documents/iitb-openocr-digit-tool/TestProject/CorrectorOutput/."): device not open
+Warning: QIODevice::read (QFile, "/home/sujay/Documents/iitb-openocr-digit-tool/TestProject/CorrectorOutput/.."): device not open
+Debug: "page-2.html"  already found in Edited Files Log. No need to update.
+Debug: App crashed
+Debug: "/home/sujay/Documents/iitb-openocr-digit-tool/TestProject/Dicts/CPair" exists
+Debug: "page-2.html"  already found in Edited Files Log. No need to update.
+Debug: "आर्यपटीयंकिऋग्ह: =>आर्यपटीयंकिऋग्ह " 
+
+Debug: "/home/sujay/Documents/iitb-openocr-digit-tool/TestProject/Dicts/CPair" exists
+Warning: QIODevice::read (QFile, "/home/sujay/Documents/iitb-openocr-digit-tool/TestProject/CorrectorOutput/."): device not open
+Warning: QIODevice::read (QFile, "/home/sujay/Documents/iitb-openocr-digit-tool/TestProject/CorrectorOutput/.."): device not open
+Debug: "page-2.html"  already found in Edited Files Log. No need to update.
+Debug: App crashed

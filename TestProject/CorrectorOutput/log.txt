@@ -1,0 +1,6 @@
+Debug: "/home/sujay/Documents/iitb-openocr-digit-tool/TestProject/Dicts/CPair" exists
+Debug: "page-3.html"  not found in Edited Files Log. 
+
+Debug: Writing  "/home/sujay/Documents/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-3.html"  to file. 
+
+Debug: App crashed
