@@ -1,0 +1,14 @@
+
+OpenOCRCorrect Application Log
+Date: 14 Jan 2022 @ 14:39:24
+User : Username:sujay
+
+Application Log:
+Debug: App crashed (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 14 Jan 2022 @ 14:40:25
+Username:sujay
+
+Application Log:
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
