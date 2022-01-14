@@ -31,3 +31,23 @@ Application Log:
 Debug: "/home/sujay/Downloads/AIML-master/image.xml" (markRegion.cpp)
 Warning:   OpenType support missing for "Ubuntu", script 11 ()
 Debug: App crashed (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 14 Jan 2022 @ 17:00:40
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/Test_JP/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 14 Jan 2022 @ 17:01:17
+Username:mush
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 14 Jan 2022 @ 17:01:20
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/Test_JP/image.xml" (markRegion.cpp)

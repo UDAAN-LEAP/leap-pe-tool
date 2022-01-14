@@ -1,3 +1,12 @@
+/*!
+  \class DiffView
+  \brief The DiffView class contains function that allows comparision of initial text, Corrector output and verifier output text
+
+  At times, the verifiers may want to compare their work with initial text and corrector text. Comparing allows
+  the user to track their work progress and find mistakes that are highly made by the correctors.
+
+  \sa on_compareVerifierOutput_clicked()
+*/
 #include "DiffView.h"
 #include "ui_DiffView.h"
 #include "diff_match_patch.h"
@@ -6,8 +15,15 @@
 #include <Project.h>
 #include <QMessageBox>
 #include "crashlog.h"
+
+/*!
+ * \fn DiffView::DiffView
+ * \param parent
+ * \param page
+ * \param fpath
+ */
 DiffView::DiffView(QWidget *parent, QString page,QString fpath)
-	: QMainWindow(parent)
+    : QMainWindow(parent)
 {
     pageNo = page.toStdString();
     gDirTwoLevelUp=fpath;
@@ -16,6 +32,7 @@ DiffView::DiffView(QWidget *parent, QString page,QString fpath)
     setWindowTitle("Verifier Output Difference " + page);
 
     qInstallMessageHandler(crashlog::myMessageHandler);
+
     //!check if file exists
     QFile fverifier(gDirTwoLevelUp+ "/VerifierOutput/"+ page );
 
@@ -31,16 +48,33 @@ DiffView::DiffView(QWidget *parent, QString page,QString fpath)
      }
 }
 
+/*!
+ * \fn DiffView::~DiffView
+ */
 DiffView::~DiffView()
 {
-	delete ui;
+    delete ui;
 }
 
+/*!
+ * \fn DiffView::validFilePath
+ * \brief Returns true if file path is valid
+ * \return bool
+ */
 bool DiffView::validFilePath()
 {
     return isValidFile;
 }
 
+/*!
+ * \fn DiffView::Load_comparePage
+ * \param page
+ * \brief For the currently opened page, the function fetches - initial text, corrector text and verifier text
+ * and produces a final color coded text representing changes. The metrics are also calculated such as
+ * change percentage and accuracy.
+ *
+ * \sa LevenshteinWithGraphemes(),GetGraphemesCount(), diff_main(), diff_prettyHtml()
+ */
 void DiffView::Load_comparePage(string page)
 {
     QString qs1="", qs2="",qs3="";
@@ -165,6 +199,7 @@ void DiffView::Load_comparePage(string page)
         doc.setHtml(qs3);
         QString verifiertext = doc.toPlainText();
 
+        //!Displays changes by color coding
         auto diffs = dmp.diff_main(ocrtext,interntext);
         QString textcolor = "ffd13d";
         QList<QString> htmlList1 = dmp.diff_prettyHtml(diffs, textcolor);
@@ -179,12 +214,18 @@ void DiffView::Load_comparePage(string page)
         html2.remove("&para;");
         html3.remove("&para;");
         QString title = "Compare Verifier Output " + QString::fromStdString(page) ;
-        setWindowTitle(title);
+
+        setWindowTitle(title); //sets window title
      }
 }
 
+/*!
+ * \fn DiffView::UpdateUI
+ * \brief It updates the content text and calculated metrics from Load_comparePage to the UI
+ */
 void DiffView::UpdateUI()
 {
+    //!Updating page text to three sections respectively
     ui->InternText->setHtml(html1);
     ui->OCRText->setHtml(html2);
     ui->VerifierText->setHtml(html3);
@@ -200,6 +241,13 @@ void DiffView::UpdateUI()
     ui->OCRLabel->setText("<p><b>1. Initial Text </b></p>Accuracy of OCR Text (w.r.t Verified Text): " +OCRLabel);
 }
 
+/*!
+ * \fn DiffView::on_PrevButton_clicked
+ * \brief It re-loads the compare window when previous button is clicked and updates the text and metrics for
+ * that page respectively.
+ *
+ * \sa Load_comparePage(), Update_UI()
+ */
 void DiffView::on_PrevButton_clicked()
 {
     //! Extract page number from the localFilename
@@ -219,8 +267,8 @@ void DiffView::on_PrevButton_clicked()
          if(fverifier.exists())
          {
            pageNo.replace(loc,no.size(),to_string(stoi(no) - 1)); //Decrement the page number
-           Load_comparePage(pageNo);
-           UpdateUI();
+           Load_comparePage(pageNo); // get the text and metrics
+           UpdateUI();               // Update the Ui
          }
          else{
              return ;
@@ -228,6 +276,13 @@ void DiffView::on_PrevButton_clicked()
      }
 }
 
+/*!
+ * \fn DiffView::on_NextButton_clicked
+ * \brief It re-loads the compare window when next button is clicked and updates the text and metrics for
+ * that page respectively.
+ *
+ * \sa Load_comparePage(), Update_UI()
+ */
 void DiffView::on_NextButton_clicked()
 {
     //! Extract page number from the localFilename
@@ -236,6 +291,7 @@ void DiffView::on_NextButton_clicked()
     QString ext = "";
     if(!mProject.GetPageNumber(pageNo, &no, &loc, &ext))
         return;
+
     //!check if file exists
     string pages = pageNo;
     pages.replace(loc,no.size(),to_string(stoi(no) + 1));
@@ -244,8 +300,8 @@ void DiffView::on_NextButton_clicked()
      if(fverifier.exists())
      {
        pageNo.replace(loc,no.size(),to_string(stoi(no) + 1)); //Increment the page number
-       Load_comparePage(pageNo);
-       UpdateUI();
+       Load_comparePage(pageNo);   // get the text and metrics
+       UpdateUI();                 // Update the Ui
      }
      else{
          return ;
