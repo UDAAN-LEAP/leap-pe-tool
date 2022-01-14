@@ -1,11 +1,12 @@
 #include "undoglobalreplace.h"
 #include "ui_undoglobalreplace.h"
-
+#include "crashlog.h"
 UndoGlobalReplace::UndoGlobalReplace(QMap<QString, QString> reversedGRMap, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::UndoGlobalReplace)
 {
     ui->setupUi(this);
+    qInstallMessageHandler(crashlog::myMessageHandler);
     setWindowTitle("Undo Globally Replace Words");
     displayListForUndoOperation(reversedGRMap);
     QObject::connect(ui->listWidget, SIGNAL(itemChanged(QlistWidgetItem*)), this, SLOT(highlightChecked(QListWidgetItem*)));

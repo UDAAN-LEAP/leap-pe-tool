@@ -2,13 +2,14 @@
 #include<QFile>
 #include<QTextStream>
 #include<QDir>
-
+#include "crashlog.h"
 extern QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName;
 
 
 //! Updating entries for figure/table/equation pagewise in image.xml
 void markRegion::updateEntries(QDomDocument document, QString filename,QString PageNo, QString s2, int i)
 {
+    qInstallMessageHandler(crashlog::myMessageHandler);
     QDomElement root = document.documentElement();
     QDomElement Component=root.firstChild().toElement();
 
@@ -54,7 +55,7 @@ void markRegion::updateEntries(QDomDocument document, QString filename,QString P
 void markRegion::createImageInfoXMLFile()
 {
     QDomDocument document;
-
+    qInstallMessageHandler(crashlog::myMessageHandler);
     // Add processing instructions that are XML instructions
     QDomProcessingInstruction instruction;
     instruction = document.createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");

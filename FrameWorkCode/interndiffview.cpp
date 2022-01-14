@@ -6,7 +6,7 @@
 #include <qstring.h>
 #include <Project.h>
 #include <QMessageBox>
-
+#include "crashlog.h"
 InternDiffView::InternDiffView( QWidget *parent, QString page, QString fpath)
 	: QMainWindow(parent)
 {
@@ -14,7 +14,7 @@ InternDiffView::InternDiffView( QWidget *parent, QString page, QString fpath)
     pageNo = page.toStdString();
     ui = new Ui::InternDiffView();
     ui->setupUi(this);
-
+    qInstallMessageHandler(crashlog::myMessageHandler);
     //!check if file exists
     QFile fcorrector(gDirTwoLevelUp+ "/CorrectorOutput/"+ page );
 

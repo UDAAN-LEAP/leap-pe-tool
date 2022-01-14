@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include <QCloseEvent>
 #include <QString>
+#include "crashlog.h"
 #include <string>
 QString commentFilename;
 QString pagename;
@@ -12,6 +13,7 @@ CommentsView::CommentsView(const int &words, const int &chars, const float &word
 
     ui = new Ui::CommentsView();
     ui->setupUi(this);
+    qInstallMessageHandler(crashlog::myMessageHandler);
     setWindowTitle("Comments and Accuracy");
     ui->h_words->setText(QString::number(words));
     ui->h_characters->setText(QString::number(chars));

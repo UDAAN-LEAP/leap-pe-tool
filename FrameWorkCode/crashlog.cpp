@@ -33,11 +33,11 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const Q
            fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
            break;
          }
-       QFile outFile(QString::fromStdString(qApp->applicationDirPath().toStdString())+"/application_log.txt");
+       QFile outFile(QString::fromStdString(qApp->applicationDirPath().toStdString())+"/Crash Logs/application_log.txt");
        outFile.open(QIODevice::ReadWrite | QIODevice::Append);
        QTextStream ts1(&outFile);
        ts1.setCodec("UTF-8");
-       QHash<QtMsgType, QString> msgLevelHash({{QtDebugMsg, "Debug"}, {QtInfoMsg, "Info"}, {QtWarningMsg, "Warning"}, {QtCriticalMsg, "Critical"}, {QtFatalMsg, "Fatal"}});
+       QHash<QtMsgType, QString> msgLevelHash({{QtDebugMsg, "Debug:"}, {QtInfoMsg, "Info:"}, {QtWarningMsg, "Warning:"}, {QtCriticalMsg, "Critical:"}, {QtFatalMsg, "Fatal:"}});
        QString logLevelName = msgLevelHash[type];
        QString txt = QString("%1 %2 (%3)").arg(logLevelName, msg,  context.file);
 

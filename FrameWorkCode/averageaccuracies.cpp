@@ -1,11 +1,12 @@
 #include "averageaccuracies.h"
 #include "ui_averageaccuracies.h"
-
+#include "crashlog.h"
 AverageAccuracies::AverageAccuracies(QString csvfilepath,float avgwordacc, float avgcharacc, int avgworderrors, int avgcharerrors, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AverageAccuracies)
 {
     ui->setupUi(this);
+    qInstallMessageHandler(crashlog::myMessageHandler);
     setWindowTitle("Average Accuracies");
     QStandardItemModel *model = new QStandardItemModel;
 
