@@ -44,7 +44,7 @@
 #include <QDebug>
 #include<QtCore>
 #include<QtXml>
-#include <QPainter>
+//#include <QPainter>
 #include <QJsonObject>
 #include <QTextDocumentFragment>
 #include <sstream>

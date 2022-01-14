@@ -74,7 +74,7 @@ HEADERS += ./Filters.h \
     ./interndiffview.h \
     ./loginpageview.h \
     ./mainwindow.h \
-    ./qcustomplot.h \
+#    ./qcustomplot.h \
     ./resizeimageview.h \
     ./zoom.h \
     ./ProjectWizard.h \
@@ -118,7 +118,7 @@ SOURCES += ./DiffView.cpp \
     ./loginpageview.cpp \
     ./main.cpp \
     ./mainwindow.cpp \
-    ./qcustomplot.cpp \
+#    ./qcustomplot.cpp \
     ./resizeimageview.cpp \
     ./zoom.cpp \
     ./ProjectWizard.cpp \

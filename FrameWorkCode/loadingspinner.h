@@ -19,7 +19,8 @@ public:
 
 private:
 
-    Ui::LoadingSpinner *ui;
+     Ui::LoadingSpinner *ui;
+     QMovie *mv;
 };
 
 #endif // LOADINGSPINNER_H

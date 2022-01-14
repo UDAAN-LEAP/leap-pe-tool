@@ -94,7 +94,8 @@ void markRegion::createImageInfoXMLFile()
         counter_i++;
     }
 
-    QString filename12 = mProject.GetDir().absolutePath() + "/image.xml";
+    QString filename12 = gDirTwoLevelUp + "/image.xml";
+    qDebug() << gDirTwoLevelUp + "/image.xml";
     if(!QFileInfo::exists(filename12))
     {
         QFile file(filename12);

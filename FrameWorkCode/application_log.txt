@@ -12,3 +12,22 @@ Username:sujay
 
 Application Log:
 Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 14 Jan 2022 @ 16:32:55
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Documents/iitb-openocr-digit-tool/FrameWorkCode/image.xml" (markRegion.cpp)
+Debug: Writing to xml file (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 14 Jan 2022 @ 16:35:01
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/AIML-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed (main.cpp)

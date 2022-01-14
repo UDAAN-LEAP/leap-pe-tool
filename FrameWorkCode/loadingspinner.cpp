@@ -14,7 +14,7 @@ LoadingSpinner::LoadingSpinner(QWidget *parent) :
     ui->setupUi(this);
     qInstallMessageHandler(crashlog::myMessageHandler);
     this->move(425,300);
-    QMovie *mv = new QMovie(":/Images/spinbar-tp.gif");
+    mv = new QMovie(":/Images/spinbar-tp.gif");
     ui->labelspin->setAttribute(Qt::WA_NoSystemBackground);
     ui->labelspin->setMovie(mv);
     ui->labelspin->setScaledContents(true);
@@ -30,6 +30,7 @@ void LoadingSpinner::SetSave(){
 
 LoadingSpinner::~LoadingSpinner()
 {
+    mv->stop();
     delete ui;
 }
 
