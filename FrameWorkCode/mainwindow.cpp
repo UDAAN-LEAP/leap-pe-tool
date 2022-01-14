@@ -5263,8 +5263,14 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 //        qDebug()<<"changesList[0]"<<changesList[0];
 //        qDebug()<<"changesList[1]"<<changesList[1];
         bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[0], changesList[1],check);
-        if (updateGlobalCPairs)
+        if (updateGlobalCPairs){
             globalReplacementMap[changesList[0]] = changesList[1];
+            if(check==1)
+                replaceInAllPages_Map.insert(changesList[0],changesList[1]);
+            else
+                replaceInUneditedPages_Map.insert(changesList[0],changesList[1]);
+        }
+
     }
     //! if there is more than 1 change spawn a checklist and get the checked pairs only
     else if(noOfChangedWords > 1){
@@ -5379,7 +5385,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         QFile csvFile(filename);
         if(!csvFile.exists())
         {
-            csvFile.open(QFile::ReadWrite);
+            csvFile.open(QIODevice::ReadWrite, QIODevice::Append);
             QTextStream output(&csvFile);
             output.setCodec("UTF-8");
             output << "Source Word,Target Word,Type of Replacement,Time of Replacement,Page Name,Set name";
@@ -5387,7 +5393,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
         else
         {
-            csvFile.open(QFile::ReadWrite);
+            csvFile.open(QIODevice::ReadWrite, QIODevice::Append);
         }
 
         for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
