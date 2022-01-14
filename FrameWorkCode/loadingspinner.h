@@ -19,6 +19,7 @@ public:
 
 private:
 
+    QMovie *mv;
     Ui::LoadingSpinner *ui;
 };
 

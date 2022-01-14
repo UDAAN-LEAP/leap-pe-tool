@@ -14,3 +14,164 @@ Warning QIODevice::read (QFile, "/home/sujay/Downloads/AIML-master/CorrectorOutp
 Debug "AIML-all_0001-003.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
 Fatal ASSERT failure in QList<T>::operator[]: "index out of range", file ../../../Qt5.12.11/5.12.11/gcc_64/include/QtCore/qlist.h, line 552 (../../../Qt5.12.11/5.12.11/gcc_64/include/QtCore/qlist.h)
 Debug App crashed (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 14 Jan 2022 @ 10:51:38
+User : Username:ajit
+Application Log:
+
+
+Warning   OpenType support missing for "Ubuntu", script 11 ()
+Debug "एवं प्रेरणा =>सृब्द् व्स्द् " 
+ (mainwindow.cpp)
+Debug App crashed (main.cpp)
+Warning QBackingStore::endPaint() called with active painter; did you forget to destroy it or call QPainter::end() on it? ()
+Warning QWidget::repaint: Recursive repaint detected ()
+Warning QBackingStore::endPaint() called with active painter; did you forget to destroy it or call QPainter::end() on it? ()
+Warning QBackingStore::endPaint() called with active painter; did you forget to destroy it or call QPainter::end() on it? ()
+
+OpenOCRCorrect Application Log
+Date: 14 Jan 2022 @ 10:57:01
+User : Username:ajit
+Application Log:
+
+
+Debug App crashed (main.cpp)
+Warning QBackingStore::endPaint() called with active painter; did you forget to destroy it or call QPainter::end() on it? ()
+Warning QWidget::repaint: Recursive repaint detected ()
+Debug "अर्थशास्त्र =>अजित् स्व् " 
+ (mainwindow.cpp)
+Warning QBackingStore::endPaint() called with active painter; did you forget to destroy it or call QPainter::end() on it? ()
+Warning QBackingStore::endPaint() called with active painter; did you forget to destroy it or call QPainter::end() on it? ()
+
+OpenOCRCorrect Application Log
+Date: 14 Jan 2022 @ 11:04:02
+User : Username:ajit
+Application Log:
+
+
+Debug "विस्तार =>अजित् " 
+ (mainwindow.cpp)
+Debug "बाद =>बा स्व्द " 
+ (mainwindow.cpp)
+Debug "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/Dicts/CPair" exists (mainwindow.cpp)
+Warning   OpenType support missing for "Ubuntu", script 11 ()
+Debug Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug Size =  2 (globalreplacedialog.cpp)
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/.."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/.."): device not open ()
+Debug "p-02.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug "बा =>बानदृव्vsd sdvs " 
+ (mainwindow.cpp)
+Debug "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/Dicts/CPair" exists (mainwindow.cpp)
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/.."): device not open ()
+Debug "p-02.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Warning   OpenType support missing for "Ubuntu", script 11 ()
+Debug "लोकानां—' =>व्स्द्’ vs dv स् " 
+ (mainwindow.cpp)
+Debug "/home/ajit/Documents/ABBv2S2_HS_AK-master/Dicts/CPair" exists (mainwindow.cpp)
+Warning QIODevice::read (QFile, "/home/ajit/Documents/ABBv2S2_HS_AK-master/CorrectorOutput/."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/ABBv2S2_HS_AK-master/CorrectorOutput/.."): device not open ()
+Debug "page-81.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug Writing  "/home/ajit/Documents/ABBv2S2_HS_AK-master/CorrectorOutput/page-81.html"  to file. 
+ (mainwindow.cpp)
+Debug "'वसुदेवादिसार्पार्धा—' 'आश्लेषार्घाद् =>'व्सद्व्’ 'आश्लेषास्व्व्र्घाद् " 
+ (mainwindow.cpp)
+Debug "'दूरस्थचिह्नवेधा—' =>'दूरस्थचिह्नवेव्स्द्धा—' स्व्द् " 
+ (mainwindow.cpp)
+Debug "/home/ajit/Documents/ABBv2S2_HS_AK-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug Size =  0 (globalreplacedialog.cpp)
+Debug "page-81.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 14 Jan 2022 @ 11:11:00
+User : Username:ajit
+Application Log:
+
+
+Warning   OpenType support missing for "Ubuntu", script 11 ()
+Debug "पर्यवेक्षित =>स्द्व्स " 
+ (mainwindow.cpp)
+Debug "समस्या =>स्द्व् " 
+ (mainwindow.cpp)
+Debug "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Warning   OpenType support missing for "Ubuntu", script 11 ()
+Debug Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug Size =  2 (globalreplacedialog.cpp)
+Warning QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/.."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/.."): device not open ()
+Debug "AIML-all_0001-008.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug Writing  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-008.html"  to file. 
+ (mainwindow.cpp)
+Debug "2020 =>2 स्०२० " 
+ (mainwindow.cpp)
+Debug "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Warning QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/.."): device not open ()
+Debug "AIML-all_0001-009.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug Writing  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-009.html"  to file. 
+ (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 14 Jan 2022 @ 11:12:29
+User : Username:ajit
+Application Log:
+
+
+Debug "अजित् =>अजिदृव्त् " 
+ (mainwindow.cpp)
+Debug "सद्व्स् =>सृद्व्स् " 
+ (mainwindow.cpp)
+Debug "बानदृव्vsd =>वृस् " 
+ (mainwindow.cpp)
+Debug "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/Dicts/CPair" exists (mainwindow.cpp)
+Warning   OpenType support missing for "Ubuntu", script 11 ()
+Debug Before Size of leftCheckbox Vector =  3 (globalreplacedialog.cpp)
+Debug Before Size of rightCheckbox Vector =  3 (globalreplacedialog.cpp)
+Debug Size =  1 (globalreplacedialog.cpp)
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/.."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/.."): device not open ()
+Debug "p-02.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug "काई =>स्स्स् " 
+ (mainwindow.cpp)
+Debug "किया =>अब्च् " 
+ (mainwindow.cpp)
+Debug "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug Size =  2 (globalreplacedialog.cpp)
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/.."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/.."): device not open ()
+Debug "p-02.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug "भारतीय =>दृव्ब्द् " 
+ (mainwindow.cpp)
+Debug "विचार =>स्व्द्स् ऋव्स् " 
+ (mainwindow.cpp)
+Debug "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug Size =  2 (globalreplacedialog.cpp)
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/.."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/."): device not open ()
+Warning QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/.."): device not open ()
+Debug "p-21.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug Writing  "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/CorrectorOutput/p-21.html"  to file. 
+ (mainwindow.cpp)
