@@ -1,3 +1,13 @@
+/*!
+\class markRegion
+\brief The DiffView class update entries and generates image.xml files for mark region
+       feature.
+       To insert image/equation/table in the html pages
+       markRegion class provides features to do so. It also keeps
+       entries of such changes in a document.
+
+\sa updateEntries(), createImageInfoXMLFile()
+*/
 #include "markRegion.h"
 #include<QFile>
 #include<QTextStream>
@@ -6,14 +16,25 @@
 extern QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName;
 
 
-//! Updating entries for figure/table/equation pagewise in image.xml
+
+/*!
+* \fn markRegion::updateEntries
+* \brief Updating entries for figure/table/equation pagewise in image.xml
+* \param document
+* \param filename
+* \param PageNo
+* \param s2
+* \param i
+* \sa qInstallMessageHandler()
+*/
+
 void markRegion::updateEntries(QDomDocument document, QString filename,QString PageNo, QString s2, int i)
 {
     qInstallMessageHandler(crashlog::myMessageHandler);
     QDomElement root = document.documentElement();
     QDomElement Component=root.firstChild().toElement();
 
-    while(!Component.isNull())       // Loop while there is a child
+    while(!Component.isNull())       //! Loop while there is a child
     {
         //! Check if the child tag name is COMPONENT
         if (Component.tagName()=="page"+PageNo)
@@ -34,10 +55,10 @@ void markRegion::updateEntries(QDomDocument document, QString filename,QString P
                     Child.childNodes().at(0).setNodeValue(QString::number(i));
                 }
 
-                Child = Child.nextSibling().toElement();       // Next child
+                Child = Child.nextSibling().toElement();       //! Next child
             }
         }
-        Component = Component.nextSibling().toElement();        // Next component
+        Component = Component.nextSibling().toElement();        //! Next component
      }
     QFile f(filename);
     f.open(QIODevice::WriteOnly);
@@ -49,23 +70,26 @@ void markRegion::updateEntries(QDomDocument document, QString filename,QString P
 }
 
 
-
-
-//! Genearte image.xml for figure/table/equation entries and initialize these values by 1 iff when this file does not exist.
+/*!
+* \fn markRegion::createImageInfoXMLFile
+* \brief Genearte image.xml for figure/table/equation entries and initialize
+*        these values by 1 iff when this file does not exist.
+* \sa qInstallMessageHandler()
+*/
 void markRegion::createImageInfoXMLFile()
 {
     QDomDocument document;
     qInstallMessageHandler(crashlog::myMessageHandler);
-    // Add processing instructions that are XML instructions
+    //! Add processing instructions that are XML instructions
     QDomProcessingInstruction instruction;
     instruction = document.createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
     document.appendChild(instruction);
 
-    // add root element
+    //! add root element
     QDomElement root = document.createElement("BookSet");
     document.appendChild(root);
 
-    //add some elements
+    //!add some elements
     QString strI = gDirTwoLevelUp + "/Inds";
     QDir directory(strI);
     QStringList list1 = directory.entryList(QStringList() << "*.txt",QDir::Files);
