@@ -5511,13 +5511,19 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
                 {
                     QStandardItem *Item = new QStandardItem(pages);
                     model->setItem(lineindex, 0,Item);
-                    QStandardItem *Item1 = new QStandardItem(sentences.at(i));
+                    string sent = sentences.at(i).toStdString();
+                    string newSentence = sent.substr(sent.find("==>")+3);
+                    string oldSentence = sent.substr(0, sent.find("==>"));
+                    QStandardItem *Item1 = new QStandardItem(QString::fromStdString(oldSentence));
                     model->setItem(lineindex, 1,Item1);
+                    QStandardItem *Item2 = new QStandardItem(QString::fromStdString(newSentence));
+                    model->setItem(lineindex, 2,Item2);
                     lineindex++;
                 }
             }
             model->setHeaderData (0,Qt::Horizontal, QObject::tr ("Page"));
-            model->setHeaderData (1,Qt::Horizontal, QObject::tr ("Sentences"));
+            model->setHeaderData (1,Qt::Horizontal, QObject::tr ("Before Repalce"));
+            model->setHeaderData (2,Qt::Horizontal, QObject::tr ("After Replace"));
       }
   globalReplacePreview gp(this, model);
   gp.exec();
@@ -5542,8 +5548,8 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
   for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
   {
       QString oldWord = grmIterator.key();
-      QRegularExpression rx(".*"+oldWord+".*");
-
+      QString newWord = grmIterator.value();
+      QRegularExpression rx("((?:[[\u0900-\u097F]+//]+[[\u0900-\u097F]+//]+){0,5}\W)( "+ oldWord + ")(\W(?:[[\u0900-\u097F]+//]+[[\u0900-\u097F]+//]+){0,5})");
       for(int i=0;i<rx.captureCount()+1;++i)
       {
          QRegularExpressionMatchIterator match = rx.globalMatch(plain);
@@ -5551,9 +5557,13 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
            {
               QRegularExpressionMatch Extmatch = match.next();
               QString matched = Extmatch.captured(i);
-              if(matched.length() >0 )
+              QString newSentence = matched;
+              newSentence = newSentence.replace(oldWord, newWord);
+              QString finalSentence = matched + "==>" + newSentence;
+              qDebug() << "Final Sentence" << finalSentence;
+              if(newSentence.length() >0 )
               {
-                  sentences << matched;
+                  sentences << finalSentence;
               }
            }
        }
@@ -5567,6 +5577,10 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
   return previewPagesMap;
 
 }
+
+
+
+
 //Global CPair End
 
 /*!
