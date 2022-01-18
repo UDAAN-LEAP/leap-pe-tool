@@ -6253,11 +6253,10 @@ void MainWindow::LoadImageFromFile(QFile * f)
     ui->graphicsView->setScene(graphic);
     ui->graphicsView->fitInView(graphic->itemsBoundingRect(), Qt::KeepAspectRatio);
     if (z)delete z;
-    z = new Graphics_view_zoom(ui->graphicsView);
+    z = new Graphics_view_zoom(ui->graphicsView, graphic);
     z->set_modifiers(Qt::NoModifier);
     z->zoom_level = 100;
     connect(z, SIGNAL(zoomed()), this, SLOT(zoomedUsingScroll()));
-    connect(z, SIGNAL(zoomLimitCrossed()), this, SLOT(handleZoomLimitCrossed()));
 
     item1 =new QGraphicsRectItem(0, 0, 1, 1);
     graphic->addItem(item1);
@@ -6966,13 +6965,6 @@ void MainWindow::zoom_slider_moved(int value)
 void MainWindow::zoomedUsingScroll()
 {
     ui->horizontalSlider->setValue(z->zoom_level);
-}
-
-void MainWindow::handleZoomLimitCrossed()
-{
-    ui->graphicsView->fitInView(graphic->itemsBoundingRect(), Qt::KeepAspectRatio);
-    z->zoom_level = 100;
-    ui->horizontalSlider->setValue(100);
 }
 
 

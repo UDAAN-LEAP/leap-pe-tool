@@ -1158,6 +1158,7 @@ public:
 "background: grey;\n"
 "}\n"
 ""));
+        horizontalSlider->setMinimum(1);
         horizontalSlider->setMaximum(100);
         horizontalSlider->setSingleStep(10);
         horizontalSlider->setPageStep(0);

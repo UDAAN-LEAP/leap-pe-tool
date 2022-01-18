@@ -41,7 +41,7 @@ InternDiffView::InternDiffView( QWidget *parent, QString page, QString fpath)
        ui->graphicsView->setScene(scene);
        ui->graphicsView->adjustSize();
        ui->graphicsView->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
-       Graphics_view_zoom* z = new Graphics_view_zoom(ui->graphicsView);
+       Graphics_view_zoom* z = new Graphics_view_zoom(ui->graphicsView, scene);
        z->set_modifiers(Qt::NoModifier);
        z->gentle_zoom(30);
 
@@ -288,7 +288,6 @@ void InternDiffView::on_NextButton_clicked()
     if(fcorrector.exists())
     {
       pageNo.replace(loc,no.size(),to_string(stoi(no) + 1)); //Increment the page number
-      Load_comparePage(pageNo);
       Load_comparePage(pageNo);
       Update_UI();
     }

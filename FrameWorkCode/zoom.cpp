@@ -6,19 +6,21 @@
 #include <QApplication>
 #include <QScrollBar>
 #include <qmath.h>
+#include <QDebug>
 
 /*!
  * \brief Graphics_view_zoom::Graphics_view_zoom
  * \param view
  * zoom based upon the factor
  */
-Graphics_view_zoom::Graphics_view_zoom(QGraphicsView* view)
+Graphics_view_zoom::Graphics_view_zoom(QGraphicsView* view, QGraphicsScene *scene)
   : QObject(view), _view(view)
 {
   _view->viewport()->installEventFilter(this);
   _view->setMouseTracking(true);
   _modifiers = Qt::ControlModifier;
   _zoom_factor_base = 1.0015;       //The minimum zoom factor
+  _scene = scene;
 }
 
 /*!
@@ -27,17 +29,11 @@ Graphics_view_zoom::Graphics_view_zoom(QGraphicsView* view)
  */
 void Graphics_view_zoom::gentle_zoom(double factor)
 {
-  // After using zoom more than 10 times image will be resetted to its original size
-  if (zoomCount > 10) {
-    zoomCount = 0;
-    emit zoomLimitCrossed();
-    return;
-  }
-
+  int previousZoomLevel = zoom_level;
   // Restricting the zoom value between 0 and 200
   if ( zoom_level >= 200 && factor > 1 )
       return;
-  else if ( zoom_level <= 0 && factor < 1 )
+  else if ( zoom_level <= 1 && factor < 1 )
       return;
 
   // Calculating zoom level
@@ -46,13 +42,24 @@ void Graphics_view_zoom::gentle_zoom(double factor)
   else if ( factor < 1 )
       zoom_level -= (1 - factor)*100;
 
+  // Returning if zoom_level == 0
+  if (zoom_level == 0) {
+      zoom_level = previousZoomLevel;
+      return;
+  }
+
+  // Resetting size of image as this zooming function zooms the image relative to that of the previous image present
+  _view->fitInView(_scene->itemsBoundingRect(), Qt::KeepAspectRatio);
+
+  // Calculating new zoom factor from new zoom_level as the size of image is resetted
+  factor = zoom_level / 100.0;
+
   _view->scale(factor, factor);
   _view->centerOn(target_scene_pos);
   QPointF delta_viewport_pos = target_viewport_pos - QPointF(_view->viewport()->width() / 2.0,
                                                              _view->viewport()->height() / 2.0);
   QPointF viewport_center = _view->mapFromScene(target_scene_pos) - delta_viewport_pos;
   _view->centerOn(_view->mapToScene(viewport_center.toPoint()));
-  zoomCount++;
   emit zoomed();
 }
 

@@ -74,15 +74,9 @@ public:
     }
     QTextBrowser * getCurrentBrowser() {
         return curr_browser;
-
-
-
-
     };
 
     void load_data();
-
-
 
 private slots:
     void createActions();
@@ -377,8 +371,6 @@ private slots:
     void zoom_slider_moved(int value);
 
     void zoomedUsingScroll(); // Slot for signal zoomed() emitted from zoom.cpp
-
-    void handleZoomLimitCrossed();  // Slot for signal zoomLimitCrossed() emitted from zoom.cpp
 
     void on_actionUndo_Global_Replace_triggered();
 

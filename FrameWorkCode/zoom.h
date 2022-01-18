@@ -37,7 +37,7 @@
 class Graphics_view_zoom : public QObject {
   Q_OBJECT
 public:
-  Graphics_view_zoom(QGraphicsView* view);
+  Graphics_view_zoom(QGraphicsView* view, QGraphicsScene *scene);
   void gentle_zoom(double factor);
   void set_modifiers(Qt::KeyboardModifiers modifiers);
   void set_zoom_factor_base(double value);
@@ -47,17 +47,16 @@ public:
 
 private:
   QGraphicsView* _view;
+  QGraphicsScene* _scene;
   Qt::KeyboardModifiers _modifiers;
   double _zoom_factor_base;
   QPointF target_scene_pos, target_viewport_pos;
   bool eventFilter(QObject* object, QEvent* event);
   double defaultZoomInFactor = 1.1;
   double defaultZoomOutFactor = 0.9;
-  int zoomCount = 0;
 
 signals:
   void zoomed();
-  void zoomLimitCrossed();
 };
 
 #endif // ZOOM_H
