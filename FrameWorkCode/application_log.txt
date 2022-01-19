@@ -876,3 +876,53 @@ Username:ajit
 
 Application Log:
 Debug: "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 11:45:07
+Username:sujay
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 11:47:16
+Username:sujay
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 11:52:31
+Username:sujay
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 11:53:30
+Username:sujay
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 12:03:02
+Username:sujay
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 12:05:08
+Username:sujay
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 12:10:25
+Username:sujay
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 12:11:39
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()

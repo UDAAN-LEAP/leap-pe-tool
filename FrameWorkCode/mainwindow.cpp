@@ -208,9 +208,16 @@ bool MainWindow::setRole(QString role)
         RoleBox.setWindowTitle("Select Role");
         RoleBox.setIcon(QMessageBox::Question);
         RoleBox.setInformativeText("Which Role do you want to Load?");
-        QPushButton *managerButton = RoleBox.addButton(tr("Project Manager"),QMessageBox::AcceptRole);
-        QPushButton *verifierButton = RoleBox.addButton(tr("Verifier"),QMessageBox::AcceptRole);
-        QPushButton *correctorButton = RoleBox.addButton(tr("Corrector"),QMessageBox::AcceptRole);
+
+        #ifdef Q_OS_WIN
+        QPushButton *correctorButton = RoleBox.addButton(("Corrector"),QMessageBox::AcceptRole);
+        QPushButton *verifierButton = RoleBox.addButton(("Verifier"),QMessageBox::AcceptRole);
+        QPushButton *managerButton = RoleBox.addButton(("Project Manager"),QMessageBox::AcceptRole);
+        #else
+        QPushButton *managerButton = RoleBox.addButton(("Project Manager"),QMessageBox::AcceptRole);
+        QPushButton *verifierButton = RoleBox.addButton(("Verifier"),QMessageBox::AcceptRole);
+        QPushButton *correctorButton = RoleBox.addButton(("Corrector"),QMessageBox::AcceptRole);
+        #endif
         RoleBox.exec();
         if(RoleBox.clickedButton() == verifierButton)
             mRole = "Verifier";
