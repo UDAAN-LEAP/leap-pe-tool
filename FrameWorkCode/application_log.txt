@@ -1054,3 +1054,11 @@ Username:shivang
 
 Application Log:
 Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 14:29:20
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
