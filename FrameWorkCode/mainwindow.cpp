@@ -127,6 +127,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     qInstallMessageHandler(crashlog::myMessageHandler);
 //    ui->textBrowser->setStyleSheet("background-color:white;");
 
+
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
     ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
     ui->tabWidget_2->tabBar()->hide();
@@ -3292,28 +3293,19 @@ void MainWindow::on_actionAllFontProperties_triggered()
  * \fn MainWindow::on_actionBold_triggered()
  * \brief Sets the font weight to bold
 */
-void MainWindow::on_actionBold_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    QTextCursor cursor = curr_browser->textCursor();
-    bool isBold = cursor.charFormat().font().bold();
-    QTextCharFormat fmt;
-    /*
-     * If the font-weight value is bold then
-     * it will change it to normal else bold.
-    */
-    fmt.setFontWeight(isBold ? QFont::Normal : QFont::Bold);
-    cursor.mergeCharFormat(fmt);
-    curr_browser->mergeCurrentCharFormat(fmt);
-  //  curr_browser->setFont(QFontDialog::getFont(0,QFont::Bold,curr_browser->font()));
-   // cursor.setCharFormat(QFontDialog::getFont(0,QFont::Bold,curr_browser->font()));
-}
 
 /*!
  * \fn MainWindow::on_actionUnBold_triggered()
  * \brief Sets the font weight to regular
 */
+void MainWindow::on_actionBold_triggered(bool bold)
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+            return;
+        //curr_browser->setFontWeight(QFont::Bold);
+       bold ? curr_browser->setFontWeight(QFont::Bold) :
+              curr_browser->setFontWeight(QFont::Normal);
+}
 void MainWindow::on_actionUnBold_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3327,19 +3319,14 @@ void MainWindow::on_actionUnBold_triggered()
  * \fn MainWindow::on_actionItalic_triggered()
  * \brief Sets the font style to italic
 */
-void MainWindow::on_actionItalic_triggered()
+void MainWindow::on_actionItalic_triggered(bool italic)
 {
     if(!curr_browser || curr_browser->isReadOnly())
         return;
 
-    QTextCursor cursor = curr_browser->textCursor();                        // initialize cursor position at text cursor's position
-    bool isItalic = cursor.charFormat().font().italic();                    // check if character under cursor is italic or not
-
-    QTextCharFormat fmt;
-    fmt.setFontItalic(isItalic ? false : true);                             // if font is italic set font to regular, else set it to italic
-
-    cursor.mergeCharFormat(fmt);
-    curr_browser->mergeCurrentCharFormat(fmt);                              // Merge current character format to character under cursor's format (previous properties + italic/non italic)
+        //curr_browser->setFontWeight(QFont::Bold);
+       curr_browser->setFontItalic(italic);
+             //curr_browser->setFontWeight(QFont::Normal);                            // Merge current character format to character under cursor's format (previous properties + italic/non italic)
 }
 
 /*!
@@ -7179,3 +7166,5 @@ void MainWindow::on_actionFont_Color_triggered()
     charFormat.setForeground(QBrush(choosencolor));
     cursor.mergeCharFormat(charFormat);
 }
+
+

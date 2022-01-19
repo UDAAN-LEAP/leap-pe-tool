@@ -926,3 +926,131 @@ Username:sujay
 Application Log:
 Debug: "/home/sujay/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
 Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 12:36:35
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 12:40:50
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 12:42:07
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 12:47:18
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 12:54:52
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 13:24:11
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 13:26:54
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 13:33:27
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 13:34:51
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 13:48:21
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 13:50:16
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 14:02:55
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 14:09:04
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 14:10:35
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 14:19:48
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 14:22:52
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)

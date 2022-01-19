@@ -179,8 +179,6 @@ private slots:
 
     void on_actionEnglish_triggered();
 
-    void on_actionBold_triggered();
-
     void on_actionLeftAlign_triggered();
 
     void on_actionRightAlign_triggered();
@@ -309,7 +307,7 @@ private slots:
 
     void on_actionRemove_Row_triggered();
 
-    void on_actionItalic_triggered();
+    void on_actionItalic_triggered(bool italic);
 
     void on_actionNonitalic_triggered();
 
@@ -398,6 +396,8 @@ private slots:
     void on_justify_triggered();
 
     void on_actionFont_Color_triggered();
+
+    void on_actionBold_triggered(bool checked);
 
 private:
 
