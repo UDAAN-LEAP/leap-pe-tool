@@ -5543,7 +5543,7 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
   {
       QString oldWord = grmIterator.key();
       QString newWord = grmIterator.value();
-      QRegularExpression rx("((?:[[\u0900-\u097F]+//]+[[\u0900-\u097F]+//]+){0,5}\W)( "+ oldWord + ")(\W(?:[[\u0900-\u097F]+//]+[[\u0900-\u097F]+//]+){0,5})");
+      QRegularExpression rx(".*"+oldWord+".*");
       for(int i=0;i<rx.captureCount()+1;++i)
       {
          QRegularExpressionMatchIterator match = rx.globalMatch(plain);
