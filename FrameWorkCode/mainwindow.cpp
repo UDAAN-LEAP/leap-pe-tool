@@ -5217,8 +5217,8 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
         *replaceInAllPages = grDialog.getStatesOfCheckboxes();
         globalReplacementMap = grDialog.getFilteredGlobalReplacementMap();
     }
-
-    return globalReplacementMap;
+    //qDebug()<<"globalReplacementMap"<<globalReplacementMap<<endl;
+    return globalReplacementMap; 
 
 }
 
@@ -5249,13 +5249,11 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     int x1 = 0;
     int check=2;
 
+//    qDebug()<<"changedWords"<<changedWords<<endl;
     //! if only one change spawn checkbox
     if (noOfChangedWords == 1){
         QRegExp sep("\\s*=>*");
         QStringList changesList = changedWords[0].split(sep, QString::SkipEmptyParts );
-//        qDebug()<<"Separator"<<sep;
-//        qDebug()<<"changesList[0]"<<changesList[0];
-//        qDebug()<<"changesList[1]"<<changesList[1];
         bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[0], changesList[1],check);
         if (updateGlobalCPairs){
             globalReplacementMap[changesList[0]] = changesList[1];
@@ -5270,7 +5268,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     else if(noOfChangedWords > 1){
 
         globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords, &replaceInAllPages);
-
+        //qDebug()<<"globalReplacementMap"<<globalReplacementMap<<endl;
         QMap<QString, QString>::iterator it;
         it = globalReplacementMap.begin();
         for (int i = 0; i < replaceInAllPages.size(); i++)

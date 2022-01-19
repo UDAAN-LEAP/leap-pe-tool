@@ -1080,3 +1080,2029 @@ Username:sujay
 
 Application Log:
 Debug: "/home/sujay/Downloads/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 16:11:04
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "akansha rawat =>asr16 " 
+ (mainwindow.cpp)
+Debug: "trees =>plants " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Size =  2 (globalreplacedialog.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 16:19:44
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "asr16 =>hello " 
+ (mainwindow.cpp)
+Debug: "plants =>trees " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Size =  2 (globalreplacedialog.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 16:22:30
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "hello =>asr16 " 
+ (mainwindow.cpp)
+Debug: "trees =>plants " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Size =  2 (globalreplacedialog.cpp)
+Debug: Final Sentence "abc def ISSN 2348-7674 International M    hello    J journal ==>abc def ISSN 2348-7674 International M    asr16    J journal " (mainwindow.cpp)
+Debug: Final Sentence "International M hello J ornal ==>International M asr16 J ornal " (mainwindow.cpp)
+Debug: Final Sentence "(For fully formatted text, see publication) (Publish / 13 / 103) Vastu Shastra says first decorate the land with trees , first plant trees on the land in auspicious times, then build a house in the back, otherwise it is not auspicious. ==>(For fully formatted text, see publication) (Publish / 13 / 103) Vastu Shastra says first decorate the land with plants , first plant plants on the land in auspicious times, then build a house in the back, otherwise it is not auspicious. " (mainwindow.cpp)
+Debug: Final Sentence "A house decorated with Jambir, flower trees , Panas, Anar (pomegranate) Jati Chameli, Shatpata (lotus) Saffron, coconut flowers and Karnikar (kaner) provides complete happiness and prosperity to the human being. ==>A house decorated with Jambir, flower plants , Panas, Anar (pomegranate) Jati Chameli, Shatpata (lotus) Saffron, coconut flowers and Karnikar (kaner) provides complete happiness and prosperity to the human being. " (mainwindow.cpp)
+Debug: Final Sentence "Plant fruit bearing trees in the east direction: East fruit tree: Milk tree in the south. West water in the best and Padyotpal bhushitam in the west. ==>Plant fruit bearing plants in the east direction: East fruit tree: Milk tree in the south. West water in the best and Padyotpal bhushitam in the west. " (mainwindow.cpp)
+Debug: Final Sentence "(For fully formatted text, see publication) Light / A / 7 / 106) The fruit bearing trees should be planted in the garden or field towards the east as they give good fruit in that direction. ==>(For fully formatted text, see publication) Light / A / 7 / 106) The fruit bearing plants should be planted in the garden or field towards the east as they give good fruit in that direction. " (mainwindow.cpp)
+Debug: Final Sentence "Devadaru, sandalwood, Shami, Shishya, Khadir, Sal and Sal trees are equally good for all the species. ==>Devadaru, sandalwood, Shami, Shishya, Khadir, Sal and Sal plants are equally good for all the species. " (mainwindow.cpp)
+Debug: Final Sentence "Wygdkubjasch has cut down other trees . Light / A / 811 - 13) ==>Wygdkubjasch has cut down other plants . Light / A / 811 - 13) " (mainwindow.cpp)
+Debug: Final Sentence "The tree which is popularly known as woman is also used in household work. Such as Malati, Champa, Chameli, Juhi, etc., milk bearing trees destroy milk and fruit bearing trees destroy sons. ==>The tree which is popularly known as woman is also used in household work. Such as Malati, Champa, Chameli, Juhi, etc., milk bearing plants destroy milk and fruit bearing plants destroy sons. " (mainwindow.cpp)
+Debug: Final Sentence "Motia, Champa, Banana, Kund, Munpariksha (Kite), and Aonla trees are inauspicious near the house. ==>Motia, Champa, Banana, Kund, Munpariksha (Kite), and Aonla plants are inauspicious near the house. " (mainwindow.cpp)
+Debug: Final Sentence "ISSN 2348-7674  hello  rawat==>ISSN 2348-7674  asr16  rawat" (mainwindow.cpp)
+Debug: Final Sentence "International M    hello    J ornal ==>International M    asr16    J ornal " (mainwindow.cpp)
+Debug: Final Sentence "Tulsi: Tulsi    trees    are abundantly found in every home and temple. ==>Tulsi: Tulsi    plants    are abundantly found in every home and temple. " (mainwindow.cpp)
+Debug: Final Sentence "4 Mango: - Most of the part of this tree is important for medicinal purposes. Its leaves act as insecticides and are used for brushing of teeth. The mango tree is also very old, there are many    trees    which have been living for more than 500-600 years ==>4 Mango: - Most of the part of this tree is important for medicinal purposes. Its leaves act as insecticides and are used for brushing of teeth. The mango tree is also very old, there are many    plants    which have been living for more than 500-600 years " (mainwindow.cpp)
+Debug: Final Sentence "International M    hello    J ornal ==>International M    asr16    J ornal " (mainwindow.cpp)
+Debug: Final Sentence "Banana: Banana is used as a symbol of prosperity and wealth in celebrations, as well as decorating the entrance of houses, pandals, etc. hello world==>Banana: Banana is used as a symbol of prosperity and wealth in celebrations, as well as decorating the entrance of houses, pandals, etc. asr16 world" (mainwindow.cpp)
+Debug: Final Sentence "International M    hello    J ornal hi my name is  hello  ==>International M    asr16    J ornal hi my name is  asr16  " (mainwindow.cpp)
+Debug: Final Sentence "Cowboys, milkmen and fruit-bearing    trees    near the house are harmful to women and children. ==>Cowboys, milkmen and fruit-bearing    plants    near the house are harmful to women and children. " (mainwindow.cpp)
+Debug: Final Sentence "The cutting of    trees    is an enemy threat, the milking tree is a destroyer of wealth and the fruit bearing tree is a destroyer and should not be planted in the house. ==>The cutting of    plants    is an enemy threat, the milking tree is a destroyer of wealth and the fruit bearing tree is a destroyer and should not be planted in the house. " (mainwindow.cpp)
+Debug: Final Sentence "Plantation of    trees    and    trees    near the house has also been considered auspicious due to which the habitat and surrounding environment occupies a very important place in lifestyle and traditions. ==>Plantation of    plants    and    plants    near the house has also been considered auspicious due to which the habitat and surrounding environment occupies a very important place in lifestyle and traditions. " (mainwindow.cpp)
+Debug: Final Sentence "Good Trees and Plants in Ancient House Architectural hello world==>Good Trees and Plants in Ancient House Architectural asr16 world" (mainwindow.cpp)
+Debug: Final Sentence "What trees should be planted in a habitable house, which plants should not be planted, Indian sages have thought a lot about it in terms of tree architecture.  hello ==>What trees should be planted in a habitable house, which plants should not be planted, Indian sages have thought a lot about it in terms of tree architecture.  asr16 " (mainwindow.cpp)
+Debug: Final Sentence "Trees to be planted in homes: - Jambirsch Rasalsch Rambha Shefalikasta. hello world Yavashek Shirishchh Mallikadiya: Shubhpradaya: | 12 (Environmental Architecture 2 / 50) ==>Trees to be planted in homes: - Jambirsch Rasalsch Rambha Shefalikasta. asr16 world Yavashek Shirishchh Mallikadiya: Shubhpradaya: | 12 (Environmental Architecture 2 / 50) " (mainwindow.cpp)
+Debug: Final Sentence "What trees should be planted in a habitable house, which plants should not be planted, Indian sages have thought a lot about it in terms of tree architecture.  hello ==>What plants should be planted in a habitable house, which plants should not be planted, Indian sages have thought a lot about it in terms of tree architecture.  hello " (mainwindow.cpp)
+Debug: Final Sentence "Bel (Banyan (pomegranate)) Saffron, jackfruit and coconut   trees   near the dwelling house are always fruitful. ==>Bel (Banyan (pomegranate)) Saffron, jackfruit and coconut   plants   near the dwelling house are always fruitful. " (mainwindow.cpp)
+Debug: Final Sentence "Aromatic   trees   like Jambhiri, Mango, Banana, Nirgudi Jau, Ashok, Sirsa and Chameli are near auspicious in the house ==>Aromatic   plants   like Jambhiri, Mango, Banana, Nirgudi Jau, Ashok, Sirsa and Chameli are near auspicious in the house " (mainwindow.cpp)
+Debug: Final Sentence "There are many   trees   which bear good or bad fruit when located in a particular direction: ==>There are many   plants   which bear good or bad fruit when located in a particular direction: " (mainwindow.cpp)
+Debug: Final Sentence "International M    hello    J ornal ==>International M    asr16    J ornal " (mainwindow.cpp)
+Debug: Final Sentence "This is not the way.  hello  hello world ==>This is not the way.  asr16  asr16 world " (mainwindow.cpp)
+Debug: Final Sentence "Thus planting the above    trees    near the house brings happiness, peace and prosperity in our lives as well as benefits and benefits us in case of other health needs, hence planting the above    trees    near the house is very auspicious. ==>Thus planting the above    plants    near the house brings happiness, peace and prosperity in our lives as well as benefits and benefits us in case of other health needs, hence planting the above    plants    near the house is very auspicious. " (mainwindow.cpp)
+Debug: Final Sentence "(Vishwakarma Prakash / a 8 / 1) Devadaru, Chandan, Shami (Chhokar) Mahua these    trees    are the best for Brahmins and are also called Brahmin    trees    by some scholars. Khadir Bilwarjun Kashish: | Shal Tanik Sarla Nripvesmi Siddha | (Vishwakarma Prakash / 8 / 31. 2) Shal Khadir, Tunica, Saral these    trees    are good for the Kshatriyas, the kings and the Raj Karmacharis and because of their hardness and perseverance these    trees    are called Kshatriya    trees    . ==>(Vishwakarma Prakash / a 8 / 1) Devadaru, Chandan, Shami (Chhokar) Mahua these    plants    are the best for Brahmins and are also called Brahmin    plants    by some scholars. Khadir Bilwarjun Kashish: | Shal Tanik Sarla Nripvesmi Siddha | (Vishwakarma Prakash / 8 / 31. 2) Shal Khadir, Tunica, Saral these    plants    are good for the Kshatriyas, the kings and the Raj Karmacharis and because of their hardness and perseverance these    plants    are called Kshatriya    plants    . " (mainwindow.cpp)
+Debug: Final Sentence "(For fully formatted text, see publication) Light / A8 / Slow. 3) For Vaishyas, outside the homes of traders, the    trees    Khadir, Sindhu, Spandana are said to be auspicious. For Shudras, tree: Tindukarjunsashashasashasacha vasaramrashakandaka. ==>(For fully formatted text, see publication) Light / A8 / Slow. 3) For Vaishyas, outside the homes of traders, the    plants    Khadir, Sindhu, Spandana are said to be auspicious. For Shudras, tree: Tindukarjunsashashasashasacha vasaramrashakandaka. " (mainwindow.cpp)
+Debug: Final Sentence "Tinduk, Arjuna, Sasha, Vaesar, Mango Kantak and other milk-bearing    trees    are said to be auspicious for Shudras and those in service. ==>Tinduk, Arjuna, Sasha, Vaesar, Mango Kantak and other milk-bearing    plants    are said to be auspicious for Shudras and those in service. " (mainwindow.cpp)
+Debug: Final Sentence "(Vi. Prakash / 13 / Slow. In the west there should be water with lotuses, in the north there should be trenches, in the east there should be fruit-bearing    trees    and in the south there should be milk    trees    . ==>(Vi. Prakash / 13 / Slow. In the west there should be water with lotuses, in the north there should be trenches, in the east there should be fruit-bearing    plants    and in the south there should be milk    plants    . " (mainwindow.cpp)
+Debug: Final Sentence "International M hello J ornal ==>International M asr16 J ornal " (mainwindow.cpp)
+Debug: Final Sentence "The thorny trees , if they are near the house, are inauspicious fruits. they cause pain to the homeowner ==>The thorny plants , if they are near the house, are inauspicious fruits. they cause pain to the homeowner " (mainwindow.cpp)
+Debug: Final Sentence "Abortion and multiple head (branch) trees kill the offspring. ==>Abortion and multiple head (branch) plants kill the offspring. " (mainwindow.cpp)
+Debug: Final Sentence "The trees of Ashan, Spandana, Chandan, Haridra, Devadaru, Tinduki, Shal (Sagwan), Kashmari, Arjun, Padyak, Saak, Agri, Shishanya are said to be auspicious and excellent for making beds. ==>The plants of Ashan, Spandana, Chandan, Haridra, Devadaru, Tinduki, Shal (Sagwan), Kashmari, Arjun, Padyak, Saak, Agri, Shishanya are said to be auspicious and excellent for making beds. " (mainwindow.cpp)
+Debug: Final Sentence "International M hello J ornal ==>International M asr16 J ornal " (mainwindow.cpp)
+Debug: Final Sentence "Asan, along with other trees , preserves wealth. Udumbar (Guler) tree, sandalwood and pulsation are auspicious. ==>Asan, along with other plants , preserves wealth. Udumbar (Guler) tree, sandalwood and pulsation are auspicious. " (mainwindow.cpp)
+Debug: Final Sentence "The house in which the shade of the trees is always in full bloom. ==>The house in which the shade of the plants is always in full bloom. " (mainwindow.cpp)
+Debug: Final Sentence "The house in which the shade of the trees is above four hours and within two hours, that tree should be removed as soon as possible i.e. ==>The house in which the shade of the plants is above four hours and within two hours, that tree should be removed as soon as possible i.e. " (mainwindow.cpp)
+Debug: Final Sentence "It is always painful to have a house in which the shadow of the trees and flags remains constant for two or three watch, except for the first and last watch. ==>It is always painful to have a house in which the shadow of the plants and flags remains constant for two or three watch, except for the first and last watch. " (mainwindow.cpp)
+Debug: Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Size =  2 (globalreplacedialog.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 16:27:12
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "asr16 =>hello " 
+ (mainwindow.cpp)
+Debug: "plants =>trees " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: changedWords QVector("asr16 =>hello ", "plants =>trees ") 
+ (mainwindow.cpp)
+Debug: Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Size =  2 (globalreplacedialog.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " trees " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " trees " 
+ (mainwindow.cpp)
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: "hello =>asr16 " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: changedWords QVector("hello =>asr16 ") 
+ (mainwindow.cpp)
+Debug: changesList[0] "hello" (mainwindow.cpp)
+Debug: changesList[1] "asr16 " (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString "asr16 " 
+ (mainwindow.cpp)
+Debug: replacementString1:  "asr16 " 
+ (mainwindow.cpp)
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 16:34:52
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "asr16 =>hello " 
+ (mainwindow.cpp)
+Debug: "trees =>plants " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: changedWords QVector("asr16 =>hello ", "trees =>plants ") 
+ (mainwindow.cpp)
+Debug: Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Size =  2 (globalreplacedialog.cpp)
+Debug: globalReplacementMap QMap(("asr16", " hello ")("trees", " plants ")) 
+ (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Debug: replacementString " hello " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " hello " 
+ (mainwindow.cpp)
+Debug: replacementString " plants " 
+ (mainwindow.cpp)
+Debug: replacementString1:  " plants " 
+ (mainwindow.cpp)
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 16:40:35
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "hello =>asr16 " 
+ (mainwindow.cpp)
+Debug: "plants =>trees " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: changedWords QVector("hello =>asr16 ", "plants =>trees ") 
+ (mainwindow.cpp)
+Debug: Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Size =  2 (globalreplacedialog.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 16:42:24
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "asr16 =>hello " 
+ (mainwindow.cpp)
+Debug: "trees =>plants " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: changedWords QVector("asr16 =>hello ", "trees =>plants ") 
+ (mainwindow.cpp)
+Debug: Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Size =  2 (globalreplacedialog.cpp)
+Debug: globalReplacementMap QMap(("asr16", " hello ")("trees", " plants ")) 
+ (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 16:45:12
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "hello =>asr16 " 
+ (mainwindow.cpp)
+Debug: "plants =>trees " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: changedWords QVector("hello =>asr16 ", "plants =>trees ") 
+ (mainwindow.cpp)
+Debug: Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Size =  2 (globalreplacedialog.cpp)
+Debug: globalReplacementMap QMap(("hello", "asr16 ")("plants", "trees ")) 
+ (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 19 Jan 2022 @ 16:47:29
+Username:asr16
+
+Application Log:
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/Comments/Timelog.json"): device not open ()
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "multidisciplinary =>asr16 " 
+ (mainwindow.cpp)
+Debug: "trees =>plants " 
+ (mainwindow.cpp)
+Debug: No exist file  "/home/asr16/Downloads/en-hi/Dicts/CPair" (mainwindow.cpp)
+Debug: changedWords QVector("multidisciplinary =>asr16 ", "trees =>plants ") 
+ (mainwindow.cpp)
+Debug: Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Size =  2 (globalreplacedialog.cpp)
+Debug: globalReplacementMap QMap(("multidisciplinary", "asr16 ")("trees", "plants ")) 
+ (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Warning: QIODevice::write (QFile, ""): device not open ()
+Debug: "p-1.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html"  to file. 
+ (mainwindow.cpp)

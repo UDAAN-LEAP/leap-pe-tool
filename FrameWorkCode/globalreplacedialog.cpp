@@ -100,7 +100,7 @@ void GlobalReplaceDialog::on_applyButton_clicked()
 
       foreach (QListWidgetItem *item, items){
           if(item->checkState() == Qt::Checked){
-              QRegExp sep("\\s*->*");
+              QRegExp sep("\\s* -> *");
               QStringList string = item->text().split(sep);
               //QStringList string = item->text().split(" ");
               this->filteredGlobalReplacementMap[string[0]] = string[1];
