@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
@@ -39,12 +40,13 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QPushButton *replaceButton;
     QPushButton *replaceAllButton;
+    QCheckBox *matchCaseCheckBox;
 
     void setupUi(QDialog *TextFinder)
     {
         if (TextFinder->objectName().isEmpty())
             TextFinder->setObjectName(QString::fromUtf8("TextFinder"));
-        TextFinder->resize(377, 189);
+        TextFinder->resize(377, 198);
         QFont font;
         font.setFamily(QString::fromUtf8("Work Sans"));
         font.setPointSize(11);
@@ -140,6 +142,12 @@ public:
 
         verticalLayout->addLayout(gridLayout);
 
+        matchCaseCheckBox = new QCheckBox(TextFinder);
+        matchCaseCheckBox->setObjectName(QString::fromUtf8("matchCaseCheckBox"));
+        matchCaseCheckBox->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+
+        verticalLayout->addWidget(matchCaseCheckBox);
+
 
         horizontalLayout_3->addLayout(verticalLayout);
 
@@ -158,6 +166,7 @@ public:
         findNextButton->setText(QApplication::translate("TextFinder", "Find Next", nullptr));
         replaceButton->setText(QApplication::translate("TextFinder", "Replace", nullptr));
         replaceAllButton->setText(QApplication::translate("TextFinder", "Replace All", nullptr));
+        matchCaseCheckBox->setText(QApplication::translate("TextFinder", "Match Case", nullptr));
     } // retranslateUi
 
 };

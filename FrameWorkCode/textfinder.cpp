@@ -55,15 +55,20 @@ TextFinder* TextFinder::openFindAndReplace(QWidget *parent) {
  */
 void TextFinder::on_findNextButton_clicked()
 {
-    QString searchString = ui->findLineEdit->text();
+    QRegExp searchExpr = QRegExp(ui->findLineEdit->text());
     QTextBrowser *curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();   //getCurrentBrowser() returns the current QTextBrower
+    if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
+        searchExpr.setCaseSensitivity(Qt::CaseSensitive);
+    else
+        searchExpr.setCaseSensitivity(Qt::CaseInsensitive);
+
     if (!curr_browser) {
         return;
     }
-    if(!curr_browser->find(searchString, QTextDocument::FindFlags()))
+    if(!curr_browser->find(searchExpr, QTextDocument::FindFlags()))
     {
         curr_browser->moveCursor(QTextCursor::Start);                              //Moves the cursor to start of text
-        curr_browser->find(searchString, QTextDocument::FindFlags());
+        curr_browser->find(searchExpr, QTextDocument::FindFlags());
     }
 }
 
@@ -74,15 +79,20 @@ void TextFinder::on_findNextButton_clicked()
  */
 void TextFinder::on_findPreviousButton_clicked()
 {
-    QString searchString = ui->findLineEdit->text();
+    QRegExp searchExpr = QRegExp(ui->findLineEdit->text());
     QTextBrowser *curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
+    if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
+        searchExpr.setCaseSensitivity(Qt::CaseSensitive);
+    else
+        searchExpr.setCaseSensitivity(Qt::CaseInsensitive);
+
     if (!curr_browser) {
         return;
     }
-    if(!curr_browser->find(searchString, QTextDocument::FindBackward))
+    if(!curr_browser->find(searchExpr, QTextDocument::FindBackward))
     {
         curr_browser->moveCursor(QTextCursor::End);                               //Moves the cursor to the end of text
-        curr_browser->find(searchString, QTextDocument::FindBackward);
+        curr_browser->find(searchExpr, QTextDocument::FindBackward);
     }
 }
 
@@ -102,7 +112,9 @@ void TextFinder::on_replaceButton_clicked()
     QTextCursor cursor = curr_browser->textCursor();
     if(cursor.hasSelection())
     {
-        if(cursor.selectedText() == searchString)
+        if(ui->matchCaseCheckBox->checkState() == Qt::Checked && cursor.selectedText() == searchString)
+            cursor.insertText(replaceString);
+        else if (ui->matchCaseCheckBox->checkState() == Qt::Unchecked && cursor.selectedText().toLower() == searchString.toLower())
             cursor.insertText(replaceString);
     }
 }
@@ -113,15 +125,19 @@ void TextFinder::on_replaceButton_clicked()
  */
 void TextFinder::on_replaceAllButton_clicked()
 {
-    QString searchString = ui->findLineEdit->text();
+    QRegExp searchExpr = QRegExp(ui->findLineEdit->text());
     QString replaceString = ui->replaceLineEdit->text();
     QTextBrowser *curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
+    if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
+        searchExpr.setCaseSensitivity(Qt::CaseSensitive);
+    else
+        searchExpr.setCaseSensitivity(Qt::CaseInsensitive);
     if (!curr_browser || curr_browser->isReadOnly()) {
         return;
     }
     QTextCursor saved_cursor = curr_browser->textCursor();
     curr_browser->moveCursor(QTextCursor::Start);
-    while(curr_browser->find(searchString))
+    while(curr_browser->find(searchExpr))
     {
         curr_browser->textCursor().insertText(replaceString);
     }
