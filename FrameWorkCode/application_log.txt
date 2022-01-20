@@ -3172,3 +3172,11 @@ Warning: QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthas
 Warning: QIODevice::write (QFile, ""): device not open ()
 Warning: QIODevice::write (QFile, ""): device not open ()
 Debug: "p-03.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 20 Jan 2022 @ 16:35:28
+Username:sujay
+
+Application Log:
+Fatal: ASSERT failure in QList<T>::operator[]: "index out of range", file /usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h, line 552 (/usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h)
+Debug: App crashed with signal  "SIGABRT" (main.cpp)

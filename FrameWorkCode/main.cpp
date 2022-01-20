@@ -9,7 +9,20 @@
 #include "crashlog.h"
 void signalHandler(int signum){
     signal(signum, SIG_DFL);
-    qDebug() << "App crashed";
+    std:string signame;
+    if(signum == SIGSEGV)
+        signame = "SIGSEGV";
+    else if(signum == SIGFPE)
+        signame = "SIGFPE";
+    else if(signum == SIGILL)
+        signame = "SIGILL";
+    else if(signum == SIGTERM)
+        signame = "SIGTERM";
+    else if(signum == SIGABRT)
+        signame = "SIGABRT";
+    else
+        signame = "SIGUNKN";
+    qDebug() << "App crashed with signal: " << QString::fromStdString(signame);
     QMessageBox::critical(nullptr, "OpenOCRCorrect has Unfortunately crashed", "Application has unexpectedly crashed!\n\nA log file was written to:\n"+QString::fromStdString(qApp->applicationDirPath().toStdString())+"/application_log.txt" + " \n\nTry restarting the application and email this to sanskritdigitization@gmail.com");
     QApplication::quit();
 }
@@ -59,4 +72,8 @@ int main(int argc, char *argv[])
     return retn;
 }
 
+std::string return_signal(int sig)
+{
 
+
+}
