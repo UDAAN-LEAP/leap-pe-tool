@@ -3180,3 +3180,19 @@ Username:sujay
 Application Log:
 Fatal: ASSERT failure in QList<T>::operator[]: "index out of range", file /usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h, line 552 (/usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h)
 Debug: App crashed with signal  "SIGABRT" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 22 Jan 2022 @ 15:05:38
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/asr16/Documents/Test_JP/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 22 Jan 2022 @ 15:06:13
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()

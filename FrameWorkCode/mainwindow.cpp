@@ -6098,6 +6098,21 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     }
     if (ext == "html") {
         b->setHtml(input);
+        input = b->toPlainText();
+        QStringList s1;
+        s1=input.split(QRegExp(" "));
+
+        QRegExp regex("[\u0900-\u097F]");
+        for(int i=0;i<s1.count();i++){
+            if(s1[i].contains(regex)){
+                string str=s1[i].toStdString();
+                str=toslp1(str);
+                str=toDev(str);
+                s1[i]=QString::fromStdString(str);
+            }
+        }
+        input=s1.join(" ");
+        b->setText(input);
     }
     QDir::setCurrent(gDirOneLevelUp);   //changing application path to load document in a relative path
     b->setFont(font);
