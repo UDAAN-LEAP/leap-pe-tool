@@ -3196,3 +3196,271 @@ Username:asr16
 Application Log:
 Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
 Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 16:45:32
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 17:13:53
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 17:17:33
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 17:45:44
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 17:46:47
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 17:48:17
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 17:49:45
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 17:52:56
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 17:54:58
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 17:56:37
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 17:59:14
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 18:01:15
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 18:02:36
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 18:06:53
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoomedUsingScroll() ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_valueChanged(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 18:16:44
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoomedUsingScroll() ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_valueChanged(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QObject::connect: No such slot InternDiffView::zoomedUsingScroll() ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_valueChanged(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 18:24:28
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoomedUsingScroll() ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_valueChanged(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 18:31:35
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoomedUsingScroll() ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_valueChanged(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QObject::connect: No such slot InternDiffView::zoomedUsingScroll() ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_valueChanged(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 18:52:27
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoomedUsingScroll() ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_valueChanged(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 18:56:22
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoomedUsingScroll() ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_valueChanged(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 24 Jan 2022 @ 19:06:51
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Downloads/iitb-openocr-digit-tool-global-replace(2)/iitb-openocr-digit-tool-global-replace/TestProject/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()

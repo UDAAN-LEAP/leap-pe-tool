@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_InternDiffView_t {
-    QByteArrayData data[8];
-    char stringdata0[99];
+    QByteArrayData data[10];
+    char stringdata0[140];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,12 +38,16 @@ QT_MOC_LITERAL(3, 38, 16), // "Load_comparePage"
 QT_MOC_LITERAL(4, 55, 6), // "string"
 QT_MOC_LITERAL(5, 62, 4), // "page"
 QT_MOC_LITERAL(6, 67, 21), // "on_prevButton_clicked"
-QT_MOC_LITERAL(7, 89, 9) // "Update_UI"
+QT_MOC_LITERAL(7, 89, 9), // "Update_UI"
+QT_MOC_LITERAL(8, 99, 31), // "on_horizontalSlider_sliderMoved"
+QT_MOC_LITERAL(9, 131, 8) // "position"
 
     },
     "InternDiffView\0on_NextButton_clicked\0"
     "\0Load_comparePage\0string\0page\0"
-    "on_prevButton_clicked\0Update_UI"
+    "on_prevButton_clicked\0Update_UI\0"
+    "on_horizontalSlider_sliderMoved\0"
+    "position"
 };
 #undef QT_MOC_LITERAL
 
@@ -53,7 +57,7 @@ static const uint qt_meta_data_InternDiffView[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -61,16 +65,18 @@ static const uint qt_meta_data_InternDiffView[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   34,    2, 0x08 /* Private */,
-       3,    1,   35,    2, 0x08 /* Private */,
-       6,    0,   38,    2, 0x08 /* Private */,
-       7,    0,   39,    2, 0x08 /* Private */,
+       1,    0,   39,    2, 0x08 /* Private */,
+       3,    1,   40,    2, 0x08 /* Private */,
+       6,    0,   43,    2, 0x08 /* Private */,
+       7,    0,   44,    2, 0x08 /* Private */,
+       8,    1,   45,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 4,    5,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    9,
 
        0        // eod
 };
@@ -85,6 +91,7 @@ void InternDiffView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 1: _t->Load_comparePage((*reinterpret_cast< string(*)>(_a[1]))); break;
         case 2: _t->on_prevButton_clicked(); break;
         case 3: _t->Update_UI(); break;
+        case 4: _t->on_horizontalSlider_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -119,13 +126,13 @@ int InternDiffView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 5)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }
