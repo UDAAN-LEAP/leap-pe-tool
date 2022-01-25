@@ -5336,7 +5336,8 @@ sender.o: SimpleMail/sender.cpp SimpleMail/sender_p.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/qloggingcategory.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QMessageAuthenticationCode \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/qmessageauthenticationcode.h \
-		moc_sender.cpp
+		moc_sender.cpp \
+		/usr/include/x86_64-linux-gnu/qt5/QtCore/QList
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sender.o SimpleMail/sender.cpp
 
 server.o: SimpleMail/server.cpp SimpleMail/server_p.h \
@@ -5438,7 +5439,8 @@ server.o: SimpleMail/server.cpp SimpleMail/server_p.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/qmessageauthenticationcode.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/QLoggingCategory \
 		/usr/include/x86_64-linux-gnu/qt5/QtCore/qloggingcategory.h \
-		moc_server.cpp
+		moc_server.cpp \
+		/usr/include/x86_64-linux-gnu/qt5/QtCore/QList
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o server.o SimpleMail/server.cpp
 
 serverreply.o: SimpleMail/serverreply.cpp SimpleMail/serverreply.h \
@@ -9239,7 +9241,9 @@ interndiffview.o: interndiffview.cpp interndiffview.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QWidget \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QMessageBox \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qmessagebox.h \
-		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qdialog.h
+		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qdialog.h \
+		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QGraphicsRectItem \
+		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qgraphicsitem.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o interndiffview.o interndiffview.cpp
 
 lg2_common.o: lg2_common.cpp lg2_common.h \

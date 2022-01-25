@@ -42,7 +42,6 @@ InternDiffView::InternDiffView( QWidget *parent, QString page, QString fpath)
        ui->graphicsView->setScene(scene);
        //ui->graphicsView->adjustSize();
        ui->graphicsView->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
-       if(z) delete z;
        z = new Graphics_view_zoom(ui->graphicsView, scene);
        ui->horizontalSlider->setMinimum(0);
        ui->horizontalSlider->setMaximum(200);
