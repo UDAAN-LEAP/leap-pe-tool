@@ -14,7 +14,9 @@
    <string>InternDiffView</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(32, 33, 72);</string>
+   <string notr="true">
+background-color: rgb(32, 33, 72);
+</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="prevButton">
@@ -61,7 +63,7 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>500</y>
+      <y>510</y>
       <width>264</width>
       <height>37</height>
      </rect>
@@ -224,8 +226,8 @@ background: grey;
      <rect>
       <x>40</x>
       <y>0</y>
-      <width>261</width>
-      <height>491</height>
+      <width>331</width>
+      <height>501</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -248,11 +250,61 @@ background: grey;
        <property name="font">
         <font>
          <pointsize>10</pointsize>
+         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:white; color:black;</string>
+        <string notr="true">#graphicsView{
+background-color:white; color:black;
+}                
+QScrollBar:vertical { 
+                                                border: none;
+                                                background: white;
+                                                width: 9.81px;
+                                            }
+QScrollBar::handle:vertical { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+                                                min-height: 273.41px;
+														border: 0px solid red; 
+														border-radius:4.905px;
+														
+                                            }
+QScrollBar::add-line:vertical {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:vertical { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+                        }
+
+QScrollBar:horizontal { 
+                                                border: none;
+                                                background: white;
+                                             		
+                                            }
+QScrollBar::handle:horizontal { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+														border: 0px solid red; 
+														border-radius:4.905px;
+                                            }
+QScrollBar::add-line:horizontal {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:horizontal { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+                        }
+
+</string>
        </property>
        <property name="sizeAdjustPolicy">
         <enum>QAbstractScrollArea::AdjustToContents</enum>
@@ -267,10 +319,10 @@ background: grey;
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>380</x>
       <y>0</y>
-      <width>401</width>
-      <height>491</height>
+      <width>371</width>
+      <height>501</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -293,17 +345,67 @@ background: grey;
        <property name="font">
         <font>
          <pointsize>11</pointsize>
+         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:white; color:black;</string>
+        <string notr="true">#ocroutput{
+background-color:white; color:black;
+}
+QScrollBar:vertical { 
+                                                border: none;
+                                                background: white;
+                                                width: 9.81px;
+                                            }
+QScrollBar::handle:vertical { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+                                                min-height: 273.41px;
+														border: 0px solid red; 
+														border-radius:4.905px;
+														
+                                            }
+QScrollBar::add-line:vertical {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:vertical { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+                        }
+
+QScrollBar:horizontal { 
+                                                border: none;
+                                                background: white;
+                                             		
+                                            }
+QScrollBar::handle:horizontal { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+														border: 0px solid red; 
+														border-radius:4.905px;
+                                            }
+QScrollBar::add-line:horizontal {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:horizontal { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+                        }
+
+</string>
        </property>
        <property name="html">
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:700; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:600; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
@@ -313,10 +415,10 @@ p, li { white-space: pre-wrap; }
    <widget class="QWidget" name="verticalLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>719</x>
+      <x>760</x>
       <y>0</y>
-      <width>401</width>
-      <height>491</height>
+      <width>361</width>
+      <height>501</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -338,17 +440,67 @@ p, li { white-space: pre-wrap; }
        <property name="font">
         <font>
          <pointsize>11</pointsize>
+         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:white; color:black;</string>
+        <string notr="true">#current{
+background-color:white; color:black;
+}
+QScrollBar:vertical { 
+                                                border: none;
+                                                background: white;
+                                                width: 9.81px;
+                                            }
+QScrollBar::handle:vertical { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+                                                min-height: 273.41px;
+														border: 0px solid red; 
+														border-radius:4.905px;
+														
+                                            }
+QScrollBar::add-line:vertical {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:vertical { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+                        }
+
+QScrollBar:horizontal { 
+                                                border: none;
+                                                background: white;
+                                             		
+                                            }
+QScrollBar::handle:horizontal { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+														border: 0px solid red; 
+														border-radius:4.905px;
+                                            }
+QScrollBar::add-line:horizontal {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:horizontal { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+                        }
+
+</string>
        </property>
        <property name="html">
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:700; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:600; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
@@ -360,6 +512,7 @@ p, li { white-space: pre-wrap; }
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
+  <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
  </resources>

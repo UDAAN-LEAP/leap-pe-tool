@@ -6260,7 +6260,7 @@ void MainWindow::LoadImageFromFile(QFile * f)
     ui->graphicsView->setScene(graphic);
     ui->graphicsView->fitInView(graphic->itemsBoundingRect(), Qt::KeepAspectRatio);
     if (z)delete z;
-    z = new Graphics_view_zoom(ui->graphicsView, graphic);
+    z = new Graphics_view_zoom(ui->graphicsView, graphic,200);
     z->set_modifiers(Qt::NoModifier);
     z->zoom_level = 100;
     connect(z, SIGNAL(zoomed()), this, SLOT(zoomedUsingScroll()));

@@ -30,6 +30,12 @@ private slots:
     //void zoom_slider_valueChanged(int position);
     //void zoomedUsingScroll();
 
+    void on_zoom_In_Button_clicked();
+
+    void on_zoom_Out_Button_clicked();
+
+    void on_horizontalSlider_valueChanged(int value);
+
 private:
 	Ui::InternDiffView *ui;
 	QImage img;
