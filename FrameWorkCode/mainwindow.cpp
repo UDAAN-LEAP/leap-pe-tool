@@ -791,12 +791,12 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         QDir().mkdir(s5);
     }
 
+
     bool exists = QDir(s1).exists() && QDir(s2).exists();
     if (xml.exists()&& exists)
     {
-        ui->treeView->reset();    //reinitialize the ProjectHierarchyWindow
+        ui->treeView->reset();    //reinitialize the ProjectHierarchyWindow       
         mProject.process_xml(xml);
-
         mProject.open_git_repo();   //Open git repo
         if(!mProject.isProjectOpen())
         {
@@ -813,6 +813,10 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
         //!Get the path of all necessary directories
         QDir dir = mProject.GetDir();
+
+        QString dirName=dir.dirName();
+        mProject.get_project_name(dirName);
+
         QString str1 = mProject.GetDir().absolutePath()+"/CorrectorOutput/";
         QString str2 = mProject.GetDir().absolutePath() + "/VerifierOutput/";
         QString str3 = mProject.GetDir().absolutePath() + "/Inds/";

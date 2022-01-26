@@ -60,6 +60,17 @@ pugi::xml_node Project::FindFile(QFile & file,pugi::xml_node  & n)
 }
 
 /*!
+ * \brief Project::get_project_name
+ * \param dirName
+ */
+void Project::get_project_name(QString dirName){
+    std::string dir = dirName.toUtf8().constData();
+    auto c = doc.child("Project");
+    c.attribute("name").set_value(dir.c_str());
+    save_xml();
+}
+
+/*!
  * \fn Project::set_stage_verifier
  * \brief Updates the stage value in xml file to 'Verifier'
  */

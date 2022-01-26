@@ -4002,3 +4002,52 @@ Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) i
 Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
 Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
 Warning:   OpenType support missing for "Ubuntu", script 11 ()
+
+OpenOCRCorrect Application Log
+Date: 26 Jan 2022 @ 17:33:12
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 26 Jan 2022 @ 17:41:37
+Username:asr16
+
+Application Log:
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/Comments/Timelog.json"): device not open ()
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/asr16/Downloads/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 26 Jan 2022 @ 18:06:16
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/asr16/Downloads/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/asr16/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
+Debug: "/home/asr16/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 26 Jan 2022 @ 18:18:00
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Documents/Test_JP/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 26 Jan 2022 @ 18:26:07
+Username:asr16
+
+Application Log:
+Debug: dir open  QDir( "." , nameFilters = { "*" },  QDir::SortFlags( Name | IgnoreCase ) , QDir::Filters( Dirs|Files|Drives|AllEntries ) ) (mainwindow.cpp)
+Debug: "/home/asr16/Documents/Test_JP/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 26 Jan 2022 @ 18:33:17
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Documents/Test_JP/image.xml" (markRegion.cpp)
+Debug: "/home/asr16/Documents/Test_JP/image.xml" (markRegion.cpp)
