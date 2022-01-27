@@ -25,7 +25,7 @@ InternDiffView::InternDiffView( QWidget *parent, QString page, QString fpath)
     pageNo = page.toStdString();
     ui = new Ui::InternDiffView();
     ui->setupUi(this);
-
+    //ui->setstyleSheet
     //!check if file exists
     QFile fcorrector(gDirTwoLevelUp+ "/CorrectorOutput/"+ page );
 
@@ -40,7 +40,7 @@ InternDiffView::InternDiffView( QWidget *parent, QString page, QString fpath)
        img.load(ocrimage);
        scene->addPixmap(QPixmap::fromImage(img));
        ui->graphicsView->setScene(scene);
-       //ui->graphicsView->adjustSize();
+       ui->graphicsView->adjustSize();
        ui->graphicsView->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
        z = new Graphics_view_zoom(ui->graphicsView, scene,400);
        ui->horizontalSlider->setMinimum(0);
