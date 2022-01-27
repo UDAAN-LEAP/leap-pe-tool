@@ -4238,3 +4238,33 @@ Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) i
 Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
 Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
 Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 27 Jan 2022 @ 15:26:57
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_valueChanged(int) in interndiffview.cpp:57 ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) in interndiffview.cpp:58 ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 27 Jan 2022 @ 15:28:19
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_valueChanged(int) in interndiffview.cpp:57 ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning: QObject::connect: No such slot InternDiffView::zoom_slider_moved(int) in interndiffview.cpp:58 ()
+Warning: QObject::connect:  (sender name:   'horizontalSlider') ()
+Warning: QObject::connect:  (receiver name: 'InternDiffView') ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()

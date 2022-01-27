@@ -31,6 +31,55 @@ background-color: rgb(32, 33, 72);
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QScrollBar:vertical { 
+                                                border: none;
+                                                background: white;
+                                                width: 9.81px;
+                                            }
+QScrollBar::handle:vertical { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+                                                min-height: 273.41px;
+														border: 0px solid red; 
+														border-radius:4.905px;
+														
+                                            }
+QScrollBar::add-line:vertical {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:vertical { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+                        }
+
+QScrollBar:horizontal { 
+                                                border: none;
+                                                background: white;
+                                             		
+                                            }
+QScrollBar::handle:horizontal { 
+                                                background-color:  rgba(1, 22, 51, 0.5);
+														border: 0px solid red; 
+														border-radius:4.905px;
+                                            }
+QScrollBar::add-line:horizontal {       
+                            height: 0px;
+                            subcontrol-position: bottom; 
+                            subcontrol-origin: margin; 
+								
+                        } 
+QScrollBar::sub-line:horizontal { 
+                            height: 0 px; 
+                            subcontrol-position: top; 
+                            subcontrol-origin: margin; 
+                        }
+
+</string>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
