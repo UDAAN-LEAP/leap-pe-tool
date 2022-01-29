@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'globalreplacedialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.8
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,11 +10,13 @@
 #define UI_GLOBALREPLACEDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QIcon>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
@@ -40,9 +42,9 @@ public:
     void setupUi(QDialog *GlobalReplaceDialog)
     {
         if (GlobalReplaceDialog->objectName().isEmpty())
-            GlobalReplaceDialog->setObjectName(QString::fromUtf8("GlobalReplaceDialog"));
+            GlobalReplaceDialog->setObjectName(QStringLiteral("GlobalReplaceDialog"));
         GlobalReplaceDialog->resize(659, 335);
-        GlobalReplaceDialog->setStyleSheet(QString::fromUtf8("QDialog{font: 11pt \"Work Sans\"; \n"
+        GlobalReplaceDialog->setStyleSheet(QLatin1String("QDialog{font: 11pt \"Work Sans\"; \n"
 "background-color: rgb(32, 33, 72);\n"
 "}\n"
 "QGraphicsView{background-color:white;}\n"
@@ -72,23 +74,23 @@ public:
 "\n"
 ""));
         verticalLayout = new QVBoxLayout(GlobalReplaceDialog);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         groupBox_2 = new QGroupBox(GlobalReplaceDialog);
-        groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
+        groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(1);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(groupBox_2->sizePolicy().hasHeightForWidth());
         groupBox_2->setSizePolicy(sizePolicy);
-        groupBox_2->setStyleSheet(QString::fromUtf8("color:black;\n"
+        groupBox_2->setStyleSheet(QLatin1String("color:black;\n"
 "background-color: rgb(255, 255, 255);"));
         horizontalLayout_3 = new QHBoxLayout(groupBox_2);
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
         listWidget = new QListWidget(groupBox_2);
-        listWidget->setObjectName(QString::fromUtf8("listWidget"));
-        listWidget->setStyleSheet(QString::fromUtf8("QListWidget{background-color: white; color:black; border:0px;}\n"
+        listWidget->setObjectName(QStringLiteral("listWidget"));
+        listWidget->setStyleSheet(QLatin1String("QListWidget{background-color: white; color:black; border:0px;}\n"
 "QGraphicsView{background-color:white;}\n"
 ""));
 
@@ -98,8 +100,8 @@ public:
         horizontalLayout_2->addWidget(groupBox_2);
 
         groupBox = new QGroupBox(GlobalReplaceDialog);
-        groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setStyleSheet(QString::fromUtf8(""));
+        groupBox->setObjectName(QStringLiteral("groupBox"));
+        groupBox->setStyleSheet(QStringLiteral(""));
 
         horizontalLayout_2->addWidget(groupBox);
 
@@ -107,12 +109,12 @@ public:
         verticalLayout->addLayout(horizontalLayout_2);
 
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         pushButton = new QPushButton(GlobalReplaceDialog);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setStyleSheet(QString::fromUtf8("border:0px;"));
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setStyleSheet(QStringLiteral("border:0px;"));
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/Images/Resources/information.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/Images/Resources/information.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButton->setIcon(icon);
         pushButton->setIconSize(QSize(27, 27));
 
@@ -123,15 +125,15 @@ public:
         horizontalLayout->addItem(horizontalSpacer);
 
         previewButton = new QPushButton(GlobalReplaceDialog);
-        previewButton->setObjectName(QString::fromUtf8("previewButton"));
-        previewButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
+        previewButton->setObjectName(QStringLiteral("previewButton"));
+        previewButton->setStyleSheet(QLatin1String("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
 "} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}"));
 
         horizontalLayout->addWidget(previewButton);
 
         applyButton = new QPushButton(GlobalReplaceDialog);
-        applyButton->setObjectName(QString::fromUtf8("applyButton"));
-        applyButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 139.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
+        applyButton->setObjectName(QStringLiteral("applyButton"));
+        applyButton->setStyleSheet(QLatin1String("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 139.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
 "} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}"));
 
         horizontalLayout->addWidget(applyButton);
@@ -147,12 +149,12 @@ public:
 
     void retranslateUi(QDialog *GlobalReplaceDialog)
     {
-        GlobalReplaceDialog->setWindowTitle(QApplication::translate("GlobalReplaceDialog", "Dialog", nullptr));
-        groupBox_2->setTitle(QApplication::translate("GlobalReplaceDialog", "Choose the words to be replaced", nullptr));
+        GlobalReplaceDialog->setWindowTitle(QApplication::translate("GlobalReplaceDialog", "Dialog", Q_NULLPTR));
+        groupBox_2->setTitle(QApplication::translate("GlobalReplaceDialog", "Choose the words to be replaced", Q_NULLPTR));
         groupBox->setTitle(QString());
         pushButton->setText(QString());
-        previewButton->setText(QApplication::translate("GlobalReplaceDialog", "Preview", nullptr));
-        applyButton->setText(QApplication::translate("GlobalReplaceDialog", "Save and Replace", nullptr));
+        previewButton->setText(QApplication::translate("GlobalReplaceDialog", "Preview", Q_NULLPTR));
+        applyButton->setText(QApplication::translate("GlobalReplaceDialog", "Save and Replace", Q_NULLPTR));
     } // retranslateUi
 
 };

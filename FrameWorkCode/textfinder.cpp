@@ -14,10 +14,12 @@
 #include "mainwindow.h"
 #include <QString>
 #include <string>
+#include <QMessageBox>
 
 using namespace std;
 extern string toslp1(string s);
 extern string toDev(string s);
+extern QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName;
 
 TextFinder *TextFinder::textFinder = 0;
 TextFinder::TextFinder(QWidget *parent) :
@@ -135,13 +137,64 @@ void TextFinder::on_replaceAllButton_clicked()
     if (!curr_browser || curr_browser->isReadOnly()) {
         return;
     }
-    QTextCursor saved_cursor = curr_browser->textCursor();
-    curr_browser->moveCursor(QTextCursor::Start);
-    while(curr_browser->find(searchExpr))
-    {
-        curr_browser->textCursor().insertText(replaceString);
-    }
-    curr_browser->setTextCursor(saved_cursor);               //Moves the cursor to the last text location placed by the user
+
+    //! Replace in All Pages
+   if(ui->ReplaceAllPages->checkState()== Qt::Checked)
+   {
+      if(replaceString=="")
+      {
+          QMessageBox infoBox;
+          infoBox.information(0, "Error","Choose a replacement word to replace");
+          return;
+      }
+      QString currentFileDirectory = gDirTwoLevelUp + "/" + gCurrentDirName;
+      QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
+
+      //!Get all the file names by iterating the directory
+      while (dirIterator.hasNext())
+      {
+          QString it_file_path = dirIterator.next();
+          QString suff = dirIterator.fileInfo().completeSuffix();
+
+          if(suff == "html")
+            {
+              //!Get the file string
+               QFile *f = new QFile(it_file_path);
+               f->open(QIODevice::ReadOnly);
+               QTextStream in(f);
+               in.setCodec("UTF-8");
+               QString s1 = in.readAll();
+               f->close();
+
+               //!Replacing Words
+               string str = replaceString.toStdString();
+               QString::fromStdString(str).toUtf8();
+               QString replacementString1 = QString::fromStdString(str);
+
+               string str2 = ui->findLineEdit->text().toStdString();
+               QString::fromStdString(str2).toUtf8();
+               QRegExp findWord = QRegExp(QString::fromStdString(str2));
+
+               f->open(QIODevice::WriteOnly);
+               s1.replace(findWord, replacementString1);
+               f->write(s1.toUtf8());
+               f->close();
+            }
+      }
+
+      //!Display message
+      QMessageBox messageBox;
+      messageBox.information(0, "Replacement Successful","Replaced in All Pages.");
+   }
+
+   QTextCursor saved_cursor = curr_browser->textCursor();
+   curr_browser->moveCursor(QTextCursor::Start);
+   while(curr_browser->find(searchExpr))
+   {
+       curr_browser->textCursor().insertText(replaceString);
+   }
+   curr_browser->setTextCursor(saved_cursor);               //Moves the cursor to the last text location placed by the user
+
 }
 
 /*!
