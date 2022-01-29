@@ -67,10 +67,12 @@ void TextFinder::on_findNextButton_clicked()
     if (!curr_browser) {
         return;
     }
+
     if(!curr_browser->find(searchExpr, QTextDocument::FindFlags()))
     {
-        curr_browser->moveCursor(QTextCursor::Start);                              //Moves the cursor to start of text
-        curr_browser->find(searchExpr, QTextDocument::FindFlags());
+//        curr_browser->moveCursor(QTextCursor::Start);                              //Moves the cursor to start of text
+//        curr_browser->find(searchExpr, QTextDocument::FindFlags());
+        ((MainWindow *)(parent()))->on_actionLoad_Next_Page_triggered();
     }
 }
 
@@ -93,9 +95,11 @@ void TextFinder::on_findPreviousButton_clicked()
     }
     if(!curr_browser->find(searchExpr, QTextDocument::FindBackward))
     {
-        curr_browser->moveCursor(QTextCursor::End);                               //Moves the cursor to the end of text
-        curr_browser->find(searchExpr, QTextDocument::FindBackward);
+       // curr_browser->find(searchExpr, QTextDocument::FindBackward);
+        ((MainWindow *)(parent()))->on_actionLoad_Prev_Page_triggered();
+         curr_browser->moveCursor(QTextCursor::End);                        //Moves the cursor to the end of text
     }
+
 }
 
 /*!
@@ -174,6 +178,10 @@ void TextFinder::on_replaceAllButton_clicked()
                string str2 = ui->findLineEdit->text().toStdString();
                QString::fromStdString(str2).toUtf8();
                QRegExp findWord = QRegExp(QString::fromStdString(str2));
+               if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
+                   findWord.setCaseSensitivity(Qt::CaseSensitive);
+               else
+                   findWord.setCaseSensitivity(Qt::CaseInsensitive);
 
                f->open(QIODevice::WriteOnly);
                s1.replace(findWord, replacementString1);

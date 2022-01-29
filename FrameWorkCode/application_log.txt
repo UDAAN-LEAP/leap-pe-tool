@@ -5303,3 +5303,303 @@ Debug: "तहा =>तन्षनिअ "
 Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
 Debug: "page-238.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
 Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 16:27:17
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: "page-224.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 16:28:28
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: "page-225.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
+Warning: QWidget::repaint: Recursive repaint detected ()
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 16:31:00
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 16:31:50
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 16:32:47
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 16:35:01
+Username:mush
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 16:35:05
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 16:36:25
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 16:38:10
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 17:05:50
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 17:07:37
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 17:08:58
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: last (textfinder.cpp)
+Debug: finding (textfinder.cpp)
+Debug: finding (textfinder.cpp)
+Debug: finding (textfinder.cpp)
+Debug: finding (textfinder.cpp)
+Debug: finding (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: finding (textfinder.cpp)
+Debug: finding (textfinder.cpp)
+Debug: finding (textfinder.cpp)
+Debug: finding (textfinder.cpp)
+Debug: finding (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 17:13:54
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+Debug: last (textfinder.cpp)
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 17:15:54
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 17:18:55
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 17:21:21
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 17:22:08
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 17:25:52
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 17:31:24
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+
+OpenOCRCorrect Application Log
+Date: 29 Jan 2022 @ 17:34:09
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: "॥१५॥ =>।१५। " 
+ (mainwindow.cpp)
+Debug: "॥१६॥ =>।१६। " 
+ (mainwindow.cpp)
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "page-224.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: "॥ =>। " 
+ (mainwindow.cpp)
+Debug: "॥९। =>।९। " 
+ (mainwindow.cpp)
+Debug: "॥। =>।। " 
+ (mainwindow.cpp)
+Debug: "॥१०॥ =>।१०। " 
+ (mainwindow.cpp)
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: "page-231.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/mush/ocr/sets/test_124 (copy)/Test_JP/CorrectorOutput/page-231.html"  to file. 
+ (mainwindow.cpp)
+Debug: "एवं =>हिन्दि " 
+ (mainwindow.cpp)
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: "page-230.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
