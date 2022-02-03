@@ -28,46 +28,14 @@ public:
 	TreeItem * find(QString & str);
 	QVariant data(int column) const;
 	int row() const;
-	void SetFile( QFile * pFile) {
-		file = pFile;
-	}
-	void SetFilter(Filter * pFilter) {
-		mFilter = pFilter;
-	}
-	NodeType GetNodeType() {
-		return type;
-	}
-	QFile * GetFile() {
-		return file;
-	}
-	Filter * GetFilter() {
-		return mFilter;
-	}
-	TreeItem * FindFileNode(QFile*f,TreeItem * item) {
-		if (!item->file) {
-			if (f->fileName() == item->file->fileName())
-			{
-				return item;
-			}
-		}
-		if (item->mChildItems.size() == 0) return nullptr;
-		else
-		{
-			TreeItem * retnVal = nullptr;
-			for (TreeItem * n : mChildItems) {
-				retnVal = FindFileNode(f, item);
-				if (retnVal) return retnVal;
-			}
-			return retnVal;
-		}
-	}
+    void SetFile( QFile * pFile);
+    void SetFilter(Filter * pFilter);
+    NodeType GetNodeType();
+    QFile * GetFile();
+    Filter * GetFilter();
+    TreeItem * FindFileNode(QFile*f,TreeItem * item);
 
-	void RemoveNode(TreeItem * item) {
-		int id = mChildItems.indexOf(item);
-		if (id < mChildItems.size()) {
-			mChildItems.remove(id);
-		}
-	}
+    void RemoveNode(TreeItem * item);
 	TreeItem * parentItem();
 private:
 	QVector<TreeItem*> mChildItems;

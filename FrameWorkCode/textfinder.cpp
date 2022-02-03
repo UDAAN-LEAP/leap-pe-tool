@@ -12,6 +12,7 @@
 #include "ui_textfinder.h"
 #include <QDebug>
 #include "mainwindow.h"
+#include "slpNPatternDict.h"
 #include <QString>
 #include <string>
 #include <QMessageBox>
@@ -247,7 +248,8 @@ void TextFinder::keyPressEvent(QKeyEvent *e)
  * and converts the string of text into devanagari
  */
 QString TextFinder::toDevanagari(string text) {
-    return QString::fromStdString(toDev(toslp1(text)));
+    slpNPatternDict slnp;
+    return QString::fromStdString(slnp.toDev(slnp.toslp1(text)));
 }
 
 /*!

@@ -98,12 +98,16 @@ SOURCES += ./DiffView.cpp \
     $$PWD/SimpleMail/server.cpp \
     $$PWD/SimpleMail/serverreply.cpp \
     $$PWD/crashlog.cpp \
+    $$PWD/eddis.cpp \
     $$PWD/editdistance.cpp \
     $$PWD/loadingspinner.cpp \
     $$PWD/markRegion.cpp \
+    $$PWD/meanStdPage.cpp \
     $$PWD/shortcutguidedialog.cpp \
+    $$PWD/slpNPatternDict.cpp \
     $$PWD/textfinder.cpp \
     $$PWD/globalreplacedialog.cpp \
+    $$PWD/trieEditdis.cpp \
     $$PWD/undoglobalreplace.cpp \
     $$PWD/worker.cpp \
     ./Filters.cpp \

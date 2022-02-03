@@ -430,17 +430,17 @@ void create_initial_commit(git_repository * repo) {
     git_index *index;
     git_oid tree_id, commit_id;
     git_tree *tree;
-
+    lg2_common lg2;
 
     /** First use the config to initialize a commit signature for the user. */
 
     //check_lg2(git_signature_default(&sig, repo),"Unable to create a commit signature.","Perhaps 'user.name' and 'user.email' are not set");
 
-    check_lg2(git_signature_default(&sig, repo),"Could not create commit signature","");
+    lg2.check_lg2(git_signature_default(&sig, repo),"Could not create commit signature","");
     /* Now let's create an empty tree for this commit */
 
 
-    check_lg2(git_repository_index(&index, repo),"Could not open repository index", "");
+    lg2.check_lg2(git_repository_index(&index, repo),"Could not open repository index", "");
 
     /**
      * Outside of this example, you could call git_index_add_bypath()
@@ -448,9 +448,9 @@ void create_initial_commit(git_repository * repo) {
      * leave it empty for now.
      */
 
-    check_lg2(git_index_write_tree(&tree_id, index),"Unable to write initial tree from index", "");
+    lg2.check_lg2(git_index_write_tree(&tree_id, index),"Unable to write initial tree from index", "");
     git_index_free(index);
-    check_lg2(git_tree_lookup(&tree, repo, &tree_id),"Could not look up initial tree", "");
+    lg2.check_lg2(git_tree_lookup(&tree, repo, &tree_id),"Could not look up initial tree", "");
 
     /**
      * Ready to create the initial commit.
@@ -460,7 +460,7 @@ void create_initial_commit(git_repository * repo) {
      * but here this is the first commit so there will be no parent.
      */
 
-    check_lg2(git_commit_create_v(&commit_id, repo, "HEAD", sig, sig,NULL, "Initial project commit", tree, 0),"Could not create the initial commit", "");
+    lg2.check_lg2(git_commit_create_v(&commit_id, repo, "HEAD", sig, sig,NULL, "Initial project commit", tree, 0),"Could not create the initial commit", "");
 
     /** Clean up so we don't leak memory. */
 
@@ -761,6 +761,7 @@ void Project::fetch() {
  */
 bool Project::commit(std::string message)
 {
+    lg2_common lg2;
     lg2_add();
     git_signature *sig;
     git_index *index;
@@ -772,20 +773,20 @@ bool Project::commit(std::string message)
     /** First use the config to initialize a commit signature for the user. */
 
     //check_lg2(git_signature_default(&sig, repo),"Unable to create a commit signature.","Perhaps 'user.name' and 'user.email' are not set");
-    int klass = check_lg2(git_signature_now(&sig, mName.c_str(), mEmail.c_str()),"Could not create signature","");
+    int klass = lg2.check_lg2(git_signature_now(&sig, mName.c_str(), mEmail.c_str()),"Could not create signature","");
     if (klass > 0) {
         if(sig)
             git_signature_free(sig);
 
     }
-    klass = check_lg2(git_revparse_ext(&parent, &ref, repo, "HEAD"),"Head not found","");
+    klass = lg2.check_lg2(git_revparse_ext(&parent, &ref, repo, "HEAD"),"Head not found","");
     if (klass > 0)
     {
         return 0;
     }
     /* Now let's create an empty tree for this commit */
 
-    klass = check_lg2(git_repository_index(&index, repo), "Could not open repository index", "");
+    klass = lg2.check_lg2(git_repository_index(&index, repo), "Could not open repository index", "");
     if (klass > 0) {
         return 0;
     }
@@ -796,25 +797,25 @@ bool Project::commit(std::string message)
      * leave it empty for now.
      */
 
-    klass = check_lg2(git_index_write_tree(&tree_id, index), "Could not write tree", "");;
+    klass = lg2.check_lg2(git_index_write_tree(&tree_id, index), "Could not write tree", "");;
     if (klass > 0)
     {
         return 0;
     }
 
-    klass = check_lg2(git_index_write(index), "Could not write index", "");;
+    klass = lg2.check_lg2(git_index_write(index), "Could not write index", "");;
     if (klass > 0)
     {
         return 0;
     }
 
-    klass = check_lg2(git_tree_lookup(&tree, repo, &tree_id), "Error looking up tree", "");
+    klass = lg2.check_lg2(git_tree_lookup(&tree, repo, &tree_id), "Error looking up tree", "");
     if (klass > 0)
     {
         return 0;
     }
 
-    klass = check_lg2(git_signature_default(&sig, repo), "Error creating signature", "");
+    klass = lg2.check_lg2(git_signature_default(&sig, repo), "Error creating signature", "");
     if (klass > 0) {
         return 0;
     }
@@ -827,7 +828,7 @@ bool Project::commit(std::string message)
      * but here this is the first commit so there will be no parent.
      */
 
-    klass = check_lg2(git_commit_create_v(&commit_id, repo, "HEAD", sig, sig, NULL, message.c_str(), tree, parent ? 1 : 0, parent), "Could not create commit", "");
+    klass = lg2.check_lg2(git_commit_create_v(&commit_id, repo, "HEAD", sig, sig, NULL, message.c_str(), tree, parent ? 1 : 0, parent), "Could not create commit", "");
     if (klass > 0) {
         git_tree_free(tree);
         git_signature_free(sig);
@@ -853,15 +854,15 @@ bool Project::add_config() {
     git_config_entry* entry = NULL;
     std::string user = "";
     std::string email = "";
-
+    lg2_common lg2;
     int error = git_repository_config(&cfg, repo);
-    check_lg2(error, "Couldn't open config file", "");
+    lg2.check_lg2(error, "Couldn't open config file", "");
 
     error = git_config_open_level(&sys_cfg, cfg, GIT_CONFIG_LEVEL_SYSTEM);
-    check_lg2(error, "Couldn't open system level config", "");
+    lg2.check_lg2(error, "Couldn't open system level config", "");
 
     error = git_config_get_entry(&entry, sys_cfg, "user.name");
-    check_lg2(error, "Couldn't get user.name", "");
+    lg2.check_lg2(error, "Couldn't get user.name", "");
     std::string str = "";
     if (entry) {
         str = entry->value;
@@ -875,7 +876,7 @@ bool Project::add_config() {
 
         str = quser.toStdString();
         error = git_config_set_string(sys_cfg, "user.name", (char*)str.c_str());
-        check_lg2(error, "Could not set user.name", "");
+        lg2.check_lg2(error, "Could not set user.name", "");
         if (!ok || error < 0)
             return false;
 
@@ -883,7 +884,7 @@ bool Project::add_config() {
     mName = str;
 
     error = git_config_get_entry(&entry, sys_cfg, "user.email");
-    check_lg2(error, "Couldn't get user.email", "");
+    lg2.check_lg2(error, "Couldn't get user.email", "");
     if (entry) {
         str = entry->value;
     }
@@ -896,7 +897,7 @@ bool Project::add_config() {
             " ", &ok);
         std::string str = quser.toStdString();
         error = git_config_set_string(sys_cfg, "user.email", (char*)str.c_str());
-        check_lg2(error, "Could not set user.email", "");
+        lg2.check_lg2(error, "Could not set user.email", "");
         if (!ok || error < 0)
             return false;
 
@@ -925,15 +926,16 @@ int match_cb(const char *path, const char *spec, void *payload) {
  */
 void Project::lg2_add(QString workingFolder)
 {
+    lg2_common lg2;
     const char * paths[] = { "/Dicts" ,"/Comments","/Images", workingFolder.toUtf8().constData()};
     git_strarray arr = { (char**)paths,1 };
     git_index *idx = NULL;
     int error = git_repository_index(&idx, repo);
-    check_lg2(error, "Error Could not open index", "");
+    lg2.check_lg2(error, "Error Could not open index", "");
     error = git_index_add_all(idx, &arr, GIT_INDEX_ADD_DEFAULT, match_cb, nullptr);
-    check_lg2(error, "Error could not add", "");
+    lg2.check_lg2(error, "Error could not add", "");
     error = git_index_update_all(idx, &arr, match_cb, nullptr);
-    check_lg2(error, "Error could not update", "");
+    lg2.check_lg2(error, "Error could not update", "");
     git_index_write(idx);
     git_index_free(idx);
 }
@@ -944,13 +946,14 @@ void Project::lg2_add(QString workingFolder)
 void Project::lg2_add() {
     const char * paths[] = { "/*"};
     git_strarray arr = { (char**)paths,1 };
-    git_index *idx = NULL;
+    git_index *idx = NULL;\
+    lg2_common lg2;
     int error = git_repository_index(&idx, repo);
-    check_lg2(error, "Error Could not open index", "");
+    lg2.check_lg2(error, "Error Could not open index", "");
     error = git_index_add_all(idx, &arr, GIT_INDEX_ADD_DEFAULT, match_cb, nullptr);
-    check_lg2(error, "Error could not add", "");
+    lg2.check_lg2(error, "Error could not add", "");
     error = git_index_update_all(idx, &arr, match_cb, nullptr);
-    check_lg2(error, "Error could not update", "");
+    lg2.check_lg2(error, "Error could not update", "");
     git_index_write(idx);
     git_index_free(idx);
 }
@@ -1049,16 +1052,17 @@ void Project::open_git_repo()
     std::string dir = mProjectDir.path().toStdString();
     QString gitpath = mProjectDir.path() + "/.git";
     QDir gitdir(gitpath);
+    lg2_common lg2;
     git_signature * out;
 
     if (gitdir.exists())
     {
-        check_lg2(git_repository_open(&repo, dir.c_str()), "Failed to Open", "");
+        lg2.check_lg2(git_repository_open(&repo, dir.c_str()), "Failed to Open", "");
         add_config();
     }
     else
     {
-        check_lg2(git_repository_init(&repo, dir.c_str(),0), "Failed to Open", "");
+        lg2.check_lg2(git_repository_init(&repo, dir.c_str(),0), "Failed to Open", "");
         add_config();
         lg2_add();
         create_initial_commit(repo);

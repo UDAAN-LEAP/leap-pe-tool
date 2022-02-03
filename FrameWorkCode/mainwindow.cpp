@@ -415,6 +415,8 @@ string selectedStr ="";
 //!GIVE EVENT TO TEXT BROWZER INSTEAD OF MAINWINDOW
 void MainWindow::mousePressEvent(QMouseEvent *ev)
 {
+    slpNPatternDict slnp;
+    trieEditDis trie;
     if (curr_browser)
     {
         curr_browser->cursorForPosition(ev->pos());
@@ -448,17 +450,17 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
                 QAction* act;
 
-                vector<string>  Words1 = print5NearestEntries(TGBook, selectedStr);
+                vector<string>  Words1 = trie.print5NearestEntries(TGBook, selectedStr);
                 if (Words1.empty()) return;
-                vector<string> Alligned = print5NearestEntries(TGBookP, selectedStr);
+                vector<string> Alligned = trie.print5NearestEntries(TGBookP, selectedStr);
                 if (Alligned.empty()) return;
 
-                vector<string> PWords1 = print5NearestEntries(TPWords, selectedStr);
+                vector<string> PWords1 = trie.print5NearestEntries(TPWords, selectedStr);
                 if (PWords1.empty()) return;
 
-                string PairSugg = print2OCRSugg(selectedStr, Alligned[0], ConfPmap, Dict); // map<string,int>&
+                string PairSugg = slnp.print2OCRSugg(selectedStr, Alligned[0], ConfPmap, Dict); // map<string,int>&
                 if (PairSugg.empty())return;
-                vector<string>  Words = print1OCRNearestEntries(toslp1(selectedStr), vIBook);
+                vector<string>  Words = trie.print1OCRNearestEntries(slnp.toslp1(selectedStr), vIBook);
                 if (Words.empty())return;
 
                 //! find nearest confirming to OCR Sugg from Book
@@ -468,7 +470,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 for (size_t t = 0; t < vec.size(); t++)
                 {
                     vector<string> wordConfusions; vector<int> wCindex;
-                    int minFactor = loadWConfusionsNindex1(selectedStr, vec[t], ConfPmap, wordConfusions, wCindex);
+                    int minFactor = slnp.loadWConfusionsNindex1(selectedStr, vec[t], ConfPmap, wordConfusions, wCindex);
                     wordConfusions.clear(); wCindex.clear();
                     if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvec = vec[t]; }
                 }
@@ -479,7 +481,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 min = 100;
                 for (size_t t = 0; t < vec1.size(); t++) {
                     vector<string> wordConfusions; vector<int> wCindex;
-                    int minFactor = loadWConfusionsNindex1(selectedStr, vec1[t], ConfPmap, wordConfusions, wCindex);
+                    int minFactor = slnp.loadWConfusionsNindex1(selectedStr, vec1[t], ConfPmap, wordConfusions, wCindex);
                     wordConfusions.clear(); wCindex.clear();
                     if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvec1 = vec1[t]; }
                 }
@@ -493,52 +495,52 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
                 for (itr = CPairs.begin(); itr != CPairs.end(); ++itr)
                 {
-                    if(toslp1(itr->first) == toslp1(selectedStr))
+                    if(slnp.toslp1(itr->first) == slnp.toslp1(selectedStr))
                     {
                         for (set_it = itr->second.begin(); set_it != itr->second.end(); ++set_it)
                         {
-                           out.push_back(toslp1(*set_it));
+                           out.push_back(slnp.toslp1(*set_it));
                         }
                     }
                 }
 
                 cout<<"From CPairs: ";
                 for(auto& it : out){
-                    cout << toslp1(it) << endl;
+                    cout << slnp.toslp1(it) << endl;
                 }
                 for (size_t ksugg1 = 0; ksugg1 < 6; ksugg1++)
                 {
-                    if (out.size() > ksugg1)  mapSugg[toslp1(out[ksugg1])]++;
+                    if (out.size() > ksugg1)  mapSugg[slnp.toslp1(out[ksugg1])]++;
                 }
 
                 if(mProject.get_configuration()=="True")
                 {
-                    if (Words.size() > 0)  mapSugg[toslp1(Words[0])]++;
-                    if (Words1.size() > 0) mapSugg[toslp1(nearestCOnfconfirmingSuggvec)]++;
-                    if (PWords1.size() > 0) mapSugg[toslp1(nearestCOnfconfirmingSuggvec1)]++;
-                    if (PairSugg.size() > 0) mapSugg[toslp1(PairSugg)]++;
-                    mapSugg[SamasBreakLRCorrect(toslp1(selectedStr), Dict, PWords, TPWords, TPWordsP)]++;
-                    string s1 = toslp1(selectedStr);
+                    if (Words.size() > 0)  mapSugg[slnp.toslp1(Words[0])]++;
+                    if (Words1.size() > 0) mapSugg[slnp.toslp1(nearestCOnfconfirmingSuggvec)]++;
+                    if (PWords1.size() > 0) mapSugg[slnp.toslp1(nearestCOnfconfirmingSuggvec1)]++;
+                    if (PairSugg.size() > 0) mapSugg[slnp.toslp1(PairSugg)]++;
+                    mapSugg[trie.SamasBreakLRCorrect(slnp.toslp1(selectedStr), Dict, PWords, TPWords, TPWordsP)]++;
+                    string s1 = slnp.toslp1(selectedStr);
                     string nearestCOnfconfirmingSuggvecFont = "";
                     min = 100;
                     for (size_t t = 0; t < vec.size(); t++)
                     {
                         vector<string> wordConfusions; vector<int> wCindex;
-                        int minFactor = loadWConfusionsNindex1(s1, vec[t], ConfPmapFont, wordConfusions, wCindex);
+                        int minFactor = slnp.loadWConfusionsNindex1(s1, vec[t], ConfPmapFont, wordConfusions, wCindex);
                         wordConfusions.clear(); wCindex.clear();
                         if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvecFont = vec[t]; }
                     }
                     //if (nearestCOnfconfirmingSuggvecFont.size() > 0) mapSugg[nearestCOnfconfirmingSuggvecFont]++;
 
                     string PairSuggFont = "";
-                    if (Alligned.size() > 0) PairSuggFont = print2OCRSugg(s1, Alligned[0], ConfPmap, Dict);
+                    if (Alligned.size() > 0) PairSuggFont = slnp.print2OCRSugg(s1, Alligned[0], ConfPmap, Dict);
                     //if (PairSuggFont.size() > 0) mapSugg[PairSuggFont]++;
 
                     string sugg9 = "";
-                    sugg9 = generatePossibilitesNsuggest(s1, TopConfusions, TopConfusionsMask, Dict, SRules);
+                    sugg9 = slnp.generatePossibilitesNsuggest(s1, TopConfusions, TopConfusionsMask, Dict, SRules);
                     //if (sugg9.size() > 0) mapSugg[sugg9]++;
 
-                    cout<<"selected string: "<<toslp1(selectedStr)<<endl;
+                    cout<<"selected string: "<<slnp.toslp1(selectedStr)<<endl;
                     cout<<"Mapped Suggestion 0: "<<endl; //(string,int) Words, last no. of occuring, create single entry for single same word
 
                     cout<<"From Primary OCR: ";
@@ -550,16 +552,16 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                     }
                     cout<<"Nearest confirming from Secondary OCR "<<nearestCOnfconfirmingSuggvec<<endl;
                     cout<<"Nearest confirming from PWords "<<nearestCOnfconfirmingSuggvec1<<endl;
-                    cout<<"One suggestion from ConfusionPair and secondary OCR Trie Pattern Data "<<toslp1(PairSugg)<<endl;
-                    cout<<"One suggestion from Pwords which is present in Dict "<<SamasBreakLRCorrect(toslp1(selectedStr), Dict, PWords, TPWords, TPWordsP)<<endl;
+                    cout<<"One suggestion from ConfusionPair and secondary OCR Trie Pattern Data "<<slnp.toslp1(PairSugg)<<endl;
+                    cout<<"One suggestion from Pwords which is present in Dict "<<trie.SamasBreakLRCorrect(slnp.toslp1(selectedStr), Dict, PWords, TPWords, TPWordsP)<<endl;
     //                cout<<"Nearest confirming from Secondary OCR by converting the string in English "<<nearestCOnfconfirmingSuggvecFont<<endl;
     //                cout<<"One suggestion from ConfusionPair and secondary OCR Trie Pattern Data by converting the string in English "<<toslp1(PairSuggFont)<<endl;
     //                cout<<"One suggestion from TopConfusion and SandhiRules by converting the string in English "<<sugg9<<endl;
                 }
-
+                eddis e;
                 for (map<string, int>::const_iterator eptr = mapSugg.begin(); eptr != mapSugg.end(); eptr++)
                 {
-                    vecSugg.push_back(make_pair(editDist(toslp1(eptr->first), toslp1(selectedStr)), eptr->first));
+                    vecSugg.push_back(make_pair(e.editDist(slnp.toslp1(eptr->first), slnp.toslp1(selectedStr)), eptr->first));
                 }
 
                 sort(vecSugg.begin(), vecSugg.end());
@@ -567,12 +569,12 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 cout << "\nVector Suggestions 0\n";
                 cout << "MappingNum\t vector_int\t Word\n";
                 for (uint i = 0; i < vecSugg.size(); i++){
-                    cout<<mapSugg[vecSugg[i].second]<<"\t"<<vecSugg[i].first<<"\t"<<toDev(vecSugg[i].second)<<endl;
+                    cout<<mapSugg[vecSugg[i].second]<<"\t"<<vecSugg[i].first<<"\t"<<slnp.toDev(vecSugg[i].second)<<endl;
                 }
 
                 for (uint bitarrayi = 0; bitarrayi < vecSugg.size(); bitarrayi++)
                 {
-                    act = new QAction(QString::fromStdString(toDev(vecSugg[bitarrayi].second)), spell_menu);
+                    act = new QAction(QString::fromStdString(slnp.toDev(vecSugg[bitarrayi].second)), spell_menu);
                     spell_menu->addAction(act);
                 }
 
@@ -632,6 +634,8 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
  */
 void MainWindow::menuSelection(QAction* action)
 {
+    slpNPatternDict slnp;
+    trieEditDis trie;
     if (curr_browser)
     {
         QTextCursor cursor = curr_browser->textCursor();
@@ -640,8 +644,8 @@ void MainWindow::menuSelection(QAction* action)
         cursor.removeSelectedText();
 
         string target = (action->text().toUtf8().constData());
-        CPair[toslp1(selectedStr)] = toslp1(target);
-        PWords[toslp1(target)]++;
+        CPair[slnp.toslp1(selectedStr)] = slnp.toslp1(target);
+        PWords[slnp.toslp1(target)]++;
         cursor.insertText(action->text());
 
         cursor.endEditBlock();
@@ -676,7 +680,7 @@ void MainWindow::translate_replace(QAction* action)
 */
 void MainWindow::on_actionSanskrit_triggered()
 {
-    HinFlag = 0, SanFlag = 1;
+    int HinFlag = 0, SanFlag = 1;
     ui->textEdit->setText(gSanskrit);//whenever language change is required it will be converted to Sanskrit using the slpNPatternDict.h
     ui->hinButton->setChecked(HinFlag);
 }
@@ -689,7 +693,7 @@ void MainWindow::on_actionSanskrit_triggered()
 */
 void MainWindow::on_actionHindi_triggered()
 {
-    HinFlag = 1, SanFlag = 0;
+    int HinFlag = 1, SanFlag = 0;
     ui->textEdit->setText(gHindi);  //whenever language change is required it will be converted to Hindi using the slpNPatternDict.h
     ui->sanButton->setChecked(SanFlag);
 }
@@ -702,7 +706,7 @@ void MainWindow::on_actionHindi_triggered()
 */
 void MainWindow::on_actionEnglish_triggered()
 {
-    HinFlag = 0, SanFlag = 0;
+    int HinFlag = 0, SanFlag = 0;
     ui->hinButton->setChecked(HinFlag);//whenever language change is required it will be left as it is
     ui->sanButton->setChecked(SanFlag);
 }
@@ -1067,6 +1071,7 @@ void MainWindow::SaveFile_GUI_1()
 }
 void MainWindow::SaveFile_Backend()
 {
+    slpNPatternDict slnp;
     QVector <QString> changedWords;
     QString tempPageName = gCurrentPageName;
 
@@ -1077,7 +1082,8 @@ void MainWindow::SaveFile_Backend()
     localFilename.replace(".txt",".html");
 
     QFile sFile(localFilename);
-    changedWords = editDistance(s1, s2);             // Update CPair by editdistance
+    edit_Distance ed;
+    changedWords = ed.editDistance(s1, s2);             // Update CPair by editdistance
     QVectorIterator<QString> i(changedWords);
     while (i.hasNext())
         qDebug() << i.next()<<endl;
@@ -1107,16 +1113,16 @@ void MainWindow::SaveFile_Backend()
     for(auto elem : CPair_editDis)
     {
        std::cerr << elem.first << " " << elem.second << "\n";
-       std::cerr << toslp1(elem.first) << " " << toslp1(elem.second) << "\n";
+       std::cerr << slnp.toslp1(elem.first) << " " << slnp.toslp1(elem.second) << "\n";
        //CPair.insert(make_pair(toslp1(elem.first), toslp1(elem.second)));
-       if ( CPairs.find(toslp1(elem.first)) != CPairs.end())
+       if ( CPairs.find(slnp.toslp1(elem.first)) != CPairs.end())
        {
-           std::set< std::string>& s_ref = CPairs[toslp1(elem.first)];
-           s_ref.insert(toslp1(elem.second));
+           std::set< std::string>& s_ref = CPairs[slnp.toslp1(elem.first)];
+           s_ref.insert(slnp.toslp1(elem.second));
        }
        else
        {
-           CPairs[toslp1(elem.first)].insert(toslp1(elem.second));
+           CPairs[slnp.toslp1(elem.first)].insert(slnp.toslp1(elem.second));
        }
     }
 
@@ -1142,15 +1148,15 @@ void MainWindow::SaveFile_Backend()
 
         for (itr = CPairs.begin(); itr != CPairs.end(); ++itr)
         {
-            out <<  QString::fromStdString(toDev(itr->first)) << '\t';
+            out <<  QString::fromStdString(slnp.toDev(itr->first)) << '\t';
             for (set_it = itr->second.begin(); set_it != itr->second.end(); ++set_it)
             {
                 if(set_it != prev(itr->second.end()))
                 {
-                    out << QString::fromStdString(toDev(*set_it)) << ",";
+                    out << QString::fromStdString(slnp.toDev(*set_it)) << ",";
                 }
                 else {
-                    out << QString::fromStdString(toDev(*set_it));
+                    out << QString::fromStdString(slnp.toDev(*set_it));
                 }
 
             }
@@ -1321,8 +1327,9 @@ void MainWindow::stopSpinning()
 
 void MainWindow::GlobalReplace()
 {
+    edit_Distance ed;
     QVector <QString> changedWords;
-    changedWords = editDistance(s1, s2);             // Update CPair by editdistance
+    changedWords = ed.editDistance(s1, s2);             // Update CPair by editdistance
     QString currentDirAbsolutePath = gDirTwoLevelUp + "/" + gCurrentDirName;
     runGlobalReplace(currentDirAbsolutePath, changedWords);
     ConvertSlpDevFlag =0;
@@ -1624,6 +1631,7 @@ map<string, int> wordLineIndex;
 
 void MainWindow::on_actionSpell_Check_triggered()
 {
+    slpNPatternDict slnp;
     if(!curr_browser || curr_browser->isReadOnly())
         return;
 
@@ -1655,15 +1663,15 @@ void MainWindow::on_actionSpell_Check_triggered()
             if(ConvertSlpDevFlag)
             {
                 string word1 = word;
-                word = toslp1(word);
+                word = slnp.toslp1(word);
                 string wordNext;
-                if(hasM40PerAsci(word1))
+                if(slnp.hasM40PerAsci(word1))
                 {
                     wordNext = word1;
                 }
                 else
                 {
-                    wordNext = toDev(word);
+                    wordNext = slnp.toDev(word);
                 }
                 strHtml += wordNext; strHtml += " ";
                 value ++;
@@ -1671,31 +1679,31 @@ void MainWindow::on_actionSpell_Check_triggered()
             else
             {
                 string word1 = word;
-                word = toslp1(word);
+                word = slnp.toslp1(word);
                 string wordNext;
                 //! checks if the word exists in the English language, Seconday OCR, Pwords, Dict and CPair; convert its color coding
-                if(hasM40PerAsci(word1))
+                if(slnp.hasM40PerAsci(word1))
                     wordNext = word1;
 
                 else if(GBook[(word)] > 0 )
                 {
-                    wordNext = toDev(word);
+                    wordNext = slnp.toDev(word);
                     PWords[word]++;
                 }
 
                 else if(PWords[word] > 0)
                 {
-                    wordNext = "<font color=\'gray\'>" + toDev(word) + "</font>";
+                    wordNext = "<font color=\'gray\'>" + slnp.toDev(word) + "</font>";
                 }
                 else if((Dict[word] ==0) && (PWords[word] == 0) && (CPair[word].size() > 0))
                 {
-                    wordNext = "<font color=\'purple\'>" + toDev(CPair[word]) + "</font>";
+                    wordNext = "<font color=\'purple\'>" + slnp.toDev(CPair[word]) + "</font>";
                 }
                 else
                 {
-                    wordNext = findDictEntries(toslp1(word),Dict,PWords, word.size());     //replace m1 with m2,m1 for combined search
-                    wordNext = find_and_replace_oddInstancesblue(wordNext);
-                    wordNext = find_and_replace_oddInstancesorange(wordNext);
+                    wordNext = slnp.findDictEntries(slnp.toslp1(word),Dict,PWords, word.size());     //replace m1 with m2,m1 for combined search
+                    wordNext = slnp.find_and_replace_oddInstancesblue(wordNext);
+                    wordNext = slnp.find_and_replace_oddInstancesorange(wordNext);
                 }
                 strHtml += wordNext;
                 strHtml += " ";
@@ -1866,6 +1874,7 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
 */
 void MainWindow::on_actionToDevanagari_triggered()
 {
+    slpNPatternDict slnp;
     if(!curr_browser || curr_browser->isReadOnly())
         return;
     QTextCursor cursor = curr_browser->textCursor();
@@ -1877,7 +1886,7 @@ void MainWindow::on_actionToDevanagari_triggered()
     selectedStr = str1.toUtf8().constData();
     cursor.beginEditBlock();
     cursor.removeSelectedText();
-    cursor.insertText(QString::fromStdString(toDev(toslp1(selectedStr))));
+    cursor.insertText(QString::fromStdString(slnp.toDev(slnp.toslp1(selectedStr))));
     cursor.endEditBlock();
 }
 
@@ -1899,7 +1908,8 @@ void MainWindow::on_actionToSlp1_triggered()
     selectedStr = str1.toUtf8().constData();
     cursor.beginEditBlock();
     cursor.removeSelectedText();
-    cursor.insertText(QString::fromStdString((toslp1(selectedStr))));
+    slpNPatternDict slnp;
+    cursor.insertText(QString::fromStdString((slnp.toslp1(selectedStr))));
     cursor.endEditBlock();
 }
 
@@ -1910,6 +1920,8 @@ void MainWindow::on_actionToSlp1_triggered()
 */
 void MainWindow::on_actionLoadGDocPage_triggered()
 {
+    slpNPatternDict slnp;
+    trieEditDis trie;
     /*! If file name is Untitled do nothing*/
     if (mFilename == "Untitled")
     {
@@ -1934,23 +1946,23 @@ void MainWindow::on_actionLoadGDocPage_triggered()
         }
 
         /*! Load PWord and Top Confusion Words*/
-        loadMap(str1.toUtf8().constData(), PWords, "PWords");
+        slnp.loadMap(str1.toUtf8().constData(), PWords, "PWords");
 
         map<string, int> PWordspage;
-        loadMap(str1.toUtf8().constData(), PWordspage, "PWordspage");
-        loadmaptoTrie(TPWords, PWordspage);
+        slnp.loadMap(str1.toUtf8().constData(), PWordspage, "PWordspage");
+        trie.loadmaptoTrie(TPWords, PWordspage);
 
         vector<string> wrong, right;
         QString str2 = mFilename;
 
-        generateCorrectionPairs(wrong, right, str2.toUtf8().constData(), str1.toUtf8().constData());
+        slnp.generateCorrectionPairs(wrong, right, str2.toUtf8().constData(), str1.toUtf8().constData());
 
-        loadConfusionsFont(wrong, right, ConfPmapFont);
-        loadConfusionsFont(wrong, right, ConfPmap);
+        slnp.loadConfusionsFont(wrong, right, ConfPmapFont);
+        slnp.loadConfusionsFont(wrong, right, ConfPmap);
 
         TopConfusions.clear();
         TopConfusionsMask.clear();
-        loadTopConfusions(ConfPmap, TopConfusions, TopConfusionsMask);
+        slnp.loadTopConfusions(ConfPmap, TopConfusions, TopConfusionsMask);
     }
 }
 
@@ -1983,7 +1995,8 @@ void MainWindow::load_data(){
     on_actionLoadSubPS_triggered();
     on_actionLoadConfusions_triggered();
     QString filepath = mProject.GetDir().absolutePath() + "/Dicts/synonyms.csv" ;
-    loadFileCSV(synonym, synrows, filepath.toUtf8().constData());
+    slpNPatternDict slnp;
+    slnp.loadFileCSV(synonym, synrows, filepath.toUtf8().constData());
     ui->lineEdit->setText(initialText);
     LoadDataFlag = 0;
     qDebug() << "done loading ....";
@@ -2039,9 +2052,10 @@ void MainWindow::on_actionLoadData_triggered()
  * \sa loadMap()
  */
 bool loadDict(Project & project) {
+    slpNPatternDict slnp;
     QString localmFilename1 = project.GetDir().absolutePath() + "/Dicts/" + "Dict";
     if (!QFile::exists(localmFilename1)) return false;
-    loadMap(localmFilename1.toUtf8().constData(), Dict, "Dict");
+    slnp.loadMap(localmFilename1.toUtf8().constData(), Dict, "Dict");
     return true;
 }
 
@@ -2065,12 +2079,13 @@ void MainWindow::on_actionLoadDict_triggered()
  */
 void MainWindow::on_actionLoadOCRWords_triggered()
 {
+    slpNPatternDict slnp;
     QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "GEROCR";
     cout << localmFilename1.toUtf8().constData() << endl;
-    loadMapNV(localmFilename1.toUtf8().constData(), GBook, vGBook, "GBook"); localmFilename1 = mFilename1;
+    slnp.loadMapNV(localmFilename1.toUtf8().constData(), GBook, vGBook, "GBook"); localmFilename1 = mFilename1;
     cout << localmFilename1.toUtf8().constData() << endl;
     localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "IEROCR";
-    loadMapNV(localmFilename1.toUtf8().constData(), IBook, vIBook, "IBook");
+    slnp.loadMapNV(localmFilename1.toUtf8().constData(), IBook, vIBook, "IBook");
     cout << GBook.size() << " " << IBook.size() << endl;
 
 }
@@ -2085,7 +2100,8 @@ void MainWindow::on_actionLoadOCRWords_triggered()
 void MainWindow::on_actionLoadDomain_triggered()
 {
     QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "/PWords";
-    loadMapPWords(vGBook, vIBook, PWords);
+    slpNPatternDict slnp;
+    slnp.loadMapPWords(vGBook, vIBook, PWords);
 }
 
 /*!
@@ -2098,10 +2114,12 @@ void MainWindow::on_actionLoadDomain_triggered()
 map<string, string> LSTM;
 void MainWindow::on_actionLoadSubPS_triggered()
 {
-    size_t count = loadPWordsPatternstoTrie(TPWordsP, PWords);// justsubstrings not patterns exactly // PWordsP,
+    slpNPatternDict slnp;
+    trieEditDis trie;
+    size_t count = trie.loadPWordsPatternstoTrie(TPWordsP, PWords);// justsubstrings not patterns exactly // PWordsP,
     QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "CPair";
 
-    loadCPairs(localmFilename1.toUtf8().constData(), CPairs, Dict, PWords);
+    slnp.loadCPairs(localmFilename1.toUtf8().constData(), CPairs, Dict, PWords);
     localmFilename1 = mFilename1;
 
     localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "LSTM";
@@ -2118,10 +2136,10 @@ void MainWindow::on_actionLoadSubPS_triggered()
     cout << LSTM.size() << "LSTM Pairs Loaded";
     localmFilename1 = mFilename1;
 
-    loadmaptoTrie(TPWords, PWords);
-    loadmaptoTrie(TDict, Dict);
-    loadmaptoTrie(TGBook, GBook);
-    loadPWordsPatternstoTrie(TGBookP, GBook);
+    trie.loadmaptoTrie(TPWords, PWords);
+    trie.loadmaptoTrie(TDict, Dict);
+    trie.loadmaptoTrie(TGBook, GBook);
+    trie.loadPWordsPatternstoTrie(TGBookP, GBook);
 }
 
 /*!
@@ -2130,8 +2148,9 @@ void MainWindow::on_actionLoadSubPS_triggered()
  */
 void MainWindow::on_actionLoadConfusions_triggered()
 {
+    slpNPatternDict slnp;
     QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "CPair";
-    loadConfusions(localmFilename1.toUtf8().constData(), ConfPmap);
+    slnp.loadConfusions(localmFilename1.toUtf8().constData(), ConfPmap);
     localmFilename1 = mFilename;
 }
 

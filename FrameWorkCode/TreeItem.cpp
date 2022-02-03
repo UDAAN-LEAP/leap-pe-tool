@@ -64,3 +64,44 @@ TreeItem * TreeItem::parentItem()
 {
 	return mParentItem;
 }
+
+void TreeItem :: SetFile( QFile * pFile) {
+        file = pFile;
+    }
+    void TreeItem :: SetFilter(Filter * pFilter) {
+        mFilter = pFilter;
+    }
+    NodeType TreeItem :: GetNodeType() {
+        return type;
+    }
+    QFile * TreeItem :: GetFile() {
+        return file;
+    }
+    Filter * TreeItem :: GetFilter() {
+        return mFilter;
+    }
+    TreeItem * TreeItem :: FindFileNode(QFile*f,TreeItem * item) {
+        if (!item->file) {
+            if (f->fileName() == item->file->fileName())
+            {
+                return item;
+            }
+        }
+        if (item->mChildItems.size() == 0) return nullptr;
+        else
+        {
+            TreeItem * retnVal = nullptr;
+            for (TreeItem * n : mChildItems) {
+                retnVal = FindFileNode(f, item);
+                if (retnVal) return retnVal;
+            }
+            return retnVal;
+        }
+    }
+
+    void TreeItem :: RemoveNode(TreeItem * item) {
+        int id = mChildItems.indexOf(item);
+        if (id < mChildItems.size()) {
+            mChildItems.remove(id);
+        }
+    }
