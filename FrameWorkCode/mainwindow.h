@@ -82,6 +82,8 @@ public:
 
     void on_actionLoad_Prev_Page_triggered();
 
+    void reLoadTabWindow();
+
 private slots:
     void createActions();
     void WordCount();

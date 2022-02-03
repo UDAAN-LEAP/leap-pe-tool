@@ -7184,4 +7184,16 @@ void MainWindow::on_actionFont_Color_triggered()
     cursor.mergeCharFormat(charFormat);
 }
 
+void MainWindow::reLoadTabWindow()
+{
+    string localFilename = mFilename.toUtf8().constData();
+    QFile *file = new QFile(QString::fromStdString(localFilename));
+    QFileInfo f(*file);
+    QString suff = f.completeSuffix();
+    if (suff == "txt" || suff == "html") {
+      LoadDocument(file,suff,currentTabPageName );
+    }
+
+}
+
 

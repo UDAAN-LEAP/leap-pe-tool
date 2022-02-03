@@ -5603,3 +5603,83 @@ Debug: "एवं =>हिन्दि "
 Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
 Debug: "page-230.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
 Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 03 Feb 2022 @ 10:49:06
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+
+OpenOCRCorrect Application Log
+Date: 03 Feb 2022 @ 12:44:49
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 03 Feb 2022 @ 12:58:10
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: "/home/mush/ocr/sets/test_124 (copy)/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: "/home/mush/Downloads/PCRayBook-Udaan/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "/home/mush/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
+Fatal: ASSERT failure in QList<T>::operator[]: "index out of range", file /usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h, line 549 (/usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h)
+Debug: App crashed with signal:  "SIGABRT" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 03 Feb 2022 @ 13:13:26
+Username:mush
+
+Application Log:
+Fatal: ASSERT failure in QList<T>::operator[]: "index out of range", file /usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h, line 549 (/usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h)
+Debug: App crashed with signal:  "SIGABRT" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 03 Feb 2022 @ 13:13:41
+Username:mush
+
+Application Log:
+Fatal: ASSERT failure in QList<T>::operator[]: "index out of range", file /usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h, line 549 (/usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h)
+Debug: App crashed with signal:  "SIGABRT" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 03 Feb 2022 @ 13:13:53
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/sets/test_124/Test_JP/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: "/home/mush/ocr/sets/test_124/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: "page-224.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/mush/ocr/sets/test_124/Test_JP/CorrectorOutput/page-224.html"  to file. 
+ (mainwindow.cpp)
+Debug: "/home/mush/ocr/sets/test_124/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: "page-224.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: "/home/mush/ocr/sets/test_124/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: "page-224.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: "/home/mush/ocr/sets/test_124/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: "page-224.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: "/home/mush/ocr/sets/test_124/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: "page-225.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/mush/ocr/sets/test_124/Test_JP/CorrectorOutput/page-225.html"  to file. 
+ (mainwindow.cpp)
+Debug: "/home/mush/ocr/sets/test_124/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: "page-228.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/mush/ocr/sets/test_124/Test_JP/CorrectorOutput/page-228.html"  to file. 
+ (mainwindow.cpp)

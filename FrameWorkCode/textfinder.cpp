@@ -73,6 +73,7 @@ void TextFinder::on_findNextButton_clicked()
 //        curr_browser->moveCursor(QTextCursor::Start);                              //Moves the cursor to start of text
 //        curr_browser->find(searchExpr, QTextDocument::FindFlags());
         ((MainWindow *)(parent()))->on_actionLoad_Next_Page_triggered();
+        curr_browser->find(searchExpr, QTextDocument::FindFlags());
     }
 }
 
@@ -97,7 +98,8 @@ void TextFinder::on_findPreviousButton_clicked()
     {
        // curr_browser->find(searchExpr, QTextDocument::FindBackward);
         ((MainWindow *)(parent()))->on_actionLoad_Prev_Page_triggered();
-         curr_browser->moveCursor(QTextCursor::End);                        //Moves the cursor to the end of text
+        curr_browser->moveCursor(QTextCursor::End);                        //Moves the cursor to the end of text
+        curr_browser->find(searchExpr, QTextDocument::FindBackward);
     }
 
 }
@@ -190,11 +192,20 @@ void TextFinder::on_replaceAllButton_clicked()
             }
       }
 
+//      string localFilename = mFilename.toUtf8().constData();
+//      QFile *file = new QFile(QString::fromStdString(localFilename));
+//      QFileInfo f(*file);
+//      QString suff = f.completeSuffix();
+//      if (suff == "txt" || suff == "html") {
+//       ((MainWindow *)(parent()))->LoadDocument(file,suff,currentTabPageName );
+//      }
+
+      ((MainWindow *)(parent()))->reLoadTabWindow();
       //!Display message
       QMessageBox messageBox;
       messageBox.information(0, "Replacement Successful","Replaced in All Pages.");
    }
-
+   else{
    QTextCursor saved_cursor = curr_browser->textCursor();
    curr_browser->moveCursor(QTextCursor::Start);
    while(curr_browser->find(searchExpr))
@@ -202,7 +213,7 @@ void TextFinder::on_replaceAllButton_clicked()
        curr_browser->textCursor().insertText(replaceString);
    }
    curr_browser->setTextCursor(saved_cursor);               //Moves the cursor to the last text location placed by the user
-
+  }
 }
 
 /*!
