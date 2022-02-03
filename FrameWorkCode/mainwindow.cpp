@@ -5686,7 +5686,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         QFile csvFile(filename);
         if(!csvFile.exists())
         {
-            csvFile.open(QIODevice::ReadWrite, QIODevice::Append);
+            csvFile.open(QIODevice::ReadWrite | QIODevice::Append);
             QTextStream output(&csvFile);
             output.setCodec("UTF-8");
             output << "Source Word,Target Word,Type of Replacement,Time of Replacement,Page Name,Set name";
@@ -5694,7 +5694,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
         else
         {
-            csvFile.open(QIODevice::ReadWrite, QIODevice::Append);
+            csvFile.open(QIODevice::ReadWrite | QIODevice::Append);
         }
 
         for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
@@ -6407,21 +6407,21 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     }
     if (ext == "html") {
         b->setHtml(input);
-        input = b->toPlainText();
-        QStringList s1;
-        s1=input.split(QRegExp(" "));
+//        input = b->toPlainText();
+//        QStringList s1;
+//        s1=input.split(QRegExp(" "));
 
-        QRegExp regex("[\u0900-\u097F]");
-        for(int i=0;i<s1.count();i++){
-            if(s1[i].contains(regex)){
-                string str=s1[i].toStdString();
-                str=toslp1(str);
-                str=toDev(str);
-                s1[i]=QString::fromStdString(str);
-            }
-        }
-        input=s1.join(" ");
-        b->setText(input);
+//        QRegExp regex("[\u0900-\u097F]");
+//        for(int i=0;i<s1.count();i++){
+//            if(s1[i].contains(regex)){
+//                string str=s1[i].toStdString();
+//                str=toslp1(str);
+//                str=toDev(str);
+//                s1[i]=QString::fromStdString(str);
+//            }
+//        }
+//        input=s1.join(" ");
+//        b->setText(input);
     }
     QDir::setCurrent(gDirOneLevelUp);   //changing application path to load document in a relative path
     b->setFont(font);
