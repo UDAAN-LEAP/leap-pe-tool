@@ -116,7 +116,7 @@ private slots:
 
     void translate_replace(QAction*);
 
-    void SaveFile();
+//    void SaveFile();
 
     void on_actionLoadGDocPage_triggered();
 
@@ -401,6 +401,17 @@ private slots:
 
     void on_actionBold_triggered(bool checked);
 
+    void SaveFile_GUI_1();
+
+    void SaveFile_GUI_2();
+
+    void GlobalReplace();
+
+    void stopSpinning();
+
+public slots:
+    void SaveFile_Backend();
+
 private:
 
     bool mExitStatus = false;
@@ -426,6 +437,7 @@ private:
     int NextPrevTrig = 0;
     bool isRecentProjclick =false;
     QString RecentProjFile;
+    LoadingSpinner *spinner;
 };
 
 #endif // MAINWINDOW_H

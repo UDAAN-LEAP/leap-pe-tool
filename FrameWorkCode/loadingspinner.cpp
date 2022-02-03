@@ -13,7 +13,6 @@ LoadingSpinner::LoadingSpinner(QWidget *parent) :
     this->setStyleSheet("background-color: white;");
     ui->setupUi(this);
     qInstallMessageHandler(crashlog::myMessageHandler);
-    this->move(425,300);
     mv = new QMovie(":/Images/spinbar-tp.gif");
     ui->labelspin->setAttribute(Qt::WA_NoSystemBackground);
     ui->labelspin->setMovie(mv);

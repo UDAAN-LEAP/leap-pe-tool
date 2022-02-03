@@ -10,6 +10,7 @@
 #include <unordered_map>
 #include <QFile>
 #include "eddis.h"
+#include <QMessageBox>
 //#include <boost/serialization/map.hpp>
 //#include <boost/serialization/vector.hpp>
 //#include <boost/serialization/serialization.hpp>
