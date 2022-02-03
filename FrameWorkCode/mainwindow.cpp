@@ -821,8 +821,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         QDir dir = mProject.GetDir();
 
         QString dirName=dir.dirName();
-        mProject.get_project_name(dirName);
-
         QString str1 = mProject.GetDir().absolutePath()+"/CorrectorOutput/";
         QString str2 = mProject.GetDir().absolutePath() + "/VerifierOutput/";
         QString str3 = mProject.GetDir().absolutePath() + "/Inds/";
@@ -4439,7 +4437,7 @@ void MainWindow::on_actionTurn_In_triggered()
 
        // ui->actionTurn_In->setEnabled(false);        // Deactivating the "Submit Corrector" button on ui
         QMessageBox::information(0, "Turn In", "Turned In Successfully");
-        deleteEditedFilesLog();
+        //deleteEditedFilesLog();
     }
     else
     {
@@ -4739,7 +4737,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         //! Updating the Project Version
         ui->lineEdit_2->setText("Version " + mProject.get_version());
         QMessageBox::information(0, "Turn In", "Turned In Successfully");
-        deleteEditedFilesLog();
+        //deleteEditedFilesLog();
     }
     else
     {
@@ -7348,6 +7346,8 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
     {
         QString oldWord = globallyReplacedWords.firstKey();
         QString newWord = globallyReplacedWords.value(oldWord);
+        oldWord=oldWord.trimmed();
+        newWord=newWord.trimmed();
         bool replace = undoGlobalReplace_Single_Word(oldWord, newWord);
 
         if ( replace )

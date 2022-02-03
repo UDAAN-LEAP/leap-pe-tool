@@ -5952,3 +5952,68 @@ Date: 03 Feb 2022 @ 16:06:32
 Username:sujay
 
 Application Log:
+
+OpenOCRCorrect Application Log
+Date: 03 Feb 2022 @ 23:21:11
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 03 Feb 2022 @ 23:35:40
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/TestProject/image.xml" (markRegion.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/asr16/Downloads/TestProject/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "page-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/asr16/Downloads/TestProject/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "page-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/asr16/Downloads/TestProject/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "page-2.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/asr16/Downloads/TestProject/CorrectorOutput/page-2.html"  to file. 
+ (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/asr16/Downloads/TestProject/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "page-2.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/asr16/Downloads/TestProject/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "page-3.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/asr16/Downloads/TestProject/CorrectorOutput/page-3.html"  to file. 
+ (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/asr16/Downloads/TestProject/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "page-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "akansha =>harshit " 
+ (mainwindow.cpp)
+Debug: "asr16 =>vrka47 " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/TestProject/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Size =  2 (globalreplacedialog.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/TestProject/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/TestProject/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/TestProject/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/TestProject/CorrectorOutput/."): device not open ()
+Debug: "page-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Warning: QObject::connect: No such signal QListWidget::itemChanged(QlistWidgetItem*) in undoglobalreplace.cpp:22 ()
+Warning: QObject::connect:  (sender name:   'listWidget') ()
+Warning: QObject::connect:  (receiver name: 'UndoGlobalReplace') ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/TestProject/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/TestProject/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/TestProject/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/TestProject/CorrectorOutput/."): device not open ()

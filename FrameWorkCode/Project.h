@@ -52,7 +52,6 @@ public:
     void set_stage(QString mRole);
     void set_verifier();
     void set_corrector();
-    void get_project_name(QString dirName);
 	QString get_stage();
     QString get_version();
     QString get_configuration();
