@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[179];
-    char stringdata0[3707];
+    QByteArrayData data[178];
+    char stringdata0[3700];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -144,73 +144,72 @@ QT_MOC_LITERAL(108, 2226, 34), // "on_actionInsert_Rowbelow_trig..."
 QT_MOC_LITERAL(109, 2261, 32), // "on_actionRemove_Column_triggered"
 QT_MOC_LITERAL(110, 2294, 29), // "on_actionRemove_Row_triggered"
 QT_MOC_LITERAL(111, 2324, 25), // "on_actionItalic_triggered"
-QT_MOC_LITERAL(112, 2350, 6), // "italic"
-QT_MOC_LITERAL(113, 2357, 28), // "on_actionNonitalic_triggered"
-QT_MOC_LITERAL(114, 2386, 27), // "on_actionSave_All_triggered"
-QT_MOC_LITERAL(115, 2414, 35), // "on_actionFind_and_Replace_tri..."
-QT_MOC_LITERAL(116, 2450, 16), // "checkUnsavedWork"
-QT_MOC_LITERAL(117, 2467, 11), // "saveAllWork"
-QT_MOC_LITERAL(118, 2479, 12), // "setMFilename"
-QT_MOC_LITERAL(119, 2492, 21), // "on_pushButton_clicked"
-QT_MOC_LITERAL(120, 2514, 23), // "on_pushButton_2_clicked"
-QT_MOC_LITERAL(121, 2538, 16), // "runGlobalReplace"
-QT_MOC_LITERAL(122, 2555, 16), // "QVector<QString>"
-QT_MOC_LITERAL(123, 2572, 28), // "globalReplaceQueryMessageBox"
-QT_MOC_LITERAL(124, 2601, 8), // "old_word"
-QT_MOC_LITERAL(125, 2610, 8), // "new_word"
-QT_MOC_LITERAL(126, 2619, 4), // "int&"
-QT_MOC_LITERAL(127, 2624, 3), // "chk"
-QT_MOC_LITERAL(128, 2628, 24), // "writeGlobalCPairsToFiles"
-QT_MOC_LITERAL(129, 2653, 9), // "file_path"
-QT_MOC_LITERAL(130, 2663, 21), // "QMap<QString,QString>"
-QT_MOC_LITERAL(131, 2685, 20), // "globalReplacementMap"
-QT_MOC_LITERAL(132, 2706, 36), // "addCurrentlyOpenFileToEditedF..."
-QT_MOC_LITERAL(133, 2743, 20), // "deleteEditedFilesLog"
-QT_MOC_LITERAL(134, 2764, 14), // "isStringInFile"
-QT_MOC_LITERAL(135, 2779, 12), // "searchString"
-QT_MOC_LITERAL(136, 2792, 16), // "dumpStringToFile"
-QT_MOC_LITERAL(137, 2809, 6), // "string"
-QT_MOC_LITERAL(138, 2816, 9), // "highlight"
-QT_MOC_LITERAL(139, 2826, 42), // "getGlobalReplacementMapFromCh..."
-QT_MOC_LITERAL(140, 2869, 13), // "replacedWords"
-QT_MOC_LITERAL(141, 2883, 13), // "QVector<int>*"
-QT_MOC_LITERAL(142, 2897, 17), // "replaceInAllPages"
-QT_MOC_LITERAL(143, 2915, 25), // "on_actionas_PDF_triggered"
-QT_MOC_LITERAL(144, 2941, 27), // "on_actionGet_Help_triggered"
-QT_MOC_LITERAL(145, 2969, 27), // "on_actionTutorial_triggered"
-QT_MOC_LITERAL(146, 2997, 24), // "on_actionLinux_triggered"
-QT_MOC_LITERAL(147, 3022, 26), // "on_actionWindows_triggered"
-QT_MOC_LITERAL(148, 3049, 33), // "on_actionShortcut_Guide_trigg..."
-QT_MOC_LITERAL(149, 3083, 26), // "on_textBrowser_textChanged"
-QT_MOC_LITERAL(150, 3110, 26), // "on_zoom_Out_Button_clicked"
-QT_MOC_LITERAL(151, 3137, 25), // "on_zoom_In_Button_clicked"
-QT_MOC_LITERAL(152, 3163, 24), // "zoom_slider_valueChanged"
-QT_MOC_LITERAL(153, 3188, 5), // "value"
-QT_MOC_LITERAL(154, 3194, 17), // "zoom_slider_moved"
-QT_MOC_LITERAL(155, 3212, 17), // "zoomedUsingScroll"
-QT_MOC_LITERAL(156, 3230, 38), // "on_actionUndo_Global_Replace_..."
-QT_MOC_LITERAL(157, 3269, 29), // "undoGlobalReplace_Single_Word"
-QT_MOC_LITERAL(158, 3299, 7), // "oldWord"
-QT_MOC_LITERAL(159, 3307, 7), // "newWord"
-QT_MOC_LITERAL(160, 3315, 29), // "reverseGlobalReplacedWordsMap"
-QT_MOC_LITERAL(161, 3345, 38), // "getUndoGlobalReplaceMap_Multi..."
-QT_MOC_LITERAL(162, 3384, 28), // "replaceInAllFilesFromTSVfile"
-QT_MOC_LITERAL(163, 3413, 20), // "checkForValidTSVfile"
-QT_MOC_LITERAL(164, 3434, 6), // "QFile&"
-QT_MOC_LITERAL(165, 3441, 22), // "globalReplacePreviewfn"
-QT_MOC_LITERAL(166, 3464, 12), // "QVector<int>"
-QT_MOC_LITERAL(167, 3477, 22), // "getBeforeAndAfterWords"
-QT_MOC_LITERAL(168, 3500, 25), // "QMap<QString,QStringList>"
-QT_MOC_LITERAL(169, 3526, 5), // "fPath"
-QT_MOC_LITERAL(170, 3532, 25), // "on_actionUpload_triggered"
-QT_MOC_LITERAL(171, 3558, 20), // "on_justify_triggered"
-QT_MOC_LITERAL(172, 3579, 29), // "on_actionFont_Color_triggered"
-QT_MOC_LITERAL(173, 3609, 23), // "on_actionBold_triggered"
-QT_MOC_LITERAL(174, 3633, 14), // "SaveFile_GUI_1"
-QT_MOC_LITERAL(175, 3648, 14), // "SaveFile_GUI_2"
-QT_MOC_LITERAL(176, 3663, 13), // "GlobalReplace"
-QT_MOC_LITERAL(177, 3677, 12), // "stopSpinning"
-QT_MOC_LITERAL(178, 3690, 16) // "SaveFile_Backend"
+QT_MOC_LITERAL(112, 2350, 28), // "on_actionNonitalic_triggered"
+QT_MOC_LITERAL(113, 2379, 27), // "on_actionSave_All_triggered"
+QT_MOC_LITERAL(114, 2407, 35), // "on_actionFind_and_Replace_tri..."
+QT_MOC_LITERAL(115, 2443, 16), // "checkUnsavedWork"
+QT_MOC_LITERAL(116, 2460, 11), // "saveAllWork"
+QT_MOC_LITERAL(117, 2472, 12), // "setMFilename"
+QT_MOC_LITERAL(118, 2485, 21), // "on_pushButton_clicked"
+QT_MOC_LITERAL(119, 2507, 23), // "on_pushButton_2_clicked"
+QT_MOC_LITERAL(120, 2531, 16), // "runGlobalReplace"
+QT_MOC_LITERAL(121, 2548, 16), // "QVector<QString>"
+QT_MOC_LITERAL(122, 2565, 28), // "globalReplaceQueryMessageBox"
+QT_MOC_LITERAL(123, 2594, 8), // "old_word"
+QT_MOC_LITERAL(124, 2603, 8), // "new_word"
+QT_MOC_LITERAL(125, 2612, 4), // "int&"
+QT_MOC_LITERAL(126, 2617, 3), // "chk"
+QT_MOC_LITERAL(127, 2621, 24), // "writeGlobalCPairsToFiles"
+QT_MOC_LITERAL(128, 2646, 9), // "file_path"
+QT_MOC_LITERAL(129, 2656, 21), // "QMap<QString,QString>"
+QT_MOC_LITERAL(130, 2678, 20), // "globalReplacementMap"
+QT_MOC_LITERAL(131, 2699, 36), // "addCurrentlyOpenFileToEditedF..."
+QT_MOC_LITERAL(132, 2736, 20), // "deleteEditedFilesLog"
+QT_MOC_LITERAL(133, 2757, 14), // "isStringInFile"
+QT_MOC_LITERAL(134, 2772, 12), // "searchString"
+QT_MOC_LITERAL(135, 2785, 16), // "dumpStringToFile"
+QT_MOC_LITERAL(136, 2802, 6), // "string"
+QT_MOC_LITERAL(137, 2809, 9), // "highlight"
+QT_MOC_LITERAL(138, 2819, 42), // "getGlobalReplacementMapFromCh..."
+QT_MOC_LITERAL(139, 2862, 13), // "replacedWords"
+QT_MOC_LITERAL(140, 2876, 13), // "QVector<int>*"
+QT_MOC_LITERAL(141, 2890, 17), // "replaceInAllPages"
+QT_MOC_LITERAL(142, 2908, 25), // "on_actionas_PDF_triggered"
+QT_MOC_LITERAL(143, 2934, 27), // "on_actionGet_Help_triggered"
+QT_MOC_LITERAL(144, 2962, 27), // "on_actionTutorial_triggered"
+QT_MOC_LITERAL(145, 2990, 24), // "on_actionLinux_triggered"
+QT_MOC_LITERAL(146, 3015, 26), // "on_actionWindows_triggered"
+QT_MOC_LITERAL(147, 3042, 33), // "on_actionShortcut_Guide_trigg..."
+QT_MOC_LITERAL(148, 3076, 26), // "on_textBrowser_textChanged"
+QT_MOC_LITERAL(149, 3103, 26), // "on_zoom_Out_Button_clicked"
+QT_MOC_LITERAL(150, 3130, 25), // "on_zoom_In_Button_clicked"
+QT_MOC_LITERAL(151, 3156, 24), // "zoom_slider_valueChanged"
+QT_MOC_LITERAL(152, 3181, 5), // "value"
+QT_MOC_LITERAL(153, 3187, 17), // "zoom_slider_moved"
+QT_MOC_LITERAL(154, 3205, 17), // "zoomedUsingScroll"
+QT_MOC_LITERAL(155, 3223, 38), // "on_actionUndo_Global_Replace_..."
+QT_MOC_LITERAL(156, 3262, 29), // "undoGlobalReplace_Single_Word"
+QT_MOC_LITERAL(157, 3292, 7), // "oldWord"
+QT_MOC_LITERAL(158, 3300, 7), // "newWord"
+QT_MOC_LITERAL(159, 3308, 29), // "reverseGlobalReplacedWordsMap"
+QT_MOC_LITERAL(160, 3338, 38), // "getUndoGlobalReplaceMap_Multi..."
+QT_MOC_LITERAL(161, 3377, 28), // "replaceInAllFilesFromTSVfile"
+QT_MOC_LITERAL(162, 3406, 20), // "checkForValidTSVfile"
+QT_MOC_LITERAL(163, 3427, 6), // "QFile&"
+QT_MOC_LITERAL(164, 3434, 22), // "globalReplacePreviewfn"
+QT_MOC_LITERAL(165, 3457, 12), // "QVector<int>"
+QT_MOC_LITERAL(166, 3470, 22), // "getBeforeAndAfterWords"
+QT_MOC_LITERAL(167, 3493, 25), // "QMap<QString,QStringList>"
+QT_MOC_LITERAL(168, 3519, 5), // "fPath"
+QT_MOC_LITERAL(169, 3525, 25), // "on_actionUpload_triggered"
+QT_MOC_LITERAL(170, 3551, 20), // "on_justify_triggered"
+QT_MOC_LITERAL(171, 3572, 29), // "on_actionFont_Color_triggered"
+QT_MOC_LITERAL(172, 3602, 23), // "on_actionBold_triggered"
+QT_MOC_LITERAL(173, 3626, 14), // "SaveFile_GUI_1"
+QT_MOC_LITERAL(174, 3641, 14), // "SaveFile_GUI_2"
+QT_MOC_LITERAL(175, 3656, 13), // "GlobalReplace"
+QT_MOC_LITERAL(176, 3670, 12), // "stopSpinning"
+QT_MOC_LITERAL(177, 3683, 16) // "SaveFile_Backend"
 
     },
     "MainWindow\0closeSignal\0\0createActions\0"
@@ -283,7 +282,7 @@ QT_MOC_LITERAL(178, 3690, 16) // "SaveFile_Backend"
     "on_actionInsert_Rowbelow_triggered\0"
     "on_actionRemove_Column_triggered\0"
     "on_actionRemove_Row_triggered\0"
-    "on_actionItalic_triggered\0italic\0"
+    "on_actionItalic_triggered\0"
     "on_actionNonitalic_triggered\0"
     "on_actionSave_All_triggered\0"
     "on_actionFind_and_Replace_triggered\0"
@@ -428,53 +427,53 @@ static const uint qt_meta_data_MainWindow[] = {
      108,    0,  818,    2, 0x08 /* Private */,
      109,    0,  819,    2, 0x08 /* Private */,
      110,    0,  820,    2, 0x08 /* Private */,
-     111,    1,  821,    2, 0x08 /* Private */,
-     113,    0,  824,    2, 0x08 /* Private */,
-     114,    0,  825,    2, 0x08 /* Private */,
-     115,    0,  826,    2, 0x08 /* Private */,
-     116,    0,  827,    2, 0x08 /* Private */,
-     117,    0,  828,    2, 0x08 /* Private */,
-     118,    1,  829,    2, 0x08 /* Private */,
-     119,    0,  832,    2, 0x08 /* Private */,
-     120,    0,  833,    2, 0x08 /* Private */,
-     121,    2,  834,    2, 0x08 /* Private */,
-     123,    3,  839,    2, 0x08 /* Private */,
-     128,    2,  846,    2, 0x08 /* Private */,
-     132,    0,  851,    2, 0x08 /* Private */,
-     133,    0,  852,    2, 0x08 /* Private */,
-     134,    2,  853,    2, 0x08 /* Private */,
-     136,    2,  858,    2, 0x08 /* Private */,
-     138,    2,  863,    2, 0x08 /* Private */,
-     139,    2,  868,    2, 0x08 /* Private */,
-     143,    0,  873,    2, 0x08 /* Private */,
-     144,    0,  874,    2, 0x08 /* Private */,
-     145,    0,  875,    2, 0x08 /* Private */,
-     146,    0,  876,    2, 0x08 /* Private */,
-     147,    0,  877,    2, 0x08 /* Private */,
-     148,    0,  878,    2, 0x08 /* Private */,
-     149,    0,  879,    2, 0x08 /* Private */,
-     150,    0,  880,    2, 0x08 /* Private */,
-     151,    0,  881,    2, 0x08 /* Private */,
-     152,    1,  882,    2, 0x08 /* Private */,
-     154,    1,  885,    2, 0x08 /* Private */,
-     155,    0,  888,    2, 0x08 /* Private */,
-     156,    0,  889,    2, 0x08 /* Private */,
-     157,    2,  890,    2, 0x08 /* Private */,
-     160,    0,  895,    2, 0x08 /* Private */,
-     161,    1,  896,    2, 0x08 /* Private */,
-     162,    0,  899,    2, 0x08 /* Private */,
-     163,    1,  900,    2, 0x08 /* Private */,
-     165,    2,  903,    2, 0x08 /* Private */,
-     167,    2,  908,    2, 0x08 /* Private */,
-     170,    0,  913,    2, 0x08 /* Private */,
-     171,    0,  914,    2, 0x08 /* Private */,
-     172,    0,  915,    2, 0x08 /* Private */,
-     173,    1,  916,    2, 0x08 /* Private */,
-     174,    0,  919,    2, 0x08 /* Private */,
-     175,    0,  920,    2, 0x08 /* Private */,
-     176,    0,  921,    2, 0x08 /* Private */,
-     177,    0,  922,    2, 0x08 /* Private */,
-     178,    0,  923,    2, 0x0a /* Public */,
+     111,    0,  821,    2, 0x08 /* Private */,
+     112,    0,  822,    2, 0x08 /* Private */,
+     113,    0,  823,    2, 0x08 /* Private */,
+     114,    0,  824,    2, 0x08 /* Private */,
+     115,    0,  825,    2, 0x08 /* Private */,
+     116,    0,  826,    2, 0x08 /* Private */,
+     117,    1,  827,    2, 0x08 /* Private */,
+     118,    0,  830,    2, 0x08 /* Private */,
+     119,    0,  831,    2, 0x08 /* Private */,
+     120,    2,  832,    2, 0x08 /* Private */,
+     122,    3,  837,    2, 0x08 /* Private */,
+     127,    2,  844,    2, 0x08 /* Private */,
+     131,    0,  849,    2, 0x08 /* Private */,
+     132,    0,  850,    2, 0x08 /* Private */,
+     133,    2,  851,    2, 0x08 /* Private */,
+     135,    2,  856,    2, 0x08 /* Private */,
+     137,    2,  861,    2, 0x08 /* Private */,
+     138,    2,  866,    2, 0x08 /* Private */,
+     142,    0,  871,    2, 0x08 /* Private */,
+     143,    0,  872,    2, 0x08 /* Private */,
+     144,    0,  873,    2, 0x08 /* Private */,
+     145,    0,  874,    2, 0x08 /* Private */,
+     146,    0,  875,    2, 0x08 /* Private */,
+     147,    0,  876,    2, 0x08 /* Private */,
+     148,    0,  877,    2, 0x08 /* Private */,
+     149,    0,  878,    2, 0x08 /* Private */,
+     150,    0,  879,    2, 0x08 /* Private */,
+     151,    1,  880,    2, 0x08 /* Private */,
+     153,    1,  883,    2, 0x08 /* Private */,
+     154,    0,  886,    2, 0x08 /* Private */,
+     155,    0,  887,    2, 0x08 /* Private */,
+     156,    2,  888,    2, 0x08 /* Private */,
+     159,    0,  893,    2, 0x08 /* Private */,
+     160,    1,  894,    2, 0x08 /* Private */,
+     161,    0,  897,    2, 0x08 /* Private */,
+     162,    1,  898,    2, 0x08 /* Private */,
+     164,    2,  901,    2, 0x08 /* Private */,
+     166,    2,  906,    2, 0x08 /* Private */,
+     169,    0,  911,    2, 0x08 /* Private */,
+     170,    0,  912,    2, 0x08 /* Private */,
+     171,    0,  913,    2, 0x08 /* Private */,
+     172,    0,  914,    2, 0x08 /* Private */,
+     173,    0,  915,    2, 0x08 /* Private */,
+     174,    0,  916,    2, 0x08 /* Private */,
+     175,    0,  917,    2, 0x08 /* Private */,
+     176,    0,  918,    2, 0x08 /* Private */,
+     177,    0,  919,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -565,7 +564,7 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Bool,  112,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -574,15 +573,15 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, QMetaType::QString,    2,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, 0x80000000 | 122,    2,    2,
-    QMetaType::Bool, QMetaType::QString, QMetaType::QString, 0x80000000 | 126,  124,  125,  127,
-    QMetaType::Int, QMetaType::QString, 0x80000000 | 130,  129,  131,
+    QMetaType::Void, QMetaType::QString, 0x80000000 | 121,    2,    2,
+    QMetaType::Bool, QMetaType::QString, QMetaType::QString, 0x80000000 | 125,  123,  124,  126,
+    QMetaType::Int, QMetaType::QString, 0x80000000 | 129,  128,  130,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Bool, QMetaType::QString, QMetaType::QString,  129,  135,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,  129,  137,
+    QMetaType::Bool, QMetaType::QString, QMetaType::QString,  128,  134,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,  128,  136,
     QMetaType::Void, 0x80000000 | 6, QMetaType::QString,    7,    8,
-    0x80000000 | 130, 0x80000000 | 122, 0x80000000 | 141,  140,  142,
+    0x80000000 | 129, 0x80000000 | 121, 0x80000000 | 140,  139,  141,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -592,21 +591,21 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,  153,
-    QMetaType::Void, QMetaType::Int,  153,
+    QMetaType::Void, QMetaType::Int,  152,
+    QMetaType::Void, QMetaType::Int,  152,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Bool, QMetaType::QString, QMetaType::QString,  158,  159,
+    QMetaType::Bool, QMetaType::QString, QMetaType::QString,  157,  158,
     QMetaType::Void,
-    0x80000000 | 130, 0x80000000 | 130,    2,
+    0x80000000 | 129, 0x80000000 | 129,    2,
     QMetaType::Void,
-    QMetaType::Bool, 0x80000000 | 164,   54,
-    QMetaType::Void, 0x80000000 | 130, 0x80000000 | 166,    2,    2,
-    0x80000000 | 168, QMetaType::QString, 0x80000000 | 130,  169,  131,
+    QMetaType::Bool, 0x80000000 | 163,   54,
+    QMetaType::Void, 0x80000000 | 129, 0x80000000 | 165,    2,    2,
+    0x80000000 | 167, QMetaType::QString, 0x80000000 | 129,  168,  130,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Bool,   91,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -711,7 +710,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 83: _t->on_actionInsert_Rowbelow_triggered(); break;
         case 84: _t->on_actionRemove_Column_triggered(); break;
         case 85: _t->on_actionRemove_Row_triggered(); break;
-        case 86: _t->on_actionItalic_triggered((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 86: _t->on_actionItalic_triggered(); break;
         case 87: _t->on_actionNonitalic_triggered(); break;
         case 88: _t->on_actionSave_All_triggered(); break;
         case 89: _t->on_actionFind_and_Replace_triggered(); break;
@@ -761,7 +760,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 124: _t->on_actionUpload_triggered(); break;
         case 125: _t->on_justify_triggered(); break;
         case 126: _t->on_actionFont_Color_triggered(); break;
-        case 127: _t->on_actionBold_triggered((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 127: _t->on_actionBold_triggered(); break;
         case 128: _t->SaveFile_GUI_1(); break;
         case 129: _t->SaveFile_GUI_2(); break;
         case 130: _t->GlobalReplace(); break;

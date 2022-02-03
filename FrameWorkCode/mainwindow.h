@@ -309,7 +309,7 @@ private slots:
 
     void on_actionRemove_Row_triggered();
 
-    void on_actionItalic_triggered(bool italic);
+    void on_actionItalic_triggered();
 
     void on_actionNonitalic_triggered();
 
@@ -399,7 +399,7 @@ private slots:
 
     void on_actionFont_Color_triggered();
 
-    void on_actionBold_triggered(bool checked);
+    void on_actionBold_triggered();
 
     void SaveFile_GUI_1();
 

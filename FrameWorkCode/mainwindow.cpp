@@ -3602,19 +3602,36 @@ void MainWindow::on_actionAllFontProperties_triggered()
  * \fn MainWindow::on_actionBold_triggered()
  * \brief Sets the font weight to bold
 */
+void MainWindow::on_actionBold_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    /*
+     * charFormat returns the format of the character before the position
+     * So, we interchange the ancr and position
+    */
+    int pos = cursor.position();
+    int ancr = cursor.anchor();
+    if (pos < ancr) {
+        cursor.setPosition(pos, QTextCursor::MoveAnchor);
+        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+    }
+    bool isBold = cursor.charFormat().font().bold();
+    /*
+     * If the font-weight value is bold then
+     * it will change it to normal else bold.
+    */
+    QTextCharFormat fmt;
+    fmt.setFontWeight(isBold ? QFont::Normal : QFont::Bold);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
+}
 
 /*!
  * \fn MainWindow::on_actionUnBold_triggered()
  * \brief Sets the font weight to regular
 */
-void MainWindow::on_actionBold_triggered(bool bold)
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-            return;
-        //curr_browser->setFontWeight(QFont::Bold);
-       bold ? curr_browser->setFontWeight(QFont::Bold) :
-              curr_browser->setFontWeight(QFont::Normal);
-}
 void MainWindow::on_actionUnBold_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3628,14 +3645,28 @@ void MainWindow::on_actionUnBold_triggered()
  * \fn MainWindow::on_actionItalic_triggered()
  * \brief Sets the font style to italic
 */
-void MainWindow::on_actionItalic_triggered(bool italic)
+void MainWindow::on_actionItalic_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
         return;
 
-        //curr_browser->setFontWeight(QFont::Bold);
-       curr_browser->setFontItalic(italic);
-             //curr_browser->setFontWeight(QFont::Normal);                            // Merge current character format to character under cursor's format (previous properties + italic/non italic)
+    QTextCursor cursor = curr_browser->textCursor();                        // initialize cursor position at text cursor's position
+    /*
+     * charFormat returns the format of the character before the position
+     * So, we interchange the ancr and position
+    */
+    int pos = cursor.position();
+    int ancr = cursor.anchor();
+    if (pos < ancr) {
+        cursor.setPosition(pos, QTextCursor::MoveAnchor);
+        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+    }
+    bool isItalic = cursor.charFormat().font().italic();                    // check if character under cursor is italic or not
+
+    QTextCharFormat fmt;
+    fmt.setFontItalic(isItalic ? false : true);                             // if font is italic set font to regular, else set it to italic
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);                              // Merge current character format to character under cursor's format (previous properties + italic/non italic)
 }
 
 /*!
@@ -5447,7 +5478,7 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
         //   if(!mapOfReplacements.contains(grmIterator.key()))
         string str = replacementString.toStdString();
         QString::fromStdString(str).toUtf8();
-        QString replacementString1 = QString::fromStdString(str);
+        QString replacementString1 = QString::fromStdString(str).trimmed();
         mapOfReplacements[grmIterator.key()] = grmIterator.value().trimmed();
         s1.replace(re, replacementString1);
         replaced = s1.count(replacementString1);
