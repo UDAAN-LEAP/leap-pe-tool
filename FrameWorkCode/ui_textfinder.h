@@ -40,13 +40,14 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QPushButton *replaceButton;
     QPushButton *replaceAllButton;
+    QCheckBox *ReplaceAllPages;
     QCheckBox *matchCaseCheckBox;
 
     void setupUi(QDialog *TextFinder)
     {
         if (TextFinder->objectName().isEmpty())
             TextFinder->setObjectName(QString::fromUtf8("TextFinder"));
-        TextFinder->resize(377, 198);
+        TextFinder->resize(377, 214);
         QFont font;
         font.setFamily(QString::fromUtf8("Work Sans"));
         font.setPointSize(11);
@@ -142,9 +143,15 @@ public:
 
         verticalLayout->addLayout(gridLayout);
 
+        ReplaceAllPages = new QCheckBox(TextFinder);
+        ReplaceAllPages->setObjectName(QString::fromUtf8("ReplaceAllPages"));
+        ReplaceAllPages->setStyleSheet(QString::fromUtf8("font: 9pt; color: rgb(255, 255, 255); QCheckBox: white;"));
+
+        verticalLayout->addWidget(ReplaceAllPages);
+
         matchCaseCheckBox = new QCheckBox(TextFinder);
         matchCaseCheckBox->setObjectName(QString::fromUtf8("matchCaseCheckBox"));
-        matchCaseCheckBox->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        matchCaseCheckBox->setStyleSheet(QString::fromUtf8("font: 9pt; color: rgb(255, 255, 255);"));
 
         verticalLayout->addWidget(matchCaseCheckBox);
 
@@ -166,6 +173,7 @@ public:
         findNextButton->setText(QApplication::translate("TextFinder", "Find Next", nullptr));
         replaceButton->setText(QApplication::translate("TextFinder", "Replace", nullptr));
         replaceAllButton->setText(QApplication::translate("TextFinder", "Replace All", nullptr));
+        ReplaceAllPages->setText(QApplication::translate("TextFinder", "Replace in all Pages", nullptr));
         matchCaseCheckBox->setText(QApplication::translate("TextFinder", "Match Case", nullptr));
     } // retranslateUi
 

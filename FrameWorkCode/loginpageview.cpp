@@ -1,6 +1,7 @@
 #include "loginpageview.h"
 #include "ui_loginpageview.h"
 #include "mainwindow.h"
+#include <QMessageBox>
 
 LoginPageView::LoginPageView(QWidget *parent) :
     QDialog(parent),

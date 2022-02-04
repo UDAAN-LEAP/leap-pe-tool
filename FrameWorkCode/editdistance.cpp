@@ -16,7 +16,7 @@ using  namespace std;
 map<string, string> CPair_editDis;
 QList <QMap<QString, QString>> map_operations_list;
 QList<QMap<int, int>> map_positions_list;
-QVector <QString> editDistance(QString a, QString b)
+QVector <QString> edit_Distance :: editDistance(QString a, QString b)
 {
     QStringList s1,s2;
 
@@ -74,7 +74,7 @@ QVector <QString> editDistance(QString a, QString b)
     return something;
 }
 
-void backtrace(QStringList s1, QStringList s2, int **solution)
+void edit_Distance :: backtrace(QStringList s1, QStringList s2, int **solution)
 {
     int si= s1.count();
     int sj= s2.count();
@@ -143,7 +143,7 @@ void backtrace(QStringList s1, QStringList s2, int **solution)
     }
 }
 
-QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
+QVector <QString> edit_Distance :: phrase_heuristics(QStringList s1, QStringList s2)
 {
     int size_edits = map_operations_list.size();
     int i = 0;
@@ -265,7 +265,7 @@ QVector <QString> phrase_heuristics(QStringList s1, QStringList s2)
     return optimalPath;
 }
 
-int min(int a,int b)
+int edit_Distance :: min(int a,int b)
 {
     if(a<b)
         return a;

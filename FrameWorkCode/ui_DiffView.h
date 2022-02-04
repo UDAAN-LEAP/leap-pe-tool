@@ -51,6 +51,11 @@ public:
         if (DiffView->objectName().isEmpty())
             DiffView->setObjectName(QString::fromUtf8("DiffView"));
         DiffView->resize(1280, 516);
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(DiffView->sizePolicy().hasHeightForWidth());
+        DiffView->setSizePolicy(sizePolicy);
         DiffView->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";\n"
 "background-color: rgb(32, 33, 72);"));
         centralWidget = new QWidget(DiffView);

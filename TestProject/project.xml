@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Project name="Book1">
+<Project name="TestProject">
 	<ItemGroup>
 		<Filter Include="Image">
 			<Extensions>jpeg;jpg;png;</Extensions>

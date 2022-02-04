@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>377</width>
-    <height>198</height>
+    <height>214</height>
    </rect>
   </property>
   <property name="font">
@@ -193,9 +193,19 @@ background-color: rgb(32, 33, 72);</string>
       </layout>
      </item>
      <item>
+      <widget class="QCheckBox" name="ReplaceAllPages">
+       <property name="styleSheet">
+        <string notr="true">font: 9pt; color: rgb(255, 255, 255); QCheckBox: white;</string>
+       </property>
+       <property name="text">
+        <string>Replace in all Pages</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QCheckBox" name="matchCaseCheckBox">
        <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 255);</string>
+        <string notr="true">font: 9pt; color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>Match Case</string>

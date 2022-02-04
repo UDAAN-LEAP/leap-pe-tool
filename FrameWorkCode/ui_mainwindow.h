@@ -321,7 +321,6 @@ public:
         actionAllFontProperties->setIcon(icon11);
         actionBold = new QAction(MainWindow);
         actionBold->setObjectName(QString::fromUtf8("actionBold"));
-        actionBold->setCheckable(true);
         QIcon icon12;
         icon12.addFile(QString::fromUtf8(":/Images/Resources/bold.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionBold->setIcon(icon12);
@@ -468,7 +467,6 @@ public:
         actionRemove_Row->setObjectName(QString::fromUtf8("actionRemove_Row"));
         actionItalic = new QAction(MainWindow);
         actionItalic->setObjectName(QString::fromUtf8("actionItalic"));
-        actionItalic->setCheckable(true);
         QIcon icon28;
         icon28.addFile(QString::fromUtf8(":/Images/Resources/ittalic.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionItalic->setIcon(icon28);
@@ -1396,7 +1394,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
         tabWidget_2->setCurrentIndex(0);
 
 

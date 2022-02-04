@@ -81,7 +81,7 @@ bool UndoGlobalReplace::on_applyButton_clicked()
         if ( item->checkState() == Qt::Checked )
         {
             QStringList strList = item->text().split(" ");
-            this->finalUndoMap[strList[0]] = strList[2];
+            this->finalUndoMap[strList[0]] = strList[3];
         }
     }
     this->close();

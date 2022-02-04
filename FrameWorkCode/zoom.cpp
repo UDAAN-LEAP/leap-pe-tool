@@ -13,9 +13,10 @@
  * \param view
  * zoom based upon the factor
  */
-Graphics_view_zoom::Graphics_view_zoom(QGraphicsView* view, QGraphicsScene *scene)
+Graphics_view_zoom::Graphics_view_zoom(QGraphicsView* view, QGraphicsScene *scene, int maximumzoom)
   : QObject(view), _view(view)
 {
+    maxzoom=maximumzoom;
   _view->viewport()->installEventFilter(this);
   _view->setMouseTracking(true);
   _modifiers = Qt::ControlModifier;
@@ -30,8 +31,8 @@ Graphics_view_zoom::Graphics_view_zoom(QGraphicsView* view, QGraphicsScene *scen
 void Graphics_view_zoom::gentle_zoom(double factor)
 {
   int previousZoomLevel = zoom_level;
-  // Restricting the zoom value between 0 and 200
-  if ( zoom_level >= 200 && factor > 1 )
+  // Restricting the zoom value between 0 and maxzoom
+  if ( zoom_level >= maxzoom && factor > 1 )
       return;
   else if ( zoom_level <= 1 && factor < 1 )
       return;

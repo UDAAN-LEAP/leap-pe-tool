@@ -78,6 +78,12 @@ public:
 
     void load_data();
 
+    void on_actionLoad_Next_Page_triggered();
+
+    void on_actionLoad_Prev_Page_triggered();
+
+    void reLoadTabWindow();
+
 private slots:
     void createActions();
     void WordCount();
@@ -110,11 +116,7 @@ private slots:
 
     void translate_replace(QAction*);
 
-    void on_actionLoad_Next_Page_triggered();
-
-    void on_actionLoad_Prev_Page_triggered();
-
-    void SaveFile();
+//    void SaveFile();
 
     void on_actionLoadGDocPage_triggered();
 
@@ -307,7 +309,7 @@ private slots:
 
     void on_actionRemove_Row_triggered();
 
-    void on_actionItalic_triggered(bool italic);
+    void on_actionItalic_triggered();
 
     void on_actionNonitalic_triggered();
 
@@ -397,7 +399,18 @@ private slots:
 
     void on_actionFont_Color_triggered();
 
-    void on_actionBold_triggered(bool checked);
+    void on_actionBold_triggered();
+
+    void SaveFile_GUI_1();
+
+    void SaveFile_GUI_2();
+
+    void GlobalReplace();
+
+    void stopSpinning();
+
+public slots:
+    void SaveFile_Backend();
 
 private:
 
@@ -424,6 +437,7 @@ private:
     int NextPrevTrig = 0;
     bool isRecentProjclick =false;
     QString RecentProjFile;
+    LoadingSpinner *spinner;
 };
 
 #endif // MAINWINDOW_H

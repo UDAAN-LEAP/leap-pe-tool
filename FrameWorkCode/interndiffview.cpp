@@ -10,6 +10,7 @@
 #include <qstring.h>
 #include <Project.h>
 #include <QMessageBox>
+#include <QGraphicsRectItem>
 
 /*!
  * \fn InternDiffView::InternDiffView
@@ -24,7 +25,7 @@ InternDiffView::InternDiffView( QWidget *parent, QString page, QString fpath)
     pageNo = page.toStdString();
     ui = new Ui::InternDiffView();
     ui->setupUi(this);
-
+    //ui->setstyleSheet
     //!check if file exists
     QFile fcorrector(gDirTwoLevelUp+ "/CorrectorOutput/"+ page );
 
@@ -41,10 +42,22 @@ InternDiffView::InternDiffView( QWidget *parent, QString page, QString fpath)
        ui->graphicsView->setScene(scene);
        ui->graphicsView->adjustSize();
        ui->graphicsView->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
-       Graphics_view_zoom* z = new Graphics_view_zoom(ui->graphicsView, scene);
+       z = new Graphics_view_zoom(ui->graphicsView, scene,400);
+       ui->horizontalSlider->setMinimum(0);
+       ui->horizontalSlider->setMaximum(400);
+       ui->horizontalSlider->setValue(200);
+       ui->zoom_level_value->setText("100%");
+
        z->set_modifiers(Qt::NoModifier);
        z->gentle_zoom(30);
-
+       z->zoom_level = 200;
+       auto crop_rect = new QGraphicsRectItem(0, 0, 1, 1);
+       scene->addItem(crop_rect);
+       //connect(z, SIGNAL(zoomed()), this, SLOT(zoomedUsingScroll()));
+       connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(zoom_slider_valueChanged(int)));
+       connect(ui->horizontalSlider, SIGNAL(sliderMoved(int)), this, SLOT(zoom_slider_moved(int)));
+      // connect(ui->zoom_In_Button, SIGNAL(clicked()), this, SLOT(zoom_slider_moved(int)));
+       //connect(z, SIGNAL(zoomed()), this, SLOT(zoomedUsingScroll()));
        QString label1 = ui->InternLabel->text();
        QString acc = QString::number(correctorChangesPerc,'f',2) + "%";
        label1.append(acc+"%");
@@ -328,3 +341,45 @@ void InternDiffView::on_prevButton_clicked()
 }
 
 
+
+void InternDiffView::on_horizontalSlider_sliderMoved(int value)
+{
+    if (value % 10 != 0) {
+        value = (value / 10)*10 + 10;
+    }
+    double zoomFactor;
+    if (value > z->zoom_level) {
+        zoomFactor = 1 + ((value - z->zoom_level) / 100.0);
+    }
+    else if (value < z->zoom_level) {
+        zoomFactor = 1 - ((z->zoom_level - value) / 100.0);
+    }
+    else return;
+
+    z->gentle_zoom(zoomFactor);
+    ui->horizontalSlider->setValue(value);
+}
+
+
+void InternDiffView::on_zoom_In_Button_clicked()
+{
+    if (z)
+        z->gentle_zoom(z->getDefaultZoomInFactor());
+    int x= int(z->zoom_level)/2;
+    ui->zoom_level_value->setText(QString::number(x)+ "%");
+    ui->horizontalSlider->setValue(x*2);
+}
+
+void InternDiffView::on_zoom_Out_Button_clicked()
+{
+    if (z)
+        z->gentle_zoom(z->getDefaultZoomOutFactor());
+    int x= int(z->zoom_level)/2;
+    ui->zoom_level_value->setText(QString::number(x)+ "%");
+    ui->horizontalSlider->setValue(x*2);
+}
+
+void InternDiffView::on_horizontalSlider_valueChanged(int value)
+{   int x= int(z->zoom_level)/2;
+    ui->zoom_level_value->setText(QString::number(x)+ "%");
+}

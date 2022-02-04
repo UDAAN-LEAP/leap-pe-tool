@@ -230,7 +230,7 @@ QTabWidget::pane {
 </string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -1520,9 +1520,6 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionBold">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="icon">
     <iconset resource="AppResources.qrc">
      <normaloff>:/Images/Resources/bold.png</normaloff>:/Images/Resources/bold.png</iconset>
@@ -1876,9 +1873,6 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionItalic">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="icon">
     <iconset resource="AppResources.qrc">
      <normaloff>:/Images/Resources/ittalic.png</normaloff>:/Images/Resources/ittalic.png</iconset>
