@@ -6017,3 +6017,9 @@ Warning: QIODevice::read (QFile, "/home/asr16/Downloads/TestProject/CorrectorOut
 Warning: QIODevice::read (QFile, "/home/asr16/Downloads/TestProject/CorrectorOutput/."): device not open ()
 Warning: QIODevice::read (QFile, "/home/asr16/Downloads/TestProject/CorrectorOutput/.."): device not open ()
 Warning: QIODevice::read (QFile, "/home/asr16/Downloads/TestProject/CorrectorOutput/."): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 09 Feb 2022 @ 11:38:22
+Username:aman
+
+Application Log:
