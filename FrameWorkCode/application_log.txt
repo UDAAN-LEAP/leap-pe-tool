@@ -6047,3 +6047,256 @@ Username:shivang
 
 Application Log:
 Debug: "/home/shivang/Music/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 10 Feb 2022 @ 22:05:17
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/Test_JP/image.xml" (markRegion.cpp)
+Debug: QMap(("page-224.html", 138)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 274 (mainwindow.cpp)
+Debug: 274 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: "page-225.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 138 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 363 (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 10 Feb 2022 @ 22:09:43
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/Test_JP/image.xml" (markRegion.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 138 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 138 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 10 Feb 2022 @ 22:14:10
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/Test_JP/image.xml" (markRegion.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 138 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 138 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 10 Feb 2022 @ 22:15:33
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/Test_JP/image.xml" (markRegion.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 138 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 138 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 10 Feb 2022 @ 22:18:27
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/Test_JP/image.xml" (markRegion.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 138 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 138 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 10 Feb 2022 @ 22:21:03
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/Test_JP/image.xml" (markRegion.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 10 Feb 2022 @ 22:22:02
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/Test_JP/image.xml" (markRegion.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 180 (mainwindow.cpp)
+Debug: 180 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: "page-230.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 197 (mainwindow.cpp)
+Debug: 197 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: "page-229.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 180 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 197 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 197 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 363 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 363)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 363 (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 137 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: "page-227.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 137 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 137 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 137 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 137 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 137 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 137 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 262 (mainwindow.cpp)
+Debug: 262 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: "page-231.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)("page-231.html", 262)) (mainwindow.cpp)
+Debug: pos1 180 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)("page-231.html", 262)) (mainwindow.cpp)
+Debug: pos1 262 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 180)("page-231.html", 262)) (mainwindow.cpp)
+Debug: pos1 180 (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/Test_JP/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 212 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: "page-230.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 212)("page-231.html", 262)) (mainwindow.cpp)
+Debug: pos1 197 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 212)("page-231.html", 262)) (mainwindow.cpp)
+Debug: pos1 197 (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 10 Feb 2022 @ 22:37:57
+Username:sujay
+
+Application Log:
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 10 Feb 2022 @ 22:38:08
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/Test_JP/image.xml" (markRegion.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 212)("page-231.html", 262)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 212)("page-231.html", 262)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 10 Feb 2022 @ 22:39:51
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/Test_JP/image.xml" (markRegion.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 212)("page-231.html", 262)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 212)("page-231.html", 262)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 212)("page-231.html", 262)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 212)("page-231.html", 262)) (mainwindow.cpp)
+Debug: pos1 274 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 212)("page-231.html", 262)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("page-224.html", 138)("page-225.html", 274)("page-227.html", 137)("page-228.html", 258)("page-229.html", 197)("page-230.html", 212)("page-231.html", 262)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)

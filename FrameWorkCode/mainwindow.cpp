@@ -1312,6 +1312,7 @@ void MainWindow::on_actionSave_triggered()
         spinner->exec();
 
         SaveFile_GUI_2(); // GUI Postprocessing
+        writeSettings();
     }
     // Run Global Replace
 
@@ -6595,6 +6596,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         }
     }
    WordCount();
+   readSettings();
 
 }
 
@@ -7591,3 +7593,73 @@ void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
         }
     }
 }
+
+void MainWindow::writeSettings()
+{
+    int pos = curr_browser->textCursor().position();
+    qDebug()<<pos;
+    QString filename = gDirTwoLevelUp + "/cursor.txt";
+      QFile myFile (filename);
+      myFile.open(QIODevice::ReadWrite);
+      QDataStream in (&myFile);
+      in.setVersion(QDataStream::Qt_5_3);
+      QMap <QString ,int> curpos;
+      in >> curpos;
+      if(curpos.find(gCurrentPageName)==curpos.end()){
+            curpos.insert(gCurrentPageName,pos);
+            qDebug()<<curpos[gCurrentPageName];
+        }
+      else{
+            curpos[gCurrentPageName]=pos;
+        }
+      myFile.resize(0);
+      QDataStream out (&myFile);
+      out.setVersion(QDataStream::Qt_5_3);
+      out<<curpos;
+      myFile.flush();
+      qDebug() << "cursor.txt written .. ";
+      myFile.close();
+
+}
+
+void MainWindow::readSettings()
+{
+    int pos1;
+
+    QString filename = gDirTwoLevelUp + "/cursor.txt";
+        QFile myFile (filename);
+        myFile.open(QIODevice::ReadOnly);
+        QMap<QString,int> map;
+        QDataStream in (&myFile);
+        in.setVersion(QDataStream::Qt_5_3);
+        in >> map;
+        qDebug()<<map;
+        pos1=map[gCurrentPageName];
+        qDebug()<<"pos1"<<pos1;
+        myFile.close();
+        curr_browser->setStyleSheet("QTextBrowser{selection-background-color: #ffa500; selection-color: #ffffff;}");
+    auto cursor = curr_browser->textCursor();
+    cursor.setPosition(pos1);
+    cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+    curr_browser->setTextCursor(cursor);
+
+
+}
+
+
+
+
+void MainWindow::on_textBrowser_cursorPositionChanged()
+{
+    curr_browser->style()->unpolish(curr_browser);
+    curr_browser->setStyleSheet("QTextBrowser{selection-background-color: #0000ff; selection-color: #ffffff;}");
+    curr_browser->style()->polish(curr_browser);
+    curr_browser->update();
+}
+
+
+void MainWindow::on_textBrowser_selectionChanged()
+{
+    curr_browser->setStyleSheet("QTextBrowser{selection-background-color: #0000ff; selection-color: #ffffff;}");
+}
+

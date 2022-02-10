@@ -321,6 +321,10 @@ private slots:
 
     void saveAllWork();
 
+    void readSettings();
+
+    void writeSettings();
+
     void setMFilename( QString );
 
     void on_pushButton_clicked();
@@ -410,6 +414,10 @@ private slots:
     void stopSpinning();
 
     void on_lineEditSearch_textChanged(const QString &arg1);
+
+    void on_textBrowser_cursorPositionChanged();
+
+    void on_textBrowser_selectionChanged();
 
 public slots:
     void SaveFile_Backend();
