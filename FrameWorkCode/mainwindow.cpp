@@ -133,6 +133,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
     ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
     ui->tabWidget_2->tabBar()->hide();
+    ui->lineEditSearch->setPlaceholderText("Search");
+    QIcon search_1("./Resources/search.jpeg");
+    ui->lineEditSearch->addAction(search_1, QLineEdit::LeadingPosition);
     QString password  = "";
     QString passwordFilePath = QDir::currentPath() + "/pass.txt";
     QFile passwordFile(passwordFilePath);
@@ -7552,3 +7555,39 @@ void MainWindow::reLoadTabWindow()
 }
 
 
+
+void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
+{
+    ui->treeView->selectionModel()->clearSelection();
+    QModelIndex currentTreeItemIndex=ui->treeView->selectionModel()->currentIndex();
+    QModelIndex parentIndex = currentTreeItemIndex.parent();
+
+    auto *model = ui->treeView->model();
+    int rowCount = ui->treeView->model()->rowCount(parentIndex);
+    //qDebug()<<"rowCount"<<rowCount;
+    QModelIndexList children;
+
+    QString item;
+    for(int i=0;i<model->rowCount();i++){
+        children<<model->index(i,0);
+    }
+    //qDebug()<<"Children size"<<children.size();
+    for(int i=0;i<children.size();i++){
+        for(int j=0;j<model->rowCount(children[i]);j++){
+            children<<children[i].child(j,0);
+
+            //qDebug()<<"Item"<<item;
+            //if(item.contains(arg1)){
+            //ui->treeView->selectionModel()->setCurrentIndex(children[j],QItemSelectionModel::Select);
+            //}
+        }
+    }
+    //qDebug()<<"Children size"<<children.size();
+    for(int i=0;i<children.size();i++){
+        item=children[i].data(Qt::DisplayRole).toString();
+      //  qDebug()<<"Item"<<item;
+        if(item.contains(arg1)){
+        ui->treeView->selectionModel()->setCurrentIndex(children[i],QItemSelectionModel::Select);
+        }
+    }
+}

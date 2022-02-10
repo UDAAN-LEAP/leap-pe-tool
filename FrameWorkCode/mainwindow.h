@@ -409,6 +409,8 @@ private slots:
 
     void stopSpinning();
 
+    void on_lineEditSearch_textChanged(const QString &arg1);
+
 public slots:
     void SaveFile_Backend();
 
