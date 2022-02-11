@@ -1312,7 +1312,7 @@ void MainWindow::on_actionSave_triggered()
         spinner->exec();
 
         SaveFile_GUI_2(); // GUI Postprocessing
-        writeSettings();
+        QtConcurrent::run(this, &MainWindow::writeSettings);;
     }
     // Run Global Replace
 
@@ -1740,6 +1740,7 @@ void MainWindow::on_actionSpell_Check_triggered()
  *
  * \sa on_actionSave_triggered() ,get_version(), SaveTimeLog(), GetPageNumber(), LoadDocument()
  */
+int isProjectOpen = 0;
 void MainWindow::on_actionLoad_Next_Page_triggered()
 {
     /*Description
@@ -4815,8 +4816,18 @@ void MainWindow::on_pushButton_clicked()
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
     //! Tooltip documentation
-
     markRegion objectMarkRegion;
+    if(event->type() == QEvent::MouseButtonPress)
+    {
+
+        if(isProjectOpen)
+        {
+            if(curr_browser != NULL){
+
+            curr_browser->setStyleSheet("QTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}");
+            }
+        }
+    }
     if (event->type() == QEvent::ToolTip)
     {
           event->accept();
@@ -6429,7 +6440,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
             b->setReadOnly(true);
         }
     }
-
+    isProjectOpen = 1;
     QTextStream stream(f);
     stream.setCodec("UTF-8");
     QString input = stream.readAll();
@@ -6597,7 +6608,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     }
    WordCount();
    readSettings();
-
 }
 
 /*!
@@ -7638,6 +7648,7 @@ void MainWindow::readSettings()
         qDebug()<<"pos1"<<pos1;
         myFile.close();
         curr_browser->setStyleSheet("QTextBrowser{selection-background-color: #ffa500; selection-color: #ffffff;}");
+
     auto cursor = curr_browser->textCursor();
     cursor.setPosition(pos1);
     cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
@@ -7645,21 +7656,3 @@ void MainWindow::readSettings()
 
 
 }
-
-
-
-
-void MainWindow::on_textBrowser_cursorPositionChanged()
-{
-    curr_browser->style()->unpolish(curr_browser);
-    curr_browser->setStyleSheet("QTextBrowser{selection-background-color: #0000ff; selection-color: #ffffff;}");
-    curr_browser->style()->polish(curr_browser);
-    curr_browser->update();
-}
-
-
-void MainWindow::on_textBrowser_selectionChanged()
-{
-    curr_browser->setStyleSheet("QTextBrowser{selection-background-color: #0000ff; selection-color: #ffffff;}");
-}
-

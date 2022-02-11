@@ -415,10 +415,6 @@ private slots:
 
     void on_lineEditSearch_textChanged(const QString &arg1);
 
-    void on_textBrowser_cursorPositionChanged();
-
-    void on_textBrowser_selectionChanged();
-
 public slots:
     void SaveFile_Backend();
 
