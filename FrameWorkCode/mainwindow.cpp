@@ -1025,7 +1025,13 @@ void MainWindow::AddRecentProjects()
 
 
 bool ConvertSlpDevFlag = 0;
-
+/*!
+* \fn MainWindow::SaveFile_GUI_1()
+* \brief This function saves the changes made in current page opened in
+*        textbrowser.
+*
+* \sa SaveTimeLog(),DisplayTimeLog(),on_viewComments_clicked(),updateAverageAccuracies(),
+*/
 void MainWindow::SaveFile_GUI_1()
 {
 
@@ -1034,10 +1040,10 @@ void MainWindow::SaveFile_GUI_1()
         return;
     //! Adding entries in Timelog.json about the elapsed time
     int nMilliseconds = myTimer.elapsed();
-    gSeconds = nMilliseconds/1000;                                 //Converting milliseconds to seconds
+    gSeconds = nMilliseconds/1000;                                 //!Converting milliseconds to seconds
     QString currentVersion = mProject.get_version();
     if(mRole == "Verifier" && mRole != currentVersion)
-        currentVersion = QString::number(currentVersion.toInt() - 1);   //Version is decremented for Verifier
+        currentVersion = QString::number(currentVersion.toInt() - 1);   //!Version is decremented for Verifier
 
 //    timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion]=gSeconds;
     QString dateTime = QDateTime::currentDateTime().toString();
@@ -1055,7 +1061,7 @@ void MainWindow::SaveFile_GUI_1()
     }
     ConvertSlpDevFlag =1;
         QTextCharFormat fmt;
-        //fmt.setForeground(QBrush(QColor(0,0,0)));           //Setting foreground brush to render text
+        //fmt.setForeground(QBrush(QColor(0,0,0)));           //!Setting foreground brush to render text
         QTextCursor cursor = curr_browser->textCursor();
         cursor.beginEditBlock();
         cursor.select(QTextCursor::Document);
@@ -1066,10 +1072,18 @@ void MainWindow::SaveFile_GUI_1()
 
         QTextDocument doc;
         doc.setHtml( gInitialTextHtml[currentTabPageName] );
-        s1 = doc.toPlainText();          //before Saving
-        s2 = curr_browser->toPlainText();       //after Saving
+        s1 = doc.toPlainText();          //!before Saving
+        s2 = curr_browser->toPlainText();       //!after Saving
 
 }
+
+/*!
+* \fn MainWindow::SaveFile_Backend()
+* \brief This function saves the changes made in current page opened in
+*        textbrowser and also perform all backend task like saving files on loaction,
+*        commits of the changes and perform global replce changes
+*
+*/
 void MainWindow::SaveFile_Backend()
 {
     slpNPatternDict slnp;
@@ -1167,7 +1181,13 @@ void MainWindow::SaveFile_Backend()
     }
 }
 
-
+/*!
+* \fn MainWindow::SaveFile_GUI_2()
+* \brief This function saves the changes made in current page opened in
+*        textbrowser and after selcting the loaction to save the file this funtion
+*        convert all html output to plain text then perform saving.
+*
+*/
 void MainWindow::SaveFile_GUI_2()
 {
 
@@ -1186,12 +1206,12 @@ void MainWindow::SaveFile_GUI_2()
     if(sFile.open(QFile::WriteOnly))
     {
         QTextStream out(&sFile);
-        out.setCodec("UTF-8");          //Sets the codec for this stream
+        out.setCodec("UTF-8");          //!Sets the codec for this stream
         gInitialTextHtml[currentTabPageName] = output;
         output = "<style> body{ width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; } </style>" + output;     //Formatting the output using CSS <style> tag
         out << output;
-        sFile.flush();      //Flushes any buffered data waiting to be written in the \a sFile
-        sFile.close();      //Closing the file
+        sFile.flush();      //!Flushes any buffered data waiting to be written in the \a sFile
+        sFile.close();      //!Closing the file
     }
 
     //! Converting html output into plain text.
@@ -1220,7 +1240,7 @@ void MainWindow::SaveFile_GUI_2()
     }
     int len = qjsonobj.length();
 
-    localFilename.replace(".html",".json");         //Replacing extension of file from .html to .json
+    localFilename.replace(".html",".json");         //!Replacing extension of file from .html to .json
     QFile sFile2(localFilename);
 
     //! Sets codec value and then adding values in file

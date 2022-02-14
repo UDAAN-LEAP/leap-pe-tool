@@ -7082,3 +7082,45 @@ Debug: QMap(("page-100.html", 441)("page-101.html", 1514)("page-53.html", 802)) 
 Debug: pos1 1514 (mainwindow.cpp)
 Debug: QMap(("page-100.html", 441)("page-101.html", 1514)("page-53.html", 802)) (mainwindow.cpp)
 Debug: pos1 0 (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 14 Feb 2022 @ 21:03:34
+Username:aman
+
+Application Log:
+Debug: "/home/aman/Desktop/iit/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/aman/Desktop/iit/iitb-openocr-digit-tool/TestProject/cursor.txt"): device not open ()
+Debug: QMap() (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/aman/Desktop/iit/iitb-openocr-digit-tool/TestProject/cursor.txt"): device not open ()
+Debug: QMap() (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/aman/Desktop/iit/iitb-openocr-digit-tool/TestProject/cursor.txt"): device not open ()
+Debug: QMap() (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/aman/Desktop/iit/iitb-openocr-digit-tool/TestProject/cursor.txt"): device not open ()
+Debug: QMap() (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/aman/Desktop/iit/iitb-openocr-digit-tool/TestProject/cursor.txt"): device not open ()
+Debug: QMap() (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "kjbप्रकास्दृस्दृददृस्द्स्स्शकजि =>प्रकास्दृस्दृददृस्द्स्स्शकजि " 
+ (mainwindow.cpp)
+Debug: "/home/aman/Desktop/iit/iitb-openocr-digit-tool/TestProject/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 116 (mainwindow.cpp)
+Debug: 116 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/aman/Desktop/iit/iitb-openocr-digit-tool/TestProject/VerifierOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/aman/Desktop/iit/iitb-openocr-digit-tool/TestProject/VerifierOutput/."): device not open ()
+Debug: "page-1.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/aman/Desktop/iit/iitb-openocr-digit-tool/TestProject/VerifierOutput/page-1.html"  to file. 
+ (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 14 Feb 2022 @ 21:14:59
+Username:aman
+
+Application Log:
