@@ -405,9 +405,9 @@ private slots:
 
     void on_actionBold_triggered();
 
-    void SaveFile_GUI_1();
+    void SaveFile_GUI_Preprocessing();
 
-    void SaveFile_GUI_2();
+    void SaveFile_GUI_Postprocessing();
 
     void GlobalReplace();
 

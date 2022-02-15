@@ -22,17 +22,29 @@ public:
 	}
 	~TreeItem();
 	void append_child(TreeItem * child);
+
 	TreeItem *child(int row);
+
 	int child_count() const;
+
 	int column_count() const;
+
 	TreeItem * find(QString & str);
+
 	QVariant data(int column) const;
+
 	int row() const;
+
     void SetFile( QFile * pFile);
+
     void SetFilter(Filter * pFilter);
+
     NodeType GetNodeType();
+
     QFile * GetFile();
+
     Filter * GetFilter();
+
     TreeItem * FindFileNode(QFile*f,TreeItem * item);
 
     void RemoveNode(TreeItem * item);

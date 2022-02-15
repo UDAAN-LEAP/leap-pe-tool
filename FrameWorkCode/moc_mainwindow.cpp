@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[182];
-    char stringdata0[3762];
+    char stringdata0[3787];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -207,13 +207,13 @@ QT_MOC_LITERAL(171, 3552, 25), // "on_actionUpload_triggered"
 QT_MOC_LITERAL(172, 3578, 20), // "on_justify_triggered"
 QT_MOC_LITERAL(173, 3599, 29), // "on_actionFont_Color_triggered"
 QT_MOC_LITERAL(174, 3629, 23), // "on_actionBold_triggered"
-QT_MOC_LITERAL(175, 3653, 14), // "SaveFile_GUI_1"
-QT_MOC_LITERAL(176, 3668, 14), // "SaveFile_GUI_2"
-QT_MOC_LITERAL(177, 3683, 13), // "GlobalReplace"
-QT_MOC_LITERAL(178, 3697, 12), // "stopSpinning"
-QT_MOC_LITERAL(179, 3710, 29), // "on_lineEditSearch_textChanged"
-QT_MOC_LITERAL(180, 3740, 4), // "arg1"
-QT_MOC_LITERAL(181, 3745, 16) // "SaveFile_Backend"
+QT_MOC_LITERAL(175, 3653, 26), // "SaveFile_GUI_Preprocessing"
+QT_MOC_LITERAL(176, 3680, 27), // "SaveFile_GUI_Postprocessing"
+QT_MOC_LITERAL(177, 3708, 13), // "GlobalReplace"
+QT_MOC_LITERAL(178, 3722, 12), // "stopSpinning"
+QT_MOC_LITERAL(179, 3735, 29), // "on_lineEditSearch_textChanged"
+QT_MOC_LITERAL(180, 3765, 4), // "arg1"
+QT_MOC_LITERAL(181, 3770, 16) // "SaveFile_Backend"
 
     },
     "MainWindow\0closeSignal\0\0createActions\0"
@@ -324,10 +324,11 @@ QT_MOC_LITERAL(181, 3745, 16) // "SaveFile_Backend"
     "getBeforeAndAfterWords\0QMap<QString,QStringList>\0"
     "fPath\0on_actionUpload_triggered\0"
     "on_justify_triggered\0on_actionFont_Color_triggered\0"
-    "on_actionBold_triggered\0SaveFile_GUI_1\0"
-    "SaveFile_GUI_2\0GlobalReplace\0stopSpinning\0"
-    "on_lineEditSearch_textChanged\0arg1\0"
-    "SaveFile_Backend"
+    "on_actionBold_triggered\0"
+    "SaveFile_GUI_Preprocessing\0"
+    "SaveFile_GUI_Postprocessing\0GlobalReplace\0"
+    "stopSpinning\0on_lineEditSearch_textChanged\0"
+    "arg1\0SaveFile_Backend"
 };
 #undef QT_MOC_LITERAL
 
@@ -775,8 +776,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 127: _t->on_justify_triggered(); break;
         case 128: _t->on_actionFont_Color_triggered(); break;
         case 129: _t->on_actionBold_triggered(); break;
-        case 130: _t->SaveFile_GUI_1(); break;
-        case 131: _t->SaveFile_GUI_2(); break;
+        case 130: _t->SaveFile_GUI_Preprocessing(); break;
+        case 131: _t->SaveFile_GUI_Postprocessing(); break;
         case 132: _t->GlobalReplace(); break;
         case 133: _t->stopSpinning(); break;
         case 134: _t->on_lineEditSearch_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;

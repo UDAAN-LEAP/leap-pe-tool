@@ -1026,13 +1026,13 @@ void MainWindow::AddRecentProjects()
 
 bool ConvertSlpDevFlag = 0;
 /*!
-* \fn MainWindow::SaveFile_GUI_1()
+* \fn MainWindow::SaveFile_GUI_Preprocessing()
 * \brief This function saves the changes made in current page opened in
 *        textbrowser.
 *
 * \sa SaveTimeLog(),DisplayTimeLog(),on_viewComments_clicked(),updateAverageAccuracies(),
 */
-void MainWindow::SaveFile_GUI_1()
+void MainWindow::SaveFile_GUI_Preprocessing()
 {
 
     SaveTimeLog();
@@ -1182,13 +1182,13 @@ void MainWindow::SaveFile_Backend()
 }
 
 /*!
-* \fn MainWindow::SaveFile_GUI_2()
+* \fn MainWindow::SaveFile_GUI_Postprocessing()
 * \brief This function saves the changes made in current page opened in
 *        textbrowser and after selcting the loaction to save the file this funtion
 *        convert all html output to plain text then perform saving.
 *
 */
-void MainWindow::SaveFile_GUI_2()
+void MainWindow::SaveFile_GUI_Postprocessing()
 {
 
     QString tempPageName = gCurrentPageName;
@@ -1313,7 +1313,7 @@ void MainWindow::on_actionSave_triggered()
     }
     else
     {
-        SaveFile_GUI_1(); // GUI Preprocessing
+        SaveFile_GUI_Preprocessing(); // GUI Preprocessing
 
         Worker *worker = new Worker(nullptr, this);
         QThread *thread = new QThread;
@@ -1331,7 +1331,7 @@ void MainWindow::on_actionSave_triggered()
         spinner->setModal(false);
         spinner->exec();
 
-        SaveFile_GUI_2(); // GUI Postprocessing
+        SaveFile_GUI_Postprocessing(); // GUI Postprocessing
         QtConcurrent::run(this, &MainWindow::writeSettings);;
     }
     // Run Global Replace
@@ -7372,6 +7372,17 @@ void MainWindow::createActions()
     ui->mainToolBar->setIconSize(QSize(100, 100));
 }
 
+/*!
+* \fn MainWindow::on_actionUndo_Global_Replace_triggered()
+* \brief This feature allows user to undo global replacements when it has been done previously
+*        This function checks if last global replace was for single word or multiple word and
+*        accordingly the appropriate function is called.
+*        This function retrives a map for undo global replace in a variable "UndoGRMap" and
+*        writes all the new words back to the old words thereby undoing the last global replace
+*
+*\sa undoGlobalReplace_Single_Word(), writeGlobalCPairsToFiles(), getUndoGlobalReplaceMap_Multiple_Words()
+
+*/
 void MainWindow::on_actionUndo_Global_Replace_triggered()
 {
     QMap<QString, QString> undoGRMap;
@@ -7403,7 +7414,10 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
     }
 }
 
-
+/*!
+* \fn MainWindow::reverseGlobalReplacedWordsMap()
+* \brief This function adds the words requested by the user for global replace undo change to a map "reversedMap"
+*/
 void MainWindow::reverseGlobalReplacedWordsMap()
 {
     QMap<QString, QString>::iterator i;
@@ -7415,7 +7429,12 @@ void MainWindow::reverseGlobalReplacedWordsMap()
     globallyReplacedWords = reversedMap;
 }
 
+/*!
+* \fn MainWindow::undoGlobalReplace_Single_Word()
+* \brief This function shows a dialog box asking the user whether the global replacement for the word has to be undone
+*        This function is only called when the last global replace was done for a single word ONLY.
 
+*/
 bool MainWindow::undoGlobalReplace_Single_Word(QString oldWord, QString newWord)
 {
     QMessageBox messageBox(this);
@@ -7435,7 +7454,12 @@ bool MainWindow::undoGlobalReplace_Single_Word(QString oldWord, QString newWord)
     return false;
 }
 
-
+/*!
+* \fn MainWindow::undoGlobalReplace_Single_Word()
+* \brief This function shows a dialog box asking the user whether the global replacement for the word has to be undone
+*        This function is only called when the last global replace was done for more than ONE word.
+*\sa UndoGlobalReplace::on_applyButton_clicked(),UndoGlobalReplace::getFinalUndoMap .
+*/
 QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<QString, QString> GRMap)
 {
     QMap<QString, QString> undoGRMap;
@@ -7450,7 +7474,15 @@ QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<Q
     return undoGRMap;
 }
 
-
+/*!
+* \fn MainWindow::replaceInAllFilesFromTSVfile()
+* \brief This feature allows user to perform global replace by uploading a tsv file
+* Here the function checks if the file being uploaded by the user is valid or invalid by calling checkForValidTSVfile()
+* If it is valid then it maps the words in the file to global replace map and asks user whether to perform global replace or not
+* If the user clicks on Ok then the words are globally replaced
+*
+*\sa checkForValidTSVfile(), writeGlobalCPairsToFiles()
+*/
 void MainWindow::replaceInAllFilesFromTSVfile()
 {
     QMap<QString, QString> globalReplacementMap_allPages;
@@ -7515,6 +7547,17 @@ void MainWindow::replaceInAllFilesFromTSVfile()
     QMessageBox::information(this, "Completed replacement", "All replacements done", QMessageBox::Ok, QMessageBox::Ok);
 }
 
+
+/*!
+* \fn MainWindow::checkForValidTSVfile()
+* \brief This function checks whether the tsv file uploaded for global replace is valid or not
+* This function opens the file, and starts scanning it.
+* A tsv file is a valid only when each and every line contains one tab space between text and no single spaces
+* The function loops through each line checking for the above condition. If any line violates above condition
+* then it returns false and terminates indicating that the file is invalid.
+* If the scan is successful and every line satisfies the condition, it returns true and exits indicating that file is valid.
+
+*/
 
 bool MainWindow::checkForValidTSVfile(QFile & file)
 {
