@@ -7417,6 +7417,72 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
         {
             writeGlobalCPairsToFiles(itFile, undoGRMap);
         }
+
+        QDir directory(gDirTwoLevelUp);
+        QString setName=directory.dirName();
+        QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
+        qDebug()<<filename;
+        QFile csvFile(filename);
+        if(!csvFile.exists())
+        {
+        }
+
+        else
+        {
+            csvFile.open(QIODevice::ReadOnly);
+            QMap <QString, QString>::iterator grmIterator;
+            QStringList s1;
+            QTextStream s2(&csvFile);
+            s2.setCodec("UTF-8");
+            while (!s2.atEnd()) {
+            QString line = s2.readLine();
+                //qDebug()<<line;
+                //s1.append(line.split(',').first());
+                s1.append(line);
+            }
+            qDebug()<<"S1"<<s1;
+
+            csvFile.close();
+            csvFile.open(QIODevice::WriteOnly);
+            QTextStream output(&csvFile);
+            output.setCodec("UTF-8");
+            QStringList s4;
+            for(grmIterator = undoGRMap.begin(); grmIterator != undoGRMap.end();++grmIterator)
+            {
+                QString value=grmIterator.value();
+                //qDebug()<<value;
+                for(int i=0;i<s1.length();i++)
+                {
+                    QString s3;
+                    s3.append(s1[i].split(',').first());
+                    if(s3==value)
+                    {
+                     s4.append(s1[i]);
+                    }
+                }
+
+            }
+            qDebug()<<"S4"<<s4;
+            for(int i=0;i<s1.length();i++)
+            {
+                for(int j=0;j<s4.length();j++)
+                {
+                    if(s1[i]==s4[j])
+                    {
+                    s1.removeAll(s1[i]);
+                    }
+                }
+            }
+            qDebug()<<"S1 Final"<<s1;
+
+            for(int i=0;i<s1.length();i++){
+                output<<s1[i];
+                output << "\n";
+
+            }
+            csvFile.close();
+        }
+
     }
 }
 

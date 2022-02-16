@@ -7130,3 +7130,60 @@ Date: 16 Feb 2022 @ 10:20:02
 Username:aman
 
 Application Log:
+Info: Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway. ()
+
+OpenOCRCorrect Application Log
+Date: 16 Feb 2022 @ 16:37:24
+Username:shivang
+
+Application Log:
+Debug: "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+Debug: QMap(("p-01.html", 1037)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("p-01.html", 1037)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "चर्चा के =>चर्चाn केn " 
+ (mainwindow.cpp)
+Debug: "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 126 (mainwindow.cpp)
+Debug: 126 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/.."): device not open ()
+Debug: "p-02.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/p-02.html"  to file. 
+ (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "प्रारंभ =>प्रारंभs " 
+ (mainwindow.cpp)
+Debug: "के =>केs " 
+ (mainwindow.cpp)
+Debug: "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 282 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Size =  2 (globalreplacedialog.cpp)
+Warning: QIODevice::read (QFile, "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/.."): device not open ()
+Debug: "p-02.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Warning: QObject::connect: No such signal QListWidget::itemChanged(QlistWidgetItem*) in undoglobalreplace.cpp:22 ()
+Warning: QObject::connect:  (sender name:   'listWidget') ()
+Warning: QObject::connect:  (receiver name: 'UndoGlobalReplace') ()
+Warning: QIODevice::read (QFile, "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/.."): device not open ()
+Debug: "/home/shivang/Pictures/TranslatingissuesinArthashastraunicode-Hi/TranslatingissuesinArthashastraunicode-Hi_logs.csv" (mainwindow.cpp)
+Debug: S1 ("Source Word,Target Word,Type of Replacement,Time of Replacement,Page Name,Set name", "चर्चा के,चर्चाn केn ,Unedited Pages,Wed Feb 16 16:37:55 2022,p-02.html,TranslatingissuesinArthashastraunicode-Hi", "के,केs ,Unedited Pages,Wed Feb 16 16:38:13 2022,p-02.html,TranslatingissuesinArthashastraunicode-Hi", "प्रारंभ,प्रारंभs ,Unedited Pages,Wed Feb 16 16:38:13 2022,p-02.html,TranslatingissuesinArthashastraunicode-Hi") (mainwindow.cpp)
+Debug: S4 ("के,केs ,Unedited Pages,Wed Feb 16 16:38:13 2022,p-02.html,TranslatingissuesinArthashastraunicode-Hi") (mainwindow.cpp)
+Debug: S1 Final ("Source Word,Target Word,Type of Replacement,Time of Replacement,Page Name,Set name", "चर्चा के,चर्चाn केn ,Unedited Pages,Wed Feb 16 16:37:55 2022,p-02.html,TranslatingissuesinArthashastraunicode-Hi", "प्रारंभ,प्रारंभs ,Unedited Pages,Wed Feb 16 16:38:13 2022,p-02.html,TranslatingissuesinArthashastraunicode-Hi") (mainwindow.cpp)
