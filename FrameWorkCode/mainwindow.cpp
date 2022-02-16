@@ -1797,9 +1797,6 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
         }
 
         string localFilename = mFilename.toUtf8().constData();
-        string localCurrentTabPageName = currentTabPageName.toUtf8().constData();
-
-
 
         //! Extract page number from the localFilename and checks if the incremented page exists
         string no = "";
@@ -1810,25 +1807,35 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
         if(!mProject.GetPageNumber(localFilename, &no, &loc, &ext))
             return;
 
-        localFilename.replace(loc,no.size(),to_string(stoi(no) + 1));   //Increments page number by one
-
         QFile *file = new QFile(QString::fromStdString(localFilename));
         QFileInfo finfo(file->fileName());
 
         if(!(finfo.exists() && finfo.isFile())){
             return; }
 
-        //!Extract page number from tab name and set the incremented page number as a new tab name and Loads the file
-        if(!mProject.GetPageNumber(localCurrentTabPageName, &no, &loc, &ext))
-            return;
-        localCurrentTabPageName.replace(loc,no.size(),to_string(stoi(no) + 1));  //Increments page number by one
-        currentTabPageName = QString::fromStdString(localCurrentTabPageName);
+        ui->treeView->selectionModel()->clearSelection();
+        QModelIndex currentTreeItemIndex = ui->treeView->selectionModel()->currentIndex();
+        QModelIndex parentIndex = currentTreeItemIndex.parent();
+        auto model = ui->treeView->model();
+        int rowCount = ui->treeView->model()->rowCount(parentIndex);
 
-        fileFlag = 1;
-        NextPrevTrig =1;
-        LoadDocument(file, ext, currentTabPageName);    //loads the new file
-        fileFlag = 0;
-
+        QString treeItemLabel;
+        for (int i = 0; i < rowCount-1; i++)
+        {
+            QModelIndex index = model->index(i, 0, parentIndex);
+            treeItemLabel = index.data(Qt::DisplayRole).toString();
+            if (index.isValid())
+            {
+                if (treeItemLabel == currentTabPageName)
+                {
+                    index = model->index(i+1, 0, parentIndex);
+                    treeItemLabel = index.data(Qt::DisplayRole).toString();
+                    currentTabPageName = treeItemLabel;
+                    LoadDocument(file, ext, currentTabPageName);
+                    break;
+                }
+             }
+         }
     }
 }
 
@@ -1868,14 +1875,12 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
         }
 
         string localFilename = mFilename.toUtf8().constData();
-        string localCurrentTabPageName = currentTabPageName.toUtf8().constData();
         //! Extract page number from the localFilename
         string no = "";
         size_t loc;
         QString ext = "";
         if(!mProject.GetPageNumber(localFilename, &no, &loc, &ext))
             return;
-        localFilename.replace(loc,no.size(),to_string(stoi(no) - 1));    //Version is decremented for Verifier
 
         //!checks if the decremented page exists
         QFile *file = new QFile(QString::fromStdString(localFilename));
@@ -1883,15 +1888,29 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
         if(!(finfo.exists() && finfo.isFile())) // Check if file exists
             return;
 
-        //!Extract page number from tab name and set the decremented page number as a new tab name and Loads the file
-        if(!mProject.GetPageNumber(localCurrentTabPageName, &no, &loc, &ext))
-            return;
-        localCurrentTabPageName.replace(loc,no.size(),to_string(stoi(no) - 1));
-        currentTabPageName = QString::fromStdString(localCurrentTabPageName);  //sets the decremented page number
-        fileFlag = 1;
-        NextPrevTrig =1;
-        LoadDocument(file, ext, currentTabPageName);          //loads the file with the decremented page name
-        fileFlag = 0;
+        ui->treeView->selectionModel()->clearSelection();
+        QModelIndex currentTreeItemIndex = ui->treeView->selectionModel()->currentIndex();
+        QModelIndex parentIndex = currentTreeItemIndex.parent();
+        auto model = ui->treeView->model();
+        int rowCount = ui->treeView->model()->rowCount(parentIndex);
+
+        QString treeItemLabel;
+        for (int i = 0; i < rowCount; i++)
+        {
+            QModelIndex index = model->index(i, 0, parentIndex);
+            treeItemLabel = index.data(Qt::DisplayRole).toString();
+            if (index.isValid())
+            {
+                if (treeItemLabel == currentTabPageName)
+                {
+                    index = model->index(i-1, 0, parentIndex);
+                    treeItemLabel = index.data(Qt::DisplayRole).toString();
+                    currentTabPageName = treeItemLabel;
+                    LoadDocument(file, ext, currentTabPageName);
+                    break;
+                }
+             }
+         }
     }
 }
 

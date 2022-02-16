@@ -1,12 +1,11 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'globalreplacedialog.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.15.2)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.9)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include <memory>
 #include "globalreplacedialog.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
@@ -14,7 +13,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'globalreplacedialog.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.15.2. It"
+#error "This file was generated using the moc from 5.9.9. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -66,7 +65,7 @@ QT_MOC_LITERAL(16, 267, 31) // "getFilteredGlobalReplacementMap"
 static const uint qt_meta_data_GlobalReplaceDialog[] = {
 
  // content:
-       8,       // revision
+       7,       // revision
        0,       // classname
        0,    0, // classinfo
        8,   14, // methods
@@ -106,7 +105,7 @@ static const uint qt_meta_data_GlobalReplaceDialog[] = {
 void GlobalReplaceDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<GlobalReplaceDialog *>(_o);
+        GlobalReplaceDialog *_t = static_cast<GlobalReplaceDialog *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->fetchCheckedlist((*reinterpret_cast< QMap<QString,QString>(*)>(_a[1])),(*reinterpret_cast< QVector<int>(*)>(_a[2]))); break;
@@ -141,7 +140,7 @@ void GlobalReplaceDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (GlobalReplaceDialog::*)(QMap<QString,QString> , QVector<int> );
+            typedef void (GlobalReplaceDialog::*_t)(QMap<QString,QString> , QVector<int> );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&GlobalReplaceDialog::fetchCheckedlist)) {
                 *result = 0;
                 return;
@@ -150,14 +149,10 @@ void GlobalReplaceDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject GlobalReplaceDialog::staticMetaObject = { {
-    QMetaObject::SuperData::link<QDialog::staticMetaObject>(),
-    qt_meta_stringdata_GlobalReplaceDialog.data,
-    qt_meta_data_GlobalReplaceDialog,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
+const QMetaObject GlobalReplaceDialog::staticMetaObject = {
+    { &QDialog::staticMetaObject, qt_meta_stringdata_GlobalReplaceDialog.data,
+      qt_meta_data_GlobalReplaceDialog,  qt_static_metacall, nullptr, nullptr}
+};
 
 
 const QMetaObject *GlobalReplaceDialog::metaObject() const
@@ -193,7 +188,7 @@ int GlobalReplaceDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 // SIGNAL 0
 void GlobalReplaceDialog::fetchCheckedlist(QMap<QString,QString> _t1, QVector<int> _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP

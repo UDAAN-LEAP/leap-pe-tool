@@ -78,10 +78,6 @@ public:
 
     void load_data();
 
-    void on_actionLoad_Next_Page_triggered();
-
-    void on_actionLoad_Prev_Page_triggered();
-
     void reLoadTabWindow();
 
 private slots:
@@ -417,6 +413,9 @@ private slots:
 
 public slots:
     void SaveFile_Backend();
+    void on_actionLoad_Next_Page_triggered();
+
+    void on_actionLoad_Prev_Page_triggered();
 
 private:
 

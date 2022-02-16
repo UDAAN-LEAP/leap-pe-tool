@@ -1,19 +1,18 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'averageaccuracies.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.15.2)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.9)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include <memory>
 #include "averageaccuracies.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'averageaccuracies.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.15.2. It"
+#error "This file was generated using the moc from 5.9.9. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -42,7 +41,7 @@ QT_MOC_LITERAL(0, 0, 17) // "AverageAccuracies"
 static const uint qt_meta_data_AverageAccuracies[] = {
 
  // content:
-       8,       // revision
+       7,       // revision
        0,       // classname
        0,    0, // classinfo
        0,    0, // methods
@@ -63,14 +62,10 @@ void AverageAccuracies::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
     Q_UNUSED(_a);
 }
 
-QT_INIT_METAOBJECT const QMetaObject AverageAccuracies::staticMetaObject = { {
-    QMetaObject::SuperData::link<QDialog::staticMetaObject>(),
-    qt_meta_stringdata_AverageAccuracies.data,
-    qt_meta_data_AverageAccuracies,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
+const QMetaObject AverageAccuracies::staticMetaObject = {
+    { &QDialog::staticMetaObject, qt_meta_stringdata_AverageAccuracies.data,
+      qt_meta_data_AverageAccuracies,  qt_static_metacall, nullptr, nullptr}
+};
 
 
 const QMetaObject *AverageAccuracies::metaObject() const

@@ -1,19 +1,18 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'textfinder.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.15.2)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.9)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include <memory>
 #include "textfinder.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'textfinder.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.15.2. It"
+#error "This file was generated using the moc from 5.9.9. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -60,7 +59,7 @@ QT_MOC_LITERAL(13, 194, 5) // "event"
 static const uint qt_meta_data_TextFinder[] = {
 
  // content:
-       8,       // revision
+       7,       // revision
        0,       // classname
        0,    0, // classinfo
        7,   14, // methods
@@ -94,7 +93,7 @@ static const uint qt_meta_data_TextFinder[] = {
 void TextFinder::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<TextFinder *>(_o);
+        TextFinder *_t = static_cast<TextFinder *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->on_findNextButton_clicked(); break;
@@ -111,14 +110,10 @@ void TextFinder::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject TextFinder::staticMetaObject = { {
-    QMetaObject::SuperData::link<QDialog::staticMetaObject>(),
-    qt_meta_stringdata_TextFinder.data,
-    qt_meta_data_TextFinder,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
+const QMetaObject TextFinder::staticMetaObject = {
+    { &QDialog::staticMetaObject, qt_meta_stringdata_TextFinder.data,
+      qt_meta_data_TextFinder,  qt_static_metacall, nullptr, nullptr}
+};
 
 
 const QMetaObject *TextFinder::metaObject() const
