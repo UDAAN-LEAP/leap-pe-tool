@@ -327,8 +327,11 @@ int secs;
 int gSeconds;
 
 /*!
- * \brief MainWindow::SaveTimeLog
- */
+* \fn  MainWindow::SaveTimeLog()
+* \brief This function saves the time of changes commit into the log json file.
+*
+* \sa writeJsonFile()
+*/
 void MainWindow::SaveTimeLog()
 {
     QJsonObject mainObj;
@@ -341,6 +344,7 @@ void MainWindow::SaveTimeLog()
 //        page["Date/Time"]=time;
 //        mainObj.insert(i->first, page);
 //    }
+    //! Iterating over newTimeLog and and assinging time details into the page and finally inserting page into json object.
     for (auto i = newTimeLog.begin(); i != newTimeLog.end(); i++)
     {
         page["directory"] = i.key();
@@ -352,8 +356,10 @@ void MainWindow::SaveTimeLog()
 }
 
 /*!
- * \brief MainWindow::DisplayTimeLog
- */
+* \fn  MainWindow::DisplayTimeLog()
+* \brief this function displays the time in statusbar and gets update on every right click.
+*
+*/
 void MainWindow::DisplayTimeLog()
 {
     QString currentVersion = mProject.get_version();
