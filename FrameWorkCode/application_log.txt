@@ -7309,3 +7309,32 @@ Debug: pos1 0 (mainwindow.cpp)
 Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/cursor.txt"): device not open ()
 Debug: QMap() (mainwindow.cpp)
 Debug: pos1 0 (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 16 Feb 2022 @ 18:17:22
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Music/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/cursor.txt"): device not open ()
+Debug: QMap() (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/cursor.txt"): device not open ()
+Debug: QMap() (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/cursor.txt"): device not open ()
+Debug: QMap() (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/cursor.txt"): device not open ()
+Debug: QMap() (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/cursor.txt"): device not open ()
+Debug: QMap() (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/cursor.txt"): device not open ()
+Debug: QMap() (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/cursor.txt"): device not open ()
+Debug: QMap() (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
