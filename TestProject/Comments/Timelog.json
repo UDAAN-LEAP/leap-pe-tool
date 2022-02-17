@@ -3869,6 +3869,11 @@
         "directory": "Corrector:PCRayBook_0001-26.html:V-1",
         "seconds": 0
     },
+    "Corrector:PCRayBook_0001-26.txt:V-1": {
+        "Date/Time": "",
+        "directory": "Corrector:PCRayBook_0001-26.txt:V-1",
+        "seconds": 0
+    },
     "Corrector:PCRayBook_0001-27.html:V-1": {
         "Date/Time": "",
         "directory": "Corrector:PCRayBook_0001-27.html:V-1",
@@ -6790,9 +6795,9 @@
         "seconds": 0
     },
     "Corrector:page-6.html:V-1": {
-        "Date/Time": "",
+        "Date/Time": "Thu Feb 17 21:59:02 2022",
         "directory": "Corrector:page-6.html:V-1",
-        "seconds": 0
+        "seconds": 5
     },
     "Corrector:page-7.html:V-1": {
         "Date/Time": "",

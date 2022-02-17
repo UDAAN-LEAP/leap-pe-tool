@@ -6011,6 +6011,16 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
            {
               QRegularExpressionMatch Extmatch = match.next();
               QString matched = Extmatch.captured(i);
+              string no_dn[]={"०","१","२","३","४","५","६","७","८","९","॥","।","–","—"};
+              QStringList list = matched.split(QString::fromStdString(no_dn[11]), QString::SkipEmptyParts);
+              for(i=0;i<list.size();i++)
+              {
+                  if(list[i].contains(oldWord))
+                  {
+                      matched = list[i];
+                      break;
+                  }
+              }
               QString newSentence = matched;
               newSentence = newSentence.replace(oldWord, newWord);
               QString finalSentence = matched + "==>" + newSentence;
