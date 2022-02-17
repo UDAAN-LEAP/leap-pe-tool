@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'shortcutguidedialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.9
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,12 +10,9 @@
 #define UI_SHORTCUTGUIDEDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QTextBrowser>
 
 QT_BEGIN_NAMESPACE
@@ -29,14 +26,14 @@ public:
     void setupUi(QDialog *ShortcutGuideDialog)
     {
         if (ShortcutGuideDialog->objectName().isEmpty())
-            ShortcutGuideDialog->setObjectName(QStringLiteral("ShortcutGuideDialog"));
+            ShortcutGuideDialog->setObjectName(QString::fromUtf8("ShortcutGuideDialog"));
         ShortcutGuideDialog->resize(760, 444);
-        ShortcutGuideDialog->setStyleSheet(QStringLiteral("font: 11pt \"Work Sans\";"));
+        ShortcutGuideDialog->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
         horizontalLayout = new QHBoxLayout(ShortcutGuideDialog);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         textBrowser = new QTextBrowser(ShortcutGuideDialog);
-        textBrowser->setObjectName(QStringLiteral("textBrowser"));
-        textBrowser->setStyleSheet(QStringLiteral("font: 11pt \"Work Sans\";"));
+        textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
+        textBrowser->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\";"));
 
         horizontalLayout->addWidget(textBrowser);
 
@@ -48,7 +45,7 @@ public:
 
     void retranslateUi(QDialog *ShortcutGuideDialog)
     {
-        ShortcutGuideDialog->setWindowTitle(QApplication::translate("ShortcutGuideDialog", " Shortcut Guide", Q_NULLPTR));
+        ShortcutGuideDialog->setWindowTitle(QApplication::translate("ShortcutGuideDialog", " Shortcut Guide", nullptr));
         textBrowser->setHtml(QApplication::translate("ShortcutGuideDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -111,7 +108,7 @@ public:
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Arial'; font-size:12pt; color:#000000;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"docs-internal-guid-bf1235c0-7fff-b3bc-9c96-be483f42d2af\"></a><span style=\" font-family:'Arial'; font-size:16pt; color:#000000; background-color:transparent;\">1</span><span style=\" font-family:'Arial'; font-size:16pt; color:#000000; background-color:transparent;\">2. Devanagari to SLP\302\240</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-inde"
-                        "nt:0px;\"><span style=\" font-family:'Arial'; font-size:12pt; color:#000000; background-color:transparent;\">     \342\227\217 Press </span><span style=\" font-family:'Arial'; font-size:12pt; font-weight:696; color:#000000; background-color:transparent;\">Ctrl + G </span><span style=\" font-family:'Arial'; font-size:12pt; color:#000000; background-color:transparent;\">to Convert devanagari to roman letters as mapped in SLP Guide</span></p></body></html>", Q_NULLPTR));
+                        "nt:0px;\"><span style=\" font-family:'Arial'; font-size:12pt; color:#000000; background-color:transparent;\">     \342\227\217 Press </span><span style=\" font-family:'Arial'; font-size:12pt; font-weight:696; color:#000000; background-color:transparent;\">Ctrl + G </span><span style=\" font-family:'Arial'; font-size:12pt; color:#000000; background-color:transparent;\">to Convert devanagari to roman letters as mapped in SLP Guide</span></p></body></html>", nullptr));
     } // retranslateUi
 
 };

@@ -5851,22 +5851,35 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     addCurrentlyOpenFileToEditedFilesLog();
 }
 
+/*!
+ * \fn MainWindow::globalReplacePreviewfn()
+ * \brief This feature allows user to view the changes in advance that are going to be done by global replace
+ *
+ * This function will fetch the required data and put in a window where the users will be able to see in a
+ * tabular format, the page name, the sentences where the global replace word is/are present and the same sentence
+ * after making the change. This allows the user to better make decisions whether to perform global replace or not
+ *
+ * When the user saves the file, a dialog box for global replace appears with words to be selected and globally
+ * replaced. If no word is selected and preview button is clicked then a message will be shown that no word
+ * was selected.
+ *
+ * If words are selected then all files in the project are scanned using dirIterator and the result is fetched
+ * by called getBeforeAndAfterWords() which returns the page name and the relevant sentences.
+ *
+ * Once the data is fetched, we loop through the data and split the returned sentence in the following fashion:
+ * 1. Before the change was made
+ * 2. Same sentence after change
+ *
+ * Then we initialize QStandardItem model and feed this data to it and also set the relevant headings to it
+ *
+ * \param QMap <QString, QString> previewMap , QVector<int> allPages
+ * \sa getBeforeAndAfterWords()
+ */
+
 void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVector<int> allPages)
 {
   QStandardItemModel *model = new QStandardItemModel;
   int lineindex = 0;
-
-  //  ..... qdebug Preview
-//  QMap <QString, QString>::iterator grmIterator;
-//  int i=0;
-//  for (grmIterator = previewMap.begin(); grmIterator != previewMap.end(); ++grmIterator)
-//  {
-//      QString sourceString = grmIterator.key();
-//      QString replaceString= grmIterator.value();
-//      qDebug()<<sourceString<<"    "<<replaceString<<"   "<<allPages.at(i)<<endl;
-//      i++;
-//  }
- //  ..... Preview
 
   if(previewMap.size() == 0)
   {
@@ -5948,6 +5961,26 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
   gp.exec();
   }
 }
+
+/*!
+ * \fn MainWindow::getBeforeAndAfterWords()
+ *
+ * \brief This function is used by MainWindow::globalReplacePreviewfn() for fetching the context sentences where
+ * the global replace is to be applied.
+ *
+ * The function first opens the file passed in parameter fPath and opens the stream.
+ * Then it runs a for loop wherein we loop through the global replace word map and otain the key and value and
+ * store them as oldword and newword respectively
+ *
+ * We run a regex which will allow us to get handful of words before and after the replaced word which will be
+ * shown in the preview dialog box.
+ *
+ * We run the regex for occurances wherein we capture the matched pattern and replace the old word with the new word,
+ * and return both the sentences along with the file name.
+ *
+ *
+ * \param QString fPath, QMap <QString, QString> globalReplacementMap
+ */
 
 QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap <QString, QString> globalReplacementMap)
 {

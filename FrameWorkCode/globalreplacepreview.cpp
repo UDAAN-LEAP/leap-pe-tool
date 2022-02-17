@@ -2,6 +2,17 @@
 #include "ui_globalreplacepreview.h"
 #include <QStandardItemModel>
 #include "crashlog.h"
+
+/*!
+ * \fn MainWindow::globalReplacePreview()
+ * \brief This feature allows user to view the changes in advance that are going to be done by global replace
+ *
+ * This function is used to initialize the dialog box for the preview of global replace.
+ * Please refer to globalReplacePreviewfn() and getBeforeAndAfterWords for more information
+ *
+ * \param QWidget *parent,QStandardItemModel *model
+ * \sa qInstallMessageHandler()
+ */
 globalReplacePreview::globalReplacePreview(QWidget *parent,QStandardItemModel *model) :
     QDialog(parent),
     ui(new Ui::globalReplacePreview)
