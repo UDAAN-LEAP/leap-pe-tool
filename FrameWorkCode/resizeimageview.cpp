@@ -1,3 +1,9 @@
+/*!
+\class ResizeImageView
+\brief The ResizeImageView class provides the feature to resize the image inserted into the project
+       by taking widht and height from user.
+\sa    on_widthSpinBox_valueChanged(), QPair<double,double> getNewSize(), on_Cancel_clicked(), on_Ok_clicked(), on_hightSpinBox_valueChanged()
+*/
 #include "resizeimageview.h"
 #include "ui_resizeimageview.h"
 #include <QDoubleSpinBox>
@@ -35,6 +41,15 @@ ResizeImageView::ResizeImageView(QWidget *parent,double imageWidth,double imageH
 
 }
 
+/*!
+* \fn ResizeImageView::getNewSize
+* \brief This function creates an object for ResizeImageview class and passes the width and height provided by
+*        the user as input.
+* \param parent
+* \param imageWidth
+* \param imageHight
+*
+*/
 QPair<double,double> ResizeImageView::getNewSize(QWidget * parent, double imageWidth, double imageHight)
 {
     ResizeImageView rz(parent,imageWidth,imageHight);
@@ -50,6 +65,12 @@ ResizeImageView::~ResizeImageView()
     delete ui;
 }
 
+/*!
+* \fn ResizeImageView::on_widthSpinBox_valueChanged
+* \brief This function changes the height of the hightSpinBox when width is changed.
+* \param width
+*
+*/
 void ResizeImageView::on_widthSpinBox_valueChanged(double width)
 {
     if(keepRatioCheckBox->isChecked()) {
@@ -62,6 +83,11 @@ void ResizeImageView::on_widthSpinBox_valueChanged(double width)
     }
 }
 
+/*!
+* \fn ResizeImageView::on_hightSpinBox_valueChanged
+* \brief This function changes the width of the widthSpinBox when height is changed.
+* \param hight
+*/
 void ResizeImageView::on_hightSpinBox_valueChanged(double hight)
 {
     if(keepRatioCheckBox->isChecked()) {
@@ -74,11 +100,23 @@ void ResizeImageView::on_hightSpinBox_valueChanged(double hight)
     }
 }
 
+/*!
+* \fn ResizeImageView::on_Ok_clicked
+* \brief This function called when ok is clicked for resizing
+*
+* \sa accept()
+*/
 void ResizeImageView::on_Ok_clicked()
 {
     accept();
 }
 
+/*!
+* \fn ResizeImageView::on_Ok_clicked
+* \brief This function called when cancle is clicked for resizing
+*
+* \sa reject()
+*/
 void ResizeImageView::on_Cancel_clicked()
 {
     reject();

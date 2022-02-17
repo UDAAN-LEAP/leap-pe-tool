@@ -1,6 +1,9 @@
-/*
- * It is used for zooming-in and zooming-out functionality
- */
+/*!
+\class Graphics_view_zoom
+\brief It is used for zooming-in and zooming-out functionality. This is controled from a slider in
+       the bottom of main window ui.
+\sa    gentle_zoom(), getDefaultZoomInFactor(), set_modifiers(), getDefaultZoomOutFactor(), set_zoom_factor_base()
+*/
 #include "zoom.h"
 #include <QMouseEvent>
 #include <QApplication>
@@ -25,34 +28,36 @@ Graphics_view_zoom::Graphics_view_zoom(QGraphicsView* view, QGraphicsScene *scen
 }
 
 /*!
- * \brief Graphics_view_zoom::gentle_zoom
+ * \fn Graphics_view_zoom::gentle_zoom
+ * \brief This function calculates the current zoom level and previous zoom levels and restrits
+ *        the zoom from 0 to max level only.
  * \param factor
  */
 void Graphics_view_zoom::gentle_zoom(double factor)
 {
   int previousZoomLevel = zoom_level;
-  // Restricting the zoom value between 0 and maxzoom
+  //! Restricting the zoom value between 0 and maxzoom
   if ( zoom_level >= maxzoom && factor > 1 )
       return;
   else if ( zoom_level <= 1 && factor < 1 )
       return;
 
-  // Calculating zoom level
+  //! Calculating zoom level
   if ( factor > 1 )
       zoom_level += (factor - 1)*100;
   else if ( factor < 1 )
       zoom_level -= (1 - factor)*100;
 
-  // Returning if zoom_level == 0
+  //! Returning if zoom_level == 0
   if (zoom_level == 0) {
       zoom_level = previousZoomLevel;
       return;
   }
 
-  // Resetting size of image as this zooming function zooms the image relative to that of the previous image present
+  //! Resetting size of image as this zooming function zooms the image relative to that of the previous image present
   _view->fitInView(_scene->itemsBoundingRect(), Qt::KeepAspectRatio);
 
-  // Calculating new zoom factor from new zoom_level as the size of image is resetted
+  //! Calculating new zoom factor from new zoom_level as the size of image is resetted
   factor = zoom_level / 100.0;
 
   _view->scale(factor, factor);
@@ -64,18 +69,31 @@ void Graphics_view_zoom::gentle_zoom(double factor)
   emit zoomed();
 }
 
+/*!
+ * \fn Graphics_view_zoom::getDefaultZoomInFactor
+ * \brief This function returns the default value of zoom in factor.
+ *
+ * \return defaultZoomInFactor
+ */
 double Graphics_view_zoom::getDefaultZoomInFactor()
 {
     return defaultZoomInFactor;
 }
 
+/*!
+ * \fn Graphics_view_zoom::getDefaultZoomOutFactor
+ * \brief This function returns the default value of zoom out factor.
+ *
+ * \return defaultZoomOutFactor
+ */
 double Graphics_view_zoom::getDefaultZoomOutFactor()
 {
     return defaultZoomOutFactor;
 }
 
 /*!
- * \brief Graphics_view_zoom::set_modifiers
+ * \fn Graphics_view_zoom::set_modifiers
+ * \brief This function sets _modifiers to modifiers.
  * \param modifiers
  */
 void Graphics_view_zoom::set_modifiers(Qt::KeyboardModifiers modifiers) {
@@ -84,7 +102,8 @@ void Graphics_view_zoom::set_modifiers(Qt::KeyboardModifiers modifiers) {
 }
 
 /*!
- * \brief Graphics_view_zoom::set_zoom_factor_base
+ * \fn Graphics_view_zoom::set_zoom_factor_base
+ * \brief This function sets _zoom_factor_base to value.
  * \param value
  */
 void Graphics_view_zoom::set_zoom_factor_base(double value) {
@@ -92,12 +111,13 @@ void Graphics_view_zoom::set_zoom_factor_base(double value) {
 }
 
 /*!
- * \brief Graphics_view_zoom::eventFilter
+ * \fn Graphics_view_zoom::eventFilter
+ * \brief Waits for the zoom to occur
+ *        This is an event filter which checks for 2 events, mouse click and mouse moves, it can scale the image by the amount of movement detected
  * \param object
  * \param event
- * Waits for the zoom to occur
- * This is an event filter which checks for 2 events, mouse click and mouse moves, it can scale the image by the amount of movement detected
- * \return true
+ *
+ * \return true, false
  * \sa keyboardModifiers
 */
 bool Graphics_view_zoom::eventFilter(QObject *object, QEvent *event)
