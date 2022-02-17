@@ -5581,7 +5581,7 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     QCheckBox *cb = new QCheckBox("Make changes to all pages");
     //dialog.setWindowTitle("Check Formatting");
     //QAbstractButton *escButton = messageBox.addButton(tr("Esc"), QMessageBox::ActionRole);
-    //QAbstractButton *previewButton = messageBox.addButton(tr("Preview"), QMessageBox::ActionRole);   
+    QAbstractButton *previewButton = messageBox.addButton(tr("Preview"), QMessageBox::ActionRole);
     QAbstractButton *replaceButton = messageBox.addButton(tr("Yes"), QMessageBox::ActionRole);
     QAbstractButton *cancelButton = messageBox.addButton(tr("No"), QMessageBox::RejectRole);
 
@@ -5590,16 +5590,26 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
                 + "\n\nClick \"Yes\" to save the changes and replace the word in the unedited pages."
                 + "\nClick \"No\" to save the changes and not replace the word in the unedited page.";
 
+    QMap <QString, QString> obj;
+    obj[old_word] = new_word;
+    QVector<int> allPages;
 
+    if(cb->checkState() == Qt::Checked){
+        chk=1;
+        allPages.push_back(1);
+    }
+    else{
+        allPages.push_back(0);
+    }
 
+    previewButton->disconnect();
+    connect(previewButton,&QAbstractButton::clicked, this,[=](){
+        globalReplacePreviewfn(obj,allPages);
+    } );
 
     messageBox.setWindowTitle("Global Replace");
     messageBox.setText(msg);
     messageBox.exec();
-
-    if(cb->checkState() == Qt::Checked){
-        chk=1;
-    }
 
     if (messageBox.clickedButton() == replaceButton)
         return true;
