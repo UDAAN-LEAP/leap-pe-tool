@@ -28,7 +28,7 @@ public:
     {
         if (globalReplacePreview->objectName().isEmpty())
             globalReplacePreview->setObjectName(QString::fromUtf8("globalReplacePreview"));
-        globalReplacePreview->resize(669, 509);
+        globalReplacePreview->resize(879, 591);
         globalReplacePreview->setStyleSheet(QString::fromUtf8("QDialog{background-color: rgb(32, 33, 72);}\n"
 "QScrollBar:vertical { \n"
 "                                                border: none;\n"

@@ -23,6 +23,7 @@
 #include <fstream>
 #include <vector>
 #include <utility>
+#include <regex>
 #include "crashlog.h"
 #include "ProjectHierarchyWindow.h"
 #include "3rdParty/RapidXML/rapidxml.hpp"
@@ -5953,8 +5954,9 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
                     lineindex++;
                 }
             }
+
             model->setHeaderData (0,Qt::Horizontal, QObject::tr ("Page"));
-            model->setHeaderData (1,Qt::Horizontal, QObject::tr ("Before Repalce"));
+            model->setHeaderData (1,Qt::Horizontal, QObject::tr ("Before Replace"));
             model->setHeaderData (2,Qt::Horizontal, QObject::tr ("After Replace"));
       }
   globalReplacePreview gp(this, model);

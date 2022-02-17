@@ -22,7 +22,12 @@ globalReplacePreview::globalReplacePreview(QWidget *parent,QStandardItemModel *m
     setWindowTitle("Preview of word replacement");
     ui->tableView->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->tableView->setModel(model);
+    ui->tableView->horizontalHeader()->setMaximumSectionSize(600);
+    ui->tableView->setWordWrap(true);
     ui->tableView->resizeColumnsToContents();
+    ui->tableView->resizeRowsToContents();
+
+
 }
 
 globalReplacePreview::~globalReplacePreview()
