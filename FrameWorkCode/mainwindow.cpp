@@ -1354,7 +1354,8 @@ void MainWindow::on_actionSave_triggered()
         spinner->exec();
 
         SaveFile_GUI_Postprocessing(); // GUI Postprocessing
-        QtConcurrent::run(this, &MainWindow::writeSettings);;
+
+        writeSettings();
     }
     // Run Global Replace
 

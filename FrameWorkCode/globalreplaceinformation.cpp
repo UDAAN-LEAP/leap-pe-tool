@@ -2,6 +2,18 @@
 #include "ui_globalreplaceinformation.h"
 #include <qtablewidget.h>
 #include "crashlog.h"
+/*!
+ * \fn globalReplaceInformation::globalReplaceInformation()
+ * This function is used to initialize dialog box for Global Replace Information
+ *
+ * Global Replace is a feature in our tool which we invoke after a user has changed a word and saved the file,
+ * this feature allows the change made to be applied globally i.e in all pages of the project.
+ *
+ * When users are using this feature, initially they may not be aware of the terminology.
+ *
+ * Thus when they click on the 𝒊 symbol they can see what each button does, thus better equipped to use the feature.
+ *
+ */
 globalReplaceInformation::globalReplaceInformation(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::globalReplaceInformation)
@@ -14,6 +26,10 @@ globalReplaceInformation::globalReplaceInformation(QWidget *parent) :
     ui->tableWidget->resizeRowsToContents();
  }
 
+
+/*!
+ * \fn globalReplaceInformation::~globalReplaceInformation()
+ */
 globalReplaceInformation::~globalReplaceInformation()
 {
     delete ui;

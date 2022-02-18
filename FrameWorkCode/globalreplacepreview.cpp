@@ -30,6 +30,10 @@ globalReplacePreview::globalReplacePreview(QWidget *parent,QStandardItemModel *m
 
 }
 
+/*!
+ * \fn globalReplacePreview::~globalReplacePreview()
+ */
+
 globalReplacePreview::~globalReplacePreview()
 {
     delete ui;
