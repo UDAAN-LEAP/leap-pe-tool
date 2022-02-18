@@ -15,7 +15,7 @@ public:
     explicit LoadingSpinner(QWidget *parent = nullptr);
     ~LoadingSpinner();
 
-    void SetSave();
+    void SetMessage(QString head, QString body);
 
 private:
 

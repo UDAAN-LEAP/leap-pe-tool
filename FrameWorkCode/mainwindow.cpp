@@ -1334,7 +1334,7 @@ void MainWindow::on_actionSave_triggered()
         thread->start();
 
         spinner = new LoadingSpinner(this);
-        spinner->SetSave();
+        spinner->SetMessage("Saving...", "Saving File");
         spinner->setModal(false);
         spinner->exec();
 
@@ -2081,7 +2081,7 @@ void MainWindow::on_actionLoadData_triggered()
         if (LoadDataFlag)
         {
             LoadingSpinner *spinner = new LoadingSpinner(this);
-            spinner->setWindowTitle("Loading Data");
+            spinner->SetMessage("Loading Data...", "Loading...");
             spinner->setModal(false);
             QtConcurrent::run(this,&MainWindow::load_data);
             connect(this, &MainWindow::closeSignal, spinner, &LoadingSpinner::close);

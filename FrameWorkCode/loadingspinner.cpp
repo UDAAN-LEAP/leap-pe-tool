@@ -21,11 +21,13 @@ LoadingSpinner::LoadingSpinner(QWidget *parent) :
 }
 
 
-void LoadingSpinner::SetSave(){
-    ui->label_2->setText("Saving...");
-    this->setWindowTitle("Saving File");
+void LoadingSpinner::SetMessage(QString head, QString body){
+    ui->label_2->setText(body);
+    this->setWindowTitle(head);
 
 }
+
+
 
 LoadingSpinner::~LoadingSpinner()
 {

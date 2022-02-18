@@ -817,3 +817,102 @@ Date: 17 Feb 2022 @ 23:43:55
 Username:aman
 
 Application Log:
+
+OpenOCRCorrect Application Log
+Date: 18 Feb 2022 @ 14:13:41
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: QMap(("AIML-all_0001-002.html", 212)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("AIML-all_0001-002.html", 212)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "अभिज्ञान =>अभिज्ञा " 
+ (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 183 (mainwindow.cpp)
+Debug: 183 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: "AIML-all_0001-003.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/sujay/Downloads/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html"  to file. 
+ (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 18 Feb 2022 @ 14:15:45
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: QMap(("AIML-all_0001-002.html", 212)("AIML-all_0001-003.html", 183)) (mainwindow.cpp)
+Debug: pos1 212 (mainwindow.cpp)
+Debug: QMap(("AIML-all_0001-002.html", 212)("AIML-all_0001-003.html", 183)) (mainwindow.cpp)
+Debug: pos1 212 (mainwindow.cpp)
+Debug: QMap(("AIML-all_0001-002.html", 212)("AIML-all_0001-003.html", 183)) (mainwindow.cpp)
+Debug: pos1 183 (mainwindow.cpp)
+Debug: QMap(("AIML-all_0001-002.html", 212)("AIML-all_0001-003.html", 183)) (mainwindow.cpp)
+Debug: pos1 183 (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 127 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: "AIML-all_0001-003.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 125 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: "AIML-all_0001-003.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "जाते =>जात " 
+ (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 123 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: "AIML-all_0001-003.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "अधिगम =>अधिगमs " 
+ (mainwindow.cpp)
+Debug: "जात =>जाते " 
+ (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 19 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "AIML-all_0001-003.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "अधिगमs =>अधिगम " 
+ (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 18 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: "AIML-all_0001-003.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: QMap(("AIML-all_0001-002.html", 212)("AIML-all_0001-003.html", 18)) (mainwindow.cpp)
+Debug: pos1 212 (mainwindow.cpp)
+Debug: QMap(("AIML-all_0001-002.html", 212)("AIML-all_0001-003.html", 18)) (mainwindow.cpp)
+Debug: pos1 212 (mainwindow.cpp)
+Debug: QMap(("AIML-all_0001-002.html", 212)("AIML-all_0001-003.html", 18)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("AIML-all_0001-002.html", 212)("AIML-all_0001-003.html", 18)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("AIML-all_0001-002.html", 212)("AIML-all_0001-003.html", 18)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("AIML-all_0001-002.html", 212)("AIML-all_0001-003.html", 18)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("AIML-all_0001-002.html", 212)("AIML-all_0001-003.html", 18)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("AIML-all_0001-002.html", 212)("AIML-all_0001-003.html", 18)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
