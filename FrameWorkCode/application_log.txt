@@ -916,3 +916,9 @@ Debug: QMap(("AIML-all_0001-002.html", 212)("AIML-all_0001-003.html", 18)) (main
 Debug: pos1 0 (mainwindow.cpp)
 Debug: QMap(("AIML-all_0001-002.html", 212)("AIML-all_0001-003.html", 18)) (mainwindow.cpp)
 Debug: pos1 0 (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 18 Feb 2022 @ 14:34:06
+Username:sujay
+
+Application Log:

@@ -29,7 +29,7 @@ Graphics_view_zoom::Graphics_view_zoom(QGraphicsView* view, QGraphicsScene *scen
 
 /*!
  * \fn Graphics_view_zoom::gentle_zoom
- * \brief This function calculates the current zoom level and previous zoom levels and restrits
+ * \brief This function calculates the current zoom level and previous zoom levels and restricts
  *        the zoom from 0 to max level only.
  * \param factor
  */

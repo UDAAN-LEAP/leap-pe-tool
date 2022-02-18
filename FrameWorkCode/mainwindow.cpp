@@ -1308,7 +1308,22 @@ void MainWindow::SaveFile_GUI_Postprocessing()
 /*!
  * \fn MainWindow::on_actionSave_triggered()
  * \brief This function will save any changes made in the current file.
- * \sa SaveTimeLog(), DisplayTimeLog()
+ *
+ * In this function we first do the preprocessing needed for the save to happen.
+ *
+ * Then we run the function SaveFile_Backend() which will perform the actual saving and commiting of files
+ * in a separate worker thread. We synchronise this with the loading window as well.
+ *
+ * We call doSaveBackend() of worker class which calls the SaveFile_Backend() function and emits the signal when
+ * done. This signal is needed to indicate that the saving is complete and the saving window can be closed.
+ *
+ * We quit the thread once the thread is finished and we also deallocate the loading window from memory
+ *
+ * We then perform SaveFile_GUI_PostProcessing() and also call the WriteSettings() function
+ * (refer functions for more details)
+ *
+ *
+ * \sa SaveFile_GUI_Preprocessing(), SaveFile_Backend(), SaveFile_GUI_Postprocessing(), writeSettings()
 */
 
 void MainWindow::on_actionSave_triggered()

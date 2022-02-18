@@ -15,7 +15,7 @@
 * \fn myMessageHanddler
 * \brief Checks the type of the QT output message as either debug, info, warning, critical or fatal and accordingly
 *        prints it in the console. Additionally it also prints it to the file FramWorkCode/application_log.txt.
-*        This function is called using qMessageHandler from different class constructors.
+*        This function is called using qMessageHandler() from different class constructors in our project.
 *
 * \sa fprintf(), QFile::open(), flush(), close()
 */
