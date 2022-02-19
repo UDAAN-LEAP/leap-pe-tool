@@ -922,3 +922,10 @@ Date: 18 Feb 2022 @ 14:34:06
 Username:sujay
 
 Application Log:
+
+OpenOCRCorrect Application Log
+Date: 19 Feb 2022 @ 14:19:36
+Username:aman
+
+Application Log:
+Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
