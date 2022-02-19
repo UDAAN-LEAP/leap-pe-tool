@@ -1,6 +1,18 @@
+/*!
+\class AverageAccuracies
+\brief This class provides functionality to calculate the avearage accuracies of correctors
+       and verifiers made changes in the text respective text files.
+*/
 #include "averageaccuracies.h"
 #include "ui_averageaccuracies.h"
 #include "crashlog.h"
+
+
+/*!
+ * \fn AverageAccuracies::AverageAccuracies
+ * \brief This constructer opens the file changed in text browser and compares each and every line and then give output of avearage accuracy in the toolbar.
+ * \param csvfilepath , avgwordacc , avgcharacc , avgworderrors, avgcharerrors, parent
+ */
 AverageAccuracies::AverageAccuracies(QString csvfilepath,float avgwordacc, float avgcharacc, int avgworderrors, int avgcharerrors, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AverageAccuracies)
