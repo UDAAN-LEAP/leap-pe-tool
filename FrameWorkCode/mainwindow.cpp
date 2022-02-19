@@ -3959,7 +3959,7 @@ void MainWindow::on_actionInsert_Horizontal_Line_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
         return;
-    curr_browser->insertHtml("<hr>");
+    curr_browser->insertHtml("</span></p><hr /><p><span>");
 }
 
 /*!
