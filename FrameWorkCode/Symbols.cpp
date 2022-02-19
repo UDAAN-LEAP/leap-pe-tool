@@ -39,13 +39,13 @@ SymbolsView::SymbolsView(QWidget *parent) : QDialog(parent, Qt::WindowCloseButto
 𝛣 𝛤 𝛥 𝛦 𝛧 𝛨 𝛩 𝛪 𝛫 𝛬 𝛭 𝛮 𝛯 𝛰 𝛱 𝛲 𝛳 𝛴
 𝛵 𝛶 𝛷 𝛸 𝛹 𝛺 𝛻 𝛼 𝛽 𝛾 𝛿 𝜀 𝜁 𝜂 𝜃 𝜄 𝜅 𝜆 𝜇 𝜈
 𝜉 𝜊 𝜋 𝜌 𝜍 𝜎 𝜏 𝜐 𝜑 𝜒 𝜓 𝜔 𝜕 𝜖 𝜗 𝜘 𝜙 𝜚 𝜛
-℉ ℃ ⊗ ⊖ ∀ ∯ ∮ ∰                
+℉ ℃ ⊗ ⊖ ∀ ∯ ∮ ∰
 )"
 );
     ui->SpecialCharacters->setText(
-    R"(¶  ¦  Ȝ  ȝ  —  –  ‑  °  ·  † ‡ §)"
+    R"(¶  ¦  Ȝ  ȝ  —  –  ‑  °  ·  † ‡ § ऽ) ❀ ✿ ✽ ꕥ 💮"
 );
-    ui->Diacritics->setText(
+
     R"(A
 Ạ ạ   Ȧ ȧ   Ä ä   Ȁ ȁ   Ā ā   Â â   Ǎ ǎ   Ã ã    
 Å å   Ḁ ḁ   Ăă   Ȃ ȃ   À à   A̲ a̲   Ặ ặ   Ả ả   
