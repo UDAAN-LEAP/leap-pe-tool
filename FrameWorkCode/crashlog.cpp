@@ -10,6 +10,15 @@
 #include <string>
 #include <cstring>
 
+
+/*! \namespace crashlog.cpp:
+ *
+ *  This is the crashlog module. As the name suggests we write debug statements in the project and whatever warnings
+ *  QT Framework gives are logged by this class and it is written to application_log.txt file in the software directory.
+ *
+ *  If the tool crashes users can share the report with us.
+ */
+
 /*!
 * \namespace crashlog
 * \fn myMessageHanddler
@@ -22,10 +31,20 @@
 namespace crashlog {
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString & msg)
 {
+       //! Store log in a 8 bit format
+
        QByteArray localMsg = msg.toLocal8Bit();
+
+       //! *file and *function are used to store the file and function where we debug the code from so it is easier
+       //! to trace the log message
+
        const char *file = context.file ? context.file : "";
        const char *function = context.function ? context.function : "";
        QString output;
+
+       /*!
+        * We check the type of message and we format it accordingly and we use switch case to achieve this
+        */
 
        switch (type) {
         case QtDebugMsg:
