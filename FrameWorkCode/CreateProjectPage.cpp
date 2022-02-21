@@ -3,6 +3,7 @@
 #include <QHBoxLayout>
 #include <QFileDialog>
 #include <QAction>
+
 CreateProjectPage::CreateProjectPage(QWidget *parent)
 	: QWizardPage(parent)
 {

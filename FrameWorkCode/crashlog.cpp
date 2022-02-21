@@ -21,7 +21,7 @@
 
 /*!
 * \namespace crashlog
-* \fn myMessageHanddler
+* \fn myMessageHandler
 * \brief Checks the type of the QT output message as either debug, info, warning, critical or fatal and accordingly
 *        prints it in the console. Additionally it also prints it to the file FramWorkCode/application_log.txt.
 *        This function is called using qMessageHandler() from different class constructors in our project.
@@ -63,6 +63,10 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const Q
            fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
            break;
          }
+
+
+       /*! Now we peform saving the messages into a log text file */
+
        //create / open log file (FrameWorkCode/application_log.txt)
        QFile outFile(QString::fromStdString(qApp->applicationDirPath().toStdString())+"/application_log.txt");
        outFile.open(QIODevice::ReadWrite | QIODevice::Append);

@@ -616,7 +616,8 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
 }
 
 /*!
- * \brief Project::set_corrector
+ * \fn Project::set_corrector
+ * \brief Sets the project stage as corrector &
  */
 void Project::set_corrector(){
     QString id=user_id;
@@ -627,7 +628,8 @@ void Project::set_corrector(){
 }
 
 /*!
- * \brief Project::set_verifier
+ * \fn Project::set_verifier
+ * \brief Sets the project stage as verifier
  */
 void Project::set_verifier(){
     QString id=user_id;
