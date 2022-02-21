@@ -7944,8 +7944,12 @@ void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
 void MainWindow::writeSettings()
 {
     int pos = curr_browser->textCursor().position();
-    //qDebug()<<pos;
-    QString filename = gDirTwoLevelUp + "/cursor.txt";
+    QString f = gDirTwoLevelUp + "/cursor.txt";
+    if(QFile(f).exists())
+    {
+        QFile::remove(f);
+    }
+    QString filename = gDirTwoLevelUp + "/.cursor.txt";
       QFile myFile (filename);
       myFile.open(QIODevice::ReadWrite);
       QDataStream in (&myFile);
@@ -7973,7 +7977,7 @@ void MainWindow::readSettings()
 {
     int pos1;
 
-    QString filename = gDirTwoLevelUp + "/cursor.txt";
+    QString filename = gDirTwoLevelUp + "/.cursor.txt";
         QFile myFile (filename);
         myFile.open(QIODevice::ReadOnly);
         QMap<QString,int> map;

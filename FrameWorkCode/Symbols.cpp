@@ -5,13 +5,21 @@
 #include "ui_Symbols.h"
 
 /*!
- * \brief SymbolsView::symbolsView
+ * \class SymbolsView
+ * \brief This class will enable users to access special symbols in sanskrit, mathematics and the like for
+ *        adding into the pages while correcting/verifying wherever necessary. User has to simply open the
+ *        symbol tab 𝛺 in the tool and a window will open showing following tabs :
+ *
+ *        1. Mathematical Symbols
+ *        2. Special Chatacters
+ *        3. Diacritics(marks placed above or below of letters)
+ *
  */
 SymbolsView *SymbolsView::symbolsView = 0;
 
 /*!
- * \brief SymbolsView::SymbolsView
- * \param parent
+ * \fn SymbolsView::SymbolsView
+ * \brief sets the text for above 3 tabs and sets current tab as Diacritics
  */
 SymbolsView::SymbolsView(QWidget *parent) : QDialog(parent, Qt::WindowCloseButtonHint), ui(new Ui::SymbolsView)
 {
@@ -42,106 +50,109 @@ SymbolsView::SymbolsView(QWidget *parent) : QDialog(parent, Qt::WindowCloseButto
 ℉ ℃ ⊗ ⊖ ∀ ∯ ∮ ∰
 )"
 );
+
+
     ui->SpecialCharacters->setText(
-    R"(¶  ¦  Ȝ  ȝ  —  –  ‑  °  ·  † ‡ § ऽ) ❀ ✿ ✽ ꕥ 💮"
-);
-
-    R"(A
-Ạ ạ   Ȧ ȧ   Ä ä   Ȁ ȁ   Ā ā   Â â   Ǎ ǎ   Ã ã    
-Å å   Ḁ ḁ   Ăă   Ȃ ȃ   À à   A̲ a̲   Ặ ặ   Ả ả   
-Ǎ ǎ   Æ ӕ
-
-B
-β
-
-C
-Ċ ċ   C̈ c̈   Ć ć   Ĉ ĉ   Č č   Ḉ ḉ   Ƈ ƈ  Ç ç
-
-D
-Ḋ ḋ   Ḍ ḍ   Ḏ ḏ   Ď ď   Ḑ ḑ    Ḓ ḓ   Ɗ ɗ   Ð đ
-
-E
-Ė ė   Ë ë   É é   È è   Ê ê   Ě ě   Ẽ ẽ   Ĕ ĕ   
-Ế ế   Ē ē   Ẻ ẻ   Ȅ ȅ   Ẹ ẹ   Ệ ệ   Ḙ ḙ   Ḛ ḛ      
-E̋ e̋
-
-F
-Ḟ ḟ   Ƒ ƒ
-
-G
-Ġ ġ   Ḡ ḡ   Ǵ ǵ   Ĝ ĝ   Ǧ ǧ   Ğ ğ   Ǥ ǥ   Ģ ģ   Ɠ ɠ
-
-H
-Ḣ ḣ   Ḧ ḧ   Ĥ ĥ   Ȟ ȟ   Ħ ħ   Ḩ ḩ    Ⱨ ⱨ   ẖ ẖ   
-Ḥ ḥ   Ḫ ḫ
-
-I
-Í í   Ì ì    i̇́      i̇̀     i̇̃   Ï ï   Î î   Ĩ ĩ   
-Ĭ ĭ   Ǐ ǐ   Ī ī   Ỉ ỉ   Ȉ ȉ   I̋ i̋   Ȋ ȋ   Ị ị   
-ᶖ   İ i
-
-J
-Ĵ ĵ    ǰ    Ɉ ɉ    J̃ j̇̃
-
-K
-Ḱ ḱ   Ǩ ǩ   Ḳ ḳ   Ƙ ƙ   Ḵ ḵ   Ķ ķ   ᶄ   Ⱪ ⱪ
-
-L
-Ĺ ĺ   Ľ ľ   Ļ ļ   Ḷ ḷ   Ḹ ḹ   L̃ l̃   Ḽ ḽ   Ḻ ḻ 
-
-M
-Ṁ ṁ   Ṃ ṃ   Ḿ ḿ   M̋ m̋   M̃ m̃    ᵯ   ᶆ
-
-N
-Ṅṅ   Ṇṇ Ńń   Ǹǹ   Ňň   Ññ   Ņņ    Ṋṋ   Ṉṉ   N̈n̈   Ɲɲ
-
-O
-Ó ó   Ò ò   Ȯ ȯ   Ö ö   O͘ o͘   Ô ô   Ǒ ǒ   Ŏ ŏ   
-Ō ō   Ő ő   Õ õ   Ǫ ǫ   Ỏ ỏ   Ȍ ȍ   Ȏ ȏ  Ọ ọ
-
-P
-Ṕ ṕ   Ṗ ṗ   Ᵽ ᵽ   Ƥ ƥ   P̃ p̃   ᵱ   ᶈ
-
-Q
-ʠ   Ɋ   ɋ   q̃
-
-R
-Ŕ ŕ   Ɍ ɍ   Ř ř   Ŗ ŗ   Ṙ ṙ   Ȑ ȑ   Ȓ ȓ   Ṛ ṛ   
-Ṝ ṝ   Ṟ ṟ   Ɽ ɽ   R̃ r̃   ᶉ
-
-S
-Ś ś   Ṡ ṡ   Ṣ ṣ   Ṩ ṩ   S̈ s̈   ȿ
-
-T
-Ť ť   Ṫ ṫ   Ţ ţ   Ṭ ṭ   Ț ț   Ṱ ṱ   Ṯ ṯ   T̈ ẗ
-
-U
-Ú ú   Ù ù   Ũ ũ   Ụ ụ   Ü ü   Ṳ ṳ   Ū ū   Û û   
-Ṷ ṷ   Ǔ ǔ   Ű ű   Ŭ ŭ   Ȗ ȗ   Ů ů   Ȕ ȕ
-
-V
-Ṽ ṽ   Ṿ ṿ   Ʋ ʋ   ᶌ
-
-W
-Ẃ ẃ   Ẁ ẁ   Ŵ ŵ   Ẅ ẅ   Ẇ ẇ   Ẉ ẉ   ẘ
-
-X
-Ẍ ẍ   Ẋ ẋ   ᶍ
-
-Y
-Ý ý   Ỳ ỳ   Ŷ ŷ   Ÿ ÿ   Ỹ ỹ   Ẏ ẏ   Ỵ ỵ   Ỷ ỷ   
-Ȳ ȳ
-
-Z
-Ź ź   Ẑ ẑ   Ž ž   Ż ż   Ẓ ẓ   Ẕ ẕ   Ⱬ ⱬ)"
-);
+    "(¶  ¦  Ȝ  ȝ  —  –  ‑  °  ·  † ‡ § ऽ ❀ ✿ ✽ ꕥ 💮 ");
     setWindowTitle("Special Symbols");
+    ui->Diacritics->setText(
+                R"(A
+            Ạ ạ   Ȧ ȧ   Ä ä   Ȁ ȁ   Ā ā   Â â   Ǎ ǎ   Ã ã
+            Å å   Ḁ ḁ   Ăă   Ȃ ȃ   À à   A̲ a̲   Ặ ặ   Ả ả
+            Ǎ ǎ   Æ ӕ
+
+            B
+            β
+
+            C
+            Ċ ċ   C̈ c̈   Ć ć   Ĉ ĉ   Č č   Ḉ ḉ   Ƈ ƈ  Ç ç
+
+            D
+            Ḋ ḋ   Ḍ ḍ   Ḏ ḏ   Ď ď   Ḑ ḑ    Ḓ ḓ   Ɗ ɗ   Ð đ
+
+            E
+            Ė ė   Ë ë   É é   È è   Ê ê   Ě ě   Ẽ ẽ   Ĕ ĕ
+            Ế ế   Ē ē   Ẻ ẻ   Ȅ ȅ   Ẹ ẹ   Ệ ệ   Ḙ ḙ   Ḛ ḛ
+            E̋ e̋
+
+            F
+            Ḟ ḟ   Ƒ ƒ
+
+            G
+            Ġ ġ   Ḡ ḡ   Ǵ ǵ   Ĝ ĝ   Ǧ ǧ   Ğ ğ   Ǥ ǥ   Ģ ģ   Ɠ ɠ
+
+            H
+            Ḣ ḣ   Ḧ ḧ   Ĥ ĥ   Ȟ ȟ   Ħ ħ   Ḩ ḩ    Ⱨ ⱨ   ẖ ẖ
+            Ḥ ḥ   Ḫ ḫ
+
+            I
+            Í í   Ì ì    i̇́      i̇̀     i̇̃   Ï ï   Î î   Ĩ ĩ
+            Ĭ ĭ   Ǐ ǐ   Ī ī   Ỉ ỉ   Ȉ ȉ   I̋ i̋   Ȋ ȋ   Ị ị
+            ᶖ   İ i
+
+            J
+            Ĵ ĵ    ǰ    Ɉ ɉ    J̃ j̇̃
+
+            K
+            Ḱ ḱ   Ǩ ǩ   Ḳ ḳ   Ƙ ƙ   Ḵ ḵ   Ķ ķ   ᶄ   Ⱪ ⱪ
+
+            L
+            Ĺ ĺ   Ľ ľ   Ļ ļ   Ḷ ḷ   Ḹ ḹ   L̃ l̃   Ḽ ḽ   Ḻ ḻ
+
+            M
+            Ṁ ṁ   Ṃ ṃ   Ḿ ḿ   M̋ m̋   M̃ m̃    ᵯ   ᶆ
+
+            N
+            Ṅṅ   Ṇṇ Ńń   Ǹǹ   Ňň   Ññ   Ņņ    Ṋṋ   Ṉṉ   N̈n̈   Ɲɲ
+
+            O
+            Ó ó   Ò ò   Ȯ ȯ   Ö ö   O͘ o͘   Ô ô   Ǒ ǒ   Ŏ ŏ
+            Ō ō   Ő ő   Õ õ   Ǫ ǫ   Ỏ ỏ   Ȍ ȍ   Ȏ ȏ  Ọ ọ
+
+            P
+            Ṕ ṕ   Ṗ ṗ   Ᵽ ᵽ   Ƥ ƥ   P̃ p̃   ᵱ   ᶈ
+
+            Q
+            ʠ   Ɋ   ɋ   q̃
+
+            R
+            Ŕ ŕ   Ɍ ɍ   Ř ř   Ŗ ŗ   Ṙ ṙ   Ȑ ȑ   Ȓ ȓ   Ṛ ṛ
+            Ṝ ṝ   Ṟ ṟ   Ɽ ɽ   R̃ r̃   ᶉ
+
+            S
+            Ś ś   Ṡ ṡ   Ṣ ṣ   Ṩ ṩ   S̈ s̈   ȿ
+
+            T
+            Ť ť   Ṫ ṫ   Ţ ţ   Ṭ ṭ   Ț ț   Ṱ ṱ   Ṯ ṯ   T̈ ẗ
+
+            U
+            Ú ú   Ù ù   Ũ ũ   Ụ ụ   Ü ü   Ṳ ṳ   Ū ū   Û û
+            Ṷ ṷ   Ǔ ǔ   Ű ű   Ŭ ŭ   Ȗ ȗ   Ů ů   Ȕ ȕ
+
+            V
+            Ṽ ṽ   Ṿ ṿ   Ʋ ʋ   ᶌ
+
+            W
+            Ẃ ẃ   Ẁ ẁ   Ŵ ŵ   Ẅ ẅ   Ẇ ẇ   Ẉ ẉ   ẘ
+
+            X
+            Ẍ ẍ   Ẋ ẋ   ᶍ
+
+            Y
+            Ý ý   Ỳ ỳ   Ŷ ŷ   Ÿ ÿ   Ỹ ỹ   Ẏ ẏ   Ỵ ỵ   Ỷ ỷ
+            Ȳ ȳ
+
+            Z
+            Ź ź   Ẑ ẑ   Ž ž   Ż ż   Ẓ ẓ   Ẕ ẕ   Ⱬ ⱬ)"
+            );
     currentTab = ui->Diacritics;
     bool b = connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 }
 /*!
- * \brief SymbolsView::tabChanged
- * \param idx
+ * \fn SymbolsView::tabChanged
+ * \brief Function for when tab is changed. Takes tab index (int idx) as a param
+ *        Sets the tab to the selected tab
+ * \param int idx
  */
 void SymbolsView::tabChanged(int idx)
  {
@@ -161,7 +172,10 @@ SymbolsView::~SymbolsView()
 }
 
 /*!
- * \brief SymbolsView::on_copyButton_clicked
+ * \fn SymbolsView::on_copyButton_clicked
+ *
+ * \brief copies the symbol(s) so that user can effortlessly paste to their page
+ *
  */
 void SymbolsView::on_copyButton_clicked()
 {
@@ -169,10 +183,9 @@ void SymbolsView::on_copyButton_clicked()
 }
 
 /*!
- * \brief SymbolsView::openSymbolTable
+ * \fn SymbolsView::openSymbolTable
+ * \brief Opens the symbol table whenever 𝛺 button is clicked on the tool menu
  * \param parent
- * \return
- * opens symbol table
  */
 SymbolsView* SymbolsView::openSymbolTable(QWidget *parent)
 {

@@ -1184,3 +1184,75 @@ Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/..
 Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
 Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
 Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 14:26:50
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/PCRayBook-Udaan/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/PCRayBook-Udaan/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/PCRayBook-Udaan/.cursor.txt"): device not open ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/PCRayBook-Udaan/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/PCRayBook-Udaan/.cursor.txt"): device not open ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/PCRayBook-Udaan/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "PCRayBook_0001-03.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/PCRayBook-Udaan/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "PCRayBook_0001-05.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 14:31:20
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/PCRayBook-Udaan/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/PCRayBook-Udaan/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "PCRayBook_0001-20.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/sujay/Downloads/PCRayBook-Udaan/CorrectorOutput/PCRayBook_0001-20.html"  to file. 
+ (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/PCRayBook-Udaan/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "PCRayBook_0001-36.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/sujay/Downloads/PCRayBook-Udaan/CorrectorOutput/PCRayBook_0001-36.html"  to file. 
+ (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/PCRayBook-Udaan/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "PCRayBook_0001-36.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/AIML-All-master/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/AIML-All-master/.cursor.txt"): device not open ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "AIML-all_0001-003.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 14:49:17
+Username:sujay
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 14:55:16
+Username:sujay
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 15:00:17
+Username:sujay
+
+Application Log:
