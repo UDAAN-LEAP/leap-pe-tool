@@ -929,3 +929,258 @@ Username:aman
 
 Application Log:
 Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 11:36:39
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 11:40:58
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 11:54:07
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 12:00:27
+Username:asr16
+
+Application Log:
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/Comments/Timelog.json"): device not open ()
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/cursor.txt"): device not open ()
+Debug: QMap() (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/cursor.txt"): device not open ()
+Debug: QMap() (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Architecture =>Architectural " 
+ (mainwindow.cpp)
+Debug: "trees =>plants " 
+ (mainwindow.cpp)
+Debug: No exist file  "/home/asr16/Downloads/en-hi/Dicts/CPair" (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 329 (mainwindow.cpp)
+Debug: 329 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: Before Size of leftCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  2 (globalreplacedialog.cpp)
+Debug: Size =  2 (globalreplacedialog.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html"  to file. 
+ (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Research =>Researcher " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 40 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 12:11:02
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: QMap(("p-1.html", 40)) (mainwindow.cpp)
+Debug: pos1 40 (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Researcher =>Research " 
+ (mainwindow.cpp)
+Debug: "International =>Internationally " 
+ (mainwindow.cpp)
+Debug: "Architectural =>Architecture " 
+ (mainwindow.cpp)
+Debug: "plants =>trees " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 81 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: Before Size of leftCheckbox Vector =  4 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  4 (globalreplacedialog.cpp)
+Debug: Size =  2 (globalreplacedialog.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 12:12:49
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: QMap(("p-1.html", 81)) (mainwindow.cpp)
+Debug: pos1 81 (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Research =>Researcher " 
+ (mainwindow.cpp)
+Debug: "Architecture =>Architectural " 
+ (mainwindow.cpp)
+Debug: "trees =>plants " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 333 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: Before Size of leftCheckbox Vector =  3 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  3 (globalreplacedialog.cpp)
+Debug: Size =  1 (globalreplacedialog.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 12:15:02
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 12:15:53
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: QMap(("p-1.html", 333)) (mainwindow.cpp)
+Debug: pos1 333 (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Researcher =>Research " 
+ (mainwindow.cpp)
+Debug: "Architectural =>Architecture " 
+ (mainwindow.cpp)
+Debug: "plants =>trees " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 329 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: Before Size of leftCheckbox Vector =  3 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  3 (globalreplacedialog.cpp)
+Debug: Size =  1 (globalreplacedialog.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Research =>Researcher " 
+ (mainwindow.cpp)
+Debug: "Architecture =>Architectural " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 196 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: uncheckedItemsListMap QMap(("Architecture", "Architectural ")("Research", "Researcher ")) (mainwindow.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 12:19:21
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 12:19:37
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: QMap(("p-1.html", 196)) (mainwindow.cpp)
+Debug: pos1 196 (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Researcher =>Research " 
+ (mainwindow.cpp)
+Debug: "research =>researcher " 
+ (mainwindow.cpp)
+Debug: "Architectural =>Architecture " 
+ (mainwindow.cpp)
+Debug: "trees =>plants " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: 332 (mainwindow.cpp)
+Debug: cursor.txt written ..  (mainwindow.cpp)
+Debug: Before Size of leftCheckbox Vector =  4 (globalreplacedialog.cpp)
+Debug: Before Size of rightCheckbox Vector =  4 (globalreplacedialog.cpp)
+Debug: Size =  2 (globalreplacedialog.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 12:22:12
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 21 Feb 2022 @ 12:33:53
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "Research =>Researcher " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Architecture =>Architectural " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Researcher =>Research " 
+ (mainwindow.cpp)
+Debug: "plants =>trees " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Research =>Researcher " 
+ (mainwindow.cpp)
+Debug: "house =>home " 
+ (mainwindow.cpp)
+Debug: "left =>right " 
+ (mainwindow.cpp)
+Debug: "many =>some " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)

@@ -35,10 +35,12 @@ private slots:
 public slots:
     void highlightChecked(QListWidgetItem* item);
     QMap <QString, QString> getFilteredGlobalReplacementMap();
+    QMap <QString, QString> uncheckedItemsList();
 
 private:
     Ui::GlobalReplaceDialog *ui;
     QMap <QString, QString> filteredGlobalReplacementMap;
+    QMap <QString, QString> uncheckedItemsListMap;
     QVector<QCheckBox *> replaceInAllFiles_Checkboxes; // Addresses of checkboxes on right side
     QVector<int> wordSelection_CheckboxesState; // State of checkboxes on left side
     QCheckBox *box;

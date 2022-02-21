@@ -116,6 +116,25 @@ void GlobalReplaceDialog::on_applyButton_clicked()
 //}
 
 /*!
+ * \brief GlobalReplaceDialog::uncheckedItemsList
+ * \param item
+ */
+QMap <QString, QString> GlobalReplaceDialog::uncheckedItemsList()
+{
+    QList<QListWidgetItem *> items = ui->listWidget->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard); //get all items
+
+    foreach (QListWidgetItem *item, items){
+    if(item->checkState() == Qt::Unchecked){
+        QRegExp sep("\\s* -> *");
+        QStringList string = item->text().split(sep);
+        this->uncheckedItemsListMap[string[0]] = string[1];
+       }
+   }
+    return this->uncheckedItemsListMap;
+}
+
+
+/*!
  * \fn "GlobalReplaceDialog::leftCheckBoxStateChanged"
  * \brief "This function is a SLOT which receives signal from listWidget when an item is selected"
  * \param "Address of QListWidgetItem is passed"
@@ -164,8 +183,8 @@ QVector<int> GlobalReplaceDialog::getStatesOfCheckboxes()
 {
     QVector<int> statesOfRightCheckboxes;
 
-    qDebug() << "Before Size of leftCheckbox Vector = " << wordSelection_CheckboxesState.size();
-    qDebug() << "Before Size of rightCheckbox Vector = " << replaceInAllFiles_Checkboxes.size();
+    //qDebug() << "Before Size of leftCheckbox Vector = " << wordSelection_CheckboxesState.size();
+    //qDebug() << "Before Size of rightCheckbox Vector = " << replaceInAllFiles_Checkboxes.size();
     for (int i = 0; i < wordSelection_CheckboxesState.size(); i++)
     {
         if (wordSelection_CheckboxesState.at(i) == 1) {
@@ -175,7 +194,7 @@ QVector<int> GlobalReplaceDialog::getStatesOfCheckboxes()
                 statesOfRightCheckboxes.push_back(0);
         }
     }
-    qDebug() << "Size = " << statesOfRightCheckboxes.size();
+    //qDebug() << "Size = " << statesOfRightCheckboxes.size();
     return statesOfRightCheckboxes;
 }
 

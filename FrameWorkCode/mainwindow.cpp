@@ -5630,7 +5630,36 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
 
     if (messageBox.clickedButton() == replaceButton)
         return true;
+    if (messageBox.clickedButton() == cancelButton){
+        QDir directory(gDirTwoLevelUp);
+        QString setName=directory.dirName();
+        QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
+        QFile csvFile(filename);
+        if(!csvFile.exists())
+        {
+            csvFile.open(QIODevice::ReadWrite | QIODevice::Append);
+            QTextStream output(&csvFile);
+            output.setCodec("UTF-8");
+            output << "Source Word,Target Word,Type of Replacement,Time of Replacement,Page Name,Set name";
+        }
+        else
+        {
+            csvFile.open(QIODevice::ReadWrite | QIODevice::Append);
+        }
+        QString sourceString = old_word;
+        QString replaceString = new_word;
+        QString typeOfReplacement = "No Replacement";
 
+        QDateTime current = QDateTime::currentDateTime();
+        QString time = current.toString();
+
+        QTextStream output(&csvFile);
+        output.setCodec("UTF-8");
+        //qDebug() << "csv Contents" << output.readAll();
+        output << "\n";
+        output<<sourceString<<","<<replaceString<<","<<typeOfReplacement<<","<<time<<","<<gCurrentPageName<<","<<setName;
+        csvFile.close();
+    }
     return false;
 
 }
@@ -5645,6 +5674,7 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
  */
 QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords, QVector<int> *replaceInAllPages){
     QMap <QString, QString> globalReplacementMap;
+    QMap<QString, QString> uncheckedItemsListMap;
     GlobalReplaceDialog grDialog(changedWords, this);
 
     QScreen *screen = QGuiApplication::primaryScreen();
@@ -5660,6 +5690,88 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
     {
         *replaceInAllPages = grDialog.getStatesOfCheckboxes();
         globalReplacementMap = grDialog.getFilteredGlobalReplacementMap();
+        uncheckedItemsListMap = grDialog.uncheckedItemsList();
+        if(uncheckedItemsListMap.values().length()>0)
+        {
+            QMap <QString, QString>::iterator grmIterator;
+
+            QDir directory(gDirTwoLevelUp);
+            QString setName=directory.dirName();
+            QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
+            QFile csvFile(filename);
+            if(!csvFile.exists())
+            {
+                csvFile.open(QIODevice::ReadWrite | QIODevice::Append);
+                QTextStream output(&csvFile);
+                output.setCodec("UTF-8");
+                output << "Source Word,Target Word,Type of Replacement,Time of Replacement,Page Name,Set name";
+            }
+
+            else
+            {
+                csvFile.open(QIODevice::ReadWrite | QIODevice::Append);
+            }
+
+            for (grmIterator = uncheckedItemsListMap.begin(); grmIterator != uncheckedItemsListMap.end(); ++grmIterator)
+            {
+                QString sourceString = grmIterator.key();
+                QString replaceString= grmIterator.value();
+                QString typeOfReplacement = "No Replacement";
+
+                QDateTime current = QDateTime::currentDateTime();
+                QString time = current.toString();
+
+                QTextStream output(&csvFile);
+                output.setCodec("UTF-8");
+                //qDebug() << "csv Contents" << output.readAll();
+                output << "\n";
+                output<<sourceString<<","<<replaceString<<","<<typeOfReplacement<<","<<time<<","<<gCurrentPageName<<","<<setName;
+            }
+            csvFile.close();
+        }
+    }
+    else{
+
+        uncheckedItemsListMap = grDialog.uncheckedItemsList();
+        //qDebug()<<"uncheckedItemsListMap"<<uncheckedItemsListMap;
+        if(uncheckedItemsListMap.values().length()>0)
+        {
+            QMap <QString, QString>::iterator grmIterator;
+
+            QDir directory(gDirTwoLevelUp);
+            QString setName=directory.dirName();
+            QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
+            QFile csvFile(filename);
+            if(!csvFile.exists())
+            {
+                csvFile.open(QIODevice::ReadWrite | QIODevice::Append);
+                QTextStream output(&csvFile);
+                output.setCodec("UTF-8");
+                output << "Source Word,Target Word,Type of Replacement,Time of Replacement,Page Name,Set name";
+            }
+
+            else
+            {
+                csvFile.open(QIODevice::ReadWrite | QIODevice::Append);
+            }
+
+            for (grmIterator = uncheckedItemsListMap.begin(); grmIterator != uncheckedItemsListMap.end(); ++grmIterator)
+            {
+                QString sourceString = grmIterator.key();
+                QString replaceString= grmIterator.value();
+                QString typeOfReplacement = "No Replacement";
+
+                QDateTime current = QDateTime::currentDateTime();
+                QString time = current.toString();
+
+                QTextStream output(&csvFile);
+                output.setCodec("UTF-8");
+                //qDebug() << "csv Contents" << output.readAll();
+                output << "\n";
+                output<<sourceString<<","<<replaceString<<","<<typeOfReplacement<<","<<time<<","<<gCurrentPageName<<","<<setName;
+            }
+            csvFile.close();
+        }
     }
     //qDebug()<<"globalReplacementMap"<<globalReplacementMap<<endl;
     return globalReplacementMap; 
@@ -7511,7 +7623,7 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
         QDir directory(gDirTwoLevelUp);
         QString setName=directory.dirName();
         QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
-        qDebug()<<filename;
+        //qDebug()<<filename;
         QFile csvFile(filename);
         if(!csvFile.exists())
         {
@@ -7530,7 +7642,7 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
                 //s1.append(line.split(',').first());
                 s1.append(line);
             }
-            qDebug()<<"S1"<<s1;
+            //qDebug()<<"S1"<<s1;
 
             csvFile.close();
             csvFile.open(QIODevice::WriteOnly);
@@ -7552,7 +7664,7 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
                 }
 
             }
-            qDebug()<<"S4"<<s4;
+            //qDebug()<<"S4"<<s4;
             for(int i=0;i<s1.length();i++)
             {
                 for(int j=0;j<s4.length();j++)
@@ -7563,7 +7675,7 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
                     }
                 }
             }
-            qDebug()<<"S1 Final"<<s1;
+            //qDebug()<<"S1 Final"<<s1;
 
             for(int i=0;i<s1.length();i++){
                 output<<s1[i];
@@ -7832,7 +7944,7 @@ void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
 void MainWindow::writeSettings()
 {
     int pos = curr_browser->textCursor().position();
-    qDebug()<<pos;
+    //qDebug()<<pos;
     QString filename = gDirTwoLevelUp + "/cursor.txt";
       QFile myFile (filename);
       myFile.open(QIODevice::ReadWrite);
@@ -7842,7 +7954,7 @@ void MainWindow::writeSettings()
       in >> curpos;
       if(curpos.find(gCurrentPageName)==curpos.end()){
             curpos.insert(gCurrentPageName,pos);
-            qDebug()<<curpos[gCurrentPageName];
+            //qDebug()<<curpos[gCurrentPageName];
         }
       else{
             curpos[gCurrentPageName]=pos;
@@ -7852,7 +7964,7 @@ void MainWindow::writeSettings()
       out.setVersion(QDataStream::Qt_5_3);
       out<<curpos;
       myFile.flush();
-      qDebug() << "cursor.txt written .. ";
+      //qDebug() << "cursor.txt written .. ";
       myFile.close();
 
 }
@@ -7868,9 +7980,9 @@ void MainWindow::readSettings()
         QDataStream in (&myFile);
         in.setVersion(QDataStream::Qt_5_3);
         in >> map;
-        qDebug()<<map;
+        //qDebug()<<map;
         pos1=map[gCurrentPageName];
-        qDebug()<<"pos1"<<pos1;
+        //qDebug()<<"pos1"<<pos1;
         myFile.close();
         curr_browser->setStyleSheet("QTextBrowser{selection-background-color: #ffa500; selection-color: #ffffff;}");
 
