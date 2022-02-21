@@ -1012,7 +1012,12 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 }
 
 /*!
- * \brief MainWindow::AddRecentProjects
+ * \fn MainWindow::AddRecentProjects
+ * \brief This function will allow user to open the last opened project.
+ *
+ * We use QSettings which allows for persistent storage and we store the project and we load the project
+ * if user selects the name of the project in recent project section.
+ *
  */
 void MainWindow::AddRecentProjects()
 {
@@ -7493,7 +7498,10 @@ void MainWindow::on_actionShortcut_Guide_triggered()
     dialog.setFixedSize(width, height);
     dialog.exec();
 }
-
+/*! \fn MainWindow::actionRecent_Project_clicked()
+ *  \brief Checks if user clicked on recent project and opens the project if user has clicked recent project
+ *  option.
+ */
 void MainWindow::actionRecent_Project_clicked()
 {
    isRecentProjclick = true;

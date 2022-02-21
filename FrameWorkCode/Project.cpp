@@ -35,10 +35,18 @@ void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 
 /*!
  * \fn Project::FindFile
- * \brief It searches for the passed file name and
- * returns the filename and its next consecutive file name from project.xml
+ * \brief This function searches for the passed file name and
+ * returns the filename and its next consecutive file name from project.xml.
+ *
+ * This is a recursive function wherein We keep traversing the child notes of the directory tree
+ * until we find the file. If the key(i.e the name of the child node file) matches the filename
+ * the search is over and we return, if there are not child node files/directories then also we return.
+ *
+ * At some point once the function gets to the end of the tree in case the file is not found till yet
+ * then there will be no children and thus it will return.
+ *
  * \param file
- * \param n
+ * \param QFile & file,pugi::xml_node  & n
  * \return FindFile(file, next)
  */
 pugi::xml_node Project::FindFile(QFile & file,pugi::xml_node  & n)
@@ -62,6 +70,7 @@ pugi::xml_node Project::FindFile(QFile & file,pugi::xml_node  & n)
 /*!
  * \fn Project::set_stage_verifier
  * \brief Updates the stage value in xml file to 'Verifier'
+ * \sa save_xml()
  */
 void Project::set_stage_verifier()
 {
@@ -71,7 +80,14 @@ void Project::set_stage_verifier()
 }
 
 /*!
- * \brief Project::set_stage
+ * \fn Project::set_stage
+ *
+ * \brief According to the pipeline once the project has been corrected it goes to verifier for further
+ * verification.
+ *
+ * As such we update the XML of the project (project.xml file) and set the stage of the project to indicate
+ * that it is in verification mode.
+ *
  * \param mRole
  */
 void Project::set_stage(QString mRole){
@@ -84,9 +100,13 @@ void Project::set_stage(QString mRole){
 /*!
  * \fn Project::enable_push
  * \brief Increments the version value by one if passed value is true
- * and sets stage value as corrector in xml file
+ * and sets stage value as corrector in xml file.
+ *
+ * We call this function to update the version of the project in the xml file.
+ *
  * \param boolean
- * \return true if version updated successfully
+ * \sa save_xml()
+ * \return
  */
 bool Project::enable_push(bool increment)
 {
@@ -102,8 +122,8 @@ bool Project::enable_push(bool increment)
 
 /*!
  * \fn Project::set_version
- * \brief Sets the passed value as version in xml file
- * \param ver
+ * \brief This function is to set version as passed in the parameters.
+ * \param int ver
  */
 void Project::set_version(int ver)
 {
@@ -113,8 +133,10 @@ void Project::set_version(int ver)
 }
 
 /*!
- * \brief Project::set_configuration
- * \param val
+ * \fn Project::set_configuration
+ * \brief We set the configuration of the project by passing the whole string of the configuration as a string
+ * We match the xml tags with that of the configuration and change the InnerXML accordingly.
+ * \param QString val
  */
 void Project::set_configuration(QString val)
 {
@@ -127,9 +149,8 @@ void Project::set_configuration(QString val)
 /*!
  * \fn Project::removeFile
  * \brief Removes the file name from project.xml and the hierarchial project tree view in ui window
- * \param idx
- * \param pFilter
- * \param pFile
+ *
+ * \param QModelIndex & idx,Filter & pFilter, QFile & pFile
  *
  * \sa FindFile()
  */
@@ -155,19 +176,34 @@ void Project::removeFile(QModelIndex & idx,Filter & pFilter, QFile & pFile)
 }
 
 /*!
- * \brief Project::process_node
- * \param pNode
- * \param parent
+ * \fn Project::process_node
+ * \brief Here we process the nodes of the xml file by recursive iteration. Refer inline comments for more info.
+ *
+ * \param pugi::xml_node * pNode, TreeItem * parent
  */
 void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
 {
+
     if (pNode) {
+
+
+        //! If the name of the node is "ItemGroup" then we get the child name and recursively traverse it
         std::string node_name = pNode->name();
         if (node_name == "ItemGroup")
         {
             pugi::xml_node p = pNode->first_child();
             process_node(&p, parent);
         }
+
+        /*! If the name of the node is "Filter" then we get the name of the filter, if this node has no child then
+         *  we set the setProjectOpen flag to false, wherein the project will not get opened even if we try to open it.
+         *
+         *  We push the filter into class variable mFilters and also create a new treeItem object with the
+         *  parent.
+         *
+         *  We then append the node to the parent as a child and we recursively traverse child nodes.
+         *
+         */
         else if (node_name == "Filter")
         {
             /*   Example
@@ -192,6 +228,14 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
             auto p = pNode->next_sibling();
             process_node(&p, parent);
         }
+
+        /*! If the name of the node is "File" then we do filter processing and scan through the files and add it
+         *  to the tree item.
+         *
+         *  We append the nodefile to the parent as a child and recursively traverse the children
+         *
+         */
+
         else if (node_name == "File")
         {
             /*
@@ -218,6 +262,10 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
             auto p = pNode->next_sibling();
             process_node(&p, parent);
         }
+        /*! If the name of the node is "Metadata" then we check if the stage is corrector or verifier. If none
+         *  of the condition holds then we set the flag setOpenProject to false to make the project unopenable.
+         *
+         */
         else if (node_name == "Metadata")
         {
             QString stage = pNode->child("Stage").child_value();
@@ -226,12 +274,13 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
         }
     }
     else {
-        setProjectOpen(false);
+        setProjectOpen(false); // otherwise we set project open to true
     }
 }
 
 /*!
- * \brief Project::process_xml
+ * \fn Project::process_xml
+ * \brief This function proecesses the xml file and creates a tree model.
  * \param pFile
  * Give XML file path and the content will be stored inside the class and processed by rapidxml
  */
@@ -270,15 +319,25 @@ void Project::process_xml(QFile & pFile)
     }
 }
 
+
+/*!
+ * \fn Project::GetDir()
+ * \brief returns the directory of the project when called.
+ */
+
 QDir Project::GetDir()
 {
     return mProjectDir;
 }
 
 /*!
- * \brief Project::addFile
- * \param f
- * \param pFile
+ * \fn Project::addFile
+ * \brief This function will add file to our project.
+ *
+ * The function first traverses the tree and when the appropriate branch is reached the node is added to the
+ * parent
+ *
+ * \param Filter &f,QFile & pFile
  */
 void Project::addFile(Filter &f,QFile & pFile)
 {
@@ -304,10 +363,9 @@ void Project::addFile(Filter &f,QFile & pFile)
 }
 
 /*!
- * \brief Project::AddTemp
- * \param filter
- * \param file
- * \param prefix
+ * \fn Project::AddTemp
+ * \brief Adds only text files and html files to the project tree view whenever project is opened.
+ * \param Filter * filter, QFile & file,QString prefix
  */
 void Project::AddTemp(Filter * filter, QFile & file,QString prefix) {
     QString name = filter->name();
@@ -333,8 +391,10 @@ void Project::AddTemp(Filter * filter, QFile & file,QString prefix) {
 }
 
 /*!
- * \brief Project::save_xml
+ * \fn Project::save_xml()
+ * \brief This function when called saves the xml changes to disk. We used standard c++ functions to achieve this.
  */
+
 void Project::save_xml()
 {
     try
@@ -357,7 +417,7 @@ void Project::save_xml()
 }
 
 /*!
- * \brief Project::getFile
+ * \fn Project::getFile
  * \param pFileName
  */
 void Project::getFile(const QString & pFileName)
@@ -365,7 +425,8 @@ void Project::getFile(const QString & pFileName)
 }
 
 /*!
- * \brief Project::getModel
+ * \fn Project::getModel
+ * \brief returns the whole tree model whenever the function is called
  * \return
  */
 TreeModel * Project::getModel()
@@ -374,12 +435,9 @@ TreeModel * Project::getModel()
 }
 
 /*!
- * \brief make_opts
- * \param bare
- * \param templ
- * \param shared
- * \param gitdir
- * \param dir
+ * \fn make_opts
+ * \brief Used to set Git options. Refer to git docs for more information
+ * \param bool bare, const char * templ, uint32_t shared,
  * \return
  */
 git_repository_init_options make_opts(bool bare, const char * templ,
@@ -415,7 +473,13 @@ git_repository_init_options make_opts(bool bare, const char * templ,
 }
 
 /*!
- * \brief create_initial_commit
+ * \fn create_initial_commit
+ * \brief This function is used to created the initial commit.
+ *
+ * We use lib git functions (a git library) to work with git and github.
+ *
+ * Check lib git library documentation for more info.
+ *
  * \param repo
  */
 void create_initial_commit(git_repository * repo) {
@@ -478,13 +542,20 @@ static int login_tries = 1;
 static bool is_cred_cached = false;
 
 /*!
- * \brief credentials_cb
- * \param out
- * \param url
- * \param username_from_url
- * \param allowed_types
- * \param payload
- * \return
+ * \fn credentials_cb
+ * \brief This function is used to authenticate user
+ *
+ * Our Checks if there is some login cache or not, if not then it will check the number of login attempts
+ * and after failed login attempts it will show message box that the login has failed and asks to try again (perhaps user entered invalid
+ * credentials??)
+ *
+ * If there is cache then it wil try to login by getting the username and password and appropriate filtering and
+ * conversion is applied and increment login_tries by 1, and releases the memory of userfield and passwordfield.
+ *
+ *
+ * \param git_cred ** out, const char *url, const char *username_from_url,
+    unsigned int allowed_types, void *payload
+    \return
  */
 int credentials_cb(git_cred ** out, const char *url, const char *username_from_url,
     unsigned int allowed_types, void *payload)
