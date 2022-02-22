@@ -119,12 +119,14 @@ void TextFinder::on_replaceButton_clicked()
         return;
     }
     QTextCursor cursor = curr_browser->textCursor();
+    QTextCharFormat format = cursor.charFormat();
+    format.setBackground(Qt::yellow);
     if(cursor.hasSelection())
     {
         if(ui->matchCaseCheckBox->checkState() == Qt::Checked && cursor.selectedText() == searchString)
-            cursor.insertText(replaceString);
+            cursor.insertText(replaceString,format);
         else if (ui->matchCaseCheckBox->checkState() == Qt::Unchecked && cursor.selectedText().toLower() == searchString.toLower())
-            cursor.insertText(replaceString);
+            cursor.insertText(replaceString,format);
     }
 }
 
@@ -176,7 +178,7 @@ void TextFinder::on_replaceAllButton_clicked()
                //!Replacing Words
                string str = replaceString.toStdString();
                QString::fromStdString(str).toUtf8();
-               QString replacementString1 = QString::fromStdString(str);
+               QString replacementString1 = "<span style = \"background-color:#ffff00;\">" + QString::fromStdString(str) + "</span> ";
 
                string str2 = ui->findLineEdit->text().toStdString();
                QString::fromStdString(str2).toUtf8();
@@ -209,9 +211,11 @@ void TextFinder::on_replaceAllButton_clicked()
    else{
    QTextCursor saved_cursor = curr_browser->textCursor();
    curr_browser->moveCursor(QTextCursor::Start);
+   QTextCharFormat format = saved_cursor.charFormat();
+   format.setBackground(Qt::yellow);
    while(curr_browser->find(searchExpr))
    {
-       curr_browser->textCursor().insertText(replaceString);
+       curr_browser->textCursor().insertText(replaceString,format);
    }
    curr_browser->setTextCursor(saved_cursor);               //Moves the cursor to the last text location placed by the user
   }

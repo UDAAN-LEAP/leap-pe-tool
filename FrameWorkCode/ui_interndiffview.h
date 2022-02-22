@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'interndiffview.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.8
+** Created by: Qt User Interface Compiler version 5.9.9
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,11 +10,13 @@
 #define UI_INTERNDIFFVIEW_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QIcon>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
@@ -57,21 +59,21 @@ public:
     void setupUi(QMainWindow *InternDiffView)
     {
         if (InternDiffView->objectName().isEmpty())
-            InternDiffView->setObjectName(QString::fromUtf8("InternDiffView"));
+            InternDiffView->setObjectName(QStringLiteral("InternDiffView"));
         InternDiffView->resize(1157, 576);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(InternDiffView->sizePolicy().hasHeightForWidth());
         InternDiffView->setSizePolicy(sizePolicy);
-        InternDiffView->setStyleSheet(QString::fromUtf8("\n"
+        InternDiffView->setStyleSheet(QLatin1String("\n"
 "background-color: rgb(32, 33, 72);\n"
 ""));
         centralWidget = new QWidget(InternDiffView);
-        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
+        centralWidget->setObjectName(QStringLiteral("centralWidget"));
         sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
         centralWidget->setSizePolicy(sizePolicy);
-        centralWidget->setStyleSheet(QString::fromUtf8("QScrollBar:vertical { \n"
+        centralWidget->setStyleSheet(QLatin1String("QScrollBar:vertical { \n"
 "                                                border: none;\n"
 "                                                background: white;\n"
 "                                                width: 9.81px;\n"
@@ -123,38 +125,38 @@ public:
         verticalLayout_4 = new QVBoxLayout(centralWidget);
         verticalLayout_4->setSpacing(6);
         verticalLayout_4->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         prevButton = new QPushButton(centralWidget);
-        prevButton->setObjectName(QString::fromUtf8("prevButton"));
-        prevButton->setStyleSheet(QString::fromUtf8("border: 0px; "));
+        prevButton->setObjectName(QStringLiteral("prevButton"));
+        prevButton->setStyleSheet(QStringLiteral("border: 0px; "));
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/Images/Resources/Previous.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/Images/Resources/Previous.png"), QSize(), QIcon::Normal, QIcon::Off);
         prevButton->setIcon(icon);
 
         horizontalLayout->addWidget(prevButton);
 
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         label = new QLabel(centralWidget);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        label->setObjectName(QStringLiteral("label"));
+        label->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         label->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(label);
 
         graphicsView = new QGraphicsView(centralWidget);
-        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
+        graphicsView->setObjectName(QStringLiteral("graphicsView"));
         graphicsView->setSizeIncrement(QSize(0, 0));
         QFont font;
         font.setPointSize(10);
         font.setBold(true);
         font.setWeight(75);
         graphicsView->setFont(font);
-        graphicsView->setStyleSheet(QString::fromUtf8("#graphicsView{\n"
+        graphicsView->setStyleSheet(QLatin1String("#graphicsView{\n"
 "background-color:white; color:black;\n"
 "}                \n"
 "QScrollBar:vertical { \n"
@@ -216,22 +218,22 @@ public:
 
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         OCRtextLabel = new QLabel(centralWidget);
-        OCRtextLabel->setObjectName(QString::fromUtf8("OCRtextLabel"));
-        OCRtextLabel->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        OCRtextLabel->setObjectName(QStringLiteral("OCRtextLabel"));
+        OCRtextLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         OCRtextLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout_2->addWidget(OCRtextLabel);
 
         ocroutput = new QTextBrowser(centralWidget);
-        ocroutput->setObjectName(QString::fromUtf8("ocroutput"));
+        ocroutput->setObjectName(QStringLiteral("ocroutput"));
         QFont font1;
         font1.setPointSize(11);
         font1.setBold(true);
         font1.setWeight(75);
         ocroutput->setFont(font1);
-        ocroutput->setStyleSheet(QString::fromUtf8("#ocroutput{\n"
+        ocroutput->setStyleSheet(QLatin1String("#ocroutput{\n"
 "background-color:white; color:black;\n"
 "}\n"
 "QScrollBar:vertical { \n"
@@ -291,18 +293,18 @@ public:
 
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         InternLabel = new QLabel(centralWidget);
-        InternLabel->setObjectName(QString::fromUtf8("InternLabel"));
-        InternLabel->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        InternLabel->setObjectName(QStringLiteral("InternLabel"));
+        InternLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         InternLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout_3->addWidget(InternLabel);
 
         current = new QTextBrowser(centralWidget);
-        current->setObjectName(QString::fromUtf8("current"));
+        current->setObjectName(QStringLiteral("current"));
         current->setFont(font1);
-        current->setStyleSheet(QString::fromUtf8("#current{\n"
+        current->setStyleSheet(QLatin1String("#current{\n"
 "background-color:white; color:black;\n"
 "}\n"
 "QScrollBar:vertical { \n"
@@ -361,10 +363,10 @@ public:
         horizontalLayout->addLayout(verticalLayout_3);
 
         NextButton = new QPushButton(centralWidget);
-        NextButton->setObjectName(QString::fromUtf8("NextButton"));
-        NextButton->setStyleSheet(QString::fromUtf8("border: 0px; "));
+        NextButton->setObjectName(QStringLiteral("NextButton"));
+        NextButton->setStyleSheet(QStringLiteral("border: 0px; "));
         QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/Images/Resources/next.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QStringLiteral(":/Images/Resources/next.png"), QSize(), QIcon::Normal, QIcon::Off);
         NextButton->setIcon(icon1);
 
         horizontalLayout->addWidget(NextButton);
@@ -374,9 +376,9 @@ public:
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         groupBox = new QGroupBox(centralWidget);
-        groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        groupBox->setObjectName(QStringLiteral("groupBox"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -384,7 +386,7 @@ public:
         groupBox->setSizePolicy(sizePolicy1);
         groupBox->setMinimumSize(QSize(264, 37));
         groupBox->setMaximumSize(QSize(264, 37));
-        groupBox->setStyleSheet(QString::fromUtf8("QGroupBox {\n"
+        groupBox->setStyleSheet(QLatin1String("QGroupBox {\n"
 "	background: white;\n"
 "	padding-top:15px;\n"
 "	margin-top:-15px; \n"
@@ -395,12 +397,12 @@ public:
         horizontalLayout_3 = new QHBoxLayout(groupBox);
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
         zoom_Out_Button = new QPushButton(groupBox);
-        zoom_Out_Button->setObjectName(QString::fromUtf8("zoom_Out_Button"));
+        zoom_Out_Button->setObjectName(QStringLiteral("zoom_Out_Button"));
         sizePolicy1.setHeightForWidth(zoom_Out_Button->sizePolicy().hasHeightForWidth());
         zoom_Out_Button->setSizePolicy(sizePolicy1);
-        zoom_Out_Button->setStyleSheet(QString::fromUtf8("#zoom_Out_Button {\n"
+        zoom_Out_Button->setStyleSheet(QLatin1String("#zoom_Out_Button {\n"
 "	color: #202148;\n"
 "	background: white;\n"
 "	font-size: 24px;\n"
@@ -412,10 +414,10 @@ public:
         horizontalLayout_3->addWidget(zoom_Out_Button);
 
         horizontalSlider = new QSlider(groupBox);
-        horizontalSlider->setObjectName(QString::fromUtf8("horizontalSlider"));
+        horizontalSlider->setObjectName(QStringLiteral("horizontalSlider"));
         sizePolicy1.setHeightForWidth(horizontalSlider->sizePolicy().hasHeightForWidth());
         horizontalSlider->setSizePolicy(sizePolicy1);
-        horizontalSlider->setStyleSheet(QString::fromUtf8("QSlider {\n"
+        horizontalSlider->setStyleSheet(QLatin1String("QSlider {\n"
 "	background: white;\n"
 "}\n"
 "\n"
@@ -467,10 +469,10 @@ public:
         horizontalLayout_3->addWidget(horizontalSlider);
 
         zoom_In_Button = new QPushButton(groupBox);
-        zoom_In_Button->setObjectName(QString::fromUtf8("zoom_In_Button"));
+        zoom_In_Button->setObjectName(QStringLiteral("zoom_In_Button"));
         sizePolicy1.setHeightForWidth(zoom_In_Button->sizePolicy().hasHeightForWidth());
         zoom_In_Button->setSizePolicy(sizePolicy1);
-        zoom_In_Button->setStyleSheet(QString::fromUtf8("#zoom_In_Button {\n"
+        zoom_In_Button->setStyleSheet(QLatin1String("#zoom_In_Button {\n"
 "	color: #202148;\n"
 "	background: white;\n"
 "	font-size: 24px;\n"
@@ -482,10 +484,10 @@ public:
         horizontalLayout_3->addWidget(zoom_In_Button);
 
         zoom_level_value = new QLabel(groupBox);
-        zoom_level_value->setObjectName(QString::fromUtf8("zoom_level_value"));
+        zoom_level_value->setObjectName(QStringLiteral("zoom_level_value"));
         sizePolicy1.setHeightForWidth(zoom_level_value->sizePolicy().hasHeightForWidth());
         zoom_level_value->setSizePolicy(sizePolicy1);
-        zoom_level_value->setStyleSheet(QString::fromUtf8("#zoom_level_value {\n"
+        zoom_level_value->setStyleSheet(QLatin1String("#zoom_level_value {\n"
 "	color: #202148;\n"
 "	background: white;\n"
 "}"));
@@ -504,7 +506,7 @@ public:
 
         InternDiffView->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(InternDiffView);
-        statusBar->setObjectName(QString::fromUtf8("statusBar"));
+        statusBar->setObjectName(QStringLiteral("statusBar"));
         InternDiffView->setStatusBar(statusBar);
 
         retranslateUi(InternDiffView);
@@ -514,28 +516,28 @@ public:
 
     void retranslateUi(QMainWindow *InternDiffView)
     {
-        InternDiffView->setWindowTitle(QApplication::translate("InternDiffView", "InternDiffView", nullptr));
+        InternDiffView->setWindowTitle(QApplication::translate("InternDiffView", "InternDiffView", Q_NULLPTR));
         prevButton->setText(QString());
         label->setText(QApplication::translate("InternDiffView", "<p><b>1. OCR Image<b></p>\n"
-"<p> </p>", nullptr));
+"<p> </p>", Q_NULLPTR));
         OCRtextLabel->setText(QApplication::translate("InternDiffView", "<p><b>2. Initial Text<b></p>\n"
-"<p> </p>", nullptr));
+"<p> </p>", Q_NULLPTR));
         ocroutput->setHtml(QApplication::translate("InternDiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-weight:400;\"><br /></p></body></html>", nullptr));
-        InternLabel->setText(QApplication::translate("InternDiffView", "<p><b>3. Corrector's Output Text</b></p>Changes made by Corrector: ", nullptr));
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-weight:400;\"><br /></p></body></html>", Q_NULLPTR));
+        InternLabel->setText(QApplication::translate("InternDiffView", "<p><b>3. Corrector's Output Text</b></p>Changes made by Corrector: ", Q_NULLPTR));
         current->setHtml(QApplication::translate("InternDiffView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-weight:400;\"><br /></p></body></html>", nullptr));
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Shobhika'; font-weight:400;\"><br /></p></body></html>", Q_NULLPTR));
         NextButton->setText(QString());
         groupBox->setTitle(QString());
-        zoom_Out_Button->setText(QApplication::translate("InternDiffView", "-", nullptr));
-        zoom_In_Button->setText(QApplication::translate("InternDiffView", "+", nullptr));
-        zoom_level_value->setText(QApplication::translate("InternDiffView", "100%", nullptr));
+        zoom_Out_Button->setText(QApplication::translate("InternDiffView", "-", Q_NULLPTR));
+        zoom_In_Button->setText(QApplication::translate("InternDiffView", "+", Q_NULLPTR));
+        zoom_level_value->setText(QApplication::translate("InternDiffView", "100%", Q_NULLPTR));
     } // retranslateUi
 
 };
