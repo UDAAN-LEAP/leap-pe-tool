@@ -1287,3 +1287,47 @@ Warning: QIODevice::read (QFile, "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1
 Warning: QIODevice::read (QFile, "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/.cursor.txt"): device not open ()
 Warning: QIODevice::read (QFile, "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/.cursor.txt"): device not open ()
 Warning: QIODevice::read (QFile, "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 22 Feb 2022 @ 18:03:48
+Username:anka
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 22 Feb 2022 @ 18:11:01
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 22 Feb 2022 @ 18:14:45
+Username:anka
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 22 Feb 2022 @ 18:22:30
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 22 Feb 2022 @ 18:29:38
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 22 Feb 2022 @ 18:33:54
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/.cursor.txt"): device not open ()

@@ -180,7 +180,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
 
     ui->horizontalSlider->setMinimum(0);
-    ui->horizontalSlider->setMaximum(200);
+    ui->horizontalSlider->setMaximum(800);
     ui->horizontalSlider->setValue(100);
     ui->horizontalSlider->setEnabled(false);
 
@@ -6865,7 +6865,7 @@ void MainWindow::LoadImageFromFile(QFile * f)
     ui->graphicsView->setScene(graphic);
     ui->graphicsView->fitInView(graphic->itemsBoundingRect(), Qt::KeepAspectRatio);
     if (z)delete z;
-    z = new Graphics_view_zoom(ui->graphicsView, graphic,200);
+    z = new Graphics_view_zoom(ui->graphicsView, graphic,800);
     z->set_modifiers(Qt::NoModifier);
     z->zoom_level = 100;
     connect(z, SIGNAL(zoomed()), this, SLOT(zoomedUsingScroll()));
