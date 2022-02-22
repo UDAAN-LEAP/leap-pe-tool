@@ -3,7 +3,21 @@
 #include <QHBoxLayout>
 #include <QFileDialog>
 #include <QAction>
+/*! \class CreateProjectPage
+ * This class is used to allow users to create new project.
+*/
 
+
+/*!
+ * \fn CreateProjectPage::CreateProjectPage
+ * \brief This function is used to initialize the ui for the CreateProjectPage Dialog Box
+ * It sets the window title and creates appropriate text boxes and labels and buttons and also sets the layout
+ * as well.
+ *
+ * Then we add all the widgets to their respective layouts.
+ *
+ * \param parent
+ */
 CreateProjectPage::CreateProjectPage(QWidget *parent)
 	: QWizardPage(parent)
 {
@@ -75,6 +89,19 @@ CreateProjectPage::CreateProjectPage(QWidget *parent)
 CreateProjectPage::~CreateProjectPage()
 {
 }
+
+
+/*!
+ * \fn CreateProjectPage::getProjectInfo
+ * \brief This function is used to get the information related to project.
+ *
+ * Info is a struct declared in createprojectpage header file, consisting of QStrings to store information about
+ * various fields of the project.
+ *
+ * The function fetches all the fields and returns to the calling function.
+ *
+ * \return
+ */
 CreateProjectPage::ProjectInfo CreateProjectPage::getProjectInfo() {
 	CreateProjectPage::ProjectInfo info;
     info.bookId = bookId_lineEdit->text();
@@ -84,8 +111,17 @@ CreateProjectPage::ProjectInfo CreateProjectPage::getProjectInfo() {
     info.pmEmail = pmEmail_lineEdit->text();
     info.setId = setId_lineEdit->text();
     info.repo = repo_lineEdit->text();
-	return info;
+
+    return info;
 }
+
+/*!
+ * \fn CreateProjectPage::OpenDirectory
+ *
+ * \brief
+ *
+ */
+
 void CreateProjectPage::OpenDirectory()
 {
 	QString dir_str = QFileDialog::getExistingDirectory();
