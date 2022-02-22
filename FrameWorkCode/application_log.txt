@@ -1331,3 +1331,11 @@ Username:anka
 Application Log:
 Debug: "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
 Warning: QIODevice::read (QFile, "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 22 Feb 2022 @ 19:04:17
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Debug: "/home/asr16/Downloads/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)

@@ -1210,6 +1210,16 @@ void MainWindow::SaveFile_GUI_Postprocessing()
     QString localFilename = gDirTwoLevelUp + "/" +changefiledir +"/" + tempPageName;
 
     localFilename.replace(".txt",".html");
+    
+    //! Don't create and save new file if output file already exists.
+    if (gCurrentDirName == "Inds" || isVerifier && gCurrentDirName == "CorrectorOutput")
+    {
+    	QFileInfo check_file(localFilename);
+    	if (check_file.exists() && check_file.isFile())
+    	{
+    		return ;
+    	}
+    }
 
     QFile sFile(localFilename);
 
