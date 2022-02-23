@@ -1339,3 +1339,15 @@ Username:asr16
 Application Log:
 Debug: "/home/asr16/Downloads/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
 Debug: "/home/asr16/Downloads/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 23 Feb 2022 @ 10:07:23
+Username:aman
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 23 Feb 2022 @ 10:44:43
+Username:aman
+
+Application Log:

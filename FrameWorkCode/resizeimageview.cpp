@@ -1,7 +1,7 @@
 /*!
 \class ResizeImageView
 \brief The ResizeImageView class provides the feature to resize the image inserted into the project
-       by taking widht and height from user.
+       by taking width and height from user.
 \sa    on_widthSpinBox_valueChanged(), QPair<double,double> getNewSize(), on_Cancel_clicked(), on_Ok_clicked(), on_hightSpinBox_valueChanged()
 */
 #include "resizeimageview.h"

@@ -1,3 +1,9 @@
+/*!
+\class edit_Distance
+\brief This class provides the functionality for suggestion of simliar words
+       or nearest smilar word based on edit distance algorithm.
+\sa    editDistance(), backtrace(), phrase_heuristics(), min()
+*/
 #include <editdistance.h>
 #include <QString>
 #include <QStringList>
@@ -16,6 +22,18 @@ using  namespace std;
 map<string, string> CPair_editDis;
 QList <QMap<QString, QString>> map_operations_list;
 QList<QMap<int, int>> map_positions_list;
+
+/*!
+* \fn edit_Distance :: editDistance
+* \brief This function takes two strings as argument then calculates the edit distance of both strings
+*        ie. minimum number of operation required to convert string first to string second then
+*        it returns the converted string and also it uses heuristics way to limit the searches.
+* \param a
+* \param b
+*
+* \return something
+* \sa backtrace(), phrase_heuristics()
+*/
 QVector <QString> edit_Distance :: editDistance(QString a, QString b)
 {
     QStringList s1,s2;
@@ -44,20 +62,21 @@ QVector <QString> edit_Distance :: editDistance(QString a, QString b)
 
     int m = s1.count();
     int n = s2.count();
+
     for (int i = 1; i <= m; i++)
     {
         for (int j = 1; j <= n; j++)
         {
-            //solution [i,j] is the cost of transforming 0 to i of s1 and o to j of s2
+            //!solution [i,j] is the cost of transforming 0 to i of s1 and o to j of s2
             if (s1[i - 1]==(s2[j - 1]))
                    solution[i][j] = solution[i - 1][j - 1];
              else
             {
-                //Assuming that the cost of insertion in s1 is 1
+                //!Assuming that the cost of insertion in s1 is 1
                 int insertS1=solution[i - 1][j] + 1;
-                //Assuming that the cost of insertion in s2 is 1, which is the same as cost of deletion in s1
+                //!Assuming that the cost of insertion in s2 is 1, which is the same as cost of deletion in s1
                 int insertS2=solution[i][j - 1] + 1;
-                //Assuming that the cost of substitution in s1->s2 is 1
+                //!Assuming that the cost of substitution in s1->s2 is 1
                 int substituteS1S2= solution[i - 1][j - 1] + 1;
                 solution[i][j] = min(insertS1, min(insertS2,substituteS1S2));
             }
@@ -74,12 +93,20 @@ QVector <QString> edit_Distance :: editDistance(QString a, QString b)
     return something;
 }
 
+/*!
+* \fn    edit_Distance :: backtrace
+* \brief This function helps edit distance algorith by pointing to the previous cell which
+*         was used in calculation of the cost to convert string first to string second.
+* \param s1
+* \param s2
+* \param solution
+*/
 void edit_Distance :: backtrace(QStringList s1, QStringList s2, int **solution)
 {
     int si= s1.count();
     int sj= s2.count();
 //    QVector<QString> optimalPath;
-
+   //!To trace back-trace path from the cost derived from cost of cell
     while (!(si==0 && sj==0))
     {
         QMap<QString, QString> temp_operations;
@@ -143,6 +170,16 @@ void edit_Distance :: backtrace(QStringList s1, QStringList s2, int **solution)
     }
 }
 
+/*!
+* \fn    edit_Distance :: phrase_heuristics
+* \brief This functions is used to eficiently retrieve the vocabulary terms likely to have
+*        low edit distance to query items by restricting searches and then returning the optimal
+*        path to convert string first to string second.
+* \param s1
+* \param s2
+*
+* \return optimalPath
+*/
 QVector <QString> edit_Distance :: phrase_heuristics(QStringList s1, QStringList s2)
 {
     int size_edits = map_operations_list.size();
@@ -150,6 +187,7 @@ QVector <QString> edit_Distance :: phrase_heuristics(QStringList s1, QStringList
     QList <QList<QMap<QString, QString>>> segments_operations;
     QList <QList<QMap<int, int>>> segments_positions;
     QVector <QString> optimalPath;
+    //!Used to create segment operations mapped list.
     while(i<size_edits)
     {
 
@@ -177,6 +215,7 @@ QVector <QString> edit_Distance :: phrase_heuristics(QStringList s1, QStringList
         }
     }
 
+    //!For finding optimal path for conversion
     for (int seg=0; seg<segments_operations.size(); seg++)
     {
         QList<QString> se;
@@ -265,6 +304,14 @@ QVector <QString> edit_Distance :: phrase_heuristics(QStringList s1, QStringList
     return optimalPath;
 }
 
+/*!
+* \fn    edit_Distance :: min
+* \brief This functions compares a and b an returns the smaller one.
+* \param a
+* \param b
+*
+* \return a, b
+*/
 int edit_Distance :: min(int a,int b)
 {
     if(a<b)
