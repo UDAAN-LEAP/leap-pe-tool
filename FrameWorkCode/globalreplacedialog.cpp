@@ -52,7 +52,7 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords){
         //QStringList changedList = replacedWords[i].split(" ");
         ui -> listWidget ->addItem(changedList[0]+ " -> " + changedList[1]);
 
-        // Creating & adding checkboxes in the groupbox
+        //! Creating & adding checkboxes in the groupbox
         box = new QCheckBox(this);
         box->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
         box->setCheckState(Qt::Unchecked);
@@ -61,9 +61,9 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords){
 
         vbox->addWidget(box);
         vbox->setAlignment(box, Qt::AlignTop);
-        // Inserting addresses of checkboxes in the vector so that we can change the state of the same accordingly
+        //! Inserting addresses of checkboxes in the vector so that we can change the state of the same accordingly
         replaceInAllFiles_Checkboxes.push_back(box);
-        // Initializing the states to 0 and pushing them in the vector
+        //! Initializing the states to 0 and pushing them in the vector
         wordSelection_CheckboxesState.push_back(0);
     }
 
@@ -183,8 +183,6 @@ QVector<int> GlobalReplaceDialog::getStatesOfCheckboxes()
 {
     QVector<int> statesOfRightCheckboxes;
 
-    //qDebug() << "Before Size of leftCheckbox Vector = " << wordSelection_CheckboxesState.size();
-    //qDebug() << "Before Size of rightCheckbox Vector = " << replaceInAllFiles_Checkboxes.size();
     for (int i = 0; i < wordSelection_CheckboxesState.size(); i++)
     {
         if (wordSelection_CheckboxesState.at(i) == 1) {
@@ -194,7 +192,6 @@ QVector<int> GlobalReplaceDialog::getStatesOfCheckboxes()
                 statesOfRightCheckboxes.push_back(0);
         }
     }
-    //qDebug() << "Size = " << statesOfRightCheckboxes.size();
     return statesOfRightCheckboxes;
 }
 

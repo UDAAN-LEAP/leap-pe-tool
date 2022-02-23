@@ -2132,3 +2132,9 @@ Warning: QIODevice::read (QFile, "/home/sujay/Downloads/TranslatingissuesinArtha
 Warning: QIODevice::read (QFile, "/home/sujay/Downloads/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
 Warning: QIODevice::read (QFile, "/home/sujay/Downloads/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
 Warning: QIODevice::read (QFile, "/home/sujay/Downloads/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 23 Feb 2022 @ 18:58:29
+Username:mush
+
+Application Log:

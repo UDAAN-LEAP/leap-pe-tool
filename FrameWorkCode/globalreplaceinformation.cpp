@@ -1,7 +1,3 @@
-#include "globalreplaceinformation.h"
-#include "ui_globalreplaceinformation.h"
-#include <qtablewidget.h>
-#include "crashlog.h"
 /*!
  * \class globalReplaceInformation::globalReplaceInformation()
  * This constructor function is used to initialize dialog box for Global Replace Information
@@ -14,6 +10,10 @@
  * Thus when they click on the 𝒊 symbol they can see what each button does, thus better equipped to use the feature.
  *
  */
+#include "globalreplaceinformation.h"
+#include "ui_globalreplaceinformation.h"
+#include <qtablewidget.h>
+#include "crashlog.h"
 globalReplaceInformation::globalReplaceInformation(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::globalReplaceInformation)

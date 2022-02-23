@@ -1,10 +1,9 @@
+/*! \class Filter
+ *  \brief Used to Filter file data of book projects.
+ */
 #include "Filters.h"
 #include <string>
 #include <QStringList>
-
-/*! \class Filter
- * Used to Filter file data of book projects.
- */
 
 /*!
 * \fn Filter::Filter()
@@ -14,7 +13,6 @@
 *
 * \param const std::string & pName, const std::string & pExt
 */
-
 Filter::Filter(const std::string & pName, const std::string & pExt) {
 	m_name = m_name.fromStdString(pName);
 	QString exts;

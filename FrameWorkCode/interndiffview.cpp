@@ -12,12 +12,6 @@
 #include <QMessageBox>
 #include <QGraphicsRectItem>
 
-
-/*! \class InternDiffView
- * This class is used to view the differences between corrector and verifier text
- */
-
-
 /*!
  * \fn InternDiffView::InternDiffView
  * \brief Constructor for interndiffview

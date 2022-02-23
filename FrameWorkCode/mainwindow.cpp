@@ -1,4 +1,7 @@
-﻿#include "mainwindow.h"
+﻿/*!
+  \class mainwWindow.cpp
+ */
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "averageaccuracies.h"
 #include "eddis.h"
@@ -7316,11 +7319,6 @@ void MainWindow::closeEvent (QCloseEvent *event)
     }
 }
 
-/*!
- * \brief MainWindow::sendEmail
- * \param emailText
- * \return
- */
 
 /*!
  * \fn MainWindow::sendEmail
@@ -7340,12 +7338,14 @@ bool MainWindow::sendEmail(QString emailText)
     if(pmEmail == "" || (!pmEmail.contains("@")))
         return 0;
 
+    //!Adding Sender Address and credentials
     SimpleMail::Sender sender ("smtp.gmail.com", 465, SimpleMail::Sender::SslConnection);
     sender.setUser("aksharanveshini.iitb@gmail.com");
     sender.setPassword("backend-ui"); //has to be encoded
     SimpleMail::MimeMessage message;
     message.setSender(SimpleMail::EmailAddress("aksharanveshini.iitb@gmail.com", "Akshar Anveshini"));
 
+    //!Adding recipient
     QList <SimpleMail::EmailAddress> listRecipients;
     listRecipients.append(pmEmail);
     message.setToRecipients(listRecipients);
@@ -8024,7 +8024,6 @@ void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
 
 /*!
  * \fn MainWindow::writeSettings
- *
  * \brief We use function write settings to write the positions of the cursor to a binary file
  *
  * We retrieve the cursor position and put it in a QMap first and then write it in the file
