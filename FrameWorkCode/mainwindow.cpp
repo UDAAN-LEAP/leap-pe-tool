@@ -7053,8 +7053,12 @@ void MainWindow::closetab(int idx)
 }
 
 /*!
- * \brief MainWindow::tabchanged
+ * \fn    MainWindow::tabchanged
+ * \brief When new page is opened without closing the current page or new tab is opened without closing
+ *        current tab or tabs/pages gets switched then this function is called.
  * \param idx
+ *
+ * \sa    setMFilename(), UpdateFileBrekadown(), LoadImageFromFile(), DisplayTimeLog()
  */
 void MainWindow::tabchanged(int idx)
 {
@@ -7064,6 +7068,7 @@ void MainWindow::tabchanged(int idx)
     string str = qstr.toStdString();
     str.erase(remove(str.begin(), str.end(), ' '), str.end());
     currentTabPageName=QString::fromStdString(str);
+
     if(mRole=="Corrector" | mRole=="Verifier"){
         setMFilename(mProject.GetDir().absolutePath() + "/" + gCurrentDirName + "/" + currentTabPageName);
     }
@@ -7949,6 +7954,13 @@ void MainWindow::on_actionFont_Color_triggered()
     cursor.mergeCharFormat(charFormat);
 }
 
+/*!
+* \fn    MainWindow::reLoadTabWindow
+* \brief This function reloads the tab window that is it loads the document again into the
+*        current tab.
+*
+* \sa    LoadDocument()
+*/
 void MainWindow::reLoadTabWindow()
 {
     string localFilename = mFilename.toUtf8().constData();

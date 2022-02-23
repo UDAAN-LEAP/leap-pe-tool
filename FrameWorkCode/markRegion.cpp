@@ -26,7 +26,6 @@ extern QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName;
 * \param i
 * \sa qInstallMessageHandler()
 */
-
 void markRegion::updateEntries(QDomDocument document, QString filename,QString PageNo, QString s2, int i)
 {
     qInstallMessageHandler(crashlog::myMessageHandler);
