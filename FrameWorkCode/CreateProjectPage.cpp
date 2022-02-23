@@ -4,7 +4,7 @@
 #include <QFileDialog>
 #include <QAction>
 /*! \class CreateProjectPage
- * This class is used to allow users to create new project.
+ * \brief This class is used to allow users to create new project.
 */
 
 

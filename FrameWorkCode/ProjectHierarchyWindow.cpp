@@ -2,7 +2,7 @@
 #include "Project.h"
 
 /*!
- * \fn ProjectHierarchyWindow::ProjectHierarchyWindow
+ * \class ProjectHierarchyWindow
  * \brief This class is used to display the file hierarchy window for the project files
  *
  * In this class we get the model from project class (check project.cpp) which contains the tree model for

@@ -7321,6 +7321,19 @@ void MainWindow::closeEvent (QCloseEvent *event)
  * \param emailText
  * \return
  */
+
+/*!
+ * \fn MainWindow::sendEmail
+ *
+ * This function sends an email to "aksharanveshini.iitb@gmail.com", whenever a user, whether corrector
+ * or verifier submits their book project after their work is done.
+ *
+ * See SimpleMail Documentation for more details.
+ *
+ * \param emailText
+ * \return
+ */
+
 bool MainWindow::sendEmail(QString emailText)
 {
     QString pmEmail = mProject.get_pmEmail();
@@ -7345,6 +7358,20 @@ bool MainWindow::sendEmail(QString emailText)
 
     return 1;
 }
+
+/*!
+ * \fn MainWindow::highlight
+ * \brief This function highlights words of Globally Replaced Words
+ *
+ * We have a map where we store all global replace word list and we get this data from CPair File in
+ * the project set folder.
+ *
+ * We loop through this map and we also loop through all the files in the set.
+ *
+ * Now we get the index of the globally replaced word, we check if the word is a whole word and not a
+ * substring and after passing all the condition we set the background of the word in yellow.
+ *
+ */
 
 void MainWindow:: highlight(QTextBrowser *b , QString input)
 {
@@ -7397,6 +7424,18 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
 
 
 }
+
+/*!
+ * \fn MainWindow::on_actionas_PDF_triggered
+ * \brief This function gets the book project set in PDF format for easy reading.
+ *
+ * Depending on whether the user has opened the tool in corrector or verifier mode the appropriate
+ * folder is opened and we scan the html contents of only html files in the folder.
+ *
+ * We then print the html contents using QPrinter and output it in the project set folder with the
+ * name "Bookset.pdf".
+ *
+ */
 
 void MainWindow::on_actionas_PDF_triggered()
 {
@@ -7620,6 +7659,8 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
         QString newWord = globallyReplacedWords.value(oldWord);
         oldWord=oldWord.trimmed();
         newWord=newWord.trimmed();
+        qDebug() << "oldWord" << oldWord;
+        qDebug() << "newWord" << newWord;
         bool replace = undoGlobalReplace_Single_Word(oldWord, newWord);
 
         if ( replace )
@@ -7735,7 +7776,6 @@ bool MainWindow::undoGlobalReplace_Single_Word(QString oldWord, QString newWord)
     QAbstractButton *cancel = messageBox.addButton(tr("No"), QMessageBox::RejectRole);
 
     QString msg = "Do you want to undo the changes you made previously using global replace feature ?\nUndo by replacing " + oldWord + " with " + newWord + "\n";
-
     messageBox.setWindowTitle("Undo Global Replace");
     messageBox.setText(msg);
     messageBox.setModal(true);
@@ -7747,7 +7787,7 @@ bool MainWindow::undoGlobalReplace_Single_Word(QString oldWord, QString newWord)
 }
 
 /*!
-* \fn MainWindow::undoGlobalReplace_Single_Word()
+* \fn MainWindow::undoGlobalReplace_Multiple_Words()
 * \brief This function shows a dialog box asking the user whether the global replacement for the word has to be undone
 *        This function is only called when the last global replace was done for more than ONE word.
 *\sa UndoGlobalReplace::on_applyButton_clicked(),UndoGlobalReplace::getFinalUndoMap .
@@ -7921,7 +7961,17 @@ void MainWindow::reLoadTabWindow()
 
 }
 
-
+/*!
+ * \fn MainWindow::on_lineEditSearch_textChanged
+ * \brief This function is a part of Project File Search feature.
+ *
+ * If set is very large then user can enter page number or any keyword related to file name and get
+ * it filtered. The tool will show him that page and thus he will be able to open more easily.
+ *
+ * This function scans the whole files and stores in a list. Whenever the user types on the search
+ * text box it will check the keyword to match in the list. The respective files are highlighted.
+ *
+ */
 
 void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
 {
@@ -7959,6 +8009,28 @@ void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
     }
 }
 
+/*! Cursor Highlight Feature
+ *
+ *  If user is working on a page in a book and closes the tool and returns back later, when he opens the
+ *  page he will be able to know in which line he was last working on by highlighting that position of
+ *  cursor.
+ *
+ *  We do it by saving the cursor position to a file when users saves it and quits the tool or changes
+ *  page, and then when he returns we retrive that position and highlight it.
+ *
+ *  We use readSettings() and writeSettings() in this feature
+ *
+ */
+
+/*!
+ * \fn MainWindow::writeSettings
+ *
+ * \brief We use function write settings to write the positions of the cursor to a binary file
+ *
+ * We retrieve the cursor position and put it in a QMap first and then write it in the file
+ * and subsequently flush it in persistent storage
+ *
+ */
 void MainWindow::writeSettings()
 {
     int pos = curr_browser->textCursor().position();
@@ -7990,6 +8062,16 @@ void MainWindow::writeSettings()
       myFile.close();
 
 }
+
+/*!
+ * \fn MainWindow::readSettings
+ * \brief We use function read settings to read the positions of the cursor from a binary file and
+ * thus get the cursor position of that file.
+ *
+ * We read the file by first opening it and we feed it into QMap and get the cursor position of that
+ * file. Then we hughlight that area by setting stylesheet of text browser.
+ *
+ */
 
 void MainWindow::readSettings()
 {

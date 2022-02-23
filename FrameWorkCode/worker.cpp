@@ -1,5 +1,13 @@
 #include "worker.h"
 #include <regex>
+
+/*!
+ * \class Worker
+ * \brief This class is used to execute Save Function of MainWindow class in a multithreaded fashion.
+ * \
+ */
+
+
 Worker::Worker(QObject *parent, MainWindow *mw) : QObject(parent)
 {
     mainWin = mw;

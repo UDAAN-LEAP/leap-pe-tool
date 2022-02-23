@@ -16,6 +16,10 @@
 #include <QMessageBox>
 #include "crashlog.h"
 
+/*! \class DiffView
+ * This class is used to view the differences between corrector and verifier text
+ */
+
 /*!
  * \fn DiffView::DiffView
  * \param parent

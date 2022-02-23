@@ -8,7 +8,7 @@
 #include "crashlog.h"
 
 /*!
- * \fn LoadingSpinner::LoadingSpinner()
+ * \class LoadingSpinner
  * \brief This is a class to show loading window whenever there is some backend task going on in the tool
  *        for eg. Performing a lengthy saving action or loading data, etc.
  *

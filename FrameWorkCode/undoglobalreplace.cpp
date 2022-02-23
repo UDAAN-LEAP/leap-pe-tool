@@ -10,6 +10,10 @@
 #include "ui_undoglobalreplace.h"
 #include "crashlog.h"
 
+/*! \class UndoGlobalReplace
+ *  \brief This class is used to show undo global replace window. Refer to Undo Global Replace Documentation
+ *  In mainwindow class for more details.
+ */
 
 UndoGlobalReplace::UndoGlobalReplace(QMap<QString, QString> reversedGRMap, QWidget *parent) :
     QDialog(parent),

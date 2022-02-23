@@ -2,6 +2,10 @@
 #include <string>
 #include <QStringList>
 
+/*! \class Filter
+ * Used to Filter file data of book projects.
+ */
+
 /*!
 * \fn Filter::Filter()
 * \brief Takes page name and extension of the pages and formats the data.
