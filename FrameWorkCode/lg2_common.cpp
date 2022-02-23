@@ -1,8 +1,3 @@
-#include  "lg2_common.h"
-#include <iostream>
-#include <qmessagebox.h>
-
-
 /*!
  * \class lg2_common
  * \brief This is a class to work with git. Whenever the user is done with the project he can push back to the
@@ -10,8 +5,9 @@
  *
  * The function of the module is to ensure that the project(OCR Text files) gets pushed to github.
  */
-
-
+#include  "lg2_common.h"
+#include <iostream>
+#include <qmessagebox.h>
 
 /*!
  * \fn PostError()

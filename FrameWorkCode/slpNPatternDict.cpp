@@ -1,3 +1,6 @@
+/*!
+  \class slpNPatternDict.cpp
+ */
 #include <string>
 #include <sstream>
 #include <fstream>
@@ -29,7 +32,13 @@
 using namespace std;
 bool HinFlag = 0, SanFlag = 1;
 
-
+/*!
+ * \fn slpNPatternDict::ReplaceString
+ * \param subject
+ * \param search
+ * \param replace
+ * \return
+ */
 string slpNPatternDict :: ReplaceString(string subject, const string& search, const string& replace)
 {
     size_t pos=0;
@@ -41,6 +50,13 @@ string slpNPatternDict :: ReplaceString(string subject, const string& search, co
     return subject;
 }
 
+/*!
+ * \fn slpNPatternDict::ReplaceStringRestricted
+ * \param subject
+ * \param search
+ * \param replace
+ * \return
+ */
 string slpNPatternDict :: ReplaceStringRestricted(string subject, const string& search, const string& replace)
 {
     size_t pos=0;
@@ -63,6 +79,12 @@ string slpNPatternDict :: ReplaceStringRestricted(string subject, const string& 
     return subject;
 }
 
+/*!
+ * \fn slpNPatternDict::loadFileCSV
+ * \param synonym
+ * \param synrows
+ * \param filename
+ */
 void slpNPatternDict :: loadFileCSV(map<string, vector<int>>& synonym, vector<vector<string>>& synrows, const string filename){
     QString fn = QString::fromStdString(filename);
     QFile file(fn);
@@ -99,6 +121,11 @@ void slpNPatternDict :: loadFileCSV(map<string, vector<int>>& synonym, vector<ve
     }
 }
 
+/*!
+ * \fn slpNPatternDict::toDev
+ * \param s
+ * \return
+ */
 string slpNPatternDict :: toDev(string s)
 { //Hin:-
     if (HinFlag){
@@ -165,7 +192,11 @@ else if(SanFlag ){
     return s;
 }
 
-
+/*!
+ * \fn slpNPatternDict::toslp1
+ * \param s
+ * \return
+ */
 string slpNPatternDict :: toslp1(string s)
 { //Hin:-
     if (HinFlag){
@@ -263,6 +294,10 @@ string slpNPatternDict :: toslp1(string s)
 return s;
 }
 
+/*!
+ * \fn slpNPatternDict::printmapinDev
+ * \param m1
+ */
 void slpNPatternDict :: printmapinDev(map<string,int> m1){
 
 /*std::ofstream ss1("ppi.bin");
@@ -272,6 +307,10 @@ for( map<string,int>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
                cout << toDev(eptr->first) << endl;
 }
 
+/*!
+ * \fn slpNPatternDict::printmap
+ * \param m1
+ */
 void slpNPatternDict :: printmap(map<string,int>& m1){
 
 /*std::ofstream ss1("ppi.bin");
@@ -281,6 +320,10 @@ for( map<string,int>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
                cout << (eptr->first) << endl;
 }
 
+/*!
+ * \fn slpNPatternDict::printmapstrstr
+ * \param m1
+ */
 void slpNPatternDict :: printmapstrstr(map<string,string>& m1){
 
 /*std::ofstream ss1("ppi.bin");
@@ -290,6 +333,10 @@ for( map<string,string>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
                cout << (eptr->first) << " " <<(eptr->second) << endl;
 }
 
+/*!
+ * \fn slpNPatternDict::printmapWFreq
+ * \param m1
+ */
 void slpNPatternDict :: printmapWFreq(map<string,int>& m1){
 
 /*std::ofstream ss1("ppi.bin");
@@ -299,12 +346,25 @@ for( map<string,int>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
                cout << (eptr->first) << " " <<(eptr->second) << endl;
 }
 
-
-
+/*!
+ * \fn slpNPatternDict::loadCwordsPair
+ * \param wordL
+ * \param wordR
+ * \param CPair
+ * \param Dict
+ * \param PWords
+ */
 void slpNPatternDict :: loadCwordsPair(string wordL,string wordR, map<string, string>& CPair,map<string,int>& Dict,map<string,int>&  PWords){
 if ((Dict[wordL] ==0) && (PWords[wordL] == 0)) CPair[wordL] = wordR;
 }
 
+/*!
+ * \fn loadCPair
+ * \param filename
+ * \param CPair
+ * \param Dict
+ * \param PWords
+ */
 void loadCPair(string filename, map<string, string>& CPair,map<string,int>&  Dict, map<string,int>&  PWords){
 ifstream myfile(filename);
 slpNPatternDict slnp;

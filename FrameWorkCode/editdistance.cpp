@@ -85,7 +85,6 @@ QVector <QString> edit_Distance :: editDistance(QString a, QString b)
 
     backtrace(s1,s2,solution);
     QVector <QString> something = phrase_heuristics(s1,s2);
-//    qDebug()<<"test"<<something;
     for (int i = 0;i < s1.count()+1;i++)
         delete[] solution[i];
     delete[] solution;
@@ -105,7 +104,6 @@ void edit_Distance :: backtrace(QStringList s1, QStringList s2, int **solution)
 {
     int si= s1.count();
     int sj= s2.count();
-//    QVector<QString> optimalPath;
    //!To trace back-trace path from the cost derived from cost of cell
     while (!(si==0 && sj==0))
     {
@@ -248,7 +246,6 @@ QVector <QString> edit_Distance :: phrase_heuristics(QStringList s1, QStringList
                 if(!(st1 == st2) && (st1 != "" && st2 != ""))
                 optimalPath.append(st1 + "=>" + st2 );
             }
-            //qDebug() <<"Substitution"<< st1 << " => " << st2;
             CPair_editDis[st1.trimmed().toStdString()] = st2.trimmed().toStdString();
         }
         else
@@ -269,8 +266,6 @@ QVector <QString> edit_Distance :: phrase_heuristics(QStringList s1, QStringList
                     if(!(st1 == st2) && (st1 != "" && st2 != ""))
                     optimalPath.append(st1 + "=>" + st2 );
                 }
-                //CPair_editDis[st1.toStdString()] = st2.toStdString();
-//                qDebug() << st1 << " => " << st2;
             }
             else if (se[0] == "insertion")
             {
@@ -288,8 +283,6 @@ QVector <QString> edit_Distance :: phrase_heuristics(QStringList s1, QStringList
                     if(!(st1 == st2) && (st1 != "" && st2 != ""))
                     optimalPath.append(st1 + "=>" + st2 );
                 }
-                //CPair_editDis[st1.toStdString()] = st2.toStdString();
-//                qDebug() << st1 << " => " << st2;
             }
         }
 

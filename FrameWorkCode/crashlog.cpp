@@ -1,3 +1,10 @@
+/*! \class crashlog.cpp:
+ *
+ *  This is the crashlog module. As the name suggests we write debug statements in the project and whatever warnings
+ *  QT Framework gives are logged by this class and it is written to application_log.txt file in the software directory.
+ *
+ *  If the tool crashes users can share the report with us.
+ */
 #include "crashlog.h"
 #include <QApplication>
 #include <QtDebug>
@@ -10,14 +17,6 @@
 #include <string>
 #include <cstring>
 
-
-/*! \namespace crashlog.cpp:
- *
- *  This is the crashlog module. As the name suggests we write debug statements in the project and whatever warnings
- *  QT Framework gives are logged by this class and it is written to application_log.txt file in the software directory.
- *
- *  If the tool crashes users can share the report with us.
- */
 
 /*!
 * \namespace crashlog

@@ -14,7 +14,6 @@
  *  \brief This class is used to show undo global replace window. Refer to Undo Global Replace Documentation
  *  In mainwindow class for more details.
  */
-
 UndoGlobalReplace::UndoGlobalReplace(QMap<QString, QString> reversedGRMap, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::UndoGlobalReplace)

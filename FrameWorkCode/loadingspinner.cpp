@@ -1,12 +1,3 @@
-#include "loadingspinner.h"
-#include "ui_loadingspinner.h"
-#include "QMovie"
-#define MAINWINDOW_H
-#include <QMainWindow>
-#include <QWidget>
-#include <mainwindow.h>
-#include "crashlog.h"
-
 /*!
  * \class LoadingSpinner
  * \brief This is a class to show loading window whenever there is some backend task going on in the tool
@@ -20,6 +11,14 @@
  *
  * \sa qInstallMessageHandler()
  */
+#include "loadingspinner.h"
+#include "ui_loadingspinner.h"
+#include "QMovie"
+#define MAINWINDOW_H
+#include <QMainWindow>
+#include <QWidget>
+#include <mainwindow.h>
+#include "crashlog.h"
 LoadingSpinner::LoadingSpinner(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LoadingSpinner)

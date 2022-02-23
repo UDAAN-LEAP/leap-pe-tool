@@ -1,12 +1,11 @@
+/*! \class CreateProjectPage
+ *  \brief This class is used to allow users to create new project.
+*/
 #include "CreateProjectPage.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QFileDialog>
 #include <QAction>
-/*! \class CreateProjectPage
- * \brief This class is used to allow users to create new project.
-*/
-
 
 /*!
  * \fn CreateProjectPage::CreateProjectPage

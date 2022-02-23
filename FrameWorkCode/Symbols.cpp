@@ -1,9 +1,3 @@
-/*
- * It shows the table for various symbols
- */
-#include "Symbols.h"
-#include "ui_Symbols.h"
-
 /*!
  * \class SymbolsView
  * \brief This class will enable users to access special symbols in sanskrit, mathematics and the like for
@@ -15,6 +9,9 @@
  *        3. Diacritics(marks placed above or below of letters)
  *
  */
+#include "Symbols.h"
+#include "ui_Symbols.h"
+
 SymbolsView *SymbolsView::symbolsView = 0;
 
 /*!

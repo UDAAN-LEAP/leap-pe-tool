@@ -1,6 +1,3 @@
-#include "ProjectHierarchyWindow.h"
-#include "Project.h"
-
 /*!
  * \class ProjectHierarchyWindow
  * \brief This class is used to display the file hierarchy window for the project files
@@ -10,6 +7,9 @@
  *
  * \param parent
  */
+#include "ProjectHierarchyWindow.h"
+#include "Project.h"
+
 
 ProjectHierarchyWindow::ProjectHierarchyWindow(Project & pProject,QWidget *parent)
 	: QWidget(parent)
