@@ -2138,3 +2138,27 @@ Date: 23 Feb 2022 @ 18:58:29
 Username:mush
 
 Application Log:
+
+OpenOCRCorrect Application Log
+Date: 24 Feb 2022 @ 16:47:24
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "मौन =>मौ " 
+ (mainwindow.cpp)
+Debug: "अनुवादित =>अनुवादि " 
+ (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "/home/sujay/Downloads/TranslatingissuesinArthashastraunicode-Hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "p-03.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 24 Feb 2022 @ 17:29:53
+Username:sujay
+
+Application Log:

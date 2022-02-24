@@ -1,3 +1,10 @@
+/*! \class GlobalReplaceDialog
+ *
+ *  \brief This class is used to handle the gui functionality of global replace dialog box
+ *         Whenever user saves the page and makes changes to words, this dialog box will appear and
+ *         show the words which can be globally replaced by the user.
+ */
+
 #include "globalreplacedialog.h"
 #include "ui_globalreplacedialog.h"
 #include <QDialogButtonBox>
@@ -7,6 +14,12 @@
 #include "globalreplaceinformation.h"
 #include <QMessageBox>
 #include "crashlog.h"
+
+/*!
+ * \fn GlobalReplaceDialog::GlobalReplaceDialog
+ * \brief In this constructor function we initialize the UI and setup the layout, margins, alignment,etc.
+ * \param replacedWords,parent
+ */
 GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GlobalReplaceDialog)
@@ -17,8 +30,15 @@ GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidge
     setWindowTitle("Select the words you want to replace globally");
     displayOriginalList(replacedWords);
     //ui->listWidget->insertItem(,"Replacement Words");
+
+
     QObject::connect(ui->listWidget, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(highlightChecked(QListWidgetItem*)));
+
+    //! Whenever user clicks on global replace preview, the words that are checked are fetched and those
+    //! words are passed to show global replace preview.
     QObject::connect(this , SIGNAL(fetchCheckedlist(QMap<QString,QString>,  QVector<int>)), parent, SLOT(globalReplacePreviewfn(QMap<QString,QString>,QVector<int>)));
+
+    //! Set layout, margins, alignment
     QVBoxLayout *listLayout = new QVBoxLayout;
     ui->listWidget->setLayout(listLayout);
     ui->groupBox->setVisible(false);
@@ -30,6 +50,9 @@ GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidge
    // vbox->setContentsMargins(0, 0, 0, 0);
 }
 
+/*!
+ * \brief GlobalReplaceDialog::~GlobalReplaceDialog
+ */
 GlobalReplaceDialog::~GlobalReplaceDialog()
 {
     replaceInAllFiles_Checkboxes.clear();
@@ -37,14 +60,27 @@ GlobalReplaceDialog::~GlobalReplaceDialog()
     delete ui;
 }
 
-
+/*!
+ * \fn GlobalReplaceDialog::getFilteredGlobalReplacementMap
+ * \brief Returns the processed globalreplacement map which contain the key value pairs of word before
+ * replacement and after it is replaced.
+ */
 QMap <QString, QString> GlobalReplaceDialog::getFilteredGlobalReplacementMap(){
     return this->filteredGlobalReplacementMap;
 }
 
-
+/*!
+ * \fn GlobalReplaceDialog::displayOriginalList
+ * \brief This function is used to show the checkboxes for words that can be globally replaced in
+ *        list format.
+ */
 void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords){
+
+
     //ui->groupBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    //! We get words in the format old Word => new Word. (See editdistance.cpp for more info)
+    //! We run the loop of the list of such strings and we separate them using QRegExp and add
+    //! to the widget.
 
     for (int i = 0; i < replacedWords.size(); ++i){
         QRegExp sep("\\s*=>*");
@@ -73,10 +109,21 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords){
         item = ui->listWidget->item(i);
         item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
         item->setCheckState(Qt::Unchecked);
+
+        //! Whenever user checks the word for global replace, the adjacent checkbox
+        //! (to ask user whether to replace in all pages or only unedited pages) becomes visible.
+        //! The connect function does the necessary syncing.
+
         connect(ui->listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(leftCheckBoxStateChanged(QListWidgetItem*)));
     }
 }
 
+
+/*!
+ * \fn GlobalReplaceDialog::highlightChecked
+ * \brief We change the color of list to lightblue when it is checked and when it is unchecked.
+ * This is done to make the GUI elegant.
+ */
 void GlobalReplaceDialog::highlightChecked(QListWidgetItem *item){
     if(item->checkState() == Qt::Checked)
         item->setBackgroundColor(QColor("#add8e6"));
@@ -84,6 +131,11 @@ void GlobalReplaceDialog::highlightChecked(QListWidgetItem *item){
         item->setBackgroundColor(QColor("#ffffff"));
 }
 
+/*!
+ * \fn GlobalReplaceDialog::on_applyButton_clicked
+ * \brief Defines what happens when user clicks on apply to global replace.
+ *        It puts the words in the global replace map and applies global replace.
+ */
 void GlobalReplaceDialog::on_applyButton_clicked()
 {
     QMessageBox replace;
@@ -116,7 +168,7 @@ void GlobalReplaceDialog::on_applyButton_clicked()
 //}
 
 /*!
- * \brief GlobalReplaceDialog::uncheckedItemsList
+ * \fn GlobalReplaceDialog::uncheckedItemsList
  * \param item
  */
 QMap <QString, QString> GlobalReplaceDialog::uncheckedItemsList()
@@ -137,6 +189,11 @@ QMap <QString, QString> GlobalReplaceDialog::uncheckedItemsList()
 /*!
  * \fn "GlobalReplaceDialog::leftCheckBoxStateChanged"
  * \brief "This function is a SLOT which receives signal from listWidget when an item is selected"
+ *
+ * \brief This function is called by QT whenever user checks or unchecks the left hand side checkbox
+ * in the global replace window.
+ *
+ * \brief If user clicks on lecft checkbox, then right hand side checkbox gets visible.
  * \param "Address of QListWidgetItem is passed"
  * \return "void"
 */
@@ -145,6 +202,9 @@ void GlobalReplaceDialog::leftCheckBoxStateChanged(QListWidgetItem* item)
 {
     int itemRow;
     itemRow = ui->listWidget->row(item);
+
+    //! This enables the right hand side pane, which was invisible when no words were checked.
+    //! Enables the checkbox for the respective left hand side word checkbox checked.
     if (item->checkState() == Qt::Checked)
     {
         wordSelection_CheckboxesState[itemRow] = 1;
@@ -158,6 +218,7 @@ void GlobalReplaceDialog::leftCheckBoxStateChanged(QListWidgetItem* item)
         ui->groupBox->setStyleSheet("background-color : white;"
                                     "color: black;");
     }
+    //! If the word on the left side is unchecked then the right checkbox gets disabled.
     else if (item->checkState() == Qt::Unchecked)
     {
         ui->groupBox->setMaximumHeight(ui->listWidget->height());
@@ -165,6 +226,11 @@ void GlobalReplaceDialog::leftCheckBoxStateChanged(QListWidgetItem* item)
         replaceInAllFiles_Checkboxes.at(itemRow)->setCheckState(Qt::Unchecked);
         replaceInAllFiles_Checkboxes.at(itemRow)->setEnabled(false);
         replaceInAllFiles_Checkboxes.at(itemRow)->setStyleSheet("QCheckBox::indicator:unchecked {border: 0px solid white}");
+
+        //! However if some other word is checked then we still keep the right hand side groupbox pane
+        //! visible, only those words are not selected their right hand side checkbox is disabled.
+        //! Thus we check if some other checkbox is checked or not?? If yes the groupbox is visible else
+        //! invisible
         for (int i = 0; i < wordSelection_CheckboxesState.size(); i++)
         {
             if ( wordSelection_CheckboxesState.at(i) == 1 )
@@ -178,11 +244,16 @@ void GlobalReplaceDialog::leftCheckBoxStateChanged(QListWidgetItem* item)
     }
 }
 
-
+/*!
+ * \fn GlobalReplaceDialog::getStatesOfCheckboxes
+ * \brief This gets the state of checkboxes at the right hand side of the pane and returns the vector.
+ */
 QVector<int> GlobalReplaceDialog::getStatesOfCheckboxes()
 {
     QVector<int> statesOfRightCheckboxes;
 
+    //! Loop through all checkboxes, if left hand side checkboxed is checked
+    //! and right hand side of checkbox is also checked then push 1 else push 0
     for (int i = 0; i < wordSelection_CheckboxesState.size(); i++)
     {
         if (wordSelection_CheckboxesState.at(i) == 1) {
@@ -195,18 +266,28 @@ QVector<int> GlobalReplaceDialog::getStatesOfCheckboxes()
     return statesOfRightCheckboxes;
 }
 
+
+/*!
+ * \fn GlobalReplaceDialog::clicked_applyButton
+ * \brief Returns if apply button is clicked
+ */
 bool GlobalReplaceDialog::clicked_applyButton()
 {
     return applyButtonIsClicked;
 }
 
-
+/*!
+ * \fn GlobalReplaceDialog::on_previewButton_clicked
+ * \brief Defines what happens when preview button is clicked. Gets the checkboxes are clicked and
+ * emits a signal which causes preview dialog to show up.
+ */
 void GlobalReplaceDialog::on_previewButton_clicked()
 {
     QMap <QString, QString> obj;
     QList<QListWidgetItem *> items = ui->listWidget->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard); //get all items
     QVector<int> allPages;
-
+    //! Loops through each item and splits the string such that when oldword newword is the format of
+    //! the string then we get key as oldword and value as new word.
     foreach (QListWidgetItem *item, items)
     {
         if(item->checkState() == Qt::Checked)
@@ -216,14 +297,24 @@ void GlobalReplaceDialog::on_previewButton_clicked()
           }
     }
 
+    //! This will check if the words are selected to be replaced in unedited pages or all pages as well
+    //! This data is stored in vector.
     if(obj.size()>0)
     {
       allPages= getStatesOfCheckboxes();
     }
-
+    //! Once the signal is emitted, it _implicitly_ calls the global replace preview function and makes the
+    //! dialog box show up. All pages vector defines whether the preview function show preview for all pages
+    //! for that particular word or just unedited pages.
     emit fetchCheckedlist(obj,allPages);
 }
 
+/*!
+ * \fn GlobalReplaceDialog::on_pushButton_clicked
+ * \brief This opens the global replace information dialog box.
+ * Whenever users click on the 𝒊 symbol they can see what each button does in global replace,
+ * thus better equipped to use the feature.
+ */
 void GlobalReplaceDialog::on_pushButton_clicked()
 {
     globalReplaceInformation info(this);

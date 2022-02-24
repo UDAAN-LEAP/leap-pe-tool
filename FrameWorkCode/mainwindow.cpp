@@ -6523,14 +6523,25 @@ void MainWindow::on_actionLineSpace_triggered() //Not used, does not work as int
 /*!
  * \brief MainWindow::on_actionAdd_Image_triggered
  */
+
+
+/*!
+ * \fn MainWindow::on_actionAdd_Image_triggered
+ * \brief This function is called whenever user wishes to add an image in the document in our tool.
+ */
+
 void MainWindow::on_actionAdd_Image_triggered()
 {
+    //! Ask user to select image from file dialog.
     if(curr_browser) {
         QString file = QFileDialog::getOpenFileName(this, tr("Select an image"),
                                                     "./", tr("Bitmap Files (*.bmp)\n"
                                                              "JPEG (*.jpg *jpeg)\n"
                                                              "GIF (*.gif)\n"
                                                              "PNG (*.png)\n"));
+
+
+        //! If file is not empty then a copy is created in a temporary location in our project set.
         if(!file.isEmpty()){
             QFileInfo fileInfo(file);
             QString fileName = fileInfo.fileName();
@@ -6551,6 +6562,10 @@ void MainWindow::on_actionAdd_Image_triggered()
             copiedFileName = QDir::current().relativeFilePath(destinationFileName);
 
             //QUrl Uri ( QString ( "file://%1" ).arg ( file ) );
+
+            //! After copy is done the image is now added to the current browser to the current cursor
+            //! position.
+
             QImage image = QImageReader ( copiedFileName ).read();
             QTextDocument * textDocument = curr_browser->document();
             textDocument->addResource( QTextDocument::ImageResource, copiedFileName, QVariant ( image ) );
@@ -6568,10 +6583,23 @@ void MainWindow::on_actionAdd_Image_triggered()
 /*!
  * \brief MainWindow::on_actionResize_Image_triggered
  */
+
+
+/*!
+ * \fn MainWindow::on_actionResize_Image_triggered
+ * \brief This function resizes the images in the document. User has to input the new height or width
+ * and thus the image is appropriately resized.
+ */
 void MainWindow::on_actionResize_Image_triggered()
 {
+    //! gets the block position of the image in the current browser
     QTextBlock currentBlock = curr_browser->textCursor().block();
     QTextBlock::iterator it;
+
+    //! The for loop scans through the block in the text browser and _captures_ the image
+    //! It gets the new size from resizeImage view class where user has inputted the new height & width
+    //! Then it sets this new height and width by setting setWidth setHeight and also sets formatting
+    //! using helper object
 
     for (it = currentBlock.begin(); !(it.atEnd()); ++it) {
         QTextFragment fragment = it.fragment();
