@@ -5629,13 +5629,13 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     obj[old_word] = new_word;
     QVector<int> allPages;
 
-    if(cb->checkState() == Qt::Checked){
-        chk=1;
-        allPages.push_back(1);
-    }
-    else{
-        allPages.push_back(0);
-    }
+//    if(cb->checkState() == Qt::Checked){
+//        chk=1;
+//        allPages.push_back(1);
+//    }
+//    else{
+//        allPages.push_back(0);
+//    }
 
     previewButton->disconnect();
     connect(previewButton,&QAbstractButton::clicked, this,[=](){
@@ -5646,8 +5646,18 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     messageBox.setText(msg);
     messageBox.exec();
 
-    if (messageBox.clickedButton() == replaceButton)
+    if (messageBox.clickedButton() == replaceButton){
+        if(cb->checkState() == Qt::Checked){
+            chk=1;
+            allPages.push_back(1);
+            qDebug()<<"Checkbox Checked";
+        }
+        else{
+            allPages.push_back(0);
+            qDebug()<<"Checkbox Unchecked";
+        }
         return true;
+    }
     if (messageBox.clickedButton() == cancelButton){
         QDir directory(gDirTwoLevelUp);
         QString setName=directory.dirName();
@@ -7808,7 +7818,7 @@ bool MainWindow::undoGlobalReplace_Single_Word(QString oldWord, QString newWord)
     QAbstractButton *undo = messageBox.addButton(tr("Yes"), QMessageBox::ActionRole);
     QAbstractButton *cancel = messageBox.addButton(tr("No"), QMessageBox::RejectRole);
 
-    QString msg = "Do you want to undo the changes you made previously using global replace feature ?\nUndo by replacing " + oldWord + " with " + newWord + "\n";
+    QString msg = "Do you want to undo the changes you made previously using global replace feature ?\nUndo by replacing \"" + oldWord + "\" with \"" + newWord + "\"\n";
     messageBox.setWindowTitle("Undo Global Replace");
     messageBox.setText(msg);
     messageBox.setModal(true);

@@ -2162,3 +2162,104 @@ Date: 24 Feb 2022 @ 17:29:53
 Username:sujay
 
 Application Log:
+
+OpenOCRCorrect Application Log
+Date: 24 Feb 2022 @ 18:39:35
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "Research =>Researcher " 
+ (mainwindow.cpp)
+Warning: QBackingStore::endPaint() called with active painter; did you forget to destroy it or call QPainter::end() on it? ()
+Warning: QBackingStore::endPaint() called with active painter; did you forget to destroy it or call QPainter::end() on it? ()
+Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
+Warning: QBackingStore::endPaint() called with active painter; did you forget to destroy it or call QPainter::end() on it? ()
+Warning: QBackingStore::endPaint() called with active painter; did you forget to destroy it or call QPainter::end() on it? ()
+Warning: QBackingStore::endPaint() called with active painter; did you forget to destroy it or call QPainter::end() on it? ()
+Warning: QBackingStore::endPaint() called with active painter; did you forget to destroy it or call QPainter::end() on it? ()
+
+OpenOCRCorrect Application Log
+Date: 24 Feb 2022 @ 18:40:09
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/ABBV1S2_YP_dinesh-main/.cursor.txt"): device not open ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "तदा =>कदा " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/ABBV1S2_YP_dinesh-main/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/ABBV1S2_YP_dinesh-main/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/ABBV1S2_YP_dinesh-main/CorrectorOutput/.."): device not open ()
+Debug: "page-100.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/asr16/Downloads/ABBV1S2_YP_dinesh-main/CorrectorOutput/page-100.html"  to file. 
+ (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 24 Feb 2022 @ 18:41:20
+Username:asr16
+
+Application Log:
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/Comments/Timelog.json"): device not open ()
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/Comments/Timelog.json"): device not open ()
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "Research =>Researcher " 
+ (mainwindow.cpp)
+Debug: No exist file  "/home/asr16/Downloads/en-hi/Dicts/CPair" (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html"  to file. 
+ (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 24 Feb 2022 @ 18:43:07
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "research =>searching " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: oldWord "searching" (mainwindow.cpp)
+Debug: newWord "research" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 24 Feb 2022 @ 18:45:27
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "trees =>plants " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Checkbox Checked (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: oldWord "plants" (mainwindow.cpp)
+Debug: newWord "trees" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
