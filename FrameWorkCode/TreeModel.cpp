@@ -2,7 +2,6 @@
 #include "TreeModel.h"
 
 
-
 TreeModel::~TreeModel()
 {
 	delete mRootItem;
