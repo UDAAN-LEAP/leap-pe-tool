@@ -2263,3 +2263,9 @@ Debug: oldWord "plants" (mainwindow.cpp)
 Debug: newWord "trees" (mainwindow.cpp)
 Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
 Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 25 Feb 2022 @ 12:31:38
+Username:aman
+
+Application Log:

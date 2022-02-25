@@ -7270,7 +7270,16 @@ void MainWindow::directoryChanged(const QString &path)
     }
 }
 
+/*!
+* \fn    MainWindow::checkUnsavedWork
+* \brief This function is called when user closes a tab or page then this function checks for the
+*        unsaved changes in that tab or page and if any unsaved work found then it returns true else
+*        false.
+*
+* \return true, false
+*/
 bool MainWindow::checkUnsavedWork() {
+    //!iterate over tab counts and checks for wok in the text browser of that tab
     for (int i = 0; i < ui->tabWidget_2->count(); ++i) {
         ui->tabWidget_2->setCurrentIndex(i);
         QTextBrowser *closing_browser = (QTextBrowser*)ui->tabWidget_2->widget(i);
@@ -7290,8 +7299,12 @@ bool MainWindow::checkUnsavedWork() {
 }
 
 /*!
- * \brief MainWindow::saveAllWork
- */
+* \fn    MainWindow::saveAllWork
+* \brief This function is called when user closes a tab or page and it has some unsaved work containg in that
+*        page or tab and this function saves all those changes in that page or tab.
+*
+* \sa    on_actionSave_triggered()
+*/
 void MainWindow::saveAllWork()
 {
     for (int i = 0; i < ui->tabWidget_2->count(); ++i)
@@ -7314,12 +7327,17 @@ void MainWindow::saveAllWork()
 }
 
 /*!
- * \brief MainWindow::on_actionSave_All_triggered
- */
+* \fn    MainWindow::on_actionSave_All_triggered
+* \brief This is called when user cloases a tab, page or the application. It saves all the unsaved work
+*        of that page.
+*
+* \sa    on_actionSave_triggered(), UpdateFileBrekadown()
+*/
 void MainWindow::on_actionSave_All_triggered()  //enable when required
 {
     if(ui->tabWidget_2->count()!=0)
     {
+        //!Iterate over tab count and calls action save function to save all works of that tab
         for(int i=0;i<ui->tabWidget_2->count();i++)
         {
             ui->tabWidget_2->setCurrentIndex(i);
