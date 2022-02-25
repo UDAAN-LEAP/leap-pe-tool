@@ -5628,13 +5628,13 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     obj[old_word] = new_word;
     QVector<int> allPages;
 
-//    if(cb->checkState() == Qt::Checked){
-//        chk=1;
-//        allPages.push_back(1);
-//    }
-//    else{
-//        allPages.push_back(0);
-//    }
+    if(cb->checkState() == Qt::Checked){
+        chk=1;
+        allPages.push_back(1);
+    }
+    else{
+        allPages.push_back(0);
+    }
 
     previewButton->disconnect();
     connect(previewButton,&QAbstractButton::clicked, this,[=](){
