@@ -7508,6 +7508,8 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
 
 void MainWindow::on_actionas_PDF_triggered()
 {
+    //! We set the dir path to CorrectorOutput or Verifier output depending on whether it is opened
+    //! in Corrector or Verifier Mode.
     QTextDocument *document = new QTextDocument();
      QString currentDirAbsolutePath;
     if(mRole=="Verifier")
@@ -7516,49 +7518,64 @@ void MainWindow::on_actionas_PDF_triggered()
         currentDirAbsolutePath = gDirTwoLevelUp + "/CorrectorOutput/";
     }
 
+    //! We then open this directory and set sorting preferences.
     QDir dir(currentDirAbsolutePath);
     dir.setSorting(QDir::SortFlag::DirsFirst | QDir::SortFlag::Name);
     QDirIterator dirIterator(dir,QDirIterator::NoIteratorFlags);
 
-   // QDirIterator dirIterator(currentDirAbsolutePath);
+    //! Set count of files in directory
+
     QString html_contents="";
     QString mainHtml;
     int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
     int counter=0;
 
     int stIndex, startFrom = 0;
+
+    //! Set the background of the pdf to be printed to be white
     QString searchString = "background-color:#"; // string to be searched
     int l = searchString.length();
     QString whiteColor = "ffffff";
 
+    //! Loop through all files
     for(auto a : dir.entryList())
     {
         QString it_file_path = a;
         QString x=currentDirAbsolutePath+a;
 
         startFrom = 0; // The position from which searchString will be scanned
-
+        //! if condition makes sure we extract only html files for PDF Processing
+        //! (folder has hocr, dict, htranslate, and other such files)
         if(x.contains("."))
         {
             QStringList html_files = x.split(QRegExp("[.]"));
-;
+
+;           //! condition to check if file is html
             if(html_files[1]=="html")
             {
                 QFile file(x);
                     if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
                     QTextStream stream(&file);
                     stream.setCodec("UTF-8");
+
+                    //! Read the file
+
                     mainHtml=stream.readAll();
-                    // Changing Background of text as white
+                    //! Changing the text background to white by setting the background to #fffff
                     while (true){
                         stIndex = mainHtml.indexOf(searchString, startFrom);
                         if (stIndex == -1)
                             break;
-                        stIndex += l;
+                        stIndex += l; // increment line
                         mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
                         startFrom = stIndex + 6;
                     }
+                    //! append counter when one file is fully scanned
                     counter++;
+
+                    //! Once page html is extracted ... before we move to next page we add html tag
+                    //! for page break so that the PDF printer separates the pages
+                    //! We do this till all pages done
                     if(counter<count){
                         mainHtml+="<P style=\"page-break-before: always\"></P>";
                     }
@@ -7566,17 +7583,21 @@ void MainWindow::on_actionas_PDF_triggered()
               html_contents.append(mainHtml);
 
             }
+            //! if file is not html
             else {
                 continue;
             }
         }
     }
+
+    //! Perform printing of html using QPrinter
+
     document->setHtml(html_contents);
     QPrinter printer(QPrinter::PrinterResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QPrinter::A4);
     printer.setPageMargins(QMarginsF(5, 5, 5, 5));
-    printer.setOutputFileName(gDirTwoLevelUp+"/BookSet.pdf");
+    printer.setOutputFileName(gDirTwoLevelUp+"/BookSet.pdf"); //! set the output dir
 
     document->setPageSize(printer.pageRect().size());
     document->print(&printer);

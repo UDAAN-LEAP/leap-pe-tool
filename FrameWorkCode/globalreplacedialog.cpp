@@ -169,12 +169,18 @@ void GlobalReplaceDialog::on_applyButton_clicked()
 
 /*!
  * \fn GlobalReplaceDialog::uncheckedItemsList
+ * \brief This function returns the map of unchecked items list.
  * \param item
+ * \return
  */
 QMap <QString, QString> GlobalReplaceDialog::uncheckedItemsList()
 {
-    QList<QListWidgetItem *> items = ui->listWidget->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard); //get all items
+    //! We first get the list of all checkbox item labels.
+    QList<QListWidgetItem *> items = ui->listWidget->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
 
+    //! Then we loop through this list and get unchecked items
+    //! Then we separate key from the value i.e (oldword and newWord) and we add that to the map of
+    //! unchecked items.
     foreach (QListWidgetItem *item, items){
     if(item->checkState() == Qt::Unchecked){
         QRegExp sep("\\s* -> *");
@@ -182,6 +188,7 @@ QMap <QString, QString> GlobalReplaceDialog::uncheckedItemsList()
         this->uncheckedItemsListMap[string[0]] = string[1];
        }
    }
+    //! We return this map to the calling function.
     return this->uncheckedItemsListMap;
 }
 

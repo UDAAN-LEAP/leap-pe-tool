@@ -20,7 +20,10 @@
 CreateProjectPage::CreateProjectPage(QWidget *parent)
 	: QWizardPage(parent)
 {
-	setTitle("Create Project");
+
+    setTitle("Create Project"); //! set the window title to create the project
+
+    //! Initialize all the line edit and button widgets with their respective labels
     bookId_lineEdit = new QLineEdit();
     bookId_label = new QLabel(tr("Book ID: "));
     docExtn_lineEdit  = new QLineEdit();
@@ -37,6 +40,7 @@ CreateProjectPage::CreateProjectPage(QWidget *parent)
 	dirline->setReadOnly(true);
 	btn = new QPushButton("Open Directory");
 	
+    //! Initialize layout for all the widgets
     QHBoxLayout * bookId_layout = new QHBoxLayout();
 	QHBoxLayout * image_layout = new QHBoxLayout();
 	QHBoxLayout * document_layout = new QHBoxLayout();
@@ -44,7 +48,10 @@ CreateProjectPage::CreateProjectPage(QWidget *parent)
     QHBoxLayout * pmEmail_layout = new QHBoxLayout();
     QHBoxLayout * setId_layout = new QHBoxLayout();
     QHBoxLayout * repo_layout = new QHBoxLayout();
-	
+
+
+    //! Add widgets to the respective layouts
+
 	dir_layout->addWidget(btn);
     dir_layout->addWidget(dirline);
 
@@ -67,9 +74,13 @@ CreateProjectPage::CreateProjectPage(QWidget *parent)
     repo_layout->addWidget(repo_label);
     repo_layout->addWidget(repo_lineEdit);
 
-
+    //! We use connect function here which implictly invokes OpenDirectory function when the button
+    //! is clicked
 	connect(btn, &QPushButton::clicked, this, &CreateProjectPage::OpenDirectory);
 	
+
+    //! We create the VBox Layout and add all the sub-layouts to this layout
+    //! Check Layout in QT documentation for more info
 	QVBoxLayout * layout = new QVBoxLayout();
     layout->addLayout(bookId_layout);
     layout->addLayout(setId_layout);
@@ -80,7 +91,7 @@ CreateProjectPage::CreateProjectPage(QWidget *parent)
 	layout->addLayout(dir_layout);
 
 
-
+    //! We set VBox layout to whole dialog box
 	setLayout(layout);
 	
 }
@@ -102,7 +113,11 @@ CreateProjectPage::~CreateProjectPage()
  * \return
  */
 CreateProjectPage::ProjectInfo CreateProjectPage::getProjectInfo() {
+    //! info is a struct with many sub - fields (check header file for this class - CreateProjectPage.h)
 	CreateProjectPage::ProjectInfo info;
+
+    //! We set the struct child items with the data entered by the user
+
     info.bookId = bookId_lineEdit->text();
     info.docExtn = docExtn_lineEdit->text();
     info.imgExtn = imgExtn_lineEdit->text();
@@ -111,18 +126,23 @@ CreateProjectPage::ProjectInfo CreateProjectPage::getProjectInfo() {
     info.setId = setId_lineEdit->text();
     info.repo = repo_lineEdit->text();
 
+    //! We return this struct to the calling function
+
     return info;
 }
 
 /*!
  * \fn CreateProjectPage::OpenDirectory
- *
+ * \brief We open a QFileDialog which opens the OS File Browser Dialog Box.
+ * Then we set the text of dirline i.e line edit widget to the text obtained from getExisting directory
+ * and we also intialize a QDir Object with the directory string.
  * \brief
  *
  */
 
 void CreateProjectPage::OpenDirectory()
 {
+    //! The user selects a directory and this is returned by the getExistingDirectory() Function.
 	QString dir_str = QFileDialog::getExistingDirectory();
 	dirline->setText(dir_str);
 	QDir dir(dir_str);
