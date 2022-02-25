@@ -1,4 +1,4 @@
-﻿/*!
+/*!
   \class mainwWindow.cpp
  */
 #include "mainwindow.h"
@@ -814,7 +814,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     bool exists = QDir(s1).exists() && QDir(s2).exists();
     if (xml.exists()&& exists)
     {
-        ui->treeView->reset();    //reinitialize the ProjectHierarchyWindow       
+        ui->treeView->reset();    //reinitialize the ProjectHierarchyWindow
         mProject.process_xml(xml);
         mProject.open_git_repo();   //Open git repo
         if(!mProject.isProjectOpen())
@@ -1213,15 +1213,15 @@ void MainWindow::SaveFile_GUI_Postprocessing()
     QString localFilename = gDirTwoLevelUp + "/" +changefiledir +"/" + tempPageName;
 
     localFilename.replace(".txt",".html");
-    
+
     //! Don't create and save new file if output file already exists.
     if (gCurrentDirName == "Inds" || isVerifier && gCurrentDirName == "CorrectorOutput")
     {
-    	QFileInfo check_file(localFilename);
-    	if (check_file.exists() && check_file.isFile())
-    	{
-    		return ;
-    	}
+        QFileInfo check_file(localFilename);
+        if (check_file.exists() && check_file.isFile())
+        {
+            return ;
+        }
     }
 
     QFile sFile(localFilename);
@@ -3903,15 +3903,14 @@ void MainWindow::on_actionCentreAlign_triggered()
 }
 
 /*!
- * \deprecated
- * \fn MainWindow::on_action_JustifiedAlign_triggered()
+ * \fn    MainWindow::on_action_JustifiedAlign_triggered
  * \brief Justifies the text.
- * Here, whenever there is a break in the text, that is being replaced by space
- * and then text is placed in-between paragraph tags. After that, the following
- * selected text is justisfied aligned.
+ *        Here, whenever there is a break in the text, that is being replaced by space
+ *        and then text is placed in-between paragraph tags. After that, the following
+ *        selected text is justisfied aligned.
+ * \note  Not used, does not work as intended
 */
-void MainWindow::on_actionJusitfiedAlign_triggered() //Not used, does not work as intended
-{
+void MainWindow::on_actionJusitfiedAlign_triggered(){
     if(!curr_browser || curr_browser->isReadOnly())
         return;
     auto cursor = curr_browser->textCursor();
@@ -4967,7 +4966,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             }
             //! Capturing mouse release event on graphicsview
             if (event->type() == QEvent::MouseButtonRelease)
-            {       
+            {
                 //! reponsible for preventing the event second time.
                 if(drawRectangleFlag==true)
                 {
@@ -5802,7 +5801,7 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
         }
     }
     //qDebug()<<"globalReplacementMap"<<globalReplacementMap<<endl;
-    return globalReplacementMap; 
+    return globalReplacementMap;
 
 }
 
@@ -6963,7 +6962,10 @@ void MainWindow::file_click(const QModelIndex & indx)
 }
 
 /*!
- * \brief MainWindow::OpenDirectory
+ * \fn    MainWindow::OpenDirectory
+ * \brief This function is used to a folder into the tree at the current index. Also it adds
+ *        that folder to the project and imports all of its files  and at it into the tree as
+ *        well as project.
  */
 void MainWindow::OpenDirectory()
 {
@@ -6981,7 +6983,9 @@ void MainWindow::OpenDirectory()
 }
 
 /*!
- * \brief MainWindow::RemoveFile
+ * \fn    MainWindow::RemoveFile
+ * \brief This function provides functionality to remove a file from the project as well as
+ *        from the tree at that index.
  */
 void MainWindow::RemoveFile()
 {
@@ -6997,7 +7001,10 @@ void MainWindow::RemoveFile()
 }
 
 /*!
- * \brief MainWindow::AddNewFile
+ * \fn MainWindow::AddNewFile
+ * \brief This function is used to add a new file into the tree to do this this function
+ *        first checks current index of tree at which user wants new file then it adds the file
+ *        at that point in tree as well as it updates project.
  */
 void MainWindow::AddNewFile()
 {
@@ -7015,7 +7022,8 @@ void MainWindow::AddNewFile()
 }
 
 /*!
- * \brief MainWindow::CustomContextMenuTriggered
+ * \fn    MainWindow::CustomContextMenuTriggered
+ * \brief
  * \param p
  */
 void MainWindow::CustomContextMenuTriggered(const QPoint & p)
@@ -7056,8 +7064,13 @@ void MainWindow::CustomContextMenuTriggered(const QPoint & p)
 }
 
 /*!
- * \brief MainWindow::closetab
+ * \fn    MainWindow::closetab
+ * \brief This function is called when tab is closed or when the page is closed. This function
+ *        checks if page is in readonly mode and if condition fails then it popups a messagebox
+ *        asking to save any unsaved works left.
  * \param idx
+ *
+ * \sa    on_actionSave_triggered()
  */
 void MainWindow::closetab(int idx)
 {
@@ -7850,18 +7863,18 @@ QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<Q
 }
 
 /*!
-* \fn MainWindow::replaceInAllFilesFromTSVfile()
+* \fn    MainWindow::replaceInAllFilesFromTSVfile
 * \brief This feature allows user to perform global replace by uploading a tsv file
-* Here the function checks if the file being uploaded by the user is valid or invalid by calling checkForValidTSVfile()
-* If it is valid then it maps the words in the file to global replace map and asks user whether to perform global replace or not
-* If the user clicks on Ok then the words are globally replaced
+*        Here the function checks if the file being uploaded by the user is valid or invalid by calling checkForValidTSVfile()
+*        If it is valid then it maps the words in the file to global replace map and asks user whether to perform global replace or not
+*        If the user clicks on Ok then the words are globally replaced
 *
-*\sa checkForValidTSVfile(), writeGlobalCPairsToFiles()
+* \sa     checkForValidTSVfile(), writeGlobalCPairsToFiles()
 */
 void MainWindow::replaceInAllFilesFromTSVfile()
 {
     QMap<QString, QString> globalReplacementMap_allPages;
-    QString msgBoxText = ""; // Text to be displayed in the message box
+    QString msgBoxText = "";             // Text to be displayed in the message box
 
     QString filename = QFileDialog::getOpenFileName(this, "Open a file", gDirTwoLevelUp);
     QFile file(filename);
@@ -7893,7 +7906,7 @@ void MainWindow::replaceInAllFilesFromTSVfile()
         if (line == "")
             continue;
         QStringList words = line.split("\t");
-        globalReplacementMap_allPages.insert(words[0], words[1]);
+        globalReplacementMap_allPages.insert(words[0], words[1]);  //inserts words into globalReplacementMap_allPages by iterating
         msgBoxText.append(words[0] + " -> " + words[1] + "\n");
     }
     file.close();
@@ -7962,13 +7975,23 @@ bool MainWindow::checkForValidTSVfile(QFile & file)
     return true;
 }
 
-
+/*!
+* \fn    MainWindow::on_actionUpload_triggered
+* \brief When uploading any file or folder this function is called which calls replaceInAllFilesFromTSVfile function
+*
+* \sa    replaceInAllFilesFromTSVfile()
+*/
 void MainWindow::on_actionUpload_triggered()
 {
     replaceInAllFilesFromTSVfile();
 }
 
-
+/*!
+* \fn    MainWindow::on_justify_triggered
+* \brief This function checks if page is opened in readonly mode if false then it allows the
+*        user to change the alignment of the text in the current opened page or tab.
+*
+*/
 void MainWindow::on_justify_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -7976,6 +7999,12 @@ void MainWindow::on_justify_triggered()
     curr_browser->setAlignment(Qt::AlignJustify);
 }
 
+/*!
+* \fn    MainWindow::on_actionFont_Color_triggered
+* \brief This function checks if page is opened in readonly mode if false then it allows the
+*        user to select a color for the font and then changes the text font color in the page.
+*
+*/
 void MainWindow::on_actionFont_Color_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
