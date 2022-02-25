@@ -2406,3 +2406,9 @@ Date: 25 Feb 2022 @ 14:40:25
 Username:asr16
 
 Application Log:
+
+OpenOCRCorrect Application Log
+Date: 25 Feb 2022 @ 23:39:03
+Username:mush
+
+Application Log:
