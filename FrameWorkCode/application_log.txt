@@ -2418,3 +2418,10 @@ Date: 25 Feb 2022 @ 23:59:40
 Username:mush
 
 Application Log:
+
+OpenOCRCorrect Application Log
+Date: 26 Feb 2022 @ 00:17:59
+Username:mush
+
+Application Log:
+Debug: "/home/mush/ocr/code-refactor/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
