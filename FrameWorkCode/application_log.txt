@@ -2275,3 +2275,134 @@ Date: 25 Feb 2022 @ 13:00:25
 Username:aman
 
 Application Log:
+
+OpenOCRCorrect Application Log
+Date: 25 Feb 2022 @ 14:35:09
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "Research =>Researcher " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ISSN 2348-7674 International M multidisciplinary research J journal ==>Researcher er Innovator ISSN 2348-7674 International M multidisciplinary research J journal " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Feb 2022 @ 14:36:17
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "Researcher =>Research " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Research  Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Research  Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Research  Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ISSN 2348-7674 International M multidisciplinary research J journal ==>Research  Innovator ISSN 2348-7674 International M multidisciplinary research J journal " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Research  Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Research  Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Research  Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Research  Innovator " (mainwindow.cpp)
+Debug: Checkbox Checked (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: oldWord "Research" (mainwindow.cpp)
+Debug: newWord "Researcher" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 25 Feb 2022 @ 14:37:14
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "Researcher =>Research " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: oldWord "Research" (mainwindow.cpp)
+Debug: newWord "Researcher" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 25 Feb 2022 @ 14:38:37
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "Research =>Researcher " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ISSN 2348-7674 International M multidisciplinary research J journal ==>Researcher er Innovator ISSN 2348-7674 International M multidisciplinary research J journal " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ISSN 2348-7674 International M multidisciplinary research J journal ==>Researcher er Innovator ISSN 2348-7674 International M multidisciplinary research J journal " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: Final Sentence "Researcher Innovator ==>Researcher er Innovator " (mainwindow.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "trees =>plants " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Checkbox Checked (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "plants =>trees " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Checkbox Checked (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: oldWord "trees" (mainwindow.cpp)
+Debug: newWord "plants" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 25 Feb 2022 @ 14:40:25
+Username:asr16
+
+Application Log:

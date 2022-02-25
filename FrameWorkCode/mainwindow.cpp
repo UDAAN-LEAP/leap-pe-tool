@@ -5648,12 +5648,7 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     if (messageBox.clickedButton() == replaceButton){
         if(cb->checkState() == Qt::Checked){
             chk=1;
-            allPages.push_back(1);
             qDebug()<<"Checkbox Checked";
-        }
-        else{
-            allPages.push_back(0);
-            qDebug()<<"Checkbox Unchecked";
         }
         return true;
     }
