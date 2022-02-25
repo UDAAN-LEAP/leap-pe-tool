@@ -2269,3 +2269,9 @@ Date: 25 Feb 2022 @ 12:31:38
 Username:aman
 
 Application Log:
+
+OpenOCRCorrect Application Log
+Date: 25 Feb 2022 @ 13:00:25
+Username:aman
+
+Application Log:

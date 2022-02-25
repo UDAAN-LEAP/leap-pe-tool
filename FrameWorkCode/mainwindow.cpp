@@ -6889,7 +6889,10 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 }
 
 /*!
- * \brief MainWindow::LoadImageFromFile
+ * \fn    MainWindow::LoadImageFromFile
+ * \brief This functions loads the image file in the image tab and provides all the functionality
+ *        like zoom , cut and resize on that image file.
+ *
  * \param f
  */
 void MainWindow::LoadImageFromFile(QFile * f)
@@ -6912,7 +6915,7 @@ void MainWindow::LoadImageFromFile(QFile * f)
     if (z)delete z;
     z = new Graphics_view_zoom(ui->graphicsView, graphic,800);
     z->set_modifiers(Qt::NoModifier);
-    z->zoom_level = 100;
+    z->zoom_level = 100;                            //default zoom level
     connect(z, SIGNAL(zoomed()), this, SLOT(zoomedUsingScroll()));
 
     item1 =new QGraphicsRectItem(0, 0, 1, 1);
@@ -6925,6 +6928,13 @@ void MainWindow::LoadImageFromFile(QFile * f)
     ui->graphicsView->viewport()->installEventFilter(this);
 }
 
+/*!
+ * \fn    MainWindow::file_click
+ * \brief This function checks for the type of file user clicked in the tree view then loads that file into
+ *        the text browser if its not image else loads into image tab.
+ * \param indx
+ * \sa    LoadDocument(), LoadImageFromFile()
+ */
 void MainWindow::file_click(const QModelIndex & indx)
 {
     auto item = (TreeItem*)indx.internalPointer();
@@ -6933,7 +6943,7 @@ void MainWindow::file_click(const QModelIndex & indx)
         return;
     auto file = item->GetFile();
 
-    QString fileName = file->fileName();
+    QString fileName = file->fileName();          //gets filename
     NodeType type = item->GetNodeType();
     switch (type) {
 
@@ -6942,12 +6952,12 @@ void MainWindow::file_click(const QModelIndex & indx)
         QFileInfo f(*file);
         QString suff = f.completeSuffix();
         if (suff == "txt" || suff == "html") {
-            LoadDocument(file,suff,qvar);
+            LoadDocument(file,suff,qvar);     //loads not image files
         }
 
         if (suff == "jpeg" || suff == "jpg" || suff == "png")
         {
-            LoadImageFromFile(file);
+            LoadImageFromFile(file);          //loads image files
         }
         break;
     }
@@ -7018,7 +7028,8 @@ void MainWindow::AddNewFile()
 
 /*!
  * \fn    MainWindow::CustomContextMenuTriggered
- * \brief
+ * \brief This function is called when user wants to change Context menu. This function maps the
+ *        tree view of then it regenrates it according to filetype or filter.
  * \param p
  */
 void MainWindow::CustomContextMenuTriggered(const QPoint & p)
@@ -7030,7 +7041,7 @@ void MainWindow::CustomContextMenuTriggered(const QPoint & p)
         auto item = (TreeItem*)curr_idx.internalPointer();
         switch (item->GetNodeType())
         {
-        case _FILETYPE:
+        case _FILETYPE:                //for filetype view
         {
             QMenu * m = new QMenu(this);
             QAction * act = new QAction("Remove File", this);
@@ -7185,22 +7196,24 @@ void MainWindow::tabchanged(int idx)
 }
 
 /*!
- * \brief MainWindow::setMFilename
+ * \fn    MainWindow::setMFilename
+ * \brief This function is used to set the file name or image file name of the project tree when
+ *        opened. Also this functions removes extentions of those file and keep only name of that file.
  * \param name
- * sets current file and image
+ *
  */
 void MainWindow::setMFilename( QString name )
 {
     mFilename = name;
     QString tempName = mFilename;
 
+    //!Replacing all the extensions from the filename
     tempName.replace("Inds", "Images");
     tempName.replace("CorrectorOutput", "Images");
     tempName.replace("VerifierOutput", "Images");
-
     tempName.replace(".txt", ".jpeg").replace(".html", ".jpeg");
 
-    // select the image. look for jpeg, jpg and png(select first whichever is found)
+    //! select the image. look for jpeg, jpg and png(select first whichever is found)
     QFileInfo check_file(tempName);
     if (check_file.exists() && check_file.isFile())
     {
@@ -7226,7 +7239,9 @@ void MainWindow::setMFilename( QString name )
 }
 
 /*!
- * \brief MainWindow::directoryChanged
+ * \fn    MainWindow::directoryChanged
+ * \brief This funcction is called when directory of project is changed. This function sets all
+ *        file paths of corrector output and verifier output to the new loaction.
  * \param path
  */
 void MainWindow::directoryChanged(const QString &path)
@@ -7237,7 +7252,7 @@ void MainWindow::directoryChanged(const QString &path)
     QString dirstr = d.dirName();
     auto list = d.entryList(QDir::Files);
     QSet<QString> s;
-    for (auto file : list)
+    for (auto file : list)    //iterating on set
     {
         s.insert(file);
     }
@@ -7245,7 +7260,7 @@ void MainWindow::directoryChanged(const QString &path)
     {
         QSet<QString> added = s - corrector_set;
         QSet<QString> removed = corrector_set - s;
-        QString str = mProject.GetDir().absolutePath() + "/CorrectorOutput/";
+        QString str = mProject.GetDir().absolutePath() + "/CorrectorOutput/";  //new location
         Filter * filter = mProject.getFilter("CorrectorOutput");
         for (auto f : added)
         {
@@ -7258,7 +7273,7 @@ void MainWindow::directoryChanged(const QString &path)
     else
     {
         QSet<QString> added = s - verifier_set;
-        QString str = mProject.GetDir().absolutePath() + "/VerifierOutput/";
+        QString str = mProject.GetDir().absolutePath() + "/VerifierOutput/"; //new location
         Filter * filter = mProject.getFilter("VerifierOutput");
         for (auto f : added)
         {
