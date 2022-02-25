@@ -7375,7 +7375,8 @@ void MainWindow::on_actionSave_All_triggered()  //enable when required
 }
 
 /*!
- * \brief MainWindow::closeEvent
+ * \fn MainWindow::closeEvent
+ * \brief event filter that tracks close event and prompts user to save file if they didn't
  * \param event
  */
 void MainWindow::closeEvent (QCloseEvent *event)
@@ -7385,8 +7386,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
     if (isUnsaved)
     {
 
-        //confusion
-
+        //!confusion
         QMessageBox saveBox;
         saveBox.setWindowTitle("Close");
         saveBox.setIcon(QMessageBox::Question);
@@ -7717,58 +7717,86 @@ void MainWindow::actionRecent_Project_clicked()
 //    }
 //};
 
-
+/*!
+ * \fn MainWindow::on_textBrowser_textChanged
+ * \brief Updates the word count based on browser text change
+ */
 void MainWindow::on_textBrowser_textChanged()
 {
     WordCount();
 }
 
-
+/*!
+ * \fn MainWindow::on_zoom_Out_Button_clicked
+ * \brief sets zoom out to graphics view
+ */
 void MainWindow::on_zoom_Out_Button_clicked()
 {
     if (z)
         z->gentle_zoom(z->getDefaultZoomOutFactor());
 }
 
-
+/*!
+ * \fn MainWindow::on_zoom_In_Button_clicked
+ * \brief sets zoom in to graphics view
+ */
 void MainWindow::on_zoom_In_Button_clicked()
 {
     if (z)
         z->gentle_zoom(z->getDefaultZoomInFactor());
 }
 
-
+/*!
+ * \fn MainWindow::zoom_slider_valueChanged
+ * \brief Updates the zoom percentage to QLabel
+ * \param value
+ */
 void MainWindow::zoom_slider_valueChanged(int value)
 {
     ui->zoom_level_value->setText(QString::number(z->zoom_level) + "%");
 }
 
-
+/*!
+ * \fn MainWindow::zoom_slider_moved
+ * \brief Updates the zoom value when the slider is moved
+ * \param value
+ */
 void MainWindow::zoom_slider_moved(int value)
 {
+    //!Calculating value to check whether it is zoom in or zoom out
     if (value % 10 != 0) {
         value = (value / 10)*10 + 10;
     }
     double zoomFactor;
+
+    //!increses zoom level by one
     if (value > z->zoom_level) {
         zoomFactor = 1 + ((value - z->zoom_level) / 100.0);
     }
+    //!Decreases zoom level by one
     else if (value < z->zoom_level) {
         zoomFactor = 1 - ((z->zoom_level - value) / 100.0);
     }
     else return;
 
+    //!Sets the final zoom value to the slider
     z->gentle_zoom(zoomFactor);
     ui->horizontalSlider->setValue(value);
 }
 
-
+/*!
+ * \fn MainWindow::zoomedUsingScroll
+ * \brief Set the zoom level of horizontal slider based on scroll
+ */
 void MainWindow::zoomedUsingScroll()
 {
     ui->horizontalSlider->setValue(z->zoom_level);
 }
 
-
+/*!
+ * \fn MainWindow::createActions
+ * \brief sets Icon Size of mainToolbar
+ */
 void MainWindow::createActions()
 {
     ui->mainToolBar->setIconSize(QSize(100, 100));
