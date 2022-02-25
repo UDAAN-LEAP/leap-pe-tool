@@ -6567,7 +6567,6 @@ void MainWindow::on_actionAdd_Image_triggered()
                 QFileInfo finfo(destinationFileName);
             }
             QFile::copy(file, destinationFileName);
-
             copiedFileName = QDir::current().relativeFilePath(destinationFileName);
 
             //QUrl Uri ( QString ( "file://%1" ).arg ( file ) );
@@ -6579,7 +6578,6 @@ void MainWindow::on_actionAdd_Image_triggered()
             QTextDocument * textDocument = curr_browser->document();
             textDocument->addResource( QTextDocument::ImageResource, copiedFileName, QVariant ( image ) );
             QTextCursor cursor = curr_browser->textCursor();
-
             QTextImageFormat imageFormat;
             imageFormat.setWidth( image.width() );
             imageFormat.setHeight( image.height() );
@@ -6616,15 +6614,12 @@ void MainWindow::on_actionResize_Image_triggered()
             if(fragment.charFormat().isImageFormat ()) {
                 QTextImageFormat newImageFormat = fragment.charFormat().toImageFormat();
                 QPair<double, double> size = ResizeImageView::getNewSize(this, newImageFormat.width(), newImageFormat.height());
-
                 newImageFormat.setWidth(size.first);
                 newImageFormat.setHeight(size.second);
-
                 if (newImageFormat.isValid()) {
                     //QMessageBox::about(this, "Fragment", fragment.text());
                     //newImageFormat.setName(":/icons/text_bold.png");
                     QTextCursor helper = curr_browser->textCursor();
-
                     helper.setPosition(fragment.position());
                     helper.setPosition(fragment.position() + fragment.length(), QTextCursor::KeepAnchor);
                     helper.setCharFormat(newImageFormat);
