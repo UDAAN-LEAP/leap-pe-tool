@@ -5499,12 +5499,13 @@ void MainWindow::on_compareVerifierOutput_clicked() //Verifier-Version
   }
 }
 
-//Global CPair Start
+//Global CPair Starts
+
 /*!
- * \brief MainWindow::dumpStringToFile
+ * \fn MainWindow::dumpStringToFile
+ * \brief dumps given QString to file at file_path
  * \param file_path
  * \param string
- * dumps given QString to file at file_path
  */
 void MainWindow::dumpStringToFile(QString file_path, QString string){
     QFile file(file_path);
@@ -5516,11 +5517,11 @@ void MainWindow::dumpStringToFile(QString file_path, QString string){
 }
 
 /*!
- * \brief MainWindow::isStringInFile
+ * \fn MainWindow::isStringInFile
+ * \brief Checks if a QString is in file at file_path
  * \param file_path
  * \param searchString
- * \return
- * checks if a QString is in file at file_path
+ * \return 0 if not present and 1 if it is present
  */
 bool MainWindow::isStringInFile(QString file_path, QString searchString){
 
@@ -5530,7 +5531,8 @@ bool MainWindow::isStringInFile(QString file_path, QString searchString){
     if(fileToSearchIn.open(QIODevice::ReadOnly | QIODevice::Text)){
         QTextStream in(&fileToSearchIn);
         QString line;
-        // Check in everyline if string exists*/
+
+        //! Check in everyline if string exists
         do{
             line = in.readLine();
             if(line.contains(searchString)){
@@ -5546,8 +5548,8 @@ bool MainWindow::isStringInFile(QString file_path, QString searchString){
 }
 
 /*!
- * \brief MainWindow::addCurrentlyOpenFileToEditedFilesLog
- * adds currently opened file in editor in .EditedFiles.txt to mark it as dirty
+ * \fn MainWindow::addCurrentlyOpenFileToEditedFilesLog
+ * \brief adds currently opened file in editor in .EditedFiles.txt to mark it as dirty
  */
 void MainWindow::addCurrentlyOpenFileToEditedFilesLog(){
     QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
@@ -5566,8 +5568,8 @@ void MainWindow::addCurrentlyOpenFileToEditedFilesLog(){
 }
 
 /*!
- * \brief MainWindow::deleteEditedFilesLog
- * for now I am calling this everytime window closes
+ * \fn MainWindow::deleteEditedFilesLog
+ * \brief for now I am calling this everytime window closes
  */
 void MainWindow::deleteEditedFilesLog(){
     QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
@@ -5576,10 +5578,10 @@ void MainWindow::deleteEditedFilesLog(){
 }
 
 /*!
- * \brief MainWindow::writeGlobalCPairsToFiles
+ * \fn MainWindow::writeGlobalCPairsToFiles
+ * \brief writes CPairs by iterating over all files
  * \param file_path
  * \param globalReplacementMap
- * writes CPairs by iterating over all files
  */
 int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap){
     QMap <QString, QString>::iterator grmIterator;
@@ -5587,6 +5589,7 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
 
     f->open(QIODevice::ReadOnly);
 
+    //!Set encoding and read the file content
     QTextStream in(f);
     in.setCodec("UTF-8");
     QString s1 = in.readAll();
@@ -5595,6 +5598,7 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
 
     int replaced = 0, tot_replaced = 0;
 
+    //!Replacing words by iterating the map
     for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
     {
         QString pattern = ("(\\b)")+grmIterator.key()+("(\\b)"); // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
@@ -5616,14 +5620,18 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
 }
 
 /*!
- * \brief MainWindow::globalReplaceQueryMessageBox
+ * \fn MainWindow::globalReplaceQueryMessageBox
+ * \brief spawns a MessageBox and returns true if Replace is chosen
  * \param old_word
  * \param new_word
- * \return
- * spawns a MessageBox and returns true if Replace is chosen
+ * \return bool
+ *
  */
 bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word, int &chk){
+
     chk=0;
+
+    //!Declaring messagebox and the associated buttons
     QMessageBox messageBox(this);
    // QDialog dialog(this);
     QCheckBox *cb = new QCheckBox("Make changes to all pages");
@@ -5642,6 +5650,7 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     obj[old_word] = new_word;
     QVector<int> allPages;
 
+    //!Get checkbox State
     if(cb->checkState() == Qt::Checked){
         chk=1;
         allPages.push_back(1);
@@ -5650,9 +5659,10 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
         allPages.push_back(0);
     }
 
+    //!Disconnecting button from message box
     previewButton->disconnect();
     connect(previewButton,&QAbstractButton::clicked, this,[=](){
-        globalReplacePreviewfn(obj,allPages);
+        globalReplacePreviewfn(obj,allPages);   //!preview for single replace
     } );
 
     messageBox.setWindowTitle("Global Replace");
@@ -5666,6 +5676,8 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
         }
         return true;
     }
+
+    //!Writing logs
     if (messageBox.clickedButton() == cancelButton){
         QDir directory(gDirTwoLevelUp);
         QString setName=directory.dirName();
@@ -5703,10 +5715,10 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
 
 
 /*!
- * \brief MainWindow::getGlobalReplacementMapFromChecklistDialog
+ * \fn MainWindow::getGlobalReplacementMapFromChecklistDialog
+ * \brief spawns a checklist and returns a Qmap of selected pairs
  * \param changedWords
- * \return
- * spawns a checklist and returns a Qmap of selected pairs
+ * \returns QMap
  */
 QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords, QVector<int> *replaceInAllPages){
     QMap <QString, QString> globalReplacementMap;
@@ -5718,6 +5730,7 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
     float height = screenGeometry.height() * 0.5;
     float width = screenGeometry.width() * 0.5;
 
+    //!Initiating and executing globalreplacedialog for getting multiple repalcement pairs
     grDialog.setModal(true);
     grDialog.setFixedSize(width, height);
     grDialog.exec();
@@ -5731,23 +5744,24 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
         {
             QMap <QString, QString>::iterator grmIterator;
 
+            //!Writing logs
             QDir directory(gDirTwoLevelUp);
             QString setName=directory.dirName();
             QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
             QFile csvFile(filename);
-            if(!csvFile.exists())
+            if(!csvFile.exists())     //for first time creation
             {
                 csvFile.open(QIODevice::ReadWrite | QIODevice::Append);
                 QTextStream output(&csvFile);
                 output.setCodec("UTF-8");
                 output << "Source Word,Target Word,Type of Replacement,Time of Replacement,Page Name,Set name";
             }
-
             else
             {
                 csvFile.open(QIODevice::ReadWrite | QIODevice::Append);
             }
 
+            //!Writing all changed words to logs
             for (grmIterator = uncheckedItemsListMap.begin(); grmIterator != uncheckedItemsListMap.end(); ++grmIterator)
             {
                 QString sourceString = grmIterator.key();
@@ -5785,7 +5799,6 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
                 output.setCodec("UTF-8");
                 output << "Source Word,Target Word,Type of Replacement,Time of Replacement,Page Name,Set name";
             }
-
             else
             {
                 csvFile.open(QIODevice::ReadWrite | QIODevice::Append);
@@ -5815,10 +5828,11 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
 }
 
 /*!
- * \brief MainWindow::runGlobalReplace
+ * \fn MainWindow::runGlobalReplace
+ * \brief Replace words iteratively
  * \param currentFileDirectory
  * \param changedWords
- * Replace words iteratively
+ *
  */
 void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QString> changedWords)
 {
@@ -5921,7 +5935,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         }
         else if (noOfChangedWords > 1)
         {
-            // Replacing in Unedited pages
+            //! Replacing in Unedited pages
             while (dirIterator.hasNext())
             {
                 QString it_file_path = dirIterator.next();
@@ -5942,7 +5956,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
             }
             QDirIterator dirIterator_2(currentFileDirectory, QDirIterator::Subdirectories);
 
-            // Replacing in all pages
+            //! Replacing in all pages
             while (dirIterator_2.hasNext())
             {
                 QString it_file_path = dirIterator_2.next();
@@ -5959,6 +5973,8 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
             }
         }
     }
+
+    //! Writing logs
     if(globalReplacementMap.values().length()>0)
     {
         QMap <QString, QString>::iterator grmIterator;
@@ -6088,7 +6104,7 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
         }
 
         QDirIterator dirIterator_2(currentFileDirectory, QDirIterator::Subdirectories);
-        //all pages
+        //!all pages
         while (dirIterator_2.hasNext())
         {
             QString it_file_path = dirIterator_2.next();
@@ -7373,7 +7389,8 @@ void MainWindow::on_actionSave_All_triggered()  //enable when required
 }
 
 /*!
- * \brief MainWindow::closeEvent
+ * \fn MainWindow::closeEvent
+ * \brief event filter that tracks close event and prompts user to save file if they didn't
  * \param event
  */
 void MainWindow::closeEvent (QCloseEvent *event)
@@ -7383,8 +7400,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
     if (isUnsaved)
     {
 
-        //confusion
-
+        //!confusion
         QMessageBox saveBox;
         saveBox.setWindowTitle("Close");
         saveBox.setIcon(QMessageBox::Question);
@@ -7627,26 +7643,46 @@ void MainWindow::on_actionas_PDF_triggered()
     document->print(&printer);
 }
 
+/*!
+ * \fn MainWindow::on_actionGet_Help_triggered
+ * \brief Redirects user to OCR Tool Help documentation
+ */
 void MainWindow::on_actionGet_Help_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/1PAQKz3Vwu5EN850uxZUeSejvmwF2293j/edit?usp=sharing&ouid=114703528031965332802&rtpof=true&sd=true", QUrl::TolerantMode));
 }
 
+/*!
+ * \fn MainWindow::on_actionTutorial_triggered
+ * \brief Redirects user to Team OCR Youtube channel
+ */
 void MainWindow::on_actionTutorial_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://www.youtube.com/channel/UCrViL9ay1RO9lS7FIlnh8BQ", QUrl::TolerantMode));
 }
 
+/*!
+ * \fn MainWindow::on_actionLinux_triggered
+ * \brief Redirects user to OpenOCRCorrect Linux Installation Guide
+ */
 void MainWindow::on_actionLinux_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/15PbeYfdMl1eMypAMoqibG6Z5dxipfx_aZBSAhifTlec/edit?usp=sharing", QUrl::TolerantMode));
 }
 
+/*!
+ * \fn MainWindow::on_actionWindows_triggered
+ * \brief Redirects user to OpenOCRCorrect Windows Installation Guide
+ */
 void MainWindow::on_actionWindows_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/1xcXsNU03d-1RneksUzCHRyC4jm1mBF-N/edit?usp=sharing&ouid=114703528031965332802&rtpof=true&sd=true", QUrl::TolerantMode));
 }
 
+/*!
+ * \fn MainWindow::on_actionShortcut_Guide_triggered
+ * \brief Opens shortcut guide for all available features
+ */
 void MainWindow::on_actionShortcut_Guide_triggered()
 {
     ShortcutGuideDialog dialog;
@@ -7661,6 +7697,7 @@ void MainWindow::on_actionShortcut_Guide_triggered()
     dialog.setFixedSize(width, height);
     dialog.exec();
 }
+
 /*! \fn MainWindow::actionRecent_Project_clicked()
  *  \brief Checks if user clicked on recent project and opens the project if user has clicked recent project
  *  option.
@@ -7694,58 +7731,86 @@ void MainWindow::actionRecent_Project_clicked()
 //    }
 //};
 
-
+/*!
+ * \fn MainWindow::on_textBrowser_textChanged
+ * \brief Updates the word count based on browser text change
+ */
 void MainWindow::on_textBrowser_textChanged()
 {
     WordCount();
 }
 
-
+/*!
+ * \fn MainWindow::on_zoom_Out_Button_clicked
+ * \brief sets zoom out to graphics view
+ */
 void MainWindow::on_zoom_Out_Button_clicked()
 {
     if (z)
         z->gentle_zoom(z->getDefaultZoomOutFactor());
 }
 
-
+/*!
+ * \fn MainWindow::on_zoom_In_Button_clicked
+ * \brief sets zoom in to graphics view
+ */
 void MainWindow::on_zoom_In_Button_clicked()
 {
     if (z)
         z->gentle_zoom(z->getDefaultZoomInFactor());
 }
 
-
+/*!
+ * \fn MainWindow::zoom_slider_valueChanged
+ * \brief Updates the zoom percentage to QLabel
+ * \param value
+ */
 void MainWindow::zoom_slider_valueChanged(int value)
 {
     ui->zoom_level_value->setText(QString::number(z->zoom_level) + "%");
 }
 
-
+/*!
+ * \fn MainWindow::zoom_slider_moved
+ * \brief Updates the zoom value when the slider is moved
+ * \param value
+ */
 void MainWindow::zoom_slider_moved(int value)
 {
+    //!Calculating value to check whether it is zoom in or zoom out
     if (value % 10 != 0) {
         value = (value / 10)*10 + 10;
     }
     double zoomFactor;
+
+    //!increses zoom level by one
     if (value > z->zoom_level) {
         zoomFactor = 1 + ((value - z->zoom_level) / 100.0);
     }
+    //!Decreases zoom level by one
     else if (value < z->zoom_level) {
         zoomFactor = 1 - ((z->zoom_level - value) / 100.0);
     }
     else return;
 
+    //!Sets the final zoom value to the slider
     z->gentle_zoom(zoomFactor);
     ui->horizontalSlider->setValue(value);
 }
 
-
+/*!
+ * \fn MainWindow::zoomedUsingScroll
+ * \brief Set the zoom level of horizontal slider based on scroll
+ */
 void MainWindow::zoomedUsingScroll()
 {
     ui->horizontalSlider->setValue(z->zoom_level);
 }
 
-
+/*!
+ * \fn MainWindow::createActions
+ * \brief sets Icon Size of mainToolbar
+ */
 void MainWindow::createActions()
 {
     ui->mainToolBar->setIconSize(QSize(100, 100));

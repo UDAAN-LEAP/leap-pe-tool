@@ -1,3 +1,8 @@
+/*!
+  \class shortcutguidedialog.cpp
+  \brief Shortcut dialog shows a list of all the shortcuts available and
+         the action that will occur on applying those shortcuts
+ */
 #include "shortcutguidedialog.h"
 #include "ui_shortcutguidedialog.h"
 
@@ -14,6 +19,8 @@ ShortcutGuideDialog::ShortcutGuideDialog(QWidget *parent) :
 //    scrollarea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 //    scrollarea->setBackgroundRole(QPalette :: Dark);
 //    scrollarea->setWidget(ui->label);
+
+    //!sets flag to specify how the text should react to user input
     ui->textBrowser->setTextInteractionFlags(Qt::NoTextInteraction);
 }
 
