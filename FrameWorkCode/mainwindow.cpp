@@ -360,13 +360,13 @@ void MainWindow::SaveTimeLog()
 }
 
 /*!
-* \fn  MainWindow::DisplayTimeLog()
-* \brief this function displays the time in statusbar and gets update on every right click.
+* \fn    MainWindow::DisplayTimeLog()
+* \brief This function displays the time in statusbar and gets update on every right click.
 *
 */
 void MainWindow::DisplayTimeLog()
 {
-    QString currentVersion = mProject.get_version();
+    QString currentVersion = mProject.get_version();     //getting project version
     if(mRole == "Verifier" && mRole != currentVersion)
         currentVersion = QString::number(currentVersion.toInt() - 1);
 
@@ -377,7 +377,7 @@ void MainWindow::DisplayTimeLog()
     int mins = gSeconds / 60;
     int seconds = gSeconds - mins * 60;
     ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(seconds) +
-                          " secs elapsed on this page(Right Click to update)");
+                          " secs elapsed on this page(Right Click to update)");        //updating time in UI
 }
 
 /*!
@@ -666,7 +666,9 @@ void MainWindow::menuSelection(QAction* action)
 }
 
 /*!
- * \brief MainWindow::translate_replace
+ * \fn    MainWindow::translate_replace
+ * \brief This function replaces the words translated in the current page by accessing the selected
+ *        text and removing old text and inserts new text on that selected part.
  * \param action
  */
 void MainWindow::translate_replace(QAction* action)
@@ -676,10 +678,10 @@ void MainWindow::translate_replace(QAction* action)
         QTextCursor cursor = curr_browser->textCursor();
         cursor.select(QTextCursor::WordUnderCursor);
         cursor.beginEditBlock();
-        cursor.removeSelectedText();
+        cursor.removeSelectedText();       //removes selected text
 
         string target = (action->text().toUtf8().constData());
-        cursor.insertText(action->text());
+        cursor.insertText(action->text());    //inserts new text
         cursor.endEditBlock();
     }
 }
@@ -1381,6 +1383,11 @@ void MainWindow::on_actionSave_triggered()
 
 }
 
+/*!
+* \fn    MainWindow::stopSpinning
+* \brief This function stops the sppiner whenever called.
+*
+*/
 void MainWindow::stopSpinning()
 {
     spinner->close();
@@ -2050,10 +2057,10 @@ void MainWindow::on_actionLoadGDocPage_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionLoadData_triggered()
+ * \fn    MainWindow::on_actionLoadData_triggered()
  * \brief Loads the dictionary files only once
- * This function is only called once per project to load the dictionary file of the project,
- * dictionary files can be used to work on suggestions.
+ *        This function is only called once per project to load the dictionary file of the project,
+ *        dictionary files can be used to work on suggestions.
  */
 bool LoadDataFlag = 1; //To load data only once
 QString mFilename1, loadStr, loadStr1;
@@ -2087,11 +2094,18 @@ void MainWindow::load_data(){
 
 }
 
+/*!
+ * \fn    MainWindow::WordCount
+ * \brief This function is called whenever there is any key pressed after opening the project.
+ *        This function counts the number of word in the page and shows it in the statusbar at bottom
+ *        of the window.
+ */
 void MainWindow::WordCount()
 {
 
     if(curr_browser){
     QString extText = curr_browser->toPlainText();
+      //!Removes these symbol while country
        extText.remove("?");
        extText.remove("|");
        extText.remove("`");
