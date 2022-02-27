@@ -2425,3 +2425,9 @@ Username:mush
 
 Application Log:
 Debug: "/home/mush/ocr/code-refactor/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 27 Feb 2022 @ 20:56:51
+Username:aman
+
+Application Log:

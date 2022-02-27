@@ -202,7 +202,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 }
 
 /*!
- * \brief MainWindow::setRole()
+ * \fn    MainWindow::setRole
+ * \brief This function is used to show a box to user to select his role as verifier, project manager or
+ *        corrector. After user chooses a role then this function sets other variables accordingly for limiting
+ *        the access.
  * \param role
  * \return true/false
  */
@@ -293,9 +296,11 @@ MainWindow::~MainWindow()
 }
 
 /*!
- * \brief readJsonFile
+ * \fn    readJsonFile
+ * \brief This function is used to load the json files into the software in read only mode or in text mode.
  * \param filepath
- * \return
+ * \return mainObj
+ * \note   Uses QJsonObject library for json files.
  */
 QJsonObject readJsonFile(QString filepath)
 {
@@ -311,9 +316,11 @@ QJsonObject readJsonFile(QString filepath)
 }
 
 /*!
- * \brief writeJsonFile
+ * \fn    readJsonFile
+ * \brief This function is used to write into the json files in the software. It uses write only mode of fle.
  * \param filepath
  * \param mainObj
+ * \note  Uses QJsonObject library for json files.
  */
 void writeJsonFile(QString filepath, QJsonObject mainObj)
 {
@@ -381,7 +388,9 @@ void MainWindow::DisplayTimeLog()
 }
 
 /*!
- * \brief MainWindow::UpdateFileBrekadown
+ * \fn    MainWindow::UpdateFileBrekadown
+ * \brief This function is called whenever there is changes in folder structure or files.
+ *        This function updates the location of files and folder into the global variables.
  */
 void MainWindow::UpdateFileBrekadown()
 {
@@ -398,7 +407,9 @@ void MainWindow::UpdateFileBrekadown()
 }
 
 /*!
- * \brief DisplayError
+ * \fn    DisplayError
+ * \brief This function is called whenever there is a expected error occured  and this function
+ *        displays that error message using a message box.
  * \param error
  */
 void DisplayError(QString error)
@@ -642,14 +653,16 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 }// if mouse event
 
 /*!
- * \brief MainWindow::menuSelection
+ * \fn    MainWindow::menuSelection
+ * \brief This function provides the functionality to select the menu options like slp Dict
+ *        words or other to  insert into the page.
  * \param action
  */
 void MainWindow::menuSelection(QAction* action)
 {
     slpNPatternDict slnp;
     trieEditDis trie;
-    if (curr_browser)
+    if (curr_browser)  //checks for current browser that is page.
     {
         QTextCursor cursor = curr_browser->textCursor();
         cursor.select(QTextCursor::WordUnderCursor);
@@ -659,7 +672,7 @@ void MainWindow::menuSelection(QAction* action)
         string target = (action->text().toUtf8().constData());
         CPair[slnp.toslp1(selectedStr)] = slnp.toslp1(target);
         PWords[slnp.toslp1(target)]++;
-        cursor.insertText(action->text());
+        cursor.insertText(action->text());     //inserting into the page
 
         cursor.endEditBlock();
     }
@@ -6688,17 +6701,23 @@ QString GetFilter(QString & Name, const QStringList &list) {
 }
 
 /*!
- * \brief MainWindow::LoadDocument
+ * \fn    MainWindow::LoadDocument
+ * \brief This function is called whenever user wants to load a document of the project.
+ *        This function  checks for the current directory of the document and finds the filepath
+ *        then opens that document into the curr browser. Also before opening the document it
+ *        checks the type of file and saves its path into the log and removes its extension and saves it for later use
+ *        then updates the word count UI to display the count of the word.
+ *
  * \param f
  * \param ext
  * \param name
+ *
+ * \sa    setMFilename(), UpdateFileBrekadown(), DisplayJsonDict(), highlight(), LoadImageFromFile(), WordCount(), readSettings(), tabchanged()
  */
-
-
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
 
-
+    //!Keeps track of current , previous and next page.
     if(ui->tabWidget_2->currentIndex() >=0 && NextPrevTrig ==0)
     {
         closetab(ui->tabWidget_2->currentIndex());
@@ -6711,10 +6730,11 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     if(!(finfo.exists() && finfo.isFile())){
         return;
     }
+    //!Retreives current folder details
     current_folder = finfo.dir().dirName();
     QString fileName = finfo.fileName();
     if (ui->tabWidget_2->count() != 0) {
-        for (int i = 0; i < ui->tabWidget_2->count(); i++) {
+        for (int i = 0; i < ui->tabWidget_2->count(); i++) {   //iterating over no of opened tb/page
             if (name == ui->tabWidget_2->tabText(i)) {
                 ui->tabWidget_2->setCurrentIndex(i);
                 setMFilename(f->fileName());
@@ -6729,7 +6749,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     QTextBrowser * b = new QTextBrowser(this);
     b->setReadOnly(false);
 
-    if (!isVerifier && current_folder == "Inds") {
+    if (!isVerifier && current_folder == "Inds") {     //checks if role is not verifier
         QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
         output_file.replace(".txt", ".html");
         if (QFile::exists(output_file)) {
@@ -6744,6 +6764,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         }
     }
     isProjectOpen = 1;
+    //!Display format by setting font size and styles
     QTextStream stream(f);
     stream.setCodec("UTF-8");
     QString input = stream.readAll();
@@ -6757,7 +6778,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         while (getline(iss, line)) {
             QString qline = QString::fromStdString(line);
             if((line == "\n") || (line == "") || (qline.contains("\r")) )
-                strHtml+=line + "</p><p>";
+                strHtml+=line + "</p><p>";    //for html view
             else strHtml += line + "<br />";
         }
         strHtml += "</p></body></html>";
@@ -6825,6 +6846,8 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
     QString temp = imageFilePath;
     int flag=0;
+
+    //!removing extention from the document name
     temp.replace(".txt", ".jpeg");
     if (QFile::exists(temp) && flag==0)
     {
@@ -6877,7 +6900,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     }
     NextPrevTrig =0;
 
-    // Enabling Selection in treeView
+    //! Enabling Selection in treeView
     ui->treeView->selectionModel()->clearSelection();
     QModelIndex currentTreeItemIndex = ui->treeView->selectionModel()->currentIndex();
     QModelIndex parentIndex = currentTreeItemIndex.parent();
@@ -6899,7 +6922,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
             }
             else
             {
-                // Removing the space from each Label which was present at the starting of every label in the CorrectorOutput Folder
+                //! Removing the space from each Label which was present at the starting of every label in the CorrectorOutput Folder
                 treeItemLabel.remove(0, 1);
                 if (treeItemLabel == currentTabPageName)
                 {
@@ -6909,7 +6932,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
             }
         }
     }
-   WordCount();
+   WordCount();     //for counting no of words in the document
    readSettings();
 }
 
