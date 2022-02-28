@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Project name="">
+	<ItemGroup>
+		<Filter Include="">
+			<Extensions>_</Extensions>
+		</Filter>
+		<Filter Include="">
+			<Extensions>_</Extensions>
+		</Filter>
+		<Filter Include="">
+			<Extensions>_</Extensions>
+		</Filter>
+		<Filter Include="">
+			<Extensions>_</Extensions>
+		</Filter>
+	</ItemGroup>
+	<Configuration>
+		<Prefixmatch>_</Prefixmatch>
+	</Configuration>
+	<Metadata>
+		<Version>_</Version>
+		<Stage>_</Stage>
+		<Corrector>_</Corrector>
+		<SanityChecker>_</SanityChecker>
+		<Verifier>_</Verifier>
+	</Metadata>
+</Project>

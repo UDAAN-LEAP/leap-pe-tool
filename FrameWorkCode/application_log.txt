@@ -17189,3 +17189,75 @@ Username:ajit
 Application Log:
 Debug: "/home/ajit/Documents/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
 Warning: QIODevice::read (QFile, "/home/ajit/Documents/ABBV1S2_YP_dinesh-main/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 28 Feb 2022 @ 15:34:11
+Username:ajit
+
+Application Log:
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 28 Feb 2022 @ 15:36:04
+Username:ajit
+
+Application Log:
+Debug: current path =  "/home/ajit/Documents/Source Code/OCR/iitb-openocr-digit-tool/FrameWorkCode" (verifyset.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 28 Feb 2022 @ 15:39:13
+Username:ajit
+
+Application Log:
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 28 Feb 2022 @ 15:40:02
+Username:ajit
+
+Application Log:
+Debug: path =  "/home/ajit/Documents/Source Code/OCR/iitb-openocr-digit-tool/FrameWorkCode/projectXML_format.xml" (verifyset.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 28 Feb 2022 @ 15:41:08
+Username:ajit
+
+Application Log:
+Debug: path =  "/home/ajit/Documents/Source Code/OCR/iitb-openocr-digit-tool/FrameWorkCode/projectXMLFormat.xml" (verifyset.cpp)
+Debug: "/home/ajit/Documents/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 28 Feb 2022 @ 15:41:37
+Username:ajit
+
+Application Log:
+Debug: path =  "/home/ajit/Documents/Source Code/OCR/iitb-openocr-digit-tool/FrameWorkCode/projectXMLFormat.xml" (verifyset.cpp)
+Debug: Some Error occurred
+ (verifyset.cpp)
+Debug: path =  "/home/ajit/Documents/Source Code/OCR/iitb-openocr-digit-tool/FrameWorkCode/projectXMLFormat.xml" (verifyset.cpp)
+Debug: "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 28 Feb 2022 @ 15:54:04
+Username:ajit
+
+Application Log:
+Debug: "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 28 Feb 2022 @ 15:54:23
+Username:ajit
+
+Application Log:
+Debug: "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 28 Feb 2022 @ 15:55:09
+Username:ajit
+
+Application Log:
+Debug: "/home/ajit/Documents/Source Code/OCR/iitb-openocr-digit-tool/FrameWorkCode/projectXMLFormat.xml" (verifyset.cpp)
+Debug: "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/image.xml" (markRegion.cpp)

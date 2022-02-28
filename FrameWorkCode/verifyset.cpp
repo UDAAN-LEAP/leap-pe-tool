@@ -3,6 +3,7 @@
 #include <QRegExp>
 #include <QDebug>
 #include <QFileInfo>
+#include <QDir>
 
 /*!
  * \fn VerifySet (Constructor)
@@ -52,7 +53,10 @@ int VerifySet::testProjectXML()
 */
 bool VerifySet::LoadProjectXMLFormat()
 {
-    pugi::xml_parse_result result = docFormat.load_file("/home/ajit/Documents/Source Code/OCR/iitb-openocr-digit-tool/ProjectXML_format.xml");
+    std::string XMLformatPath(QDir::currentPath().toStdString() + "/projectXMLFormat.xml");
+    QFileInfo xmlFormatFile(QString::fromStdString(XMLformatPath));
+
+    pugi::xml_parse_result result = docFormat.load_file(xmlFormatFile.absoluteFilePath().toStdString().c_str());
     if (!result)
         return false;
     return true;
