@@ -807,7 +807,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
     if (result != 0) {
         mProject.setProjectOpen(false);
-        QMessageBox::warning(0, "Project XML file Error", "Error: " + verifySetObj.getErrorString());
+        QMessageBox::warning(0, "Project XML file Error", "Project XML File is corrupted \n\nError "+ QString::fromStdString(std::to_string(verifySetObj.getErrorCode()))+": " + verifySetObj.getErrorString()+"\n\nPlease Report this to your administrator");
         return;
     }
 
