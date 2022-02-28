@@ -17307,3 +17307,44 @@ Date: 28 Feb 2022 @ 20:27:59
 Username:sujay
 
 Application Log:
+
+OpenOCRCorrect Application Log
+Date: 28 Feb 2022 @ 21:16:55
+Username:asr16
+
+Application Log:
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/Comments/Timelog.json"): device not open ()
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "Research =>Researcher " 
+ (mainwindow.cpp)
+Debug: No exist file  "/home/asr16/Downloads/en-hi/Dicts/CPair" (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Checkbox Checked (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html"  to file. 
+ (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "Architecture =>Architectural " 
+ (mainwindow.cpp)
+Debug: "trees =>plants " 
+ (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Warning: QObject::connect: No such signal QListWidget::itemChanged(QlistWidgetItem*) in undoglobalreplace.cpp:25 ()
+Warning: QObject::connect:  (sender name:   'listWidget') ()
+Warning: QObject::connect:  (receiver name: 'UndoGlobalReplace') ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()

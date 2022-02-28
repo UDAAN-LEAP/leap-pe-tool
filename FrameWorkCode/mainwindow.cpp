@@ -7872,6 +7872,9 @@ void MainWindow::createActions()
 void MainWindow::on_actionUndo_Global_Replace_triggered()
 {
     QMap<QString, QString> undoGRMap;
+    int r1 = 0;
+    int r2 = 0;
+    int files = 0;
 
     reverseGlobalReplacedWordsMap();
     if ( globallyReplacedWords.size() == 1 )
@@ -7880,24 +7883,35 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
         QString newWord = globallyReplacedWords.value(oldWord);
         oldWord=oldWord.trimmed();
         newWord=newWord.trimmed();
-        qDebug() << "oldWord" << oldWord;
-        qDebug() << "newWord" << newWord;
         bool replace = undoGlobalReplace_Single_Word(oldWord, newWord);
 
         if ( replace )
             undoGRMap.insert(oldWord, newWord);
-    }
-    else if ( globallyReplacedWords.size() > 1 )
-    {
+     }
+     else if ( globallyReplacedWords.size() > 1 )
+     {
         //qDebug() << "For Multiple Words";
         undoGRMap = getUndoGlobalReplaceMap_Multiple_Words(globallyReplacedWords);
-    }
+     }
 
-    if ( !undoGRMap.isEmpty() )
-    {
-        for (auto itFile : filesChangedUsingGlobalReplace)
+     QString currentDirAbsolutePath = gDirTwoLevelUp + "/" + gCurrentDirName;
+     QDirIterator dirIterator(currentDirAbsolutePath, QDirIterator::Subdirectories);
+
+     if ( !undoGRMap.isEmpty() )
+     {
+        //for (auto itFile : filesChangedUsingGlobalReplace)
+        while(dirIterator.hasNext())
         {
-            writeGlobalCPairsToFiles(itFile, undoGRMap);
+            //QString suff = dirIterator.fileInfo().completeSuffix();
+            QString itFile = dirIterator.next();
+            if(itFile.contains(".html")){
+                r1 = writeGlobalCPairsToFiles(itFile, undoGRMap);
+                r2 = r2+r1;
+                if(r1 > 0)
+                files++;
+             }
+             else
+                writeGlobalCPairsToFiles(itFile, undoGRMap);
         }
 
         QDir directory(gDirTwoLevelUp);
@@ -7964,8 +7978,11 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
             }
             csvFile.close();
         }
-
     }
+     QString msg  = QString::fromStdString(std::to_string(undoGRMap.values().length()) + " words changed" + "\n" + std::to_string(r2) + " instances replaced" + "\n" + std::to_string(files) + " files modified");
+     QMessageBox messageBox;
+     if(undoGRMap.values().length()>0)
+        messageBox.information(0, "Undo Global Replacement Successful", msg);
 }
 
 /*!
