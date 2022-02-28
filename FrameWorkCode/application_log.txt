@@ -17158,3 +17158,34 @@ Date: 28 Feb 2022 @ 12:42:16
 Username:asr16
 
 Application Log:
+
+OpenOCRCorrect Application Log
+Date: 28 Feb 2022 @ 14:05:40
+Username:ajit
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 28 Feb 2022 @ 14:07:18
+Username:ajit
+
+Application Log:
+Debug: "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 28 Feb 2022 @ 14:07:58
+Username:ajit
+
+Application Log:
+Debug: Some Error occurred
+ (verifyset.cpp)
+Debug: Some Error occurred
+ (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 28 Feb 2022 @ 14:08:50
+Username:ajit
+
+Application Log:
+Debug: "/home/ajit/Documents/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/ABBV1S2_YP_dinesh-main/.cursor.txt"): device not open ()

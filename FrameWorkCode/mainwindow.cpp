@@ -70,6 +70,7 @@
 #include <QColorDialog>
 #include "worker.h"
 #include <QThread>
+#include "verifyset.h"
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -796,6 +797,20 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     else{
       ProjFile = QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)"));   //Opens only if the file name is Project.xml
     }
+
+    if (ProjFile == "")
+        return;
+
+    // Testing of project.xml
+    VerifySet verifySetObj(ProjFile);
+    int result = verifySetObj.testProjectXML();
+
+    if (result != 0) {
+        mProject.setProjectOpen(false);
+        QMessageBox::warning(0, "Project XML file Error", "Error: " + verifySetObj.getErrorString());
+        return;
+    }
+
     QFile xml(ProjFile);
     QFileInfo finfo(xml);
     QString basedir = finfo.absoluteDir().absolutePath();

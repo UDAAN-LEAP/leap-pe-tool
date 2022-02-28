@@ -35,6 +35,7 @@ HEADERS += ./Filters.h \
     $$PWD/globalreplacedialog.h \
     $$PWD/ui_shortcutguidedialog.h \
     $$PWD/undoglobalreplace.h \
+	$$PWD/verifyset.h \
     $$PWD/worker.h \
     ./Project.h \
     ./TreeItem.h \
@@ -109,6 +110,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/globalreplacedialog.cpp \
     $$PWD/trieEditdis.cpp \
     $$PWD/undoglobalreplace.cpp \
+	$$PWD/verifyset.cpp \
     $$PWD/worker.cpp \
     ./Filters.cpp \
     ./Project.cpp \
