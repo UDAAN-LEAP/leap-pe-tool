@@ -5924,8 +5924,9 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
                             if(r1 > 0)
                             files++;
                         }
-                        else
+                        else if(suff != "dict"){
                             x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                        }
                     }
                 }
             }
@@ -5941,8 +5942,9 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
                         if(r1 > 0)
                         files++;
                     }
-                    else
+                    else if(suff != "dict"){
                         x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                    }
                 }
             }
         }
@@ -5963,8 +5965,9 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
                         if(r1 > 0)
                         files++;
                     }
-                    else
-                        x1 = writeGlobalCPairsToFiles(it_file_path, replaceInUneditedPages_Map);
+                    else if(suff != "dict"){
+                        x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                    }
                 }
             }
             QDirIterator dirIterator_2(currentFileDirectory, QDirIterator::Subdirectories);
@@ -5981,8 +5984,9 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
                     if(r1 > 0)
                     files++;
                 }
-                else
-                    x1 = writeGlobalCPairsToFiles(it_file_path, replaceInAllPages_Map);
+                else if(suff != "dict"){
+                    x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                }
             }
         }
     }
