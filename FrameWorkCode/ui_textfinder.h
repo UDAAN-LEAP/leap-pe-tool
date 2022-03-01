@@ -47,15 +47,15 @@ public:
     {
         if (TextFinder->objectName().isEmpty())
             TextFinder->setObjectName(QString::fromUtf8("TextFinder"));
-        TextFinder->resize(377, 214);
+        TextFinder->resize(552, 318);
         QFont font;
         font.setFamily(QString::fromUtf8("Work Sans"));
-        font.setPointSize(11);
+        font.setPointSize(12);
         font.setBold(false);
         font.setItalic(false);
         font.setWeight(50);
         TextFinder->setFont(font);
-        TextFinder->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\"; \n"
+        TextFinder->setStyleSheet(QString::fromUtf8("font: 12pt \"Work Sans\"; \n"
 "background-color: rgb(32, 33, 72);"));
         TextFinder->setSizeGripEnabled(false);
         horizontalLayout_3 = new QHBoxLayout(TextFinder);
@@ -71,25 +71,25 @@ public:
         formLayout->setContentsMargins(10, 10, 10, 10);
         findLabel = new QLabel(TextFinder);
         findLabel->setObjectName(QString::fromUtf8("findLabel"));
-        findLabel->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        findLabel->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);font:14pt;"));
 
         formLayout->setWidget(0, QFormLayout::LabelRole, findLabel);
 
         findLineEdit = new QLineEdit(TextFinder);
         findLineEdit->setObjectName(QString::fromUtf8("findLineEdit"));
-        findLineEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255); color: black;"));
+        findLineEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255); color: black;padding:5px;height:20px;border:2px;border-style:outset;border-color: #8c8c8c;"));
 
         formLayout->setWidget(0, QFormLayout::FieldRole, findLineEdit);
 
         replaceLabel = new QLabel(TextFinder);
         replaceLabel->setObjectName(QString::fromUtf8("replaceLabel"));
-        replaceLabel->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        replaceLabel->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);font:14pt;"));
 
         formLayout->setWidget(1, QFormLayout::LabelRole, replaceLabel);
 
         replaceLineEdit = new QLineEdit(TextFinder);
         replaceLineEdit->setObjectName(QString::fromUtf8("replaceLineEdit"));
-        replaceLineEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255); color: black;"));
+        replaceLineEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255); color: black;padding:5px;height:20px;border:2px;border-style:outset;border-color: #8c8c8c;"));
 
         formLayout->setWidget(1, QFormLayout::FieldRole, replaceLineEdit);
 
@@ -103,14 +103,14 @@ public:
         horizontalLayout->setContentsMargins(10, 3, 10, 2);
         findPreviousButton = new QPushButton(TextFinder);
         findPreviousButton->setObjectName(QString::fromUtf8("findPreviousButton"));
-        findPreviousButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
+        findPreviousButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:2px;color: rgb(32, 33, 72); height:20 pt; width: 113.5px; padding-top:1px; padding:5px;border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);border-style:outset;border-color: #8c8c8c;\n"
 "} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}"));
 
         horizontalLayout->addWidget(findPreviousButton);
 
         findNextButton = new QPushButton(TextFinder);
         findNextButton->setObjectName(QString::fromUtf8("findNextButton"));
-        findNextButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
+        findNextButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:2px;color: rgb(32, 33, 72); height:20 pt; width: 113.5px; padding-top:1px; padding:5px;border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);border-style:outset;border-color: #8c8c8c;\n"
 "} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}"));
 
         horizontalLayout->addWidget(findNextButton);
@@ -124,7 +124,7 @@ public:
         replaceButton = new QPushButton(TextFinder);
         replaceButton->setObjectName(QString::fromUtf8("replaceButton"));
         replaceButton->setFont(font);
-        replaceButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
+        replaceButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:2px;color: rgb(32, 33, 72); height:20 pt; width: 113.5px; padding-top:1px; padding:5px;border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);border-style:outset;border-color: #8c8c8c;\n"
 "} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}"));
 
         horizontalLayout_2->addWidget(replaceButton);
@@ -132,7 +132,7 @@ public:
         replaceAllButton = new QPushButton(TextFinder);
         replaceAllButton->setObjectName(QString::fromUtf8("replaceAllButton"));
         replaceAllButton->setFont(font);
-        replaceAllButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
+        replaceAllButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:2px;color: rgb(32, 33, 72); height:20 pt; width: 113.5px; padding-top:1px; padding:5px;border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);border-style:outset;border-color: #8c8c8c;\n"
 "} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}"));
 
         horizontalLayout_2->addWidget(replaceAllButton);
@@ -145,13 +145,17 @@ public:
 
         ReplaceAllPages = new QCheckBox(TextFinder);
         ReplaceAllPages->setObjectName(QString::fromUtf8("ReplaceAllPages"));
-        ReplaceAllPages->setStyleSheet(QString::fromUtf8("font: 9pt; color: rgb(255, 255, 255); QCheckBox: white;"));
+        ReplaceAllPages->setStyleSheet(QString::fromUtf8("font: 14pt; color: rgb(255, 255, 255); \n"
+"QCheckBox: :indicator{\n"
+"background-color:white;}"));
 
         verticalLayout->addWidget(ReplaceAllPages);
 
         matchCaseCheckBox = new QCheckBox(TextFinder);
         matchCaseCheckBox->setObjectName(QString::fromUtf8("matchCaseCheckBox"));
-        matchCaseCheckBox->setStyleSheet(QString::fromUtf8("font: 9pt; color: rgb(255, 255, 255);"));
+        matchCaseCheckBox->setStyleSheet(QString::fromUtf8("font: 14pt; color: rgb(255, 255, 255);\n"
+"QCheckBox: :indicator{\n"
+"background-color:white;}"));
 
         verticalLayout->addWidget(matchCaseCheckBox);
 

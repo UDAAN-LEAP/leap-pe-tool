@@ -7082,3 +7082,17 @@ Debug: QMap(("page-100.html", 441)("page-101.html", 1514)("page-53.html", 802)) 
 Debug: pos1 1514 (mainwindow.cpp)
 Debug: QMap(("page-100.html", 441)("page-101.html", 1514)("page-53.html", 802)) (mainwindow.cpp)
 Debug: pos1 0 (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 01 Mar 2022 @ 20:29:37
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: QMap(("p-3.html", 99)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
+Debug: QMap(("p-3.html", 99)) (mainwindow.cpp)
+Debug: pos1 99 (mainwindow.cpp)
+Debug: QMap(("p-3.html", 99)) (mainwindow.cpp)
+Debug: pos1 0 (mainwindow.cpp)
