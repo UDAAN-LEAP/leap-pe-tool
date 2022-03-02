@@ -17348,3 +17348,19 @@ Warning: QObject::connect:  (sender name:   'listWidget') ()
 Warning: QObject::connect:  (receiver name: 'UndoGlobalReplace') ()
 Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
 Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 18:33:13
+Username:sadam
+
+Application Log:
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 18:40:22
+Username:sadam
+
+Application Log:
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
