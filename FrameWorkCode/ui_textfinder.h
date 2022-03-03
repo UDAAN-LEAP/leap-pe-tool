@@ -47,15 +47,15 @@ public:
     {
         if (TextFinder->objectName().isEmpty())
             TextFinder->setObjectName(QString::fromUtf8("TextFinder"));
-        TextFinder->resize(509, 303);
+        TextFinder->resize(465, 270);
         QFont font;
         font.setFamily(QString::fromUtf8("Work Sans"));
-        font.setPointSize(12);
+        font.setPointSize(11);
         font.setBold(false);
         font.setItalic(false);
         font.setWeight(50);
         TextFinder->setFont(font);
-        TextFinder->setStyleSheet(QString::fromUtf8("font: 12pt \"Work Sans\"; \n"
+        TextFinder->setStyleSheet(QString::fromUtf8("font: 11pt \"Work Sans\"; \n"
 "background-color: rgb(32, 33, 72);"));
         TextFinder->setSizeGripEnabled(false);
         horizontalLayout_3 = new QHBoxLayout(TextFinder);
@@ -71,7 +71,7 @@ public:
         formLayout->setContentsMargins(10, 10, 10, 10);
         findLabel = new QLabel(TextFinder);
         findLabel->setObjectName(QString::fromUtf8("findLabel"));
-        findLabel->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);font:14pt;"));
+        findLabel->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);font:12pt;"));
 
         formLayout->setWidget(0, QFormLayout::LabelRole, findLabel);
 
@@ -83,7 +83,7 @@ public:
 
         replaceLabel = new QLabel(TextFinder);
         replaceLabel->setObjectName(QString::fromUtf8("replaceLabel"));
-        replaceLabel->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);font:14pt;"));
+        replaceLabel->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);font:12pt;"));
 
         formLayout->setWidget(1, QFormLayout::LabelRole, replaceLabel);
 
@@ -145,13 +145,13 @@ public:
 
         ReplaceAllPages = new QCheckBox(TextFinder);
         ReplaceAllPages->setObjectName(QString::fromUtf8("ReplaceAllPages"));
-        ReplaceAllPages->setStyleSheet(QString::fromUtf8("font: 12pt; color: rgb(255, 255, 255); QCheckBox: white;"));
+        ReplaceAllPages->setStyleSheet(QString::fromUtf8("font: 10pt; color: rgb(255, 255, 255); QCheckBox: white;"));
 
         verticalLayout->addWidget(ReplaceAllPages);
 
         matchCaseCheckBox = new QCheckBox(TextFinder);
         matchCaseCheckBox->setObjectName(QString::fromUtf8("matchCaseCheckBox"));
-        matchCaseCheckBox->setStyleSheet(QString::fromUtf8("font: 12pt; color: rgb(255, 255, 255);"));
+        matchCaseCheckBox->setStyleSheet(QString::fromUtf8("font: 10pt; color: rgb(255, 255, 255);"));
 
         verticalLayout->addWidget(matchCaseCheckBox);
 

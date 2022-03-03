@@ -126,7 +126,6 @@ QMap<QString, QString> globallyReplacedWords;
 
 QList<QString> filesChangedUsingGlobalReplace;
 
-
 //Constructor
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
@@ -789,10 +788,19 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
     int totalFileCountInDir = 0;
     QMap<QString, int> fileCountInDir;
-
-    if(isRecentProjclick == true)
+//to choose between recent three files
+    qDebug () <<"proj_flag ="<<proj_flag;
+    if(isRecentProjclick == true && proj_flag == '0')
     {
       ProjFile = RecentProjFile;
+    }
+    else if(isRecentProjclick == true && proj_flag == '1')
+    {
+      ProjFile = RecentProjFile2;
+    }
+    else if(isRecentProjclick == true && proj_flag == '2')
+    {
+      ProjFile = RecentProjFile3;
     }
     else{
       ProjFile = QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)"));   //Opens only if the file name is Project.xml
@@ -1026,9 +1034,13 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
         //!save project paths for showing it on recent projects
         QSettings settings("IIT-B", "OpenOCRCorrect");
+        QString new_project = finfo.path()+"/project.xml";
+        if(new_project != RecentProjFile && new_project != RecentProjFile2 && new_project != RecentProjFile3 ){
         settings.beginGroup("RecentProjects");
+        settings.setValue("Project3",RecentProjFile2 );
+        settings.setValue("Project2",RecentProjFile );
         settings.setValue("Project",finfo.path()+"/project.xml" );
-        settings.endGroup();
+        settings.endGroup();}
         isRecentProjclick = false;
 
         // Setting Project window size and dict window size = 50% - 50%
@@ -1057,6 +1069,8 @@ void MainWindow::AddRecentProjects()
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("RecentProjects");
     RecentProjFile = settings.value("Project").toString();
+    RecentProjFile2 = settings.value("Project2").toString();
+    RecentProjFile3 = settings.value("Project3").toString();
     ui->menuRecent_Project->clear();
 
     if(RecentProjFile!="")
@@ -1064,7 +1078,21 @@ void MainWindow::AddRecentProjects()
       QAction *FileAction = new QAction(this);
       FileAction->setIconText("~"+ RecentProjFile);
       ui->menuRecent_Project->addAction(FileAction);
-      connect(FileAction, &QAction::triggered, this , &MainWindow::actionRecent_Project_clicked);
+      connect(FileAction, &QAction::triggered, this , &MainWindow::on_action1_triggered);
+     }
+    if(RecentProjFile2!="")
+     {
+      QAction *FileAction = new QAction(this);
+      FileAction->setIconText("~"+ RecentProjFile2);
+      ui->menuRecent_Project->addAction(FileAction);
+      connect(FileAction, &QAction::triggered, this , &MainWindow::on_action2_triggered);
+     }
+    if(RecentProjFile3!="")
+     {
+      QAction *FileAction = new QAction(this);
+      FileAction->setIconText("~"+ RecentProjFile3);
+      ui->menuRecent_Project->addAction(FileAction);
+      connect(FileAction, &QAction::triggered, this , &MainWindow::on_action3_triggered);
      }
 }
 
@@ -7744,11 +7772,11 @@ void MainWindow::on_actionShortcut_Guide_triggered()
  *  \brief Checks if user clicked on recent project and opens the project if user has clicked recent project
  *  option.
  */
-void MainWindow::actionRecent_Project_clicked()
+/*void MainWindow::actionRecent_Project_clicked()
 {
    isRecentProjclick = true;
-   on_actionOpen_Project_triggered();
-}
+   //on_actionOpen_Project_triggered();
+}*/
 
 
 //class Thread1 : public QThread, public MainWindow
@@ -8356,4 +8384,25 @@ void MainWindow::readSettings()
     curr_browser->setTextCursor(cursor);
 
 
+}
+
+void MainWindow::on_action1_triggered()
+{
+    proj_flag = '0';
+    isRecentProjclick = true;
+    on_actionOpen_Project_triggered();
+}
+
+void MainWindow::on_action2_triggered()
+{
+    proj_flag = '1';
+    isRecentProjclick = true;
+    on_actionOpen_Project_triggered();
+}
+
+void MainWindow::on_action3_triggered()
+{
+    proj_flag = '2';
+    isRecentProjclick = true;
+    on_actionOpen_Project_triggered();
 }

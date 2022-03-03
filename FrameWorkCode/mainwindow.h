@@ -98,7 +98,7 @@ private slots:
 
     void AddRecentProjects();
 
-    void actionRecent_Project_clicked();
+    //void actionRecent_Project_clicked();
 
     void on_actionSave_triggered();
 
@@ -411,6 +411,12 @@ private slots:
 
     void on_lineEditSearch_textChanged(const QString &arg1);
 
+    void on_action1_triggered();
+
+    void on_action2_triggered();
+
+    void on_action3_triggered();
+
 public slots:
     void SaveFile_Backend();
     void on_actionLoad_Next_Page_triggered();
@@ -442,6 +448,9 @@ private:
     int NextPrevTrig = 0;
     bool isRecentProjclick =false;
     QString RecentProjFile;
+    QString RecentProjFile2;
+    QString RecentProjFile3;
+    QString proj_flag; //for choosing recent opened project out of 3
     LoadingSpinner *spinner;
 };
 

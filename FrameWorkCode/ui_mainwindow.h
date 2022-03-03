@@ -134,6 +134,8 @@ public:
     QAction *actionUpload;
     QAction *justify;
     QAction *actionFont_Color;
+    QAction *action2;
+    QAction *action3;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_5;
     QVBoxLayout *verticalLayout_4;
@@ -523,6 +525,10 @@ public:
         QIcon icon32;
         icon32.addFile(QString::fromUtf8(":/Images/Resources/font color.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionFont_Color->setIcon(icon32);
+        action2 = new QAction(MainWindow);
+        action2->setObjectName(QString::fromUtf8("action2"));
+        action3 = new QAction(MainWindow);
+        action3->setObjectName(QString::fromUtf8("action3"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         centralWidget->setStyleSheet(QString::fromUtf8("mainToolBar{background:rgb(143, 89, 2)}"));
@@ -1370,6 +1376,8 @@ public:
         menuOCR_Correction_Window->addAction(actionLoadConfusions);
         menuOCR_Correction_Window->addAction(actionSugg);
         menuRecent_Project->addAction(action1);
+        menuRecent_Project->addAction(action2);
+        menuRecent_Project->addAction(action3);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen_Project);
         mainToolBar->addAction(actionSave);
@@ -1615,6 +1623,14 @@ public:
         actionUpload->setText(QApplication::translate("MainWindow", "Upload and Replace", nullptr));
         justify->setText(QApplication::translate("MainWindow", "AlignJustify", nullptr));
         actionFont_Color->setText(QApplication::translate("MainWindow", "Font Color", nullptr));
+        action2->setText(QApplication::translate("MainWindow", "2|", nullptr));
+#ifndef QT_NO_TOOLTIP
+        action2->setToolTip(QApplication::translate("MainWindow", "2|", nullptr));
+#endif // QT_NO_TOOLTIP
+        action3->setText(QApplication::translate("MainWindow", "3|", nullptr));
+#ifndef QT_NO_TOOLTIP
+        action3->setToolTip(QApplication::translate("MainWindow", "3|", nullptr));
+#endif // QT_NO_TOOLTIP
         pushButton_2->setText(QApplication::translate("MainWindow", "Resize Image", nullptr));
         pushButton->setText(QApplication::translate("MainWindow", "Mark Regions", nullptr));
         viewComments->setText(QApplication::translate("MainWindow", "Comments Accuracy", nullptr));

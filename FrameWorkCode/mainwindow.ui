@@ -1161,6 +1161,8 @@ QMenu::item:selected{
       <string>Recent Project</string>
      </property>
      <addaction name="action1"/>
+     <addaction name="action2"/>
+     <addaction name="action3"/>
     </widget>
     <addaction name="actionNew"/>
     <addaction name="actionNew_Project"/>
@@ -2016,6 +2018,22 @@ background-color: #EEF0F2;
    </property>
    <property name="text">
     <string>Font Color</string>
+   </property>
+  </action>
+  <action name="action2">
+   <property name="text">
+    <string>2|</string>
+   </property>
+   <property name="toolTip">
+    <string>2|</string>
+   </property>
+  </action>
+  <action name="action3">
+   <property name="text">
+    <string>3|</string>
+   </property>
+   <property name="toolTip">
+    <string>3|</string>
    </property>
   </action>
  </widget>

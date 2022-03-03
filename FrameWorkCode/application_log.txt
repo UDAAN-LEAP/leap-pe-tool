@@ -17364,3 +17364,427 @@ Username:sadam
 Application Log:
 Debug: Unknown property QCheckBox ()
 Debug: Unknown property QCheckBox ()
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 18:44:24
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 21:10:00
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Debug: Some Error occurred
+ (verifyset.cpp)
+Debug: Some Error occurred
+ (verifyset.cpp)
+Debug: Some Error occurred
+ (verifyset.cpp)
+Debug: Some Error occurred
+ (verifyset.cpp)
+Debug: Some Error occurred
+ (verifyset.cpp)
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/en-hi/.cursor.txt"): device not open ()
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: Error in loading docFormat (verifyset.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 21:29:57
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 21:31:21
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 21:33:20
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Music/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 21:34:04
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Music/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 21:37:35
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 21:38:40
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 21:45:37
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 21:46:11
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 21:46:47
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 21:47:16
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 21:48:50
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 21:49:55
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 21:50:35
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 22:33:04
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 22:33:05
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/en-hi/.cursor.txt"): device not open ()
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Music/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 22:36:35
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 22:37:50
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 22:38:30
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 02 Mar 2022 @ 22:39:21
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 13:50:05
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:00:05
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: Printing new_project = "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Debug: Printing project1 = "" (mainwindow.cpp)
+Debug: Printing project2 = "" (mainwindow.cpp)
+Debug: Printing project3 = "" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:04:55
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: Printing new_project = "/home/sadam/Music/en-hi/project.xml" (mainwindow.cpp)
+Debug: Printing project1 = "" (mainwindow.cpp)
+Debug: Printing project2 = "" (mainwindow.cpp)
+Debug: Printing project3 = "" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Music/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:12:15
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: Printing new_project = "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Debug: Printing project1 = "" (mainwindow.cpp)
+Debug: Printing project2 = "" (mainwindow.cpp)
+Debug: Printing project3 = "" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:13:42
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: Printing new_project = "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Debug: Printing project1 = "" (mainwindow.cpp)
+Debug: Printing project2 = "" (mainwindow.cpp)
+Debug: Printing project3 = "" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:14:35
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: Printing new_project = "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Debug: Printing project1 = "" (mainwindow.cpp)
+Debug: Printing project2 = "" (mainwindow.cpp)
+Debug: Printing project3 = "" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:15:24
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:23:17
+Username:sadam
+
+Application Log:
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:26:01
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:26:45
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Music/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:27:37
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:28:21
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:30:22
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:30:53
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:36:04
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Music/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:36:37
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:42:50
+Username:sadam
+
+Application Log:
+Debug: proj_flag = -920715320 (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:45:48
+Username:sadam
+
+Application Log:
+Debug: proj_flag = "" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:50:50
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 14:51:56
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 15:05:59
+Username:sadam
+
+Application Log:
+Debug: proj_flag = "2" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: proj_flag = "0" (mainwindow.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Music/en-hi/.cursor.txt"): device not open ()
+Debug: proj_flag = "1" (mainwindow.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 15:06:52
+Username:sadam
+
+Application Log:
+Debug: proj_flag = "2" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 15:09:42
+Username:sadam
+
+Application Log:
+Debug: proj_flag = "2" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/.cursor.txt"): device not open ()
+Debug: proj_flag = "0" (mainwindow.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+Debug: proj_flag = "0" (mainwindow.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 15:10:40
+Username:sadam
+
+Application Log:
+Debug: proj_flag = "0" (mainwindow.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Music/en-hi/.cursor.txt"): device not open ()
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: proj_flag = "0" (mainwindow.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 15:12:32
+Username:sadam
+
+Application Log:
+Debug: proj_flag = "" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 03 Mar 2022 @ 15:13:42
+Username:sadam
+
+Application Log:

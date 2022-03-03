@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>509</width>
-    <height>303</height>
+    <width>465</width>
+    <height>270</height>
    </rect>
   </property>
   <property name="font">
    <font>
     <family>Work Sans</family>
-    <pointsize>12</pointsize>
+    <pointsize>11</pointsize>
     <weight>50</weight>
     <italic>false</italic>
     <bold>false</bold>
@@ -23,7 +23,7 @@
    <string>Find and Replace</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 12pt &quot;Work Sans&quot;; 
+   <string notr="true">font: 11pt &quot;Work Sans&quot;; 
 background-color: rgb(32, 33, 72);</string>
   </property>
   <property name="sizeGripEnabled">
@@ -61,7 +61,7 @@ background-color: rgb(32, 33, 72);</string>
        <item row="0" column="0">
         <widget class="QLabel" name="findLabel">
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);font:14pt;</string>
+          <string notr="true">color: rgb(255, 255, 255);font:12pt;</string>
          </property>
          <property name="text">
           <string>Find:</string>
@@ -78,7 +78,7 @@ background-color: rgb(32, 33, 72);</string>
        <item row="1" column="0">
         <widget class="QLabel" name="replaceLabel">
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);font:14pt;</string>
+          <string notr="true">color: rgb(255, 255, 255);font:12pt;</string>
          </property>
          <property name="text">
           <string>Replace:</string>
@@ -153,7 +153,7 @@ background-color: rgb(32, 33, 72);</string>
            <property name="font">
             <font>
              <family>Work Sans</family>
-             <pointsize>12</pointsize>
+             <pointsize>11</pointsize>
              <weight>50</weight>
              <italic>false</italic>
              <bold>false</bold>
@@ -173,7 +173,7 @@ background-color: rgb(32, 33, 72);</string>
            <property name="font">
             <font>
              <family>Work Sans</family>
-             <pointsize>12</pointsize>
+             <pointsize>11</pointsize>
              <weight>50</weight>
              <italic>false</italic>
              <bold>false</bold>
@@ -195,7 +195,7 @@ background-color: rgb(32, 33, 72);</string>
      <item>
       <widget class="QCheckBox" name="ReplaceAllPages">
        <property name="styleSheet">
-        <string notr="true">font: 12pt; color: rgb(255, 255, 255); QCheckBox: white;</string>
+        <string notr="true">font: 10pt; color: rgb(255, 255, 255); QCheckBox: white;</string>
        </property>
        <property name="text">
         <string>Replace in all Pages</string>
@@ -205,7 +205,7 @@ background-color: rgb(32, 33, 72);</string>
      <item>
       <widget class="QCheckBox" name="matchCaseCheckBox">
        <property name="styleSheet">
-        <string notr="true">font: 12pt; color: rgb(255, 255, 255);</string>
+        <string notr="true">font: 10pt; color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>Match Case</string>
