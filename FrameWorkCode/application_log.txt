@@ -17788,3 +17788,108 @@ Date: 03 Mar 2022 @ 15:13:42
 Username:sadam
 
 Application Log:
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 12:24:12
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 12:25:18
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 12:26:25
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 12:30:21
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QSettings::endGroup: No matching beginGroup() ()
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 12:31:02
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QSettings::endGroup: No matching beginGroup() ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 12:42:15
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QSettings::endGroup: No matching beginGroup() ()
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 12:43:01
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QSettings::endGroup: No matching beginGroup() ()
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 12:48:34
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: Printing new_project "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Debug: Printing RecentProjFile2 "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 12:49:58
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: Printing new_project "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Debug: Printing RecentProjFile2 "/home/sadam/Music/en-hi/project.xml" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 12:51:05
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: Printing new_project "/home/sadam/Music/en-hi/project.xml" (mainwindow.cpp)
+Debug: Printing RecentProjFile2 "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 12:51:49
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: Printing new_project "/home/sadam/Music/en-hi/project.xml" (mainwindow.cpp)
+Debug: Printing RecentProjFile2 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 12:52:49
+Username:sadam
+
+Application Log:

@@ -125,7 +125,8 @@ QString branchName;
 QMap<QString, QString> globallyReplacedWords;
 
 QList<QString> filesChangedUsingGlobalReplace;
-
+QString priority_tmp;
+QString priority_tmp2;
 //Constructor
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
@@ -789,7 +790,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     int totalFileCountInDir = 0;
     QMap<QString, int> fileCountInDir;
 //to choose between recent three files
-    qDebug () <<"proj_flag ="<<proj_flag;
     if(isRecentProjclick == true && proj_flag == '0')
     {
       ProjFile = RecentProjFile;
@@ -1041,6 +1041,22 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         settings.setValue("Project2",RecentProjFile );
         settings.setValue("Project",finfo.path()+"/project.xml" );
         settings.endGroup();}
+        //changing priorities of recent opened projects
+        if(new_project == RecentProjFile2){
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            settings.beginGroup("RecentProjects");
+            settings.setValue("Project",RecentProjFile2 );
+            settings.setValue("Project2",RecentProjFile );
+            settings.endGroup();
+        }
+        else if(new_project == RecentProjFile3){
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            settings.beginGroup("RecentProjects");
+            settings.setValue("Project",RecentProjFile3 );
+            settings.setValue("Project2",RecentProjFile );
+            settings.setValue("Project3",RecentProjFile2 );
+            settings.endGroup();
+        }
         isRecentProjclick = false;
 
         // Setting Project window size and dict window size = 50% - 50%
