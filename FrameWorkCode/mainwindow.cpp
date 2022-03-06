@@ -8477,15 +8477,26 @@ void MainWindow::on_action3_triggered()
     on_actionOpen_Project_triggered();
 }
 
-
+/*!
+ * \fn MainWindow::UpdateInfo()
+ * \brief We use the function UpdateInfo() to fetch the information about new version of this software from github.
+ *  Basically we are using github API to get the information about new releases. it will only work when the internet
+ *  connection is available.
+ *
+ *  From the information fetched by internet, it will check whether the new release is already installed in this system
+ *  or not, if it is already installed then it will return back from this function, else it will call the compareVersion()
+ *  function.
+ *
+ * \sa compareVersion()
+*/
 
 void MainWindow::UpdateInfo()
 {
     QUrl url("https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases");
     qInfo() << url.toString();
-    QNetworkRequest request(url);
+    QNetworkRequest request(url);               //requesting url over the network
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QNetworkAccessManager nam;
+    QNetworkAccessManager nam;                  //sending network request
     QNetworkReply * reply = nam.get(request);
     QTimer *timer = new QTimer();
     timer->start(5000);
@@ -8505,12 +8516,22 @@ void MainWindow::UpdateInfo()
             return;
         }
         compareVersion(json[0]["name"].toString());
-    }else{
-
+    }
+    else{
+        qDebug()<<"Connection timeout";
     }
 
 }
 
+/*!
+ * \fn MainWindow::compareVersion
+ *
+ * \brief we use this function to compare the current version of this software with the latest version of the software released.
+ *  if the current version and new version are the same then it will return back, else it will show a message box where the user will
+ *  be redirected to the download page.
+ *
+ * \param latestVersion
+ */
 void MainWindow::compareVersion(QString latestVersion)
 {
     QString curr_version = qApp->applicationVersion();
@@ -8527,6 +8548,7 @@ void MainWindow::compareVersion(QString latestVersion)
         QAbstractButton *rml = updateInfo.addButton(tr("Remind me Later"), QMessageBox::RejectRole);
         rml->setMinimumWidth(140);
         updateInfo.exec();
+
         if(updateInfo.clickedButton() == download){
             QDesktopServices::openUrl(QUrl("https://drive.google.com/drive/folders/1DZn72n6gH0r459hTGsL2f7qhoZnHQPEI"));
         }
