@@ -6438,9 +6438,29 @@ void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
                 endIndex++;
                 len--;
             }
-            if(input[endIndex]!=" ")
+
+            int start = indexOfReplacedWord;
+
+            if(indexOfReplacedWord == 0){
+                input[start] == " ";
+            }
+            else{
+                start=start-1;
+            }
+
+            QRegExp regex("[$&+,:;=?@#|'\"<>.^*()%!-\n\t]");
+
+            QString test1(QChar(input[start]));
+            QString test2(QChar(input[endIndex]));
+
+            //qDebug()<<"input[start-1]="<<input[start];
+            //qDebug()<<"input[endIndex]="<<input[endIndex];
+            if((input[endIndex] == " " || test2.contains(regex)) && (input[start] == " " || test1.contains(regex))){
                 flag=1;
-            if(flag==0)
+            }
+            //qDebug()<<"flag : "<<flag;
+
+            if(flag==1)
             {
                 cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
                 cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
@@ -7617,9 +7637,29 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
                 endIndex++;
                 len--;
             }
-            if(input[endIndex]!=" ")
+
+            int start = indexOfReplacedWord;
+
+            if(indexOfReplacedWord == 0){
+                input[start] == " ";
+            }
+            else{
+                start=start-1;
+            }
+
+            QRegExp regex("[$&+,:;=?@#|'\"<>.^*()%!-\n\t]");
+
+            QString test1(QChar(input[start]));
+            QString test2(QChar(input[endIndex]));
+
+            //qDebug()<<"input[start-1]="<<input[start];
+            //qDebug()<<"input[endIndex]="<<input[endIndex];
+            if((input[endIndex] == " " || test2.contains(regex)) && (input[start] == " " || test1.contains(regex))){
                 flag=1;
-            if(flag==0)
+            }
+            //qDebug()<<"flag : "<<flag;
+
+            if(flag==1)
             {
                 cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
                 cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
