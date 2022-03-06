@@ -125,8 +125,6 @@ QString branchName;
 QMap<QString, QString> globallyReplacedWords;
 
 QList<QString> filesChangedUsingGlobalReplace;
-QString priority_tmp;
-QString priority_tmp2;
 //Constructor
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
@@ -1045,7 +1043,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         if(new_project == RecentProjFile2){
             QSettings settings("IIT-B", "OpenOCRCorrect");
             settings.beginGroup("RecentProjects");
-            settings.setValue("Project",RecentProjFile2 );
+            settings.setValue("Project",RecentProjFile2 );//06-03
             settings.setValue("Project2",RecentProjFile );
             settings.endGroup();
         }
@@ -1070,6 +1068,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         QMessageBox::warning(0, "Project Error", "Couldn't open project. Please check your project.");
         return;
     }
+    AddRecentProjects();//to load recent project without restarting app
 }
 
 /*!
@@ -1087,6 +1086,7 @@ void MainWindow::AddRecentProjects()
     RecentProjFile = settings.value("Project").toString();
     RecentProjFile2 = settings.value("Project2").toString();
     RecentProjFile3 = settings.value("Project3").toString();
+    settings.endGroup();
     ui->menuRecent_Project->clear();
 
     if(RecentProjFile!="")

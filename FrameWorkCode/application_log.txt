@@ -17893,3 +17893,362 @@ Date: 04 Mar 2022 @ 12:52:49
 Username:sadam
 
 Application Log:
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 12:58:32
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 12:58:52
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 13:00:11
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Music/en-hi/.cursor.txt"): device not open ()
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Warning: QIODevice::read (QFile, "/home/sadam/Music/en-hi/.cursor.txt"): device not open ()
+Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 13:01:54
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 13:02:29
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 13:03:35
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 13:03:54
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 13:04:21
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 13:04:40
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 20:23:19
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 20:24:08
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 20:25:54
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 20:26:23
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 20:26:49
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 20:27:45
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 04 Mar 2022 @ 20:28:40
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/.cursor.txt"): device not open ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "page-2.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-2.html"  to file. 
+ (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 15:11:31
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 15:12:20
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 15:12:35
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 15:13:26
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 15:13:49
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 15:14:34
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 15:15:27
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 15:17:55
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 15:20:04
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 15:21:17
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 15:25:30
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 15:27:43
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 15:36:57
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 15:38:02
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 15:39:14
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 16:08:06
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 16:08:40
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Music/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 16:09:55
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 16:11:06
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 16:12:43
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 16:30:35
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Music/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 16:35:08
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 16:38:17
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 16:39:44
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: Error in loading docFormat (verifyset.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 16:41:29
+Username:sadam
+
+Application Log:
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
