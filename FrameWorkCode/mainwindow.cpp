@@ -1074,7 +1074,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         QMessageBox::warning(0, "Project Error", "Couldn't open project. Please check your project.");
         return;
     }
-    AddRecentProjects();//to load recent project without restarting app
+     AddRecentProjects();//to load recent project without restarting app
 }
 
 /*!
