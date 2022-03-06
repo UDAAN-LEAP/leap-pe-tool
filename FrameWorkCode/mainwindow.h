@@ -77,7 +77,6 @@ public:
     };
 
     void load_data();
-
     void reLoadTabWindow();
 
 private slots:
@@ -129,7 +128,6 @@ private slots:
     void on_actionLoadSubPS_triggered();
 
     void on_actionLoadConfusions_triggered();
-
 
     void on_actionSugg_triggered();
 
@@ -210,6 +208,10 @@ private slots:
     void AddNewFile();
 
     void OpenDirectory();
+
+    void UpdateInfo();
+
+    void compareVersion(QString latestVersion);
 
     void RemoveFile();
 

@@ -16,6 +16,9 @@
 #include "DiffView.h"
 #include <QtConcurrent/QtConcurrent>
 #include "diff_match_patch.h"
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include "interndiffview.h"
 #include "commentsview.h"
 #include "Symbols.h"
@@ -132,7 +135,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     qInstallMessageHandler(crashlog::myMessageHandler);
 //    ui->textBrowser->setStyleSheet("background-color:white;");
 
-
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
     ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
     ui->tabWidget_2->tabBar()->hide();
@@ -192,11 +194,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     qApp->installEventFilter(this);
     AddRecentProjects();
 
-
     if (!isVerifier)
     {
         ui->actionHighlight->setEnabled(false);
     }
+
+
 
 }
 
@@ -233,6 +236,7 @@ bool MainWindow::setRole(QString role)
         RoleBox.exec();
         if(RoleBox.clickedButton() == verifierButton)
             mRole = "Verifier";
+
         else if(RoleBox.clickedButton() == correctorButton)
             mRole = "Corrector";
         else if(RoleBox.clickedButton() == managerButton)
@@ -261,7 +265,6 @@ bool MainWindow::setRole(QString role)
 
         this->setWindowTitle("OpenOCRCorrect-Verifier");
 
-
     }
     else if(mRole == "Corrector")
     {
@@ -285,6 +288,7 @@ bool MainWindow::setRole(QString role)
         int result = QMessageBox::information(this,"Login","Login Failed");
         return false;
     }
+
     return true;
 }
 
@@ -435,11 +439,13 @@ function. Works with the help of a flag.
 bool RightclickFlag = 0;
 string selectedStr ="";
 
-//!GIVE EVENT TO TEXT BROWZER INSTEAD OF MAINWINDOW
+
+//!GIVE EVENT TO TEXT BROWSER INSTEAD OF MAINWINDOW
 void MainWindow::mousePressEvent(QMouseEvent *ev)
 {
     slpNPatternDict slnp;
     trieEditDis trie;
+
     if (curr_browser)
     {
         curr_browser->cursorForPosition(ev->pos());
@@ -4978,10 +4984,17 @@ void MainWindow::on_pushButton_clicked()
  * \return QMainWindow::eventFilter(object, event);
  * \sa MainWindow::displayHolder, MainWindow::updateEntries, MainWindow::createImageInfoXMLFile
  */
+bool show_update = true;
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
     //! Tooltip documentation
     markRegion objectMarkRegion;
+    //! When user moves his mouse the system will ask user to download new update.
+    if(event->type() == QEvent::MouseMove && show_update)
+    {
+          show_update = false; // show only once
+          UpdateInfo();
+    }
     if(event->type() == QEvent::MouseButtonPress)
     {
 
@@ -5228,6 +5241,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         if (event->type() == QEvent::MouseMove)
         {
              QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+
              if (pressedFlag == 1)
              {
                  //statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mEvent->pos().x()).arg(mEvent->pos().y()));
@@ -6424,9 +6438,29 @@ void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
                 endIndex++;
                 len--;
             }
-            if(input[endIndex]!=" ")
+
+            int start = indexOfReplacedWord;
+
+            if(indexOfReplacedWord == 0){
+                input[start] == " ";
+            }
+            else{
+                start=start-1;
+            }
+
+            QRegExp regex("[$&+,:;=?@#|'\"<>.^*()%!-\n\t]");
+
+            QString test1(QChar(input[start]));
+            QString test2(QChar(input[endIndex]));
+
+            //qDebug()<<"input[start-1]="<<input[start];
+            //qDebug()<<"input[endIndex]="<<input[endIndex];
+            if((input[endIndex] == " " || test2.contains(regex)) && (input[start] == " " || test1.contains(regex))){
                 flag=1;
-            if(flag==0)
+            }
+            //qDebug()<<"flag : "<<flag;
+
+            if(flag==1)
             {
                 cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
                 cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
@@ -7603,9 +7637,29 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
                 endIndex++;
                 len--;
             }
-            if(input[endIndex]!=" ")
+
+            int start = indexOfReplacedWord;
+
+            if(indexOfReplacedWord == 0){
+                input[start] == " ";
+            }
+            else{
+                start=start-1;
+            }
+
+            QRegExp regex("[$&+,:;=?@#|'\"<>.^*()%!-\n\t]");
+
+            QString test1(QChar(input[start]));
+            QString test2(QChar(input[endIndex]));
+
+            //qDebug()<<"input[start-1]="<<input[start];
+            //qDebug()<<"input[endIndex]="<<input[endIndex];
+            if((input[endIndex] == " " || test2.contains(regex)) && (input[start] == " " || test1.contains(regex))){
                 flag=1;
-            if(flag==0)
+            }
+            //qDebug()<<"flag : "<<flag;
+
+            if(flag==1)
             {
                 cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
                 cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
@@ -8422,3 +8476,65 @@ void MainWindow::on_action3_triggered()
     isRecentProjclick = true;
     on_actionOpen_Project_triggered();
 }
+
+
+
+void MainWindow::UpdateInfo()
+{
+    QUrl url("https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases");
+    qInfo() << url.toString();
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QNetworkAccessManager nam;
+    QNetworkReply * reply = nam.get(request);
+    QTimer *timer = new QTimer();
+    timer->start(5000);
+
+    while(true){
+        qApp->processEvents();
+        if(reply->isFinished()) break;
+    }
+
+    if(reply->isFinished()){
+        QByteArray response_data = reply->readAll();
+        QJsonDocument json = QJsonDocument::fromJson(response_data);
+        qDebug() << json[0]["name"].toString();
+        if(json[0]["name"].toString() == "")
+        {
+            qDebug() << QString("Timeout .... Internet Not Available");
+            return;
+        }
+        compareVersion(json[0]["name"].toString());
+    }else{
+
+    }
+
+}
+
+void MainWindow::compareVersion(QString latestVersion)
+{
+    QString curr_version = qApp->applicationVersion();
+    qDebug() << curr_version;
+    if(curr_version==latestVersion)
+        return;
+    else{
+        QMessageBox updateInfo;
+        updateInfo.setWindowTitle("Update Available");
+        updateInfo.setIcon(QMessageBox::Information);
+        updateInfo.setText("A New Version of OpenOCRCorrect is Available!!\n\nOpenOCRCorrect "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below");
+        QAbstractButton *download = updateInfo.addButton(tr("Go to Download Page"), QMessageBox::ActionRole);
+        download->setMinimumWidth(160);
+        QAbstractButton *rml = updateInfo.addButton(tr("Remind me Later"), QMessageBox::RejectRole);
+        rml->setMinimumWidth(140);
+        updateInfo.exec();
+        if(updateInfo.clickedButton() == download){
+            QDesktopServices::openUrl(QUrl("https://drive.google.com/drive/folders/1DZn72n6gH0r459hTGsL2f7qhoZnHQPEI"));
+        }
+    }
+
+}
+
+
+
+
+
