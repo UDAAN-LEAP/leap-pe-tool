@@ -19660,3 +19660,503 @@ Date: 07 Mar 2022 @ 16:16:08
 Username:sujay
 
 Application Log:
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:21:46
+Username:sujay
+
+Application Log:
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:56:32
+Username:sujay
+
+Application Log:
+Debug: Number This time  "56" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:56:53
+Username:sujay
+
+Application Log:
+Debug: Number This time  "71" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:56:59
+Username:sujay
+
+Application Log:
+Debug: Number This time  "52" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:57:06
+Username:sujay
+
+Application Log:
+Debug: Number This time  "27" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:57:40
+Username:sujay
+
+Application Log:
+Debug: Number This time  "69" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:57:47
+Username:sujay
+
+Application Log:
+Debug: Number This time  "88" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:57:52
+Username:sujay
+
+Application Log:
+Debug: Number This time  "67" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:57:58
+Username:sujay
+
+Application Log:
+Debug: Number This time  "38" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:58:03
+Username:sujay
+
+Application Log:
+Debug: Number This time  "98" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:59:21
+Username:sujay
+
+Application Log:
+Debug: Number This time  "77" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:59:31
+Username:sujay
+
+Application Log:
+Debug: Number This time  "80" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:59:37
+Username:sujay
+
+Application Log:
+Debug: Number This time  "34" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:59:47
+Username:sujay
+
+Application Log:
+Debug: Number This time  "78" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:59:52
+Username:sujay
+
+Application Log:
+Debug: Number This time  "63" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:59:57
+Username:sujay
+
+Application Log:
+Debug: Number This time  "90" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:02
+Username:sujay
+
+Application Log:
+Debug: Number This time  "13" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:08
+Username:sujay
+
+Application Log:
+Debug: Number This time  "44" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:14
+Username:sujay
+
+Application Log:
+Debug: Number This time  "94" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:29
+Username:sujay
+
+Application Log:
+Debug: Number This time  "23" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:34
+Username:sujay
+
+Application Log:
+Debug: Number This time  "23" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:38
+Username:sujay
+
+Application Log:
+Debug: Number This time  "33" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:43
+Username:sujay
+
+Application Log:
+Debug: Number This time  "39" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:47
+Username:sujay
+
+Application Log:
+Debug: Number This time  "86" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:52
+Username:sujay
+
+Application Log:
+Debug: Number This time  "56" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:56
+Username:sujay
+
+Application Log:
+Debug: Number This time  "66" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:00
+Username:sujay
+
+Application Log:
+Debug: Number This time  "89" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:04
+Username:sujay
+
+Application Log:
+Debug: Number This time  "42" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:08
+Username:sujay
+
+Application Log:
+Debug: Number This time  "68" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:13
+Username:sujay
+
+Application Log:
+Debug: Number This time  "7" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:18
+Username:sujay
+
+Application Log:
+Debug: Number This time  "85" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:23
+Username:sujay
+
+Application Log:
+Debug: Number This time  "54" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:28
+Username:sujay
+
+Application Log:
+Debug: Number This time  "67" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:32
+Username:sujay
+
+Application Log:
+Debug: Number This time  "38" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:37
+Username:sujay
+
+Application Log:
+Debug: Number This time  "64" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:02:09
+Username:sujay
+
+Application Log:
+Debug: Number This time  "21" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:03:11
+Username:sujay
+
+Application Log:
+Debug: Number This time  "89" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:03:39
+Username:sujay
+
+Application Log:
+Debug: Number This time  "25" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:03:43
+Username:sujay
+
+Application Log:
+Debug: Number This time  "36" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:03:48
+Username:sujay
+
+Application Log:
+Debug: Number This time  "12" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:03:53
+Username:sujay
+
+Application Log:
+Debug: Number This time  "30" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:03:57
+Username:sujay
+
+Application Log:
+Debug: Number This time  "90" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:02
+Username:sujay
+
+Application Log:
+Debug: Number This time  "89" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:06
+Username:sujay
+
+Application Log:
+Debug: Number This time  "32" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:10
+Username:sujay
+
+Application Log:
+Debug: Number This time  "41" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:14
+Username:sujay
+
+Application Log:
+Debug: Number This time  "80" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:18
+Username:sujay
+
+Application Log:
+Debug: Number This time  "78" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:23
+Username:sujay
+
+Application Log:
+Debug: Number This time  "37" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:28
+Username:sujay
+
+Application Log:
+Debug: Number This time  "33" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:33
+Username:sujay
+
+Application Log:
+Debug: Number This time  "76" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:37
+Username:sujay
+
+Application Log:
+Debug: Number This time  "99" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:43
+Username:sujay
+
+Application Log:
+Debug: Number This time  "39" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:05:23
+Username:sujay
+
+Application Log:
+Debug: Number This time  "95" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:05:39
+Username:sujay
+
+Application Log:
+Debug: Number This time  "23" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:06:53
+Username:sujay
+
+Application Log:
+Debug: Number This time  "86" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:07:26
+Username:sujay
+
+Application Log:
+Debug: Number This time  "41" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:08:35
+Username:sujay
+
+Application Log:
+Debug: Number This time  "62" (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:10:34
+Username:sujay
+
+Application Log:
+Debug: Number This time  "44" (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:11:28
+Username:sujay
+
+Application Log:
+Debug: Number This time  "98" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:12:06
+Username:sujay
+
+Application Log:
+Debug: Number This time  "70" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/Draft_EGM_Notice_BOB/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/Draft_EGM_Notice_BOB/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/Draft_EGM_Notice_BOB/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/Draft_EGM_Notice_BOB/.cursor.txt"): device not open ()
+Debug: Error in loading docFormat (verifyset.cpp)
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/Draft_EGM_Notice_BOB/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/Draft_EGM_Notice_BOB/.cursor.txt"): device not open ()
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:12:55
+Username:sujay
+
+Application Log:
+Debug: Number This time  "92" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:13:56
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:14:37
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/hsm_aerospace_chemical_propulsion/image.xml" (markRegion.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/hsm_aerospace_chemical_propulsion/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "hsm_aerospace_chemical_propulsion_0001-202.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/sujay/Downloads/hsm_aerospace_chemical_propulsion/CorrectorOutput/hsm_aerospace_chemical_propulsion_0001-202.html"  to file. 
+ (mainwindow.cpp)

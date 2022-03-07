@@ -39,6 +39,7 @@
 #include <QTreeView>
 #include <QFont>
 #include <git2.h>
+#include <QRandomGenerator>
 #include "shortcutguidedialog.h"
 #include <QFileSystemWatcher>
 #include <set>
@@ -201,6 +202,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
         ui->actionHighlight->setEnabled(false);
     }
 
+    //! random game ...
+
+    int rand = QRandomGenerator::global()->bounded(1, 100);
+    if(rand > 90)
+    {
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        if(settings.childGroups().contains("SoftwareUpdate", Qt::CaseInsensitive))
+        {
+            settings.beginGroup("SoftwareUpdate");
+            settings.setValue("showUpdate",true);
+            settings.endGroup();
+        }
+
+    }
 
 
 }
