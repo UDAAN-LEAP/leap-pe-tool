@@ -148,6 +148,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
         password = passwordFile.readAll().replace("\n","").replace("\r","");
     passwordFile.close();
 
+
     map<QString, QString> passwordRoleMap = { { "x3JzWx5KY}Gd&,]A" ,"Verifier"},
                                               { "3`t,FxjytJ[uU,HW" ,"Corrector"},
                                               { "$5Y9hkc+`{<7N%{L:KuR", "Admin"},
@@ -193,6 +194,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     qApp->installEventFilter(this);
     AddRecentProjects();
+
 
     if (!isVerifier)
     {
@@ -4985,12 +4987,19 @@ void MainWindow::on_pushButton_clicked()
  * \sa MainWindow::displayHolder, MainWindow::updateEntries, MainWindow::createImageInfoXMLFile
  */
 bool show_update = true;
+bool isShowAgain = true;
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
     //! Tooltip documentation
     markRegion objectMarkRegion;
     //! When user moves his mouse the system will ask user to download new update.
-    if(event->type() == QEvent::MouseMove && show_update)
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    if(settings.childGroups().contains("SoftwareUpdate", Qt::CaseInsensitive))
+    {
+        settings.beginGroup("SoftwareUpdate");
+        isShowAgain = settings.value("showUpdate").toBool();
+    }
+    if(event->type() == QEvent::MouseMove && show_update && isShowAgain)
     {
           show_update = false; // show only once
           UpdateInfo();
@@ -8539,18 +8548,35 @@ void MainWindow::compareVersion(QString latestVersion)
     if(curr_version==latestVersion)
         return;
     else{
-        QMessageBox updateInfo;
+        QMessageBox updateInfo(this);
         updateInfo.setWindowTitle("Update Available");
         updateInfo.setIcon(QMessageBox::Information);
-        updateInfo.setText("A New Version of OpenOCRCorrect is Available!!\n\nOpenOCRCorrect "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below");
+        updateInfo.setText("A New Version of OpenOCRCorrect is Available!!\n\nOpenOCRCorrect "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below\n");
         QAbstractButton *download = updateInfo.addButton(tr("Go to Download Page"), QMessageBox::ActionRole);
         download->setMinimumWidth(160);
         QAbstractButton *rml = updateInfo.addButton(tr("Remind me Later"), QMessageBox::RejectRole);
         rml->setMinimumWidth(140);
+        QCheckBox *cb = new QCheckBox("Don't Show this again");
+        updateInfo.setCheckBox(cb);
+        cb->setStyleSheet("QCheckBox::indicator:unchecked{border: 1px solid white};");
         updateInfo.exec();
 
         if(updateInfo.clickedButton() == download){
             QDesktopServices::openUrl(QUrl("https://drive.google.com/drive/folders/1DZn72n6gH0r459hTGsL2f7qhoZnHQPEI"));
+        }
+        if(cb->checkState() == Qt::Checked)
+        {
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            settings.beginGroup("SoftwareUpdate");
+            settings.setValue("showUpdate",false);
+            settings.endGroup();
+        }
+        else
+        {
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            settings.beginGroup("SoftwareUpdate");
+            settings.setValue("showUpdate",true);
+            settings.endGroup();
         }
     }
 

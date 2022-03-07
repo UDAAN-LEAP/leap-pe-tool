@@ -19327,3 +19327,336 @@ Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/
 Debug: "v2.8.0" (mainwindow.cpp)
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 14:40:50
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 14:43:07
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 14:49:52
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 14:51:00
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 14:51:40
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 14:55:23
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 14:59:58
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:01:32
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:02:53
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:05:30
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:08:13
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:09:43
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:11:00
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:13:49
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "हैंः =>हैं " 
+ (mainwindow.cpp)
+Debug: "अभिज्ञान =>अभिज्ञा " 
+ (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "/home/sujay/Downloads/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:16:18
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "AIML-all_0001-003.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/sujay/Downloads/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html"  to file. 
+ (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "हैं =>हैंः " 
+ (mainwindow.cpp)
+Debug: "अभिज्ञा =>अभिज्ञान " 
+ (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "AIML-all_0001-003.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "हैंः =>हैं " 
+ (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:25:21
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:28:55
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:30:19
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:31:30
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:32:21
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:33:18
+Username:sujay
+
+Application Log:
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:34:18
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:34:59
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:35:34
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:36:24
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:37:14
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "जाएगी। =>जाएग। " 
+ (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/TranslatingissuesinArthashastraunicode-Hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "p-02.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/sujay/Downloads/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/p-02.html"  to file. 
+ (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:39:03
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:39:42
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:40:53
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:41:51
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:15:44
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:16:00
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:16:08
+Username:sujay
+
+Application Log:
