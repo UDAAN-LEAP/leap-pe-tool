@@ -20160,3 +20160,127 @@ Debug: "hsm_aerospace_chemical_propulsion_0001-202.html"  not found in Edited Fi
  (mainwindow.cpp)
 Debug: Writing  "/home/sujay/Downloads/hsm_aerospace_chemical_propulsion/CorrectorOutput/hsm_aerospace_chemical_propulsion_0001-202.html"  to file. 
  (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 21:20:43
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: Some Error occurred
+ (verifyset.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 22:33:55
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: ProjFile =  "/home/ajit/Documents/ABBV1S2_YP_dinesh-main/project.xml" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/ABBV1S2_YP_dinesh-main/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/project.xml" (mainwindow.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 22:55:50
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: ProjFile =  "/home/ajit/Documents/ABBV1S2_YP_dinesh-main/project.xml" (mainwindow.cpp)
+Debug: resultInXMLformat =  true (verifyset.cpp)
+Debug: "/home/ajit/Documents/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Debug: ProjFile =  "/home/ajit/Documents/ABBv2S2_HS_AK-master/project.xml" (mainwindow.cpp)
+Debug: resultInXMLformat =  true (verifyset.cpp)
+Debug: "/home/ajit/Documents/ABBv2S2_HS_AK-master/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/ABBv2S2_HS_AK-master/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/AIML-All-master/project.xml" (mainwindow.cpp)
+Debug: resultInXMLformat =  false (verifyset.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 22:57:04
+Username:ajit
+
+Application Log:
+Debug: ProjFile =  "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/project.xml" (mainwindow.cpp)
+Debug: resultInXMLformat =  true (verifyset.cpp)
+Debug: "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/image.xml" (markRegion.cpp)
+Debug: ProjFile =  "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/project.xml" (mainwindow.cpp)
+Debug: resultInXMLformat =  true (verifyset.cpp)
+Debug: "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/ABBv2S2_HS_AK-master/project.xml" (mainwindow.cpp)
+Debug: resultInXMLformat =  false (verifyset.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 23:00:39
+Username:ajit
+
+Application Log:
+Debug: ProjFile =  "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/project.xml" (mainwindow.cpp)
+Debug: curPath -->  "/home/ajit/Documents/Source Code/VerifySetIssue/iitb-openocr-digit-tool/FrameWorkCode/projectXMLFormat.xml" (verifyset.cpp)
+Debug: "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/ABBv2S2_HS_AK-master/project.xml" (mainwindow.cpp)
+Debug: curPath -->  "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/projectXMLFormat.xml" (verifyset.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 23:17:33
+Username:ajit
+
+Application Log:
+Debug: ProjFile =  "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/project.xml" (mainwindow.cpp)
+Debug: curPath -->  "/home/ajit/Documents/Source Code/VerifySetIssue/iitb-openocr-digit-tool/FrameWorkCode/projectXMLFormat.xml" (verifyset.cpp)
+Debug: "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/project.xml" (mainwindow.cpp)
+Debug: curPath -->  "/home/ajit/Documents/Source Code/VerifySetIssue/iitb-openocr-digit-tool/FrameWorkCode/projectXMLFormat.xml" (verifyset.cpp)
+Debug: "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 23:19:31
+Username:ajit
+
+Application Log:
+Debug: ProjFile =  "/home/ajit/Documents/ABBv2S2_HS_AK-master/project.xml" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/ABBv2S2_HS_AK-master/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/ABBv2S2_HS_AK-master/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/project.xml" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/AIML-All-master/project.xml" (mainwindow.cpp)
+Debug: Some Error occurred
+ (verifyset.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/project.xml" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 23:23:16
+Username:ajit
+
+Application Log:
+Debug: "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/.cursor.txt"): device not open ()
+Debug: "/home/ajit/Documents/ABBv2S2_HS_AK-master/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/ABBv2S2_HS_AK-master/.cursor.txt"): device not open ()

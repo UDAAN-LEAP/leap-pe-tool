@@ -1,18 +1,17 @@
 #include "verifyset.h"
 #include <string.h>
-#include <QRegExp>
 #include <QDebug>
 #include <QFileInfo>
-#include <QDir>
 
 /*!
  * \fn VerifySet (Constructor)
  * \param QString projectXMLPath
  * \brief Takes absolute path of project XML file
 */
-VerifySet::VerifySet(QString projectXMLPath)
+VerifySet::VerifySet(QString projectXMLPath, QString projectXML_formatPath)
 {
     this->ProjectXMLPath = projectXMLPath.toStdString();
+    this->ProjectXML_formatPath = projectXML_formatPath.toStdString();
 }
 
 /*!
@@ -53,9 +52,7 @@ int VerifySet::testProjectXML()
 */
 bool VerifySet::LoadProjectXMLFormat()
 {
-    std::string XMLformatPath(QDir::currentPath().toStdString() + "/projectXMLFormat.xml");
-    QFileInfo xmlFormatFile(QString::fromStdString(XMLformatPath));
-
+    QFileInfo xmlFormatFile(QString::fromStdString(ProjectXML_formatPath));
     pugi::xml_parse_result result = docFormat.load_file(xmlFormatFile.absoluteFilePath().toStdString().c_str());
     if (!result)
         return false;

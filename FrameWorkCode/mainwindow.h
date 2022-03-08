@@ -90,7 +90,6 @@ private slots:
 
  //   void displayHolder(QString,QString,QString,int,int,int,int,int);
 
-
     void on_actionNew_triggered();
 
     //void on_actionOpen_triggered();
@@ -421,12 +420,12 @@ private slots:
 
 public slots:
     void SaveFile_Backend();
+
     void on_actionLoad_Next_Page_triggered();
 
     void on_actionLoad_Prev_Page_triggered();
 
 private:
-
     bool mExitStatus = false;
     QString mRole;
     bool isVerifier;
@@ -454,6 +453,7 @@ private:
     QString RecentProjFile3;
     QString proj_flag; //for choosing recent opened project out of 3
     LoadingSpinner *spinner;
+    QString toolDirAbsolutePath; // This path is the absolute path of this tool
 };
 
 #endif // MAINWINDOW_H

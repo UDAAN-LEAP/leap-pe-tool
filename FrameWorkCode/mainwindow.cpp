@@ -135,6 +135,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->setupUi(this);
     qInstallMessageHandler(crashlog::myMessageHandler);
 //    ui->textBrowser->setStyleSheet("background-color:white;");
+    toolDirAbsolutePath = QDir::currentPath(); // Setting toolPath
 
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
     ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
@@ -831,7 +832,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         return;
 
     // Testing of project.xml
-    VerifySet verifySetObj(ProjFile);
+    VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
     int result = verifySetObj.testProjectXML();
 
     if (result != 0) {

@@ -19,7 +19,7 @@ enum error_codes
 class VerifySet
 {
 public:
-    VerifySet(QString projectXMLPath);
+    VerifySet(QString projectXMLPath, QString projectXML_formatPath);
     int testProjectXML();
     bool LoadProjectXMLFormat();
     int getErrorCode();
@@ -30,6 +30,7 @@ private:
     pugi::xml_document docFormat;
     QString SetDirectoryPath;
     std::string ProjectXMLPath;
+    std::string ProjectXML_formatPath;
     bool verifyNode(pugi::xml_node nodeTest, pugi::xml_node nodeFormat);
     bool verifyNodeAttributes(pugi::xml_node nodeTest, pugi::xml_node nodeFormat);
     QString error_string = "";
