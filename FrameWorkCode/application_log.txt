@@ -19327,3 +19327,1137 @@ Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/
 Debug: "v2.8.0" (mainwindow.cpp)
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 17:14:54
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 17:18:07
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 17:44:53
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Mar 2022 @ 17:48:52
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Desktop/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 21:31:04
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: Name saved for loading... "page-2.html" (mainwindow.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 21:47:17
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: Name saved for loading... "p-4.html" (mainwindow.cpp)
+Debug: ext saved for loading... "html" (mainwindow.cpp)
+Debug: project saved for loading... "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 18:15:23
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: suff variable:::-> QFile(0x5578ecc97ed0) (mainwindow.cpp)
+Debug: Name saved for loading... "page-2.html" (mainwindow.cpp)
+Debug: ext saved for loading... "html" (mainwindow.cpp)
+Debug: project saved for loading... "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 18:19:22
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: file variable:::-> QFile(0x56139d9d0420) (mainwindow.cpp)
+Debug: qvar variable:::-> "page-2.html" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: Name saved for loading... "page-2.html" (mainwindow.cpp)
+Debug: ext saved for loading... "html" (mainwindow.cpp)
+Debug: project saved for loading... "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 18:45:47
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: file variable:::-> QFile(0x555749c7f070) (mainwindow.cpp)
+Debug: qvar variable:::-> "page-2.html" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: Name saved for loading... "page-2.html" (mainwindow.cpp)
+Debug: ext saved for loading... "html" (mainwindow.cpp)
+Debug: project saved for loading... "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 18:59:10
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: file variable:::-> QFile(0x55dc6ef629a0) (mainwindow.cpp)
+Debug: qvar variable:::-> "p-2.html" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: Name saved for loading... "p-2.html" (mainwindow.cpp)
+Debug: ext saved for loading... "html" (mainwindow.cpp)
+Debug: project saved for loading... "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Debug: fileVAr... QFile(0x55dc6ef629a0) (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 19:03:59
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: file variable:::-> QFile(0x5621bd5ee4e0) (mainwindow.cpp)
+Debug: qvar variable:::-> "page-1.html" (mainwindow.cpp)
+Debug: index::-> QModelIndex(0,0,0x5621bd5e6970,TreeModel(0x5621bd5a1db0)) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: Name saved for loading... "page-1.html" (mainwindow.cpp)
+Debug: ext saved for loading... "html" (mainwindow.cpp)
+Debug: project saved for loading... "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Debug: fileVAr... QFile(0x5621bd5ee4e0) (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 19:13:59
+Username:sadam
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 19:14:03
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: file variable:::-> QFile(0x562d9cd27aa0) (mainwindow.cpp)
+Debug: qvar variable:::-> "page-2.html" (mainwindow.cpp)
+Debug: index::-> QModelIndex(1,0,0x562d9cd1fdc0,TreeModel(0x562d9ccd9c20)) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Name saved for loading... "page-2.html" (mainwindow.cpp)
+Debug: ext saved for loading... "html" (mainwindow.cpp)
+Debug: project saved for loading... "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Debug: Index... "" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: file variable:::-> QFile(0x562d9cd20540) (mainwindow.cpp)
+Debug: qvar variable:::-> "page-3.html" (mainwindow.cpp)
+Debug: index::-> QModelIndex(2,0,0x562d9cd1fb80,TreeModel(0x562d9ccd9c20)) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Name saved for loading... "page-3.html" (mainwindow.cpp)
+Debug: ext saved for loading... "html" (mainwindow.cpp)
+Debug: project saved for loading... "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Debug: Index... "" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 19:33:17
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Matched...just need to highlight (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 19:33:49
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Matched...just need to highlight (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 19:39:16
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Matched...just need to highlight (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 19:42:01
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Matched...just need to highlight (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 19:43:01
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Matched...just need to highlight (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 22:04:04
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Matched...just need to highlight (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Error in loading docFormat (verifyset.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 22:06:04
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Matched...just need to highlight (mainwindow.cpp)
+Debug: suff variable:::-> "txt" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 22:07:38
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Matched...just need to highlight (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 22:15:36
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Matched...just need to highlight (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 22:30:52
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 22:31:49
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 22:43:28
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x55cfd98f7d40) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 23:24:05
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: File:::::::: QFile(0x55726a36eb20) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 23:33:42
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: File:::::::: QFile(0x5618baffad20) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x5618baffb060) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x5618baffbbd0) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x5618baff8950) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x5618baff8950) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x5618baff8950) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x5618bb000460) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x5618bb004960) (mainwindow.cpp)
+Debug: suff variable:::-> "txt" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x5618bb004960) (mainwindow.cpp)
+Debug: suff variable:::-> "txt" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 23:42:04
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: File:::::::: QFile(0x55d1c7d3dfe0) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x55d1c7d60f30) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x55d1c7d61270) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 23:44:36
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: File:::::::: QFile(0x55e2ba15abb0) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x55e2ba15aef0) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x55e2ba15cc00) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x55e2ba15b890) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x55e2ba162b60) (mainwindow.cpp)
+Debug: suff variable:::-> "txt" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x55e2ba15d620) (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x55e2ba15fd00) (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x55e2ba15fa00) (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x55e2ba15b570) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x55e2ba15bb30) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x55e2ba15cf40) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x55e2ba15e890) (mainwindow.cpp)
+Debug: suff variable:::-> "txt" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 11:14:18
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 11:20:53
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: File:::::::: QFile(0x55612916f4a0) (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 11:43:18
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: gcurrent page name "" (mainwindow.cpp)
+Debug: ggDirTewo level up "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject" (mainwindow.cpp)
+Debug: gcurrent page name "." (mainwindow.cpp)
+Debug: gcurrent page name "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/." (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: File:::::::: QFile(0x558201a9cdf0) (mainwindow.cpp)
+Debug: Item:::::::: 0x558201a9c420 (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: gcurrent page name "page-2.html" (mainwindow.cpp)
+Debug: ggDirTewo level up "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject" (mainwindow.cpp)
+Debug: gcurrent page name "CorrectorOutput" (mainwindow.cpp)
+Debug: gcurrent page name "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/CorrectorOutput" (mainwindow.cpp)
+Debug: gcurrent page name "page-2.html" (mainwindow.cpp)
+Debug: ggDirTewo level up "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject" (mainwindow.cpp)
+Debug: gcurrent page name "CorrectorOutput" (mainwindow.cpp)
+Debug: gcurrent page name "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/CorrectorOutput" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 11:46:39
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: gcurrent page name "" (mainwindow.cpp)
+Debug: ggDirTewo level up "/home/sadam/Downloads/en-hi" (mainwindow.cpp)
+Debug: gcurrent page name "." (mainwindow.cpp)
+Debug: gcurrent page name "/home/sadam/Downloads/en-hi/." (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x55cd14a762a0) (mainwindow.cpp)
+Debug: Item:::::::: 0x55cd14aa3980 (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: gcurrent page name "p-4.html" (mainwindow.cpp)
+Debug: ggDirTewo level up "/home/sadam/Downloads/en-hi" (mainwindow.cpp)
+Debug: gcurrent page name "CorrectorOutput" (mainwindow.cpp)
+Debug: gcurrent page name "/home/sadam/Downloads/en-hi/CorrectorOutput" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: gcurrent page name "p-4.html" (mainwindow.cpp)
+Debug: ggDirTewo level up "/home/sadam/Downloads/en-hi" (mainwindow.cpp)
+Debug: gcurrent page name "CorrectorOutput" (mainwindow.cpp)
+Debug: gcurrent page name "/home/sadam/Downloads/en-hi/CorrectorOutput" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/Comments/pageRecord.json"): device not open ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 11:47:16
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: gcurrent page name "" (mainwindow.cpp)
+Debug: ggDirTewo level up "/home/sadam/Downloads/en-hi" (mainwindow.cpp)
+Debug: gcurrent page name "." (mainwindow.cpp)
+Debug: gcurrent page name "/home/sadam/Downloads/en-hi/." (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 11:52:05
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: File:::::::: QFile(0x55b4f2058fb0) (mainwindow.cpp)
+Debug: Item:::::::: 0x55b4f2053480 (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 11:52:34
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 11:57:25
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: File:::::::: QFile(0x55fc0216c160) (mainwindow.cpp)
+Debug: Item:::::::: 0x55fc021e0710 (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 11:57:52
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 12:02:58
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: children[i] QModelIndex(0,0,0x5563463a7c50,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(1,0,0x5563463f4840,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(2,0,0x55634640e3c0,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(3,0,0x55634640e5b0,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(0,0,0x5563463a7c50,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(1,0,0x5563463f4840,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(2,0,0x55634640e3c0,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(3,0,0x55634640e5b0,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(0,0,0x5563463a7c50,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(1,0,0x5563463f4840,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(2,0,0x55634640e3c0,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(3,0,0x55634640e5b0,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(0,0,0x5563463a7c50,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(1,0,0x5563463f4840,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(2,0,0x55634640e3c0,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(3,0,0x55634640e5b0,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(0,0,0x5563463a7c50,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(1,0,0x5563463f4840,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(2,0,0x55634640e3c0,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(3,0,0x55634640e5b0,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(0,0,0x5563463a7c50,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(1,0,0x5563463f4840,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(2,0,0x55634640e3c0,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(3,0,0x55634640e5b0,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(0,0,0x5563463a7c50,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(1,0,0x5563463f4840,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(2,0,0x55634640e3c0,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(3,0,0x55634640e5b0,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(0,0,0x5563463a7c50,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(1,0,0x5563463f4840,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(2,0,0x55634640e3c0,TreeModel(0x556346401720)) (mainwindow.cpp)
+Debug: children[i] QModelIndex(3,0,0x55634640e5b0,TreeModel(0x556346401720)) (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 12:04:48
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0))) QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0))) QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0))) QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)), QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0))) QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0))) QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0))) QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0))) QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)), QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0))) QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0))) QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0))) QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0))) QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)), QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0))) QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0))) QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0))) QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0))) QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)), QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0))) QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0))) QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0))) QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0))) QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)), QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0))) QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0))) QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0))) QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0))) QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)), QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0))) QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0))) QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0))) QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0))) QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)), QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0))) QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0))) QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0))) QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0))) QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)), QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0))) QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0))) QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0))) QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0))) QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)), QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0))) QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0))) QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0))) QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0))) QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)), QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0))) QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0))) QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0))) QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0))) QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)), QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0))) QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0))) QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0))) QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0))) QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: children[i] (QModelIndex(0,0,0x55faa2e37140,TreeModel(0x55faa52e14a0)), QModelIndex(1,0,0x55faa52c5ea0,TreeModel(0x55faa52e14a0)), QModelIndex(2,0,0x55faa52efec0,TreeModel(0x55faa52e14a0)), QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0))) QModelIndex(3,0,0x55faa52f00b0,TreeModel(0x55faa52e14a0)) (mainwindow.cpp)
+Debug: File:::::::: QFile(0x55faa531fe60) (mainwindow.cpp)
+Debug: Item:::::::: 0x55faa5312f20 (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 12:07:33
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Item "Image" (mainwindow.cpp)
+Debug: Item "CorrectorOutput" (mainwindow.cpp)
+Debug: Item "VerifierOutput" (mainwindow.cpp)
+Debug: Item "Document" (mainwindow.cpp)
+Debug: Item "Image" (mainwindow.cpp)
+Debug: Item "CorrectorOutput" (mainwindow.cpp)
+Debug: Item "VerifierOutput" (mainwindow.cpp)
+Debug: Item "Document" (mainwindow.cpp)
+Debug: Item "Image" (mainwindow.cpp)
+Debug: Item "CorrectorOutput" (mainwindow.cpp)
+Debug: Item "VerifierOutput" (mainwindow.cpp)
+Debug: Item "Document" (mainwindow.cpp)
+Debug: Item "Image" (mainwindow.cpp)
+Debug: Item "CorrectorOutput" (mainwindow.cpp)
+Debug: Item "VerifierOutput" (mainwindow.cpp)
+Debug: Item "Document" (mainwindow.cpp)
+Debug: Item "Image" (mainwindow.cpp)
+Debug: Item "CorrectorOutput" (mainwindow.cpp)
+Debug: Item "VerifierOutput" (mainwindow.cpp)
+Debug: Item "Document" (mainwindow.cpp)
+Debug: Item "Image" (mainwindow.cpp)
+Debug: Item "CorrectorOutput" (mainwindow.cpp)
+Debug: Item "VerifierOutput" (mainwindow.cpp)
+Debug: Item "Document" (mainwindow.cpp)
+Debug: Item "Image" (mainwindow.cpp)
+Debug: Item "CorrectorOutput" (mainwindow.cpp)
+Debug: Item "VerifierOutput" (mainwindow.cpp)
+Debug: Item "Document" (mainwindow.cpp)
+Debug: Item "Image" (mainwindow.cpp)
+Debug: Item "CorrectorOutput" (mainwindow.cpp)
+Debug: Item "VerifierOutput" (mainwindow.cpp)
+Debug: Item "Document" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 12:31:21
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Item1 "p-1.html" (mainwindow.cpp)
+Debug: Item1 "p-2.html" (mainwindow.cpp)
+Debug: Item1 "p-3.html" (mainwindow.cpp)
+Debug: Item1 "p-4.html" (mainwindow.cpp)
+Debug: Item1 "p-5.html" (mainwindow.cpp)
+Debug: Item1 "p-6.html" (mainwindow.cpp)
+Debug: Item1 "p-7.html" (mainwindow.cpp)
+Debug: Item1 "p-8.html" (mainwindow.cpp)
+Debug: Item1 "p-9.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 12:32:03
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: File:::::::: QFile(0x558682bac470) (mainwindow.cpp)
+Debug: Item:::::::: 0x558682c32480 (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 12:32:36
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Item1 "page-1.html" (mainwindow.cpp)
+Debug: Item1 "page-2.html" (mainwindow.cpp)
+Debug: Item1 "page-4.html" (mainwindow.cpp)
+Debug: Item1 "page-6.html" (mainwindow.cpp)
+Debug: Item1 "page-7.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 12:41:56
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Item1 "page-1.html" (mainwindow.cpp)
+Debug: File:::::::: QFile(0x55967a248690) (mainwindow.cpp)
+Debug: Item:::::::: 0x55967a2c3890 (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Item1 "page-2.html" (mainwindow.cpp)
+Debug: Item1 "page-4.html" (mainwindow.cpp)
+Debug: Item1 "page-6.html" (mainwindow.cpp)
+Debug: Item1 "page-7.html" (mainwindow.cpp)
+Debug: File:::::::: QFile(0x55967a2bdd20) (mainwindow.cpp)
+Debug: Item:::::::: 0x55967a2baad0 (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 12:48:50
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Item1 "page-1.html" (mainwindow.cpp)
+Debug: Item1 "page-2.html" (mainwindow.cpp)
+Debug: Item1 "page-4.html" (mainwindow.cpp)
+Debug: Item1 "page-6.html" (mainwindow.cpp)
+Debug: Item1 "page-7.html" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 12:49:19
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Item1 "page-1.html" (mainwindow.cpp)
+Debug: Item1 "page-2.html" (mainwindow.cpp)
+Debug: Item1 "page-3.html" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Item1 "page-4.html" (mainwindow.cpp)
+Debug: Item1 "page-5.html" (mainwindow.cpp)
+Debug: Item1 "page-6.html" (mainwindow.cpp)
+Debug: Item1 "page-7.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 12:49:42
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()

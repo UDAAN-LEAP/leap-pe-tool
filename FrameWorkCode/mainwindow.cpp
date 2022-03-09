@@ -74,7 +74,6 @@
 #include "worker.h"
 #include <QThread>
 #include "verifyset.h"
-
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
 trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
@@ -122,7 +121,7 @@ bool loadimage=false;           //Check image is loaded on not
 bool shouldIDraw=false;         //button functioning over marking a region for figure/table/equations
 
 int pressedFlag;            //Resposible for dynamic rectangular drawing
-
+QString ProjFile;
 QString branchName;
 
 QMap<QString, QString> globallyReplacedWords;
@@ -407,6 +406,7 @@ void MainWindow::UpdateFileBrekadown()
     gDirTwoLevelUp = mProject.GetDir().absolutePath();
     gCurrentDirName = finfo.dir().dirName();
     gDirOneLevelUp = gDirTwoLevelUp + "/" + gCurrentDirName;
+
 }
 
 /*!
@@ -789,7 +789,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
      * 6. Get the value for time elapsed from Timelog.json.
      */
 
-    QString ProjFile;
+    //QString ProjFile;
 
     int totalFileCountInDir = 0;
     QMap<QString, int> fileCountInDir;
@@ -1075,6 +1075,14 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         return;
     }
      AddRecentProjects();//to load recent project without restarting app
+     //--for last opened page--//
+     QSettings settings("IIT-B", "OpenOCRCorrect");
+     settings.beginGroup("RecentPageLoaded");
+     QString stored_project = settings.value("projectName").toString();
+     settings.endGroup();
+     if(ProjFile == stored_project){
+         RecentPageInfo();
+     }
 }
 
 /*!
@@ -6860,6 +6868,14 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
             b->setReadOnly(true);
         }
     }
+    //Saves the current opened page
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("RecentPageLoaded");
+    settings.setValue("projectName",ProjFile );
+    settings.setValue("name",name );
+    settings.setValue("pageParent",gCurrentDirName );
+    settings.endGroup();
+    //.///////////////////////////////////////////////////////
     isProjectOpen = 1;
     //!Display format by setting font size and styles
     QTextStream stream(f);
@@ -7054,7 +7070,6 @@ void MainWindow::LoadImageFromFile(QFile * f)
     if (graphic)delete graphic;
     graphic = new QGraphicsScene(this);
     graphic->addPixmap(QPixmap::fromImage(imageOrig));
-
     ui->graphicsView->setScene(graphic);
     ui->graphicsView->fitInView(graphic->itemsBoundingRect(), Qt::KeepAspectRatio);
     if (z)delete z;
@@ -7087,16 +7102,15 @@ void MainWindow::file_click(const QModelIndex & indx)
     if(qvar == "Document" || qvar == "Image" || qvar=="CorrectorOutput" || qvar=="VerifierOutput")
         return;
     auto file = item->GetFile();
-
     QString fileName = file->fileName();          //gets filename
     NodeType type = item->GetNodeType();
     switch (type) {
-
     case NodeType::_FILETYPE:
     {
         QFileInfo f(*file);
         QString suff = f.completeSuffix();
         if (suff == "txt" || suff == "html") {
+            qDebug () <<"suff variable:::->"<<suff;
             LoadDocument(file,suff,qvar);     //loads not image files
         }
 
@@ -7109,6 +7123,7 @@ void MainWindow::file_click(const QModelIndex & indx)
     default:
         break;
     }
+
 }
 
 /*!
@@ -8315,7 +8330,7 @@ void MainWindow::reLoadTabWindow()
     QFileInfo f(*file);
     QString suff = f.completeSuffix();
     if (suff == "txt" || suff == "html") {
-      LoadDocument(file,suff,currentTabPageName );
+      (file,suff,currentTabPageName );
     }
 
 }
@@ -8346,7 +8361,10 @@ void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
     QString item;
     for(int i=0;i<model->rowCount();i++){
         children<<model->index(i,0);
+        item=children[i].data(Qt::DisplayRole).toString();
+        qDebug()<<"Item"<<item;
     }
+
     //qDebug()<<"Children size"<<children.size();
     for(int i=0;i<children.size();i++){
         for(int j=0;j<model->rowCount(children[i]);j++){
@@ -8361,7 +8379,7 @@ void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
     //qDebug()<<"Children size"<<children.size();
     for(int i=0;i<children.size();i++){
         item=children[i].data(Qt::DisplayRole).toString();
-      //  qDebug()<<"Item"<<item;
+        //qDebug()<<"Item"<<item;
         if(item.contains(arg1)){
         ui->treeView->selectionModel()->setCurrentIndex(children[i],QItemSelectionModel::Select);
         }
@@ -8533,7 +8551,39 @@ void MainWindow::compareVersion(QString latestVersion)
     }
 
 }
-
+void MainWindow::RecentPageInfo()
+{
+    ui->treeView->selectionModel()->clearSelection();
+    QModelIndex currentTreeItemIndex=ui->treeView->selectionModel()->currentIndex();
+    QModelIndex parentIndex = currentTreeItemIndex.parent();
+    auto *model = ui->treeView->model();
+    int rowCount = ui->treeView->model()->rowCount(parentIndex);
+    //qDebug()<<"rowCount"<<rowCount;
+    QModelIndexList children;
+    QString var1,var2;
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("RecentPageLoaded");
+    var1 = settings.value("name").toString();
+    var2 = settings.value("pageParent").toString();
+    QString item1;
+    settings.endGroup();
+    QString item;
+    for(int i=0;i<model->rowCount();i++){
+        children<<model->index(i,0);
+        item=children[i].data(Qt::DisplayRole).toString();
+        if(item == var2){
+            for(int j=0;j<model->rowCount(children[i]);j++){
+                children<<children[i].child(j,0);
+                item1 = children[i].child(j,0).data(Qt::DisplayRole).toString();
+                qDebug ()<<"Item1"<<item1;
+                if(item1 == var1){
+                    auto location = children[i].child(j,0);
+                    ui->treeView->selectionModel()->setCurrentIndex(children[i].child(j,0),QItemSelectionModel::Select);
+                    file_click(location);
+                }
+        }
+    }}
+}
 
 
 

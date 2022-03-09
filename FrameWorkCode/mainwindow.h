@@ -338,6 +338,7 @@ private slots:
     void addCurrentlyOpenFileToEditedFilesLog();
 
     void deleteEditedFilesLog();
+    void RecentPageInfo();
 
    // void highlight_dict(QTextBrowser *b);
     bool isStringInFile(QString file_path, QString searchString);

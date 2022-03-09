@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[189];
-    char stringdata0[3929];
+    QByteArrayData data[190];
+    char stringdata0[3944];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -169,58 +169,59 @@ QT_MOC_LITERAL(133, 2694, 21), // "QMap<QString,QString>"
 QT_MOC_LITERAL(134, 2716, 20), // "globalReplacementMap"
 QT_MOC_LITERAL(135, 2737, 36), // "addCurrentlyOpenFileToEditedF..."
 QT_MOC_LITERAL(136, 2774, 20), // "deleteEditedFilesLog"
-QT_MOC_LITERAL(137, 2795, 14), // "isStringInFile"
-QT_MOC_LITERAL(138, 2810, 12), // "searchString"
-QT_MOC_LITERAL(139, 2823, 16), // "dumpStringToFile"
-QT_MOC_LITERAL(140, 2840, 6), // "string"
-QT_MOC_LITERAL(141, 2847, 9), // "highlight"
-QT_MOC_LITERAL(142, 2857, 42), // "getGlobalReplacementMapFromCh..."
-QT_MOC_LITERAL(143, 2900, 13), // "replacedWords"
-QT_MOC_LITERAL(144, 2914, 13), // "QVector<int>*"
-QT_MOC_LITERAL(145, 2928, 17), // "replaceInAllPages"
-QT_MOC_LITERAL(146, 2946, 25), // "on_actionas_PDF_triggered"
-QT_MOC_LITERAL(147, 2972, 27), // "on_actionGet_Help_triggered"
-QT_MOC_LITERAL(148, 3000, 27), // "on_actionTutorial_triggered"
-QT_MOC_LITERAL(149, 3028, 24), // "on_actionLinux_triggered"
-QT_MOC_LITERAL(150, 3053, 26), // "on_actionWindows_triggered"
-QT_MOC_LITERAL(151, 3080, 33), // "on_actionShortcut_Guide_trigg..."
-QT_MOC_LITERAL(152, 3114, 26), // "on_textBrowser_textChanged"
-QT_MOC_LITERAL(153, 3141, 26), // "on_zoom_Out_Button_clicked"
-QT_MOC_LITERAL(154, 3168, 25), // "on_zoom_In_Button_clicked"
-QT_MOC_LITERAL(155, 3194, 24), // "zoom_slider_valueChanged"
-QT_MOC_LITERAL(156, 3219, 5), // "value"
-QT_MOC_LITERAL(157, 3225, 17), // "zoom_slider_moved"
-QT_MOC_LITERAL(158, 3243, 17), // "zoomedUsingScroll"
-QT_MOC_LITERAL(159, 3261, 38), // "on_actionUndo_Global_Replace_..."
-QT_MOC_LITERAL(160, 3300, 29), // "undoGlobalReplace_Single_Word"
-QT_MOC_LITERAL(161, 3330, 7), // "oldWord"
-QT_MOC_LITERAL(162, 3338, 7), // "newWord"
-QT_MOC_LITERAL(163, 3346, 29), // "reverseGlobalReplacedWordsMap"
-QT_MOC_LITERAL(164, 3376, 38), // "getUndoGlobalReplaceMap_Multi..."
-QT_MOC_LITERAL(165, 3415, 28), // "replaceInAllFilesFromTSVfile"
-QT_MOC_LITERAL(166, 3444, 20), // "checkForValidTSVfile"
-QT_MOC_LITERAL(167, 3465, 6), // "QFile&"
-QT_MOC_LITERAL(168, 3472, 22), // "globalReplacePreviewfn"
-QT_MOC_LITERAL(169, 3495, 12), // "QVector<int>"
-QT_MOC_LITERAL(170, 3508, 22), // "getBeforeAndAfterWords"
-QT_MOC_LITERAL(171, 3531, 25), // "QMap<QString,QStringList>"
-QT_MOC_LITERAL(172, 3557, 5), // "fPath"
-QT_MOC_LITERAL(173, 3563, 25), // "on_actionUpload_triggered"
-QT_MOC_LITERAL(174, 3589, 20), // "on_justify_triggered"
-QT_MOC_LITERAL(175, 3610, 29), // "on_actionFont_Color_triggered"
-QT_MOC_LITERAL(176, 3640, 23), // "on_actionBold_triggered"
-QT_MOC_LITERAL(177, 3664, 26), // "SaveFile_GUI_Preprocessing"
-QT_MOC_LITERAL(178, 3691, 27), // "SaveFile_GUI_Postprocessing"
-QT_MOC_LITERAL(179, 3719, 13), // "GlobalReplace"
-QT_MOC_LITERAL(180, 3733, 12), // "stopSpinning"
-QT_MOC_LITERAL(181, 3746, 29), // "on_lineEditSearch_textChanged"
-QT_MOC_LITERAL(182, 3776, 4), // "arg1"
-QT_MOC_LITERAL(183, 3781, 20), // "on_action1_triggered"
-QT_MOC_LITERAL(184, 3802, 20), // "on_action2_triggered"
-QT_MOC_LITERAL(185, 3823, 20), // "on_action3_triggered"
-QT_MOC_LITERAL(186, 3844, 16), // "SaveFile_Backend"
-QT_MOC_LITERAL(187, 3861, 33), // "on_actionLoad_Next_Page_trigg..."
-QT_MOC_LITERAL(188, 3895, 33) // "on_actionLoad_Prev_Page_trigg..."
+QT_MOC_LITERAL(137, 2795, 14), // "RecentPageInfo"
+QT_MOC_LITERAL(138, 2810, 14), // "isStringInFile"
+QT_MOC_LITERAL(139, 2825, 12), // "searchString"
+QT_MOC_LITERAL(140, 2838, 16), // "dumpStringToFile"
+QT_MOC_LITERAL(141, 2855, 6), // "string"
+QT_MOC_LITERAL(142, 2862, 9), // "highlight"
+QT_MOC_LITERAL(143, 2872, 42), // "getGlobalReplacementMapFromCh..."
+QT_MOC_LITERAL(144, 2915, 13), // "replacedWords"
+QT_MOC_LITERAL(145, 2929, 13), // "QVector<int>*"
+QT_MOC_LITERAL(146, 2943, 17), // "replaceInAllPages"
+QT_MOC_LITERAL(147, 2961, 25), // "on_actionas_PDF_triggered"
+QT_MOC_LITERAL(148, 2987, 27), // "on_actionGet_Help_triggered"
+QT_MOC_LITERAL(149, 3015, 27), // "on_actionTutorial_triggered"
+QT_MOC_LITERAL(150, 3043, 24), // "on_actionLinux_triggered"
+QT_MOC_LITERAL(151, 3068, 26), // "on_actionWindows_triggered"
+QT_MOC_LITERAL(152, 3095, 33), // "on_actionShortcut_Guide_trigg..."
+QT_MOC_LITERAL(153, 3129, 26), // "on_textBrowser_textChanged"
+QT_MOC_LITERAL(154, 3156, 26), // "on_zoom_Out_Button_clicked"
+QT_MOC_LITERAL(155, 3183, 25), // "on_zoom_In_Button_clicked"
+QT_MOC_LITERAL(156, 3209, 24), // "zoom_slider_valueChanged"
+QT_MOC_LITERAL(157, 3234, 5), // "value"
+QT_MOC_LITERAL(158, 3240, 17), // "zoom_slider_moved"
+QT_MOC_LITERAL(159, 3258, 17), // "zoomedUsingScroll"
+QT_MOC_LITERAL(160, 3276, 38), // "on_actionUndo_Global_Replace_..."
+QT_MOC_LITERAL(161, 3315, 29), // "undoGlobalReplace_Single_Word"
+QT_MOC_LITERAL(162, 3345, 7), // "oldWord"
+QT_MOC_LITERAL(163, 3353, 7), // "newWord"
+QT_MOC_LITERAL(164, 3361, 29), // "reverseGlobalReplacedWordsMap"
+QT_MOC_LITERAL(165, 3391, 38), // "getUndoGlobalReplaceMap_Multi..."
+QT_MOC_LITERAL(166, 3430, 28), // "replaceInAllFilesFromTSVfile"
+QT_MOC_LITERAL(167, 3459, 20), // "checkForValidTSVfile"
+QT_MOC_LITERAL(168, 3480, 6), // "QFile&"
+QT_MOC_LITERAL(169, 3487, 22), // "globalReplacePreviewfn"
+QT_MOC_LITERAL(170, 3510, 12), // "QVector<int>"
+QT_MOC_LITERAL(171, 3523, 22), // "getBeforeAndAfterWords"
+QT_MOC_LITERAL(172, 3546, 25), // "QMap<QString,QStringList>"
+QT_MOC_LITERAL(173, 3572, 5), // "fPath"
+QT_MOC_LITERAL(174, 3578, 25), // "on_actionUpload_triggered"
+QT_MOC_LITERAL(175, 3604, 20), // "on_justify_triggered"
+QT_MOC_LITERAL(176, 3625, 29), // "on_actionFont_Color_triggered"
+QT_MOC_LITERAL(177, 3655, 23), // "on_actionBold_triggered"
+QT_MOC_LITERAL(178, 3679, 26), // "SaveFile_GUI_Preprocessing"
+QT_MOC_LITERAL(179, 3706, 27), // "SaveFile_GUI_Postprocessing"
+QT_MOC_LITERAL(180, 3734, 13), // "GlobalReplace"
+QT_MOC_LITERAL(181, 3748, 12), // "stopSpinning"
+QT_MOC_LITERAL(182, 3761, 29), // "on_lineEditSearch_textChanged"
+QT_MOC_LITERAL(183, 3791, 4), // "arg1"
+QT_MOC_LITERAL(184, 3796, 20), // "on_action1_triggered"
+QT_MOC_LITERAL(185, 3817, 20), // "on_action2_triggered"
+QT_MOC_LITERAL(186, 3838, 20), // "on_action3_triggered"
+QT_MOC_LITERAL(187, 3859, 16), // "SaveFile_Backend"
+QT_MOC_LITERAL(188, 3876, 33), // "on_actionLoad_Next_Page_trigg..."
+QT_MOC_LITERAL(189, 3910, 33) // "on_actionLoad_Prev_Page_trigg..."
 
     },
     "MainWindow\0closeSignal\0\0createActions\0"
@@ -306,9 +307,10 @@ QT_MOC_LITERAL(188, 3895, 33) // "on_actionLoad_Prev_Page_trigg..."
     "file_path\0QMap<QString,QString>\0"
     "globalReplacementMap\0"
     "addCurrentlyOpenFileToEditedFilesLog\0"
-    "deleteEditedFilesLog\0isStringInFile\0"
-    "searchString\0dumpStringToFile\0string\0"
-    "highlight\0getGlobalReplacementMapFromChecklistDialog\0"
+    "deleteEditedFilesLog\0RecentPageInfo\0"
+    "isStringInFile\0searchString\0"
+    "dumpStringToFile\0string\0highlight\0"
+    "getGlobalReplacementMapFromChecklistDialog\0"
     "replacedWords\0QVector<int>*\0"
     "replaceInAllPages\0on_actionas_PDF_triggered\0"
     "on_actionGet_Help_triggered\0"
@@ -348,7 +350,7 @@ static const uint qt_meta_data_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-     142,   14, // methods
+     143,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -356,150 +358,151 @@ static const uint qt_meta_data_MainWindow[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  724,    2, 0x06 /* Public */,
+       1,    0,  729,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,  725,    2, 0x08 /* Private */,
-       4,    0,  726,    2, 0x08 /* Private */,
-       5,    2,  727,    2, 0x08 /* Private */,
-       9,    2,  732,    2, 0x08 /* Private */,
-      11,    6,  737,    2, 0x08 /* Private */,
-      12,    0,  750,    2, 0x08 /* Private */,
-      13,    0,  751,    2, 0x08 /* Private */,
-      14,    0,  752,    2, 0x08 /* Private */,
-      15,    0,  753,    2, 0x08 /* Private */,
-      16,    0,  754,    2, 0x08 /* Private */,
-      17,    1,  755,    2, 0x08 /* Private */,
-      20,    1,  758,    2, 0x08 /* Private */,
-      23,    1,  761,    2, 0x08 /* Private */,
-      24,    0,  764,    2, 0x08 /* Private */,
-      25,    0,  765,    2, 0x08 /* Private */,
-      26,    0,  766,    2, 0x08 /* Private */,
-      27,    0,  767,    2, 0x08 /* Private */,
-      28,    0,  768,    2, 0x08 /* Private */,
-      29,    0,  769,    2, 0x08 /* Private */,
-      30,    0,  770,    2, 0x08 /* Private */,
-      31,    0,  771,    2, 0x08 /* Private */,
-      32,    0,  772,    2, 0x08 /* Private */,
-      33,    0,  773,    2, 0x08 /* Private */,
-      34,    0,  774,    2, 0x08 /* Private */,
-      35,    0,  775,    2, 0x08 /* Private */,
-      36,    0,  776,    2, 0x08 /* Private */,
-      37,    0,  777,    2, 0x08 /* Private */,
-      38,    0,  778,    2, 0x08 /* Private */,
-      39,    0,  779,    2, 0x08 /* Private */,
-      40,    0,  780,    2, 0x08 /* Private */,
-      41,    0,  781,    2, 0x08 /* Private */,
-      42,    0,  782,    2, 0x08 /* Private */,
-      43,    0,  783,    2, 0x08 /* Private */,
-      44,    0,  784,    2, 0x08 /* Private */,
-      45,    0,  785,    2, 0x08 /* Private */,
-      46,    0,  786,    2, 0x08 /* Private */,
-      47,    0,  787,    2, 0x08 /* Private */,
-      48,    1,  788,    2, 0x08 /* Private */,
-      51,    3,  791,    2, 0x08 /* Private */,
-      56,    1,  798,    2, 0x08 /* Private */,
-      57,    1,  801,    2, 0x08 /* Private */,
-      59,    0,  804,    2, 0x08 /* Private */,
-      60,    0,  805,    2, 0x08 /* Private */,
-      61,    0,  806,    2, 0x08 /* Private */,
-      62,    1,  807,    2, 0x08 /* Private */,
-      64,    0,  810,    2, 0x08 /* Private */,
-      65,    1,  811,    2, 0x08 /* Private */,
-      67,    1,  814,    2, 0x08 /* Private */,
-      68,    0,  817,    2, 0x08 /* Private */,
-      69,    0,  818,    2, 0x08 /* Private */,
-      70,    0,  819,    2, 0x08 /* Private */,
-      71,    0,  820,    2, 0x08 /* Private */,
-      72,    1,  821,    2, 0x08 /* Private */,
-      74,    0,  824,    2, 0x08 /* Private */,
-      75,    0,  825,    2, 0x08 /* Private */,
-      76,    0,  826,    2, 0x08 /* Private */,
-      77,    0,  827,    2, 0x08 /* Private */,
-      78,    0,  828,    2, 0x08 /* Private */,
-      79,    0,  829,    2, 0x08 /* Private */,
-      80,    0,  830,    2, 0x08 /* Private */,
-      81,    0,  831,    2, 0x08 /* Private */,
-      82,    0,  832,    2, 0x08 /* Private */,
-      83,    0,  833,    2, 0x08 /* Private */,
-      84,    0,  834,    2, 0x08 /* Private */,
-      85,    0,  835,    2, 0x08 /* Private */,
-      86,    0,  836,    2, 0x08 /* Private */,
-      87,    0,  837,    2, 0x08 /* Private */,
-      88,    0,  838,    2, 0x08 /* Private */,
-      89,    1,  839,    2, 0x08 /* Private */,
-      91,    0,  842,    2, 0x08 /* Private */,
-      92,    1,  843,    2, 0x08 /* Private */,
-      94,    1,  846,    2, 0x08 /* Private */,
-      95,    0,  849,    2, 0x08 /* Private */,
-      96,    0,  850,    2, 0x08 /* Private */,
-      97,    0,  851,    2, 0x08 /* Private */,
-      98,    0,  852,    2, 0x08 /* Private */,
-      99,    0,  853,    2, 0x08 /* Private */,
-     100,    1,  854,    2, 0x08 /* Private */,
-     103,    1,  857,    2, 0x08 /* Private */,
-     105,    1,  860,    2, 0x08 /* Private */,
-     107,    0,  863,    2, 0x08 /* Private */,
-     108,    0,  864,    2, 0x08 /* Private */,
-     109,    0,  865,    2, 0x08 /* Private */,
-     110,    0,  866,    2, 0x08 /* Private */,
-     111,    0,  867,    2, 0x08 /* Private */,
-     112,    0,  868,    2, 0x08 /* Private */,
-     113,    0,  869,    2, 0x08 /* Private */,
-     114,    0,  870,    2, 0x08 /* Private */,
-     115,    0,  871,    2, 0x08 /* Private */,
-     116,    0,  872,    2, 0x08 /* Private */,
-     117,    0,  873,    2, 0x08 /* Private */,
-     118,    0,  874,    2, 0x08 /* Private */,
-     119,    0,  875,    2, 0x08 /* Private */,
-     120,    0,  876,    2, 0x08 /* Private */,
-     121,    1,  877,    2, 0x08 /* Private */,
-     122,    0,  880,    2, 0x08 /* Private */,
-     123,    0,  881,    2, 0x08 /* Private */,
-     124,    2,  882,    2, 0x08 /* Private */,
-     126,    3,  887,    2, 0x08 /* Private */,
-     131,    2,  894,    2, 0x08 /* Private */,
-     135,    0,  899,    2, 0x08 /* Private */,
-     136,    0,  900,    2, 0x08 /* Private */,
-     137,    2,  901,    2, 0x08 /* Private */,
-     139,    2,  906,    2, 0x08 /* Private */,
-     141,    2,  911,    2, 0x08 /* Private */,
-     142,    2,  916,    2, 0x08 /* Private */,
-     146,    0,  921,    2, 0x08 /* Private */,
-     147,    0,  922,    2, 0x08 /* Private */,
-     148,    0,  923,    2, 0x08 /* Private */,
-     149,    0,  924,    2, 0x08 /* Private */,
-     150,    0,  925,    2, 0x08 /* Private */,
-     151,    0,  926,    2, 0x08 /* Private */,
-     152,    0,  927,    2, 0x08 /* Private */,
-     153,    0,  928,    2, 0x08 /* Private */,
-     154,    0,  929,    2, 0x08 /* Private */,
-     155,    1,  930,    2, 0x08 /* Private */,
-     157,    1,  933,    2, 0x08 /* Private */,
-     158,    0,  936,    2, 0x08 /* Private */,
-     159,    0,  937,    2, 0x08 /* Private */,
-     160,    2,  938,    2, 0x08 /* Private */,
-     163,    0,  943,    2, 0x08 /* Private */,
-     164,    1,  944,    2, 0x08 /* Private */,
-     165,    0,  947,    2, 0x08 /* Private */,
-     166,    1,  948,    2, 0x08 /* Private */,
-     168,    2,  951,    2, 0x08 /* Private */,
-     170,    2,  956,    2, 0x08 /* Private */,
-     173,    0,  961,    2, 0x08 /* Private */,
-     174,    0,  962,    2, 0x08 /* Private */,
-     175,    0,  963,    2, 0x08 /* Private */,
-     176,    0,  964,    2, 0x08 /* Private */,
-     177,    0,  965,    2, 0x08 /* Private */,
-     178,    0,  966,    2, 0x08 /* Private */,
-     179,    0,  967,    2, 0x08 /* Private */,
-     180,    0,  968,    2, 0x08 /* Private */,
-     181,    1,  969,    2, 0x08 /* Private */,
-     183,    0,  972,    2, 0x08 /* Private */,
-     184,    0,  973,    2, 0x08 /* Private */,
-     185,    0,  974,    2, 0x08 /* Private */,
-     186,    0,  975,    2, 0x0a /* Public */,
-     187,    0,  976,    2, 0x0a /* Public */,
-     188,    0,  977,    2, 0x0a /* Public */,
+       3,    0,  730,    2, 0x08 /* Private */,
+       4,    0,  731,    2, 0x08 /* Private */,
+       5,    2,  732,    2, 0x08 /* Private */,
+       9,    2,  737,    2, 0x08 /* Private */,
+      11,    6,  742,    2, 0x08 /* Private */,
+      12,    0,  755,    2, 0x08 /* Private */,
+      13,    0,  756,    2, 0x08 /* Private */,
+      14,    0,  757,    2, 0x08 /* Private */,
+      15,    0,  758,    2, 0x08 /* Private */,
+      16,    0,  759,    2, 0x08 /* Private */,
+      17,    1,  760,    2, 0x08 /* Private */,
+      20,    1,  763,    2, 0x08 /* Private */,
+      23,    1,  766,    2, 0x08 /* Private */,
+      24,    0,  769,    2, 0x08 /* Private */,
+      25,    0,  770,    2, 0x08 /* Private */,
+      26,    0,  771,    2, 0x08 /* Private */,
+      27,    0,  772,    2, 0x08 /* Private */,
+      28,    0,  773,    2, 0x08 /* Private */,
+      29,    0,  774,    2, 0x08 /* Private */,
+      30,    0,  775,    2, 0x08 /* Private */,
+      31,    0,  776,    2, 0x08 /* Private */,
+      32,    0,  777,    2, 0x08 /* Private */,
+      33,    0,  778,    2, 0x08 /* Private */,
+      34,    0,  779,    2, 0x08 /* Private */,
+      35,    0,  780,    2, 0x08 /* Private */,
+      36,    0,  781,    2, 0x08 /* Private */,
+      37,    0,  782,    2, 0x08 /* Private */,
+      38,    0,  783,    2, 0x08 /* Private */,
+      39,    0,  784,    2, 0x08 /* Private */,
+      40,    0,  785,    2, 0x08 /* Private */,
+      41,    0,  786,    2, 0x08 /* Private */,
+      42,    0,  787,    2, 0x08 /* Private */,
+      43,    0,  788,    2, 0x08 /* Private */,
+      44,    0,  789,    2, 0x08 /* Private */,
+      45,    0,  790,    2, 0x08 /* Private */,
+      46,    0,  791,    2, 0x08 /* Private */,
+      47,    0,  792,    2, 0x08 /* Private */,
+      48,    1,  793,    2, 0x08 /* Private */,
+      51,    3,  796,    2, 0x08 /* Private */,
+      56,    1,  803,    2, 0x08 /* Private */,
+      57,    1,  806,    2, 0x08 /* Private */,
+      59,    0,  809,    2, 0x08 /* Private */,
+      60,    0,  810,    2, 0x08 /* Private */,
+      61,    0,  811,    2, 0x08 /* Private */,
+      62,    1,  812,    2, 0x08 /* Private */,
+      64,    0,  815,    2, 0x08 /* Private */,
+      65,    1,  816,    2, 0x08 /* Private */,
+      67,    1,  819,    2, 0x08 /* Private */,
+      68,    0,  822,    2, 0x08 /* Private */,
+      69,    0,  823,    2, 0x08 /* Private */,
+      70,    0,  824,    2, 0x08 /* Private */,
+      71,    0,  825,    2, 0x08 /* Private */,
+      72,    1,  826,    2, 0x08 /* Private */,
+      74,    0,  829,    2, 0x08 /* Private */,
+      75,    0,  830,    2, 0x08 /* Private */,
+      76,    0,  831,    2, 0x08 /* Private */,
+      77,    0,  832,    2, 0x08 /* Private */,
+      78,    0,  833,    2, 0x08 /* Private */,
+      79,    0,  834,    2, 0x08 /* Private */,
+      80,    0,  835,    2, 0x08 /* Private */,
+      81,    0,  836,    2, 0x08 /* Private */,
+      82,    0,  837,    2, 0x08 /* Private */,
+      83,    0,  838,    2, 0x08 /* Private */,
+      84,    0,  839,    2, 0x08 /* Private */,
+      85,    0,  840,    2, 0x08 /* Private */,
+      86,    0,  841,    2, 0x08 /* Private */,
+      87,    0,  842,    2, 0x08 /* Private */,
+      88,    0,  843,    2, 0x08 /* Private */,
+      89,    1,  844,    2, 0x08 /* Private */,
+      91,    0,  847,    2, 0x08 /* Private */,
+      92,    1,  848,    2, 0x08 /* Private */,
+      94,    1,  851,    2, 0x08 /* Private */,
+      95,    0,  854,    2, 0x08 /* Private */,
+      96,    0,  855,    2, 0x08 /* Private */,
+      97,    0,  856,    2, 0x08 /* Private */,
+      98,    0,  857,    2, 0x08 /* Private */,
+      99,    0,  858,    2, 0x08 /* Private */,
+     100,    1,  859,    2, 0x08 /* Private */,
+     103,    1,  862,    2, 0x08 /* Private */,
+     105,    1,  865,    2, 0x08 /* Private */,
+     107,    0,  868,    2, 0x08 /* Private */,
+     108,    0,  869,    2, 0x08 /* Private */,
+     109,    0,  870,    2, 0x08 /* Private */,
+     110,    0,  871,    2, 0x08 /* Private */,
+     111,    0,  872,    2, 0x08 /* Private */,
+     112,    0,  873,    2, 0x08 /* Private */,
+     113,    0,  874,    2, 0x08 /* Private */,
+     114,    0,  875,    2, 0x08 /* Private */,
+     115,    0,  876,    2, 0x08 /* Private */,
+     116,    0,  877,    2, 0x08 /* Private */,
+     117,    0,  878,    2, 0x08 /* Private */,
+     118,    0,  879,    2, 0x08 /* Private */,
+     119,    0,  880,    2, 0x08 /* Private */,
+     120,    0,  881,    2, 0x08 /* Private */,
+     121,    1,  882,    2, 0x08 /* Private */,
+     122,    0,  885,    2, 0x08 /* Private */,
+     123,    0,  886,    2, 0x08 /* Private */,
+     124,    2,  887,    2, 0x08 /* Private */,
+     126,    3,  892,    2, 0x08 /* Private */,
+     131,    2,  899,    2, 0x08 /* Private */,
+     135,    0,  904,    2, 0x08 /* Private */,
+     136,    0,  905,    2, 0x08 /* Private */,
+     137,    0,  906,    2, 0x08 /* Private */,
+     138,    2,  907,    2, 0x08 /* Private */,
+     140,    2,  912,    2, 0x08 /* Private */,
+     142,    2,  917,    2, 0x08 /* Private */,
+     143,    2,  922,    2, 0x08 /* Private */,
+     147,    0,  927,    2, 0x08 /* Private */,
+     148,    0,  928,    2, 0x08 /* Private */,
+     149,    0,  929,    2, 0x08 /* Private */,
+     150,    0,  930,    2, 0x08 /* Private */,
+     151,    0,  931,    2, 0x08 /* Private */,
+     152,    0,  932,    2, 0x08 /* Private */,
+     153,    0,  933,    2, 0x08 /* Private */,
+     154,    0,  934,    2, 0x08 /* Private */,
+     155,    0,  935,    2, 0x08 /* Private */,
+     156,    1,  936,    2, 0x08 /* Private */,
+     158,    1,  939,    2, 0x08 /* Private */,
+     159,    0,  942,    2, 0x08 /* Private */,
+     160,    0,  943,    2, 0x08 /* Private */,
+     161,    2,  944,    2, 0x08 /* Private */,
+     164,    0,  949,    2, 0x08 /* Private */,
+     165,    1,  950,    2, 0x08 /* Private */,
+     166,    0,  953,    2, 0x08 /* Private */,
+     167,    1,  954,    2, 0x08 /* Private */,
+     169,    2,  957,    2, 0x08 /* Private */,
+     171,    2,  962,    2, 0x08 /* Private */,
+     174,    0,  967,    2, 0x08 /* Private */,
+     175,    0,  968,    2, 0x08 /* Private */,
+     176,    0,  969,    2, 0x08 /* Private */,
+     177,    0,  970,    2, 0x08 /* Private */,
+     178,    0,  971,    2, 0x08 /* Private */,
+     179,    0,  972,    2, 0x08 /* Private */,
+     180,    0,  973,    2, 0x08 /* Private */,
+     181,    0,  974,    2, 0x08 /* Private */,
+     182,    1,  975,    2, 0x08 /* Private */,
+     184,    0,  978,    2, 0x08 /* Private */,
+     185,    0,  979,    2, 0x08 /* Private */,
+     186,    0,  980,    2, 0x08 /* Private */,
+     187,    0,  981,    2, 0x0a /* Public */,
+     188,    0,  982,    2, 0x0a /* Public */,
+     189,    0,  983,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -607,10 +610,11 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Int, QMetaType::QString, 0x80000000 | 133,  132,  134,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Bool, QMetaType::QString, QMetaType::QString,  132,  138,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,  132,  140,
+    QMetaType::Void,
+    QMetaType::Bool, QMetaType::QString, QMetaType::QString,  132,  139,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,  132,  141,
     QMetaType::Void, 0x80000000 | 6, QMetaType::QString,    7,    8,
-    0x80000000 | 133, 0x80000000 | 125, 0x80000000 | 144,  143,  145,
+    0x80000000 | 133, 0x80000000 | 125, 0x80000000 | 145,  144,  146,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -620,17 +624,17 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,  156,
-    QMetaType::Void, QMetaType::Int,  156,
+    QMetaType::Void, QMetaType::Int,  157,
+    QMetaType::Void, QMetaType::Int,  157,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Bool, QMetaType::QString, QMetaType::QString,  161,  162,
+    QMetaType::Bool, QMetaType::QString, QMetaType::QString,  162,  163,
     QMetaType::Void,
     0x80000000 | 133, 0x80000000 | 133,    2,
     QMetaType::Void,
-    QMetaType::Bool, 0x80000000 | 167,   53,
-    QMetaType::Void, 0x80000000 | 133, 0x80000000 | 169,    2,    2,
-    0x80000000 | 171, QMetaType::QString, 0x80000000 | 133,  172,  134,
+    QMetaType::Bool, 0x80000000 | 168,   53,
+    QMetaType::Void, 0x80000000 | 133, 0x80000000 | 170,    2,    2,
+    0x80000000 | 172, QMetaType::QString, 0x80000000 | 133,  173,  134,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -639,7 +643,7 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,  182,
+    QMetaType::Void, QMetaType::QString,  183,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -765,51 +769,52 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         case 101: _t->addCurrentlyOpenFileToEditedFilesLog(); break;
         case 102: _t->deleteEditedFilesLog(); break;
-        case 103: { bool _r = _t->isStringInFile((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
+        case 103: _t->RecentPageInfo(); break;
+        case 104: { bool _r = _t->isStringInFile((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 104: _t->dumpStringToFile((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 105: _t->highlight((*reinterpret_cast< QTextBrowser*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 106: { QMap<QString,QString> _r = _t->getGlobalReplacementMapFromChecklistDialog((*reinterpret_cast< QVector<QString>(*)>(_a[1])),(*reinterpret_cast< QVector<int>*(*)>(_a[2])));
+        case 105: _t->dumpStringToFile((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 106: _t->highlight((*reinterpret_cast< QTextBrowser*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 107: { QMap<QString,QString> _r = _t->getGlobalReplacementMapFromChecklistDialog((*reinterpret_cast< QVector<QString>(*)>(_a[1])),(*reinterpret_cast< QVector<int>*(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< QMap<QString,QString>*>(_a[0]) = std::move(_r); }  break;
-        case 107: _t->on_actionas_PDF_triggered(); break;
-        case 108: _t->on_actionGet_Help_triggered(); break;
-        case 109: _t->on_actionTutorial_triggered(); break;
-        case 110: _t->on_actionLinux_triggered(); break;
-        case 111: _t->on_actionWindows_triggered(); break;
-        case 112: _t->on_actionShortcut_Guide_triggered(); break;
-        case 113: _t->on_textBrowser_textChanged(); break;
-        case 114: _t->on_zoom_Out_Button_clicked(); break;
-        case 115: _t->on_zoom_In_Button_clicked(); break;
-        case 116: _t->zoom_slider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 117: _t->zoom_slider_moved((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 118: _t->zoomedUsingScroll(); break;
-        case 119: _t->on_actionUndo_Global_Replace_triggered(); break;
-        case 120: { bool _r = _t->undoGlobalReplace_Single_Word((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
+        case 108: _t->on_actionas_PDF_triggered(); break;
+        case 109: _t->on_actionGet_Help_triggered(); break;
+        case 110: _t->on_actionTutorial_triggered(); break;
+        case 111: _t->on_actionLinux_triggered(); break;
+        case 112: _t->on_actionWindows_triggered(); break;
+        case 113: _t->on_actionShortcut_Guide_triggered(); break;
+        case 114: _t->on_textBrowser_textChanged(); break;
+        case 115: _t->on_zoom_Out_Button_clicked(); break;
+        case 116: _t->on_zoom_In_Button_clicked(); break;
+        case 117: _t->zoom_slider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 118: _t->zoom_slider_moved((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 119: _t->zoomedUsingScroll(); break;
+        case 120: _t->on_actionUndo_Global_Replace_triggered(); break;
+        case 121: { bool _r = _t->undoGlobalReplace_Single_Word((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 121: _t->reverseGlobalReplacedWordsMap(); break;
-        case 122: { QMap<QString,QString> _r = _t->getUndoGlobalReplaceMap_Multiple_Words((*reinterpret_cast< QMap<QString,QString>(*)>(_a[1])));
+        case 122: _t->reverseGlobalReplacedWordsMap(); break;
+        case 123: { QMap<QString,QString> _r = _t->getUndoGlobalReplaceMap_Multiple_Words((*reinterpret_cast< QMap<QString,QString>(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QMap<QString,QString>*>(_a[0]) = std::move(_r); }  break;
-        case 123: _t->replaceInAllFilesFromTSVfile(); break;
-        case 124: { bool _r = _t->checkForValidTSVfile((*reinterpret_cast< QFile(*)>(_a[1])));
+        case 124: _t->replaceInAllFilesFromTSVfile(); break;
+        case 125: { bool _r = _t->checkForValidTSVfile((*reinterpret_cast< QFile(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 125: _t->globalReplacePreviewfn((*reinterpret_cast< QMap<QString,QString>(*)>(_a[1])),(*reinterpret_cast< QVector<int>(*)>(_a[2]))); break;
-        case 126: { QMap<QString,QStringList> _r = _t->getBeforeAndAfterWords((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QMap<QString,QString>(*)>(_a[2])));
+        case 126: _t->globalReplacePreviewfn((*reinterpret_cast< QMap<QString,QString>(*)>(_a[1])),(*reinterpret_cast< QVector<int>(*)>(_a[2]))); break;
+        case 127: { QMap<QString,QStringList> _r = _t->getBeforeAndAfterWords((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QMap<QString,QString>(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< QMap<QString,QStringList>*>(_a[0]) = std::move(_r); }  break;
-        case 127: _t->on_actionUpload_triggered(); break;
-        case 128: _t->on_justify_triggered(); break;
-        case 129: _t->on_actionFont_Color_triggered(); break;
-        case 130: _t->on_actionBold_triggered(); break;
-        case 131: _t->SaveFile_GUI_Preprocessing(); break;
-        case 132: _t->SaveFile_GUI_Postprocessing(); break;
-        case 133: _t->GlobalReplace(); break;
-        case 134: _t->stopSpinning(); break;
-        case 135: _t->on_lineEditSearch_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 136: _t->on_action1_triggered(); break;
-        case 137: _t->on_action2_triggered(); break;
-        case 138: _t->on_action3_triggered(); break;
-        case 139: _t->SaveFile_Backend(); break;
-        case 140: _t->on_actionLoad_Next_Page_triggered(); break;
-        case 141: _t->on_actionLoad_Prev_Page_triggered(); break;
+        case 128: _t->on_actionUpload_triggered(); break;
+        case 129: _t->on_justify_triggered(); break;
+        case 130: _t->on_actionFont_Color_triggered(); break;
+        case 131: _t->on_actionBold_triggered(); break;
+        case 132: _t->SaveFile_GUI_Preprocessing(); break;
+        case 133: _t->SaveFile_GUI_Postprocessing(); break;
+        case 134: _t->GlobalReplace(); break;
+        case 135: _t->stopSpinning(); break;
+        case 136: _t->on_lineEditSearch_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 137: _t->on_action1_triggered(); break;
+        case 138: _t->on_action2_triggered(); break;
+        case 139: _t->on_action3_triggered(); break;
+        case 140: _t->SaveFile_Backend(); break;
+        case 141: _t->on_actionLoad_Next_Page_triggered(); break;
+        case 142: _t->on_actionLoad_Prev_Page_triggered(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -857,21 +862,21 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QVector<QString> >(); break;
             }
             break;
-        case 105:
+        case 106:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QTextBrowser* >(); break;
             }
             break;
-        case 106:
+        case 107:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QVector<QString> >(); break;
             }
             break;
-        case 125:
+        case 126:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 1:
@@ -920,13 +925,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 142)
+        if (_id < 143)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 142;
+        _id -= 143;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 142)
+        if (_id < 143)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 142;
+        _id -= 143;
     }
     return _id;
 }
