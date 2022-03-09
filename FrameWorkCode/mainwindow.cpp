@@ -39,6 +39,7 @@
 #include <QTreeView>
 #include <QFont>
 #include <git2.h>
+#include <QRandomGenerator>
 #include "shortcutguidedialog.h"
 #include <QFileSystemWatcher>
 #include <set>
@@ -133,6 +134,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->setupUi(this);
     qInstallMessageHandler(crashlog::myMessageHandler);
 //    ui->textBrowser->setStyleSheet("background-color:white;");
+    toolDirAbsolutePath = QDir::currentPath(); // Setting toolPath
 
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
     ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
@@ -146,6 +148,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     if(passwordFile.open(QFile::ReadOnly | QFile::Text))
         password = passwordFile.readAll().replace("\n","").replace("\r","");
     passwordFile.close();
+
 
     map<QString, QString> passwordRoleMap = { { "x3JzWx5KY}Gd&,]A" ,"Verifier"},
                                               { "3`t,FxjytJ[uU,HW" ,"Corrector"},
@@ -193,11 +196,26 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     qApp->installEventFilter(this);
     AddRecentProjects();
 
+
     if (!isVerifier)
     {
         ui->actionHighlight->setEnabled(false);
     }
 
+    //! random game ...
+
+    int rand = QRandomGenerator::global()->bounded(1, 100);
+    if(rand > 90)
+    {
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        if(settings.childGroups().contains("SoftwareUpdate", Qt::CaseInsensitive))
+        {
+            settings.beginGroup("SoftwareUpdate");
+            settings.setValue("showUpdate",true);
+            settings.endGroup();
+        }
+
+    }
 
 
 }
@@ -814,7 +832,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         return;
 
     // Testing of project.xml
-    VerifySet verifySetObj(ProjFile);
+    VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
     int result = verifySetObj.testProjectXML();
 
     if (result != 0) {
@@ -4993,12 +5011,19 @@ void MainWindow::on_pushButton_clicked()
  * \sa MainWindow::displayHolder, MainWindow::updateEntries, MainWindow::createImageInfoXMLFile
  */
 bool show_update = true;
+bool isShowAgain = true;
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
     //! Tooltip documentation
     markRegion objectMarkRegion;
     //! When user moves his mouse the system will ask user to download new update.
-    if(event->type() == QEvent::MouseMove && show_update)
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    if(settings.childGroups().contains("SoftwareUpdate", Qt::CaseInsensitive))
+    {
+        settings.beginGroup("SoftwareUpdate");
+        isShowAgain = settings.value("showUpdate").toBool();
+    }
+    if(event->type() == QEvent::MouseMove && show_update && isShowAgain)
     {
           show_update = false; // show only once
           UpdateInfo();
@@ -8495,15 +8520,26 @@ void MainWindow::on_action3_triggered()
     on_actionOpen_Project_triggered();
 }
 
-
+/*!
+ * \fn MainWindow::UpdateInfo()
+ * \brief We use the function UpdateInfo() to fetch the information about new version of this software from github.
+ *  Basically we are using github API to get the information about new releases. it will only work when the internet
+ *  connection is available.
+ *
+ *  From the information fetched by internet, it will check whether the new release is already installed in this system
+ *  or not, if it is already installed then it will return back from this function, else it will call the compareVersion()
+ *  function.
+ *
+ * \sa compareVersion()
+*/
 
 void MainWindow::UpdateInfo()
 {
     QUrl url("https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases");
     qInfo() << url.toString();
-    QNetworkRequest request(url);
+    QNetworkRequest request(url);               //requesting url over the network
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QNetworkAccessManager nam;
+    QNetworkAccessManager nam;                  //sending network request
     QNetworkReply * reply = nam.get(request);
     QTimer *timer = new QTimer();
     timer->start(5000);
@@ -8523,12 +8559,22 @@ void MainWindow::UpdateInfo()
             return;
         }
         compareVersion(json[0]["name"].toString());
-    }else{
-
+    }
+    else{
+        qDebug()<<"Connection timeout";
     }
 
 }
 
+/*!
+ * \fn MainWindow::compareVersion
+ *
+ * \brief we use this function to compare the current version of this software with the latest version of the software released.
+ *  if the current version and new version are the same then it will return back, else it will show a message box where the user will
+ *  be redirected to the download page.
+ *
+ * \param latestVersion
+ */
 void MainWindow::compareVersion(QString latestVersion)
 {
     QString curr_version = qApp->applicationVersion();
@@ -8536,17 +8582,35 @@ void MainWindow::compareVersion(QString latestVersion)
     if(curr_version==latestVersion)
         return;
     else{
-        QMessageBox updateInfo;
+        QMessageBox updateInfo(this);
         updateInfo.setWindowTitle("Update Available");
         updateInfo.setIcon(QMessageBox::Information);
-        updateInfo.setText("A New Version of OpenOCRCorrect is Available!!\n\nOpenOCRCorrect "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below");
+        updateInfo.setText("A New Version of OpenOCRCorrect is Available!!\n\nOpenOCRCorrect "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below\n");
         QAbstractButton *download = updateInfo.addButton(tr("Go to Download Page"), QMessageBox::ActionRole);
         download->setMinimumWidth(160);
         QAbstractButton *rml = updateInfo.addButton(tr("Remind me Later"), QMessageBox::RejectRole);
         rml->setMinimumWidth(140);
+        QCheckBox *cb = new QCheckBox("Don't Show this again");
+        updateInfo.setCheckBox(cb);
+        cb->setStyleSheet("QCheckBox::indicator:unchecked{border: 1px solid white};");
         updateInfo.exec();
+
         if(updateInfo.clickedButton() == download){
             QDesktopServices::openUrl(QUrl("https://drive.google.com/drive/folders/1DZn72n6gH0r459hTGsL2f7qhoZnHQPEI"));
+        }
+        if(cb->checkState() == Qt::Checked)
+        {
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            settings.beginGroup("SoftwareUpdate");
+            settings.setValue("showUpdate",false);
+            settings.endGroup();
+        }
+        else
+        {
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            settings.beginGroup("SoftwareUpdate");
+            settings.setValue("showUpdate",true);
+            settings.endGroup();
         }
     }
 
