@@ -6483,8 +6483,8 @@ void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
 
             QRegExp regex("[$&+,:;=?@#|'\"<>.^*()%!-\n\t]");
 
-            QString test1(QChar(input[start]));
-            QString test2(QChar(input[endIndex]));
+            QString test1=input.at(start);
+            QString test2=input.at(endIndex);
 
             //qDebug()<<"input[start-1]="<<input[start];
             //qDebug()<<"input[endIndex]="<<input[endIndex];
@@ -7689,8 +7689,8 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
 
             QRegExp regex("[$&+,:;=?@#|'\"<>.^*()%!-\n\t]");
 
-            QString test1(QChar(input[start]));
-            QString test2(QChar(input[endIndex]));
+            QString test1=input.at(start);
+            QString test2=input.at(endIndex);
 
             //qDebug()<<"input[start-1]="<<input[start];
             //qDebug()<<"input[endIndex]="<<input[endIndex];
