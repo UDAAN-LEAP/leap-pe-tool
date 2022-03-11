@@ -8639,7 +8639,7 @@ void MainWindow::RecentPageInfo()
             for(int j=0;j<model->rowCount(children[i]);j++){
                 children<<children[i].child(j,0);
                 item1 = children[i].child(j,0).data(Qt::DisplayRole).toString();
-                qDebug ()<<"Item1"<<item1;
+                //qDebug ()<<"Item1"<<item1;
                 if(item1 == var1){
                     auto location = children[i].child(j,0);
                     ui->treeView->selectionModel()->setCurrentIndex(children[i].child(j,0),QItemSelectionModel::Select);
@@ -8648,7 +8648,3 @@ void MainWindow::RecentPageInfo()
         }
     }}
 }
-
-
-
-

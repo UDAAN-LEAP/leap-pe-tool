@@ -24,10 +24,14 @@ LoadingSpinner::LoadingSpinner(QWidget *parent) :
     ui(new Ui::LoadingSpinner)
 {
     ui->setupUi(this);
+    this->setModal(true);
+    this->move(500,310);
     qInstallMessageHandler(crashlog::myMessageHandler);
-    mv = new QMovie(":/Images/spinbar-tp.gif");
+    mv = new QMovie(":/Images/spinbar-white-tp.gif");
     ui->labelspin->setAttribute(Qt::WA_NoSystemBackground);
     ui->labelspin->setMovie(mv);
+    //this->setWindowFlags(Qt::FramelessWindowHint);
+    this->setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint);
     ui->labelspin->setScaledContents(true);
     mv->start();
 }
