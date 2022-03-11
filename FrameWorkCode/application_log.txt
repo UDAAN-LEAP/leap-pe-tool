@@ -19329,12 +19329,18 @@ Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 
 OpenOCRCorrect Application Log
+<<<<<<< HEAD
 Date: 06 Mar 2022 @ 17:14:54
 Username:sadam
+=======
+Date: 07 Mar 2022 @ 14:40:50
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
 Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
@@ -19351,29 +19357,53 @@ Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xm
 OpenOCRCorrect Application Log
 Date: 06 Mar 2022 @ 17:18:07
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 14:43:07
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 
 OpenOCRCorrect Application Log
 Date: 06 Mar 2022 @ 17:44:53
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 14:49:52
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 
 OpenOCRCorrect Application Log
 Date: 06 Mar 2022 @ 17:48:52
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 14:51:00
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/en-hi/image.xml" (markRegion.cpp)
 Warning: QIODevice::read (QFile, "/home/sadam/Desktop/en-hi/.cursor.txt"): device not open ()
@@ -19408,10 +19438,36 @@ Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): dev
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 18:15:23
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 14:51:40
+Username:sujay
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 14:55:23
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 14:59:58
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Debug: suff variable:::-> QFile(0x5578ecc97ed0) (mainwindow.cpp)
@@ -19422,10 +19478,18 @@ Debug: project saved for loading... "/home/sadam/Desktop/myClone/iitb-openocr-di
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 18:19:22
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:01:32
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Debug: file variable:::-> QFile(0x56139d9d0420) (mainwindow.cpp)
@@ -19438,10 +19502,18 @@ Debug: project saved for loading... "/home/sadam/Desktop/myClone/iitb-openocr-di
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 18:45:47
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:02:53
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Debug: file variable:::-> QFile(0x555749c7f070) (mainwindow.cpp)
@@ -19454,10 +19526,18 @@ Debug: project saved for loading... "/home/sadam/Desktop/myClone/iitb-openocr-di
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 18:59:10
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:05:30
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
 Debug: file variable:::-> QFile(0x55dc6ef629a0) (mainwindow.cpp)
@@ -19473,10 +19553,18 @@ Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): dev
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 19:03:59
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:08:13
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Debug: file variable:::-> QFile(0x5621bd5ee4e0) (mainwindow.cpp)
@@ -19497,10 +19585,28 @@ Application Log:
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 19:14:03
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:09:43
+Username:sujay
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:11:00
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Debug: file variable:::-> QFile(0x562d9cd27aa0) (mainwindow.cpp)
@@ -19534,10 +19640,18 @@ Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 19:33:17
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:13:49
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -19549,10 +19663,28 @@ Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 19:33:49
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "हैंः =>हैं " 
+ (mainwindow.cpp)
+Debug: "अभिज्ञान =>अभिज्ञा " 
+ (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "/home/sujay/Downloads/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:16:18
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -19561,10 +19693,35 @@ Debug: Matched...just need to highlight (mainwindow.cpp)
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 19:39:16
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "AIML-all_0001-003.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/sujay/Downloads/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html"  to file. 
+ (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "हैं =>हैंः " 
+ (mainwindow.cpp)
+Debug: "अभिज्ञा =>अभिज्ञान " 
+ (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "AIML-all_0001-003.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "हैंः =>हैं " 
+ (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:25:21
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -19576,10 +19733,18 @@ Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 19:42:01
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:28:55
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -19592,10 +19757,18 @@ Debug: Error in loading docFormat (verifyset.cpp)
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 19:43:01
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:30:19
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -19604,10 +19777,18 @@ Debug: Matched...just need to highlight (mainwindow.cpp)
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 22:04:04
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:31:30
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -19633,10 +19814,18 @@ Debug: Error in loading docFormat (verifyset.cpp)
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 22:06:04
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:32:21
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -19660,10 +19849,28 @@ Debug: Matched...just need to highlight (mainwindow.cpp)
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 22:15:36
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:33:18
+Username:sujay
+
+Application Log:
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:34:18
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -19675,10 +19882,18 @@ Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 22:30:52
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:34:59
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -19699,10 +19914,18 @@ Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 22:31:49
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:35:34
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -19710,10 +19933,18 @@ Warning: QVariant::load: unable to load type 42. ()
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 22:43:28
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:36:24
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -19731,10 +19962,18 @@ Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 23:24:05
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:37:14
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -19750,10 +19989,28 @@ Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 23:33:42
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "जाएगी। =>जाएग। " 
+ (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/TranslatingissuesinArthashastraunicode-Hi/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "p-02.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/sujay/Downloads/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/p-02.html"  to file. 
+ (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:39:03
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -19849,10 +20106,18 @@ Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 23:42:04
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:39:42
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -19888,10 +20153,18 @@ Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
 OpenOCRCorrect Application Log
 Date: 08 Mar 2022 @ 23:44:36
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:40:53
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -19996,19 +20269,35 @@ Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
 OpenOCRCorrect Application Log
 Date: 09 Mar 2022 @ 11:14:18
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 15:41:51
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 
 OpenOCRCorrect Application Log
 Date: 09 Mar 2022 @ 11:20:53
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:15:44
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -20026,10 +20315,18 @@ Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
 OpenOCRCorrect Application Log
 Date: 09 Mar 2022 @ 11:43:18
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:16:00
+Username:sujay
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: gcurrent page name "" (mainwindow.cpp)
 Debug: ggDirTewo level up "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject" (mainwindow.cpp)
@@ -20426,10 +20723,540 @@ Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
 OpenOCRCorrect Application Log
 Date: 09 Mar 2022 @ 12:49:19
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:16:08
+Username:sujay
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:21:46
+Username:sujay
+
+Application Log:
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:56:32
+Username:sujay
+
+Application Log:
+Debug: Number This time  "56" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:56:53
+Username:sujay
+
+Application Log:
+Debug: Number This time  "71" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:56:59
+Username:sujay
+
+Application Log:
+Debug: Number This time  "52" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:57:06
+Username:sujay
+
+Application Log:
+Debug: Number This time  "27" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:57:40
+Username:sujay
+
+Application Log:
+Debug: Number This time  "69" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:57:47
+Username:sujay
+
+Application Log:
+Debug: Number This time  "88" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:57:52
+Username:sujay
+
+Application Log:
+Debug: Number This time  "67" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:57:58
+Username:sujay
+
+Application Log:
+Debug: Number This time  "38" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:58:03
+Username:sujay
+
+Application Log:
+Debug: Number This time  "98" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:59:21
+Username:sujay
+
+Application Log:
+Debug: Number This time  "77" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:59:31
+Username:sujay
+
+Application Log:
+Debug: Number This time  "80" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:59:37
+Username:sujay
+
+Application Log:
+Debug: Number This time  "34" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:59:47
+Username:sujay
+
+Application Log:
+Debug: Number This time  "78" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:59:52
+Username:sujay
+
+Application Log:
+Debug: Number This time  "63" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 16:59:57
+Username:sujay
+
+Application Log:
+Debug: Number This time  "90" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:02
+Username:sujay
+
+Application Log:
+Debug: Number This time  "13" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:08
+Username:sujay
+
+Application Log:
+Debug: Number This time  "44" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:14
+Username:sujay
+
+Application Log:
+Debug: Number This time  "94" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:29
+Username:sujay
+
+Application Log:
+Debug: Number This time  "23" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:34
+Username:sujay
+
+Application Log:
+Debug: Number This time  "23" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:38
+Username:sujay
+
+Application Log:
+Debug: Number This time  "33" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:43
+Username:sujay
+
+Application Log:
+Debug: Number This time  "39" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:47
+Username:sujay
+
+Application Log:
+Debug: Number This time  "86" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:52
+Username:sujay
+
+Application Log:
+Debug: Number This time  "56" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:00:56
+Username:sujay
+
+Application Log:
+Debug: Number This time  "66" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:00
+Username:sujay
+
+Application Log:
+Debug: Number This time  "89" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:04
+Username:sujay
+
+Application Log:
+Debug: Number This time  "42" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:08
+Username:sujay
+
+Application Log:
+Debug: Number This time  "68" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:13
+Username:sujay
+
+Application Log:
+Debug: Number This time  "7" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:18
+Username:sujay
+
+Application Log:
+Debug: Number This time  "85" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:23
+Username:sujay
+
+Application Log:
+Debug: Number This time  "54" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:28
+Username:sujay
+
+Application Log:
+Debug: Number This time  "67" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:32
+Username:sujay
+
+Application Log:
+Debug: Number This time  "38" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:01:37
+Username:sujay
+
+Application Log:
+Debug: Number This time  "64" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:02:09
+Username:sujay
+
+Application Log:
+Debug: Number This time  "21" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:03:11
+Username:sujay
+
+Application Log:
+Debug: Number This time  "89" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:03:39
+Username:sujay
+
+Application Log:
+Debug: Number This time  "25" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:03:43
+Username:sujay
+
+Application Log:
+Debug: Number This time  "36" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:03:48
+Username:sujay
+
+Application Log:
+Debug: Number This time  "12" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:03:53
+Username:sujay
+
+Application Log:
+Debug: Number This time  "30" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:03:57
+Username:sujay
+
+Application Log:
+Debug: Number This time  "90" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:02
+Username:sujay
+
+Application Log:
+Debug: Number This time  "89" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:06
+Username:sujay
+
+Application Log:
+Debug: Number This time  "32" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:10
+Username:sujay
+
+Application Log:
+Debug: Number This time  "41" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:14
+Username:sujay
+
+Application Log:
+Debug: Number This time  "80" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:18
+Username:sujay
+
+Application Log:
+Debug: Number This time  "78" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:23
+Username:sujay
+
+Application Log:
+Debug: Number This time  "37" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:28
+Username:sujay
+
+Application Log:
+Debug: Number This time  "33" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:33
+Username:sujay
+
+Application Log:
+Debug: Number This time  "76" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:37
+Username:sujay
+
+Application Log:
+Debug: Number This time  "99" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:04:43
+Username:sujay
+
+Application Log:
+Debug: Number This time  "39" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:05:23
+Username:sujay
+
+Application Log:
+Debug: Number This time  "95" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:05:39
+Username:sujay
+
+Application Log:
+Debug: Number This time  "23" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:06:53
+Username:sujay
+
+Application Log:
+Debug: Number This time  "86" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:07:26
+Username:sujay
+
+Application Log:
+Debug: Number This time  "41" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:08:35
+Username:sujay
+
+Application Log:
+Debug: Number This time  "62" (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:10:34
+Username:sujay
+
+Application Log:
+Debug: Number This time  "44" (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:11:28
+Username:sujay
+
+Application Log:
+Debug: Number This time  "98" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:12:06
+Username:sujay
+
+Application Log:
+Debug: Number This time  "70" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/Draft_EGM_Notice_BOB/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/Draft_EGM_Notice_BOB/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/Draft_EGM_Notice_BOB/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/Draft_EGM_Notice_BOB/.cursor.txt"): device not open ()
+Debug: Error in loading docFormat (verifyset.cpp)
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/Draft_EGM_Notice_BOB/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/sujay/Downloads/Draft_EGM_Notice_BOB/.cursor.txt"): device not open ()
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:12:55
+Username:sujay
+
+Application Log:
+Debug: Number This time  "92" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:13:56
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 07 Mar 2022 @ 17:14:37
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/hsm_aerospace_chemical_propulsion/image.xml" (markRegion.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "/home/sujay/Downloads/hsm_aerospace_chemical_propulsion/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "hsm_aerospace_chemical_propulsion_0001-202.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/sujay/Downloads/hsm_aerospace_chemical_propulsion/CorrectorOutput/hsm_aerospace_chemical_propulsion_0001-202.html"  to file. 
+ (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 21:20:43
+Username:ajit
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: Some Error occurred
+ (verifyset.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 22:33:55
+Username:ajit
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -20447,10 +21274,23 @@ Debug: Item1 "page-7.html" (mainwindow.cpp)
 OpenOCRCorrect Application Log
 Date: 09 Mar 2022 @ 12:49:42
 Username:sadam
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: ProjFile =  "/home/ajit/Documents/ABBV1S2_YP_dinesh-main/project.xml" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/ABBV1S2_YP_dinesh-main/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/project.xml" (mainwindow.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 22:55:50
+Username:ajit
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
 
 Application Log:
 Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
 Debug: "v2.8.0" (mainwindow.cpp)
+<<<<<<< HEAD
 Debug: "v2.7.8" (mainwindow.cpp)
 Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
 Warning: QVariant::load: unable to load type 42. ()
@@ -20461,3 +21301,972 @@ Warning:   OpenType support missing for "Ubuntu", script 11 ()
 Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
 Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
  ()
+=======
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: ProjFile =  "/home/ajit/Documents/ABBV1S2_YP_dinesh-main/project.xml" (mainwindow.cpp)
+Debug: resultInXMLformat =  true (verifyset.cpp)
+Debug: "/home/ajit/Documents/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Debug: ProjFile =  "/home/ajit/Documents/ABBv2S2_HS_AK-master/project.xml" (mainwindow.cpp)
+Debug: resultInXMLformat =  true (verifyset.cpp)
+Debug: "/home/ajit/Documents/ABBv2S2_HS_AK-master/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/ABBv2S2_HS_AK-master/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/AIML-All-master/project.xml" (mainwindow.cpp)
+Debug: resultInXMLformat =  false (verifyset.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 22:57:04
+Username:ajit
+
+Application Log:
+Debug: ProjFile =  "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/project.xml" (mainwindow.cpp)
+Debug: resultInXMLformat =  true (verifyset.cpp)
+Debug: "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/image.xml" (markRegion.cpp)
+Debug: ProjFile =  "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/project.xml" (mainwindow.cpp)
+Debug: resultInXMLformat =  true (verifyset.cpp)
+Debug: "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/ABBv2S2_HS_AK-master/project.xml" (mainwindow.cpp)
+Debug: resultInXMLformat =  false (verifyset.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 23:00:39
+Username:ajit
+
+Application Log:
+Debug: ProjFile =  "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/project.xml" (mainwindow.cpp)
+Debug: curPath -->  "/home/ajit/Documents/Source Code/VerifySetIssue/iitb-openocr-digit-tool/FrameWorkCode/projectXMLFormat.xml" (verifyset.cpp)
+Debug: "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/ABBv2S2_HS_AK-master/project.xml" (mainwindow.cpp)
+Debug: curPath -->  "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/CorrectorOutput/projectXMLFormat.xml" (verifyset.cpp)
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 23:17:33
+Username:ajit
+
+Application Log:
+Debug: ProjFile =  "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/project.xml" (mainwindow.cpp)
+Debug: curPath -->  "/home/ajit/Documents/Source Code/VerifySetIssue/iitb-openocr-digit-tool/FrameWorkCode/projectXMLFormat.xml" (verifyset.cpp)
+Debug: "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/project.xml" (mainwindow.cpp)
+Debug: curPath -->  "/home/ajit/Documents/Source Code/VerifySetIssue/iitb-openocr-digit-tool/FrameWorkCode/projectXMLFormat.xml" (verifyset.cpp)
+Debug: "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 23:19:31
+Username:ajit
+
+Application Log:
+Debug: ProjFile =  "/home/ajit/Documents/ABBv2S2_HS_AK-master/project.xml" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/ABBv2S2_HS_AK-master/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/ABBv2S2_HS_AK-master/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/project.xml" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/AIML-All-master/project.xml" (mainwindow.cpp)
+Debug: Some Error occurred
+ (verifyset.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/translatingissuesinarthashastraunicode-hi/TranslatingissuesinArthashastraunicode-Hi/.cursor.txt"): device not open ()
+Debug: ProjFile =  "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/project.xml" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 08 Mar 2022 @ 23:23:16
+Username:ajit
+
+Application Log:
+Debug: "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/.cursor.txt"): device not open ()
+Debug: "/home/ajit/Documents/ABBv2S2_HS_AK-master/image.xml" (markRegion.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/ABBv2S2_HS_AK-master/.cursor.txt"): device not open ()
+>>>>>>> 92b26a017f51d863b8a7f53bf1ff05b17ddbdd9f
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 13:01:20
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Error in loading docFormat (verifyset.cpp)
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 13:02:44
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Item1 "page-1.html" (mainwindow.cpp)
+Debug: Item1 "page-2.html" (mainwindow.cpp)
+Debug: Item1 "page-3.html" (mainwindow.cpp)
+Debug: Item1 "page-4.html" (mainwindow.cpp)
+Debug: Item1 "page-5.html" (mainwindow.cpp)
+Debug: Item1 "page-6.html" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Item1 "page-7.html" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 09 Mar 2022 @ 13:04:20
+Username:sadam
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.0" (mainwindow.cpp)
+Debug: "v2.7.8" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
+Debug: Item1 "page-1.html" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Item1 "page-2.html" (mainwindow.cpp)
+Debug: Item1 "page-4.html" (mainwindow.cpp)
+Debug: Item1 "page-6.html" (mainwindow.cpp)
+Debug: Item1 "page-7.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 17:58:28
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 17:59:10
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: Item1 "page-1.html" (mainwindow.cpp)
+Debug: Item1 "page-2.html" (mainwindow.cpp)
+Debug: Item1 "page-3.html" (mainwindow.cpp)
+Debug: Item1 "page-4.html" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Item1 "page-5.html" (mainwindow.cpp)
+Debug: Item1 "page-6.html" (mainwindow.cpp)
+Debug: Item1 "page-7.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 17:59:31
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 17:59:58
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:00:20
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:00:38
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: Item1 "p-1.html" (mainwindow.cpp)
+Debug: Item1 "p-2.html" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: Item1 "p-3.html" (mainwindow.cpp)
+Debug: Item1 "p-4.html" (mainwindow.cpp)
+Debug: Item1 "p-5.html" (mainwindow.cpp)
+Debug: Item1 "p-6.html" (mainwindow.cpp)
+Debug: Item1 "p-7.html" (mainwindow.cpp)
+Debug: Item1 "p-8.html" (mainwindow.cpp)
+Debug: Item1 "p-9.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:06:21
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:06:53
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:07:32
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:08:08
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:13:27
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:28:26
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:28:52
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:29:34
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:30:17
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:30:38
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:41:50
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Downloads/en-hi/project.xml"  :::  tmp2 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:48:07
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: var1 "" var2 "" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Downloads/en-hi/project.xml"  :::  tmp2 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" ProjFile "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: var1 "" var2 "" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Downloads/en-hi/project.xml"  :::  tmp2 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" ProjFile "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: var1 "" var2 "" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Downloads/en-hi/project.xml"  :::  tmp2 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" ProjFile "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:49:15
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: var1 "" var2 "" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Downloads/en-hi/project.xml"  :::  tmp2 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" ProjFile "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Downloads/en-hi/project.xml"  :::  tmp2 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" ProjFile "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: var1 "" var2 "" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Downloads/en-hi/project.xml" ProjFile "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:57:20
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: In last f proj1 "/home/sadam/Documents/TestProject/project.xml" "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Debug: var1 "" var2 "" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Downloads/en-hi/project.xml" ProjFile "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 18:59:01
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Debug: In last f proj1 "/home/sadam/Documents/TestProject/project.xml" "/home/sadam/Downloads/en-hi/project.xml" "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Debug: var1 "" var2 "" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Downloads/en-hi/project.xml" ProjFile "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 19:01:11
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Debug: In last f proj1 "/home/sadam/Documents/TestProject/project.xml" "/home/sadam/Downloads/en-hi/project.xml" "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Debug: var1 "page-1.html" var2 "VerifierOutput" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Downloads/en-hi/project.xml" ProjFile "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Downloads/en-hi/project.xml" ProjFile "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: In last f proj1 "/home/sadam/Documents/TestProject/project.xml" "/home/sadam/Downloads/en-hi/project.xml" "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Debug: var1 "p-1.html" var2 "CorrectorOutput" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Downloads/en-hi/project.xml" ProjFile "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Downloads/en-hi/project.xml" ProjFile "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: In last f proj1 "/home/sadam/Documents/TestProject/project.xml" "/home/sadam/Downloads/en-hi/project.xml" "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Debug: var1 "page-4.html" var2 "VerifierOutput" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Downloads/en-hi/project.xml" ProjFile "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: In last f proj1 "/home/sadam/Documents/TestProject/project.xml" "/home/sadam/Downloads/en-hi/project.xml" "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Debug: var1 "p-4.html" var2 "CorrectorOutput" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Downloads/en-hi/project.xml" ProjFile "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: In last f proj1 "/home/sadam/Documents/TestProject/project.xml" "/home/sadam/Downloads/en-hi/project.xml" "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Debug: var1 "page-4.html" var2 "VerifierOutput" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Downloads/en-hi/project.xml" ProjFile "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: In last f proj1 "/home/sadam/Documents/TestProject/project.xml" "/home/sadam/Downloads/en-hi/project.xml" "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Debug: var1 "p-4.html" var2 "CorrectorOutput" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Downloads/en-hi/project.xml" ProjFile "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Downloads/en-hi/project.xml" ProjFile "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: In last f proj1 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" "/home/sadam/Documents/TestProject/project.xml" "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Debug: var1 "page-1.html" var2 "VerifierOutput" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml"  :::  tmp2 "/home/sadam/Documents/TestProject/project.xml" ProjFile "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: In last f proj1 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" "/home/sadam/Documents/TestProject/project.xml" "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Debug: var1 "page-4.html" var2 "VerifierOutput" (mainwindow.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml"  :::  tmp2 "/home/sadam/Documents/TestProject/project.xml" ProjFile "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 19:11:26
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml"  :::  tmp2 "/home/sadam/Documents/TestProject/project.xml" ProjFile "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" ProjFile "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml"  :::  tmp2 "/home/sadam/Documents/TestProject/project.xml" ProjFile "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Downloads/en-hi/project.xml"  :::  tmp2 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" ProjFile "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml"  :::  tmp2 "/home/sadam/Downloads/en-hi/project.xml" ProjFile "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Downloads/en-hi/project.xml"  :::  tmp2 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" ProjFile "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Downloads/en-hi/project.xml" ProjFile "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Downloads/en-hi/project.xml"  :::  tmp2 "/home/sadam/Documents/TestProject/project.xml" ProjFile "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 19:15:09
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Downloads/en-hi/project.xml" ProjFile "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml"  :::  tmp2 "/home/sadam/Documents/TestProject/project.xml" ProjFile "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" ProjFile "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 10 Mar 2022 @ 19:15:46
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" ProjFile "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml"  :::  tmp2 "/home/sadam/Documents/TestProject/project.xml" ProjFile "/home/sadam/Documents/TestProject/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Debug: tmp1 "/home/sadam/Documents/TestProject/project.xml"  :::  tmp2 "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/project.xml" ProjFile "/home/sadam/Downloads/en-hi/project.xml" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 11 Mar 2022 @ 19:36:59
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Debug: suff variable:::-> "html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 11 Mar 2022 @ 19:41:53
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()

@@ -1067,7 +1067,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         if(new_project == RecentProjFile2){
             QSettings settings("IIT-B", "OpenOCRCorrect");
             settings.beginGroup("RecentProjects");
-            settings.setValue("Project",RecentProjFile2 );//06-03
+            settings.setValue("Project",RecentProjFile2 );
             settings.setValue("Project2",RecentProjFile );
             settings.endGroup();
         }
@@ -1096,9 +1096,11 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
      //--for last opened page--//
      QSettings settings("IIT-B", "OpenOCRCorrect");
      settings.beginGroup("RecentPageLoaded");
-     QString stored_project = settings.value("projectName").toString();
+     QString stored_project = settings.value("projectName1").toString();
+     QString stored_project2 = settings.value("projectName2").toString();
+     QString stored_project3 = settings.value("projectName3").toString();
      settings.endGroup();
-     if(ProjFile == stored_project){
+     if(ProjFile == stored_project || ProjFile == stored_project2 || ProjFile == stored_project3){
          RecentPageInfo();
      }
 }
@@ -6896,9 +6898,31 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     //Saves the current opened page
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("RecentPageLoaded");
-    settings.setValue("projectName",ProjFile );
-    settings.setValue("name",name );
-    settings.setValue("pageParent",gCurrentDirName );
+    QString tmp1 = settings.value("projectName1").toString();
+    QString tmp2 = settings.value("projectName2").toString();
+    QString tmp3 = settings.value("projectName3").toString();
+    if(ProjFile == tmp1){
+    settings.setValue("projectName1",ProjFile );
+    settings.setValue("name1",name );
+    settings.setValue("pageParent1",gCurrentDirName );}
+    else if(ProjFile == tmp2){
+    settings.setValue("projectName2",settings.value("projectName1").toString() );
+    settings.setValue("name2",settings.value("name1").toString() );
+    settings.setValue("pageParent2",settings.value("pageParent1").toString() );
+    settings.setValue("projectName1",ProjFile );
+    settings.setValue("name1",name );
+    settings.setValue("pageParent1",gCurrentDirName );}
+    else{
+        settings.setValue("projectName3",settings.value("projectName2").toString() );
+        settings.setValue("name3",settings.value("name2").toString() );
+        settings.setValue("pageParent3",settings.value("pageParent2").toString() );
+        settings.setValue("projectName2",settings.value("projectName1").toString() );
+        settings.setValue("name2",settings.value("name1").toString() );
+        settings.setValue("pageParent2",settings.value("pageParent1").toString() );
+        settings.setValue("projectName1",ProjFile );
+        settings.setValue("name1",name );
+        settings.setValue("pageParent1",gCurrentDirName );
+    }
     settings.endGroup();
     //.///////////////////////////////////////////////////////
     isProjectOpen = 1;
@@ -7135,7 +7159,6 @@ void MainWindow::file_click(const QModelIndex & indx)
         QFileInfo f(*file);
         QString suff = f.completeSuffix();
         if (suff == "txt" || suff == "html") {
-            qDebug () <<"suff variable:::->"<<suff;
             LoadDocument(file,suff,qvar);     //loads not image files
         }
 
@@ -8627,11 +8650,22 @@ void MainWindow::RecentPageInfo()
     QString var1,var2;
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("RecentPageLoaded");
-    var1 = settings.value("name").toString();
-    var2 = settings.value("pageParent").toString();
-    QString item1;
+    QString stored_project = settings.value("projectName1").toString();
+    QString stored_project2 = settings.value("projectName2").toString();
+    QString stored_project3 = settings.value("projectName3").toString();
+    if(ProjFile == stored_project){
+    var1 = settings.value("name1").toString();
+    var2 = settings.value("pageParent1").toString();}
+    else if(ProjFile == stored_project2){
+        var1 = settings.value("name2").toString();
+        var2 = settings.value("pageParent2").toString();
+    }
+    else if(ProjFile == stored_project3){
+        var1 = settings.value("name3").toString();
+        var2 = settings.value("pageParent3").toString();
+    }
     settings.endGroup();
-    QString item;
+    QString item,item1;
     for(int i=0;i<model->rowCount();i++){
         children<<model->index(i,0);
         item=children[i].data(Qt::DisplayRole).toString();
@@ -8639,7 +8673,7 @@ void MainWindow::RecentPageInfo()
             for(int j=0;j<model->rowCount(children[i]);j++){
                 children<<children[i].child(j,0);
                 item1 = children[i].child(j,0).data(Qt::DisplayRole).toString();
-                qDebug ()<<"Item1"<<item1;
+                //qDebug ()<<"Item1"<<item1;
                 if(item1 == var1){
                     auto location = children[i].child(j,0);
                     ui->treeView->selectionModel()->setCurrentIndex(children[i].child(j,0),QItemSelectionModel::Select);
