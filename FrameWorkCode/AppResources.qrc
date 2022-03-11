@@ -46,5 +46,6 @@
         <file>Resources/stylesheet-branch-closed.png</file>
         <file>Resources/stylesheet-branch-open.png</file>
         <file>Resources/font color.png</file>
+        <file>spinbar-white-tp.gif</file>
     </qresource>
 </RCC>
