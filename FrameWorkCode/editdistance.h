@@ -10,7 +10,8 @@ public:
     int min(int ,int );
     QVector <QString> phrase_heuristics(QStringList, QStringList );
     void backtrace(QStringList, QStringList, int **);
-
+    int getEditDistance(std::string first, std::string second);
+    double findStringSimilarity(std::string first, std::string second);
 };
 
 
