@@ -763,3 +763,275 @@ Debug: similarity done (mainwindow.cpp)
 Debug: Similarity Processing took 7 milliseconds (mainwindow.cpp)
 Debug: Coordinates BBOX :  "bbox 123 293 1067 432" (mainwindow.cpp)
 Debug: BBOX Processing took 7 milliseconds (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 16 Mar 2022 @ 19:18:57
+Username:ajit
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 16 Mar 2022 @ 23:31:29
+Username:ajit
+
+Application Log:
+Debug: Some Error occurred
+ (verifyset.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "अधिगमस =>अधिगमसम् " 
+ (mainwindow.cpp)
+Debug: "व्याख्यान =>व्याख्यानअ " 
+ (mainwindow.cpp)
+Debug: "परिचयस्म एवं =>परिचयस्मस् एअवं " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: currentFileDirectory =  "/home/ajit/Documents/AIML-All-master/CorrectorOutput" (mainwindow.cpp)
+Debug: Printing changedWords QVector
+ (mainwindow.cpp)
+Debug: "अधिगमस =>अधिगमसम् " 
+ (mainwindow.cpp)
+Debug: "व्याख्यान =>व्याख्यानअ " 
+ (mainwindow.cpp)
+Debug: "परिचयस्म एवं =>परिचयस्मस् एअवं " 
+ (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "AIML-all_0001-001.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 16 Mar 2022 @ 23:36:37
+Username:ajit
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 00:08:38
+Username:ajit
+
+Application Log:
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Debug: "यंत्रम् अधिगमसम् परिचयस्म  \nप्रशिक्ष : प्रो. गणेशस् \n\nव्याख्यानअ 1 : परिचयस्मस् एअवं प्रेरणा\n\n\n\n" (mainwindow.cpp)
+Debug: "यंत्रम् अधिगमम् परिचयस्  \nप्रशिक्ष : प्रो. गणेस् \n\nव्याख्यानअ 1 : परिचयस्मस् एअवं प्रेरणा\n\n\n\n" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "अधिगमसम् परिचयस्म =>अधिगमम् परिचयस् " 
+ (mainwindow.cpp)
+Debug: "गणेशस् =>गणेस् " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/.."): device not open ()
+Debug: "AIML-all_0001-001.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 00:16:49
+Username:ajit
+
+Application Log:
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 00:24:18
+Username:ajit
+
+Application Log:
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 00:25:51
+Username:ajit
+
+Application Log:
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस 337: आर्टिफिशियल इंटेलिजेंस एंड यंत्र यंत्र ==>सीएस 337: आर्टिफिशियल इंटेलिजेंस एंड यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "> इस प्रकार का अधिगम अपर्यवेक्षित अधिगम है==>> इस प्रकार का अधिगमस् अपर्यवेक्षित अधिगमस् है" (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "विशिष्ट यंत्र अधिगम उपगम ==>विशिष्ट यंत्र अधिगमस् उपगम " (mainwindow.cpp)
+Debug: Final Sentence "हम यंत्र अधिगम समस्या को कैसे संबोधित करते हैं -? ==>हम यंत्र अधिगमस् समस्या को कैसे संबोधित करते हैं -? " (mainwindow.cpp)
+Debug: Final Sentence "> अधिगम : प्रतिरूप को प्राचलीकृत किया जा सकता है==>> अधिगमस् : प्रतिरूप को प्राचलीकृत किया जा सकता है" (mainwindow.cpp)
+Debug: Final Sentence "विशिष्ट यंत्र अधिगम उपगम ==>विशिष्ट यंत्रम् अधिगम उपगम " (mainwindow.cpp)
+Debug: Final Sentence "हम यंत्र अधिगम समस्या को कैसे संबोधित करते हैं -? ==>हम यंत्रम् अधिगम समस्या को कैसे संबोधित करते हैं -? " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "व्याख्यान 13-भाग 2: अपर्यवेक्षित अधिगमः आयाम में कमी और गुल्मीकरण ==>व्याख्यान 13-भाग 2: अपर्यवेक्षित अधिगमस्ः आयाम में कमी और गुल्मीकरण " (mainwindow.cpp)
+Debug: Final Sentence " चित्र सौजन्यः \"मैथेमेटिक्स फॉर यंत्र यंत्र,\" मार्क पीटर डीज़नरोथ, ए. अल्डो फैसल और चेंग सून ओंग ==> चित्र सौजन्यः \"मैथेमेटिक्स फॉर यंत्रम् यंत्रम्,\" मार्क पीटर डीज़नरोथ, ए. अल्डो फैसल और चेंग सून ओंग " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "बिना पर्यवेक्षित अधिगम) [वैकल्पिक: अतिरिक्त स्लाइड] EE ==>बिना पर्यवेक्षित अधिगमस्) [वैकल्पिक: अतिरिक्त स्लाइड] EE " (mainwindow.cpp)
+Debug: Final Sentence "यंत्र अधिगम==>यंत्र अधिगमस्" (mainwindow.cpp)
+Debug: Final Sentence "यंत्र अधिगम==>यंत्रम् अधिगम" (mainwindow.cpp)
+Debug: Final Sentence "कन्वोल्यूशन तीन महत्वपूर्ण विचारों का लाभ उठाता -जो यंत्र यंत्र सिस्टम को बेहतर बनाने में मदद कर सकते हैंः (a) विरल इंटरैक्शन, (b) प्राचल शेयरिंग और (c) समरूप निरूपणः f (g (x)) = g (f (x)) जब f संवहनी -और g शिफ्ट फलन है==>कन्वोल्यूशन तीन महत्वपूर्ण विचारों का लाभ उठाता -जो यंत्रम् यंत्रम् सिस्टम को बेहतर बनाने में मदद कर सकते हैंः (a) विरल इंटरैक्शन, (b) प्राचल शेयरिंग और (c) समरूप निरूपणः f (g (x)) = g (f (x)) जब f संवहनी -और g शिफ्ट फलन है" (mainwindow.cpp)
+Debug: Final Sentence "सीएस 337: आर्टिफिशियल इंटेलिजेंस एंड यंत्र यंत्र लेक्चरः रसद रेग्रेशन ==>सीएस 337: आर्टिफिशियल इंटेलिजेंस एंड यंत्रम् यंत्रम् लेक्चरः रसद रेग्रेशन " (mainwindow.cpp)
+Debug: Final Sentence ", आप यंत्र अधिगम का उपयोग \t\tकरके हल कर रहे हैं - परिमाणीकृत रूप में ==>, आप यंत्र अधिगमस् का उपयोग \t\tकरके हल कर रहे हैं - परिमाणीकृत रूप में " (mainwindow.cpp)
+Debug: Final Sentence "==>" (mainwindow.cpp)
+Debug: Final Sentence ", आप यंत्र अधिगम का उपयोग \t\tकरके हल कर रहे हैं - परिमाणीकृत रूप में ==>, आप यंत्रम् अधिगम का उपयोग \t\tकरके हल कर रहे हैं - परिमाणीकृत रूप में " (mainwindow.cpp)
+Debug: Final Sentence "==>" (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "ConvNetJS (http:// cs. stanford. edu/people/karpathy/convnetjs/) पूरी तरह से अपने ब्राउज़र में डीप यंत्र प्रतिरूप (न्यूरल नेटवर्क) के प्रशिक्षण के लिए एक जावास्क्रिप्ट लाइब्रेरी है==>ConvNetJS (http:// cs. stanford. edu/people/karpathy/convnetjs/) पूरी तरह से अपने ब्राउज़र में डीप यंत्रम् प्रतिरूप (न्यूरल नेटवर्क) के प्रशिक्षण के लिए एक जावास्क्रिप्ट लाइब्रेरी है" (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "कन्वोल्यूशन तीन महत्वपूर्ण विचारों का लाभ उठाता -जो यंत्र यंत्र सिस्टम को बेहतर बनाने में मदद कर सकते हैंः (a) विरल इंटरैक्शन, (b) प्राचल शेयरिंग और (c) समरूप निरूपणः f (g (x)) = g (f (x)) जब f संवहनी -और g शिफ्ट फलन है==>कन्वोल्यूशन तीन महत्वपूर्ण विचारों का लाभ उठाता -जो यंत्रम् यंत्रम् सिस्टम को बेहतर बनाने में मदद कर सकते हैंः (a) विरल इंटरैक्शन, (b) प्राचल शेयरिंग और (c) समरूप निरूपणः f (g (x)) = g (f (x)) जब f संवहनी -और g शिफ्ट फलन है" (mainwindow.cpp)
+Debug: Final Sentence "परिचय: यंत्र अधिगम क्या है==>परिचय: यंत्र अधिगमस् क्या है" (mainwindow.cpp)
+Debug: Final Sentence "परिचय: यंत्र अधिगम क्या है==>परिचय: यंत्रम् अधिगम क्या है" (mainwindow.cpp)
+Debug: Final Sentence "वैकल्पिक: बहु-कार्य (सेकेंड 7.7), सेमी-पर्यवेक्षित और एडवरसियल यंत्र ==>वैकल्पिक: बहु-कार्य (सेकेंड 7.7), सेमी-पर्यवेक्षित और एडवरसियल यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "एम्बेडिंग्स (अपर्यवेक्षित अधिगम) [वैकल्पिक: अतिरिक्त सचलपट्ट] ==>एम्बेडिंग्स (अपर्यवेक्षित अधिगमस्) [वैकल्पिक: अतिरिक्त सचलपट्ट] " (mainwindow.cpp)
+Debug: Final Sentence "पर्यवेक्षित अधिगम==>पर्यवेक्षित अधिगमस्" (mainwindow.cpp)
+Debug: Final Sentence "अधिगम : ￼==>अधिगमस् : ￼" (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence " विहित अधिगम की तीन समस्याएँ ==> विहित अधिगमस् की तीन समस्याएँ " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "3) अपर्यवेक्षित अधिगम - दत्तांश का प्रतिरूपण करें, ==>3) अपर्यवेक्षित अधिगमस् - दत्तांश का प्रतिरूपण करें, " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "> सुदृढ़ीकरण अधिगम ==>> सुदृढ़ीकरण अधिगमस् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस 335/337: कृत्रिमप्रज्ञा एवं यंत्र अधिगम==>सीएस 335/337: कृत्रिमप्रज्ञा एवं यंत्र अधिगमस्" (mainwindow.cpp)
+Debug: Final Sentence "सीएस 335/337: कृत्रिमप्रज्ञा एवं यंत्र अधिगम==>सीएस 335/337: कृत्रिमप्रज्ञा एवं यंत्रम् अधिगम" (mainwindow.cpp)
+Debug: Final Sentence "सीएस 337: आर्टिफिशियल इंटेलिजेंस एंड यंत्र यंत्र इंस्ट्रक्टरः प्रो. गणेश रामकृष्णन ==>सीएस 337: आर्टिफिशियल इंटेलिजेंस एंड यंत्रम् यंत्रम् इंस्ट्रक्टरः प्रो. गणेश रामकृष्णन " (mainwindow.cpp)
+Debug: Final Sentence "कन्वोल्यूशन तीन महत्वपूर्ण विचारों का लाभ उठाता -जो यंत्र यंत्र सिस्टम को बेहतर बनाने में मदद कर सकते हैंः (a) विरल इंटरैक्शन, (b) प्राचल शेयरिंग और (c) समरूप निरूपणः f (g (x)) = g (f (x)) जब f संवहनी -और g शिफ्ट फलन है==>कन्वोल्यूशन तीन महत्वपूर्ण विचारों का लाभ उठाता -जो यंत्रम् यंत्रम् सिस्टम को बेहतर बनाने में मदद कर सकते हैंः (a) विरल इंटरैक्शन, (b) प्राचल शेयरिंग और (c) समरूप निरूपणः f (g (x)) = g (f (x)) जब f संवहनी -और g शिफ्ट फलन है" (mainwindow.cpp)
+Debug: Final Sentence "सीएस 337: आर्टिफिशियल इंटेलिजेंस एंड यंत्र यंत्र ==>सीएस 337: आर्टिफिशियल इंटेलिजेंस एंड यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "\t>गहन अधिगम : कुन्डलीकरण, पुनरावृत्ति, LSTM आदि==>\t>गहन अधिगमस् : कुन्डलीकरण, पुनरावृत्ति, LSTM आदि" (mainwindow.cpp)
+Debug: Final Sentence "\t>समवेत अधिगम, स्यूतीकरण, वृद्धिकरण और गुण चयन : निर्णय वृक्ष के साथ विवरण ==>\t>समवेत अधिगमस्, स्यूतीकरण, वृद्धिकरण और गुण चयन : निर्णय वृक्ष के साथ विवरण " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "यह पर्यवेक्षित अधिगम समस्या का एक उदाहरण :==>यह पर्यवेक्षित अधिगमस् समस्या का एक उदाहरण :" (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "यंत्र अधिगम परिचय==>यंत्र अधिगमस् परिचय" (mainwindow.cpp)
+Debug: Final Sentence "यंत्र अधिगम परिचय==>यंत्रम् अधिगम परिचय" (mainwindow.cpp)
+Debug: Final Sentence "परिचय: यंत्र अधिगम क्या है==>परिचय: यंत्र अधिगमस् क्या है" (mainwindow.cpp)
+Debug: Final Sentence "> यंत्र अधिगम संगणक(कंप्यूटर) विज्ञान का एक उप-क्षेत्र -जो कृत्रिमप्रज्ञा में प्रतिरूप अभिज्ञान और अभिकलनाधिगम (संगणकीय यंत्र) सिद्धांत के अध्ययन से विकसित हुआ है==>> यंत्र अधिगमस् संगणक(कंप्यूटर) विज्ञान का एक उप-क्षेत्र -जो कृत्रिमप्रज्ञा में प्रतिरूप अभिज्ञान और अभिकलनाधिगम (संगणकीय यंत्र) सिद्धांत के अध्ययन से विकसित हुआ है" (mainwindow.cpp)
+Debug: Final Sentence "परिचय: यंत्र अधिगम क्या है==>परिचय: यंत्रम् अधिगम क्या है" (mainwindow.cpp)
+Debug: Final Sentence "> यंत्र अधिगम संगणक(कंप्यूटर) विज्ञान का एक उप-क्षेत्र -जो कृत्रिमप्रज्ञा में प्रतिरूप अभिज्ञान और अभिकलनाधिगम (संगणकीय यंत्र) सिद्धांत के अध्ययन से विकसित हुआ है==>> यंत्रम् अधिगम संगणक(कंप्यूटर) विज्ञान का एक उप-क्षेत्र -जो कृत्रिमप्रज्ञा में प्रतिरूप अभिज्ञान और अभिकलनाधिगम (संगणकीय यंत्रम्) सिद्धांत के अध्ययन से विकसित हुआ है" (mainwindow.cpp)
+Debug: Final Sentence "सदिश यंत्र का समर्थन दोहरा उद्देश्य ==>सदिश यंत्रम् का समर्थन दोहरा उद्देश्य " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence " चित्र सौजन्यः \"मैथेमेटिक्स फॉर यंत्र यंत्र,\" मार्क पीटर डीज़नरोथ, ए. अलडो फैसल ==> चित्र सौजन्यः \"मैथेमेटिक्स फॉर यंत्रम् यंत्रम्,\" मार्क पीटर डीज़नरोथ, ए. अलडो फैसल " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "अंतर्निहित और अपर्यवेक्षित अधिगम ==>अंतर्निहित और अपर्यवेक्षित अधिगमस् " (mainwindow.cpp)
+Debug: Final Sentence "पर्यवेक्षित अधिगम==>पर्यवेक्षित अधिगमस्" (mainwindow.cpp)
+Debug: Final Sentence "अपर्यवेक्षित अधिगम==>अपर्यवेक्षित अधिगमस्" (mainwindow.cpp)
+Debug: Final Sentence "> पर्यवेक्षित अधिगम में, वांछित निर्गम प्रदान किए जाते हैं जिनका उपयोग यंत्र को प्रशिक्षित करने के लिए किया जाता है==>> पर्यवेक्षित अधिगमस् में, वांछित निर्गम प्रदान किए जाते हैं जिनका उपयोग यंत्र को प्रशिक्षित करने के लिए किया जाता है" (mainwindow.cpp)
+Debug: Final Sentence "> पर्यवेक्षित अधिगम में, वांछित निर्गम प्रदान किए जाते हैं जिनका उपयोग यंत्र को प्रशिक्षित करने के लिए किया जाता है==>> पर्यवेक्षित अधिगम में, वांछित निर्गम प्रदान किए जाते हैं जिनका उपयोग यंत्रम् को प्रशिक्षित करने के लिए किया जाता है" (mainwindow.cpp)
+Debug: Final Sentence " \"एनएन की पहली कुछ परतों में प्राचलों की अपर्यवेक्षित अधिगम\" \"\" ==> \"एनएन की पहली कुछ परतों में प्राचलों की अपर्यवेक्षित अधिगमस्\" \"\" " (mainwindow.cpp)
+Debug: Final Sentence "यंत्र अधिगम परिचय==>यंत्र अधिगमस् परिचय" (mainwindow.cpp)
+Debug: Final Sentence "व्याख्यान 2, भाग 1-पर्यवेक्षित बनाम अपर्यवेक्षित अधिगम और न्यूनतम वर्ग विधि ==>व्याख्यान 2, भाग 1-पर्यवेक्षित बनाम अपर्यवेक्षित अधिगमस् और न्यूनतम वर्ग विधि " (mainwindow.cpp)
+Debug: Final Sentence "यंत्र अधिगम परिचय==>यंत्रम् अधिगम परिचय" (mainwindow.cpp)
+Debug: Final Sentence "एम्बेडिंग्स (अपर्यवेक्षित अधिगम) ==>एम्बेडिंग्स (अपर्यवेक्षित अधिगमस्) " (mainwindow.cpp)
+Debug: Final Sentence "कन्वोल्यूशन तीन महत्वपूर्ण विचारों का लाभ उठाता -जो एक यंत्र यंत्र प्रणाली को बेहतर बनाने में मदद कर सकते हैंः (a) विरल f (g (x)) = g (f (x)) ==>कन्वोल्यूशन तीन महत्वपूर्ण विचारों का लाभ उठाता -जो एक यंत्रम् यंत्रम् प्रणाली को बेहतर बनाने में मदद कर सकते हैंः (a) विरल f (g (x)) = g (f (x)) " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "\t> इस प्रकार के अधिगम को पर्यवेक्षित अधिगम कहा जाता है==>\t> इस प्रकार के अधिगमस् को पर्यवेक्षित अधिगमस् कहा जाता है" (mainwindow.cpp)
+Debug: Final Sentence " > सामान्य रूप से यंत्र अधिगम ==> > सामान्य रूप से यंत्र अधिगमस् " (mainwindow.cpp)
+Debug: Final Sentence "\t > पर्यवेक्षित अधिगम ==>\t > पर्यवेक्षित अधिगमस् " (mainwindow.cpp)
+Debug: Final Sentence "\t> अपर्यवेक्षित अधिगम ==>\t> अपर्यवेक्षित अधिगमस् " (mainwindow.cpp)
+Debug: Final Sentence "> विहित अधिगम समस्याएं ==>> विहित अधिगमस् समस्याएं " (mainwindow.cpp)
+Debug: Final Sentence " > सामान्य रूप से यंत्र अधिगम ==> > सामान्य रूप से यंत्रम् अधिगम " (mainwindow.cpp)
+Debug: Final Sentence "उपलब्ध नमूनों को तीन सेटों में विभाजित करेंः प्रशिक्षण सेटः यंत्र विधिकल्प को प्रशिक्षित करने के लिए उपयोग किया गया ==>उपलब्ध नमूनों को तीन सेटों में विभाजित करेंः प्रशिक्षण सेटः यंत्रम् विधिकल्प को प्रशिक्षित करने के लिए उपयोग किया गया " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "यह पर्यवेक्षित अधिगम समस्या का एक उदाहरण :==>यह पर्यवेक्षित अधिगमस् समस्या का एक उदाहरण :" (mainwindow.cpp)
+Debug: Final Sentence "एम्बेडिंग्स (अपर्यवेक्षित अधिगम) [वैकल्पिक: अतिरिक्त सचलपट्ट] ==>एम्बेडिंग्स (अपर्यवेक्षित अधिगमस्) [वैकल्पिक: अतिरिक्त सचलपट्ट] " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "@एडवांसमेंट इन यंत्र यंत्र==>@एडवांसमेंट इन यंत्रम् यंत्रम्" (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "व्याख्यान 12ए: अपर्यवेक्षित अधिगमः पीसीए और आयाम न्यूनीकरण ==>व्याख्यान 12ए: अपर्यवेक्षित अधिगमस्ः पीसीए और आयाम न्यूनीकरण " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "अधिगमः दत्तांश के साथ अनुभव के साथ पूरक भंडार एल्गोरिदम ==>अधिगमस्ः दत्तांश के साथ अनुभव के साथ पूरक भंडार एल्गोरिदम " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "> मान लीजिये कि X1, X2,..., Xn यादृच्छिक चरों का एक समुच्चय है जो एक संयुक्त pdf/pmf के साथ प्रेक्षण को नियंत्रित करता हैः ==>> मान लीजिये कि X1, X2,..., Xn यादृच्छिक चरों का एक समुच्चय है जो एक संयुक्त pdf/pmf के साथ प्रेक्षण को नियंत्रम्ित करता हैः " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Debug: Final Sentence "चित्र 3: पीसीए का निदर्शन: संपीड़ित बनाम. गैर-संपीडित दत्तांश-समुच्चय. चित्र सौजन्यः \"मैथेमेटिक्स फॉर यंत्र यंत्र,\" मार्क पीटर डीज़नरोथ, ए. अल्डो फैसल और चेंग सून ओंग ==>चित्र 3: पीसीए का निदर्शन: संपीड़ित बनाम. गैर-संपीडित दत्तांश-समुच्चय. चित्र सौजन्यः \"मैथेमेटिक्स फॉर यंत्रम् यंत्रम्,\" मार्क पीटर डीज़नरोथ, ए. अल्डो फैसल और चेंग सून ओंग " (mainwindow.cpp)
+Debug: Final Sentence "सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्र यंत्र ==>सीएस337, आर्टिफिशियल इंटेलिजेंस और यंत्रम् यंत्रम् " (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/.."): device not open ()
+Debug: "AIML-all_0001-001.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html"  to file. 
+ (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-004.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 00:33:27
+Username:ajit
+
+Application Log:
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-004.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()

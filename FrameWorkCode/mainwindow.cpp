@@ -1203,21 +1203,20 @@ void MainWindow::SaveFile_GUI_Preprocessing()
         updateAverageAccuracies();
     }
     ConvertSlpDevFlag =1;
-        QTextCharFormat fmt;
-        //fmt.setForeground(QBrush(QColor(0,0,0)));           //!Setting foreground brush to render text
-        QTextCursor cursor = curr_browser->textCursor();
-        cursor.beginEditBlock();
-        cursor.select(QTextCursor::Document);
-        cursor.mergeCharFormat(fmt);
-        cursor.endEditBlock();
+    QTextCharFormat fmt;
+    //fmt.setForeground(QBrush(QColor(0,0,0)));           //!Setting foreground brush to render text
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.beginEditBlock();
+    cursor.select(QTextCursor::Document);
+    cursor.mergeCharFormat(fmt);
+    cursor.endEditBlock();
 
-        QString output = curr_browser->toHtml();
+    QString output = curr_browser->toHtml();
 
-        QTextDocument doc;
-        doc.setHtml( gInitialTextHtml[currentTabPageName] );
-        s1 = doc.toPlainText();          //!before Saving
-        s2 = curr_browser->toPlainText();       //!after Saving
-
+    QTextDocument doc;
+    doc.setHtml( gInitialTextHtml[currentTabPageName] );
+    s1 = doc.toPlainText();          //!before Saving
+    s2 = curr_browser->toPlainText();       //!after Saving
 }
 
 /*!
@@ -8117,9 +8116,6 @@ QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<Q
 */
 void MainWindow::replaceInAllFilesFromTSVfile()
 {
-    QMap<QString, QString> globalReplacementMap_allPages;
-    QString msgBoxText = "";             // Text to be displayed in the message box
-
     QString filename = QFileDialog::getOpenFileName(this, "Open a file", gDirTwoLevelUp);
     QFile file(filename);
 
@@ -8144,39 +8140,22 @@ void MainWindow::replaceInAllFilesFromTSVfile()
         return;
     }
 
+    QVector<QString> phrasesToBeReplaced;
     while (!in.atEnd())
     {
         QString line = in.readLine();
         if (line == "")
             continue;
-        QStringList words = line.split("\t");
-        globalReplacementMap_allPages.insert(words[0], words[1]);  //inserts words into globalReplacementMap_allPages by iterating
-        msgBoxText.append(words[0] + " -> " + words[1] + "\n");
+        int indexOfFirstTab = line.indexOf("\t");
+        QString sourcePhrase = line.left(indexOfFirstTab);
+        QString targetPhrase = line.right(line.length() - indexOfFirstTab - 1);
+
+        phrasesToBeReplaced.push_back(sourcePhrase + " =>" + targetPhrase + " ");
     }
     file.close();
 
-    // Displaying message box
-    QMessageBox msgBox;
-    msgBox.setText(msgBoxText);
-    msgBox.setInformativeText("Do you want to make these replacements(in all pages)?");
-    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-    msgBox.setDefaultButton(QMessageBox::Ok);
-    int ret = msgBox.exec();
-
-    if (ret == QMessageBox::Cancel)
-        return;
-
     QString currentDirAbsPath = gDirTwoLevelUp + "/" + gCurrentDirName;
-    QDirIterator dirIterator(currentDirAbsPath, QDirIterator::Subdirectories);
-
-    while (dirIterator.hasNext())
-    {
-        QString file_path = dirIterator.next();
-        writeGlobalCPairsToFiles(file_path, globalReplacementMap_allPages);
-    }
-
-    qDebug() << "Done replacement from TSV file";
-    QMessageBox::information(this, "Completed replacement", "All replacements done", QMessageBox::Ok, QMessageBox::Ok);
+    runGlobalReplace(currentDirAbsPath, phrasesToBeReplaced);
 }
 
 
@@ -8206,9 +8185,7 @@ bool MainWindow::checkForValidTSVfile(QFile & file)
         if (line == "")
             continue;
 
-        singleSpaces = line.count(' ');
-        tabSpaces = line.count('\t');
-        if (singleSpaces != 0 || tabSpaces != 1)
+        if (!line.contains("\t"))
         {
             file.close();
             return false;
@@ -8227,7 +8204,21 @@ bool MainWindow::checkForValidTSVfile(QFile & file)
 */
 void MainWindow::on_actionUpload_triggered()
 {
-    replaceInAllFilesFromTSVfile();
+    int idx = ui->tabWidget_2->currentIndex();
+    QTextBrowser *closing_browser = (QTextBrowser*)ui->tabWidget_2->widget(idx);
+    QString closing_browserHtml = closing_browser->toHtml();
+    QString qstr = ui->tabWidget_2->tabText(idx);
+
+    string str = qstr.toStdString();
+    str.erase(remove(str.begin(), str.end(), ' '), str.end());
+    QString closingTabPageName = QString::fromStdString(str);
+
+    if (closing_browserHtml != gInitialTextHtml[closingTabPageName])
+    {
+        QMessageBox::information(0, "Error", "Please save the current opened file first.");
+    }
+    else
+        replaceInAllFilesFromTSVfile();
 }
 
 /*!
