@@ -42926,3 +42926,315 @@ Warning:   OpenType support missing for "Ubuntu", script 11 ()
 Debug: "No such file or directory" (slpNPatternDict.cpp)
 Debug: done loading .... (mainwindow.cpp)
 >>>>>>> db0c2f45f698fe6e49bbc65a778033a65ce6897e
+
+OpenOCRCorrect Application Log
+Date: 16 Mar 2022 @ 00:15:09
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "१०१०११०" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "aman kumar" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "\u0000" (mainwindow.cpp)
+Debug: "\u0001" (mainwindow.cpp)
+Debug: "\u0002" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: "\u0000" (mainwindow.cpp)
+Debug: "\u0001" (mainwindow.cpp)
+Debug: "\u0002" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 16 Mar 2022 @ 00:34:18
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: s+i "\u0000" (mainwindow.cpp)
+Debug: s+i "\u0001" (mainwindow.cpp)
+Debug: s+i "\u0002" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 16 Mar 2022 @ 00:37:33
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "new" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: KeypressEvent ctrl+c "page" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: KeypressEvent ctrl+c "file" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "file" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "file" (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "page" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "page" (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "new" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "new" (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "new" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "new" (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "परमेश्वरन् " (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "परमेश्वरन् " (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "" (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "" (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: KeypressEvent ctrl+c "6" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "6" (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "नायद " (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "नायद " (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "स्पष्टमवगम्यते ।" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "स्पष्टमवगम्यते ।" (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "ग्रन्थोऽयं प्रकाश्यमानो ज्योतिःशास्नविषयकेपु निवक्रुधेपु नान्यसामान्यं" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "ग्रन्थोऽयं प्रकाश्यमानो ज्योतिःशास्नविषयकेपु निवक्रुधेपु नान्यसामान्यं" (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "स्वेनारव्धा, पुरस्कर्तुर्जीवितशेषं स्वस्य वार्द्धके माष्यमिदं समापितं च इत्यादि आर्यपटीयंकिऋग्ह्  प्रकाशकजिऋग्स्दृ  स्पष्टमवगम्यते । प्रकाशिस्कः  ग्रन्थोऽयं प्रकाश्यमानो ज्योतिःशास्नविषयकेपु निवक्रुधेपु नान्यसामान्यं म।हइमानमावहत।ई।तइ वयं विश्वसिमः । ग्रन्थस्यास्य प्रकाशने साह्यमाचरितवद्भ्यः के. एs. महादेवशास्त्रिम्यः, एन् राघवन् नायद । एम्. पि. परमेश्वरन् नम्पूतिरि, एन्. परमेश्वरशास्त्री, वि. नारायणन् नम्पूतिरि एम्. ए., इत्येतेभ्यश्च सुबहु धारयामि । अनन्तशयनम् शूरनाट् कुञ्जन् पिल्ल, ९ १- १ ७- १९५७. संस्कृतग्रन्थप्रकाशनकार्यालयाध्यक्षः ।" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "स्वेनारव्धा, पुरस्कर्तुर्जीवितशेषं स्वस्य वार्द्धके माष्यमिदं समापितं च इत्यादि आर्यपटीयंकिऋग्ह्  प्रकाशकजिऋग्स्दृ  स्पष्टमवगम्यते । प्रकाशिस्कः  ग्रन्थोऽयं प्रकाश्यमानो ज्योतिःशास्नविषयकेपु निवक्रुधेपु नान्यसामान्यं म।हइमानमावहत।ई।तइ वयं विश्वसिमः । ग्रन्थस्यास्य प्रकाशने साह्यमाचरितवद्भ्यः के. एs. महादेवशास्त्रिम्यः, एन् राघवन् नायद । एम्. पि. परमेश्वरन् नम्पूतिरि, एन्. परमेश्वरशास्त्री, वि. नारायणन् नम्पूतिरि एम्. ए., इत्येतेभ्यश्च सुबहु धारयामि । अनन्तशयनम् शूरनाट् कुञ्जन् पिल्ल, ९ १- १ ७- १९५७. संस्कृतग्रन्थप्रकाशनकार्यालयाध्यक्षः ।" (mainwindow.cpp)
+Debug: s1 "स्वेनारव्धा, पुरस्कर्तुर्जीवितशेषं स्वस्य वार्द्धके माष्यमिदं समापितं च इत्यादि आर्यपटीयंकिऋग्ह्  प्रकाशकजिऋग्स्दृ  स्पष्टमवगम्यते । प्रकाशिस्कः  ग्रन्थोऽयं प्रकाश्यमानो ज्योतिःशास्नविषयकेपु निवक्रुधेपु नान्यसामान्यं म।हइमानमावहत।ई।तइ वयं विश्वसिमः । ग्रन्थस्यास्य प्रकाशने साह्यमाचरितवद्भ्यः के. एs. महादेवशास्त्रिम्यः, एन् राघवन् नायद । एम्. पि. परमेश्वरन् नम्पूतिरि, एन्. परमेश्वरशास्त्री, वि. नारायणन् नम्पूतिरि एम्. ए., इत्येतेभ्यश्च सुबहु धारयामि । अनन्तशयनम् शूरनाट् कुञ्जन् पिल्ल, ९ १- १ ७- १९५७. संस्कृतग्रन्थप्रकाशनकार्यालयाध्यक्षः ।" (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "ग्रन्थोऽयं" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: KeypressEvent ctrl+c "प्रकाश्यमानो" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: KeypressEvent ctrl+c "ज्योतिः" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "ज्योतिः" (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "म।हइमानमावहत।ई।तइ वयं विश्वसिमः । ग्रन्थस्यास्य प्रकाशने साह्यमाचरितवद्भ्यः के. एs. महादेवशास्त्रिम्यः, एन् राघवन् नायद । एम्. पि. परमेश्वरन् नम्पूतिरि, एन्. परमेश्वरशास्त्री, वि. नारायणन् नम्पूतिरि एम्. ए., इत्येतेभ्यश्च सुबहु धारयामि ।" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "म।हइमानमावहत।ई।तइ वयं विश्वसिमः । ग्रन्थस्यास्य प्रकाशने साह्यमाचरितवद्भ्यः के. एs. महादेवशास्त्रिम्यः, एन् राघवन् नायद । एम्. पि. परमेश्वरन् नम्पूतिरि, एन्. परमेश्वरशास्त्री, वि. नारायणन् नम्पूतिरि एम्. ए., इत्येतेभ्यश्च सुबहु धारयामि ।" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 16 Mar 2022 @ 00:52:34
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: s1 "म।हइमानमावहत।ई।तइ वयं विश्वसिमः । ग्रन्थस्यास्य प्रकाशने साह्यमाचरितवद्भ्यः के. एs. महादेवशास्त्रिम्यः, एन् राघवन् नायद । एम्. पि. परमेश्वरन् नम्पूतिरि, एन्. परमेश्वरशास्त्री, वि. नारायणन् नम्पूतिरि एम्. ए., इत्येतेभ्यश्च सुबहु धारयामि ।" (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "च इ" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: KeypressEvent ctrl+c "म्यते ।" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: KeypressEvent ctrl+c "नायद ।" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "नायद ।" (mainwindow.cpp)
+Debug: s1 "नायद ।" (mainwindow.cpp)
+Debug: s1 "नायद ।" (mainwindow.cpp)
+Debug: s1 "नायद ।" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 16 Mar 2022 @ 11:44:03
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: s1 "नायद ।" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "नायद ।" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "नायद ।" (mainwindow.cpp)
+Debug: s1 "नायद ।" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "नायद ।" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "नायद ।" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "नायद ।" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "doing" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: KeypressEvent ctrl+c "how" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: KeypressEvent ctrl+c "you" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "you" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "you" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 16 Mar 2022 @ 11:53:51
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: s1 "you" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "you" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "you" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "you" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "you" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "you" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "you" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "you" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "you" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "you" (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: KeypressEvent ctrl+c "hello students, pease prepare for the upcoming exams." (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: KeypressEvent ctrl+c "presentation must be very well composed." (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: s1 "presentation must be very well composed." (mainwindow.cpp)
+Debug: s1 "presentation must be very well composed." (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "presentation must be very well composed." (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "presentation must be very well composed." (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "presentation must be very well composed." (mainwindow.cpp)
+Debug: s1 "presentation must be very well composed." (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+Debug: s1 "presentation must be very well composed." (mainwindow.cpp)
+Debug: Clipboard paste called. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 16 Mar 2022 @ 12:10:13
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 16 Mar 2022 @ 12:11:24
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()

@@ -109,6 +109,8 @@ private slots:
     void menuSelection(QAction* action);
 
     void translate_replace(QAction*);
+    void clipboard_paste(QAction*);
+    void keyPressEvent(QKeyEvent*);
 
 //    void SaveFile();
 

@@ -485,15 +485,17 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 // code to display options on rightclick
                 curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
                 QMenu* popup_menu = curr_browser->createStandardContextMenu();
-                QMenu* spell_menu, *translate_menu;
+                QMenu* spell_menu, *translate_menu, *clipboard_menu;
 
                 spell_menu = new QMenu("suggestions", this);
                 translate_menu = new QMenu("translate", this);
+                clipboard_menu = new QMenu("clipboard", this);
                 QFont font("Shobhika-Regular");
                 font.setWeight(16);
                 font.setPointSize(16);
                 spell_menu->setFont(font);
                 translate_menu->setFont(font);
+                clipboard_menu->setFont(font);
 
                 QAction* act;
 
@@ -646,16 +648,32 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                     act = new QAction(QString::fromStdString(translate[bitarrayi]), translate_menu);
                     translate_menu->addAction(act);
                 }
-
+                //For clipboard
+                QSettings settings("IIT-B", "OpenOCRCorrect");
+                settings.beginGroup("Clipboard");
+                QString s1 = settings.value("copy1").toString();
+                QString s2 = settings.value("copy2").toString();
+                QString s3 = settings.value("copy3").toString();
+                settings.endGroup();
+                act = new QAction(s1,clipboard_menu);
+                clipboard_menu->addAction(act);
+                act = new QAction(s2,clipboard_menu);
+                clipboard_menu->addAction(act);
+                act = new QAction(s3,clipboard_menu);
+                clipboard_menu->addAction(act);
                 popup_menu->insertSeparator(popup_menu->actions()[0]);
                 popup_menu->insertMenu(popup_menu->actions()[0], spell_menu);
 
                 popup_menu->insertSeparator(popup_menu->actions()[1]);
                 popup_menu->insertMenu(popup_menu->actions()[1], translate_menu);
 
+                popup_menu->insertSeparator(popup_menu->actions()[2]);
+                popup_menu->insertMenu(popup_menu->actions()[2], clipboard_menu);
+
 
                 connect(spell_menu, SIGNAL(triggered(QAction*)), this, SLOT(menuSelection(QAction*)));
                 connect(translate_menu, SIGNAL(triggered(QAction*)), this, SLOT(translate_replace(QAction*)));
+                connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
 
                 popup_menu->exec(ev->globalPos());
                 popup_menu->close(); popup_menu->clear();
@@ -721,9 +739,11 @@ void MainWindow::translate_replace(QAction* action)
         cursor.endEditBlock();
     }
 }
-
-//start
-
+void MainWindow::clipboard_paste(QAction* action)
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.insertText(action->text());
+}
 /*!
  * \fn MainWindow::on_actionSanskrit_triggered()
  * \brief Sets the language of the current broweser to Sanskrit by by passing the SanFlag as true
@@ -4996,7 +5016,35 @@ void MainWindow::on_pushButton_clicked()
                           "QPushButton:enabled { background-color: rgb(136, 138, 133);color:white; }\n");      //apply style on button when it is triggered
      }
 }
-
+void MainWindow::keyPressEvent(QKeyEvent *e)
+{
+    if ( (e->key() == Qt::Key_C)  && QApplication::keyboardModifiers() == Qt::ControlModifier)
+    {
+        QTextCursor cursor = curr_browser->textCursor();
+        QString text = cursor.selectedText().toUtf8().constData();
+        if(text!=""){
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("Clipboard");
+        QString s1,s2,s3;
+        s1 = settings.value("copy1").toString();
+        s2 = settings.value("copy2").toString();
+        s3 = settings.value("copy3").toString();
+        if(text == s1){
+            settings.setValue("copy1",text);
+        }
+        else if(text == s2){
+            settings.setValue("copy2",settings.value("copy1").toString());
+            settings.setValue("copy1",text);
+        }
+        else{
+            settings.setValue("copy3",settings.value("copy2").toString());
+            settings.setValue("copy2",settings.value("copy1").toString());
+            settings.setValue("copy1",text);
+        }
+        settings.endGroup();
+        }
+    }
+}
 /*!
  * \fn MainWindow::eventFilter
  * \brief event: ToolTip and ImageMarkingRegion
@@ -5304,7 +5352,14 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             WordCount();
         }
     }
-
+    if (event->type() == QEvent::ShortcutOverride) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        if (keyEvent->modifiers().testFlag(Qt::ControlModifier) && keyEvent->key() == 'C') {
+            keyPressEvent(keyEvent);
+            event->ignore();
+            return true;
+        }
+    }
     return QMainWindow::eventFilter(object, event);
 }
 
@@ -8682,3 +8737,4 @@ void MainWindow::RecentPageInfo()
         }
     }}
 }
+
