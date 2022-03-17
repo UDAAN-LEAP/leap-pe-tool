@@ -105,6 +105,7 @@ map<int, vector<int>> commentederrors;
 int openedFileChars;
 int openedFileWords;
 bool gSaveTriggered = 0;
+bool LoadDataFlag = 1; //To load data only once
 map<QString, QString> filestructure_fw;
 QMap <QString, QString> mapOfReplacements;
 
@@ -469,7 +470,42 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
         curr_browser->cursorForPosition(ev->pos());
 
         DisplayTimeLog();
+        if((ev->button() == Qt::RightButton) && (LoadDataFlag)){
+            QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
+            QTextCursor cursor = curr_browser->textCursor();
+            cursor.select(QTextCursor::WordUnderCursor);
+            curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
+            QMenu* popup_menu = curr_browser->createStandardContextMenu();
+            QMenu* clipboard_menu;
+            clipboard_menu = new QMenu("clipboard", this);
+            clipboard_menu->setStyleSheet("height: 100px;width: 300px;overflow: hidden;white-space: nowrap;");
+            QFont font("Shobhika-Regular");
+            font.setWeight(16);
+            font.setPointSize(16);
+            clipboard_menu->setFont(font);
+            QAction* act;
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            settings.beginGroup("Clipboard");
+            QString s1 = settings.value("copy1").toString();
+            QString s2 = settings.value("copy2").toString();
+            QString s3 = settings.value("copy3").toString();
+            settings.endGroup();
+            act = new QAction(s1,clipboard_menu);
+            clipboard_menu->addAction(act);
+            clipboard_menu->addSeparator();
+            act = new QAction(s2,clipboard_menu);
+            clipboard_menu->addAction(act);
+            clipboard_menu->addSeparator();
+            act = new QAction(s3,clipboard_menu);
+            clipboard_menu->addAction(act);
+            popup_menu->insertSeparator(popup_menu->actions()[0]);
+            popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
 
+            connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
+            popup_menu->exec(ev->globalPos());
+            popup_menu->close(); popup_menu->clear();
+            qDebug ()<<"right click";
+        }
         //! if right click
         if ((ev->button() == Qt::RightButton) || (RightclickFlag))
         {
@@ -490,6 +526,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 spell_menu = new QMenu("suggestions", this);
                 translate_menu = new QMenu("translate", this);
                 clipboard_menu = new QMenu("clipboard", this);
+                clipboard_menu->setStyleSheet("height: 100px;width: 300px;overflow: hidden;white-space: nowrap;");
                 QFont font("Shobhika-Regular");
                 font.setWeight(16);
                 font.setPointSize(16);
@@ -657,8 +694,10 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 settings.endGroup();
                 act = new QAction(s1,clipboard_menu);
                 clipboard_menu->addAction(act);
+                clipboard_menu->addSeparator();
                 act = new QAction(s2,clipboard_menu);
                 clipboard_menu->addAction(act);
+                clipboard_menu->addSeparator();
                 act = new QAction(s3,clipboard_menu);
                 clipboard_menu->addAction(act);
                 popup_menu->insertSeparator(popup_menu->actions()[0]);
@@ -2188,7 +2227,7 @@ void MainWindow::on_actionLoadGDocPage_triggered()
  *        This function is only called once per project to load the dictionary file of the project,
  *        dictionary files can be used to work on suggestions.
  */
-bool LoadDataFlag = 1; //To load data only once
+
 QString mFilename1, loadStr, loadStr1;
 
 

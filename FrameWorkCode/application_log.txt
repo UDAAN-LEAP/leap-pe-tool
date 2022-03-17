@@ -43238,3 +43238,1322 @@ Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
  ()
 Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
  ()
+
+OpenOCRCorrect Application Log
+Date: 16 Mar 2022 @ 15:27:18
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 16 Mar 2022 @ 21:10:23
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 16 Mar 2022 @ 22:34:24
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 16 Mar 2022 @ 22:37:26
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 17:48:02
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 17:49:04
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 17:51:27
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 17:52:31
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 17:53:18
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 17:55:57
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 17:58:05
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 17:59:08
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:01:05
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:03:27
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:05:00
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:06:33
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:10:45
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:12:12
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Warning: Could not parse stylesheet of object QMenu(0x55ecb75d0cb0) ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:13:24
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:13:57
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:17:53
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property text-overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:21:20
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:23:58
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:26:00
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property whitespace ()
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property whitespace ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:27:33
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:29:30
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:39:57
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:40:46
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property text-overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:45:06
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:47:14
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property text-color ()
+Debug: Unknown property text-color ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:49:25
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:54:12
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 18:57:47
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 19:00:14
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 19:05:49
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 19:08:59
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 19:14:54
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 19:19:27
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+Debug: Unknown property overflow ()
+Debug: Unknown property display ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 19:27:31
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 19:30:23
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 19:38:38
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 19:41:03
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 19:44:14
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::load: unable to load type 42. ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 19:44:39
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 19:47:17
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 19:49:46
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 19:57:31
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+
+OpenOCRCorrect Application Log
+Date: 17 Mar 2022 @ 20:04:45
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
