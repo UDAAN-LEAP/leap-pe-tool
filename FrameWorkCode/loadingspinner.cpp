@@ -25,7 +25,6 @@ LoadingSpinner::LoadingSpinner(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setModal(true);
-    this->move(500,310);
     qInstallMessageHandler(crashlog::myMessageHandler);
     mv = new QMovie(":/Images/spinbar-white-tp.gif");
     ui->labelspin->setAttribute(Qt::WA_NoSystemBackground);
