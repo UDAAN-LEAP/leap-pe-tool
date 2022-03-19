@@ -8171,14 +8171,6 @@ void MainWindow::replaceInAllFilesFromTSVfile()
     }
 
     QTextStream in(&file);
-    QStringList header = in.readLine().split("\t");
-    if (header[0] != "Source" || header[1] != "Target")
-    {
-        file.close();
-        QMessageBox::warning(this, "Error", "Incorrect file format", QMessageBox::Ok, QMessageBox::Ok);
-        return;
-    }
-
     QVector<QString> phrasesToBeReplaced;
     while (!in.atEnd())
     {
