@@ -4830,7 +4830,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
       drawing.
  * \param object, event
  * \return QMainWindow::eventFilter(object, event);
- * \sa MainWindow::displayHolder, MainWindow::updateEntries, MainWindow::createImageInfoXMLFile
+ * \sa MainWindow::displayHolder, MainWindow::updateEntries, MainWindow::createImageInfoXMLFile, findStringSimilarity,
  */
 bool show_update = true;
 bool isShowAgain = true;
@@ -4863,6 +4863,8 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             }
         }
     }
+
+    //! When the user moves the cursor over unedited html file text, it shows a rectangle box with some text value.
     if (event->type() == QEvent::ToolTip)
     {
           event->accept();
@@ -4897,69 +4899,75 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
           }
       }
     edit_Distance edit;
+
+    //! When the user clicks any mouse button, a bbox file is being created storing some coodinates values.
     if(event->type() == QEvent::MouseButtonPress)
     {
         QElapsedTimer timer;
         timer.start();
-        if(curr_browser!= NULL){
-        if(bbox_file.exists())
-         {
+        if(curr_browser!= NULL)
+        {
+            if(bbox_file.exists())
+            {
+                QTextCursor cursor = curr_browser->textCursor();
+                cursor.select(QTextCursor::BlockUnderCursor);
+                qDebug() << "Cursor Selected Text is:" << cursor.selectedText().trimmed();
+                bbox_file.open(QIODevice::ReadWrite);
+                QDataStream in (&bbox_file);
+                in.setVersion(QDataStream::Qt_5_3);
+                QDataStream out (&bbox_file);
+                out.setVersion(QDataStream::Qt_5_3);
+                QMap<QString,QString> coordinates;
 
-           QTextCursor cursor = curr_browser->textCursor();
-           cursor.select(QTextCursor::BlockUnderCursor);
-           qDebug() << "Cursor Selected Text is:" << cursor.selectedText().trimmed();
-           bbox_file.open(QIODevice::ReadWrite);
-           QDataStream in (&bbox_file);
-           in.setVersion(QDataStream::Qt_5_3);
-           QDataStream out (&bbox_file);
-           out.setVersion(QDataStream::Qt_5_3);
-           QMap<QString,QString> coordinates;
+                in >> coordinates;
+                QString bbox_coordinates;
+                QMap<QString, QString>::iterator ci;
+                qDebug() << "Initial Processing took" << timer.elapsed() << "milliseconds";
 
-           in >> coordinates;
-            QString bbox_coordinates;
-           QMap<QString, QString>::iterator ci;
-           qDebug() << "Initial Processing took" << timer.elapsed() << "milliseconds";
+                double max = 0;
 
-              double max = 0;
-              for(ci = coordinates.begin(); ci!=coordinates.end(); ++ci)
-              {
-                 double similarity = edit.findStringSimilarity(cursor.selectedText().toStdString(), ci.value().toStdString());
-                 if(similarity>max)
-                 {
-                     bbox_coordinates = ci.key();
-                     max = similarity;
+                //!Comparing the selected text and value stored in the map to find the similarity between them
+                for(ci = coordinates.begin(); ci!=coordinates.end(); ++ci)
+                {
+                    double similarity = edit.findStringSimilarity(cursor.selectedText().toStdString(), ci.value().toStdString());
+                    if(similarity>max)
+                    {
+                        bbox_coordinates = ci.key();
+                        max = similarity;
+                    }
                  }
-               }
 
-           qDebug() << "similarity done";
+                qDebug() << "similarity done";
 
-           qDebug() << "Similarity Processing took" << timer.elapsed() << "milliseconds";
-           qDebug() << "Coordinates BBOX : " << bbox_coordinates;
-           int x0, y0, x1, y1;
+                qDebug() << "Similarity Processing took" << timer.elapsed() << "milliseconds";
+                qDebug() << "Coordinates BBOX : " << bbox_coordinates;
 
-           QStringList list;
+                //!After the bbox file is created, using the coordinates values stored in them to show the bbox.
+                int x0, y0, x1, y1;
 
-           list=bbox_coordinates.split(" ");
-           int len = list.count();
-           if (len>=5)
-           {
-               x0 = list[1].toInt();
-               y0 = list[2].toInt();
-               x1 = list[3].toInt();
-               y1 = list[4].toInt();
-               if(x1!=0 && x0!=0 && y1!=0 && y0!=0)
-               {
-                   QColor blue40 = Qt::blue;
-                   blue40.setAlphaF( 0.4 );
+                QStringList list;
 
-                   item1->setBrush(blue40);
+                list=bbox_coordinates.split(" ");
+                int len = list.count();
+                if (len>=5)
+                {
+                    x0 = list[1].toInt();
+                    y0 = list[2].toInt();
+                    x1 = list[3].toInt();
+                    y1 = list[4].toInt();
+                    if(x1!=0 && x0!=0 && y1!=0 && y0!=0)
+                    {
+                        QColor blue40 = Qt::blue;
+                        blue40.setAlphaF( 0.4 );
 
-                   item1->setRect(x0, y0, x1-x0, y1-y0);
-           }
-          }
-           qDebug() << "BBOX Processing took" << timer.elapsed() << "milliseconds";
-         }
-       }
+                        item1->setBrush(blue40);
+
+                        item1->setRect(x0, y0, x1-x0, y1-y0);
+                    }
+                }
+                qDebug() << "BBOX Processing took" << timer.elapsed() << "milliseconds";
+             }
+        }
         bbox_file.close();
     }
 

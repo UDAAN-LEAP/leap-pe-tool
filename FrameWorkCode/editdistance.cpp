@@ -299,7 +299,7 @@ QVector <QString> edit_Distance :: phrase_heuristics(QStringList s1, QStringList
 
 /*!
 * \fn    edit_Distance :: min
-* \brief This functions compares a and b an returns the smaller one.
+* \brief This function compares a and b an returns the smaller one.
 * \param a
 * \param b
 *
@@ -313,6 +313,15 @@ int edit_Distance :: min(int a,int b)
         return b;
 }
 
+/*!
+ * \fn    edit_Distance::getEditDistance
+ * \brief This function takes two strings as argument then calculates the edit distance of both strings
+ *        ie. minimum number of operation required to convert string first to string second.
+ * \param first
+ * \param second
+ *
+ * \return T[m][n]
+ */
 int edit_Distance :: getEditDistance(std::string first, std::string second)
 {
     int m = first.length();
@@ -333,10 +342,18 @@ int edit_Distance :: getEditDistance(std::string first, std::string second)
             T[i][j] = std::min(std::min(T[i-1][j] + 1, T[i][j-1] + 1), T[i-1][j-1] + weight);
         }
     }
-
     return T[m][n];
 }
 
+/*!
+ * \fn    edit_Distance::findStringSimilarity
+ * \brief This function takes two strings as argument then calculates the similarity between them.
+ * \param first
+ * \param second
+ *
+ * \return double
+ * \sa getEditDistance()
+ */
 double edit_Distance :: findStringSimilarity(std::string first, std::string second) {
     double max_length = std::max(first.length(), second.length());
     if (max_length > 0) {
