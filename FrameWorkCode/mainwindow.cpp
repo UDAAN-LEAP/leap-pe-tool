@@ -246,11 +246,15 @@ bool MainWindow::setRole(QString role)
         QPushButton *correctorButton = RoleBox.addButton(("Corrector"),QMessageBox::AcceptRole);
         QPushButton *verifierButton = RoleBox.addButton(("Verifier"),QMessageBox::AcceptRole);
         QPushButton *managerButton = RoleBox.addButton(("Project Manager"),QMessageBox::AcceptRole);
+        QAbstractButton *cancel = RoleBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
         #else
         QPushButton *managerButton = RoleBox.addButton(("Project Manager"),QMessageBox::AcceptRole);
         QPushButton *verifierButton = RoleBox.addButton(("Verifier"),QMessageBox::AcceptRole);
         QPushButton *correctorButton = RoleBox.addButton(("Corrector"),QMessageBox::AcceptRole);
+        QAbstractButton *cancel = RoleBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+
         #endif
+        cancel->hide();
         RoleBox.exec();
         if(RoleBox.clickedButton() == verifierButton)
             mRole = "Verifier";
@@ -260,7 +264,7 @@ bool MainWindow::setRole(QString role)
         else if(RoleBox.clickedButton() == managerButton)
             mRole = "Project Manager";
         else
-            return false;
+            exit(0);
     }
 
     if(mRole == "Project Manager")
