@@ -210,9 +210,9 @@ private slots:
 
     void OpenDirectory();
 
-    void UpdateInfo();
+    QString UpdateInfo();
 
-    void compareVersion(QString latestVersion);
+    void compareVersion();
 
     void RemoveFile();
 

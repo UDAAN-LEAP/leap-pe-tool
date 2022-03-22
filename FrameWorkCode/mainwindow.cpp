@@ -4854,7 +4854,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     if(event->type() == QEvent::MouseMove && show_update && isShowAgain)
     {
           show_update = false; // show only once
-          UpdateInfo();
+          compareVersion();
     }
     if(event->type() == QEvent::MouseButtonPress)
     {
@@ -8491,7 +8491,7 @@ void MainWindow::on_action3_triggered()
  * \sa compareVersion()
 */
 
-void MainWindow::UpdateInfo()
+QString MainWindow::UpdateInfo()
 {
     QUrl url("https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases");
     qInfo() << url.toString();
@@ -8514,12 +8514,14 @@ void MainWindow::UpdateInfo()
         if(json[0]["name"].toString() == "")
         {
             qDebug() << QString("Timeout .... Internet Not Available");
-            return;
+            return "";
         }
-        compareVersion(json[0]["name"].toString());
+        //compareVersion();
+        return json[0]["name"].toString();
     }
     else{
         qDebug()<<"Connection timeout";
+        return "";
     }
 
 }
@@ -8533,9 +8535,10 @@ void MainWindow::UpdateInfo()
  *
  * \param latestVersion
  */
-void MainWindow::compareVersion(QString latestVersion)
+void MainWindow::compareVersion()
 {
     QString curr_version = qApp->applicationVersion();
+    QString latestVersion = UpdateInfo();
     qDebug() << curr_version;
     if(curr_version==latestVersion)
         return;
