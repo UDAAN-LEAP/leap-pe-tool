@@ -6260,7 +6260,6 @@ void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
     QStringList list1;
     QSet<QString> dict_set;
     QSet<QString> dict_set1;
-
     //! Get dict file from current opened file
     QString dictFilename;
     if(mRole=="Verifier")
@@ -6287,6 +6286,10 @@ void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
                dictQFile.close();
                doc = doc.fromJson(data_json);
                obj = doc.object();
+               if( obj.size() == 0){
+                   QMessageBox::information(0, "Error !", "Please correct the syntax of json file of current page");
+                   return;
+               }
                QJsonValue jv = obj.value(obj.keys().at(0));
                QJsonObject item = jv.toObject();
                for(int i = 0; i < item.count(); i++)
@@ -6742,8 +6745,6 @@ QString GetFilter(QString & Name, const QStringList &list) {
  * \sa    setMFilename(), UpdateFileBrekadown(), DisplayJsonDict(), highlight(), LoadImageFromFile(), WordCount(), readSettings(), tabchanged()
  */
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
-
-
     //!Keeps track of current , previous and next page.
     if(ui->tabWidget_2->currentIndex() >=0 && NextPrevTrig ==0)
     {

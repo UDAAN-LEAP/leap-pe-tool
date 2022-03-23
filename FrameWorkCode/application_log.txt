@@ -44331,3 +44331,544 @@ Debug: Unknown property overflow ()
 Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-004.html" (mainwindow.cpp)
 Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/.cursor.txt"): device not open ()
 >>>>>>> c25eedcf3f3d91db2fc1ade7d81e1cdba294e99b
+
+OpenOCRCorrect Application Log
+Date: 21 Mar 2022 @ 18:12:20
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi/CorrectorOutput/p-7.html" (mainwindow.cpp)
+Debug: bbox file written succesfully ...  (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 3 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 1349 1086 2092 1287" (mainwindow.cpp)
+Debug: BBOX Processing took 3 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 2 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 158 1062 197" (mainwindow.cpp)
+Debug: BBOX Processing took 2 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 3 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 8 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 301 2766 1005 2769" (mainwindow.cpp)
+Debug: BBOX Processing took 10 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 2 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 1350 654 2065 657" (mainwindow.cpp)
+Debug: BBOX Processing took 2 milliseconds (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Fatal: ASSERT failure in QList<T>::at: "index out of range", file /usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h, line 544 (/usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h)
+Debug: App crashed with signal:  "SIGABRT" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Mar 2022 @ 18:17:03
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Before reading.... (mainwindow.cpp)
+Debug: After reading.... (mainwindow.cpp)
+Fatal: ASSERT failure in QList<T>::at: "index out of range", file /usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h, line 544 (/usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h)
+Debug: App crashed with signal:  "SIGABRT" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Mar 2022 @ 18:24:27
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: AFTER DOC.OBJECT ... (mainwindow.cpp)
+Fatal: ASSERT failure in QList<T>::at: "index out of range", file /usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h, line 544 (/usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h)
+Debug: App crashed with signal:  "SIGABRT" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Mar 2022 @ 19:10:44
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Mar 2022 @ 19:21:19
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-4.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Mar 2022 @ 19:24:32
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-4.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Mar 2022 @ 19:26:21
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-4.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Mar 2022 @ 19:27:13
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-4.html" (mainwindow.cpp)
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 22 Mar 2022 @ 21:42:05
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: AFTER DOC.OBJECT ... QJsonObject({"words":{"12":["12,12"],"august":["महत्वपूर्ण,अगस्त,गरिमापूर्ण"],"innovator":["प्रवर्तक"],"international":["अंतर्राष्ट्रीय श्रमजीवी संघ,अंतर्राष्ट्रीय संघ,अन्तर्राष्ट्रीय संघटन,अंतर्राष्ट्रीय प्रतियोगी,अन्तर्राष्ट्रीय,अंतर्राष्ट्रीय प्रतियोगिता,अंतर्राष्ट्रीय,अंतःराष्ट्रीय,अंतर्राष्ट्रीय(PH)"],"issue":["मिलना,देना,प्रकाशन,लाभ,वितरण,परिणाम,फ़ायदा,प्रचालन,विषय,मुद्दा,सन्तान,प्रकाशित करना,निकास द्वार,बहाव,निकासन,वितरण करना,निर्गमन,विवादास्पद विषय,प्रकाशित वस्तु,आदेश जारी करना,संतति,स्राव्,जारी करना,मुनाफ़ा"],"j":["जे"],"m":["विवाहित,पुरुष,दस लाख,पुल्लिंग,मीटर्,एक हज़ार"],"research":["फिर खोज करना,अनुसन्धान,खोज करना,खोज,अन्वेषण,अनुसंधान करना,अनुसंधान,शोध,अनुसंधान(IT),अनुसंधान(PH)"],"volume":["प्रबलता,घनफल,अंक,मात्रा,मात्रा,आयतन,तीव्रता,खंड,वल्यूम,ग्रन्थ,खण्ड,आयति,१.आयतन २.प्रबलता ३.खंड(PH),1. आयतन 2. प्रबलता 3. खंड(MA)"],"अगस्त":["aug,august"],"अत्यन्त":["deadly,exceedingly,exorbitant,extreme,far,frightfully,greatly,precious,quite,ultra,very"],"अथवा":["else,or"],"अनार":["pomegranate"],"अशुभ":["bad,calamity,evil,ill,ill fated,ill starred,inauspicious,sad,sinister,unfavourable,unlucky,unpropitious,untoward"],"आग्नेय":["igneous"],"आदि":["early,et cetera,etc"],"आम":["common,commonplace,general,mango,public,unwashed,usual,vulgar"],"आवासीय":["domiciliary"],"आसपास":["close,hereabouts,near about"],"इमली":["tamarind,tamarindo"],"इस":["such,this"],"ईशान":["north east quarter"],"उत्तम":["choice,eminent,excellent,exquisite,fine,high,neat,smashing"],"उत्तर":["answer,north,northerly,northern,reply,response,result,solution,upper"],"उद्यान":["garden,park"],"एवं":["cum"],"ऐसे":["so"],"और":["also,and,else,further,more,much,other,plus,too,yet"],"कई":["a good few,any number of,few,good ,good few,large ,large number,many,number,number of,several,umpteen,umteen"],"कटहल":["jack fruit,jack_fruit"],"करना":["accept,act,act out,administer,aim,anticipate,bear,bore,bring about,build,burn,carry ,carry out,cause,come out with,commission,commit,contract,crack,cultivate,cut,deliver,dig,do,do ,do to,do with,double park,draw,drive,exchange,get,give,go,go about,lay,let off,make,make happen,pay,perform,perpetrate,place,plant,play,provide,pull,raise,remark,set,set off,stuff,take,take out,tear,turn hand to,undergo,wage,wave,weave,wind,wing,witness,work,wreak"],"कल्याणकारी":["healer"],"कहा":["said,tattle,told"],"का":[" iana,am,in,of"],"काफी":["adequate,ample,fair,fucking,pretty,quiet,quite,rich"],"कि":["if,that,whether"],"के":["from,k"],"को":["on,to"],"कौन":["who,whoever"],"गूलर":["sycamore,sycamore fig"],"गृह":["home,house,housing,studio,tenement,villa"],"घर":["abode,breeding ,breeding ground,crib,flat,hall,home,house,housing,place,quarter,stitch,stronghold"],"चमेली":["jasmine"],"चाहिए":["may ,may ,may as well,may just as well"],"चिन्तन":["mediation,reflection,thought"],"जामुन":["blackberry"],"जैसे":["as it were,for exmaple,namely"],"जो":["one,that,those,what,which,who,whom"],"ठोस":["exact,firm,good,hard,material,rock solid,soft,solid,sound,thick,tight,valid,watertight,well grounded"],"तथा":["and"],"दक्षिण":["south"],"दिन":["daily,day,daylight,daytime"],"दिशा":["course,direction,exposure,hand,line,quarter,sense"],"नहीं":["absent,nay,neither,no,nope,not,not ,not anywhere near,not nearly,nothing like,nowhere near,other ,other than"],"नारियल":["coconut"],"निर्धनता":["immiseration,indigence,need"],"निवास":["abidance,accommodations,lodging,nest,quarter,residence,residency"],"पर":["aboard,at,at expenses,down,feather,on,on ,on to,onto,over,plume,up,up ,up against,upon,wing"],"परंतु":["but"],"पराजय":["defeat,fall,overthrow,reversal"],"पश्चिम":["occident,west,westward"],"पास":["about,adjacent,beside,by,close,handy,hard,near,nigh,paper,pass,throw"],"पीड़ा":["aching,affliction,soreness,suffering,tenderness,tribulation"],"पूर्व":["advance,ante,early,east,eastern,former,orient,past,previous,prior"],"पौराणिक":["legendary,mythic,mythical,mythological"],"प्रकार":["brand,choice,description,form,kind,nature,parapet,quality,range,several,sort,species,spread,stamp,style,type,variety,way"],"फल":["blade,blue berry,cup,fruit,head"],"बगीचा":["garden,orchard,park,plantation"],"बरगद":["banyan"],"बेल":["climber,quince,tendril"],"भय":["apprehension,creep,fear,fearfulness,fright,funk,jeopardy,phobia,phobic ,phobic disorder,phobic neurosis,scare,terror,threat"],"भाग":["apportionment,branch,contribution,detail,division,edition,face,figment,lap,module,nose,panel,part,parts,piece,portion,proportion,pt,pt.,section,segment,share,side,title,zone"],"भारत":["india"],"भारतीय":["hindu,indian"],"मृत्यु":["curtain,death,decease,demise,expiration,grave,grim ,grim reaper,passing,reaper"],"में":["among,at,by,during,in,inside,into,on,over,through,throughout,to,towards,under,with,within"],"योग्य":["able,acceptable,adequate,be one for,capable,clever,deserving,desirable,eligible,expedient,good,merited,meriting,neat,profit,regular,right,right up street,suitable,susceptible,up ,up street,worth,worth ,worth salt,worthy"],"रोग":["affliction,complaint,disease,illness,malady,nerve,sickness,unwellness"],"लगाना":["address,affix,aim,apply,attach,bind,bring,centre,charge,coat,crop,dab,display,fix,get,give,glue,implantation,impose,infliction,inject,installation,institute,introduce,invest,lay out,level against,nail,piece,pin back,pitch,place,plant,plug ,plug in,print,pump in,pump into,put,put in,put on,put up,roll on,set into,set up,shift,shoot,sink into,size,spend,spread,spring,stitch,stock,tack,tag,tag ,tag on,take,tape,throw,tie up,tooth,tune in,turn,use up,weight"],"वट":["banyan"],"वातावरण":["air,ambience,atmosphere,aura,background,climate,environment,milieu,setting"],"वाला":["related to"],"वास्तुशास्त्र":["traditional hindu architecture"],"विभाग":["block,branch,bureau,compartment,department,division,office,personnel,portfolio,section,service,unit,work unit"],"विशेष":["certain,characteristic,class,classic,exceptional,executive,extraordinary,given,individual,particular,peculiar,quaint,respective,special,specific,substaintial"],"शाल":["shawl,wrap"],"शुद्ध":["correct,exact,fine,immaculate,pure,refined,unadulterated,uncorrupted,undefiled"],"शुभ":["auspicious,bright,golden,good,happy,propitious,red"],"संदर्भ":["reference"],"समीप":["beside,by,near,warm"],"समीपस्थ":["adjacent,proximal,proximate,vicinal"],"सुगन्धित":["fragrant,redolent"],"से":["as from,as of,at,at hands,by,by means ,by means of,fro,from,in,in the form of,in the shape of,of,off,out of,since,than,through,to,with"],"स्थल":["earth,ground,land,point,site,space,terra firma"],"स्थित":["headquartered,located,perched,placed,set,situated"],"हमारे":["us"],"हमेशा":["all ,all along,all the time,always,at all ,at all times,daily,evermore,for ,for ever,for evermore,forever,perpetually,unfailingly,usual,without fail,year ,year in"],"है":["have"],"हो":["lnk"]}}) (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Debug: bbox file written succesfully ...  (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 1370 3110 2106 3149" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 1 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 2 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 3 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 2 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 2 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 1 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 3 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 1349 2624 2246 2751" (mainwindow.cpp)
+Debug: BBOX Processing took 3 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-4.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-1.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-1.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-1.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-1.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-1.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-2.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-1.html" (mainwindow.cpp)
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-1.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-1.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-1.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-1.html" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: AFTER DOC.OBJECT ... QJsonObject() (mainwindow.cpp)
+Fatal: ASSERT failure in QList<T>::at: "index out of range", file /usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h, line 544 (/usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h)
+Debug: App crashed with signal:  "SIGABRT" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 22 Mar 2022 @ 21:59:31
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: AFTER DOC.OBJECT ... QJsonObject() (mainwindow.cpp)
+Fatal: ASSERT failure in QList<T>::at: "index out of range", file /usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h, line 544 (/usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h)
+Debug: App crashed with signal:  "SIGABRT" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 22 Mar 2022 @ 22:00:10
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-1.html" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-2.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-7.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 22 Mar 2022 @ 22:07:58
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "/home/sadam/Documents/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Documents/TestProject/CorrectorOutput/page-7.html" (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 106 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 110 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 1349 2624 2246 2751" (mainwindow.cpp)
+Debug: BBOX Processing took 111 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 1370 3110 2106 3149" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 0 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi/CorrectorOutput/p-2.html" (mainwindow.cpp)
+Debug: bbox file written succesfully ...  (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 22 Mar 2022 @ 22:14:30
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi/CorrectorOutput/p-2.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 101 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 103 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 1349 473 2207 718" (mainwindow.cpp)
+Debug: BBOX Processing took 103 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 158 1062 197" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 1802 159 2192 197" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 0 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 1349 473 2207 718" (mainwindow.cpp)
+Debug: BBOX Processing took 0 milliseconds (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 1350 1323 2247 1508" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 3 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 4 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 1349 2624 2246 2751" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 0 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 1349 2624 2246 2751" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 2 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 2 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-4.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Desktop/myClone/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-1.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 22 Mar 2022 @ 22:18:21
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
+Debug: "" (mainwindow.cpp)
+Debug: "Timeout .... Internet Not Available" (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 2 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 4 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 4 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 3 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 1350 1323 2247 1508" (mainwindow.cpp)
+Debug: BBOX Processing took 4 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 3 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 4 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 2 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 2 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "WWW. research-innovator. com" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 433 150 1062 189" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi/.cursor.txt"): device not open ()
