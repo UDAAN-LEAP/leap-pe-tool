@@ -6299,7 +6299,7 @@ void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
                doc = doc.fromJson(data_json);
                obj = doc.object();
                if( obj.size() == 0){
-                   QMessageBox::information(0, "Error !", "Please correct the syntax of json file of current page");
+                   QMessageBox::information(0, "Error !", "Dictionary of current page can't be loaded, please correct the syntax of corresponding Json file.");
                    return;
                }
                QJsonValue jv = obj.value(obj.keys().at(0));
