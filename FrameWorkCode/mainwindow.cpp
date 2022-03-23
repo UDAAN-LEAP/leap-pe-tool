@@ -75,7 +75,10 @@
 #include "worker.h"
 #include <QThread>
 #include "verifyset.h"
+#include "loaddataworker.h"
+
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
+map<string, string> LSTM;
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
 trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
 vector<string> vGBook,vIBook;
@@ -2030,15 +2033,57 @@ void MainWindow::on_actionLoadData_triggered()
     {
         if (LoadDataFlag)
         {
-            LoadingSpinner *spinner = new LoadingSpinner(this);
+            ui->actionLoadData->setDisabled(true);
+            ui->actionLoadData->setDisabled(true);
+            QString initialText = ui->lineEdit->text();
+            ui->lineEdit->setText("Loading Data...");
+            QString  localmFilename1 = mFilename;
+            string localmFilename1n = localmFilename1.toUtf8().constData();
+            localmFilename1n = localmFilename1n.substr(0, localmFilename1n.find("page"));
+            localmFilename1 = QString::fromStdString(localmFilename1n);
+
+            LoadDataWorker *worker = new LoadDataWorker(
+                        nullptr,
+                        &mProject,
+                        mFilename,
+                        mFilename1,
+                        &LSTM,
+                        &CPairs,
+                        &Dict,
+                        &GBook,
+                        &IBook,
+                        &PWords,
+                        &ConfPmap,
+                        &vGBook,
+                        &vIBook,
+                        &TDict,
+                        &TGBook,
+                        &TGBookP,
+                        &TPWords,
+                        &TPWordsP,
+                        &synonym,
+                        &synrows
+                        );
+            QThread *thread = new QThread;
+
+            connect(thread, SIGNAL(started()), worker, SLOT(LoadData()));
+            connect(worker, SIGNAL(finishedLoadingData()), thread, SLOT(quit()));
+            connect(worker, SIGNAL(finishedLoadingData()), worker, SLOT(deleteLater()));
+            connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+            connect(worker, SIGNAL(finishedLoadingData()), this, SLOT(stopSpinning()));
+            worker->moveToThread(thread);
+            thread->start();
+
+            spinner = new LoadingSpinner(this);
             spinner->SetMessage("Loading Data...", "Loading...");
             spinner->setModal(false);
-            QtConcurrent::run(this,&MainWindow::load_data);
-            connect(this, &MainWindow::closeSignal, spinner, &LoadingSpinner::close);
             spinner->exec();
+
+            ui->lineEdit->setText(initialText);
+            LoadDataFlag = 0;
+            qDebug() << "done loading ....";
             QMessageBox messageBox;
             messageBox.information(0, "Load Data", "Data has been loaded.");
-
         }
     }
 }
@@ -2110,7 +2155,6 @@ void MainWindow::on_actionLoadDomain_triggered()
     to load the suggestions
   \sa loadmaptoTrie(), loadPwordsPatternstoTrie(), loadCPair()
  */
-map<string, string> LSTM;
 void MainWindow::on_actionLoadSubPS_triggered()
 {
     slpNPatternDict slnp;

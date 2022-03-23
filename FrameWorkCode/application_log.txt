@@ -47782,3 +47782,323 @@ Debug: similarity done (mainwindow.cpp)
 Debug: Similarity Processing took 1 milliseconds (mainwindow.cpp)
 Debug: Coordinates BBOX :  "bbox 1802 159 2192 197" (mainwindow.cpp)
 Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 23 Mar 2022 @ 20:46:44
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 23 Mar 2022 @ 20:47:01
+Username:ajit
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 23 Mar 2022 @ 20:47:12
+Username:ajit
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 23 Mar 2022 @ 20:47:19
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 23 Mar 2022 @ 20:47:26
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/CorrectorOutput/hsm_aerospace_chemical_propulsion_0001-001.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/.cursor.txt"): device not open ()
+Debug: Current page name:  "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/CorrectorOutput/hsm_aerospace_chemical_propulsion_0001-002.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/.cursor.txt"): device not open ()
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/CorrectorOutput/hsm_aerospace_chemical_propulsion_0001-015.html" (mainwindow.cpp)
+Debug: bbox file written succesfully ...  (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/hsm_aerospace_chemical_propulsion/.cursor.txt"): device not open ()
+Debug: Cursor Selected Text is: "xi" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 0 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 1568 494 1591" (mainwindow.cpp)
+Debug: BBOX Processing took 1 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "xi" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 0 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 1568 494 1591" (mainwindow.cpp)
+Debug: BBOX Processing took 0 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "अध्याय 11 ठोस और तरल रॉकेटों में दहन अस्थिरता के लिए समर्पित है। इस अध्याय में निम्न आवृत्ति और उच्च आवृत्ति अस्थिरताओं की मूलभूत विशेषताएँ, उनके होने के कारण और समाधान चर्चा पर हावी हैं।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 56 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 427 1346 568" (mainwindow.cpp)
+Debug: BBOX Processing took 56 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "अध्याय 11 ठोस और तरल रॉकेटों में दहन अस्थिरता के लिए समर्पित है। इस अध्याय में निम्न आवृत्ति और उच्च आवृत्ति अस्थिरताओं की मूलभूत विशेषताएँ, उनके होने के कारण और समाधान चर्चा पर हावी हैं।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 51 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 427 1346 568" (mainwindow.cpp)
+Debug: BBOX Processing took 52 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "अध्याय 11 ठोस और तरल रॉकेटों में दहन अस्थिरता के लिए समर्पित है। इस अध्याय में निम्न आवृत्ति और उच्च आवृत्ति अस्थिरताओं की मूलभूत विशेषताएँ, उनके होने के कारण और समाधान चर्चा पर हावी हैं।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 53 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 427 1346 568" (mainwindow.cpp)
+Debug: BBOX Processing took 53 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "अध्याय 11 ठोस और तरल रॉकेटों में दहन अस्थिरता के लिए समर्पित है। इस अध्याय में निम्न आवृत्ति और उच्च आवृत्ति अस्थिरताओं की मूलभूत विशेषताएँ, उनके होने के कारण और समाधान चर्चा पर हावी हैं।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 51 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 427 1346 568" (mainwindow.cpp)
+Debug: BBOX Processing took 52 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "अध्याय 11 ठोस और तरल रॉकेटों में दहन अस्थिरता के लिए समर्पित है। इस अध्याय में निम्न आवृत्ति और उच्च आवृत्ति अस्थिरताओं की मूलभूत विशेषताएँ, उनके होने के कारण और समाधान चर्चा पर हावी हैं।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 51 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 427 1346 568" (mainwindow.cpp)
+Debug: BBOX Processing took 51 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "अध्याय 11 ठोस और तरल रॉकेटों में दहन अस्थिरता के लिए समर्पित है। इस अध्याय में निम्न आवृत्ति और उच्च आवृत्ति अस्थिरताओं की मूलभूत विशेषताएँ, उनके होने के कारण और समाधान चर्चा पर हावी हैं।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 51 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 427 1346 568" (mainwindow.cpp)
+Debug: BBOX Processing took 51 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "अध्याय 11 ठोस और तरल रॉकेटों में दहन अस्थिरता के लिए समर्पित है। इस अध्याय में निम्न आवृत्ति और उच्च आवृत्ति अस्थिरताओं की मूलभूत विशेषताएँ, उनके होने के कारण और समाधान चर्चा पर हावी हैं।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 51 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 427 1346 568" (mainwindow.cpp)
+Debug: BBOX Processing took 51 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "अध्याय 11 ठोस और तरल रॉकेटों में दहन अस्थिरता के लिए समर्पित है। इस अध्याय में निम्न आवृत्ति और उच्च आवृत्ति अस्थिरताओं की मूलभूत विशेषताएँ, उनके होने के कारण और समाधान चर्चा पर हावी हैं।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 53 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 427 1346 568" (mainwindow.cpp)
+Debug: BBOX Processing took 53 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "अध्याय 11 ठोस और तरल रॉकेटों में दहन अस्थिरता के लिए समर्पित है। इस अध्याय में निम्न आवृत्ति और उच्च आवृत्ति अस्थिरताओं की मूलभूत विशेषताएँ, उनके होने के कारण और समाधान चर्चा पर हावी हैं।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 51 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 427 1346 568" (mainwindow.cpp)
+Debug: BBOX Processing took 51 milliseconds (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Cursor Selected Text is: "अध्याय 11 ठोस और तरल रॉकेटों में दहन अस्थिरता के लिए समर्पित है। इस अध्याय में निम्न आवृत्ति और उच्च आवृत्ति अस्थिरताओं की मूलभूत विशेषताएँ, उनके होने के कारण और समाधान चर्चा पर हावी हैं।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 53 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 427 1346 568" (mainwindow.cpp)
+Debug: BBOX Processing took 53 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "अध्याय 11 ठोस और तरल रॉकेटों में दहन अस्थिरता के लिए समर्पित है। इस अध्याय में निम्न आवृत्ति और उच्च आवृत्ति अस्थिरताओं की मूलभूत विशेषताएँ, उनके होने के कारण और समाधान चर्चा पर हावी हैं।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 52 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 427 1346 568" (mainwindow.cpp)
+Debug: BBOX Processing took 52 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "अध्याय 11 ठोस और तरल रॉकेटों में दहन अस्थिरता के लिए समर्पित है। इस अध्याय में निम्न आवृत्ति और उच्च आवृत्ति अस्थिरताओं की मूलभूत विशेषताएँ, उनके होने के कारण और समाधान चर्चा पर हावी हैं।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 56 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 427 1346 568" (mainwindow.cpp)
+Debug: BBOX Processing took 56 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "अध्याय 11 ठोस और तरल रॉकेटों में दहन अस्थिरता के लिए समर्पित है। इस अध्याय में निम्न आवृत्ति और उच्च आवृत्ति अस्थिरताओं की मूलभूत विशेषताएँ, उनके होने के कारण और समाधान चर्चा पर हावी हैं।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 55 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 427 1346 568" (mainwindow.cpp)
+Debug: BBOX Processing took 56 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "मुझे लगता है कि इस पुस्तक को किसे पढ़ना चाहिए? इंजीनियरों को एयरोस्पेस उद्योग में अपने करियर की शुरुआत करते हुए, जिन्हें प्रणोदन प्रणाली के अंतर्निहित सिद्धांतों की अच्छी समझ होनी चाहिए, इस पुस्तक को पढ़ने सेअ काफी लाभ हो सकता है। जो इंजीनियर आगे बढ़ना चाहते हैं और अधिक जिम्मेदारियां उठाना चाहते हैं, उन्हें एक सेअ अधिक समूहों की देखरेख करते हुए, प्रणोदन प्रणालियों के बीच समानताओं पर नए विचारों पर पुनर्विचार करना चाहिए, जिनसे वे एक दशक या अधिक समय तक विशिष्ट कार्यों में कड़ी मेहनत करते रहे होंगे। उनकी समझ में काफी वृद्धि होगी और वे कुछ भागों को पढ़ने कादृव्स्द् भी आनंद उठा सकते हैं क्योंकि उन्हें कुछ प्रणालियों के बारे में बहुत विस्तार सेअ व्यावहारिक अंतर्दृष्टि मिली है।" (mainwindow.cpp)
+Debug: Initial Processing took 1 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 187 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 594 1346 923" (mainwindow.cpp)
+Debug: BBOX Processing took 187 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "मुझे लगता है कि इस पुस्तक को किसे पढ़ना चाहिए? इंजीनियरों को एयरोस्पेस उद्योग में अपने करियर की शुरुआत करते हुए, जिन्हें प्रणोदन प्रणाली के अंतर्निहित सिद्धांतों की अच्छी समझ होनी चाहिए, इस पुस्तक को पढ़ने सेअ काफी लाभ हो सकता है। जो इंजीनियर आगे बढ़ना चाहते हैं और अधिक जिम्मेदारियां उठाना चाहते हैं, उन्हें एक सेअ अधिक समूहों की देखरेख करते हुए, प्रणोदन प्रणालियों के बीच समानताओं पर नए विचारों पर पुनर्विचार करना चाहिए, जिनसे वे एक दशक या अधिक समय तक विशिष्ट कार्यों में कड़ी मेहनत करते रहे होंगे। उनकी समझ में काफी वृद्धि होगी और वे कुछ भागों को पढ़ने कादृव्स्द् भी आनंद उठा सकते हैं क्योंकि उन्हें कुछ प्रणालियों के बारे में बहुत विस्तार सेअ व्यावहारिक अंतर्दृष्टि मिली है।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 186 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 594 1346 923" (mainwindow.cpp)
+Debug: BBOX Processing took 186 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "मुझे लगता है कि इस पुस्तक को किसे पढ़ना चाहिए? इंजीनियरों को एयरोस्पेस उद्योग में अपने करियर की शुरुआत करते हुए, जिन्हें प्रणोदन प्रणाली के अंतर्निहित सिद्धांतों की अच्छी समझ होनी चाहिए, इस पुस्तक को पढ़ने सेअ काफी लाभ हो सकता है। जो इंजीनियर आगे बढ़ना चाहते हैं और अधिक जिम्मेदारियां उठाना चाहते हैं, उन्हें एक सेअ अधिक समूहों की देखरेख करते हुए, प्रणोदन प्रणालियों के बीच समानताओं पर नए विचारों पर पुनर्विचार करना चाहिए, जिनसे वे एक दशक या अधिक समय तक विशिष्ट कार्यों में कड़ी मेहनत करते रहे होंगे। उनकी समझ में काफी वृद्धि होगी और वे कुछ भागों को पढ़ने कादृव्स्द् भी आनंद उठा सकते हैं क्योंकि उन्हें कुछ प्रणालियों के बारे में बहुत विस्तार सेअ व्यावहारिक अंतर्दृष्टि मिली है।" (mainwindow.cpp)
+Debug: Initial Processing took 1 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 197 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 594 1346 923" (mainwindow.cpp)
+Debug: BBOX Processing took 197 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "मुझे लगता है कि इस पुस्तक को किसे पढ़ना चाहिए? इंजीनियरों को एयरोस्पेस उद्योग में अपने करियर की शुरुआत करते हुए, जिन्हें प्रणोदन प्रणाली के अंतर्निहित सिद्धांतों की अच्छी समझ होनी चाहिए, इस पुस्तक को पढ़ने सेअ काफी लाभ हो सकता है। जो इंजीनियर आगे बढ़ना चाहते हैं और अधिक जिम्मेदारियां उठाना चाहते हैं, उन्हें एक सेअ अधिक समूहों की देखरेख करते हुए, प्रणोदन प्रणालियों के बीच समानताओं पर नए विचारों पर पुनर्विचार करना चाहिए, जिनसे वे एक दशक या अधिक समय तक विशिष्ट कार्यों में कड़ी मेहनत करते रहे होंगे। उनकी समझ में काफी वृद्धि होगी और वे कुछ भागों को पढ़ने कादृव्स्द् भी आनंद उठा सकते हैं क्योंकि उन्हें कुछ प्रणालियों के बारे में बहुत विस्तार सेअ व्यावहारिक अंतर्दृष्टि मिली है।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 190 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 594 1346 923" (mainwindow.cpp)
+Debug: BBOX Processing took 190 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "मुझे लगता है कि इस पुस्तक को किसे पढ़ना चाहिए? इंजीनियरों को एयरोस्पेस उद्योग में अपने करियर की शुरुआत करते हुए, जिन्हें प्रणोदन प्रणाली के अंतर्निहित सिद्धांतों की अच्छी समझ होनी चाहिए, इस पुस्तक को पढ़ने सेअ काफी लाभ हो सकता है। जो इंजीनियर आगे बढ़ना चाहते हैं और अधिक जिम्मेदारियां उठाना चाहते हैं, उन्हें एक सेअ अधिक समूहों की देखरेख करते हुए, प्रणोदन प्रणालियों के बीच समानताओं पर नए विचारों पर पुनर्विचार करना चाहिए, जिनसे वे एक दशक या अधिक समय तक विशिष्ट कार्यों में कड़ी मेहनत करते रहे होंगे। उनकी समझ में काफी वृद्धि होगी और वे कुछ भागों को पढ़ने कादृव्स्द् भी आनंद उठा सकते हैं क्योंकि उन्हें कुछ प्रणालियों के बारे में बहुत विस्तार सेअ व्यावहारिक अंतर्दृष्टि मिली है।" (mainwindow.cpp)
+Debug: Initial Processing took 1 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 191 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 594 1346 923" (mainwindow.cpp)
+Debug: BBOX Processing took 191 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "मुझे लगता है कि इस पुस्तक को किसे पढ़ना चाहिए? इंजीनियरों को एयरोस्पेस उद्योग में अपने करियर की शुरुआत करते हुए, जिन्हें प्रणोदन प्रणाली के अंतर्निहित सिद्धांतों की अच्छी समझ होनी चाहिए, इस पुस्तक को पढ़ने सेअ काफी लाभ हो सकता है। जो इंजीनियर आगे बढ़ना चाहते हैं और अधिक जिम्मेदारियां उठाना चाहते हैं, उन्हें एक सेअ अधिक समूहों की देखरेख करते हुए, प्रणोदन प्रणालियों के बीच समानताओं पर नए विचारों पर पुनर्विचार करना चाहिए, जिनसे वे एक दशक या अधिक समय तक विशिष्ट कार्यों में कड़ी मेहनत करते रहे होंगे। उनकी समझ में काफी वृद्धि होगी और वे कुछ भागों को पढ़ने कादृव्स्द् भी आनंद उठा सकते हैं क्योंकि उन्हें कुछ प्रणालियों के बारे में बहुत विस्तार सेअ व्यावहारिक अंतर्दृष्टि मिली है।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 183 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 594 1346 923" (mainwindow.cpp)
+Debug: BBOX Processing took 183 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "मुझे लगता है कि इस पुस्तक को किसे पढ़ना चाहिए? इंजीनियरों को एयरोस्पेस उद्योग में अपने करियर की शुरुआत करते हुए, जिन्हें प्रणोदन प्रणाली के अंतर्निहित सिद्धांतों की अच्छी समझ होनी चाहिए, इस पुस्तक को पढ़ने सेअ काफी लाभ हो सकता है। जो इंजीनियर आगे बढ़ना चाहते हैं और अधिक जिम्मेदारियां उठाना चाहते हैं, उन्हें एक सेअ अधिक समूहों की देखरेख करते हुए, प्रणोदन प्रणालियों के बीच समानताओं पर नए विचारों पर पुनर्विचार करना चाहिए, जिनसे वे एक दशक या अधिक समय तक विशिष्ट कार्यों में कड़ी मेहनत करते रहे होंगे। उनकी समझ में काफी वृद्धि होगी और वे कुछ भागों को पढ़ने कादृव्स्द् भी आनंद उठा सकते हैं क्योंकि उन्हें कुछ प्रणालियों के बारे में बहुत विस्तार सेअ व्यावहारिक अंतर्दृष्टि मिली है।" (mainwindow.cpp)
+Debug: Initial Processing took 1 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 203 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 594 1346 923" (mainwindow.cpp)
+Debug: BBOX Processing took 203 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "मुझे लगता है कि इस पुस्तक को किसे पढ़ना चाहिए? इंजीनियरों को एयरोस्पेस उद्योग में अपने करियर की शुरुआत करते हुए, जिन्हें प्रणोदन प्रणाली के अंतर्निहित सिद्धांतों की अच्छी समझ होनी चाहिए, इस पुस्तक को पढ़ने सेअ काफी लाभ हो सकता है। जो इंजीनियर आगे बढ़ना चाहते हैं और अधिक जिम्मेदारियां उठाना चाहते हैं, उन्हें एक सेअ अधिक समूहों की देखरेख करते हुए, प्रणोदन प्रणालियों के बीच समानताओं पर नए विचारों पर पुनर्विचार करना चाहिए, जिनसे वे एक दशक या अधिक समय तक विशिष्ट कार्यों में कड़ी मेहनत करते रहे होंगे। उनकी समझ में काफी वृद्धि होगी और वे कुछ भागों को पढ़ने कादृव्स्द् भी आनंद उठा सकते हैं क्योंकि उन्हें कुछ प्रणालियों के बारे में बहुत विस्तार सेअ व्यावहारिक अंतर्दृष्टि मिली है।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 199 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 594 1346 923" (mainwindow.cpp)
+Debug: BBOX Processing took 199 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "गैस टरबाइस्न दहन कक्षों और रॉकेट इंजन दहन कक्षों, रॉकेट इंजनों और वायु में सांस लेने वाले इंजनों, टर्बाइन और कंप्रेसरों और रॉकेट इंजनों में पंपों के बीच मूलभूत प्रक्रिया समानताओं की तुलना की जाती है।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 57 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 427 1346 568" (mainwindow.cpp)
+Debug: BBOX Processing took 57 milliseconds (mainwindow.cpp)
+Debug: Cursor Selected Text is: "गैस टरबाइस्न दहन कक्षों और रॉकेट इंजन दहन कक्षों, रॉकेट इंजनों और वायु में सांस लेने वाले इंजनों, टर्बाइन और कंप्रेसरों और रॉकेट इंजनों में पंपों के बीच मूलभूत प्रक्रिया समानताओं की तुलना की जाती है।" (mainwindow.cpp)
+Debug: Initial Processing took 0 milliseconds (mainwindow.cpp)
+Debug: similarity done (mainwindow.cpp)
+Debug: Similarity Processing took 56 milliseconds (mainwindow.cpp)
+Debug: Coordinates BBOX :  "bbox 205 427 1346 568" (mainwindow.cpp)
+Debug: BBOX Processing took 56 milliseconds (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 23 Mar 2022 @ 20:56:09
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Debug: "अरेबिक" 
+ (slpNPatternDict.cpp)
+Debug: "तरीका" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "\"क़िताब" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "तौर" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "इमारत" 
+ (slpNPatternDict.cpp)
+Debug: "\"तसवीर" 
+ (slpNPatternDict.cpp)
+Debug: "\"फर्श" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "खाली" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "फैसला" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "उम्र" 
+ (slpNPatternDict.cpp)
+Debug: "शर्त" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "सुराग" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "\"सवाल" 
+ (slpNPatternDict.cpp)
+Debug: "जवाब" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "\"सबूतों" 
+ (slpNPatternDict.cpp)
+Debug: "दुनिया" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "तरीकों" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "" 
+ (slpNPatternDict.cpp)
+Debug: "गुमराह" 
+ (slpNPatternDict.cpp)
+Debug: "अकसर" 
+ (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
