@@ -109,13 +109,11 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords){
         item = ui->listWidget->item(i);
         item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
         item->setCheckState(Qt::Unchecked);
-
-        //! Whenever user checks the word for global replace, the adjacent checkbox
-        //! (to ask user whether to replace in all pages or only unedited pages) becomes visible.
-        //! The connect function does the necessary syncing.
-
-        connect(ui->listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(leftCheckBoxStateChanged(QListWidgetItem*)));
     }
+    //! Whenever user checks the word for global replace, the adjacent checkbox
+    //! (to ask user whether to replace in all pages or only unedited pages) becomes visible.
+    //! The connect function does the necessary syncing.
+    connect(ui->listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(leftCheckBoxStateChanged(QListWidgetItem*)));
 }
 
 
@@ -216,7 +214,9 @@ void GlobalReplaceDialog::leftCheckBoxStateChanged(QListWidgetItem* item)
     {
         wordSelection_CheckboxesState[itemRow] = 1;
         ui->groupBox->setVisible(true);
-        ui->groupBox->setMinimumHeight(ui->groupBox_2->height());
+        ui->groupBox->setMinimumHeight(28*ui ->listWidget->count());
+        //ui->groupBox->setMinimumHeight(ui->listWidget->height());
+        //ui->groupBox->setMinimumHeight(ui->groupBox_2->height());
         vbox->addStretch(1);
         ui->groupBox->setTitle("Replace in all pages");
         replaceInAllFiles_Checkboxes.at(itemRow)->setEnabled(true);
