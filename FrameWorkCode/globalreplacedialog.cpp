@@ -347,3 +347,39 @@ void GlobalReplaceDialog::on_pushButton_clicked()
     globalReplaceInformation info(this);
     info.exec();
 }
+
+void GlobalReplaceDialog::on_checkBox_stateChanged(int arg1)
+{
+    QListWidgetItem* item = 0;
+    for(int i = 0; i < ui ->listWidget->count(); ++i){
+        item = ui->listWidget->item(i);
+        item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+        if(arg1 == 2){
+        item->setCheckState(Qt::Checked);
+        leftCheckBoxStateChanged(item);
+        }
+        if(arg1 == 0){
+        item->setCheckState(Qt::Unchecked);
+        leftCheckBoxStateChanged(item);
+        }
+    }
+}
+
+void GlobalReplaceDialog::on_checkBox_2_stateChanged(int arg1)
+{
+    QListWidgetItem* item = 0;
+    Qt::ItemFlags flags;
+
+    for(int i = 0; i < ui ->ReplaceInAllPagesListWidget->count(); ++i){
+        item = ui->ReplaceInAllPagesListWidget->item(i);
+        flags = item->flags();
+        if(flags == (flags | Qt::ItemIsUserCheckable)){
+        if(arg1 == 2){
+        item->setCheckState(Qt::Checked);
+        }
+        if(arg1 == 0){
+        item->setCheckState(Qt::Unchecked);
+        }
+    }
+}
+}

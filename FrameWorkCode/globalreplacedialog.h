@@ -32,6 +32,10 @@ private slots:
     void on_previewButton_clicked();
     void on_pushButton_clicked();
 
+    void on_checkBox_stateChanged(int arg1);
+
+    void on_checkBox_2_stateChanged(int arg1);
+
 public slots:
     void highlightChecked(QListWidgetItem* item);
     QMap <QString, QString> getFilteredGlobalReplacementMap();

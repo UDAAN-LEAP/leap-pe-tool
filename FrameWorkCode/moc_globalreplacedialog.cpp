@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_GlobalReplaceDialog_t {
-    QByteArrayData data[18];
-    char stringdata0[318];
+    QByteArrayData data[21];
+    char stringdata0[375];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -46,10 +46,13 @@ QT_MOC_LITERAL(10, 156, 24), // "leftCheckBoxStateChanged"
 QT_MOC_LITERAL(11, 181, 16), // "QListWidgetItem*"
 QT_MOC_LITERAL(12, 198, 24), // "on_previewButton_clicked"
 QT_MOC_LITERAL(13, 223, 21), // "on_pushButton_clicked"
-QT_MOC_LITERAL(14, 245, 16), // "highlightChecked"
-QT_MOC_LITERAL(15, 262, 4), // "item"
-QT_MOC_LITERAL(16, 267, 31), // "getFilteredGlobalReplacementMap"
-QT_MOC_LITERAL(17, 299, 18) // "uncheckedItemsList"
+QT_MOC_LITERAL(14, 245, 24), // "on_checkBox_stateChanged"
+QT_MOC_LITERAL(15, 270, 4), // "arg1"
+QT_MOC_LITERAL(16, 275, 26), // "on_checkBox_2_stateChanged"
+QT_MOC_LITERAL(17, 302, 16), // "highlightChecked"
+QT_MOC_LITERAL(18, 319, 4), // "item"
+QT_MOC_LITERAL(19, 324, 31), // "getFilteredGlobalReplacementMap"
+QT_MOC_LITERAL(20, 356, 18) // "uncheckedItemsList"
 
     },
     "GlobalReplaceDialog\0fetchCheckedlist\0"
@@ -58,8 +61,10 @@ QT_MOC_LITERAL(17, 299, 18) // "uncheckedItemsList"
     "displayOriginalList\0QVector<QString>\0"
     "replacedWords\0leftCheckBoxStateChanged\0"
     "QListWidgetItem*\0on_previewButton_clicked\0"
-    "on_pushButton_clicked\0highlightChecked\0"
-    "item\0getFilteredGlobalReplacementMap\0"
+    "on_pushButton_clicked\0on_checkBox_stateChanged\0"
+    "arg1\0on_checkBox_2_stateChanged\0"
+    "highlightChecked\0item\0"
+    "getFilteredGlobalReplacementMap\0"
     "uncheckedItemsList"
 };
 #undef QT_MOC_LITERAL
@@ -70,7 +75,7 @@ static const uint qt_meta_data_GlobalReplaceDialog[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -78,17 +83,19 @@ static const uint qt_meta_data_GlobalReplaceDialog[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,   59,    2, 0x06 /* Public */,
+       1,    2,   69,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       6,    0,   64,    2, 0x08 /* Private */,
-       7,    1,   65,    2, 0x08 /* Private */,
-      10,    1,   68,    2, 0x08 /* Private */,
-      12,    0,   71,    2, 0x08 /* Private */,
-      13,    0,   72,    2, 0x08 /* Private */,
-      14,    1,   73,    2, 0x0a /* Public */,
-      16,    0,   76,    2, 0x0a /* Public */,
-      17,    0,   77,    2, 0x0a /* Public */,
+       6,    0,   74,    2, 0x08 /* Private */,
+       7,    1,   75,    2, 0x08 /* Private */,
+      10,    1,   78,    2, 0x08 /* Private */,
+      12,    0,   81,    2, 0x08 /* Private */,
+      13,    0,   82,    2, 0x08 /* Private */,
+      14,    1,   83,    2, 0x08 /* Private */,
+      16,    1,   86,    2, 0x08 /* Private */,
+      17,    1,   89,    2, 0x0a /* Public */,
+      19,    0,   92,    2, 0x0a /* Public */,
+      20,    0,   93,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 4,    2,    5,
@@ -99,7 +106,9 @@ static const uint qt_meta_data_GlobalReplaceDialog[] = {
     QMetaType::Void, 0x80000000 | 11,    2,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 11,   15,
+    QMetaType::Void, QMetaType::Int,   15,
+    QMetaType::Void, QMetaType::Int,   15,
+    QMetaType::Void, 0x80000000 | 11,   18,
     0x80000000 | 3,
     0x80000000 | 3,
 
@@ -118,10 +127,12 @@ void GlobalReplaceDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         case 3: _t->leftCheckBoxStateChanged((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
         case 4: _t->on_previewButton_clicked(); break;
         case 5: _t->on_pushButton_clicked(); break;
-        case 6: _t->highlightChecked((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
-        case 7: { QMap<QString,QString> _r = _t->getFilteredGlobalReplacementMap();
+        case 6: _t->on_checkBox_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 7: _t->on_checkBox_2_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 8: _t->highlightChecked((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 9: { QMap<QString,QString> _r = _t->getFilteredGlobalReplacementMap();
             if (_a[0]) *reinterpret_cast< QMap<QString,QString>*>(_a[0]) = std::move(_r); }  break;
-        case 8: { QMap<QString,QString> _r = _t->uncheckedItemsList();
+        case 10: { QMap<QString,QString> _r = _t->uncheckedItemsList();
             if (_a[0]) *reinterpret_cast< QMap<QString,QString>*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
@@ -184,13 +195,13 @@ int GlobalReplaceDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 11;
     }
     return _id;
 }
