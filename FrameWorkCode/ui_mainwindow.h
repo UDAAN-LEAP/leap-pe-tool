@@ -826,11 +826,11 @@ public:
 "	font-size: 15px;\n"
 "	line-height: 18px;\n"
 "	border: none;\n"
-"	margin: 11px 242px 13px 20px;\n"
+"	margin: 11px 11px 13px 20px;\n"
 "}\n"
 "\n"
 "QTreeView::item {\n"
-"	padding: 12px 100px 12px 17px;\n"
+"	padding: 12px 12px 12px 17px;\n"
 "	border: 0.5px solid #202148;\n"
 "	color: #202148;\n"
 "	font-size: 15px;\n"
@@ -852,8 +852,8 @@ public:
 "\n"
 "QTreeView::branch:has-children:!has-siblings:closed,\n"
 "QTreeView::branch:closed:has-children:has-siblings {\n"
-"    image: url(\":/Imag"
-                        "es/Resources/stylesheet-branch-closed.png\");\n"
+"    image: url(\":/Images"
+                        "/Resources/stylesheet-branch-closed.png\");\n"
 "}\n"
 "QScrollBar:vertical { \n"
 "                                                border: none;\n"
@@ -875,8 +875,8 @@ public:
 "                        } \n"
 "QScrollBar::sub-line:vertical { \n"
 "                            height: 0 px; \n"
-""
-                        "                            subcontrol-position: top; \n"
+" "
+                        "                           subcontrol-position: top; \n"
 "                            subcontrol-origin: margin; \n"
 "                        }\n"
 ""));
@@ -1419,7 +1419,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
         tabWidget_2->setCurrentIndex(0);
 
 

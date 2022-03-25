@@ -48180,3 +48180,1286 @@ Debug: Similarity Processing took 0 milliseconds (mainwindow.cpp)
 Debug: Coordinates BBOX :  "" (mainwindow.cpp)
 Debug: BBOX Processing took 0 milliseconds (mainwindow.cpp)
 Debug: "p-2.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 12:54:41
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "यंत्रम् अधिगमस् =>यंत्र अधिगम " 
+ (mainwindow.cpp)
+Debug: "दत्तांश =>दत्तां " 
+ (mainwindow.cpp)
+Debug: "शामिल =>शामल " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QWidget::setLayout: Attempting to set QLayout "" on QGroupBox "groupBox", which already has a layout ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "AIML-all_0001-003.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 12:56:04
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "यंत्र अधिगम =>यंत्रम् अधिगमस् " 
+ (mainwindow.cpp)
+Debug: "सीखे =>सीस्खे " 
+ (mainwindow.cpp)
+Debug: "अभिज्ञान =>अभिज्ञानस् " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QWidget::setLayout: Attempting to set QLayout "" on QGroupBox "groupBox", which already has a layout ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:02:51
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "यंत्रम् अधिगमस् =>यंत्र अधिगम " 
+ (mainwindow.cpp)
+Debug: "सीस्खे =>सीस्स्खे " 
+ (mainwindow.cpp)
+Debug: "हस्तलिखित =>हस्तलिअखित " 
+ (mainwindow.cpp)
+Debug: "अभिज्ञानस् =>अभिअज्ञानस् " 
+ (mainwindow.cpp)
+Debug: "नाऊ\" =>नाऊ\"अ " 
+ (mainwindow.cpp)
+Debug: "\"मोबाइल\" =>\"मोअबाइल\" " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QWidget::setLayout: Attempting to set QLayout "" on QGroupBox "groupBox", which already has a layout ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "AIML-all_0001-003.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:04:55
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "से =>सेस् " 
+ (mainwindow.cpp)
+Debug: "हस्तलिअखित =>हस्तलिअखितस् " 
+ (mainwindow.cpp)
+Debug: "अ\u0000भिज्ञान =>अ " 
+ (mainwindow.cpp)
+Debug: "वाक् =>अवाक् " 
+ (mainwindow.cpp)
+Debug: "\"मोअबाइल\" =>\"मोअअबाइल\" " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QWidget::setLayout: Attempting to set QLayout "" on QGroupBox "groupBox", which already has a layout ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:06:16
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "(बड़ी) =>(स्बड़ई) " 
+ (mainwindow.cpp)
+Debug: "अभिज्ञान =>अअभिज्ञान " 
+ (mainwindow.cpp)
+Debug: "में =>अमें " 
+ (mainwindow.cpp)
+Debug: "\"मोअअबाइल\" =>\"मोअअबाअइल\" " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QWidget::setLayout: Attempting to set QLayout "" on QGroupBox "groupBox", which already has a layout ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:07:53
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "अधिगम =>अधिगस्म " 
+ (mainwindow.cpp)
+Debug: "विधिकल्प =>विधिकस्ल्प " 
+ (mainwindow.cpp)
+Debug: "हस्तलिअखितस् =>हस्तलिअखिअतस् " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QWidget::setLayout: Attempting to set QLayout "" on QGroupBox "groupBox", which already has a layout ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:09:20
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "(स्बड़ई) =>(अस्बड़ई) " 
+ (mainwindow.cpp)
+Debug: ">अनुप्रयोगों =>s>अनुप्रयोगों " 
+ (mainwindow.cpp)
+Debug: "हस्तलिअखिअतस् =>हस्तलिअखिअस्तस् " 
+ (mainwindow.cpp)
+Debug: "अमें =>अअमें " 
+ (mainwindow.cpp)
+Debug: "\"मोअअबाअइल\" =>\"मोअअबासइल\" " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QWidget::setLayout: Attempting to set QLayout "" on QGroupBox "groupBox", which already has a layout ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:19:30
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "अधिगस्म =>सधिगस्म " 
+ (mainwindow.cpp)
+Debug: "(अस्बड़ई) =>s(अस्बड़ई) " 
+ (mainwindow.cpp)
+Debug: "सेस् =>असेस् " 
+ (mainwindow.cpp)
+Debug: "शामल =>शामलअ " 
+ (mainwindow.cpp)
+Debug: "हस्तलिअखिअस्तस् =>हस्तलिअखिअअस्तस् " 
+ (mainwindow.cpp)
+Debug: "अभिअज्ञानस् =>अभिअद्ज्ञानस् " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QWidget::setLayout: Attempting to set QLayout "" on QGroupBox "groupBox", which already has a layout ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+Debug: "AIML-all_0001-003.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:20:42
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "सधिगस्म =>सस्धिगस्म " 
+ (mainwindow.cpp)
+Debug: "s(अस्बड़ई) =>अस्(अस्बड़ई) " 
+ (mainwindow.cpp)
+Debug: "शामलअ =>शामलअअ " 
+ (mainwindow.cpp)
+Debug: "हस्तलिअखिअअस्तस् =>हस्तलिअखिअअअस्तस् " 
+ (mainwindow.cpp)
+Debug: "अभिअद्ज्ञानस् =>अभिअदज्ञानस् " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QWidget::setLayout: Attempting to set QLayout "" on QGroupBox "groupBox", which already has a layout ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: QFlags<Qt::ItemFlag>(ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled) (globalreplacedialog.cpp)
+Debug: QFlags<Qt::ItemFlag>(ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled) (globalreplacedialog.cpp)
+Debug: QFlags<Qt::ItemFlag>(ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled) (globalreplacedialog.cpp)
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:22:56
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "असेस् =>असेद्स् " 
+ (mainwindow.cpp)
+Debug: "हस्तलिअखिअअअस्तस् =>हस्तलिअखिअअअस्स्तस् " 
+ (mainwindow.cpp)
+Debug: "नाऊ\"अ =>नाऊ\"अअ " 
+ (mainwindow.cpp)
+Debug: "\"मोअअबासइल\" उपकरणों =>\"मोअअबाअसिल\" उपकरअणों " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QWidget::setLayout: Attempting to set QLayout "" on QGroupBox "groupBox", which already has a layout ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: ELSE PART (globalreplacedialog.cpp)
+Debug: QFlags<Qt::ItemFlag>(ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable) (globalreplacedialog.cpp)
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:24:59
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "सस्धिगस्म =>सस्धिस्गस्म " 
+ (mainwindow.cpp)
+Debug: "दत्तां असेद्स् =>दस्त्तां असेद्स " 
+ (mainwindow.cpp)
+Debug: "अभिअदज्ञानस् =>अभिअअदज्ञानस् " 
+ (mainwindow.cpp)
+Debug: "नाऊ\"अअ =>नाऊ\"अअअ " 
+ (mainwindow.cpp)
+Debug: "और =>अऔर " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QWidget::setLayout: Attempting to set QLayout "" on QGroupBox "groupBox", which already has a layout ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:27:19
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "दस्त्तां =>दस्त्तांअ " 
+ (mainwindow.cpp)
+Debug: "s>अनुप्रयोगों =>s>अनुप्रअयोगों " 
+ (mainwindow.cpp)
+Debug: "अभिअअदज्ञानस् =>अभिअअअदज्ञानस् " 
+ (mainwindow.cpp)
+Debug: "\"मोअअबाअसिल\" =>a”मोअअबाअसिल\" " 
+ (mainwindow.cpp)
+Debug: "विज्ञापनों =>विज्ञापअनों " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QWidget::setLayout: Attempting to set QLayout "" on QGroupBox "groupBox", which already has a layout ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: ELSE PART (globalreplacedialog.cpp)
+Debug: QFlags<Qt::ItemFlag>(ItemIsSelectable|ItemIsDragEnabled) (globalreplacedialog.cpp)
+Debug: ELSE PART (globalreplacedialog.cpp)
+Debug: QFlags<Qt::ItemFlag>(ItemIsSelectable|ItemIsDragEnabled) (globalreplacedialog.cpp)
+Debug: ELSE PART (globalreplacedialog.cpp)
+Debug: QFlags<Qt::ItemFlag>(ItemIsSelectable|ItemIsDragEnabled) (globalreplacedialog.cpp)
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:30:32
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "मान =>माअन " 
+ (mainwindow.cpp)
+Debug: "जाते =>अजाते " 
+ (mainwindow.cpp)
+Debug: "अअभिज्ञान =>अअभिअज्ञान " 
+ (mainwindow.cpp)
+Debug: "अभिज्ञान =>अभिअज्ञान " 
+ (mainwindow.cpp)
+Debug: "उपकरअणों =>उपअकरअणों " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: ELSE PART (globalreplacedialog.cpp)
+Debug: QFlags<Qt::ItemFlag>(ItemIsSelectable|ItemIsDragEnabled) (globalreplacedialog.cpp)
+Debug: ELSE PART (globalreplacedialog.cpp)
+Debug: QFlags<Qt::ItemFlag>(ItemIsSelectable|ItemIsDragEnabled) (globalreplacedialog.cpp)
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:37:40
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "विधिकस्ल्प =>विधिकअस्ल्प " 
+ (mainwindow.cpp)
+Debug: "माअन =>माअअन " 
+ (mainwindow.cpp)
+Debug: "हस्तलिअखिअअअस्स्तस् =>हस्तलिअस्स्तस् " 
+ (mainwindow.cpp)
+Debug: "नाऊ\"अअअ =>नाऊ\"अ " 
+ (mainwindow.cpp)
+Debug: "a”मोअअबाअसिल\" =>a”मोअअसिल\" " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:39:47
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "विधिकअस्ल्प =>विधिकल्प " 
+ (mainwindow.cpp)
+Debug: "अअभिअज्ञान =>अअभअज्ञान " 
+ (mainwindow.cpp)
+Debug: "अवाक् =>अवक् " 
+ (mainwindow.cpp)
+Debug: "a”मोअअसिल\" =>a”मोअअल\" " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:40:50
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "असेद्स =>अद्स " 
+ (mainwindow.cpp)
+Debug: "अअभअज्ञान =>अअभज्ञान " 
+ (mainwindow.cpp)
+Debug: "अभिअअअदज्ञानस् =>अभिअदज्ञानस् " 
+ (mainwindow.cpp)
+Debug: "अअमें =>अमें " 
+ (mainwindow.cpp)
+Debug: "उपअकरअणों =>उपअकरणों " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:44:23
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "में =>स्में " 
+ (mainwindow.cpp)
+Debug: "दस्त्तांअ =>दस्त्तांस " 
+ (mainwindow.cpp)
+Debug: "शामलअअ हैंः =>शाअमलअअ अहैंः " 
+ (mainwindow.cpp)
+Debug: "अभिअदज्ञानस् =>अभिअदअज्ञानस् " 
+ (mainwindow.cpp)
+Debug: "नाऊ\"अ =>नाऊ\"अअ " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:46:12
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "विधिकल्प =>विधिस्कल्प " 
+ (mainwindow.cpp)
+Debug: "माअअन =>माअअस्न " 
+ (mainwindow.cpp)
+Debug: "अंक =>अंअक " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:49:46
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "यंत्र =>यंत्रस् " 
+ (mainwindow.cpp)
+Debug: "> =>s> " 
+ (mainwindow.cpp)
+Debug: "माअअस्न =>माअअअस्न " 
+ (mainwindow.cpp)
+Debug: "शाअमलअअ =>शाअमलअअअ " 
+ (mainwindow.cpp)
+Debug: "अंअक =>अंअअक " 
+ (mainwindow.cpp)
+Debug: "अभिअदअज्ञानस् =>अभिअदअअज्ञानस् " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: ELSE PART (globalreplacedialog.cpp)
+Debug: QFlags<Qt::ItemFlag>(ItemIsSelectable|ItemIsDragEnabled) (globalreplacedialog.cpp)
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:51:32
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "यंत्रस् सस्धिस्गस्म =>यंत्र सस्धिसस्म " 
+ (mainwindow.cpp)
+Debug: "विधिस्कल्प स्में =>विधिस्कल्पस्में " 
+ (mainwindow.cpp)
+Debug: "अद्स =>अद् " 
+ (mainwindow.cpp)
+Debug: "शाअमलअअअ =>शाअअअअ " 
+ (mainwindow.cpp)
+Debug: "अंअअक =>अंअक " 
+ (mainwindow.cpp)
+Debug: "अमें =>अमे " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:53:38
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "सस्धिसस्म =>सस्धिस " 
+ (mainwindow.cpp)
+Debug: "विधिस्कल्पस्में =>विधिस्कल्पस्मे " 
+ (mainwindow.cpp)
+Debug: "अद् सीस्स्खे =>अद्सीस्स्खे " 
+ (mainwindow.cpp)
+Debug: "शाअअअअ =>शाअअअ " 
+ (mainwindow.cpp)
+Debug: "हस्तलिअस्स्तस् =>हस्तलिअस्स् " 
+ (mainwindow.cpp)
+Debug: "अभिअदअअज्ञानस् =>अभदअअज्ञानस् " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:55:25
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "यंत्र =>यंत्रम् " 
+ (mainwindow.cpp)
+Debug: "विधिस्कल्पस्मे =>विस्धिस्कल्पस्मे " 
+ (mainwindow.cpp)
+Debug: "हस्तलिअस्स् =>हस्तस्लिअस्स् " 
+ (mainwindow.cpp)
+Debug: "अभदअअज्ञानस् =>अभअदअअज्ञानस् " 
+ (mainwindow.cpp)
+Debug: "नाऊ\"अअ =>नाअऊ\"अअ " 
+ (mainwindow.cpp)
+Debug: "अऔर =>अअऔर " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 13:59:20
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "विस्धिस्कल्पस्मे =>विस्धिल्पस्मे " 
+ (mainwindow.cpp)
+Debug: "दस्त्तांस =>दस्त्तास " 
+ (mainwindow.cpp)
+Debug: "अहैंः =>हैंः " 
+ (mainwindow.cpp)
+Debug: "अंअक =>अअक " 
+ (mainwindow.cpp)
+Debug: "अभअदअअज्ञानस् =>अभअदअअज्नस् " 
+ (mainwindow.cpp)
+Debug: "नाअऊ\"अअ =>नऊ\"अअ " 
+ (mainwindow.cpp)
+Debug: "a”मोअअल\" =>a”मअल\" " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 14:00:27
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 14:06:28
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "विस्धिल्पस्मे अस्(अस्बड़ई) =>विस्धिस्मे अस्(अस्ड़ई) " 
+ (mainwindow.cpp)
+Debug: "अद्सीस्स्खे =>अदसीस्स्खे " 
+ (mainwindow.cpp)
+Debug: "शाअअअ =>शअअअ " 
+ (mainwindow.cpp)
+Debug: "हस्तस्लिअस्स् अअक =>हस्स्लिअस्स् अक " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 14:09:05
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "यंत्रम् =>यंत्र " 
+ (mainwindow.cpp)
+Debug: "विस्धिस्मे =>विस्धस्मे " 
+ (mainwindow.cpp)
+Debug: "माअअअस्न =>माअअस्न " 
+ (mainwindow.cpp)
+Debug: "शअअअ =>शअअ " 
+ (mainwindow.cpp)
+Debug: "हस्स्लिअस्स् =>हस्स्लिस्स् " 
+ (mainwindow.cpp)
+Debug: "अभअदअअज्नस् =>अअदअज्नस् " 
+ (mainwindow.cpp)
+Debug: "नऊ\"अअ =>नऊ\"अ " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:02:40
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:09:49
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:10:41
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:14:08
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:17:00
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:20:04
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:20:51
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:22:54
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:23:38
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:25:32
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:26:35
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:27:28
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:28:30
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:33:19
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:34:48
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:35:30
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:38:19
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:40:10
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:41:19
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:43:14
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:46:25
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:53:37
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:56:09
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 18:57:12
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 19:00:36
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 19:02:33
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 19:13:49
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "यंत्रम् अधिगमस् =>यंत्र अधिगम " 
+ (mainwindow.cpp)
+Debug: "उपयोग =>उपयो " 
+ (mainwindow.cpp)
+Debug: "किए =>कि " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: statesOfRightCheckboxes (globalreplacedialog.cpp)
+Debug: 1 (globalreplacedialog.cpp)
+Debug: 0 (globalreplacedialog.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/.."): device not open ()
+Debug: "AIML-all_0001-002.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 19:18:50
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "अधिगमस् =>अधिगम " 
+ (mainwindow.cpp)
+Debug: "अभिज्ञान =>अभिज्ञन " 
+ (mainwindow.cpp)
+Debug: "अध्ययन =>ध्ययन " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: filteredGlobalReplacementMap (globalreplacedialog.cpp)
+Debug: "अधिगम " (globalreplacedialog.cpp)
+Debug: "ध्ययन " (globalreplacedialog.cpp)
+Debug: statesOfRightCheckboxes (globalreplacedialog.cpp)
+Debug: 0 (globalreplacedialog.cpp)
+Debug: 1 (globalreplacedialog.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/.."): device not open ()
+Debug: "AIML-all_0001-002.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: App crashed with signal:  "SIGTERM" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 19:23:29
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "यंत्र =>यंत्रम्द् " 
+ (mainwindow.cpp)
+Debug: "दस्त्तास =>दस्स्त्तास " 
+ (mainwindow.cpp)
+Debug: "हैंः =>स्हैंः " 
+ (mainwindow.cpp)
+Debug: "अक =>अअक " 
+ (mainwindow.cpp)
+Debug: "अ =>अअ " 
+ (mainwindow.cpp)
+Debug: "अवक् =>अअवक् " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/.."): device not open ()
+Debug: "AIML-all_0001-003.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 19:27:20
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-015.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "स्लाइड =>स्लाइअड " 
+ (mainwindow.cpp)
+Debug: "टिप्पणियां =>टिप्पणिअयां " 
+ (mainwindow.cpp)
+Debug: "पुस्तकों =>पुस्तकोंअ " 
+ (mainwindow.cpp)
+Debug: "अनुशंसा =>अनुस्शंसा " 
+ (mainwindow.cpp)
+Debug: "जाती =>अजाती " 
+ (mainwindow.cpp)
+Debug: "Elements =>ऐलेमएन्त्स् " 
+ (mainwindow.cpp)
+Debug: "नोर्विग =>नोर्विगस् " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: globalReplacementMap (mainwindow.cpp)
+Debug: "स्लाइअड " (mainwindow.cpp)
+Debug: "पुस्तकोंअ " (mainwindow.cpp)
+Debug: "अजाती " (mainwindow.cpp)
+Debug: "नोर्विगस् " (mainwindow.cpp)
+Debug: replaceInAllPages (mainwindow.cpp)
+Debug: 1 (mainwindow.cpp)
+Debug: 0 (mainwindow.cpp)
+Debug: 1 (mainwindow.cpp)
+Debug: 1 (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/ajit/Documents/AIML-All-master/CorrectorOutput/.."): device not open ()
+Debug: "AIML-all_0001-015.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-015.html"  to file. 
+ (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-015.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Mar 2022 @ 19:31:09
+Username:ajit
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-015.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-012.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "गुणनखंड =>गुणdनखंड " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "AIML-all_0001-012.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-012.html"  to file. 
+ (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "गुणdनखंड =>गुणनखंड " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "AIML-all_0001-012.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-012.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-012.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-013.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/ajit/Documents/AIML-All-master/CorrectorOutput/AIML-all_0001-012.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "मार्कोव =>मार्कोअव " 
+ (mainwindow.cpp)
+Debug: "प्रक्रिया =>प्रक्रियाअ " 
+ (mainwindow.cpp)
+Debug: "विशेषताएं =>विशेअषताएं " 
+ (mainwindow.cpp)
+Debug: "बेसियन =>बेअसियन " 
+ (mainwindow.cpp)
+Debug: "मैक्स-उत्पाद =>मैक्स-उत्पादस् " 
+ (mainwindow.cpp)
+Debug: "अंकन =>संकन " 
+ (mainwindow.cpp)
+Debug: "सम्भाव्यता =>सस्म्भाव्यता " 
+ (mainwindow.cpp)
+Debug: "/home/ajit/Documents/AIML-All-master/Dicts/CPair" exists (mainwindow.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: "AIML-all_0001-012.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)

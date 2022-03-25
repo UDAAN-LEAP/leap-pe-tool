@@ -434,11 +434,11 @@ QHeaderView::section {
 	font-size: 15px;
 	line-height: 18px;
 	border: none;
-	margin: 11px 242px 13px 20px;
+	margin: 11px 11px 13px 20px;
 }
 
 QTreeView::item {
-	padding: 12px 100px 12px 17px;
+	padding: 12px 12px 12px 17px;
 	border: 0.5px solid #202148;
 	color: #202148;
 	font-size: 15px;

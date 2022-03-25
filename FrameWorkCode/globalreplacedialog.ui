@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>659</width>
-    <height>335</height>
+    <width>913</width>
+    <height>433</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,7 +50,7 @@ QScrollBar::sub-line:vertical {
       <widget class="QGroupBox" name="groupBox_2">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>1</horstretch>
+         <horstretch>3</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
@@ -61,12 +61,25 @@ background-color: rgb(255, 255, 255);</string>
        <property name="title">
         <string>Choose the words to be replaced</string>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QCheckBox" name="checkBox">
+          <property name="text">
+           <string>Select All</string>
+          </property>
+         </widget>
+        </item>
         <item>
          <widget class="QListWidget" name="listWidget">
           <property name="styleSheet">
            <string notr="true">QListWidget{background-color: white; color:black; border:0px;}
 QGraphicsView{background-color:white;}
+
+QListView::item {
+	/*border: 1x solid black;*/
+	height: 28px;
+}
+
 </string>
           </property>
          </widget>
@@ -76,12 +89,41 @@ QGraphicsView{background-color:white;}
      </item>
      <item>
       <widget class="QGroupBox" name="groupBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="styleSheet">
-        <string notr="true"/>
+        <string notr="true">color:black;
+background-color: rgb(255, 255, 255);</string>
        </property>
        <property name="title">
-        <string/>
+        <string>Replace In All Pages</string>
        </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QCheckBox" name="checkBox_2">
+          <property name="text">
+           <string>Select All</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="ReplaceInAllPagesListWidget">
+          <property name="styleSheet">
+           <string notr="true">QListWidget{background-color: white; color:black; border:0px;}
+QGraphicsView{background-color:white;}
+
+QListView::item {
+	/*border: 1x solid black;*/
+	height: 28px;
+}</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>

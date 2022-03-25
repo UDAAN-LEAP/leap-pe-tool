@@ -41,10 +41,11 @@ private:
     Ui::GlobalReplaceDialog *ui;
     QMap <QString, QString> filteredGlobalReplacementMap;
     QMap <QString, QString> uncheckedItemsListMap;
-    QVector<QCheckBox *> replaceInAllFiles_Checkboxes; // Addresses of checkboxes on right side
-    QVector<int> wordSelection_CheckboxesState; // State of checkboxes on left side
-    QCheckBox *box;
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVector<QListWidgetItem *> rightPaneCheckboxes; // Addresses of checkboxes on right side
+    QVector<int> leftPaneCheckboxesStates; // State of checkboxes on left side
+    QVector<int> rightPaneCheckboxesStates; // State of checkboxes on right side
+//    QCheckBox *box;
+//    QVBoxLayout *vbox = new QVBoxLayout;
     bool applyButtonIsClicked = false;
 };
 

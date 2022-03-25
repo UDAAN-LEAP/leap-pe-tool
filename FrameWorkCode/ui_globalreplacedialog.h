@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -28,9 +29,13 @@ public:
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout_2;
     QGroupBox *groupBox_2;
-    QHBoxLayout *horizontalLayout_3;
+    QVBoxLayout *verticalLayout_3;
+    QCheckBox *checkBox;
     QListWidget *listWidget;
     QGroupBox *groupBox;
+    QVBoxLayout *verticalLayout_2;
+    QCheckBox *checkBox_2;
+    QListWidget *ReplaceInAllPagesListWidget;
     QHBoxLayout *horizontalLayout;
     QPushButton *pushButton;
     QSpacerItem *horizontalSpacer;
@@ -41,7 +46,7 @@ public:
     {
         if (GlobalReplaceDialog->objectName().isEmpty())
             GlobalReplaceDialog->setObjectName(QString::fromUtf8("GlobalReplaceDialog"));
-        GlobalReplaceDialog->resize(659, 335);
+        GlobalReplaceDialog->resize(913, 433);
         GlobalReplaceDialog->setStyleSheet(QString::fromUtf8("QDialog{font: 11pt \"Work Sans\"; \n"
 "background-color: rgb(32, 33, 72);\n"
 "}\n"
@@ -78,28 +83,64 @@ public:
         groupBox_2 = new QGroupBox(GlobalReplaceDialog);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy.setHorizontalStretch(1);
+        sizePolicy.setHorizontalStretch(3);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(groupBox_2->sizePolicy().hasHeightForWidth());
         groupBox_2->setSizePolicy(sizePolicy);
         groupBox_2->setStyleSheet(QString::fromUtf8("color:black;\n"
 "background-color: rgb(255, 255, 255);"));
-        horizontalLayout_3 = new QHBoxLayout(groupBox_2);
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        verticalLayout_3 = new QVBoxLayout(groupBox_2);
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        checkBox = new QCheckBox(groupBox_2);
+        checkBox->setObjectName(QString::fromUtf8("checkBox"));
+
+        verticalLayout_3->addWidget(checkBox);
+
         listWidget = new QListWidget(groupBox_2);
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
         listWidget->setStyleSheet(QString::fromUtf8("QListWidget{background-color: white; color:black; border:0px;}\n"
 "QGraphicsView{background-color:white;}\n"
+"\n"
+"QListView::item {\n"
+"	/*border: 1x solid black;*/\n"
+"	height: 28px;\n"
+"}\n"
+"\n"
 ""));
 
-        horizontalLayout_3->addWidget(listWidget);
+        verticalLayout_3->addWidget(listWidget);
 
 
         horizontalLayout_2->addWidget(groupBox_2);
 
         groupBox = new QGroupBox(GlobalReplaceDialog);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setStyleSheet(QString::fromUtf8(""));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
+        groupBox->setSizePolicy(sizePolicy1);
+        groupBox->setStyleSheet(QString::fromUtf8("color:black;\n"
+"background-color: rgb(255, 255, 255);"));
+        verticalLayout_2 = new QVBoxLayout(groupBox);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        checkBox_2 = new QCheckBox(groupBox);
+        checkBox_2->setObjectName(QString::fromUtf8("checkBox_2"));
+
+        verticalLayout_2->addWidget(checkBox_2);
+
+        ReplaceInAllPagesListWidget = new QListWidget(groupBox);
+        ReplaceInAllPagesListWidget->setObjectName(QString::fromUtf8("ReplaceInAllPagesListWidget"));
+        ReplaceInAllPagesListWidget->setStyleSheet(QString::fromUtf8("QListWidget{background-color: white; color:black; border:0px;}\n"
+"QGraphicsView{background-color:white;}\n"
+"\n"
+"QListView::item {\n"
+"	/*border: 1x solid black;*/\n"
+"	height: 28px;\n"
+"}"));
+
+        verticalLayout_2->addWidget(ReplaceInAllPagesListWidget);
+
 
         horizontalLayout_2->addWidget(groupBox);
 
@@ -149,7 +190,9 @@ public:
     {
         GlobalReplaceDialog->setWindowTitle(QApplication::translate("GlobalReplaceDialog", "Dialog", nullptr));
         groupBox_2->setTitle(QApplication::translate("GlobalReplaceDialog", "Choose the words to be replaced", nullptr));
-        groupBox->setTitle(QString());
+        checkBox->setText(QApplication::translate("GlobalReplaceDialog", "Select All", nullptr));
+        groupBox->setTitle(QApplication::translate("GlobalReplaceDialog", "Replace In All Pages", nullptr));
+        checkBox_2->setText(QApplication::translate("GlobalReplaceDialog", "Select All", nullptr));
         pushButton->setText(QString());
         previewButton->setText(QApplication::translate("GlobalReplaceDialog", "Preview", nullptr));
         applyButton->setText(QApplication::translate("GlobalReplaceDialog", "Save and Replace", nullptr));

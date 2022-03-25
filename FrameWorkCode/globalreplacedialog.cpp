@@ -24,7 +24,6 @@ GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidge
     QDialog(parent),
     ui(new Ui::GlobalReplaceDialog)
 {
-
     ui->setupUi(this);
     qInstallMessageHandler(crashlog::myMessageHandler);
     setWindowTitle("Select the words you want to replace globally");
@@ -42,11 +41,12 @@ GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidge
     QVBoxLayout *listLayout = new QVBoxLayout;
     ui->listWidget->setLayout(listLayout);
     ui->groupBox->setVisible(false);
-    ui->groupBox->setLayout(vbox);
-    ui->horizontalLayout_2->setAlignment(ui->groupBox, Qt::AlignTop);
-    vbox->setAlignment(ui->groupBox, Qt::AlignTop);
-    vbox->setSpacing(12);
-    vbox->setMargin(12);
+//    ui->groupBox->setLayout(vbox);
+//    ui->horizontalLayout_2->setAlignment(ui->groupBox, Qt::AlignTop);
+    ui->ReplaceInAllPagesListWidget->setLayout(listLayout);
+//    vbox->setAlignment(ui->groupBox, Qt::AlignTop);
+//    vbox->setSpacing(12);
+//    vbox->setMargin(12);
    // vbox->setContentsMargins(0, 0, 0, 0);
 }
 
@@ -55,8 +55,8 @@ GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidge
  */
 GlobalReplaceDialog::~GlobalReplaceDialog()
 {
-    replaceInAllFiles_Checkboxes.clear();
-    delete vbox;
+    rightPaneCheckboxes.clear();
+//    delete vbox;
     delete ui;
 }
 
@@ -74,9 +74,8 @@ QMap <QString, QString> GlobalReplaceDialog::getFilteredGlobalReplacementMap(){
  * \brief This function is used to show the checkboxes for words that can be globally replaced in
  *        list format.
  */
-void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords){
-
-
+void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords)
+{
     //ui->groupBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     //! We get words in the format old Word => new Word. (See editdistance.cpp for more info)
     //! We run the loop of the list of such strings and we separate them using QRegExp and add
@@ -86,33 +85,48 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords){
         QRegExp sep("\\s*=>*");
         QStringList changedList = replacedWords[i].split(sep);
         //QStringList changedList = replacedWords[i].split(" ");
-        ui -> listWidget ->addItem(changedList[0]+ " -> " + changedList[1]);
+        ui->listWidget ->addItem(QString::number(i+1) + "  -  " + changedList[0]+ " -> " + changedList[1]);
 
         //! Creating & adding checkboxes in the groupbox
-        box = new QCheckBox(this);
-        box->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        box->setCheckState(Qt::Unchecked);
-        box->setStyleSheet("QCheckBox::indicator:unchecked {border: 0px solid white}");
-        box->setEnabled(false);
+//        box = new QCheckBox(this);
+//        box->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+//        box->setCheckState(Qt::Unchecked);
+//        box->setStyleSheet("QCheckBox::indicator:unchecked {border: 0px solid white}");
+//        box->setEnabled(false);
 
-        vbox->addWidget(box);
-        vbox->setAlignment(box, Qt::AlignTop);
+//        vbox->addWidget(box);
+//        vbox->setAlignment(box, Qt::AlignTop);
         //! Inserting addresses of checkboxes in the vector so that we can change the state of the same accordingly
-        replaceInAllFiles_Checkboxes.push_back(box);
+//        replaceInAllFiles_Checkboxes.push_back(box);
         //! Initializing the states to 0 and pushing them in the vector
-        wordSelection_CheckboxesState.push_back(0);
+        leftPaneCheckboxesStates.push_back(0);
+
+        // NEW IMPLEMENTATION OF RIGHT PANE USING QListWidget
+        ui->ReplaceInAllPagesListWidget->addItem(QString::number(i+1));
+        QListWidgetItem* item = ui->ReplaceInAllPagesListWidget->item(i);
+        rightPaneCheckboxes.push_back(item);
     }
 
     //! spawn  checkboxes for list
-    QListWidgetItem* item = 0;
+    QListWidgetItem *item = 0, *rightPaneListItem = 0;
+    Qt::ItemFlags flags;
     for(int i = 0; i < ui ->listWidget->count(); ++i){
         item = ui->listWidget->item(i);
         item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
         item->setCheckState(Qt::Unchecked);
+
+        rightPaneListItem = ui->ReplaceInAllPagesListWidget->item(i);
+        rightPaneListItem->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+        rightPaneListItem->setCheckState(Qt::Unchecked);
+
+        flags = rightPaneListItem->flags();
+        flags = flags & (~(Qt::ItemIsEnabled | Qt::ItemIsUserCheckable));
+        rightPaneListItem->setFlags(flags);
     }
     //! Whenever user checks the word for global replace, the adjacent checkbox
     //! (to ask user whether to replace in all pages or only unedited pages) becomes visible.
     //! The connect function does the necessary syncing.
+
     connect(ui->listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(leftCheckBoxStateChanged(QListWidgetItem*)));
 }
 
@@ -207,47 +221,53 @@ void GlobalReplaceDialog::leftCheckBoxStateChanged(QListWidgetItem* item)
 {
     int itemRow;
     itemRow = ui->listWidget->row(item);
+    Qt::ItemFlags flags = ui->ReplaceInAllPagesListWidget->item(itemRow)->flags();
 
     //! This enables the right hand side pane, which was invisible when no words were checked.
     //! Enables the checkbox for the respective left hand side word checkbox checked.
     if (item->checkState() == Qt::Checked)
     {
-        wordSelection_CheckboxesState[itemRow] = 1;
+        leftPaneCheckboxesStates[itemRow] = 1;
         ui->groupBox->setVisible(true);
-        ui->groupBox->setMinimumHeight(28*ui ->listWidget->count());
+        flags = flags | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable;
+        ui->ReplaceInAllPagesListWidget->item(itemRow)->setFlags(flags);
+
+//        ui->groupBox->setMinimumHeight(28*ui ->listWidget->count());
         //ui->groupBox->setMinimumHeight(ui->listWidget->height());
         //ui->groupBox->setMinimumHeight(ui->groupBox_2->height());
-        vbox->addStretch(1);
-        ui->groupBox->setTitle("Replace in all pages");
-        replaceInAllFiles_Checkboxes.at(itemRow)->setEnabled(true);
-        replaceInAllFiles_Checkboxes.at(itemRow)->setStyleSheet("color: black;"
-                                                                "background-color: white; padding-left:75px");
-        ui->groupBox->setStyleSheet("background-color : white;"
-                                    "color: black;");
+//        vbox->addStretch(1);
+//        ui->groupBox->setTitle("Replace in all pages");
+//        replaceInAllFiles_Checkboxes.at(itemRow)->setEnabled(true);
+//        replaceInAllFiles_Checkboxes.at(itemRow)->setStyleSheet("color: black; background-color: white; padding-left:75px");
+//        ui->groupBox->setStyleSheet("background-color : white; color: black;");
     }
     //! If the word on the left side is unchecked then the right checkbox gets disabled.
     else if (item->checkState() == Qt::Unchecked)
     {
-        ui->groupBox->setMaximumHeight(ui->listWidget->height());
-        wordSelection_CheckboxesState[itemRow] = 0;
-        replaceInAllFiles_Checkboxes.at(itemRow)->setCheckState(Qt::Unchecked);
-        replaceInAllFiles_Checkboxes.at(itemRow)->setEnabled(false);
-        replaceInAllFiles_Checkboxes.at(itemRow)->setStyleSheet("QCheckBox::indicator:unchecked {border: 0px solid white}");
+//        ui->groupBox->setMaximumHeight(ui->listWidget->height());
+        leftPaneCheckboxesStates[itemRow] = 0;
 
+//        replaceInAllFiles_Checkboxes.at(itemRow)->setCheckState(Qt::Unchecked);
+//        replaceInAllFiles_Checkboxes.at(itemRow)->setEnabled(false);
+//        replaceInAllFiles_Checkboxes.at(itemRow)->setStyleSheet("QCheckBox::indicator:unchecked {border: 0px solid white}");
+
+        flags = flags & (~(Qt::ItemIsEnabled | Qt::ItemIsUserCheckable));
+        ui->ReplaceInAllPagesListWidget->item(itemRow)->setFlags(flags);
+        ui->ReplaceInAllPagesListWidget->item(itemRow)->setCheckState(Qt::Unchecked);
         //! However if some other word is checked then we still keep the right hand side groupbox pane
         //! visible, only those words are not selected their right hand side checkbox is disabled.
         //! Thus we check if some other checkbox is checked or not?? If yes the groupbox is visible else
         //! invisible
-        for (int i = 0; i < wordSelection_CheckboxesState.size(); i++)
+        for (int i = 0; i < leftPaneCheckboxesStates.size(); i++)
         {
-            if ( wordSelection_CheckboxesState.at(i) == 1 )
+            if ( leftPaneCheckboxesStates.at(i) == 1 )
             {
                 ui->groupBox->setVisible(true);
                 return;
             }
         }
         ui->groupBox->setVisible(false);
-        ui->groupBox->setTitle("");
+//        ui->groupBox->setTitle("");
     }
 }
 
@@ -261,10 +281,10 @@ QVector<int> GlobalReplaceDialog::getStatesOfCheckboxes()
 
     //! Loop through all checkboxes, if left hand side checkboxed is checked
     //! and right hand side of checkbox is also checked then push 1 else push 0
-    for (int i = 0; i < wordSelection_CheckboxesState.size(); i++)
+    for (int i = 0; i < leftPaneCheckboxesStates.size(); i++)
     {
-        if (wordSelection_CheckboxesState.at(i) == 1) {
-            if (replaceInAllFiles_Checkboxes.at(i)->checkState() == Qt::Checked)
+        if (leftPaneCheckboxesStates.at(i) == 1) {
+            if (rightPaneCheckboxes.at(i)->checkState() == Qt::Checked)
                 statesOfRightCheckboxes.push_back(1);
             else
                 statesOfRightCheckboxes.push_back(0);
