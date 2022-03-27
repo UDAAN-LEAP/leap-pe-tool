@@ -13,6 +13,7 @@
 *.userprefs
 *.o
 qpadfinal
+FrameWorkCode/.qtc_clangd/
 
 # Build results
 [Dd]ebug/
