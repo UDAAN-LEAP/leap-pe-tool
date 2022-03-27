@@ -8666,3 +8666,77 @@ void MainWindow::RecentPageInfo()
     }}
 }
 
+
+void MainWindow::on_actionSoftware_Update_triggered()
+{
+    QUrl url("https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases");
+    qInfo() << url.toString();
+    QNetworkRequest request(url);               //requesting url over the network
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QNetworkAccessManager nam;                  //sending network request
+    QNetworkReply * reply = nam.get(request);
+    QTimer *timer = new QTimer();
+    timer->start(5000);
+
+    while(true){
+        qApp->processEvents();
+        if(reply->isFinished()) break;
+    }
+
+    if(reply->isFinished()){
+        QByteArray response_data = reply->readAll();
+        QJsonDocument json = QJsonDocument::fromJson(response_data);
+        qDebug() << json[0]["name"].toString();
+        if(json[0]["name"].toString() == "")
+        {
+            qDebug() << QString("Timeout .... Internet Not Available");
+           // return "";
+        }
+        QString latestVersion=json[0]["name"].toString();
+        qDebug()<<latestVersion;
+        QString curr_version = qApp->applicationVersion();
+        //QString latestVersion = UpdateInfo();
+        qDebug() << curr_version;
+        if(curr_version==latestVersion)
+        {
+            QMessageBox box;
+            box.setText("Software is already updated");
+            box.exec();
+        }
+        else{
+            QMessageBox msg(this);
+            msg.setWindowTitle("Update Available");
+            msg.setIcon(QMessageBox::Information);
+            msg.setText("A New Version of OpenOCRCorrect is Available!!\n\nOpenOCRCorrect "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below\n");
+            QAbstractButton *download = msg.addButton(tr("Go to Download Page"), QMessageBox::ActionRole);
+            download->setMinimumWidth(160);
+            QAbstractButton *rml = msg.addButton(tr("Remind me Later"), QMessageBox::RejectRole);
+            rml->setMinimumWidth(140);
+            QCheckBox *cb = new QCheckBox("Don't Show this again");
+            msg.setCheckBox(cb);
+            cb->setStyleSheet("QCheckBox::indicator:unchecked{border: 1px solid white};");
+            msg.exec();
+
+            if(msg.clickedButton() == download){
+                QDesktopServices::openUrl(QUrl("https://drive.google.com/drive/folders/1DZn72n6gH0r459hTGsL2f7qhoZnHQPEI"));
+            }
+            else {
+                this->close();
+            }
+            if(cb->checkState() == Qt::Checked)
+            {
+                QSettings settings("IIT-B", "OpenOCRCorrect");
+                settings.beginGroup("SoftwareUpdate");
+                settings.setValue("showUpdate",false);
+                settings.endGroup();
+            }
+            else
+            {
+                QSettings settings("IIT-B", "OpenOCRCorrect");
+                settings.beginGroup("SoftwareUpdate");
+                settings.setValue("showUpdate",true);
+                settings.endGroup();
+            }
+        }
+}
+}

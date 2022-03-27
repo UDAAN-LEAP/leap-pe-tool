@@ -136,6 +136,7 @@ public:
     QAction *actionFont_Color;
     QAction *action2;
     QAction *action3;
+    QAction *actionSoftware_Update;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_5;
     QVBoxLayout *verticalLayout_4;
@@ -529,6 +530,8 @@ public:
         action2->setObjectName(QString::fromUtf8("action2"));
         action3 = new QAction(MainWindow);
         action3->setObjectName(QString::fromUtf8("action3"));
+        actionSoftware_Update = new QAction(MainWindow);
+        actionSoftware_Update->setObjectName(QString::fromUtf8("actionSoftware_Update"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         centralWidget->setStyleSheet(QString::fromUtf8("mainToolBar{background:rgb(143, 89, 2)}"));
@@ -1350,6 +1353,7 @@ public:
         menuHelp->addAction(menuInstallation_Guide->menuAction());
         menuHelp->addAction(actionTutorial);
         menuHelp->addAction(actionShortcut_Guide);
+        menuHelp->addAction(actionSoftware_Update);
         menuInstallation_Guide->addAction(actionLinux);
         menuInstallation_Guide->addAction(actionWindows);
         menuSelectLanguage->addAction(actionSanskrit_2);
@@ -1419,7 +1423,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
         tabWidget_2->setCurrentIndex(0);
 
 
@@ -1631,6 +1635,7 @@ public:
 #ifndef QT_NO_TOOLTIP
         action3->setToolTip(QApplication::translate("MainWindow", "3|", nullptr));
 #endif // QT_NO_TOOLTIP
+        actionSoftware_Update->setText(QApplication::translate("MainWindow", "Software Update", nullptr));
         pushButton_2->setText(QApplication::translate("MainWindow", "Resize Image", nullptr));
         pushButton->setText(QApplication::translate("MainWindow", "Mark Regions", nullptr));
         viewComments->setText(QApplication::translate("MainWindow", "Comments Accuracy", nullptr));

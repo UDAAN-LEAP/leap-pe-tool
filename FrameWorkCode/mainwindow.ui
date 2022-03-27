@@ -1129,6 +1129,7 @@ QMenu::item:selected{
     <addaction name="menuInstallation_Guide"/>
     <addaction name="actionTutorial"/>
     <addaction name="actionShortcut_Guide"/>
+    <addaction name="actionSoftware_Update"/>
    </widget>
    <widget class="QMenu" name="menuSelectLanguage">
     <property name="styleSheet">
@@ -2034,6 +2035,11 @@ background-color: #EEF0F2;
    </property>
    <property name="toolTip">
     <string>3|</string>
+   </property>
+  </action>
+  <action name="actionSoftware_Update">
+   <property name="text">
+    <string>Software Update</string>
    </property>
   </action>
  </widget>
