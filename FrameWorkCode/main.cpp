@@ -111,7 +111,8 @@ int main(int argc, char *argv[])
         msgBox.show();
     }
     else {
-        w.show();         //loads main window ui and backend files
+//        w.show();         //loads main window ui and backend files
+        w.showMaximized();  //loads main window ui and backend files
     }
 
     int retn = a.exec();

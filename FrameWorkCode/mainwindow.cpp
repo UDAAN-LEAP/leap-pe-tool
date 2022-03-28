@@ -76,6 +76,7 @@
 #include <QThread>
 #include "verifyset.h"
 #include "loaddataworker.h"
+#include "globalreplaceworker.h"
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -161,6 +162,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
                                             };
     if(!setRole(passwordRoleMap[password]))
         mExitStatus = true;
+
+    this->show();
+    this->setWindowState(Qt::WindowState::WindowActive);
 
     QString common = "डॉ - xZ,, अ  - a,, आ/ ा  - A,, इ/ ि  - i,, ई/ ी  - I,, उ/ ु  - u,, ऊ/ ू  - U,, ऋ/ ृ  - f,, ए/ े  - e,, ऐ/ ै  - E,, ओ/ ो  - o,, औ/ ौ  - O,, ं  - M,, ः  - H,,  ँ   - ~,, ज्ञ  - jYa,, त्र  - tra,, श्र  - Sra,, क्ष्/क्ष  - kz/kza,, द्य्/द्य  - dy/dya,, क्/क  - k/ka,, ख्/ख  - K/Ka,, ग्/ग  - g/ga,, घ्/घ  - G/Ga,, ङ्/ङ  - N/Na,, च्/च  - c/ca,, छ्/छ  - C/Ca,, ज्/ज  - j/ja,, झ्/झ  - J/Ja,, ञ्/ञ  - Y/Ya,, ट्/ट  - w/wa,, ठ्/ठ  - W/Wa,, ड्/ड  - q/qa,, ढ्/ढ  - Q/Qa,, ण्/ण  - R/Ra,, त्/त  - t/ta,, थ्/थ  - T/Ta,, द्/द  - d/da,, ध्/ध  - D/Da,, न्/न  - n/na,, प्/प  - p/pa,, फ्/फ  - P/Pa,, ब्/ब  - b/ba,, भ्/भ  - B/Ba,, म्/म  - m/ma,, य्/य  - y/ya,, र्/र  - r/ra,, ल्/ल  - l/la,, व्/व  - v/va,, श्/श  - S/Sa,, ष्/ष  - z/za,, स्/स  - s/sa,, ह्/ह  - h/ha,, ळ्/ळ  - L/La,, १  - 1,, २  - 2,, ३  - 3,, ४  - 4,, ५  - 5,, ६  - 6,, ७  - 7,, ८  - 8,, ९  - 9,, ०  - 0,, ।  - |,, ॥  - ||";
     gSanskrit = "SLP1 Sanskrit Guide:";
@@ -5964,139 +5968,174 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     {
 //        mapOfReplacements = globalReplacementMap;
         globallyReplacedWords = globalReplacementMap;
-        QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
 
-        if (noOfChangedWords == 1)
-        {
-            if (check == 0)
-            {
-                while (dirIterator.hasNext()) {
-                    QString it_file_path = dirIterator.next();
-                    bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
-                    QString suff = dirIterator.fileInfo().completeSuffix();
-                    if(!isFileInEditedFilesLog)
-                    {
-                        filesChangedUsingGlobalReplace.append(it_file_path);
-                        if(suff == "html") {
-                            r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
-                            r2 = r2 + r1;
-                            if(r1 > 0)
-                            files++;
-                        }
-                        else if(suff != "dict"){
-                            x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
-                        }
-                    }
-                }
-            }
-            else if (check == 1)
-            {
-                while (dirIterator.hasNext()) {
-                    QString it_file_path = dirIterator.next();
-                    QString suff = dirIterator.fileInfo().completeSuffix();
-                    filesChangedUsingGlobalReplace.append(it_file_path);
-                    if(suff == "html") {
-                        r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
-                        r2 = r2 + r1;
-                        if(r1 > 0)
-                        files++;
-                    }
-                    else if(suff != "dict"){
-                        x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
-                    }
-                }
-            }
-        }
-        else if (noOfChangedWords > 1)
-        {
-            //! Replacing in Unedited pages
-            while (dirIterator.hasNext())
-            {
-                QString it_file_path = dirIterator.next();
-                bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
-                QString suff = dirIterator.fileInfo().completeSuffix();
-                if (!isFileInEditedFilesLog)
-                {
-                    filesChangedUsingGlobalReplace.append(it_file_path);
-                    if(suff == "html") {
-                        r1 = writeGlobalCPairsToFiles(it_file_path, replaceInUneditedPages_Map);
-                        r2 = r2 + r1;
-                        if(r1 > 0)
-                        files++;
-                    }
-                    else if(suff != "dict"){
-                        x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
-                    }
-                }
-            }
-            QDirIterator dirIterator_2(currentFileDirectory, QDirIterator::Subdirectories);
+        /*START MULTITHREADING IMPLEMENTATION HERE*/
+        GlobalReplaceWorker *grWorker = new GlobalReplaceWorker(
+                    nullptr,
+                    &filesChangedUsingGlobalReplace,
+                    &mapOfReplacements,
+                    globalReplacementMap,
+                    replaceInAllPages_Map,
+                    replaceInUneditedPages_Map,
+                    currentFileDirectory,
+                    gDirTwoLevelUp,
+                    gCurrentPageName,
+                    noOfChangedWords,
+                    check,
+                    &r1,
+                    &r2,
+                    &x1,
+                    &files
+                    );
 
-            //! Replacing in all pages
-            while (dirIterator_2.hasNext())
-            {
-                QString it_file_path = dirIterator_2.next();
-                QString suff = dirIterator_2.fileInfo().completeSuffix();
-                filesChangedUsingGlobalReplace.append(it_file_path);
-                if(suff == "html") {
-                    r1 = writeGlobalCPairsToFiles(it_file_path, replaceInAllPages_Map);
-                    r2 = r2 + r1;
-                    if(r1 > 0)
-                    files++;
-                }
-                else if(suff != "dict"){
-                    x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
-                }
-            }
-        }
-    }
+        QThread *thread = new QThread;
+        connect(thread, SIGNAL(started()), grWorker, SLOT(replaceWordsInFiles()));
+        connect(grWorker, SIGNAL(finishedReplacingWords()), grWorker, SLOT(writeLogs()));
+        connect(grWorker, SIGNAL(finishedWritingLogs()), thread, SLOT(quit()));
+        connect(grWorker, SIGNAL(finishedWritingLogs()), grWorker, SLOT(deleteLater()));
+        connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+        connect(grWorker, SIGNAL(finishedWritingLogs()), this, SLOT(stopSpinning()));
+        grWorker->moveToThread(thread);
+        thread->start();
 
-    //! Writing logs
-    if(globalReplacementMap.values().length()>0)
-    {
-        QMap <QString, QString>::iterator grmIterator;
+        spinner = new LoadingSpinner(this);
+        spinner->SetMessage("Replacing Words", "Please wait while words are replacing");
+        spinner->setModal(false);
+        spinner->exec();
 
-        QDir directory(gDirTwoLevelUp);
-        QString setName=directory.dirName();
-        QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
-        QFile csvFile(filename);
-        if(!csvFile.exists())
-        {
-            csvFile.open(QIODevice::ReadWrite | QIODevice::Append);
-            QTextStream output(&csvFile);
-            output.setCodec("UTF-8");
-            output << "Source Word,Target Word,Type of Replacement,Time of Replacement,Page Name,Set name";
-        }
+//        QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
 
-        else
-        {
-            csvFile.open(QIODevice::ReadWrite | QIODevice::Append);
-        }
+//        if (noOfChangedWords == 1)
+//        {
+//            if (check == 0)
+//            {
+//                while (dirIterator.hasNext()) {
+//                    QString it_file_path = dirIterator.next();
+//                    bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
+//                    QString suff = dirIterator.fileInfo().completeSuffix();
+//                    if(!isFileInEditedFilesLog)
+//                    {
+//                        filesChangedUsingGlobalReplace.append(it_file_path);
+//                        if(suff == "html") {
+//                            r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+//                            r2 = r2 + r1;
+//                            if(r1 > 0)
+//                            files++;
+//                        }
+//                        else if(suff != "dict"){
+//                            x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+//                        }
+//                    }
+//                }
+//            }
+//            else if (check == 1)
+//            {
+//                while (dirIterator.hasNext()) {
+//                    QString it_file_path = dirIterator.next();
+//                    QString suff = dirIterator.fileInfo().completeSuffix();
+//                    filesChangedUsingGlobalReplace.append(it_file_path);
+//                    if(suff == "html") {
+//                        r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+//                        r2 = r2 + r1;
+//                        if(r1 > 0)
+//                        files++;
+//                    }
+//                    else if(suff != "dict"){
+//                        x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+//                    }
+//                }
+//            }
+//        }
+//        else if (noOfChangedWords > 1)
+//        {
+//            //! Replacing in Unedited pages
+//            while (dirIterator.hasNext())
+//            {
+//                QString it_file_path = dirIterator.next();
+//                bool isFileInEditedFilesLog = isStringInFile(editedFilesLogPath, it_file_path);
+//                QString suff = dirIterator.fileInfo().completeSuffix();
+//                if (!isFileInEditedFilesLog)
+//                {
+//                    filesChangedUsingGlobalReplace.append(it_file_path);
+//                    if(suff == "html") {
+//                        r1 = writeGlobalCPairsToFiles(it_file_path, replaceInUneditedPages_Map);
+//                        r2 = r2 + r1;
+//                        if(r1 > 0)
+//                        files++;
+//                    }
+//                    else if(suff != "dict"){
+//                        x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+//                    }
+//                }
+//            }
+//            QDirIterator dirIterator_2(currentFileDirectory, QDirIterator::Subdirectories);
 
-        for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
-        {
-            QString sourceString = grmIterator.key();
-            QString replaceString= grmIterator.value();
-            QString typeOfReplacement;
-            if(replaceInAllPages_Map.contains(sourceString)||check==1)
-            {
-               typeOfReplacement="All Pages";
-            }
-            else if(replaceInUneditedPages_Map.contains(sourceString)||check==0)
-            {
-               typeOfReplacement="Unedited Pages";
-            }
+//            //! Replacing in all pages
+//            while (dirIterator_2.hasNext())
+//            {
+//                QString it_file_path = dirIterator_2.next();
+//                QString suff = dirIterator_2.fileInfo().completeSuffix();
+//                filesChangedUsingGlobalReplace.append(it_file_path);
+//                if(suff == "html") {
+//                    r1 = writeGlobalCPairsToFiles(it_file_path, replaceInAllPages_Map);
+//                    r2 = r2 + r1;
+//                    if(r1 > 0)
+//                    files++;
+//                }
+//                else if(suff != "dict"){
+//                    x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+//                }
+//            }
+//        }
+//    }
 
-            QDateTime current = QDateTime::currentDateTime();
-            QString time = current.toString();
+//    //! Writing logs
+//    if(globalReplacementMap.values().length()>0)
+//    {
+//        QMap <QString, QString>::iterator grmIterator;
 
-            QTextStream output(&csvFile);
-            output.setCodec("UTF-8");
-            //qDebug() << "csv Contents" << output.readAll();
-            output << "\n";
-            output<<sourceString<<","<<replaceString<<","<<typeOfReplacement<<","<<time<<","<<gCurrentPageName<<","<<setName;
-        }
-        csvFile.close();
-        check=2;
+//        QDir directory(gDirTwoLevelUp);
+//        QString setName=directory.dirName();
+//        QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
+//        QFile csvFile(filename);
+//        if(!csvFile.exists())
+//        {
+//            csvFile.open(QIODevice::ReadWrite | QIODevice::Append);
+//            QTextStream output(&csvFile);
+//            output.setCodec("UTF-8");
+//            output << "Source Word,Target Word,Type of Replacement,Time of Replacement,Page Name,Set name";
+//        }
+
+//        else
+//        {
+//            csvFile.open(QIODevice::ReadWrite | QIODevice::Append);
+//        }
+
+//        for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
+//        {
+//            QString sourceString = grmIterator.key();
+//            QString replaceString= grmIterator.value();
+//            QString typeOfReplacement;
+//            if(replaceInAllPages_Map.contains(sourceString)||check==1)
+//            {
+//               typeOfReplacement="All Pages";
+//            }
+//            else if(replaceInUneditedPages_Map.contains(sourceString)||check==0)
+//            {
+//               typeOfReplacement="Unedited Pages";
+//            }
+
+//            QDateTime current = QDateTime::currentDateTime();
+//            QString time = current.toString();
+
+//            QTextStream output(&csvFile);
+//            output.setCodec("UTF-8");
+//            //qDebug() << "csv Contents" << output.readAll();
+//            output << "\n";
+//            output<<sourceString<<","<<replaceString<<","<<typeOfReplacement<<","<<time<<","<<gCurrentPageName<<","<<setName;
+//        }
+//        csvFile.close();
+//        check=2;
 
     }
 
