@@ -6450,7 +6450,9 @@ void MainWindow::DisplayJsonDict(QTextBrowser *b, QString input)
 
         while(numReplaced<count)
         {
-
+            if(x.size()<count){
+                break;
+            }
             int endIndex;
             indexOfReplacedWord = input.indexOf(x,from , Qt::CaseInsensitive);
             endIndex = indexOfReplacedWord;
