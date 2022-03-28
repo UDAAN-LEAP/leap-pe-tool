@@ -421,7 +421,7 @@ private slots:
 
     void on_action3_triggered();
 
-    void on_actionSoftware_Update_triggered();
+    void on_actionCheck_for_Updates_triggered();
 
 public slots:
     void SaveFile_Backend();

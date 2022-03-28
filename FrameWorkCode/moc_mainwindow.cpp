@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[193];
-    char stringdata0[4006];
+    char stringdata0[4008];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -221,10 +221,10 @@ QT_MOC_LITERAL(185, 3818, 4), // "arg1"
 QT_MOC_LITERAL(186, 3823, 20), // "on_action1_triggered"
 QT_MOC_LITERAL(187, 3844, 20), // "on_action2_triggered"
 QT_MOC_LITERAL(188, 3865, 20), // "on_action3_triggered"
-QT_MOC_LITERAL(189, 3886, 34), // "on_actionSoftware_Update_trig..."
-QT_MOC_LITERAL(190, 3921, 16), // "SaveFile_Backend"
-QT_MOC_LITERAL(191, 3938, 33), // "on_actionLoad_Next_Page_trigg..."
-QT_MOC_LITERAL(192, 3972, 33) // "on_actionLoad_Prev_Page_trigg..."
+QT_MOC_LITERAL(189, 3886, 36), // "on_actionCheck_for_Updates_tr..."
+QT_MOC_LITERAL(190, 3923, 16), // "SaveFile_Backend"
+QT_MOC_LITERAL(191, 3940, 33), // "on_actionLoad_Next_Page_trigg..."
+QT_MOC_LITERAL(192, 3974, 33) // "on_actionLoad_Prev_Page_trigg..."
 
     },
     "MainWindow\0closeSignal\0\0createActions\0"
@@ -344,7 +344,7 @@ QT_MOC_LITERAL(192, 3972, 33) // "on_actionLoad_Prev_Page_trigg..."
     "stopSpinning\0on_lineEditSearch_textChanged\0"
     "arg1\0on_action1_triggered\0"
     "on_action2_triggered\0on_action3_triggered\0"
-    "on_actionSoftware_Update_triggered\0"
+    "on_actionCheck_for_Updates_triggered\0"
     "SaveFile_Backend\0on_actionLoad_Next_Page_triggered\0"
     "on_actionLoad_Prev_Page_triggered"
 };
@@ -827,7 +827,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 139: _t->on_action1_triggered(); break;
         case 140: _t->on_action2_triggered(); break;
         case 141: _t->on_action3_triggered(); break;
-        case 142: _t->on_actionSoftware_Update_triggered(); break;
+        case 142: _t->on_actionCheck_for_Updates_triggered(); break;
         case 143: _t->SaveFile_Backend(); break;
         case 144: _t->on_actionLoad_Next_Page_triggered(); break;
         case 145: _t->on_actionLoad_Prev_Page_triggered(); break;

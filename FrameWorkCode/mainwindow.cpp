@@ -8667,7 +8667,9 @@ void MainWindow::RecentPageInfo()
 }
 
 
-void MainWindow::on_actionSoftware_Update_triggered()
+
+
+void MainWindow::on_actionCheck_for_Updates_triggered()
 {
     QUrl url("https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases");
     qInfo() << url.toString();
@@ -8700,7 +8702,7 @@ void MainWindow::on_actionSoftware_Update_triggered()
         if(curr_version==latestVersion)
         {
             QMessageBox box;
-            box.setText("Software is already updated");
+            box.setText("Software is already on the latest version");
             box.exec();
         }
         else{
@@ -8712,9 +8714,9 @@ void MainWindow::on_actionSoftware_Update_triggered()
             download->setMinimumWidth(160);
             QAbstractButton *rml = msg.addButton(tr("Remind me Later"), QMessageBox::RejectRole);
             rml->setMinimumWidth(140);
-            QCheckBox *cb = new QCheckBox("Don't Show this again");
-            msg.setCheckBox(cb);
-            cb->setStyleSheet("QCheckBox::indicator:unchecked{border: 1px solid white};");
+            //QCheckBox *cb = new QCheckBox("Don't Show this again");
+            //msg.setCheckBox(cb);
+            //cb->setStyleSheet("QCheckBox::indicator:unchecked{border: 1px solid white};");
             msg.exec();
 
             if(msg.clickedButton() == download){
@@ -8723,20 +8725,20 @@ void MainWindow::on_actionSoftware_Update_triggered()
             else {
                 this->close();
             }
-            if(cb->checkState() == Qt::Checked)
-            {
-                QSettings settings("IIT-B", "OpenOCRCorrect");
-                settings.beginGroup("SoftwareUpdate");
-                settings.setValue("showUpdate",false);
-                settings.endGroup();
-            }
-            else
-            {
-                QSettings settings("IIT-B", "OpenOCRCorrect");
-                settings.beginGroup("SoftwareUpdate");
-                settings.setValue("showUpdate",true);
-                settings.endGroup();
-            }
+            //if(cb->checkState() == Qt::Checked)
+            //{
+              //  QSettings settings("IIT-B", "OpenOCRCorrect");
+                //settings.beginGroup("SoftwareUpdate");
+                //settings.setValue("showUpdate",false);
+                //settings.endGroup();
+            //}
+            //else
+            //{
+              //  QSettings settings("IIT-B", "OpenOCRCorrect");
+                //settings.beginGroup("SoftwareUpdate");
+                //settings.setValue("showUpdate",true);
+                //settings.endGroup();
+            //}
         }
 }
 }
