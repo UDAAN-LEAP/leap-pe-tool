@@ -230,7 +230,7 @@ QTabWidget::pane {
 </string>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -491,25 +491,58 @@ QScrollBar::sub-line:vertical {
             </item>
            </layout>
           </widget>
-         </widget>
-         <widget class="QTextEdit" name="textEdit_dict">
-          <property name="styleSheet">
-           <string notr="true">QTextEdit{
-color:#18182F;
+          <widget class="QWidget" name="tab_3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <attribute name="title">
+            <string>Dict</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <widget class="QLineEdit" name="lineEdit_4">
+              <property name="styleSheet">
+               <string notr="true">#lineEdit_4{
+background-color: rgb(255, 255, 255);
+color:black;
+border:0px;
+height:26.96px;
+padding-top:1pxx; 
+border-radius:4.8px; 
+padding-left:1.3px; 
+margin-top: 8px;
+}</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTextEdit" name="textEdit_dict">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QTextEdit{
+	color:rgb(32, 33, 72);
 	border: 5px solid #BCBDBD;
+	margin: 0px;
 	background-color:white;
 }
 QScrollBar:vertical { 
                                                 border: none;
                                                 background: white;
-                                                
+                                             
                                             }
 QScrollBar::handle:vertical { 
                                                 background-color:  rgba(1, 22, 51, 0.5);
                                                 min-height: 273.41px;
 														border: 0px solid red; 
 														border-radius:4.905px;
-														
                                             }
 QScrollBar::add-line:vertical {       
                             height: 0px;
@@ -522,13 +555,18 @@ QScrollBar::sub-line:vertical {
                             subcontrol-position: top; 
                             subcontrol-origin: margin; 
                         }
-
-
 </string>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QAbstractScrollArea::AdjustToContents</enum>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </widget>
         <widget class="QTabWidget" name="tabWidget_2">

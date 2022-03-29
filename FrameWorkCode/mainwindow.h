@@ -423,6 +423,8 @@ private slots:
 
     void on_actionCheck_for_Updates_triggered();
 
+    void on_lineEdit_4_textChanged(const QString &arg1);
+
 public slots:
     void SaveFile_Backend();
 

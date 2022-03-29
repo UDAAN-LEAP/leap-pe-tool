@@ -147,6 +147,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->lineEditSearch->setPlaceholderText("Search");
     QIcon search_1("./Resources/search.jpeg");
     ui->lineEditSearch->addAction(search_1, QLineEdit::LeadingPosition);
+    ui->lineEdit_4->setPlaceholderText("Search");
+    ui->lineEdit_4->addAction(search_1, QLineEdit::LeadingPosition);
+
     QString password  = "";
     QString passwordFilePath = QDir::currentPath() + "/pass.txt";
     QFile passwordFile(passwordFilePath);
@@ -1152,10 +1155,10 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         isRecentProjclick = false;
 
         // Setting Project window size and dict window size = 50% - 50%
-        QList<int> list1 = ui->splitter_2->sizes();
-        int totalHeight;
-        totalHeight = list1.at(0) + list1.at(1);
-        ui->splitter_2->setSizes(QList<int>() << totalHeight/2 << totalHeight/2);
+//        QList<int> list1 = ui->splitter_2->sizes();
+//        int totalHeight;
+//        totalHeight = list1.at(0) + list1.at(1);
+//        ui->splitter_2->setSizes(QList<int>() << totalHeight/2 << totalHeight/2);
     }
     else
     {
@@ -8782,4 +8785,9 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
             //}
         }
 }
+}
+
+void MainWindow::on_lineEdit_4_textChanged(const QString &arg1)
+{
+
 }
