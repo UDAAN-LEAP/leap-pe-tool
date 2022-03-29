@@ -1535,7 +1535,16 @@ void MainWindow::on_actionSave_triggered()
     {
         SaveFile_GUI_Preprocessing(); // GUI Preprocessing
 
-        Worker *worker = new Worker(nullptr, this);
+        Worker *worker = new Worker(nullptr,
+                                    &mProject,
+                                    gCurrentPageName,
+                                    gCurrentDirName,
+                                    gDirTwoLevelUp,
+                                    s1,
+                                    s2,
+                                    CPair_editDis,
+                                    &CPairs,
+                                    filestructure_fw);
         QThread *thread = new QThread;
 
         connect(thread, SIGNAL(started()), worker, SLOT(doSaveBackend()));

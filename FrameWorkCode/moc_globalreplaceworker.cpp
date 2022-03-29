@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'globalreplaceworker.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.8)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.9)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'globalreplaceworker.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.12.8. It"
+#error "This file was generated using the moc from 5.9.9. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -48,7 +48,7 @@ QT_MOC_LITERAL(5, 84, 9) // "writeLogs"
 static const uint qt_meta_data_GlobalReplaceWorker[] = {
 
  // content:
-       8,       // revision
+       7,       // revision
        0,       // classname
        0,    0, // classinfo
        4,   14, // methods
@@ -80,7 +80,7 @@ static const uint qt_meta_data_GlobalReplaceWorker[] = {
 void GlobalReplaceWorker::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<GlobalReplaceWorker *>(_o);
+        GlobalReplaceWorker *_t = static_cast<GlobalReplaceWorker *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->finishedReplacingWords(); break;
@@ -92,14 +92,14 @@ void GlobalReplaceWorker::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (GlobalReplaceWorker::*)();
+            typedef void (GlobalReplaceWorker::*_t)();
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&GlobalReplaceWorker::finishedReplacingWords)) {
                 *result = 0;
                 return;
             }
         }
         {
-            using _t = void (GlobalReplaceWorker::*)();
+            typedef void (GlobalReplaceWorker::*_t)();
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&GlobalReplaceWorker::finishedWritingLogs)) {
                 *result = 1;
                 return;
@@ -109,14 +109,10 @@ void GlobalReplaceWorker::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
     Q_UNUSED(_a);
 }
 
-QT_INIT_METAOBJECT const QMetaObject GlobalReplaceWorker::staticMetaObject = { {
-    &QObject::staticMetaObject,
-    qt_meta_stringdata_GlobalReplaceWorker.data,
-    qt_meta_data_GlobalReplaceWorker,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
+const QMetaObject GlobalReplaceWorker::staticMetaObject = {
+    { &QObject::staticMetaObject, qt_meta_stringdata_GlobalReplaceWorker.data,
+      qt_meta_data_GlobalReplaceWorker,  qt_static_metacall, nullptr, nullptr}
+};
 
 
 const QMetaObject *GlobalReplaceWorker::metaObject() const

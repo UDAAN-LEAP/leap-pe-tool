@@ -2,16 +2,33 @@
 #define WORKER_H
 
 #include <QObject>
-#include "mainwindow.h"
+#include "Project.h"
+#include <set>
 
 class Worker : public QObject
 {
     Q_OBJECT
 public:
-    explicit Worker(QObject *parent = nullptr, MainWindow *mw = nullptr);
+    explicit Worker(QObject *parent = nullptr,
+                    Project* mProject = nullptr,
+                    QString gCurrentPageName = "",
+                    QString gCurrentDirName = "",
+                    QString gDirTwoLevelUp = "",
+                    QString s1 = "",
+                    QString s2 = "",
+                    std::map<std::string, std::string> CPair_editDis = {},
+                    std::map<std::string, std::set<std::string> >* CPairs = nullptr,
+                    std::map<QString, QString> filestructure_fw = {});
 
 private:
-    MainWindow *mainWin;
+    QString gCurrentPageName;
+    QString gCurrentDirName;
+    QString gDirTwoLevelUp;
+    QString s1, s2;
+    Project* mProject;
+    std::map<std::string, std::string> CPair_editDis;
+    std::map<QString, QString> filestructure_fw;
+    std::map<std::string, std::set<std::string> >* CPairs;
 
 signals:
     void finished();
@@ -21,3 +38,4 @@ public slots:
 };
 
 #endif // WORKER_H
+
