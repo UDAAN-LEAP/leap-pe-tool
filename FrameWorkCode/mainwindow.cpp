@@ -5915,6 +5915,18 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
 
 }
 
+void MainWindow::closeProgressBar()
+{
+    progressBarDialog->close();
+    progressBarDialog->deleteLater();
+}
+
+void MainWindow::setProgressBarPerc(int value)
+{
+    progressBarDialog->setPercentage(value);
+}
+
+
 /*!
  * \fn MainWindow::runGlobalReplace
  * \brief Replace words iteratively
@@ -6006,14 +6018,20 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         connect(grWorker, SIGNAL(finishedWritingLogs()), thread, SLOT(quit()));
         connect(grWorker, SIGNAL(finishedWritingLogs()), grWorker, SLOT(deleteLater()));
         connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-        connect(grWorker, SIGNAL(finishedWritingLogs()), this, SLOT(stopSpinning()));
+        connect(grWorker, SIGNAL(finishedWritingLogs()), this, SLOT(closeProgressBar()));
+        connect(grWorker, SIGNAL(changeProgressBarValue(int)), this, SLOT(setProgressBarPerc(int)));
         grWorker->moveToThread(thread);
         thread->start();
 
-        spinner = new LoadingSpinner(this);
-        spinner->SetMessage("Replacing Words", "Please wait while words are replacing");
-        spinner->setModal(false);
-        spinner->exec();
+        progressBarDialog = new ProgressBarDialog(this);
+        progressBarDialog->setMessage("Replacing words...");
+        progressBarDialog->setModal(false);
+        progressBarDialog->exec();
+
+//        spinner = new LoadingSpinner(this);
+//        spinner->SetMessage("Replacing Words", "Please wait while words are replacing");
+//        spinner->setModal(false);
+//        spinner->exec();
 
 //        QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
 

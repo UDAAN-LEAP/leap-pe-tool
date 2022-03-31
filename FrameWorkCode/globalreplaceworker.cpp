@@ -3,6 +3,7 @@
 #include <QDirIterator>
 #include <QTextStream>
 #include <QDateTime>
+#include <QDebug>
 
 GlobalReplaceWorker::GlobalReplaceWorker(QObject *parent,
                                          QList<QString> *filesChangedUsingGlobalReplace,
@@ -79,6 +80,21 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
 void GlobalReplaceWorker::replaceWordsInFiles()
 {
     QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
+    QDir currDir(currentFileDirectory);
+    QString suffix;
+    QString toolMode = currentFileDirectory.right(currentFileDirectory.size() - currentFileDirectory.lastIndexOf('/') - 1);
+    if (toolMode == "CorrectorOutput" || toolMode == "VerifierOutput")
+    {
+        suffix = "*.html";
+    }
+    else if (toolMode == "Document")
+    {
+        suffix = "*.txt";
+    }
+    QStringList fileNameList = currDir.entryList({suffix}, QDir::Files);
+    int numberOfFiles = fileNameList.size();
+    int count = 0;
+    int perc = 0; // percentage to be shown on progress bar
 
     if (numOfChangedWords == 1)
     {
@@ -101,6 +117,12 @@ void GlobalReplaceWorker::replaceWordsInFiles()
                         *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
                     }
                 }
+                count++;
+                int tempPerc = (count * 100) / numberOfFiles;
+                if (tempPerc > perc) {
+                    perc = tempPerc;
+                    emit changeProgressBarValue(perc);
+                }
             }
         }
         else if (check == 1)
@@ -117,6 +139,12 @@ void GlobalReplaceWorker::replaceWordsInFiles()
                 }
                 else if(suff != "dict"){
                     *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                }
+                count++;
+                int tempPerc = (count * 100) / numberOfFiles;
+                if (tempPerc > perc) {
+                    perc = tempPerc;
+                    emit changeProgressBarValue(perc);
                 }
             }
         }
@@ -142,7 +170,17 @@ void GlobalReplaceWorker::replaceWordsInFiles()
                     *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
                 }
             }
+            count++;
+            int tempPerc = (count * 100) / numberOfFiles;
+            if ((tempPerc > perc) && (tempPerc < 50)) {
+                perc = tempPerc;
+                emit changeProgressBarValue(perc);
+            }
         }
+        emit changeProgressBarValue(50);
+        count = 0;
+        perc = 0;
+
         QDirIterator dirIterator_2(currentFileDirectory, QDirIterator::Subdirectories);
 
         //! Replacing in all pages
@@ -160,9 +198,17 @@ void GlobalReplaceWorker::replaceWordsInFiles()
             else if(suff != "dict"){
                 *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
             }
+
+            count++;
+            int tempPerc = (count * 100) / numberOfFiles;
+            if ((tempPerc > perc) && (tempPerc > 50)) {
+                perc = tempPerc;
+                emit changeProgressBarValue(perc);
+            }
         }
     }
 
+    emit changeProgressBarValue(100);
     emit finishedReplacingWords();
 }
 

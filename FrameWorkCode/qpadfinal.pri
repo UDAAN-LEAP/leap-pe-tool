@@ -32,6 +32,7 @@ HEADERS += ./Filters.h \
 	$$PWD/loaddataworker.h \
     $$PWD/loadingspinner.h \
     $$PWD/markRegion.h \
+    $$PWD/progressbardialog.h \
     $$PWD/shortcutguidedialog.h \
     $$PWD/textfinder.h \
     $$PWD/globalreplacedialog.h \
@@ -108,6 +109,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/loadingspinner.cpp \
     $$PWD/markRegion.cpp \
     $$PWD/meanStdPage.cpp \
+    $$PWD/progressbardialog.cpp \
     $$PWD/shortcutguidedialog.cpp \
     $$PWD/slpNPatternDict.cpp \
     $$PWD/textfinder.cpp \
@@ -139,6 +141,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/globalreplaceinformation.cpp
 FORMS += ./DiffView.ui \
     $$PWD/loadingspinner.ui \
+    $$PWD/progressbardialog.ui \
     $$PWD/shortcutguidedialog.ui \
     $$PWD/textfinder.ui \
     $$PWD/globalreplacedialog.ui \

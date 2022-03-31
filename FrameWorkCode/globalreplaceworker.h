@@ -49,6 +49,7 @@ public slots:
 signals:
     void finishedReplacingWords();
     void finishedWritingLogs();
+    void changeProgressBarValue(int);
 };
 
 #endif // GLOBALREPLACEWORKER_H

@@ -42,6 +42,7 @@
 #include<QGraphicsRectItem>
 #include "globalreplacedialog.h"
 #include "loadingspinner.h"
+#include "progressbardialog.h"
 #include "globalreplacepreview.h"
 #include<markRegion.h>
 
@@ -425,6 +426,10 @@ private slots:
 
     void on_lineEdit_4_textChanged(const QString &arg1);
 
+    void closeProgressBar();
+
+    void setProgressBarPerc(int);
+
 public slots:
     void SaveFile_Backend();
 
@@ -460,6 +465,7 @@ private:
     QString RecentProjFile3;
     QString proj_flag; //for choosing recent opened project out of 3
     LoadingSpinner *spinner;
+    ProgressBarDialog *progressBarDialog;
     QString toolDirAbsolutePath; // This path is the absolute path of this tool
 };
 
