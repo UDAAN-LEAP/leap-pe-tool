@@ -85,7 +85,7 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords)
         QRegExp sep("\\s*=>*");
         QStringList changedList = replacedWords[i].split(sep);
         //QStringList changedList = replacedWords[i].split(" ");
-        ui->listWidget ->addItem(QString::number(i+1) + "  -  " + changedList[0]+ " -> " + changedList[1]);
+        ui->listWidget ->addItem(changedList[0]+ " -> " + changedList[1]);
 
         //! Creating & adding checkboxes in the groupbox
 //        box = new QCheckBox(this);
@@ -102,7 +102,7 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords)
         leftPaneCheckboxesStates.push_back(0);
 
         // NEW IMPLEMENTATION OF RIGHT PANE USING QListWidget
-        ui->ReplaceInAllPagesListWidget->addItem(QString::number(i+1));
+        ui->ReplaceInAllPagesListWidget->addItem("");
         QListWidgetItem* item = ui->ReplaceInAllPagesListWidget->item(i);
         rightPaneCheckboxes.push_back(item);
     }
