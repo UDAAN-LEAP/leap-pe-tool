@@ -4991,7 +4991,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             {
                 QTextCursor cursor = curr_browser->textCursor();
                 cursor.select(QTextCursor::BlockUnderCursor);
-                qDebug() << "Cursor Selected Text is:" << cursor.selectedText().trimmed();
+                //qDebug() << "Cursor Selected Text is:" << cursor.selectedText().trimmed();
                 bbox_file.open(QIODevice::ReadWrite);
                 QDataStream in (&bbox_file);
                 in.setVersion(QDataStream::Qt_5_3);
@@ -5002,7 +5002,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 in >> coordinates;
                 QString bbox_coordinates;
                 QMap<QString, QString>::iterator ci;
-                qDebug() << "Initial Processing took" << timer.elapsed() << "milliseconds";
+                //qDebug() << "Initial Processing took" << timer.elapsed() << "milliseconds";
 
                 double max = 0;
 
@@ -5017,10 +5017,10 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     }
                  }
 
-                qDebug() << "similarity done";
+                //qDebug() << "similarity done";
 
-                qDebug() << "Similarity Processing took" << timer.elapsed() << "milliseconds";
-                qDebug() << "Coordinates BBOX : " << bbox_coordinates;
+                //qDebug() << "Similarity Processing took" << timer.elapsed() << "milliseconds";
+                //qDebug() << "Coordinates BBOX : " << bbox_coordinates;
 
                 //!After the bbox file is created, using the coordinates values stored in them to show the bbox.
                 int x0, y0, x1, y1;
