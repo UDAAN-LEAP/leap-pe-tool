@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'progressbardialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.2
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -51,7 +51,7 @@ public:
 
     void retranslateUi(QDialog *ProgressBarDialog)
     {
-        ProgressBarDialog->setWindowTitle(QCoreApplication::translate("ProgressBarDialog", "Dialog", nullptr));
+        ProgressBarDialog->setWindowTitle(QApplication::translate("ProgressBarDialog", "Dialog", nullptr));
     } // retranslateUi
 
 };

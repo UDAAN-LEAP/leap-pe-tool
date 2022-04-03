@@ -4880,7 +4880,23 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         settings.endGroup();
         }
     }
+
+    if ( (e->key() == Qt::Key_D)  && QApplication::keyboardModifiers() == Qt::ControlModifier)
+    {
+       QString convertedText;
+       string selectedStr;
+
+       selectedStr = ui->lineEdit_4->text().toUtf8().constData();
+       convertedText = toDevanagari(selectedStr);
+       ui->lineEdit_4->setText(convertedText);
+    }
 }
+
+QString MainWindow::toDevanagari(string text) {
+    slpNPatternDict slnp;
+    return QString::fromStdString(slnp.toDev(slnp.toslp1(text)));
+}
+
 /*!
  * \fn MainWindow::eventFilter
  * \brief event: ToolTip and ImageMarkingRegion
@@ -5267,6 +5283,14 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     if (event->type() == QEvent::ShortcutOverride) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
         if (keyEvent->modifiers().testFlag(Qt::ControlModifier) && keyEvent->key() == 'C') {
+            keyPressEvent(keyEvent);
+            event->ignore();
+            return true;
+        }
+    }
+    if (event->type() == QEvent::ShortcutOverride) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        if (keyEvent->modifiers().testFlag(Qt::ControlModifier) && keyEvent->key() == 'D') {
             keyPressEvent(keyEvent);
             event->ignore();
             return true;
@@ -8785,9 +8809,6 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
             download->setMinimumWidth(160);
             QAbstractButton *rml = msg.addButton(tr("Remind me Later"), QMessageBox::RejectRole);
             rml->setMinimumWidth(140);
-            //QCheckBox *cb = new QCheckBox("Don't Show this again");
-            //msg.setCheckBox(cb);
-            //cb->setStyleSheet("QCheckBox::indicator:unchecked{border: 1px solid white};");
             msg.exec();
 
             if(msg.clickedButton() == download){
@@ -8796,25 +8817,20 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
             else {
                 this->close();
             }
-            //if(cb->checkState() == Qt::Checked)
-            //{
-              //  QSettings settings("IIT-B", "OpenOCRCorrect");
-                //settings.beginGroup("SoftwareUpdate");
-                //settings.setValue("showUpdate",false);
-                //settings.endGroup();
-            //}
-            //else
-            //{
-              //  QSettings settings("IIT-B", "OpenOCRCorrect");
-                //settings.beginGroup("SoftwareUpdate");
-                //settings.setValue("showUpdate",true);
-                //settings.endGroup();
-            //}
         }
-}
+    }
 }
 
-void MainWindow::on_lineEdit_4_textChanged(const QString &arg1)
+void MainWindow::on_next_clicked()
 {
+    QRegExp searchExpr = QRegExp(ui->lineEdit_4->text());
+    searchExpr.setCaseSensitivity(Qt::CaseInsensitive);
+    ui->textEdit_dict->find(searchExpr, QTextDocument::FindFlags());
+}
 
+void MainWindow::on_previous_clicked()
+{
+    QRegExp searchExpr = QRegExp(ui->lineEdit_4->text());
+    searchExpr.setCaseSensitivity(Qt::CaseInsensitive);
+    ui->textEdit_dict->find(searchExpr, QTextDocument::FindBackward);
 }

@@ -424,11 +424,15 @@ private slots:
 
     void on_actionCheck_for_Updates_triggered();
 
-    void on_lineEdit_4_textChanged(const QString &arg1);
-
     void closeProgressBar();
 
     void setProgressBarPerc(int);
+
+    void on_next_clicked();
+
+    void on_previous_clicked();
+
+    QString toDevanagari(string text);
 
 public slots:
     void SaveFile_Backend();
