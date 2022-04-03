@@ -8821,14 +8821,7 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
     }
 }
 
-void MainWindow::on_next_clicked()
-{
-    QRegExp searchExpr = QRegExp(ui->lineEdit_4->text());
-    searchExpr.setCaseSensitivity(Qt::CaseInsensitive);
-    ui->textEdit_dict->find(searchExpr, QTextDocument::FindFlags());
-}
-
-void MainWindow::on_previous_clicked()
+void MainWindow::on_find_clicked()
 {
     QRegExp searchExpr = QRegExp(ui->lineEdit_4->text());
     searchExpr.setCaseSensitivity(Qt::CaseInsensitive);

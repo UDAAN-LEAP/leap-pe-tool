@@ -428,11 +428,9 @@ private slots:
 
     void setProgressBarPerc(int);
 
-    void on_next_clicked();
-
-    void on_previous_clicked();
-
     QString toDevanagari(string text);
+
+    void on_find_clicked();
 
 public slots:
     void SaveFile_Backend();

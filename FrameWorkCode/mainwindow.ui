@@ -503,9 +503,11 @@ QScrollBar::sub-line:vertical {
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
-             <widget class="QLineEdit" name="lineEdit_4">
-              <property name="styleSheet">
-               <string notr="true">#lineEdit_4{
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QLineEdit" name="lineEdit_4">
+                <property name="styleSheet">
+                 <string notr="true">#lineEdit_4{
 background-color: rgb(255, 255, 255);
 color:black;
 border:0px;
@@ -515,30 +517,31 @@ border-radius:4.8px;
 padding-left:1.3px; 
 margin-top: 8px;
 }</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <item>
-               <widget class="QPushButton" name="previous">
-                <property name="styleSheet">
-                 <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 210.62px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;}QPushButton:pressed {background-color: rgb(136, 138, 133);}
-</string>
-                </property>
-                <property name="text">
-                 <string>Find Previous</string>
                 </property>
                </widget>
               </item>
-              <item>
-               <widget class="QPushButton" name="next">
+              <item alignment="Qt::AlignRight">
+               <widget class="QPushButton" name="find">
                 <property name="styleSheet">
-                 <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 210.62px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;}QPushButton:pressed {background-color: rgb(136, 138, 133);}
-</string>
+                 <string notr="true">QPushButton{
+background-color:rgb(227, 228, 228);
+border:0px;
+color: rgb(32, 33, 72);
+height:26.96px;
+width: 113.5px; 
+padding-top:1px; 
+border-radius:4.8px; 
+padding-left:1.3px; 
+selection-color: rgb(32, 33, 72);
+ selection-background-color: rgb(136, 138, 133);
+margin-top: 5px;
+} 
+QPushButton:pressed {
+background-color: rgb(136, 138, 133);
+}</string>
                 </property>
                 <property name="text">
-                 <string>Find Next</string>
+                 <string>Find</string>
                 </property>
                </widget>
               </item>

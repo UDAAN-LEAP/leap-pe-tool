@@ -163,10 +163,9 @@ public:
     QTreeView *treeView;
     QWidget *tab_3;
     QVBoxLayout *verticalLayout_6;
-    QLineEdit *lineEdit_4;
     QHBoxLayout *horizontalLayout_4;
-    QPushButton *previous;
-    QPushButton *next;
+    QLineEdit *lineEdit_4;
+    QPushButton *find;
     QTextEdit *textEdit_dict;
     QTabWidget *tabWidget_2;
     QWidget *tab_5;
@@ -904,6 +903,9 @@ public:
         verticalLayout_6->setSpacing(6);
         verticalLayout_6->setContentsMargins(11, 11, 11, 11);
         verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         lineEdit_4 = new QLineEdit(tab_3);
         lineEdit_4->setObjectName(QString::fromUtf8("lineEdit_4"));
         lineEdit_4->setStyleSheet(QString::fromUtf8("#lineEdit_4{\n"
@@ -917,24 +919,28 @@ public:
 "margin-top: 8px;\n"
 "}"));
 
-        verticalLayout_6->addWidget(lineEdit_4);
+        horizontalLayout_4->addWidget(lineEdit_4);
 
-        horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setSpacing(6);
-        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        previous = new QPushButton(tab_3);
-        previous->setObjectName(QString::fromUtf8("previous"));
-        previous->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 210.62px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;}QPushButton:pressed {background-color: rgb(136, 138, 133);}\n"
-""));
+        find = new QPushButton(tab_3);
+        find->setObjectName(QString::fromUtf8("find"));
+        find->setStyleSheet(QString::fromUtf8("QPushButton{\n"
+"background-color:rgb(227, 228, 228);\n"
+"border:0px;\n"
+"color: rgb(32, 33, 72);\n"
+"height:26.96px;\n"
+"width: 113.5px; \n"
+"padding-top:1px; \n"
+"border-radius:4.8px; \n"
+"padding-left:1.3px; \n"
+"selection-color: rgb(32, 33, 72);\n"
+" selection-background-color: rgb(136, 138, 133);\n"
+"margin-top: 5px;\n"
+"} \n"
+"QPushButton:pressed {\n"
+"background-color: rgb(136, 138, 133);\n"
+"}"));
 
-        horizontalLayout_4->addWidget(previous);
-
-        next = new QPushButton(tab_3);
-        next->setObjectName(QString::fromUtf8("next"));
-        next->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 210.62px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;}QPushButton:pressed {background-color: rgb(136, 138, 133);}\n"
-""));
-
-        horizontalLayout_4->addWidget(next);
+        horizontalLayout_4->addWidget(find, 0, Qt::AlignRight);
 
 
         verticalLayout_6->addLayout(horizontalLayout_4);
@@ -1701,8 +1707,7 @@ public:
         sanButton->setText(QApplication::translate("MainWindow", "Sanskrit", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "SLP", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "Project", nullptr));
-        previous->setText(QApplication::translate("MainWindow", "Find Previous", nullptr));
-        next->setText(QApplication::translate("MainWindow", "Find Next", nullptr));
+        find->setText(QApplication::translate("MainWindow", "Find", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("MainWindow", "Dict", nullptr));
         textBrowser->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
