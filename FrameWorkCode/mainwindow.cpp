@@ -8387,6 +8387,10 @@ bool MainWindow::checkForValidTSVfile(QFile & file)
 */
 void MainWindow::on_actionUpload_triggered()
 {
+    if(ProjFile==""){
+        QMessageBox::information(0, "Error", "Please open a Project first.");
+        return;
+    }
     int idx = ui->tabWidget_2->currentIndex();
     QTextBrowser *closing_browser = (QTextBrowser*)ui->tabWidget_2->widget(idx);
     QString closing_browserHtml = closing_browser->toHtml();
