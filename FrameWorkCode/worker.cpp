@@ -99,6 +99,7 @@ void Worker::doSaveBackend()
     //! Reflecting CPairs entries in the file /Dicts/CPair; Making it dynamic
     QString filename12 = (*mProject).GetDir().absolutePath() + "/Dicts/" + "CPair";
     QFile file12(filename12);
+    QStringList split1;
     if(!file12.exists())
     {
        qDebug() << "No exist file "<<filename12;
@@ -106,6 +107,26 @@ void Worker::doSaveBackend()
     else
     {
        qDebug() << filename12<<"exists";
+       /*QFile *f = new QFile(filename12);
+       f->open(QIODevice::ReadOnly);
+       QTextStream in(f);
+       in.setCodec("UTF-8");
+       QString s1 = in.readAll();
+       f->close();
+       qDebug ()<<"File is here:::"<<s1[0];*/
+       QFile myfile(filename12);
+       myfile.open(QIODevice::ReadOnly | QIODevice::Text);
+       QTextStream out(&myfile);
+       QString text;
+       while(!out.atEnd())
+           {
+               text = out.readLine();
+               split1.append(text.split('\t').first());
+
+           }
+           myfile.close();
+       //qDebug ()<<"List:::"<<split1[1]<<split1.size();
+       //file.close();
     }
 
     //! Insert entries in Correct Formatting Hello (/t) hi,(comma)hiii
@@ -115,9 +136,16 @@ void Worker::doSaveBackend()
         out.setCodec("UTF-8");
         map<string, set<string>>::iterator itr;
         set<string>::iterator set_it;
+        int flag = 0;
 
         for (itr = (*CPairs).begin(); itr != (*CPairs).end(); ++itr)
         {
+            for(int i =0;i<split1.size();i++){
+                if(QString::fromStdString(slnp.toDev(itr->first)) == split1[i]){
+                    flag = 1;
+                break;}
+                }
+            if(flag == 0){
             out <<  QString::fromStdString(slnp.toDev(itr->first)) << '\t';
             for (set_it = itr->second.begin(); set_it != itr->second.end(); ++set_it)
             {
@@ -131,6 +159,8 @@ void Worker::doSaveBackend()
 
             }
             out <<"\n";
+            }
+            flag = 0;
         }
          file12.close();
     }
