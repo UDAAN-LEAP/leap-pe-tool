@@ -5979,7 +5979,18 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     int x1 = 0;
     int check=2;
 
-//    qDebug()<<"changedWords"<<changedWords<<endl;
+    QRegExp separat("\\s*=>*");
+    QMap<QString, QString> replacementMap; // This map is used for removing duplicate entries from changedWords
+    for (int i = 0; i < noOfChangedWords; i++) {
+        QStringList mapping = changedWords[i].split(separat, QString::SkipEmptyParts);
+        if (replacementMap.find(mapping[0]) != replacementMap.end()) {
+            changedWords.remove(i);
+            noOfChangedWords--;
+        } else {
+            replacementMap.insert(mapping[0], mapping[1]);
+        }
+    }
+
     //! if only one change spawn checkbox
     if (noOfChangedWords == 1){
         QRegExp sep("\\s*=>*");
@@ -5998,7 +6009,6 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     else if(noOfChangedWords > 1){
 
         globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords, &replaceInAllPages);
-        //qDebug()<<"globalReplacementMap"<<globalReplacementMap<<endl;
         QMap<QString, QString>::iterator it;
         it = globalReplacementMap.begin();
         for (int i = 0; i < replaceInAllPages.size(); i++)
@@ -6014,7 +6024,6 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
     if(!globalReplacementMap.isEmpty())
     {
-//        mapOfReplacements = globalReplacementMap;
         globallyReplacedWords = globalReplacementMap;
 
         /*START MULTITHREADING IMPLEMENTATION HERE*/
