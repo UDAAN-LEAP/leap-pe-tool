@@ -8310,7 +8310,12 @@ void MainWindow::replaceInAllFilesFromTSVfile()
     QString filename = QFileDialog::getOpenFileName(this, "Open a file", gDirTwoLevelUp);
     QFile file(filename);
 
-    if (( !file.exists() ) || ( !checkForValidTSVfile(file) ))
+    if (!file.exists() )
+    {
+        //QMessageBox::warning(this, "Error", "Incorrect file format", QMessageBox::Ok, QMessageBox::Ok);
+        return;
+    }
+    if ( !checkForValidTSVfile(file) )
     {
         QMessageBox::warning(this, "Error", "Incorrect file format", QMessageBox::Ok, QMessageBox::Ok);
         return;
