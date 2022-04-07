@@ -110,6 +110,7 @@ int openedFileChars;
 int openedFileWords;
 bool gSaveTriggered = 0;
 bool LoadDataFlag = 1; //To load data only once
+bool uploadReplaceFlag = 0; //To highlight in Upload and Replace
 map<QString, QString> filestructure_fw;
 QMap <QString, QString> mapOfReplacements;
 
@@ -7770,8 +7771,14 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
 
     QMap <QString, QString>::iterator grmIterator;
     QTextCursor cursor(b->document());
+
     QTextCharFormat fmt;
-    fmt.setBackground(Qt::yellow);
+    if(uploadReplaceFlag)
+        fmt.setBackground(QColor("#ffa000"));
+    else
+        fmt.setBackground(Qt::yellow);
+
+
     int indexOfReplacedWord;
     int from=0;
     int count;
@@ -8401,6 +8408,8 @@ bool MainWindow::checkForValidTSVfile(QFile & file)
 */
 void MainWindow::on_actionUpload_triggered()
 {
+    uploadReplaceFlag = 1;
+
     if(ProjFile==""){
         QMessageBox::information(0, "Error", "Please open a Project first.");
         return;

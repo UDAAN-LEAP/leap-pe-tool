@@ -65,7 +65,8 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
         //   if(!mapOfReplacements.contains(grmIterator.key()))
         std::string str = replacementString.toStdString();
         QString::fromStdString(str).toUtf8();
-        QString replacementString1 = QString::fromStdString(str).trimmed();
+        //QString replacementString1 = QString::fromStdString(str).trimmed();
+        QString replacementString1 = "<span style = \"background-color:#ffa000;\">" + QString::fromStdString(str).trimmed() + "</span>";
         (*mapOfReplacements)[grmIterator.key()] = grmIterator.value().trimmed();
         s1.replace(re, replacementString1);
         replaced = s1.count(replacementString1);
