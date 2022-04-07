@@ -324,8 +324,10 @@ int edit_Distance :: min(int a,int b)
  */
 int edit_Distance :: getEditDistance(std::string first, std::string second)
 {
-    int m = first.length();
-    int n = second.length();
+    QStringList f = QString::fromStdString(first).split(" ", QString::SkipEmptyParts);
+    QStringList s = QString::fromStdString(second).split(" ", QString::SkipEmptyParts);
+    int m = f.length();
+    int n = s.length();
 
     int T[m + 1][n + 1];
     for (int i = 1; i <= m; i++) {
@@ -338,7 +340,7 @@ int edit_Distance :: getEditDistance(std::string first, std::string second)
 
     for (int i = 1; i <= m; i++) {
         for (int j = 1; j <= n; j++) {
-            int weight = first[i - 1] == second[j - 1] ? 0: 1;
+            int weight = f[i - 1] == s[j - 1] ? 0: 1;
             T[i][j] = std::min(std::min(T[i-1][j] + 1, T[i][j-1] + 1), T[i-1][j-1] + weight);
         }
     }
