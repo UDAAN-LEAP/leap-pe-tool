@@ -226,10 +226,78 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
             settings.setValue("showUpdate",true);
             settings.endGroup();
         }
-
     }
 
+    // Disabling some buttons while opening the tool
 
+    // File Menu
+    ui->actionSave->setEnabled(false);
+    ui->actionSave_As->setEnabled(false);
+    ui->actionSpell_Check->setEnabled(false);
+    ui->actionLoad_Prev_Page->setEnabled(false);
+    ui->actionLoad_Next_Page->setEnabled(false);
+    ui->actionToDevanagari->setEnabled(false);
+    ui->actionToSlp1->setEnabled(false);
+    ui->actionLoadGDocPage->setEnabled(false);
+    ui->actionLoadData->setEnabled(false);
+    ui->actionLoadDict->setEnabled(false);
+    ui->actionLoadOCRWords->setEnabled(false);
+    ui->actionLoadDomain->setEnabled(false);
+    ui->actionLoadSubPS->setEnabled(false);
+    ui->actionLoadConfusions->setEnabled(false);
+    ui->actionSugg->setEnabled(false);
+
+    // Edit Menu
+    ui->actionUndo->setEnabled(false);
+    ui->actionRedo->setEnabled(false);
+    ui->actionFind_and_Replace->setEnabled(false);
+    ui->actionUndo_Global_Replace->setEnabled(false);
+    ui->actionUpload->setEnabled(false);
+
+    // Language Menu
+    ui->actionSanskrit_2->setEnabled(false);
+    ui->actionEnglish->setEnabled(false);
+    ui->actionHindi->setEnabled(false);
+
+    // Reports Menu
+    ui->actionAccuracyLog->setEnabled(false);
+    ui->actionViewAverageAccuracies->setEnabled(false);
+
+    // View Menu
+    ui->actionAllFontProperties->setEnabled(false);
+    ui->actionBold->setEnabled(false);
+    ui->actionItalic->setEnabled(false);
+    ui->actionHighlight->setEnabled(false); // Already disabled in Corrector mode
+    ui->actionLeftAlign->setEnabled(false);
+    ui->actionRightAlign->setEnabled(false);
+    ui->actionCentreAlign->setEnabled(false);
+    ui->actionJusitfiedAlign->setEnabled(false);
+    ui->actionSuperscript->setEnabled(false);
+    ui->actionSubscript->setEnabled(false);
+    ui->actionInsert_Horizontal_Line->setEnabled(false);
+    ui->actionFontBlack->setEnabled(false);
+    ui->actionInsert_Tab_Space->setEnabled(false);
+
+    // Table Menu inside View Menu
+    ui->actionInsert_Table_2->setEnabled(false);
+    ui->actionInsert_Columnleft->setEnabled(false);
+    ui->actionInsert_Columnright->setEnabled(false);
+    ui->actionInsert_Rowabove->setEnabled(false);
+    ui->actionInsert_Rowbelow->setEnabled(false);
+    ui->actionRemove_Column->setEnabled(false);
+    ui->actionRemove_Row->setEnabled(false);
+
+    // Versions Menu
+    ui->actionFetch_2->setEnabled(false);
+    ui->actionTurn_In->setEnabled(false);
+    ui->actionVerifier_Turn_In->setEnabled(false);
+
+    // Download Menu
+    ui->actionas_PDF->setEnabled(false);
+
+    ui->actionSymbols->setEnabled(false);
+    ui->actionZoom_In->setEnabled(false);
+    ui->actionZoom_Out->setEnabled(false);
 }
 
 /*!
@@ -1177,6 +1245,76 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
      if(ProjFile == stored_project || ProjFile == stored_project2 || ProjFile == stored_project3){
          RecentPageInfo();
      }
+
+     // Enabling the buttons again after a project is opened
+
+     // File Menu
+     ui->actionSave->setEnabled(true);
+     ui->actionSave_As->setEnabled(true);
+     ui->actionSpell_Check->setEnabled(true);
+     ui->actionLoad_Prev_Page->setEnabled(true);
+     ui->actionLoad_Next_Page->setEnabled(true);
+     ui->actionToDevanagari->setEnabled(true);
+     ui->actionToSlp1->setEnabled(true);
+     ui->actionLoadGDocPage->setEnabled(true);
+     ui->actionLoadData->setEnabled(true);
+     ui->actionLoadDict->setEnabled(true);
+     ui->actionLoadOCRWords->setEnabled(true);
+     ui->actionLoadDomain->setEnabled(true);
+     ui->actionLoadSubPS->setEnabled(true);
+     ui->actionLoadConfusions->setEnabled(true);
+     ui->actionSugg->setEnabled(true);
+
+     // Edit Menu
+     ui->actionUndo->setEnabled(true);
+     ui->actionRedo->setEnabled(true);
+     ui->actionFind_and_Replace->setEnabled(true);
+     ui->actionUndo_Global_Replace->setEnabled(true);
+     ui->actionUpload->setEnabled(true);
+
+     // Language Menu
+     ui->actionSanskrit_2->setEnabled(true);
+     ui->actionEnglish->setEnabled(true);
+     ui->actionHindi->setEnabled(true);
+
+     // Reports Menu
+     ui->actionAccuracyLog->setEnabled(true);
+     ui->actionViewAverageAccuracies->setEnabled(true);
+
+     // View Menu
+     ui->actionAllFontProperties->setEnabled(true);
+     ui->actionBold->setEnabled(true);
+     ui->actionItalic->setEnabled(true);
+     ui->actionLeftAlign->setEnabled(true);
+     ui->actionRightAlign->setEnabled(true);
+     ui->actionCentreAlign->setEnabled(true);
+     ui->actionJusitfiedAlign->setEnabled(true);
+     ui->actionSuperscript->setEnabled(true);
+     ui->actionSubscript->setEnabled(true);
+     ui->actionInsert_Horizontal_Line->setEnabled(true);
+     ui->actionFontBlack->setEnabled(true);
+     ui->actionInsert_Tab_Space->setEnabled(true);
+
+     // Table Menu inside View Menu
+     ui->actionInsert_Table_2->setEnabled(true);
+     ui->actionInsert_Columnleft->setEnabled(true);
+     ui->actionInsert_Columnright->setEnabled(true);
+     ui->actionInsert_Rowabove->setEnabled(true);
+     ui->actionInsert_Rowbelow->setEnabled(true);
+     ui->actionRemove_Column->setEnabled(true);
+     ui->actionRemove_Row->setEnabled(true);
+
+     // Versions Menu
+     ui->actionFetch_2->setEnabled(true);
+     ui->actionTurn_In->setEnabled(true);
+     ui->actionVerifier_Turn_In->setEnabled(true);
+
+     // Download Menu
+     ui->actionas_PDF->setEnabled(true);
+
+     ui->actionSymbols->setEnabled(true);
+     ui->actionZoom_In->setEnabled(true);
+     ui->actionZoom_Out->setEnabled(true);
 }
 
 /*!
