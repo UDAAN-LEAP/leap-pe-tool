@@ -43,38 +43,51 @@ GlobalReplaceWorker::GlobalReplaceWorker(QObject *parent,
 int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QString, QString> globalReplacementMap)
 {
     QMap <QString, QString>::iterator grmIterator;
-    QFile *f = new QFile(file_path);
+    QFile f(file_path);
 
-    f->open(QIODevice::ReadOnly);
+    f.open(QIODevice::ReadOnly);
 
     //!Set encoding and read the file content
-    QTextStream in(f);
+    QTextStream in(&f);
     in.setCodec("UTF-8");
     QString s1 = in.readAll();
-    f->close();
-    f->open(QIODevice::WriteOnly);
-
+    f.close();
+    f.open(QIODevice::WriteOnly);
     int replaced = 0, tot_replaced = 0;
 
     //!Replacing words by iterating the map
     for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
-    {
-        QString pattern = ("(\\b)")+grmIterator.key()+("(\\b)"); // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
-        QRegExp re(pattern);
-        QString replacementString = re.cap(1) + grmIterator.value() + re.cap(2); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
-        //   if(!mapOfReplacements.contains(grmIterator.key()))
-        std::string str = replacementString.toStdString();
-        QString::fromStdString(str).toUtf8();
-        //QString replacementString1 = QString::fromStdString(str).trimmed();
-        QString replacementString1 = "<span style = \"background-color:#ffa000;\">" + QString::fromStdString(str).trimmed() + "</span>";
-        (*mapOfReplacements)[grmIterator.key()] = grmIterator.value().trimmed();
-        s1.replace(re, replacementString1);
-        replaced = s1.count(replacementString1);
-        tot_replaced = tot_replaced + replaced;
-    }
+        {
+            //qDebug() << "grmIterator Key : " <<grmIterator.key()<<"grmIterator.value : "<<grmIterator.value();
+            if((grmIterator.key().split(" ", QString::SkipEmptyParts).count() == 1) || (grmIterator.value().split(" ", QString::SkipEmptyParts).count() == 1))
+            {
+                qDebug() << "Word replacement";
+                QString pattern = "(\\b)"+grmIterator.key()+"(\\b)"; // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
+                QRegExp re(pattern);
+                QString replacementString = re.cap(1) + grmIterator.value() + re.cap(2); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
+                std::string str = replacementString.toStdString();
+                QString::fromStdString(str).toUtf8();
+                QString replacementString1 = QString::fromStdString(str).trimmed();
+                (*mapOfReplacements)[grmIterator.key()] = grmIterator.value().trimmed();
+                s1.replace(re, replacementString1);
+                replaced = s1.count(replacementString1);
+                tot_replaced = tot_replaced + replaced;
+            }
 
+            else if((grmIterator.key().split(" ", QString::SkipEmptyParts).count() > 1) || (grmIterator.value().split(" ", QString::SkipEmptyParts).count() > 1))
+            {
+                s1 = s1.simplified();
+                (*mapOfReplacements)[grmIterator.key()] = grmIterator.value().trimmed();
+                s1.replace(grmIterator.key(), grmIterator.value());
+                replaced = s1.count(grmIterator.value());
+                tot_replaced = tot_replaced + replaced;
+
+            }
+
+        }
     in << s1;
-    f->close();
+    f.close();
+
     return tot_replaced;
 }
 
