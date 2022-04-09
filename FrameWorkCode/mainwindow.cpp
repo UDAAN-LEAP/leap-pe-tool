@@ -7764,10 +7764,10 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
     QTextCursor cursor(b->document());
 
     QTextCharFormat fmt;
-    if(uploadReplaceFlag)
-        fmt.setBackground(QColor("#ffa000"));
-    else
-        fmt.setBackground(Qt::yellow);
+//    if(uploadReplaceFlag)
+//        fmt.setBackground(QColor("#ffa000"));
+//    else
+    fmt.setBackground(Qt::yellow);
 
 
     int indexOfReplacedWord;
@@ -8399,7 +8399,7 @@ bool MainWindow::checkForValidTSVfile(QFile & file)
 */
 void MainWindow::on_actionUpload_triggered()
 {
-    uploadReplaceFlag = 1;
+    //uploadReplaceFlag = 1;
 
     if(ProjFile==""){
         QMessageBox::information(0, "Error", "Please open a Project first.");
