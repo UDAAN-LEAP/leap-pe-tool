@@ -176,7 +176,7 @@
 #define __NO_INLINE__ 1
 #define __FLT_MANT_DIG__ 24
 #define __LDBL_DECIMAL_DIG__ 21
-#define __VERSION__ "9.3.0"
+#define __VERSION__ "9.4.0"
 #define __UINT64_C(c) c ## UL
 #define __cpp_unicode_characters 200704
 #define _STDC_PREDEF_H 1
@@ -345,7 +345,7 @@
 #define __DEC128_MAX_EXP__ 6145
 #define __FLT32X_HAS_QUIET_NAN__ 1
 #define __ATOMIC_CONSUME 1
-#define __GNUC_MINOR__ 3
+#define __GNUC_MINOR__ 4
 #define __GLIBCXX_TYPE_INT_N_0 __int128
 #define __INT_FAST16_WIDTH__ 64
 #define __UINTMAX_MAX__ 0xffffffffffffffffUL
