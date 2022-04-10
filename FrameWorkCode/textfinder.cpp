@@ -74,6 +74,8 @@ void TextFinder::on_findNextButton_clicked()
 //        curr_browser->moveCursor(QTextCursor::Start);                              //Moves the cursor to start of text
 //        curr_browser->find(searchExpr, QTextDocument::FindFlags());
         ((MainWindow *)(parent()))->on_actionLoad_Next_Page_triggered();
+        curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
+        curr_browser->moveCursor(QTextCursor::Start);
         curr_browser->find(searchExpr, QTextDocument::FindFlags());
     }
 }
@@ -99,6 +101,7 @@ void TextFinder::on_findPreviousButton_clicked()
     {
        // curr_browser->find(searchExpr, QTextDocument::FindBackward);
         ((MainWindow *)(parent()))->on_actionLoad_Prev_Page_triggered();
+        curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
         curr_browser->moveCursor(QTextCursor::End);                        //Moves the cursor to the end of text
         curr_browser->find(searchExpr, QTextDocument::FindBackward);
     }
