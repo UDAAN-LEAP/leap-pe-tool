@@ -326,10 +326,15 @@ int edit_Distance :: getEditDistance(std::string first, std::string second)
 {
     QStringList f = QString::fromStdString(first).split(" ", QString::SkipEmptyParts);
     QStringList s = QString::fromStdString(second).split(" ", QString::SkipEmptyParts);
-    int m = f.length();
-    int n = s.length();
+    int m = f.count();
+    int n = s.count();
 
-    int T[m + 1][n + 1];
+    int** T = new int* [m + 1];
+
+    for (int i = 0; i <= m; i++) {
+        T[i] = new int[n + 1];
+    }
+
     for (int i = 1; i <= m; i++) {
         T[i][0] = i;
     }
