@@ -87,7 +87,7 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords)
         //QStringList changedList = replacedWords[i].split(" ");
         ui->listWidget ->addItem(changedList[0]+ " -> " + changedList[1]);
         QString test_word = changedList[0];
-                qDebug ()<<test_word<<test_word.size();
+                //qDebug ()<<test_word<<test_word.size();
                for(int z = 0;z<test_word.size();z++){
                     if(test_word[z] == " ")
                         flag_save = 1;
@@ -111,9 +111,9 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords)
         QListWidgetItem* item = ui->ReplaceInAllPagesListWidget->item(i);
         rightPaneCheckboxes.push_back(item);
     }
-    if(flag_save == 1){
+    /*if(flag_save == 1){
         QMessageBox::information(0, "Warning!", "Using this cpair file for global replace may cause corruption");
-    }
+    }*/
 
     //! spawn  checkboxes for list
     QListWidgetItem *item = 0, *rightPaneListItem = 0;

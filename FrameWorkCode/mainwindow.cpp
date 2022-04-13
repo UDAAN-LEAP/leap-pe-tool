@@ -5886,11 +5886,11 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
 
     messageBox.setCheckBox(cb);
     //To give warning regarding set corruption
-    for(int z = 0;z<old_word.size();z++){
+    /*for(int z = 0;z<old_word.size();z++){
         if(old_word[z] == " "){
         QMessageBox::information(0, "Warning!", "Current global replace may cause corruption");
         break;}
-    }
+    }*/
     QString msg = "Do you want to replace \"" + old_word + "\" with \"" + new_word + "\" in rest of the pages?\n"
                 + "\n\nClick \"Yes\" to save the changes and replace the word in the unedited pages."
                 + "\nClick \"No\" to save the changes and not replace the word in the unedited page.";
