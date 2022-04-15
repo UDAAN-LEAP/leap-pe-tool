@@ -121,16 +121,15 @@ void Worker::doSaveBackend()
        while(!out.atEnd())
            {
                text = out.readLine();
-               split1.append(text.split('\t').first());
-
+               //split1.append(text.split('\t').first());
+               split1.append(text.split('\t'));
            }
            myfile.close();
-       //qDebug ()<<"List:::"<<split1[1]<<split1.size();
-       //file.close();
+       qDebug ()<<"List:::"<<split1<<split1.size();
     }
 
     //! Insert entries in Correct Formatting Hello (/t) hi,(comma)hiii
-    if (file12.open(QIODevice::ReadWrite  | QIODevice::Text | QIODevice::Append))
+    if (file12.open(QIODevice::ReadWrite  | QIODevice::Text | QIODevice::Truncate))
     {
         QTextStream out(&file12);
         out.setCodec("UTF-8");
@@ -140,13 +139,14 @@ void Worker::doSaveBackend()
 
         for (itr = (*CPairs).begin(); itr != (*CPairs).end(); ++itr)
         {
-            for(int i =0;i<split1.size();i++){
+            for(int i =0;i<split1.size();i+=2){
                 if(QString::fromStdString(slnp.toDev(itr->first)) == split1[i]){
                     flag = 1;
                 break;}
                 }
             if(flag == 0){
-            out <<  QString::fromStdString(slnp.toDev(itr->first)) << '\t';
+
+            /*out <<  QString::fromStdString(slnp.toDev(itr->first)) << '\t';
             for (set_it = itr->second.begin(); set_it != itr->second.end(); ++set_it)
             {
                 if(set_it != prev(itr->second.end()))
@@ -158,9 +158,21 @@ void Worker::doSaveBackend()
                 }
 
             }
-            out <<"\n";
+            out <<"\n";*/
+                split1.append(QString::fromStdString(slnp.toDev(itr->first)));
+                //split1.append('\t');
+                set_it = itr->second.begin();
+                {
+                    split1.append(QString::fromStdString(slnp.toDev(*set_it)));
+
+                }
             }
+
             flag = 0;
+        }
+        //Add entries to cpair file {hi \t hello \n}
+        for(int i=0;i<split1.size()-1;i+=2){
+          out <<  split1[i] << '\t'<<split1[i+1]<<"\n";
         }
          file12.close();
     }
