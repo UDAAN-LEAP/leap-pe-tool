@@ -116,11 +116,12 @@ void Worker::doSaveBackend()
        qDebug ()<<"File is here:::"<<s1[0];*/
        QFile myfile(filename12);
        myfile.open(QIODevice::ReadOnly | QIODevice::Text);
-       QTextStream out(&myfile);
+       QTextStream out1(&myfile);
+       out1.setCodec("UTF-8");
        QString text;
-       while(!out.atEnd())
+       while(!out1.atEnd())
            {
-               text = out.readLine();
+               text = out1.readLine();
                //split1.append(text.split('\t').first());
                split1.append(text.split('\t'));
            }
@@ -171,6 +172,7 @@ void Worker::doSaveBackend()
             flag = 0;
         }
         //Add entries to cpair file {hi \t hello \n}
+        //file12.resize(0);
         for(int i=0;i<split1.size()-1;i+=2){
           out <<  split1[i] << '\t'<<split1[i+1]<<"\n";
         }
