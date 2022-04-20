@@ -1294,6 +1294,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
      ui->actionInsert_Horizontal_Line->setEnabled(true);
      ui->actionFontBlack->setEnabled(true);
      ui->actionInsert_Tab_Space->setEnabled(true);
+     if (isVerifier)
+         ui->actionHighlight->setEnabled(true);
 
      // Table Menu inside View Menu
      ui->actionInsert_Table_2->setEnabled(true);

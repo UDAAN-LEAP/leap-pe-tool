@@ -1,0 +1,59 @@
+
+OpenOCRCorrect Application Log
+Date: 21 Apr 2022 @ 01:42:54
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Debug: Current page name:  "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/CorrectorOutput/page-101.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Apr 2022 @ 01:43:33
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Music/AIML-All-master/image.xml" (markRegion.cpp)
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-007.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Apr 2022 @ 01:44:29
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Debug: Current page name:  "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/CorrectorOutput/page-101.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/CorrectorOutput/page-100.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 21 Apr 2022 @ 01:45:28
+Username:anka
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "/home/anka/Music/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/.cursor.txt"): device not open ()
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/.cursor.txt"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 21 Apr 2022 @ 01:46:12
+Username:anka
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Debug: Current page name:  "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/CorrectorOutput/page-100.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/CorrectorOutput/page-100.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/CorrectorOutput/page-100.html" (mainwindow.cpp)
+Debug: "/home/anka/Music/AIML-All-master/image.xml" (markRegion.cpp)
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/.cursor.txt"): device not open ()
+Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/Comments/HighlightsLog.json"): device not open ()
