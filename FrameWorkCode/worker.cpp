@@ -126,7 +126,6 @@ void Worker::doSaveBackend()
                split1.append(text.split('\t'));
            }
            myfile.close();
-       qDebug ()<<"List:::"<<split1<<split1.size();
     }
 
     //! Insert entries in Correct Formatting Hello (/t) hi,(comma)hiii
@@ -140,12 +139,30 @@ void Worker::doSaveBackend()
 
         for (itr = (*CPairs).begin(); itr != (*CPairs).end(); ++itr)
         {
+            //Don't add special symbols to cpair file
+            QString special_symbols = "~`!@#$%^&*()-+={}[]|\"/:\ ;'<>,.?;";
+            int replaceFlag = 0;
+            for(int i=0;i<QString::fromStdString(slnp.toDev(itr->first)).size();i++){
+                int count =0;
+                for(int k=0;k<special_symbols.size();k++){
+                    if(QString::fromStdString(slnp.toDev(itr->first))[i] != special_symbols[k]){
+                        count +=1;
+                    }
+                    if(count == special_symbols.size()){
+                        replaceFlag = 1;
+                        break;
+                    }
+                }
+                if(replaceFlag == 1)
+                    break;
+            }
+                ///////////////////////////////////////
             for(int i =0;i<split1.size();i+=2){
                 if(QString::fromStdString(slnp.toDev(itr->first)) == split1[i]){
                     flag = 1;
                 break;}
                 }
-            if(flag == 0){
+            if(flag == 0 && replaceFlag == 1){
 
             /*out <<  QString::fromStdString(slnp.toDev(itr->first)) << '\t';
             for (set_it = itr->second.begin(); set_it != itr->second.end(); ++set_it)

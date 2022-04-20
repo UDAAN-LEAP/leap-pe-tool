@@ -80,7 +80,7 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords)
     //! We get words in the format old Word => new Word. (See editdistance.cpp for more info)
     //! We run the loop of the list of such strings and we separate them using QRegExp and add
     //! to the widget.
-    int flag_save = 0;
+    //int flag_save = 0;
     for (int i = 0; i < replacedWords.size(); ++i){
         QRegExp sep("\\s*=>*");
         QStringList changedList = replacedWords[i].split(sep);
@@ -88,10 +88,10 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords)
         ui->listWidget ->addItem(changedList[0]+ " -> " + changedList[1]);
         QString test_word = changedList[0];
                 //qDebug ()<<test_word<<test_word.size();
-               for(int z = 0;z<test_word.size();z++){
+               /*for(int z = 0;z<test_word.size();z++){
                     if(test_word[z] == " ")
                         flag_save = 1;
-                }
+                }*/
         //! Creating & adding checkboxes in the groupbox
 //        box = new QCheckBox(this);
 //        box->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);

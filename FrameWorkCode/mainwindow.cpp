@@ -5872,6 +5872,30 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
  */
 bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word, int &chk){
 
+    //!Disable global replace on special symbols
+    //QRegularExpression ss("[^a-zA-Z0-9]+");
+    QString special_symbols = "~`!@#$%^&*()-+={}[]|\ \"/:;'<>,.?;";
+    int replaceFlag = 0;
+    //qDebug ()<<"Reg exp:"<<special_symbols;
+    for(int i=0;i<old_word.size();i++){
+        int count =0;
+        for(int k=0;k<special_symbols.size();k++){
+            if(old_word[i] != special_symbols[k]){
+                count +=1;
+                //replaceFlag = 1;
+                //qDebug ()<<"Replace should work";
+                //break;
+            }
+            if(count == special_symbols.size()){
+                replaceFlag = 1;
+                break;
+            }
+        }
+        if(replaceFlag == 1)
+            break;
+    }
+        if (replaceFlag == 0){
+            return false;}
     chk=0;
 
     //!Declaring messagebox and the associated buttons
