@@ -57,3 +57,1077 @@ Debug: "/home/anka/Music/AIML-All-master/image.xml" (markRegion.cpp)
 Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-001.html" (mainwindow.cpp)
 Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/.cursor.txt"): device not open ()
 Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/Comments/HighlightsLog.json"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 22 Apr 2022 @ 21:40:56
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 22 Apr 2022 @ 21:45:20
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Jabalpur =>Jabalpur;;; " 
+ (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Jabalpur" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Jabalpur(\\b)"') (globalreplaceworker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "plants =>trees " 
+ (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "plants" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)plants(\\b)"') (globalreplaceworker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "(Environmental =>(Environmental$$$ " 
+ (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "\\(Environmental" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)\\(Environmental(\\b)"') (globalreplaceworker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 22 Apr 2022 @ 22:02:22
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 22 Apr 2022 @ 22:29:11
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "India =>India&&& " 
+ (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: called addCpair (worker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "not =>not&& " 
+ (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: called addCpair (worker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "not" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)not(\\b)"') (globalreplaceworker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Multidisciplinary =>Multidisciplinary%%% " 
+ (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: called addCpair (worker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 22 Apr 2022 @ 22:39:40
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 22 Apr 2022 @ 22:40:57
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/Comments/Timelog.json"): device not open ()
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Debug: bbox file written succesfully ...  (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/.cursor.txt"): device not open ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "M multidisciplinary =>Multidisciplinary " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: called addCpair (worker.cpp)
+Debug: No exist file  "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" (worker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "M multidisciplinary" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)M multidisciplinary(\\b)"') (globalreplaceworker.cpp)
+Debug: "p-1.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/p-1.html"  to file. 
+ (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "India =>India67%%% " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: called addCpair (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "India" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)India(\\b)"') (globalreplaceworker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "sages =>## " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: called addCpair (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "sages" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)sages(\\b)"') (globalreplaceworker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Tree, =>T&^##, " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: called addCpair (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Tree," 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Tree,(\\b)"') (globalreplaceworker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Pali =>mali " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Bilab =>Bila%%##b " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: called addCpair (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: San :  "Bilab" 
+Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)

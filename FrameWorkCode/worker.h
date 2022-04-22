@@ -35,6 +35,7 @@ signals:
 
 public slots:
     void doSaveBackend();
+    void addCpair();
 };
 
 #endif // WORKER_H
