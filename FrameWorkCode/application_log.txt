@@ -1131,3 +1131,98 @@ Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplacewo
 Debug: San :  "Bilab" 
 Regexp :  QRegExp(patternSyntax=0, pattern='"(\\b)Bilab(\\b)"') (globalreplaceworker.cpp)
 Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 24 Apr 2022 @ 20:02:18
+Username:asr16
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Internally =>International " 
+ (worker.cpp)
+Debug: "off =>of " 
+ (worker.cpp)
+Debug: "plantscould =>trees could " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Adding words to Cpair (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 24 Apr 2022 @ 20:04:27
+Username:asr16
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "/home/asr16/Downloads/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Debug: Current page name:  "/home/asr16/Downloads/ABBV1S2_YP_dinesh-main/CorrectorOutput/page-100.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 24 Apr 2022 @ 20:04:41
+Username:asr16
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: Current page name:  "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-1.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-2.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-3.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-4.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "आर्यभटः =>तद " 
+ (worker.cpp)
+Debug: "एव =>तअह् " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/Dicts/CPair" exists (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/.."): device not open ()
+Debug: "page-4.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-4.html"  to file. 
+ (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 24 Apr 2022 @ 20:08:11
+Username:asr16
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Debug: Current page name:  "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-4.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-4.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "तद =>कदा " 
+ (worker.cpp)
+Debug: "तअह् =>अत्रS " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Adding words to Cpair (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/."): device not open ()
+Debug: "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/Dicts/CPair" exists (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/.."): device not open ()
+Debug: "page-4.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)

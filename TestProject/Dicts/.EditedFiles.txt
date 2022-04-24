@@ -1,2 +1,3 @@
 /home/sujay/Documents/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-2.html
 /home/sujay/Documents/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-6.html
+/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-4.html

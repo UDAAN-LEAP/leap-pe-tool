@@ -5945,28 +5945,14 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     messageBox.exec();
 
     if (messageBox.clickedButton() == replaceButton){
-            if(cb->checkState() == Qt::Checked){
-                chk=1;
-                qDebug()<<"Checkbox Checked";
-            }
-            //cpairFlag = 1;
-            Worker *worker = new Worker(nullptr,
-                                        &mProject,
-                                        gCurrentPageName,
-                                        gCurrentDirName,
-                                        gDirTwoLevelUp,
-                                        s1,
-                                        s2,
-                                        CPair_editDis,
-                                        &CPairs,
-                                        filestructure_fw);
-            QThread *thread = new QThread;
-
-            connect(thread, SIGNAL(started()), worker, SLOT(addCpair()));
-            worker->moveToThread(thread);
-            thread->start();
-            return true;
+        if(cb->checkState() == Qt::Checked){
+            chk=1;
+            qDebug()<<"Checkbox Checked";
         }
+
+
+    return true;
+    }
 
     //!Writing logs
     if (messageBox.clickedButton() == cancelButton){
@@ -6200,6 +6186,22 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         }
     }
 
+    //!Adding changed words to the Cpair file
+    Worker *worker = new Worker(nullptr,
+                                &mProject,
+                                gCurrentPageName,
+                                gCurrentDirName,
+                                gDirTwoLevelUp,
+                                s1,
+                                s2,
+                                CPair_editDis,
+                                &CPairs,
+                                filestructure_fw);
+    QThread *thread = new QThread;
+
+    connect(thread, SIGNAL(started()), worker, SLOT(addCpair()));
+    worker->moveToThread(thread);
+    thread->start();
 
     if(!globalReplacementMap.isEmpty())
     {

@@ -66,7 +66,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                 QRegExp re(pattern);
                 QString replacementString = re.cap(1) + grmIterator.value() + re.cap(2); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
                 std::string str = replacementString.toStdString();
-                qDebug() << "San : " << sanstr << "\nRegexp : " << re;
+                //qDebug() << "San : " << sanstr << "\nRegexp : " << re;
                 QString::fromStdString(str).toUtf8();
                 //QString replacementString1 = QString::fromStdString(str).trimmed();
                 QString replacementString1 = "<span style = \"background-color:#ffff00;\">" + QString::fromStdString(str).trimmed() + "</span>";
