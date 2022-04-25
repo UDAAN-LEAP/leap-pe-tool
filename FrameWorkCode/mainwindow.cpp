@@ -5984,6 +5984,8 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
         output << "\n";
         output<<sourceString<<","<<replaceString<<","<<typeOfReplacement<<","<<time<<","<<gCurrentPageName<<","<<setName;
         csvFile.close();
+        //to clear the CPair entries when "no" is clicked, else they will be added to cpair later
+        CPair_editDis.clear();
     }
     return false;
 
@@ -6186,23 +6188,6 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         }
     }
 
-    //!Adding changed words to the Cpair file
-    Worker *worker = new Worker(nullptr,
-                                &mProject,
-                                gCurrentPageName,
-                                gCurrentDirName,
-                                gDirTwoLevelUp,
-                                s1,
-                                s2,
-                                CPair_editDis,
-                                &CPairs,
-                                filestructure_fw);
-    QThread *thread = new QThread;
-
-    connect(thread, SIGNAL(started()), worker, SLOT(addCpair()));
-    worker->moveToThread(thread);
-    thread->start();
-
     if(!globalReplacementMap.isEmpty())
     {
         globallyReplacedWords = globalReplacementMap;
@@ -6243,7 +6228,37 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         progressBarDialog->exec();
 
     }
+    map<string, string> new_cpair;
+        QMapIterator<QString, QString>i(globalReplacementMap);
+        map<string, set<string>>::iterator itr;
+        //itr = (CPair_editDis).begin()
+        while (i.hasNext())
+        {
+            i.next();
+            QString tmp = i.key();
+            //new_cpair.insert(pair<string, string>(i.key(), i.value()));
+            //new_cpair.put(i.key(), i.value());
+            //  new_cpair.insert(tmp,i.value());
+            new_cpair[i.key().toStdString()]=i.value().toStdString();
+                    //i.key();
+            //new_cpair[itr->second()]=i.value();
+            //itr++;
+        }
+        Worker *worker = new Worker(nullptr,
+                                    &mProject,
+                                    gCurrentPageName,
+                                    gCurrentDirName,
+                                    gDirTwoLevelUp,
+                                    s1,
+                                    s2,
+                                    new_cpair,
+                                    &CPairs,
+                                    filestructure_fw);
+        QThread *thread = new QThread;
 
+        connect(thread, SIGNAL(started()), worker, SLOT(addCpair()));
+        worker->moveToThread(thread);
+        thread->start();
     QString msg  = QString::fromStdString(std::to_string(globalReplacementMap.values().length()) + " words changed" + "\n" + std::to_string(r2) + " instances replaced" + "\n" + std::to_string(files) + " files modified");
     QMessageBox messageBox;
     if(globalReplacementMap.values().length()>0)

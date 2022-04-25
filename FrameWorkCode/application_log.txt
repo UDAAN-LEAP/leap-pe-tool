@@ -1226,3 +1226,60 @@ Warning: QIODevice::read (QFile, "/home/asr16/Desktop/iitb-openocr-digit-tool/Te
 Warning: QIODevice::read (QFile, "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/."): device not open ()
 Warning: QIODevice::read (QFile, "/home/asr16/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/.."): device not open ()
 Debug: "page-4.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 Apr 2022 @ 16:36:54
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "sages =>wages " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Yatra =>Yatra! " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "wages =>w9ages " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Palim&& =>Palim&7& " 
+ (worker.cpp)
+Debug: "planted&& =>plantehd&& " 
+ (worker.cpp)
+Debug: "habitable =>habihtable " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
