@@ -1935,7 +1935,8 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
                     index = model->index(i+1, 0, parentIndex);
                     treeItemLabel = index.data(Qt::DisplayRole).toString();
                     currentTabPageName = treeItemLabel;
-                    LoadDocument(file, ext, currentTabPageName);
+                    file_click(index);
+//                    LoadDocument(file, ext, currentTabPageName);
                     break;
                 }
              }
@@ -2010,7 +2011,8 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
                     index = model->index(i-1, 0, parentIndex);
                     treeItemLabel = index.data(Qt::DisplayRole).toString();
                     currentTabPageName = treeItemLabel;
-                    LoadDocument(file, ext, currentTabPageName);
+                    file_click(index);
+//                    LoadDocument(file, ext, currentTabPageName);
                     break;
                 }
              }
