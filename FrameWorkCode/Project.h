@@ -45,7 +45,8 @@ public:
                     delete f;
                 }
 		if(repo)
-		git_repository_free(repo);
+        //git_repository_free(repo);
+            ;
 	}
 	void add_and_commit();
     void set_stage_verifier();

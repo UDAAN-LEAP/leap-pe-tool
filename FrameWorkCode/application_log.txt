@@ -1283,3 +1283,208 @@ Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/Corrector
 Debug: Adding words to Cpair (worker.cpp)
 Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
 Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 29 Apr 2022 @ 18:53:58
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/NGMA_5_1/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/p-005.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "tirtle =>title " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Checkbox Checked (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/.."): device not open ()
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/sadam/Downloads/NGMA_5_1/Dicts/CPair" exists (worker.cpp)
+Debug: "p-005.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/p-005.html"  to file. 
+ (mainwindow.cpp)
+Debug: App crashed with signal:  "SIGSEGV" (main.cpp)
+
+OpenOCRCorrect Application Log
+Date: 29 Apr 2022 @ 18:56:01
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/NGMA_5_1/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/p-005.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/p-001.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "hini =>hindi " 
+ (worker.cpp)
+Debug: "hindie6 =>hindi " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/.."): device not open ()
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/sadam/Downloads/NGMA_5_1/Dicts/CPair" exists (worker.cpp)
+Debug: "p-001.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 30 Apr 2022 @ 20:45:45
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "edit_ =>edit_123 " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Checkbox Checked (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 30 Apr 2022 @ 20:46:20
+Username:sadam
+
+Application Log:
+Warning: QVariant::load: unable to load type 42. ()
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "salam =>sadam " 
+ (worker.cpp)
+Debug: "edit_123 =>edit_1124 " 
+ (worker.cpp)
+Debug: "Dr. =>Dr " 
+ (worker.cpp)
+Debug: "planted, =>slanted, " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Final Sentence "In his inaugural talk, Dr Region ==>In his inaugural talk, Dr Region " (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Trees =>plants " 
+ (worker.cpp)
+Debug: "1 =>2 " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/."): device not open ()
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/p-2.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/p-3.html" (mainwindow.cpp)
+Debug: bbox file written succesfully ...  (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/p-2.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Debug: "/home/sadam/Downloads/NGMA_5_1/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/p-001.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "144 =>sadam " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Checkbox Checked (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/.."): device not open ()
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/sadam/Downloads/NGMA_5_1/Dicts/CPair" exists (worker.cpp)
+Debug: "p-001.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/p-002.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/p-003.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/p-002.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/sadam/Downloads/NGMA_5_1/Dicts/CPair" exists (worker.cpp)
+Debug: "p-002.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/p-003.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/p-002.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "1 =>hello " 
+ (worker.cpp)
+Debug: "(indexed =>(indexed1 " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/.."): device not open ()
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/sadam/Downloads/NGMA_5_1/Dicts/CPair" exists (worker.cpp)
+Debug: "p-002.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/p-003.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/p-002.html" (mainwindow.cpp)
