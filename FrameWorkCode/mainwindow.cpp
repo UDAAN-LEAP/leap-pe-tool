@@ -39,7 +39,6 @@
 #include <QTreeView>
 #include <QFont>
 #include <git2.h>
-#include <QRandomGenerator>
 #include "shortcutguidedialog.h"
 #include <QFileSystemWatcher>
 #include <set>
