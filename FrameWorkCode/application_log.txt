@@ -1488,3 +1488,154 @@ Debug: Current page name:  "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/p-003
 Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
  ()
 Debug: Current page name:  "/home/sadam/Downloads/NGMA_5_1/CorrectorOutput/p-002.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 May 2022 @ 11:27:58
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "/home/sujay/Downloads/Erich_Von_Daniken/image.xml" (markRegion.cpp)
+Debug: Current page name:  "/home/sujay/Downloads/Erich_Von_Daniken/CorrectorOutput/p-001.html" (mainwindow.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sujay/Downloads/Erich_Von_Daniken/CorrectorOutput/p-002.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/sujay/Downloads/Erich_Von_Daniken/CorrectorOutput/p-004.html" (mainwindow.cpp)
+Debug: bbox file written succesfully ...  (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 May 2022 @ 11:31:40
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 May 2022 @ 11:32:11
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.8.9" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 May 2022 @ 11:32:32
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.8.9" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 May 2022 @ 11:33:41
+Username:sujay
+
+Application Log:
+Debug: "/home/sujay/Downloads/Erich_Von_Daniken/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/sujay/Downloads/Erich_Von_Daniken/CorrectorOutput/p-004.html" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.8.9" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.8.9" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 May 2022 @ 11:34:39
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.8.9" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 May 2022 @ 11:35:02
+Username:sujay
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 02 May 2022 @ 11:35:13
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.8.9" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 May 2022 @ 11:35:40
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.8.9" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.8.9" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.8.9" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 May 2022 @ 11:36:53
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.8.9" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 May 2022 @ 11:38:31
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.8.9" (mainwindow.cpp)
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.8.9" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 May 2022 @ 11:39:16
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.8.9" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 02 May 2022 @ 11:40:08
+Username:sujay
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.9.0" (mainwindow.cpp)
+Debug: "v2.8.9" (mainwindow.cpp)

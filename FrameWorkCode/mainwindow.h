@@ -211,10 +211,6 @@ private slots:
 
     void OpenDirectory();
 
-    QString UpdateInfo();
-
-    void compareVersion();
-
     void RemoveFile();
 
     void closetab(int index);

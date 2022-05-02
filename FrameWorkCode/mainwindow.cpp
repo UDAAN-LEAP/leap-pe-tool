@@ -214,20 +214,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
         ui->actionHighlight->setEnabled(false);
     }
 
-    //! random game ...
-
-    int rand = QRandomGenerator::global()->bounded(1, 100);
-    if(rand > 90)
-    {
-        QSettings settings("IIT-B", "OpenOCRCorrect");
-        if(settings.childGroups().contains("SoftwareUpdate", Qt::CaseInsensitive))
-        {
-            settings.beginGroup("SoftwareUpdate");
-            settings.setValue("showUpdate",true);
-            settings.endGroup();
-        }
-    }
-
     // Disabling some buttons while opening the tool
 
     // File Menu
@@ -5055,8 +5041,6 @@ QString MainWindow::toDevanagari(string text) {
  * \return QMainWindow::eventFilter(object, event);
  * \sa MainWindow::displayHolder, MainWindow::updateEntries, MainWindow::createImageInfoXMLFile, findStringSimilarity,
  */
-bool show_update = true;
-bool isShowAgain = true;
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
     //! Tooltip documentation
@@ -5064,17 +5048,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     QString bboxf = currentTabPageName;
     QFile bbox_file(gDirTwoLevelUp + "/CorrectorOutput/"+bboxf.replace(".html", ".bbox"));
     //! When user moves his mouse the system will ask user to download new update.
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    if(settings.childGroups().contains("SoftwareUpdate", Qt::CaseInsensitive))
-    {
-        settings.beginGroup("SoftwareUpdate");
-        isShowAgain = settings.value("showUpdate").toBool();
-    }
-    if(event->type() == QEvent::MouseMove && show_update && isShowAgain)
-    {
-          show_update = false; // show only once
-          compareVersion();
-    }
+
     if(event->type() == QEvent::MouseButtonPress)
     {
 
@@ -8703,104 +8677,8 @@ void MainWindow::on_action3_triggered()
     on_actionOpen_Project_triggered();
 }
 
-/*!
- * \fn MainWindow::UpdateInfo()
- * \brief We use the function UpdateInfo() to fetch the information about new version of this software from github.
- *  Basically we are using github API to get the information about new releases. it will only work when the internet
- *  connection is available.
- *
- *  From the information fetched by internet, it will check whether the new release is already installed in this system
- *  or not, if it is already installed then it will return back from this function, else it will call the compareVersion()
- *  function.
- *
- * \sa compareVersion()
-*/
 
-QString MainWindow::UpdateInfo()
-{
-    QUrl url("https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases");
-    qInfo() << url.toString();
-    QNetworkRequest request(url);               //requesting url over the network
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QNetworkAccessManager nam;                  //sending network request
-    QNetworkReply * reply = nam.get(request);
-    QTimer *timer = new QTimer();
-    timer->start(5000);
 
-    while(true){
-        qApp->processEvents();
-        if(reply->isFinished()) break;
-    }
-
-    if(reply->isFinished()){
-        QByteArray response_data = reply->readAll();
-        QJsonDocument json = QJsonDocument::fromJson(response_data);
-        qDebug() << json[0]["name"].toString();
-        if(json[0]["name"].toString() == "")
-        {
-            qDebug() << QString("Timeout .... Internet Not Available");
-            return "";
-        }
-        //compareVersion();
-        return json[0]["name"].toString();
-    }
-    else{
-        qDebug()<<"Connection timeout";
-        return "";
-    }
-
-}
-
-/*!
- * \fn MainWindow::compareVersion
- *
- * \brief we use this function to compare the current version of this software with the latest version of the software released.
- *  if the current version and new version are the same then it will return back, else it will show a message box where the user will
- *  be redirected to the download page.
- *
- * \param latestVersion
- */
-void MainWindow::compareVersion()
-{
-    QString curr_version = qApp->applicationVersion();
-    QString latestVersion = UpdateInfo();
-    qDebug() << curr_version;
-    if(curr_version==latestVersion)
-        return;
-    else{
-        QMessageBox updateInfo(this);
-        updateInfo.setWindowTitle("Update Available");
-        updateInfo.setIcon(QMessageBox::Information);
-        updateInfo.setText("A New Version of OpenOCRCorrect is Available!!\n\nOpenOCRCorrect "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below\n");
-        QAbstractButton *download = updateInfo.addButton(tr("Go to Download Page"), QMessageBox::ActionRole);
-        download->setMinimumWidth(160);
-        QAbstractButton *rml = updateInfo.addButton(tr("Remind me Later"), QMessageBox::RejectRole);
-        rml->setMinimumWidth(140);
-        QCheckBox *cb = new QCheckBox("Don't Show this again");
-        updateInfo.setCheckBox(cb);
-        cb->setStyleSheet("QCheckBox::indicator:unchecked{border: 1px solid white};");
-        updateInfo.exec();
-
-        if(updateInfo.clickedButton() == download){
-            QDesktopServices::openUrl(QUrl("https://drive.google.com/drive/folders/1DZn72n6gH0r459hTGsL2f7qhoZnHQPEI"));
-        }
-        if(cb->checkState() == Qt::Checked)
-        {
-            QSettings settings("IIT-B", "OpenOCRCorrect");
-            settings.beginGroup("SoftwareUpdate");
-            settings.setValue("showUpdate",false);
-            settings.endGroup();
-        }
-        else
-        {
-            QSettings settings("IIT-B", "OpenOCRCorrect");
-            settings.beginGroup("SoftwareUpdate");
-            settings.setValue("showUpdate",true);
-            settings.endGroup();
-        }
-    }
-
-}
 void MainWindow::RecentPageInfo()
 {
     ui->treeView->selectionModel()->clearSelection();
@@ -8886,21 +8764,21 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
             box.exec();
         }
         else{
-            QMessageBox msg(this);
+            QMessageBox msg;
             msg.setWindowTitle("Update Available");
             msg.setIcon(QMessageBox::Information);
             msg.setText("A New Version of OpenOCRCorrect is Available!!\n\nOpenOCRCorrect "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below\n");
             QAbstractButton *download = msg.addButton(tr("Go to Download Page"), QMessageBox::ActionRole);
             download->setMinimumWidth(160);
-            QAbstractButton *rml = msg.addButton(tr("Remind me Later"), QMessageBox::RejectRole);
-            rml->setMinimumWidth(140);
+            QAbstractButton *rml = msg.addButton(tr("Later"), QMessageBox::RejectRole);
+            rml->setMaximumWidth(80);
             msg.exec();
 
             if(msg.clickedButton() == download){
                 QDesktopServices::openUrl(QUrl("https://drive.google.com/drive/folders/1DZn72n6gH0r459hTGsL2f7qhoZnHQPEI"));
             }
             else {
-                this->close();
+                msg.close();
             }
         }
     }
