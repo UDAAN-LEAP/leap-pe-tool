@@ -7975,11 +7975,17 @@ void MainWindow::on_actionas_PDF_triggered()
 
     document->setHtml(html_contents);
     QPrinter printer(QPrinter::PrinterResolution);
-    printer.setOutputFormat(QPrinter::PdfFormat);
-    printer.setPaperSize(QPrinter::A4);
-    printer.setPageMargins(QMarginsF(5, 5, 5, 5));
-    printer.setOutputFileName(gDirTwoLevelUp+"/BookSet.pdf"); //! set the output dir
+    QPrintDialog dialog(&printer, this);
+    dialog.setWindowTitle("Set PDF properties");
+    dialog.addEnabledOption(QAbstractPrintDialog::PrintSelection);
+    //printer.setOutputFormat(QPrinter::PdfFormat);
+    //printer.setPaperSize(QPrinter::A4);
+    //printer.setPageMargins(QMarginsF(5, 5, 5, 5));
 
+    if(dialog.exec() != QDialog::Accepted){
+        return;
+    }
+    //printer.setOutputFileName(gDirTwoLevelUp+"/BookSet.pdf");//! set the output dir
     document->setPageSize(printer.pageRect().size());
     document->print(&printer);
 }

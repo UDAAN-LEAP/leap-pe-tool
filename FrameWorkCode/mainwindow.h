@@ -32,6 +32,8 @@
 #include "zoom.h"
 #include<QMessageBox>
 #include<QTime>
+#include<QPrinter>
+#include<QPrintDialog>
 //#include"staticDict.h"
 //#include "lcsqt.h"
 #include <Project.h>
