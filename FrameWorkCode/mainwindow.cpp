@@ -11,6 +11,7 @@
 #include <math.h>
 #include "QProgressBar"
 #include <QPrinter>
+#include <QPrintPreviewDialog>
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
 #include "DiffView.h"
@@ -8795,3 +8796,19 @@ void MainWindow::on_find_clicked()
     searchExpr.setCaseSensitivity(Qt::CaseInsensitive);
     ui->textEdit_dict->find(searchExpr, QTextDocument::FindBackward);
 }
+
+void MainWindow::on_actionPDF_Preview_triggered()
+{
+    QPrinter printer(QPrinter::PrinterResolution);
+    QPrintPreviewDialog preview(&printer,this);
+    preview.setMinimumHeight(800);
+    preview.setMinimumWidth(800);
+    connect(&preview, SIGNAL(paintRequested(QPrinter*)),this, SLOT(print(QPrinter*)));
+    preview.exec();
+}
+
+void MainWindow::print(QPrinter *printer)
+{
+    curr_browser->print(printer);
+}
+

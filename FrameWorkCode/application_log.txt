@@ -1639,3 +1639,21 @@ Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/
 Debug: "v2.9.0" (mainwindow.cpp)
 Debug: "v2.9.0" (mainwindow.cpp)
 Debug: "v2.8.9" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 05 May 2022 @ 11:38:26
+Username:anka
+
+Application Log:
+Warning: libpng warning: iCCP: known incorrect sRGB profile ()
+Debug: "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Debug: Current page name:  "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/CorrectorOutput/page-54.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 05 May 2022 @ 11:38:56
+Username:anka
+
+Application Log:
+Warning: libpng warning: iCCP: known incorrect sRGB profile ()
+Debug: "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/image.xml" (markRegion.cpp)
+Debug: Current page name:  "/home/anka/Music/ABBV1S2_YP_dinesh-main1/ABBV1S2_YP_dinesh-main/CorrectorOutput/page-54.html" (mainwindow.cpp)

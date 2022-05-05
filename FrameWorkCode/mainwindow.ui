@@ -12,8 +12,6 @@
   </property>
   <property name="font">
    <font>
-    <family>WorkSans</family>
-    <weight>50</weight>
     <italic>false</italic>
     <bold>false</bold>
    </font>
@@ -325,8 +323,6 @@ background-color: rgb(136, 138, 133);
                 </property>
                 <property name="font">
                  <font>
-                  <family>WorkSans</family>
-                  <weight>50</weight>
                   <italic>false</italic>
                   <bold>false</bold>
                  </font>
@@ -654,9 +650,7 @@ QScrollBar::sub-line:vertical {
              </property>
              <property name="font">
               <font>
-               <family>WorkSans</family>
                <pointsize>20</pointsize>
-               <weight>50</weight>
                <italic>false</italic>
                <bold>false</bold>
               </font>
@@ -706,7 +700,7 @@ QScrollBar::sub-line:vertical {
              </property>
              <property name="html">
               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'WorkSans'; font-size:20pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1139,6 +1133,8 @@ QMenu::item:selected{
     <addaction name="actionFontBlack"/>
     <addaction name="actionInsert_Tab_Space"/>
     <addaction name="menuTables"/>
+    <addaction name="separator"/>
+    <addaction name="actionPDF_Preview"/>
    </widget>
    <widget class="QMenu" name="menuGit">
     <property name="styleSheet">
@@ -1291,6 +1287,7 @@ background-color: #EEF0F2;
    <addaction name="actionSave"/>
    <addaction name="actionSave_As"/>
    <addaction name="actionLoadData"/>
+   <addaction name="actionPDF_Preview"/>
    <addaction name="separator"/>
    <addaction name="actionLoad_Prev_Page"/>
    <addaction name="actionLoad_Next_Page"/>
@@ -2109,10 +2106,18 @@ background-color: #EEF0F2;
     <string>Check for Updates</string>
    </property>
   </action>
+  <action name="actionPDF_Preview">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/file-preview.png</normaloff>Resources/file-preview.png</iconset>
+   </property>
+   <property name="text">
+    <string>PDF Preview</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
  </resources>

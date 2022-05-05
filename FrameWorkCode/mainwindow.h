@@ -430,6 +430,10 @@ private slots:
 
     void on_find_clicked();
 
+    void on_actionPDF_Preview_triggered();
+
+    void print(QPrinter *printer);
+
 public slots:
     void SaveFile_Backend();
 
