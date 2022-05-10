@@ -6154,7 +6154,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords, &replaceInAllPages);
         QMap<QString, QString>::iterator it;
         it = globalReplacementMap.begin();
-        for (int i = 0; i < replaceInAllPages.size(); i++)
+        for (int i = 0; i < globalReplacementMap.size(); i++)
         {
             if (replaceInAllPages.at(i) == 1)
                 replaceInAllPages_Map.insert(it.key(), it.value());
@@ -6207,18 +6207,12 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     map<string, string> new_cpair;
         QMapIterator<QString, QString>i(globalReplacementMap);
         map<string, set<string>>::iterator itr;
-        //itr = (CPair_editDis).begin()
         while (i.hasNext())
         {
             i.next();
             QString tmp = i.key();
-            //new_cpair.insert(pair<string, string>(i.key(), i.value()));
-            //new_cpair.put(i.key(), i.value());
-            //  new_cpair.insert(tmp,i.value());
             new_cpair[i.key().toStdString()]=i.value().toStdString();
-                    //i.key();
-            //new_cpair[itr->second()]=i.value();
-            //itr++;
+
         }
         Worker *worker = new Worker(nullptr,
                                     &mProject,
@@ -6282,7 +6276,7 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
       QMap<QString, QString> replaceInAllPages_Map;
       QMap<QString, QString> replaceInUneditedPages_Map;
       QMap<QString, QString>::iterator it = previewMap.begin();
-      for (int i = 0; i < allPages.size(); i++)
+      for (int i = 0; i < previewMap.size(); i++)
       {
           if (allPages.at(i) == 1)
             { replaceInAllPages_Map.insert(it.key(), it.value());}
