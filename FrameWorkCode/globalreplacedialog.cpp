@@ -157,6 +157,7 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords)
     //! The connect function does the necessary syncing.
 
     connect(ui->listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(leftCheckBoxStateChanged(QListWidgetItem*)));
+    connect(ui->ReplaceInAllPagesListWidget,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(rightCheckBoxStateChanged()));
 }
 
 
@@ -251,7 +252,22 @@ void GlobalReplaceDialog::leftCheckBoxStateChanged(QListWidgetItem* item)
     int itemRow;
     itemRow = ui->listWidget->row(item);
     Qt::ItemFlags flags = ui->ReplaceInAllPagesListWidget->item(itemRow)->flags();
-
+    //To uncheck 'Select All' button when some sub-item is unchecked
+    QListWidgetItem* item_ = 0;
+    int count_=0;
+    for(int j = 0; j < ui ->listWidget->count(); ++j){
+        item_ = ui->listWidget->item(j);
+        if(item_->checkState() == Qt::Checked){
+            count_ ++;
+        }
+    }
+    if(count_ == ui ->listWidget->count()){
+        ui->checkBox->setCheckState(Qt::Checked);
+    }
+    else if( count_ != ui ->listWidget->count() ){
+        ui->checkBox->setCheckState(Qt::Unchecked);
+    }
+    count_ = 0;
     //! This enables the right hand side pane, which was invisible when no words were checked.
     //! Enables the checkbox for the respective left hand side word checkbox checked.
     if (item->checkState() == Qt::Checked)
@@ -298,6 +314,7 @@ void GlobalReplaceDialog::leftCheckBoxStateChanged(QListWidgetItem* item)
         ui->groupBox->setVisible(false);
 //        ui->groupBox->setTitle("");
     }
+
 }
 
 /*!
@@ -377,24 +394,29 @@ void GlobalReplaceDialog::on_pushButton_clicked()
     info.exec();
 }
 
-void GlobalReplaceDialog::on_checkBox_stateChanged(int arg1)
+void GlobalReplaceDialog::on_checkBox_clicked()
 {
     QListWidgetItem* item = 0;
+    QList<QListWidgetItem*> list;
     for(int i = 0; i < ui ->listWidget->count(); ++i){
         item = ui->listWidget->item(i);
         item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
-        if(arg1 == 2){
-        item->setCheckState(Qt::Checked);
-        leftCheckBoxStateChanged(item);
-        }
-        if(arg1 == 0){
+        if(ui->checkBox->checkState() == Qt::Unchecked){
         item->setCheckState(Qt::Unchecked);
         leftCheckBoxStateChanged(item);
         }
+        else if(ui->checkBox->checkState() == Qt::Checked){
+        item->setCheckState(Qt::Checked);
+        list.append(item);
+        //leftCheckBoxStateChanged(item);
+        }
+    }
+    for(int j=0;j<list.size();++j){
+        leftCheckBoxStateChanged(list[j]);
     }
 }
 
-void GlobalReplaceDialog::on_checkBox_2_stateChanged(int arg1)
+void GlobalReplaceDialog::on_checkBox_2_clicked()
 {
     QListWidgetItem* item = 0;
     Qt::ItemFlags flags;
@@ -403,12 +425,35 @@ void GlobalReplaceDialog::on_checkBox_2_stateChanged(int arg1)
         item = ui->ReplaceInAllPagesListWidget->item(i);
         flags = item->flags();
         if(flags == (flags | Qt::ItemIsUserCheckable)){
-        if(arg1 == 2){
-        item->setCheckState(Qt::Checked);
-        }
-        if(arg1 == 0){
+        if(ui->checkBox_2->checkState() == Qt::Unchecked){
         item->setCheckState(Qt::Unchecked);
+        }
+        if(ui->checkBox_2->checkState() == Qt::Checked){
+        item->setCheckState(Qt::Checked);
         }
     }
 }
+}
+void GlobalReplaceDialog::rightCheckBoxStateChanged(){
+    QListWidgetItem* item_ = 0;
+    Qt::ItemFlags flags;
+    int count_=0,count1=0;
+    for(int j = 0; j < ui ->ReplaceInAllPagesListWidget->count(); ++j){
+        item_ = ui->ReplaceInAllPagesListWidget->item(j);
+        flags = item_->flags();
+        if(flags == (flags | Qt::ItemIsUserCheckable)){
+            count1 ++;
+        if(item_->checkState() == Qt::Checked){
+            count_ ++;
+        }
+    }
+    }
+    if(count_ == count1){
+        ui->checkBox_2->setCheckState(Qt::Checked);
+    }
+    else if( count_ != count1 ){
+        ui->checkBox_2->setCheckState(Qt::Unchecked);
+    }
+    count_ = 0;
+    count1=0;
 }

@@ -29,12 +29,11 @@ private slots:
     void on_applyButton_clicked();
     void displayOriginalList(QVector <QString> replacedWords);
     void leftCheckBoxStateChanged(QListWidgetItem*);
+    void rightCheckBoxStateChanged();
     void on_previewButton_clicked();
     void on_pushButton_clicked();
-
-    void on_checkBox_stateChanged(int arg1);
-
-    void on_checkBox_2_stateChanged(int arg1);
+    void on_checkBox_clicked();
+    void on_checkBox_2_clicked();
 
 public slots:
     void highlightChecked(QListWidgetItem* item);
