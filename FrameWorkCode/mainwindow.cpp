@@ -547,11 +547,11 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             QMenu* popup_menu = curr_browser->createStandardContextMenu();
             QMenu* clipboard_menu;
             clipboard_menu = new QMenu("clipboard", this);
-            clipboard_menu->setStyleSheet("height: 100px;width: 300px;overflow: hidden;white-space: nowrap;");
-            QFont font("Shobhika-Regular");
-            font.setWeight(16);
-            font.setPointSize(16);
-            clipboard_menu->setFont(font);
+            clipboard_menu->setStyleSheet("height: 6em; width: 10em; overflow: hidden; white-space: nowrap; color: black; background-color: white;");
+            //QFont font("Shobhika-Regular");
+            //font.setWeight(16);
+            //font.setPointSize(16);
+            //clipboard_menu->setFont(font);
             QAction* act;
             QSettings settings("IIT-B", "OpenOCRCorrect");
             settings.beginGroup("Clipboard");
@@ -595,7 +595,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 spell_menu = new QMenu("suggestions", this);
                 translate_menu = new QMenu("translate", this);
                 clipboard_menu = new QMenu("clipboard", this);
-                clipboard_menu->setStyleSheet("height: 100px;width: 300px;overflow: hidden;white-space: nowrap;");
+                clipboard_menu->setStyleSheet("height: 6em; width: 10em; overflow: hidden; white-space: nowrap; color: black; background-color: white;");
                 QFont font("Shobhika-Regular");
                 font.setWeight(16);
                 font.setPointSize(16);
