@@ -539,7 +539,7 @@ public:
         actionPDF_Preview = new QAction(MainWindow);
         actionPDF_Preview->setObjectName(QString::fromUtf8("actionPDF_Preview"));
         QIcon icon33;
-        icon33.addFile(QString::fromUtf8("PDF-Preview.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon33.addFile(QString::fromUtf8(":/Images/PDF-Preview.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionPDF_Preview->setIcon(icon33);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
@@ -1289,7 +1289,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1366, 50));
+        menuBar->setGeometry(QRect(0, 0, 1366, 53));
         menuBar->setStyleSheet(QString::fromUtf8("QMenuBar{\n"
 "font-size:17px;\n"
 "}\n"
@@ -1718,8 +1718,8 @@ public:
         textBrowser->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Ubuntu'; font-size:20pt; font-weight:400; font-style:normal;\" bgcolor=\"#ffffff\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", nullptr));
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:20pt; font-weight:400; font-style:normal;\" bgcolor=\"#ffffff\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab_5), QCoreApplication::translate("MainWindow", "Tab 1", nullptr));
         lineEdit_3->setText(QCoreApplication::translate("MainWindow", "Words 0", nullptr));
         groupBox->setTitle(QString());

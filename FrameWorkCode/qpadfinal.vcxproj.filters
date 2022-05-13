@@ -57,6 +57,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CreateProjectPage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="DiffView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -67,6 +70,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ProjectHierarchyWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectWizard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Symbols.cpp">
@@ -84,13 +90,40 @@
     <ClCompile Include="commentsview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="crashlog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="diff_match_patch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="eddis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="editdistance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="globalreplacedialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="globalreplaceinformation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="globalreplacepreview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="globalreplaceworker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="interndiffview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lg2_common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="loaddataworker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="loadingspinner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="loginpageview.cpp">
@@ -102,23 +135,47 @@
     <ClCompile Include="mainwindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="qcustomplot.cpp">
+    <ClCompile Include="markRegion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="meanStdPage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="progressbardialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="resizeimageview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="shortcutguidedialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="slpNPatternDict.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="textfinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="trieEditdis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="undoglobalreplace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="verifyset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="worker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="zoom.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ProjectWizard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CreateProjectPage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="CreateProjectPage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <QtMoc Include="DiffView.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -129,6 +186,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <QtMoc Include="ProjectHierarchyWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ProjectWizard.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Symbols.h">
@@ -155,15 +215,33 @@
     <QtMoc Include="commentsview.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <ClInclude Include="crashlog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="diff_match_patch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="eddis.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="editdistance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="tesseract\genericvector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <QtMoc Include="globalreplacedialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="globalreplaceinformation.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="globalreplacepreview.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="globalreplaceworker.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <ClInclude Include="tesseract\helpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -173,6 +251,12 @@
     <ClInclude Include="lg2_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <QtMoc Include="loaddataworker.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="loadingspinner.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <QtMoc Include="loginpageview.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -182,6 +266,9 @@
     <QtMoc Include="mainwindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <ClInclude Include="markRegion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="meanStdPage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -197,12 +284,12 @@
     <ClInclude Include="tesseract\platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <QtMoc Include="progressbardialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <ClInclude Include="tesseract\publictypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <QtMoc Include="qcustomplot.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <ClInclude Include="3rdParty\RapidXML\rapidxml.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -227,31 +314,40 @@
     <ClInclude Include="tesseract\serialis.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <QtMoc Include="shortcutguidedialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <ClInclude Include="slpNPatternDict.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tesseract\strngs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <QtMoc Include="textfinder.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <ClInclude Include="tesseract\thresholder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="trieEditdis.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <QtMoc Include="undoglobalreplace.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <ClInclude Include="tesseract\unichar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="verifyset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tesseract\version.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <QtMoc Include="worker.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <QtMoc Include="zoom.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="CreateProjectPage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="ProjectWizard.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -279,7 +375,19 @@
     <QtUic Include="commentsview.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="globalreplacedialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="globalreplaceinformation.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="globalreplacepreview.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
     <QtUic Include="interndiffview.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="loadingspinner.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="loginpageview.ui">
@@ -288,99 +396,176 @@
     <QtUic Include="mainwindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="progressbardialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
     <QtUic Include="resizeimageview.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="shortcutguidedialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="textfinder.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="undoglobalreplace.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <None Include="AlignCenter.png">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="AlignLeft.png">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="AlignRight.png">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="AllFont.png">
+    <None Include="Resources\Old Icons\AllFont.png">
       <Filter>Resource Files</Filter>
     </None>
     <QtRcc Include="AppResources.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
-    <None Include="JustifiedAlign.png">
+    <None Include="PDF-Preview.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="LoadData.png">
+    <None Include="Resources\Previous.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="New.png">
+    <None Include="Resources\Old Icons\SaveLoadPwords1.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="SaveLoadPwords1.png">
+    <None Include="ShortcutGuide.jpg">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="Zoom-In-icon.png">
+    <None Include="Resources\add.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="Zoom-Out-icon.png">
+    <None Include="Resources\align center.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="copy.png">
+    <None Include="Resources\align para.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="cut.png">
+    <None Include="Resources\align right.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="highlight-icon.png">
+    <None Include="Resources\all font properties 1.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="icon_diacritics.png">
+    <None Include="Resources\all font properties 2.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="linespacing.png">
+    <None Include="Resources\allign left.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="next-page.png">
+    <None Include="Resources\bold.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="open.png">
+    <None Include="Resources\english to hindi.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="paste.png">
+    <None Include="Resources\find 1.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="previous-page.png">
+    <None Include="Resources\find 2.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="redo.png">
+    <None Include="Resources\font black.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="save-as.png">
+    <None Include="Resources\font color.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="save.png">
+    <None Include="Resources\help.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="spellcheck.png">
+    <None Include="Resources\highlighter.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="symbols.png">
+    <None Include="Resources\information.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="toDevangari.png">
+    <None Include="Resources\ittalic.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="undo.png">
+    <None Include="Resources\load data.png">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Resources\next page.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\next.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\open file.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\preivious page.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\redo.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\save as.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\save load p words.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\save.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\spell check.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Old Icons\spellcheck.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="spinbar-tp.gif">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="spinbar-white-tp.gif">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\spl symbol.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\stylesheet-branch-closed.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\stylesheet-branch-open.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\subscpt.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\superscrpt.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Old Icons\toSlp1.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\tospl.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\underline  2.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\underline 1.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\undo.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\zoom in.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\zoom out.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include=".\SimpleMail\CMakeLists.txt" />
+    <None Include=".\SimpleMail\simplemail-qt5.pc.in" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ProjectJson.json">
-      <Filter>Distribution Files</Filter>
-    </None>
     <None Include="UserJson.json">
       <Filter>Distribution Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="qpadfinal.rc" />
   </ItemGroup>
 </Project>

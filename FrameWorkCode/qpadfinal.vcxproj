@@ -1,25 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Release|x64">
+    <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
-      <Platform>x64</Platform>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|x64">
+    <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
-      <Platform>x64</Platform>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{16C00DE0-A290-3D7F-AEAF-F9E428C36991}</ProjectGuid>
+    <ProjectGuid>{35FEABFC-C0E1-3882-9313-D6CC0636572D}</ProjectGuid>
     <RootNamespace>qpadfinal</RootNamespace>
-    <Keyword>QtVS_v303</Keyword>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
+    <Keyword>QtVS_v304</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.19041.0</WindowsTargetPlatformMinVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' or !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <PlatformToolset>v142</PlatformToolset>
     <OutputDirectory>release\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
@@ -28,7 +28,7 @@
     <IntermediateDirectory>release\</IntermediateDirectory>
     <PrimaryOutput>qpadfinal</PrimaryOutput>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <PlatformToolset>v142</PlatformToolset>
     <OutputDirectory>debug\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
@@ -42,43 +42,43 @@
     <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
   </Target>
   <ImportGroup Label="ExtensionSettings" />
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>debug\</OutDir>
     <IntDir>debug\</IntDir>
     <TargetName>qpadfinal</TargetName>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>release\</OutDir>
     <IntDir>release\</IntDir>
     <TargetName>qpadfinal</TargetName>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <QtInstall>msvc2017_64</QtInstall>
+  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <QtInstall>Qt 5.15.2</QtInstall>
     <QtModules>core;xml;network;gui;widgets;printsupport</QtModules>
   </PropertyGroup>
-  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <QtInstall>msvc2017_64</QtInstall>
+  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <QtInstall>Qt 5.15.2</QtInstall>
     <QtModules>core;xml;network;gui;widgets;printsupport</QtModules>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
     <Import Project="$(QtMsBuild)\qt.props" />
   </ImportGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;release;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\akans\Downloads\simple-mail\out\install\x86-Release\include\simplemail2-qt5;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -Zc:referenceBinding -Zc:__cplusplus -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>release\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -87,7 +87,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ObjectFileName>release\</ObjectFileName>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;NDEBUG;QT_NO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;QT_MESSAGELOGCONTEXT;NDEBUG;QT_NO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <ProgramDataBaseFileName>
       </ProgramDataBaseFileName>
@@ -98,8 +98,8 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>\usr\include\tesseract;\usr\include\leptonica;\usr\include\pugixml;\usr\include\git2;C:\openssl\lib;C:\Utils\my_sql\mysql-5.7.25-winx64\lib;C:\Utils\postgresql\pgsql\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SimpleMail2Qt5.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\akans\Downloads\simple-mail\out\install\x86-Release\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -117,7 +117,7 @@
       <WarningLevel>0</WarningLevel>
     </Midl>
     <ResourceCompile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;NDEBUG;QT_NO_DEBUG;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_XML_LIB;QT_NETWORK_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;QT_MESSAGELOGCONTEXT;NDEBUG;QT_NO_DEBUG;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_XML_LIB;QT_NETWORK_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <QtMoc>
       <CompilerFlavor>msvc</CompilerFlavor>
@@ -140,9 +140,9 @@
       <QtUicFileName>ui_%(Filename).h</QtUicFileName>
     </QtUic>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;debug;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;debug;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -Zc:referenceBinding -Zc:__cplusplus -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>debug\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -151,7 +151,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ObjectFileName>debug\</ObjectFileName>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;QT_MESSAGELOGCONTEXT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -161,7 +161,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>tesseract.lib;lept.lib;pugixml.lib;git2.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>\usr\include\tesseract;\usr\include\leptonica;\usr\include\pugixml;\usr\include\git2;C:\openssl\lib;C:\Utils\my_sql\mysql-5.7.25-winx64\lib;C:\Utils\postgresql\pgsql\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>\usr\include\tesseract;\usr\include\leptonica;\usr\include\pugixml;\usr\include\git2;C:\opensslx86\lib;C:\Utils\my_sql\mysql-5.7.25-win32\lib;C:\Utils\postgresqlx86\pgsql\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -177,7 +177,7 @@
       <WarningLevel>0</WarningLevel>
     </Midl>
     <ResourceCompile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_XML_LIB;QT_NETWORK_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;QT_MESSAGELOGCONTEXT;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_XML_LIB;QT_NETWORK_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <QtMoc>
       <CompilerFlavor>msvc</CompilerFlavor>
@@ -212,27 +212,47 @@
     <ClCompile Include="TreeModel.cpp" />
     <ClCompile Include="averageaccuracies.cpp" />
     <ClCompile Include="commentsview.cpp" />
+    <ClCompile Include="crashlog.cpp" />
     <ClCompile Include="diff_match_patch.cpp" />
+    <ClCompile Include="eddis.cpp" />
+    <ClCompile Include="editdistance.cpp" />
+    <ClCompile Include="globalreplacedialog.cpp" />
+    <ClCompile Include="globalreplaceinformation.cpp" />
+    <ClCompile Include="globalreplacepreview.cpp" />
+    <ClCompile Include="globalreplaceworker.cpp" />
     <ClCompile Include="interndiffview.cpp" />
     <ClCompile Include="lg2_common.cpp" />
+    <ClCompile Include="loaddataworker.cpp" />
+    <ClCompile Include="loadingspinner.cpp" />
     <ClCompile Include="loginpageview.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
-    <ClCompile Include="qcustomplot.cpp" />
+    <ClCompile Include="markRegion.cpp" />
+    <ClCompile Include="meanStdPage.cpp" />
+    <ClCompile Include="progressbardialog.cpp" />
     <ClCompile Include="resizeimageview.cpp" />
+    <ClCompile Include="shortcutguidedialog.cpp" />
+    <ClCompile Include="slpNPatternDict.cpp" />
+    <ClCompile Include="textfinder.cpp" />
+    <ClCompile Include="trieEditdis.cpp" />
+    <ClCompile Include="undoglobalreplace.cpp" />
+    <ClCompile Include="verifyset.cpp" />
+    <ClCompile Include="worker.cpp" />
     <ClCompile Include="zoom.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="CreateProjectPage.h">
+    </QtMoc>
     <QtMoc Include="DiffView.h">
     </QtMoc>
-    <QtMoc Include="CreateProjectPage.h" />
     <ClInclude Include="Filters.h" />
     <ClInclude Include="Project.h" />
     <QtMoc Include="ProjectHierarchyWindow.h">
     </QtMoc>
+    <QtMoc Include="ProjectWizard.h">
+    </QtMoc>
     <QtMoc Include="Symbols.h">
     </QtMoc>
-    <QtMoc Include="ProjectWizard.h" />
     <ClInclude Include="TreeItem.h" />
     <QtMoc Include="TreeModel.h">
     </QtMoc>
@@ -243,26 +263,41 @@
     <ClInclude Include="tesseract\capi.h" />
     <QtMoc Include="commentsview.h">
     </QtMoc>
+    <ClInclude Include="crashlog.h" />
     <ClInclude Include="diff_match_patch.h" />
     <ClInclude Include="eddis.h" />
+    <ClInclude Include="editdistance.h" />
     <ClInclude Include="tesseract\genericvector.h" />
+    <QtMoc Include="globalreplacedialog.h">
+    </QtMoc>
+    <QtMoc Include="globalreplaceinformation.h">
+    </QtMoc>
+    <QtMoc Include="globalreplacepreview.h">
+    </QtMoc>
+    <QtMoc Include="globalreplaceworker.h">
+    </QtMoc>
     <ClInclude Include="tesseract\helpers.h" />
     <QtMoc Include="interndiffview.h">
     </QtMoc>
     <ClInclude Include="lg2_common.h" />
+    <QtMoc Include="loaddataworker.h">
+    </QtMoc>
+    <QtMoc Include="loadingspinner.h">
+    </QtMoc>
     <QtMoc Include="loginpageview.h">
     </QtMoc>
     <ClInclude Include="tesseract\ltrresultiterator.h" />
     <QtMoc Include="mainwindow.h">
     </QtMoc>
+    <ClInclude Include="markRegion.h" />
     <ClInclude Include="meanStdPage.h" />
     <ClInclude Include="tesseract\ocrclass.h" />
     <ClInclude Include="tesseract\osdetect.h" />
     <ClInclude Include="tesseract\pageiterator.h" />
     <ClInclude Include="tesseract\platform.h" />
-    <ClInclude Include="tesseract\publictypes.h" />
-    <QtMoc Include="qcustomplot.h">
+    <QtMoc Include="progressbardialog.h">
     </QtMoc>
+    <ClInclude Include="tesseract\publictypes.h" />
     <ClInclude Include="3rdParty\RapidXML\rapidxml.hpp" />
     <ClInclude Include="3rdParty\RapidXML\rapidxml_iterators.hpp" />
     <ClInclude Include="3rdParty\RapidXML\rapidxml_print.hpp" />
@@ -272,31 +307,40 @@
     </QtMoc>
     <ClInclude Include="tesseract\resultiterator.h" />
     <ClInclude Include="tesseract\serialis.h" />
+    <QtMoc Include="shortcutguidedialog.h">
+    </QtMoc>
     <ClInclude Include="slpNPatternDict.h" />
     <ClInclude Include="tesseract\strngs.h" />
+    <QtMoc Include="textfinder.h">
+    </QtMoc>
     <ClInclude Include="tesseract\thresholder.h" />
     <ClInclude Include="trieEditdis.h" />
+    <QtMoc Include="undoglobalreplace.h">
+    </QtMoc>
     <ClInclude Include="tesseract\unichar.h" />
+    <ClInclude Include="verifyset.h" />
     <ClInclude Include="tesseract\version.h" />
+    <QtMoc Include="worker.h">
+    </QtMoc>
     <QtMoc Include="zoom.h">
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
       <FileType>Document</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cl -Bx"$(QTDIR)\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -Zc:referenceBinding -Zc:__cplusplus -Zi -MDd -W3 -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E $(QTDIR)\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;debug\moc_predefs.h</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generate moc_predefs.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\moc_predefs.h;%(Outputs)</Outputs>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl -Bx"$(QTDIR)\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -Zc:referenceBinding -Zc:__cplusplus -w -Zi -MDd -W3 -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E $(QTDIR)\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;debug\moc_predefs.h</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Generate moc_predefs.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">debug\moc_predefs.h;%(Outputs)</Outputs>
     </CustomBuild>
     <CustomBuild Include="release\moc_predefs.h.cbt">
       <FileType>Document</FileType>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cl -Bx"$(QTDIR)\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -Zc:referenceBinding -Zc:__cplusplus -O2 -MD -W3 -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E $(QTDIR)\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;release\moc_predefs.h</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generate moc_predefs.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\moc_predefs.h;%(Outputs)</Outputs>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl -Bx"$(QTDIR)\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -Zc:referenceBinding -Zc:__cplusplus -w -O2 -MD -W3 -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E $(QTDIR)\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;release\moc_predefs.h</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Generate moc_predefs.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">release\moc_predefs.h;%(Outputs)</Outputs>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -310,48 +354,89 @@
     </QtUic>
     <QtUic Include="commentsview.ui">
     </QtUic>
+    <QtUic Include="globalreplacedialog.ui">
+    </QtUic>
+    <QtUic Include="globalreplaceinformation.ui">
+    </QtUic>
+    <QtUic Include="globalreplacepreview.ui">
+    </QtUic>
     <QtUic Include="interndiffview.ui">
+    </QtUic>
+    <QtUic Include="loadingspinner.ui">
     </QtUic>
     <QtUic Include="loginpageview.ui">
     </QtUic>
     <QtUic Include="mainwindow.ui">
     </QtUic>
+    <QtUic Include="progressbardialog.ui">
+    </QtUic>
     <QtUic Include="resizeimageview.ui">
+    </QtUic>
+    <QtUic Include="shortcutguidedialog.ui">
+    </QtUic>
+    <QtUic Include="textfinder.ui">
+    </QtUic>
+    <QtUic Include="undoglobalreplace.ui">
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <None Include="AlignCenter.png" />
-    <None Include="AlignLeft.png" />
-    <None Include="AlignRight.png" />
-    <None Include="AllFont.png" />
+    <None Include="Resources\Old Icons\AllFont.png" />
     <QtRcc Include="AppResources.qrc">
     </QtRcc>
-    <None Include="JustifiedAlign.png" />
-    <None Include="LoadData.png" />
-    <None Include="New.png" />
-    <None Include="SaveLoadPwords1.png" />
-    <None Include="Zoom-In-icon.png" />
-    <None Include="Zoom-Out-icon.png" />
-    <None Include="copy.png" />
-    <None Include="cut.png" />
-    <None Include="highlight-icon.png" />
-    <None Include="icon_diacritics.png" />
-    <None Include="linespacing.png" />
-    <None Include="next-page.png" />
-    <None Include="open.png" />
-    <None Include="paste.png" />
-    <None Include="previous-page.png" />
-    <None Include="redo.png" />
-    <None Include="save-as.png" />
-    <None Include="save.png" />
-    <None Include="spellcheck.png" />
-    <None Include="symbols.png" />
-    <None Include="toDevangari.png" />
-    <None Include="undo.png" />
+    <None Include="PDF-Preview.png" />
+    <None Include="Resources\Previous.png" />
+    <None Include="Resources\Old Icons\SaveLoadPwords1.png" />
+    <None Include="ShortcutGuide.jpg" />
+    <None Include="Resources\add.png" />
+    <None Include="Resources\align center.png" />
+    <None Include="Resources\align para.png" />
+    <None Include="Resources\align right.png" />
+    <None Include="Resources\all font properties 1.png" />
+    <None Include="Resources\all font properties 2.png" />
+    <None Include="Resources\allign left.png" />
+    <None Include="Resources\bold.png" />
+    <None Include="Resources\english to hindi.png" />
+    <None Include="Resources\find 1.png" />
+    <None Include="Resources\find 2.png" />
+    <None Include="Resources\font black.png" />
+    <None Include="Resources\font color.png" />
+    <None Include="Resources\help.png" />
+    <None Include="Resources\highlighter.png" />
+    <None Include="Resources\information.png" />
+    <None Include="Resources\ittalic.png" />
+    <None Include="Resources\load data.png" />
+    <None Include="Resources\next page.png" />
+    <None Include="Resources\next.png" />
+    <None Include="Resources\open file.png" />
+    <None Include="Resources\preivious page.png" />
+    <None Include="Resources\redo.png" />
+    <None Include="Resources\save as.png" />
+    <None Include="Resources\save load p words.png" />
+    <None Include="Resources\save.png" />
+    <None Include="Resources\spell check.png" />
+    <None Include="Resources\Old Icons\spellcheck.png" />
+    <None Include="spinbar-tp.gif" />
+    <None Include="spinbar-white-tp.gif" />
+    <None Include="Resources\spl symbol.png" />
+    <None Include="Resources\stylesheet-branch-closed.png" />
+    <None Include="Resources\stylesheet-branch-open.png" />
+    <None Include="Resources\subscpt.png" />
+    <None Include="Resources\superscrpt.png" />
+    <None Include="Resources\Old Icons\toSlp1.png" />
+    <None Include="Resources\tospl.png" />
+    <None Include="Resources\underline  2.png" />
+    <None Include="Resources\underline 1.png" />
+    <None Include="Resources\undo.png" />
+    <None Include="Resources\zoom in.png" />
+    <None Include="Resources\zoom out.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ProjectJson.json" />
+    <None Include=".\SimpleMail\CMakeLists.txt" />
     <None Include="UserJson.json" />
+    <None Include=".\SimpleMail\simplemail-qt5.pc.in" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="qpadfinal.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
