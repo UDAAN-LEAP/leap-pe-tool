@@ -32,6 +32,7 @@ HEADERS += ./Filters.h \
 	$$PWD/loaddataworker.h \
     $$PWD/loadingspinner.h \
     $$PWD/markRegion.h \
+    $$PWD/pdfhandling.h \
     $$PWD/progressbardialog.h \
     $$PWD/shortcutguidedialog.h \
     $$PWD/textfinder.h \
@@ -109,6 +110,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/loadingspinner.cpp \
     $$PWD/markRegion.cpp \
     $$PWD/meanStdPage.cpp \
+    $$PWD/pdfhandling.cpp \
     $$PWD/progressbardialog.cpp \
     $$PWD/shortcutguidedialog.cpp \
     $$PWD/slpNPatternDict.cpp \
