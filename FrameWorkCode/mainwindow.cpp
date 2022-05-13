@@ -264,6 +264,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionInsert_Horizontal_Line->setEnabled(false);
     ui->actionFontBlack->setEnabled(false);
     ui->actionInsert_Tab_Space->setEnabled(false);
+    ui->actionPDF_Preview->setEnabled(false);
 
     // Table Menu inside View Menu
     ui->actionInsert_Table_2->setEnabled(false);
@@ -1281,6 +1282,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
      ui->actionInsert_Horizontal_Line->setEnabled(true);
      ui->actionFontBlack->setEnabled(true);
      ui->actionInsert_Tab_Space->setEnabled(true);
+     ui->actionPDF_Preview->setEnabled(true);
      if (isVerifier)
          ui->actionHighlight->setEnabled(true);
 
