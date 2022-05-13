@@ -368,9 +368,7 @@ void GlobalReplaceDialog::on_previewButton_clicked()
     {
         if(item->checkState() == Qt::Checked)
           {
-            //qDebug()<<"all items:"<<item->text();
             QStringList string = item->text().split("->");
-            //qDebug()<<"stringList:"<<string;
             obj[string[0]] = string[1];
           }
     }

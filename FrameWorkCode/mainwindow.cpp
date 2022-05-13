@@ -6412,7 +6412,7 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
                   }
               }
               QString newSentence = matched;
-              qDebug()<<oldWord<<newWord;
+              //qDebug()<<oldWord<<newWord;
               oldWord = oldWord.trimmed();
               newSentence = newSentence.replace(oldWord,newWord,Qt::CaseSensitive);
               QString finalSentence = matched + "==>" + newSentence;
