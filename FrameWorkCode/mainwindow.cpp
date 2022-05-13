@@ -5909,7 +5909,7 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     else{
         allPages.push_back(0);
     }
-
+    //qDebug()<<"oldword | newWord | obj###########"<<old_word<<new_word<<obj;
     //!Disconnecting button from message box
     previewButton->disconnect();
     connect(previewButton,&QAbstractButton::clicked, this,[=](){
@@ -6231,8 +6231,9 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         thread->start();
     QString msg  = QString::fromStdString(std::to_string(globalReplacementMap.values().length()) + " words changed" + "\n" + std::to_string(r2) + " instances replaced" + "\n" + std::to_string(files) + " files modified");
     QMessageBox messageBox;
-    if(globalReplacementMap.values().length()>0)
+    if(globalReplacementMap.values().length()>0) //{
         messageBox.information(0, "Replacement Successful", msg);
+        //globalReplacementMap.clear();}
 
     addCurrentlyOpenFileToEditedFilesLog();
 }
@@ -6266,8 +6267,8 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
 {
   QStandardItemModel *model = new QStandardItemModel;
   int lineindex = 0;
-
-  if(previewMap.size() == 0)
+    //qDebug()<<"previewMap:"<<previewMap;
+    if(previewMap.size() == 0)
   {
        QMessageBox::warning(this, "Error", "No words are selected for replacement");
   }
@@ -6371,6 +6372,7 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
 
 QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap <QString, QString> globalReplacementMap)
 {
+    //qDebug()<<"grm:"<<globalReplacementMap;
   QStringList sentences;
   QMap <QString, QString>::iterator grmIterator;
   QFile *f = new QFile(fPath);
@@ -6388,7 +6390,8 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
   {
       QString oldWord = grmIterator.key();
       QString newWord = grmIterator.value();
-      QRegularExpression rx(".*"+oldWord+".*");
+
+      QRegularExpression rx(".*"+oldWord+"*");
       for(int i=0;i<rx.captureCount()+1;++i)
       {
          QRegularExpressionMatchIterator match = rx.globalMatch(plain);
@@ -6396,8 +6399,10 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
            {
               QRegularExpressionMatch Extmatch = match.next();
               QString matched = Extmatch.captured(i);
+              //qDebug()<<"Matched:"<<matched;
               string no_dn[]={"०","१","२","३","४","५","६","७","८","९","॥","।","–","—"};
               QStringList list = matched.split(QString::fromStdString(no_dn[11]), QString::SkipEmptyParts);
+              //qDebug()<<"list:"<<list;
               for(i=0;i<list.size();i++)
               {
                   if(list[i].contains(oldWord))
@@ -6407,7 +6412,9 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
                   }
               }
               QString newSentence = matched;
-              newSentence = newSentence.replace(oldWord, newWord);
+              qDebug()<<oldWord<<newWord;
+              oldWord = oldWord.trimmed();
+              newSentence = newSentence.replace(oldWord,newWord,Qt::CaseSensitive);
               QString finalSentence = matched + "==>" + newSentence;
               qDebug() << "Final Sentence" << finalSentence;
               if(newSentence.length() >0 )

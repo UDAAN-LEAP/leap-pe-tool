@@ -359,17 +359,20 @@ void GlobalReplaceDialog::on_previewButton_clicked()
     QMap <QString, QString> obj;
     QList<QListWidgetItem *> items = ui->listWidget->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard); //get all items
     QVector<int> allPages;
+
     //! Loops through each item and splits the string such that when oldword newword is the format of
     //! the string then we get key as oldword and value as new word.
     foreach (QListWidgetItem *item, items)
     {
         if(item->checkState() == Qt::Checked)
           {
-            QStringList string = item->text().split(" ");
-            obj[string[0]] = string[2];
+            //qDebug()<<"all items:"<<item->text();
+            QStringList string = item->text().split("->");
+            //qDebug()<<"stringList:"<<string;
+            obj[string[0]] = string[1];
           }
     }
-
+    //qDebug()<<"old word | new word | obj"<<obj;
     //! This will check if the words are selected to be replaced in unedited pages or all pages as well
     //! This data is stored in vector.
     if(obj.size()>0)
