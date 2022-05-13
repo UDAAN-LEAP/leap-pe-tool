@@ -182,10 +182,12 @@ void GlobalReplaceDialog::on_applyButton_clicked()
 {
     QMessageBox replace;
     replace.setWindowTitle("Save and Replace");
-    replace.setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint);
+    replace.setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint|Qt::WindowCloseButtonHint);
     replace.setIcon(QMessageBox::Question);
     replace.setInformativeText("Selected words will be saved and replaced");
     QPushButton *confirmButton = replace.addButton(tr("Confirm"),QMessageBox::AcceptRole);
+    QPushButton *cancelButton = replace.addButton(tr("Cancel"),QMessageBox::RejectRole);
+
     replace.exec();
     if(replace.clickedButton() == confirmButton)
     {
@@ -198,10 +200,10 @@ void GlobalReplaceDialog::on_applyButton_clicked()
               QStringList string = item->text().split(sep);
               //QStringList string = item->text().split(" ");
               this->filteredGlobalReplacementMap[string[0]] = string[1];
-         }
-     }
-      this->close();
+          }
+      }
     }
+    this->close();
 }
 
 //void GlobalReplaceDialog::on_cancelButton_clicked()
