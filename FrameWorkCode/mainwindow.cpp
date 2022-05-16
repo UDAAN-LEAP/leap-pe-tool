@@ -77,6 +77,7 @@
 #include "verifyset.h"
 #include "loaddataworker.h"
 #include "globalreplaceworker.h"
+#include "pdfhandling.h"
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -263,6 +264,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionInsert_Horizontal_Line->setEnabled(false);
     ui->actionFontBlack->setEnabled(false);
     ui->actionInsert_Tab_Space->setEnabled(false);
+    ui->actionPDF_Preview->setEnabled(false);
 
     // Table Menu inside View Menu
     ui->actionInsert_Table_2->setEnabled(false);
@@ -547,11 +549,11 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             QMenu* popup_menu = curr_browser->createStandardContextMenu();
             QMenu* clipboard_menu;
             clipboard_menu = new QMenu("clipboard", this);
-            clipboard_menu->setStyleSheet("height: 100px;width: 300px;overflow: hidden;white-space: nowrap;");
-            QFont font("Shobhika-Regular");
-            font.setWeight(16);
-            font.setPointSize(16);
-            clipboard_menu->setFont(font);
+            clipboard_menu->setStyleSheet("height: 6em; width: 10em; overflow: hidden; white-space: nowrap; color: black; background-color: white;");
+            //QFont font("Shobhika-Regular");
+            //font.setWeight(16);
+            //font.setPointSize(16);
+            //clipboard_menu->setFont(font);
             QAction* act;
             QSettings settings("IIT-B", "OpenOCRCorrect");
             settings.beginGroup("Clipboard");
@@ -595,7 +597,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 spell_menu = new QMenu("suggestions", this);
                 translate_menu = new QMenu("translate", this);
                 clipboard_menu = new QMenu("clipboard", this);
-                clipboard_menu->setStyleSheet("height: 100px;width: 300px;overflow: hidden;white-space: nowrap;");
+                clipboard_menu->setStyleSheet("height: 6em; width: 10em; overflow: hidden; white-space: nowrap; color: black; background-color: white;");
                 QFont font("Shobhika-Regular");
                 font.setWeight(16);
                 font.setPointSize(16);
@@ -1280,6 +1282,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
      ui->actionInsert_Horizontal_Line->setEnabled(true);
      ui->actionFontBlack->setEnabled(true);
      ui->actionInsert_Tab_Space->setEnabled(true);
+     ui->actionPDF_Preview->setEnabled(true);
      if (isVerifier)
          ui->actionHighlight->setEnabled(true);
 
@@ -7897,105 +7900,136 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
 
 void MainWindow::on_actionas_PDF_triggered()
 {
-    //! We set the dir path to CorrectorOutput or Verifier output depending on whether it is opened
-    //! in Corrector or Verifier Mode.
-    QTextDocument *document = new QTextDocument();
-     QString currentDirAbsolutePath;
-    if(mRole=="Verifier")
-    currentDirAbsolutePath = gDirTwoLevelUp + "/VerifierOutput/";
-    else if (mRole=="Corrector") {
-        currentDirAbsolutePath = gDirTwoLevelUp + "/CorrectorOutput/";
-    }
-
-    //! We then open this directory and set sorting preferences.
-    QDir dir(currentDirAbsolutePath);
-    dir.setSorting(QDir::SortFlag::DirsFirst | QDir::SortFlag::Name);
-    QDirIterator dirIterator(dir,QDirIterator::NoIteratorFlags);
-
-    //! Set count of files in directory
-
-    QString html_contents="";
-    QString mainHtml;
-    int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
-    int counter=0;
-
-    int stIndex, startFrom = 0;
-
-    //! Set the background of the pdf to be printed to be white
-    QString searchString = "background-color:#"; // string to be searched
-    int l = searchString.length();
-    QString whiteColor = "ffffff";
-
-    //! Loop through all files
-    for(auto a : dir.entryList())
-    {
-        QString it_file_path = a;
-        QString x=currentDirAbsolutePath+a;
-
-        startFrom = 0; // The position from which searchString will be scanned
-        //! if condition makes sure we extract only html files for PDF Processing
-        //! (folder has hocr, dict, htranslate, and other such files)
-        if(x.contains("."))
-        {
-            QStringList html_files = x.split(QRegExp("[.]"));
-
-;           //! condition to check if file is html
-            if(html_files[1]=="html")
-            {
-                QFile file(x);
-                    if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
-                    QTextStream stream(&file);
-                    stream.setCodec("UTF-8");
-
-                    //! Read the file
-
-                    mainHtml=stream.readAll();
-                    //! Changing the text background to white by setting the background to #fffff
-                    while (true){
-                        stIndex = mainHtml.indexOf(searchString, startFrom);
-                        if (stIndex == -1)
-                            break;
-                        stIndex += l; // increment line
-                        mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
-                        startFrom = stIndex + 6;
-                    }
-                    //! append counter when one file is fully scanned
-                    counter++;
-
-                    //! Once page html is extracted ... before we move to next page we add html tag
-                    //! for page break so that the PDF printer separates the pages
-                    //! We do this till all pages done
-                    if(counter<count){
-                        mainHtml+="<P style=\"page-break-before: always\"></P>";
-                    }
-                    file.close();
-              html_contents.append(mainHtml);
-
-            }
-            //! if file is not html
-            else {
-                continue;
-            }
-        }
-    }
-
-    //! Perform printing of html using QPrinter
-
-    document->setHtml(html_contents);
     QPrinter printer(QPrinter::PrinterResolution);
     QPrintDialog dialog(&printer, this);
     dialog.setWindowTitle("Set PDF properties");
     dialog.addEnabledOption(QAbstractPrintDialog::PrintSelection);
-    //printer.setOutputFormat(QPrinter::PdfFormat);
-    //printer.setPaperSize(QPrinter::A4);
-    //printer.setPageMargins(QMarginsF(5, 5, 5, 5));
 
     if(dialog.exec() != QDialog::Accepted){
         return;
     }
-    //printer.setOutputFileName(gDirTwoLevelUp+"/BookSet.pdf");//! set the output dir
-    document->setPageSize(printer.pageRect().size());
-    document->print(&printer);
+    else{
+        //! We set the dir path to CorrectorOutput or Verifier output depending on whether it is opened
+        //! in Corrector or Verifier Mode.
+        QTextDocument *document = new QTextDocument();
+         QString currentDirAbsolutePath;
+        if(mRole=="Verifier")
+        currentDirAbsolutePath = gDirTwoLevelUp + "/VerifierOutput/";
+        else if (mRole=="Corrector") {
+            currentDirAbsolutePath = gDirTwoLevelUp + "/CorrectorOutput/";
+        }
+
+        //! We then open this directory and set sorting preferences.
+        QDir dir(currentDirAbsolutePath);
+        dir.setSorting(QDir::SortFlag::DirsFirst | QDir::SortFlag::Name);
+        QDirIterator dirIterator(dir,QDirIterator::NoIteratorFlags);
+
+        //! Set count of files in directory
+
+        QString html_contents="";
+        QString mainHtml;
+        int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
+        int counter=0;
+
+        int stIndex, startFrom = 0;
+
+        //! Set the background of the pdf to be printed to be white
+        QString searchString = "background-color:#"; // string to be searched
+        int l = searchString.length();
+        QString whiteColor = "ffffff";
+
+        //! Loop through all files
+        for(auto a : dir.entryList())
+        {
+            QString it_file_path = a;
+            QString x=currentDirAbsolutePath+a;
+
+            startFrom = 0; // The position from which searchString will be scanned
+            //! if condition makes sure we extract only html files for PDF Processing
+            //! (folder has hocr, dict, htranslate, and other such files)
+            if(x.contains("."))
+            {
+                QStringList html_files = x.split(QRegExp("[.]"));
+
+               //! condition to check if file is html
+                if(html_files[1]=="html")
+                {
+                    QFile file(x);
+                        if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
+                        QTextStream stream(&file);
+                        stream.setCodec("UTF-8");
+
+                        //! Read the file
+
+                        mainHtml=stream.readAll();
+                        //! Changing the text background to white by setting the background to #fffff
+                        while (true){
+                            stIndex = mainHtml.indexOf(searchString, startFrom);
+                            if (stIndex == -1)
+                                break;
+                            stIndex += l; // increment line
+                            mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
+                            startFrom = stIndex + 6;
+                        }
+                        //! append counter when one file is fully scanned
+                        counter++;
+
+                        //! Once page html is extracted ... before we move to next page we add html tag
+                        //! for page break so that the PDF printer separates the pages
+                        //! We do this till all pages done
+                        if(counter<count){
+                            mainHtml+="<P style=\"page-break-before: always\"></P>";
+                        }
+                        file.close();
+                  html_contents.append(mainHtml);
+
+                }
+                //! if file is not html
+                else {
+                    continue;
+                }
+            }
+        }
+
+        //! Perform printing of html using QPrinter
+
+        document->setHtml(html_contents);
+    //    QPrinter printer(QPrinter::PrinterResolution);
+    //    QPrintDialog dialog(&printer, this);
+    //    dialog.setWindowTitle("Set PDF properties");
+    //    dialog.addEnabledOption(QAbstractPrintDialog::PrintSelection);
+    //    //printer.setOutputFormat(QPrinter::PdfFormat);
+    //    //printer.setPaperSize(QPrinter::A4);
+    //    //printer.setPageMargins(QMarginsF(5, 5, 5, 5));
+
+    //    if(dialog.exec() != QDialog::Accepted){
+    //        return;
+    //    }
+    //    //printer.setOutputFileName(gDirTwoLevelUp+"/BookSet.pdf");//! set the output dir
+    //    document->setPageSize(printer.pageRect().size());
+    //    document->print(&printer);
+        PDFHandling *savepdf = new PDFHandling(
+                    nullptr,
+                    document,
+                    &printer,
+                    html_contents
+                    );
+
+        QThread *thread = new QThread;
+
+        connect(thread, SIGNAL(started()), savepdf, SLOT(SavePDF()));
+        connect(savepdf, SIGNAL(finishedSavingPDF()), thread, SLOT(quit()));
+        connect(savepdf, SIGNAL(finishedSavingPDF()), savepdf, SLOT(deleteLater()));
+        connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+        connect(savepdf, SIGNAL(finishedSavingPDF()), this, SLOT(stopSpinning()));
+        savepdf->moveToThread(thread);
+        thread->start();
+
+        spinner = new LoadingSpinner(this);
+        spinner->SetMessage("Saving as PDF...", "Loading...");
+        spinner->setModal(false);
+        spinner->exec();
+    }
 }
 
 /*!
