@@ -8800,6 +8800,7 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
            // return "";
         }
         QString latestVersion=json[0]["name"].toString();
+        QString newFeatures = json[0]["body"].toString();
         qDebug()<<latestVersion;
         QString curr_version = qApp->applicationVersion();
         //QString latestVersion = UpdateInfo();
@@ -8814,7 +8815,7 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
             QMessageBox msg;
             msg.setWindowTitle("Update Available");
             msg.setIcon(QMessageBox::Information);
-            msg.setText("A New Version of OpenOCRCorrect is Available!!\n\nOpenOCRCorrect "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below\n");
+            msg.setText("A New Version of OpenOCRCorrect is Available!!\n\nOpenOCRCorrect "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below\nWhat's New:-\n\n" + newFeatures);
             QAbstractButton *download = msg.addButton(tr("Go to Download Page"), QMessageBox::ActionRole);
             download->setMinimumWidth(160);
             QAbstractButton *rml = msg.addButton(tr("Later"), QMessageBox::RejectRole);

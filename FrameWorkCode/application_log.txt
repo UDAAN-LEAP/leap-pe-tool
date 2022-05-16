@@ -1,0 +1,30 @@
+
+OpenOCRCorrect Application Log
+Date: 16 May 2022 @ 19:20:17
+Username:anka
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.5" (mainwindow.cpp)
+Debug: "v2.9.5" (mainwindow.cpp)
+Debug: "v2.9.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 16 May 2022 @ 19:21:36
+Username:anka
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.5" (mainwindow.cpp)
+Debug: "v2.9.5" (mainwindow.cpp)
+Debug: "v2.8.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 16 May 2022 @ 19:22:19
+Username:anka
+
+Application Log:
+Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
+Debug: "v2.9.5" (mainwindow.cpp)
+Debug: "v2.9.5" (mainwindow.cpp)
+Debug: "v2.9.5" (mainwindow.cpp)
