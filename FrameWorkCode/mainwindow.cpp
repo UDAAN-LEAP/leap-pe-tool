@@ -5887,32 +5887,38 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     QAbstractButton *cancelButton = messageBox.addButton(tr("No"), QMessageBox::RejectRole);
 
     messageBox.setCheckBox(cb);
-    //To give warning regarding set corruption
-    /*for(int z = 0;z<old_word.size();z++){
-        if(old_word[z] == " "){
-        QMessageBox::information(0, "Warning!", "Current global replace may cause corruption");
-        break;}
-    }*/
     QString msg = "Do you want to replace \"" + old_word + "\" with \"" + new_word + "\" in rest of the pages?\n"
                 + "\n\nClick \"Yes\" to save the changes and replace the word in the unedited pages."
                 + "\nClick \"No\" to save the changes and not replace the word in the unedited page.";
 
     QMap <QString, QString> obj;
     obj[old_word] = new_word;
-    QVector<int> allPages;
-
+   // QVector<int> allPages;
+    //qDebug()<<"cb->checkState():"<<cb->checkState();
     //!Get checkbox State
-    if(cb->checkState() == Qt::Checked){
+    /*if(cb->checkState() == Qt::Checked){
+        qDebug()<<"Make changes in all pages?";
         chk=1;
         allPages.push_back(1);
     }
-    else{
-        allPages.push_back(0);
-    }
-    //qDebug()<<"oldword | newWord | obj###########"<<old_word<<new_word<<obj;
+    else if(cb->checkState() == Qt::Unchecked){
+        qDebug()<<"Make in all pages not clicked";
+        //allPages.push_back(0);
+    }*/
+ //allPages.push_back(1);
+
     //!Disconnecting button from message box
     previewButton->disconnect();
     connect(previewButton,&QAbstractButton::clicked, this,[=](){
+        QVector<int> allPages;
+        //!Get checkbox State
+        if(cb->checkState() == Qt::Checked){
+           // chk=1;
+            allPages.push_back(1);
+        }
+        else if(cb->checkState() == Qt::Unchecked){
+            allPages.push_back(0);
+        }
         globalReplacePreviewfn(obj,allPages);   //!preview for single replace
     } );
 
