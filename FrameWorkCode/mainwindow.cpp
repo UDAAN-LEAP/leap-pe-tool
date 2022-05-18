@@ -578,8 +578,9 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             qDebug ()<<"right click";
         }
         //! if right click
-        if ((ev->button() == Qt::RightButton) || (RightclickFlag))
+        if (((ev->button() == Qt::RightButton) && (!LoadDataFlag)) || (RightclickFlag))
         {
+
             QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
             QTextCursor cursor = curr_browser->textCursor();
             cursor.select(QTextCursor::WordUnderCursor);
@@ -606,9 +607,9 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 clipboard_menu->setFont(font);
 
                 QAction* act;
-
                 vector<string>  Words1 = trie.print5NearestEntries(TGBook, selectedStr);
                 if (Words1.empty()) return;
+
                 vector<string> Alligned = trie.print5NearestEntries(TGBookP, selectedStr);
                 if (Alligned.empty()) return;
 
@@ -617,8 +618,10 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
                 string PairSugg = slnp.print2OCRSugg(selectedStr, Alligned[0], ConfPmap, Dict); // map<string,int>&
                 if (PairSugg.empty())return;
+
                 vector<string>  Words = trie.print1OCRNearestEntries(slnp.toslp1(selectedStr), vIBook);
                 if (Words.empty())return;
+
 
                 //! find nearest confirming to OCR Sugg from Book
                 string nearestCOnfconfirmingSuggvec;
@@ -938,7 +941,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
      */
 
     //QString ProjFile;
-
     int totalFileCountInDir = 0;
     QMap<QString, int> fileCountInDir;
 //to choose between recent three files
@@ -1306,6 +1308,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
      ui->actionSymbols->setEnabled(true);
      ui->actionZoom_In->setEnabled(true);
      ui->actionZoom_Out->setEnabled(true);
+     //Reset loadData flag
+     LoadDataFlag = 1;
+
 }
 
 /*!

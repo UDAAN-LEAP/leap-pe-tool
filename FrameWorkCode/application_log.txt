@@ -1,116 +1,46 @@
 
 OpenOCRCorrect Application Log
-Date: 16 May 2022 @ 19:20:17
-Username:anka
+Date: 18 May 2022 @ 20:15:58
+Username:sadam
 
 Application Log:
-Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
-Debug: "v2.9.5" (mainwindow.cpp)
-Debug: "v2.9.5" (mainwindow.cpp)
-Debug: "v2.9.5" (mainwindow.cpp)
-
-OpenOCRCorrect Application Log
-Date: 16 May 2022 @ 19:21:36
-Username:anka
-
-Application Log:
-Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
-Debug: "v2.9.5" (mainwindow.cpp)
-Debug: "v2.9.5" (mainwindow.cpp)
-Debug: "v2.8.5" (mainwindow.cpp)
-
-OpenOCRCorrect Application Log
-Date: 16 May 2022 @ 19:22:19
-Username:anka
-
-Application Log:
-Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases" (mainwindow.cpp)
-Debug: "v2.9.5" (mainwindow.cpp)
-Debug: "v2.9.5" (mainwindow.cpp)
-Debug: "v2.9.5" (mainwindow.cpp)
-
-OpenOCRCorrect Application Log
-Date: 18 May 2022 @ 15:37:55
-Username:asr16
-
-Application Log:
-Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::load: unable to load type 42. ()
 Warning:   OpenType support missing for "Ubuntu", script 11 ()
-Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
-Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
-Debug: Started Backend Task (worker.cpp)
-Debug: "Innovator =>Innovation " 
- (worker.cpp)
-Debug: "International =>Internationally " 
- (worker.cpp)
-Debug: "PLANTS =>trees " 
- (worker.cpp)
-Debug: Completed Backend Task (worker.cpp)
-Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
-Debug: Final Sentence "International ==> Internationally  " (mainwindow.cpp)
-Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
-Debug: Final Sentence "International ==> Internationally  " (mainwindow.cpp)
-Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
-Debug: Final Sentence "International ==> Internationally  " (mainwindow.cpp)
-Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
-Debug: Final Sentence "Research Innovator ISSN 2348-7674 International ==>Research Innovator ISSN 2348-7674  Internationally  " (mainwindow.cpp)
-Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
-Debug: Final Sentence "International ==> Internationally  " (mainwindow.cpp)
-Debug: Final Sentence "International==> Internationally " (mainwindow.cpp)
-Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
-Debug: Final Sentence "International ==> Internationally  " (mainwindow.cpp)
-Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
-Debug: Final Sentence "International ==> Internationally  " (mainwindow.cpp)
-Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
-Debug: Final Sentence "International ==> Internationally  " (mainwindow.cpp)
-Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
-Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
-Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
-Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
-Debug: Adding words to Cpair (worker.cpp)
-Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (worker.cpp)
-Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
-
-OpenOCRCorrect Application Log
-Date: 18 May 2022 @ 15:40:29
-Username:asr16
-
-Application Log:
-Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Debug: Current page name:  "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/p-3.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
 Warning:   OpenType support missing for "Ubuntu", script 11 ()
-Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
-Debug: Started Backend Task (worker.cpp)
-Debug: "OLD Home =>Ancient HOUSE " 
- (worker.cpp)
-Debug: "and =>or " 
- (worker.cpp)
-Debug: Completed Backend Task (worker.cpp)
-Debug: Adding words to Cpair (worker.cpp)
-Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (worker.cpp)
-Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
-
-OpenOCRCorrect Application Log
-Date: 18 May 2022 @ 15:42:07
-Username:asr16
-
-Application Log:
-Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
-Warning:   OpenType support missing for "Ubuntu", script 11 ()
-Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
-Debug: Started Backend Task (worker.cpp)
-Debug: "Innovation =>Innovator " 
- (worker.cpp)
-Debug: "HOUSE Architecture fgjk =>house architecture " 
- (worker.cpp)
-Debug: "or =>and " 
- (worker.cpp)
-Debug: "trees =>plants " 
- (worker.cpp)
-Debug: Completed Backend Task (worker.cpp)
-Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
-Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
-Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
-Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
-Debug: Adding words to Cpair (worker.cpp)
-Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (worker.cpp)
-Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: right click (mainwindow.cpp)
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: "/home/sadam/Desktop/iitb-openocr-digit-tool/TestProject/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Desktop/iitb-openocr-digit-tool/TestProject/CorrectorOutput/page-2.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: "/home/sadam/Downloads/en-hi(1)/en-hi/image.xml" (markRegion.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Current page name:  "/home/sadam/Downloads/en-hi(1)/en-hi/CorrectorOutput/p-3.html" (mainwindow.cpp)
+Warning: QVariant::save: unable to save type 'QModelIndex' (type id: 42).
+ ()
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
+Debug: right click (mainwindow.cpp)
+Debug: "No such file or directory" (slpNPatternDict.cpp)
+Debug: done loading .... (mainwindow.cpp)
+Debug: Unknown property overflow ()
+Debug: Unknown property overflow ()
