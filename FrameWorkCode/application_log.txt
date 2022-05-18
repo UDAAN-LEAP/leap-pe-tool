@@ -28,3 +28,89 @@ Info: "https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/
 Debug: "v2.9.5" (mainwindow.cpp)
 Debug: "v2.9.5" (mainwindow.cpp)
 Debug: "v2.9.5" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 18 May 2022 @ 15:37:55
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Innovator =>Innovation " 
+ (worker.cpp)
+Debug: "International =>Internationally " 
+ (worker.cpp)
+Debug: "PLANTS =>trees " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
+Debug: Final Sentence "International ==> Internationally  " (mainwindow.cpp)
+Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
+Debug: Final Sentence "International ==> Internationally  " (mainwindow.cpp)
+Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
+Debug: Final Sentence "International ==> Internationally  " (mainwindow.cpp)
+Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
+Debug: Final Sentence "Research Innovator ISSN 2348-7674 International ==>Research Innovator ISSN 2348-7674  Internationally  " (mainwindow.cpp)
+Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
+Debug: Final Sentence "International ==> Internationally  " (mainwindow.cpp)
+Debug: Final Sentence "International==> Internationally " (mainwindow.cpp)
+Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
+Debug: Final Sentence "International ==> Internationally  " (mainwindow.cpp)
+Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
+Debug: Final Sentence "International ==> Internationally  " (mainwindow.cpp)
+Debug: Final Sentence "Research Innovator ==>Research  Innovation  " (mainwindow.cpp)
+Debug: Final Sentence "International ==> Internationally  " (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 18 May 2022 @ 15:40:29
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "OLD Home =>Ancient HOUSE " 
+ (worker.cpp)
+Debug: "and =>or " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 18 May 2022 @ 15:42:07
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: "Innovation =>Innovator " 
+ (worker.cpp)
+Debug: "HOUSE Architecture fgjk =>house architecture " 
+ (worker.cpp)
+Debug: "or =>and " 
+ (worker.cpp)
+Debug: "trees =>plants " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/.."): device not open ()
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/asr16/Downloads/en-hi/Dicts/CPair" exists (worker.cpp)
+Debug: "p-1.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
