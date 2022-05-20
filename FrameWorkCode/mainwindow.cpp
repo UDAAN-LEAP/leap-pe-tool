@@ -1310,6 +1310,25 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
      ui->actionZoom_Out->setEnabled(true);
      //Reset loadData flag
      LoadDataFlag = 1;
+     //reset data
+     mFilename.clear();
+     //mFilename1.clear();
+     LSTM.clear();
+     CPairs.clear();
+     Dict.clear();
+     GBook.clear();
+     IBook.clear();
+     PWords.clear();
+     ConfPmap.clear();
+     vGBook.clear();
+     vIBook.clear();
+     TDict.clear();
+     TGBook.clear();
+     TGBookP.clear();
+     TPWords.clear();
+     TPWordsP.clear();
+     synonym.clear();
+     synrows.clear();
 
 }
 
