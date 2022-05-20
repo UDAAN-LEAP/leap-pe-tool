@@ -8860,7 +8860,8 @@ void MainWindow::on_find_clicked()
 {
     QRegExp searchExpr = QRegExp(ui->lineEdit_4->text());
     searchExpr.setCaseSensitivity(Qt::CaseInsensitive);
-    ui->textEdit_dict->find(searchExpr, QTextDocument::FindBackward);
+    ui->textEdit_dict->moveCursor(QTextCursor::Start);
+    ui->textEdit_dict->find(searchExpr, QTextDocument::FindFlags());
 }
 
 void MainWindow::on_actionPDF_Preview_triggered()

@@ -207,3 +207,30 @@ Debug: Unknown property overflow ()
 Debug: Unknown property overflow ()
 Debug: Unknown property overflow ()
 Debug: Unknown property overflow ()
+
+OpenOCRCorrect Application Log
+Date: 20 May 2022 @ 13:04:38
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 20 May 2022 @ 13:12:55
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 20 May 2022 @ 13:14:30
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
