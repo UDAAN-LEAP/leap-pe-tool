@@ -444,6 +444,7 @@ public slots:
 private:
     bool mExitStatus = false;
     QString mRole;
+    QString saveRole;
     bool isVerifier;
     Ui::MainWindow *ui;
     Project mProject;

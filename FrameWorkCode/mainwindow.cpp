@@ -165,8 +165,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
                                               { "$5Y9hkc+`{<7N%{L:KuR", "Admin"},
                                               { "sfbkasg81!248-Bks","Project Manager"}
                                             };
-    if(!setRole(passwordRoleMap[password]))
+    if(!setRole(passwordRoleMap[password])){
         mExitStatus = true;
+    }
 
     this->show();
     this->setWindowState(Qt::WindowState::WindowActive);
@@ -303,35 +304,62 @@ bool MainWindow::setRole(QString role)
     //! Checking role
     if(mRole == "Admin")
     {
-
-        QMessageBox RoleBox;
-        RoleBox.setWindowTitle("Select Role");
-        RoleBox.setIcon(QMessageBox::Question);
-        RoleBox.setInformativeText("Which Role do you want to Load?");
-
-        #ifdef Q_OS_WIN
-        QPushButton *correctorButton = RoleBox.addButton(("Corrector"),QMessageBox::AcceptRole);
-        QPushButton *verifierButton = RoleBox.addButton(("Verifier"),QMessageBox::AcceptRole);
-        QPushButton *managerButton = RoleBox.addButton(("Project Manager"),QMessageBox::AcceptRole);
-        QAbstractButton *cancel = RoleBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
-        #else
-        QPushButton *managerButton = RoleBox.addButton(("Project Manager"),QMessageBox::AcceptRole);
-        QPushButton *verifierButton = RoleBox.addButton(("Verifier"),QMessageBox::AcceptRole);
-        QPushButton *correctorButton = RoleBox.addButton(("Corrector"),QMessageBox::AcceptRole);
-        QAbstractButton *cancel = RoleBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
-
-        #endif
-        cancel->hide();
-        RoleBox.exec();
-        if(RoleBox.clickedButton() == verifierButton)
-            mRole = "Verifier";
-
-        else if(RoleBox.clickedButton() == correctorButton)
-            mRole = "Corrector";
-        else if(RoleBox.clickedButton() == managerButton)
-            mRole = "Project Manager";
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("SetRole");
+        QString role;
+        role = settings.value("role").toString();
+        settings.endGroup();
+        if(!role.isEmpty()){
+            mRole = role;
+            qDebug()<<"mRole Admin if: "<<mRole<<endl;
+        }
         else
-            exit(0);
+        {
+            QMessageBox RoleBox;
+            RoleBox.setWindowTitle("Select Role");
+            RoleBox.setIcon(QMessageBox::Question);
+            RoleBox.setInformativeText("Which Role do you want to Load?");
+
+            #ifdef Q_OS_WIN
+            QPushButton *correctorButton = RoleBox.addButton(("Corrector"),QMessageBox::AcceptRole);
+            QPushButton *verifierButton = RoleBox.addButton(("Verifier"),QMessageBox::AcceptRole);
+            QPushButton *managerButton = RoleBox.addButton(("Project Manager"),QMessageBox::AcceptRole);
+            QAbstractButton *cancel = RoleBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+
+            #else
+            QPushButton *managerButton = RoleBox.addButton(("Project Manager"),QMessageBox::AcceptRole);
+            QPushButton *verifierButton = RoleBox.addButton(("Verifier"),QMessageBox::AcceptRole);
+            QPushButton *correctorButton = RoleBox.addButton(("Corrector"),QMessageBox::AcceptRole);
+            QAbstractButton *cancel = RoleBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+
+            #endif
+            cancel->hide();
+
+            QCheckBox *cb = new QCheckBox("Set Selected Role As Default");
+            RoleBox.setCheckBox(cb);
+            cb->setStyleSheet("QCheckBox{border: 1px none; background-color: white; text-color: white");
+
+            RoleBox.exec();
+            if(RoleBox.clickedButton() == verifierButton)
+                mRole = "Verifier";
+            else if(RoleBox.clickedButton() == correctorButton)
+                mRole = "Corrector";
+            else if(RoleBox.clickedButton() == managerButton)
+                mRole = "Project Manager";
+            else
+                exit(0);
+
+            if(cb->checkState() == Qt::Checked)
+            {
+                saveRole = mRole;
+                qDebug()<<"save Role else:"<<saveRole;
+                QSettings settings("IIT-B", "OpenOCRCorrect");
+                settings.beginGroup("SetRole");
+                settings.setValue("role",saveRole);
+                settings.endGroup();
+            }
+        }
+
     }
 
     if(mRole == "Project Manager")

@@ -234,3 +234,137 @@ Application Log:
 Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
 Warning:   OpenType support missing for "Ubuntu", script 11 ()
 Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 12:37:26
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 12:39:36
+Username:asr16
+
+Application Log:
+Debug: SetRole call: "Admin" 
+ (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 12:55:02
+Username:asr16
+
+Application Log:
+Debug: mRole Admin if:  "Corrector" 
+ (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 12:57:15
+Username:asr16
+
+Application Log:
+Debug: mRole Admin if:  "Corrector" 
+ (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 12:57:43
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 12:57:59
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 12:59:32
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 13:00:36
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 13:02:08
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 13:05:38
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 13:06:31
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 13:07:56
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 13:08:42
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 13:10:11
+Username:asr16
+
+Application Log:
+Debug: Unknown property text-color ()
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 13:12:48
+Username:asr16
+
+Application Log:
+Warning: Could not parse stylesheet of object QCheckBox(0x558eeddd7120) ()
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 13:15:49
+Username:asr16
+
+Application Log:
+Warning: Could not parse stylesheet of object QCheckBox(0x55f18e779a90) ()
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 13:21:30
+Username:asr16
+
+Application Log:
+Warning: Could not parse stylesheet of object QCheckBox(0x560815dfce70) ()
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 13:22:03
+Username:asr16
+
+Application Log:
+Warning: Could not parse stylesheet of object QCheckBox(0x55ef6c8182a0) ()
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 13:22:37
+Username:asr16
+
+Application Log:
+Warning: Could not parse stylesheet of object QCheckBox(0x55748a3d69c0) ()
+
+OpenOCRCorrect Application Log
+Date: 24 May 2022 @ 13:25:02
+Username:asr16
+
+Application Log:
+Debug: mRole Admin if:  "Corrector" 
+ (mainwindow.cpp)
