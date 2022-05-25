@@ -368,3 +368,19 @@ Username:asr16
 Application Log:
 Debug: mRole Admin if:  "Corrector" 
  (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 May 2022 @ 20:38:35
+Username:sujay
+
+Application Log:
+Debug: mRole Admin if:  "Corrector" 
+ (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 25 May 2022 @ 20:40:01
+Username:sujay
+
+Application Log:
+Debug: mRole Admin if:  "Corrector" 
+ (mainwindow.cpp)
