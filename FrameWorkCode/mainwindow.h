@@ -434,6 +434,8 @@ private slots:
 
     void print(QPrinter *printer);
 
+    void on_actionChange_Role_triggered();
+
 public slots:
     void SaveFile_Backend();
 

@@ -384,3 +384,48 @@ Username:sujay
 Application Log:
 Debug: mRole Admin if:  "Corrector" 
  (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 29 May 2022 @ 18:20:21
+Username:asr16
+
+Application Log:
+Debug: mRole Admin if:  "Corrector" 
+ (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 29 May 2022 @ 18:20:40
+Username:asr16
+
+Application Log:
+Warning: Could not parse stylesheet of object QCheckBox(0x5641f5391300) ()
+
+OpenOCRCorrect Application Log
+Date: 29 May 2022 @ 18:23:49
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 29 May 2022 @ 18:23:55
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 29 May 2022 @ 18:24:17
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 29 May 2022 @ 18:25:48
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 29 May 2022 @ 18:27:22
+Username:asr16
+
+Application Log:

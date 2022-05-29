@@ -138,6 +138,7 @@ public:
     QAction *action3;
     QAction *actionCheck_for_Updates;
     QAction *actionPDF_Preview;
+    QAction *actionChange_Role;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_5;
     QVBoxLayout *verticalLayout_4;
@@ -206,6 +207,7 @@ public:
         QFont font;
         font.setBold(false);
         font.setItalic(false);
+        font.setWeight(50);
         MainWindow->setFont(font);
         MainWindow->setMouseTracking(true);
         MainWindow->setStyleSheet(QString::fromUtf8("background:rgb(32, 33, 72); \n"
@@ -541,6 +543,8 @@ public:
         QIcon icon33;
         icon33.addFile(QString::fromUtf8(":/Images/PDF-Preview.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionPDF_Preview->setIcon(icon33);
+        actionChange_Role = new QAction(MainWindow);
+        actionChange_Role->setObjectName(QString::fromUtf8("actionChange_Role"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         centralWidget->setStyleSheet(QString::fromUtf8("mainToolBar{background:rgb(143, 89, 2)}"));
@@ -1020,6 +1024,7 @@ public:
         font2.setPointSize(20);
         font2.setBold(false);
         font2.setItalic(false);
+        font2.setWeight(50);
         textBrowser->setFont(font2);
         textBrowser->setMouseTracking(true);
         textBrowser->setStyleSheet(QString::fromUtf8("QTextBrowser{\n"
@@ -1289,7 +1294,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1366, 53));
+        menuBar->setGeometry(QRect(0, 0, 1366, 50));
         menuBar->setStyleSheet(QString::fromUtf8("QMenuBar{\n"
 "font-size:17px;\n"
 "}\n"
@@ -1414,6 +1419,7 @@ public:
         menuEdit->addSeparator();
         menuEdit->addAction(actionUndo_Global_Replace);
         menuEdit->addAction(actionUpload);
+        menuEdit->addAction(actionChange_Role);
         menuDownload->addAction(actionas_PDF);
         menuHelp->addAction(actionGet_Help);
         menuHelp->addAction(menuInstallation_Guide->menuAction());
@@ -1704,6 +1710,7 @@ public:
 #endif // QT_NO_TOOLTIP
         actionCheck_for_Updates->setText(QApplication::translate("MainWindow", "Check for Updates", nullptr));
         actionPDF_Preview->setText(QApplication::translate("MainWindow", "PDF Preview", nullptr));
+        actionChange_Role->setText(QApplication::translate("MainWindow", "Change Role", nullptr));
         pushButton_2->setText(QApplication::translate("MainWindow", "Resize Image", nullptr));
         pushButton->setText(QApplication::translate("MainWindow", "Mark Regions", nullptr));
         viewComments->setText(QApplication::translate("MainWindow", "Comments Accuracy", nullptr));
@@ -1716,10 +1723,10 @@ public:
         find->setText(QApplication::translate("MainWindow", "Find", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("MainWindow", "Dict", nullptr));
         textBrowser->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:20pt; font-weight:400; font-style:normal;\" bgcolor=\"#ffffff\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Ubuntu'; font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", nullptr));
+"</style></head><body style=\" font-family:'Ubuntu'; font-size:20pt; font-weight:400; font-style:normal;\" bgcolor=\"#ffffff\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">Please Select the Language from top left menu before loading any document.</span></p></body></html>", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab_5), QApplication::translate("MainWindow", "Tab 1", nullptr));
         lineEdit_3->setText(QApplication::translate("MainWindow", "Words 0", nullptr));
         groupBox->setTitle(QString());

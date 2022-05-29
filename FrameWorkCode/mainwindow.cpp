@@ -337,7 +337,7 @@ bool MainWindow::setRole(QString role)
 
             QCheckBox *cb = new QCheckBox("Set Selected Role As Default");
             RoleBox.setCheckBox(cb);
-            cb->setStyleSheet("QCheckBox{border: 1px none; background-color: white; text-color: white");
+            cb->setStyleSheet("QCheckBox{color:rgb(227, 228, 228);border:0px;}");
 
             RoleBox.exec();
             if(RoleBox.clickedButton() == verifierButton)
@@ -8907,3 +8907,11 @@ void MainWindow::print(QPrinter *printer)
     curr_browser->print(printer);
 }
 
+
+void MainWindow::on_actionChange_Role_triggered()
+{
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("SetRole");
+    settings.remove("");
+    settings.endGroup();
+}
