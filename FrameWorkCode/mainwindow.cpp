@@ -991,6 +991,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     if (ProjFile == "")
         return;
 
+    isRecentProjclick = false;
+
     // Testing of project.xml
     VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
     int result = verifySetObj.testProjectXML();
