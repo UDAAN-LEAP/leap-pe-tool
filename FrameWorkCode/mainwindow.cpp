@@ -8886,6 +8886,9 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
     }
 }
 
+/*!
+ * \brief MainWindow::on_find_clicked
+ */
 void MainWindow::on_find_clicked()
 {
     QRegExp searchExpr = QRegExp(ui->lineEdit_4->text());
@@ -8894,6 +8897,9 @@ void MainWindow::on_find_clicked()
     ui->textEdit_dict->find(searchExpr, QTextDocument::FindFlags());
 }
 
+/*!
+ * \brief MainWindow::on_actionPDF_Preview_triggered
+ */
 void MainWindow::on_actionPDF_Preview_triggered()
 {
     QPrinter printer(QPrinter::PrinterResolution);
@@ -8904,12 +8910,54 @@ void MainWindow::on_actionPDF_Preview_triggered()
     preview.exec();
 }
 
+/*!
+ * \brief MainWindow::print
+ * \param printer
+ */
 void MainWindow::print(QPrinter *printer)
 {
-    curr_browser->print(printer);
+    QTextDocument *document = new QTextDocument();
+    QString htmlFile = gDirTwoLevelUp + "/"+gCurrentDirName+"/"+currentTabPageName;
+
+    QString html_contents="";
+    QString mainHtml ;
+    int startFrom,stIndex = 0;
+
+    //! Set the background of the pdf to be printed to be white
+    QString searchString = "background-color:#";
+    int l = searchString.length();
+    QString whiteColor = "ffffff";
+
+    startFrom = 0;
+
+    QFile file(htmlFile);
+    if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
+    QTextStream stream(&file);
+    stream.setCodec("UTF-8");
+
+    //! Read the file
+    mainHtml=stream.readAll();
+
+    //! Changing the text background to white by setting the background to #fffff
+    while (true){
+        stIndex = mainHtml.indexOf(searchString, startFrom);
+        if (stIndex == -1)
+            break;
+        stIndex += l; // increment line
+        mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
+        startFrom = stIndex + 6;
+    }
+
+    file.close();
+    html_contents.append(mainHtml);
+    document->setHtml(html_contents);
+    document->print(printer);
+    //curr_browser->print(printer);
 }
 
-
+/*!
+ * \brief MainWindow::on_actionChange_Role_triggered
+ */
 void MainWindow::on_actionChange_Role_triggered()
 {
     QSettings settings("IIT-B", "OpenOCRCorrect");

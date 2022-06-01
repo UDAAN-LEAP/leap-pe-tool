@@ -429,3 +429,240 @@ Date: 29 May 2022 @ 18:27:22
 Username:asr16
 
 Application Log:
+
+OpenOCRCorrect Application Log
+Date: 31 May 2022 @ 13:35:37
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 31 May 2022 @ 13:43:47
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 31 May 2022 @ 13:44:05
+Username:asr16
+
+Application Log:
+
+OpenOCRCorrect Application Log
+Date: 31 May 2022 @ 13:45:59
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-1.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-2.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-2.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-2.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-2.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-2.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-3.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-3.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-4.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-4.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 01 Jun 2022 @ 18:32:04
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-4.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 01 Jun 2022 @ 18:37:42
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-4.html" (mainwindow.cpp)
+Debug: mfilename "" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 01 Jun 2022 @ 18:42:16
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-4.html" (mainwindow.cpp)
+Debug: mfilename "/home/asr16/Downloads/en-hi/CorrectorOutput/p-4.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 01 Jun 2022 @ 18:46:17
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-4.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/p-4.html"): device not open ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-3.html" (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/asr16/Downloads/en-hi/CorrectorOutput/p-3.html"): device not open ()
+
+OpenOCRCorrect Application Log
+Date: 01 Jun 2022 @ 18:50:03
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-3.html" (mainwindow.cpp)
+Debug: mainhtml "<style> body{ width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; } </style><!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\"> <html><head><meta name=\"qrichtext\" content=\"1\" /><title> </title><style type=\"text/css\"> p, li { white-space: pre-wrap; } </style></head><body style=\" font-family:'Shobhika Regular'; font-size:16pt; font-weight:400; font-style:normal;\"> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"page_1\"></a>WWW. research-innovator. com </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_2\"></a>Research <span style=\" background-color:#ffff00;\"><span style = \"background-color:#ffff00;\"><span style = \"background-color:#ffff00;\">Innovator</span></span></span> </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_3\"></a>ISSN 2348-7674 </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_4\"></a><span style=\" background-color:#ffff00;\">I</span><span style=\" background-color:#ffff00;\">nternational</span> M <span style=\" background-color:#ffff00;\">multinational</span> research J ornal </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_5\"></a>This is not <span style=\" background-color:#ffff00;\">their</span> way. </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_6\"></a>Plantation is <span style=\" background-color:#00ff00;\">necessary</span> <span style=\" background-color:#00ff00;\">near</span> <span style=\" background-color:#ffff00;\">the</span> <span style=\" background-color:#00ff00;\">temple</span>. Its roots <span style=\" background-color:#00ff00;\">spread</span> <span style=\" background-color:#00ff00;\">far</span> <span style=\" background-color:#ffff00;\">and</span> <span style=\" background-color:#00ff00;\">wide</span>. They <span style=\" background-color:#00ff00;\">have</span> a <span style=\" background-color:#00ff00;\">long</span> <span style=\" background-color:#00ff00;\">life</span> <span style=\" background-color:#ffff00;\">and</span> are prohibited <span style=\" background-color:#00ff00;\">from</span> <span style=\" background-color:#00ff00;\">any</span> <span style=\" background-color:#00ff00;\">house</span>. <span style=\" background-color:#00ff00;\">Therefore</span>, this tree should be <span style=\" background-color:#ffff00;\">planting</span> at a <span style=\" background-color:#00ff00;\">reasonable</span> <span style=\" background-color:#00ff00;\">distance</span> <span style=\" background-color:#00ff00;\">from</span> <span style=\" background-color:#ffff00;\">their</span> cutting <span style=\" background-color:#00ff00;\">etc</span> </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_7\"></a>Tulsi: Tulsi plants are abundantly found in <span style=\" background-color:#00ff00;\">every</span> <span style=\" background-color:#00ff00;\">home</span> <span style=\" background-color:#ffff00;\">and</span> <span style=\" background-color:#00ff00;\">temple</span>. </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_8\"></a>Scientists <span style=\" background-color:#00ff00;\">have</span> found <span style=\" background-color:#00ff00;\">that</span> <span style=\" background-color:#ffff00;\">their</span> speed <span style=\" background-color:#ffff00;\">for</span> <span style=\" background-color:#ffff00;\">their</span> <span style=\" background-color:#00ff00;\">vehicle</span> can be increased <span style=\" background-color:#00ff00;\">by</span> <span style=\" background-color:#00ff00;\">20</span> <span style=\" background-color:#00ff00;\">per cent</span> if <span style=\" background-color:#00ff00;\">one</span> <span style=\" background-color:#00ff00;\">litre</span> <span style=\" background-color:#ffff00;\">of</span> Tulsi leaf <span style=\" background-color:#00ff00;\">juice</span> is mixed <span style=\" background-color:#00ff00;\">with</span> <span style=\" background-color:#00ff00;\">petrol</span> <span style=\" background-color:#00ff00;\">up to</span> <span style=\" background-color:#00ff00;\">15</span> drops. </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_9\"></a>Neem: Neem has <span style=\" background-color:#00ff00;\">great</span> <span style=\" background-color:#00ff00;\">medicinal</span> <span style=\" background-color:#00ff00;\">value</span> <span style=\" background-color:#ffff00;\">and</span> <span style=\" background-color:#00ff00;\">also</span> acts as an insecticide. </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_10\"></a>This is not <span style=\" background-color:#ffff00;\">their</span> way. </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_11\"></a>This is not <span style=\" background-color:#ffff00;\">their</span> way. </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_12\"></a>Volume IL Issue IV: August 2016 (81) </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_13\"></a>It is considered <span style=\" background-color:#00ff00;\">auspicious</span> to tie neem leaves at <span style=\" background-color:#ffff00;\">their</span> <span style=\" background-color:#00ff00;\">entrance</span> on <span style=\" background-color:#ffff00;\">their</span> <span style=\" background-color:#00ff00;\">occasion</span> <span style=\" background-color:#ffff00;\">and</span> a <span style=\" background-color:#00ff00;\">mixture</span> <span style=\" background-color:#ffff00;\">of</span> gur <span style=\" background-color:#ffff00;\">and</span> neem leaves is offered in <span style=\" background-color:#ffff00;\">their</span> Mant on Ugadi, <span style=\" background-color:#00ff00;\">which</span> represents <span style=\" background-color:#ffff00;\">their</span> pledge to <span style=\" background-color:#00ff00;\">take</span> <span style=\" background-color:#00ff00;\">life</span>'s joys <span style=\" background-color:#ffff00;\">and</span> sorrows in <span style=\" background-color:#00ff00;\">equal</span> measure. </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_14\"></a>4 <span style=\" background-color:#00ff00;\">Mango</span>: - <span style=\" background-color:#00ff00;\">Most</span> <span style=\" background-color:#ffff00;\">of</span> <span style=\" background-color:#ffff00;\">their</span> <span style=\" background-color:#00ff00;\">part</span> <span style=\" background-color:#ffff00;\">of</span> this tree is important for <span style=\" background-color:#00ff00;\">medicinal</span> purposes. Its leaves <span style=\" background-color:#00ff00;\">act</span> as insecticides <span style=\" background-color:#ffff00;\">and</span> are <span style=\" background-color:#00ff00;\">used</span> for brushing <span style=\" background-color:#ffff00;\">of</span> teeth. The <span style=\" background-color:#00ff00;\">mango</span> tree is <span style=\" background-color:#00ff00;\">also</span> <span style=\" background-color:#00ff00;\">very</span> old, there are <span style=\" background-color:#00ff00;\">many</span> <span style=\" background-color:#ffff00;\">plants</span> <span style=\" background-color:#00ff00;\">which</span> <span style=\" background-color:#00ff00;\">have</span> been <span style=\" background-color:#00ff00;\">living</span> for <span style=\" background-color:#00ff00;\">more than</span> 500-600 years </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_15\"></a>And <span style=\" background-color:#00ff00;\">still</span> bearing <span style=\" background-color:#00ff00;\">fruit</span>. 42 This is <span style=\" background-color:#00ff00;\">also</span> a <span style=\" background-color:#00ff00;\">very</span> important <span style=\" background-color:#ffff00;\">and</span> <span style=\" background-color:#00ff00;\">auspicious</span> tree. </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_16\"></a>This is not <span style=\" background-color:#ffff00;\">their</span> way. </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_17\"></a>This is not <span style=\" background-color:#ffff00;\">their</span> way. </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_18\"></a>Citrus: <span style=\" background-color:#00ff00;\">Like</span> a <span style=\" background-color:#00ff00;\">mango</span> tree, it is <span style=\" background-color:#00ff00;\">used</span> in <span style=\" background-color:#00ff00;\">many</span> forms <span style=\" background-color:#ffff00;\">and</span> has its <span style=\" background-color:#00ff00;\">own</span> <span style=\" background-color:#00ff00;\">importance</span>. It has a <span style=\" background-color:#00ff00;\">long</span> <span style=\" background-color:#00ff00;\">life</span>. It gives <span style=\" background-color:#00ff00;\">fruit</span> in its <span style=\" background-color:#00ff00;\">season</span> <span style=\" background-color:#00ff00;\">which</span> is <span style=\" background-color:#00ff00;\">large</span>. <span style=\" background-color:#00ff00;\">Besides</span>, its wood is <span style=\" background-color:#00ff00;\">beautiful</span> yellow in <span style=\" background-color:#00ff00;\">colour</span> <span style=\" background-color:#00ff00;\">which</span> is <span style=\" background-color:#00ff00;\">used</span> to <span style=\" background-color:#00ff00;\">make</span> doors, windows <span style=\" background-color:#ffff00;\">and</span> <span style=\" background-color:#00ff00;\">furniture</span>. Its leaves are considered <span style=\" background-color:#00ff00;\">auspicious</span> <span style=\" background-color:#ffff00;\">and</span> are <span style=\" background-color:#00ff00;\">used</span> to decorate <span style=\" background-color:#ffff00;\">their</span> kalash as an <span style=\" background-color:#00ff00;\">alternative</span> to <span style=\" background-color:#00ff00;\">mango</span> leaves. </p> <p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"par_1_19\"></a>Editor-In-C chief: Professor, K.N. % s (% s) </p></body></html>" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 01 Jun 2022 @ 18:53:11
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-3.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 01 Jun 2022 @ 18:57:08
+Username:asr16
+
+Application Log:
+Debug: "/home/asr16/Downloads/en-hi/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/asr16/Downloads/en-hi/CorrectorOutput/p-3.html" (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
+Debug: exit while (mainwindow.cpp)
