@@ -123,7 +123,7 @@ void TextFinder::on_replaceButton_clicked()
     }
     QTextCursor cursor = curr_browser->textCursor();
     QTextCharFormat format = cursor.charFormat();
-    format.setBackground(Qt::blue);
+    format.setBackground(QColor("#ADD8E6"));
     if(cursor.hasSelection())
     {
         if(ui->matchCaseCheckBox->checkState() == Qt::Checked && cursor.selectedText() == searchString)
@@ -139,7 +139,8 @@ void TextFinder::on_replaceButton_clicked()
  */
 void TextFinder::on_replaceAllButton_clicked()
 {
-    QRegExp searchExpr = QRegExp(ui->findLineEdit->text());
+    QString temp1 =  "(\\b)" +ui->findLineEdit->text() + "(\\b)";
+    QRegExp searchExpr(temp1);
     QString replaceString = ui->replaceLineEdit->text();
     QTextBrowser *curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
     if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
@@ -181,11 +182,13 @@ void TextFinder::on_replaceAllButton_clicked()
                //!Replacing Words
                string str = replaceString.toStdString();
                QString::fromStdString(str).toUtf8();
-               QString replacementString1 = "<span style = \"background-color:#0000ff;\">" + QString::fromStdString(str) + "</span>";
+               QString replacementString1 = "<span style = \"background-color:#ADD8E6;\">" + QString::fromStdString(str) + "</span>";
 
                string str2 = ui->findLineEdit->text().toStdString();
                QString::fromStdString(str2).toUtf8();
-               QRegExp findWord = QRegExp(QString::fromStdString(str2));
+               QString temp2 = "(\\b)" + ui->findLineEdit->text() + "(\\b)";
+               QRegExp findWord(temp2);
+
                if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
                    findWord.setCaseSensitivity(Qt::CaseSensitive);
                else
@@ -215,7 +218,7 @@ void TextFinder::on_replaceAllButton_clicked()
    QTextCursor saved_cursor = curr_browser->textCursor();
    curr_browser->moveCursor(QTextCursor::Start);
    QTextCharFormat format = saved_cursor.charFormat();
-   format.setBackground(Qt::yellow);
+   format.setBackground(QColor("#ADD8E6"));
    while(curr_browser->find(searchExpr))
    {
        curr_browser->textCursor().insertText(replaceString,format);

@@ -666,3 +666,59 @@ Debug: exit while (mainwindow.cpp)
 Debug: exit while (mainwindow.cpp)
 Debug: exit while (mainwindow.cpp)
 Debug: exit while (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 05 Jun 2022 @ 16:14:39
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Music/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+
+OpenOCRCorrect Application Log
+Date: 06 Jun 2022 @ 09:07:54
+Username:anka
+
+Application Log:
+Debug: "/home/anka/Music/AIML-All-master/image.xml" (markRegion.cpp)
+Warning:   OpenType support missing for "Ubuntu", script 11 ()
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Unknown property QCheckBox ()
+Debug: Unknown property QCheckBox ()
+Debug: Started Backend Task (worker.cpp)
+Debug: "अधिक =>अधि " 
+ (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: Checkbox Checked (mainwindow.cpp)
+Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/CorrectorOutput/."): device not open ()
+Warning: QIODevice::read (QFile, "/home/anka/Music/AIML-All-master/CorrectorOutput/.."): device not open ()
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/anka/Music/AIML-All-master/Dicts/CPair" exists (worker.cpp)
+Debug: "AIML-all_0001-002.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "AIML-all_0001-002.html"  already found in Edited Files Log. No need to update. (mainwindow.cpp)
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/anka/Music/AIML-All-master/Dicts/CPair" exists (worker.cpp)
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
+Debug: Started Backend Task (worker.cpp)
+Debug: Completed Backend Task (worker.cpp)
+Debug: "AIML-all_0001-003.html"  not found in Edited Files Log. 
+ (mainwindow.cpp)
+Debug: Writing  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html"  to file. 
+ (mainwindow.cpp)
+Debug: Adding words to Cpair (worker.cpp)
+Debug: "/home/anka/Music/AIML-All-master/Dicts/CPair" exists (worker.cpp)
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-002.html" (mainwindow.cpp)
+Debug: Current page name:  "/home/anka/Music/AIML-All-master/CorrectorOutput/AIML-all_0001-003.html" (mainwindow.cpp)
