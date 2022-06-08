@@ -1601,6 +1601,9 @@ void MainWindow::SaveFile_GUI_Postprocessing()
         out << output;
         sFile.flush();      //!Flushes any buffered data waiting to be written in the \a sFile
         sFile.close();      //!Closing the file
+
+        // Fixing Word breaking problem after saving file
+        filterHtml(&sFile);
     }
 
     //! Converting html output into plain text.
@@ -7079,6 +7082,12 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     settings.endGroup();
     //.///////////////////////////////////////////////////////
     isProjectOpen = 1;
+
+    // Fixing Word Breaking problem
+    f->close();
+    filterHtml(f);
+    f->open(QIODevice::ReadOnly);
+
     //!Display format by setting font size and styles
     QTextStream stream(f);
     stream.setCodec("UTF-8");
@@ -8965,3 +8974,153 @@ void MainWindow::on_actionChange_Role_triggered()
     settings.remove("");
     settings.endGroup();
 }
+
+void MainWindow::filterHtml(QFile *f)
+{
+    QFile *file = f;
+
+    if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "File not opened for reading";
+        return;
+    }
+
+    QTextStream in(file);
+    in.setCodec("UTF-8");
+    QString text = in.readAll();
+    file->close();
+
+    QRegularExpression re1("(<span[^>]*>)");
+    QRegularExpressionMatchIterator it;
+
+    it = re1.globalMatch(text);
+
+    int prevStringStart = -1, prevStringEnd = -1, curStringStart = -1, curStringEnd = -1;
+    QString prevString = "", curString = "";
+    QVector<QVector<int> > results;
+
+    while (it.hasNext()) {
+        QRegularExpressionMatch match = it.next();
+        curString = match.captured(1);
+        curStringStart = match.capturedStart(1);
+        curStringEnd = match.capturedEnd(1);
+
+        // Checking if a new paragraph is starting or not
+        if (prevString != "") {
+            QString subString = text.mid(prevStringEnd, curStringEnd - prevStringEnd);
+            if (subString.contains("</p>")) {
+                prevString = "";
+            }
+        }
+
+        if (prevString == "") {
+            prevString = curString;
+            prevStringStart = curStringStart;
+            prevStringEnd = curStringEnd;
+        }
+        else if (prevString == curString) {
+            results.push_back({prevStringStart, prevStringEnd, curStringStart, curStringEnd});
+            prevStringStart = curStringStart;
+            prevStringEnd = curStringEnd;
+        }
+    }
+
+//    for(int i = 0; i < results.size(); i++) {
+//        qDebug() << "[" << results[i][0] << "," << results[i][1] << "," << results[i][2] << "," << results[i][3] << "]";
+//    }
+
+//    QFile file("/home/ajit/Internship/temp.html"); //opening temp1 file, where we will store data //temporarily
+    if (!file->open(QFile::WriteOnly)) {
+        qDebug() << "File not opened for writing";
+        return;
+    }
+    QTextStream out(file);
+    out.setCodec("UTF-8");
+
+    int index = 0, flag = 0, flag_test = 0;
+    int ite = 0, value_prev = 0;
+
+    while(flag_test == 0 && index < text.size()) {
+        QList<int> list_;
+
+        for(int x = value_prev; x < results.size(); x++) {
+            if(x < results.size() - 1) {
+                if(results[x][2] == results[x+1][0]) {
+                    int sizeList = list_.size();
+                    if(sizeList == 0 || list_[sizeList - 1] != results[x][2]) {
+                        list_.append(results[x][2]);
+                    }
+                    list_.append(results[x][3]);
+                    list_.append(results[x+1][2]);
+                }
+                else {
+                    int sizeList = list_.size();
+                    if(sizeList == 0)
+                        list_.append(results[x][2]);
+                    list_.append(results[x][3]);
+                    value_prev = x+1;
+                    break;
+                }
+            }
+            else {
+                list_.append(results[x][2]);
+                list_.append(results[x][3]);
+                value_prev = x+1;
+                break;
+            }
+        }
+
+        for(int tmp = 0; tmp < list_.size(); tmp++) {
+            if(tmp == 0) {
+                while(index < list_[tmp]-7){
+                    QChar s = text.at(index);
+                    out << s;
+                    index++;
+                }
+            }
+            else {
+                index = list_[tmp];
+                if(tmp < list_.size() - 1)
+                    tmp++;
+                while(index < list_[tmp]-7) {
+                    QChar s = text.at(index);
+                    out << s;
+                    index++;
+                }
+            }
+        }
+
+//        qDebug() << "results.size() =" << results.size() << " | value_prev =" << value_prev;
+
+        if(value_prev >= results.size()) {
+            flag_test = 1;
+        }
+    }
+    while(index < text.size()) {
+        QChar s = text.at(index);
+        out << s;
+        index++;
+    }
+    file->close();
+    //tempFile.remove(); //removing original file
+    //QFile::rename("temp1.html","temp.html"); //renaming temporary file to original
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
