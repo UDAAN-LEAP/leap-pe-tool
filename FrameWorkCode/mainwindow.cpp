@@ -9018,7 +9018,13 @@ void MainWindow::filterHtml(QFile *f)
             prevStringEnd = curStringEnd;
         }
         else if (prevString == curString) {
-            results.push_back({prevStringStart, prevStringEnd, curStringStart, curStringEnd});
+            QString subs = text.mid(prevStringEnd, curStringStart - prevStringEnd);
+            int closingIndexOfspanClosing = subs.indexOf("</span>")+QString("</span>").length();
+
+            if ((prevStringEnd + closingIndexOfspanClosing) == curStringStart) {
+                results.push_back({prevStringStart, prevStringEnd, curStringStart, curStringEnd});
+            }
+
             prevStringStart = curStringStart;
             prevStringEnd = curStringEnd;
         }
