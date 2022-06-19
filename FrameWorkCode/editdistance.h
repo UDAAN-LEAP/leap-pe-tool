@@ -12,6 +12,9 @@ public:
     void backtrace(QStringList, QStringList, int **);
     int getEditDistance(std::string first, std::string second);
     double findStringSimilarity(std::string first, std::string second);
+    int getSimilarityValue(std::string str1, std::string str2);
+    int matchPattern(std::string str1, int arLengthLeft, std::string str2, int arLengthRight);
+    double DiceMatch(std::string string1, std::string string2);
 };
 
 

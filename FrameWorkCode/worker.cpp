@@ -83,7 +83,7 @@ void Worker::doSaveBackend()
 }
 void Worker:: addCpair()
 {
-    qDebug()<<"Adding words to Cpair";
+    //qDebug()<<"Adding words to Cpair";
     //! Enters entries in CPairs through CPair_editDis; allows multiple entries for a incorrent word entry
     for(auto &elem : CPair_editDis)
     {
