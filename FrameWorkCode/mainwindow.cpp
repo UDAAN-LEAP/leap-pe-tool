@@ -8130,7 +8130,7 @@ void MainWindow::on_actionLinux_triggered()
  */
 void MainWindow::on_actionWindows_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/1xcXsNU03d-1RneksUzCHRyC4jm1mBF-N/edit?usp=sharing&ouid=114703528031965332802&rtpof=true&sd=true", QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/16P1UZ2t1Dd8qhAsl2UqL5hTkrsOkBJqr/edit?usp=sharing&ouid=105473566501828143797&rtpof=true&sd=true", QUrl::TolerantMode));
 }
 
 /*!
