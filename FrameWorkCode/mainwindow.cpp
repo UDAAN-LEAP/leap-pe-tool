@@ -8904,9 +8904,30 @@ void MainWindow::on_find_clicked()
 {
     QRegExp searchExpr = QRegExp(ui->lineEdit_4->text());
     searchExpr.setCaseSensitivity(Qt::CaseInsensitive);
-    ui->textEdit_dict->moveCursor(QTextCursor::Start);
-    ui->textEdit_dict->find(searchExpr, QTextDocument::FindFlags());
+    QTextCursor cursor = ui->textEdit_dict->textCursor();
+    int pos1=cursor.position();
+    //qDebug()<<pos1;
+
+    if(ui->textEdit_dict->find(searchExpr, QTextDocument::FindFlags()))
+    {
+        //ui->textEdit_dict->moveCursor(QTextCursor::EndOfWord);
+
+    }
+    else
+    {
+        if (pos1==0)
+        {
+            QMessageBox::warning(0,"Error","No such Word Found");
+            // qDebug()<<"Word Not found";
+        }
+        else
+        {
+            ui->textEdit_dict->moveCursor(QTextCursor::Start);
+            // qDebug()<<"Moving to start of FIle";
+        }
+    }
 }
+
 
 /*!
  * \brief MainWindow::on_actionPDF_Preview_triggered
