@@ -437,7 +437,10 @@ private slots:
     void on_actionChange_Role_triggered();
 
     void filterHtml(QFile *f = nullptr);
+
     void bboxInsertion(QFile *f = nullptr);
+
+    void finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStatus);
 
 public slots:
     void SaveFile_Backend();

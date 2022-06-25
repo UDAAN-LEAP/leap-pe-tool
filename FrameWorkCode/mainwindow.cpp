@@ -7965,136 +7965,119 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
 
 void MainWindow::on_actionas_PDF_triggered()
 {
-    QPrinter printer(QPrinter::PrinterResolution);
-    QPrintDialog dialog(&printer, this);
-    dialog.setWindowTitle("Set PDF properties");
-    dialog.addEnabledOption(QAbstractPrintDialog::PrintSelection);
 
-    if(dialog.exec() != QDialog::Accepted){
-        return;
-    }
-    else{
-        //! We set the dir path to CorrectorOutput or Verifier output depending on whether it is opened
-        //! in Corrector or Verifier Mode.
-        QTextDocument *document = new QTextDocument();
-         QString currentDirAbsolutePath;
-        if(mRole=="Verifier")
+    //! We set the dir path to CorrectorOutput or Verifier output depending on whether it is opened
+    //! in Corrector or Verifier Mode.
+    QString currentDirAbsolutePath;
+    if(mRole=="Verifier")
         currentDirAbsolutePath = gDirTwoLevelUp + "/VerifierOutput/";
-        else if (mRole=="Corrector") {
-            currentDirAbsolutePath = gDirTwoLevelUp + "/CorrectorOutput/";
-        }
+    else if (mRole=="Corrector") {
+        currentDirAbsolutePath = gDirTwoLevelUp + "/CorrectorOutput/";
+    }
 
-        //! We then open this directory and set sorting preferences.
-        QDir dir(currentDirAbsolutePath);
-        dir.setSorting(QDir::SortFlag::DirsFirst | QDir::SortFlag::Name);
-        QDirIterator dirIterator(dir,QDirIterator::NoIteratorFlags);
+    //! We then open this directory and set sorting preferences.
+    QDir dir(currentDirAbsolutePath);
+    dir.setSorting(QDir::SortFlag::DirsFirst | QDir::SortFlag::Name);
+    QDirIterator dirIterator(dir,QDirIterator::NoIteratorFlags);
 
-        //! Set count of files in directory
+    //! Set count of files in directory
 
-        QString html_contents="";
-        QString mainHtml;
-        int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
-        int counter=0;
+    QString html_contents=""; // Final HTML Content
+    QString mainHtml;
+    int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
+    int counter=0;
 
-        int stIndex, startFrom = 0;
+    int stIndex, startFrom = 0;
 
-        //! Set the background of the pdf to be printed to be white
-        QString searchString = "background-color:#"; // string to be searched
-        int l = searchString.length();
-        QString whiteColor = "ffffff";
+    //! Set the background of the pdf to be printed to be white
+    QString searchString = "background-color:#"; // string to be searched
+    int l = searchString.length();
+    QString whiteColor = "ffffff";
 
-        //! Loop through all files
-        for(auto a : dir.entryList())
+    //! Loop through all files
+    for(auto a : dir.entryList())
+    {
+        QString it_file_path = a;
+        QString x=currentDirAbsolutePath+a;
+
+        startFrom = 0; // The position from which searchString will be scanned
+        //! if condition makes sure we extract only html files for PDF Processing
+        //! (folder has hocr, dict, htranslate, and other such files)
+        if(x.contains("."))
         {
-            QString it_file_path = a;
-            QString x=currentDirAbsolutePath+a;
+            QStringList html_files = x.split(QRegExp("[.]"));
 
-            startFrom = 0; // The position from which searchString will be scanned
-            //! if condition makes sure we extract only html files for PDF Processing
-            //! (folder has hocr, dict, htranslate, and other such files)
-            if(x.contains("."))
+            //! condition to check if file is html
+            if(html_files[1]=="html")
             {
-                QStringList html_files = x.split(QRegExp("[.]"));
+                QFile file(x);
+                if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
+                QTextStream stream(&file);
+                stream.setCodec("UTF-8");
 
-               //! condition to check if file is html
-                if(html_files[1]=="html")
-                {
-                    QFile file(x);
-                        if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
-                        QTextStream stream(&file);
-                        stream.setCodec("UTF-8");
+                //! Read the file
 
-                        //! Read the file
-
-                        mainHtml=stream.readAll();
-                        //! Changing the text background to white by setting the background to #fffff
-                        while (true){
-                            stIndex = mainHtml.indexOf(searchString, startFrom);
-                            if (stIndex == -1)
-                                break;
-                            stIndex += l; // increment line
-                            mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
-                            startFrom = stIndex + 6;
-                        }
-                        //! append counter when one file is fully scanned
-                        counter++;
-
-                        //! Once page html is extracted ... before we move to next page we add html tag
-                        //! for page break so that the PDF printer separates the pages
-                        //! We do this till all pages done
-                        if(counter<count){
-                            mainHtml+="<P style=\"page-break-before: always\"></P>";
-                        }
-                        file.close();
-                  html_contents.append(mainHtml);
-
+                mainHtml=stream.readAll();
+                //! Changing the text background to white by setting the background to #fffff
+                while (true){
+                    stIndex = mainHtml.indexOf(searchString, startFrom);
+                    if (stIndex == -1)
+                        break;
+                    stIndex += l; // increment line
+                    mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
+                    startFrom = stIndex + 6;
                 }
-                //! if file is not html
-                else {
-                    continue;
+                //! append counter when one file is fully scanned
+                counter++;
+
+                //! Once page html is extracted ... before we move to next page we add html tag
+                //! for page break so that the PDF printer separates the pages
+                //! We do this till all pages done
+                if(counter<count){
+                    mainHtml+="<P style=\"page-break-before: always\"></P>";
                 }
+                file.close();
+                html_contents.append(mainHtml);
+
+            }
+            //! if file is not html
+            else {
+                continue;
             }
         }
-
-        //! Perform printing of html using QPrinter
-
-        document->setHtml(html_contents);
-    //    QPrinter printer(QPrinter::PrinterResolution);
-    //    QPrintDialog dialog(&printer, this);
-    //    dialog.setWindowTitle("Set PDF properties");
-    //    dialog.addEnabledOption(QAbstractPrintDialog::PrintSelection);
-    //    //printer.setOutputFormat(QPrinter::PdfFormat);
-    //    //printer.setPaperSize(QPrinter::A4);
-    //    //printer.setPageMargins(QMarginsF(5, 5, 5, 5));
-
-    //    if(dialog.exec() != QDialog::Accepted){
-    //        return;
-    //    }
-    //    //printer.setOutputFileName(gDirTwoLevelUp+"/BookSet.pdf");//! set the output dir
-    //    document->setPageSize(printer.pageRect().size());
-    //    document->print(&printer);
-        PDFHandling *savepdf = new PDFHandling(
-                    nullptr,
-                    document,
-                    &printer,
-                    html_contents
-                    );
-
-        QThread *thread = new QThread;
-
-        connect(thread, SIGNAL(started()), savepdf, SLOT(SavePDF()));
-        connect(savepdf, SIGNAL(finishedSavingPDF()), thread, SLOT(quit()));
-        connect(savepdf, SIGNAL(finishedSavingPDF()), savepdf, SLOT(deleteLater()));
-        connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-        connect(savepdf, SIGNAL(finishedSavingPDF()), this, SLOT(stopSpinning()));
-        savepdf->moveToThread(thread);
-        thread->start();
-
-        spinner = new LoadingSpinner(this);
-        spinner->SetMessage("Saving as PDF...", "Loading...");
-        spinner->setModal(false);
-        spinner->exec();
     }
+
+//    document->setHtml(html_contents);
+    QString htmlFile = toolDirAbsolutePath + "/.html_for_pdf.html";
+
+    QFile file(htmlFile);
+    if (file.exists()) {
+        qDebug() << "Cannot Create a file for that.";
+        return;
+    }
+    if (!file.open(QIODevice::ReadWrite)) {
+        qDebug() << "Error";
+        return;
+    }
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << html_contents << endl;
+    file.flush();
+    file.close();
+
+    QString program = toolDirAbsolutePath + "/HtmlToPdfUtil";
+    QStringList arguments;
+    arguments << htmlFile << gDirTwoLevelUp;
+
+    QProcess *process = new QProcess(this);
+    connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &MainWindow::finishedPdfCreation);
+
+    process->start(program, arguments);
+
+    spinner = new LoadingSpinner(this);
+    spinner->SetMessage("Saving as PDF...", "Loading...");
+    spinner->setModal(false);
+    spinner->exec();
 }
 
 /*!
@@ -9287,6 +9270,22 @@ void MainWindow::bboxInsertion(QFile *f){
     bbox_list.clear();bbox_list_.clear();
     }
 
+}
+
+void MainWindow::finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStatus)
+{
+    if (exitCode == 0) {
+        qDebug() << "PDF created Successfully";
+    } else if (exitCode == -1) {
+        qDebug() << "User cancelled PDF creation";
+    } else {
+        qDebug() << "PDF creation failed";
+    }
+    QFile file(toolDirAbsolutePath + "/.html_for_pdf.html");
+    file.remove();
+    qDebug() << "Exit code is " << QString::number(exitCode);
+
+    stopSpinning();
 }
 
 
