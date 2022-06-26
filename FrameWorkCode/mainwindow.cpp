@@ -8065,7 +8065,12 @@ void MainWindow::on_actionas_PDF_triggered()
     file.flush();
     file.close();
 
-    QString program = toolDirAbsolutePath + "/HtmlToPdfUtil";
+    QString program = toolDirAbsolutePath;
+    if (QSysInfo::productType() == "windows") {
+        program += "/HtmlToPdfUtil.exe";
+    } else {
+        program += "/HtmlToPdfUtil";
+    }
     QStringList arguments;
     arguments << htmlFile << gDirTwoLevelUp;
 
@@ -9274,18 +9279,33 @@ void MainWindow::bboxInsertion(QFile *f){
 
 void MainWindow::finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStatus)
 {
+    QString msg, title;
+
     if (exitCode == 0) {
         qDebug() << "PDF created Successfully";
-    } else if (exitCode == -1) {
+        title = "Success";
+        msg = "PDF created Successfully";
+    } else if (exitCode == -1 || exitCode == 255) {
         qDebug() << "User cancelled PDF creation";
+        title = "Cancelled";
+        msg = "PDF creation cancelled";
     } else {
         qDebug() << "PDF creation failed";
+        title = "Error";
+        msg = "Error in creating PDF";
     }
     QFile file(toolDirAbsolutePath + "/.html_for_pdf.html");
-    file.remove();
-    qDebug() << "Exit code is " << QString::number(exitCode);
-
+    if (file.exists()) {
+        file.remove();
+    }
     stopSpinning();
+
+    qDebug() << "Exit code is " << QString::number(exitCode);
+    if (title != "Error") {
+        QMessageBox::information(this, title, msg, QMessageBox::Ok, QMessageBox::Ok);
+    } else {
+        QMessageBox::warning(this, title, msg, QMessageBox::Ok, QMessageBox::Ok);
+    }
 }
 
 
