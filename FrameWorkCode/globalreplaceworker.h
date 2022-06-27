@@ -41,6 +41,9 @@ private:
 
     int writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap);
     bool isStringInFile(QString file_path, QString searchString);
+    void saveBboxInfo(QString);
+    void filterHtml(QString);
+    void bboxInsertion(QString);
 
 public slots:
     void replaceWordsInFiles();

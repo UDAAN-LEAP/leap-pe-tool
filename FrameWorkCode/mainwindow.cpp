@@ -9201,7 +9201,7 @@ void MainWindow::bboxInsertion(QFile *f){
             double max = 0;
             for(ci = coordinates.begin(); ci!=coordinates.end(); ++ci)
             {
-                double similarity = edit.DiceMatch(ex.toStdString(), ci.value().toStdString());
+                double similarity = edit.getSimilarityValue(ex.toStdString(), ci.value().toStdString());
                 if(similarity>max)
                 {
                     bbox_coordinates = ci.key();
@@ -9242,7 +9242,7 @@ void MainWindow::bboxInsertion(QFile *f){
         itr2 = rex2.globalMatch(text,0);
         int i=0,j=0;
         //qDebug()<<"bbox_list="<<bbox_list;
-        if(bbox_list.size() == 0 || bbox_list_.size() == 0){
+        if(bbox_list.size() == 0 && bbox_list_.size() == 0){
             return;
         }
         while (itr2.hasNext()) {
