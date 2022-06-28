@@ -16,6 +16,7 @@
 #include <QString>
 #include <string>
 #include <QMessageBox>
+#include <globalreplaceworker.h>
 
 using namespace std;
 extern string toslp1(string s);
@@ -172,6 +173,8 @@ void TextFinder::on_replaceAllButton_clicked()
           if(suff == "html")
             {
               //!Get the file string
+               GlobalReplaceWorker grw;
+               grw.saveBboxInfo(it_file_path); //to save bbox information
                QFile *f = new QFile(it_file_path);
                f->open(QIODevice::ReadOnly);
                QTextStream in(f);
@@ -193,11 +196,61 @@ void TextFinder::on_replaceAllButton_clicked()
                    findWord.setCaseSensitivity(Qt::CaseSensitive);
                else
                    findWord.setCaseSensitivity(Qt::CaseInsensitive);
+               //replace words on text instead of html files
+               QString input;
+               QTextBrowser * browser = new QTextBrowser();
+               browser->setReadOnly(false);
+               browser->setHtml(s1);
+               input = browser->toPlainText();
+               input.replace(findWord, replacementString1);
+               //////////////////////////////////
+               QString fileTmp = gDirTwoLevelUp + "/globalReplace1.txt";
+               QFile f5(fileTmp);
 
+               istringstream iss(input.toUtf8().constData());
+               string strHtml = "<html><body><p>";
+               string line;
+
+               f5.open(QIODevice::WriteOnly);
+               QTextStream in5(&f5);
+               in5.setCodec("UTF-8");
+
+               int index = 0;
+               in5 << "<html><body><p>";
+               while(index < input.size()) {
+                   QChar s = input.at(index);
+                   if((s == "\n") || (s == "\r")){
+                       in5 << s;    //for html view
+                       in5 <<  "</p><p>";
+                   }
+                   else
+                       in5 <<  s;
+                   index++;
+               }
+               in5 << "</p></body></html>";
+               f5.flush();
+               f5.close();
+               f5.open(QIODevice::ReadOnly);
+               QTextStream in6(&f5);
+               QString qstrHtml = in6.readAll();
+               f5.close();
+               qstrHtml.replace("<br /></p>", "</p>");
+
+               QFont font("Shobhika-Regular");
+               font.setWeight(16);
+               font.setPointSize(16);
+               font.setFamily("Shobhika");
+               browser->setFont(font);
+               browser->setHtml(qstrHtml);
+               input = browser->toHtml();
+
+               /////////////////////////////////////////////////////////////////////////////
                f->open(QIODevice::WriteOnly);
-               s1.replace(findWord, replacementString1);
-               f->write(s1.toUtf8());
+               //s1.replace(findWord, replacementString1);
+               f->write(input.toUtf8());
                f->close();
+               grw.filterHtml(it_file_path); //filter html file
+               grw.bboxInsertion(it_file_path); //insert back bbox info
             }
       }
 
