@@ -249,7 +249,7 @@ void TextFinder::on_replaceAllButton_clicked()
                //s1.replace(findWord, replacementString1);
                f->write(input.toUtf8());
                f->close();
-               grw.filterHtml(it_file_path); //filter html file
+               //grw.filterHtml(it_file_path); //filter html file
                grw.bboxInsertion(it_file_path); //insert back bbox info
             }
       }

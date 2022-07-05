@@ -47,7 +47,7 @@ public slots:
     void replaceWordsInFiles();
     void writeLogs();
     void saveBboxInfo(QString);
-    void filterHtml(QString);
+    //void filterHtml(QString);
     void bboxInsertion(QString);
 
 signals:

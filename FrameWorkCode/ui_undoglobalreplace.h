@@ -30,7 +30,6 @@ public:
     QHBoxLayout *horizontalLayout;
     QSpacerItem *horizontalSpacer;
     QPushButton *applyButton;
-    QPushButton *cancelButton;
 
     void setupUi(QDialog *UndoGlobalReplace)
     {
@@ -65,13 +64,6 @@ public:
 
         horizontalLayout->addWidget(applyButton);
 
-        cancelButton = new QPushButton(UndoGlobalReplace);
-        cancelButton->setObjectName(QString::fromUtf8("cancelButton"));
-        cancelButton->setStyleSheet(QString::fromUtf8("QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);\n"
-"} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}"));
-
-        horizontalLayout->addWidget(cancelButton);
-
 
         verticalLayout->addLayout(horizontalLayout);
 
@@ -84,8 +76,7 @@ public:
     void retranslateUi(QDialog *UndoGlobalReplace)
     {
         UndoGlobalReplace->setWindowTitle(QApplication::translate("UndoGlobalReplace", "Dialog", nullptr));
-        applyButton->setText(QApplication::translate("UndoGlobalReplace", "Yes", nullptr));
-        cancelButton->setText(QApplication::translate("UndoGlobalReplace", "No", nullptr));
+        applyButton->setText(QApplication::translate("UndoGlobalReplace", "Undo Changes", nullptr));
     } // retranslateUi
 
 };
