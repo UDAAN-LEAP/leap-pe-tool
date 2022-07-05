@@ -173,7 +173,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
     }
     //call filterHtml() function to filter html files, bboxInsertion() to insert back bbox information
     if(file_path.endsWith(".html")){
-            filterHtml(file_path);
+//            filterHtml(file_path);
             bboxInsertion(file_path);
     }
 
@@ -441,133 +441,135 @@ void GlobalReplaceWorker::saveBboxInfo(QString htmlFile){
          // qDebug() << "bbox file written succesfully ... ";
       }
 }
-void GlobalReplaceWorker::filterHtml(QString f)
-{
-    QFile file(f);
 
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "File not opened for reading";
-        return;
-    }
+//void GlobalReplaceWorker::filterHtml(QString f)
+//{
+//    QFile file(f);
 
-    QTextStream in(&file);
-    in.setCodec("UTF-8");
-    QString text = in.readAll();
-    file.close();
+//    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+//        qDebug() << "File not opened for reading";
+//        return;
+//    }
 
-    QRegularExpression re1("(<span[^>]*>)");
-    QRegularExpressionMatchIterator it;
+//    QTextStream in(&file);
+//    in.setCodec("UTF-8");
+//    QString text = in.readAll();
+//    file.close();
 
-    it = re1.globalMatch(text);
+//    QRegularExpression re1("(<span[^>]*>)");
+//    QRegularExpressionMatchIterator it;
 
-    int prevStringStart = -1, prevStringEnd = -1, curStringStart = -1, curStringEnd = -1;
-    QString prevString = "", curString = "";
-    QVector<QVector<int> > results;
+//    it = re1.globalMatch(text);
 
-    while (it.hasNext()) {
-        QRegularExpressionMatch match = it.next();
-        curString = match.captured(1);
-        curStringStart = match.capturedStart(1);
-        curStringEnd = match.capturedEnd(1);
+//    int prevStringStart = -1, prevStringEnd = -1, curStringStart = -1, curStringEnd = -1;
+//    QString prevString = "", curString = "";
+//    QVector<QVector<int> > results;
 
-        // Checking if a new paragraph is starting or not
-        if (prevString != "") {
-            QString subString = text.mid(prevStringEnd, curStringEnd - prevStringEnd);
-            if (subString.contains("</p>")) {
-                prevString = "";
-            }
-        }
+//    while (it.hasNext()) {
+//        QRegularExpressionMatch match = it.next();
+//        curString = match.captured(1);
+//        curStringStart = match.capturedStart(1);
+//        curStringEnd = match.capturedEnd(1);
 
-        if (prevString == "") {
-            prevString = curString;
-            prevStringStart = curStringStart;
-            prevStringEnd = curStringEnd;
-        }
-        else if (prevString == curString) {
-            QString subs = text.mid(prevStringEnd, curStringStart - prevStringEnd);
-            int closingIndexOfspanClosing = subs.indexOf("</span>")+QString("</span>").length();
+//        // Checking if a new paragraph is starting or not
+//        if (prevString != "") {
+//            QString subString = text.mid(prevStringEnd, curStringEnd - prevStringEnd);
+//            if (subString.contains("</p>")) {
+//                prevString = "";
+//            }
+//        }
 
-            if ((prevStringEnd + closingIndexOfspanClosing) == curStringStart) {
-                results.push_back({prevStringStart, prevStringEnd, curStringStart, curStringEnd});
-            }
+//        if (prevString == "") {
+//            prevString = curString;
+//            prevStringStart = curStringStart;
+//            prevStringEnd = curStringEnd;
+//        }
+//        else if (prevString == curString) {
+//            QString subs = text.mid(prevStringEnd, curStringStart - prevStringEnd);
+//            int closingIndexOfspanClosing = subs.indexOf("</span>")+QString("</span>").length();
 
-            prevStringStart = curStringStart;
-            prevStringEnd = curStringEnd;
-        }
-    }
+//            if ((prevStringEnd + closingIndexOfspanClosing) == curStringStart) {
+//                results.push_back({prevStringStart, prevStringEnd, curStringStart, curStringEnd});
+//            }
 
-    if (!file.open(QFile::WriteOnly)) {
-        qDebug() << "File not opened for writing";
-        return;
-    }
-    QTextStream out(&file);
-    out.setCodec("UTF-8");
+//            prevStringStart = curStringStart;
+//            prevStringEnd = curStringEnd;
+//        }
+//    }
 
-    int index = 0, flag = 0, flag_test = 0;
-    int ite = 0, value_prev = 0;
+//    if (!file.open(QFile::WriteOnly)) {
+//        qDebug() << "File not opened for writing";
+//        return;
+//    }
+//    QTextStream out(&file);
+//    out.setCodec("UTF-8");
 
-    while(flag_test == 0 && index < text.size()) {
-        QList<int> list_;
+//    int index = 0, flag = 0, flag_test = 0;
+//    int ite = 0, value_prev = 0;
 
-        for(int x = value_prev; x < results.size(); x++) {
-            if(x < results.size() - 1) {
-                if(results[x][2] == results[x+1][0]) {
-                    int sizeList = list_.size();
-                    if(sizeList == 0 || list_[sizeList - 1] != results[x][2]) {
-                        list_.append(results[x][2]);
-                    }
-                    list_.append(results[x][3]);
-                    list_.append(results[x+1][2]);
-                }
-                else {
-                    int sizeList = list_.size();
-                    if(sizeList == 0)
-                        list_.append(results[x][2]);
-                    list_.append(results[x][3]);
-                    value_prev = x+1;
-                    break;
-                }
-            }
-            else {
-                list_.append(results[x][2]);
-                list_.append(results[x][3]);
-                value_prev = x+1;
-                break;
-            }
-        }
+//    while(flag_test == 0 && index < text.size()) {
+//        QList<int> list_;
 
-        for(int tmp = 0; tmp < list_.size(); tmp++) {
-            if(tmp == 0) {
-                while(index < list_[tmp]-7){
-                    QChar s = text.at(index);
-                    out << s;
-                    index++;
-                }
-            }
-            else {
-                index = list_[tmp];
-                if(tmp < list_.size() - 1)
-                    tmp++;
-                while(index < list_[tmp]-7) {
-                    QChar s = text.at(index);
-                    out << s;
-                    index++;
-                }
-            }
-        }
+//        for(int x = value_prev; x < results.size(); x++) {
+//            if(x < results.size() - 1) {
+//                if(results[x][2] == results[x+1][0]) {
+//                    int sizeList = list_.size();
+//                    if(sizeList == 0 || list_[sizeList - 1] != results[x][2]) {
+//                        list_.append(results[x][2]);
+//                    }
+//                    list_.append(results[x][3]);
+//                    list_.append(results[x+1][2]);
+//                }
+//                else {
+//                    int sizeList = list_.size();
+//                    if(sizeList == 0)
+//                        list_.append(results[x][2]);
+//                    list_.append(results[x][3]);
+//                    value_prev = x+1;
+//                    break;
+//                }
+//            }
+//            else {
+//                list_.append(results[x][2]);
+//                list_.append(results[x][3]);
+//                value_prev = x+1;
+//                break;
+//            }
+//        }
 
-        if(value_prev >= results.size()) {
-            flag_test = 1;
-        }
-    }
-    while(index < text.size()) {
-        QChar s = text.at(index);
-        out << s;
-        index++;
-    }
-    file.flush();
-    file.close();
-}
+//        for(int tmp = 0; tmp < list_.size(); tmp++) {
+//            if(tmp == 0) {
+//                while(index < list_[tmp]-7){
+//                    QChar s = text.at(index);
+//                    out << s;
+//                    index++;
+//                }
+//            }
+//            else {
+//                index = list_[tmp];
+//                if(tmp < list_.size() - 1)
+//                    tmp++;
+//                while(index < list_[tmp]-7) {
+//                    QChar s = text.at(index);
+//                    out << s;
+//                    index++;
+//                }
+//            }
+//        }
+
+//        if(value_prev >= results.size()) {
+//            flag_test = 1;
+//        }
+//    }
+//    while(index < text.size()) {
+//        QChar s = text.at(index);
+//        out << s;
+//        index++;
+//    }
+//    file.flush();
+//    file.close();
+//}
+
 void GlobalReplaceWorker::bboxInsertion(QString f){
     QFile file(f);
 
