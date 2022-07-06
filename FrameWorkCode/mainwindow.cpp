@@ -6194,6 +6194,29 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     QMap<QString, QString> replacementMap; // This map is used for removing duplicate entries from changedWords
     for (int i = 0; i < noOfChangedWords; i++) {
         QStringList mapping = changedWords[i].split(separat, QString::SkipEmptyParts);
+
+        // Removing source words which have more than 5 words
+        int numOfWordsInSource = 0;
+        bool lastWasSpace = true;
+        QString source = mapping[0].trimmed();
+        for (int i = 0; i < source.size(); i++) {
+            if (source[i] == ' ') {
+                if (!lastWasSpace) {
+                    numOfWordsInSource++;
+                    lastWasSpace = true;
+                }
+            } else {
+                if (source[i] != '\n')
+                    lastWasSpace = false;
+            }
+        }
+        if (!lastWasSpace)
+            numOfWordsInSource++;
+        if (numOfWordsInSource > 5) {
+            changedWords.remove(i);
+            noOfChangedWords--;
+        }
+
         if (replacementMap.find(mapping[0]) != replacementMap.end()) {
             changedWords.remove(i);
             noOfChangedWords--;
