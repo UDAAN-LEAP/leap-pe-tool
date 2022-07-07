@@ -59,6 +59,7 @@ TextFinder* TextFinder::openFindAndReplace(QWidget *parent) {
  */
 void TextFinder::on_findNextButton_clicked()
 {
+    QString searchstr = ui->findLineEdit->text();
     QRegExp searchExpr = QRegExp(ui->findLineEdit->text());
     QTextBrowser *curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();   //getCurrentBrowser() returns the current QTextBrower
     if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
@@ -74,10 +75,45 @@ void TextFinder::on_findNextButton_clicked()
     {
 //        curr_browser->moveCursor(QTextCursor::Start);                              //Moves the cursor to start of text
 //        curr_browser->find(searchExpr, QTextDocument::FindFlags());
-        ((MainWindow *)(parent()))->on_actionLoad_Next_Page_triggered();
+//        ((MainWindow *)(parent()))->on_actionLoad_Next_Page_triggered();
+//        curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
+//        curr_browser->moveCursor(QTextCursor::Start);
+//        curr_browser->find(searchExpr, QTextDocument::FindFlags());
+
+        QString currentFileDirectory = gDirTwoLevelUp + "/" + gCurrentDirName;
+        QDir dir(currentFileDirectory);
+        QStringList nameFilter;
+        nameFilter << "*.html";
+        QFileInfoList list = dir.entryInfoList(nameFilter, QDir::NoDotAndDotDot | QDir::Files);
+        QString path;
+        QFileInfo fileInfo;
+        QString temp1 = currentFileDirectory + "/" + gCurrentPageName;
+        int index = list.indexOf(temp1,0);
+        qDebug()<<index;
+        int i;
+        i = (index == (list.count()-1)) ? 0 : index+1 ;
+        for (i ; i < list.size(); ++i)
+        {
+            fileInfo = list.at(i);
+            path = fileInfo.filePath();
+
+            if(stringCheck(path,searchstr)){
+                gCurrentPageName = fileInfo.fileName();
+                break;
+            }
+            if(i == (list.size() - 1)){
+                i=0;
+            }
+
+        }
+        QString suff = fileInfo.completeSuffix();
+        QFile *f = new QFile(path);
+        QString filename(fileInfo.fileName());
+        ((MainWindow *)(parent()))->LoadDocument(f,suff,filename);
         curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
-        curr_browser->moveCursor(QTextCursor::Start);
+        curr_browser->moveCursor(QTextCursor::Start);                        //Moves the cursor to the end of text
         curr_browser->find(searchExpr, QTextDocument::FindFlags());
+
     }
 }
 
@@ -88,6 +124,7 @@ void TextFinder::on_findNextButton_clicked()
  */
 void TextFinder::on_findPreviousButton_clicked()
 {
+    QString searchstr = ui->findLineEdit->text();
     QRegExp searchExpr = QRegExp(ui->findLineEdit->text());
     QTextBrowser *curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
     if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
@@ -101,10 +138,44 @@ void TextFinder::on_findPreviousButton_clicked()
     if(!curr_browser->find(searchExpr, QTextDocument::FindBackward))
     {
        // curr_browser->find(searchExpr, QTextDocument::FindBackward);
-        ((MainWindow *)(parent()))->on_actionLoad_Prev_Page_triggered();
+       //((MainWindow *)(parent()))->on_actionLoad_Prev_Page_triggered();
+       //curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
+       //curr_browser->moveCursor(QTextCursor::End);                        //Moves the cursor to the end of text
+       //curr_browser->find(searchExpr, QTextDocument::FindBackward);
+
+        QString currentFileDirectory = gDirTwoLevelUp + "/" + gCurrentDirName;
+        QDir dir(currentFileDirectory);
+        QStringList nameFilter;
+        nameFilter << "*.html";
+        QFileInfoList list = dir.entryInfoList(nameFilter, QDir::NoDotAndDotDot | QDir::Files);
+        QString path;
+        QFileInfo fileInfo;
+        QString temp1 = currentFileDirectory + "/" + gCurrentPageName;
+        int index = list.indexOf(temp1,0);
+        int i;
+        i = (index == 0) ? (list.count()-1) : index-1 ;
+
+        for (i ; i >= 0; --i)
+        {
+            fileInfo = list.at(i);
+            path = fileInfo.filePath();
+            if(stringCheck(path,searchstr)){
+                gCurrentPageName = fileInfo.fileName();
+                break;
+            }
+            if(i == 0){
+                i=(list.size());
+            }
+        }
+        QString suff = fileInfo.completeSuffix();
+        QFile *f = new QFile(path);
+        QString filename(fileInfo.fileName());
+        ((MainWindow *)(parent()))->LoadDocument(f,suff,filename);
         curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
         curr_browser->moveCursor(QTextCursor::End);                        //Moves the cursor to the end of text
         curr_browser->find(searchExpr, QTextDocument::FindBackward);
+
+
     }
 
 }
@@ -345,4 +416,22 @@ bool TextFinder::eventFilter(QObject *watched, QEvent *event)
         }
     }
     return QDialog::eventFilter(watched, event);
+}
+
+
+bool TextFinder::stringCheck(QString path, QString searchstr)
+{
+    qDebug()<<"1111111";
+    QFile *f = new QFile(path);
+    f->open(QIODevice::ReadOnly);
+    QTextStream in(f);
+    in.setCodec("UTF-8");
+    QString s1 = in.readAll();
+    f->close();
+    if(s1.contains(searchstr))
+    { qDebug()<<"2222";
+        return true;
+    }
+    else
+        return false;
 }

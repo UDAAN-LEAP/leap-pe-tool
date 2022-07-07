@@ -203,7 +203,7 @@ private slots:
 
     void file_click(const QModelIndex & indx);
 
-    void LoadDocument(QFile * file, QString ext, QString name);
+    //void LoadDocument(QFile * file, QString ext, QString name);
 
     void LoadImageFromFile(QFile * file);
 
@@ -448,6 +448,9 @@ public slots:
     void on_actionLoad_Next_Page_triggered();
 
     void on_actionLoad_Prev_Page_triggered();
+
+    void LoadDocument(QFile * file, QString ext, QString name);
+
 
 private:
     bool mExitStatus = false;

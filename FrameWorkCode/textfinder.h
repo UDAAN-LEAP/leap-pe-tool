@@ -34,6 +34,8 @@ private slots:
 
     bool eventFilter(QObject *watched, QEvent *event);
 
+    bool stringCheck(QString path, QString searchstr);
+
 
 private:
     Ui::TextFinder *ui;
