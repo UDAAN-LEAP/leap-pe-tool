@@ -185,8 +185,8 @@ void TextFinder::on_replaceAllButton_clicked()
                //!Replacing Words
                string str = replaceString.toStdString();
                QString::fromStdString(str).toUtf8();
-               QString replacementString1 = "<span style = \"background-color:#ADD8E6;\">" + QString::fromStdString(str) + "</span>";
-
+               //QString replacementString1 = "<span style = \"background-color:#ADD8E6;\">" + QString::fromStdString(str) + "</span>";
+               QString replacementString1 =QString::fromStdString(str);
                string str2 = ui->findLineEdit->text().toStdString();
                QString::fromStdString(str2).toUtf8();
                QString temp2 = "(\\b)" + ui->findLineEdit->text() + "(\\b)";
@@ -197,14 +197,26 @@ void TextFinder::on_replaceAllButton_clicked()
                else
                    findWord.setCaseSensitivity(Qt::CaseInsensitive);
                //replace words on text instead of html files
-               QString input;
+
                QTextBrowser * browser = new QTextBrowser();
                browser->setReadOnly(false);
+               QFont font("Shobhika-Regular");
+               font.setWeight(16);
+               font.setPointSize(16);
+               font.setFamily("Shobhika");
+               browser->setFont(font);
                browser->setHtml(s1);
-               input = browser->toPlainText();
-               input.replace(findWord, replacementString1);
+               //input = browser->toPlainText();
+               //input.replace(findWord, replacementString1);
+
+               while(browser->find(findWord))
+               {
+
+                     browser->textCursor().insertHtml("<span style = \"background-color:#ADD8E6;\">" +replacementString1+ "</span>");
+
+               }
                //////////////////////////////////
-               QString fileTmp = gDirTwoLevelUp + "/globalReplace1.txt";
+               /*QString fileTmp = gDirTwoLevelUp + "/globalReplace1.txt";
                QFile f5(fileTmp);
 
                istringstream iss(input.toUtf8().constData());
@@ -241,13 +253,13 @@ void TextFinder::on_replaceAllButton_clicked()
                font.setPointSize(16);
                font.setFamily("Shobhika");
                browser->setFont(font);
-               browser->setHtml(qstrHtml);
-               input = browser->toHtml();
-
+               browser->setHtml(qstrHtml);*/
+               s1 = browser->toHtml();
+               //s1.replace(replacementString1,"<span style = \"background-color:#ADD8E6;\">"+replacementString1+"</span>");
                /////////////////////////////////////////////////////////////////////////////
                f->open(QIODevice::WriteOnly);
                //s1.replace(findWord, replacementString1);
-               f->write(input.toUtf8());
+               f->write(s1.toUtf8());
                f->close();
                //grw.filterHtml(it_file_path); //filter html file
                grw.bboxInsertion(it_file_path); //insert back bbox info

@@ -53,8 +53,8 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
     if(file_path.endsWith(".html")){
         saveBboxInfo(file_path);
     }
-    // if bbox file is passed, just return back
-    if(file_path.endsWith(".bbox")){
+    // if any file other than html is passed, just return back
+    if(!file_path.endsWith(".html")){
         return 0;
     }
     QMap <QString, QString>::iterator grmIterator;
@@ -68,24 +68,23 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
     f.close();
     f.open(QIODevice::WriteOnly);
     int replaced = 0, tot_replaced = 0;
-    QString input;
+
     //create new text browser for html files(such that replacement works on text instead of html)
     QTextBrowser * browser = new QTextBrowser();
     browser->setReadOnly(false);
-    if(file_path.endsWith(".html")){
-        browser->setHtml(s1);
-        input = browser->toPlainText();
-    }
-    else {        //if file is not html, just put back s1 into input
-       input = s1;
-    }
 
+    QFont font("Shobhika-Regular");
+    font.setWeight(16);
+    font.setPointSize(16);
+    font.setFamily("Shobhika");
+    browser->setFont(font);
+    browser->setHtml(s1);
+
+    QString replacementString1;
     //!Replacing words by iterating the map
     for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
         {
             //qDebug() << "grmIterator Key : " <<grmIterator.key()<<"grmIterator.value : "<<grmIterator.value();
-//            if((grmIterator.key().split(" ", QString::SkipEmptyParts).count() == 1) || (grmIterator.value().split(" ", QString::SkipEmptyParts).count() == 1))
-//            {
                 QString sanstr = QRegExp::escape(grmIterator.key());    //sanitized string
                 QString pattern = "(\\b)"+sanstr+"(\\b)"; // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
                 QRegExp re(pattern);
@@ -94,88 +93,27 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                 //qDebug() << "San : " << sanstr << "\nRegexp : " << re;
                 QString::fromStdString(str).toUtf8();
                 //QString replacementString1 = QString::fromStdString(str).trimmed();
-                QString replacementString1 = "<span style = \"background-color:#ffff00;\">" + QString::fromStdString(str).trimmed() + "</span>";
+                //QString replacementString1 = "<span style = \"background-color:#ffff00;\">" + QString::fromStdString(str).trimmed() + "</span>";
+                replacementString1 = QString::fromStdString(str).trimmed();
                 (*mapOfReplacements)[grmIterator.key()] = grmIterator.value().trimmed();
-                input.replace(re, replacementString1);
-                replaced = input.count(replacementString1);
-                tot_replaced = tot_replaced + replaced;
-            /*}
-
-            else if((grmIterator.key().split(" ", QString::SkipEmptyParts).count() > 1) || (grmIterator.value().split(" ", QString::SkipEmptyParts).count() > 1))
-            {
-                QString sanstr = QRegExp::escape(grmIterator.key());    //sanitized string
-                QString pattern = "(\\b)"+sanstr+"(\\b)"; // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
-                QRegExp re(pattern);
-                QString replacementString = re.cap(1) + grmIterator.value() + re.cap(2); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
-                std::string str = replacementString.toStdString();
-                //qDebug() << "San : " << sanstr << "\nRegexp : " << re;
-                QString::fromStdString(str).toUtf8();
-                //input = input.simplified();
-                QString replacementString1 = "<span style = \"background-color:#ffff00;\">" + QString::fromStdString(str).trimmed() + "</span>";
-                (*mapOfReplacements)[grmIterator.key()] = grmIterator.value().trimmed();
-                //QString replacementString = "<span style = \"background-color:#ffff00;\">" + grmIterator.value() + "</span>";
-                //input.replace(grmIterator.key(), replacementString);
-                input.replace(re, replacementString1);
-                replaced = input.count(grmIterator.value());
-                tot_replaced = tot_replaced + replaced;
-
-            }*/
-
+                //input.replace(re, replacementString1);
+                browser->moveCursor(QTextCursor::Start);
+                while(browser->find(re))
+                {
+                  browser->textCursor().insertHtml("<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
+                  tot_replaced = tot_replaced + 1;
+                }
         }
-   //creating a temporary file named globalreplace.txt which is used to convert text file into html file - only when html file is passed
-    QString fileTmp = gDirTwoLevelUp + "/globalReplace.txt";
-    QFile f5(fileTmp);
-    if(file_path.endsWith(".html")){
-    istringstream iss(input.toUtf8().constData());
-    string strHtml = "<html><body><p>";
-    string line;
 
-    f5.open(QIODevice::WriteOnly);
-    QTextStream in5(&f5);
-    in5.setCodec("UTF-8");
-
-    int index = 0;
-    in5 << "<html><body><p>";
-    while(index < input.size()) {
-        QChar s = input.at(index);
-        if((s == "\n") || (s == "\r")){
-            in5 << s;    //for html view
-            in5 <<  "</p><p>";
-        }
-        else
-            in5 <<  s;
-        index++;
-    }
-    in5 << "</p></body></html>";
-    f5.flush();
-    f5.close();
-    f5.open(QIODevice::ReadOnly);
-    QTextStream in6(&f5);
-    QString qstrHtml = in6.readAll();
-    f5.close();
-    qstrHtml.replace("<br /></p>", "</p>");
-
-    QFont font("Shobhika-Regular");
-    font.setWeight(16);
-    font.setPointSize(16);
-    font.setFamily("Shobhika");
-    browser->setFont(font);
-    browser->setHtml(qstrHtml);
-    input = browser->toHtml();
-    }
-    in << input;
+    s1 = browser->toHtml();
+   //s1.replace(replacementString1,"<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
+    in << s1;
     f.flush();
     f.close();
-    //if it was html file then close the browser and remove the temporary file "globalReplace.txt"
-    if(file_path.endsWith(".html")){
-    f5.remove();
     browser->close();
-    }
     //call filterHtml() function to filter html files, bboxInsertion() to insert back bbox information
-    if(file_path.endsWith(".html")){
-//            filterHtml(file_path);
-            bboxInsertion(file_path);
-    }
+//  filterHtml(file_path);
+    bboxInsertion(file_path);
 
     return tot_replaced;
 }
