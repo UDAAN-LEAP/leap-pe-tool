@@ -3886,6 +3886,7 @@ void MainWindow::on_actionBold_triggered()
         cursor.setPosition(pos, QTextCursor::MoveAnchor);
         cursor.setPosition(ancr, QTextCursor::KeepAnchor);
     }
+    //qDebug()<<"pos : ancr"<<pos<<ancr;
     bool isBold = cursor.charFormat().font().bold();
     /*
      * If the font-weight value is bold then

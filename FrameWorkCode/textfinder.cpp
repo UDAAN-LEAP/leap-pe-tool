@@ -282,8 +282,27 @@ void TextFinder::on_replaceAllButton_clicked()
 
                while(browser->find(findWord))
                {
+                   QTextCursor cursor = browser->textCursor(); //get the cursor
+                   QTextCharFormat fmt;
+                   int pos = cursor.position(); //get the cursor position
+                   int ancr = pos - replaceString.size() + 1; //anchor is now cursor position - length of old word to be replaced
+                   //qDebug()<<"pos : ancr"<<pos<<ancr;
+                   if (pos < ancr) {
+                       cursor.setPosition(pos, QTextCursor::MoveAnchor);
+                       cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+                   }
+                   fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
 
-                     browser->textCursor().insertHtml("<span style = \"background-color:#ADD8E6;\">" +replacementString1+ "</span>");
+                   browser->textCursor().insertHtml("<span style = \"background-color:#ADD8E6;\">" +replacementString1+ "</span>");
+
+                   cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
+
+                   pos = cursor.position();
+                   ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
+                   cursor.setPosition(pos, QTextCursor::MoveAnchor);
+                   cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+                   //qDebug()<<"pos : ancr"<<pos<<ancr;
+                   cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
 
                }
                //////////////////////////////////
