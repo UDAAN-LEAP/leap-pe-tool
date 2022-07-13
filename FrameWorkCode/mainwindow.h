@@ -203,7 +203,7 @@ private slots:
 
     void file_click(const QModelIndex & indx);
 
-    void LoadDocument(QFile * file, QString ext, QString name);
+    //void LoadDocument(QFile * file, QString ext, QString name);
 
     void LoadImageFromFile(QFile * file);
 
@@ -436,7 +436,11 @@ private slots:
 
     void on_actionChange_Role_triggered();
 
-    void filterHtml(QFile *f = nullptr);
+    //void filterHtml(QFile *f = nullptr);
+
+    void bboxInsertion(QFile *f = nullptr);
+
+    void finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStatus);
 
 public slots:
     void SaveFile_Backend();
@@ -444,6 +448,9 @@ public slots:
     void on_actionLoad_Next_Page_triggered();
 
     void on_actionLoad_Prev_Page_triggered();
+
+    void LoadDocument(QFile * file, QString ext, QString name);
+
 
 private:
     bool mExitStatus = false;

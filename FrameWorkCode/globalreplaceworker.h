@@ -42,9 +42,13 @@ private:
     int writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap);
     bool isStringInFile(QString file_path, QString searchString);
 
+
 public slots:
     void replaceWordsInFiles();
     void writeLogs();
+    void saveBboxInfo(QString);
+    //void filterHtml(QString);
+    void bboxInsertion(QString);
 
 signals:
     void finishedReplacingWords();

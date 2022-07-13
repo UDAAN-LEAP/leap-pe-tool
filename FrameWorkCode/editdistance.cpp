@@ -368,3 +368,101 @@ double edit_Distance :: findStringSimilarity(std::string first, std::string seco
     }
     return 1.0;
 }
+//for string similarity
+int edit_Distance ::matchPattern(std::string str1, int arLengthLeft, std::string str2, int arLengthRight)
+{
+    const char* arLeft = str1.c_str();
+    const char* arRight = str2.c_str();
+
+    int i, j, k, m;
+    int arLength = 0;
+    int arLengthLeftReset = 0;
+    int arLengthRightReset = 0;
+
+    for (i = 0; i < arLengthLeft - arLength; i++)
+    {
+        for (j = 0; j < arLengthRight - arLength; j++)
+        {
+            if (arLeft[i] == arRight[j] && arLeft[i + arLength] == arRight[j + arLength])
+            {
+                for (k = i + 1, m = j + 1; arLeft[k] == arRight[m] && k < arLengthLeft && m < arLengthRight; k++, m++);
+
+                if (k - i > arLength)
+                {
+                    arLengthLeftReset = i;
+                    arLengthRightReset = j;
+                    arLength = k - i;
+                }
+            }
+        }
+    }
+
+    if (arLength == 0) return 0;
+
+    i = (arLengthLeftReset + arLength);
+    j = (arLengthRightReset + arLength);
+
+    arLengthLeft -= i;
+    arLengthRight -= j;
+
+    int leftMatch = (arLengthLeftReset != 0 && arLengthRightReset != 0) ? matchPattern(arLeft, arLengthLeftReset, arRight, arLengthRightReset) : 0;
+    int rightMatch = (arLengthLeft != 0 && arLengthRight != 0) ? matchPattern(arLeft + i, arLengthLeft, arRight + j, arLengthRight) : 0;
+
+    return arLength + leftMatch + rightMatch;
+}
+//! This is implementation of Ratcliff/Obershelp pattern-matching algorithm
+//! it returns the similiraity index of two strings i.e., how similar or disimilar two strings are
+//! it is Sequence based algorithm
+//! Refer  https://itnext.io/string-similarity-the-basic-know-your-algorithms-guide-3de3d7346227 for more knowledge on this topic
+//! jun 19 - sadam
+int edit_Distance ::getSimilarityValue(std::string str1, std::string str2)
+{
+    int strLen1 = str1.length();
+    int strLen2 = str2.length();
+    if (strLen1 == 0 || strLen2 == 0) return 0;
+    return (matchPattern(str1, strLen1, str2, strLen2) * 200) / (strLen1 + strLen2);
+}
+
+//! This is an implementation of Sorensen-Dice algorithm to calculate similarity between two strings
+//! It is a Token based algorithm
+double edit_Distance::DiceMatch(std::string string1, std::string string2)
+{
+
+        QStringList string1_bigrams;
+        QStringList string2_bigrams;
+
+        //base case
+        if(string1.length() == 0 || string2.length() == 0)
+        {
+                return 0;
+        }
+
+        for(unsigned int i = 0; i < (string1.length() - 1); i++) {
+            string tmp = string1.substr(i, 2);
+            // extract character bigrams from string1
+            QString qstr = QString::fromStdString(tmp);
+                string1_bigrams.append(qstr);
+        }
+        for(unsigned int i = 0; i < (string2.length() - 1); i++) {      // extract character bigrams from string2
+            string tmp1 = string2.substr(i, 2);
+            QString qstr1 = QString::fromStdString(tmp1);
+                string2_bigrams.append(qstr1);
+        }
+
+        int intersection = 0;
+
+        // find the intersection between the two sets
+
+        for(QStringList::iterator IT = string2_bigrams.begin();
+            IT != string2_bigrams.end();
+            IT++)
+        {
+                intersection += string1_bigrams.count((*IT));
+        }
+
+        // calculate dice coefficient
+        int total = string1_bigrams.size() + string2_bigrams.size();
+        float dice = (float)(intersection * 2) / (float)total;
+
+        return dice;
+}

@@ -1589,7 +1589,7 @@ void MainWindow::SaveFile_GUI_Postprocessing()
     }
 
     QFile sFile(localFilename);
-
+    //restoreBbox(&sFile); //getting title tag before saving the file
     QString output = curr_browser->toHtml();
 
     if(sFile.open(QFile::WriteOnly))
@@ -1602,8 +1602,10 @@ void MainWindow::SaveFile_GUI_Postprocessing()
         sFile.flush();      //!Flushes any buffered data waiting to be written in the \a sFile
         sFile.close();      //!Closing the file
 
-        // Fixing Word breaking problem after saving file
-        filterHtml(&sFile);
+//        // Fixing Word breaking problem after saving file
+//        filterHtml(&sFile);
+        //Inserting back bbox info
+        bboxInsertion(&sFile);
     }
 
     //! Converting html output into plain text.
@@ -3884,6 +3886,7 @@ void MainWindow::on_actionBold_triggered()
         cursor.setPosition(pos, QTextCursor::MoveAnchor);
         cursor.setPosition(ancr, QTextCursor::KeepAnchor);
     }
+    //qDebug()<<"pos : ancr"<<pos<<ancr;
     bool isBold = cursor.charFormat().font().bold();
     /*
      * If the font-weight value is bold then
@@ -6192,6 +6195,29 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     QMap<QString, QString> replacementMap; // This map is used for removing duplicate entries from changedWords
     for (int i = 0; i < noOfChangedWords; i++) {
         QStringList mapping = changedWords[i].split(separat, QString::SkipEmptyParts);
+
+        // Removing source words which have more than 5 words
+        int numOfWordsInSource = 0;
+        bool lastWasSpace = true;
+        QString source = mapping[0].trimmed();
+        for (int i = 0; i < source.size(); i++) {
+            if (source[i] == ' ') {
+                if (!lastWasSpace) {
+                    numOfWordsInSource++;
+                    lastWasSpace = true;
+                }
+            } else {
+                if (source[i] != '\n')
+                    lastWasSpace = false;
+            }
+        }
+        if (!lastWasSpace)
+            numOfWordsInSource++;
+        if (numOfWordsInSource > 5) {
+            changedWords.remove(i);
+            noOfChangedWords--;
+        }
+
         if (replacementMap.find(mapping[0]) != replacementMap.end()) {
             changedWords.remove(i);
             noOfChangedWords--;
@@ -7085,7 +7111,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
     // Fixing Word Breaking problem
     f->close();
-    filterHtml(f);
+//    filterHtml(f);
     f->open(QIODevice::ReadOnly);
 
     //!Display format by setting font size and styles
@@ -7963,136 +7989,124 @@ void MainWindow:: highlight(QTextBrowser *b , QString input)
 
 void MainWindow::on_actionas_PDF_triggered()
 {
-    QPrinter printer(QPrinter::PrinterResolution);
-    QPrintDialog dialog(&printer, this);
-    dialog.setWindowTitle("Set PDF properties");
-    dialog.addEnabledOption(QAbstractPrintDialog::PrintSelection);
 
-    if(dialog.exec() != QDialog::Accepted){
-        return;
-    }
-    else{
-        //! We set the dir path to CorrectorOutput or Verifier output depending on whether it is opened
-        //! in Corrector or Verifier Mode.
-        QTextDocument *document = new QTextDocument();
-         QString currentDirAbsolutePath;
-        if(mRole=="Verifier")
+    //! We set the dir path to CorrectorOutput or Verifier output depending on whether it is opened
+    //! in Corrector or Verifier Mode.
+    QString currentDirAbsolutePath;
+    if(mRole=="Verifier")
         currentDirAbsolutePath = gDirTwoLevelUp + "/VerifierOutput/";
-        else if (mRole=="Corrector") {
-            currentDirAbsolutePath = gDirTwoLevelUp + "/CorrectorOutput/";
-        }
+    else if (mRole=="Corrector") {
+        currentDirAbsolutePath = gDirTwoLevelUp + "/CorrectorOutput/";
+    }
 
-        //! We then open this directory and set sorting preferences.
-        QDir dir(currentDirAbsolutePath);
-        dir.setSorting(QDir::SortFlag::DirsFirst | QDir::SortFlag::Name);
-        QDirIterator dirIterator(dir,QDirIterator::NoIteratorFlags);
+    //! We then open this directory and set sorting preferences.
+    QDir dir(currentDirAbsolutePath);
+    dir.setSorting(QDir::SortFlag::DirsFirst | QDir::SortFlag::Name);
+    QDirIterator dirIterator(dir,QDirIterator::NoIteratorFlags);
 
-        //! Set count of files in directory
+    //! Set count of files in directory
 
-        QString html_contents="";
-        QString mainHtml;
-        int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
-        int counter=0;
+    QString html_contents=""; // Final HTML Content
+    QString mainHtml;
+    int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
+    int counter=0;
 
-        int stIndex, startFrom = 0;
+    int stIndex, startFrom = 0;
 
-        //! Set the background of the pdf to be printed to be white
-        QString searchString = "background-color:#"; // string to be searched
-        int l = searchString.length();
-        QString whiteColor = "ffffff";
+    //! Set the background of the pdf to be printed to be white
+    QString searchString = "background-color:#"; // string to be searched
+    int l = searchString.length();
+    QString whiteColor = "ffffff";
 
-        //! Loop through all files
-        for(auto a : dir.entryList())
+    //! Loop through all files
+    for(auto a : dir.entryList())
+    {
+        QString it_file_path = a;
+        QString x=currentDirAbsolutePath+a;
+
+        startFrom = 0; // The position from which searchString will be scanned
+        //! if condition makes sure we extract only html files for PDF Processing
+        //! (folder has hocr, dict, htranslate, and other such files)
+        if(x.contains("."))
         {
-            QString it_file_path = a;
-            QString x=currentDirAbsolutePath+a;
+            QStringList html_files = x.split(QRegExp("[.]"));
 
-            startFrom = 0; // The position from which searchString will be scanned
-            //! if condition makes sure we extract only html files for PDF Processing
-            //! (folder has hocr, dict, htranslate, and other such files)
-            if(x.contains("."))
+            //! condition to check if file is html
+            if(html_files[1]=="html")
             {
-                QStringList html_files = x.split(QRegExp("[.]"));
+                QFile file(x);
+                if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
+                QTextStream stream(&file);
+                stream.setCodec("UTF-8");
 
-               //! condition to check if file is html
-                if(html_files[1]=="html")
-                {
-                    QFile file(x);
-                        if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
-                        QTextStream stream(&file);
-                        stream.setCodec("UTF-8");
+                //! Read the file
 
-                        //! Read the file
-
-                        mainHtml=stream.readAll();
-                        //! Changing the text background to white by setting the background to #fffff
-                        while (true){
-                            stIndex = mainHtml.indexOf(searchString, startFrom);
-                            if (stIndex == -1)
-                                break;
-                            stIndex += l; // increment line
-                            mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
-                            startFrom = stIndex + 6;
-                        }
-                        //! append counter when one file is fully scanned
-                        counter++;
-
-                        //! Once page html is extracted ... before we move to next page we add html tag
-                        //! for page break so that the PDF printer separates the pages
-                        //! We do this till all pages done
-                        if(counter<count){
-                            mainHtml+="<P style=\"page-break-before: always\"></P>";
-                        }
-                        file.close();
-                  html_contents.append(mainHtml);
-
+                mainHtml=stream.readAll();
+                //! Changing the text background to white by setting the background to #fffff
+                while (true){
+                    stIndex = mainHtml.indexOf(searchString, startFrom);
+                    if (stIndex == -1)
+                        break;
+                    stIndex += l; // increment line
+                    mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
+                    startFrom = stIndex + 6;
                 }
-                //! if file is not html
-                else {
-                    continue;
+                //! append counter when one file is fully scanned
+                counter++;
+
+                //! Once page html is extracted ... before we move to next page we add html tag
+                //! for page break so that the PDF printer separates the pages
+                //! We do this till all pages done
+                if(counter<count){
+                    mainHtml+="<P style=\"page-break-before: always\"></P>";
                 }
+                file.close();
+                html_contents.append(mainHtml);
+
+            }
+            //! if file is not html
+            else {
+                continue;
             }
         }
-
-        //! Perform printing of html using QPrinter
-
-        document->setHtml(html_contents);
-    //    QPrinter printer(QPrinter::PrinterResolution);
-    //    QPrintDialog dialog(&printer, this);
-    //    dialog.setWindowTitle("Set PDF properties");
-    //    dialog.addEnabledOption(QAbstractPrintDialog::PrintSelection);
-    //    //printer.setOutputFormat(QPrinter::PdfFormat);
-    //    //printer.setPaperSize(QPrinter::A4);
-    //    //printer.setPageMargins(QMarginsF(5, 5, 5, 5));
-
-    //    if(dialog.exec() != QDialog::Accepted){
-    //        return;
-    //    }
-    //    //printer.setOutputFileName(gDirTwoLevelUp+"/BookSet.pdf");//! set the output dir
-    //    document->setPageSize(printer.pageRect().size());
-    //    document->print(&printer);
-        PDFHandling *savepdf = new PDFHandling(
-                    nullptr,
-                    document,
-                    &printer,
-                    html_contents
-                    );
-
-        QThread *thread = new QThread;
-
-        connect(thread, SIGNAL(started()), savepdf, SLOT(SavePDF()));
-        connect(savepdf, SIGNAL(finishedSavingPDF()), thread, SLOT(quit()));
-        connect(savepdf, SIGNAL(finishedSavingPDF()), savepdf, SLOT(deleteLater()));
-        connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-        connect(savepdf, SIGNAL(finishedSavingPDF()), this, SLOT(stopSpinning()));
-        savepdf->moveToThread(thread);
-        thread->start();
-
-        spinner = new LoadingSpinner(this);
-        spinner->SetMessage("Saving as PDF...", "Loading...");
-        spinner->setModal(false);
-        spinner->exec();
     }
+
+//    document->setHtml(html_contents);
+    QString htmlFile = toolDirAbsolutePath + "/.html_for_pdf.html";
+
+    QFile file(htmlFile);
+    if (file.exists()) {
+        qDebug() << "Cannot Create a file for that.";
+        return;
+    }
+    if (!file.open(QIODevice::ReadWrite)) {
+        qDebug() << "Error";
+        return;
+    }
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << html_contents << endl;
+    file.flush();
+    file.close();
+
+    QString program = toolDirAbsolutePath;
+    if (QSysInfo::productType() == "windows") {
+        program += "/HtmlToPdfUtil.exe";
+    } else {
+        program += "/HtmlToPdfUtil";
+    }
+    QStringList arguments;
+    arguments << htmlFile << gDirTwoLevelUp;
+
+    QProcess *process = new QProcess(this);
+    connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &MainWindow::finishedPdfCreation);
+
+    process->start(program, arguments);
+
+    spinner = new LoadingSpinner(this);
+    spinner->SetMessage("Saving as PDF...", "Loading...");
+    spinner->setModal(false);
+    spinner->exec();
 }
 
 /*!
@@ -8128,7 +8142,7 @@ void MainWindow::on_actionLinux_triggered()
  */
 void MainWindow::on_actionWindows_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/1xcXsNU03d-1RneksUzCHRyC4jm1mBF-N/edit?usp=sharing&ouid=114703528031965332802&rtpof=true&sd=true", QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/16P1UZ2t1Dd8qhAsl2UqL5hTkrsOkBJqr/edit?usp=sharing&ouid=105473566501828143797&rtpof=true&sd=true", QUrl::TolerantMode));
 }
 
 /*!
@@ -8902,9 +8916,30 @@ void MainWindow::on_find_clicked()
 {
     QRegExp searchExpr = QRegExp(ui->lineEdit_4->text());
     searchExpr.setCaseSensitivity(Qt::CaseInsensitive);
-    ui->textEdit_dict->moveCursor(QTextCursor::Start);
-    ui->textEdit_dict->find(searchExpr, QTextDocument::FindFlags());
+    QTextCursor cursor = ui->textEdit_dict->textCursor();
+    int pos1=cursor.position();
+    //qDebug()<<pos1;
+
+    if(ui->textEdit_dict->find(searchExpr, QTextDocument::FindFlags()))
+    {
+        //ui->textEdit_dict->moveCursor(QTextCursor::EndOfWord);
+
+    }
+    else
+    {
+        if (pos1==0)
+        {
+            QMessageBox::warning(0,"Error","No such Word Found");
+            // qDebug()<<"Word Not found";
+        }
+        else
+        {
+            ui->textEdit_dict->moveCursor(QTextCursor::Start);
+            // qDebug()<<"Moving to start of FIle";
+        }
+    }
 }
+
 
 /*!
  * \brief MainWindow::on_actionPDF_Preview_triggered
@@ -8975,8 +9010,168 @@ void MainWindow::on_actionChange_Role_triggered()
     settings.endGroup();
 }
 
-void MainWindow::filterHtml(QFile *f)
-{
+//void MainWindow::filterHtml(QFile *f)
+//{
+//    QFile *file = f;
+
+//    if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
+//        qDebug() << "File not opened for reading";
+//        return;
+//    }
+
+//    QTextStream in(file);
+//    in.setCodec("UTF-8");
+//    QString text = in.readAll();
+//    file->close();
+
+//    QRegularExpression re1("(<span[^>]*>)");
+//    QRegularExpressionMatchIterator it;
+
+//    it = re1.globalMatch(text);
+
+//    int prevStringStart = -1, prevStringEnd = -1, curStringStart = -1, curStringEnd = -1;
+//    QString prevString = "", curString = "";
+//    QVector<QVector<int> > results;
+
+//    while (it.hasNext()) {
+//        QRegularExpressionMatch match = it.next();
+//        curString = match.captured(1);
+//        curStringStart = match.capturedStart(1);
+//        curStringEnd = match.capturedEnd(1);
+
+//        // Checking if a new paragraph is starting or not
+//        if (prevString != "") {
+//            QString subString = text.mid(prevStringEnd, curStringEnd - prevStringEnd);
+//            if (subString.contains("</p>")) {
+//                prevString = "";
+//            }
+//        }
+
+//        if (prevString == "") {
+//            prevString = curString;
+//            prevStringStart = curStringStart;
+//            prevStringEnd = curStringEnd;
+//        }
+//        else if (prevString == curString) {
+//            QString subs = text.mid(prevStringEnd, curStringStart - prevStringEnd);
+//            int closingIndexOfspanClosing = subs.indexOf("</span>")+QString("</span>").length();
+
+//            if ((prevStringEnd + closingIndexOfspanClosing) == curStringStart) {
+//                results.push_back({prevStringStart, prevStringEnd, curStringStart, curStringEnd});
+//            }
+
+//            prevStringStart = curStringStart;
+//            prevStringEnd = curStringEnd;
+//        }
+//    }
+
+////    for(int i = 0; i < results.size(); i++) {
+////        qDebug() << "[" << results[i][0] << "," << results[i][1] << "," << results[i][2] << "," << results[i][3] << "]";
+////    }
+
+////    QFile file("/home/ajit/Internship/temp.html"); //opening temp1 file, where we will store data //temporarily
+//    if (!file->open(QFile::WriteOnly)) {
+//        qDebug() << "File not opened for writing";
+//        return;
+//    }
+//    QTextStream out(file);
+//    out.setCodec("UTF-8");
+
+//    int index = 0, flag = 0, flag_test = 0;
+//    int ite = 0, value_prev = 0;
+
+//    while(flag_test == 0 && index < text.size()) {
+//        QList<int> list_;
+
+//        for(int x = value_prev; x < results.size(); x++) {
+//            if(x < results.size() - 1) {
+//                if(results[x][2] == results[x+1][0]) {
+//                    int sizeList = list_.size();
+//                    if(sizeList == 0 || list_[sizeList - 1] != results[x][2]) {
+//                        list_.append(results[x][2]);
+//                    }
+//                    list_.append(results[x][3]);
+//                    list_.append(results[x+1][2]);
+//                }
+//                else {
+//                    int sizeList = list_.size();
+//                    if(sizeList == 0)
+//                        list_.append(results[x][2]);
+//                    list_.append(results[x][3]);
+//                    value_prev = x+1;
+//                    break;
+//                }
+//            }
+//            else {
+//                list_.append(results[x][2]);
+//                list_.append(results[x][3]);
+//                value_prev = x+1;
+//                break;
+//            }
+//        }
+
+//        for(int tmp = 0; tmp < list_.size(); tmp++) {
+//            if(tmp == 0) {
+//                while(index < list_[tmp]-7){
+//                    QChar s = text.at(index);
+//                    out << s;
+//                    index++;
+//                }
+//            }
+//            else {
+//                index = list_[tmp];
+//                if(tmp < list_.size() - 1)
+//                    tmp++;
+//                while(index < list_[tmp]-7) {
+//                    QChar s = text.at(index);
+//                    out << s;
+//                    index++;
+//                }
+//            }
+//        }
+
+////        qDebug() << "results.size() =" << results.size() << " | value_prev =" << value_prev;
+
+//        if(value_prev >= results.size()) {
+//            flag_test = 1;
+//        }
+//    }
+//    while(index < text.size()) {
+//        QChar s = text.at(index);
+//        out << s;
+//        index++;
+//    }
+//    file->close();
+//}
+
+//!This function stores bbox information of file before saving the changes
+//! It traverses html file & extracts "title" attribute from every tag and puts it in titleList.
+/*QStringList titleList; //shared between next two functions
+void MainWindow::restoreBbox(QFile *f){
+    QFile *file = f;
+
+    if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "File not opened for reading";
+        return;
+    }
+    titleList.clear();
+    QTextStream in(file);
+    in.setCodec("UTF-8");
+    QString text = in.readAll();
+    file->close();
+    QRegularExpression rex("(title=\"[^>]*\")");
+    QRegularExpressionMatchIterator itr;
+    itr = rex.globalMatch(text);
+    while (itr.hasNext()) {
+        QRegularExpressionMatch match = itr.next();
+        QString ex = match.captured(1);
+        titleList.append(ex);
+    }
+    //qDebug()<<"titleList="<<titleList;
+}*/
+
+//this function then re-introduces bbox's to saved file
+void MainWindow::bboxInsertion(QFile *f){
     QFile *file = f;
 
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -8989,128 +9184,153 @@ void MainWindow::filterHtml(QFile *f)
     QString text = in.readAll();
     file->close();
 
-    QRegularExpression re1("(<span[^>]*>)");
-    QRegularExpressionMatchIterator it;
+    QRegularExpression rex("<p(.*?)</p>",QRegularExpression::DotMatchesEverythingOption);
+    QRegularExpression rex_("<span(.*?)</span>",QRegularExpression::DotMatchesEverythingOption);
 
-    it = re1.globalMatch(text);
+    QRegularExpression rex2("(<p[^>]*>|<span[^>]*>)");
 
-    int prevStringStart = -1, prevStringEnd = -1, curStringStart = -1, curStringEnd = -1;
-    QString prevString = "", curString = "";
-    QVector<QVector<int> > results;
-
-    while (it.hasNext()) {
-        QRegularExpressionMatch match = it.next();
-        curString = match.captured(1);
-        curStringStart = match.capturedStart(1);
-        curStringEnd = match.capturedEnd(1);
-
-        // Checking if a new paragraph is starting or not
-        if (prevString != "") {
-            QString subString = text.mid(prevStringEnd, curStringEnd - prevStringEnd);
-            if (subString.contains("</p>")) {
-                prevString = "";
-            }
+    QString bboxf = currentTabPageName;
+    QFile bbox_file(gDirTwoLevelUp + "/CorrectorOutput/"+bboxf.replace(".html", ".bbox"));
+    if(bbox_file.exists())
+    {
+        QRegularExpressionMatchIterator itr,itr_;
+        itr = rex.globalMatch(text);
+        itr_ = rex_.globalMatch(text);
+        if (!bbox_file.open(QIODevice::ReadOnly)) {
+            qDebug() << "Unable to open bbox_file!";
+            return;
         }
 
-        if (prevString == "") {
-            prevString = curString;
-            prevStringStart = curStringStart;
-            prevStringEnd = curStringEnd;
-        }
-        else if (prevString == curString) {
-            QString subs = text.mid(prevStringEnd, curStringStart - prevStringEnd);
-            int closingIndexOfspanClosing = subs.indexOf("</span>")+QString("</span>").length();
+        QDataStream in_ (&bbox_file);
+        in_.setVersion(QDataStream::Qt_5_3);
+        //QDataStream out (&bbox_file);
+        //out.setVersion(QDataStream::Qt_5_3);
+        QMap<QString,QString> coordinates;
 
-            if ((prevStringEnd + closingIndexOfspanClosing) == curStringStart) {
-                results.push_back({prevStringStart, prevStringEnd, curStringStart, curStringEnd});
-            }
+        in_ >> coordinates;
+        bbox_file.close();
+        QString bbox_coordinates;
+        QStringList bbox_list,bbox_list_;
+        QMap<QString, QString>::iterator ci;
+        edit_Distance edit;
+        //qDebug()<<"in_ : map="<<in_<<":"<<coordinates;
+        QRegularExpression rex3("(<[^>]*>|[^>]*>)");
+        while (itr.hasNext())
+        {
+            QRegularExpressionMatch match = itr.next();
+            QString ex = match.captured(1);
 
-            prevStringStart = curStringStart;
-            prevStringEnd = curStringEnd;
-        }
-    }
-
-//    for(int i = 0; i < results.size(); i++) {
-//        qDebug() << "[" << results[i][0] << "," << results[i][1] << "," << results[i][2] << "," << results[i][3] << "]";
-//    }
-
-//    QFile file("/home/ajit/Internship/temp.html"); //opening temp1 file, where we will store data //temporarily
-    if (!file->open(QFile::WriteOnly)) {
-        qDebug() << "File not opened for writing";
-        return;
-    }
-    QTextStream out(file);
-    out.setCodec("UTF-8");
-
-    int index = 0, flag = 0, flag_test = 0;
-    int ite = 0, value_prev = 0;
-
-    while(flag_test == 0 && index < text.size()) {
-        QList<int> list_;
-
-        for(int x = value_prev; x < results.size(); x++) {
-            if(x < results.size() - 1) {
-                if(results[x][2] == results[x+1][0]) {
-                    int sizeList = list_.size();
-                    if(sizeList == 0 || list_[sizeList - 1] != results[x][2]) {
-                        list_.append(results[x][2]);
-                    }
-                    list_.append(results[x][3]);
-                    list_.append(results[x+1][2]);
-                }
-                else {
-                    int sizeList = list_.size();
-                    if(sizeList == 0)
-                        list_.append(results[x][2]);
-                    list_.append(results[x][3]);
-                    value_prev = x+1;
-                    break;
+            ex.remove(rex3);//ex.remove("</p>");ex.remove("</span>");
+            //qDebug()<<"text now = "<<ex;
+            double max = 0;
+            for(ci = coordinates.begin(); ci!=coordinates.end(); ++ci)
+            {
+                double similarity = edit.getSimilarityValue(ex.toStdString(), ci.value().toStdString());
+                if(similarity>max)
+                {
+                    bbox_coordinates = ci.key();
+                    max = similarity;
                 }
             }
-            else {
-                list_.append(results[x][2]);
-                list_.append(results[x][3]);
-                value_prev = x+1;
-                break;
-            }
+            bbox_coordinates.remove("\">");
+            if(bbox_coordinates != "")
+            bbox_list.append(bbox_coordinates);
         }
+        //itr_ is for span tags
+        while (itr_.hasNext())
+        {
+            QRegularExpressionMatch match_ = itr_.next();
+            QString ex_ = match_.captured(1);
+            ex_.remove(rex3);//ex_.remove("</p>");ex_.remove("</span>");
+            //qDebug()<<"for spans text = "<<ex_;
+            double max = 0;
+            for(ci = coordinates.begin(); ci!=coordinates.end(); ++ci)
+            {
+                double similarity = edit.DiceMatch(ex_.toStdString(), ci.value().toStdString());
 
-        for(int tmp = 0; tmp < list_.size(); tmp++) {
-            if(tmp == 0) {
-                while(index < list_[tmp]-7){
-                    QChar s = text.at(index);
-                    out << s;
-                    index++;
+                //qDebug()<<"| matching above with ::"<<ci.value()<<" Similarity = "<<similarity;
+                // qDebug()<<"similarity="<<;
+                if(similarity>max)
+                {
+                    bbox_coordinates = ci.key();
+                    max = similarity;
                 }
             }
-            else {
-                index = list_[tmp];
-                if(tmp < list_.size() - 1)
-                    tmp++;
-                while(index < list_[tmp]-7) {
-                    QChar s = text.at(index);
-                    out << s;
-                    index++;
-                }
+           // qDebug() <<"max similarity is = "<<max;
+            bbox_coordinates.remove("\">");
+            if(bbox_coordinates != "")
+            bbox_list_.append(bbox_coordinates);
+        }
+        //now just insert the bbox coordinates into the file saved
+        QRegularExpressionMatchIterator itr2;
+        itr2 = rex2.globalMatch(text,0);
+        int i=0,j=0;
+        //qDebug()<<"bbox_list="<<bbox_list;
+        if(bbox_list.size() == 0 && bbox_list_.size() == 0){
+            return;
+        }
+        while (itr2.hasNext()) {
+            QRegularExpressionMatch match2 = itr2.next();
+            QString ex = match2.captured(1);
+            int endIndex = match2.capturedEnd(1);
+            if((ex[1] == "p" || ex[1] == "P") && i<bbox_list.size()){
+                endIndex = endIndex-1;
+                text.insert(endIndex," title=\""+bbox_list[i]+"\"");//index+1
+                i++;
             }
-        }
+            else if((ex[1] == "s" || ex[1] == "S") && j<bbox_list_.size()){
+                endIndex = endIndex-1;
+                text.insert(endIndex," title=\""+bbox_list_[j]+"\"");
+                j++;
+            }
 
-//        qDebug() << "results.size() =" << results.size() << " | value_prev =" << value_prev;
+            itr2 = rex2.globalMatch(text,endIndex+1);
 
-        if(value_prev >= results.size()) {
-            flag_test = 1;
         }
+        if(file->open(QFile::WriteOnly))
+        {
+            QTextStream out2(file);
+            out2.setCodec("UTF-8");          //!Sets the codec for this stream
+            //text = "<style> body{ width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; } </style>" + text;     //Formatting the output using CSS <style> tag
+            out2 << text;
+            file->flush();      //!Flushes any buffered data waiting to be written in the \a sFile
+            file->close();      //!Closing the file
+        }
+    bbox_list.clear();bbox_list_.clear();
     }
-    while(index < text.size()) {
-        QChar s = text.at(index);
-        out << s;
-        index++;
-    }
-    file->close();
-    //tempFile.remove(); //removing original file
-    //QFile::rename("temp1.html","temp.html"); //renaming temporary file to original
+
 }
 
+void MainWindow::finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStatus)
+{
+    QString msg, title;
+
+    if (exitCode == 0) {
+        qDebug() << "PDF created Successfully";
+        title = "Success";
+        msg = "PDF created Successfully";
+    } else if (exitCode == -1 || exitCode == 255) {
+        qDebug() << "User cancelled PDF creation";
+        title = "Cancelled";
+        msg = "PDF creation cancelled";
+    } else {
+        qDebug() << "PDF creation failed";
+        title = "Error";
+        msg = "Error in creating PDF";
+    }
+    QFile file(toolDirAbsolutePath + "/.html_for_pdf.html");
+    if (file.exists()) {
+        file.remove();
+    }
+    stopSpinning();
+
+    qDebug() << "Exit code is " << QString::number(exitCode);
+    if (title != "Error") {
+        QMessageBox::information(this, title, msg, QMessageBox::Ok, QMessageBox::Ok);
+    } else {
+        QMessageBox::warning(this, title, msg, QMessageBox::Ok, QMessageBox::Ok);
+    }
+}
 
 
 

@@ -16,6 +16,7 @@
 #include <QString>
 #include <string>
 #include <QMessageBox>
+#include <globalreplaceworker.h>
 
 using namespace std;
 extern string toslp1(string s);
@@ -58,6 +59,7 @@ TextFinder* TextFinder::openFindAndReplace(QWidget *parent) {
  */
 void TextFinder::on_findNextButton_clicked()
 {
+    QString searchstr = ui->findLineEdit->text();
     QRegExp searchExpr = QRegExp(ui->findLineEdit->text());
     QTextBrowser *curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();   //getCurrentBrowser() returns the current QTextBrower
     if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
@@ -73,10 +75,45 @@ void TextFinder::on_findNextButton_clicked()
     {
 //        curr_browser->moveCursor(QTextCursor::Start);                              //Moves the cursor to start of text
 //        curr_browser->find(searchExpr, QTextDocument::FindFlags());
-        ((MainWindow *)(parent()))->on_actionLoad_Next_Page_triggered();
+//        ((MainWindow *)(parent()))->on_actionLoad_Next_Page_triggered();
+//        curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
+//        curr_browser->moveCursor(QTextCursor::Start);
+//        curr_browser->find(searchExpr, QTextDocument::FindFlags());
+
+        QString currentFileDirectory = gDirTwoLevelUp + "/" + gCurrentDirName;
+        QDir dir(currentFileDirectory);
+        QStringList nameFilter;
+        nameFilter << "*.html";
+        QFileInfoList list = dir.entryInfoList(nameFilter, QDir::NoDotAndDotDot | QDir::Files);
+        QString path;
+        QFileInfo fileInfo;
+        QString temp1 = currentFileDirectory + "/" + gCurrentPageName;
+        int index = list.indexOf(temp1,0);
+        qDebug()<<index;
+        int i;
+        i = (index == (list.count()-1)) ? 0 : index+1 ;
+        for (i ; i < list.size(); ++i)
+        {
+            fileInfo = list.at(i);
+            path = fileInfo.filePath();
+
+            if(stringCheck(path,searchstr)){
+                gCurrentPageName = fileInfo.fileName();
+                break;
+            }
+            if(i == (list.size() - 1)){
+                i=0;
+            }
+
+        }
+        QString suff = fileInfo.completeSuffix();
+        QFile *f = new QFile(path);
+        QString filename(fileInfo.fileName());
+        ((MainWindow *)(parent()))->LoadDocument(f,suff,filename);
         curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
-        curr_browser->moveCursor(QTextCursor::Start);
+        curr_browser->moveCursor(QTextCursor::Start);                        //Moves the cursor to the end of text
         curr_browser->find(searchExpr, QTextDocument::FindFlags());
+
     }
 }
 
@@ -87,6 +124,7 @@ void TextFinder::on_findNextButton_clicked()
  */
 void TextFinder::on_findPreviousButton_clicked()
 {
+    QString searchstr = ui->findLineEdit->text();
     QRegExp searchExpr = QRegExp(ui->findLineEdit->text());
     QTextBrowser *curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
     if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
@@ -100,10 +138,44 @@ void TextFinder::on_findPreviousButton_clicked()
     if(!curr_browser->find(searchExpr, QTextDocument::FindBackward))
     {
        // curr_browser->find(searchExpr, QTextDocument::FindBackward);
-        ((MainWindow *)(parent()))->on_actionLoad_Prev_Page_triggered();
+       //((MainWindow *)(parent()))->on_actionLoad_Prev_Page_triggered();
+       //curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
+       //curr_browser->moveCursor(QTextCursor::End);                        //Moves the cursor to the end of text
+       //curr_browser->find(searchExpr, QTextDocument::FindBackward);
+
+        QString currentFileDirectory = gDirTwoLevelUp + "/" + gCurrentDirName;
+        QDir dir(currentFileDirectory);
+        QStringList nameFilter;
+        nameFilter << "*.html";
+        QFileInfoList list = dir.entryInfoList(nameFilter, QDir::NoDotAndDotDot | QDir::Files);
+        QString path;
+        QFileInfo fileInfo;
+        QString temp1 = currentFileDirectory + "/" + gCurrentPageName;
+        int index = list.indexOf(temp1,0);
+        int i;
+        i = (index == 0) ? (list.count()-1) : index-1 ;
+
+        for (i ; i >= 0; --i)
+        {
+            fileInfo = list.at(i);
+            path = fileInfo.filePath();
+            if(stringCheck(path,searchstr)){
+                gCurrentPageName = fileInfo.fileName();
+                break;
+            }
+            if(i == 0){
+                i=(list.size());
+            }
+        }
+        QString suff = fileInfo.completeSuffix();
+        QFile *f = new QFile(path);
+        QString filename(fileInfo.fileName());
+        ((MainWindow *)(parent()))->LoadDocument(f,suff,filename);
         curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
         curr_browser->moveCursor(QTextCursor::End);                        //Moves the cursor to the end of text
         curr_browser->find(searchExpr, QTextDocument::FindBackward);
+
+
     }
 
 }
@@ -172,6 +244,8 @@ void TextFinder::on_replaceAllButton_clicked()
           if(suff == "html")
             {
               //!Get the file string
+               GlobalReplaceWorker grw;
+               grw.saveBboxInfo(it_file_path); //to save bbox information
                QFile *f = new QFile(it_file_path);
                f->open(QIODevice::ReadOnly);
                QTextStream in(f);
@@ -182,8 +256,8 @@ void TextFinder::on_replaceAllButton_clicked()
                //!Replacing Words
                string str = replaceString.toStdString();
                QString::fromStdString(str).toUtf8();
-               QString replacementString1 = "<span style = \"background-color:#ADD8E6;\">" + QString::fromStdString(str) + "</span>";
-
+               //QString replacementString1 = "<span style = \"background-color:#ADD8E6;\">" + QString::fromStdString(str) + "</span>";
+               QString replacementString1 =QString::fromStdString(str);
                string str2 = ui->findLineEdit->text().toStdString();
                QString::fromStdString(str2).toUtf8();
                QString temp2 = "(\\b)" + ui->findLineEdit->text() + "(\\b)";
@@ -193,11 +267,92 @@ void TextFinder::on_replaceAllButton_clicked()
                    findWord.setCaseSensitivity(Qt::CaseSensitive);
                else
                    findWord.setCaseSensitivity(Qt::CaseInsensitive);
+               //replace words on text instead of html files
 
+               QTextBrowser * browser = new QTextBrowser();
+               browser->setReadOnly(false);
+               QFont font("Shobhika-Regular");
+               font.setWeight(16);
+               font.setPointSize(16);
+               font.setFamily("Shobhika");
+               browser->setFont(font);
+               browser->setHtml(s1);
+               //input = browser->toPlainText();
+               //input.replace(findWord, replacementString1);
+
+               while(browser->find(findWord))
+               {
+                   QTextCursor cursor = browser->textCursor(); //get the cursor
+                   QTextCharFormat fmt;
+                   int pos = cursor.position(); //get the cursor position
+                   int ancr = pos - replaceString.size() + 1; //anchor is now cursor position - length of old word to be replaced
+                   //qDebug()<<"pos : ancr"<<pos<<ancr;
+                   if (pos < ancr) {
+                       cursor.setPosition(pos, QTextCursor::MoveAnchor);
+                       cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+                   }
+                   fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
+
+                   browser->textCursor().insertHtml("<span style = \"background-color:#ADD8E6;\">" +replacementString1+ "</span>");
+
+                   cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
+
+                   pos = cursor.position();
+                   ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
+                   cursor.setPosition(pos, QTextCursor::MoveAnchor);
+                   cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+                   //qDebug()<<"pos : ancr"<<pos<<ancr;
+                   cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
+
+               }
+               //////////////////////////////////
+               /*QString fileTmp = gDirTwoLevelUp + "/globalReplace1.txt";
+               QFile f5(fileTmp);
+
+               istringstream iss(input.toUtf8().constData());
+               string strHtml = "<html><body><p>";
+               string line;
+
+               f5.open(QIODevice::WriteOnly);
+               QTextStream in5(&f5);
+               in5.setCodec("UTF-8");
+
+               int index = 0;
+               in5 << "<html><body><p>";
+               while(index < input.size()) {
+                   QChar s = input.at(index);
+                   if((s == "\n") || (s == "\r")){
+                       in5 << s;    //for html view
+                       in5 <<  "</p><p>";
+                   }
+                   else
+                       in5 <<  s;
+                   index++;
+               }
+               in5 << "</p></body></html>";
+               f5.flush();
+               f5.close();
+               f5.open(QIODevice::ReadOnly);
+               QTextStream in6(&f5);
+               QString qstrHtml = in6.readAll();
+               f5.close();
+               qstrHtml.replace("<br /></p>", "</p>");
+
+               QFont font("Shobhika-Regular");
+               font.setWeight(16);
+               font.setPointSize(16);
+               font.setFamily("Shobhika");
+               browser->setFont(font);
+               browser->setHtml(qstrHtml);*/
+               s1 = browser->toHtml();
+               //s1.replace(replacementString1,"<span style = \"background-color:#ADD8E6;\">"+replacementString1+"</span>");
+               /////////////////////////////////////////////////////////////////////////////
                f->open(QIODevice::WriteOnly);
-               s1.replace(findWord, replacementString1);
+               //s1.replace(findWord, replacementString1);
                f->write(s1.toUtf8());
                f->close();
+               //grw.filterHtml(it_file_path); //filter html file
+               grw.bboxInsertion(it_file_path); //insert back bbox info
             }
       }
 
@@ -280,4 +435,22 @@ bool TextFinder::eventFilter(QObject *watched, QEvent *event)
         }
     }
     return QDialog::eventFilter(watched, event);
+}
+
+
+bool TextFinder::stringCheck(QString path, QString searchstr)
+{
+    qDebug()<<"1111111";
+    QFile *f = new QFile(path);
+    f->open(QIODevice::ReadOnly);
+    QTextStream in(f);
+    in.setCodec("UTF-8");
+    QString s1 = in.readAll();
+    f->close();
+    if(s1.contains(searchstr))
+    { qDebug()<<"2222";
+        return true;
+    }
+    else
+        return false;
 }

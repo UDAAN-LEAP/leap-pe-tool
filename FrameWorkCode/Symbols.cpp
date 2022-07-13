@@ -49,8 +49,11 @@ SymbolsView::SymbolsView(QWidget *parent) : QDialog(parent, Qt::WindowCloseButto
 );
 
 
-    ui->SpecialCharacters->setText(
-    "(¶  ¦  Ȝ  ȝ  —  –  ‑  °  ·  † ‡ § ऽ ❀ ✿ ✽ ꕥ 💮 ");
+
+
+    ui->SpecialCharacters->setText(R"(¶  ¦  Ȝ  ȝ  —  –  ‑  °  ·  † ‡ § ऽ ❀ ✿ ✽ ꕥ 💮
+A᳒  B᳒  C᳒  D᳒  E᳒  F᳒  G᳒  H᳒  I᳒  J᳒  K᳒  L᳒  M᳒  N᳒  O᳒  P᳒  Q᳒  R᳒  S᳒  T᳒  U᳒  V᳒  W᳒  X᳒  Y᳒  Z᳒
+A᳙  B᳙  C᳙  D᳙  E᳙  F᳙  G᳙  H᳙  I᳙  J᳙  K᳙  L᳙  M᳙  N᳙  O᳙  P᳙  Q᳙  R᳙  S᳙  T᳙  U᳙  V᳙  W᳙  X᳙  Y᳙  Z᳙ )");
     setWindowTitle("Special Symbols");
     ui->Diacritics->setText(
                 R"(A
