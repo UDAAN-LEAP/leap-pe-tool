@@ -5033,8 +5033,33 @@ void MainWindow::on_actionSymbols_triggered()
  */
 void MainWindow::on_actionZoom_In_triggered()
 {
-    if (z)
-        z->gentle_zoom(z->getDefaultZoomInFactor());
+//    if (z)
+//        z->gentle_zoom(z->getDefaultZoomInFactor());
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    /*
+     * charFormat returns the format of the character before the position
+     * So, we interchange the ancr and position
+    */
+//    int pos = cursor.position();
+//    int ancr = cursor.anchor();
+//    if (pos < ancr) {
+//        cursor.setPosition(pos, QTextCursor::MoveAnchor);
+//        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+//    }
+    //qDebug()<<"pos : ancr"<<pos<<ancr;
+    qreal fontSize = cursor.charFormat().fontPointSize();
+    if(fontSize == 0){
+        fontSize = 16;
+    }
+    //qDebug()<<"Font size returned is:"<<fontSize;
+    /*
+     * Increase the font size by 1
+    */
+    QTextCharFormat fmt;
+    fmt.setFontPointSize(fontSize+1);
+    cursor.mergeCharFormat(fmt);
 }
 
 /*!
@@ -5043,8 +5068,34 @@ void MainWindow::on_actionZoom_In_triggered()
  */
 void MainWindow::on_actionZoom_Out_triggered()
 {
-    if (z)
-        z->gentle_zoom(z->getDefaultZoomOutFactor());
+//    if (z)
+//        z->gentle_zoom(z->getDefaultZoomOutFactor());
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    /*
+     * charFormat returns the format of the character before the position
+     * So, we interchange the ancr and position
+    */
+//    int pos = cursor.position();
+//    int ancr = cursor.anchor();
+//    if (pos < ancr) {
+//        cursor.setPosition(pos, QTextCursor::MoveAnchor);
+//        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+//    }
+    //qDebug()<<"pos : ancr"<<pos<<ancr;
+    qreal fontSize = cursor.charFormat().fontPointSize();
+    if(fontSize == 0){
+        fontSize = 16;
+    }
+    //qDebug()<<"Font size returned is:"<<fontSize;
+    /*
+     *decrease the font size by 1
+    */
+    QTextCharFormat fmt;
+    fmt.setFontPointSize(fontSize - 1);
+    cursor.mergeCharFormat(fmt);
+    //curr_browser->mergeCurrentCharFormat(fmt);
 }
 
 /*!
