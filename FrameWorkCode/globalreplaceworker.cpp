@@ -554,6 +554,8 @@ void GlobalReplaceWorker::bboxInsertion(QString f){
     QRegularExpression rex2("(<p[^>]*>|<span[^>]*>)");
     QString fBbox = f;
     fBbox.replace(".html",".bbox");
+    fBbox.replace("CorrectorOutput","bboxf");
+    qDebug()<<"file = "<<fBbox;
     QFile bbox_file(fBbox);
     if(bbox_file.exists())
     {
