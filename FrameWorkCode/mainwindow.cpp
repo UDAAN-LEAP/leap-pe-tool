@@ -151,6 +151,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->lineEditSearch->addAction(search_1, QLineEdit::LeadingPosition);
     ui->lineEdit_4->setPlaceholderText("Search");
     ui->lineEdit_4->addAction(search_1, QLineEdit::LeadingPosition);
+    ui->lineEdit->setReadOnly(true);
+    ui->lineEdit_2->setReadOnly(true);
+    ui->lineEdit_3->setReadOnly(true);
 
     QString password  = "";
     QString passwordFilePath = QDir::currentPath() + "/pass.txt";
