@@ -5955,10 +5955,22 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
 
     int replaced = 0, tot_replaced = 0;
 
+    //create new text browser for html files(such that replacement works on text instead of html)
+    QTextBrowser * browser = new QTextBrowser();
+    browser->setReadOnly(false);
+
+    QFont font("Shobhika-Regular");
+    font.setWeight(16);
+    font.setPointSize(16);
+    font.setFamily("Shobhika");
+    browser->setFont(font);
+    browser->setHtml(s1);
+
     //!Replacing words by iterating the map
     for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
     {
-        QString pattern = ("(\\b)")+grmIterator.key()+("(\\b)"); // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
+        QString grmItrKey = grmIterator.key();
+        QString pattern = ("(\\b)")+grmItrKey.trimmed()+("(\\b)"); // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
         QRegExp re(pattern);
         QString replacementString = re.cap(1) + grmIterator.value() + re.cap(2); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
         //   if(!mapOfReplacements.contains(grmIterator.key()))
@@ -5966,13 +5978,45 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
         QString::fromStdString(str).toUtf8();
         QString replacementString1 = QString::fromStdString(str).trimmed();
         mapOfReplacements[grmIterator.key()] = grmIterator.value().trimmed();
-        s1.replace(re, replacementString1);
-        replaced = s1.count(replacementString1);
-        tot_replaced = tot_replaced + replaced;
+
+        browser->moveCursor(QTextCursor::Start);
+        while(browser->find(re))
+        {
+            QTextCursor cursor = browser->textCursor(); //get the cursor
+            QTextCharFormat fmt;
+            int pos = cursor.position(); //get the cursor position
+            int ancr = pos - replacementString.size() + 1; //anchor is now cursor position - length of old word to be replaced
+            //qDebug()<<"pos : ancr"<<pos<<ancr;
+            if (pos < ancr) {
+                cursor.setPosition(pos, QTextCursor::MoveAnchor);
+                cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+            }
+            fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
+            browser->textCursor().insertText(replacementString1);
+            cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
+
+            pos = cursor.position();
+            ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
+            cursor.setPosition(pos, QTextCursor::MoveAnchor);
+            cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+            //qDebug()<<"pos : ancr"<<pos<<ancr;
+            cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
+
+            tot_replaced = tot_replaced + 1;
+        }
+//qDebug()<<"word ="<<grmIterator.key()+":"+replacementString1;
+//        s1.replace(re, replacementString1);
+//        replaced = s1.count(replacementString1);
+//        tot_replaced = tot_replaced + replaced;
     }
 
+    s1 = browser->toHtml();
     in << s1;
+    //f->flush();
     f->close();
+    browser->close();
+    GlobalReplaceWorker grw;
+    grw.bboxInsertion(file_path);
     return tot_replaced;
 }
 
@@ -7357,7 +7401,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     }
     QString htmlFile = gDirTwoLevelUp + "/CorrectorOutput/"+currentTabPageName;
     QFile gfile(htmlFile.replace(".bbox", ".html"));
-    qDebug()  << "Current page name: " << gfile.fileName();
+    //qDebug()  << "Current page name: " << gfile.fileName();
     gfile.open(QIODevice::ReadOnly | QFile::Text);
     QTextStream in(&gfile);
     QString initial = in.readAll();
@@ -8413,8 +8457,8 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
                 if(r1 > 0)
                 files++;
              }
-             else
-                writeGlobalCPairsToFiles(itFile, undoGRMap);
+//             else
+//                writeGlobalCPairsToFiles(itFile, undoGRMap);
         }
 
         QDir directory(gDirTwoLevelUp);
@@ -8535,6 +8579,7 @@ bool MainWindow::undoGlobalReplace_Single_Word(QString oldWord, QString newWord)
 */
 QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<QString, QString> GRMap)
 {
+
     QMap<QString, QString> undoGRMap;
     UndoGlobalReplace ugrWindow(GRMap, this);
 
@@ -8543,8 +8588,7 @@ QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<Q
 
     if ( ugrWindow.on_applyButton_clicked() )
         undoGRMap = ugrWindow.getFinalUndoMap();
-
-    return undoGRMap;
+    return GRMap;
 }
 
 /*!

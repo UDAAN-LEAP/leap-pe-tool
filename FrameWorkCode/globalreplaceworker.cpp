@@ -555,7 +555,7 @@ void GlobalReplaceWorker::bboxInsertion(QString f){
     QString fBbox = f;
     fBbox.replace(".html",".bbox");
     fBbox.replace("CorrectorOutput","bboxf");
-    qDebug()<<"file = "<<fBbox;
+    //qDebug()<<"file = "<<fBbox;
     QFile bbox_file(fBbox);
     if(bbox_file.exists())
     {
