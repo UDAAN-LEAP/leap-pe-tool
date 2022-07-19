@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'undoglobalreplace.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.8
+** Created by: Qt User Interface Compiler version 5.15.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -75,8 +75,8 @@ public:
 
     void retranslateUi(QDialog *UndoGlobalReplace)
     {
-        UndoGlobalReplace->setWindowTitle(QApplication::translate("UndoGlobalReplace", "Dialog", nullptr));
-        applyButton->setText(QApplication::translate("UndoGlobalReplace", "Undo Changes", nullptr));
+        UndoGlobalReplace->setWindowTitle(QCoreApplication::translate("UndoGlobalReplace", "Dialog", nullptr));
+        applyButton->setText(QCoreApplication::translate("UndoGlobalReplace", "Undo Changes", nullptr));
     } // retranslateUi
 
 };

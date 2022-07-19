@@ -363,6 +363,14 @@ void GlobalReplaceWorker::saveBboxInfo(QString htmlFile){
     gfile.close();
     QString bboxfile = gfile.fileName();
     bboxfile = bboxfile.replace(".html", ".bbox");
+
+
+    if(!QDir(gDirTwoLevelUp+"/bboxf").exists())
+            QDir().mkdir(gDirTwoLevelUp+"/bboxf");
+
+        bboxfile=bboxfile.replace("CorrectorOutput","bboxf");
+
+
     QFile bbox_file(bboxfile);
     if(initial.contains("bbox") && !bbox_file.exists())
       {

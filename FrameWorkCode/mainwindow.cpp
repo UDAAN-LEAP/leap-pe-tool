@@ -5182,7 +5182,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     //! Tooltip documentation
     markRegion objectMarkRegion;
     QString bboxf = currentTabPageName;
-    QFile bbox_file(gDirTwoLevelUp + "/CorrectorOutput/"+bboxf.replace(".html", ".bbox"));
+    QFile bbox_file(gDirTwoLevelUp + "/bboxf/"+bboxf.replace(".html", ".bbox"));
     //! When user moves his mouse the system will ask user to download new update.
 
     if(event->type() == QEvent::MouseButtonPress)
@@ -7363,6 +7363,12 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     QString initial = in.readAll();
     QString bboxfile = gfile.fileName();
     bboxfile = bboxfile.replace(".html", ".bbox");
+
+    if(!QDir(gDirTwoLevelUp+"/bboxf").exists())
+            QDir().mkdir(gDirTwoLevelUp+"/bboxf");
+
+        bboxfile=bboxfile.replace("CorrectorOutput","bboxf");
+
     QFile bbox_file(bboxfile);
     if(initial.contains("bbox") && !bbox_file.exists())
       {
@@ -9263,7 +9269,7 @@ void MainWindow::bboxInsertion(QFile *f){
     QRegularExpression rex2("(<p[^>]*>|<span[^>]*>)");
 
     QString bboxf = currentTabPageName;
-    QFile bbox_file(gDirTwoLevelUp + "/CorrectorOutput/"+bboxf.replace(".html", ".bbox"));
+    QFile bbox_file(gDirTwoLevelUp + "/bboxf/"+bboxf.replace(".html", ".bbox"));
     if(bbox_file.exists())
     {
         QRegularExpressionMatchIterator itr,itr_;
