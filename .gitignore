@@ -14,6 +14,7 @@
 *.o
 qpadfinal
 FrameWorkCode/.qtc_clangd/
+FrameWorkCode/application_log.txt
 
 # Build results
 [Dd]ebug/
