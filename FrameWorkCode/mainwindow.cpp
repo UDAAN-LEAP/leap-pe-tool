@@ -8222,6 +8222,9 @@ void MainWindow::on_actionas_PDF_triggered()
     arguments << htmlFile << gDirTwoLevelUp;
 
     QProcess *process = new QProcess(this);
+    mPrintPdfProcess = process;
+    process->setWorkingDirectory(toolDirAbsolutePath);
+    connect(process, &QProcess::readyReadStandardOutput, this, &MainWindow::readOutputFromPdfPrint);
     connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &MainWindow::finishedPdfCreation);
 
     process->start(program, arguments);
@@ -9432,7 +9435,7 @@ void MainWindow::finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStat
         qDebug() << "PDF created Successfully";
         title = "Success";
         msg = "PDF created Successfully";
-    } else if (exitCode == -1 || exitCode == 255) {
+    } else if (exitCode == -1 || exitCode == 255 || exitCode == 9) {
         qDebug() << "User cancelled PDF creation";
         title = "Cancelled";
         msg = "PDF creation cancelled";
@@ -9441,17 +9444,50 @@ void MainWindow::finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStat
         title = "Error";
         msg = "Error in creating PDF";
     }
+
+    // Closing the dialog box shown after the PDF dialog box is ready
+    tempMsgBox->close();
+
     QFile file(toolDirAbsolutePath + "/.html_for_pdf.html");
     if (file.exists()) {
         file.remove();
     }
-    stopSpinning();
+//    stopSpinning();
 
     qDebug() << "Exit code is " << QString::number(exitCode);
     if (title != "Error") {
         QMessageBox::information(this, title, msg, QMessageBox::Ok, QMessageBox::Ok);
     } else {
         QMessageBox::warning(this, title, msg, QMessageBox::Ok, QMessageBox::Ok);
+    }
+}
+
+void MainWindow::pdfPrintIsReady()
+{
+    stopSpinning();
+    QString title = "Wait";
+    QString msg = "Print PDF dialog box is opened.\nDeal with it OR if you want to close it, click the close button";
+    QMessageBox msgBox(this);
+    tempMsgBox = &msgBox;
+    msgBox.setWindowTitle(title);
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setInformativeText(msg);
+    QPushButton *closeButton = msgBox.addButton("Close", QMessageBox::AcceptRole);
+    msgBox.exec();
+
+    if (msgBox.clickedButton() == closeButton) {
+        // close the print dialog box
+        mPrintPdfProcess->close();
+    }
+}
+
+void MainWindow::readOutputFromPdfPrint()
+{
+    qDebug() << "Reading data";
+    QByteArray data = mPrintPdfProcess->readAllStandardOutput();
+    qDebug() << QString(data);
+    if (QString(data) == "Ready\n") {
+        pdfPrintIsReady();
     }
 }
 
