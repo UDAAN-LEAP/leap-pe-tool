@@ -9483,9 +9483,13 @@ void MainWindow::pdfPrintIsReady()
 
 void MainWindow::readOutputFromPdfPrint()
 {
-    qDebug() << "Reading data";
     QByteArray data = mPrintPdfProcess->readAllStandardOutput();
-    qDebug() << QString(data);
+    QString checkString;
+#ifdef Q_OS_WIN
+    checkString = "Ready\r\n";
+#else
+    checkString = "Ready\n";
+#endif
     if (QString(data) == "Ready\n") {
         pdfPrintIsReady();
     }
