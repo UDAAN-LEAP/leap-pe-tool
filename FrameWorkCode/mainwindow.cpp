@@ -567,6 +567,34 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
     slpNPatternDict slnp;
     trieEditDis trie;
 
+    // to make sure the right menu click is not taking place outside of the tabWidget_2
+    QRect tabRect = ui->tabWidget_2->frameGeometry();
+
+        QPoint topLeftPoint = tabRect.topLeft();
+        QPoint botRightPoint = tabRect.bottomRight();
+
+        int topLeftx = topLeftPoint.x();
+        int topLefty = topLeftPoint.y();
+        int h =tabRect.height();
+        int botRightx = botRightPoint.x();
+        int botRighty = botRightPoint.y();
+
+//        qDebug()<<topLeftx<<","<<topLefty<<"\n";
+//        qDebug()<<botRightx<<","<<botRighty<<"\n";
+
+
+        QPoint point = ev->pos();
+        int px = point.x();
+        int py = point.y();
+
+//        qDebug()<<px<<","<<py<<"\n";
+
+        if(!(px>=topLeftx && px<=botRightx &&  py>=topLefty && py<(botRighty))) return;
+    //
+
+
+
+
     if (curr_browser)
     {
         curr_browser->cursorForPosition(ev->pos());
