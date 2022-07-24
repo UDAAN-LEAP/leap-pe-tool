@@ -1234,13 +1234,9 @@ QMenu::item:selected{
     <addaction name="menuRecent_Project"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
-    <addaction name="actionSpell_Check"/>
     <addaction name="actionLoad_Next_Page"/>
     <addaction name="actionLoad_Prev_Page"/>
     <addaction name="separator"/>
-    <addaction name="actionToDevanagari"/>
-    <addaction name="actionToSlp1"/>
-    <addaction name="actionLoadGDocPage"/>
     <addaction name="actionSugg"/>
    </widget>
    <widget class="QMenu" name="menuTool">
@@ -1248,7 +1244,7 @@ QMenu::item:selected{
      <string notr="true">font-size: 17px;</string>
     </property>
     <property name="title">
-     <string>Tool</string>
+     <string>Tools</string>
     </property>
     <addaction name="actionUpload"/>
     <addaction name="actionLoadData"/>
@@ -1257,6 +1253,11 @@ QMenu::item:selected{
     <addaction name="actionLoadDomain"/>
     <addaction name="actionLoadSubPS"/>
     <addaction name="actionLoadConfusions"/>
+    <addaction name="separator"/>
+    <addaction name="actionSpell_Check"/>
+    <addaction name="actionToDevanagari"/>
+    <addaction name="actionToSlp1"/>
+    <addaction name="actionLoadGDocPage"/>
    </widget>
    <addaction name="menuOCR_Correction_Window"/>
    <addaction name="menuEdit"/>

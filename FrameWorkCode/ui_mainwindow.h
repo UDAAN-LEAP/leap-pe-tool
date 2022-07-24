@@ -1439,13 +1439,9 @@ public:
         menuOCR_Correction_Window->addAction(menuRecent_Project->menuAction());
         menuOCR_Correction_Window->addAction(actionSave);
         menuOCR_Correction_Window->addAction(actionSave_As);
-        menuOCR_Correction_Window->addAction(actionSpell_Check);
         menuOCR_Correction_Window->addAction(actionLoad_Next_Page);
         menuOCR_Correction_Window->addAction(actionLoad_Prev_Page);
         menuOCR_Correction_Window->addSeparator();
-        menuOCR_Correction_Window->addAction(actionToDevanagari);
-        menuOCR_Correction_Window->addAction(actionToSlp1);
-        menuOCR_Correction_Window->addAction(actionLoadGDocPage);
         menuOCR_Correction_Window->addAction(actionSugg);
         menuRecent_Project->addAction(action1);
         menuRecent_Project->addAction(action2);
@@ -1457,6 +1453,11 @@ public:
         menuTool->addAction(actionLoadDomain);
         menuTool->addAction(actionLoadSubPS);
         menuTool->addAction(actionLoadConfusions);
+        menuTool->addSeparator();
+        menuTool->addAction(actionSpell_Check);
+        menuTool->addAction(actionToDevanagari);
+        menuTool->addAction(actionToSlp1);
+        menuTool->addAction(actionLoadGDocPage);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen_Project);
         mainToolBar->addAction(actionSave);
@@ -1747,7 +1748,7 @@ public:
         menuSelectLanguage->setTitle(QCoreApplication::translate("MainWindow", "Language", nullptr));
         menuOCR_Correction_Window->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
         menuRecent_Project->setTitle(QCoreApplication::translate("MainWindow", "Recent Project", nullptr));
-        menuTool->setTitle(QCoreApplication::translate("MainWindow", "Tool", nullptr));
+        menuTool->setTitle(QCoreApplication::translate("MainWindow", "Tools", nullptr));
     } // retranslateUi
 
 };
