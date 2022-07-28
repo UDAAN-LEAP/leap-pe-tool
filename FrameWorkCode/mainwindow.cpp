@@ -647,10 +647,14 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             clipboard_menu->addSeparator();
             act = new QAction(s3,clipboard_menu);
             clipboard_menu->addAction(act);
+            QAction* gsearch;
+            gsearch = new QAction("Search over google",popup_menu);
             popup_menu->insertSeparator(popup_menu->actions()[0]);
             popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
+            popup_menu->addAction(gsearch);
 
             connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
+            connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
             popup_menu->exec(ev->globalPos());
             popup_menu->close(); popup_menu->clear();
             qDebug ()<<"right click";
@@ -9524,7 +9528,12 @@ void MainWindow::readOutputFromPdfPrint()
 }
 
 
-
+void MainWindow::SearchOnGoogle()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    QString str = cursor.selectedText();
+    QDesktopServices::openUrl(QUrl("https://www.google.com/search?q="+str, QUrl::TolerantMode));
+}
 
 
 

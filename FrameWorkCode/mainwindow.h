@@ -442,6 +442,8 @@ private slots:
 
     void finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStatus);
 
+    void SearchOnGoogle();
+
 public slots:
     void SaveFile_Backend();
 
