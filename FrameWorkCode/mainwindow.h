@@ -444,6 +444,8 @@ private slots:
 
     void SearchOnGoogle();
 
+    void GoogleTranslation();
+
 public slots:
     void SaveFile_Backend();
 

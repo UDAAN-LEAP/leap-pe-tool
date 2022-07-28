@@ -649,12 +649,16 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             clipboard_menu->addAction(act);
             QAction* gsearch;
             gsearch = new QAction("Search over google",popup_menu);
+            QAction* gtrans;
+            gtrans = new QAction("Google translate",popup_menu);
             popup_menu->insertSeparator(popup_menu->actions()[0]);
             popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
             popup_menu->addAction(gsearch);
+            popup_menu->addAction(gtrans);
 
             connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
             connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
+            connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
             popup_menu->exec(ev->globalPos());
             popup_menu->close(); popup_menu->clear();
             qDebug ()<<"right click";
@@ -9535,6 +9539,14 @@ void MainWindow::SearchOnGoogle()
     QDesktopServices::openUrl(QUrl("https://www.google.com/search?q="+str, QUrl::TolerantMode));
 }
 
+
+
+void MainWindow::GoogleTranslation()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    QString str = cursor.selectedText();
+    QDesktopServices::openUrl(QUrl("https://translate.google.co.in/?sl=auto&tl=en&text=" +str+ "&op=translate", QUrl::TolerantMode));
+}
 
 
 
