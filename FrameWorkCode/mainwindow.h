@@ -62,6 +62,12 @@ class MainWindow : public QMainWindow
 signals:
     void closeSignal();
 
+	void projectChanged(const QString &);
+
+    void currentFileChanged(const QString &, bool, QTextDocument *);
+
+	void timerTimeout(QTextDocument *);
+
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -446,6 +452,10 @@ private slots:
 
     void GoogleTranslation();
 
+	void handle_cursorPositionChanged();
+
+	void trackWords_timeout();
+
 public slots:
     void SaveFile_Backend();
 
@@ -492,6 +502,8 @@ private:
     QString toolDirAbsolutePath; // This path is the absolute path of this tool
     QProcess *mPrintPdfProcess;
     QMessageBox *tempMsgBox;
+	QTimer *trackWordsTimer; // Timer for tracking the curr_browser words after a specific time
+	QTextDocument *docForTrackingWords;
 };
 
 #endif // MAINWINDOW_H

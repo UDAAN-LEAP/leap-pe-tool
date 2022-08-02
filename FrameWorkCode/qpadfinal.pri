@@ -37,6 +37,7 @@ HEADERS += ./Filters.h \
     $$PWD/shortcutguidedialog.h \
     $$PWD/textfinder.h \
     $$PWD/globalreplacedialog.h \
+	$$PWD/trackchanges.h \
     $$PWD/ui_shortcutguidedialog.h \
     $$PWD/undoglobalreplace.h \
 	$$PWD/verifyset.h \
@@ -116,6 +117,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/slpNPatternDict.cpp \
     $$PWD/textfinder.cpp \
     $$PWD/globalreplacedialog.cpp \
+	$$PWD/trackchanges.cpp \
     $$PWD/trieEditdis.cpp \
     $$PWD/undoglobalreplace.cpp \
 	$$PWD/verifyset.cpp \

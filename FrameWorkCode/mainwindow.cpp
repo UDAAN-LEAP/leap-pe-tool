@@ -78,6 +78,9 @@
 #include "loaddataworker.h"
 #include "globalreplaceworker.h"
 #include "pdfhandling.h"
+#include "trackchanges.h"
+
+#define TRACKER_TIMEOUT 2000
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -290,6 +293,39 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionSymbols->setEnabled(false);
     ui->actionZoom_In->setEnabled(false);
     ui->actionZoom_Out->setEnabled(false);
+
+	// Initialize the timer
+	trackWordsTimer = new QTimer(this);
+
+    // Run another thread for tracking words
+    TrackChanges *trackChangesWorker = new TrackChanges(nullptr);
+    QThread *thread = new QThread;
+
+	connect(trackWordsTimer, SIGNAL(timeout()), this, SLOT(trackWords_timeout()));
+
+	connect(this, SIGNAL(timerTimeout(QTextDocument*)), trackChangesWorker, SLOT(handleTimeOut(QTextDocument*)));
+	connect(this, SIGNAL(projectChanged(QString)), trackChangesWorker, SLOT(projectChanged(QString)));
+    connect(this, SIGNAL(currentFileChanged(QString,bool,QTextDocument*)), trackChangesWorker, SLOT(currentPageChanged(QString,bool,QTextDocument*)));
+
+    connect(trackChangesWorker, SIGNAL(finished()), thread, SLOT(quit()));
+    connect(trackChangesWorker, SIGNAL(finished()), trackChangesWorker, SLOT(deleteLater()));
+    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+    connect(trackChangesWorker, SIGNAL(finished()), this, SLOT(completedTracking()));
+
+	trackChangesWorker->moveToThread(thread);
+    thread->start();
+}
+
+void MainWindow::handle_cursorPositionChanged()
+{
+    QTextCursor cur = curr_browser->textCursor();
+	qDebug() << "Current pos of cur: " << QString::number(cur.position());
+}
+
+void MainWindow::trackWords_timeout()
+{
+	docForTrackingWords = curr_browser->document();
+	emit timerTimeout(docForTrackingWords);
 }
 
 /*!
@@ -1312,6 +1348,10 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         QMessageBox::warning(0, "Project Error", "Couldn't open project. Please check your project.");
         return;
     }
+
+	// Emitting signal to TrackChanges
+	emit projectChanged(ProjFile);
+
      AddRecentProjects();//to load recent project without restarting app
      //--for last opened page--//
      QSettings settings("IIT-B", "OpenOCRCorrect");
@@ -7344,6 +7384,20 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     gInitialTextHtml[currentTabPageName] = b->toHtml();
 
     f->close();
+
+	// Tracking Words
+	if (trackWordsTimer->isActive()) {
+		trackWordsTimer->stop();
+	}
+
+	bool isCurrentFileWritable = true;
+	if (curr_browser->isReadOnly())
+		isCurrentFileWritable = false;
+
+	trackWords_timeout();
+	trackWordsTimer->start(TRACKER_TIMEOUT);
+    emit currentFileChanged(finfo.dir().dirName(), isCurrentFileWritable, curr_browser->document());
+
 
     QString imageFilePath = mProject.GetDir().absolutePath()+"/Images/" + gCurrentPageName;
 
