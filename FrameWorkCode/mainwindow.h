@@ -48,6 +48,16 @@
 #include "globalreplacepreview.h"
 #include<markRegion.h>
 
+
+#include<QCompleter>
+#include<QDirModel>
+#include <QStringListModel>
+#include <QModelIndex>
+#include <QAbstractItemModel>
+#include <QScrollBar>
+
+#include"newtextbrowser.h"
+
 //#include <set>
 using namespace std;
 
@@ -459,6 +469,10 @@ public slots:
 
     void readOutputFromPdfPrint();
 
+    void insertCompletion(const QString &completion);
+
+    void focusInEvent(QFocusEvent *e) ;
+
 private:
     bool mExitStatus = false;
     QString mRole;
@@ -492,6 +506,15 @@ private:
     QString toolDirAbsolutePath; // This path is the absolute path of this tool
     QProcess *mPrintPdfProcess;
     QMessageBox *tempMsgBox;
+
+
+    newTextBrowser *TextBrowser;
+
+    void createMenu();
+    QAbstractItemModel *modelFromFile(const QString& fileName);
+    QString textUnderCursor();
+
+    QCompleter *c = nullptr;
 };
 
 #endif // MAINWINDOW_H

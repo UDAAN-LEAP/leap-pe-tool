@@ -78,6 +78,7 @@
 #include "loaddataworker.h"
 #include "globalreplaceworker.h"
 #include "pdfhandling.h"
+#include "newtextbrowser.h"
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -290,6 +291,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionSymbols->setEnabled(false);
     ui->actionZoom_In->setEnabled(false);
     ui->actionZoom_Out->setEnabled(false);
+
+
+
+    TextBrowser = new newTextBrowser;
+
+    ui->setupUi(this);
+    //this->setCentralWidget(TextBrowser);
+    //resize(500, 300);
+
+    c = new QCompleter(TextBrowser);
+
+    c->setModel(modelFromFile(":/textFiles/TextFiles/english.txt"));
+    c->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
+    c->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->tabWidget_2->addTab(TextBrowser,"newTab");
+    TextBrowser->setCompleter(c);
 }
 
 /*!
