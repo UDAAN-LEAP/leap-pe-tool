@@ -9526,7 +9526,7 @@ void MainWindow::readOutputFromPdfPrint()
 #else
     checkString = "Ready\n";
 #endif
-    if (QString(data) == "Ready\n") {
+    if (QString(data) == checkString) {
         pdfPrintIsReady();
     }
 }
