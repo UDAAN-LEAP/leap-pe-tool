@@ -151,6 +151,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->lineEditSearch->addAction(search_1, QLineEdit::LeadingPosition);
     ui->lineEdit_4->setPlaceholderText("Search");
     ui->lineEdit_4->addAction(search_1, QLineEdit::LeadingPosition);
+    ui->lineEdit->setReadOnly(true);
+    ui->lineEdit_2->setReadOnly(true);
+    ui->lineEdit_3->setReadOnly(true);
 
     QString password  = "";
     QString passwordFilePath = QDir::currentPath() + "/pass.txt";
@@ -564,6 +567,34 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
     slpNPatternDict slnp;
     trieEditDis trie;
 
+    // to make sure the right menu click is not taking place outside of the tabWidget_2
+    QRect tabRect = ui->tabWidget_2->frameGeometry();
+
+        QPoint topLeftPoint = tabRect.topLeft();
+        QPoint botRightPoint = tabRect.bottomRight();
+
+        int topLeftx = topLeftPoint.x();
+        int topLefty = topLeftPoint.y();
+        int h =tabRect.height();
+        int botRightx = botRightPoint.x();
+        int botRighty = botRightPoint.y();
+
+//        qDebug()<<topLeftx<<","<<topLefty<<"\n";
+//        qDebug()<<botRightx<<","<<botRighty<<"\n";
+
+
+        QPoint point = ev->pos();
+        int px = point.x();
+        int py = point.y();
+
+//        qDebug()<<px<<","<<py<<"\n";
+
+        if(!(px>=topLeftx && px<=botRightx &&  py>=topLefty && py<(botRighty))) return;
+    //
+
+
+
+
     if (curr_browser)
     {
         curr_browser->cursorForPosition(ev->pos());
@@ -578,6 +609,25 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             QMenu* clipboard_menu;
             clipboard_menu = new QMenu("clipboard", this);
             clipboard_menu->setStyleSheet("height: 6em; width: 10em; overflow: hidden; white-space: nowrap; color: black; background-color: white;");
+            QString menuStyle(
+                        "QMenu::item{"
+                        "background-color: rgb(255,255,255);"
+                        "color: rgb(0,0,0);"
+                        "}"
+
+                        "QMenu::item:selected{"
+                        "background-color: rgb(0, 85, 127);"
+                        "color: rgb(255, 255, 255);"
+                        "}"
+                        "QMenu::item:disabled{"
+                        "background-color: rgb(255, 255, 255);"
+                        "color: rgb(128, 128, 128);"
+                        "}"
+
+                        );
+            popup_menu->setStyleSheet(menuStyle);
+            clipboard_menu->setStyleSheet(menuStyle);
+
             //QFont font("Shobhika-Regular");
             //font.setWeight(16);
             //font.setPointSize(16);
@@ -597,10 +647,18 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             clipboard_menu->addSeparator();
             act = new QAction(s3,clipboard_menu);
             clipboard_menu->addAction(act);
+            QAction* gsearch;
+            gsearch = new QAction("Search over google",popup_menu);
+            QAction* gtrans;
+            gtrans = new QAction("Google translate",popup_menu);
             popup_menu->insertSeparator(popup_menu->actions()[0]);
             popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
+            popup_menu->addAction(gsearch);
+            popup_menu->addAction(gtrans);
 
             connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
+            connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
+            connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
             popup_menu->exec(ev->globalPos());
             popup_menu->close(); popup_menu->clear();
             qDebug ()<<"right click";
@@ -5014,8 +5072,33 @@ void MainWindow::on_actionSymbols_triggered()
  */
 void MainWindow::on_actionZoom_In_triggered()
 {
-    if (z)
-        z->gentle_zoom(z->getDefaultZoomInFactor());
+//    if (z)
+//        z->gentle_zoom(z->getDefaultZoomInFactor());
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    /*
+     * charFormat returns the format of the character before the position
+     * So, we interchange the ancr and position
+    */
+//    int pos = cursor.position();
+//    int ancr = cursor.anchor();
+//    if (pos < ancr) {
+//        cursor.setPosition(pos, QTextCursor::MoveAnchor);
+//        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+//    }
+    //qDebug()<<"pos : ancr"<<pos<<ancr;
+    qreal fontSize = cursor.charFormat().fontPointSize();
+    if(fontSize == 0){
+        fontSize = 16;
+    }
+    //qDebug()<<"Font size returned is:"<<fontSize;
+    /*
+     * Increase the font size by 1
+    */
+    QTextCharFormat fmt;
+    fmt.setFontPointSize(fontSize+1);
+    cursor.mergeCharFormat(fmt);
 }
 
 /*!
@@ -5024,8 +5107,34 @@ void MainWindow::on_actionZoom_In_triggered()
  */
 void MainWindow::on_actionZoom_Out_triggered()
 {
-    if (z)
-        z->gentle_zoom(z->getDefaultZoomOutFactor());
+//    if (z)
+//        z->gentle_zoom(z->getDefaultZoomOutFactor());
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    /*
+     * charFormat returns the format of the character before the position
+     * So, we interchange the ancr and position
+    */
+//    int pos = cursor.position();
+//    int ancr = cursor.anchor();
+//    if (pos < ancr) {
+//        cursor.setPosition(pos, QTextCursor::MoveAnchor);
+//        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+//    }
+    //qDebug()<<"pos : ancr"<<pos<<ancr;
+    qreal fontSize = cursor.charFormat().fontPointSize();
+    if(fontSize == 0){
+        fontSize = 16;
+    }
+    //qDebug()<<"Font size returned is:"<<fontSize;
+    /*
+     *decrease the font size by 1
+    */
+    QTextCharFormat fmt;
+    fmt.setFontPointSize(fontSize - 1);
+    cursor.mergeCharFormat(fmt);
+    //curr_browser->mergeCurrentCharFormat(fmt);
 }
 
 /*!
@@ -5109,7 +5218,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     //! Tooltip documentation
     markRegion objectMarkRegion;
     QString bboxf = currentTabPageName;
-    QFile bbox_file(gDirTwoLevelUp + "/CorrectorOutput/"+bboxf.replace(".html", ".bbox"));
+    QFile bbox_file(gDirTwoLevelUp + "/bboxf/"+bboxf.replace(".html", ".bbox"));
     //! When user moves his mouse the system will ask user to download new update.
 
     if(event->type() == QEvent::MouseButtonPress)
@@ -5882,10 +5991,22 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
 
     int replaced = 0, tot_replaced = 0;
 
+    //create new text browser for html files(such that replacement works on text instead of html)
+    QTextBrowser * browser = new QTextBrowser();
+    browser->setReadOnly(false);
+
+    QFont font("Shobhika-Regular");
+    font.setWeight(16);
+    font.setPointSize(16);
+    font.setFamily("Shobhika");
+    browser->setFont(font);
+    browser->setHtml(s1);
+
     //!Replacing words by iterating the map
     for (grmIterator = globalReplacementMap.begin(); grmIterator != globalReplacementMap.end(); ++grmIterator)
     {
-        QString pattern = ("(\\b)")+grmIterator.key()+("(\\b)"); // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
+        QString grmItrKey = grmIterator.key();
+        QString pattern = ("(\\b)")+grmItrKey.trimmed()+("(\\b)"); // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
         QRegExp re(pattern);
         QString replacementString = re.cap(1) + grmIterator.value() + re.cap(2); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
         //   if(!mapOfReplacements.contains(grmIterator.key()))
@@ -5893,13 +6014,45 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
         QString::fromStdString(str).toUtf8();
         QString replacementString1 = QString::fromStdString(str).trimmed();
         mapOfReplacements[grmIterator.key()] = grmIterator.value().trimmed();
-        s1.replace(re, replacementString1);
-        replaced = s1.count(replacementString1);
-        tot_replaced = tot_replaced + replaced;
+
+        browser->moveCursor(QTextCursor::Start);
+        while(browser->find(re))
+        {
+            QTextCursor cursor = browser->textCursor(); //get the cursor
+            QTextCharFormat fmt;
+            int pos = cursor.position(); //get the cursor position
+            int ancr = pos - replacementString.size() + 1; //anchor is now cursor position - length of old word to be replaced
+            //qDebug()<<"pos : ancr"<<pos<<ancr;
+            if (pos < ancr) {
+                cursor.setPosition(pos, QTextCursor::MoveAnchor);
+                cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+            }
+            fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
+            browser->textCursor().insertText(replacementString1);
+            cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
+
+            pos = cursor.position();
+            ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
+            cursor.setPosition(pos, QTextCursor::MoveAnchor);
+            cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+            //qDebug()<<"pos : ancr"<<pos<<ancr;
+            cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
+
+            tot_replaced = tot_replaced + 1;
+        }
+//qDebug()<<"word ="<<grmIterator.key()+":"+replacementString1;
+//        s1.replace(re, replacementString1);
+//        replaced = s1.count(replacementString1);
+//        tot_replaced = tot_replaced + replaced;
     }
 
+    s1 = browser->toHtml();
     in << s1;
+    //f->flush();
     f->close();
+    browser->close();
+    GlobalReplaceWorker grw;
+    grw.bboxInsertion(file_path);
     return tot_replaced;
 }
 
@@ -7284,12 +7437,18 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     }
     QString htmlFile = gDirTwoLevelUp + "/CorrectorOutput/"+currentTabPageName;
     QFile gfile(htmlFile.replace(".bbox", ".html"));
-    qDebug()  << "Current page name: " << gfile.fileName();
+    //qDebug()  << "Current page name: " << gfile.fileName();
     gfile.open(QIODevice::ReadOnly | QFile::Text);
     QTextStream in(&gfile);
     QString initial = in.readAll();
     QString bboxfile = gfile.fileName();
     bboxfile = bboxfile.replace(".html", ".bbox");
+
+    if(!QDir(gDirTwoLevelUp+"/bboxf").exists())
+            QDir().mkdir(gDirTwoLevelUp+"/bboxf");
+
+        bboxfile=bboxfile.replace("CorrectorOutput","bboxf");
+
     QFile bbox_file(bboxfile);
     if(initial.contains("bbox") && !bbox_file.exists())
       {
@@ -8099,6 +8258,9 @@ void MainWindow::on_actionas_PDF_triggered()
     arguments << htmlFile << gDirTwoLevelUp;
 
     QProcess *process = new QProcess(this);
+    mPrintPdfProcess = process;
+    process->setWorkingDirectory(toolDirAbsolutePath);
+    connect(process, &QProcess::readyReadStandardOutput, this, &MainWindow::readOutputFromPdfPrint);
     connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &MainWindow::finishedPdfCreation);
 
     process->start(program, arguments);
@@ -8334,8 +8496,8 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
                 if(r1 > 0)
                 files++;
              }
-             else
-                writeGlobalCPairsToFiles(itFile, undoGRMap);
+//             else
+//                writeGlobalCPairsToFiles(itFile, undoGRMap);
         }
 
         QDir directory(gDirTwoLevelUp);
@@ -8456,6 +8618,7 @@ bool MainWindow::undoGlobalReplace_Single_Word(QString oldWord, QString newWord)
 */
 QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<QString, QString> GRMap)
 {
+
     QMap<QString, QString> undoGRMap;
     UndoGlobalReplace ugrWindow(GRMap, this);
 
@@ -8464,8 +8627,7 @@ QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<Q
 
     if ( ugrWindow.on_applyButton_clicked() )
         undoGRMap = ugrWindow.getFinalUndoMap();
-
-    return undoGRMap;
+    return GRMap;
 }
 
 /*!
@@ -9190,7 +9352,7 @@ void MainWindow::bboxInsertion(QFile *f){
     QRegularExpression rex2("(<p[^>]*>|<span[^>]*>)");
 
     QString bboxf = currentTabPageName;
-    QFile bbox_file(gDirTwoLevelUp + "/CorrectorOutput/"+bboxf.replace(".html", ".bbox"));
+    QFile bbox_file(gDirTwoLevelUp + "/bboxf/"+bboxf.replace(".html", ".bbox"));
     if(bbox_file.exists())
     {
         QRegularExpressionMatchIterator itr,itr_;
@@ -9309,7 +9471,7 @@ void MainWindow::finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStat
         qDebug() << "PDF created Successfully";
         title = "Success";
         msg = "PDF created Successfully";
-    } else if (exitCode == -1 || exitCode == 255) {
+    } else if (exitCode == -1 || exitCode == 255 || exitCode == 9) {
         qDebug() << "User cancelled PDF creation";
         title = "Cancelled";
         msg = "PDF creation cancelled";
@@ -9318,11 +9480,15 @@ void MainWindow::finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStat
         title = "Error";
         msg = "Error in creating PDF";
     }
+
+    // Closing the dialog box shown after the PDF dialog box is ready
+    tempMsgBox->close();
+
     QFile file(toolDirAbsolutePath + "/.html_for_pdf.html");
     if (file.exists()) {
         file.remove();
     }
-    stopSpinning();
+//    stopSpinning();
 
     qDebug() << "Exit code is " << QString::number(exitCode);
     if (title != "Error") {
@@ -9332,9 +9498,55 @@ void MainWindow::finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStat
     }
 }
 
+void MainWindow::pdfPrintIsReady()
+{
+    stopSpinning();
+    QString title = "Wait";
+    QString msg = "Print PDF dialog box is opened.\nDeal with it OR if you want to close it, click the close button";
+    QMessageBox msgBox(this);
+    tempMsgBox = &msgBox;
+    msgBox.setWindowTitle(title);
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setInformativeText(msg);
+    QPushButton *closeButton = msgBox.addButton("Close", QMessageBox::AcceptRole);
+    msgBox.exec();
+
+    if (msgBox.clickedButton() == closeButton) {
+        // close the print dialog box
+        mPrintPdfProcess->close();
+    }
+}
+
+void MainWindow::readOutputFromPdfPrint()
+{
+    QByteArray data = mPrintPdfProcess->readAllStandardOutput();
+    QString checkString;
+#ifdef Q_OS_WIN
+    checkString = "Ready\r\n";
+#else
+    checkString = "Ready\n";
+#endif
+    if (QString(data) == checkString) {
+        pdfPrintIsReady();
+    }
+}
+
+
+void MainWindow::SearchOnGoogle()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    QString str = cursor.selectedText();
+    QDesktopServices::openUrl(QUrl("https://www.google.com/search?q="+str, QUrl::TolerantMode));
+}
 
 
 
+void MainWindow::GoogleTranslation()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    QString str = cursor.selectedText();
+    QDesktopServices::openUrl(QUrl("https://translate.google.co.in/?sl=auto&tl=en&text=" +str+ "&op=translate", QUrl::TolerantMode));
+}
 
 
 

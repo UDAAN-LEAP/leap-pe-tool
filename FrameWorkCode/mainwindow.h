@@ -442,6 +442,10 @@ private slots:
 
     void finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStatus);
 
+    void SearchOnGoogle();
+
+    void GoogleTranslation();
+
 public slots:
     void SaveFile_Backend();
 
@@ -451,6 +455,9 @@ public slots:
 
     void LoadDocument(QFile * file, QString ext, QString name);
 
+    void pdfPrintIsReady();
+
+    void readOutputFromPdfPrint();
 
 private:
     bool mExitStatus = false;
@@ -483,6 +490,8 @@ private:
     LoadingSpinner *spinner;
     ProgressBarDialog *progressBarDialog;
     QString toolDirAbsolutePath; // This path is the absolute path of this tool
+    QProcess *mPrintPdfProcess;
+    QMessageBox *tempMsgBox;
 };
 
 #endif // MAINWINDOW_H

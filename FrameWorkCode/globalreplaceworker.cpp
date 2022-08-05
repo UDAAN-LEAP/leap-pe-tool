@@ -363,6 +363,14 @@ void GlobalReplaceWorker::saveBboxInfo(QString htmlFile){
     gfile.close();
     QString bboxfile = gfile.fileName();
     bboxfile = bboxfile.replace(".html", ".bbox");
+
+
+    if(!QDir(gDirTwoLevelUp+"/bboxf").exists())
+            QDir().mkdir(gDirTwoLevelUp+"/bboxf");
+
+        bboxfile=bboxfile.replace("CorrectorOutput","bboxf");
+
+
     QFile bbox_file(bboxfile);
     if(initial.contains("bbox") && !bbox_file.exists())
       {
@@ -546,6 +554,8 @@ void GlobalReplaceWorker::bboxInsertion(QString f){
     QRegularExpression rex2("(<p[^>]*>|<span[^>]*>)");
     QString fBbox = f;
     fBbox.replace(".html",".bbox");
+    fBbox.replace("CorrectorOutput","bboxf");
+    //qDebug()<<"file = "<<fBbox;
     QFile bbox_file(fBbox);
     if(bbox_file.exists())
     {

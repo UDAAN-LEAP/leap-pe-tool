@@ -12,8 +12,10 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 *.o
+*.dll
 qpadfinal
 FrameWorkCode/.qtc_clangd/
+FrameWorkCode/application_log.txt
 
 # Build results
 [Dd]ebug/

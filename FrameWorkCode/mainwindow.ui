@@ -1119,9 +1119,7 @@ QMenu::item:selected{
      <addaction name="actionRemove_Row"/>
     </widget>
     <addaction name="actionAllFontProperties"/>
-    <addaction name="actionBold"/>
     <addaction name="actionUnBold"/>
-    <addaction name="actionItalic"/>
     <addaction name="actionHighlight"/>
     <addaction name="separator"/>
     <addaction name="actionLeftAlign"/>
@@ -1157,11 +1155,11 @@ QMenu::item:selected{
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
+    <addaction name="actionBold"/>
+    <addaction name="actionItalic"/>
     <addaction name="actionFind_and_Replace"/>
     <addaction name="separator"/>
     <addaction name="actionUndo_Global_Replace"/>
-    <addaction name="actionUpload"/>
-    <addaction name="actionChange_Role"/>
    </widget>
    <widget class="QMenu" name="menuDownload">
     <property name="styleSheet">
@@ -1194,6 +1192,7 @@ QMenu::item:selected{
     <addaction name="actionTutorial"/>
     <addaction name="actionShortcut_Guide"/>
     <addaction name="actionCheck_for_Updates"/>
+    <addaction name="actionChange_Role"/>
    </widget>
    <widget class="QMenu" name="menuSelectLanguage">
     <property name="styleSheet">
@@ -1235,23 +1234,34 @@ QMenu::item:selected{
     <addaction name="menuRecent_Project"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
-    <addaction name="actionSpell_Check"/>
     <addaction name="actionLoad_Next_Page"/>
     <addaction name="actionLoad_Prev_Page"/>
     <addaction name="separator"/>
-    <addaction name="actionToDevanagari"/>
-    <addaction name="actionToSlp1"/>
-    <addaction name="actionLoadGDocPage"/>
+    <addaction name="actionSugg"/>
+   </widget>
+   <widget class="QMenu" name="menuTool">
+    <property name="styleSheet">
+     <string notr="true">font-size: 17px;</string>
+    </property>
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionUpload"/>
     <addaction name="actionLoadData"/>
     <addaction name="actionLoadDict"/>
     <addaction name="actionLoadOCRWords"/>
     <addaction name="actionLoadDomain"/>
     <addaction name="actionLoadSubPS"/>
     <addaction name="actionLoadConfusions"/>
-    <addaction name="actionSugg"/>
+    <addaction name="separator"/>
+    <addaction name="actionSpell_Check"/>
+    <addaction name="actionToDevanagari"/>
+    <addaction name="actionToSlp1"/>
+    <addaction name="actionLoadGDocPage"/>
    </widget>
    <addaction name="menuOCR_Correction_Window"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuTool"/>
    <addaction name="menuSelectLanguage"/>
    <addaction name="menuCreateReports"/>
    <addaction name="menuFontAndLayout"/>
