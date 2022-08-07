@@ -5269,68 +5269,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
       }
     edit_Distance edit;
 
-    //! When the user clicks any mouse button, a bbox file is being created storing some coodinates values.
-    if(event->type() == QEvent::MouseButtonPress && object->parent() == curr_browser)
-    {
-        if(curr_browser!= NULL)
-        {
-            if(bbox_file.exists())
-            {
-                QTextCursor cursor = curr_browser->textCursor();
-                cursor.select(QTextCursor::BlockUnderCursor);
-                //qDebug() << "Cursor Selected Text is:" << cursor.selectedText().trimmed();
-                bbox_file.open(QIODevice::ReadWrite);
-                QDataStream in (&bbox_file);
-                in.setVersion(QDataStream::Qt_5_3);
-                QDataStream out (&bbox_file);
-                out.setVersion(QDataStream::Qt_5_3);
-                QMap<QString,QString> coordinates;
-
-                in >> coordinates;
-                QString bbox_coordinates;
-                QMap<QString, QString>::iterator ci;
-                //qDebug() << "Initial Processing took" << timer.elapsed() << "milliseconds";
-
-                double max = 0;
-
-                //!Comparing the selected text and value stored in the map to find the similarity between them
-                for(ci = coordinates.begin(); ci!=coordinates.end(); ++ci)
-                {
-                    double similarity = edit.findStringSimilarity(cursor.selectedText().toStdString(), ci.value().toStdString());
-                    if(similarity>max)
-                    {
-                        bbox_coordinates = ci.key();
-                        max = similarity;
-                    }
-                 }
-
-                //!After the bbox file is created, using the coordinates values stored in them to show the bbox.
-                int x0, y0, x1, y1;
-
-                QStringList list;
-
-                list=bbox_coordinates.split(" ");
-                int len = list.count();
-                if (len>=5)
-                {
-                    x0 = list[1].toInt();
-                    y0 = list[2].toInt();
-                    x1 = list[3].toInt();
-                    y1 = list[4].toInt();
-                    if(x1!=0 && x0!=0 && y1!=0 && y0!=0)
-                    {
-                        QColor blue40 = Qt::blue;
-                        blue40.setAlphaF( 0.4 );
-
-                        item1->setBrush(blue40);
-
-                        item1->setRect(x0, y0, x1-x0, y1-y0);
-                    }
-                }
-             }
-        }
-        bbox_file.close();
-    }
 
     //! ImageMarkingRegion feature
     if(loadimage)                   //Check image is loaded or not.
