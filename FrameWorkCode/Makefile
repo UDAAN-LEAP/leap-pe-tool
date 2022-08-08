@@ -651,6 +651,7 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_AppResources.cpp
 qrc_AppResources.cpp: AppResources.qrc \
 		/usr/lib/qt5/bin/rcc \
+		wordlists/english.txt \
 		PDF-Preview.png \
 		ShortcutGuide.jpg \
 		AppResources.qrc \

@@ -294,7 +294,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
 
 
-    TextBrowser = new newTextBrowser;
+    TextBrowser = new newTextBrowser(this);
 
     ui->setupUi(this);
     //this->setCentralWidget(TextBrowser);
@@ -9570,6 +9570,67 @@ void MainWindow::GoogleTranslation()
 
 
 
+//--------------------------------------------------------------------------------------------------------------------------------------
+void MainWindow::insertCompletion(const QString &completion)
+{
+
+    QTextCursor tc = TextBrowser->textCursor();
+    int extra = completion.length() - c->completionPrefix().length();
+    tc.movePosition(QTextCursor::Left);
+    tc.movePosition(QTextCursor::EndOfWord);
+    tc.insertText(completion.right(extra));
+    TextBrowser->setTextCursor(tc);
+}
+
+QString MainWindow::textUnderCursor()
+{
+    QTextCursor tc = TextBrowser->textCursor();
+    tc.select(QTextCursor::WordUnderCursor);
+    return tc.selectedText();
+}
+
+void MainWindow::focusInEvent(QFocusEvent *e)
+{
+    if (c)
+        c->setWidget(this);
+    QMainWindow::focusInEvent(e);
+}
+
+void MainWindow::createMenu()
+{
+    QAction *exitAction = new QAction(tr("Exit"), this);
+
+   connect(exitAction, &QAction::triggered, qApp, &QApplication::quit);
+
+    QMenu *fileMenu = menuBar()->addMenu(tr("File"));
+    fileMenu->addAction(exitAction);
+}
+
+QAbstractItemModel *MainWindow::modelFromFile(const QString& fileName)
+{
+    QFile file(fileName);
+    if (!file.open(QFile::ReadOnly)){
+
+        qDebug()<<"File not opened...";
+        return new QStringListModel(c);
+    }
+qDebug()<<"File opened...";
+#ifndef QT_NO_CURSOR
+    QGuiApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+#endif
+    QStringList words;
+
+    while (!file.atEnd()) {
+        QByteArray line = file.readLine();
+        if (!line.isEmpty())
+            words << QString::fromUtf8(line.trimmed());
+    }
+
+#ifndef QT_NO_CURSOR
+    QGuiApplication::restoreOverrideCursor();
+#endif
+    return new QStringListModel(words, c);
+}
 
 
 

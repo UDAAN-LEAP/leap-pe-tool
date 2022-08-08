@@ -49,5 +49,8 @@
         <file>spinbar-white-tp.gif</file>
         <file>PDF-Preview.png</file>
     </qresource>
+    <qresource prefix="/WordList">
+        <file>wordlists/english.txt</file>
+    </qresource>
     <qresource prefix="/"/>
 </RCC>
