@@ -302,7 +302,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     c = new QCompleter(TextBrowser);
 
-    c->setModel(modelFromFile(":/textFiles/TextFiles/english.txt"));
+    c->setModel(modelFromFile(":/WordList/wordlists/english.txt"));
     c->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
     c->setCaseSensitivity(Qt::CaseInsensitive);
     ui->tabWidget_2->addTab(TextBrowser,"newTab");
