@@ -306,6 +306,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     c->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
     c->setCaseSensitivity(Qt::CaseInsensitive);
     ui->tabWidget_2->addTab(TextBrowser,"newTab");
+    ui->tabWidget_2->removeTab(0);
     TextBrowser->setCompleter(c);
 }
 
