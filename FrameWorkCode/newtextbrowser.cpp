@@ -7,10 +7,16 @@
 #include <QApplication>
 #include <QModelIndex>
 #include <QAbstractItemModel>
+#include <QStringListModel>
 #include <QScrollBar>
 newTextBrowser::newTextBrowser(QWidget *parent): QTextBrowser(parent)
 {
     this->setReadOnly(false);
+	c = new QCompleter((newTextBrowser *)this);
+	c->setModel(modelFromFile(":/WordList/wordlists/english.txt"));
+    c->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
+    c->setCaseSensitivity(Qt::CaseInsensitive);
+	this->setCompleter(c);
 }
 
 newTextBrowser::~newTextBrowser()
@@ -39,6 +45,32 @@ void newTextBrowser::setCompleter(QCompleter *completer)
 QCompleter *newTextBrowser::completer() const
 {
     return c;
+}
+
+QAbstractItemModel *newTextBrowser::modelFromFile(const QString& fileName)
+{
+	QFile file(fileName);
+	if (!file.open(QFile::ReadOnly)){
+
+		qDebug()<<"File not opened...";
+		return new QStringListModel(c);
+	}
+qDebug()<<"File opened...";
+#ifndef QT_NO_CURSOR
+	QGuiApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+#endif
+	QStringList words;
+
+	while (!file.atEnd()) {
+		QByteArray line = file.readLine();
+		if (!line.isEmpty())
+			words << QString::fromUtf8(line.trimmed());
+	}
+
+#ifndef QT_NO_CURSOR
+	QGuiApplication::restoreOverrideCursor();
+#endif
+	return new QStringListModel(words, c);
 }
 
 void newTextBrowser::insertCompletion(const QString &completion)

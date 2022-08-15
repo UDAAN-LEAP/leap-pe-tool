@@ -6,6 +6,7 @@
 
 QT_BEGIN_NAMESPACE
 class QCompleter;
+class QAbstractItemModel;
 QT_END_NAMESPACE
 
 //! [0]
@@ -29,6 +30,7 @@ private slots:
 
 private:
     QString textUnderCursor() const;
+	QAbstractItemModel *modelFromFile(const QString& fileName);
 
 private:
     QCompleter *c = nullptr;

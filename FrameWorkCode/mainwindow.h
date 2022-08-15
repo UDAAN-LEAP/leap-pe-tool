@@ -56,7 +56,7 @@
 #include <QAbstractItemModel>
 #include <QScrollBar>
 
-#include"newtextbrowser.h"
+#include "newtextbrowser.h"
 
 //#include <set>
 using namespace std;
@@ -85,7 +85,7 @@ public:
     int getCurrentTabIndex() {
         return currentTabIndex;
     }
-    QTextBrowser * getCurrentBrowser() {
+    newTextBrowser * getCurrentBrowser() {
         return curr_browser;
     };
 
@@ -95,7 +95,7 @@ public:
 private slots:
     void createActions();
     void WordCount();
-    void DisplayJsonDict(QTextBrowser *b, QString input);
+    void DisplayJsonDict(newTextBrowser *b, QString input);
 
     bool eventFilter(QObject *, QEvent *);
 
@@ -355,7 +355,7 @@ private slots:
 
     void dumpStringToFile(QString file_path, QString string);
 
-    void highlight(QTextBrowser *b , QString input);
+    void highlight(newTextBrowser *b , QString input);
 
     QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords, QVector<int> *replaceInAllPages);
 
@@ -485,7 +485,7 @@ private:
     QString current_folder;
     QString currentTabPageName="";
     int currentTabIndex;
-    QTextBrowser * curr_browser = nullptr;
+    newTextBrowser * curr_browser = nullptr;
     QGraphicsScene * graphic =nullptr;
     Graphics_view_zoom * z = nullptr;
     QModelIndex curr_idx;
