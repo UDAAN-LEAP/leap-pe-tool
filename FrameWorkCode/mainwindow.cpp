@@ -7391,7 +7391,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     if(initial.contains("bbox") && !bbox_file.exists())
       {
           QMap<QString, QString> bbox;
-          QStringList plist = initial.split("<p class");
+          QStringList plist = initial.split("<span class");
           for(int i=0;i<plist.length();i++)
           {
              QString bbox_tags = plist[i];
@@ -7412,7 +7412,9 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
              bbox.insert(bbox_tags, sents);
 
           }
-
+          qDebug()<<bbox;
+          bbox.erase(bbox.begin());
+          qDebug()<<bbox;
           bbox_file.open(QIODevice::ReadWrite | QFile::Truncate);
           QDataStream out (&bbox_file);
           out.setVersion(QDataStream::Qt_5_3);
