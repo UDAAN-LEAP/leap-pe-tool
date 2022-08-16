@@ -11,12 +11,17 @@
 #include <QScrollBar>
 newTextBrowser::newTextBrowser(QWidget *parent): QTextBrowser(parent)
 {
+
     this->setReadOnly(false);
 	c = new QCompleter((newTextBrowser *)this);
-	c->setModel(modelFromFile(":/WordList/wordlists/english.txt"));
-    c->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
-    c->setCaseSensitivity(Qt::CaseInsensitive);
+    //c->setModel(modelFromFile(":/WordList/wordlists/english.txt"));
+    //c->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
+    //c->setCaseSensitivity(Qt::CaseInsensitive);
 	this->setCompleter(c);
+
+    QAbstractItemModel *temp;
+    engModel = modelFromFile(":/WordList/wordlists/english.txt") ;
+    devModel = modelFromFile(":/WordList/wordlists/sanskrit.txt") ;
 }
 
 newTextBrowser::~newTextBrowser()
@@ -53,7 +58,7 @@ QAbstractItemModel *newTextBrowser::modelFromFile(const QString& fileName)
 	if (!file.open(QFile::ReadOnly)){
 
 		qDebug()<<"File not opened...";
-		return new QStringListModel(c);
+        return new QStringListModel(nullptr);
 	}
 qDebug()<<"File opened...";
 #ifndef QT_NO_CURSOR
@@ -70,7 +75,7 @@ qDebug()<<"File opened...";
 #ifndef QT_NO_CURSOR
 	QGuiApplication::restoreOverrideCursor();
 #endif
-	return new QStringListModel(words, c);
+    return new QStringListModel(words, nullptr);
 }
 
 void newTextBrowser::insertCompletion(const QString &completion)
@@ -112,7 +117,10 @@ void newTextBrowser::keyPressEvent(QKeyEvent *e)
        case Qt::Key_Tab:
        case Qt::Key_Backtab:
             e->ignore();
-            return; // let the completer do default behavior
+            return;
+            // let the completer do default behavior
+       case Qt::Key_Space:
+
        default:
            break;
        }
@@ -131,11 +139,51 @@ void newTextBrowser::keyPressEvent(QKeyEvent *e)
     const bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
     QString completionPrefix = textUnderCursor();
 
+
+
     if ((hasModifier || e->text().isEmpty()|| completionPrefix.length() < 3
                       || eow.contains(e->text().right(1)))) {
         c->popup()->hide();
         return;
     }
+
+
+
+
+
+    //.............................
+    string str = completionPrefix.toStdString();
+
+
+    slpNPatternDict justForCheck ;
+
+    int  x= 0;
+
+
+     x = (str==justForCheck.toDev(str));
+
+
+    if(e->key()==Qt::Key_Tab || e->key()== Qt::Key_Enter || e->key()== Qt::Key_Space) x=0;
+
+
+    else if(x)
+    {
+        x=1;
+        c->setModel(devModel);
+        c->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
+        //c->setCaseSensitivity(Qt::CaseInsensitive);
+        //this->setCompleter(c);
+    }
+    else
+    {
+        x=1;
+        c->setModel(engModel);
+        c->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
+        c->setCaseSensitivity(Qt::CaseInsensitive);
+        //this->setCompleter(c);
+    }
+    //.............................
+
 
     if (completionPrefix != c->completionPrefix()) {
         c->setCompletionPrefix(completionPrefix);
@@ -150,3 +198,30 @@ void newTextBrowser::keyPressEvent(QKeyEvent *e)
     c->complete(cr); // popup it up!
     qDebug()<<"textBrowser last poped up...";
 }
+
+
+//QAbstractItemModel *newTextBrowser::modelFromFile(const QString& fileName)
+//{
+//    QFile file(fileName);
+//    if (!file.open(QFile::ReadOnly))
+//    {
+//        qDebug()<<"File not opened...";
+//        return new QStringListModel(c);
+//    }
+//qDebug()<<"File opened...";
+//#ifndef QT_NO_CURSOR
+//    QGuiApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+//#endif
+//    QStringList words;
+
+//    while (!file.atEnd()) {
+//        QByteArray line = file.readLine();
+//        if (!line.isEmpty())
+//            words << QString::fromUtf8(line.trimmed());
+//    }
+
+//#ifndef QT_NO_CURSOR
+//    QGuiApplication::restoreOverrideCursor();
+//#endif
+//    return new QStringListModel(words, c);
+//}

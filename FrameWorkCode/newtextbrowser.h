@@ -3,6 +3,8 @@
 #define NEWTEXTBROWSER_H
 
 #include <QTextBrowser>
+#include<QAbstractItemModel>
+#include"slpNPatternDict.h"
 
 QT_BEGIN_NAMESPACE
 class QCompleter;
@@ -20,6 +22,10 @@ public:
 
     void setCompleter(QCompleter *c);
     QCompleter *completer() const;
+    QAbstractItemModel *modelFromFile(const QString&);
+    int modelFlag = 0;
+    QAbstractItemModel *engModel ;
+    QAbstractItemModel *devModel ;
 
 protected:
     void keyPressEvent(QKeyEvent *e) override;
@@ -30,7 +36,7 @@ private slots:
 
 private:
     QString textUnderCursor() const;
-	QAbstractItemModel *modelFromFile(const QString& fileName);
+
 
 private:
     QCompleter *c = nullptr;
