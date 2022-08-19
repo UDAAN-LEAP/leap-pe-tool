@@ -607,7 +607,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
 //        qDebug()<<px<<","<<py<<"\n";
 
-        if(!(px>=topLeftx && px<=botRightx &&  py>=topLefty && py<(botRighty))) return;
+        if(!(px>=topLeftx && px<=botRightx &&  py>=150 /*&& py<(botRighty)*/)) return;
     //
 
 
