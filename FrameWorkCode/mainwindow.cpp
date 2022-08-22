@@ -5593,28 +5593,63 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
  */
 void MainWindow::on_pushButton_2_clicked()
 {
+
     auto cursor = curr_browser->textCursor();
     auto selected = cursor.selection();
     QString sel = selected.toHtml();
 
-    QRegularExpression re("<img[^>]*?src\=[\x27\x22](?<Url>[^\x27\x22]*)[\x27\x22][^>]*?width\=[\x27\x22](?<width>[^\x27\x22]*)[\x27\x22][^>]*?height\=[\x27\x22](?<height>[^\x27\x22]*)[\x27\x22][^>]*?>");
-    QRegularExpressionMatch match = re.match(sel, 0);
-    int height = match.captured(3).toInt();
-    int width = match.captured(2).toInt();
-    QString imgname = match.captured(1);
+
+    QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
+
+    QRegularExpressionMatchIterator itr,itr_;
+    itr = rex.globalMatch(sel);
+
+    int height=0;
+    int width=0;
 
     //!setting width
     int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
     //!setting height
     int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
 
-    if(n>0 && n1>0)
+    while(itr.hasNext())
     {
-        cursor.removeSelectedText();   //remove old image
-        QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(n).arg(n1);
-        QTextCursor cursor1 = curr_browser->textCursor();
-        cursor1.insertHtml(html);      //insert new image with modified attributes height and width
+        QRegularExpressionMatch match = itr.next();
+        QString ex = match.captured(1);
+        qDebug()<<ex<<endl;
+
+
+        string str = ex.toStdString();
+
+             int ind = str.find("src=");
+             ind+=5;
+             int start = ind;
+
+             int end = str.find(".jpg");
+             end+=3;
+
+
+             str = str.substr(start,end-start+1);
+             cout<<"---------------------------------"<<str<<endl;
+
+
+
+            QString imgname = QString::fromStdString(str);
+
+
+        if(n>0 && n1>0)
+        {
+            //cursor.removeSelectedText();   //remove old image
+            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(n).arg(n1);
+            //QTextCursor cursor1 = curr_browser->textCursor();
+            cursor.insertHtml(html);      //insert new image with modified attributes height and width
+        }
+
+
+
     }
+
+
 }
 
 /*!
