@@ -9534,7 +9534,7 @@ void MainWindow::GoogleTranslation()
 
 void MainWindow::insertImageAction()
 {
-    qDebug()<<"Image Will Be Inserted"<<endl;
+    //qDebug()<<"Image Will Be Inserted"<<endl;
     QString imgFileName;
     QString imgFile = QFileDialog::getOpenFileName(this, "Open Project");
 
@@ -9544,7 +9544,8 @@ void MainWindow::insertImageAction()
     QString imgFilePath = imgFileInfo.filePath();
 
     QString copiedImgFilePath(gDirTwoLevelUp + "/Inserted_Images/"+imgFileName);
-
+    if(!QDir(gDirTwoLevelUp + "/Inserted_Images").exists())
+            QDir().mkdir(gDirTwoLevelUp + "/Inserted_Images");
     QFile::copy(imgFilePath,copiedImgFilePath);
 
     int height =0;
