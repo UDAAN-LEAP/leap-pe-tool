@@ -290,6 +290,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionSymbols->setEnabled(false);
     ui->actionZoom_In->setEnabled(false);
     ui->actionZoom_Out->setEnabled(false);
+
+    //insertion of local image
+    insertedImagesCount = 0;
 }
 
 /*!
@@ -651,14 +654,18 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             gsearch = new QAction("Search over google",popup_menu);
             QAction* gtrans;
             gtrans = new QAction("Google translate",popup_menu);
+            QAction* insertImage;
+            insertImage = new QAction("Insert image",popup_menu);
             popup_menu->insertSeparator(popup_menu->actions()[0]);
             popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
             popup_menu->addAction(gsearch);
             popup_menu->addAction(gtrans);
+            popup_menu->addAction(insertImage);
 
             connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
             connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
             connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
+            connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
             popup_menu->exec(ev->globalPos());
             popup_menu->close(); popup_menu->clear();
             qDebug ()<<"right click";
@@ -5642,6 +5649,7 @@ void MainWindow::on_pushButton_2_clicked()
             //cursor.removeSelectedText();   //remove old image
             QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(n).arg(n1);
             //QTextCursor cursor1 = curr_browser->textCursor();
+
             cursor.insertHtml(html);      //insert new image with modified attributes height and width
         }
 
@@ -9524,6 +9532,36 @@ void MainWindow::GoogleTranslation()
 }
 
 
+void MainWindow::insertImageAction()
+{
+    qDebug()<<"Image Will Be Inserted"<<endl;
+    QString imgFileName;
+    QString imgFile = QFileDialog::getOpenFileName(this, "Open Project");
+
+
+    QFileInfo imgFileInfo(imgFile);
+    imgFileName = imgFileInfo.fileName();
+    QString imgFilePath = imgFileInfo.filePath();
+
+    QString copiedImgFilePath(gDirTwoLevelUp + "/Inserted_Images/"+imgFileName);
+
+    QFile::copy(imgFilePath,copiedImgFilePath);
+
+    int height =0;
+    int width = 0;
+
+    //!setting width
+    int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
+    //!setting height
+    int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
+
+    qDebug()<<imgFilePath<<"\n"<<copiedImgFilePath;
+
+    QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(copiedImgFilePath).arg(n).arg(n1);
+    auto cursor = curr_browser->textCursor();
+    cursor.insertHtml(html);
+
+}
 
 
 
