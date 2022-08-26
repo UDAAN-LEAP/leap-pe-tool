@@ -27,6 +27,7 @@ HEADERS += ./Filters.h \
     $$PWD/SimpleMail/serverreply_p.h \
     $$PWD/SimpleMail/smtpexports.h \
     $$PWD/crashlog.h \
+    $$PWD/customtextbrowser.h \
     $$PWD/editdistance.h \
     $$PWD/globalreplaceworker.h \
 	$$PWD/loaddataworker.h \
@@ -103,6 +104,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/SimpleMail/server.cpp \
     $$PWD/SimpleMail/serverreply.cpp \
     $$PWD/crashlog.cpp \
+    $$PWD/customtextbrowser.cpp \
     $$PWD/eddis.cpp \
     $$PWD/editdistance.cpp \
     $$PWD/globalreplaceworker.cpp \
