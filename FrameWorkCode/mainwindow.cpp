@@ -5632,12 +5632,22 @@ void MainWindow::on_pushButton_2_clicked()
              ind+=5;
              int start = ind;
 
-             int end = str.find(".jpg");
-             end+=3;
-
+			 int end = 0;
+			 if (str.find(".jpg") != -1) {
+				 end = str.find(".jpg");
+				 end += 3;
+			 } else if (str.find(".png") != -1) {
+				 end = str.find(".png");
+				 end += 3;
+			 } else if (str.find(".jpeg") != -1) {
+				 end = str.find(".jpeg");
+				 end += 4;
+			 } else {
+				 qDebug() << "File extension not recognisable";
+			 }
 
              str = str.substr(start,end-start+1);
-             cout<<"---------------------------------"<<str<<endl;
+//             cout<<"---------------------------------"<<str<<endl;
 
 
 
