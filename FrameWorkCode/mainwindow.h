@@ -91,6 +91,7 @@ public:
 
     void load_data();
     void reLoadTabWindow();
+    int insertedImagesCount;
 
 private slots:
     void createActions();
@@ -455,6 +456,8 @@ private slots:
     void SearchOnGoogle();
 
     void GoogleTranslation();
+
+    void insertImageAction();
 
 public slots:
     void SaveFile_Backend();

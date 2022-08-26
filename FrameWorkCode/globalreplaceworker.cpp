@@ -54,7 +54,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
         saveBboxInfo(file_path);
     }
     // if any file other than html is passed, just return back
-    if(!file_path.endsWith(".html")){
+    if(!file_path.endsWith(".html") || file_path.endsWith(gCurrentPageName)){
         return 0;
     }
     QMap <QString, QString>::iterator grmIterator;
@@ -375,7 +375,7 @@ void GlobalReplaceWorker::saveBboxInfo(QString htmlFile){
     if(initial.contains("bbox") && !bbox_file.exists())
       {
           QMap<QString, QString> bbox;
-          QStringList plist = initial.split("<p class");
+          QStringList plist = initial.split("<span class");
           for(int i=0;i<plist.length();i++)
           {
              QString bbox_tags = plist[i];
@@ -396,7 +396,8 @@ void GlobalReplaceWorker::saveBboxInfo(QString htmlFile){
              bbox.insert(bbox_tags, sents);
 
           }
-
+          bbox.erase(bbox.begin());
+          //qDebug()<<bbox;
           bbox_file.open(QIODevice::ReadWrite | QFile::Truncate);
           QDataStream out (&bbox_file);
           out.setVersion(QDataStream::Qt_5_3);

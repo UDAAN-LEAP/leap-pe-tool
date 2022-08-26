@@ -293,21 +293,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionZoom_Out->setEnabled(false);
 
 
-
-//    TextBrowser = new CustomTextBrowser(this);
-
-//    ui->setupUi(this);
-    //this->setCentralWidget(TextBrowser);
-    //resize(500, 300);
-
-//    c = new QCompleter(TextBrowser);
-
-//    c->setModel(modelFromFile(":/WordList/wordlists/english.txt"));
-//    c->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
-//    c->setCaseSensitivity(Qt::CaseInsensitive);
-//    ui->tabWidget_2->addTab(TextBrowser,"newTab");
-//    ui->tabWidget_2->removeTab(0);
-//    TextBrowser->setCompleter(c);
 }
 
 /*!
@@ -669,14 +654,18 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             gsearch = new QAction("Search over google",popup_menu);
             QAction* gtrans;
             gtrans = new QAction("Google translate",popup_menu);
+            QAction* insertImage;
+            insertImage = new QAction("Insert image",popup_menu);
             popup_menu->insertSeparator(popup_menu->actions()[0]);
             popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
             popup_menu->addAction(gsearch);
             popup_menu->addAction(gtrans);
+            popup_menu->addAction(insertImage);
 
             connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
             connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
             connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
+            connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
             popup_menu->exec(ev->globalPos());
             popup_menu->close(); popup_menu->clear();
             qDebug ()<<"right click";
@@ -5287,68 +5276,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
       }
     edit_Distance edit;
 
-    //! When the user clicks any mouse button, a bbox file is being created storing some coodinates values.
-    if(event->type() == QEvent::MouseButtonPress && object->parent() == curr_browser)
-    {
-        if(curr_browser!= NULL)
-        {
-            if(bbox_file.exists())
-            {
-                QTextCursor cursor = curr_browser->textCursor();
-                cursor.select(QTextCursor::BlockUnderCursor);
-                //qDebug() << "Cursor Selected Text is:" << cursor.selectedText().trimmed();
-                bbox_file.open(QIODevice::ReadWrite);
-                QDataStream in (&bbox_file);
-                in.setVersion(QDataStream::Qt_5_3);
-                QDataStream out (&bbox_file);
-                out.setVersion(QDataStream::Qt_5_3);
-                QMap<QString,QString> coordinates;
-
-                in >> coordinates;
-                QString bbox_coordinates;
-                QMap<QString, QString>::iterator ci;
-                //qDebug() << "Initial Processing took" << timer.elapsed() << "milliseconds";
-
-                double max = 0;
-
-                //!Comparing the selected text and value stored in the map to find the similarity between them
-                for(ci = coordinates.begin(); ci!=coordinates.end(); ++ci)
-                {
-                    double similarity = edit.findStringSimilarity(cursor.selectedText().toStdString(), ci.value().toStdString());
-                    if(similarity>max)
-                    {
-                        bbox_coordinates = ci.key();
-                        max = similarity;
-                    }
-                 }
-
-                //!After the bbox file is created, using the coordinates values stored in them to show the bbox.
-                int x0, y0, x1, y1;
-
-                QStringList list;
-
-                list=bbox_coordinates.split(" ");
-                int len = list.count();
-                if (len>=5)
-                {
-                    x0 = list[1].toInt();
-                    y0 = list[2].toInt();
-                    x1 = list[3].toInt();
-                    y1 = list[4].toInt();
-                    if(x1!=0 && x0!=0 && y1!=0 && y0!=0)
-                    {
-                        QColor blue40 = Qt::blue;
-                        blue40.setAlphaF( 0.4 );
-
-                        item1->setBrush(blue40);
-
-                        item1->setRect(x0, y0, x1-x0, y1-y0);
-                    }
-                }
-             }
-        }
-        bbox_file.close();
-    }
 
     //! ImageMarkingRegion feature
     if(loadimage)                   //Check image is loaded or not.
@@ -5673,28 +5600,64 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
  */
 void MainWindow::on_pushButton_2_clicked()
 {
+
     auto cursor = curr_browser->textCursor();
     auto selected = cursor.selection();
     QString sel = selected.toHtml();
 
-    QRegularExpression re("<img[^>]*?src\=[\x27\x22](?<Url>[^\x27\x22]*)[\x27\x22][^>]*?width\=[\x27\x22](?<width>[^\x27\x22]*)[\x27\x22][^>]*?height\=[\x27\x22](?<height>[^\x27\x22]*)[\x27\x22][^>]*?>");
-    QRegularExpressionMatch match = re.match(sel, 0);
-    int height = match.captured(3).toInt();
-    int width = match.captured(2).toInt();
-    QString imgname = match.captured(1);
+
+    QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
+
+    QRegularExpressionMatchIterator itr,itr_;
+    itr = rex.globalMatch(sel);
+
+    int height=0;
+    int width=0;
 
     //!setting width
     int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
     //!setting height
     int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
 
-    if(n>0 && n1>0)
+    while(itr.hasNext())
     {
-        cursor.removeSelectedText();   //remove old image
-        QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(n).arg(n1);
-        QTextCursor cursor1 = curr_browser->textCursor();
-        cursor1.insertHtml(html);      //insert new image with modified attributes height and width
+        QRegularExpressionMatch match = itr.next();
+        QString ex = match.captured(1);
+        qDebug()<<ex<<endl;
+
+
+        string str = ex.toStdString();
+
+             int ind = str.find("src=");
+             ind+=5;
+             int start = ind;
+
+             int end = str.find(".jpg");
+             end+=3;
+
+
+             str = str.substr(start,end-start+1);
+             cout<<"---------------------------------"<<str<<endl;
+
+
+
+            QString imgname = QString::fromStdString(str);
+
+
+        if(n>0 && n1>0)
+        {
+            //cursor.removeSelectedText();   //remove old image
+            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(n).arg(n1);
+            //QTextCursor cursor1 = curr_browser->textCursor();
+
+            cursor.insertHtml(html);      //insert new image with modified attributes height and width
+        }
+
+
+
     }
+
+
 }
 
 /*!
@@ -7471,7 +7434,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     if(initial.contains("bbox") && !bbox_file.exists())
       {
           QMap<QString, QString> bbox;
-          QStringList plist = initial.split("<p class");
+          QStringList plist = initial.split("<span class");
           for(int i=0;i<plist.length();i++)
           {
              QString bbox_tags = plist[i];
@@ -7492,7 +7455,9 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
              bbox.insert(bbox_tags, sents);
 
           }
-
+          qDebug()<<bbox;
+          bbox.erase(bbox.begin());
+          qDebug()<<bbox;
           bbox_file.open(QIODevice::ReadWrite | QFile::Truncate);
           QDataStream out (&bbox_file);
           out.setVersion(QDataStream::Qt_5_3);
@@ -9544,7 +9509,7 @@ void MainWindow::readOutputFromPdfPrint()
 #else
     checkString = "Ready\n";
 #endif
-    if (QString(data) == "Ready\n") {
+    if (QString(data) == checkString) {
         pdfPrintIsReady();
     }
 }
@@ -9567,6 +9532,37 @@ void MainWindow::GoogleTranslation()
 }
 
 
+void MainWindow::insertImageAction()
+{
+    //qDebug()<<"Image Will Be Inserted"<<endl;
+    QString imgFileName;
+    QString imgFile = QFileDialog::getOpenFileName(this, "Open Project");
+
+
+    QFileInfo imgFileInfo(imgFile);
+    imgFileName = imgFileInfo.fileName();
+    QString imgFilePath = imgFileInfo.filePath();
+
+    QString copiedImgFilePath(gDirTwoLevelUp + "/Inserted_Images/"+imgFileName);
+    if(!QDir(gDirTwoLevelUp + "/Inserted_Images").exists())
+            QDir().mkdir(gDirTwoLevelUp + "/Inserted_Images");
+    QFile::copy(imgFilePath,copiedImgFilePath);
+
+    int height =0;
+    int width = 0;
+
+    //!setting width
+    int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
+    //!setting height
+    int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
+
+    qDebug()<<imgFilePath<<"\n"<<copiedImgFilePath;
+
+    QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(copiedImgFilePath).arg(n).arg(n1);
+    auto cursor = curr_browser->textCursor();
+    cursor.insertHtml(html);
+
+}
 
 
 
