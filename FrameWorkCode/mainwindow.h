@@ -56,7 +56,7 @@
 #include <QAbstractItemModel>
 #include <QScrollBar>
 
-#include "newtextbrowser.h"
+#include "customtextbrowser.h"
 
 //#include <set>
 using namespace std;
@@ -85,7 +85,7 @@ public:
     int getCurrentTabIndex() {
         return currentTabIndex;
     }
-    newTextBrowser * getCurrentBrowser() {
+    CustomTextBrowser * getCurrentBrowser() {
         return curr_browser;
     };
 
@@ -95,7 +95,7 @@ public:
 private slots:
     void createActions();
     void WordCount();
-    void DisplayJsonDict(newTextBrowser *b, QString input);
+    void DisplayJsonDict(CustomTextBrowser *b, QString input);
 
     bool eventFilter(QObject *, QEvent *);
 
@@ -355,7 +355,7 @@ private slots:
 
     void dumpStringToFile(QString file_path, QString string);
 
-    void highlight(newTextBrowser *b , QString input);
+    void highlight(CustomTextBrowser *b , QString input);
 
     QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords, QVector<int> *replaceInAllPages);
 
@@ -485,7 +485,7 @@ private:
     QString current_folder;
     QString currentTabPageName="";
     int currentTabIndex;
-    newTextBrowser * curr_browser = nullptr;
+    CustomTextBrowser * curr_browser = nullptr;
     QGraphicsScene * graphic =nullptr;
     Graphics_view_zoom * z = nullptr;
     QModelIndex curr_idx;
@@ -508,7 +508,7 @@ private:
     QMessageBox *tempMsgBox;
 
 
-    newTextBrowser *TextBrowser;
+    CustomTextBrowser *TextBrowser;
 
     void createMenu();
     QAbstractItemModel *modelFromFile(const QString& fileName);

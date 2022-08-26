@@ -27,12 +27,12 @@ HEADERS += ./Filters.h \
     $$PWD/SimpleMail/serverreply_p.h \
     $$PWD/SimpleMail/smtpexports.h \
     $$PWD/crashlog.h \
+    $$PWD/customtextbrowser.h \
     $$PWD/editdistance.h \
     $$PWD/globalreplaceworker.h \
 	$$PWD/loaddataworker.h \
     $$PWD/loadingspinner.h \
     $$PWD/markRegion.h \
-    $$PWD/newtextbrowser.h \
     $$PWD/pdfhandling.h \
     $$PWD/progressbardialog.h \
     $$PWD/shortcutguidedialog.h \
@@ -104,6 +104,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/SimpleMail/server.cpp \
     $$PWD/SimpleMail/serverreply.cpp \
     $$PWD/crashlog.cpp \
+    $$PWD/customtextbrowser.cpp \
     $$PWD/eddis.cpp \
     $$PWD/editdistance.cpp \
     $$PWD/globalreplaceworker.cpp \
@@ -111,7 +112,6 @@ SOURCES += ./DiffView.cpp \
     $$PWD/loadingspinner.cpp \
     $$PWD/markRegion.cpp \
     $$PWD/meanStdPage.cpp \
-    $$PWD/newtextbrowser.cpp \
     $$PWD/pdfhandling.cpp \
     $$PWD/progressbardialog.cpp \
     $$PWD/shortcutguidedialog.cpp \

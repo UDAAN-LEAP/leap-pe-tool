@@ -78,7 +78,7 @@
 #include "loaddataworker.h"
 #include "globalreplaceworker.h"
 #include "pdfhandling.h"
-#include "newtextbrowser.h"
+#include "customtextbrowser.h"
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -294,7 +294,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
 
 
-//    TextBrowser = new newTextBrowser(this);
+//    TextBrowser = new CustomTextBrowser(this);
 
 //    ui->setupUi(this);
     //this->setCentralWidget(TextBrowser);
@@ -1006,7 +1006,7 @@ void MainWindow::on_actionEnglish_triggered()
  */
 void MainWindow::on_actionNew_triggered()
 {
-    newTextBrowser * b = new newTextBrowser(this);
+    CustomTextBrowser * b = new CustomTextBrowser(this);
     b->setReadOnly(false);
     b->setUndoRedoEnabled(true);            //User can use Undo/Redo commands
 
@@ -1754,7 +1754,7 @@ void MainWindow::SaveFile_GUI_Postprocessing()
                 QString tab_name = ui->tabWidget_2->tabText(i);
                 if (tab_name == Inds_file || tab_name == Corr_file)
                 {
-                    auto b = (newTextBrowser*)ui->tabWidget_2->widget(i);
+                    auto b = (CustomTextBrowser*)ui->tabWidget_2->widget(i);
                     b->setReadOnly(true);
                 }
             }
@@ -5246,7 +5246,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         {
             if(curr_browser != NULL){
 
-            curr_browser->setStyleSheet("newTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}");
+            curr_browser->setStyleSheet("CustomTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}");
             }
         }
     }
@@ -6010,7 +6010,7 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
     int replaced = 0, tot_replaced = 0;
 
     //create new text browser for html files(such that replacement works on text instead of html)
-    newTextBrowser * browser = new newTextBrowser();
+    CustomTextBrowser * browser = new CustomTextBrowser();
     browser->setReadOnly(false);
 
     QFont font("Shobhika-Regular");
@@ -6706,7 +6706,7 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
  * \brief MainWindow::DisplayJsonDict
  * Load and display *.dict files
  */
-void MainWindow::DisplayJsonDict(newTextBrowser *b, QString input)
+void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
 {
     QVector<QString> dictionary;
     QJsonDocument doc;
@@ -7231,7 +7231,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     }
     setMFilename(mFilename = f->fileName());
     UpdateFileBrekadown();
-    newTextBrowser * b = new newTextBrowser(this);
+    CustomTextBrowser * b = new CustomTextBrowser(this);
     b->setReadOnly(false);
 
     if (!isVerifier && current_folder == "Inds") {     //checks if role is not verifier
@@ -7344,7 +7344,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     b->setUndoRedoEnabled(true);
 
     if(fileFlag) {
-        curr_browser = (newTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
+        curr_browser = (CustomTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
         curr_browser->setDocument(b->document());
         ui->tabWidget_2->setTabText(currentTabIndex, name);
         tabchanged(currentTabIndex);
@@ -7698,7 +7698,7 @@ void MainWindow::CustomContextMenuTriggered(const QPoint & p)
 void MainWindow::closetab(int idx)
 {
 
-    newTextBrowser *closing_browser = (newTextBrowser*)ui->tabWidget_2->widget(idx);
+    CustomTextBrowser *closing_browser = (CustomTextBrowser*)ui->tabWidget_2->widget(idx);
     QString closing_browserHtml = closing_browser->toHtml();
     QString qstr = ui->tabWidget_2->tabText(idx);
 
@@ -7737,7 +7737,7 @@ void MainWindow::closetab(int idx)
 void MainWindow::tabchanged(int idx)
 {
     currentTabIndex = idx;
-    curr_browser = (newTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
+    curr_browser = (CustomTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
     QString qstr = ui->tabWidget_2->tabText(currentTabIndex);
     string str = qstr.toStdString();
     str.erase(remove(str.begin(), str.end(), ' '), str.end());
@@ -7914,7 +7914,7 @@ bool MainWindow::checkUnsavedWork() {
     //!iterate over tab counts and checks for wok in the text browser of that tab
     for (int i = 0; i < ui->tabWidget_2->count(); ++i) {
         ui->tabWidget_2->setCurrentIndex(i);
-        newTextBrowser *closing_browser = (newTextBrowser*)ui->tabWidget_2->widget(i);
+        CustomTextBrowser *closing_browser = (CustomTextBrowser*)ui->tabWidget_2->widget(i);
         QString closing_browserHtml = closing_browser->toHtml();
         QString closingTabPageName = ui->tabWidget_2->tabText(i);
         QFile f(mFilename);
@@ -7942,7 +7942,7 @@ void MainWindow::saveAllWork()
     for (int i = 0; i < ui->tabWidget_2->count(); ++i)
     {
         ui->tabWidget_2->setCurrentIndex(i);
-        newTextBrowser *closing_browser = (newTextBrowser*)ui->tabWidget_2->widget(i);
+        CustomTextBrowser *closing_browser = (CustomTextBrowser*)ui->tabWidget_2->widget(i);
         QString closing_browserHtml = closing_browser->toHtml();
         QString closingTabPageName = ui->tabWidget_2->tabText(i);
         QFile f(mFilename);
@@ -8074,7 +8074,7 @@ bool MainWindow::sendEmail(QString emailText)
  *
  */
 
-void MainWindow:: highlight(newTextBrowser *b , QString input)
+void MainWindow:: highlight(CustomTextBrowser *b , QString input)
 {
 
     QMap <QString, QString>::iterator grmIterator;
@@ -8751,7 +8751,7 @@ void MainWindow::on_actionUpload_triggered()
         return;
     }
     int idx = ui->tabWidget_2->currentIndex();
-    newTextBrowser *closing_browser = (newTextBrowser*)ui->tabWidget_2->widget(idx);
+    CustomTextBrowser *closing_browser = (CustomTextBrowser*)ui->tabWidget_2->widget(idx);
     QString closing_browserHtml = closing_browser->toHtml();
     QString qstr = ui->tabWidget_2->tabText(idx);
 
@@ -8950,7 +8950,7 @@ void MainWindow::readSettings()
         pos1=map[gCurrentPageName];
         //qDebug()<<"pos1"<<pos1;
         myFile.close();
-        curr_browser->setStyleSheet("newTextBrowser{selection-background-color: #ffa500; selection-color: #ffffff;}");
+        curr_browser->setStyleSheet("CustomTextBrowser{selection-background-color: #ffa500; selection-color: #ffffff;}");
 
     auto cursor = curr_browser->textCursor();
     cursor.setPosition(pos1);
