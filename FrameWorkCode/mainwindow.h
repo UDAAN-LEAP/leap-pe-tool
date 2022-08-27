@@ -510,14 +510,14 @@ private:
     QProcess *mPrintPdfProcess;
     QMessageBox *tempMsgBox;
 
-
     CustomTextBrowser *TextBrowser;
-
     void createMenu();
     QAbstractItemModel *modelFromFile(const QString& fileName);
     QString textUnderCursor();
 
     QCompleter *c = nullptr;
+
+	int currentZoomLevel = 100;
 };
 
 #endif // MAINWINDOW_H

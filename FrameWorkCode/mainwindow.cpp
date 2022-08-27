@@ -1068,6 +1068,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         return;
     }
 
+	currentZoomLevel = 100;
+
     QFile xml(ProjFile);
     QFileInfo finfo(xml);
     QString basedir = finfo.absoluteDir().absolutePath();
@@ -7519,6 +7521,18 @@ void MainWindow::LoadImageFromFile(QFile * f)
     graphic->addItem(crop_rect);
     ui->graphicsView->setMouseTracking(true);
     ui->graphicsView->viewport()->installEventFilter(this);
+
+	// Zooming upto currentZoomLevel
+	if (currentZoomLevel == z->zoom_level) {
+		return;
+	}
+	double factor_to_be_applied = 1.0;
+	if (currentZoomLevel < z->zoom_level) {
+		factor_to_be_applied = 1 - ((z->zoom_level - currentZoomLevel) / 100.0);
+	} else {
+		factor_to_be_applied = 1 + ((currentZoomLevel - z->zoom_level) / 100.0);
+	}
+	z->gentle_zoom(factor_to_be_applied);
 }
 
 /*!
@@ -8425,6 +8439,7 @@ void MainWindow::zoom_slider_moved(int value)
  */
 void MainWindow::zoomedUsingScroll()
 {
+	currentZoomLevel = z->zoom_level;
     ui->horizontalSlider->setValue(z->zoom_level);
 }
 
