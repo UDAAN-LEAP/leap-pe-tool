@@ -8266,7 +8266,7 @@ void MainWindow::on_actionas_PDF_triggered()
 
     QProcess *process = new QProcess(this);
     mPrintPdfProcess = process;
-    process->setWorkingDirectory(toolDirAbsolutePath);
+//    process->setWorkingDirectory(toolDirAbsolutePath);
     connect(process, &QProcess::readyReadStandardOutput, this, &MainWindow::readOutputFromPdfPrint);
     connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &MainWindow::finishedPdfCreation);
 
