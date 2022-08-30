@@ -5608,9 +5608,10 @@ void MainWindow::on_pushButton_2_clicked()
     QString sel = selected.toHtml();
 
 
-    QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
+   QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
+//    QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
 
-    QRegularExpressionMatchIterator itr,itr_;
+    QRegularExpressionMatchIterator itr;
     itr = rex.globalMatch(sel);
 
     int height=0;
@@ -7289,22 +7290,77 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         b->setHtml(qstrHtml);
     }
     if (ext == "html") {
-        b->setHtml(input);
-//        input = b->toPlainText();
-//        QStringList s1;
-//        s1=input.split(QRegExp(" "));
 
-//        QRegExp regex("[\u0900-\u097F]");
-//        for(int i=0;i<s1.count();i++){
-//            if(s1[i].contains(regex)){
-//                string str=s1[i].toStdString();
-//                str=toslp1(str);
-//                str=toDev(str);
-//                s1[i]=QString::fromStdString(str);
-//            }
-//        }
-//        input=s1.join(" ");
-//        b->setText(input);
+        QSize graphicsViewSize = ui->graphicsView->size();
+                    int graphicsViewHeight = graphicsViewSize.height()/4;
+                    int graphicsViewWidth = graphicsViewSize.width()/3;
+
+                    QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
+
+                    QRegularExpressionMatchIterator itr;
+                    itr = rex.globalMatch(input);
+
+                    int height=graphicsViewHeight;
+                    int width=graphicsViewWidth;
+
+
+
+                    while(itr.hasNext())
+                    {
+                        QRegularExpressionMatch match = itr.next();
+                        QString ex = match.captured(1);
+                        qDebug()<<ex<<endl;
+
+                        if(!ex.contains("width") && !ex.contains("height")){
+                        string str = ex.toStdString();
+
+                             int ind = str.find("src=");
+                             ind+=5;
+                             int start = ind;
+
+                             int end = 0;
+                             if (str.find(".jpg") != -1) {
+                                 end = str.find(".jpg");
+                                 end += 3;
+                             } else if (str.find(".png") != -1) {
+                                 end = str.find(".png");
+                                 end += 3;
+                             } else if (str.find(".jpeg") != -1) {
+                                 end = str.find(".jpeg");
+                                 end += 4;
+                             } else {
+                                 qDebug() << "File extension not recognisable";
+                             }
+
+
+
+
+                             string ttstr = str.substr(end+2,str.length()-end-3);// title tag string
+                             str = str.substr(start,end-start+1);
+
+
+
+
+
+                           cout<<"---------------------------------"<<ttstr<<endl;
+
+                            QString imgname = QString::fromStdString(str);
+                            QString titleString = QString::fromStdString(ttstr);
+
+                            //qDebug()<<"XXXXXXXXXXXX"<<imgname<<endl;
+                            QString html = QString("\n <img src='%1' width='%2' height='%3'%4>").arg(imgname).arg(width).arg(height).arg(titleString);
+//                            qDebug()<<";;;;;;;;;"<<ex<<endl;
+//                            qDebug()<<":::::::::"<<html;
+                            input.replace(ex,html);
+
+                        }
+
+                    }
+
+
+                b->setHtml(input);
+
+
     }
     QDir::setCurrent(gDirOneLevelUp);   //changing application path to load document in a relative path
     b->setFont(font);
