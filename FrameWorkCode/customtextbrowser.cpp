@@ -60,7 +60,7 @@ QAbstractItemModel *CustomTextBrowser::modelFromFile(const QString& fileName)
 		qDebug()<<"File not opened...";
         return new QStringListModel(nullptr);
 	}
-qDebug()<<"File opened...";
+//qDebug()<<"File opened...";
 #ifndef QT_NO_CURSOR
 	QGuiApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 #endif
@@ -106,7 +106,7 @@ void CustomTextBrowser::focusInEvent(QFocusEvent *e)
 
 void CustomTextBrowser::keyPressEvent(QKeyEvent *e)
 {
-    qDebug()<<"textBrowser poped up...";
+//    qDebug()<<"textBrowser poped up...";
 
     if (c && c->popup()->isVisible()) {
         // The following keys are forwarded by the completer to the widget
@@ -196,7 +196,7 @@ void CustomTextBrowser::keyPressEvent(QKeyEvent *e)
     cr.setWidth(c->popup()->sizeHintForColumn(0)
                 + c->popup()->verticalScrollBar()->sizeHint().width());
     c->complete(cr); // popup it up!
-    qDebug()<<"textBrowser last poped up...";
+//    qDebug()<<"textBrowser last poped up...";
 }
 
 

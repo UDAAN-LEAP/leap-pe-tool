@@ -476,6 +476,14 @@ public slots:
 
     void focusInEvent(QFocusEvent *e) ;
 
+	void loadHtmlInDoc(QFile *);
+
+	void blockCountChanged(int);
+
+	void storeBboxes(QFile *);
+
+	void insertBboxes(QFile *);
+
 private:
     bool mExitStatus = false;
     QString mRole;
@@ -515,9 +523,13 @@ private:
     QAbstractItemModel *modelFromFile(const QString& fileName);
     QString textUnderCursor();
 
-    QCompleter *c = nullptr;
+	QCompleter *c = nullptr;
+	QTextDocument *doc;
 
 	int currentZoomLevel = 100;
+
+	QVector<QPair<QString,QString> > bboxes;
+	int blockCount = -1;
 };
 
 #endif // MAINWINDOW_H

@@ -1672,7 +1672,8 @@ void MainWindow::SaveFile_GUI_Postprocessing()
 //        // Fixing Word breaking problem after saving file
 //        filterHtml(&sFile);
         //Inserting back bbox info
-        bboxInsertion(&sFile);
+//        bboxInsertion(&sFile);
+		insertBboxes(&sFile);
     }
 
     //! Converting html output into plain text.
@@ -5606,71 +5607,51 @@ void MainWindow::on_pushButton_2_clicked()
     auto cursor = curr_browser->textCursor();
     auto selected = cursor.selection();
     QString sel = selected.toHtml();
+	QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
+	//    QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
 
+	QRegularExpressionMatchIterator itr;
+	itr = rex.globalMatch(sel);
+	int height=0;
+	int width=0;
 
-   QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
-//    QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
+	//!setting width
+	int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
+	//!setting height
+	int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
 
-    QRegularExpressionMatchIterator itr;
-    itr = rex.globalMatch(sel);
+	while(itr.hasNext())
+	{
+		QRegularExpressionMatch match = itr.next();
+		QString ex = match.captured(1);
+		string str = ex.toStdString();
+		int ind = str.find("src=");
+		ind+=5;
+		int start = ind;
+		int end = 0;
 
-    int height=0;
-    int width=0;
+		if (str.find(".jpg") != -1) {
+			end = str.find(".jpg");
+			end += 3;
+		} else if (str.find(".png") != -1) {
+			end = str.find(".png");
+			end += 3;
+		} else if (str.find(".jpeg") != -1) {
+			end = str.find(".jpeg");
+			end += 4;
+		} else {
+			qDebug() << "File extension not recognisable";
+		}
 
-    //!setting width
-    int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
-    //!setting height
-    int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
+		str = str.substr(start,end-start+1);
+		QString imgname = QString::fromStdString(str);
 
-    while(itr.hasNext())
-    {
-        QRegularExpressionMatch match = itr.next();
-        QString ex = match.captured(1);
-        qDebug()<<ex<<endl;
-
-
-        string str = ex.toStdString();
-
-             int ind = str.find("src=");
-             ind+=5;
-             int start = ind;
-
-			 int end = 0;
-			 if (str.find(".jpg") != -1) {
-				 end = str.find(".jpg");
-				 end += 3;
-			 } else if (str.find(".png") != -1) {
-				 end = str.find(".png");
-				 end += 3;
-			 } else if (str.find(".jpeg") != -1) {
-				 end = str.find(".jpeg");
-				 end += 4;
-			 } else {
-				 qDebug() << "File extension not recognisable";
-			 }
-
-             str = str.substr(start,end-start+1);
-//             cout<<"---------------------------------"<<str<<endl;
-
-
-
-            QString imgname = QString::fromStdString(str);
-
-
-        if(n>0 && n1>0)
-        {
-            //cursor.removeSelectedText();   //remove old image
-            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(n).arg(n1);
-            //QTextCursor cursor1 = curr_browser->textCursor();
-
-            cursor.insertHtml(html);      //insert new image with modified attributes height and width
-        }
-
-
-
-    }
-
-
+		if(n>0 && n1>0)
+		{
+			QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(n).arg(n1);
+			cursor.insertHtml(html);      //insert new image with modified attributes height and width
+		}
+	}
 }
 
 /*!
@@ -6655,7 +6636,7 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
               oldWord = oldWord.trimmed();
               newSentence = newSentence.replace(oldWord,newWord,Qt::CaseSensitive);
               QString finalSentence = matched + "==>" + newSentence;
-              qDebug() << "Final Sentence" << finalSentence;
+//              qDebug() << "Final Sentence" << finalSentence;
               if(newSentence.length() >0 )
               {
                   sentences << finalSentence;
@@ -7257,9 +7238,12 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     isProjectOpen = 1;
 
     // Fixing Word Breaking problem
-    f->close();
+//    f->close();
 //    filterHtml(f);
-    f->open(QIODevice::ReadOnly);
+//    f->open(QIODevice::ReadOnly);
+
+	doc = b->document();
+//	connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
 
     //!Display format by setting font size and styles
     QTextStream stream(f);
@@ -7290,76 +7274,57 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
         b->setHtml(qstrHtml);
     }
     if (ext == "html") {
+		QSize graphicsViewSize = ui->graphicsView->size();
+		int graphicsViewHeight = graphicsViewSize.height()/4;
+		int graphicsViewWidth = graphicsViewSize.width()/3;
+		QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
+		QRegularExpressionMatchIterator itr;
+		itr = rex.globalMatch(input);
+		int height=graphicsViewHeight;
+		int width=graphicsViewWidth;
 
-        QSize graphicsViewSize = ui->graphicsView->size();
-                    int graphicsViewHeight = graphicsViewSize.height()/4;
-                    int graphicsViewWidth = graphicsViewSize.width()/3;
+		while(itr.hasNext())
+		{
+			QRegularExpressionMatch match = itr.next();
+			QString ex = match.captured(1);
 
-                    QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
+			if(!ex.contains("width") && !ex.contains("height")){
+				string str = ex.toStdString();
+				int ind = str.find("src=");
+				ind += 5;
+				int start = ind;
 
-                    QRegularExpressionMatchIterator itr;
-                    itr = rex.globalMatch(input);
+				int end = 0;
+				if (str.find(".jpg") != -1) {
+					end = str.find(".jpg");
+					end += 3;
+				} else if (str.find(".png") != -1) {
+					end = str.find(".png");
+					end += 3;
+				} else if (str.find(".jpeg") != -1) {
+					end = str.find(".jpeg");
+					end += 4;
+				} else {
+					qDebug() << "File extension not recognisable";
+				}
 
-                    int height=graphicsViewHeight;
-                    int width=graphicsViewWidth;
+				string ttstr = str.substr(end+2,str.length()-end-3);// title tag string
+				str = str.substr(start,end-start+1);
+				QString imgname = QString::fromStdString(str);
+				QString titleString = QString::fromStdString(ttstr);
+				QString html = QString("\n <img src='%1' width='%2' height='%3'%4>").arg(imgname).arg(width).arg(height).arg(titleString);
+				input.replace(ex,html);
+			}
+		}
+//		b->setHtml(input);
 
-
-
-                    while(itr.hasNext())
-                    {
-                        QRegularExpressionMatch match = itr.next();
-                        QString ex = match.captured(1);
-                        qDebug()<<ex<<endl;
-
-                        if(!ex.contains("width") && !ex.contains("height")){
-                        string str = ex.toStdString();
-
-                             int ind = str.find("src=");
-                             ind+=5;
-                             int start = ind;
-
-                             int end = 0;
-                             if (str.find(".jpg") != -1) {
-                                 end = str.find(".jpg");
-                                 end += 3;
-                             } else if (str.find(".png") != -1) {
-                                 end = str.find(".png");
-                                 end += 3;
-                             } else if (str.find(".jpeg") != -1) {
-                                 end = str.find(".jpeg");
-                                 end += 4;
-                             } else {
-                                 qDebug() << "File extension not recognisable";
-                             }
-
-
-
-
-                             string ttstr = str.substr(end+2,str.length()-end-3);// title tag string
-                             str = str.substr(start,end-start+1);
-
-
-
-
-
-                           cout<<"---------------------------------"<<ttstr<<endl;
-
-                            QString imgname = QString::fromStdString(str);
-                            QString titleString = QString::fromStdString(ttstr);
-
-                            //qDebug()<<"XXXXXXXXXXXX"<<imgname<<endl;
-                            QString html = QString("\n <img src='%1' width='%2' height='%3'%4>").arg(imgname).arg(width).arg(height).arg(titleString);
-//                            qDebug()<<";;;;;;;;;"<<ex<<endl;
-//                            qDebug()<<":::::::::"<<html;
-                            input.replace(ex,html);
-
-                        }
-
-                    }
-
-
-                b->setHtml(input);
-
+		f->close();
+		loadHtmlInDoc(f);
+		connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
+		if (!f->open(QIODevice::ReadOnly | QIODevice::Text)) {
+			qDebug() << "Cannot open file for reading";
+			return;
+		}
 
     }
     QDir::setCurrent(gDirOneLevelUp);   //changing application path to load document in a relative path
@@ -7472,69 +7437,58 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
                 ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
                 break;
             }
-            else
-            {
-                //! Removing the space from each Label which was present at the starting of every label in the CorrectorOutput Folder
-                treeItemLabel.remove(0, 1);
-                if (treeItemLabel == currentTabPageName)
-                {
-                    ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
-                    break;
-                }
-            }
         }
-    }
-    QString htmlFile = gDirTwoLevelUp + "/CorrectorOutput/"+currentTabPageName;
-    QFile gfile(htmlFile.replace(".bbox", ".html"));
-    //qDebug()  << "Current page name: " << gfile.fileName();
-    gfile.open(QIODevice::ReadOnly | QFile::Text);
-    QTextStream in(&gfile);
-    QString initial = in.readAll();
-    QString bboxfile = gfile.fileName();
-    bboxfile = bboxfile.replace(".html", ".bbox");
+	}
+//  QString htmlFile = gDirTwoLevelUp + "/CorrectorOutput/"+currentTabPageName;
+//	QFile gfile(htmlFile.replace(".bbox", ".html"));
+//	//qDebug()  << "Current page name: " << gfile.fileName();
+//	gfile.open(QIODevice::ReadOnly | QFile::Text);
+//	QTextStream in(&gfile);
+//	QString initial = in.readAll();
+//	QString bboxfile = gfile.fileName();
+//	bboxfile = bboxfile.replace(".html", ".bbox");
 
-    if(!QDir(gDirTwoLevelUp+"/bboxf").exists())
-            QDir().mkdir(gDirTwoLevelUp+"/bboxf");
+//	if(!QDir(gDirTwoLevelUp+"/bboxf").exists())
+//		QDir().mkdir(gDirTwoLevelUp+"/bboxf");
 
-        bboxfile=bboxfile.replace("CorrectorOutput","bboxf");
+//	bboxfile=bboxfile.replace("CorrectorOutput","bboxf");
 
-    QFile bbox_file(bboxfile);
-    if(initial.contains("bbox") && !bbox_file.exists())
-      {
-          QMap<QString, QString> bbox;
-          QStringList plist = initial.split("<span class");
-          for(int i=0;i<plist.length();i++)
-          {
-             QString bbox_tags = plist[i];
-             int first = bbox_tags.indexOf("bbox");
-             int last = bbox_tags.indexOf(";\">");
-             bbox_tags = bbox_tags.mid(first,last-first);
-             bbox_tags = bbox_tags.remove("\">\n");
-             bbox_tags = bbox_tags.trimmed();
+//	QFile bbox_file(bboxfile);
+//	if(initial.contains("bbox") && !bbox_file.exists())
+//	{
+//		QMap<QString, QString> bbox;
+//		QStringList plist = initial.split("<span class");
+//		for(int i=0;i<plist.length();i++)
+//		{
+//			QString bbox_tags = plist[i];
+//			int first = bbox_tags.indexOf("bbox");
+//			int last = bbox_tags.indexOf(";\">");
+//			bbox_tags = bbox_tags.mid(first,last-first);
+//			bbox_tags = bbox_tags.remove("\">\n");
+//			bbox_tags = bbox_tags.trimmed();
 
-             QStringList bbox_coordinates = bbox_tags.split(" ");
-             bbox_tags = bbox_coordinates[0] + " " + bbox_coordinates[1] + " " + bbox_coordinates[2] + " " + bbox_coordinates[3] + " " + bbox_coordinates[4];
+//			QStringList bbox_coordinates = bbox_tags.split(" ");
+//			bbox_tags = bbox_coordinates[0] + " " + bbox_coordinates[1] + " " + bbox_coordinates[2] + " " + bbox_coordinates[3] + " " + bbox_coordinates[4];
 
-             int start = plist[i].indexOf(";\">\n");
-             int end = plist[i].indexOf("</span>");
-             QString sents = plist[i].mid(start, end-start);
-             sents = sents.remove(";\">\n");
-             sents = sents.trimmed();
-             bbox.insert(bbox_tags, sents);
+//			int start = plist[i].indexOf(";\">\n");
+//			int end = plist[i].indexOf("</span>");
+//			QString sents = plist[i].mid(start, end-start);
+//			sents = sents.remove(";\">\n");
+//			sents = sents.trimmed();
+//			bbox.insert(bbox_tags, sents);
 
-          }
-          qDebug()<<bbox;
-          bbox.erase(bbox.begin());
-          qDebug()<<bbox;
-          bbox_file.open(QIODevice::ReadWrite | QFile::Truncate);
-          QDataStream out (&bbox_file);
-          out.setVersion(QDataStream::Qt_5_3);
-          out<<bbox;
-          bbox_file.flush();
-          bbox_file.close();
-          qDebug() << "bbox file written succesfully ... ";
-      }
-
+//		}
+//		qDebug()<<bbox;
+//		bbox.erase(bbox.begin());
+//		qDebug()<<bbox;
+//		bbox_file.open(QIODevice::ReadWrite | QFile::Truncate);
+//		QDataStream out (&bbox_file);
+//		out.setVersion(QDataStream::Qt_5_3);
+//		out<<bbox;
+//		bbox_file.flush();
+//		bbox_file.close();
+//		qDebug() << "bbox file written succesfully ... ";
+//	}
 
    WordCount();     //for counting no of words in the document
    readSettings();
@@ -8894,7 +8848,7 @@ void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
     for(int i=0;i<model->rowCount();i++){
         children<<model->index(i,0);
         item=children[i].data(Qt::DisplayRole).toString();
-        qDebug()<<"Item"<<item;
+//        qDebug()<<"Item"<<item;
     }
 
     //qDebug()<<"Children size"<<children.size();
@@ -9708,6 +9662,257 @@ qDebug()<<"File opened...";
     QGuiApplication::restoreOverrideCursor();
 #endif
     return new QStringListModel(words, c);
+}
+
+
+void MainWindow::loadHtmlInDoc(QFile *fq)
+{
+	QTextCursor cur(doc);
+	if (!fq->open(QIODevice::ReadOnly | QIODevice::Text)) {
+		qDebug() << "Cannot open file";
+		return;
+	}
+	QString line;
+	int flag_ = 0;
+	QString inputText = "";
+
+//	QDir::setCurrent("/home/ajit/Internship/test_bbox/");
+
+	while(!fq->atEnd()) {
+		line=fq->readLine();
+		line = line.simplified();
+		QStringList l = line.split(" ");
+//		qDebug()<<"data line = "<<l;
+		for(int i=0; i<l.size(); i++){
+			//for parsing p tags
+			if((l[i].contains("<p") && flag_ != 2) || flag_ == 1){
+				flag_ = 1;
+				while(i<l.size() && !l[i].contains("</p>")){
+//					qDebug()<<l[i];
+					inputText += l[i];
+					inputText += " ";
+					i++;
+				}
+				if(i == l.size())
+					i = i-1;
+				if(l[i].contains("</p>")){
+					flag_ = 0;
+//					qDebug()<<l[i];
+					inputText += l[i];
+					inputText += " ";
+					cur.insertBlock();
+					cur.insertHtml(inputText);
+					inputText = "";
+				}
+			}
+
+			//for parsing table tags
+			else if(l[i].contains("<table") || flag_ == 2){
+				flag_ = 2;
+				while(i<l.size() && !l[i].contains("</table>")){
+//					qDebug()<<l[i];
+					inputText += l[i];
+					inputText += " ";
+					i++;
+				}
+				if(i == l.size())
+					i = i-1;
+				if(l[i].contains("</table>")){
+					flag_ = 0;
+//					qDebug()<<l[i];
+					inputText += l[i];
+					inputText += " ";
+					cur.insertBlock();
+					cur.insertHtml(inputText);
+					inputText = "";
+				}
+
+			}
+
+			//for parsing image tags
+			else if(l[i].contains("<img") || flag_ == 3){
+				flag_ = 3;
+				while(i<l.size() && !l[i].contains(">")){
+//					qDebug()<<l[i];
+					inputText += l[i];
+					inputText += " ";
+					i++;
+				}
+				if(i == l.size())
+					i = i-1;
+				if(l[i].contains(">")){
+					flag_ = 0;
+//					qDebug()<<l[i];
+					inputText += l[i];
+					inputText += " ";
+//					qDebug() << inputText;
+					cur.insertBlock();
+					cur.insertHtml(inputText);
+					inputText = "";
+				}
+			}
+
+		}
+		if(flag_ ==1 || flag_ == 2) {
+//			qDebug()<<"\n";
+			inputText += "\n";
+		}
+	}
+
+	cur = QTextCursor(doc->findBlockByNumber(0));
+	cur.select(QTextCursor::BlockUnderCursor);
+	cur.deleteChar();
+	fq->close();
+
+	storeBboxes(fq);
+
+//	blockCount = doc->blockCount();
+//	qDebug() << "now Block count = " << blockCount;
+
+//	connect(doc, SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
+}
+
+void MainWindow::storeBboxes(QFile *file)
+{
+	if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
+		return;
+	}
+
+	QTextStream st(file);
+	QString initial = st.readAll();
+	file->close();
+	bboxes.clear();
+
+	QRegularExpression rex("(<p[^>]*>|<img[^>]*>|<table[^>]*>|</table>|<td[^>]*>)");
+    QRegularExpressionMatchIterator itr;
+
+    itr = rex.globalMatch(initial);
+
+    QString temp_tags;
+	bool inTable = false;
+
+	while (itr.hasNext())
+	{
+		QRegularExpressionMatch match = itr.next();
+		QString bbox_tags = match.captured(1);
+
+		int first, last;
+		first = bbox_tags.indexOf("bbox");
+		if (first == -1) { // If bbox tag is not present
+			temp_tags = "";
+		} else { // If bbox tag is present
+			last = bbox_tags.indexOf(">");
+			temp_tags = bbox_tags.mid(first,last-first);
+			temp_tags = temp_tags.simplified();
+		}
+
+		/*! @todo
+		 * 1. If images are inside tables
+		 * 2. If multiple lines are there in one cell of table i.e. if there are multiple paragraphs in one table cell
+		 */
+
+		if(bbox_tags.left(2) == "<i") {
+			bboxes.push_back({"img",temp_tags});
+		} else if(bbox_tags.left(2) == "<p" && (!inTable)) {
+			bboxes.push_back({"p",temp_tags});
+		} else if (bbox_tags.left(3) == "<td") {
+			bboxes.push_back({"td", temp_tags});
+		} else if (bbox_tags.left(6) == "<table") { // Table start
+			inTable = true;
+			bboxes.push_back({"table", temp_tags});
+		} else if (bbox_tags.left(7) == "</table") {
+			inTable = false;
+			bboxes.push_back({"/table", temp_tags});
+		}
+	}
+//	qDebug() << bboxes;
+//	qDebug() << "size: " << bboxes.size();
+}
+
+void MainWindow::blockCountChanged(int numOfBlocks)
+{
+	qDebug() << "number of blocks: " << doc->blockCount();
+	QTextCursor cur = curr_browser->textCursor();
+	int currentBlockNum = cur.blockNumber();
+	QPair<QString, QString> bbox_value;
+
+	if (numOfBlocks > blockCount) {
+		if (currentBlockNum == 0) {
+			bbox_value = bboxes[0];
+		} else {
+			bbox_value = bboxes[currentBlockNum - 1];
+		}
+		bbox_value.first = "p";
+		bboxes.insert(currentBlockNum, bbox_value);
+	} else if (numOfBlocks < blockCount) {
+		if (cur.atBlockEnd()) {
+			bboxes.remove(currentBlockNum + 1);
+		} else if (cur.atBlockStart()) {
+			bboxes.remove(currentBlockNum);
+		}
+	}
+//	qDebug() << bboxes;
+	blockCount = numOfBlocks;
+}
+
+
+void MainWindow::insertBboxes(QFile *fptr)
+{
+	qDebug() << "number of blocks = " << doc->blockCount();
+	qDebug() << "size of bboxes = " << bboxes.size();
+	if (!fptr->open(QIODevice::ReadOnly | QIODevice::Text)) {
+		qDebug() << "Cannot open file for writing";
+		return;
+	}
+	QString input = fptr->readAll();
+	fptr->close();
+	QRegularExpression regex_p("(<p[^>]*>|<img[^>]*>|<table[^>]*>|<td[^>]*>|</table>)");
+	QRegularExpressionMatchIterator itr = regex_p.globalMatch(input);
+
+	int i = 0;
+	bool inTable = false;
+	int increment = 0;
+	QString currentTag;
+	while (itr.hasNext() && i < bboxes.size()) {
+		QRegularExpressionMatch match = itr.next();
+		QString htmlTagData = match.captured(1);
+		int end = match.capturedEnd(1);
+
+		if (htmlTagData.left(6) == "<table") {
+			inTable = true;
+			currentTag = "table";
+		} else if (htmlTagData.left(7) == "</table") {
+			inTable = false;
+			currentTag = "/table";
+		} else if (htmlTagData.left(4) == "<img") {
+			currentTag = "img";
+		} else if (htmlTagData.left(3) == "<td") {
+			currentTag = "td";
+		} else if (htmlTagData.left(2) == "<p") {
+			if (inTable)
+				continue;
+			currentTag = "p";
+		}
+
+		if (bboxes[i].first != currentTag) {
+			qDebug() << "tags not matching at " << i;
+		}
+		QString temp = " title = \"" + bboxes[i++].second + "\"";
+		increment += temp.length();
+		input.insert(end - 1, temp);
+
+		itr = regex_p.globalMatch(input, end + 1);
+	}
+
+	if (!fptr->open(QIODevice::WriteOnly | QIODevice::Text)) {
+		qDebug() << "Cannot open file for writing";
+		return;
+	}
+
+	QTextStream out(fptr);
+	out << input;
+	out.flush();
+	fptr->close();
 }
 
 
