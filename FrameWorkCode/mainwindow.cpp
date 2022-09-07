@@ -7321,6 +7321,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 		f->close();
 		loadHtmlInDoc(f);
 		connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
+		blockCount = b->document()->blockCount();
 		if (!f->open(QIODevice::ReadOnly | QIODevice::Text)) {
 			qDebug() << "Cannot open file for reading";
 			return;
@@ -9801,9 +9802,18 @@ void MainWindow::storeBboxes(QFile *file)
 		if (first == -1) { // If bbox tag is not present
 			temp_tags = "";
 		} else { // If bbox tag is present
-			last = bbox_tags.indexOf(">");
-			temp_tags = bbox_tags.mid(first,last-first);
-			temp_tags = temp_tags.simplified();
+			int i = first;
+			while (bbox_tags[i] != "\"") {
+				i++;
+			}
+			last = i - 1;
+			temp_tags = bbox_tags.mid(first, last - first + 1);
+			temp_tags = temp_tags.simplified(); // bbox 23 34
+			//                                     0123456789
+
+//			last = bbox_tags.indexOf(">");
+//			temp_tags = bbox_tags.mid(first,last-first);
+//			temp_tags = temp_tags.simplified();
 		}
 
 		/*! @todo
@@ -9825,8 +9835,8 @@ void MainWindow::storeBboxes(QFile *file)
 			bboxes.push_back({"/table", temp_tags});
 		}
 	}
-//	qDebug() << bboxes;
-//	qDebug() << "size: " << bboxes.size();
+	qDebug() << bboxes;
+	qDebug() << "size: " << bboxes.size();
 }
 
 void MainWindow::blockCountChanged(int numOfBlocks)
@@ -9839,19 +9849,34 @@ void MainWindow::blockCountChanged(int numOfBlocks)
 	if (numOfBlocks > blockCount) {
 		if (currentBlockNum == 0) {
 			bbox_value = bboxes[0];
+			for (int i = 0; i < (numOfBlocks - blockCount); i++) {
+				bboxes.insert(currentBlockNum, {"p", bbox_value.second});
+			}
 		} else {
-			bbox_value = bboxes[currentBlockNum - 1];
+			int pos = currentBlockNum - (numOfBlocks - blockCount);
+			qDebug() << "pos = " << pos;
+			bbox_value = bboxes[pos];
+			bbox_value.first = "p";
+			for (int i = 0; i < (numOfBlocks - blockCount); i++) {
+				bboxes.insert(pos + 1, bbox_value);
+			}
 		}
-		bbox_value.first = "p";
-		bboxes.insert(currentBlockNum, bbox_value);
+//		bboxes.insert(currentBlockNum, bbox_value);
 	} else if (numOfBlocks < blockCount) {
+		int pos;
 		if (cur.atBlockEnd()) {
-			bboxes.remove(currentBlockNum + 1);
+//			bboxes.remove(currentBlockNum + 1);
+			pos = currentBlockNum + 1;
 		} else if (cur.atBlockStart()) {
-			bboxes.remove(currentBlockNum);
+//			bboxes.remove(currentBlockNum);
+			pos = currentBlockNum;
+		}
+
+		for (int i = 0; i < (blockCount - numOfBlocks); i++) {
+			bboxes.remove(pos);
 		}
 	}
-//	qDebug() << bboxes;
+	qDebug() << bboxes;
 	blockCount = numOfBlocks;
 }
 
@@ -9866,11 +9891,12 @@ void MainWindow::insertBboxes(QFile *fptr)
 	}
 	QString input = fptr->readAll();
 	fptr->close();
-	QRegularExpression regex_p("(<p[^>]*>|<img[^>]*>|<table[^>]*>|<td[^>]*>|</table>)");
+	QRegularExpression regex_p("(<p[^>]*>|</p>|<img[^>]*>|<table[^>]*>|<td[^>]*>|</table>)");
 	QRegularExpressionMatchIterator itr = regex_p.globalMatch(input);
 
 	int i = 0;
 	bool inTable = false;
+	bool inPara = false;
 	int increment = 0;
 	QString currentTag;
 	while (itr.hasNext() && i < bboxes.size()) {
@@ -9884,20 +9910,29 @@ void MainWindow::insertBboxes(QFile *fptr)
 		} else if (htmlTagData.left(7) == "</table") {
 			inTable = false;
 			currentTag = "/table";
+			continue;
 		} else if (htmlTagData.left(4) == "<img") {
+			if (inPara) {
+				i--;
+			}
 			currentTag = "img";
 		} else if (htmlTagData.left(3) == "<td") {
 			currentTag = "td";
 		} else if (htmlTagData.left(2) == "<p") {
-			if (inTable)
+			if (inTable) {
 				continue;
+			}
 			currentTag = "p";
+			inPara = true;
+		} else if (htmlTagData.left(3) == "</p") {
+			inPara = false;
+			continue;
 		}
 
 		if (bboxes[i].first != currentTag) {
 			qDebug() << "tags not matching at " << i;
 		}
-		QString temp = " title = \"" + bboxes[i++].second + "\"";
+		QString temp = " title=\"" + bboxes[i++].second + "\"";
 		increment += temp.length();
 		input.insert(end - 1, temp);
 
