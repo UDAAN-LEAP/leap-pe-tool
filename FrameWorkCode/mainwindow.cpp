@@ -140,13 +140,16 @@ QList<QString> filesChangedUsingGlobalReplace;
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    CustomTextBrowser *customtextbrowser = new CustomTextBrowser(this);
+    customtextbrowser->setStyleSheet("background-color:white; color:black;");
+    ui->splitter->replaceWidget(1,customtextbrowser);
+    customtextbrowser->show();
     qInstallMessageHandler(crashlog::myMessageHandler);
-//    ui->textBrowser->setStyleSheet("background-color:white;");
     toolDirAbsolutePath = QDir::currentPath(); // Setting toolPath
 
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
     ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
-    ui->tabWidget_2->tabBar()->hide();
+//    ui->tabWidget_2->tabBar()->hide();
     ui->lineEditSearch->setPlaceholderText("Search");
     QIcon search_1("./Resources/search.jpeg");
     ui->lineEditSearch->addAction(search_1, QLineEdit::LeadingPosition);
@@ -195,11 +198,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     ui->sanButton->setChecked(true);
 
-    ui->tabWidget_2->removeTab(0);
-    ui->tabWidget_2->removeTab(0);
-    bool b = connect(ui->tabWidget_2, SIGNAL(tabCloseRequested(int)), this, SLOT(closetab(int)));
-    b = connect(ui->tabWidget_2, SIGNAL(currentChanged(int)), this, SLOT(tabchanged(int)));
-    b = connect(&watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(directoryChanged(const QString&)));
+//    ui->tabWidget_2->removeTab(0);
+//    ui->tabWidget_2->removeTab(0);
+//    bool b = connect(ui->tabWidget_2, SIGNAL(tabCloseRequested(int)), this, SLOT(closetab(int)));
+//    b = connect(ui->tabWidget_2, SIGNAL(currentChanged(int)), this, SLOT(tabchanged(int)));
+//    b = connect(&watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(directoryChanged(const QString&)));
     connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(CustomContextMenuTriggered(const QPoint&)));
     connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
 
@@ -571,32 +574,24 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
     trieEditDis trie;
 
     // to make sure the right menu click is not taking place outside of the tabWidget_2
-    QRect tabRect = ui->tabWidget_2->frameGeometry();
+    QRect tabRect = ui->textBrowser->frameGeometry();
 
-        QPoint topLeftPoint = tabRect.topLeft();
-        QPoint botRightPoint = tabRect.bottomRight();
+    QPoint topLeftPoint = tabRect.topLeft();
+    QPoint botRightPoint = tabRect.bottomRight();
 
-        int topLeftx = topLeftPoint.x();
-        int topLefty = topLeftPoint.y();
-        int h =tabRect.height();
-        int botRightx = botRightPoint.x();
-        int botRighty = botRightPoint.y();
+    int topLeftx = topLeftPoint.x();
+    int topLefty = topLeftPoint.y();
+    int h =tabRect.height();
+    int botRightx = botRightPoint.x();
+    int botRighty = botRightPoint.y();
+    QPoint point = ev->pos();
+    int px = point.x();
+    int py = point.y();
 
-//        qDebug()<<topLeftx<<","<<topLefty<<"\n";
-//        qDebug()<<botRightx<<","<<botRighty<<"\n";
+//  qDebug()<<px<<","<<py<<"\n";
 
-
-        QPoint point = ev->pos();
-        int px = point.x();
-        int py = point.y();
-
-//        qDebug()<<px<<","<<py<<"\n";
-
-        if(!(px>=topLeftx && px<=botRightx &&  py>=150 /*&& py<(botRighty)*/)) return;
+    if(!(px>=topLeftx && px<=botRightx &&  py>=150 /*&& py<(botRighty)*/)) return;
     //
-
-
-
 
     if (curr_browser)
     {
@@ -995,22 +990,22 @@ void MainWindow::on_actionEnglish_triggered()
  */
 void MainWindow::on_actionNew_triggered()
 {
-    CustomTextBrowser * b = new CustomTextBrowser(this);
-    b->setReadOnly(false);
-    b->setUndoRedoEnabled(true);            //User can use Undo/Redo commands
+//    CustomTextBrowser * b = new CustomTextBrowser(this);
+//    b->setReadOnly(false);
+//    b->setUndoRedoEnabled(true);            //User can use Undo/Redo commands
 
-    //! When opened tabs count is not zero
-    if (ui->tabWidget_2->count() != 0) {
-        for (int i = 0; i < ui->tabWidget_2->count(); i++) {
-            //!When opened file name is not set
-            if ("Untitled" == ui->tabWidget_2->tabText(i)) {
-                ui->tabWidget_2->setCurrentIndex(i);
-            }
-        }
-    }
-    //! Setting current tab index
-    currentTabIndex = ui->tabWidget_2->addTab(b, "Untitled");
-    ui->tabWidget_2->setCurrentIndex(currentTabIndex);
+//    //! When opened tabs count is not zero
+//    if (ui->tabWidget_2->count() != 0) {
+//        for (int i = 0; i < ui->tabWidget_2->count(); i++) {
+//            //!When opened file name is not set
+//            if ("Untitled" == ui->tabWidget_2->tabText(i)) {
+//                ui->tabWidget_2->setCurrentIndex(i);
+//            }
+//        }
+//    }
+//    //! Setting current tab index
+//    currentTabIndex = ui->tabWidget_2->addTab(b, "Untitled");
+//    ui->tabWidget_2->setCurrentIndex(currentTabIndex);
 }
 
 /*!
@@ -1276,7 +1271,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         //    QDir().mkdir(mProject.GetDir().absolutePath() + "/Images/Inserted");
 
         QMessageBox::information(0, "Success", "Project opened successfully.");
-        ui->tabWidget_2->removeTab(0);
+//        ui->tabWidget_2->removeTab(0);
         //!Genearte image.xml for figure/table/equation entries and initialize these values by 1.
 
         markRegion objectMarkRegion;
@@ -1741,15 +1736,15 @@ void MainWindow::SaveFile_GUI_Postprocessing()
             Inds_file.replace(".html", ".txt");
             QString Corr_file = Inds_file;
             Corr_file.replace(".txt", ".html");
-            for (int i = 0; i < ui->tabWidget_2->count(); i++)
-            {
-                QString tab_name = ui->tabWidget_2->tabText(i);
-                if (tab_name == Inds_file || tab_name == Corr_file)
-                {
-                    auto b = (CustomTextBrowser*)ui->tabWidget_2->widget(i);
+//            for (int i = 0; i < ui->tabWidget_2->count(); i++)
+//            {
+//                QString tab_name = ui->tabWidget_2->tabText(i);
+//                if (tab_name == Inds_file || tab_name == Corr_file)
+//                {
+                    auto b = (CustomTextBrowser*)ui->textBrowser;
                     b->setReadOnly(true);
-                }
-            }
+//                }
+//            }
         }
     }
 
@@ -1998,23 +1993,23 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
      * 4. Page number extracted from the tab name is incremented and set as the new tab name
      * 5. Loads the file with the incremented page number
      * */
-
-    //! Checking if the file is saved else saves the file
+//    qDebug()<<"page = "<<currentTabPageName;
+//    //! Checking if the file is saved else saves the file
     if(curr_browser) {
-        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {    //fetching the text from the key(tab name) and comparing it to current browser text
+//        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {    //fetching the text from the key(tab name) and comparing it to current browser text
 
-            QMessageBox currBox;
-            currBox.setWindowTitle("Save?");
-            currBox.setIcon(QMessageBox::Question);
-            currBox.setInformativeText("Do you want to save this file?");
-            QPushButton *okButton = currBox.addButton(QMessageBox::StandardButton::Ok);
-            QPushButton *noButton = currBox.addButton(QMessageBox::StandardButton::No);
-            currBox.exec();
+//            QMessageBox currBox;
+//            currBox.setWindowTitle("Save?");
+//            currBox.setIcon(QMessageBox::Question);
+//            currBox.setInformativeText("Do you want to save this file?");
+//            QPushButton *okButton = currBox.addButton(QMessageBox::StandardButton::Ok);
+//            QPushButton *noButton = currBox.addButton(QMessageBox::StandardButton::No);
+//            currBox.exec();
 
 
-            if (currBox.clickedButton() == okButton)
-                on_actionSave_triggered();
-        }
+//            if (currBox.clickedButton() == okButton)
+//                on_actionSave_triggered();
+//        }
 
         string localFilename = mFilename.toUtf8().constData();
 
@@ -2050,7 +2045,7 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
                 {
                     index = model->index(i+1, 0, parentIndex);
                     treeItemLabel = index.data(Qt::DisplayRole).toString();
-                    currentTabPageName = treeItemLabel;
+                    //currentTabPageName = treeItemLabel;
                     file_click(index);
 //                    LoadDocument(file, ext, currentTabPageName);
                     break;
@@ -2077,24 +2072,25 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
      * 4. Decrement the page number extracted from tab name and sets it as new tab name
      * 5. Loads the file with the decremented page number
      * */
-
-    //! Check if the file is saved or not
+//    qDebug()<<"page "<<currentTabPageName;
+//    //! Check if the file is saved or not
     if(curr_browser) {
-        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
+//        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
 
-            QMessageBox currBox2;
-            currBox2.setWindowTitle("Save?");
-            currBox2.setIcon(QMessageBox::Question);
-            currBox2.setInformativeText("Do you want to save " + currentTabPageName + " file?");
-            QPushButton *okButton2 = currBox2.addButton(QMessageBox::StandardButton::Ok);
-            QPushButton *noButton2 = currBox2.addButton(QMessageBox::StandardButton::No);
-            currBox2.exec();
+//            QMessageBox currBox2;
+//            currBox2.setWindowTitle("Save?");
+//            currBox2.setIcon(QMessageBox::Question);
+//            currBox2.setInformativeText("Do you want to save " + currentTabPageName + " file?");
+//            QPushButton *okButton2 = currBox2.addButton(QMessageBox::StandardButton::Ok);
+//            QPushButton *noButton2 = currBox2.addButton(QMessageBox::StandardButton::No);
+//            currBox2.exec();
 
 
-            if (currBox2.clickedButton() == okButton2)
-                on_actionSave_triggered();
-        }
-
+//            if (currBox2.clickedButton() == okButton2)
+//                on_actionSave_triggered();
+//        }
+//    }
+//qDebug()<<"page "<<currentTabPageName;
         string localFilename = mFilename.toUtf8().constData();
         //! Extract page number from the localFilename
         string no = "";
@@ -2126,7 +2122,7 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
                 {
                     index = model->index(i-1, 0, parentIndex);
                     treeItemLabel = index.data(Qt::DisplayRole).toString();
-                    currentTabPageName = treeItemLabel;
+                    //currentTabPageName = treeItemLabel;
                     file_click(index);
 //                    LoadDocument(file, ext, currentTabPageName);
                     break;
@@ -2285,16 +2281,16 @@ void MainWindow::WordCount()
 
     if(curr_browser){
     QString extText = curr_browser->toPlainText();
-      //!Removes these symbol while country
-       extText.remove("?");
-       extText.remove("|");
-       extText.remove("`");
-       extText.remove("[");
-       extText.remove("]");
-       extText.remove("'");
-       extText.remove(",");
+  //!Removes these symbol while counting
+   extText.remove("?");
+   extText.remove("|");
+   extText.remove("`");
+   extText.remove("[");
+   extText.remove("]");
+   extText.remove("'");
+   extText.remove(",");
 
-       int wordcnt = extText.split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
+   int wordcnt = extText.split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
     QString toshow = QString::number(wordcnt)+" Words";
     ui->lineEdit_3->setText(toshow);
 
@@ -7160,12 +7156,29 @@ QString GetFilter(QString & Name, const QStringList &list) {
  */
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     //!Keeps track of current , previous and next page.
-    if(ui->tabWidget_2->currentIndex() >=0 && NextPrevTrig ==0)
-    {
-        closetab(ui->tabWidget_2->currentIndex());
-        ui->tabWidget_2->removeTab(0);
-    }
+//    if(ui->tabWidget_2->currentIndex() >=0 && NextPrevTrig ==0)
+//    {
+//        closetab(ui->tabWidget_2->currentIndex());
+//        ui->tabWidget_2->removeTab(0);
+//    }
+    //-
+    if(curr_browser) {
+        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
 
+            QMessageBox currBox2;
+            currBox2.setWindowTitle("Save?");
+            currBox2.setIcon(QMessageBox::Question);
+            currBox2.setInformativeText("Do you want to save " + currentTabPageName + " file?");
+            QPushButton *okButton2 = currBox2.addButton(QMessageBox::StandardButton::Ok);
+            QPushButton *noButton2 = currBox2.addButton(QMessageBox::StandardButton::No);
+            currBox2.exec();
+
+
+            if (currBox2.clickedButton() == okButton2)
+                on_actionSave_triggered();
+        }
+    }
+    //-
     f->open(QIODevice::ReadOnly);
     QFileInfo finfo(f->fileName());
 
@@ -7175,21 +7188,23 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     //!Retreives current folder details
     current_folder = finfo.dir().dirName();
     QString fileName = finfo.fileName();
-    if (ui->tabWidget_2->count() != 0) {
-        for (int i = 0; i < ui->tabWidget_2->count(); i++) {   //iterating over no of opened tb/page
-            if (name == ui->tabWidget_2->tabText(i)) {
-                ui->tabWidget_2->setCurrentIndex(i);
-                setMFilename(f->fileName());
-                UpdateFileBrekadown();
-                f->close();
-                return;
-            }
-        }
-    }
+//    if (ui->tabWidget_2->count() != 0) {
+//        for (int i = 0; i < ui->tabWidget_2->count(); i++) {   //iterating over no of opened tb/page
+//            if (name == ui->tabWidget_2->tabText(i)) {
+//                ui->tabWidget_2->setCurrentIndex(i);
+//                setMFilename(f->fileName());
+//                UpdateFileBrekadown();
+//                f->close();
+//                return;
+//            }
+//        }
+//    }
     setMFilename(mFilename = f->fileName());
     UpdateFileBrekadown();
     CustomTextBrowser * b = new CustomTextBrowser(this);
     b->setReadOnly(false);
+    b->setStyleSheet("background-color:white; color:black;");
+
 
     if (!isVerifier && current_folder == "Inds") {     //checks if role is not verifier
         QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
@@ -7340,21 +7355,24 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     b->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
     b->setUndoRedoEnabled(true);
 
-    if(fileFlag) {
-        curr_browser = (CustomTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
+//    if(fileFlag) {
+        curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
+        curr_browser->setStyleSheet("background-color:white; color:black;");
         curr_browser->setDocument(b->document());
-        ui->tabWidget_2->setTabText(currentTabIndex, name);
+//        ui->tabWidget_2->setTabText(currentTabIndex, name);
         tabchanged(currentTabIndex);
 
-    }
-    else {
-        currentTabIndex = ui->tabWidget_2->addTab(b, name);
-        ui->tabWidget_2->setCurrentIndex(currentTabIndex);
-    }
-    QString qstr = ui->tabWidget_2->tabText(currentTabIndex);
-    string str = qstr.toStdString();
-    str.erase(remove(str.begin(), str.end(), ' '), str.end());
-    currentTabPageName=QString::fromStdString(str);
+//    }
+//    else {
+//        currentTabIndex = ui->tabWidget_2->addTab(b, name);
+//        ui->tabWidget_2->setCurrentIndex(currentTabIndex);
+//    }
+//    QString qstr = ui->tabWidget_2->tabText(currentTabIndex);
+//    string str = qstr.toStdString();
+//    str.erase(remove(str.begin(), str.end(), ' '), str.end());
+//    currentTabPageName=QString::fromStdString(str);
+    QFileInfo info(*f);
+    currentTabPageName = info.fileName();
 
     gInitialTextHtml[currentTabPageName] = b->toHtml();
 
@@ -7698,32 +7716,32 @@ void MainWindow::CustomContextMenuTriggered(const QPoint & p)
 void MainWindow::closetab(int idx)
 {
 
-    CustomTextBrowser *closing_browser = (CustomTextBrowser*)ui->tabWidget_2->widget(idx);
-    QString closing_browserHtml = closing_browser->toHtml();
-    QString qstr = ui->tabWidget_2->tabText(idx);
+//    CustomTextBrowser *closing_browser = (CustomTextBrowser*)ui->tabWidget_2->widget(idx);
+//    QString closing_browserHtml = closing_browser->toHtml();
+//    QString qstr = ui->tabWidget_2->tabText(idx);
 
-    string str = qstr.toStdString();
-    str.erase(remove(str.begin(), str.end(), ' '), str.end());
-   QString closingTabPageName = QString::fromStdString(str);
+//    string str = qstr.toStdString();
+//    str.erase(remove(str.begin(), str.end(), ' '), str.end());
+//   QString closingTabPageName = QString::fromStdString(str);
 
-    if(!closing_browser->isReadOnly() && (closing_browserHtml != gInitialTextHtml[closingTabPageName]))
-    {
+//    if(!closing_browser->isReadOnly() && (closing_browserHtml != gInitialTextHtml[closingTabPageName]))
+//    {
 
-        QMessageBox saveBox2;
-        saveBox2.setWindowTitle("Save ?");
-        saveBox2.setIcon(QMessageBox::Question);
-        saveBox2.setInformativeText("Do you want to save " + closingTabPageName + " file?");
-        QPushButton *OKButton = saveBox2.addButton(QMessageBox::StandardButton::Ok);
-        QPushButton *NOButton = saveBox2.addButton(QMessageBox::StandardButton::No);
-        saveBox2.exec();
+//        QMessageBox saveBox2;
+//        saveBox2.setWindowTitle("Save ?");
+//        saveBox2.setIcon(QMessageBox::Question);
+//        saveBox2.setInformativeText("Do you want to save " + closingTabPageName + " file?");
+//        QPushButton *OKButton = saveBox2.addButton(QMessageBox::StandardButton::Ok);
+//        QPushButton *NOButton = saveBox2.addButton(QMessageBox::StandardButton::No);
+//        saveBox2.exec();
 
 
 
-        if (saveBox2.clickedButton() == OKButton)
-            on_actionSave_triggered();
-    }
-    delete ui->tabWidget_2->widget(idx);
-    //deleteEditedFilesLog();
+//        if (saveBox2.clickedButton() == OKButton)
+//            on_actionSave_triggered();
+//    }
+//    delete ui->tabWidget_2->widget(idx);
+//    //deleteEditedFilesLog();
 }
 
 /*!
@@ -7736,80 +7754,80 @@ void MainWindow::closetab(int idx)
  */
 void MainWindow::tabchanged(int idx)
 {
-    currentTabIndex = idx;
-    curr_browser = (CustomTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
-    QString qstr = ui->tabWidget_2->tabText(currentTabIndex);
-    string str = qstr.toStdString();
-    str.erase(remove(str.begin(), str.end(), ' '), str.end());
-    currentTabPageName=QString::fromStdString(str);
+//    currentTabIndex = idx;
+//    curr_browser = (CustomTextBrowser*)ui->tabWidget_2->widget(currentTabIndex);
+//    QString qstr = ui->tabWidget_2->tabText(currentTabIndex);
+//    string str = qstr.toStdString();
+//    str.erase(remove(str.begin(), str.end(), ' '), str.end());
+//    currentTabPageName=QString::fromStdString(str);
 
-    if(mRole=="Corrector" | mRole=="Verifier"){
-        setMFilename(mProject.GetDir().absolutePath() + "/" + gCurrentDirName + "/" + currentTabPageName);
-    }
-    else{
-        setMFilename(mProject.GetDir().absolutePath() + "/Inds/" + currentTabPageName);
-          }
-    UpdateFileBrekadown();
+//    if(mRole=="Corrector" | mRole=="Verifier"){
+//        setMFilename(mProject.GetDir().absolutePath() + "/" + gCurrentDirName + "/" + currentTabPageName);
+//    }
+//    else{
+//        setMFilename(mProject.GetDir().absolutePath() + "/Inds/" + currentTabPageName);
+//          }
+//    UpdateFileBrekadown();
 
 
-    QString imagePathFile = mFilename;
-    imagePathFile.replace("CorrectorOutput", "Images");
-    imagePathFile.replace("VerifierOutput", "Images");
-    imagePathFile.replace("Inds", "Images");
-    QString temp = imagePathFile;
-    int flag=0;
-    temp.replace(".txt", ".jpeg");
-    if (QFile::exists(temp) && flag==0)
-    {
-        imagePathFile=temp;
-        QFile *pImageFile = new QFile(imagePathFile);
-        flag=1;
-        LoadImageFromFile(pImageFile);
-    }
-    else
-    {
-        temp=imagePathFile;
-    }
-    temp.replace(".html", ".jpeg");
-    if (QFile::exists(temp) && flag==0)
-    {
-        imagePathFile=temp;
-        QFile *pImageFile = new QFile(imagePathFile);
-        flag=1;
-        LoadImageFromFile(pImageFile);
-    }
-    else
-    {
-        temp=imagePathFile;
-    }
-    temp.replace(".html", ".png");
-    if (QFile::exists(temp) && flag==0)
-    {
-        imagePathFile=temp;
-        QFile *pImageFile = new QFile(imagePathFile);
-        flag=1;
-        LoadImageFromFile(pImageFile);
-    }
-    else
-    {
-        temp=imagePathFile;
-    }
-    temp.replace(".html", ".jpg");
-    if (QFile::exists(temp) && flag==0)
-    {
-        imagePathFile=temp;
-        QFile *pImageFile = new QFile(imagePathFile);
-        flag=1;
-        LoadImageFromFile(pImageFile);
-    }
-    else
-    {
-        temp=imagePathFile;
-    }
+//    QString imagePathFile = mFilename;
+//    imagePathFile.replace("CorrectorOutput", "Images");
+//    imagePathFile.replace("VerifierOutput", "Images");
+//    imagePathFile.replace("Inds", "Images");
+//    QString temp = imagePathFile;
+//    int flag=0;
+//    temp.replace(".txt", ".jpeg");
+//    if (QFile::exists(temp) && flag==0)
+//    {
+//        imagePathFile=temp;
+//        QFile *pImageFile = new QFile(imagePathFile);
+//        flag=1;
+//        LoadImageFromFile(pImageFile);
+//    }
+//    else
+//    {
+//        temp=imagePathFile;
+//    }
+//    temp.replace(".html", ".jpeg");
+//    if (QFile::exists(temp) && flag==0)
+//    {
+//        imagePathFile=temp;
+//        QFile *pImageFile = new QFile(imagePathFile);
+//        flag=1;
+//        LoadImageFromFile(pImageFile);
+//    }
+//    else
+//    {
+//        temp=imagePathFile;
+//    }
+//    temp.replace(".html", ".png");
+//    if (QFile::exists(temp) && flag==0)
+//    {
+//        imagePathFile=temp;
+//        QFile *pImageFile = new QFile(imagePathFile);
+//        flag=1;
+//        LoadImageFromFile(pImageFile);
+//    }
+//    else
+//    {
+//        temp=imagePathFile;
+//    }
+//    temp.replace(".html", ".jpg");
+//    if (QFile::exists(temp) && flag==0)
+//    {
+//        imagePathFile=temp;
+//        QFile *pImageFile = new QFile(imagePathFile);
+//        flag=1;
+//        LoadImageFromFile(pImageFile);
+//    }
+//    else
+//    {
+//        temp=imagePathFile;
+//    }
 
-    myTimer.start();
-    DisplayTimeLog();
-    //DisplayJsonDict(b);
+//    myTimer.start();
+//    DisplayTimeLog();
+//    //DisplayJsonDict(b);
 }
 
 /*!
@@ -7912,22 +7930,13 @@ void MainWindow::directoryChanged(const QString &path)
 */
 bool MainWindow::checkUnsavedWork() {
     //!iterate over tab counts and checks for wok in the text browser of that tab
-    for (int i = 0; i < ui->tabWidget_2->count(); ++i) {
-        ui->tabWidget_2->setCurrentIndex(i);
-        CustomTextBrowser *closing_browser = (CustomTextBrowser*)ui->tabWidget_2->widget(i);
-        QString closing_browserHtml = closing_browser->toHtml();
-        QString closingTabPageName = ui->tabWidget_2->tabText(i);
-        QFile f(mFilename);
-        QFileInfo fileInfo(f.fileName());
-        QString filename(fileInfo.fileName());
-        if (filename == "Untitled" || closing_browser->isReadOnly()) {
-            continue;
-        }
-        if(closing_browserHtml != gInitialTextHtml[closingTabPageName]) {
-            return true;
-        }
+
+    QString closing_browserHtml = curr_browser->toHtml();
+    if(closing_browserHtml != gInitialTextHtml[currentTabPageName]) {
+        return true;
     }
-    return false;
+    else
+        return false;
 }
 
 /*!
@@ -7939,22 +7948,9 @@ bool MainWindow::checkUnsavedWork() {
 */
 void MainWindow::saveAllWork()
 {
-    for (int i = 0; i < ui->tabWidget_2->count(); ++i)
-    {
-        ui->tabWidget_2->setCurrentIndex(i);
-        CustomTextBrowser *closing_browser = (CustomTextBrowser*)ui->tabWidget_2->widget(i);
-        QString closing_browserHtml = closing_browser->toHtml();
-        QString closingTabPageName = ui->tabWidget_2->tabText(i);
-        QFile f(mFilename);
-        QFileInfo fileInfo(f.fileName());
-        QString filename(fileInfo.fileName());
-        if (filename == "Untitled")
-        {
-            continue;
-        }
-        if(!closing_browser->isReadOnly() && closing_browserHtml != gInitialTextHtml[closingTabPageName]) {
-            on_actionSave_triggered();
-        }
+    QString closing_browserHtml = curr_browser->toHtml();
+    if(!curr_browser->isReadOnly() && closing_browserHtml != gInitialTextHtml[currentTabPageName]) {
+        on_actionSave_triggered();
     }
 }
 
@@ -7967,16 +7963,9 @@ void MainWindow::saveAllWork()
 */
 void MainWindow::on_actionSave_All_triggered()  //enable when required
 {
-    if(ui->tabWidget_2->count()!=0)
-    {
-        //!Iterate over tab count and calls action save function to save all works of that tab
-        for(int i=0;i<ui->tabWidget_2->count();i++)
-        {
-            ui->tabWidget_2->setCurrentIndex(i);
-            UpdateFileBrekadown();
-            on_actionSave_triggered();
-        }
-    }
+
+    UpdateFileBrekadown();
+    on_actionSave_triggered();
 
 }
 
@@ -8751,16 +8740,8 @@ void MainWindow::on_actionUpload_triggered()
         QMessageBox::information(0, "Error", "Please open a Project first.");
         return;
     }
-    int idx = ui->tabWidget_2->currentIndex();
-    CustomTextBrowser *closing_browser = (CustomTextBrowser*)ui->tabWidget_2->widget(idx);
-    QString closing_browserHtml = closing_browser->toHtml();
-    QString qstr = ui->tabWidget_2->tabText(idx);
-
-    string str = qstr.toStdString();
-    str.erase(remove(str.begin(), str.end(), ' '), str.end());
-    QString closingTabPageName = QString::fromStdString(str);
-
-    if (closing_browserHtml != gInitialTextHtml[closingTabPageName])
+    QString closing_browserHtml = curr_browser->toHtml();
+    if (closing_browserHtml != gInitialTextHtml[currentTabPageName])
     {
         QMessageBox::information(0, "Error", "Please save the current opened file first.");
     }

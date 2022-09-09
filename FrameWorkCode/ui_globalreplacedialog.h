@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'globalreplacedialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.3
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -188,14 +188,14 @@ public:
 
     void retranslateUi(QDialog *GlobalReplaceDialog)
     {
-        GlobalReplaceDialog->setWindowTitle(QCoreApplication::translate("GlobalReplaceDialog", "Dialog", nullptr));
-        groupBox_2->setTitle(QCoreApplication::translate("GlobalReplaceDialog", "Choose the words to be replaced", nullptr));
-        checkBox->setText(QCoreApplication::translate("GlobalReplaceDialog", "Select All", nullptr));
-        groupBox->setTitle(QCoreApplication::translate("GlobalReplaceDialog", "Replace In All Pages", nullptr));
-        checkBox_2->setText(QCoreApplication::translate("GlobalReplaceDialog", "Select All", nullptr));
+        GlobalReplaceDialog->setWindowTitle(QApplication::translate("GlobalReplaceDialog", "Dialog", nullptr));
+        groupBox_2->setTitle(QApplication::translate("GlobalReplaceDialog", "Choose the words to be replaced", nullptr));
+        checkBox->setText(QApplication::translate("GlobalReplaceDialog", "Select All", nullptr));
+        groupBox->setTitle(QApplication::translate("GlobalReplaceDialog", "Replace In All Pages", nullptr));
+        checkBox_2->setText(QApplication::translate("GlobalReplaceDialog", "Select All", nullptr));
         pushButton->setText(QString());
-        previewButton->setText(QCoreApplication::translate("GlobalReplaceDialog", "Preview", nullptr));
-        applyButton->setText(QCoreApplication::translate("GlobalReplaceDialog", "Save and Replace", nullptr));
+        previewButton->setText(QApplication::translate("GlobalReplaceDialog", "Preview", nullptr));
+        applyButton->setText(QApplication::translate("GlobalReplaceDialog", "Save and Replace", nullptr));
     } // retranslateUi
 
 };

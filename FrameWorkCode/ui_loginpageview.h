@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'loginpageview.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.3
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -92,11 +92,11 @@ public:
 
     void retranslateUi(QDialog *LoginPageView)
     {
-        LoginPageView->setWindowTitle(QCoreApplication::translate("LoginPageView", "Dialog", nullptr));
-        groupBox->setTitle(QCoreApplication::translate("LoginPageView", "Log-In", nullptr));
-        loginButton->setText(QCoreApplication::translate("LoginPageView", "Login", nullptr));
-        unameLabel->setText(QCoreApplication::translate("LoginPageView", "Username:", nullptr));
-        pwdLabel->setText(QCoreApplication::translate("LoginPageView", "Password:", nullptr));
+        LoginPageView->setWindowTitle(QApplication::translate("LoginPageView", "Dialog", nullptr));
+        groupBox->setTitle(QApplication::translate("LoginPageView", "Log-In", nullptr));
+        loginButton->setText(QApplication::translate("LoginPageView", "Login", nullptr));
+        unameLabel->setText(QApplication::translate("LoginPageView", "Username:", nullptr));
+        pwdLabel->setText(QApplication::translate("LoginPageView", "Password:", nullptr));
     } // retranslateUi
 
 };

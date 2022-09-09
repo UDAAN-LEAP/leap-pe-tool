@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'loadingspinner.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.3
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -46,10 +46,10 @@ public:
 
     void retranslateUi(QDialog *LoadingSpinner)
     {
-        LoadingSpinner->setWindowTitle(QCoreApplication::translate("LoadingSpinner", "Form", nullptr));
-        labelspin->setText(QCoreApplication::translate("LoadingSpinner", "TextLabel", nullptr));
-        label->setText(QCoreApplication::translate("LoadingSpinner", "Please Wait", nullptr));
-        label_2->setText(QCoreApplication::translate("LoadingSpinner", "Loading...", nullptr));
+        LoadingSpinner->setWindowTitle(QApplication::translate("LoadingSpinner", "Form", nullptr));
+        labelspin->setText(QApplication::translate("LoadingSpinner", "TextLabel", nullptr));
+        label->setText(QApplication::translate("LoadingSpinner", "Please Wait", nullptr));
+        label_2->setText(QApplication::translate("LoadingSpinner", "Loading...", nullptr));
     } // retranslateUi
 
 };

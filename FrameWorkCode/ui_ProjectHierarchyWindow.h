@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ProjectHierarchyWindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.3
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -47,7 +47,7 @@ public:
 
     void retranslateUi(QWidget *ProjectHierarchyWindow)
     {
-        ProjectHierarchyWindow->setWindowTitle(QCoreApplication::translate("ProjectHierarchyWindow", "ProjectHierarchyWindow", nullptr));
+        ProjectHierarchyWindow->setWindowTitle(QApplication::translate("ProjectHierarchyWindow", "ProjectHierarchyWindow", nullptr));
     } // retranslateUi
 
 };

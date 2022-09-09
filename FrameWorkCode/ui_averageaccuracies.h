@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'averageaccuracies.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.3
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -208,13 +208,13 @@ public:
 
     void retranslateUi(QDialog *AverageAccuracies)
     {
-        AverageAccuracies->setWindowTitle(QCoreApplication::translate("AverageAccuracies", "Dialog", nullptr));
-        label_4->setText(QCoreApplication::translate("AverageAccuracies", "Average Accuracy", nullptr));
-        label_8->setText(QCoreApplication::translate("AverageAccuracies", "Word Level", nullptr));
-        label_9->setText(QCoreApplication::translate("AverageAccuracies", "Character Level", nullptr));
-        label_10->setText(QCoreApplication::translate("AverageAccuracies", "Average Errors", nullptr));
-        label_11->setText(QCoreApplication::translate("AverageAccuracies", "Word Level", nullptr));
-        label_12->setText(QCoreApplication::translate("AverageAccuracies", "Character Level", nullptr));
+        AverageAccuracies->setWindowTitle(QApplication::translate("AverageAccuracies", "Dialog", nullptr));
+        label_4->setText(QApplication::translate("AverageAccuracies", "Average Accuracy", nullptr));
+        label_8->setText(QApplication::translate("AverageAccuracies", "Word Level", nullptr));
+        label_9->setText(QApplication::translate("AverageAccuracies", "Character Level", nullptr));
+        label_10->setText(QApplication::translate("AverageAccuracies", "Average Errors", nullptr));
+        label_11->setText(QApplication::translate("AverageAccuracies", "Word Level", nullptr));
+        label_12->setText(QApplication::translate("AverageAccuracies", "Character Level", nullptr));
     } // retranslateUi
 
 };

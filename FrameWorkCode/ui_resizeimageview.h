@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'resizeimageview.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.3
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -126,12 +126,12 @@ public:
 
     void retranslateUi(QDialog *ResizeImageView)
     {
-        ResizeImageView->setWindowTitle(QCoreApplication::translate("ResizeImageView", "Dialog", nullptr));
-        label->setText(QCoreApplication::translate("ResizeImageView", "Image Width", nullptr));
-        label_2->setText(QCoreApplication::translate("ResizeImageView", "Image Height", nullptr));
-        checkBox->setText(QCoreApplication::translate("ResizeImageView", "Keep Aspect Ratio", nullptr));
-        Cancel->setText(QCoreApplication::translate("ResizeImageView", "Cancel", nullptr));
-        Ok->setText(QCoreApplication::translate("ResizeImageView", "Ok", nullptr));
+        ResizeImageView->setWindowTitle(QApplication::translate("ResizeImageView", "Dialog", nullptr));
+        label->setText(QApplication::translate("ResizeImageView", "Image Width", nullptr));
+        label_2->setText(QApplication::translate("ResizeImageView", "Image Height", nullptr));
+        checkBox->setText(QApplication::translate("ResizeImageView", "Keep Aspect Ratio", nullptr));
+        Cancel->setText(QApplication::translate("ResizeImageView", "Cancel", nullptr));
+        Ok->setText(QApplication::translate("ResizeImageView", "Ok", nullptr));
     } // retranslateUi
 
 };
