@@ -20,8 +20,11 @@ CustomTextBrowser::CustomTextBrowser(QWidget *parent): QTextBrowser(parent)
 	this->setCompleter(c);
 
     QAbstractItemModel *temp;
-    engModel = modelFromFile(":/WordList/wordlists/english.txt") ;
-    devModel = modelFromFile(":/WordList/wordlists/sanskrit.txt") ;
+    if(modelFlag == 0){
+        engModel = modelFromFile(":/WordList/wordlists/english.txt");
+        devModel = modelFromFile(":/WordList/wordlists/sanskrit.txt");
+        modelFlag = 1;
+    }
 }
 
 CustomTextBrowser::~CustomTextBrowser()

@@ -23,9 +23,9 @@ public:
     void setCompleter(QCompleter *c);
     QCompleter *completer() const;
     QAbstractItemModel *modelFromFile(const QString&);
-    int modelFlag = 0;
-    QAbstractItemModel *engModel ;
-    QAbstractItemModel *devModel ;
+    static int modelFlag;
+    static QAbstractItemModel *engModel ;
+    static QAbstractItemModel *devModel ;
 
 protected:
     void keyPressEvent(QKeyEvent *e) override;

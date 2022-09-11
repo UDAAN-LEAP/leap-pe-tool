@@ -14,6 +14,10 @@
 #include <QDateTime>
 #include <signal.h>
 #include "crashlog.h"
+#include <QAbstractItemModel>
+QAbstractItemModel* CustomTextBrowser::engModel = nullptr;
+QAbstractItemModel* CustomTextBrowser::devModel = nullptr;
+int CustomTextBrowser::modelFlag = 0;
 
 /*!
 * \fn    signalHandler
