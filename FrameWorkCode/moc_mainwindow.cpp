@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[221];
-    char stringdata0[4423];
+    QByteArrayData data[220];
+    char stringdata0[4400];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -44,222 +44,220 @@ QT_MOC_LITERAL(8, 85, 5), // "input"
 QT_MOC_LITERAL(9, 91, 11), // "eventFilter"
 QT_MOC_LITERAL(10, 103, 7), // "QEvent*"
 QT_MOC_LITERAL(11, 111, 15), // "saveImageRegion"
-QT_MOC_LITERAL(12, 127, 22), // "on_actionNew_triggered"
-QT_MOC_LITERAL(13, 150, 17), // "AddRecentProjects"
-QT_MOC_LITERAL(14, 168, 23), // "on_actionSave_triggered"
-QT_MOC_LITERAL(15, 192, 26), // "on_actionSave_As_triggered"
-QT_MOC_LITERAL(16, 219, 30), // "on_actionSpell_Check_triggered"
-QT_MOC_LITERAL(17, 250, 15), // "mousePressEvent"
-QT_MOC_LITERAL(18, 266, 12), // "QMouseEvent*"
-QT_MOC_LITERAL(19, 279, 2), // "ev"
-QT_MOC_LITERAL(20, 282, 13), // "menuSelection"
-QT_MOC_LITERAL(21, 296, 8), // "QAction*"
-QT_MOC_LITERAL(22, 305, 6), // "action"
-QT_MOC_LITERAL(23, 312, 17), // "translate_replace"
-QT_MOC_LITERAL(24, 330, 15), // "clipboard_paste"
-QT_MOC_LITERAL(25, 346, 13), // "keyPressEvent"
-QT_MOC_LITERAL(26, 360, 10), // "QKeyEvent*"
-QT_MOC_LITERAL(27, 371, 31), // "on_actionLoadGDocPage_triggered"
-QT_MOC_LITERAL(28, 403, 31), // "on_actionToDevanagari_triggered"
-QT_MOC_LITERAL(29, 435, 27), // "on_actionLoadData_triggered"
-QT_MOC_LITERAL(30, 463, 27), // "on_actionLoadDict_triggered"
-QT_MOC_LITERAL(31, 491, 31), // "on_actionLoadOCRWords_triggered"
-QT_MOC_LITERAL(32, 523, 29), // "on_actionLoadDomain_triggered"
-QT_MOC_LITERAL(33, 553, 28), // "on_actionLoadSubPS_triggered"
-QT_MOC_LITERAL(34, 582, 33), // "on_actionLoadConfusions_trigg..."
-QT_MOC_LITERAL(35, 616, 23), // "on_actionSugg_triggered"
-QT_MOC_LITERAL(36, 640, 25), // "on_actionToSlp1_triggered"
-QT_MOC_LITERAL(37, 666, 27), // "on_actionSanskrit_triggered"
-QT_MOC_LITERAL(38, 694, 24), // "on_actionHindi_triggered"
-QT_MOC_LITERAL(39, 719, 26), // "on_actionEnglish_triggered"
-QT_MOC_LITERAL(40, 746, 28), // "on_actionLeftAlign_triggered"
-QT_MOC_LITERAL(41, 775, 29), // "on_actionRightAlign_triggered"
-QT_MOC_LITERAL(42, 805, 30), // "on_actionCentreAlign_triggered"
-QT_MOC_LITERAL(43, 836, 36), // "on_actionAllFontProperties_tr..."
-QT_MOC_LITERAL(44, 873, 25), // "on_actionUnBold_triggered"
-QT_MOC_LITERAL(45, 899, 33), // "on_actionJusitfiedAlign_trigg..."
-QT_MOC_LITERAL(46, 933, 28), // "on_actionHighlight_triggered"
-QT_MOC_LITERAL(47, 962, 28), // "on_actionFontBlack_triggered"
-QT_MOC_LITERAL(48, 991, 23), // "updateAverageAccuracies"
-QT_MOC_LITERAL(49, 1015, 40), // "on_actionViewAverageAccuracie..."
-QT_MOC_LITERAL(50, 1056, 31), // "on_actionOpen_Project_triggered"
-QT_MOC_LITERAL(51, 1088, 10), // "file_click"
-QT_MOC_LITERAL(52, 1099, 11), // "QModelIndex"
-QT_MOC_LITERAL(53, 1111, 4), // "indx"
-QT_MOC_LITERAL(54, 1116, 17), // "LoadImageFromFile"
-QT_MOC_LITERAL(55, 1134, 6), // "QFile*"
-QT_MOC_LITERAL(56, 1141, 4), // "file"
-QT_MOC_LITERAL(57, 1146, 26), // "CustomContextMenuTriggered"
-QT_MOC_LITERAL(58, 1173, 1), // "p"
-QT_MOC_LITERAL(59, 1175, 10), // "AddNewFile"
-QT_MOC_LITERAL(60, 1186, 13), // "OpenDirectory"
-QT_MOC_LITERAL(61, 1200, 10), // "RemoveFile"
-QT_MOC_LITERAL(62, 1211, 8), // "closetab"
-QT_MOC_LITERAL(63, 1220, 5), // "index"
-QT_MOC_LITERAL(64, 1226, 10), // "tabchanged"
-QT_MOC_LITERAL(65, 1237, 26), // "on_actionTurn_In_triggered"
-QT_MOC_LITERAL(66, 1264, 23), // "on_actionPush_triggered"
-QT_MOC_LITERAL(67, 1288, 26), // "on_actionFetch_2_triggered"
-QT_MOC_LITERAL(68, 1315, 35), // "on_actionVerifier_Turn_In_tri..."
-QT_MOC_LITERAL(69, 1351, 16), // "directoryChanged"
-QT_MOC_LITERAL(70, 1368, 4), // "path"
-QT_MOC_LITERAL(71, 1373, 30), // "on_actionAccuracyLog_triggered"
-QT_MOC_LITERAL(72, 1404, 33), // "on_compareCorrectorOutput_cli..."
-QT_MOC_LITERAL(73, 1438, 23), // "on_viewComments_clicked"
-QT_MOC_LITERAL(74, 1462, 26), // "on_actionZoom_In_triggered"
-QT_MOC_LITERAL(75, 1489, 27), // "on_actionZoom_Out_triggered"
-QT_MOC_LITERAL(76, 1517, 26), // "on_actionSymbols_triggered"
-QT_MOC_LITERAL(77, 1544, 35), // "on_actionInsert_Tab_Space_tri..."
-QT_MOC_LITERAL(78, 1580, 41), // "on_actionInsert_Horizontal_Li..."
-QT_MOC_LITERAL(79, 1622, 28), // "on_actionSubscript_triggered"
-QT_MOC_LITERAL(80, 1651, 30), // "on_actionSuperscript_triggered"
-QT_MOC_LITERAL(81, 1682, 19), // "UpdateFileBrekadown"
-QT_MOC_LITERAL(82, 1702, 28), // "on_actionAdd_Image_triggered"
-QT_MOC_LITERAL(83, 1731, 11), // "SaveTimeLog"
-QT_MOC_LITERAL(84, 1743, 14), // "DisplayTimeLog"
-QT_MOC_LITERAL(85, 1758, 31), // "on_actionResize_Image_triggered"
-QT_MOC_LITERAL(86, 1790, 13), // "LogHighlights"
-QT_MOC_LITERAL(87, 1804, 4), // "word"
-QT_MOC_LITERAL(88, 1809, 32), // "on_compareVerifierOutput_clicked"
-QT_MOC_LITERAL(89, 1842, 20), // "on_sanButton_toggled"
-QT_MOC_LITERAL(90, 1863, 7), // "checked"
-QT_MOC_LITERAL(91, 1871, 20), // "on_hinButton_toggled"
-QT_MOC_LITERAL(92, 1892, 28), // "on_actionLineSpace_triggered"
-QT_MOC_LITERAL(93, 1921, 23), // "on_actionUndo_triggered"
-QT_MOC_LITERAL(94, 1945, 23), // "on_actionRedo_triggered"
-QT_MOC_LITERAL(95, 1969, 30), // "on_actionNew_Project_triggered"
-QT_MOC_LITERAL(96, 2000, 33), // "on_actionInsert_Table_2_trigg..."
-QT_MOC_LITERAL(97, 2034, 10), // "closeEvent"
-QT_MOC_LITERAL(98, 2045, 12), // "QCloseEvent*"
-QT_MOC_LITERAL(99, 2058, 5), // "event"
-QT_MOC_LITERAL(100, 2064, 20), // "getAverageAccuracies"
-QT_MOC_LITERAL(101, 2085, 7), // "mainObj"
-QT_MOC_LITERAL(102, 2093, 9), // "sendEmail"
-QT_MOC_LITERAL(103, 2103, 7), // "message"
-QT_MOC_LITERAL(104, 2111, 36), // "on_actionInsert_Columnleft_tr..."
-QT_MOC_LITERAL(105, 2148, 37), // "on_actionInsert_Columnright_t..."
-QT_MOC_LITERAL(106, 2186, 34), // "on_actionInsert_Rowabove_trig..."
-QT_MOC_LITERAL(107, 2221, 34), // "on_actionInsert_Rowbelow_trig..."
-QT_MOC_LITERAL(108, 2256, 32), // "on_actionRemove_Column_triggered"
-QT_MOC_LITERAL(109, 2289, 29), // "on_actionRemove_Row_triggered"
-QT_MOC_LITERAL(110, 2319, 25), // "on_actionItalic_triggered"
-QT_MOC_LITERAL(111, 2345, 28), // "on_actionNonitalic_triggered"
-QT_MOC_LITERAL(112, 2374, 27), // "on_actionSave_All_triggered"
-QT_MOC_LITERAL(113, 2402, 35), // "on_actionFind_and_Replace_tri..."
-QT_MOC_LITERAL(114, 2438, 16), // "checkUnsavedWork"
-QT_MOC_LITERAL(115, 2455, 11), // "saveAllWork"
-QT_MOC_LITERAL(116, 2467, 12), // "readSettings"
-QT_MOC_LITERAL(117, 2480, 13), // "writeSettings"
-QT_MOC_LITERAL(118, 2494, 12), // "setMFilename"
-QT_MOC_LITERAL(119, 2507, 21), // "on_pushButton_clicked"
-QT_MOC_LITERAL(120, 2529, 23), // "on_pushButton_2_clicked"
-QT_MOC_LITERAL(121, 2553, 16), // "runGlobalReplace"
-QT_MOC_LITERAL(122, 2570, 16), // "QVector<QString>"
-QT_MOC_LITERAL(123, 2587, 28), // "globalReplaceQueryMessageBox"
-QT_MOC_LITERAL(124, 2616, 8), // "old_word"
-QT_MOC_LITERAL(125, 2625, 8), // "new_word"
-QT_MOC_LITERAL(126, 2634, 4), // "int&"
-QT_MOC_LITERAL(127, 2639, 3), // "chk"
-QT_MOC_LITERAL(128, 2643, 24), // "writeGlobalCPairsToFiles"
-QT_MOC_LITERAL(129, 2668, 9), // "file_path"
-QT_MOC_LITERAL(130, 2678, 21), // "QMap<QString,QString>"
-QT_MOC_LITERAL(131, 2700, 20), // "globalReplacementMap"
-QT_MOC_LITERAL(132, 2721, 36), // "addCurrentlyOpenFileToEditedF..."
-QT_MOC_LITERAL(133, 2758, 20), // "deleteEditedFilesLog"
-QT_MOC_LITERAL(134, 2779, 14), // "RecentPageInfo"
-QT_MOC_LITERAL(135, 2794, 14), // "isStringInFile"
-QT_MOC_LITERAL(136, 2809, 12), // "searchString"
-QT_MOC_LITERAL(137, 2822, 16), // "dumpStringToFile"
-QT_MOC_LITERAL(138, 2839, 6), // "string"
-QT_MOC_LITERAL(139, 2846, 9), // "highlight"
-QT_MOC_LITERAL(140, 2856, 42), // "getGlobalReplacementMapFromCh..."
-QT_MOC_LITERAL(141, 2899, 13), // "replacedWords"
-QT_MOC_LITERAL(142, 2913, 13), // "QVector<int>*"
-QT_MOC_LITERAL(143, 2927, 17), // "replaceInAllPages"
-QT_MOC_LITERAL(144, 2945, 25), // "on_actionas_PDF_triggered"
-QT_MOC_LITERAL(145, 2971, 27), // "on_actionGet_Help_triggered"
-QT_MOC_LITERAL(146, 2999, 27), // "on_actionTutorial_triggered"
-QT_MOC_LITERAL(147, 3027, 24), // "on_actionLinux_triggered"
-QT_MOC_LITERAL(148, 3052, 26), // "on_actionWindows_triggered"
-QT_MOC_LITERAL(149, 3079, 33), // "on_actionShortcut_Guide_trigg..."
-QT_MOC_LITERAL(150, 3113, 26), // "on_textBrowser_textChanged"
-QT_MOC_LITERAL(151, 3140, 26), // "on_zoom_Out_Button_clicked"
-QT_MOC_LITERAL(152, 3167, 25), // "on_zoom_In_Button_clicked"
-QT_MOC_LITERAL(153, 3193, 24), // "zoom_slider_valueChanged"
-QT_MOC_LITERAL(154, 3218, 5), // "value"
-QT_MOC_LITERAL(155, 3224, 17), // "zoom_slider_moved"
-QT_MOC_LITERAL(156, 3242, 17), // "zoomedUsingScroll"
-QT_MOC_LITERAL(157, 3260, 38), // "on_actionUndo_Global_Replace_..."
-QT_MOC_LITERAL(158, 3299, 29), // "undoGlobalReplace_Single_Word"
-QT_MOC_LITERAL(159, 3329, 7), // "oldWord"
-QT_MOC_LITERAL(160, 3337, 7), // "newWord"
-QT_MOC_LITERAL(161, 3345, 29), // "reverseGlobalReplacedWordsMap"
-QT_MOC_LITERAL(162, 3375, 38), // "getUndoGlobalReplaceMap_Multi..."
-QT_MOC_LITERAL(163, 3414, 28), // "replaceInAllFilesFromTSVfile"
-QT_MOC_LITERAL(164, 3443, 20), // "checkForValidTSVfile"
-QT_MOC_LITERAL(165, 3464, 6), // "QFile&"
-QT_MOC_LITERAL(166, 3471, 22), // "globalReplacePreviewfn"
-QT_MOC_LITERAL(167, 3494, 12), // "QVector<int>"
-QT_MOC_LITERAL(168, 3507, 22), // "getBeforeAndAfterWords"
-QT_MOC_LITERAL(169, 3530, 25), // "QMap<QString,QStringList>"
-QT_MOC_LITERAL(170, 3556, 5), // "fPath"
-QT_MOC_LITERAL(171, 3562, 25), // "on_actionUpload_triggered"
-QT_MOC_LITERAL(172, 3588, 20), // "on_justify_triggered"
-QT_MOC_LITERAL(173, 3609, 29), // "on_actionFont_Color_triggered"
-QT_MOC_LITERAL(174, 3639, 23), // "on_actionBold_triggered"
-QT_MOC_LITERAL(175, 3663, 26), // "SaveFile_GUI_Preprocessing"
-QT_MOC_LITERAL(176, 3690, 27), // "SaveFile_GUI_Postprocessing"
-QT_MOC_LITERAL(177, 3718, 13), // "GlobalReplace"
-QT_MOC_LITERAL(178, 3732, 12), // "stopSpinning"
-QT_MOC_LITERAL(179, 3745, 29), // "on_lineEditSearch_textChanged"
-QT_MOC_LITERAL(180, 3775, 4), // "arg1"
-QT_MOC_LITERAL(181, 3780, 20), // "on_action1_triggered"
-QT_MOC_LITERAL(182, 3801, 20), // "on_action2_triggered"
-QT_MOC_LITERAL(183, 3822, 20), // "on_action3_triggered"
-QT_MOC_LITERAL(184, 3843, 36), // "on_actionCheck_for_Updates_tr..."
-QT_MOC_LITERAL(185, 3880, 16), // "closeProgressBar"
-QT_MOC_LITERAL(186, 3897, 18), // "setProgressBarPerc"
-QT_MOC_LITERAL(187, 3916, 12), // "toDevanagari"
-QT_MOC_LITERAL(188, 3929, 4), // "text"
-QT_MOC_LITERAL(189, 3934, 15), // "on_find_clicked"
-QT_MOC_LITERAL(190, 3950, 30), // "on_actionPDF_Preview_triggered"
-QT_MOC_LITERAL(191, 3981, 5), // "print"
-QT_MOC_LITERAL(192, 3987, 9), // "QPrinter*"
-QT_MOC_LITERAL(193, 3997, 7), // "printer"
-QT_MOC_LITERAL(194, 4005, 30), // "on_actionChange_Role_triggered"
-QT_MOC_LITERAL(195, 4036, 13), // "bboxInsertion"
-QT_MOC_LITERAL(196, 4050, 1), // "f"
-QT_MOC_LITERAL(197, 4052, 19), // "finishedPdfCreation"
-QT_MOC_LITERAL(198, 4072, 8), // "exitCode"
-QT_MOC_LITERAL(199, 4081, 20), // "QProcess::ExitStatus"
-QT_MOC_LITERAL(200, 4102, 10), // "exitStatus"
-QT_MOC_LITERAL(201, 4113, 14), // "SearchOnGoogle"
-QT_MOC_LITERAL(202, 4128, 17), // "GoogleTranslation"
-QT_MOC_LITERAL(203, 4146, 17), // "insertImageAction"
-QT_MOC_LITERAL(204, 4164, 16), // "SaveFile_Backend"
-QT_MOC_LITERAL(205, 4181, 33), // "on_actionLoad_Next_Page_trigg..."
-QT_MOC_LITERAL(206, 4215, 33), // "on_actionLoad_Prev_Page_trigg..."
-QT_MOC_LITERAL(207, 4249, 12), // "LoadDocument"
-QT_MOC_LITERAL(208, 4262, 3), // "ext"
-QT_MOC_LITERAL(209, 4266, 4), // "name"
-QT_MOC_LITERAL(210, 4271, 15), // "pdfPrintIsReady"
-QT_MOC_LITERAL(211, 4287, 22), // "readOutputFromPdfPrint"
-QT_MOC_LITERAL(212, 4310, 16), // "insertCompletion"
-QT_MOC_LITERAL(213, 4327, 10), // "completion"
-QT_MOC_LITERAL(214, 4338, 12), // "focusInEvent"
-QT_MOC_LITERAL(215, 4351, 12), // "QFocusEvent*"
-QT_MOC_LITERAL(216, 4364, 1), // "e"
-QT_MOC_LITERAL(217, 4366, 13), // "loadHtmlInDoc"
-QT_MOC_LITERAL(218, 4380, 17), // "blockCountChanged"
-QT_MOC_LITERAL(219, 4398, 11), // "storeBboxes"
-QT_MOC_LITERAL(220, 4410, 12) // "insertBboxes"
+QT_MOC_LITERAL(12, 127, 17), // "AddRecentProjects"
+QT_MOC_LITERAL(13, 145, 23), // "on_actionSave_triggered"
+QT_MOC_LITERAL(14, 169, 26), // "on_actionSave_As_triggered"
+QT_MOC_LITERAL(15, 196, 30), // "on_actionSpell_Check_triggered"
+QT_MOC_LITERAL(16, 227, 15), // "mousePressEvent"
+QT_MOC_LITERAL(17, 243, 12), // "QMouseEvent*"
+QT_MOC_LITERAL(18, 256, 2), // "ev"
+QT_MOC_LITERAL(19, 259, 13), // "menuSelection"
+QT_MOC_LITERAL(20, 273, 8), // "QAction*"
+QT_MOC_LITERAL(21, 282, 6), // "action"
+QT_MOC_LITERAL(22, 289, 17), // "translate_replace"
+QT_MOC_LITERAL(23, 307, 15), // "clipboard_paste"
+QT_MOC_LITERAL(24, 323, 13), // "keyPressEvent"
+QT_MOC_LITERAL(25, 337, 10), // "QKeyEvent*"
+QT_MOC_LITERAL(26, 348, 31), // "on_actionLoadGDocPage_triggered"
+QT_MOC_LITERAL(27, 380, 31), // "on_actionToDevanagari_triggered"
+QT_MOC_LITERAL(28, 412, 27), // "on_actionLoadData_triggered"
+QT_MOC_LITERAL(29, 440, 27), // "on_actionLoadDict_triggered"
+QT_MOC_LITERAL(30, 468, 31), // "on_actionLoadOCRWords_triggered"
+QT_MOC_LITERAL(31, 500, 29), // "on_actionLoadDomain_triggered"
+QT_MOC_LITERAL(32, 530, 28), // "on_actionLoadSubPS_triggered"
+QT_MOC_LITERAL(33, 559, 33), // "on_actionLoadConfusions_trigg..."
+QT_MOC_LITERAL(34, 593, 23), // "on_actionSugg_triggered"
+QT_MOC_LITERAL(35, 617, 25), // "on_actionToSlp1_triggered"
+QT_MOC_LITERAL(36, 643, 27), // "on_actionSanskrit_triggered"
+QT_MOC_LITERAL(37, 671, 24), // "on_actionHindi_triggered"
+QT_MOC_LITERAL(38, 696, 26), // "on_actionEnglish_triggered"
+QT_MOC_LITERAL(39, 723, 28), // "on_actionLeftAlign_triggered"
+QT_MOC_LITERAL(40, 752, 29), // "on_actionRightAlign_triggered"
+QT_MOC_LITERAL(41, 782, 30), // "on_actionCentreAlign_triggered"
+QT_MOC_LITERAL(42, 813, 36), // "on_actionAllFontProperties_tr..."
+QT_MOC_LITERAL(43, 850, 25), // "on_actionUnBold_triggered"
+QT_MOC_LITERAL(44, 876, 33), // "on_actionJusitfiedAlign_trigg..."
+QT_MOC_LITERAL(45, 910, 28), // "on_actionHighlight_triggered"
+QT_MOC_LITERAL(46, 939, 28), // "on_actionFontBlack_triggered"
+QT_MOC_LITERAL(47, 968, 23), // "updateAverageAccuracies"
+QT_MOC_LITERAL(48, 992, 40), // "on_actionViewAverageAccuracie..."
+QT_MOC_LITERAL(49, 1033, 31), // "on_actionOpen_Project_triggered"
+QT_MOC_LITERAL(50, 1065, 10), // "file_click"
+QT_MOC_LITERAL(51, 1076, 11), // "QModelIndex"
+QT_MOC_LITERAL(52, 1088, 4), // "indx"
+QT_MOC_LITERAL(53, 1093, 17), // "LoadImageFromFile"
+QT_MOC_LITERAL(54, 1111, 6), // "QFile*"
+QT_MOC_LITERAL(55, 1118, 4), // "file"
+QT_MOC_LITERAL(56, 1123, 26), // "CustomContextMenuTriggered"
+QT_MOC_LITERAL(57, 1150, 1), // "p"
+QT_MOC_LITERAL(58, 1152, 10), // "AddNewFile"
+QT_MOC_LITERAL(59, 1163, 13), // "OpenDirectory"
+QT_MOC_LITERAL(60, 1177, 10), // "RemoveFile"
+QT_MOC_LITERAL(61, 1188, 8), // "closetab"
+QT_MOC_LITERAL(62, 1197, 5), // "index"
+QT_MOC_LITERAL(63, 1203, 10), // "tabchanged"
+QT_MOC_LITERAL(64, 1214, 26), // "on_actionTurn_In_triggered"
+QT_MOC_LITERAL(65, 1241, 23), // "on_actionPush_triggered"
+QT_MOC_LITERAL(66, 1265, 26), // "on_actionFetch_2_triggered"
+QT_MOC_LITERAL(67, 1292, 35), // "on_actionVerifier_Turn_In_tri..."
+QT_MOC_LITERAL(68, 1328, 16), // "directoryChanged"
+QT_MOC_LITERAL(69, 1345, 4), // "path"
+QT_MOC_LITERAL(70, 1350, 30), // "on_actionAccuracyLog_triggered"
+QT_MOC_LITERAL(71, 1381, 33), // "on_compareCorrectorOutput_cli..."
+QT_MOC_LITERAL(72, 1415, 23), // "on_viewComments_clicked"
+QT_MOC_LITERAL(73, 1439, 26), // "on_actionZoom_In_triggered"
+QT_MOC_LITERAL(74, 1466, 27), // "on_actionZoom_Out_triggered"
+QT_MOC_LITERAL(75, 1494, 26), // "on_actionSymbols_triggered"
+QT_MOC_LITERAL(76, 1521, 35), // "on_actionInsert_Tab_Space_tri..."
+QT_MOC_LITERAL(77, 1557, 41), // "on_actionInsert_Horizontal_Li..."
+QT_MOC_LITERAL(78, 1599, 28), // "on_actionSubscript_triggered"
+QT_MOC_LITERAL(79, 1628, 30), // "on_actionSuperscript_triggered"
+QT_MOC_LITERAL(80, 1659, 19), // "UpdateFileBrekadown"
+QT_MOC_LITERAL(81, 1679, 28), // "on_actionAdd_Image_triggered"
+QT_MOC_LITERAL(82, 1708, 11), // "SaveTimeLog"
+QT_MOC_LITERAL(83, 1720, 14), // "DisplayTimeLog"
+QT_MOC_LITERAL(84, 1735, 31), // "on_actionResize_Image_triggered"
+QT_MOC_LITERAL(85, 1767, 13), // "LogHighlights"
+QT_MOC_LITERAL(86, 1781, 4), // "word"
+QT_MOC_LITERAL(87, 1786, 32), // "on_compareVerifierOutput_clicked"
+QT_MOC_LITERAL(88, 1819, 20), // "on_sanButton_toggled"
+QT_MOC_LITERAL(89, 1840, 7), // "checked"
+QT_MOC_LITERAL(90, 1848, 20), // "on_hinButton_toggled"
+QT_MOC_LITERAL(91, 1869, 28), // "on_actionLineSpace_triggered"
+QT_MOC_LITERAL(92, 1898, 23), // "on_actionUndo_triggered"
+QT_MOC_LITERAL(93, 1922, 23), // "on_actionRedo_triggered"
+QT_MOC_LITERAL(94, 1946, 30), // "on_actionNew_Project_triggered"
+QT_MOC_LITERAL(95, 1977, 33), // "on_actionInsert_Table_2_trigg..."
+QT_MOC_LITERAL(96, 2011, 10), // "closeEvent"
+QT_MOC_LITERAL(97, 2022, 12), // "QCloseEvent*"
+QT_MOC_LITERAL(98, 2035, 5), // "event"
+QT_MOC_LITERAL(99, 2041, 20), // "getAverageAccuracies"
+QT_MOC_LITERAL(100, 2062, 7), // "mainObj"
+QT_MOC_LITERAL(101, 2070, 9), // "sendEmail"
+QT_MOC_LITERAL(102, 2080, 7), // "message"
+QT_MOC_LITERAL(103, 2088, 36), // "on_actionInsert_Columnleft_tr..."
+QT_MOC_LITERAL(104, 2125, 37), // "on_actionInsert_Columnright_t..."
+QT_MOC_LITERAL(105, 2163, 34), // "on_actionInsert_Rowabove_trig..."
+QT_MOC_LITERAL(106, 2198, 34), // "on_actionInsert_Rowbelow_trig..."
+QT_MOC_LITERAL(107, 2233, 32), // "on_actionRemove_Column_triggered"
+QT_MOC_LITERAL(108, 2266, 29), // "on_actionRemove_Row_triggered"
+QT_MOC_LITERAL(109, 2296, 25), // "on_actionItalic_triggered"
+QT_MOC_LITERAL(110, 2322, 28), // "on_actionNonitalic_triggered"
+QT_MOC_LITERAL(111, 2351, 27), // "on_actionSave_All_triggered"
+QT_MOC_LITERAL(112, 2379, 35), // "on_actionFind_and_Replace_tri..."
+QT_MOC_LITERAL(113, 2415, 16), // "checkUnsavedWork"
+QT_MOC_LITERAL(114, 2432, 11), // "saveAllWork"
+QT_MOC_LITERAL(115, 2444, 12), // "readSettings"
+QT_MOC_LITERAL(116, 2457, 13), // "writeSettings"
+QT_MOC_LITERAL(117, 2471, 12), // "setMFilename"
+QT_MOC_LITERAL(118, 2484, 21), // "on_pushButton_clicked"
+QT_MOC_LITERAL(119, 2506, 23), // "on_pushButton_2_clicked"
+QT_MOC_LITERAL(120, 2530, 16), // "runGlobalReplace"
+QT_MOC_LITERAL(121, 2547, 16), // "QVector<QString>"
+QT_MOC_LITERAL(122, 2564, 28), // "globalReplaceQueryMessageBox"
+QT_MOC_LITERAL(123, 2593, 8), // "old_word"
+QT_MOC_LITERAL(124, 2602, 8), // "new_word"
+QT_MOC_LITERAL(125, 2611, 4), // "int&"
+QT_MOC_LITERAL(126, 2616, 3), // "chk"
+QT_MOC_LITERAL(127, 2620, 24), // "writeGlobalCPairsToFiles"
+QT_MOC_LITERAL(128, 2645, 9), // "file_path"
+QT_MOC_LITERAL(129, 2655, 21), // "QMap<QString,QString>"
+QT_MOC_LITERAL(130, 2677, 20), // "globalReplacementMap"
+QT_MOC_LITERAL(131, 2698, 36), // "addCurrentlyOpenFileToEditedF..."
+QT_MOC_LITERAL(132, 2735, 20), // "deleteEditedFilesLog"
+QT_MOC_LITERAL(133, 2756, 14), // "RecentPageInfo"
+QT_MOC_LITERAL(134, 2771, 14), // "isStringInFile"
+QT_MOC_LITERAL(135, 2786, 12), // "searchString"
+QT_MOC_LITERAL(136, 2799, 16), // "dumpStringToFile"
+QT_MOC_LITERAL(137, 2816, 6), // "string"
+QT_MOC_LITERAL(138, 2823, 9), // "highlight"
+QT_MOC_LITERAL(139, 2833, 42), // "getGlobalReplacementMapFromCh..."
+QT_MOC_LITERAL(140, 2876, 13), // "replacedWords"
+QT_MOC_LITERAL(141, 2890, 13), // "QVector<int>*"
+QT_MOC_LITERAL(142, 2904, 17), // "replaceInAllPages"
+QT_MOC_LITERAL(143, 2922, 25), // "on_actionas_PDF_triggered"
+QT_MOC_LITERAL(144, 2948, 27), // "on_actionGet_Help_triggered"
+QT_MOC_LITERAL(145, 2976, 27), // "on_actionTutorial_triggered"
+QT_MOC_LITERAL(146, 3004, 24), // "on_actionLinux_triggered"
+QT_MOC_LITERAL(147, 3029, 26), // "on_actionWindows_triggered"
+QT_MOC_LITERAL(148, 3056, 33), // "on_actionShortcut_Guide_trigg..."
+QT_MOC_LITERAL(149, 3090, 26), // "on_textBrowser_textChanged"
+QT_MOC_LITERAL(150, 3117, 26), // "on_zoom_Out_Button_clicked"
+QT_MOC_LITERAL(151, 3144, 25), // "on_zoom_In_Button_clicked"
+QT_MOC_LITERAL(152, 3170, 24), // "zoom_slider_valueChanged"
+QT_MOC_LITERAL(153, 3195, 5), // "value"
+QT_MOC_LITERAL(154, 3201, 17), // "zoom_slider_moved"
+QT_MOC_LITERAL(155, 3219, 17), // "zoomedUsingScroll"
+QT_MOC_LITERAL(156, 3237, 38), // "on_actionUndo_Global_Replace_..."
+QT_MOC_LITERAL(157, 3276, 29), // "undoGlobalReplace_Single_Word"
+QT_MOC_LITERAL(158, 3306, 7), // "oldWord"
+QT_MOC_LITERAL(159, 3314, 7), // "newWord"
+QT_MOC_LITERAL(160, 3322, 29), // "reverseGlobalReplacedWordsMap"
+QT_MOC_LITERAL(161, 3352, 38), // "getUndoGlobalReplaceMap_Multi..."
+QT_MOC_LITERAL(162, 3391, 28), // "replaceInAllFilesFromTSVfile"
+QT_MOC_LITERAL(163, 3420, 20), // "checkForValidTSVfile"
+QT_MOC_LITERAL(164, 3441, 6), // "QFile&"
+QT_MOC_LITERAL(165, 3448, 22), // "globalReplacePreviewfn"
+QT_MOC_LITERAL(166, 3471, 12), // "QVector<int>"
+QT_MOC_LITERAL(167, 3484, 22), // "getBeforeAndAfterWords"
+QT_MOC_LITERAL(168, 3507, 25), // "QMap<QString,QStringList>"
+QT_MOC_LITERAL(169, 3533, 5), // "fPath"
+QT_MOC_LITERAL(170, 3539, 25), // "on_actionUpload_triggered"
+QT_MOC_LITERAL(171, 3565, 20), // "on_justify_triggered"
+QT_MOC_LITERAL(172, 3586, 29), // "on_actionFont_Color_triggered"
+QT_MOC_LITERAL(173, 3616, 23), // "on_actionBold_triggered"
+QT_MOC_LITERAL(174, 3640, 26), // "SaveFile_GUI_Preprocessing"
+QT_MOC_LITERAL(175, 3667, 27), // "SaveFile_GUI_Postprocessing"
+QT_MOC_LITERAL(176, 3695, 13), // "GlobalReplace"
+QT_MOC_LITERAL(177, 3709, 12), // "stopSpinning"
+QT_MOC_LITERAL(178, 3722, 29), // "on_lineEditSearch_textChanged"
+QT_MOC_LITERAL(179, 3752, 4), // "arg1"
+QT_MOC_LITERAL(180, 3757, 20), // "on_action1_triggered"
+QT_MOC_LITERAL(181, 3778, 20), // "on_action2_triggered"
+QT_MOC_LITERAL(182, 3799, 20), // "on_action3_triggered"
+QT_MOC_LITERAL(183, 3820, 36), // "on_actionCheck_for_Updates_tr..."
+QT_MOC_LITERAL(184, 3857, 16), // "closeProgressBar"
+QT_MOC_LITERAL(185, 3874, 18), // "setProgressBarPerc"
+QT_MOC_LITERAL(186, 3893, 12), // "toDevanagari"
+QT_MOC_LITERAL(187, 3906, 4), // "text"
+QT_MOC_LITERAL(188, 3911, 15), // "on_find_clicked"
+QT_MOC_LITERAL(189, 3927, 30), // "on_actionPDF_Preview_triggered"
+QT_MOC_LITERAL(190, 3958, 5), // "print"
+QT_MOC_LITERAL(191, 3964, 9), // "QPrinter*"
+QT_MOC_LITERAL(192, 3974, 7), // "printer"
+QT_MOC_LITERAL(193, 3982, 30), // "on_actionChange_Role_triggered"
+QT_MOC_LITERAL(194, 4013, 13), // "bboxInsertion"
+QT_MOC_LITERAL(195, 4027, 1), // "f"
+QT_MOC_LITERAL(196, 4029, 19), // "finishedPdfCreation"
+QT_MOC_LITERAL(197, 4049, 8), // "exitCode"
+QT_MOC_LITERAL(198, 4058, 20), // "QProcess::ExitStatus"
+QT_MOC_LITERAL(199, 4079, 10), // "exitStatus"
+QT_MOC_LITERAL(200, 4090, 14), // "SearchOnGoogle"
+QT_MOC_LITERAL(201, 4105, 17), // "GoogleTranslation"
+QT_MOC_LITERAL(202, 4123, 17), // "insertImageAction"
+QT_MOC_LITERAL(203, 4141, 16), // "SaveFile_Backend"
+QT_MOC_LITERAL(204, 4158, 33), // "on_actionLoad_Next_Page_trigg..."
+QT_MOC_LITERAL(205, 4192, 33), // "on_actionLoad_Prev_Page_trigg..."
+QT_MOC_LITERAL(206, 4226, 12), // "LoadDocument"
+QT_MOC_LITERAL(207, 4239, 3), // "ext"
+QT_MOC_LITERAL(208, 4243, 4), // "name"
+QT_MOC_LITERAL(209, 4248, 15), // "pdfPrintIsReady"
+QT_MOC_LITERAL(210, 4264, 22), // "readOutputFromPdfPrint"
+QT_MOC_LITERAL(211, 4287, 16), // "insertCompletion"
+QT_MOC_LITERAL(212, 4304, 10), // "completion"
+QT_MOC_LITERAL(213, 4315, 12), // "focusInEvent"
+QT_MOC_LITERAL(214, 4328, 12), // "QFocusEvent*"
+QT_MOC_LITERAL(215, 4341, 1), // "e"
+QT_MOC_LITERAL(216, 4343, 13), // "loadHtmlInDoc"
+QT_MOC_LITERAL(217, 4357, 17), // "blockCountChanged"
+QT_MOC_LITERAL(218, 4375, 11), // "storeBboxes"
+QT_MOC_LITERAL(219, 4387, 12) // "insertBboxes"
 
     },
     "MainWindow\0closeSignal\0\0createActions\0"
     "WordCount\0DisplayJsonDict\0CustomTextBrowser*\0"
     "b\0input\0eventFilter\0QEvent*\0saveImageRegion\0"
-    "on_actionNew_triggered\0AddRecentProjects\0"
-    "on_actionSave_triggered\0"
+    "AddRecentProjects\0on_actionSave_triggered\0"
     "on_actionSave_As_triggered\0"
     "on_actionSpell_Check_triggered\0"
     "mousePressEvent\0QMouseEvent*\0ev\0"
@@ -396,7 +394,7 @@ static const uint qt_meta_data_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-     165,   14, // methods
+     164,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -404,173 +402,172 @@ static const uint qt_meta_data_MainWindow[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  839,    2, 0x06 /* Public */,
+       1,    0,  834,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,  840,    2, 0x08 /* Private */,
-       4,    0,  841,    2, 0x08 /* Private */,
-       5,    2,  842,    2, 0x08 /* Private */,
-       9,    2,  847,    2, 0x08 /* Private */,
-      11,    6,  852,    2, 0x08 /* Private */,
-      12,    0,  865,    2, 0x08 /* Private */,
-      13,    0,  866,    2, 0x08 /* Private */,
-      14,    0,  867,    2, 0x08 /* Private */,
-      15,    0,  868,    2, 0x08 /* Private */,
-      16,    0,  869,    2, 0x08 /* Private */,
-      17,    1,  870,    2, 0x08 /* Private */,
-      20,    1,  873,    2, 0x08 /* Private */,
-      23,    1,  876,    2, 0x08 /* Private */,
-      24,    1,  879,    2, 0x08 /* Private */,
-      25,    1,  882,    2, 0x08 /* Private */,
-      27,    0,  885,    2, 0x08 /* Private */,
-      28,    0,  886,    2, 0x08 /* Private */,
-      29,    0,  887,    2, 0x08 /* Private */,
-      30,    0,  888,    2, 0x08 /* Private */,
-      31,    0,  889,    2, 0x08 /* Private */,
-      32,    0,  890,    2, 0x08 /* Private */,
-      33,    0,  891,    2, 0x08 /* Private */,
-      34,    0,  892,    2, 0x08 /* Private */,
-      35,    0,  893,    2, 0x08 /* Private */,
-      36,    0,  894,    2, 0x08 /* Private */,
-      37,    0,  895,    2, 0x08 /* Private */,
-      38,    0,  896,    2, 0x08 /* Private */,
-      39,    0,  897,    2, 0x08 /* Private */,
-      40,    0,  898,    2, 0x08 /* Private */,
-      41,    0,  899,    2, 0x08 /* Private */,
-      42,    0,  900,    2, 0x08 /* Private */,
-      43,    0,  901,    2, 0x08 /* Private */,
-      44,    0,  902,    2, 0x08 /* Private */,
-      45,    0,  903,    2, 0x08 /* Private */,
-      46,    0,  904,    2, 0x08 /* Private */,
-      47,    0,  905,    2, 0x08 /* Private */,
-      48,    0,  906,    2, 0x08 /* Private */,
-      49,    0,  907,    2, 0x08 /* Private */,
-      50,    0,  908,    2, 0x08 /* Private */,
-      51,    1,  909,    2, 0x08 /* Private */,
-      54,    1,  912,    2, 0x08 /* Private */,
-      57,    1,  915,    2, 0x08 /* Private */,
-      59,    0,  918,    2, 0x08 /* Private */,
-      60,    0,  919,    2, 0x08 /* Private */,
-      61,    0,  920,    2, 0x08 /* Private */,
-      62,    1,  921,    2, 0x08 /* Private */,
-      64,    1,  924,    2, 0x08 /* Private */,
-      65,    0,  927,    2, 0x08 /* Private */,
-      66,    0,  928,    2, 0x08 /* Private */,
-      67,    0,  929,    2, 0x08 /* Private */,
-      68,    0,  930,    2, 0x08 /* Private */,
-      69,    1,  931,    2, 0x08 /* Private */,
-      71,    0,  934,    2, 0x08 /* Private */,
-      72,    0,  935,    2, 0x08 /* Private */,
-      73,    0,  936,    2, 0x08 /* Private */,
-      74,    0,  937,    2, 0x08 /* Private */,
-      75,    0,  938,    2, 0x08 /* Private */,
-      76,    0,  939,    2, 0x08 /* Private */,
-      77,    0,  940,    2, 0x08 /* Private */,
-      78,    0,  941,    2, 0x08 /* Private */,
-      79,    0,  942,    2, 0x08 /* Private */,
-      80,    0,  943,    2, 0x08 /* Private */,
-      81,    0,  944,    2, 0x08 /* Private */,
-      82,    0,  945,    2, 0x08 /* Private */,
-      83,    0,  946,    2, 0x08 /* Private */,
-      84,    0,  947,    2, 0x08 /* Private */,
-      85,    0,  948,    2, 0x08 /* Private */,
-      86,    1,  949,    2, 0x08 /* Private */,
-      88,    0,  952,    2, 0x08 /* Private */,
-      89,    1,  953,    2, 0x08 /* Private */,
-      91,    1,  956,    2, 0x08 /* Private */,
-      92,    0,  959,    2, 0x08 /* Private */,
-      93,    0,  960,    2, 0x08 /* Private */,
-      94,    0,  961,    2, 0x08 /* Private */,
-      95,    0,  962,    2, 0x08 /* Private */,
-      96,    0,  963,    2, 0x08 /* Private */,
-      97,    1,  964,    2, 0x08 /* Private */,
-     100,    1,  967,    2, 0x08 /* Private */,
-     102,    1,  970,    2, 0x08 /* Private */,
-     104,    0,  973,    2, 0x08 /* Private */,
-     105,    0,  974,    2, 0x08 /* Private */,
-     106,    0,  975,    2, 0x08 /* Private */,
-     107,    0,  976,    2, 0x08 /* Private */,
-     108,    0,  977,    2, 0x08 /* Private */,
-     109,    0,  978,    2, 0x08 /* Private */,
-     110,    0,  979,    2, 0x08 /* Private */,
-     111,    0,  980,    2, 0x08 /* Private */,
-     112,    0,  981,    2, 0x08 /* Private */,
-     113,    0,  982,    2, 0x08 /* Private */,
-     114,    0,  983,    2, 0x08 /* Private */,
-     115,    0,  984,    2, 0x08 /* Private */,
-     116,    0,  985,    2, 0x08 /* Private */,
-     117,    0,  986,    2, 0x08 /* Private */,
-     118,    1,  987,    2, 0x08 /* Private */,
-     119,    0,  990,    2, 0x08 /* Private */,
-     120,    0,  991,    2, 0x08 /* Private */,
-     121,    2,  992,    2, 0x08 /* Private */,
-     123,    3,  997,    2, 0x08 /* Private */,
-     128,    2, 1004,    2, 0x08 /* Private */,
-     132,    0, 1009,    2, 0x08 /* Private */,
-     133,    0, 1010,    2, 0x08 /* Private */,
-     134,    0, 1011,    2, 0x08 /* Private */,
-     135,    2, 1012,    2, 0x08 /* Private */,
-     137,    2, 1017,    2, 0x08 /* Private */,
-     139,    2, 1022,    2, 0x08 /* Private */,
-     140,    2, 1027,    2, 0x08 /* Private */,
-     144,    0, 1032,    2, 0x08 /* Private */,
-     145,    0, 1033,    2, 0x08 /* Private */,
-     146,    0, 1034,    2, 0x08 /* Private */,
-     147,    0, 1035,    2, 0x08 /* Private */,
-     148,    0, 1036,    2, 0x08 /* Private */,
-     149,    0, 1037,    2, 0x08 /* Private */,
-     150,    0, 1038,    2, 0x08 /* Private */,
-     151,    0, 1039,    2, 0x08 /* Private */,
-     152,    0, 1040,    2, 0x08 /* Private */,
-     153,    1, 1041,    2, 0x08 /* Private */,
-     155,    1, 1044,    2, 0x08 /* Private */,
-     156,    0, 1047,    2, 0x08 /* Private */,
-     157,    0, 1048,    2, 0x08 /* Private */,
-     158,    2, 1049,    2, 0x08 /* Private */,
-     161,    0, 1054,    2, 0x08 /* Private */,
-     162,    1, 1055,    2, 0x08 /* Private */,
-     163,    0, 1058,    2, 0x08 /* Private */,
-     164,    1, 1059,    2, 0x08 /* Private */,
-     166,    2, 1062,    2, 0x08 /* Private */,
-     168,    2, 1067,    2, 0x08 /* Private */,
-     171,    0, 1072,    2, 0x08 /* Private */,
-     172,    0, 1073,    2, 0x08 /* Private */,
-     173,    0, 1074,    2, 0x08 /* Private */,
-     174,    0, 1075,    2, 0x08 /* Private */,
-     175,    0, 1076,    2, 0x08 /* Private */,
-     176,    0, 1077,    2, 0x08 /* Private */,
-     177,    0, 1078,    2, 0x08 /* Private */,
-     178,    0, 1079,    2, 0x08 /* Private */,
-     179,    1, 1080,    2, 0x08 /* Private */,
-     181,    0, 1083,    2, 0x08 /* Private */,
-     182,    0, 1084,    2, 0x08 /* Private */,
-     183,    0, 1085,    2, 0x08 /* Private */,
-     184,    0, 1086,    2, 0x08 /* Private */,
-     185,    0, 1087,    2, 0x08 /* Private */,
-     186,    1, 1088,    2, 0x08 /* Private */,
-     187,    1, 1091,    2, 0x08 /* Private */,
-     189,    0, 1094,    2, 0x08 /* Private */,
-     190,    0, 1095,    2, 0x08 /* Private */,
-     191,    1, 1096,    2, 0x08 /* Private */,
-     194,    0, 1099,    2, 0x08 /* Private */,
-     195,    1, 1100,    2, 0x08 /* Private */,
-     195,    0, 1103,    2, 0x28 /* Private | MethodCloned */,
-     197,    2, 1104,    2, 0x08 /* Private */,
-     201,    0, 1109,    2, 0x08 /* Private */,
-     202,    0, 1110,    2, 0x08 /* Private */,
-     203,    0, 1111,    2, 0x08 /* Private */,
-     204,    0, 1112,    2, 0x0a /* Public */,
-     205,    0, 1113,    2, 0x0a /* Public */,
-     206,    0, 1114,    2, 0x0a /* Public */,
-     207,    3, 1115,    2, 0x0a /* Public */,
-     210,    0, 1122,    2, 0x0a /* Public */,
-     211,    0, 1123,    2, 0x0a /* Public */,
-     212,    1, 1124,    2, 0x0a /* Public */,
-     214,    1, 1127,    2, 0x0a /* Public */,
-     217,    1, 1130,    2, 0x0a /* Public */,
-     218,    1, 1133,    2, 0x0a /* Public */,
-     219,    1, 1136,    2, 0x0a /* Public */,
-     220,    1, 1139,    2, 0x0a /* Public */,
+       3,    0,  835,    2, 0x08 /* Private */,
+       4,    0,  836,    2, 0x08 /* Private */,
+       5,    2,  837,    2, 0x08 /* Private */,
+       9,    2,  842,    2, 0x08 /* Private */,
+      11,    6,  847,    2, 0x08 /* Private */,
+      12,    0,  860,    2, 0x08 /* Private */,
+      13,    0,  861,    2, 0x08 /* Private */,
+      14,    0,  862,    2, 0x08 /* Private */,
+      15,    0,  863,    2, 0x08 /* Private */,
+      16,    1,  864,    2, 0x08 /* Private */,
+      19,    1,  867,    2, 0x08 /* Private */,
+      22,    1,  870,    2, 0x08 /* Private */,
+      23,    1,  873,    2, 0x08 /* Private */,
+      24,    1,  876,    2, 0x08 /* Private */,
+      26,    0,  879,    2, 0x08 /* Private */,
+      27,    0,  880,    2, 0x08 /* Private */,
+      28,    0,  881,    2, 0x08 /* Private */,
+      29,    0,  882,    2, 0x08 /* Private */,
+      30,    0,  883,    2, 0x08 /* Private */,
+      31,    0,  884,    2, 0x08 /* Private */,
+      32,    0,  885,    2, 0x08 /* Private */,
+      33,    0,  886,    2, 0x08 /* Private */,
+      34,    0,  887,    2, 0x08 /* Private */,
+      35,    0,  888,    2, 0x08 /* Private */,
+      36,    0,  889,    2, 0x08 /* Private */,
+      37,    0,  890,    2, 0x08 /* Private */,
+      38,    0,  891,    2, 0x08 /* Private */,
+      39,    0,  892,    2, 0x08 /* Private */,
+      40,    0,  893,    2, 0x08 /* Private */,
+      41,    0,  894,    2, 0x08 /* Private */,
+      42,    0,  895,    2, 0x08 /* Private */,
+      43,    0,  896,    2, 0x08 /* Private */,
+      44,    0,  897,    2, 0x08 /* Private */,
+      45,    0,  898,    2, 0x08 /* Private */,
+      46,    0,  899,    2, 0x08 /* Private */,
+      47,    0,  900,    2, 0x08 /* Private */,
+      48,    0,  901,    2, 0x08 /* Private */,
+      49,    0,  902,    2, 0x08 /* Private */,
+      50,    1,  903,    2, 0x08 /* Private */,
+      53,    1,  906,    2, 0x08 /* Private */,
+      56,    1,  909,    2, 0x08 /* Private */,
+      58,    0,  912,    2, 0x08 /* Private */,
+      59,    0,  913,    2, 0x08 /* Private */,
+      60,    0,  914,    2, 0x08 /* Private */,
+      61,    1,  915,    2, 0x08 /* Private */,
+      63,    1,  918,    2, 0x08 /* Private */,
+      64,    0,  921,    2, 0x08 /* Private */,
+      65,    0,  922,    2, 0x08 /* Private */,
+      66,    0,  923,    2, 0x08 /* Private */,
+      67,    0,  924,    2, 0x08 /* Private */,
+      68,    1,  925,    2, 0x08 /* Private */,
+      70,    0,  928,    2, 0x08 /* Private */,
+      71,    0,  929,    2, 0x08 /* Private */,
+      72,    0,  930,    2, 0x08 /* Private */,
+      73,    0,  931,    2, 0x08 /* Private */,
+      74,    0,  932,    2, 0x08 /* Private */,
+      75,    0,  933,    2, 0x08 /* Private */,
+      76,    0,  934,    2, 0x08 /* Private */,
+      77,    0,  935,    2, 0x08 /* Private */,
+      78,    0,  936,    2, 0x08 /* Private */,
+      79,    0,  937,    2, 0x08 /* Private */,
+      80,    0,  938,    2, 0x08 /* Private */,
+      81,    0,  939,    2, 0x08 /* Private */,
+      82,    0,  940,    2, 0x08 /* Private */,
+      83,    0,  941,    2, 0x08 /* Private */,
+      84,    0,  942,    2, 0x08 /* Private */,
+      85,    1,  943,    2, 0x08 /* Private */,
+      87,    0,  946,    2, 0x08 /* Private */,
+      88,    1,  947,    2, 0x08 /* Private */,
+      90,    1,  950,    2, 0x08 /* Private */,
+      91,    0,  953,    2, 0x08 /* Private */,
+      92,    0,  954,    2, 0x08 /* Private */,
+      93,    0,  955,    2, 0x08 /* Private */,
+      94,    0,  956,    2, 0x08 /* Private */,
+      95,    0,  957,    2, 0x08 /* Private */,
+      96,    1,  958,    2, 0x08 /* Private */,
+      99,    1,  961,    2, 0x08 /* Private */,
+     101,    1,  964,    2, 0x08 /* Private */,
+     103,    0,  967,    2, 0x08 /* Private */,
+     104,    0,  968,    2, 0x08 /* Private */,
+     105,    0,  969,    2, 0x08 /* Private */,
+     106,    0,  970,    2, 0x08 /* Private */,
+     107,    0,  971,    2, 0x08 /* Private */,
+     108,    0,  972,    2, 0x08 /* Private */,
+     109,    0,  973,    2, 0x08 /* Private */,
+     110,    0,  974,    2, 0x08 /* Private */,
+     111,    0,  975,    2, 0x08 /* Private */,
+     112,    0,  976,    2, 0x08 /* Private */,
+     113,    0,  977,    2, 0x08 /* Private */,
+     114,    0,  978,    2, 0x08 /* Private */,
+     115,    0,  979,    2, 0x08 /* Private */,
+     116,    0,  980,    2, 0x08 /* Private */,
+     117,    1,  981,    2, 0x08 /* Private */,
+     118,    0,  984,    2, 0x08 /* Private */,
+     119,    0,  985,    2, 0x08 /* Private */,
+     120,    2,  986,    2, 0x08 /* Private */,
+     122,    3,  991,    2, 0x08 /* Private */,
+     127,    2,  998,    2, 0x08 /* Private */,
+     131,    0, 1003,    2, 0x08 /* Private */,
+     132,    0, 1004,    2, 0x08 /* Private */,
+     133,    0, 1005,    2, 0x08 /* Private */,
+     134,    2, 1006,    2, 0x08 /* Private */,
+     136,    2, 1011,    2, 0x08 /* Private */,
+     138,    2, 1016,    2, 0x08 /* Private */,
+     139,    2, 1021,    2, 0x08 /* Private */,
+     143,    0, 1026,    2, 0x08 /* Private */,
+     144,    0, 1027,    2, 0x08 /* Private */,
+     145,    0, 1028,    2, 0x08 /* Private */,
+     146,    0, 1029,    2, 0x08 /* Private */,
+     147,    0, 1030,    2, 0x08 /* Private */,
+     148,    0, 1031,    2, 0x08 /* Private */,
+     149,    0, 1032,    2, 0x08 /* Private */,
+     150,    0, 1033,    2, 0x08 /* Private */,
+     151,    0, 1034,    2, 0x08 /* Private */,
+     152,    1, 1035,    2, 0x08 /* Private */,
+     154,    1, 1038,    2, 0x08 /* Private */,
+     155,    0, 1041,    2, 0x08 /* Private */,
+     156,    0, 1042,    2, 0x08 /* Private */,
+     157,    2, 1043,    2, 0x08 /* Private */,
+     160,    0, 1048,    2, 0x08 /* Private */,
+     161,    1, 1049,    2, 0x08 /* Private */,
+     162,    0, 1052,    2, 0x08 /* Private */,
+     163,    1, 1053,    2, 0x08 /* Private */,
+     165,    2, 1056,    2, 0x08 /* Private */,
+     167,    2, 1061,    2, 0x08 /* Private */,
+     170,    0, 1066,    2, 0x08 /* Private */,
+     171,    0, 1067,    2, 0x08 /* Private */,
+     172,    0, 1068,    2, 0x08 /* Private */,
+     173,    0, 1069,    2, 0x08 /* Private */,
+     174,    0, 1070,    2, 0x08 /* Private */,
+     175,    0, 1071,    2, 0x08 /* Private */,
+     176,    0, 1072,    2, 0x08 /* Private */,
+     177,    0, 1073,    2, 0x08 /* Private */,
+     178,    1, 1074,    2, 0x08 /* Private */,
+     180,    0, 1077,    2, 0x08 /* Private */,
+     181,    0, 1078,    2, 0x08 /* Private */,
+     182,    0, 1079,    2, 0x08 /* Private */,
+     183,    0, 1080,    2, 0x08 /* Private */,
+     184,    0, 1081,    2, 0x08 /* Private */,
+     185,    1, 1082,    2, 0x08 /* Private */,
+     186,    1, 1085,    2, 0x08 /* Private */,
+     188,    0, 1088,    2, 0x08 /* Private */,
+     189,    0, 1089,    2, 0x08 /* Private */,
+     190,    1, 1090,    2, 0x08 /* Private */,
+     193,    0, 1093,    2, 0x08 /* Private */,
+     194,    1, 1094,    2, 0x08 /* Private */,
+     194,    0, 1097,    2, 0x28 /* Private | MethodCloned */,
+     196,    2, 1098,    2, 0x08 /* Private */,
+     200,    0, 1103,    2, 0x08 /* Private */,
+     201,    0, 1104,    2, 0x08 /* Private */,
+     202,    0, 1105,    2, 0x08 /* Private */,
+     203,    0, 1106,    2, 0x0a /* Public */,
+     204,    0, 1107,    2, 0x0a /* Public */,
+     205,    0, 1108,    2, 0x0a /* Public */,
+     206,    3, 1109,    2, 0x0a /* Public */,
+     209,    0, 1116,    2, 0x0a /* Public */,
+     210,    0, 1117,    2, 0x0a /* Public */,
+     211,    1, 1118,    2, 0x0a /* Public */,
+     213,    1, 1121,    2, 0x0a /* Public */,
+     216,    1, 1124,    2, 0x0a /* Public */,
+     217,    1, 1127,    2, 0x0a /* Public */,
+     218,    1, 1130,    2, 0x0a /* Public */,
+     219,    1, 1133,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -585,13 +582,11 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 18,   19,
-    QMetaType::Void, 0x80000000 | 21,   22,
-    QMetaType::Void, 0x80000000 | 21,    2,
-    QMetaType::Void, 0x80000000 | 21,    2,
-    QMetaType::Void, 0x80000000 | 26,    2,
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 17,   18,
+    QMetaType::Void, 0x80000000 | 20,   21,
+    QMetaType::Void, 0x80000000 | 20,    2,
+    QMetaType::Void, 0x80000000 | 20,    2,
+    QMetaType::Void, 0x80000000 | 25,    2,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -615,24 +610,20 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 52,   53,
-    QMetaType::Void, 0x80000000 | 55,   56,
-    QMetaType::Void, QMetaType::QPoint,   58,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 51,   52,
+    QMetaType::Void, 0x80000000 | 54,   55,
+    QMetaType::Void, QMetaType::QPoint,   57,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   63,
-    QMetaType::Void, QMetaType::Int,   63,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   70,
+    QMetaType::Void, QMetaType::Int,   62,
+    QMetaType::Void, QMetaType::Int,   62,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   69,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -643,18 +634,23 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   87,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::Bool,   90,
-    QMetaType::Void, QMetaType::Bool,   90,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 98,   99,
-    QMetaType::QJsonObject, QMetaType::QJsonObject,  101,
-    QMetaType::Bool, QMetaType::QString,  103,
+    QMetaType::Void, QMetaType::QString,   86,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Bool,   89,
+    QMetaType::Void, QMetaType::Bool,   89,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 97,   98,
+    QMetaType::QJsonObject, QMetaType::QJsonObject,  100,
+    QMetaType::Bool, QMetaType::QString,  102,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -672,16 +668,16 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, QMetaType::QString,    2,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, 0x80000000 | 122,    2,    2,
-    QMetaType::Bool, QMetaType::QString, QMetaType::QString, 0x80000000 | 126,  124,  125,  127,
-    QMetaType::Int, QMetaType::QString, 0x80000000 | 130,  129,  131,
+    QMetaType::Void, QMetaType::QString, 0x80000000 | 121,    2,    2,
+    QMetaType::Bool, QMetaType::QString, QMetaType::QString, 0x80000000 | 125,  123,  124,  126,
+    QMetaType::Int, QMetaType::QString, 0x80000000 | 129,  128,  130,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Bool, QMetaType::QString, QMetaType::QString,  129,  136,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,  129,  138,
+    QMetaType::Bool, QMetaType::QString, QMetaType::QString,  128,  135,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,  128,  137,
     QMetaType::Void, 0x80000000 | 6, QMetaType::QString,    7,    8,
-    0x80000000 | 130, 0x80000000 | 122, 0x80000000 | 142,  141,  143,
+    0x80000000 | 129, 0x80000000 | 121, 0x80000000 | 141,  140,  142,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -691,55 +687,55 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,  154,
-    QMetaType::Void, QMetaType::Int,  154,
+    QMetaType::Void, QMetaType::Int,  153,
+    QMetaType::Void, QMetaType::Int,  153,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Bool, QMetaType::QString, QMetaType::QString,  159,  160,
+    QMetaType::Bool, QMetaType::QString, QMetaType::QString,  158,  159,
     QMetaType::Void,
-    0x80000000 | 130, 0x80000000 | 130,    2,
+    0x80000000 | 129, 0x80000000 | 129,    2,
     QMetaType::Void,
-    QMetaType::Bool, 0x80000000 | 165,   56,
-    QMetaType::Void, 0x80000000 | 130, 0x80000000 | 167,    2,    2,
-    0x80000000 | 169, QMetaType::QString, 0x80000000 | 130,  170,  131,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Bool, 0x80000000 | 164,   55,
+    QMetaType::Void, 0x80000000 | 129, 0x80000000 | 166,    2,    2,
+    0x80000000 | 168, QMetaType::QString, 0x80000000 | 129,  169,  130,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,  180,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,  179,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int,    2,
-    QMetaType::QString, 0x80000000 | 138,  188,
+    QMetaType::QString, 0x80000000 | 137,  187,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 192,  193,
+    QMetaType::Void, 0x80000000 | 191,  192,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 55,  196,
+    QMetaType::Void, 0x80000000 | 54,  195,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, 0x80000000 | 199,  198,  200,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, 0x80000000 | 198,  197,  199,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 55, QMetaType::QString, QMetaType::QString,   56,  208,  209,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,  213,
-    QMetaType::Void, 0x80000000 | 215,  216,
-    QMetaType::Void, 0x80000000 | 55,    2,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 54, QMetaType::QString, QMetaType::QString,   55,  207,  208,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,  212,
+    QMetaType::Void, 0x80000000 | 214,  215,
+    QMetaType::Void, 0x80000000 | 54,    2,
     QMetaType::Void, QMetaType::Int,    2,
-    QMetaType::Void, 0x80000000 | 55,    2,
-    QMetaType::Void, 0x80000000 | 55,    2,
+    QMetaType::Void, 0x80000000 | 54,    2,
+    QMetaType::Void, 0x80000000 | 54,    2,
 
        0        // eod
 };
@@ -757,177 +753,176 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 4: { bool _r = _t->eventFilter((*reinterpret_cast< QObject*(*)>(_a[1])),(*reinterpret_cast< QEvent*(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
         case 5: _t->saveImageRegion((*reinterpret_cast< QPixmap(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< int(*)>(_a[6]))); break;
-        case 6: _t->on_actionNew_triggered(); break;
-        case 7: _t->AddRecentProjects(); break;
-        case 8: _t->on_actionSave_triggered(); break;
-        case 9: _t->on_actionSave_As_triggered(); break;
-        case 10: _t->on_actionSpell_Check_triggered(); break;
-        case 11: _t->mousePressEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
-        case 12: _t->menuSelection((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
-        case 13: _t->translate_replace((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
-        case 14: _t->clipboard_paste((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
-        case 15: _t->keyPressEvent((*reinterpret_cast< QKeyEvent*(*)>(_a[1]))); break;
-        case 16: _t->on_actionLoadGDocPage_triggered(); break;
-        case 17: _t->on_actionToDevanagari_triggered(); break;
-        case 18: _t->on_actionLoadData_triggered(); break;
-        case 19: _t->on_actionLoadDict_triggered(); break;
-        case 20: _t->on_actionLoadOCRWords_triggered(); break;
-        case 21: _t->on_actionLoadDomain_triggered(); break;
-        case 22: _t->on_actionLoadSubPS_triggered(); break;
-        case 23: _t->on_actionLoadConfusions_triggered(); break;
-        case 24: _t->on_actionSugg_triggered(); break;
-        case 25: _t->on_actionToSlp1_triggered(); break;
-        case 26: _t->on_actionSanskrit_triggered(); break;
-        case 27: _t->on_actionHindi_triggered(); break;
-        case 28: _t->on_actionEnglish_triggered(); break;
-        case 29: _t->on_actionLeftAlign_triggered(); break;
-        case 30: _t->on_actionRightAlign_triggered(); break;
-        case 31: _t->on_actionCentreAlign_triggered(); break;
-        case 32: _t->on_actionAllFontProperties_triggered(); break;
-        case 33: _t->on_actionUnBold_triggered(); break;
-        case 34: _t->on_actionJusitfiedAlign_triggered(); break;
-        case 35: _t->on_actionHighlight_triggered(); break;
-        case 36: _t->on_actionFontBlack_triggered(); break;
-        case 37: _t->updateAverageAccuracies(); break;
-        case 38: _t->on_actionViewAverageAccuracies_triggered(); break;
-        case 39: _t->on_actionOpen_Project_triggered(); break;
-        case 40: _t->file_click((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
-        case 41: _t->LoadImageFromFile((*reinterpret_cast< QFile*(*)>(_a[1]))); break;
-        case 42: _t->CustomContextMenuTriggered((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 43: _t->AddNewFile(); break;
-        case 44: _t->OpenDirectory(); break;
-        case 45: _t->RemoveFile(); break;
-        case 46: _t->closetab((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 47: _t->tabchanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 48: _t->on_actionTurn_In_triggered(); break;
-        case 49: _t->on_actionPush_triggered(); break;
-        case 50: _t->on_actionFetch_2_triggered(); break;
-        case 51: _t->on_actionVerifier_Turn_In_triggered(); break;
-        case 52: _t->directoryChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 53: _t->on_actionAccuracyLog_triggered(); break;
-        case 54: _t->on_compareCorrectorOutput_clicked(); break;
-        case 55: _t->on_viewComments_clicked(); break;
-        case 56: _t->on_actionZoom_In_triggered(); break;
-        case 57: _t->on_actionZoom_Out_triggered(); break;
-        case 58: _t->on_actionSymbols_triggered(); break;
-        case 59: _t->on_actionInsert_Tab_Space_triggered(); break;
-        case 60: _t->on_actionInsert_Horizontal_Line_triggered(); break;
-        case 61: _t->on_actionSubscript_triggered(); break;
-        case 62: _t->on_actionSuperscript_triggered(); break;
-        case 63: _t->UpdateFileBrekadown(); break;
-        case 64: _t->on_actionAdd_Image_triggered(); break;
-        case 65: _t->SaveTimeLog(); break;
-        case 66: _t->DisplayTimeLog(); break;
-        case 67: _t->on_actionResize_Image_triggered(); break;
-        case 68: _t->LogHighlights((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 69: _t->on_compareVerifierOutput_clicked(); break;
-        case 70: _t->on_sanButton_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 71: _t->on_hinButton_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 72: _t->on_actionLineSpace_triggered(); break;
-        case 73: _t->on_actionUndo_triggered(); break;
-        case 74: _t->on_actionRedo_triggered(); break;
-        case 75: _t->on_actionNew_Project_triggered(); break;
-        case 76: _t->on_actionInsert_Table_2_triggered(); break;
-        case 77: _t->closeEvent((*reinterpret_cast< QCloseEvent*(*)>(_a[1]))); break;
-        case 78: { QJsonObject _r = _t->getAverageAccuracies((*reinterpret_cast< QJsonObject(*)>(_a[1])));
+        case 6: _t->AddRecentProjects(); break;
+        case 7: _t->on_actionSave_triggered(); break;
+        case 8: _t->on_actionSave_As_triggered(); break;
+        case 9: _t->on_actionSpell_Check_triggered(); break;
+        case 10: _t->mousePressEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
+        case 11: _t->menuSelection((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
+        case 12: _t->translate_replace((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
+        case 13: _t->clipboard_paste((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
+        case 14: _t->keyPressEvent((*reinterpret_cast< QKeyEvent*(*)>(_a[1]))); break;
+        case 15: _t->on_actionLoadGDocPage_triggered(); break;
+        case 16: _t->on_actionToDevanagari_triggered(); break;
+        case 17: _t->on_actionLoadData_triggered(); break;
+        case 18: _t->on_actionLoadDict_triggered(); break;
+        case 19: _t->on_actionLoadOCRWords_triggered(); break;
+        case 20: _t->on_actionLoadDomain_triggered(); break;
+        case 21: _t->on_actionLoadSubPS_triggered(); break;
+        case 22: _t->on_actionLoadConfusions_triggered(); break;
+        case 23: _t->on_actionSugg_triggered(); break;
+        case 24: _t->on_actionToSlp1_triggered(); break;
+        case 25: _t->on_actionSanskrit_triggered(); break;
+        case 26: _t->on_actionHindi_triggered(); break;
+        case 27: _t->on_actionEnglish_triggered(); break;
+        case 28: _t->on_actionLeftAlign_triggered(); break;
+        case 29: _t->on_actionRightAlign_triggered(); break;
+        case 30: _t->on_actionCentreAlign_triggered(); break;
+        case 31: _t->on_actionAllFontProperties_triggered(); break;
+        case 32: _t->on_actionUnBold_triggered(); break;
+        case 33: _t->on_actionJusitfiedAlign_triggered(); break;
+        case 34: _t->on_actionHighlight_triggered(); break;
+        case 35: _t->on_actionFontBlack_triggered(); break;
+        case 36: _t->updateAverageAccuracies(); break;
+        case 37: _t->on_actionViewAverageAccuracies_triggered(); break;
+        case 38: _t->on_actionOpen_Project_triggered(); break;
+        case 39: _t->file_click((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
+        case 40: _t->LoadImageFromFile((*reinterpret_cast< QFile*(*)>(_a[1]))); break;
+        case 41: _t->CustomContextMenuTriggered((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 42: _t->AddNewFile(); break;
+        case 43: _t->OpenDirectory(); break;
+        case 44: _t->RemoveFile(); break;
+        case 45: _t->closetab((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 46: _t->tabchanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 47: _t->on_actionTurn_In_triggered(); break;
+        case 48: _t->on_actionPush_triggered(); break;
+        case 49: _t->on_actionFetch_2_triggered(); break;
+        case 50: _t->on_actionVerifier_Turn_In_triggered(); break;
+        case 51: _t->directoryChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 52: _t->on_actionAccuracyLog_triggered(); break;
+        case 53: _t->on_compareCorrectorOutput_clicked(); break;
+        case 54: _t->on_viewComments_clicked(); break;
+        case 55: _t->on_actionZoom_In_triggered(); break;
+        case 56: _t->on_actionZoom_Out_triggered(); break;
+        case 57: _t->on_actionSymbols_triggered(); break;
+        case 58: _t->on_actionInsert_Tab_Space_triggered(); break;
+        case 59: _t->on_actionInsert_Horizontal_Line_triggered(); break;
+        case 60: _t->on_actionSubscript_triggered(); break;
+        case 61: _t->on_actionSuperscript_triggered(); break;
+        case 62: _t->UpdateFileBrekadown(); break;
+        case 63: _t->on_actionAdd_Image_triggered(); break;
+        case 64: _t->SaveTimeLog(); break;
+        case 65: _t->DisplayTimeLog(); break;
+        case 66: _t->on_actionResize_Image_triggered(); break;
+        case 67: _t->LogHighlights((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 68: _t->on_compareVerifierOutput_clicked(); break;
+        case 69: _t->on_sanButton_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 70: _t->on_hinButton_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 71: _t->on_actionLineSpace_triggered(); break;
+        case 72: _t->on_actionUndo_triggered(); break;
+        case 73: _t->on_actionRedo_triggered(); break;
+        case 74: _t->on_actionNew_Project_triggered(); break;
+        case 75: _t->on_actionInsert_Table_2_triggered(); break;
+        case 76: _t->closeEvent((*reinterpret_cast< QCloseEvent*(*)>(_a[1]))); break;
+        case 77: { QJsonObject _r = _t->getAverageAccuracies((*reinterpret_cast< QJsonObject(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QJsonObject*>(_a[0]) = std::move(_r); }  break;
-        case 79: { bool _r = _t->sendEmail((*reinterpret_cast< QString(*)>(_a[1])));
+        case 78: { bool _r = _t->sendEmail((*reinterpret_cast< QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 80: _t->on_actionInsert_Columnleft_triggered(); break;
-        case 81: _t->on_actionInsert_Columnright_triggered(); break;
-        case 82: _t->on_actionInsert_Rowabove_triggered(); break;
-        case 83: _t->on_actionInsert_Rowbelow_triggered(); break;
-        case 84: _t->on_actionRemove_Column_triggered(); break;
-        case 85: _t->on_actionRemove_Row_triggered(); break;
-        case 86: _t->on_actionItalic_triggered(); break;
-        case 87: _t->on_actionNonitalic_triggered(); break;
-        case 88: _t->on_actionSave_All_triggered(); break;
-        case 89: _t->on_actionFind_and_Replace_triggered(); break;
-        case 90: { bool _r = _t->checkUnsavedWork();
+        case 79: _t->on_actionInsert_Columnleft_triggered(); break;
+        case 80: _t->on_actionInsert_Columnright_triggered(); break;
+        case 81: _t->on_actionInsert_Rowabove_triggered(); break;
+        case 82: _t->on_actionInsert_Rowbelow_triggered(); break;
+        case 83: _t->on_actionRemove_Column_triggered(); break;
+        case 84: _t->on_actionRemove_Row_triggered(); break;
+        case 85: _t->on_actionItalic_triggered(); break;
+        case 86: _t->on_actionNonitalic_triggered(); break;
+        case 87: _t->on_actionSave_All_triggered(); break;
+        case 88: _t->on_actionFind_and_Replace_triggered(); break;
+        case 89: { bool _r = _t->checkUnsavedWork();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 91: _t->saveAllWork(); break;
-        case 92: _t->readSettings(); break;
-        case 93: _t->writeSettings(); break;
-        case 94: _t->setMFilename((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 95: _t->on_pushButton_clicked(); break;
-        case 96: _t->on_pushButton_2_clicked(); break;
-        case 97: _t->runGlobalReplace((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QVector<QString>(*)>(_a[2]))); break;
-        case 98: { bool _r = _t->globalReplaceQueryMessageBox((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])));
+        case 90: _t->saveAllWork(); break;
+        case 91: _t->readSettings(); break;
+        case 92: _t->writeSettings(); break;
+        case 93: _t->setMFilename((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 94: _t->on_pushButton_clicked(); break;
+        case 95: _t->on_pushButton_2_clicked(); break;
+        case 96: _t->runGlobalReplace((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QVector<QString>(*)>(_a[2]))); break;
+        case 97: { bool _r = _t->globalReplaceQueryMessageBox((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 99: { int _r = _t->writeGlobalCPairsToFiles((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QMap<QString,QString>(*)>(_a[2])));
+        case 98: { int _r = _t->writeGlobalCPairsToFiles((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QMap<QString,QString>(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 100: _t->addCurrentlyOpenFileToEditedFilesLog(); break;
-        case 101: _t->deleteEditedFilesLog(); break;
-        case 102: _t->RecentPageInfo(); break;
-        case 103: { bool _r = _t->isStringInFile((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
+        case 99: _t->addCurrentlyOpenFileToEditedFilesLog(); break;
+        case 100: _t->deleteEditedFilesLog(); break;
+        case 101: _t->RecentPageInfo(); break;
+        case 102: { bool _r = _t->isStringInFile((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 104: _t->dumpStringToFile((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 105: _t->highlight((*reinterpret_cast< CustomTextBrowser*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 106: { QMap<QString,QString> _r = _t->getGlobalReplacementMapFromChecklistDialog((*reinterpret_cast< QVector<QString>(*)>(_a[1])),(*reinterpret_cast< QVector<int>*(*)>(_a[2])));
+        case 103: _t->dumpStringToFile((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 104: _t->highlight((*reinterpret_cast< CustomTextBrowser*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 105: { QMap<QString,QString> _r = _t->getGlobalReplacementMapFromChecklistDialog((*reinterpret_cast< QVector<QString>(*)>(_a[1])),(*reinterpret_cast< QVector<int>*(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< QMap<QString,QString>*>(_a[0]) = std::move(_r); }  break;
-        case 107: _t->on_actionas_PDF_triggered(); break;
-        case 108: _t->on_actionGet_Help_triggered(); break;
-        case 109: _t->on_actionTutorial_triggered(); break;
-        case 110: _t->on_actionLinux_triggered(); break;
-        case 111: _t->on_actionWindows_triggered(); break;
-        case 112: _t->on_actionShortcut_Guide_triggered(); break;
-        case 113: _t->on_textBrowser_textChanged(); break;
-        case 114: _t->on_zoom_Out_Button_clicked(); break;
-        case 115: _t->on_zoom_In_Button_clicked(); break;
-        case 116: _t->zoom_slider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 117: _t->zoom_slider_moved((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 118: _t->zoomedUsingScroll(); break;
-        case 119: _t->on_actionUndo_Global_Replace_triggered(); break;
-        case 120: { bool _r = _t->undoGlobalReplace_Single_Word((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
+        case 106: _t->on_actionas_PDF_triggered(); break;
+        case 107: _t->on_actionGet_Help_triggered(); break;
+        case 108: _t->on_actionTutorial_triggered(); break;
+        case 109: _t->on_actionLinux_triggered(); break;
+        case 110: _t->on_actionWindows_triggered(); break;
+        case 111: _t->on_actionShortcut_Guide_triggered(); break;
+        case 112: _t->on_textBrowser_textChanged(); break;
+        case 113: _t->on_zoom_Out_Button_clicked(); break;
+        case 114: _t->on_zoom_In_Button_clicked(); break;
+        case 115: _t->zoom_slider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 116: _t->zoom_slider_moved((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 117: _t->zoomedUsingScroll(); break;
+        case 118: _t->on_actionUndo_Global_Replace_triggered(); break;
+        case 119: { bool _r = _t->undoGlobalReplace_Single_Word((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 121: _t->reverseGlobalReplacedWordsMap(); break;
-        case 122: { QMap<QString,QString> _r = _t->getUndoGlobalReplaceMap_Multiple_Words((*reinterpret_cast< QMap<QString,QString>(*)>(_a[1])));
+        case 120: _t->reverseGlobalReplacedWordsMap(); break;
+        case 121: { QMap<QString,QString> _r = _t->getUndoGlobalReplaceMap_Multiple_Words((*reinterpret_cast< QMap<QString,QString>(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QMap<QString,QString>*>(_a[0]) = std::move(_r); }  break;
-        case 123: _t->replaceInAllFilesFromTSVfile(); break;
-        case 124: { bool _r = _t->checkForValidTSVfile((*reinterpret_cast< QFile(*)>(_a[1])));
+        case 122: _t->replaceInAllFilesFromTSVfile(); break;
+        case 123: { bool _r = _t->checkForValidTSVfile((*reinterpret_cast< QFile(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 125: _t->globalReplacePreviewfn((*reinterpret_cast< QMap<QString,QString>(*)>(_a[1])),(*reinterpret_cast< QVector<int>(*)>(_a[2]))); break;
-        case 126: { QMap<QString,QStringList> _r = _t->getBeforeAndAfterWords((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QMap<QString,QString>(*)>(_a[2])));
+        case 124: _t->globalReplacePreviewfn((*reinterpret_cast< QMap<QString,QString>(*)>(_a[1])),(*reinterpret_cast< QVector<int>(*)>(_a[2]))); break;
+        case 125: { QMap<QString,QStringList> _r = _t->getBeforeAndAfterWords((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QMap<QString,QString>(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< QMap<QString,QStringList>*>(_a[0]) = std::move(_r); }  break;
-        case 127: _t->on_actionUpload_triggered(); break;
-        case 128: _t->on_justify_triggered(); break;
-        case 129: _t->on_actionFont_Color_triggered(); break;
-        case 130: _t->on_actionBold_triggered(); break;
-        case 131: _t->SaveFile_GUI_Preprocessing(); break;
-        case 132: _t->SaveFile_GUI_Postprocessing(); break;
-        case 133: _t->GlobalReplace(); break;
-        case 134: _t->stopSpinning(); break;
-        case 135: _t->on_lineEditSearch_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 136: _t->on_action1_triggered(); break;
-        case 137: _t->on_action2_triggered(); break;
-        case 138: _t->on_action3_triggered(); break;
-        case 139: _t->on_actionCheck_for_Updates_triggered(); break;
-        case 140: _t->closeProgressBar(); break;
-        case 141: _t->setProgressBarPerc((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 142: { QString _r = _t->toDevanagari((*reinterpret_cast< string(*)>(_a[1])));
+        case 126: _t->on_actionUpload_triggered(); break;
+        case 127: _t->on_justify_triggered(); break;
+        case 128: _t->on_actionFont_Color_triggered(); break;
+        case 129: _t->on_actionBold_triggered(); break;
+        case 130: _t->SaveFile_GUI_Preprocessing(); break;
+        case 131: _t->SaveFile_GUI_Postprocessing(); break;
+        case 132: _t->GlobalReplace(); break;
+        case 133: _t->stopSpinning(); break;
+        case 134: _t->on_lineEditSearch_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 135: _t->on_action1_triggered(); break;
+        case 136: _t->on_action2_triggered(); break;
+        case 137: _t->on_action3_triggered(); break;
+        case 138: _t->on_actionCheck_for_Updates_triggered(); break;
+        case 139: _t->closeProgressBar(); break;
+        case 140: _t->setProgressBarPerc((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 141: { QString _r = _t->toDevanagari((*reinterpret_cast< string(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
-        case 143: _t->on_find_clicked(); break;
-        case 144: _t->on_actionPDF_Preview_triggered(); break;
-        case 145: _t->print((*reinterpret_cast< QPrinter*(*)>(_a[1]))); break;
-        case 146: _t->on_actionChange_Role_triggered(); break;
-        case 147: _t->bboxInsertion((*reinterpret_cast< QFile*(*)>(_a[1]))); break;
-        case 148: _t->bboxInsertion(); break;
-        case 149: _t->finishedPdfCreation((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QProcess::ExitStatus(*)>(_a[2]))); break;
-        case 150: _t->SearchOnGoogle(); break;
-        case 151: _t->GoogleTranslation(); break;
-        case 152: _t->insertImageAction(); break;
-        case 153: _t->SaveFile_Backend(); break;
-        case 154: _t->on_actionLoad_Next_Page_triggered(); break;
-        case 155: _t->on_actionLoad_Prev_Page_triggered(); break;
-        case 156: _t->LoadDocument((*reinterpret_cast< QFile*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
-        case 157: _t->pdfPrintIsReady(); break;
-        case 158: _t->readOutputFromPdfPrint(); break;
-        case 159: _t->insertCompletion((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 160: _t->focusInEvent((*reinterpret_cast< QFocusEvent*(*)>(_a[1]))); break;
-        case 161: _t->loadHtmlInDoc((*reinterpret_cast< QFile*(*)>(_a[1]))); break;
-        case 162: _t->blockCountChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 163: _t->storeBboxes((*reinterpret_cast< QFile*(*)>(_a[1]))); break;
-        case 164: _t->insertBboxes((*reinterpret_cast< QFile*(*)>(_a[1]))); break;
+        case 142: _t->on_find_clicked(); break;
+        case 143: _t->on_actionPDF_Preview_triggered(); break;
+        case 144: _t->print((*reinterpret_cast< QPrinter*(*)>(_a[1]))); break;
+        case 145: _t->on_actionChange_Role_triggered(); break;
+        case 146: _t->bboxInsertion((*reinterpret_cast< QFile*(*)>(_a[1]))); break;
+        case 147: _t->bboxInsertion(); break;
+        case 148: _t->finishedPdfCreation((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QProcess::ExitStatus(*)>(_a[2]))); break;
+        case 149: _t->SearchOnGoogle(); break;
+        case 150: _t->GoogleTranslation(); break;
+        case 151: _t->insertImageAction(); break;
+        case 152: _t->SaveFile_Backend(); break;
+        case 153: _t->on_actionLoad_Next_Page_triggered(); break;
+        case 154: _t->on_actionLoad_Prev_Page_triggered(); break;
+        case 155: _t->LoadDocument((*reinterpret_cast< QFile*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
+        case 156: _t->pdfPrintIsReady(); break;
+        case 157: _t->readOutputFromPdfPrint(); break;
+        case 158: _t->insertCompletion((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 159: _t->focusInEvent((*reinterpret_cast< QFocusEvent*(*)>(_a[1]))); break;
+        case 160: _t->loadHtmlInDoc((*reinterpret_cast< QFile*(*)>(_a[1]))); break;
+        case 161: _t->blockCountChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 162: _t->storeBboxes((*reinterpret_cast< QFile*(*)>(_a[1]))); break;
+        case 163: _t->insertBboxes((*reinterpret_cast< QFile*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -938,6 +933,13 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< CustomTextBrowser* >(); break;
+            }
+            break;
+        case 11:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QAction* >(); break;
             }
             break;
         case 12:
@@ -954,63 +956,63 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QAction* >(); break;
             }
             break;
-        case 14:
-            switch (*reinterpret_cast<int*>(_a[1])) {
-            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-            case 0:
-                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QAction* >(); break;
-            }
-            break;
-        case 41:
+        case 40:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QFile* >(); break;
             }
             break;
-        case 97:
+        case 96:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 1:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QVector<QString> >(); break;
             }
             break;
-        case 105:
+        case 104:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< CustomTextBrowser* >(); break;
             }
             break;
-        case 106:
+        case 105:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QVector<QString> >(); break;
             }
             break;
-        case 125:
+        case 124:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 1:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QVector<int> >(); break;
             }
             break;
-        case 147:
+        case 146:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QFile* >(); break;
             }
             break;
-        case 156:
+        case 155:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QFile* >(); break;
             }
             break;
-        case 161:
+        case 160:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QFile* >(); break;
+            }
+            break;
+        case 162:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -1018,13 +1020,6 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             }
             break;
         case 163:
-            switch (*reinterpret_cast<int*>(_a[1])) {
-            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-            case 0:
-                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QFile* >(); break;
-            }
-            break;
-        case 164:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -1073,13 +1068,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 165)
+        if (_id < 164)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 165;
+        _id -= 164;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 165)
+        if (_id < 164)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 165;
+        _id -= 164;
     }
     return _id;
 }

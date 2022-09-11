@@ -1131,7 +1131,6 @@ QMenu::item:selected{
      <addaction name="action2"/>
      <addaction name="action3"/>
     </widget>
-    <addaction name="actionNew"/>
     <addaction name="actionNew_Project"/>
     <addaction name="actionOpen_Project"/>
     <addaction name="menuRecent_Project"/>

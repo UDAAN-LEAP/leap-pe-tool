@@ -140,16 +140,19 @@ QList<QString> filesChangedUsingGlobalReplace;
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    CustomTextBrowser *customtextbrowser = new CustomTextBrowser(this);
+    CustomTextBrowser *customtextbrowser = new CustomTextBrowser();
     customtextbrowser->setStyleSheet("background-color:white; color:black;");
     ui->splitter->replaceWidget(1,customtextbrowser);
     customtextbrowser->show();
+
+    ui->splitter->setStyleSheet("background-color:white;color:black;");
+    ui->splitter_2->setStyleSheet("background-color:rgb(32, 33, 72);color:black;");
+
     qInstallMessageHandler(crashlog::myMessageHandler);
     toolDirAbsolutePath = QDir::currentPath(); // Setting toolPath
 
     int largeWidth = QGuiApplication::primaryScreen ()->size ().width ();
     ui->splitter->setSizes(QList<int>({largeWidth/2 , largeWidth, largeWidth}));
-//    ui->tabWidget_2->tabBar()->hide();
     ui->lineEditSearch->setPlaceholderText("Search");
     QIcon search_1("./Resources/search.jpeg");
     ui->lineEditSearch->addAction(search_1, QLineEdit::LeadingPosition);
@@ -981,31 +984,6 @@ void MainWindow::on_actionEnglish_triggered()
     int HinFlag = 0, SanFlag = 0;
     ui->hinButton->setChecked(HinFlag);//whenever language change is required it will be left as it is
     ui->sanButton->setChecked(SanFlag);
-}
-
-
-/*!
- * \fn MainWindow::on_actionNew_triggered
- * \brief This function allows the user to create new file/project.
- */
-void MainWindow::on_actionNew_triggered()
-{
-//    CustomTextBrowser * b = new CustomTextBrowser(this);
-//    b->setReadOnly(false);
-//    b->setUndoRedoEnabled(true);            //User can use Undo/Redo commands
-
-//    //! When opened tabs count is not zero
-//    if (ui->tabWidget_2->count() != 0) {
-//        for (int i = 0; i < ui->tabWidget_2->count(); i++) {
-//            //!When opened file name is not set
-//            if ("Untitled" == ui->tabWidget_2->tabText(i)) {
-//                ui->tabWidget_2->setCurrentIndex(i);
-//            }
-//        }
-//    }
-//    //! Setting current tab index
-//    currentTabIndex = ui->tabWidget_2->addTab(b, "Untitled");
-//    ui->tabWidget_2->setCurrentIndex(currentTabIndex);
 }
 
 /*!
@@ -5798,6 +5776,7 @@ void MainWindow::on_compareCorrectorOutput_clicked()
     {
     //QString qs1="", qs2="";
     QString page = gCurrentPageName;
+    //QString page = currentTabPageName;
 
     //!checks whether users have selected a page
     if(page.isEmpty())
@@ -7201,7 +7180,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 //    }
     setMFilename(mFilename = f->fileName());
     UpdateFileBrekadown();
-    CustomTextBrowser * b = new CustomTextBrowser(this);
+    CustomTextBrowser * b = new CustomTextBrowser();
     b->setReadOnly(false);
     b->setStyleSheet("background-color:white; color:black;");
 
@@ -7365,11 +7344,11 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     b->setUndoRedoEnabled(true);
 
 //    if(fileFlag) {
-        curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
-        curr_browser->setStyleSheet("background-color:white; color:black;");
-        curr_browser->setDocument(b->document());
+    curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
+    //curr_browser->setStyleSheet("background-color:white; color:red;");
+    curr_browser->setDocument(b->document());
 //        ui->tabWidget_2->setTabText(currentTabIndex, name);
-        tabchanged(currentTabIndex);
+//        tabchanged(currentTabIndex);
 
 //    }
 //    else {

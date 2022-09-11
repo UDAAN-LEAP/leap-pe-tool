@@ -1355,7 +1355,6 @@ public:
         menuSelectLanguage->addAction(actionSanskrit_2);
         menuSelectLanguage->addAction(actionHindi);
         menuSelectLanguage->addAction(actionEnglish);
-        menuOCR_Correction_Window->addAction(actionNew);
         menuOCR_Correction_Window->addAction(actionNew_Project);
         menuOCR_Correction_Window->addAction(actionOpen_Project);
         menuOCR_Correction_Window->addAction(menuRecent_Project->menuAction());

@@ -104,7 +104,6 @@ private slots:
 
  //   void displayHolder(QString,QString,QString,int,int,int,int,int);
 
-    void on_actionNew_triggered();
 
     //void on_actionOpen_triggered();
 
