@@ -9072,6 +9072,10 @@ void MainWindow::on_find_clicked()
 
     if(ui->textEdit_dict->find(searchExpr, QTextDocument::FindFlags()))
     {
+        QPalette p = ui->textEdit_dict->palette();
+        p.setColor(QPalette::Highlight, QColor(Qt::yellow));
+        p.setColor(QPalette::HighlightedText, QColor(Qt::black));
+        ui->textEdit_dict->setPalette(p);
         //ui->textEdit_dict->moveCursor(QTextCursor::EndOfWord);
 
     }
