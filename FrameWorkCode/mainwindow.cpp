@@ -7318,6 +7318,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 			qDebug() << "Cannot open file in write mode";
 		}
 		QTextStream out(f);
+        out.setCodec("utf-8");
 		out << input;
 		out.flush();
 		f->close();
