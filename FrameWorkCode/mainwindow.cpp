@@ -225,6 +225,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     {
         ui->actionHighlight->setEnabled(false);
     }
+    //hiding options
+
+    ui->actionLoadDict->setVisible(false);
+    ui->actionLoadOCRWords->setVisible(false);
+    ui->actionLoadDomain->setVisible(false);
+    ui->actionLoadSubPS->setVisible(false);
+    ui->actionLoadConfusions->setVisible(false);
+    ui->menuSelectLanguage->setTitle("");
 
     // Disabling some buttons while opening the tool
 

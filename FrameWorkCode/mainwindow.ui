@@ -1195,7 +1195,6 @@ background-color: #EEF0F2;
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionNew"/>
    <addaction name="actionOpen_Project"/>
    <addaction name="actionSave"/>
    <addaction name="actionSave_As"/>
@@ -1269,21 +1268,6 @@ background-color: #EEF0F2;
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
-   </property>
-  </action>
-  <action name="actionNew">
-   <property name="icon">
-    <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Resources/add.png</normaloff>:/Images/Resources/add.png</iconset>
-   </property>
-   <property name="text">
-    <string>New</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+N</string>
-   </property>
-   <property name="visible">
-    <bool>true</bool>
    </property>
   </action>
   <action name="actionSpell_Check">
