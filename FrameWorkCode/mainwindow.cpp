@@ -9924,6 +9924,7 @@ void MainWindow::insertBboxes(QFile *fptr)
 	}
 
 	QTextStream out(fptr);
+	out.setCodec("utf-8");
 	out << input;
 	out.flush();
 	fptr->close();
