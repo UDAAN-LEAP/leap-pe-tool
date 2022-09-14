@@ -232,7 +232,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionLoadDomain->setVisible(false);
     ui->actionLoadSubPS->setVisible(false);
     ui->actionLoadConfusions->setVisible(false);
+    ui->actionLoadGDocPage->setVisible(false);
     ui->menuSelectLanguage->setTitle("");
+    ui->menuCreateReports->setTitle("");
 
     // Disabling some buttons while opening the tool
 
