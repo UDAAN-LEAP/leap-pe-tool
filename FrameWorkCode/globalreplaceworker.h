@@ -13,6 +13,7 @@ public:
             QList<QString> *filesChangedUsingGlobalReplace = nullptr,
             QMap<QString, QString> *mapOfReplacements = nullptr,
             QMap<QString, QString> globalReplacementMap = {},
+            QMap<QPair<QString,QString>,QString> globalReplacementMapAfterCheck = {},
             QMap<QString, QString> replaceInAllPages_Map = {},
             QMap<QString, QString> replaceInUneditedPages_Map = {},
             QString currentFileDirectory = "",
@@ -23,11 +24,14 @@ public:
             int *r1 = nullptr,
             int *r2 = nullptr,
             int *x1 = nullptr,
-            int *files = nullptr
+            int *files = nullptr,
+            int pairMap = 1
             );
 
 private:
     QMap<QString, QString> globalReplacementMap;
+    QMap<QString, QString> globalReplacementMap2;
+    QMap<QPair<QString,QString>,QString> globalReplacementMapAfterCheck;
     QList<QString> *filesChangedUsingGlobalReplace;
     QMap<QString, QString> *mapOfReplacements;
     QMap<QString, QString> replaceInAllPages_Map;
@@ -42,7 +46,7 @@ private:
     int writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap);
     bool isStringInFile(QString file_path, QString searchString);
 
-
+    int pairMap;
 public slots:
     void replaceWordsInFiles();
     void writeLogs();

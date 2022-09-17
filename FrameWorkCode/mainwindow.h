@@ -93,6 +93,8 @@ public:
     void reLoadTabWindow();
     int insertedImagesCount;
 
+    QMap<QPair<QString,QString>,QString> changesCheckedInPreviewMap;
+
 private slots:
     void createActions();
     void WordCount();

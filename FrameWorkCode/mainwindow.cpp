@@ -6373,12 +6373,16 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     {
         globallyReplacedWords = globalReplacementMap;
 
+        int pairMap = 1;
+        if(changesCheckedInPreviewMap.size()==0) pairMap = 0;
+
         /*START MULTITHREADING IMPLEMENTATION HERE*/
         GlobalReplaceWorker *grWorker = new GlobalReplaceWorker(
                     nullptr,
                     &filesChangedUsingGlobalReplace,
                     &mapOfReplacements,
                     globalReplacementMap,
+                    changesCheckedInPreviewMap,
                     replaceInAllPages_Map,
                     replaceInUneditedPages_Map,
                     currentFileDirectory,
@@ -6389,7 +6393,8 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
                     &r1,
                     &r2,
                     &x1,
-                    &files
+                    &files,
+                    pairMap
                     );
 
         QThread *thread = new QThread;
@@ -6438,6 +6443,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     QMessageBox messageBox;
     if(globalReplacementMap.values().length()>0) //{
         messageBox.information(0, "Replacement Successful", msg);
+    changesCheckedInPreviewMap.clear();
         //globalReplacementMap.clear();}
 
     addCurrentlyOpenFileToEditedFilesLog();
@@ -6534,6 +6540,9 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
                 for(int i=0;i<sentences.size();i++)
                 {
                     QStandardItem *Item = new QStandardItem(pages);
+                    Item->checkState();
+                    Item->setCheckState(Qt::Unchecked);
+                    Item->setCheckable(1);
                     model->setItem(lineindex, 0,Item);
                     string sent = sentences.at(i).toStdString();
                     string newSentence = sent.substr(sent.find("==>")+3);
@@ -6552,7 +6561,38 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
       }
   globalReplacePreview gp(this, model);
   gp.exec();
+
+
+
+  int n = model->rowCount();
+  int checkCount = 0;
+
+  cout<<"::::::::::::::::::::::::::::::::"<<endl;
+  for(int i=0 ; i<n ; i++)
+  {
+      if(model->item(i)->checkState()==Qt::Checked)
+      {
+
+          changesCheckedInPreviewMap.insert({model->item(i,2)->text(),model->item(i,0)->text()},model->item(i,1)->text());
+          checkCount++;
+
+          //qDebug()<<model->item(i,1)->text()<<"------->"<<changesCheckedInPreviewMap[model->item(i,1)->text()].first<<"++++"<<changesCheckedInPreviewMap[model->item(i,1)->text()].second<<endl;
+      }
   }
+
+  qDebug()<<changesCheckedInPreviewMap<<endl;
+
+
+  qDebug()<<"::::::::::::::::????"<<checkCount<<endl;
+  //changesCheckedInPreviewMap.clear();
+
+
+
+
+  }
+
+
+
 }
 
 /*!
