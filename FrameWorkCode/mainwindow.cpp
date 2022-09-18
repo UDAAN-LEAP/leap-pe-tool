@@ -2,6 +2,7 @@
   \class mainwWindow.cpp
  */
 #include "mainwindow.h"
+#include "ui_globalreplacedialog.h"
 #include "ui_mainwindow.h"
 #include "averageaccuracies.h"
 #include "eddis.h"
@@ -6161,6 +6162,7 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
     QMap <QString, QString> globalReplacementMap;
     QMap<QString, QString> uncheckedItemsListMap;
     GlobalReplaceDialog grDialog(changedWords, this);
+    currentGlobalReplaceDialog = &grDialog;
 
     QScreen *screen = QGuiApplication::primaryScreen();
     QRect  screenGeometry = screen->geometry();
@@ -6375,6 +6377,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
         int pairMap = 1;
         if(changesCheckedInPreviewMap.size()==0) pairMap = 0;
+        qDebug()<<"Pair map ="<<pairMap;
 
         /*START MULTITHREADING IMPLEMENTATION HERE*/
         GlobalReplaceWorker *grWorker = new GlobalReplaceWorker(
@@ -6567,7 +6570,7 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
   int n = model->rowCount();
   int checkCount = 0;
 
-  cout<<"::::::::::::::::::::::::::::::::"<<endl;
+ // cout<<"::::::::::::::::::::::::::::::::"<<endl;
   for(int i=0 ; i<n ; i++)
   {
       if(model->item(i)->checkState()==Qt::Checked)
@@ -6580,19 +6583,15 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
       }
   }
 
-  qDebug()<<changesCheckedInPreviewMap<<endl;
-
-
-  qDebug()<<"::::::::::::::::????"<<checkCount<<endl;
-  //changesCheckedInPreviewMap.clear();
-
-
-
-
+  //qDebug()<<changesCheckedInPreviewMap<<endl;
+    GlobalReplaceDialog *grd = currentGlobalReplaceDialog;
+    if(checkCount>0){
+        grd->disableCheckboxes(1,&changesCheckedInPreviewMap);
+    }
+    else if(checkCount == 0){
+        grd->disableCheckboxes(1,&changesCheckedInPreviewMap);
+    }
   }
-
-
-
 }
 
 /*!

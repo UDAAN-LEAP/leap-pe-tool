@@ -91,16 +91,6 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
 
     QString replacementString1;
     //!Replacing words by iterating the map
-    //!
-    //!
-    //!
-
-
-
-
-
-
-
     if(pairMap)
     {
 
@@ -110,17 +100,17 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
 
                 if(pageName != grmIterator.key().second)
                 {
-                    qDebug()<<"NOT CHANGED in -------->"<<pageName<<":"<<grmIterator.key()<<","<<grmIterator.value()<<endl;
+                    //qDebug()<<"NOT CHANGED in -------->"<<pageName<<":"<<grmIterator.key()<<","<<grmIterator.value()<<endl;
                     continue;
                 }
 
-                qDebug()<<"CHANGED in -------->"<<pageName<<":"<<grmIterator.key()<<","<<grmIterator.value()<<endl;
+                //qDebug()<<"CHANGED in -------->"<<pageName<<":"<<grmIterator.key()<<","<<grmIterator.value()<<endl;
 
             //qDebug() << "grmIterator Key : " <<grmIterator.key()<<"grmIterator.value : "<<grmIterator.value();
                 //QString sanstr = QRegExp::escape(grmIterator.value());    //sanitized string
                 QString sanstr(grmIterator.value());
                 sanstr = "(\\b)"+sanstr+"(\\b)";
-                QRegularExpression re(sanstr);
+                QRegExp re(sanstr);
                 //QString pattern = "(\\b)"+sanstr+"(\\b)"; // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
                 //QRegExp re(pattern);
                 QString replacementString = grmIterator.key().first; // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
@@ -134,11 +124,11 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                 //input.replace(re, replacementString1);
                 browser->moveCursor(QTextCursor::Start);
 
-                qDebug()<<"____REPLACEMENT_____"<<replacementString1;
+                //qDebug()<<"____REPLACEMENT_____"<<replacementString1;
 
                 while(browser->find(re))
                 {
-                    qDebug()<<"____REPLACEMENT in LOOP_____";
+                    //qDebug()<<"____REPLACEMENT in LOOP_____";
                     QTextCursor cursor = browser->textCursor(); //get the cursor
                     QTextCharFormat fmt;
                     int pos = cursor.position(); //get the cursor position
@@ -170,13 +160,14 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
             {
 
 
-                    qDebug()<<"CHANGED in -------->"<<pageName<<":"<<grmIterator.key()<<","<<grmIterator.value()<<endl;
+                   // qDebug()<<"CHANGED in -------->"<<pageName<<":"<<grmIterator.key()<<","<<grmIterator.value()<<endl;
 
                 //qDebug() << "grmIterator Key : " <<grmIterator.key()<<"grmIterator.value : "<<grmIterator.value();
                     //QString sanstr = QRegExp::escape(grmIterator.value());    //sanitized string
                     QString sanstr(grmIterator.key());
                     sanstr = "(\\b)"+sanstr+"(\\b)";
-                    QRegularExpression re(sanstr);
+                    QRegExp re(sanstr);
+
                     //QString pattern = "(\\b)"+sanstr+"(\\b)"; // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
                     //QRegExp re(pattern);
                     QString replacementString = grmIterator.value(); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
@@ -190,11 +181,11 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                     //input.replace(re, replacementString1);
                     browser->moveCursor(QTextCursor::Start);
 
-                    qDebug()<<"____REPLACEMENT_____"<<replacementString1;
+                    //qDebug()<<"____REPLACEMENT_____"<<replacementString1;
 
                     while(browser->find(re))
                     {
-                        qDebug()<<"____REPLACEMENT in LOOP_____";
+                       // qDebug()<<"____REPLACEMENT in LOOP_____";
                         QTextCursor cursor = browser->textCursor(); //get the cursor
                         QTextCharFormat fmt;
                         int pos = cursor.position(); //get the cursor position

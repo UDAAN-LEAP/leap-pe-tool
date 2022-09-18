@@ -95,6 +95,7 @@ public:
 
     QMap<QPair<QString,QString>,QString> changesCheckedInPreviewMap;
 
+
 private slots:
     void createActions();
     void WordCount();
@@ -531,6 +532,7 @@ private:
 
 	QVector<QPair<QString,QString> > bboxes;
 	int blockCount = -1;
+    GlobalReplaceDialog *currentGlobalReplaceDialog = nullptr;
 };
 
 #endif // MAINWINDOW_H

@@ -27,6 +27,7 @@ public:
             int *files = nullptr,
             int pairMap = 1
             );
+    int pairMap;
 
 private:
     QMap<QString, QString> globalReplacementMap;
@@ -46,7 +47,7 @@ private:
     int writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap);
     bool isStringInFile(QString file_path, QString searchString);
 
-    int pairMap;
+    //int pairMap;
 public slots:
     void replaceWordsInFiles();
     void writeLogs();
