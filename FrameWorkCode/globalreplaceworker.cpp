@@ -110,7 +110,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                 //QString sanstr = QRegExp::escape(grmIterator.value());    //sanitized string
                 QString sanstr(grmIterator.value());
                 sanstr = "(\\b)"+sanstr+"(\\b)";
-                QRegExp re(sanstr);
+                QRegularExpression re(sanstr);
                 //QString pattern = "(\\b)"+sanstr+"(\\b)"; // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
                 //QRegExp re(pattern);
                 QString replacementString = grmIterator.key().first; // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
@@ -166,7 +166,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                     //QString sanstr = QRegExp::escape(grmIterator.value());    //sanitized string
                     QString sanstr(grmIterator.key());
                     sanstr = "(\\b)"+sanstr+"(\\b)";
-                    QRegExp re(sanstr);
+                    QRegularExpression re(sanstr);
 
                     //QString pattern = "(\\b)"+sanstr+"(\\b)"; // \b is word boundary, for cpp compilers an extra \ is required before \b, refer to QT docs for details
                     //QRegExp re(pattern);
