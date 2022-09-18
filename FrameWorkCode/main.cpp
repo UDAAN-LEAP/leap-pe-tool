@@ -45,7 +45,7 @@ void signalHandler(int signum){
     else
         signame = "SIGUNKN";
     qDebug() << "App crashed with signal: " << QString::fromStdString(signame);
-    QMessageBox::critical(nullptr, "OpenOCRCorrect has Unfortunately crashed", "Application has unexpectedly crashed!\n\nA log file was written to:\n"+QString::fromStdString(qApp->applicationDirPath().toStdString())+"/application_log.txt" + " \n\nTry restarting the application and email this to sanskritdigitization@gmail.com");
+    QMessageBox::critical(nullptr, "OpenOCRCorrect has Unfortunately crashed", "Application has unexpectedly crashed!\n\nA log file was written to:\n"+QString::fromStdString(qApp->applicationDirPath().toStdString())+"/application.log" + " \n\nTry restarting the application and email this to sanskritdigitization@gmail.com");
     QApplication::quit();
 }
 
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     a.setApplicationVersion("v3.0.0");
 
     //! Writing Log Files
-    QFile logFile(QString::fromStdString(qApp->applicationDirPath().toStdString())+"/application_log.txt");
+    QFile logFile(QString::fromStdString(qApp->applicationDirPath().toStdString())+"/application.log");
     logFile.open(QFile::ReadWrite | QFile::Append);
     QTextStream ts(&logFile);
     ts << endl << "OpenOCRCorrect Application Log" << endl << "Date: " <<  QDateTime::currentDateTime().toString( "dd MMM yyyy @ HH:mm:ss" ) << endl << QString("Username:" + qgetenv("USERNAME")) << endl << endl << "Application Log:" << endl ;

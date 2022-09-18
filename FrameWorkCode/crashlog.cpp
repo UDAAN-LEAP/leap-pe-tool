@@ -1,7 +1,7 @@
 /*! \class crashlog.cpp:
  *
  *  This is the crashlog module. As the name suggests we write debug statements in the project and whatever warnings
- *  QT Framework gives are logged by this class and it is written to application_log.txt file in the software directory.
+ *  QT Framework gives are logged by this class and it is written to application.log file in the software directory.
  *
  *  If the tool crashes users can share the report with us.
  */
@@ -22,7 +22,7 @@
 * \namespace crashlog
 * \fn myMessageHandler
 * \brief Checks the type of the QT output message as either debug, info, warning, critical or fatal and accordingly
-*        prints it in the console. Additionally it also prints it to the file FramWorkCode/application_log.txt.
+*        prints it in the console. Additionally it also prints it to the file FramWorkCode/application.log.
 *        This function is called using qMessageHandler() from different class constructors in our project.
 *
 * \sa fprintf(), QFile::open(), flush(), close()
@@ -66,8 +66,8 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const Q
 
        /*! Now we peform saving the messages into a log text file */
 
-       //create / open log file (FrameWorkCode/application_log.txt)
-       QFile outFile(QString::fromStdString(qApp->applicationDirPath().toStdString())+"/application_log.txt");
+       //create / open log file (FrameWorkCode/application.log)
+       QFile outFile(QString::fromStdString(qApp->applicationDirPath().toStdString())+"/application.log");
        outFile.open(QIODevice::ReadWrite | QIODevice::Append);
        QTextStream ts1(&outFile);
        //set codec

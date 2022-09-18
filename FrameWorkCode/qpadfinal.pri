@@ -38,7 +38,6 @@ HEADERS += ./Filters.h \
     $$PWD/shortcutguidedialog.h \
     $$PWD/textfinder.h \
     $$PWD/globalreplacedialog.h \
-    $$PWD/ui_shortcutguidedialog.h \
     $$PWD/undoglobalreplace.h \
 	$$PWD/verifyset.h \
     $$PWD/worker.h \
