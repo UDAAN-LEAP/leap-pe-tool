@@ -133,6 +133,7 @@ bool shouldIDraw=false;         //button functioning over marking a region for f
 int pressedFlag;            //Resposible for dynamic rectangular drawing
 QString ProjFile;
 QString branchName;
+int grdFlag = 0;
 
 QMap<QString, QString> globallyReplacedWords;
 
@@ -6431,6 +6432,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 
     //! if only one change spawn checkbox
     if (noOfChangedWords == 1){
+        grdFlag = 1;
         QRegExp sep("\\s*=>*");
         QStringList changesList = changedWords[0].split(sep, QString::SkipEmptyParts );
         bool updateGlobalCPairs = globalReplaceQueryMessageBox(changesList[0], changesList[1],check);
@@ -6445,7 +6447,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     }
     //! if there is more than 1 change spawn a checklist and get the checked pairs only
     else if(noOfChangedWords > 1){
-
+        grdFlag = 2;
         globalReplacementMap = getGlobalReplacementMapFromChecklistDialog(changedWords, &replaceInAllPages);
         QMap<QString, QString>::iterator it;
         it = globalReplacementMap.begin();
@@ -6672,12 +6674,15 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
   }
 
   //qDebug()<<changesCheckedInPreviewMap<<endl;
+  if(grdFlag == 2){
     GlobalReplaceDialog *grd = currentGlobalReplaceDialog;
+    qDebug()<<"Check count:"<<checkCount;
     if(checkCount>0){
         grd->disableCheckboxes(1,&changesCheckedInPreviewMap);
     }
     else if(checkCount == 0){
-        grd->disableCheckboxes(1,&changesCheckedInPreviewMap);
+        grd->disableCheckboxes(0,&changesCheckedInPreviewMap);
+    }
     }
   }
 }
