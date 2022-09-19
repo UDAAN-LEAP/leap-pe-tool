@@ -1620,7 +1620,6 @@ void MainWindow::SaveFile_Backend()
 */
 void MainWindow::SaveFile_GUI_Postprocessing()
 {
-
     QString tempPageName = gCurrentPageName;
 
     //! Selecting the location where file is to be saved
@@ -1635,7 +1634,7 @@ void MainWindow::SaveFile_GUI_Postprocessing()
         QFileInfo check_file(localFilename);
         if (check_file.exists() && check_file.isFile())
         {
-            return ;
+            return;
         }
     }
 
@@ -1648,7 +1647,17 @@ void MainWindow::SaveFile_GUI_Postprocessing()
         QTextStream out(&sFile);
         out.setCodec("UTF-8");          //!Sets the codec for this stream
         gInitialTextHtml[currentTabPageName] = output;
-        output = "<style> body{ width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; } </style>" + output;     //Formatting the output using CSS <style> tag
+//        output = "<style> body{ width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; } </style>" + output;     //Formatting the output using CSS <style> tag
+
+		// Formatting the output using CSS <style> tag
+		// Add style tag just before head or add styling properties in the pre-made style tag
+		int inputDataIndex = -1;
+		if ((inputDataIndex = output.indexOf("</style>")) != -1) {
+			output.insert(inputDataIndex - 1, "\nbody { width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; }");
+		} else if ((inputDataIndex = output.indexOf("</head>")) != -1) {
+			output.insert(inputDataIndex - 1, "<style>\nbody { width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; }\n</style>");
+		}
+
         out << output;
         sFile.flush();      //!Flushes any buffered data waiting to be written in the \a sFile
         sFile.close();      //!Closing the file
@@ -3859,7 +3868,7 @@ void MainWindow::on_actionCPairGEROcrVsCorrect_triggered()
 */
 void MainWindow::on_actionAllFontProperties_triggered()
 {
-    if(!curr_browser || curr_browser->isReadOnly())
+	if(!curr_browser || curr_browser->isReadOnly())
         return;
     QFont initialFont = curr_browser->font();      // initial font face
     QTextCursor cursor = curr_browser->textCursor();
@@ -3868,56 +3877,135 @@ void MainWindow::on_actionAllFontProperties_triggered()
 
     if(pointsize) initialFont.setPointSize(pointsize);      // initial font size
     bool ok;
-    QFont font = QFontDialog::getFont(&ok, initialFont, this);
+    QFont font = QFontDialog::getFont(&ok, initialFont, this, tr("Font Properties"), QFontDialog::DontUseNativeDialog);
 
-    //!Filter the font properities
-      QTextCharFormat applyFont;
-      qreal wgt = font.pointSize();
-      QString fam = font.family();
-      bool strike = font.strikeOut();
-      bool underline = font.underline();
-      qreal LetterSpacing=font.letterSpacing();
-      qreal WordSpacing = font.wordSpacing();
-      int stretch = font.stretch();
-      auto styleHint = font.styleHint();
-      auto styleStrategy = font.styleStrategy();
-      auto letterSpacingType = font.letterSpacingType();
-      bool overline = font.overline();
-      bool fixedpitch = font.fixedPitch();
-      auto hintingpref = font.hintingPreference();
+	/*! If user clicks OK then change to selected font with properties*/
+	if (!ok) {
+		return;
+	}
 
-      applyFont.setFontPointSize(wgt);
-      applyFont.setFontFamily(fam);
-      applyFont.setFontStrikeOut(strike);
-      applyFont.setFontUnderline(underline);
-      applyFont.setFontLetterSpacing(LetterSpacing);
-      applyFont.setFontWordSpacing(WordSpacing);
-      applyFont.setFontStretch(stretch);
-      applyFont.setFontStyleHint(styleHint,styleStrategy);
-      applyFont.setFontLetterSpacingType(letterSpacingType);
-      applyFont.setFontOverline(overline);
-      applyFont.setFontFixedPitch(fixedpitch);
-      applyFont.setFontHintingPreference(hintingpref);
+	int ret = QMessageBox::question(this, tr("Question"), tr("Do you want to apply this font to all pages ? (CAN'T UNDO THIS OPERATION)"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+	if (ret == QMessageBox::Yes) {
+		QString fontFamily = font.family();
+		int fontSize = font.pointSize();
+		QVector<QString> styleProperties = {"font-family:", "font-size:"};
+		QVector<QString> stylePropertyValues = {QString("\'" + fontFamily + "\'"), QString::number(fontSize) + "pt"};
+		int totalFontProperties = styleProperties.size();
+		qDebug() << "apply to all pages";
+		/*!
+		 * 1. Loop through each page except the current one
+		 * 2. Apply font size and font family
+		 */
+
+		QString directory = gDirTwoLevelUp + "/" + gCurrentDirName;
+		QString exception = gDirTwoLevelUp + "/" + gCurrentDirName + "/" + gCurrentPageName;
+
+		QDirIterator filesIt(directory, {"*.html"}, QDir::Files | QDir::NoDotAndDotDot);
+
+		while (filesIt.hasNext()) {
+			QString filename = filesIt.next();
+			if (filename == exception) {
+				continue;
+			}
+			QFile file(filename);
+			if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+				qDebug() << "Cannot open file in read mode";
+			}
+			QString fileText = file.readAll();
+			file.close();
+
+			QRegularExpression regex_style("(<span[^>]*>)");
+			QRegularExpressionMatchIterator itr = regex_style.globalMatch(fileText);
+
+			while (itr.hasNext()) {
+				QRegularExpressionMatch match = itr.next();
+				int increment = 0;
+				QString capString = match.captured(1);
+				int capStart = match.capturedStart(1);
+
+				for (int i = 0; i < totalFontProperties; i++) {
+					QString property = styleProperties[i];
+					QString value = stylePropertyValues[i];
+					int propIndex = -1;
+
+					if ((propIndex = capString.indexOf(property)) != -1) { // If value of the property is different
+						int endIndexOfProperty = capString.indexOf(";", propIndex);
+						int replacementLen = endIndexOfProperty - (propIndex + property.length());
+						fileText.replace(capStart + propIndex + property.length(), replacementLen, value);
+						increment += (value.length() - replacementLen);
+						capString.replace(propIndex + property.length(), replacementLen, value);
+					} else if (capString.indexOf("style=\"") != -1) { // If property is not present
+						int indexOfStyle = capString.indexOf("style=\"");
+						fileText.insert(capStart + indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+						increment += QString(" " + property + value + "; ").length();
+						capString.insert(indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+					} else { // If style tag is not present
+						fileText.insert(capStart + QString("<span ").length(), "style=\" " + property + value + ";\" ");
+						increment += QString("style=\" " + property + value + ";\" ").length();
+						capString.insert(QString("<span ").length(), "style=\" " + property + value + ";\" ");
+					}
+				}
+
+				itr = regex_style.globalMatch(fileText, capStart + increment);
+			}
+			if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+				qDebug() << "Cannot open file in write mode";
+			}
+			QTextStream out(&file);
+			out.setCodec("UTF-8");
+			out << fileText;
+			file.close();
+		}
+
+	}
+
+	//!Filter the font properities
+	QTextCharFormat format_to_be_applied;
+
+	qreal wgt = font.pointSize();
+	QString fam = font.family();
+	bool strike = font.strikeOut();
+	bool underline = font.underline();
+	qreal LetterSpacing=font.letterSpacing();
+	qreal WordSpacing = font.wordSpacing();
+	int stretch = font.stretch();
+	auto styleHint = font.styleHint();
+	auto styleStrategy = font.styleStrategy();
+	auto letterSpacingType = font.letterSpacingType();
+	bool overline = font.overline();
+	bool fixedpitch = font.fixedPitch();
+	auto hintingpref = font.hintingPreference();
+
+	format_to_be_applied.setFontPointSize(wgt);
+	format_to_be_applied.setFontFamily(fam);
+	format_to_be_applied.setFontStrikeOut(strike);
+	format_to_be_applied.setFontUnderline(underline);
+	format_to_be_applied.setFontLetterSpacing(LetterSpacing);
+	format_to_be_applied.setFontWordSpacing(WordSpacing);
+	format_to_be_applied.setFontStretch(stretch);
+	format_to_be_applied.setFontStyleHint(styleHint,styleStrategy);
+	format_to_be_applied.setFontLetterSpacingType(letterSpacingType);
+	format_to_be_applied.setFontOverline(overline);
+	format_to_be_applied.setFontFixedPitch(fixedpitch);
+	format_to_be_applied.setFontHintingPreference(hintingpref);
 
 
-      //! Apply bold and italics if present
-      if(font.bold())
-      {
-          qreal weight  =font.weight();
-          applyFont.setFontWeight(weight);
-      }
-      if(font.italic())
-      {
-          bool Italics = font.italic();
-          applyFont.setFontItalic(Italics);
-      }
+	//! Apply bold and italics if present
+	if(font.bold())
+	{
+		qreal weight = font.weight();
+		format_to_be_applied.setFontWeight(weight);
+	}
+	if(font.italic())
+	{
+		bool Italics = font.italic();
+		format_to_be_applied.setFontItalic(Italics);
+	}
 
-    /*! If user clicks OK then change to selected font with properties*/
-    if(ok)
-    {
-        cursor.mergeCharFormat(applyFont);
-        curr_browser->textCursor().mergeCharFormat(applyFont);
-    }
+	cursor.mergeCharFormat(format_to_be_applied);
+	curr_browser->textCursor().mergeCharFormat(format_to_be_applied);
+	curr_browser->setCurrentCharFormat(format_to_be_applied);
+	curr_browser->setCurrentFont(font);
 }
 
 /*!
