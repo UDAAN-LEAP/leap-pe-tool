@@ -3920,7 +3920,6 @@ void MainWindow::on_actionAllFontProperties_triggered()
 
 			while (itr.hasNext()) {
 				QRegularExpressionMatch match = itr.next();
-				int increment = 0;
 				QString capString = match.captured(1);
 				int capStart = match.capturedStart(1);
 
@@ -3933,21 +3932,18 @@ void MainWindow::on_actionAllFontProperties_triggered()
 						int endIndexOfProperty = capString.indexOf(";", propIndex);
 						int replacementLen = endIndexOfProperty - (propIndex + property.length());
 						fileText.replace(capStart + propIndex + property.length(), replacementLen, value);
-						increment += (value.length() - replacementLen);
 						capString.replace(propIndex + property.length(), replacementLen, value);
 					} else if (capString.indexOf("style=\"") != -1) { // If property is not present
 						int indexOfStyle = capString.indexOf("style=\"");
 						fileText.insert(capStart + indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
-						increment += QString(" " + property + value + "; ").length();
 						capString.insert(indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
 					} else { // If style tag is not present
 						fileText.insert(capStart + QString("<span ").length(), "style=\" " + property + value + ";\" ");
-						increment += QString("style=\" " + property + value + ";\" ").length();
 						capString.insert(QString("<span ").length(), "style=\" " + property + value + ";\" ");
 					}
 				}
 
-				itr = regex_style.globalMatch(fileText, capStart + increment);
+				itr = regex_style.globalMatch(fileText, capStart + capString.length());
 			}
 			if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
 				qDebug() << "Cannot open file in write mode";
