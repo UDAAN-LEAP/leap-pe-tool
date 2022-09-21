@@ -81,11 +81,11 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
     QTextBrowser * browser = new QTextBrowser();
     browser->setReadOnly(false);
 
-    QFont font("Shobhika-Regular");
-    font.setWeight(16);
-    font.setPointSize(16);
-    font.setFamily("Shobhika");
-    browser->setFont(font);
+//    QFont font("Shobhika-Regular");
+//    font.setWeight(16);
+//    font.setPointSize(16);
+//    font.setFamily("Shobhika");
+//    browser->setFont(font);
     browser->setHtml(s1);
     //QString pageName;
 
