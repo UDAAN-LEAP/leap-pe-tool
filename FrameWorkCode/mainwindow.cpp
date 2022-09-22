@@ -6724,7 +6724,7 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
       QString oldWord = grmIterator.key();
       QString newWord = grmIterator.value();
 
-      QRegularExpression rx(".*"+oldWord+"*");
+      QRegularExpression rx(".*"+oldWord+"*"); //"[^.]*"+oldWord+"[^.]*\."
       for(int i=0;i<rx.captureCount()+1;++i)
       {
          QRegularExpressionMatchIterator match = rx.globalMatch(plain);
