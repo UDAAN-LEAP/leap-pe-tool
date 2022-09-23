@@ -4707,7 +4707,7 @@ void MainWindow::on_actionFetch_2_triggered()
 
     if (forPullBox.clickedButton() == okButton)
     {
-        mProject.fetch();
+        mProject.fetch(this);
         if(mProject.get_version().toInt())
         {
             QMessageBox::information(0, "Pull Success", "Pull Succesful");

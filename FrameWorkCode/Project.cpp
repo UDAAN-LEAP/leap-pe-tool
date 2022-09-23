@@ -811,13 +811,18 @@ static int transfer_progress_cb(const git_transfer_progress *stats, void *payloa
 /*!
  * \brief Project::fetch
  */
-void Project::fetch() {
-
+void Project::fetch(QObject *parent)
+{
     QDir::setCurrent(mProjectDir.absolutePath());
     QProcess::execute("git pull");
-//	QProcess::execute("git reset --hard origin/master");
-    QDir::setCurrent(mProjectDir.absolutePath()+"/CorrectorOutput/");
-
+    QProcess gitProcess;
+    gitProcess.start("git", QStringList() << "branch" << "--show-current");
+    if (!gitProcess.waitForFinished())
+        return;
+    QString result = gitProcess.readAll();
+    QString currentBranch = result.remove("\n");
+    QProcess::execute("git reset --hard origin/" + currentBranch);
+    QDir::setCurrent(mProjectDir.absolutePath() + "/CorrectorOutput/");
 }
 
 /*!
