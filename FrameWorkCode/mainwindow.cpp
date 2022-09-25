@@ -222,6 +222,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     qApp->installEventFilter(this);
     AddRecentProjects();
 
+	// Add custom fonts
+	QFontDatabase::addApplicationFont(":/Fonts/fonts/Meera/Meera-Regular.ttf");
 
     if (!isVerifier)
     {
