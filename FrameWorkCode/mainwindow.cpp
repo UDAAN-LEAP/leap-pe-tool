@@ -8312,6 +8312,12 @@ void MainWindow::on_actionas_PDF_triggered()
     QString searchString = "background-color:#"; // string to be searched
     int l = searchString.length();
     QString whiteColor = "ffffff";
+    bool ok; int count_ = 0;
+        int i = QInputDialog::getInt(this, tr("Print pages"),
+                                     tr("Number of pages(cancel if you want whole set):"), 20, 0, 100, 1, &ok);
+        if (ok)
+            count_ = i;
+   int itr = 0;
 
     //! Loop through all files
     for(auto a : dir.entryList())
@@ -8364,6 +8370,9 @@ void MainWindow::on_actionas_PDF_triggered()
                 continue;
             }
         }
+        itr ++;
+        if(itr == count_)
+            break;
     }
 
 //    document->setHtml(html_contents);
@@ -8371,7 +8380,7 @@ void MainWindow::on_actionas_PDF_triggered()
 
     QFile file(htmlFile);
     if (file.exists()) {
-        qDebug() << "Cannot Create a file for that.";
+        qDebug() <<htmlFile<< "Cannot Create a file for that.";
         return;
     }
     if (!file.open(QIODevice::ReadWrite)) {

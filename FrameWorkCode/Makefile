@@ -647,6 +647,9 @@ qrc_AppResources.cpp: AppResources.qrc \
 		wordlists/hindi.txt \
 		wordlists/sanskrit.txt \
 		wordlists/english.txt \
+		fonts/Meera/Meera-Regular.ttf \
+		fonts/Shobhika/Shobhika-Bold.otf \
+		fonts/Shobhika/Shobhika-Regular.otf \
 		PDF-Preview.png \
 		ShortcutGuide.jpg \
 		AppResources.qrc \
