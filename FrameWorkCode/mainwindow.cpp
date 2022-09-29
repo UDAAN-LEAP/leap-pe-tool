@@ -3871,7 +3871,7 @@ void MainWindow::on_actionCPairGEROcrVsCorrect_triggered()
 */
 void MainWindow::on_actionAllFontProperties_triggered()
 {
-	if(!curr_browser || curr_browser->isReadOnly())
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
     QFont initialFont = curr_browser->font();      // initial font face
     QTextCursor cursor = curr_browser->textCursor();
@@ -3880,131 +3880,75 @@ void MainWindow::on_actionAllFontProperties_triggered()
 
     if(pointsize) initialFont.setPointSize(pointsize);      // initial font size
     bool ok;
-    QFont font = QFontDialog::getFont(&ok, initialFont, this, tr("Font Properties"), QFontDialog::DontUseNativeDialog);
+    QFont font = QFontDialog::getFont(&ok, initialFont, this);
 
-	/*! If user clicks OK then change to selected font with properties*/
-	if (!ok) {
-		return;
-	}
+    //!Filter the font properities
+      QTextCharFormat applyFont;
+      qreal wgt = font.pointSize();
+      QString fam = font.family();
+      bool strike = font.strikeOut();
+      bool underline = font.underline();
+      qreal LetterSpacing=font.letterSpacing();
+      qreal WordSpacing = font.wordSpacing();
+      int stretch = font.stretch();
+      auto styleHint = font.styleHint();
+      auto styleStrategy = font.styleStrategy();
+      auto letterSpacingType = font.letterSpacingType();
+      bool overline = font.overline();
+      bool fixedpitch = font.fixedPitch();
+      auto hintingpref = font.hintingPreference();
 
-	int ret = QMessageBox::question(this, tr("Question"), tr("Do you want to apply this font to all pages ? (CAN'T UNDO THIS OPERATION)"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-	if (ret == QMessageBox::Yes) {
-		QString fontFamily = font.family();
-		int fontSize = font.pointSize();
-		QVector<QString> styleProperties = {"font-family:", "font-size:"};
-		QVector<QString> stylePropertyValues = {QString("\'" + fontFamily + "\'"), QString::number(fontSize) + "pt"};
-		int totalFontProperties = styleProperties.size();
-		qDebug() << "apply to all pages";
-		/*!
-		 * 1. Loop through each page except the current one
-		 * 2. Apply font size and font family
-		 */
-
-		QString directory = gDirTwoLevelUp + "/" + gCurrentDirName;
-		QString exception = gDirTwoLevelUp + "/" + gCurrentDirName + "/" + gCurrentPageName;
-
-		QDirIterator filesIt(directory, {"*.html"}, QDir::Files | QDir::NoDotAndDotDot);
-
-		while (filesIt.hasNext()) {
-			QString filename = filesIt.next();
-			if (filename == exception) {
-				continue;
-			}
-			QFile file(filename);
-			if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-				qDebug() << "Cannot open file in read mode";
-			}
-			QString fileText = file.readAll();
-			file.close();
-
-			QRegularExpression regex_style("(<span[^>]*>)");
-			QRegularExpressionMatchIterator itr = regex_style.globalMatch(fileText);
-
-			while (itr.hasNext()) {
-				QRegularExpressionMatch match = itr.next();
-				QString capString = match.captured(1);
-				int capStart = match.capturedStart(1);
-
-				for (int i = 0; i < totalFontProperties; i++) {
-					QString property = styleProperties[i];
-					QString value = stylePropertyValues[i];
-					int propIndex = -1;
-
-					if ((propIndex = capString.indexOf(property)) != -1) { // If value of the property is different
-						int endIndexOfProperty = capString.indexOf(";", propIndex);
-						int replacementLen = endIndexOfProperty - (propIndex + property.length());
-						fileText.replace(capStart + propIndex + property.length(), replacementLen, value);
-						capString.replace(propIndex + property.length(), replacementLen, value);
-					} else if (capString.indexOf("style=\"") != -1) { // If property is not present
-						int indexOfStyle = capString.indexOf("style=\"");
-						fileText.insert(capStart + indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
-						capString.insert(indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
-					} else { // If style tag is not present
-						fileText.insert(capStart + QString("<span ").length(), "style=\" " + property + value + ";\" ");
-						capString.insert(QString("<span ").length(), "style=\" " + property + value + ";\" ");
-					}
-				}
-
-				itr = regex_style.globalMatch(fileText, capStart + capString.length());
-			}
-			if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-				qDebug() << "Cannot open file in write mode";
-			}
-			QTextStream out(&file);
-			out.setCodec("UTF-8");
-			out << fileText;
-			file.close();
-		}
-
-	}
-
-	//!Filter the font properities
-	QTextCharFormat format_to_be_applied;
-
-	qreal wgt = font.pointSize();
-	QString fam = font.family();
-	bool strike = font.strikeOut();
-	bool underline = font.underline();
-	qreal LetterSpacing=font.letterSpacing();
-	qreal WordSpacing = font.wordSpacing();
-	int stretch = font.stretch();
-	auto styleHint = font.styleHint();
-	auto styleStrategy = font.styleStrategy();
-	auto letterSpacingType = font.letterSpacingType();
-	bool overline = font.overline();
-	bool fixedpitch = font.fixedPitch();
-	auto hintingpref = font.hintingPreference();
-
-	format_to_be_applied.setFontPointSize(wgt);
-	format_to_be_applied.setFontFamily(fam);
-	format_to_be_applied.setFontStrikeOut(strike);
-	format_to_be_applied.setFontUnderline(underline);
-	format_to_be_applied.setFontLetterSpacing(LetterSpacing);
-	format_to_be_applied.setFontWordSpacing(WordSpacing);
-	format_to_be_applied.setFontStretch(stretch);
-	format_to_be_applied.setFontStyleHint(styleHint,styleStrategy);
-	format_to_be_applied.setFontLetterSpacingType(letterSpacingType);
-	format_to_be_applied.setFontOverline(overline);
-	format_to_be_applied.setFontFixedPitch(fixedpitch);
-	format_to_be_applied.setFontHintingPreference(hintingpref);
+      applyFont.setFontPointSize(wgt);
+      applyFont.setFontFamily(fam);
+      applyFont.setFontStrikeOut(strike);
+      applyFont.setFontUnderline(underline);
+      applyFont.setFontLetterSpacing(LetterSpacing);
+      applyFont.setFontWordSpacing(WordSpacing);
+      applyFont.setFontStretch(stretch);
+      applyFont.setFontStyleHint(styleHint,styleStrategy);
+      applyFont.setFontLetterSpacingType(letterSpacingType);
+      applyFont.setFontOverline(overline);
+      applyFont.setFontFixedPitch(fixedpitch);
+      applyFont.setFontHintingPreference(hintingpref);
 
 
-	//! Apply bold and italics if present
-	if(font.bold())
-	{
-		qreal weight = font.weight();
-		format_to_be_applied.setFontWeight(weight);
-	}
-	if(font.italic())
-	{
-		bool Italics = font.italic();
-		format_to_be_applied.setFontItalic(Italics);
-	}
+      //! Apply bold and italics if present
+      if(font.bold())
+      {
+          qreal weight  =font.weight();
+          applyFont.setFontWeight(weight);
+      }
+      if(font.italic())
+      {
+          bool Italics = font.italic();
+          applyFont.setFontItalic(Italics);
+      }
+    QString sel = cursor.selectedText();
+    int start_pos = cursor.selectionStart();
+    int end_pos = cursor.selectionEnd();
+    if(ok){
+    for(int i = 0;i<sel.size();i++){
+        if((sel[i]=='<')&&(sel[i+1]=='i')&&(sel[i+2]=='m')&&(sel[i+3]=='g')){
+            int moved = i;
+            cursor.setPosition((start_pos+i),QTextCursor::KeepAnchor);
+            cursor.mergeCharFormat(applyFont);
+            curr_browser->textCursor().mergeCharFormat(applyFont);
+        }
+        else if((sel[i-6]=='<')&&(sel[i-5]=='/')&&(sel[i-4]=='i')&&(sel[i-3]=='m')&&(sel[i-2]=='g')&&(sel[i-1]=='>')){
+            cursor.setPosition((start_pos+i),QTextCursor::MoveAnchor);
+        }
+    }
+    cursor.setPosition((end_pos),QTextCursor::KeepAnchor);
+    cursor.mergeCharFormat(applyFont);
+    curr_browser->textCursor().mergeCharFormat(applyFont);
+    }
 
-	cursor.mergeCharFormat(format_to_be_applied);
-	curr_browser->textCursor().mergeCharFormat(format_to_be_applied);
-	curr_browser->setCurrentCharFormat(format_to_be_applied);
-	curr_browser->setCurrentFont(font);
+ //   /*! If user clicks OK then change to selected font with properties*/
+//    if(ok)
+//    {
+//        cursor.mergeCharFormat(applyFont);
+//        curr_browser->textCursor().mergeCharFormat(applyFont);
+//    }
 }
 
 /*!
@@ -7293,8 +7237,15 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
             currBox2.exec();
 
 
-            if (currBox2.clickedButton() == okButton2)
+            if (currBox2.clickedButton() == okButton2){
                 on_actionSave_triggered();
+            //this->close();
+                if (graphic)delete graphic;
+                delete curr_browser;}
+            else{
+                if (graphic)delete graphic;
+                delete curr_browser;
+            }
         }
     }
     //-
