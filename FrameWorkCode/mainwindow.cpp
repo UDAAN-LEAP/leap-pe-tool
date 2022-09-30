@@ -591,7 +591,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
     trieEditDis trie;
 
     // to make sure the right menu click is not taking place outside of the tabWidget_2
-    QRect tabRect = ui->textBrowser->frameGeometry();
+    QRect tabRect = curr_browser->frameGeometry();
 
     QPoint topLeftPoint = tabRect.topLeft();
     QPoint botRightPoint = tabRect.bottomRight();
@@ -615,7 +615,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
         curr_browser->cursorForPosition(ev->pos());
 
         DisplayTimeLog();
-        if((ev->button() == Qt::RightButton) && (LoadDataFlag)){
+        if((ev->button() == Qt::RightButton) && (!LoadDataFlag)){
             QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
             QTextCursor cursor = curr_browser->textCursor();
             cursor.select(QTextCursor::WordUnderCursor);
@@ -683,7 +683,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             qDebug ()<<"right click";
         }
         //! if right click
-        if (((ev->button() == Qt::RightButton) && (!LoadDataFlag)) || (RightclickFlag))
+        if (((ev->button() == Qt::RightButton) && (LoadDataFlag)) || (RightclickFlag))
         {
 
             QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
@@ -2036,7 +2036,7 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
         int rowCount = ui->treeView->model()->rowCount(parentIndex);
 
         QString treeItemLabel;
-        for (int i = 0; i < rowCount-1; i++)
+        for (int i = 0; i <= rowCount-1; i++)
         {
             QModelIndex index = model->index(i, 0, parentIndex);
             treeItemLabel = index.data(Qt::DisplayRole).toString();
@@ -2044,6 +2044,7 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
             {
                 if (treeItemLabel == currentTabPageName)
                 {
+                    if(i==rowCount-1) i=-1;
                     index = model->index(i+1, 0, parentIndex);
                     treeItemLabel = index.data(Qt::DisplayRole).toString();
                     //currentTabPageName = treeItemLabel;
@@ -2121,6 +2122,7 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
             {
                 if (treeItemLabel == currentTabPageName)
                 {
+                    if(i==0) i = rowCount;
                     index = model->index(i-1, 0, parentIndex);
                     treeItemLabel = index.data(Qt::DisplayRole).toString();
                     //currentTabPageName = treeItemLabel;
@@ -5619,6 +5621,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
  */
 void MainWindow::on_pushButton_2_clicked()
 {
+    if(!curr_browser) return;
 
     auto cursor = curr_browser->textCursor();
     auto selected = cursor.selection();
@@ -8010,6 +8013,8 @@ void MainWindow::directoryChanged(const QString &path)
 */
 bool MainWindow::checkUnsavedWork() {
     //!iterate over tab counts and checks for wok in the text browser of that tab
+
+    if(!curr_browser) return false;
 
     QString closing_browserHtml = curr_browser->toHtml();
     if(closing_browserHtml != gInitialTextHtml[currentTabPageName]) {
