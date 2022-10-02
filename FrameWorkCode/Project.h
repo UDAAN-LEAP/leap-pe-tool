@@ -9,6 +9,7 @@
 #include <string>
 #include <diff_match_patch.h>
 #include <qlist.h>
+#include <QObject>
 
 class Project {
 public:
@@ -29,7 +30,7 @@ public:
     bool commit(std::string message);
     bool push(QString branchName);
 	bool add_config();
-	void fetch();
+	void fetch(QObject *parent);
     bool enable_push(bool increment);
 	void AddTemp(Filter * f, QFile &pFile,QString prefix);
     int findNumberOfFilesInDirectory(std::string);

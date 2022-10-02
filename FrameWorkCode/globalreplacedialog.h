@@ -19,6 +19,7 @@ class GlobalReplaceDialog : public QDialog
 public:
     explicit GlobalReplaceDialog(QVector <QString> replacedWords,QWidget *parent = nullptr);
     QVector<int> getStatesOfCheckboxes();
+    QMap<QPair<QString,QString>,QString> *changesCheckedInPreviewMap;;
     bool clicked_applyButton();
     ~GlobalReplaceDialog();
 signals:
@@ -35,10 +36,14 @@ private slots:
     void on_checkBox_clicked();
     void on_checkBox_2_clicked();
 
+    void on_pushButton_2_clicked();
+
 public slots:
     void highlightChecked(QListWidgetItem* item);
     QMap <QString, QString> getFilteredGlobalReplacementMap();
     QMap <QString, QString> uncheckedItemsList();
+    void disableCheckboxes(int,QMap<QPair<QString,QString>,QString> *changesCheckedInPreviewMap);
+    friend class MainWindow;
 
 private:
     Ui::GlobalReplaceDialog *ui;
@@ -50,6 +55,7 @@ private:
 //    QCheckBox *box;
 //    QVBoxLayout *vbox = new QVBoxLayout;
     bool applyButtonIsClicked = false;
+
 };
 
 #endif // GLOBALREPLACEDIALOG_H

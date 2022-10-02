@@ -27,6 +27,7 @@ HEADERS += ./Filters.h \
     $$PWD/SimpleMail/serverreply_p.h \
     $$PWD/SimpleMail/smtpexports.h \
     $$PWD/crashlog.h \
+    $$PWD/customtextbrowser.h \
     $$PWD/editdistance.h \
     $$PWD/globalreplaceworker.h \
 	$$PWD/loaddataworker.h \
@@ -37,7 +38,6 @@ HEADERS += ./Filters.h \
     $$PWD/shortcutguidedialog.h \
     $$PWD/textfinder.h \
     $$PWD/globalreplacedialog.h \
-    $$PWD/ui_shortcutguidedialog.h \
     $$PWD/undoglobalreplace.h \
 	$$PWD/verifyset.h \
     $$PWD/worker.h \
@@ -103,6 +103,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/SimpleMail/server.cpp \
     $$PWD/SimpleMail/serverreply.cpp \
     $$PWD/crashlog.cpp \
+    $$PWD/customtextbrowser.cpp \
     $$PWD/eddis.cpp \
     $$PWD/editdistance.cpp \
     $$PWD/globalreplaceworker.cpp \

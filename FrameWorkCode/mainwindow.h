@@ -48,6 +48,16 @@
 #include "globalreplacepreview.h"
 #include<markRegion.h>
 
+
+#include<QCompleter>
+#include<QDirModel>
+#include <QStringListModel>
+#include <QModelIndex>
+#include <QAbstractItemModel>
+#include <QScrollBar>
+
+#include "customtextbrowser.h"
+
 //#include <set>
 using namespace std;
 
@@ -75,17 +85,21 @@ public:
     int getCurrentTabIndex() {
         return currentTabIndex;
     }
-    QTextBrowser * getCurrentBrowser() {
+    CustomTextBrowser * getCurrentBrowser() {
         return curr_browser;
     };
 
     void load_data();
     void reLoadTabWindow();
+    int insertedImagesCount;
+
+    QMap<QPair<QString,QString>,QString> changesCheckedInPreviewMap;
+
 
 private slots:
     void createActions();
     void WordCount();
-    void DisplayJsonDict(QTextBrowser *b, QString input);
+    void DisplayJsonDict(CustomTextBrowser *b, QString input);
 
     bool eventFilter(QObject *, QEvent *);
 
@@ -93,7 +107,6 @@ private slots:
 
  //   void displayHolder(QString,QString,QString,int,int,int,int,int);
 
-    void on_actionNew_triggered();
 
     //void on_actionOpen_triggered();
 
@@ -345,7 +358,7 @@ private slots:
 
     void dumpStringToFile(QString file_path, QString string);
 
-    void highlight(QTextBrowser *b , QString input);
+    void highlight(CustomTextBrowser *b , QString input);
 
     QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords, QVector<int> *replaceInAllPages);
 
@@ -446,6 +459,8 @@ private slots:
 
     void GoogleTranslation();
 
+    void insertImageAction();
+
 public slots:
     void SaveFile_Backend();
 
@@ -459,6 +474,18 @@ public slots:
 
     void readOutputFromPdfPrint();
 
+    void insertCompletion(const QString &completion);
+
+    void focusInEvent(QFocusEvent *e) ;
+
+	void loadHtmlInDoc(QFile *);
+
+	void blockCountChanged(int);
+
+	void storeBboxes(QFile *);
+
+	void insertBboxes(QFile *);
+
 private:
     bool mExitStatus = false;
     QString mRole;
@@ -471,7 +498,7 @@ private:
     QString current_folder;
     QString currentTabPageName="";
     int currentTabIndex;
-    QTextBrowser * curr_browser = nullptr;
+    CustomTextBrowser * curr_browser = nullptr;
     QGraphicsScene * graphic =nullptr;
     Graphics_view_zoom * z = nullptr;
     QModelIndex curr_idx;
@@ -492,6 +519,20 @@ private:
     QString toolDirAbsolutePath; // This path is the absolute path of this tool
     QProcess *mPrintPdfProcess;
     QMessageBox *tempMsgBox;
+
+    CustomTextBrowser *TextBrowser;
+    void createMenu();
+    QAbstractItemModel *modelFromFile(const QString& fileName);
+    QString textUnderCursor();
+
+	QCompleter *c = nullptr;
+	QTextDocument *doc;
+
+	int currentZoomLevel = 100;
+
+	QVector<QPair<QString,QString> > bboxes;
+	int blockCount = -1;
+    GlobalReplaceDialog *currentGlobalReplaceDialog = nullptr;
 };
 
 #endif // MAINWINDOW_H

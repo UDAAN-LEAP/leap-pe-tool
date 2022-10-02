@@ -12,6 +12,7 @@
   </property>
   <property name="font">
    <font>
+    <weight>50</weight>
     <italic>false</italic>
     <bold>false</bold>
    </font>
@@ -114,61 +115,6 @@ color:white;
       </item>
       <item>
        <widget class="QSplitter" name="splitter">
-        <property name="styleSheet">
-         <string notr="true">QSplitter{
-QGraphicsView{background-color:white;}
-}
-QGraphicsView{background-color:white;}
-QScrollBar:vertical { 
-                                                border: none;
-                                                background: white;
-                                                 width: 9.81px;
-                                            }
-QScrollBar::handle:vertical { 
-                                                background-color:  rgba(1, 22, 51, 0.5);
-                                                border-radius:4.905px;
-														border: 0px solid red; 
-													
-														
-                                            }
-QScrollBar::add-line:vertical {       
-                            height: 0px;
-                            subcontrol-position: bottom; 
-                            subcontrol-origin: margin; 
-								
-                        } 
-QScrollBar::sub-line:vertical { 
-                            height: 0 px; 
-                            subcontrol-position: top; 
-                            subcontrol-origin: margin; 
-                        }
-
-QScrollBar:horizontal { 
-                                                border: none;
-                                                background: white;
- 													   
-                                             		
-                                            }
-QScrollBar::handle:horizontal { 
-                                                background-color:  rgba(1, 22, 51, 0.5);
-														border: 0px solid red; 
-														border-radius:4.905px;
-														
-                                            }
-QScrollBar::add-line:horizontal {       
-                            height: 0px;
-                            subcontrol-position: bottom; 
-                            subcontrol-origin: margin; 
-								
-                        } 
-QScrollBar::sub-line:horizontal { 
-                            height: 0 px; 
-                            subcontrol-position: top; 
-                            subcontrol-origin: margin; 
-                        }
-
-</string>
-        </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -323,6 +269,7 @@ background-color: rgb(136, 138, 133);
                 </property>
                 <property name="font">
                  <font>
+                  <weight>50</weight>
                   <italic>false</italic>
                   <bold>false</bold>
                  </font>
@@ -594,72 +541,32 @@ QScrollBar::sub-line:vertical {
           </widget>
          </widget>
         </widget>
-        <widget class="QTabWidget" name="tabWidget_2">
+        <widget class="QTextBrowser" name="textBrowser">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>400</width>
            <height>0</height>
           </size>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16777215</height>
-          </size>
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="mouseTracking">
+          <bool>true</bool>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color:white; color:black;
-</string>
-         </property>
-         <property name="currentIndex">
-          <number>0</number>
-         </property>
-         <property name="tabsClosable">
-          <bool>true</bool>
-         </property>
-         <property name="movable">
-          <bool>true</bool>
-         </property>
-         <property name="tabBarAutoHide">
-          <bool>false</bool>
-         </property>
-         <widget class="QWidget" name="tab_5">
-          <attribute name="title">
-           <string>Tab 1</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_4">
-           <item row="0" column="0">
-            <widget class="QTextBrowser" name="textBrowser">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>400</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>20</pointsize>
-               <italic>false</italic>
-               <bold>false</bold>
-              </font>
-             </property>
-             <property name="mouseTracking">
-              <bool>true</bool>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QTextBrowser{
+          <string notr="true">QTextBrowser{
 	border: 0px;
 	background-color:white;
 font-size: 20pt;
@@ -688,33 +595,29 @@ QScrollBar::sub-line:vertical {
                             subcontrol-origin: margin; 
                         }
 </string>
-             </property>
-             <property name="sizeAdjustPolicy">
-              <enum>QAbstractScrollArea::AdjustToContents</enum>
-             </property>
-             <property name="undoRedoEnabled">
-              <bool>true</bool>
-             </property>
-             <property name="readOnly">
-              <bool>false</bool>
-             </property>
-             <property name="html">
-              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::AdjustToContents</enum>
+         </property>
+         <property name="undoRedoEnabled">
+          <bool>true</bool>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:20pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="acceptRichText">
-              <bool>true</bool>
-             </property>
-             <property name="textInteractionFlags">
-              <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextEditable|Qt::TextEditorInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
+         </property>
+         <property name="acceptRichText">
+          <bool>true</bool>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextEditable|Qt::TextEditorInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+         </property>
         </widget>
         <widget class="QGraphicsView" name="graphicsView">
          <property name="sizePolicy">
@@ -1228,7 +1131,6 @@ QMenu::item:selected{
      <addaction name="action2"/>
      <addaction name="action3"/>
     </widget>
-    <addaction name="actionNew"/>
     <addaction name="actionNew_Project"/>
     <addaction name="actionOpen_Project"/>
     <addaction name="menuRecent_Project"/>
@@ -1293,7 +1195,6 @@ background-color: #EEF0F2;
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionNew"/>
    <addaction name="actionOpen_Project"/>
    <addaction name="actionSave"/>
    <addaction name="actionSave_As"/>
@@ -1367,21 +1268,6 @@ background-color: #EEF0F2;
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
-   </property>
-  </action>
-  <action name="actionNew">
-   <property name="icon">
-    <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Resources/add.png</normaloff>:/Images/Resources/add.png</iconset>
-   </property>
-   <property name="text">
-    <string>New</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+N</string>
-   </property>
-   <property name="visible">
-    <bool>true</bool>
    </property>
   </action>
   <action name="actionSpell_Check">
@@ -2134,6 +2020,7 @@ background-color: #EEF0F2;
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
+  <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
  </resources>

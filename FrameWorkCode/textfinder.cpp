@@ -101,9 +101,9 @@ void TextFinder::on_findNextButton_clicked()
                 gCurrentPageName = fileInfo.fileName();
                 break;
             }
-            if(i == (list.size() - 1)){
-                i=0;
-            }
+//            if(i == (list.size() - 1)){
+//                i=0;
+//            }
 
         }
         QString suff = fileInfo.completeSuffix();
@@ -163,9 +163,9 @@ void TextFinder::on_findPreviousButton_clicked()
                 gCurrentPageName = fileInfo.fileName();
                 break;
             }
-            if(i == 0){
-                i=(list.size());
-            }
+//            if(i == 0){
+//                i=(list.size());
+//            }
         }
         QString suff = fileInfo.completeSuffix();
         QFile *f = new QFile(path);

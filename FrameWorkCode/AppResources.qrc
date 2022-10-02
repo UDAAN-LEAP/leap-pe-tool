@@ -49,4 +49,14 @@
         <file>spinbar-white-tp.gif</file>
         <file>PDF-Preview.png</file>
     </qresource>
+    <qresource prefix="/WordList">
+        <file>wordlists/english.txt</file>
+        <file>wordlists/hindi.txt</file>
+        <file>wordlists/sanskrit.txt</file>
+    </qresource>
+    <qresource prefix="/Fonts">
+        <file>fonts/Meera/Meera-Regular.ttf</file>
+        <file>fonts/Shobhika/Shobhika-Bold.otf</file>
+        <file>fonts/Shobhika/Shobhika-Regular.otf</file>
+    </qresource>
 </RCC>

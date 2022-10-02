@@ -14,6 +14,7 @@
 #include "globalreplaceinformation.h"
 #include <QMessageBox>
 #include "crashlog.h"
+#include <mainwindow.h>
 
 /*!
  * \fn GlobalReplaceDialog::GlobalReplaceDialog
@@ -29,7 +30,7 @@ GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidge
     setWindowTitle("Select the words you want to replace globally");
     displayOriginalList(replacedWords);
     //ui->listWidget->insertItem(,"Replacement Words");
-
+    ui->pushButton_2->setVisible(false);
 
     QObject::connect(ui->listWidget, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(highlightChecked(QListWidgetItem*)));
 
@@ -464,3 +465,24 @@ void GlobalReplaceDialog::rightCheckBoxStateChanged(){
     count_ = 0;
     count1=0;
 }
+
+void GlobalReplaceDialog::disableCheckboxes(int flag,QMap<QPair<QString,QString>,QString> *changesCheckedInPreviewMap1)
+{
+    changesCheckedInPreviewMap = changesCheckedInPreviewMap1;
+    ui->groupBox->setDisabled(flag);
+    ui->groupBox_2->setDisabled(flag);
+    if(flag == 1)
+        ui->pushButton_2->setVisible(true);
+    if(flag == 0)
+        ui->pushButton_2->setVisible(false);
+}
+
+void GlobalReplaceDialog::on_pushButton_2_clicked()
+{
+
+    ui->pushButton_2->setVisible(false);
+    ui->groupBox->setDisabled(false);
+    ui->groupBox_2->setDisabled(false);
+    changesCheckedInPreviewMap->clear();
+}
+
