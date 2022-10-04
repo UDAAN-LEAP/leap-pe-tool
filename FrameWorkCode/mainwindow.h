@@ -47,6 +47,7 @@
 #include "progressbardialog.h"
 #include "globalreplacepreview.h"
 #include<markRegion.h>
+#include<QOAuth2AuthorizationCodeFlow>
 
 
 #include<QCompleter>
@@ -71,6 +72,7 @@ class MainWindow : public QMainWindow
 
 signals:
     void closeSignal();
+    void gotToken(const QString& token);
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -461,6 +463,10 @@ private slots:
 
     void insertImageAction();
 
+    void on_actionLogin_triggered();
+
+    void on_actionLogout_triggered();
+
 public slots:
     void SaveFile_Backend();
 
@@ -485,6 +491,7 @@ public slots:
 	void storeBboxes(QFile *);
 
 	void insertBboxes(QFile *);
+    void authenticate();
 
 private:
     bool mExitStatus = false;
@@ -533,6 +540,8 @@ private:
 	QVector<QPair<QString,QString> > bboxes;
 	int blockCount = -1;
     GlobalReplaceDialog *currentGlobalReplaceDialog = nullptr;
+    QOAuth2AuthorizationCodeFlow * google;
+    void googleAuth();
 };
 
 #endif // MAINWINDOW_H

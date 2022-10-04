@@ -80,6 +80,8 @@
 #include "globalreplaceworker.h"
 #include "pdfhandling.h"
 #include "customtextbrowser.h"
+#include <QtNetworkAuth>
+#include <QOAuth2AuthorizationCodeFlow>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -164,6 +166,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->lineEdit_2->setReadOnly(true);
     ui->lineEdit_3->setReadOnly(true);
 
+    googleAuth();
+
     QString password  = "";
     QString passwordFilePath = QDir::currentPath() + "/pass.txt";
     QFile passwordFile(passwordFilePath);
@@ -183,6 +187,46 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     this->show();
     this->setWindowState(Qt::WindowState::WindowActive);
+    //ask for login
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("loginConsent");
+    QString value = settings.value("consent").toString();
+    if(value != "dna" && value != "loggedIn"){
+    QMessageBox login;
+    login.setWindowTitle("Login using Google");
+    login.setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint|Qt::WindowCloseButtonHint);
+    login.setIcon(QMessageBox::Information);
+    login.setInformativeText("Login using your Google account");
+    QPushButton *confirmButton = login.addButton(tr("Login"),QMessageBox::AcceptRole);
+    QPushButton *cancelButton = login.addButton(tr("Cancel"),QMessageBox::ActionRole);
+    QCheckBox *cb = new QCheckBox("Do not ask again");
+    login.setCheckBox(cb);
+    cb->setStyleSheet("QCheckBox{color:rgb(227, 228, 228);border:0px;}");
+
+    login.exec();
+    if(cb->checkState() == Qt::Checked){
+        settings.setValue("consent","dna");
+    }
+    if(login.clickedButton() == confirmButton)
+    {
+      authenticate();
+      this->close();
+    }
+    if(login.clickedButton() == cancelButton){
+        login.close();
+    }
+    }
+    //show login/logout options
+    QString consent = settings.value("consent").toString();
+    settings.endGroup();
+    if(consent != "loggedIn"){
+        this->ui->actionLogin->setVisible(true);
+        this->ui->actionLogout->setVisible(false);
+    }
+    else{
+        this->ui->actionLogin->setVisible(false);
+        this->ui->actionLogout->setVisible(true);
+    }
 
     QString common = "डॉ - xZ,, अ  - a,, आ/ ा  - A,, इ/ ि  - i,, ई/ ी  - I,, उ/ ु  - u,, ऊ/ ू  - U,, ऋ/ ृ  - f,, ए/ े  - e,, ऐ/ ै  - E,, ओ/ ो  - o,, औ/ ौ  - O,, ं  - M,, ः  - H,,  ँ   - ~,, ज्ञ  - jYa,, त्र  - tra,, श्र  - Sra,, क्ष्/क्ष  - kz/kza,, द्य्/द्य  - dy/dya,, क्/क  - k/ka,, ख्/ख  - K/Ka,, ग्/ग  - g/ga,, घ्/घ  - G/Ga,, ङ्/ङ  - N/Na,, च्/च  - c/ca,, छ्/छ  - C/Ca,, ज्/ज  - j/ja,, झ्/झ  - J/Ja,, ञ्/ञ  - Y/Ya,, ट्/ट  - w/wa,, ठ्/ठ  - W/Wa,, ड्/ड  - q/qa,, ढ्/ढ  - Q/Qa,, ण्/ण  - R/Ra,, त्/त  - t/ta,, थ्/थ  - T/Ta,, द्/द  - d/da,, ध्/ध  - D/Da,, न्/न  - n/na,, प्/प  - p/pa,, फ्/फ  - P/Pa,, ब्/ब  - b/ba,, भ्/भ  - B/Ba,, म्/म  - m/ma,, य्/य  - y/ya,, र्/र  - r/ra,, ल्/ल  - l/la,, व्/व  - v/va,, श्/श  - S/Sa,, ष्/ष  - z/za,, स्/स  - s/sa,, ह्/ह  - h/ha,, ळ्/ळ  - L/La,, १  - 1,, २  - 2,, ३  - 3,, ४  - 4,, ५  - 5,, ६  - 6,, ७  - 7,, ८  - 8,, ९  - 9,, ०  - 0,, ।  - |,, ॥  - ||";
     gSanskrit = "SLP1 Sanskrit Guide:";
@@ -202,6 +246,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->textEdit->setFont(font);
 
     ui->sanButton->setChecked(true);
+
 
 //    ui->tabWidget_2->removeTab(0);
 //    ui->tabWidget_2->removeTab(0);
@@ -476,6 +521,75 @@ void writeJsonFile(QString filepath, QJsonObject mainObj)
     jsonFile.open(QIODevice::WriteOnly);
     jsonFile.write(document1.toJson());
     jsonFile.close();
+}
+//void MainWindow::gotToken(const QString token){
+//    qDebug()<<"Token received is :"<<token;
+//}
+void MainWindow::authenticate() {
+    this->google->grant();
+}
+
+void MainWindow::googleAuth()
+{
+     google = new QOAuth2AuthorizationCodeFlow;
+     google->setScope("email");
+     connect(google, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser,
+             &QDesktopServices::openUrl);
+
+     const auto object = readJsonFile("auth.json");
+     const auto settingsObject = object["web"].toObject();
+     const QUrl authUri(settingsObject["auth_uri"].toString());
+     const auto clientId = settingsObject["client_id"].toString();
+     const QUrl tokenUri(settingsObject["token_uri"].toString());
+     const auto clientSecret(settingsObject["client_secret"].toString());
+     const auto redirectUris = settingsObject["redirect_uris"].toArray();
+     const QUrl redirectUri(redirectUris[0].toString()); // Get the first URI
+     const auto port = static_cast<quint16>(redirectUri.port()); // Get the port
+
+     google->setAuthorizationUrl(authUri);
+     google->setClientIdentifier(clientId);
+     google->setAccessTokenUrl(tokenUri);
+     google->setClientIdentifierSharedKey(clientSecret);
+
+     google->setModifyParametersFunction([](QAbstractOAuth::Stage stage, QVariantMap* parameters) {
+         // Percent-decode the "code" parameter so Google can match it
+         if (stage == QAbstractOAuth::Stage::RequestingAccessToken) {
+             QByteArray code = parameters->value("code").toByteArray();
+             (*parameters)["code"] = QUrl::fromPercentEncoding(code);
+         }
+     });
+
+     QOAuthHttpServerReplyHandler* replyHandler = new QOAuthHttpServerReplyHandler(port, this);
+     google->setReplyHandler(replyHandler);
+     connect(this->google, &QOAuth2AuthorizationCodeFlow::granted, [=](){
+            const QString token = this->google->token();
+            //qDebug()<<"Token "<<token;
+            emit gotToken(token);
+
+            auto reply = this->google->get(QUrl("https://www.googleapis.com/oauth2/v2/userinfo?access_token="+token));
+            connect(reply, &QNetworkReply::finished, [reply, token, this](){
+                const auto objectDetails = (QString)reply->readAll();
+                QJsonDocument jsonResponse = QJsonDocument::fromJson(objectDetails.toUtf8());
+                QJsonObject jsonObject = jsonResponse.object();
+                QString email = jsonObject["email"].toString();
+                QString id = jsonObject["id"].toString();
+             // qDebug()<<"email"<<email;
+            //save details in QSettings
+                QSettings settings("IIT-B", "OpenOCRCorrect");
+                settings.beginGroup("login");
+                settings.setValue("token",token);
+                settings.setValue("email",email);
+                settings.setValue("id",id);
+                settings.endGroup();
+                //now login dialog should not appear
+                settings.beginGroup("loginConsent");
+                settings.setValue("consent","loggedIn");
+                settings.endGroup();
+                this->ui->actionLogin->setVisible(false);
+                this->ui->actionLogout->setVisible(true);
+            });
+        });
+
 }
 QString file = "";
 bool fileFlag = 0;
@@ -10041,5 +10155,24 @@ void MainWindow::insertBboxes(QFile *fptr)
 
 
 
+void MainWindow::on_actionLogin_triggered()
+{
+    authenticate();
+}
 
+
+void MainWindow::on_actionLogout_triggered()
+{
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("loginConsent");
+    settings.remove("");
+    settings.endGroup();
+    settings.beginGroup("login");
+    settings.remove("");
+    settings.endGroup();
+    ui->actionLogout->setVisible(false);
+    ui->actionLogin->setVisible(true);
+    QDesktopServices::openUrl(QUrl("https://myaccount.google.com/permissions?continue=https%3A%2F%2Fmyaccount.google.com%2Fsecurity", QUrl::TolerantMode));
+
+}
 
