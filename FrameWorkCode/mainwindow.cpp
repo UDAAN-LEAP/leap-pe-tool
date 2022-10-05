@@ -536,15 +536,20 @@ void MainWindow::googleAuth()
      connect(google, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser,
              &QDesktopServices::openUrl);
 
-     const auto object = readJsonFile("auth.json");
-     const auto settingsObject = object["web"].toObject();
-     const QUrl authUri(settingsObject["auth_uri"].toString());
-     const auto clientId = settingsObject["client_id"].toString();
-     const QUrl tokenUri(settingsObject["token_uri"].toString());
-     const auto clientSecret(settingsObject["client_secret"].toString());
-     const auto redirectUris = settingsObject["redirect_uris"].toArray();
-     const QUrl redirectUri(redirectUris[0].toString()); // Get the first URI
-     const auto port = static_cast<quint16>(redirectUri.port()); // Get the port
+//     const auto object = readJsonFile("auth.json");
+//     const auto settingsObject = object["web"].toObject();
+//     const QUrl authUri(settingsObject["auth_uri"].toString());
+//     const auto clientId = settingsObject["client_id"].toString();
+//     const QUrl tokenUri(settingsObject["token_uri"].toString());
+//     const auto clientSecret(settingsObject["client_secret"].toString());
+//     const auto redirectUris = settingsObject["redirect_uris"].toArray();
+//     const QUrl redirectUri(redirectUris[0].toString()); // Get the first URI
+//     const auto port = static_cast<quint16>(redirectUri.port()); // Get the port
+     const auto clientId = "197058330007-52nb7ed137qbah2jsmsd20kok5b3jfog.apps.googleusercontent.com";
+     const QUrl authUri("https://accounts.google.com/o/oauth2/auth");
+     const QUrl tokenUri("https://oauth2.googleapis.com/token");
+     const auto clientSecret = "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";
+     const auto port = 8080;
 
      google->setAuthorizationUrl(authUri);
      google->setClientIdentifier(clientId);
@@ -563,7 +568,7 @@ void MainWindow::googleAuth()
      google->setReplyHandler(replyHandler);
      connect(this->google, &QOAuth2AuthorizationCodeFlow::granted, [=](){
             const QString token = this->google->token();
-            //qDebug()<<"Token "<<token;
+//            qDebug()<<"Token "<<token;
             emit gotToken(token);
 
             auto reply = this->google->get(QUrl("https://www.googleapis.com/oauth2/v2/userinfo?access_token="+token));
@@ -581,6 +586,7 @@ void MainWindow::googleAuth()
                 settings.setValue("email",email);
                 settings.setValue("id",id);
                 settings.endGroup();
+//                qDebug()<<"id :"<<id;
                 //now login dialog should not appear
                 settings.beginGroup("loginConsent");
                 settings.setValue("consent","loggedIn");
@@ -10164,15 +10170,21 @@ void MainWindow::on_actionLogin_triggered()
 void MainWindow::on_actionLogout_triggered()
 {
     QSettings settings("IIT-B", "OpenOCRCorrect");
+    ui->actionLogout->setVisible(false);
+    ui->actionLogin->setVisible(true);
+    //QDesktopServices::openUrl(QUrl("https://myaccount.google.com/permissions?continue=https%3A%2F%2Fmyaccount.google.com%2Fsecurity", QUrl::TolerantMode));
+    settings.beginGroup("login");
+    QString token = settings.value("token").toString();
+    settings.endGroup();
+    QProcess process;
+   //qDebug()<<"curl -d -X -POST --header \"Content-type:application/x-www-form-urlencoded\" https://oauth2.googleapis.com/revoke?token="+token;
+    process.execute("curl -d -X -POST --header \"Content-type:application/x-www-form-urlencoded\" https://oauth2.googleapis.com/revoke?token="+token);
     settings.beginGroup("loginConsent");
     settings.remove("");
     settings.endGroup();
     settings.beginGroup("login");
     settings.remove("");
     settings.endGroup();
-    ui->actionLogout->setVisible(false);
-    ui->actionLogin->setVisible(true);
-    QDesktopServices::openUrl(QUrl("https://myaccount.google.com/permissions?continue=https%3A%2F%2Fmyaccount.google.com%2Fsecurity", QUrl::TolerantMode));
 
 }
 
