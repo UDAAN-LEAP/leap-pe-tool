@@ -842,7 +842,6 @@ bool Project::commit(std::string message)
     git_object *parent = NULL;
     git_reference *ref = NULL;
     /** First use the config to initialize a commit signature for the user. */
-
     //check_lg2(git_signature_default(&sig, repo),"Unable to create a commit signature.","Perhaps 'user.name' and 'user.email' are not set");
     int klass = lg2.check_lg2(git_signature_now(&sig, mName.c_str(), mEmail.c_str()),"Could not create signature","");
     if (klass > 0) {
@@ -850,6 +849,7 @@ bool Project::commit(std::string message)
             git_signature_free(sig);
 
     }
+
     klass = lg2.check_lg2(git_revparse_ext(&parent, &ref, repo, "HEAD"),"Head not found","");
     if (klass > 0)
     {
@@ -976,7 +976,49 @@ bool Project::add_config() {
     mEmail = str;
     git_config_free(cfg);
     git_config_free(sys_cfg);
-    return true;
+	return true;
+}
+
+bool Project::add_git_config()
+{
+	bool ret = false;
+	QSettings appSettings("IIT-B", "OpenOCRCorrect");
+	appSettings.beginGroup("GitConfig");
+	QString username = appSettings.value("user", "").toString();
+	QString email = appSettings.value("email", "").toString();
+	if (username == "" || email == "") {
+		// Take input from user and set the git config
+		bool ok = false;
+		QString quser = QInputDialog::getText(nullptr, QWidget::tr("Enter username:"), QWidget::tr("Username:"), QLineEdit::Normal, "", &ok);
+		if (!ok) {
+			ret = ok;
+			goto exit;
+		}
+		QString qemail = QInputDialog::getText(nullptr, QWidget::tr("Enter email:"), QWidget::tr("Email:"), QLineEdit::Normal, "", &ok);
+		if (!ok) {
+			ret = ok;
+			goto exit;
+		}
+
+		if (quser.trimmed() == "" || qemail.trimmed() == "" || !qemail.contains("@")) {
+			ret = false;
+			goto exit;
+		}
+
+		appSettings.setValue("user", quser);
+		appSettings.setValue("email", qemail);
+
+		mName = quser.toStdString();
+		mEmail = qemail.toStdString();
+	} else {
+		mName = username.toStdString();
+		mEmail = email.toStdString();
+	}
+
+exit:
+	appSettings.endGroup();
+
+	return ret;
 }
 
 int match_cb(const char *path, const char *spec, void *payload) {
@@ -1129,12 +1171,14 @@ void Project::open_git_repo()
     if (gitdir.exists())
     {
         lg2.check_lg2(git_repository_open(&repo, dir.c_str()), "Failed to Open", "");
-        add_config();
+//        add_config();
+		add_git_config();
     }
     else
     {
         lg2.check_lg2(git_repository_init(&repo, dir.c_str(),0), "Failed to Open", "");
-        add_config();
+//        add_config();
+		add_git_config();
         lg2_add();
         create_initial_commit(repo);
 
