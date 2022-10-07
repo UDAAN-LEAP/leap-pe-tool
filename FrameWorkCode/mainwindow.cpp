@@ -4760,6 +4760,28 @@ void MainWindow::on_actionPrepareFeatures_triggered()
  */
 void MainWindow::on_actionFetch_2_triggered()
 {
+    //check whether user is logged in or not
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("loginConsent");
+    QString value = settings.value("consent").toString();
+    settings.endGroup();
+    if(value != "loggedIn"){
+        QMessageBox msg;
+        msg.setText("Please login to pull");
+        int cnt = 2;
+        //showing the message box for 2 seconds only.
+        QTimer cntDown;
+        QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
+             if(--cnt < 0){
+                 cntDown.stop();
+                 msg.close();
+             }
+            });
+        cntDown.start(1000);
+        msg.exec();
+        return;
+    }
+
     QString stage = mProject.get_stage();
     QString prvs_stage = (stage=="Verifier")?"Verifier":"Corrector";
     QString prvs_output_dir = prvs_stage + "Output"; //"VerifierOutput" or "CorrectorOutput"
@@ -4833,6 +4855,31 @@ void MainWindow::on_actionTurn_In_triggered()
         {
             saveAllWork();      //saves all the file
         }
+    }
+
+    /*
+     * \description
+     * Checks whether user is logged in or not
+    */
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("loginConsent");
+    QString value = settings.value("consent").toString();
+    settings.endGroup();
+    if(value != "loggedIn"){
+        QMessageBox msg;
+        msg.setText("Please login to submit your changes");
+        int cnt = 2;
+        //showing the message box for 2 seconds only.
+        QTimer cntDown;
+        QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
+             if(--cnt < 0){
+                 cntDown.stop();
+                 msg.close();
+             }
+            });
+        cntDown.start(1000);
+        msg.exec();
+        return;
     }
 
     //!Checking whether all the file are there in CorrectorOutput directory.
@@ -4942,6 +4989,30 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         }
     }
 
+    /*
+     * \description
+     * Checks whether user is logged in or not
+    */
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("loginConsent");
+    QString value = settings.value("consent").toString();
+    settings.endGroup();
+    if(value != "loggedIn"){
+        QMessageBox msg;
+        msg.setText("Please login to submit your changes");
+        int cnt = 2;
+        //showing the message box for 2 seconds only.
+        QTimer cntDown;
+        QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
+             if(--cnt < 0){
+                 cntDown.stop();
+                 msg.close();
+             }
+            });
+        cntDown.start(1000);
+        msg.exec();
+        return;
+    }
     /*
      * \description
      * 1. Checks if any project is opened or not.
