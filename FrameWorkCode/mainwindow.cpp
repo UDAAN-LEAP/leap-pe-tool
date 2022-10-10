@@ -196,7 +196,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     login.setWindowTitle("Login using Google");
     login.setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint|Qt::WindowCloseButtonHint);
     login.setIcon(QMessageBox::Information);
-    login.setInformativeText("Login using your Google account");
+    login.setInformativeText("You can save your edits on the cloud. To enable this feature please login using your google account now or later in settings>login");
     QPushButton *confirmButton = login.addButton(tr("Login"),QMessageBox::AcceptRole);
     QPushButton *cancelButton = login.addButton(tr("Cancel"),QMessageBox::ActionRole);
     QCheckBox *cb = new QCheckBox("Do not ask again");
@@ -4882,6 +4882,7 @@ void MainWindow::on_actionTurn_In_triggered()
         return;
     }
 
+
     //!Checking whether all the file are there in CorrectorOutput directory.
     if(mProject.get_version().toInt())
     {
@@ -4906,26 +4907,27 @@ void MainWindow::on_actionTurn_In_triggered()
         if (submitBox.clickedButton() == yButton)
         {
             bool ok;
-            branchName = QInputDialog::getText(this, tr("Branch Name"),
-                                               tr("Enter the branch name:"), QLineEdit::Normal,
-                                               "", &ok );
-            if ( ok && !branchName.isEmpty() ) {
+//            branchName = QInputDialog::getText(this, tr("Branch Name"),
+//                                               tr("Enter the branch name:"), QLineEdit::Normal,
+//                                               "", &ok );
+            branchName = "master";
+//            if ( ok && !branchName.isEmpty() ) {
                 // user entered something and pressed OK
-
                 // mProject.set_stage_verifier();    // set_stage_verifier()inherited from project.cpp updates the stage in xml file to "verifier"
 
                 //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
-                if(!mProject.commit(commit_msg.toStdString()) || !mProject.push(branchName))
-                {
-                    mProject.enable_push(false);      // enable_push() increments version and sets stage in xml file
-                    QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-                    return;
-                }
-            } else {
-                // user entered nothing or pressed Cancel
+            if(!mProject.commit(commit_msg.toStdString()) || !mProject.push(branchName))
+            {
+                mProject.enable_push(false);      // enable_push() increments version and sets stage in xml file
                 QMessageBox::information(0, "Turn In", "Turn In Cancelled");
                 return;
             }
+//            }
+//            else {
+//                // user entered nothing or pressed Cancel
+//                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+//                return;
+//            }
             mProject.set_corrector();
         }
         else
@@ -4994,6 +4996,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
      * Checks whether user is logged in or not
     */
     QSettings settings("IIT-B", "OpenOCRCorrect");
+    qDebug() << settings.fileName();
     settings.beginGroup("loginConsent");
     QString value = settings.value("consent").toString();
     settings.endGroup();
@@ -5021,6 +5024,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
      * 4. mRoleCheck
      * 5. Sets the rating and formatting.
     */
+
     if(mProject.get_version().toInt())
     {
 
@@ -5220,10 +5224,11 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
        if (submitBox2.clickedButton() == yButton2)
        {
             bool ok;
-            branchName = QInputDialog::getText(this, tr("Branch Name"),
-                                                 tr("Enter the branch name:"), QLineEdit::Normal,
-                                                 "", &ok );
-            if ( ok && !branchName.isEmpty() ) {
+//            branchName = QInputDialog::getText(this, tr("Branch Name"),
+//                                                 tr("Enter the branch name:"), QLineEdit::Normal,
+//                                                 "", &ok );
+            branchName ="master";
+            if (!branchName.isEmpty() ) {
                 // user entered something and pressed OK
                 if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
                 {
@@ -10257,5 +10262,17 @@ void MainWindow::on_actionLogout_triggered()
     settings.remove("");
     settings.endGroup();
 
+}
+
+
+void MainWindow::on_actionClone_Repository_triggered()
+{
+    bool ok;
+    QString url_ = QInputDialog::getText(this, tr("Repository url"),
+                                     tr("Enter Repo url"), QLineEdit::Normal, "", &ok);
+    if (!ok)
+        return;
+    Project p;
+    p.clone(url_);
 }
 

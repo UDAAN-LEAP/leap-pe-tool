@@ -467,6 +467,8 @@ private slots:
 
     void on_actionLogout_triggered();
 
+    void on_actionClone_Repository_triggered();
+
 public slots:
     void SaveFile_Backend();
 

@@ -1131,6 +1131,7 @@ QMenu::item:selected{
     <addaction name="actionNew_Project"/>
     <addaction name="actionOpen_Project"/>
     <addaction name="menuRecent_Project"/>
+    <addaction name="actionClone_Repository"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
     <addaction name="actionLoad_Next_Page"/>
@@ -1595,7 +1596,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionTurn_In">
    <property name="text">
-    <string>Submit Corrector</string>
+    <string>Cloud Save</string>
    </property>
   </action>
   <action name="actionFetch">
@@ -2041,9 +2042,7 @@ background-color: #EEF0F2;
     <string>Login</string>
    </property>
    <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-    </font>
+    <font/>
    </property>
   </action>
   <action name="actionReset_Role">
@@ -2054,6 +2053,11 @@ background-color: #EEF0F2;
   <action name="actionLogout">
    <property name="text">
     <string>Logout</string>
+   </property>
+  </action>
+  <action name="actionClone_Repository">
+   <property name="text">
+    <string>Clone Repository</string>
    </property>
   </action>
  </widget>
