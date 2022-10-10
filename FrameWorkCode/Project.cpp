@@ -612,8 +612,8 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
 //        delete userfield;
 //        delete passfield;
 //    }
-    user = "Sadam452";
-    pass = "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";
+    user = "username here";
+    pass = "token here";
     return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
 
