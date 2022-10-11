@@ -813,18 +813,117 @@ static int transfer_progress_cb(const git_transfer_progress *stats, void *payloa
 /*!
  * \brief Project::fetch
  */
-void Project::fetch(QObject *parent)
+int Project::fetch(QObject *parent)
 {
-    QDir::setCurrent(mProjectDir.absolutePath());
-    QProcess::execute("git pull");
-    QProcess gitProcess;
-    gitProcess.start("git", QStringList() << "branch" << "--show-current");
-    if (!gitProcess.waitForFinished())
-        return;
-    QString result = gitProcess.readAll();
-    QString currentBranch = result.remove("\n");
-    QProcess::execute("git reset --hard origin/" + currentBranch);
-    QDir::setCurrent(mProjectDir.absolutePath() + "/CorrectorOutput/");
+	int error = 0;
+	git_remote *remote = NULL;
+	const git_indexer_progress *stats;
+	git_fetch_options fetch_opts = GIT_FETCH_OPTIONS_INIT;
+
+	/* Figure out whether it's a named remote or a URL */
+	error = git_remote_lookup(&remote, repo, "origin");
+	if (error < 0) {
+		error = git_remote_create_anonymous(&remote, repo, "origin");
+		if (error < 0) {
+			qDebug() << "error in git_remote";
+			goto cleanup;
+		}
+	}
+
+	/* Set up the callbacks (only update_tips for now) */
+	fetch_opts.callbacks.credentials = credentials_cb;
+
+	/**
+	 * Perform the fetch with the configured refspecs from the
+	 * config. Update the reflog for the updated references with
+	 * "fetch".
+	 */
+	error = git_remote_fetch(remote, NULL, &fetch_opts, "pull");
+	if (error < 0) {
+		qDebug() << "error in fetch";
+		goto cleanup;
+	}
+	is_cred_cached = true;
+
+	stats = git_remote_stats(remote);
+	char buffer[200];
+	int ck;
+
+	if (stats->local_objects > 0) {
+		ck = snprintf(buffer, 200, "Received %u/%u objects in %zu bytes (used %u local objects)",
+				 stats->indexed_objects, stats->total_objects, stats->received_bytes, stats->local_objects);
+	} else {
+		ck = snprintf(buffer, 200, "Received %u/%u objects in %zu bytes\n",
+			   stats->indexed_objects, stats->total_objects, stats->received_bytes);
+	}
+	if (ck >= 0 && ck < 200) {
+		qDebug() << QString::fromLocal8Bit(buffer);
+	}
+
+	/**
+	 * 1. Check if the repository is already up to date (Don't perform git reset)
+	 * 2. If it is not up to date then reset the repo to the latest commit (This will delete the modifications done by user)
+	 */
+
+	git_revwalk *walker;
+	error = git_revwalk_new(&walker, repo);
+	if (error < 0) {
+		goto cleanup;
+	}
+	error = git_revwalk_push_range(walker, "HEAD..refs/remotes/origin/HEAD");
+	if (error < 0) {
+		goto cleanup;
+	}
+
+	git_oid oid;
+	int count;
+	count = 0;
+	while(!git_revwalk_next(&oid, walker)) {
+		count++;
+	}
+	git_revwalk_free(walker);
+	qDebug() << "Final count = " << count;
+
+	if (count > 0) {
+		// perform git reset
+		QFile fetchHeadFile("../.git/refs/remotes/origin/HEAD");
+		if (!fetchHeadFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+			qDebug() << "cannot open file: " << QFileInfo(fetchHeadFile).absoluteFilePath();
+			goto cleanup;
+		}
+
+		QString text = fetchHeadFile.readAll();
+		QString nameOfFileStoresCommitID = text.remove("ref: ").remove("\n");
+		fetchHeadFile.close();
+
+		nameOfFileStoresCommitID = "../.git/" + nameOfFileStoresCommitID;
+		QFile fileStoresCommitID(nameOfFileStoresCommitID);
+		if (!fileStoresCommitID.open(QIODevice::ReadOnly | QIODevice::Text)) {
+			qDebug() << "Cannot open file: " << QFileInfo(fileStoresCommitID).absoluteFilePath();
+			goto cleanup;
+		}
+		QString commit_id = fileStoresCommitID.readAll();
+		fileStoresCommitID.close();
+
+		const char *sha = commit_id.toLocal8Bit();
+		git_oid oid;
+		error = git_oid_fromstr(&oid, sha);
+		if (error < 0) {
+			goto cleanup;
+		}
+		git_object *obj;
+		error = git_object_lookup(&obj, repo, &oid, GIT_OBJECT_ANY);
+		if (error < 0) {
+			goto cleanup;
+		}
+
+		git_reset(repo, obj, GIT_RESET_HARD, NULL);
+		git_object_free(obj);
+	}
+
+cleanup:
+	git_remote_free(remote);
+	return error;
 }
 
 /*!

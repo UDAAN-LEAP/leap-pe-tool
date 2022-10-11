@@ -4794,10 +4794,12 @@ void MainWindow::on_actionFetch_2_triggered()
     QPushButton *noButton = forPullBox.addButton(QMessageBox::StandardButton::No);
     forPullBox.exec();
 
-
+	int error;
     if (forPullBox.clickedButton() == okButton)
     {
-        mProject.fetch(this);
+		if ((error = mProject.fetch(this)) != 0) {
+			qDebug() << "Fetch failed with error code " << error;
+		}
         if(mProject.get_version().toInt())
         {
             QMessageBox::information(0, "Pull Success", "Pull Succesful");
