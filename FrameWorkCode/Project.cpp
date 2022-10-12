@@ -844,11 +844,11 @@ static int transfer_progress_cb(const git_transfer_progress *stats, void *payloa
 /*!
  * \brief Project::fetch
  */
-int Project::fetch(QObject *parent)
+int Project::fetch()
 {
 	int error = 0;
 	git_remote *remote = NULL;
-	const git_indexer_progress *stats;
+//	const git_indexer_progress *stats;
 	git_fetch_options fetch_opts = GIT_FETCH_OPTIONS_INIT;
 
 	/* Figure out whether it's a named remote or a URL */
@@ -876,20 +876,20 @@ int Project::fetch(QObject *parent)
 	}
 	is_cred_cached = true;
 
-	stats = git_remote_stats(remote);
-	char buffer[200];
-	int ck;
+//	stats = git_remote_stats(remote);
+//	char buffer[200];
+//	int ck;
 
-	if (stats->local_objects > 0) {
-		ck = snprintf(buffer, 200, "Received %u/%u objects in %zu bytes (used %u local objects)",
-				 stats->indexed_objects, stats->total_objects, stats->received_bytes, stats->local_objects);
-	} else {
-		ck = snprintf(buffer, 200, "Received %u/%u objects in %zu bytes\n",
-			   stats->indexed_objects, stats->total_objects, stats->received_bytes);
-	}
-	if (ck >= 0 && ck < 200) {
-		qDebug() << QString::fromLocal8Bit(buffer);
-	}
+//	if (stats->local_objects > 0) {
+//		ck = snprintf(buffer, 200, "Received %u/%u objects in %zu bytes (used %u local objects)",
+//				 stats->indexed_objects, stats->total_objects, stats->received_bytes, stats->local_objects);
+//	} else {
+//		ck = snprintf(buffer, 200, "Received %u/%u objects in %zu bytes\n",
+//			   stats->indexed_objects, stats->total_objects, stats->received_bytes);
+//	}
+//	if (ck >= 0 && ck < 200) {
+//		qDebug() << QString::fromLocal8Bit(buffer);
+//	}
 
 	/**
 	 * 1. Check if the repository is already up to date (Don't perform git reset)
