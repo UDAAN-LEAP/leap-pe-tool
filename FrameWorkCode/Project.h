@@ -72,6 +72,7 @@ public:
 	void setProjectOpen(bool open) {
 		m_isOpen = open;
 	}
+	static QString getCommmitID(git_commit *commit);
 private:
 	bool m_isOpen = false;
 	QVector<QFile*> mFiles;

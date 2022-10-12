@@ -1214,7 +1214,14 @@ Filter * Project::getFilter(QString str)
             return p;
         }
     }
-    return nullptr;
+	return nullptr;
+}
+
+QString Project::getCommmitID(git_commit *commit)
+{
+	const git_oid *id;
+	id = git_commit_id(commit);
+	return QString::fromLocal8Bit((const char*)id);
 }
 
 /*!
