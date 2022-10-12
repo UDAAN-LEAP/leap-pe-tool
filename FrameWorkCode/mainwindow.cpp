@@ -451,7 +451,7 @@ bool MainWindow::setRole(QString role)
         ui->actionTurn_In->setVisible(false);      //set false to its visibility; now shown
         ui->actionTurn_In->setEnabled(false);      //disable the option
 
-        this->setWindowTitle("OpenOCRCorrect-Verifier");
+        this->setWindowTitle("Udaan Editing Tool-Verifier");
 
     }
     else if(mRole == "Corrector")
@@ -469,7 +469,7 @@ bool MainWindow::setRole(QString role)
         ui->actionVerifier_Turn_In->setEnabled(false);
 
         isVerifier = 0;
-        this->setWindowTitle("OpenOCRCorrect-Corrector");
+        this->setWindowTitle("Udaan Editing Tool-Corrector");
     }
     else
     {
@@ -7535,12 +7535,10 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 //        }
 //    }
     setMFilename(mFilename = f->fileName());
-    qDebug()<<"Executed 7438";
     UpdateFileBrekadown();
     CustomTextBrowser * b = new CustomTextBrowser();
     b->setReadOnly(false);
     b->setStyleSheet("background-color:white; color:black;");
-qDebug()<<"Executed 7438";
 
     if (!isVerifier && current_folder == "Inds") {     //checks if role is not verifier
         QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
@@ -7556,7 +7554,6 @@ qDebug()<<"Executed 7438";
             b->setReadOnly(true);
         }
     }
-    qDebug()<<"Executed 7438";
     //Saves the current opened page
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("RecentPageLoaded");
@@ -9412,7 +9409,7 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
             QMessageBox msg;
             msg.setWindowTitle("Update Available");
             msg.setIcon(QMessageBox::Information);
-            msg.setText("A New Version of OpenOCRCorrect is Available!!\n\nOpenOCRCorrect "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below\nWhat's New:-\n\n" + newFeatures);
+            msg.setText("A New Version of Udaan Editing Tool is Available!!\n\nUdaan Editing Tool "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below\nWhat's New:-\n\n" + newFeatures);
             QAbstractButton *download = msg.addButton(tr("Go to Download Page"), QMessageBox::ActionRole);
             download->setMinimumWidth(160);
             QAbstractButton *rml = msg.addButton(tr("Later"), QMessageBox::RejectRole);
@@ -10335,7 +10332,18 @@ void MainWindow::on_actionLogout_triggered()
 
 void MainWindow::on_actionClone_Repository_triggered()
 {
-	QString username, password;
+    //check if user is logged in
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("loginConsent");
+    QString value = settings.value("consent").toString();
+    settings.endGroup();
+    if(value != "loggedIn"){
+        QMessageBox msg;
+        msg.setText("Please login to clone the repository [Go to settings>login]");
+        msg.exec();
+        return;
+    }
+
 	QString path, url_;
 	bool ok;
 	int ret;
@@ -10357,33 +10365,6 @@ void MainWindow::on_actionClone_Repository_triggered()
 		QMessageBox::information(this, "Use HTTPS URL", "This URL requires SSH key. Please provide HTTPS URL", QMessageBox::Ok, QMessageBox::Ok);
 		return;
 	}
-	QDialog dialog(this);
-	dialog.setWindowTitle("Github Login");
-	QFormLayout form(&dialog);
-
-	QLineEdit *userfield = new QLineEdit(&dialog);
-	QString userlabel = QString("Username: ");
-	form.addRow(userlabel, userfield);
-	QLineEdit *passfield = new QLineEdit(&dialog);
-	passfield->setEchoMode(QLineEdit::Password);
-	QString passlabel = QString("Password: ");
-	form.addRow(passlabel, passfield);
-
-	QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-							   Qt::Horizontal, &dialog);
-	form.addRow(&buttonBox);
-	QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-	QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
-	if (dialog.exec() == QDialog::Accepted) {
-		username = userfield->text();
-		password = passfield->text();
-	} else {
-		qDebug() << "Cancelled login";
-		return;
-	}
-
-	url_ = url_.insert(url_.indexOf("github.com"), username + ":" + password + "@");
 
 	QFutureWatcher<int> watcher;
 	connect(&watcher, &QFutureWatcher<int>::finished, this, &MainWindow::stopSpinning);
@@ -10397,7 +10378,8 @@ void MainWindow::on_actionClone_Repository_triggered()
 	spinner->exec();
 
 	if ((ret = t1.result()) != 0) {
-		qDebug() << "Clone exit abnormally with exit code " << ret;
+        QMessageBox::information(this, "Error", "Repository Cloning Failed, Check if the url entered is correct", QMessageBox::Ok, QMessageBox::Ok);
+        qDebug()<<"Exited with return code"<<ret;
 	} else {
 		QMessageBox::information(this, "Successful", "Successfully cloned set", QMessageBox::Ok, QMessageBox::Ok);
 	}

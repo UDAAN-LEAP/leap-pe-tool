@@ -763,7 +763,7 @@ bool Project::push(QString branchName) {
          */
         error = (git_reference_peel((git_object **)&parents[0], head_ref, GIT_OBJ_COMMIT))
              || (git_commit_lookup(&parents[1], repo, git_annotated_commit_id(heads[0])))
-             || (git_commit_create(&id, repo, "HEAD", signature, signature, NULL, "Merge commit - OpenOCRCorrect", tree, 2, (const git_commit **)parents))
+             || (git_commit_create(&id, repo, "HEAD", signature, signature, NULL, "Merge commit - Udaan Translation Tool", tree, 2, (const git_commit **)parents))
              || (git_repository_state_cleanup(repo));
 
         if(error){
@@ -1399,6 +1399,7 @@ int Project::clone(QString url_, QString path)
     const char *url = array.data();
 
     git_clone_options clone_opts = GIT_CLONE_OPTIONS_INIT;
+    clone_opts.fetch_opts.callbacks.credentials = credentials_cb;
     git_repository *repo = NULL;
 
     QStringList list = url_.split("/");
