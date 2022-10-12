@@ -26,7 +26,13 @@
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QJsonObject>
+
 QString user_id;
+std::string user, pass;
+
+bool takeCredentialsFromUser();
+
+
 
 void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 {
@@ -561,57 +567,19 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
     unsigned int allowed_types, void *payload)
 {
     int error;
-    static std::string user, pass;
+//    static std::string user, pass;
 
     /*
      * Ask the user via the UI. On error, store the information and return GIT_EUSER which will be
      * bubbled up to the code performing the fetch or push. Using GIT_EUSER allows the application
      * to know it was an error from the application instead of libgit2.
      */
-//    if (!is_cred_cached)
-//    {
-//        QInputDialog inp;
-//        bool ok = false;
-//        if (login_tries != 1) {
-//            QMessageBox msgWarning;
-//            msgWarning.setText("Invalid username or password. Please try again");
-//            msgWarning.setIcon(QMessageBox::Warning);
-//            msgWarning.setWindowTitle("Authentication Failed!");
-//            msgWarning.exec();
-//        }
-//        QDialog dialog(nullptr);
-//        dialog.setWindowTitle("Github Login");
-//        QFormLayout form(&dialog);
-
-//        QLineEdit *userfield = new QLineEdit(&dialog);
-//        QString userlabel = QString("Username: ");
-//        form.addRow(userlabel, userfield);
-//        QLineEdit *passfield = new QLineEdit(&dialog);
-//        passfield->setEchoMode(QLineEdit::Password);
-//        QString passlabel = QString("Password: ");
-//        form.addRow(passlabel, passfield);
-
-//        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-//                                   Qt::Horizontal, &dialog);
-//        form.addRow(&buttonBox);
-//        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-//        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
-//        if (dialog.exec() == QDialog::Accepted) {
-//            user = userfield->text().toStdString();
-//            user_id=user_id.fromStdString(user);
-//            pass = passfield->text().toStdString();
-//            ok = true;
-//        }
-//        else {
-//            ok = false;
-//        }
-//        if (!ok) return -1;
-
-//        login_tries++;
-//        delete userfield;
-//        delete passfield;
-//    }
+    if (!is_cred_cached)
+    {
+//		if (!takeCredentialsFromUser()) {
+//			return -1;
+//		}
+    }
     QProcess process;
     process.execute("curl -d -X -k -POST --header "
                     "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o gitToken.json");
@@ -631,6 +599,54 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
     pass = git_token.toStdString();
     return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
+
+
+bool takeCredentialsFromUser()
+{
+	qDebug() << "Taking credentials";
+	QInputDialog inp;
+	bool ok = false;
+	if (login_tries != 1) {
+		QMessageBox msgWarning;
+		msgWarning.setText("Invalid username or password. Please try again");
+		msgWarning.setIcon(QMessageBox::Warning);
+		msgWarning.setWindowTitle("Authentication Failed!");
+		msgWarning.exec();
+	}
+	QDialog dialog(nullptr);
+	dialog.setWindowTitle("Github Login");
+	QFormLayout form(&dialog);
+
+	QLineEdit *userfield = new QLineEdit(&dialog);
+	QString userlabel = QString("Username: ");
+	form.addRow(userlabel, userfield);
+	QLineEdit *passfield = new QLineEdit(&dialog);
+	passfield->setEchoMode(QLineEdit::Password);
+	QString passlabel = QString("Password: ");
+	form.addRow(passlabel, passfield);
+
+	QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+							   Qt::Horizontal, &dialog);
+	form.addRow(&buttonBox);
+	QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+	QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+	if (dialog.exec() == QDialog::Accepted) {
+		user = userfield->text().toStdString();
+		user_id=user_id.fromStdString(user);
+		pass = passfield->text().toStdString();
+		ok = true;
+	}
+	else {
+		ok = false;
+	}
+
+	login_tries++;
+	delete userfield;
+	delete passfield;
+	return ok;
+}
+
 
 /*!
  * \fn Project::set_corrector
@@ -1377,27 +1393,27 @@ int Project::GetPageNumber(std::string localFilename, std::string *no, size_t *l
     return 1;
 }
 
-void Project::clone(QString url_)
+int Project::clone(QString url_, QString path)
 {
-    QByteArray array = url_.toLocal8Bit();
+	QByteArray array = url_.toLocal8Bit();
     const char *url = array.data();
-    //git_fetch_options fetch_opts;
-    //fetch_opts.callbacks.credentials = credentials_cb;
+
     git_clone_options clone_opts = GIT_CLONE_OPTIONS_INIT;
-    clone_opts.fetch_opts.callbacks.credentials = credentials_cb;
     git_repository *repo = NULL;
+
     QStringList list = url_.split("/");
-    QString repoName = "../../"+list[list.size()-1].remove(".git");
-    array = repoName.toLocal8Bit();
-    const char *path = array.data();
-    int error = git_clone(&repo, url, path, &clone_opts);
+	QString repoName = list[list.size() - 1].remove(".git");
+	path = path + "/" + repoName;
 
-    if(error<0){
-        qDebug()<<"Error cloning the repo"<<url;
+	int error = git_clone(&repo, url, path.toLocal8Bit().data(), &clone_opts);
+
+    if(error < 0) {
+        qDebug() << "Error cloning the repo";
     }
-    else
-        qDebug()<<url<<" cloned successfully";
-
+	else {
+        qDebug() << " cloned successfully";
+	}
+	return error;
 }
 
 

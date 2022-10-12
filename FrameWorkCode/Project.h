@@ -38,7 +38,7 @@ public:
     int LevenshteinWithGraphemes(QList<Diff> diffs);
     int GetGraphemesCount(QString string);
     int GetPageNumber(std::string localFilename, std::string *no, size_t *loc, QString *ext);
-    void clone(QString);
+    static int clone(QString url_, QString path);
 
 	~Project() {
 		for (auto p : mFiles) {

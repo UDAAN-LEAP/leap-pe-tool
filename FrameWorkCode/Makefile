@@ -14,19 +14,11 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-<<<<<<< Updated upstream
 DEFINES       = -DQT_MESSAGELOGCONTEXT -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_NETWORKAUTH_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -w -g -std=gnu++11 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I. -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/libdrm -I. -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/ajit/Qt/5.15.2/gcc_64/bin/qmake
-=======
-DEFINES       = -DQT_MESSAGELOGCONTEXT -DQT_QML_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_NETWORKAUTH_LIB -DQT_NETWORK_LIB -DQT_SQL_LIB -DQT_CORE_LIB
-CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -w -g -std=gnu++11 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I../../../../Qt/5.15.2/gcc_64/include -I../../../../Qt/5.15.2/gcc_64/include/QtPrintSupport -I../../../../Qt/5.15.2/gcc_64/include/QtWidgets -I../../../../Qt/5.15.2/gcc_64/include/QtGui -I../../../../Qt/5.15.2/gcc_64/include/QtXml -I../../../../Qt/5.15.2/gcc_64/include/QtNetworkAuth -I../../../../Qt/5.15.2/gcc_64/include/QtNetwork -I../../../../Qt/5.15.2/gcc_64/include/QtSql -I../../../../Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/libdrm -I. -I../../../../Qt/5.15.2/gcc_64/mkspecs/linux-g++
-QMAKE         = /home/sadam/Qt/5.15.2/gcc_64/bin/qmake
->>>>>>> Stashed changes
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
 MKDIR         = mkdir -p
@@ -45,15 +37,10 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = qpadfinal1.0.0
-DISTDIR = /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/.tmp/qpadfinal1.0.0
+DISTDIR = /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/.tmp/qpadfinal1.0.0
 LINK          = g++
-<<<<<<< Updated upstream
 LFLAGS        = -Wl,-rpath,/home/ajit/Qt/5.15.2/gcc_64/lib
 LIBS          = $(SUBLIBS) -L/usr/include/tesseract -L/usr/include/leptonica -L/usr/include/pugixml -ltesseract -llept -lpugixml -L/usr/include/git2 -lgit2 /home/ajit/Qt/5.15.2/gcc_64/lib/libQt5PrintSupport.so /home/ajit/Qt/5.15.2/gcc_64/lib/libQt5Widgets.so /home/ajit/Qt/5.15.2/gcc_64/lib/libQt5Gui.so /home/ajit/Qt/5.15.2/gcc_64/lib/libQt5Xml.so /home/ajit/Qt/5.15.2/gcc_64/lib/libQt5NetworkAuth.so /home/ajit/Qt/5.15.2/gcc_64/lib/libQt5Network.so /home/ajit/Qt/5.15.2/gcc_64/lib/libQt5Core.so -lGL -lpthread   
-=======
-LFLAGS        = -Wl,-rpath,/home/sadam/Qt/5.15.2/gcc_64/lib
-LIBS          = $(SUBLIBS) -L/usr/include/tesseract -L/usr/include/leptonica -L/usr/include/pugixml -ltesseract -llept -lpugixml -L/usr/include/git2 -lgit2 /home/sadam/Qt/5.15.2/gcc_64/lib/libQt5PrintSupport.so /home/sadam/Qt/5.15.2/gcc_64/lib/libQt5Widgets.so /home/sadam/Qt/5.15.2/gcc_64/lib/libQt5Gui.so /home/sadam/Qt/5.15.2/gcc_64/lib/libQt5Xml.so /home/sadam/Qt/5.15.2/gcc_64/lib/libQt5NetworkAuth.so /home/sadam/Qt/5.15.2/gcc_64/lib/libQt5Network.so /home/sadam/Qt/5.15.2/gcc_64/lib/libQt5Sql.so /home/sadam/Qt/5.15.2/gcc_64/lib/libQt5Core.so -lGL -lpthread   
->>>>>>> Stashed changes
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -1190,13 +1177,8 @@ moc_sender.cpp: SimpleMail/sender.h \
 		SimpleMail/smtpexports.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QtGlobal \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include SimpleMail/sender.h -o moc_sender.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include SimpleMail/sender.h -o moc_sender.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include SimpleMail/sender.h -o moc_sender.cpp
 
 moc_server.cpp: SimpleMail/server.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QObject \
@@ -1255,13 +1237,8 @@ moc_server.cpp: SimpleMail/server.h \
 		SimpleMail/smtpexports.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QtGlobal \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include SimpleMail/server.h -o moc_server.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include SimpleMail/server.h -o moc_server.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include SimpleMail/server.h -o moc_server.cpp
 
 moc_serverreply.cpp: SimpleMail/serverreply.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QObject \
@@ -1320,13 +1297,8 @@ moc_serverreply.cpp: SimpleMail/serverreply.h \
 		SimpleMail/smtpexports.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QtGlobal \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include SimpleMail/serverreply.h -o moc_serverreply.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include SimpleMail/serverreply.h -o moc_serverreply.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include SimpleMail/serverreply.h -o moc_serverreply.cpp
 
 moc_customtextbrowser.cpp: customtextbrowser.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QTextBrowser \
@@ -1447,13 +1419,8 @@ moc_customtextbrowser.cpp: customtextbrowser.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QFile \
 		eddis.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include customtextbrowser.h -o moc_customtextbrowser.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include customtextbrowser.h -o moc_customtextbrowser.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include customtextbrowser.h -o moc_customtextbrowser.cpp
 
 moc_globalreplaceworker.cpp: globalreplaceworker.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QObject \
@@ -1523,13 +1490,8 @@ moc_globalreplaceworker.cpp: globalreplaceworker.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include globalreplaceworker.h -o moc_globalreplaceworker.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include globalreplaceworker.h -o moc_globalreplaceworker.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include globalreplaceworker.h -o moc_globalreplaceworker.cpp
 
 moc_loaddataworker.cpp: loaddataworker.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QObject \
@@ -1751,13 +1713,8 @@ moc_loaddataworker.cpp: loaddataworker.h \
 		eddis.h \
 		trieEditdis.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include loaddataworker.h -o moc_loaddataworker.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include loaddataworker.h -o moc_loaddataworker.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include loaddataworker.h -o moc_loaddataworker.cpp
 
 moc_loadingspinner.cpp: loadingspinner.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
@@ -1865,13 +1822,8 @@ moc_loadingspinner.cpp: loadingspinner.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include loadingspinner.h -o moc_loadingspinner.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include loadingspinner.h -o moc_loadingspinner.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include loadingspinner.h -o moc_loadingspinner.cpp
 
 moc_pdfhandling.cpp: pdfhandling.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QObject \
@@ -1962,13 +1914,8 @@ moc_pdfhandling.cpp: pdfhandling.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qpagelayout.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qpagesize.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include pdfhandling.h -o moc_pdfhandling.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include pdfhandling.h -o moc_pdfhandling.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include pdfhandling.h -o moc_pdfhandling.cpp
 
 moc_progressbardialog.cpp: progressbardialog.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
@@ -2076,13 +2023,8 @@ moc_progressbardialog.cpp: progressbardialog.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include progressbardialog.h -o moc_progressbardialog.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include progressbardialog.h -o moc_progressbardialog.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include progressbardialog.h -o moc_progressbardialog.cpp
 
 moc_shortcutguidedialog.cpp: shortcutguidedialog.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
@@ -2190,13 +2132,8 @@ moc_shortcutguidedialog.cpp: shortcutguidedialog.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include shortcutguidedialog.h -o moc_shortcutguidedialog.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include shortcutguidedialog.h -o moc_shortcutguidedialog.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include shortcutguidedialog.h -o moc_shortcutguidedialog.cpp
 
 moc_textfinder.cpp: textfinder.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
@@ -2305,13 +2242,8 @@ moc_textfinder.cpp: textfinder.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QString \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include textfinder.h -o moc_textfinder.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include textfinder.h -o moc_textfinder.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include textfinder.h -o moc_textfinder.cpp
 
 moc_globalreplacedialog.cpp: globalreplacedialog.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
@@ -2450,13 +2382,8 @@ moc_globalreplacedialog.cpp: globalreplacedialog.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include globalreplacedialog.h -o moc_globalreplacedialog.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include globalreplacedialog.h -o moc_globalreplacedialog.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include globalreplacedialog.h -o moc_globalreplacedialog.cpp
 
 moc_undoglobalreplace.cpp: undoglobalreplace.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
@@ -2584,13 +2511,8 @@ moc_undoglobalreplace.cpp: undoglobalreplace.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qrubberband.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include undoglobalreplace.h -o moc_undoglobalreplace.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include undoglobalreplace.h -o moc_undoglobalreplace.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include undoglobalreplace.h -o moc_undoglobalreplace.cpp
 
 moc_worker.cpp: worker.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QObject \
@@ -2809,13 +2731,8 @@ moc_worker.cpp: worker.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QList \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QMap \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include worker.h -o moc_worker.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include worker.h -o moc_worker.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include worker.h -o moc_worker.cpp
 
 moc_DiffView.cpp: DiffView.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QMainWindow \
@@ -3067,13 +2984,8 @@ moc_DiffView.cpp: DiffView.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QList \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QMap \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include DiffView.h -o moc_DiffView.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include DiffView.h -o moc_DiffView.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include DiffView.h -o moc_DiffView.cpp
 
 moc_ProjectHierarchyWindow.cpp: ProjectHierarchyWindow.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QWidget \
@@ -3180,7 +3092,6 @@ moc_ProjectHierarchyWindow.cpp: ProjectHierarchyWindow.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		ui_ProjectHierarchyWindow.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QVariant \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
@@ -3215,42 +3126,6 @@ moc_ProjectHierarchyWindow.cpp: ProjectHierarchyWindow.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qrubberband.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QTreeView \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qtreeview.h \
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QGridLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHeaderView \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qheaderview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qframe.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstyleoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvalidator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qregularexpression.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstyle.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabbar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qrubberband.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTreeView \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtreeview.h \
->>>>>>> Stashed changes
 		Project.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QFile \
 		Filters.h \
@@ -3261,7 +3136,6 @@ moc_ProjectHierarchyWindow.cpp: ProjectHierarchyWindow.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QMetaType \
 		TreeItem.h \
 		TreeModel.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QAbstractItemModel \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QDir \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/qdir.h \
@@ -3390,138 +3264,7 @@ moc_ProjectHierarchyWindow.cpp: ProjectHierarchyWindow.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QMap \
 		moc_predefs.h \
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ProjectHierarchyWindow.h -o moc_ProjectHierarchyWindow.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QAbstractItemModel \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QDir \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdir.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfileinfo.h \
-		diff_match_patch.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtCore \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtCoreDepends \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstracteventdispatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractnativeeventfilter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractstate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstracttransition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qanimationgroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydataops.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydatapointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbasictimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbitarray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbuffer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearraymatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcache.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcalendar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborarray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborvalue.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdatetime.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborcommon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/quuid.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcbormap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborstream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborstreamreader.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfloat16.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborstreamwriter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcollator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcommandlineoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qconcatenatetablesproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdeadlinetimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qelapsedtimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdiriterator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeasingcurve.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qendian.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventtransition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qexception.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfactoryinterface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfileselector.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfilesystemwatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfinalstate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfuture.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfutureinterface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrunnable.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qresultstore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfuturesynchronizer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfuturewatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qhistorystate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qidentityproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qisenum.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsonarray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsonvalue.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsondocument.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsonobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlibrary.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlibraryinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qversionnumber.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlinkedlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlockfile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qloggingcategory.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmath.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmessageauthenticationcode.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmetaobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmimedata.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmimedatabase.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmimetype.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectcleanuphandler.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qoperatingsystemversion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qparallelanimationgroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpauseanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpluginloader.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qprocess.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpropertyanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvariantanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qqueue.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrandom.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qreadwritelock.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qresource.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsavefile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qscopedvaluerollback.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qscopeguard.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsemaphore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsequentialanimationgroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsettings.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedmemory.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsignalmapper.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsignaltransition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsocketnotifier.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsortfilterproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstack.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstandardpaths.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstatemachine.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstorageinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringlistmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsystemsemaphore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtemporarydir.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtemporaryfile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtextboundaryfinder.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtextcodec.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qthread.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qthreadpool.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qthreadstorage.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtimeline.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtimezone.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtranslator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtransposeproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtypetraits.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qwaitcondition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QDeadlineTimer \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qwineventnotifier.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qxmlstream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtcoreversion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QList \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QMap \
-		moc_predefs.h \
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ProjectHierarchyWindow.h -o moc_ProjectHierarchyWindow.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ProjectHierarchyWindow.h -o moc_ProjectHierarchyWindow.cpp
 
 moc_Symbols.cpp: Symbols.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
@@ -3638,13 +3381,8 @@ moc_Symbols.cpp: Symbols.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtextformat.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qpen.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Symbols.h -o moc_Symbols.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Symbols.h -o moc_Symbols.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Symbols.h -o moc_Symbols.cpp
 
 moc_TreeModel.cpp: TreeModel.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QAbstractItemModel \
@@ -3725,13 +3463,8 @@ moc_TreeModel.cpp: TreeModel.h \
 		3rdParty/RapidXML/rapidxml.hpp \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QMetaType \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TreeModel.h -o moc_TreeModel.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TreeModel.h -o moc_TreeModel.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TreeModel.h -o moc_TreeModel.cpp
 
 moc_averageaccuracies.cpp: averageaccuracies.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
@@ -3845,13 +3578,8 @@ moc_averageaccuracies.cpp: averageaccuracies.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QFile \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QTextStream \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include averageaccuracies.h -o moc_averageaccuracies.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include averageaccuracies.h -o moc_averageaccuracies.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include averageaccuracies.h -o moc_averageaccuracies.cpp
 
 moc_commentsview.cpp: commentsview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
@@ -3959,13 +3687,8 @@ moc_commentsview.cpp: commentsview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include commentsview.h -o moc_commentsview.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include commentsview.h -o moc_commentsview.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include commentsview.h -o moc_commentsview.cpp
 
 moc_interndiffview.cpp: interndiffview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QMainWindow \
@@ -4228,13 +3951,8 @@ moc_interndiffview.cpp: interndiffview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qframe.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include interndiffview.h -o moc_interndiffview.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include interndiffview.h -o moc_interndiffview.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include interndiffview.h -o moc_interndiffview.cpp
 
 moc_loginpageview.cpp: loginpageview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
@@ -4682,13 +4400,8 @@ moc_loginpageview.cpp: loginpageview.h \
 		slpNPatternDict.h \
 		eddis.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include loginpageview.h -o moc_loginpageview.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include loginpageview.h -o moc_loginpageview.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include loginpageview.h -o moc_loginpageview.cpp
 
 moc_mainwindow.cpp: mainwindow.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QInputDialog \
@@ -5135,13 +4848,8 @@ moc_mainwindow.cpp: mainwindow.h \
 		slpNPatternDict.h \
 		eddis.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
 
 moc_resizeimageview.cpp: resizeimageview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
@@ -5269,13 +4977,8 @@ moc_resizeimageview.cpp: resizeimageview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QCheckBox \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qcheckbox.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include resizeimageview.h -o moc_resizeimageview.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include resizeimageview.h -o moc_resizeimageview.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include resizeimageview.h -o moc_resizeimageview.cpp
 
 moc_zoom.cpp: zoom.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QObject \
@@ -5391,13 +5094,8 @@ moc_zoom.cpp: zoom.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qgraphicsscene.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include zoom.h -o moc_zoom.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include zoom.h -o moc_zoom.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include zoom.h -o moc_zoom.cpp
 
 moc_ProjectWizard.cpp: ProjectWizard.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QWizard \
@@ -5521,13 +5219,8 @@ moc_ProjectWizard.cpp: ProjectWizard.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ProjectWizard.h -o moc_ProjectWizard.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ProjectWizard.h -o moc_ProjectWizard.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ProjectWizard.h -o moc_ProjectWizard.cpp
 
 moc_CreateProjectPage.cpp: CreateProjectPage.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QWizardPage \
@@ -5649,13 +5342,8 @@ moc_CreateProjectPage.cpp: CreateProjectPage.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include CreateProjectPage.h -o moc_CreateProjectPage.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include CreateProjectPage.h -o moc_CreateProjectPage.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include CreateProjectPage.h -o moc_CreateProjectPage.cpp
 
 moc_globalreplacepreview.cpp: globalreplacepreview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
@@ -5767,13 +5455,8 @@ moc_globalreplacepreview.cpp: globalreplacepreview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include globalreplacepreview.h -o moc_globalreplacepreview.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include globalreplacepreview.h -o moc_globalreplacepreview.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include globalreplacepreview.h -o moc_globalreplacepreview.cpp
 
 moc_globalreplaceinformation.cpp: globalreplaceinformation.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
@@ -5881,13 +5564,8 @@ moc_globalreplaceinformation.cpp: globalreplaceinformation.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		moc_predefs.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/bin/moc
-	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/Latest/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include globalreplaceinformation.h -o moc_globalreplaceinformation.cpp
-=======
-		../../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/sadam/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/sadam/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/sadam/Desktop/iitb_clone/iitb-openocr-digit-tool/FrameWorkCode -I/home/sadam/Qt/5.15.2/gcc_64/include -I/home/sadam/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/sadam/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/sadam/Qt/5.15.2/gcc_64/include/QtGui -I/home/sadam/Qt/5.15.2/gcc_64/include/QtXml -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/sadam/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/sadam/Qt/5.15.2/gcc_64/include/QtSql -I/home/sadam/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include globalreplaceinformation.h -o moc_globalreplaceinformation.cpp
->>>>>>> Stashed changes
+	/home/ajit/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode/moc_predefs.h -I/home/ajit/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/ajit/Internship/Source_Code/gitConfig/iitb-openocr-digit-tool/FrameWorkCode -I/home/ajit/Qt/5.15.2/gcc_64/include -I/home/ajit/Qt/5.15.2/gcc_64/include/QtPrintSupport -I/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/ajit/Qt/5.15.2/gcc_64/include/QtGui -I/home/ajit/Qt/5.15.2/gcc_64/include/QtXml -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetworkAuth -I/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/ajit/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include globalreplaceinformation.h -o moc_globalreplaceinformation.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -6224,7 +5902,6 @@ DiffView.o: DiffView.cpp DiffView.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QList \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QMap \
 		ui_DiffView.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/QIcon \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
@@ -6262,45 +5939,6 @@ DiffView.o: DiffView.cpp DiffView.h \
 		crashlog.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QtDebug \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QTextStream
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QIcon \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QLabel \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlabel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qframe.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QPushButton \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QSplitter \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qsplitter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QStatusBar \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstatusbar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTextEdit \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtextedit.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextdocument.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextcursor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpen.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QVBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QWidget \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QMessageBox \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qmessagebox.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdialog.h \
-		crashlog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtDebug \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QTextStream
->>>>>>> Stashed changes
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DiffView.o DiffView.cpp
 
 emailaddress.o: SimpleMail/emailaddress.cpp SimpleMail/emailaddress_p.h \
@@ -7100,7 +6738,6 @@ sender.o: SimpleMail/sender.cpp SimpleMail/sender_p.h \
 		SimpleMail/mimecontentformatter.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QByteArray \
 		SimpleMail/emailaddress.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QString \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QLoggingCategory \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/qloggingcategory.h \
@@ -7108,15 +6745,6 @@ sender.o: SimpleMail/sender.cpp SimpleMail/sender_p.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/qmessageauthenticationcode.h \
 		moc_sender.cpp \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QList
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QString \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QLoggingCategory \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qloggingcategory.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QMessageAuthenticationCode \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmessageauthenticationcode.h \
-		moc_sender.cpp \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QList
->>>>>>> Stashed changes
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sender.o SimpleMail/sender.cpp
 
 server.o: SimpleMail/server.cpp SimpleMail/server_p.h \
@@ -7191,7 +6819,6 @@ server.o: SimpleMail/server.cpp SimpleMail/server_p.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		SimpleMail/serverreply.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork/QSslSocket \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork/qsslsocket.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
@@ -7222,38 +6849,6 @@ server.o: SimpleMail/server.cpp SimpleMail/server_p.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/qloggingcategory.h \
 		moc_server.cpp \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QList
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtNetwork/QSslSocket \
-		../../../../Qt/5.15.2/gcc_64/include/QtNetwork/qsslsocket.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtcpsocket.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtNetwork/qabstractsocket.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdebug.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtextstream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlocale.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvariant.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qset.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtNetwork/qsslerror.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtNetwork/qsslcertificate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdatetime.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtNetwork/qssl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QFlags \
-		../../../../Qt/5.15.2/gcc_64/include/QtNetwork/QTcpSocket \
-		../../../../Qt/5.15.2/gcc_64/include/QtNetwork/QHostInfo \
-		../../../../Qt/5.15.2/gcc_64/include/QtNetwork/qhostinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtNetwork/qhostaddress.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QMessageAuthenticationCode \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmessageauthenticationcode.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QLoggingCategory \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qloggingcategory.h \
-		moc_server.cpp \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QList
->>>>>>> Stashed changes
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o server.o SimpleMail/server.cpp
 
 serverreply.o: SimpleMail/serverreply.cpp SimpleMail/serverreply.h \
@@ -8443,7 +8038,6 @@ loadingspinner.o: loadingspinner.cpp loadingspinner.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		ui_loadingspinner.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QVariant \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
@@ -8707,271 +8301,6 @@ loadingspinner.o: loadingspinner.cpp loadingspinner.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qplaintextedit.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qtextedit.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QLabel \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlabel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qframe.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QMovie \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qmovie.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qimagereader.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qimageiohandler.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsonobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsonvalue.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborvalue.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdatetime.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborcommon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qregularexpression.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/quuid.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfactoryinterface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QMainWindow \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qmainwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QWidget \
-		mainwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QInputDialog \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qinputdialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlineedit.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextcursor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpen.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtCore \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtCoreDepends \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstracteventdispatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractnativeeventfilter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractstate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstracttransition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qanimationgroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydataops.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydatapointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbasictimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbitarray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbuffer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearraymatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcache.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcalendar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborarray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcbormap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborstream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborstreamreader.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfloat16.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborstreamwriter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcollator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcommandlineoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qconcatenatetablesproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdeadlinetimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qelapsedtimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdir.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfileinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdiriterator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeasingcurve.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qendian.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventtransition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qexception.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfileselector.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QStringList \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfilesystemwatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfinalstate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfuture.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfutureinterface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrunnable.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qresultstore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfuturesynchronizer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfuturewatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qhistorystate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qidentityproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qisenum.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsonarray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsondocument.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlibrary.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlibraryinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qversionnumber.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlinkedlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlockfile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qloggingcategory.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmath.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmessageauthenticationcode.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmetaobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmimedata.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmimedatabase.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmimetype.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectcleanuphandler.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qoperatingsystemversion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qparallelanimationgroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpauseanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpluginloader.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qprocess.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpropertyanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvariantanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qqueue.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrandom.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qreadwritelock.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qresource.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsavefile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qscopedvaluerollback.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qscopeguard.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsemaphore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsequentialanimationgroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsettings.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedmemory.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsignalmapper.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsignaltransition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsocketnotifier.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsortfilterproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstack.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstandardpaths.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstatemachine.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstorageinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringlistmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsystemsemaphore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtemporarydir.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtemporaryfile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtextboundaryfinder.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtextcodec.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qthread.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qthreadpool.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qthreadstorage.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtimeline.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtimezone.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtranslator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtransposeproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtypetraits.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qwaitcondition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QDeadlineTimer \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qwineventnotifier.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qxmlstream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtcoreversion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QtGui \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QtGuiDepends \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qabstracttextdocumentlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qglyphrun.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qrawfont.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qfontdatabase.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextdocument.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qaccessible.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qaccessiblebridge.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qaccessibleobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qaccessibleplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qbackingstore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QEvent \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QMargins \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QRect \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qsurface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qbitmap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qclipboard.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qcolorspace.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qcolortransform.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qdesktopservices.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qdrag.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qgenericplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qgenericpluginfactory.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qiconengine.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qiconengineplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qimagewriter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qmatrix4x4.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvector3d.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvector4d.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qquaternion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qoffscreensurface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qt_windows.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengles2ext.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglext.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglbuffer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglcontext.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QScopedPointer \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QSurfaceFormat \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglversionfunctions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengldebug.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglextrafunctions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglframebufferobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglpaintdevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglpixeltransferoptions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QSharedDataPointer \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglshaderprogram.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengltexture.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengltextureblitter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QMatrix3x3 \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QMatrix4x4 \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengltimerquery.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglvertexarrayobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QPaintDeviceWindow \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpaintdevicewindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QWindow \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QPaintDevice \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QOpenGLContext \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QImage \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpagedpaintdevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpagelayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpagesize.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpaintengine.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpainter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpainterpath.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpdfwriter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpicture.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpictureformatplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpixmapcache.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qrasterwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qscreen.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QList \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QSize \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QSizeF \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QTransform \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qsessionmanager.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qstandarditemmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qstatictext.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qstylehints.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qsyntaxhighlighter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextdocumentfragment.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextdocumentwriter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtexttable.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvalidator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtguiversion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QFileDialog \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qfiledialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QFontDialog \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qfontdialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QFont \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QFile \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QAction \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qaction.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qactiongroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtDebug \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QMouseEvent \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QPlainTextEdit \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qplaintextedit.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtextedit.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
->>>>>>> Stashed changes
 		zoom.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QGraphicsView \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qgraphicsview.h \
@@ -9054,11 +8383,7 @@ loadingspinner.o: loadingspinner.cpp loadingspinner.h \
 		slpNPatternDict.h \
 		eddis.h \
 		crashlog.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QTextStream
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QTextStream
->>>>>>> Stashed changes
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o loadingspinner.o loadingspinner.cpp
 
 markRegion.o: markRegion.cpp markRegion.h \
@@ -9506,7 +8831,6 @@ pdfhandling.o: pdfhandling.cpp pdfhandling.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pdfhandling.o pdfhandling.cpp
 
 progressbardialog.o: progressbardialog.cpp progressbardialog.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qdialog.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -9765,266 +9089,6 @@ shortcutguidedialog.o: shortcutguidedialog.cpp shortcutguidedialog.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtextcursor.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtextformat.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qpen.h
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtguiglobal.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qglobal.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtcore-config.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsystemdetection.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qprocessordetection.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtypeinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsysinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlogging.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qflags.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbasicatomic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qgenericatomic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_msvc.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qglobalstatic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmutex.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qnumeric.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qversiontagging.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtgui-config.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qwindowdefs.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstring.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qchar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrefcount.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydata.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringliteral.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringalgorithms.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringbuilder.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qalgorithms.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qiterator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qhashfunctions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpair.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvector.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainertools_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpoint.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearraylist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qregexp.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringmatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreevent.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qscopedpointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmetatype.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobject_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmargins.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpaintdevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrect.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsize.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpalette.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qcolor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qrgb.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qrgba64.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qbrush.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qmatrix.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpolygon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qregion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdatastream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qline.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtransform.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qimage.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpixelformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpixmap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qshareddata.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qhash.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qfont.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qfontmetrics.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qfontinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qcursor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qkeysequence.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qevent.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvariant.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdebug.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtextstream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlocale.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qset.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qurl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qurlquery.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfiledevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
-		ui_progressbardialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QLineEdit \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlineedit.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qframe.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextcursor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpen.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QProgressBar \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qprogressbar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QVBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o progressbardialog.o progressbardialog.cpp
-
-shortcutguidedialog.o: shortcutguidedialog.cpp shortcutguidedialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtguiglobal.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qglobal.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtcore-config.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsystemdetection.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qprocessordetection.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtypeinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsysinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlogging.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qflags.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbasicatomic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qgenericatomic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_msvc.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qglobalstatic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmutex.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qnumeric.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qversiontagging.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtgui-config.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qwindowdefs.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstring.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qchar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrefcount.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydata.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringliteral.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringalgorithms.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringbuilder.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qalgorithms.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qiterator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qhashfunctions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpair.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvector.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainertools_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpoint.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearraylist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qregexp.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringmatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreevent.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qscopedpointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmetatype.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobject_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmargins.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpaintdevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrect.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsize.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpalette.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qcolor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qrgb.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qrgba64.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qbrush.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qmatrix.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpolygon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qregion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdatastream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qline.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtransform.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qimage.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpixelformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpixmap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qshareddata.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qhash.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qfont.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qfontmetrics.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qfontinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qcursor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qkeysequence.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qevent.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvariant.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdebug.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtextstream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlocale.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qset.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qurl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qurlquery.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfiledevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
-		ui_shortcutguidedialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTextBrowser \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtextbrowser.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtextedit.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qframe.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextdocument.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextcursor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpen.h
->>>>>>> Stashed changes
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o shortcutguidedialog.o shortcutguidedialog.cpp
 
 slpNPatternDict.o: slpNPatternDict.cpp /home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QMessageBox \
@@ -10244,7 +9308,6 @@ textfinder.o: textfinder.cpp textfinder.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QString \
 		ui_textfinder.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QVariant \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
@@ -10522,285 +9585,6 @@ textfinder.o: textfinder.cpp textfinder.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qplaintextedit.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qtextedit.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QCheckBox \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qcheckbox.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QFormLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qformlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QGridLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QLabel \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlabel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qframe.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QLineEdit \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlineedit.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextcursor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpen.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QPushButton \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QVBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
-		mainwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QInputDialog \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qinputdialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QMainWindow \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qmainwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtCore \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtCoreDepends \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstracteventdispatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractnativeeventfilter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractstate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstracttransition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qanimationgroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydataops.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydatapointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbasictimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbitarray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbuffer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearraymatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcache.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcalendar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborarray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborvalue.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdatetime.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborcommon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qregularexpression.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/quuid.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcbormap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborstream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborstreamreader.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfloat16.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborstreamwriter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcollator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcommandlineoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qconcatenatetablesproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdeadlinetimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qelapsedtimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdir.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfileinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdiriterator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeasingcurve.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qendian.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventtransition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qexception.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfactoryinterface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfileselector.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QStringList \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfilesystemwatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfinalstate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfuture.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfutureinterface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrunnable.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qresultstore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfuturesynchronizer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfuturewatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qhistorystate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qidentityproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qisenum.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsonarray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsonvalue.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsondocument.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsonobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlibrary.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlibraryinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qversionnumber.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlinkedlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlockfile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qloggingcategory.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmath.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmessageauthenticationcode.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmetaobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmimedata.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmimedatabase.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmimetype.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectcleanuphandler.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qoperatingsystemversion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qparallelanimationgroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpauseanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpluginloader.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qprocess.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpropertyanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvariantanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qqueue.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrandom.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qreadwritelock.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qresource.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsavefile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qscopedvaluerollback.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qscopeguard.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsemaphore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsequentialanimationgroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsettings.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedmemory.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsignalmapper.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsignaltransition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsocketnotifier.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsortfilterproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstack.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstandardpaths.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstatemachine.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstorageinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringlistmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsystemsemaphore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtemporarydir.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtemporaryfile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtextboundaryfinder.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtextcodec.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qthread.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qthreadpool.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qthreadstorage.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtimeline.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtimezone.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtranslator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtransposeproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtypetraits.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qwaitcondition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QDeadlineTimer \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qwineventnotifier.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qxmlstream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtcoreversion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QtGui \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QtGuiDepends \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qabstracttextdocumentlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qglyphrun.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qrawfont.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qfontdatabase.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextdocument.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qaccessible.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qaccessiblebridge.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qaccessibleobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qaccessibleplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qbackingstore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QEvent \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QMargins \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QRect \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qsurface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qbitmap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qclipboard.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qcolorspace.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qcolortransform.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qdesktopservices.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qdrag.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qgenericplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qgenericpluginfactory.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qiconengine.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qiconengineplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qimageiohandler.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qimagereader.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qimagewriter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qmatrix4x4.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvector3d.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvector4d.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qquaternion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qmovie.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qoffscreensurface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qt_windows.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengles2ext.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglext.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglbuffer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglcontext.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QScopedPointer \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QSurfaceFormat \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglversionfunctions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengldebug.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglextrafunctions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglframebufferobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglpaintdevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglpixeltransferoptions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QSharedDataPointer \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglshaderprogram.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengltexture.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengltextureblitter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QMatrix3x3 \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QMatrix4x4 \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengltimerquery.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglvertexarrayobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QPaintDeviceWindow \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpaintdevicewindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QWindow \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QPaintDevice \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QOpenGLContext \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QImage \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpagedpaintdevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpagelayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpagesize.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpaintengine.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpainter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpainterpath.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpdfwriter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpicture.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpictureformatplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpixmapcache.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qrasterwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qscreen.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QList \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QSize \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QSizeF \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QTransform \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qsessionmanager.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qstandarditemmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qstatictext.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qstylehints.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qsyntaxhighlighter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextdocumentfragment.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextdocumentwriter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtexttable.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvalidator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtguiversion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QFileDialog \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qfiledialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QFontDialog \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qfontdialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QFont \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QFile \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QAction \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qaction.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qactiongroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtDebug \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QMouseEvent \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QPlainTextEdit \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qplaintextedit.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtextedit.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
->>>>>>> Stashed changes
 		zoom.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QGraphicsView \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qgraphicsview.h \
@@ -10838,7 +9622,6 @@ textfinder.o: textfinder.cpp textfinder.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QGraphicsRectItem \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		globalreplacedialog.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QListWidgetItem \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qlistwidget.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qlistview.h \
@@ -10853,22 +9636,6 @@ textfinder.o: textfinder.cpp textfinder.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qrubberband.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QGroupBox \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qgroupbox.h \
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QListWidgetItem \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlistwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlistview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstyleoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstyle.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabbar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qrubberband.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QGroupBox \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgroupbox.h \
->>>>>>> Stashed changes
 		loadingspinner.h \
 		progressbardialog.h \
 		globalreplacepreview.h \
@@ -11031,7 +9798,6 @@ globalreplacedialog.o: globalreplacedialog.cpp globalreplacedialog.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
 		ui_globalreplacedialog.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QVariant \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/QIcon \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
@@ -11049,53 +9815,21 @@ globalreplacedialog.o: globalreplacedialog.cpp globalreplacedialog.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialogButtonBox \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qdialogbuttonbox.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QDebug \
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QIcon \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QListWidget \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QPushButton \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QSpacerItem \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QDialogButtonBox \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdialogbuttonbox.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
->>>>>>> Stashed changes
 		globalreplacepreview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/QStandardItemModel \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qstandarditemmodel.h \
 		ui_globalreplacepreview.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QHeaderView \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qheaderview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QTableView \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qtableview.h \
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHeaderView \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qheaderview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTableView \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtableview.h \
->>>>>>> Stashed changes
 		globalreplaceinformation.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QMessageBox \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qmessagebox.h \
 		crashlog.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QtDebug \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QFile \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QTextStream \
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtDebug \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QFile \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QTextStream \
->>>>>>> Stashed changes
 		mainwindow.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QInputDialog \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qinputdialog.h \
@@ -11580,7 +10314,6 @@ undoglobalreplace.o: undoglobalreplace.cpp undoglobalreplace.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qrubberband.h \
 		ui_undoglobalreplace.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QVariant \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
@@ -11612,39 +10345,6 @@ undoglobalreplace.o: undoglobalreplace.cpp undoglobalreplace.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QtDebug \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QFile \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QTextStream
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QListWidget \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QPushButton \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QSpacerItem \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTextBrowser \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtextbrowser.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtextedit.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextdocument.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextcursor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpen.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QVBoxLayout \
-		crashlog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtDebug \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QFile \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QTextStream
->>>>>>> Stashed changes
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o undoglobalreplace.o undoglobalreplace.cpp
 
 verifyset.o: verifyset.cpp verifyset.h \
@@ -12266,7 +10966,8 @@ Project.o: Project.cpp Project.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qlayout.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qboxlayout.h \
-		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h
+		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QJsonObject
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Project.o Project.cpp
 
 ProjectHierarchyWindow.o: ProjectHierarchyWindow.cpp ProjectHierarchyWindow.h \
@@ -12374,7 +11075,6 @@ ProjectHierarchyWindow.o: ProjectHierarchyWindow.cpp ProjectHierarchyWindow.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		ui_ProjectHierarchyWindow.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QVariant \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
@@ -12409,42 +11109,6 @@ ProjectHierarchyWindow.o: ProjectHierarchyWindow.cpp ProjectHierarchyWindow.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qrubberband.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QTreeView \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qtreeview.h \
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QGridLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHeaderView \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qheaderview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qframe.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstyleoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvalidator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qregularexpression.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstyle.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabbar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qrubberband.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTreeView \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtreeview.h \
->>>>>>> Stashed changes
 		Project.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QFile \
 		Filters.h \
@@ -12455,7 +11119,6 @@ ProjectHierarchyWindow.o: ProjectHierarchyWindow.cpp ProjectHierarchyWindow.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QMetaType \
 		TreeItem.h \
 		TreeModel.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QAbstractItemModel \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QDir \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/qdir.h \
@@ -12719,271 +11382,6 @@ Symbols.o: Symbols.cpp Symbols.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QWidget
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QAbstractItemModel \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QDir \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdir.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfileinfo.h \
-		diff_match_patch.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtCore \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtCoreDepends \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstracteventdispatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractnativeeventfilter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractstate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstracttransition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qanimationgroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydataops.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydatapointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbasictimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbitarray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbuffer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearraymatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcache.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcalendar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborarray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborvalue.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdatetime.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborcommon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/quuid.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcbormap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborstream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborstreamreader.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfloat16.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborstreamwriter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcollator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcommandlineoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qconcatenatetablesproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdeadlinetimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qelapsedtimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdiriterator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeasingcurve.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qendian.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventtransition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qexception.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfactoryinterface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfileselector.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfilesystemwatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfinalstate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfuture.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfutureinterface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrunnable.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qresultstore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfuturesynchronizer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfuturewatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qhistorystate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qidentityproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qisenum.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsonarray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsonvalue.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsondocument.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsonobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlibrary.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlibraryinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qversionnumber.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlinkedlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlockfile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qloggingcategory.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmath.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmessageauthenticationcode.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmetaobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmimedata.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmimedatabase.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmimetype.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectcleanuphandler.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qoperatingsystemversion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qparallelanimationgroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpauseanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpluginloader.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qprocess.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpropertyanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvariantanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qqueue.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrandom.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qreadwritelock.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qresource.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsavefile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qscopedvaluerollback.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qscopeguard.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsemaphore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsequentialanimationgroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsettings.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedmemory.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsignalmapper.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsignaltransition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsocketnotifier.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsortfilterproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstack.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstandardpaths.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstatemachine.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstorageinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringlistmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsystemsemaphore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtemporarydir.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtemporaryfile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtextboundaryfinder.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtextcodec.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qthread.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qthreadpool.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qthreadstorage.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtimeline.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtimezone.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtranslator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtransposeproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtypetraits.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qwaitcondition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QDeadlineTimer \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qwineventnotifier.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qxmlstream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtcoreversion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QList \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QMap
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ProjectHierarchyWindow.o ProjectHierarchyWindow.cpp
-
-Symbols.o: Symbols.cpp Symbols.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtguiglobal.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qglobal.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtcore-config.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsystemdetection.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qprocessordetection.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtypeinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsysinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlogging.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qflags.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbasicatomic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qgenericatomic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_msvc.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qglobalstatic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmutex.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qnumeric.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qversiontagging.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtgui-config.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qwindowdefs.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstring.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qchar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrefcount.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydata.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringliteral.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringalgorithms.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringbuilder.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qalgorithms.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qiterator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qhashfunctions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpair.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvector.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainertools_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpoint.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearraylist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qregexp.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringmatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreevent.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qscopedpointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmetatype.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobject_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmargins.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpaintdevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrect.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsize.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpalette.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qcolor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qrgb.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qrgba64.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qbrush.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qmatrix.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpolygon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qregion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdatastream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qline.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtransform.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qimage.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpixelformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpixmap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qshareddata.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qhash.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qfont.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qfontmetrics.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qfontinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qcursor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qkeysequence.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qevent.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvariant.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdebug.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtextstream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlocale.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qset.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qurl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qurlquery.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfiledevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTextEdit \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtextedit.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qframe.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextdocument.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextcursor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpen.h \
-		ui_Symbols.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QPushButton \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTabWidget \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QVBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QWidget
->>>>>>> Stashed changes
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Symbols.o Symbols.cpp
 
 TreeItem.o: TreeItem.cpp TreeItem.h \
@@ -13255,7 +11653,6 @@ averageaccuracies.o: averageaccuracies.cpp averageaccuracies.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QFile \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QTextStream \
 		ui_averageaccuracies.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QVariant \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
@@ -13300,52 +11697,6 @@ averageaccuracies.o: averageaccuracies.cpp averageaccuracies.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QVBoxLayout \
 		crashlog.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QtDebug
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QFrame \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qframe.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHeaderView \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qheaderview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstyleoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvalidator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qregularexpression.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstyle.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabbar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qrubberband.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QLabel \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlabel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QLineEdit \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlineedit.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextcursor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpen.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTableView \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtableview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QVBoxLayout \
-		crashlog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtDebug
->>>>>>> Stashed changes
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o averageaccuracies.o averageaccuracies.cpp
 
 commentsview.o: commentsview.cpp commentsview.h \
@@ -13454,7 +11805,6 @@ commentsview.o: commentsview.cpp commentsview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		ui_commentsview.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QVariant \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
@@ -13730,283 +12080,6 @@ commentsview.o: commentsview.cpp commentsview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QDebug \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QPlainTextEdit \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qplaintextedit.h \
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QFrame \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qframe.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QLabel \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlabel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QLineEdit \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlineedit.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextcursor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpen.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QPushButton \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QSpacerItem \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTextBrowser \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtextbrowser.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtextedit.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextdocument.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QVBoxLayout \
-		mainwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QInputDialog \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qinputdialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QMainWindow \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qmainwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtCore \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtCoreDepends \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstracteventdispatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractnativeeventfilter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractstate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstracttransition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qanimationgroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydataops.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydatapointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbasictimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbitarray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbuffer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearraymatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcache.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcalendar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborarray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborvalue.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdatetime.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborcommon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qregularexpression.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/quuid.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcbormap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborstream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborstreamreader.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfloat16.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcborstreamwriter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcollator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcommandlineoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qconcatenatetablesproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdeadlinetimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qelapsedtimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdir.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfileinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdiriterator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeasingcurve.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qendian.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventtransition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qexception.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfactoryinterface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfileselector.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QStringList \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfilesystemwatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfinalstate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfuture.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfutureinterface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrunnable.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qresultstore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfuturesynchronizer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfuturewatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qhistorystate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qidentityproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qisenum.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsonarray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsonvalue.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsondocument.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qjsonobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlibrary.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlibraryinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qversionnumber.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlinkedlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlockfile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qloggingcategory.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmath.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmessageauthenticationcode.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmetaobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmimedata.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmimedatabase.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmimetype.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectcleanuphandler.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qoperatingsystemversion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qparallelanimationgroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpauseanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpluginloader.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qprocess.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpropertyanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvariantanimation.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qqueue.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrandom.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qreadwritelock.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qresource.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsavefile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qscopedvaluerollback.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qscopeguard.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsemaphore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsequentialanimationgroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsettings.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedmemory.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsignalmapper.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsignaltransition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsocketnotifier.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsortfilterproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstack.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstandardpaths.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstatemachine.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstorageinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringlistmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsystemsemaphore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtemporarydir.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtemporaryfile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtextboundaryfinder.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtextcodec.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qthread.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qthreadpool.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qthreadstorage.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtimeline.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtimer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtimezone.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtranslator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtransposeproxymodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtypetraits.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qwaitcondition.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QDeadlineTimer \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qwineventnotifier.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qxmlstream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtcoreversion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QtGui \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QtGuiDepends \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qabstracttextdocumentlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qglyphrun.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qrawfont.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qfontdatabase.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qaccessible.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qaccessiblebridge.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qaccessibleobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qaccessibleplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qbackingstore.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QEvent \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QMargins \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QRect \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qsurface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qbitmap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qclipboard.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qcolorspace.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qcolortransform.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qdesktopservices.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qdrag.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qgenericplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qgenericpluginfactory.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qiconengine.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qiconengineplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qimageiohandler.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qimagereader.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qimagewriter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qmatrix4x4.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvector3d.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvector4d.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qquaternion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qmovie.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qoffscreensurface.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qt_windows.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengles2ext.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglext.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglbuffer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglcontext.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QScopedPointer \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QSurfaceFormat \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglversionfunctions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengldebug.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglextrafunctions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglframebufferobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglpaintdevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglpixeltransferoptions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QSharedDataPointer \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglshaderprogram.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengltexture.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengltextureblitter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QMatrix3x3 \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QMatrix4x4 \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopengltimerquery.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglvertexarrayobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qopenglwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QPaintDeviceWindow \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpaintdevicewindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QWindow \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QPaintDevice \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QOpenGLContext \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QImage \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpagedpaintdevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpagelayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpagesize.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpaintengine.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpainter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpainterpath.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpdfwriter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpicture.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpictureformatplugin.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpixmapcache.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qrasterwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qscreen.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QList \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QSize \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QSizeF \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QTransform \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qsessionmanager.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qstandarditemmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qstatictext.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qstylehints.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qsyntaxhighlighter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextdocumentfragment.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextdocumentwriter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtexttable.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvalidator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtguiversion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QFileDialog \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qfiledialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QFontDialog \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qfontdialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QFont \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QFile \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QAction \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qaction.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qactiongroup.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtDebug \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QMouseEvent \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QPlainTextEdit \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qplaintextedit.h \
->>>>>>> Stashed changes
 		zoom.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QGraphicsView \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qgraphicsview.h \
@@ -14033,7 +12106,6 @@ commentsview.o: commentsview.cpp commentsview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QAbstractItemModel \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QDir \
 		diff_match_patch.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QMap \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QSet \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtXml/QDomDocument \
@@ -14060,34 +12132,6 @@ commentsview.o: commentsview.cpp commentsview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qcheckbox.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QGroupBox \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qgroupbox.h \
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QMap \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QSet \
-		../../../../Qt/5.15.2/gcc_64/include/QtXml/QDomDocument \
-		../../../../Qt/5.15.2/gcc_64/include/QtXml/qdom.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtXml/qtxmlglobal.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtXml/qtxml-config.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QFileSystemWatcher \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QGraphicsRectItem \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
-		globalreplacedialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QListWidgetItem \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlistwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlistview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstyleoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstyle.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabbar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qrubberband.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QCheckBox \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qcheckbox.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QGroupBox \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgroupbox.h \
->>>>>>> Stashed changes
 		loadingspinner.h \
 		progressbardialog.h \
 		globalreplacepreview.h \
@@ -14112,11 +12156,7 @@ commentsview.o: commentsview.cpp commentsview.h \
 		eddis.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/QCloseEvent \
 		crashlog.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QTextStream
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QTextStream
->>>>>>> Stashed changes
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o commentsview.o commentsview.cpp
 
 diff_match_patch.o: diff_match_patch.cpp /home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QtCore \
@@ -14587,7 +12627,6 @@ interndiffview.o: interndiffview.cpp interndiffview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qframe.h \
 		ui_interndiffview.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/QIcon \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
@@ -14626,46 +12665,6 @@ interndiffview.o: interndiffview.cpp interndiffview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QGraphicsRectItem \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qpainterpath.h
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QIcon \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QGroupBox \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgroupbox.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QLabel \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlabel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QPushButton \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QSlider \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QSpacerItem \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QStatusBar \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstatusbar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTextBrowser \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtextbrowser.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtextedit.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextdocument.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextcursor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtextformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QVBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QWidget \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QMessageBox \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qmessagebox.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QGraphicsRectItem \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpainterpath.h
->>>>>>> Stashed changes
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o interndiffview.o interndiffview.cpp
 
 lg2_common.o: lg2_common.cpp lg2_common.h \
@@ -15222,7 +13221,6 @@ loginpageview.o: loginpageview.cpp loginpageview.h \
 		slpNPatternDict.h \
 		eddis.h \
 		ui_loginpageview.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
@@ -15231,16 +13229,6 @@ loginpageview.o: loginpageview.cpp loginpageview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QPushButton \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qpushbutton.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QWidget
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QLineEdit \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QPushButton \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QWidget
->>>>>>> Stashed changes
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o loginpageview.o loginpageview.cpp
 
 main.o: main.cpp loginpageview.h \
@@ -16141,7 +14129,6 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		slpNPatternDict.h \
 		eddis.h \
 		ui_globalreplacedialog.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/QIcon \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
@@ -16169,35 +14156,6 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QTreeView \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qtreeview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QWidget \
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/QIcon \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QListWidget \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QPushButton \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QSpacerItem \
-		ui_mainwindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHeaderView \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qheaderview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QLineEdit \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QMenu \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qmenu.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QMenuBar \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qmenubar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QSlider \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QSplitter \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qsplitter.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTabWidget \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTextEdit \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QToolBar \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtoolbar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTreeView \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtreeview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QWidget \
->>>>>>> Stashed changes
 		averageaccuracies.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QTextStream \
 		trieEditdis.h \
@@ -16263,7 +14221,6 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		Symbols.h \
 		textfinder.h \
 		resizeimageview.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDoubleSpinBox \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qspinbox.h \
 		crashlog.h \
@@ -16275,29 +14232,12 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QLayout \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialogButtonBox \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qdialogbuttonbox.h \
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QDoubleSpinBox \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qspinbox.h \
-		crashlog.h \
-		ProjectHierarchyWindow.h \
-		ui_ProjectHierarchyWindow.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QGridLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QFormLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qformlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QDialogButtonBox \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdialogbuttonbox.h \
->>>>>>> Stashed changes
 		shortcutguidedialog.h \
 		ProjectWizard.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QWizard \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qwizard.h \
 		CreateProjectPage.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QWizardPage \
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QWizardPage \
->>>>>>> Stashed changes
 		SimpleMail/SimpleMail \
 		SimpleMail/sender.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtNetwork/QSslSocket \
@@ -16384,7 +14324,6 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 resizeimageview.o: resizeimageview.cpp resizeimageview.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qdialog.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -16518,141 +14457,6 @@ resizeimageview.o: resizeimageview.cpp resizeimageview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QDialog \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdialog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtguiglobal.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qglobal.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtcore-config.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsystemdetection.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qprocessordetection.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtypeinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsysinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlogging.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qflags.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbasicatomic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qgenericatomic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_msvc.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qglobalstatic.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmutex.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qnumeric.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qversiontagging.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtgui-config.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qwindowdefs.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstring.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qchar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrefcount.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydata.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringliteral.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringalgorithms.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringbuilder.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qalgorithms.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qiterator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qhashfunctions.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpair.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvector.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainertools_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qpoint.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearraylist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringlist.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qregexp.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qstringmatcher.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreevent.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qscopedpointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmetatype.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qobject_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmargins.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpaintdevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qrect.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsize.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpalette.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qcolor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qrgb.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qrgba64.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qbrush.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qmatrix.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpolygon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qregion.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdatastream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qline.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtransform.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qimage.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpixelformat.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qpixmap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qshareddata.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qhash.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qfont.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qfontmetrics.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qfontinfo.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qcursor.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qkeysequence.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qevent.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qvariant.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qmap.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qdebug.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qtextstream.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qlocale.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qset.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qurl.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qurlquery.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfile.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qfiledevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QDoubleSpinBox \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qspinbox.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvalidator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qregularexpression.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QLabel \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlabel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qframe.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QPushButton \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractbutton.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QVBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QCheckBox \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qcheckbox.h \
-		ui_resizeimageview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h
->>>>>>> Stashed changes
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o resizeimageview.o resizeimageview.cpp
 
 zoom.o: zoom.cpp zoom.h \
@@ -17157,7 +14961,6 @@ globalreplacepreview.o: globalreplacepreview.cpp globalreplacepreview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
 		ui_globalreplacepreview.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QVariant \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
@@ -17194,44 +14997,6 @@ globalreplacepreview.o: globalreplacepreview.cpp globalreplacepreview.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QtDebug \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QFile \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QTextStream
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHeaderView \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qheaderview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qframe.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstyleoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvalidator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qregularexpression.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstyle.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabbar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qrubberband.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTableView \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtableview.h \
-		crashlog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtDebug \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QFile \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QTextStream
->>>>>>> Stashed changes
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o globalreplacepreview.o globalreplacepreview.cpp
 
 globalreplaceinformation.o: globalreplaceinformation.cpp globalreplaceinformation.h \
@@ -17340,7 +15105,6 @@ globalreplaceinformation.o: globalreplaceinformation.cpp globalreplaceinformatio
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		ui_globalreplaceinformation.h \
-<<<<<<< Updated upstream
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QVariant \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
@@ -17380,47 +15144,6 @@ globalreplaceinformation.o: globalreplaceinformation.cpp globalreplaceinformatio
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QtDebug \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QFile \
 		/home/ajit/Qt/5.15.2/gcc_64/include/QtCore/QTextStream
-=======
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QHeaderView \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qheaderview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qframe.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstyleoption.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qvalidator.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/qregularexpression.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qstyle.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabbar.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qrubberband.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/QTableWidget \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtablewidget.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtWidgets/qtableview.h \
-		crashlog.h \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QtDebug \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QFile \
-		../../../../Qt/5.15.2/gcc_64/include/QtCore/QTextStream
->>>>>>> Stashed changes
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o globalreplaceinformation.o globalreplaceinformation.cpp
 
 qrc_AppResources.o: qrc_AppResources.cpp 

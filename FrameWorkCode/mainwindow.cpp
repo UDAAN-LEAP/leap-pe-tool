@@ -10335,12 +10335,71 @@ void MainWindow::on_actionLogout_triggered()
 
 void MainWindow::on_actionClone_Repository_triggered()
 {
-    bool ok;
-    QString url_ = QInputDialog::getText(this, tr("Repository url"),
+	QString username, password;
+	QString path, url_;
+	bool ok;
+	int ret;
+
+	path = QFileDialog::getExistingDirectory(this, tr("Open Directory for cloning"), "/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+	if (path == "") {
+		qDebug() << "User cancelled clone #1";
+		return;
+	}
+
+    url_ = QInputDialog::getText(this, tr("Repository url"),
                                      tr("Enter Repo url"), QLineEdit::Normal, "", &ok);
-    if (!ok)
+	if (!ok) {
+		qDebug() << "User cancelled clone #2";
         return;
-    Project p;
-    p.clone(url_);
+	}
+	if (url_.startsWith("git@github.com")) {
+		qDebug() << "Not prepared to take clone using SSH. Please provide HTTPS URL";
+		QMessageBox::information(this, "Use HTTPS URL", "This URL requires SSH key. Please provide HTTPS URL", QMessageBox::Ok, QMessageBox::Ok);
+		return;
+	}
+	QDialog dialog(this);
+	dialog.setWindowTitle("Github Login");
+	QFormLayout form(&dialog);
+
+	QLineEdit *userfield = new QLineEdit(&dialog);
+	QString userlabel = QString("Username: ");
+	form.addRow(userlabel, userfield);
+	QLineEdit *passfield = new QLineEdit(&dialog);
+	passfield->setEchoMode(QLineEdit::Password);
+	QString passlabel = QString("Password: ");
+	form.addRow(passlabel, passfield);
+
+	QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+							   Qt::Horizontal, &dialog);
+	form.addRow(&buttonBox);
+	QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+	QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+	if (dialog.exec() == QDialog::Accepted) {
+		username = userfield->text();
+		password = passfield->text();
+	} else {
+		qDebug() << "Cancelled login";
+		return;
+	}
+
+	url_ = url_.insert(url_.indexOf("github.com"), username + ":" + password + "@");
+
+	QFutureWatcher<int> watcher;
+	connect(&watcher, &QFutureWatcher<int>::finished, this, &MainWindow::stopSpinning);
+
+	QFuture<int> t1 = QtConcurrent::run(Project::clone, QString(url_), QString(path));
+	watcher.setFuture(t1);
+
+	spinner = new LoadingSpinner(this);
+	spinner->SetMessage("Cloning Set...", "Cloning...");
+	spinner->setModal(false);
+	spinner->exec();
+
+	if ((ret = t1.result()) != 0) {
+		qDebug() << "Clone exit abnormally with exit code " << ret;
+	} else {
+		QMessageBox::information(this, "Successful", "Successfully cloned set", QMessageBox::Ok, QMessageBox::Ok);
+	}
 }
 
