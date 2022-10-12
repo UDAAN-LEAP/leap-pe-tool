@@ -25,7 +25,7 @@
 #include <cstdio>
 #include <QDialogButtonBox>
 #include <QFormLayout>
-
+#include <QJsonObject>
 QString user_id;
 
 void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
@@ -612,8 +612,23 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
 //        delete userfield;
 //        delete passfield;
 //    }
-    user = "username here";
-    pass = "token here";
+    QProcess process;
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o gitToken.json");
+
+    QFile jsonFile("gitToken.json");
+    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    QByteArray data = jsonFile.readAll();
+
+    QJsonParseError errorPtr;
+    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+    QJsonObject mainObj = document.object();
+    jsonFile.close();
+    QString git_token = mainObj.value("github_token").toString();
+    QString git_username = mainObj.value("github_username").toString();
+    QFile::remove("gitToken.json");
+    user = git_username.toStdString();
+    pass = git_token.toStdString();
     return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
 

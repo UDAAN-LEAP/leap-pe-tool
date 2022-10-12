@@ -522,9 +522,7 @@ void writeJsonFile(QString filepath, QJsonObject mainObj)
     jsonFile.write(document1.toJson());
     jsonFile.close();
 }
-//void MainWindow::gotToken(const QString token){
-//    qDebug()<<"Token received is :"<<token;
-//}
+
 void MainWindow::authenticate() {
     this->google->grant();
 }
@@ -536,19 +534,27 @@ void MainWindow::googleAuth()
      connect(google, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser,
              &QDesktopServices::openUrl);
 
-//     const auto object = readJsonFile("auth.json");
-//     const auto settingsObject = object["web"].toObject();
-//     const QUrl authUri(settingsObject["auth_uri"].toString());
-//     const auto clientId = settingsObject["client_id"].toString();
-//     const QUrl tokenUri(settingsObject["token_uri"].toString());
-//     const auto clientSecret(settingsObject["client_secret"].toString());
-//     const auto redirectUris = settingsObject["redirect_uris"].toArray();
-//     const QUrl redirectUri(redirectUris[0].toString()); // Get the first URI
-//     const auto port = static_cast<quint16>(redirectUri.port()); // Get the port
-     const auto clientId = "197058330007-52nb7ed137qbah2jsmsd20kok5b3jfog.apps.googleusercontent.com";
+     QProcess process;
+     process.execute("curl -d -X -k -POST --header "
+                     "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o client.json");
+
+     QFile jsonFile("client.json");
+     jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+     QByteArray data = jsonFile.readAll();
+
+     QJsonParseError errorPtr;
+     QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+     QJsonObject mainObj = document.object();
+     jsonFile.close();
+     QString id = mainObj.value("client_id").toString();
+     QString secret = mainObj.value("client_secret").toString();
+     QFile::remove("client.json");
+     QByteArray array = id.toLocal8Bit();
+     const auto clientId = array.data();
      const QUrl authUri("https://accounts.google.com/o/oauth2/auth");
      const QUrl tokenUri("https://oauth2.googleapis.com/token");
-     const auto clientSecret = "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";
+     array = secret.toLocal8Bit();
+     const auto clientSecret = array.data();
      const auto port = 8080;
 
      google->setAuthorizationUrl(authUri);
@@ -586,7 +592,14 @@ void MainWindow::googleAuth()
                 settings.setValue("email",email);
                 settings.setValue("id",id);
                 settings.endGroup();
-//                qDebug()<<"id :"<<id;
+
+                //saving details in database via Post request to api
+//                QProcess process;
+
+//               //qDebug()<<"curl -d -X -POST --header \"Content-type:application/x-www-form-urlencoded\" https://oauth2.googleapis.com/revoke?token="+token;
+//                process.execute("curl -d -X -k -POST --header "
+//                                "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/user_detail/{email:"+email+",user_id:"+id+",token:"+token+"}/");
+
                 //now login dialog should not appear
                 settings.beginGroup("loginConsent");
                 settings.setValue("consent","loggedIn");
@@ -4781,6 +4794,32 @@ void MainWindow::on_actionFetch_2_triggered()
         msg.exec();
         return;
     }
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    settings.endGroup();
+    QProcess process;
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"\" -o validate.json");
+
+    QStringList list = gDirTwoLevelUp.split("/");
+    QString repo = list[list.size()-1];
+    QJsonObject mainObj = readJsonFile("validate.json");
+    QJsonArray repos = mainObj.value("repo_list").toArray();
+    QJsonArray::iterator itr; int flag = 0;
+    for(itr = repos.begin(); itr != repos.end(); itr++){
+        //qDebug()<<"itr->toString()"<<itr->toString()<<":"<<repo;
+        if(itr->toString() == repo){
+            flag = 1;
+            break;
+        }
+    }
+    QFile::remove("validate.json");
+    if(repos.size() == 0 || flag == 0){
+        QMessageBox msg;
+        msg.setText("You don't have access to this repository.");
+        msg.exec();
+        return;
+    }
 
     QString stage = mProject.get_stage();
     QString prvs_stage = (stage=="Verifier")?"Verifier":"Corrector";
@@ -4806,7 +4845,7 @@ void MainWindow::on_actionFetch_2_triggered()
         }
         else
         {
-            QMessageBox::information(0, "Pull Error", "Pull Un-succesful, Please Check Your Internet Connection");
+            QMessageBox::information(0, "Pull Error", "Pull Un-successful, Please Check Your Internet Connection");
         }
 //        if(!isVerifier)
 //        {
@@ -4884,6 +4923,32 @@ void MainWindow::on_actionTurn_In_triggered()
         return;
     }
 
+    //retrieve details from database and check if user has access to push into this repo
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    settings.endGroup();
+    QProcess process;
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"\" -o validate.json");
+
+    QStringList list = gDirTwoLevelUp.split("/");
+    QString repo = list[list.size()-1];
+    QJsonObject mainObj = readJsonFile("validate.json");
+    QJsonArray repos = mainObj.value("repo_list").toArray();
+    QJsonArray::iterator itr; int flag = 0;
+    for(itr = repos.begin(); itr != repos.end(); itr++){
+        if(itr->toString() == repo){
+            flag = 1;
+            break;
+        }
+    }
+    QFile::remove("validate.json");
+    if(repos.size() == 0 || flag == 0){
+        QMessageBox msg;
+        msg.setText("You don't have access to this repository.");
+        msg.exec();
+        return;
+    }
 
     //!Checking whether all the file are there in CorrectorOutput directory.
     if(mProject.get_version().toInt())
@@ -7437,7 +7502,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
             QPushButton *noButton2 = currBox2.addButton(QMessageBox::StandardButton::No);
             currBox2.exec();
 
-
             if (currBox2.clickedButton() == okButton2){
                 on_actionSave_triggered();
             //this->close();
@@ -7471,11 +7535,12 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 //        }
 //    }
     setMFilename(mFilename = f->fileName());
+    qDebug()<<"Executed 7438";
     UpdateFileBrekadown();
     CustomTextBrowser * b = new CustomTextBrowser();
     b->setReadOnly(false);
     b->setStyleSheet("background-color:white; color:black;");
-
+qDebug()<<"Executed 7438";
 
     if (!isVerifier && current_folder == "Inds") {     //checks if role is not verifier
         QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
@@ -7491,6 +7556,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
             b->setReadOnly(true);
         }
     }
+    qDebug()<<"Executed 7438";
     //Saves the current opened page
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("RecentPageLoaded");
