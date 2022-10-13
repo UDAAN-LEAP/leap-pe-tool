@@ -748,7 +748,8 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
         curr_browser->cursorForPosition(ev->pos());
 
         DisplayTimeLog();
-        if((ev->button() == Qt::RightButton) && (!LoadDataFlag)){
+        if((ev->button() == Qt::RightButton) && (LoadDataFlag)){
+            qDebug()<<"data is not loaded yet";
             QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
             QTextCursor cursor = curr_browser->textCursor();
             cursor.select(QTextCursor::WordUnderCursor);
@@ -816,9 +817,12 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             qDebug ()<<"right click";
         }
         //! if right click
-        if (((ev->button() == Qt::RightButton) && (LoadDataFlag)) || (RightclickFlag))
-        {
+        //!
 
+        if (((ev->button() == Qt::RightButton) && (!LoadDataFlag)) || (RightclickFlag))
+        {
+            QMenu* spell_menu, *translate_menu, *clipboard_menu;
+            QAction *act;
             QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
             QTextCursor cursor = curr_browser->textCursor();
             cursor.select(QTextCursor::WordUnderCursor);
@@ -827,38 +831,86 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             QString str1 = cursor.selectedText();
             selectedStr = str1.toUtf8().constData();
 
-            if (selectedStr != "") {
-                // code to display options on rightclick
-                curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
-                QMenu* popup_menu = curr_browser->createStandardContextMenu();
-                QMenu* spell_menu, *translate_menu, *clipboard_menu;
+            curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
+            QMenu* popup_menu = curr_browser->createStandardContextMenu();
+
+            translate_menu = new QMenu("translate", this);
+            clipboard_menu = new QMenu("clipboard", this);
+            clipboard_menu->setStyleSheet("height: 6em; width: 10em; overflow: hidden; white-space: nowrap; color: black; background-color: white;");
+            QFont font("Shobhika-Regular");
+            font.setWeight(16);
+            font.setPointSize(16);
+
+            translate_menu->setFont(font);
+            clipboard_menu->setFont(font);
+
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            settings.beginGroup("Clipboard");
+            QString s1 = settings.value("copy1").toString();
+            QString s2 = settings.value("copy2").toString();
+            QString s3 = settings.value("copy3").toString();
+            settings.endGroup();
+            act = new QAction(s1,clipboard_menu);
+            clipboard_menu->addAction(act);
+            clipboard_menu->addSeparator();
+            act = new QAction(s2,clipboard_menu);
+            clipboard_menu->addAction(act);
+            clipboard_menu->addSeparator();
+            act = new QAction(s3,clipboard_menu);
+            clipboard_menu->addAction(act);
+
+
+            popup_menu->insertSeparator(popup_menu->actions()[1]);
+            popup_menu->insertMenu(popup_menu->actions()[1], translate_menu);
+
+            popup_menu->insertSeparator(popup_menu->actions()[2]);
+            popup_menu->insertMenu(popup_menu->actions()[2], clipboard_menu);
+
+
+            //connect(spell_menu, SIGNAL(triggered(QAction*)), this, SLOT(menuSelection(QAction*)));
+            connect(translate_menu, SIGNAL(triggered(QAction*)), this, SLOT(translate_replace(QAction*)));
+            connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
+            QAction* gsearch;
+            gsearch = new QAction("Search over google",popup_menu);
+            QAction* gtrans;
+            gtrans = new QAction("Google translate",popup_menu);
+            QAction* insertImage;
+            insertImage = new QAction("Insert image",popup_menu);
+            popup_menu->insertSeparator(popup_menu->actions()[0]);
+            //popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
+            popup_menu->addAction(gsearch);
+            popup_menu->addAction(gtrans);
+            popup_menu->addAction(insertImage);
+
+            //connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
+            connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
+            connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
+            connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
+            QString str = QString::fromStdString(selectedStr);
+            qDebug()<<"selected str"<<str;
+            if (!selectedStr.empty()) {
+
 
                 spell_menu = new QMenu("suggestions", this);
-                translate_menu = new QMenu("translate", this);
-                clipboard_menu = new QMenu("clipboard", this);
-                clipboard_menu->setStyleSheet("height: 6em; width: 10em; overflow: hidden; white-space: nowrap; color: black; background-color: white;");
-                QFont font("Shobhika-Regular");
-                font.setWeight(16);
-                font.setPointSize(16);
+
                 spell_menu->setFont(font);
-                translate_menu->setFont(font);
-                clipboard_menu->setFont(font);
+
 
                 QAction* act;
                 vector<string>  Words1 = trie.print5NearestEntries(TGBook, selectedStr);
-                if (Words1.empty()) return;
+               // if (Words1.empty()) return;
 
                 vector<string> Alligned = trie.print5NearestEntries(TGBookP, selectedStr);
-                if (Alligned.empty()) return;
+                //if (Alligned.empty()) return;
 
                 vector<string> PWords1 = trie.print5NearestEntries(TPWords, selectedStr);
-                if (PWords1.empty()) return;
+               // if (PWords1.empty()) return;
 
                 string PairSugg = slnp.print2OCRSugg(selectedStr, Alligned[0], ConfPmap, Dict); // map<string,int>&
-                if (PairSugg.empty())return;
+              //  if (PairSugg.empty())return;
 
                 vector<string>  Words = trie.print1OCRNearestEntries(slnp.toslp1(selectedStr), vIBook);
-                if (Words.empty())return;
+              //  if (Words.empty())return;
 
 
                 //! find nearest confirming to OCR Sugg from Book
@@ -952,9 +1004,9 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                     cout<<"Nearest confirming from PWords "<<nearestCOnfconfirmingSuggvec1<<endl;
                     cout<<"One suggestion from ConfusionPair and secondary OCR Trie Pattern Data "<<slnp.toslp1(PairSugg)<<endl;
                     cout<<"One suggestion from Pwords which is present in Dict "<<trie.SamasBreakLRCorrect(slnp.toslp1(selectedStr), Dict, PWords, TPWords, TPWordsP)<<endl;
-    //                cout<<"Nearest confirming from Secondary OCR by converting the string in English "<<nearestCOnfconfirmingSuggvecFont<<endl;
-    //                cout<<"One suggestion from ConfusionPair and secondary OCR Trie Pattern Data by converting the string in English "<<toslp1(PairSuggFont)<<endl;
-    //                cout<<"One suggestion from TopConfusion and SandhiRules by converting the string in English "<<sugg9<<endl;
+            //                cout<<"Nearest confirming from Secondary OCR by converting the string in English "<<nearestCOnfconfirmingSuggvecFont<<endl;
+            //                cout<<"One suggestion from ConfusionPair and secondary OCR Trie Pattern Data by converting the string in English "<<toslp1(PairSuggFont)<<endl;
+            //                cout<<"One suggestion from TopConfusion and SandhiRules by converting the string in English "<<sugg9<<endl;
                 }
                 eddis e;
                 for (map<string, int>::const_iterator eptr = mapSugg.begin(); eptr != mapSugg.end(); eptr++)
@@ -998,48 +1050,24 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                     translate_menu->addAction(act);
                 }
                 //For clipboard
-                QSettings settings("IIT-B", "OpenOCRCorrect");
-                settings.beginGroup("Clipboard");
-                QString s1 = settings.value("copy1").toString();
-                QString s2 = settings.value("copy2").toString();
-                QString s3 = settings.value("copy3").toString();
-                settings.endGroup();
-                act = new QAction(s1,clipboard_menu);
-                clipboard_menu->addAction(act);
-                clipboard_menu->addSeparator();
-                act = new QAction(s2,clipboard_menu);
-                clipboard_menu->addAction(act);
-                clipboard_menu->addSeparator();
-                act = new QAction(s3,clipboard_menu);
-                clipboard_menu->addAction(act);
+
                 popup_menu->insertSeparator(popup_menu->actions()[0]);
                 popup_menu->insertMenu(popup_menu->actions()[0], spell_menu);
 
-                popup_menu->insertSeparator(popup_menu->actions()[1]);
-                popup_menu->insertMenu(popup_menu->actions()[1], translate_menu);
-
-                popup_menu->insertSeparator(popup_menu->actions()[2]);
-                popup_menu->insertMenu(popup_menu->actions()[2], clipboard_menu);
 
 
                 connect(spell_menu, SIGNAL(triggered(QAction*)), this, SLOT(menuSelection(QAction*)));
-                connect(translate_menu, SIGNAL(triggered(QAction*)), this, SLOT(translate_replace(QAction*)));
-                connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
 
-                popup_menu->exec(ev->globalPos());
-                popup_menu->close(); popup_menu->clear();
 
-                vecSugg.clear(); Words1.clear(); Words.clear(); Alligned.clear(); PairSugg.clear();
-                translate.clear();
+
             }
-            else
-            {
+
                 DisplayTimeLog();
 
-                QMenu* popup_menu = curr_browser->createStandardContextMenu();
+                //QMenu* popup_menu = curr_browser->createStandardContextMenu();
                 popup_menu->exec(ev->globalPos());
                 popup_menu->close(); popup_menu->clear();
-            }
+
         } // if right click
     }
 }// if mouse event
