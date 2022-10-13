@@ -799,6 +799,24 @@ bool Project::push(QString branchName) {
     */
     if (error)
         return false;
+
+    /* Finding the last commit on current repo and saves the entry in commit history table
+     * Email | Commit_no
+     * So that we can see users commit history based on his/her email id without github account
+     */
+    char fullsha[42] = {0};
+    git_oid_tostr(fullsha, 41, &id);
+    QString sha = QString::fromStdString(fullsha);
+    //qDebug()<<"Last commit full hash :"<<sha;
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    //qDebug()<<"email"<<email;
+    settings.endGroup();
+    QProcess process;
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/commits/ -d \"commit_no="+sha+"&email="+email+"\" ");;
+
     return true;//No errors
 }
 
@@ -1215,13 +1233,6 @@ Filter * Project::getFilter(QString str)
         }
     }
 	return nullptr;
-}
-
-QString Project::getCommmitID(git_commit *commit)
-{
-	const git_oid *id;
-	id = git_commit_id(commit);
-	return QString::fromLocal8Bit((const char*)id);
 }
 
 /*!
