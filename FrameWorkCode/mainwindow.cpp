@@ -7694,7 +7694,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 
 
     DisplayJsonDict(b,input);
-    highlight(b , input);
+    //highlight(b , input);
 
     b->setMouseTracking(true);
     b->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
