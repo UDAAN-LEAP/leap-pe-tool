@@ -7511,57 +7511,34 @@ QString GetFilter(QString & Name, const QStringList &list) {
  *
  * \sa    setMFilename(), UpdateFileBrekadown(), DisplayJsonDict(), highlight(), LoadImageFromFile(), WordCount(), readSettings(), tabchanged()
  */
-void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
-    //!Keeps track of current , previous and next page.
-//    if(ui->tabWidget_2->currentIndex() >=0 && NextPrevTrig ==0)
-//    {
-//        closetab(ui->tabWidget_2->currentIndex());
-//        ui->tabWidget_2->removeTab(0);
-//    }
-    //-
-    if(curr_browser) {
-        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
+void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
+{
+	if(curr_browser) {
+		if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
+			QMessageBox currBox2;
+			currBox2.setWindowTitle("Save?");
+			currBox2.setIcon(QMessageBox::Question);
+			currBox2.setInformativeText("Do you want to save " + currentTabPageName + " file?");
+			QPushButton *okButton2 = currBox2.addButton(QMessageBox::StandardButton::Ok);
+			QPushButton *noButton2 = currBox2.addButton(QMessageBox::StandardButton::No);
+			currBox2.exec();
 
-            QMessageBox currBox2;
-            currBox2.setWindowTitle("Save?");
-            currBox2.setIcon(QMessageBox::Question);
-            currBox2.setInformativeText("Do you want to save " + currentTabPageName + " file?");
-            QPushButton *okButton2 = currBox2.addButton(QMessageBox::StandardButton::Ok);
-            QPushButton *noButton2 = currBox2.addButton(QMessageBox::StandardButton::No);
-            currBox2.exec();
+			if (currBox2.clickedButton() == okButton2){
+				on_actionSave_triggered();
+			}
+		}
+	}
 
-            if (currBox2.clickedButton() == okButton2){
-                on_actionSave_triggered();
-            //this->close();
-                if (graphic)delete graphic;
-                delete curr_browser;}
-            else{
-                if (graphic)delete graphic;
-                delete curr_browser;
-            }
-        }
-    }
-    //-
     f->open(QIODevice::ReadOnly);
     QFileInfo finfo(f->fileName());
 
     if(!(finfo.exists() && finfo.isFile())){
         return;
     }
+
     //!Retreives current folder details
     current_folder = finfo.dir().dirName();
     QString fileName = finfo.fileName();
-//    if (ui->tabWidget_2->count() != 0) {
-//        for (int i = 0; i < ui->tabWidget_2->count(); i++) {   //iterating over no of opened tb/page
-//            if (name == ui->tabWidget_2->tabText(i)) {
-//                ui->tabWidget_2->setCurrentIndex(i);
-//                setMFilename(f->fileName());
-//                UpdateFileBrekadown();
-//                f->close();
-//                return;
-//            }
-//        }
-//    }
     setMFilename(mFilename = f->fileName());
     UpdateFileBrekadown();
     CustomTextBrowser * b = new CustomTextBrowser();
@@ -7582,45 +7559,41 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
             b->setReadOnly(true);
         }
     }
-    //Saves the current opened page
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    settings.beginGroup("RecentPageLoaded");
-    QString tmp1 = settings.value("projectName1").toString();
-    QString tmp2 = settings.value("projectName2").toString();
-    QString tmp3 = settings.value("projectName3").toString();
-    if(ProjFile == tmp1){
-    settings.setValue("projectName1",ProjFile );
-    settings.setValue("name1",name );
-    settings.setValue("pageParent1",gCurrentDirName );}
-    else if(ProjFile == tmp2){
-    settings.setValue("projectName2",settings.value("projectName1").toString() );
-    settings.setValue("name2",settings.value("name1").toString() );
-    settings.setValue("pageParent2",settings.value("pageParent1").toString() );
-    settings.setValue("projectName1",ProjFile );
-    settings.setValue("name1",name );
-    settings.setValue("pageParent1",gCurrentDirName );}
-    else{
-        settings.setValue("projectName3",settings.value("projectName2").toString() );
-        settings.setValue("name3",settings.value("name2").toString() );
-        settings.setValue("pageParent3",settings.value("pageParent2").toString() );
-        settings.setValue("projectName2",settings.value("projectName1").toString() );
-        settings.setValue("name2",settings.value("name1").toString() );
-        settings.setValue("pageParent2",settings.value("pageParent1").toString() );
-        settings.setValue("projectName1",ProjFile );
-        settings.setValue("name1",name );
-        settings.setValue("pageParent1",gCurrentDirName );
-    }
-    settings.endGroup();
-    //.///////////////////////////////////////////////////////
+    // Saves the current opened page
+
+	QSettings settings("IIT-B", "OpenOCRCorrect");
+	settings.beginGroup("RecentPageLoaded");
+	QString tmp1 = settings.value("projectName1").toString();
+	QString tmp2 = settings.value("projectName2").toString();
+	QString tmp3 = settings.value("projectName3").toString();
+
+	if(ProjFile == tmp1){
+		settings.setValue("projectName1",ProjFile );
+		settings.setValue("name1",name );
+		settings.setValue("pageParent1",gCurrentDirName );}
+	else if(ProjFile == tmp2){
+		settings.setValue("projectName2",settings.value("projectName1").toString() );
+		settings.setValue("name2",settings.value("name1").toString() );
+		settings.setValue("pageParent2",settings.value("pageParent1").toString() );
+		settings.setValue("projectName1",ProjFile );
+		settings.setValue("name1",name );
+		settings.setValue("pageParent1",gCurrentDirName );}
+	else{
+		settings.setValue("projectName3",settings.value("projectName2").toString() );
+		settings.setValue("name3",settings.value("name2").toString() );
+		settings.setValue("pageParent3",settings.value("pageParent2").toString() );
+		settings.setValue("projectName2",settings.value("projectName1").toString() );
+		settings.setValue("name2",settings.value("name1").toString() );
+		settings.setValue("pageParent2",settings.value("pageParent1").toString() );
+		settings.setValue("projectName1",ProjFile );
+		settings.setValue("name1",name );
+		settings.setValue("pageParent1",gCurrentDirName );
+	}
+	settings.endGroup();
+
     isProjectOpen = 1;
 
-    // Fixing Word Breaking problem
-//    f->close();
-//    filterHtml(f);
-//    f->open(QIODevice::ReadOnly);
-
 	doc = b->document();
-//	connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
 
     //!Display format by setting font size and styles
     QTextStream stream(f);
@@ -7727,22 +7700,9 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     b->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
     b->setUndoRedoEnabled(true);
 
-//    if(fileFlag) {
     curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
-    //curr_browser->setStyleSheet("background-color:white; color:red;");
-    curr_browser->setDocument(b->document());
-//        ui->tabWidget_2->setTabText(currentTabIndex, name);
-//        tabchanged(currentTabIndex);
+    curr_browser->setDocument(b->document()->clone(curr_browser));
 
-//    }
-//    else {
-//        currentTabIndex = ui->tabWidget_2->addTab(b, name);
-//        ui->tabWidget_2->setCurrentIndex(currentTabIndex);
-//    }
-//    QString qstr = ui->tabWidget_2->tabText(currentTabIndex);
-//    string str = qstr.toStdString();
-//    str.erase(remove(str.begin(), str.end(), ' '), str.end());
-//    currentTabPageName=QString::fromStdString(str);
     QFileInfo info(*f);
     currentTabPageName = info.fileName();
 
@@ -7815,74 +7775,27 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     auto model = ui->treeView->model();
     int rowCount = ui->treeView->model()->rowCount(parentIndex);
 
-    QString treeItemLabel;
-    for (int i = 0; i < rowCount; i++)
-    {
-        QModelIndex index = model->index(i, 0, parentIndex);
-        treeItemLabel = index.data(Qt::DisplayRole).toString();
+	QString treeItemLabel;
+	for (int i = 0; i < rowCount; i++)
+	{
+		QModelIndex index = model->index(i, 0, parentIndex);
+		treeItemLabel = index.data(Qt::DisplayRole).toString();
 
-        if (index.isValid())
-        {
-            if (treeItemLabel == currentTabPageName)
-            {
-                ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
-                break;
-            }
-        }
+		if (index.isValid())
+		{
+			if (treeItemLabel == currentTabPageName)
+			{
+				ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+				break;
+			}
+		}
 	}
-//  QString htmlFile = gDirTwoLevelUp + "/CorrectorOutput/"+currentTabPageName;
-//	QFile gfile(htmlFile.replace(".bbox", ".html"));
-//	//qDebug()  << "Current page name: " << gfile.fileName();
-//	gfile.open(QIODevice::ReadOnly | QFile::Text);
-//	QTextStream in(&gfile);
-//	QString initial = in.readAll();
-//	QString bboxfile = gfile.fileName();
-//	bboxfile = bboxfile.replace(".html", ".bbox");
 
-//	if(!QDir(gDirTwoLevelUp+"/bboxf").exists())
-//		QDir().mkdir(gDirTwoLevelUp+"/bboxf");
+	// Deleting temporarily created CustomTextBrowser
+	delete b;
 
-//	bboxfile=bboxfile.replace("CorrectorOutput","bboxf");
-
-//	QFile bbox_file(bboxfile);
-//	if(initial.contains("bbox") && !bbox_file.exists())
-//	{
-//		QMap<QString, QString> bbox;
-//		QStringList plist = initial.split("<span class");
-//		for(int i=0;i<plist.length();i++)
-//		{
-//			QString bbox_tags = plist[i];
-//			int first = bbox_tags.indexOf("bbox");
-//			int last = bbox_tags.indexOf(";\">");
-//			bbox_tags = bbox_tags.mid(first,last-first);
-//			bbox_tags = bbox_tags.remove("\">\n");
-//			bbox_tags = bbox_tags.trimmed();
-
-//			QStringList bbox_coordinates = bbox_tags.split(" ");
-//			bbox_tags = bbox_coordinates[0] + " " + bbox_coordinates[1] + " " + bbox_coordinates[2] + " " + bbox_coordinates[3] + " " + bbox_coordinates[4];
-
-//			int start = plist[i].indexOf(";\">\n");
-//			int end = plist[i].indexOf("</span>");
-//			QString sents = plist[i].mid(start, end-start);
-//			sents = sents.remove(";\">\n");
-//			sents = sents.trimmed();
-//			bbox.insert(bbox_tags, sents);
-
-//		}
-//		qDebug()<<bbox;
-//		bbox.erase(bbox.begin());
-//		qDebug()<<bbox;
-//		bbox_file.open(QIODevice::ReadWrite | QFile::Truncate);
-//		QDataStream out (&bbox_file);
-//		out.setVersion(QDataStream::Qt_5_3);
-//		out<<bbox;
-//		bbox_file.flush();
-//		bbox_file.close();
-//		qDebug() << "bbox file written succesfully ... ";
-//	}
-
-   WordCount();     //for counting no of words in the document
-   readSettings();
+	WordCount();     //for counting no of words in the document
+	readSettings();
 }
 
 /*!
