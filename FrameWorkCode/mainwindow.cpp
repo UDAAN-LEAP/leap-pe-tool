@@ -723,6 +723,8 @@ string selectedStr ="";
 //!GIVE EVENT TO TEXT BROWSER INSTEAD OF MAINWINDOW
 void MainWindow::mousePressEvent(QMouseEvent *ev)
 {
+    if(!curr_browser)
+        return;
     slpNPatternDict slnp;
     trieEditDis trie;
 
@@ -9834,8 +9836,9 @@ void MainWindow::insertImageAction()
 {
     //qDebug()<<"Image Will Be Inserted"<<endl;
     QString imgFileName;
-    QString imgFile = QFileDialog::getOpenFileName(this, "Open Project");
-
+    QString imgFile = QFileDialog::getOpenFileName(this, "Select an Image");
+    if(imgFile.isEmpty())
+        return;
 
     QFileInfo imgFileInfo(imgFile);
     imgFileName = imgFileInfo.fileName();
