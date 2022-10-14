@@ -82,6 +82,7 @@
 #include "customtextbrowser.h"
 #include <QtNetworkAuth>
 #include <QOAuth2AuthorizationCodeFlow>
+#include <QCryptographicHash>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -584,6 +585,8 @@ void MainWindow::googleAuth()
                 QJsonObject jsonObject = jsonResponse.object();
                 QString email = jsonObject["email"].toString();
                 QString id = jsonObject["id"].toString();
+//                const QByteArray data = email.toUtf8();
+//                qDebug()<<"hash"<<QCryptographicHash::hash(data, QCryptographicHash::Sha256).toHex();
              // qDebug()<<"email"<<email;
             //save details in QSettings
                 QSettings settings("IIT-B", "OpenOCRCorrect");
@@ -4046,72 +4049,50 @@ void MainWindow::on_actionAllFontProperties_triggered()
     QFont font = QFontDialog::getFont(&ok, initialFont, this);
 
     //!Filter the font properities
-      QTextCharFormat applyFont;
-      qreal wgt = font.pointSize();
-      QString fam = font.family();
-      bool strike = font.strikeOut();
-      bool underline = font.underline();
-      qreal LetterSpacing=font.letterSpacing();
-      qreal WordSpacing = font.wordSpacing();
-      int stretch = font.stretch();
-      auto styleHint = font.styleHint();
-      auto styleStrategy = font.styleStrategy();
-      auto letterSpacingType = font.letterSpacingType();
-      bool overline = font.overline();
-      bool fixedpitch = font.fixedPitch();
-      auto hintingpref = font.hintingPreference();
+    QTextCharFormat applyFont;
+    qreal wgt = font.pointSize();
+    QString fam = font.family();
+    bool strike = font.strikeOut();
+    bool underline = font.underline();
+    qreal LetterSpacing=font.letterSpacing();
+    qreal WordSpacing = font.wordSpacing();
+    int stretch = font.stretch();
+    auto styleHint = font.styleHint();
+    auto styleStrategy = font.styleStrategy();
+    auto letterSpacingType = font.letterSpacingType();
+    bool overline = font.overline();
+    bool fixedpitch = font.fixedPitch();
+    auto hintingpref = font.hintingPreference();
 
-      applyFont.setFontPointSize(wgt);
-      applyFont.setFontFamily(fam);
-      applyFont.setFontStrikeOut(strike);
-      applyFont.setFontUnderline(underline);
-      applyFont.setFontLetterSpacing(LetterSpacing);
-      applyFont.setFontWordSpacing(WordSpacing);
-      applyFont.setFontStretch(stretch);
-      applyFont.setFontStyleHint(styleHint,styleStrategy);
-      applyFont.setFontLetterSpacingType(letterSpacingType);
-      applyFont.setFontOverline(overline);
-      applyFont.setFontFixedPitch(fixedpitch);
-      applyFont.setFontHintingPreference(hintingpref);
+    applyFont.setFontPointSize(wgt);
+    applyFont.setFontFamily(fam);
+    applyFont.setFontStrikeOut(strike);
+    applyFont.setFontUnderline(underline);
+    applyFont.setFontLetterSpacing(LetterSpacing);
+    applyFont.setFontWordSpacing(WordSpacing);
+    applyFont.setFontStretch(stretch);
+    applyFont.setFontStyleHint(styleHint,styleStrategy);
+    applyFont.setFontLetterSpacingType(letterSpacingType);
+    applyFont.setFontOverline(overline);
+    applyFont.setFontFixedPitch(fixedpitch);
+    applyFont.setFontHintingPreference(hintingpref);
 
 
-      //! Apply bold and italics if present
-      if(font.bold())
-      {
-          qreal weight  =font.weight();
-          applyFont.setFontWeight(weight);
-      }
-      if(font.italic())
-      {
-          bool Italics = font.italic();
-          applyFont.setFontItalic(Italics);
-      }
-    QString sel = cursor.selectedText();
-    int start_pos = cursor.selectionStart();
-    int end_pos = cursor.selectionEnd();
-    if(ok){
-    for(int i = 0;i<sel.size();i++){
-        if((sel[i]=='<')&&(sel[i+1]=='i')&&(sel[i+2]=='m')&&(sel[i+3]=='g')){
-            int moved = i;
-            cursor.setPosition((start_pos+i),QTextCursor::KeepAnchor);
-            cursor.mergeCharFormat(applyFont);
-            curr_browser->textCursor().mergeCharFormat(applyFont);
-        }
-        else if((sel[i-6]=='<')&&(sel[i-5]=='/')&&(sel[i-4]=='i')&&(sel[i-3]=='m')&&(sel[i-2]=='g')&&(sel[i-1]=='>')){
-            cursor.setPosition((start_pos+i),QTextCursor::MoveAnchor);
-        }
+    //! Apply bold and italics if present
+    if(font.bold())
+    {
+      qreal weight  =font.weight();
+      applyFont.setFontWeight(weight);
     }
-    cursor.setPosition((end_pos),QTextCursor::KeepAnchor);
-    cursor.mergeCharFormat(applyFont);
-    curr_browser->textCursor().mergeCharFormat(applyFont);
+    if(font.italic())
+    {
+      bool Italics = font.italic();
+      applyFont.setFontItalic(Italics);
     }
-
- //   /*! If user clicks OK then change to selected font with properties*/
-//    if(ok)
-//    {
-//        cursor.mergeCharFormat(applyFont);
-//        curr_browser->textCursor().mergeCharFormat(applyFont);
-//    }
+//    QString sel = cursor.selectedText();
+//    int start_pos = cursor.selectionStart();
+//    int end_pos = cursor.selectionEnd();
+    curr_browser->mergeCurrentCharFormat(applyFont);
 }
 
 /*!
