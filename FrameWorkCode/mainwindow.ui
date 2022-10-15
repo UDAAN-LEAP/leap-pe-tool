@@ -12,7 +12,6 @@
   </property>
   <property name="font">
    <font>
-    <weight>50</weight>
     <italic>false</italic>
     <bold>false</bold>
    </font>
@@ -269,7 +268,6 @@ background-color: rgb(136, 138, 133);
                 </property>
                 <property name="font">
                  <font>
-                  <weight>50</weight>
                   <italic>false</italic>
                   <bold>false</bold>
                  </font>
@@ -557,7 +555,6 @@ QScrollBar::sub-line:vertical {
          <property name="font">
           <font>
            <pointsize>20</pointsize>
-           <weight>50</weight>
            <italic>false</italic>
            <bold>false</bold>
           </font>
@@ -607,8 +604,9 @@ QScrollBar::sub-line:vertical {
          </property>
          <property name="html">
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:20pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
@@ -1095,7 +1093,6 @@ QMenu::item:selected{
     <addaction name="actionTutorial"/>
     <addaction name="actionShortcut_Guide"/>
     <addaction name="actionCheck_for_Updates"/>
-    <addaction name="actionChange_Role"/>
    </widget>
    <widget class="QMenu" name="menuSelectLanguage">
     <property name="styleSheet">
@@ -1134,6 +1131,7 @@ QMenu::item:selected{
     <addaction name="actionNew_Project"/>
     <addaction name="actionOpen_Project"/>
     <addaction name="menuRecent_Project"/>
+    <addaction name="actionClone_Repository"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
     <addaction name="actionLoad_Next_Page"/>
@@ -1161,6 +1159,22 @@ QMenu::item:selected{
     <addaction name="actionToSlp1"/>
     <addaction name="actionLoadGDocPage"/>
    </widget>
+   <widget class="QMenu" name="menuSetting">
+    <property name="font">
+     <font>
+      <pointsize>-1</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font-size: 17px;</string>
+    </property>
+    <property name="title">
+     <string>Setting</string>
+    </property>
+    <addaction name="actionLogin"/>
+    <addaction name="actionLogout"/>
+    <addaction name="actionChange_Role"/>
+   </widget>
    <addaction name="menuOCR_Correction_Window"/>
    <addaction name="menuEdit"/>
    <addaction name="menuTool"/>
@@ -1170,6 +1184,7 @@ QMenu::item:selected{
    <addaction name="menuGit"/>
    <addaction name="menuDownload"/>
    <addaction name="menuHelp"/>
+   <addaction name="menuSetting"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="styleSheet">
@@ -1581,7 +1596,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionTurn_In">
    <property name="text">
-    <string>Submit Corrector</string>
+    <string>Cloud Save</string>
    </property>
   </action>
   <action name="actionFetch">
@@ -1619,7 +1634,7 @@ background-color: #EEF0F2;
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Pull</string>
+    <string>Sync Data</string>
    </property>
   </action>
   <action name="actionPush">
@@ -1632,7 +1647,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionVerifier_Turn_In">
    <property name="text">
-    <string>Submit Verifier</string>
+    <string>Cloud Save Verifier</string>
    </property>
   </action>
   <action name="actionHighlight">
@@ -2017,10 +2032,37 @@ background-color: #EEF0F2;
     <string>Reset Role</string>
    </property>
   </action>
+  <action name="actionlogin_using_google">
+   <property name="text">
+    <string>login using google</string>
+   </property>
+  </action>
+  <action name="actionLogin">
+   <property name="text">
+    <string>Login</string>
+   </property>
+   <property name="font">
+    <font/>
+   </property>
+  </action>
+  <action name="actionReset_Role">
+   <property name="text">
+    <string>Reset Role</string>
+   </property>
+  </action>
+  <action name="actionLogout">
+   <property name="text">
+    <string>Logout</string>
+   </property>
+  </action>
+  <action name="actionClone_Repository">
+   <property name="text">
+    <string>Import Project</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
   <include location="AppResources.qrc"/>
  </resources>

@@ -25,8 +25,14 @@
 #include <cstdio>
 #include <QDialogButtonBox>
 #include <QFormLayout>
+#include <QJsonObject>
 
 QString user_id;
+std::string user, pass;
+
+bool takeCredentialsFromUser();
+
+
 
 void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 {
@@ -561,7 +567,7 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
     unsigned int allowed_types, void *payload)
 {
     int error;
-    static std::string user, pass;
+//    static std::string user, pass;
 
     /*
      * Ask the user via the UI. On error, store the information and return GIT_EUSER which will be
@@ -570,50 +576,77 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
      */
     if (!is_cred_cached)
     {
-        QInputDialog inp;
-        bool ok = false;
-        if (login_tries != 1) {
-            QMessageBox msgWarning;
-            msgWarning.setText("Invalid username or password. Please try again");
-            msgWarning.setIcon(QMessageBox::Warning);
-            msgWarning.setWindowTitle("Authentication Failed!");
-            msgWarning.exec();
-        }
-        QDialog dialog(nullptr);
-        dialog.setWindowTitle("Github Login");
-        QFormLayout form(&dialog);
-
-        QLineEdit *userfield = new QLineEdit(&dialog);
-        QString userlabel = QString("Username: ");
-        form.addRow(userlabel, userfield);
-        QLineEdit *passfield = new QLineEdit(&dialog);
-        passfield->setEchoMode(QLineEdit::Password);
-        QString passlabel = QString("Password: ");
-        form.addRow(passlabel, passfield);
-
-        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-                                   Qt::Horizontal, &dialog);
-        form.addRow(&buttonBox);
-        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
-        if (dialog.exec() == QDialog::Accepted) {
-            user = userfield->text().toStdString();
-            user_id=user_id.fromStdString(user);
-            pass = passfield->text().toStdString();
-            ok = true;
-        }
-        else {
-            ok = false;
-        }
-        if (!ok) return -1;
-
-        login_tries++;
-        delete userfield;
-        delete passfield;
+//		if (!takeCredentialsFromUser()) {
+//			return -1;
+//		}
     }
+    QProcess process;
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o gitToken.json");
+
+    QFile jsonFile("gitToken.json");
+    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    QByteArray data = jsonFile.readAll();
+
+    QJsonParseError errorPtr;
+    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+    QJsonObject mainObj = document.object();
+    jsonFile.close();
+    QString git_token = mainObj.value("github_token").toString();
+    QString git_username = mainObj.value("github_username").toString();
+    QFile::remove("gitToken.json");
+    user = git_username.toStdString();
+    pass = git_token.toStdString();
     return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
+
+
+bool takeCredentialsFromUser()
+{
+	qDebug() << "Taking credentials";
+	QInputDialog inp;
+	bool ok = false;
+	if (login_tries != 1) {
+		QMessageBox msgWarning;
+		msgWarning.setText("Invalid username or password. Please try again");
+		msgWarning.setIcon(QMessageBox::Warning);
+		msgWarning.setWindowTitle("Authentication Failed!");
+		msgWarning.exec();
+	}
+	QDialog dialog(nullptr);
+	dialog.setWindowTitle("Github Login");
+	QFormLayout form(&dialog);
+
+	QLineEdit *userfield = new QLineEdit(&dialog);
+	QString userlabel = QString("Username: ");
+	form.addRow(userlabel, userfield);
+	QLineEdit *passfield = new QLineEdit(&dialog);
+	passfield->setEchoMode(QLineEdit::Password);
+	QString passlabel = QString("Password: ");
+	form.addRow(passlabel, passfield);
+
+	QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+							   Qt::Horizontal, &dialog);
+	form.addRow(&buttonBox);
+	QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+	QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+	if (dialog.exec() == QDialog::Accepted) {
+		user = userfield->text().toStdString();
+		user_id=user_id.fromStdString(user);
+		pass = passfield->text().toStdString();
+		ok = true;
+	}
+	else {
+		ok = false;
+	}
+
+	login_tries++;
+	delete userfield;
+	delete passfield;
+	return ok;
+}
+
 
 /*!
  * \fn Project::set_corrector
@@ -730,7 +763,7 @@ bool Project::push(QString branchName) {
          */
         error = (git_reference_peel((git_object **)&parents[0], head_ref, GIT_OBJ_COMMIT))
              || (git_commit_lookup(&parents[1], repo, git_annotated_commit_id(heads[0])))
-             || (git_commit_create(&id, repo, "HEAD", signature, signature, NULL, "Merge commit - OpenOCRCorrect", tree, 2, (const git_commit **)parents))
+             || (git_commit_create(&id, repo, "HEAD", signature, signature, NULL, "Merge commit - Udaan Translation Tool", tree, 2, (const git_commit **)parents))
              || (git_repository_state_cleanup(repo));
 
         if(error){
@@ -766,6 +799,24 @@ bool Project::push(QString branchName) {
     */
     if (error)
         return false;
+
+    /* Finding the last commit on current repo and saves the entry in commit history table
+     * Email | Commit_no
+     * So that we can see users commit history based on his/her email id without github account
+     */
+    char fullsha[42] = {0};
+    git_oid_tostr(fullsha, 41, &id);
+    QString sha = QString::fromStdString(fullsha);
+    //qDebug()<<"Last commit full hash :"<<sha;
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    //qDebug()<<"email"<<email;
+    settings.endGroup();
+    QProcess process;
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/commits/ -d \"commit_no="+sha+"&email="+email+"\" ");;
+
     return true;//No errors
 }
 
@@ -811,18 +862,117 @@ static int transfer_progress_cb(const git_transfer_progress *stats, void *payloa
 /*!
  * \brief Project::fetch
  */
-void Project::fetch(QObject *parent)
+int Project::fetch()
 {
-    QDir::setCurrent(mProjectDir.absolutePath());
-    QProcess::execute("git pull");
-    QProcess gitProcess;
-    gitProcess.start("git", QStringList() << "branch" << "--show-current");
-    if (!gitProcess.waitForFinished())
-        return;
-    QString result = gitProcess.readAll();
-    QString currentBranch = result.remove("\n");
-    QProcess::execute("git reset --hard origin/" + currentBranch);
-    QDir::setCurrent(mProjectDir.absolutePath() + "/CorrectorOutput/");
+	int error = 0;
+	git_remote *remote = NULL;
+//	const git_indexer_progress *stats;
+	git_fetch_options fetch_opts = GIT_FETCH_OPTIONS_INIT;
+
+	/* Figure out whether it's a named remote or a URL */
+	error = git_remote_lookup(&remote, repo, "origin");
+	if (error < 0) {
+		error = git_remote_create_anonymous(&remote, repo, "origin");
+		if (error < 0) {
+			qDebug() << "error in git_remote";
+			goto cleanup;
+		}
+	}
+
+	/* Set up the callbacks (only update_tips for now) */
+	fetch_opts.callbacks.credentials = credentials_cb;
+
+	/**
+	 * Perform the fetch with the configured refspecs from the
+	 * config. Update the reflog for the updated references with
+	 * "fetch".
+	 */
+	error = git_remote_fetch(remote, NULL, &fetch_opts, "pull");
+	if (error < 0) {
+		qDebug() << "error in fetch";
+		goto cleanup;
+	}
+	is_cred_cached = true;
+
+//	stats = git_remote_stats(remote);
+//	char buffer[200];
+//	int ck;
+
+//	if (stats->local_objects > 0) {
+//		ck = snprintf(buffer, 200, "Received %u/%u objects in %zu bytes (used %u local objects)",
+//				 stats->indexed_objects, stats->total_objects, stats->received_bytes, stats->local_objects);
+//	} else {
+//		ck = snprintf(buffer, 200, "Received %u/%u objects in %zu bytes\n",
+//			   stats->indexed_objects, stats->total_objects, stats->received_bytes);
+//	}
+//	if (ck >= 0 && ck < 200) {
+//		qDebug() << QString::fromLocal8Bit(buffer);
+//	}
+
+	/**
+	 * 1. Check if the repository is already up to date (Don't perform git reset)
+	 * 2. If it is not up to date then reset the repo to the latest commit (This will delete the modifications done by user)
+	 */
+
+	git_revwalk *walker;
+	error = git_revwalk_new(&walker, repo);
+	if (error < 0) {
+		goto cleanup;
+	}
+	error = git_revwalk_push_range(walker, "HEAD..refs/remotes/origin/HEAD");
+	if (error < 0) {
+		goto cleanup;
+	}
+
+	git_oid oid;
+	int count;
+	count = 0;
+	while(!git_revwalk_next(&oid, walker)) {
+		count++;
+	}
+	git_revwalk_free(walker);
+	qDebug() << "Final count = " << count;
+
+	if (count > 0) {
+		// perform git reset
+		QFile fetchHeadFile("../.git/refs/remotes/origin/HEAD");
+		if (!fetchHeadFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+			qDebug() << "cannot open file: " << QFileInfo(fetchHeadFile).absoluteFilePath();
+			goto cleanup;
+		}
+
+		QString text = fetchHeadFile.readAll();
+		QString nameOfFileStoresCommitID = text.remove("ref: ").remove("\n");
+		fetchHeadFile.close();
+
+		nameOfFileStoresCommitID = "../.git/" + nameOfFileStoresCommitID;
+		QFile fileStoresCommitID(nameOfFileStoresCommitID);
+		if (!fileStoresCommitID.open(QIODevice::ReadOnly | QIODevice::Text)) {
+			qDebug() << "Cannot open file: " << QFileInfo(fileStoresCommitID).absoluteFilePath();
+			goto cleanup;
+		}
+		QString commit_id = fileStoresCommitID.readAll();
+		fileStoresCommitID.close();
+
+		const char *sha = commit_id.toLocal8Bit();
+		git_oid oid;
+		error = git_oid_fromstr(&oid, sha);
+		if (error < 0) {
+			goto cleanup;
+		}
+		git_object *obj;
+		error = git_object_lookup(&obj, repo, &oid, GIT_OBJECT_ANY);
+		if (error < 0) {
+			goto cleanup;
+		}
+
+		git_reset(repo, obj, GIT_RESET_HARD, NULL);
+		git_object_free(obj);
+	}
+
+cleanup:
+	git_remote_free(remote);
+	return error;
 }
 
 /*!
@@ -842,7 +992,6 @@ bool Project::commit(std::string message)
     git_object *parent = NULL;
     git_reference *ref = NULL;
     /** First use the config to initialize a commit signature for the user. */
-
     //check_lg2(git_signature_default(&sig, repo),"Unable to create a commit signature.","Perhaps 'user.name' and 'user.email' are not set");
     int klass = lg2.check_lg2(git_signature_now(&sig, mName.c_str(), mEmail.c_str()),"Could not create signature","");
     if (klass > 0) {
@@ -850,6 +999,7 @@ bool Project::commit(std::string message)
             git_signature_free(sig);
 
     }
+
     klass = lg2.check_lg2(git_revparse_ext(&parent, &ref, repo, "HEAD"),"Head not found","");
     if (klass > 0)
     {
@@ -976,7 +1126,49 @@ bool Project::add_config() {
     mEmail = str;
     git_config_free(cfg);
     git_config_free(sys_cfg);
-    return true;
+	return true;
+}
+
+bool Project::add_git_config()
+{
+	bool ret = false;
+	QSettings appSettings("IIT-B", "OpenOCRCorrect");
+	appSettings.beginGroup("GitConfig");
+	QString username = appSettings.value("user", "").toString();
+	QString email = appSettings.value("email", "").toString();
+	if (username == "" || email == "") {
+		// Take input from user and set the git config
+		bool ok = false;
+		QString quser = QInputDialog::getText(nullptr, QWidget::tr("Enter username:"), QWidget::tr("Username:"), QLineEdit::Normal, "", &ok);
+		if (!ok) {
+			ret = ok;
+			goto exit;
+		}
+		QString qemail = QInputDialog::getText(nullptr, QWidget::tr("Enter email:"), QWidget::tr("Email:"), QLineEdit::Normal, "", &ok);
+		if (!ok) {
+			ret = ok;
+			goto exit;
+		}
+
+		if (quser.trimmed() == "" || qemail.trimmed() == "" || !qemail.contains("@")) {
+			ret = false;
+			goto exit;
+		}
+
+		appSettings.setValue("user", quser);
+		appSettings.setValue("email", qemail);
+
+		mName = quser.toStdString();
+		mEmail = qemail.toStdString();
+	} else {
+		mName = username.toStdString();
+		mEmail = email.toStdString();
+	}
+
+exit:
+	appSettings.endGroup();
+
+	return ret;
 }
 
 int match_cb(const char *path, const char *spec, void *payload) {
@@ -1040,7 +1232,7 @@ Filter * Project::getFilter(QString str)
             return p;
         }
     }
-    return nullptr;
+	return nullptr;
 }
 
 /*!
@@ -1129,12 +1321,14 @@ void Project::open_git_repo()
     if (gitdir.exists())
     {
         lg2.check_lg2(git_repository_open(&repo, dir.c_str()), "Failed to Open", "");
-        add_config();
+//        add_config();
+		add_git_config();
     }
     else
     {
         lg2.check_lg2(git_repository_init(&repo, dir.c_str(),0), "Failed to Open", "");
-        add_config();
+//        add_config();
+		add_git_config();
         lg2_add();
         create_initial_commit(repo);
 
@@ -1217,6 +1411,29 @@ int Project::GetPageNumber(std::string localFilename, std::string *no, size_t *l
     return 1;
 }
 
+int Project::clone(QString url_, QString path)
+{
+	QByteArray array = url_.toLocal8Bit();
+    const char *url = array.data();
+
+    git_clone_options clone_opts = GIT_CLONE_OPTIONS_INIT;
+    clone_opts.fetch_opts.callbacks.credentials = credentials_cb;
+    git_repository *repo = NULL;
+
+    QStringList list = url_.split("/");
+	QString repoName = list[list.size() - 1].remove(".git");
+	path = path + "/" + repoName;
+
+	int error = git_clone(&repo, url, path.toLocal8Bit().data(), &clone_opts);
+
+    if(error < 0) {
+        qDebug() << "Error importing the project";
+    }
+	else {
+        qDebug() << " Imported successfully";
+	}
+	return error;
+}
 
 
 #ifdef _WIN32

@@ -30,13 +30,15 @@ public:
     bool commit(std::string message);
     bool push(QString branchName);
 	bool add_config();
-	void fetch(QObject *parent);
+	bool add_git_config(); // New function which does not looks up the git configurations (regardless of any level)
+	int fetch();
     bool enable_push(bool increment);
 	void AddTemp(Filter * f, QFile &pFile,QString prefix);
     int findNumberOfFilesInDirectory(std::string);
     int LevenshteinWithGraphemes(QList<Diff> diffs);
     int GetGraphemesCount(QString string);
     int GetPageNumber(std::string localFilename, std::string *no, size_t *loc, QString *ext);
+    static int clone(QString url_, QString path);
 
 	~Project() {
 		for (auto p : mFiles) {

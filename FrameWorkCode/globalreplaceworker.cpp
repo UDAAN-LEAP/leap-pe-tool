@@ -136,7 +136,8 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                     }
                     fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
                     replacementString1 = replacementString1.simplified();
-                    browser->textCursor().insertHtml("<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
+//                    browser->textCursor().insertHtml("<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
+                    browser->textCursor().insertHtml(replacementString1);
                     cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
 
                     pos = cursor.position();

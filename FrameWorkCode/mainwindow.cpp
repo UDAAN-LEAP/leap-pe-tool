@@ -80,6 +80,9 @@
 #include "globalreplaceworker.h"
 #include "pdfhandling.h"
 #include "customtextbrowser.h"
+#include <QtNetworkAuth>
+#include <QOAuth2AuthorizationCodeFlow>
+#include <QCryptographicHash>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -164,6 +167,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->lineEdit_2->setReadOnly(true);
     ui->lineEdit_3->setReadOnly(true);
 
+    googleAuth();
+
     QString password  = "";
     QString passwordFilePath = QDir::currentPath() + "/pass.txt";
     QFile passwordFile(passwordFilePath);
@@ -183,6 +188,46 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     this->show();
     this->setWindowState(Qt::WindowState::WindowActive);
+    //ask for login
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("loginConsent");
+    QString value = settings.value("consent").toString();
+    if(value != "dna" && value != "loggedIn"){
+    QMessageBox login;
+    login.setWindowTitle("Login using Google");
+    login.setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint|Qt::WindowCloseButtonHint);
+    login.setIcon(QMessageBox::Information);
+    login.setInformativeText("You can save your edits on the cloud. To enable this feature please login using your google account now or later in settings>login");
+    QPushButton *confirmButton = login.addButton(tr("Login"),QMessageBox::AcceptRole);
+    QPushButton *cancelButton = login.addButton(tr("Cancel"),QMessageBox::ActionRole);
+    QCheckBox *cb = new QCheckBox("Do not ask again");
+    login.setCheckBox(cb);
+    cb->setStyleSheet("QCheckBox{color:rgb(227, 228, 228);border:0px;}");
+
+    login.exec();
+    if(cb->checkState() == Qt::Checked){
+        settings.setValue("consent","dna");
+    }
+    if(login.clickedButton() == confirmButton)
+    {
+      authenticate();
+      this->close();
+    }
+    if(login.clickedButton() == cancelButton){
+        login.close();
+    }
+    }
+    //show login/logout options
+    QString consent = settings.value("consent").toString();
+    settings.endGroup();
+    if(consent != "loggedIn"){
+        this->ui->actionLogin->setVisible(true);
+        this->ui->actionLogout->setVisible(false);
+    }
+    else{
+        this->ui->actionLogin->setVisible(false);
+        this->ui->actionLogout->setVisible(true);
+    }
 
     QString common = "डॉ - xZ,, अ  - a,, आ/ ा  - A,, इ/ ि  - i,, ई/ ी  - I,, उ/ ु  - u,, ऊ/ ू  - U,, ऋ/ ृ  - f,, ए/ े  - e,, ऐ/ ै  - E,, ओ/ ो  - o,, औ/ ौ  - O,, ं  - M,, ः  - H,,  ँ   - ~,, ज्ञ  - jYa,, त्र  - tra,, श्र  - Sra,, क्ष्/क्ष  - kz/kza,, द्य्/द्य  - dy/dya,, क्/क  - k/ka,, ख्/ख  - K/Ka,, ग्/ग  - g/ga,, घ्/घ  - G/Ga,, ङ्/ङ  - N/Na,, च्/च  - c/ca,, छ्/छ  - C/Ca,, ज्/ज  - j/ja,, झ्/झ  - J/Ja,, ञ्/ञ  - Y/Ya,, ट्/ट  - w/wa,, ठ्/ठ  - W/Wa,, ड्/ड  - q/qa,, ढ्/ढ  - Q/Qa,, ण्/ण  - R/Ra,, त्/त  - t/ta,, थ्/थ  - T/Ta,, द्/द  - d/da,, ध्/ध  - D/Da,, न्/न  - n/na,, प्/प  - p/pa,, फ्/फ  - P/Pa,, ब्/ब  - b/ba,, भ्/भ  - B/Ba,, म्/म  - m/ma,, य्/य  - y/ya,, र्/र  - r/ra,, ल्/ल  - l/la,, व्/व  - v/va,, श्/श  - S/Sa,, ष्/ष  - z/za,, स्/स  - s/sa,, ह्/ह  - h/ha,, ळ्/ळ  - L/La,, १  - 1,, २  - 2,, ३  - 3,, ४  - 4,, ५  - 5,, ६  - 6,, ७  - 7,, ८  - 8,, ९  - 9,, ०  - 0,, ।  - |,, ॥  - ||";
     gSanskrit = "SLP1 Sanskrit Guide:";
@@ -202,6 +247,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->textEdit->setFont(font);
 
     ui->sanButton->setChecked(true);
+
 
 //    ui->tabWidget_2->removeTab(0);
 //    ui->tabWidget_2->removeTab(0);
@@ -406,7 +452,7 @@ bool MainWindow::setRole(QString role)
         ui->actionTurn_In->setVisible(false);      //set false to its visibility; now shown
         ui->actionTurn_In->setEnabled(false);      //disable the option
 
-        this->setWindowTitle("OpenOCRCorrect-Verifier");
+        this->setWindowTitle("Udaan Editing Tool-Verifier");
 
     }
     else if(mRole == "Corrector")
@@ -424,7 +470,7 @@ bool MainWindow::setRole(QString role)
         ui->actionVerifier_Turn_In->setEnabled(false);
 
         isVerifier = 0;
-        this->setWindowTitle("OpenOCRCorrect-Corrector");
+        this->setWindowTitle("Udaan Editing Tool-Corrector");
     }
     else
     {
@@ -476,6 +522,96 @@ void writeJsonFile(QString filepath, QJsonObject mainObj)
     jsonFile.open(QIODevice::WriteOnly);
     jsonFile.write(document1.toJson());
     jsonFile.close();
+}
+
+void MainWindow::authenticate() {
+    this->google->grant();
+}
+
+void MainWindow::googleAuth()
+{
+     google = new QOAuth2AuthorizationCodeFlow;
+     google->setScope("email");
+     connect(google, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser,
+             &QDesktopServices::openUrl);
+
+     QProcess process;
+     process.execute("curl -d -X -k -POST --header "
+                     "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o client.json");
+
+     QFile jsonFile("client.json");
+     jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+     QByteArray data = jsonFile.readAll();
+
+     QJsonParseError errorPtr;
+     QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+     QJsonObject mainObj = document.object();
+     jsonFile.close();
+     QString id = mainObj.value("client_id").toString();
+     QString secret = mainObj.value("client_secret").toString();
+     QFile::remove("client.json");
+     QByteArray array = id.toLocal8Bit();
+     const auto clientId = array.data();
+     const QUrl authUri("https://accounts.google.com/o/oauth2/auth");
+     const QUrl tokenUri("https://oauth2.googleapis.com/token");
+     array = secret.toLocal8Bit();
+     const auto clientSecret = array.data();
+     const auto port = 8080;
+
+     google->setAuthorizationUrl(authUri);
+     google->setClientIdentifier(clientId);
+     google->setAccessTokenUrl(tokenUri);
+     google->setClientIdentifierSharedKey(clientSecret);
+
+     google->setModifyParametersFunction([](QAbstractOAuth::Stage stage, QVariantMap* parameters) {
+         // Percent-decode the "code" parameter so Google can match it
+         if (stage == QAbstractOAuth::Stage::RequestingAccessToken) {
+             QByteArray code = parameters->value("code").toByteArray();
+             (*parameters)["code"] = QUrl::fromPercentEncoding(code);
+         }
+     });
+
+     QOAuthHttpServerReplyHandler* replyHandler = new QOAuthHttpServerReplyHandler(port, this);
+     google->setReplyHandler(replyHandler);
+     connect(this->google, &QOAuth2AuthorizationCodeFlow::granted, [=](){
+            const QString token = this->google->token();
+//            qDebug()<<"Token "<<token;
+            emit gotToken(token);
+
+            auto reply = this->google->get(QUrl("https://www.googleapis.com/oauth2/v2/userinfo?access_token="+token));
+            connect(reply, &QNetworkReply::finished, [reply, token, this](){
+                const auto objectDetails = (QString)reply->readAll();
+                QJsonDocument jsonResponse = QJsonDocument::fromJson(objectDetails.toUtf8());
+                QJsonObject jsonObject = jsonResponse.object();
+                QString email = jsonObject["email"].toString();
+                QString id = jsonObject["id"].toString();
+//                const QByteArray data = email.toUtf8();
+//                qDebug()<<"hash"<<QCryptographicHash::hash(data, QCryptographicHash::Sha256).toHex();
+             // qDebug()<<"email"<<email;
+            //save details in QSettings
+                QSettings settings("IIT-B", "OpenOCRCorrect");
+                settings.beginGroup("login");
+                settings.setValue("token",token);
+                settings.setValue("email",email);
+                settings.setValue("id",id);
+                settings.endGroup();
+
+                //saving details in database via Post request to api
+//                QProcess process;
+
+//               //qDebug()<<"curl -d -X -POST --header \"Content-type:application/x-www-form-urlencoded\" https://oauth2.googleapis.com/revoke?token="+token;
+//                process.execute("curl -d -X -k -POST --header "
+//                                "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/user_detail/{email:"+email+",user_id:"+id+",token:"+token+"}/");
+
+                //now login dialog should not appear
+                settings.beginGroup("loginConsent");
+                settings.setValue("consent","loggedIn");
+                settings.endGroup();
+                this->ui->actionLogin->setVisible(false);
+                this->ui->actionLogout->setVisible(true);
+            });
+        });
+
 }
 QString file = "";
 bool fileFlag = 0;
@@ -587,6 +723,8 @@ string selectedStr ="";
 //!GIVE EVENT TO TEXT BROWSER INSTEAD OF MAINWINDOW
 void MainWindow::mousePressEvent(QMouseEvent *ev)
 {
+    if(!curr_browser)
+        return;
     slpNPatternDict slnp;
     trieEditDis trie;
 
@@ -615,7 +753,8 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
         curr_browser->cursorForPosition(ev->pos());
 
         DisplayTimeLog();
-        if((ev->button() == Qt::RightButton) && (!LoadDataFlag)){
+        if((ev->button() == Qt::RightButton) && (LoadDataFlag)){
+            qDebug()<<"data is not loaded yet";
             QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
             QTextCursor cursor = curr_browser->textCursor();
             cursor.select(QTextCursor::WordUnderCursor);
@@ -683,9 +822,12 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             qDebug ()<<"right click";
         }
         //! if right click
-        if (((ev->button() == Qt::RightButton) && (LoadDataFlag)) || (RightclickFlag))
-        {
+        //!
 
+        if (((ev->button() == Qt::RightButton) && (!LoadDataFlag)) || (RightclickFlag))
+        {
+            QMenu* spell_menu, *translate_menu, *clipboard_menu;
+            QAction *act;
             QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
             QTextCursor cursor = curr_browser->textCursor();
             cursor.select(QTextCursor::WordUnderCursor);
@@ -694,38 +836,86 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             QString str1 = cursor.selectedText();
             selectedStr = str1.toUtf8().constData();
 
-            if (selectedStr != "") {
-                // code to display options on rightclick
-                curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
-                QMenu* popup_menu = curr_browser->createStandardContextMenu();
-                QMenu* spell_menu, *translate_menu, *clipboard_menu;
+            curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
+            QMenu* popup_menu = curr_browser->createStandardContextMenu();
+
+            translate_menu = new QMenu("translate", this);
+            clipboard_menu = new QMenu("clipboard", this);
+            clipboard_menu->setStyleSheet("height: 6em; width: 10em; overflow: hidden; white-space: nowrap; color: black; background-color: white;");
+            QFont font("Shobhika-Regular");
+            font.setWeight(16);
+            font.setPointSize(16);
+
+            translate_menu->setFont(font);
+            clipboard_menu->setFont(font);
+
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            settings.beginGroup("Clipboard");
+            QString s1 = settings.value("copy1").toString();
+            QString s2 = settings.value("copy2").toString();
+            QString s3 = settings.value("copy3").toString();
+            settings.endGroup();
+            act = new QAction(s1,clipboard_menu);
+            clipboard_menu->addAction(act);
+            clipboard_menu->addSeparator();
+            act = new QAction(s2,clipboard_menu);
+            clipboard_menu->addAction(act);
+            clipboard_menu->addSeparator();
+            act = new QAction(s3,clipboard_menu);
+            clipboard_menu->addAction(act);
+
+
+            popup_menu->insertSeparator(popup_menu->actions()[1]);
+            popup_menu->insertMenu(popup_menu->actions()[1], translate_menu);
+
+            popup_menu->insertSeparator(popup_menu->actions()[2]);
+            popup_menu->insertMenu(popup_menu->actions()[2], clipboard_menu);
+
+
+            //connect(spell_menu, SIGNAL(triggered(QAction*)), this, SLOT(menuSelection(QAction*)));
+            connect(translate_menu, SIGNAL(triggered(QAction*)), this, SLOT(translate_replace(QAction*)));
+            connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
+            QAction* gsearch;
+            gsearch = new QAction("Search over google",popup_menu);
+            QAction* gtrans;
+            gtrans = new QAction("Google translate",popup_menu);
+            QAction* insertImage;
+            insertImage = new QAction("Insert image",popup_menu);
+            popup_menu->insertSeparator(popup_menu->actions()[0]);
+            //popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
+            popup_menu->addAction(gsearch);
+            popup_menu->addAction(gtrans);
+            popup_menu->addAction(insertImage);
+
+            //connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
+            connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
+            connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
+            connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
+            QString str = QString::fromStdString(selectedStr);
+            qDebug()<<"selected str"<<str;
+            if (!selectedStr.empty()) {
+
 
                 spell_menu = new QMenu("suggestions", this);
-                translate_menu = new QMenu("translate", this);
-                clipboard_menu = new QMenu("clipboard", this);
-                clipboard_menu->setStyleSheet("height: 6em; width: 10em; overflow: hidden; white-space: nowrap; color: black; background-color: white;");
-                QFont font("Shobhika-Regular");
-                font.setWeight(16);
-                font.setPointSize(16);
+
                 spell_menu->setFont(font);
-                translate_menu->setFont(font);
-                clipboard_menu->setFont(font);
+
 
                 QAction* act;
                 vector<string>  Words1 = trie.print5NearestEntries(TGBook, selectedStr);
-                if (Words1.empty()) return;
+               // if (Words1.empty()) return;
 
                 vector<string> Alligned = trie.print5NearestEntries(TGBookP, selectedStr);
-                if (Alligned.empty()) return;
+                //if (Alligned.empty()) return;
 
                 vector<string> PWords1 = trie.print5NearestEntries(TPWords, selectedStr);
-                if (PWords1.empty()) return;
+               // if (PWords1.empty()) return;
 
                 string PairSugg = slnp.print2OCRSugg(selectedStr, Alligned[0], ConfPmap, Dict); // map<string,int>&
-                if (PairSugg.empty())return;
+              //  if (PairSugg.empty())return;
 
                 vector<string>  Words = trie.print1OCRNearestEntries(slnp.toslp1(selectedStr), vIBook);
-                if (Words.empty())return;
+              //  if (Words.empty())return;
 
 
                 //! find nearest confirming to OCR Sugg from Book
@@ -819,9 +1009,9 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                     cout<<"Nearest confirming from PWords "<<nearestCOnfconfirmingSuggvec1<<endl;
                     cout<<"One suggestion from ConfusionPair and secondary OCR Trie Pattern Data "<<slnp.toslp1(PairSugg)<<endl;
                     cout<<"One suggestion from Pwords which is present in Dict "<<trie.SamasBreakLRCorrect(slnp.toslp1(selectedStr), Dict, PWords, TPWords, TPWordsP)<<endl;
-    //                cout<<"Nearest confirming from Secondary OCR by converting the string in English "<<nearestCOnfconfirmingSuggvecFont<<endl;
-    //                cout<<"One suggestion from ConfusionPair and secondary OCR Trie Pattern Data by converting the string in English "<<toslp1(PairSuggFont)<<endl;
-    //                cout<<"One suggestion from TopConfusion and SandhiRules by converting the string in English "<<sugg9<<endl;
+            //                cout<<"Nearest confirming from Secondary OCR by converting the string in English "<<nearestCOnfconfirmingSuggvecFont<<endl;
+            //                cout<<"One suggestion from ConfusionPair and secondary OCR Trie Pattern Data by converting the string in English "<<toslp1(PairSuggFont)<<endl;
+            //                cout<<"One suggestion from TopConfusion and SandhiRules by converting the string in English "<<sugg9<<endl;
                 }
                 eddis e;
                 for (map<string, int>::const_iterator eptr = mapSugg.begin(); eptr != mapSugg.end(); eptr++)
@@ -865,48 +1055,24 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                     translate_menu->addAction(act);
                 }
                 //For clipboard
-                QSettings settings("IIT-B", "OpenOCRCorrect");
-                settings.beginGroup("Clipboard");
-                QString s1 = settings.value("copy1").toString();
-                QString s2 = settings.value("copy2").toString();
-                QString s3 = settings.value("copy3").toString();
-                settings.endGroup();
-                act = new QAction(s1,clipboard_menu);
-                clipboard_menu->addAction(act);
-                clipboard_menu->addSeparator();
-                act = new QAction(s2,clipboard_menu);
-                clipboard_menu->addAction(act);
-                clipboard_menu->addSeparator();
-                act = new QAction(s3,clipboard_menu);
-                clipboard_menu->addAction(act);
+
                 popup_menu->insertSeparator(popup_menu->actions()[0]);
                 popup_menu->insertMenu(popup_menu->actions()[0], spell_menu);
 
-                popup_menu->insertSeparator(popup_menu->actions()[1]);
-                popup_menu->insertMenu(popup_menu->actions()[1], translate_menu);
-
-                popup_menu->insertSeparator(popup_menu->actions()[2]);
-                popup_menu->insertMenu(popup_menu->actions()[2], clipboard_menu);
 
 
                 connect(spell_menu, SIGNAL(triggered(QAction*)), this, SLOT(menuSelection(QAction*)));
-                connect(translate_menu, SIGNAL(triggered(QAction*)), this, SLOT(translate_replace(QAction*)));
-                connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
 
-                popup_menu->exec(ev->globalPos());
-                popup_menu->close(); popup_menu->clear();
 
-                vecSugg.clear(); Words1.clear(); Words.clear(); Alligned.clear(); PairSugg.clear();
-                translate.clear();
+
             }
-            else
-            {
+
                 DisplayTimeLog();
 
-                QMenu* popup_menu = curr_browser->createStandardContextMenu();
+                //QMenu* popup_menu = curr_browser->createStandardContextMenu();
                 popup_menu->exec(ev->globalPos());
                 popup_menu->close(); popup_menu->clear();
-            }
+
         } // if right click
     }
 }// if mouse event
@@ -3873,7 +4039,7 @@ void MainWindow::on_actionCPairGEROcrVsCorrect_triggered()
 */
 void MainWindow::on_actionAllFontProperties_triggered()
 {
-    if(!curr_browser || curr_browser->isReadOnly())
+	if(!curr_browser || curr_browser->isReadOnly())
         return;
     QFont initialFont = curr_browser->font();      // initial font face
     QTextCursor cursor = curr_browser->textCursor();
@@ -3882,75 +4048,131 @@ void MainWindow::on_actionAllFontProperties_triggered()
 
     if(pointsize) initialFont.setPointSize(pointsize);      // initial font size
     bool ok;
-    QFont font = QFontDialog::getFont(&ok, initialFont, this);
+    QFont font = QFontDialog::getFont(&ok, initialFont, this, tr("Font Properties"), QFontDialog::DontUseNativeDialog);
 
-    //!Filter the font properities
-      QTextCharFormat applyFont;
-      qreal wgt = font.pointSize();
-      QString fam = font.family();
-      bool strike = font.strikeOut();
-      bool underline = font.underline();
-      qreal LetterSpacing=font.letterSpacing();
-      qreal WordSpacing = font.wordSpacing();
-      int stretch = font.stretch();
-      auto styleHint = font.styleHint();
-      auto styleStrategy = font.styleStrategy();
-      auto letterSpacingType = font.letterSpacingType();
-      bool overline = font.overline();
-      bool fixedpitch = font.fixedPitch();
-      auto hintingpref = font.hintingPreference();
+	/*! If user clicks OK then change to selected font with properties*/
+	if (!ok) {
+		return;
+	}
 
-      applyFont.setFontPointSize(wgt);
-      applyFont.setFontFamily(fam);
-      applyFont.setFontStrikeOut(strike);
-      applyFont.setFontUnderline(underline);
-      applyFont.setFontLetterSpacing(LetterSpacing);
-      applyFont.setFontWordSpacing(WordSpacing);
-      applyFont.setFontStretch(stretch);
-      applyFont.setFontStyleHint(styleHint,styleStrategy);
-      applyFont.setFontLetterSpacingType(letterSpacingType);
-      applyFont.setFontOverline(overline);
-      applyFont.setFontFixedPitch(fixedpitch);
-      applyFont.setFontHintingPreference(hintingpref);
+	int ret = QMessageBox::question(this, tr("Question"), tr("Do you want to apply this font to all pages ? (CAN'T UNDO THIS OPERATION)"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+	if (ret == QMessageBox::Yes) {
+		QString fontFamily = font.family();
+		int fontSize = font.pointSize();
+		QVector<QString> styleProperties = {"font-family:", "font-size:"};
+		QVector<QString> stylePropertyValues = {QString("\'" + fontFamily + "\'"), QString::number(fontSize) + "pt"};
+		int totalFontProperties = styleProperties.size();
+		qDebug() << "apply to all pages";
+		/*!
+		 * 1. Loop through each page except the current one
+		 * 2. Apply font size and font family
+		 */
+
+		QString directory = gDirTwoLevelUp + "/" + gCurrentDirName;
+		QString exception = gDirTwoLevelUp + "/" + gCurrentDirName + "/" + gCurrentPageName;
+
+		QDirIterator filesIt(directory, {"*.html"}, QDir::Files | QDir::NoDotAndDotDot);
+
+		while (filesIt.hasNext()) {
+			QString filename = filesIt.next();
+			if (filename == exception) {
+				continue;
+			}
+			QFile file(filename);
+			if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+				qDebug() << "Cannot open file in read mode";
+			}
+			QString fileText = file.readAll();
+			file.close();
+
+			QRegularExpression regex_style("(<span[^>]*>)");
+			QRegularExpressionMatchIterator itr = regex_style.globalMatch(fileText);
+
+			while (itr.hasNext()) {
+				QRegularExpressionMatch match = itr.next();
+				QString capString = match.captured(1);
+				int capStart = match.capturedStart(1);
+
+				for (int i = 0; i < totalFontProperties; i++) {
+					QString property = styleProperties[i];
+					QString value = stylePropertyValues[i];
+					int propIndex = -1;
+
+					if ((propIndex = capString.indexOf(property)) != -1) { // If value of the property is different
+						int endIndexOfProperty = capString.indexOf(";", propIndex);
+						int replacementLen = endIndexOfProperty - (propIndex + property.length());
+						fileText.replace(capStart + propIndex + property.length(), replacementLen, value);
+						capString.replace(propIndex + property.length(), replacementLen, value);
+					} else if (capString.indexOf("style=\"") != -1) { // If property is not present
+						int indexOfStyle = capString.indexOf("style=\"");
+						fileText.insert(capStart + indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+						capString.insert(indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+					} else { // If style tag is not present
+						fileText.insert(capStart + QString("<span ").length(), "style=\" " + property + value + ";\" ");
+						capString.insert(QString("<span ").length(), "style=\" " + property + value + ";\" ");
+					}
+				}
+
+				itr = regex_style.globalMatch(fileText, capStart + capString.length());
+			}
+			if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+				qDebug() << "Cannot open file in write mode";
+			}
+			QTextStream out(&file);
+			out.setCodec("UTF-8");
+			out << fileText;
+			file.close();
+		}
+
+	}
+
+	//!Filter the font properities
+	QTextCharFormat format_to_be_applied;
+
+	qreal wgt = font.pointSize();
+	QString fam = font.family();
+	bool strike = font.strikeOut();
+	bool underline = font.underline();
+	qreal LetterSpacing=font.letterSpacing();
+	qreal WordSpacing = font.wordSpacing();
+	int stretch = font.stretch();
+	auto styleHint = font.styleHint();
+	auto styleStrategy = font.styleStrategy();
+	auto letterSpacingType = font.letterSpacingType();
+	bool overline = font.overline();
+	bool fixedpitch = font.fixedPitch();
+	auto hintingpref = font.hintingPreference();
+
+	format_to_be_applied.setFontPointSize(wgt);
+	format_to_be_applied.setFontFamily(fam);
+	format_to_be_applied.setFontStrikeOut(strike);
+	format_to_be_applied.setFontUnderline(underline);
+	format_to_be_applied.setFontLetterSpacing(LetterSpacing);
+	format_to_be_applied.setFontWordSpacing(WordSpacing);
+	format_to_be_applied.setFontStretch(stretch);
+	format_to_be_applied.setFontStyleHint(styleHint,styleStrategy);
+	format_to_be_applied.setFontLetterSpacingType(letterSpacingType);
+	format_to_be_applied.setFontOverline(overline);
+	format_to_be_applied.setFontFixedPitch(fixedpitch);
+	format_to_be_applied.setFontHintingPreference(hintingpref);
 
 
-      //! Apply bold and italics if present
-      if(font.bold())
-      {
-          qreal weight  =font.weight();
-          applyFont.setFontWeight(weight);
-      }
-      if(font.italic())
-      {
-          bool Italics = font.italic();
-          applyFont.setFontItalic(Italics);
-      }
-    QString sel = cursor.selectedText();
-    int start_pos = cursor.selectionStart();
-    int end_pos = cursor.selectionEnd();
-    if(ok){
-    for(int i = 0;i<sel.size();i++){
-        if((sel[i]=='<')&&(sel[i+1]=='i')&&(sel[i+2]=='m')&&(sel[i+3]=='g')){
-            int moved = i;
-            cursor.setPosition((start_pos+i),QTextCursor::KeepAnchor);
-            cursor.mergeCharFormat(applyFont);
-            curr_browser->textCursor().mergeCharFormat(applyFont);
-        }
-        else if((sel[i-6]=='<')&&(sel[i-5]=='/')&&(sel[i-4]=='i')&&(sel[i-3]=='m')&&(sel[i-2]=='g')&&(sel[i-1]=='>')){
-            cursor.setPosition((start_pos+i),QTextCursor::MoveAnchor);
-        }
-    }
-    cursor.setPosition((end_pos),QTextCursor::KeepAnchor);
-    cursor.mergeCharFormat(applyFont);
-    curr_browser->textCursor().mergeCharFormat(applyFont);
-    }
+	//! Apply bold and italics if present
+	if(font.bold())
+	{
+		qreal weight = font.weight();
+		format_to_be_applied.setFontWeight(weight);
+	}
+	if(font.italic())
+	{
+		bool Italics = font.italic();
+		format_to_be_applied.setFontItalic(Italics);
+	}
 
- //   /*! If user clicks OK then change to selected font with properties*/
-//    if(ok)
-//    {
-//        cursor.mergeCharFormat(applyFont);
-//        curr_browser->textCursor().mergeCharFormat(applyFont);
-//    }
+//	cursor.mergeCharFormat(format_to_be_applied);
+//	curr_browser->textCursor().mergeCharFormat(format_to_be_applied);
+//	curr_browser->setCurrentCharFormat(format_to_be_applied);
+	curr_browser->setCurrentFont(font);
 }
 
 /*!
@@ -4640,6 +4862,54 @@ void MainWindow::on_actionPrepareFeatures_triggered()
  */
 void MainWindow::on_actionFetch_2_triggered()
 {
+    //check whether user is logged in or not
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("loginConsent");
+    QString value = settings.value("consent").toString();
+    settings.endGroup();
+    if(value != "loggedIn"){
+        QMessageBox msg;
+        msg.setText("Please login to pull");
+        int cnt = 2;
+        //showing the message box for 2 seconds only.
+        QTimer cntDown;
+        QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
+             if(--cnt < 0){
+                 cntDown.stop();
+                 msg.close();
+             }
+            });
+        cntDown.start(1000);
+        msg.exec();
+        return;
+    }
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    settings.endGroup();
+    QProcess process;
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"\" -o validate.json");
+
+    QStringList list = gDirTwoLevelUp.split("/");
+    QString repo = list[list.size()-1];
+    QJsonObject mainObj = readJsonFile("validate.json");
+    QJsonArray repos = mainObj.value("repo_list").toArray();
+    QJsonArray::iterator itr; int flag = 0;
+    for(itr = repos.begin(); itr != repos.end(); itr++){
+        //qDebug()<<"itr->toString()"<<itr->toString()<<":"<<repo;
+        if(itr->toString() == repo){
+            flag = 1;
+            break;
+        }
+    }
+    QFile::remove("validate.json");
+    if(repos.size() == 0 || flag == 0){
+        QMessageBox msg;
+        msg.setText("You don't have access to this repository.");
+        msg.exec();
+        return;
+    }
+
     QString stage = mProject.get_stage();
     QString prvs_stage = (stage=="Verifier")?"Verifier":"Corrector";
     QString prvs_output_dir = prvs_stage + "Output"; //"VerifierOutput" or "CorrectorOutput"
@@ -4652,17 +4922,19 @@ void MainWindow::on_actionFetch_2_triggered()
     QPushButton *noButton = forPullBox.addButton(QMessageBox::StandardButton::No);
     forPullBox.exec();
 
-
+	int error;
     if (forPullBox.clickedButton() == okButton)
     {
-        mProject.fetch(this);
+		if ((error = mProject.fetch()) != 0) {
+			qDebug() << "Fetch failed with error code " << error;
+		}
         if(mProject.get_version().toInt())
         {
             QMessageBox::information(0, "Pull Success", "Pull Succesful");
         }
         else
         {
-            QMessageBox::information(0, "Pull Error", "Pull Un-succesful, Please Check Your Internet Connection");
+            QMessageBox::information(0, "Pull Error", "Pull Un-successful, Please Check Your Internet Connection");
         }
 //        if(!isVerifier)
 //        {
@@ -4715,6 +4987,58 @@ void MainWindow::on_actionTurn_In_triggered()
         }
     }
 
+    /*
+     * \description
+     * Checks whether user is logged in or not
+    */
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("loginConsent");
+    QString value = settings.value("consent").toString();
+    settings.endGroup();
+    if(value != "loggedIn"){
+        QMessageBox msg;
+        msg.setText("Please login to submit your changes");
+        int cnt = 2;
+        //showing the message box for 2 seconds only.
+        QTimer cntDown;
+        QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
+             if(--cnt < 0){
+                 cntDown.stop();
+                 msg.close();
+             }
+            });
+        cntDown.start(1000);
+        msg.exec();
+        return;
+    }
+
+    //retrieve details from database and check if user has access to push into this repo
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    settings.endGroup();
+    QProcess process;
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"\" -o validate.json");
+
+    QStringList list = gDirTwoLevelUp.split("/");
+    QString repo = list[list.size()-1];
+    QJsonObject mainObj = readJsonFile("validate.json");
+    QJsonArray repos = mainObj.value("repo_list").toArray();
+    QJsonArray::iterator itr; int flag = 0;
+    for(itr = repos.begin(); itr != repos.end(); itr++){
+        if(itr->toString() == repo){
+            flag = 1;
+            break;
+        }
+    }
+    QFile::remove("validate.json");
+    if(repos.size() == 0 || flag == 0){
+        QMessageBox msg;
+        msg.setText("You don't have access to this repository.");
+        msg.exec();
+        return;
+    }
+
     //!Checking whether all the file are there in CorrectorOutput directory.
     if(mProject.get_version().toInt())
     {
@@ -4739,26 +5063,27 @@ void MainWindow::on_actionTurn_In_triggered()
         if (submitBox.clickedButton() == yButton)
         {
             bool ok;
-            branchName = QInputDialog::getText(this, tr("Branch Name"),
-                                               tr("Enter the branch name:"), QLineEdit::Normal,
-                                               "", &ok );
-            if ( ok && !branchName.isEmpty() ) {
+//            branchName = QInputDialog::getText(this, tr("Branch Name"),
+//                                               tr("Enter the branch name:"), QLineEdit::Normal,
+//                                               "", &ok );
+            branchName = "master";
+//            if ( ok && !branchName.isEmpty() ) {
                 // user entered something and pressed OK
-
                 // mProject.set_stage_verifier();    // set_stage_verifier()inherited from project.cpp updates the stage in xml file to "verifier"
 
                 //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
-                if(!mProject.commit(commit_msg.toStdString()) || !mProject.push(branchName))
-                {
-                    mProject.enable_push(false);      // enable_push() increments version and sets stage in xml file
-                    QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-                    return;
-                }
-            } else {
-                // user entered nothing or pressed Cancel
+            if(!mProject.commit(commit_msg.toStdString()) || !mProject.push(branchName))
+            {
+                mProject.enable_push(false);      // enable_push() increments version and sets stage in xml file
                 QMessageBox::information(0, "Turn In", "Turn In Cancelled");
                 return;
             }
+//            }
+//            else {
+//                // user entered nothing or pressed Cancel
+//                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+//                return;
+//            }
             mProject.set_corrector();
         }
         else
@@ -4824,12 +5149,38 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
 
     /*
      * \description
+     * Checks whether user is logged in or not
+    */
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    qDebug() << settings.fileName();
+    settings.beginGroup("loginConsent");
+    QString value = settings.value("consent").toString();
+    settings.endGroup();
+    if(value != "loggedIn"){
+        QMessageBox msg;
+        msg.setText("Please login to submit your changes");
+        int cnt = 2;
+        //showing the message box for 2 seconds only.
+        QTimer cntDown;
+        QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
+             if(--cnt < 0){
+                 cntDown.stop();
+                 msg.close();
+             }
+            });
+        cntDown.start(1000);
+        msg.exec();
+        return;
+    }
+    /*
+     * \description
      * 1. Checks if any project is opened or not.
      * 2. Reads the comments.json file in Comments folder in the opened project.
      * 3. Calculates AverageCharAccuracy.
      * 4. mRoleCheck
      * 5. Sets the rating and formatting.
     */
+
     if(mProject.get_version().toInt())
     {
 
@@ -5029,10 +5380,11 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
        if (submitBox2.clickedButton() == yButton2)
        {
             bool ok;
-            branchName = QInputDialog::getText(this, tr("Branch Name"),
-                                                 tr("Enter the branch name:"), QLineEdit::Normal,
-                                                 "", &ok );
-            if ( ok && !branchName.isEmpty() ) {
+//            branchName = QInputDialog::getText(this, tr("Branch Name"),
+//                                                 tr("Enter the branch name:"), QLineEdit::Normal,
+//                                                 "", &ok );
+            branchName ="master";
+            if (!branchName.isEmpty() ) {
                 // user entered something and pressed OK
                 if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
                 {
@@ -7220,64 +7572,39 @@ QString GetFilter(QString & Name, const QStringList &list) {
  *
  * \sa    setMFilename(), UpdateFileBrekadown(), DisplayJsonDict(), highlight(), LoadImageFromFile(), WordCount(), readSettings(), tabchanged()
  */
-void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
-    //!Keeps track of current , previous and next page.
-//    if(ui->tabWidget_2->currentIndex() >=0 && NextPrevTrig ==0)
-//    {
-//        closetab(ui->tabWidget_2->currentIndex());
-//        ui->tabWidget_2->removeTab(0);
-//    }
-    //-
-    if(curr_browser) {
-        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
+void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
+{
+	if(curr_browser) {
+		if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
+			QMessageBox currBox2;
+			currBox2.setWindowTitle("Save?");
+			currBox2.setIcon(QMessageBox::Question);
+			currBox2.setInformativeText("Do you want to save " + currentTabPageName + " file?");
+			QPushButton *okButton2 = currBox2.addButton(QMessageBox::StandardButton::Ok);
+			QPushButton *noButton2 = currBox2.addButton(QMessageBox::StandardButton::No);
+			currBox2.exec();
 
-            QMessageBox currBox2;
-            currBox2.setWindowTitle("Save?");
-            currBox2.setIcon(QMessageBox::Question);
-            currBox2.setInformativeText("Do you want to save " + currentTabPageName + " file?");
-            QPushButton *okButton2 = currBox2.addButton(QMessageBox::StandardButton::Ok);
-            QPushButton *noButton2 = currBox2.addButton(QMessageBox::StandardButton::No);
-            currBox2.exec();
+			if (currBox2.clickedButton() == okButton2){
+				on_actionSave_triggered();
+			}
+		}
+	}
 
-
-            if (currBox2.clickedButton() == okButton2){
-                on_actionSave_triggered();
-            //this->close();
-                if (graphic)delete graphic;
-                delete curr_browser;}
-            else{
-                if (graphic)delete graphic;
-                delete curr_browser;
-            }
-        }
-    }
-    //-
     f->open(QIODevice::ReadOnly);
     QFileInfo finfo(f->fileName());
 
     if(!(finfo.exists() && finfo.isFile())){
         return;
     }
+
     //!Retreives current folder details
     current_folder = finfo.dir().dirName();
     QString fileName = finfo.fileName();
-//    if (ui->tabWidget_2->count() != 0) {
-//        for (int i = 0; i < ui->tabWidget_2->count(); i++) {   //iterating over no of opened tb/page
-//            if (name == ui->tabWidget_2->tabText(i)) {
-//                ui->tabWidget_2->setCurrentIndex(i);
-//                setMFilename(f->fileName());
-//                UpdateFileBrekadown();
-//                f->close();
-//                return;
-//            }
-//        }
-//    }
     setMFilename(mFilename = f->fileName());
     UpdateFileBrekadown();
     CustomTextBrowser * b = new CustomTextBrowser();
     b->setReadOnly(false);
     b->setStyleSheet("background-color:white; color:black;");
-
 
     if (!isVerifier && current_folder == "Inds") {     //checks if role is not verifier
         QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
@@ -7293,45 +7620,41 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
             b->setReadOnly(true);
         }
     }
-    //Saves the current opened page
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    settings.beginGroup("RecentPageLoaded");
-    QString tmp1 = settings.value("projectName1").toString();
-    QString tmp2 = settings.value("projectName2").toString();
-    QString tmp3 = settings.value("projectName3").toString();
-    if(ProjFile == tmp1){
-    settings.setValue("projectName1",ProjFile );
-    settings.setValue("name1",name );
-    settings.setValue("pageParent1",gCurrentDirName );}
-    else if(ProjFile == tmp2){
-    settings.setValue("projectName2",settings.value("projectName1").toString() );
-    settings.setValue("name2",settings.value("name1").toString() );
-    settings.setValue("pageParent2",settings.value("pageParent1").toString() );
-    settings.setValue("projectName1",ProjFile );
-    settings.setValue("name1",name );
-    settings.setValue("pageParent1",gCurrentDirName );}
-    else{
-        settings.setValue("projectName3",settings.value("projectName2").toString() );
-        settings.setValue("name3",settings.value("name2").toString() );
-        settings.setValue("pageParent3",settings.value("pageParent2").toString() );
-        settings.setValue("projectName2",settings.value("projectName1").toString() );
-        settings.setValue("name2",settings.value("name1").toString() );
-        settings.setValue("pageParent2",settings.value("pageParent1").toString() );
-        settings.setValue("projectName1",ProjFile );
-        settings.setValue("name1",name );
-        settings.setValue("pageParent1",gCurrentDirName );
-    }
-    settings.endGroup();
-    //.///////////////////////////////////////////////////////
+    // Saves the current opened page
+
+	QSettings settings("IIT-B", "OpenOCRCorrect");
+	settings.beginGroup("RecentPageLoaded");
+	QString tmp1 = settings.value("projectName1").toString();
+	QString tmp2 = settings.value("projectName2").toString();
+	QString tmp3 = settings.value("projectName3").toString();
+
+	if(ProjFile == tmp1){
+		settings.setValue("projectName1",ProjFile );
+		settings.setValue("name1",name );
+		settings.setValue("pageParent1",gCurrentDirName );}
+	else if(ProjFile == tmp2){
+		settings.setValue("projectName2",settings.value("projectName1").toString() );
+		settings.setValue("name2",settings.value("name1").toString() );
+		settings.setValue("pageParent2",settings.value("pageParent1").toString() );
+		settings.setValue("projectName1",ProjFile );
+		settings.setValue("name1",name );
+		settings.setValue("pageParent1",gCurrentDirName );}
+	else{
+		settings.setValue("projectName3",settings.value("projectName2").toString() );
+		settings.setValue("name3",settings.value("name2").toString() );
+		settings.setValue("pageParent3",settings.value("pageParent2").toString() );
+		settings.setValue("projectName2",settings.value("projectName1").toString() );
+		settings.setValue("name2",settings.value("name1").toString() );
+		settings.setValue("pageParent2",settings.value("pageParent1").toString() );
+		settings.setValue("projectName1",ProjFile );
+		settings.setValue("name1",name );
+		settings.setValue("pageParent1",gCurrentDirName );
+	}
+	settings.endGroup();
+
     isProjectOpen = 1;
 
-    // Fixing Word Breaking problem
-//    f->close();
-//    filterHtml(f);
-//    f->open(QIODevice::ReadOnly);
-
 	doc = b->document();
-//	connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
 
     //!Display format by setting font size and styles
     QTextStream stream(f);
@@ -7432,28 +7755,15 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
 
 
     DisplayJsonDict(b,input);
-    highlight(b , input);
+    //highlight(b , input);
 
     b->setMouseTracking(true);
     b->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
     b->setUndoRedoEnabled(true);
 
-//    if(fileFlag) {
     curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
-    //curr_browser->setStyleSheet("background-color:white; color:red;");
-    curr_browser->setDocument(b->document());
-//        ui->tabWidget_2->setTabText(currentTabIndex, name);
-//        tabchanged(currentTabIndex);
+    curr_browser->setDocument(b->document()->clone(curr_browser));
 
-//    }
-//    else {
-//        currentTabIndex = ui->tabWidget_2->addTab(b, name);
-//        ui->tabWidget_2->setCurrentIndex(currentTabIndex);
-//    }
-//    QString qstr = ui->tabWidget_2->tabText(currentTabIndex);
-//    string str = qstr.toStdString();
-//    str.erase(remove(str.begin(), str.end(), ' '), str.end());
-//    currentTabPageName=QString::fromStdString(str);
     QFileInfo info(*f);
     currentTabPageName = info.fileName();
 
@@ -7526,74 +7836,27 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name) {
     auto model = ui->treeView->model();
     int rowCount = ui->treeView->model()->rowCount(parentIndex);
 
-    QString treeItemLabel;
-    for (int i = 0; i < rowCount; i++)
-    {
-        QModelIndex index = model->index(i, 0, parentIndex);
-        treeItemLabel = index.data(Qt::DisplayRole).toString();
+	QString treeItemLabel;
+	for (int i = 0; i < rowCount; i++)
+	{
+		QModelIndex index = model->index(i, 0, parentIndex);
+		treeItemLabel = index.data(Qt::DisplayRole).toString();
 
-        if (index.isValid())
-        {
-            if (treeItemLabel == currentTabPageName)
-            {
-                ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
-                break;
-            }
-        }
+		if (index.isValid())
+		{
+			if (treeItemLabel == currentTabPageName)
+			{
+				ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+				break;
+			}
+		}
 	}
-//  QString htmlFile = gDirTwoLevelUp + "/CorrectorOutput/"+currentTabPageName;
-//	QFile gfile(htmlFile.replace(".bbox", ".html"));
-//	//qDebug()  << "Current page name: " << gfile.fileName();
-//	gfile.open(QIODevice::ReadOnly | QFile::Text);
-//	QTextStream in(&gfile);
-//	QString initial = in.readAll();
-//	QString bboxfile = gfile.fileName();
-//	bboxfile = bboxfile.replace(".html", ".bbox");
 
-//	if(!QDir(gDirTwoLevelUp+"/bboxf").exists())
-//		QDir().mkdir(gDirTwoLevelUp+"/bboxf");
+	// Deleting temporarily created CustomTextBrowser
+	delete b;
 
-//	bboxfile=bboxfile.replace("CorrectorOutput","bboxf");
-
-//	QFile bbox_file(bboxfile);
-//	if(initial.contains("bbox") && !bbox_file.exists())
-//	{
-//		QMap<QString, QString> bbox;
-//		QStringList plist = initial.split("<span class");
-//		for(int i=0;i<plist.length();i++)
-//		{
-//			QString bbox_tags = plist[i];
-//			int first = bbox_tags.indexOf("bbox");
-//			int last = bbox_tags.indexOf(";\">");
-//			bbox_tags = bbox_tags.mid(first,last-first);
-//			bbox_tags = bbox_tags.remove("\">\n");
-//			bbox_tags = bbox_tags.trimmed();
-
-//			QStringList bbox_coordinates = bbox_tags.split(" ");
-//			bbox_tags = bbox_coordinates[0] + " " + bbox_coordinates[1] + " " + bbox_coordinates[2] + " " + bbox_coordinates[3] + " " + bbox_coordinates[4];
-
-//			int start = plist[i].indexOf(";\">\n");
-//			int end = plist[i].indexOf("</span>");
-//			QString sents = plist[i].mid(start, end-start);
-//			sents = sents.remove(";\">\n");
-//			sents = sents.trimmed();
-//			bbox.insert(bbox_tags, sents);
-
-//		}
-//		qDebug()<<bbox;
-//		bbox.erase(bbox.begin());
-//		qDebug()<<bbox;
-//		bbox_file.open(QIODevice::ReadWrite | QFile::Truncate);
-//		QDataStream out (&bbox_file);
-//		out.setVersion(QDataStream::Qt_5_3);
-//		out<<bbox;
-//		bbox_file.flush();
-//		bbox_file.close();
-//		qDebug() << "bbox file written succesfully ... ";
-//	}
-
-   WordCount();     //for counting no of words in the document
-   readSettings();
+	WordCount();     //for counting no of words in the document
+	readSettings();
 }
 
 /*!
@@ -9148,7 +9411,7 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
             QMessageBox msg;
             msg.setWindowTitle("Update Available");
             msg.setIcon(QMessageBox::Information);
-            msg.setText("A New Version of OpenOCRCorrect is Available!!\n\nOpenOCRCorrect "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below\nWhat's New:-\n\n" + newFeatures);
+            msg.setText("A New Version of Udaan Editing Tool is Available!!\n\nUdaan Editing Tool "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below\nWhat's New:-\n\n" + newFeatures);
             QAbstractButton *download = msg.addButton(tr("Go to Download Page"), QMessageBox::ActionRole);
             download->setMinimumWidth(160);
             QAbstractButton *rml = msg.addButton(tr("Later"), QMessageBox::RejectRole);
@@ -9651,8 +9914,9 @@ void MainWindow::insertImageAction()
 {
     //qDebug()<<"Image Will Be Inserted"<<endl;
     QString imgFileName;
-    QString imgFile = QFileDialog::getOpenFileName(this, "Open Project");
-
+    QString imgFile = QFileDialog::getOpenFileName(this, "Select an Image");
+    if(imgFile.isEmpty())
+        return;
 
     QFileInfo imgFileInfo(imgFile);
     imgFileName = imgFileInfo.fileName();
@@ -10041,5 +10305,86 @@ void MainWindow::insertBboxes(QFile *fptr)
 
 
 
+void MainWindow::on_actionLogin_triggered()
+{
+    authenticate();
+}
 
+
+void MainWindow::on_actionLogout_triggered()
+{
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    ui->actionLogout->setVisible(false);
+    ui->actionLogin->setVisible(true);
+    //QDesktopServices::openUrl(QUrl("https://myaccount.google.com/permissions?continue=https%3A%2F%2Fmyaccount.google.com%2Fsecurity", QUrl::TolerantMode));
+    settings.beginGroup("login");
+    QString token = settings.value("token").toString();
+    settings.endGroup();
+    QProcess process;
+   //qDebug()<<"curl -d -X -POST --header \"Content-type:application/x-www-form-urlencoded\" https://oauth2.googleapis.com/revoke?token="+token;
+    process.execute("curl -d -X -POST --header \"Content-type:application/x-www-form-urlencoded\" https://oauth2.googleapis.com/revoke?token="+token);
+    settings.beginGroup("loginConsent");
+    settings.remove("");
+    settings.endGroup();
+    settings.beginGroup("login");
+    settings.remove("");
+    settings.endGroup();
+
+}
+
+
+void MainWindow::on_actionClone_Repository_triggered()
+{
+    //check if user is logged in
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("loginConsent");
+    QString value = settings.value("consent").toString();
+    settings.endGroup();
+    if(value != "loggedIn"){
+        QMessageBox msg;
+        msg.setText("Please login to clone the repository [Go to settings>login]");
+        msg.exec();
+        return;
+    }
+
+	QString path, url_;
+	bool ok;
+	int ret;
+
+    path = QFileDialog::getExistingDirectory(this, tr("Open Directory for importing project"), "/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+	if (path == "") {
+        qDebug() << "User cancelled import #1";
+		return;
+	}
+
+    url_ = QInputDialog::getText(this, tr("Project url"),
+                                     tr("Enter Project url"), QLineEdit::Normal, "", &ok);
+	if (!ok) {
+        qDebug() << "User cancelled import #2";
+        return;
+	}
+	if (url_.startsWith("git@github.com")) {
+        qDebug() << "Not prepared to import using SSH. Please provide HTTPS URL";
+		QMessageBox::information(this, "Use HTTPS URL", "This URL requires SSH key. Please provide HTTPS URL", QMessageBox::Ok, QMessageBox::Ok);
+		return;
+	}
+
+	QFutureWatcher<int> watcher;
+	connect(&watcher, &QFutureWatcher<int>::finished, this, &MainWindow::stopSpinning);
+
+	QFuture<int> t1 = QtConcurrent::run(Project::clone, QString(url_), QString(path));
+	watcher.setFuture(t1);
+
+	spinner = new LoadingSpinner(this);
+    spinner->SetMessage("Importing Set...", "Importing...");
+	spinner->setModal(false);
+	spinner->exec();
+
+	if ((ret = t1.result()) != 0) {
+        QMessageBox::information(this, "Error", "Project importing Failed, Check if the url entered is correct", QMessageBox::Ok, QMessageBox::Ok);
+        qDebug()<<"Exited with return code"<<ret;
+	} else {
+        QMessageBox::information(this, "Successful", "Successfully imported the set", QMessageBox::Ok, QMessageBox::Ok);
+	}
+}
 
