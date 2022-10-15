@@ -597,7 +597,6 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
     QFile::remove("gitToken.json");
     user = git_username.toStdString();
     pass = git_token.toStdString();
-    qDebug()<<git_token<<git_username;
     return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
 
