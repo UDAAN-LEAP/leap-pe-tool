@@ -197,7 +197,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     login.setWindowTitle("Login using Google");
     login.setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint|Qt::WindowCloseButtonHint);
     login.setIcon(QMessageBox::Information);
-    login.setInformativeText("You can save your edits on the cloud. To enable this feature please login using your google account now or later in settings>login");
+    login.setInformativeText("You can save your edits on the cloud. To enable this feature please login using your google account now or later in settings > login");
     QPushButton *confirmButton = login.addButton(tr("Login"),QMessageBox::AcceptRole);
     QPushButton *cancelButton = login.addButton(tr("Cancel"),QMessageBox::ActionRole);
     QCheckBox *cb = new QCheckBox("Do not ask again");
@@ -4869,7 +4869,7 @@ void MainWindow::on_actionFetch_2_triggered()
     settings.endGroup();
     if(value != "loggedIn"){
         QMessageBox msg;
-        msg.setText("Please login to pull");
+        msg.setText("Please login to sync cloud data");
         int cnt = 2;
         //showing the message box for 2 seconds only.
         QTimer cntDown;
@@ -4905,7 +4905,7 @@ void MainWindow::on_actionFetch_2_triggered()
     QFile::remove("validate.json");
     if(repos.size() == 0 || flag == 0){
         QMessageBox msg;
-        msg.setText("You don't have access to this repository.");
+        msg.setText("You don't have access to this project on cloud.");
         msg.exec();
         return;
     }
@@ -4997,7 +4997,7 @@ void MainWindow::on_actionTurn_In_triggered()
     settings.endGroup();
     if(value != "loggedIn"){
         QMessageBox msg;
-        msg.setText("Please login to submit your changes");
+        msg.setText("Please login to save your changes on cloud");
         int cnt = 2;
         //showing the message box for 2 seconds only.
         QTimer cntDown;
@@ -5026,6 +5026,7 @@ void MainWindow::on_actionTurn_In_triggered()
     QJsonArray repos = mainObj.value("repo_list").toArray();
     QJsonArray::iterator itr; int flag = 0;
     for(itr = repos.begin(); itr != repos.end(); itr++){
+       // qDebug()<<itr->toString();
         if(itr->toString() == repo){
             flag = 1;
             break;
@@ -5034,7 +5035,7 @@ void MainWindow::on_actionTurn_In_triggered()
     QFile::remove("validate.json");
     if(repos.size() == 0 || flag == 0){
         QMessageBox msg;
-        msg.setText("You don't have access to this repository.");
+        msg.setText("You don't have access to this project on cloud.");
         msg.exec();
         return;
     }
@@ -5158,7 +5159,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
     settings.endGroup();
     if(value != "loggedIn"){
         QMessageBox msg;
-        msg.setText("Please login to submit your changes");
+        msg.setText("Please login to save your changes on cloud");
         int cnt = 2;
         //showing the message box for 2 seconds only.
         QTimer cntDown;
@@ -10342,7 +10343,7 @@ void MainWindow::on_actionClone_Repository_triggered()
     settings.endGroup();
     if(value != "loggedIn"){
         QMessageBox msg;
-        msg.setText("Please login to clone the repository [Go to settings>login]");
+        msg.setText("Please login to import the project [Go to settings>login]");
         msg.exec();
         return;
     }
