@@ -597,6 +597,7 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
     QFile::remove("gitToken.json");
     user = git_username.toStdString();
     pass = git_token.toStdString();
+    qDebug()<<git_token<<git_username;
     return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
 
@@ -1427,10 +1428,10 @@ int Project::clone(QString url_, QString path)
 	int error = git_clone(&repo, url, path.toLocal8Bit().data(), &clone_opts);
 
     if(error < 0) {
-        qDebug() << "Error cloning the repo";
+        qDebug() << "Error importing the project";
     }
 	else {
-        qDebug() << " cloned successfully";
+        qDebug() << " Imported successfully";
 	}
 	return error;
 }

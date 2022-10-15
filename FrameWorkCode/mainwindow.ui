@@ -1634,7 +1634,7 @@ background-color: #EEF0F2;
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Pull</string>
+    <string>Sync Data</string>
    </property>
   </action>
   <action name="actionPush">
@@ -1647,7 +1647,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionVerifier_Turn_In">
    <property name="text">
-    <string>Submit Verifier</string>
+    <string>Cloud Save Verifier</string>
    </property>
   </action>
   <action name="actionHighlight">
@@ -2057,7 +2057,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionClone_Repository">
    <property name="text">
-    <string>Clone Repository</string>
+    <string>Import Project</string>
    </property>
   </action>
  </widget>

@@ -4169,9 +4169,9 @@ void MainWindow::on_actionAllFontProperties_triggered()
 		format_to_be_applied.setFontItalic(Italics);
 	}
 
-	cursor.mergeCharFormat(format_to_be_applied);
-	curr_browser->textCursor().mergeCharFormat(format_to_be_applied);
-	curr_browser->setCurrentCharFormat(format_to_be_applied);
+//	cursor.mergeCharFormat(format_to_be_applied);
+//	curr_browser->textCursor().mergeCharFormat(format_to_be_applied);
+//	curr_browser->setCurrentCharFormat(format_to_be_applied);
 	curr_browser->setCurrentFont(font);
 }
 
@@ -10351,20 +10351,20 @@ void MainWindow::on_actionClone_Repository_triggered()
 	bool ok;
 	int ret;
 
-	path = QFileDialog::getExistingDirectory(this, tr("Open Directory for cloning"), "/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    path = QFileDialog::getExistingDirectory(this, tr("Open Directory for importing project"), "/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 	if (path == "") {
-		qDebug() << "User cancelled clone #1";
+        qDebug() << "User cancelled import #1";
 		return;
 	}
 
-    url_ = QInputDialog::getText(this, tr("Repository url"),
-                                     tr("Enter Repo url"), QLineEdit::Normal, "", &ok);
+    url_ = QInputDialog::getText(this, tr("Project url"),
+                                     tr("Enter Project url"), QLineEdit::Normal, "", &ok);
 	if (!ok) {
-		qDebug() << "User cancelled clone #2";
+        qDebug() << "User cancelled import #2";
         return;
 	}
 	if (url_.startsWith("git@github.com")) {
-		qDebug() << "Not prepared to take clone using SSH. Please provide HTTPS URL";
+        qDebug() << "Not prepared to import using SSH. Please provide HTTPS URL";
 		QMessageBox::information(this, "Use HTTPS URL", "This URL requires SSH key. Please provide HTTPS URL", QMessageBox::Ok, QMessageBox::Ok);
 		return;
 	}
@@ -10376,15 +10376,15 @@ void MainWindow::on_actionClone_Repository_triggered()
 	watcher.setFuture(t1);
 
 	spinner = new LoadingSpinner(this);
-	spinner->SetMessage("Cloning Set...", "Cloning...");
+    spinner->SetMessage("Importing Set...", "Importing...");
 	spinner->setModal(false);
 	spinner->exec();
 
 	if ((ret = t1.result()) != 0) {
-        QMessageBox::information(this, "Error", "Repository Cloning Failed, Check if the url entered is correct", QMessageBox::Ok, QMessageBox::Ok);
+        QMessageBox::information(this, "Error", "Project importing Failed, Check if the url entered is correct", QMessageBox::Ok, QMessageBox::Ok);
         qDebug()<<"Exited with return code"<<ret;
 	} else {
-		QMessageBox::information(this, "Successful", "Successfully cloned set", QMessageBox::Ok, QMessageBox::Ok);
+        QMessageBox::information(this, "Successful", "Successfully imported the set", QMessageBox::Ok, QMessageBox::Ok);
 	}
 }
 
