@@ -4930,11 +4930,11 @@ void MainWindow::on_actionFetch_2_triggered()
 		}
         if(mProject.get_version().toInt())
         {
-            QMessageBox::information(0, "Pull Success", "Pull Succesful");
+            QMessageBox::information(0, "Sync Success", "Synced Succesfully");
         }
         else
         {
-            QMessageBox::information(0, "Pull Error", "Pull Un-successful, Please Check Your Internet Connection");
+            QMessageBox::information(0, "Sync Error", "Cloud Sync Un-successful, Please Check Your Internet Connection");
         }
 //        if(!isVerifier)
 //        {

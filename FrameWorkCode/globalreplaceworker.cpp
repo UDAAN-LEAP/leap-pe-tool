@@ -120,12 +120,12 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                 replacementString1 = QString::fromStdString(str); //.trimmed();
                 (*mapOfReplacements)[grmIterator.value()] = grmIterator.key().first.trimmed();
                 browser->moveCursor(QTextCursor::Start);
-                sanstr = sanstr.simplified();
-                QRegExp re(sanstr);
-               // qDebug()<<browser->toPlainText();
-                while(browser->find(sanstr))
+               // sanstr = sanstr.simplified();
+                QRegularExpression re(sanstr);
+                qDebug()<<sanstr;
+                while(browser->find(re))
                 {
-//                    qDebug()<<"found in browser";
+                    qDebug()<<"found in browser";
                     QTextCursor cursor = browser->textCursor(); //get the cursor
                     QTextCharFormat fmt;
                     int pos = cursor.position(); //get the cursor position
@@ -136,8 +136,8 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                     }
                     fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
                     replacementString1 = replacementString1.simplified();
-//                    browser->textCursor().insertHtml("<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
-                    browser->textCursor().insertHtml(replacementString1);
+                    browser->textCursor().insertHtml("<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
+//                    browser->textCursor().insertHtml(replacementString1);
                     cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
 
                     pos = cursor.position();
@@ -157,7 +157,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
             {
                     QString sanstr(grmIterator.key());
                     sanstr = "(\\b)"+sanstr+"(\\b)";
-                    QRegExp re(sanstr);
+                    QRegularExpression re(sanstr);
                     QString replacementString = grmIterator.value(); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
                     std::string str = replacementString.toStdString();
                     QString::fromStdString(str).toUtf8();
@@ -175,6 +175,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                             cursor.setPosition(ancr, QTextCursor::KeepAnchor);
                         }
                         fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
+//                        browser->textCursor().insertHtml("<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
                         browser->textCursor().insertHtml("<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
                         cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
 
