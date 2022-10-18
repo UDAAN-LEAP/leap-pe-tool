@@ -81,125 +81,105 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
     //create new text browser for html files(such that replacement works on text instead of html)
     QTextBrowser * browser = new QTextBrowser();
     browser->setReadOnly(false);
-
-//    QFont font("Shobhika-Regular");
-//    font.setWeight(16);
-//    font.setPointSize(16);
-//    font.setFamily("Shobhika");
-//    browser->setFont(font);
     browser->setHtml(s1);
-    //QString pageName;
 
     QString replacementString1;
     //!Replacing words by iterating the map
-   // qDebug()<<"globalReplacementMapAfterCheck"<<globalReplacementMapAfterCheck;
     if(pairMap)
     {
-
-    QMap< QPair<QString,QString>,QString>::iterator grmIterator;
-    QMap<QString, QString>::Iterator itr;
-    for (grmIterator = globalReplacementMapAfterCheck.begin(); grmIterator != globalReplacementMapAfterCheck.end(); ++grmIterator)
+        QMap< QPair<QString,QString>,QString>::iterator grmIterator;
+        QMap<QString, QString>::Iterator itr;
+        for (grmIterator = globalReplacementMapAfterCheck.begin(); grmIterator != globalReplacementMapAfterCheck.end(); ++grmIterator)
         {
-
-                if(pageName != grmIterator.key().second)
-                {
-                   // qDebug()<<"Page name "<<pageName;
-                    continue;
+            if(pageName != grmIterator.key().second)
+            {
+                continue;
+            }
+            QString sanstr(grmIterator.value());
+            sanstr = sanstr.simplified();
+            sanstr = "(\\b)"+sanstr+"(\\b)";
+            QString replacementString = grmIterator.key().first; // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
+            for(itr = sentencesReplaced.begin(); itr != sentencesReplaced.end(); ++itr){
+                qDebug()<<sanstr<<" :: "<<itr.key();
+                if(sanstr.contains(itr.key())){
+                    sanstr = sanstr.replace(itr.key(),itr.value());
                 }
-                QString sanstr(grmIterator.value());//7,9,3,2,1,5,8,7,9,3,2,1,5,8
-                //sanstr = "(\\b)"+sanstr+"(\\b)";
-                QString replacementString = grmIterator.key().first; // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
-                for(itr = sentencesReplaced.begin(); itr != sentencesReplaced.end(); ++itr){
-                    if(sanstr.contains(itr.key())){
-                        sanstr = sanstr.replace(itr.key(),itr.value());
-                    }
-                }
+            }
+            std::string str = replacementString.toStdString();
+            QString::fromStdString(str).toUtf8();
+            replacementString1 = QString::fromStdString(str);
+            (*mapOfReplacements)[grmIterator.value()] = grmIterator.key().first.trimmed();
+            browser->moveCursor(QTextCursor::Start);
 
-                std::string str = replacementString.toStdString();
-                QString::fromStdString(str).toUtf8();
-                replacementString1 = QString::fromStdString(str); //.trimmed();
-                (*mapOfReplacements)[grmIterator.value()] = grmIterator.key().first.trimmed();
-                browser->moveCursor(QTextCursor::Start);
-               // sanstr = sanstr.simplified();
-                QRegularExpression re(sanstr);
-                qDebug()<<sanstr;
-                while(browser->find(re))
-                {
-                    qDebug()<<"found in browser";
-                    QTextCursor cursor = browser->textCursor(); //get the cursor
-                    QTextCharFormat fmt;
-                    int pos = cursor.position(); //get the cursor position
-                    int ancr = pos - replacementString.size() + 1; //anchor is now cursor position - length of old word to be replaced
-                    if (pos < ancr) {
-                        cursor.setPosition(pos, QTextCursor::MoveAnchor);
-                        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
-                    }
-                    fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
-                    replacementString1 = replacementString1.simplified();
-                    browser->textCursor().insertHtml("<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
-//                    browser->textCursor().insertHtml(replacementString1);
-                    cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
-
-                    pos = cursor.position();
-                    ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
+            QRegularExpression re(sanstr);
+            qDebug()<<sanstr;
+            while(browser->find(re))
+            {
+                qDebug()<<sanstr<<":found in browser";
+                QTextCursor cursor = browser->textCursor(); //get the cursor
+                QTextCharFormat fmt;
+                int pos = cursor.position(); //get the cursor position
+                int ancr = pos - replacementString.size() + 1; //anchor is now cursor position - length of old word to be replaced
+                if (pos < ancr) {
                     cursor.setPosition(pos, QTextCursor::MoveAnchor);
-                    cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
-
-                    tot_replaced = tot_replaced + 1;
-                    sentencesReplaced.insert(sanstr,replacementString); // to keep track of changed sentences
+                    cursor.setPosition(ancr, QTextCursor::KeepAnchor);
                 }
+                fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
+                replacementString1 = replacementString1.simplified();
+                browser->textCursor().insertHtml("<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
+                cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
+                pos = cursor.position();
+                ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
+                cursor.setPosition(pos, QTextCursor::MoveAnchor);
+                cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
+                tot_replaced = tot_replaced + 1;
+                QString sanstr_ = sanstr.remove("(\\b)");
+                sentencesReplaced.insert(sanstr_,replacementString1); // to keep track of changed sentences
+            }
         }
     }
     else
     {
         QMap<QString,QString>::iterator grmIterator;
         for (grmIterator = globalReplacementMap2.begin(); grmIterator != globalReplacementMap2.end(); ++grmIterator)
+        {
+            QString sanstr(grmIterator.key());
+            sanstr = "(\\b)"+sanstr+"(\\b)";
+            QRegularExpression re(sanstr);
+            QString replacementString = grmIterator.value(); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
+            std::string str = replacementString.toStdString();
+            QString::fromStdString(str).toUtf8();
+            replacementString1 = QString::fromStdString(str);
+            (*mapOfReplacements)[grmIterator.key()] = grmIterator.value().trimmed();
+            browser->moveCursor(QTextCursor::Start);
+            while(browser->find(re))
             {
-                    QString sanstr(grmIterator.key());
-                    sanstr = "(\\b)"+sanstr+"(\\b)";
-                    QRegularExpression re(sanstr);
-                    QString replacementString = grmIterator.value(); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
-                    std::string str = replacementString.toStdString();
-                    QString::fromStdString(str).toUtf8();
-                    replacementString1 = QString::fromStdString(str); //.trimmed();
-                    (*mapOfReplacements)[grmIterator.key()] = grmIterator.value().trimmed();
-                    browser->moveCursor(QTextCursor::Start);
-                    while(browser->find(re))
-                    {
-                        QTextCursor cursor = browser->textCursor(); //get the cursor
-                        QTextCharFormat fmt;
-                        int pos = cursor.position(); //get the cursor position
-                        int ancr = pos - replacementString.size() + 1; //anchor is now cursor position - length of old word to be replaced
-                        if (pos < ancr) {
-                            cursor.setPosition(pos, QTextCursor::MoveAnchor);
-                            cursor.setPosition(ancr, QTextCursor::KeepAnchor);
-                        }
-                        fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
-//                        browser->textCursor().insertHtml("<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
-                        browser->textCursor().insertHtml("<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
-                        cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
-
-                        pos = cursor.position();
-                        ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
-                        cursor.setPosition(pos, QTextCursor::MoveAnchor);
-                        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
-                        cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
-
-                        tot_replaced = tot_replaced + 1;
-                    }
+                QTextCursor cursor = browser->textCursor(); //get the cursor
+                QTextCharFormat fmt;
+                int pos = cursor.position(); //get the cursor position
+                int ancr = pos - replacementString.size() + 1; //anchor is now cursor position - length of old word to be replaced
+                if (pos < ancr) {
+                    cursor.setPosition(pos, QTextCursor::MoveAnchor);
+                    cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+                }
+                fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
+                browser->textCursor().insertHtml("<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
+                cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
+                pos = cursor.position();
+                ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
+                cursor.setPosition(pos, QTextCursor::MoveAnchor);
+                cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+                cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
+                tot_replaced = tot_replaced + 1;
             }
+        }
     }
-
     s1 = browser->toHtml();
-
     in << s1;
     f.flush();
     f.close();
     browser->close();
-    //call filterHtml() function to filter html files, bboxInsertion() to insert back bbox information
-//  filterHtml(file_path);
     bboxInsertion(file_path);
-
     return tot_replaced;
 }
 
