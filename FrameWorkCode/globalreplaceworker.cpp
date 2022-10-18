@@ -97,7 +97,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
             }
             QString sanstr(grmIterator.value());
             sanstr = sanstr.simplified();
-            sanstr = "(\\b)"+sanstr+"(\\b)";
+            //sanstr = "(\\b)"+sanstr+"(\\b)";
             QString replacementString = grmIterator.key().first; // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
             for(itr = sentencesReplaced.begin(); itr != sentencesReplaced.end(); ++itr){
                 qDebug()<<sanstr<<" :: "<<itr.key();
@@ -133,8 +133,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                 cursor.setPosition(pos, QTextCursor::MoveAnchor);
                 cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
                 tot_replaced = tot_replaced + 1;
-                QString sanstr_ = sanstr.remove("(\\b)");
-                sentencesReplaced.insert(sanstr_,replacementString1); // to keep track of changed sentences
+                sentencesReplaced.insert(sanstr,replacementString1); // to keep track of changed sentences
             }
         }
     }
@@ -144,7 +143,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
         for (grmIterator = globalReplacementMap2.begin(); grmIterator != globalReplacementMap2.end(); ++grmIterator)
         {
             QString sanstr(grmIterator.key());
-            sanstr = "(\\b)"+sanstr+"(\\b)";
+//            sanstr = "(\\b)"+sanstr+"(\\b)";
             QRegularExpression re(sanstr);
             QString replacementString = grmIterator.value(); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
             std::string str = replacementString.toStdString();
