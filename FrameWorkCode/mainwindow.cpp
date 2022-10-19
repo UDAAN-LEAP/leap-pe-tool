@@ -270,6 +270,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
 	// Add custom fonts
 	QFontDatabase::addApplicationFont(":/Fonts/fonts/Meera/Meera-Regular.ttf");
+	QFontDatabase::addApplicationFont(":/Fonts/fonts/Shobhika/Shobhika-Regular.otf");
+	QFontDatabase::addApplicationFont(":/Fonts/fonts/Shobhika/Shobhika-Bold.otf");
+	QFontDatabase::addApplicationFont(":/Fonts/fonts/Mandali/Mandali Regular.otf");
 
     if (!isVerifier)
     {

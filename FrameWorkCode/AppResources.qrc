@@ -58,5 +58,6 @@
         <file>fonts/Meera/Meera-Regular.ttf</file>
         <file>fonts/Shobhika/Shobhika-Bold.otf</file>
         <file>fonts/Shobhika/Shobhika-Regular.otf</file>
+        <file>fonts/Mandali/Mandali Regular.otf</file>
     </qresource>
 </RCC>
