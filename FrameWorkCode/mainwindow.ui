@@ -1040,11 +1040,11 @@ QMenu::item:selected{
      <string notr="true">font-size: 17px;</string>
     </property>
     <property name="title">
-     <string>Versions</string>
+     <string>Sync</string>
     </property>
+    <addaction name="actionTurn_In"/>
     <addaction name="actionFetch_2"/>
     <addaction name="actionVerifier_Turn_In"/>
-    <addaction name="actionTurn_In"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="styleSheet">
@@ -1596,7 +1596,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionTurn_In">
    <property name="text">
-    <string>Cloud Save</string>
+    <string>Save to Cloud</string>
    </property>
   </action>
   <action name="actionFetch">
@@ -1634,7 +1634,7 @@ background-color: #EEF0F2;
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Sync Data</string>
+    <string>Sync from Cloud</string>
    </property>
   </action>
   <action name="actionPush">
