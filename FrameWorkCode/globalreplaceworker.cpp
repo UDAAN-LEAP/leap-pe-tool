@@ -60,7 +60,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
         saveBboxInfo(file_path);
     }
     // if any file other than html is passed, just return back
-    if(!file_path.endsWith(".html") || file_path.endsWith(gCurrentPageName)){
+    if(!file_path.endsWith(".html")){ //|| file_path.endsWith(gCurrentPageName)
         return 0;
     }
     QMap <QString, QString> sentencesReplaced;
@@ -95,6 +95,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
             {
                 continue;
             }
+            qDebug()<<"Going to replace in ::"<<pageName;
             QString sanstr(grmIterator.value());
             sanstr = sanstr.simplified();
             //sanstr = "(\\b)"+sanstr+"(\\b)";
@@ -129,10 +130,10 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                     replaced_sen = replaced_sen.remove(org_sen[i]);
             }
             replaced_sen = replaced_sen.simplified();
-           // qDebug() <<"replaced words :"<<replaced_sen;
+            qDebug() <<"original :"<<sanstr;
             while(browser->find(re))
             {
-               // qDebug()<<sanstr<<":found in browser";
+                qDebug()<<":found in browser";
                 QTextCursor cursor = browser->textCursor(); //get the cursor
                 QTextCharFormat fmt;
                 int pos = cursor.position(); //get the cursor position
