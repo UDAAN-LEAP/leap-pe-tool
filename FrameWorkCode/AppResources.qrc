@@ -59,5 +59,7 @@
         <file>fonts/Shobhika/Shobhika-Bold.otf</file>
         <file>fonts/Shobhika/Shobhika-Regular.otf</file>
         <file>fonts/Mandali/Mandali Regular.otf</file>
+        <file>fonts/Latha/latha.ttf</file>
+        <file>fonts/Nirmala/Nirmala Regular.ttf</file>
     </qresource>
 </RCC>

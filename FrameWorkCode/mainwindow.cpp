@@ -274,6 +274,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 	QFontDatabase::addApplicationFont(":/Fonts/fonts/Shobhika/Shobhika-Regular.otf");
 	QFontDatabase::addApplicationFont(":/Fonts/fonts/Shobhika/Shobhika-Bold.otf");
 	QFontDatabase::addApplicationFont(":/Fonts/fonts/Mandali/Mandali Regular.otf");
+	QFontDatabase::addApplicationFont(":/Fonts/fonts/Latha/latha.ttf");
+	QFontDatabase::addApplicationFont(":/Fonts/fonts/Nirmala/Nirmala Regular.ttf");
 
     if (!isVerifier)
     {
