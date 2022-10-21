@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QMap>
 
+class QTextBrowser;
+
 class GlobalReplaceWorker : public QObject
 {
     Q_OBJECT
@@ -44,7 +46,7 @@ private:
     QString editedFilesLogPath;
     int numOfChangedWords, check, *r1, *r2, *x1, *files;
 
-    int writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap);
+    int writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap, QTextBrowser* browser);
     bool isStringInFile(QString file_path, QString searchString);
 
     //int pairMap;

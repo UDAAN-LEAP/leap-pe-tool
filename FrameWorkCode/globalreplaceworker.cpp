@@ -4,12 +4,13 @@
 #include <QTextStream>
 #include <QDateTime>
 #include <QDebug>
-#include <QTextBrowser>
+//#include <QTextBrowser>
 #include <sstream>
 #include <string>
 #include <mainwindow.h>
 #include <QFile>
 #include <editdistance.h>
+#include <QTextBrowser>
 //using namespace std;
 
 GlobalReplaceWorker::GlobalReplaceWorker(QObject *parent,
@@ -53,7 +54,7 @@ GlobalReplaceWorker::GlobalReplaceWorker(QObject *parent,
     editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
 }
 
-int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QString, QString> globalReplacementMap)
+int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QString, QString> globalReplacementMap, QTextBrowser *browser)
 {
     //save bbox information of files
     if(file_path.endsWith(".html")){
@@ -79,8 +80,9 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
     int replaced = 0, tot_replaced = 0;
 
     //create new text browser for html files(such that replacement works on text instead of html)
-    QTextBrowser * browser = new QTextBrowser();
-    browser->setReadOnly(false);
+//    QTextBrowser * browser = new QTextBrowser();
+	browser->clear();
+//	browser->setReadOnly(false);
     browser->setHtml(s1);
 
     QString replacementString1;
@@ -197,13 +199,15 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
     in << s1;
     f.flush();
     f.close();
-    browser->close();
+//    browser->close();
     bboxInsertion(file_path);
     return tot_replaced;
 }
 
 void GlobalReplaceWorker::replaceWordsInFiles()
 {
+    QTextBrowser *browser = new QTextBrowser();
+    browser->setReadOnly(false);
     QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
     QDir currDir(currentFileDirectory);
     QString suffix;
@@ -233,13 +237,13 @@ void GlobalReplaceWorker::replaceWordsInFiles()
                 {
                     (*filesChangedUsingGlobalReplace).append(it_file_path);
                     if(suff == "html") {
-                        *r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                        *r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, browser);
                         *r2 = *r2 + *r1;
                         if(*r1 > 0)
                             (*files)++;
                     }
                     else if(suff != "dict"){
-                        *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                        *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, browser);
                     }
                 }
                 count++;
@@ -257,13 +261,13 @@ void GlobalReplaceWorker::replaceWordsInFiles()
                 QString suff = dirIterator.fileInfo().completeSuffix();
                 (*filesChangedUsingGlobalReplace).append(it_file_path);
                 if(suff == "html") {
-                    *r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                    *r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, browser);
                     *r2 = *r2 + *r1;
                     if(*r1 > 0)
                         (*files)++;
                 }
                 else if(suff != "dict"){
-                    *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                    *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, browser);
                 }
                 count++;
                 int tempPerc = (count * 100) / numberOfFiles;
@@ -286,13 +290,13 @@ void GlobalReplaceWorker::replaceWordsInFiles()
             {
                 (*filesChangedUsingGlobalReplace).append(it_file_path);
                 if(suff == "html") {
-                    *r1 = writeGlobalCPairsToFiles(it_file_path, replaceInUneditedPages_Map);
+                    *r1 = writeGlobalCPairsToFiles(it_file_path, replaceInUneditedPages_Map, browser);
                     *r2 = *r2 + *r1;
                     if(*r1 > 0)
                         (*files)++;
                 }
                 else if(suff != "dict"){
-                    *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                    *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, browser);
                 }
             }
             count++;
@@ -315,13 +319,13 @@ void GlobalReplaceWorker::replaceWordsInFiles()
             QString suff = dirIterator_2.fileInfo().completeSuffix();
             (*filesChangedUsingGlobalReplace).append(it_file_path);
             if(suff == "html") {
-                *r1 = writeGlobalCPairsToFiles(it_file_path, replaceInAllPages_Map);
+                *r1 = writeGlobalCPairsToFiles(it_file_path, replaceInAllPages_Map, browser);
                 *r2 = *r2 + *r1;
                 if(*r1 > 0)
                     (*files)++;
             }
             else if(suff != "dict"){
-                *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap);
+                *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, browser);
             }
 
             count++;
@@ -332,6 +336,8 @@ void GlobalReplaceWorker::replaceWordsInFiles()
             }
         }
     }
+
+	browser->close();
 
     emit changeProgressBarValue(100);
     emit finishedReplacingWords();
