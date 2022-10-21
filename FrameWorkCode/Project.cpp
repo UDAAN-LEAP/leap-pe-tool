@@ -28,7 +28,7 @@
 #include <QJsonObject>
 
 QString user_id;
-std::string user, pass;
+std::string user, pass, email;
 
 bool takeCredentialsFromUser();
 
@@ -499,7 +499,7 @@ void create_initial_commit(git_repository * repo) {
 
     //check_lg2(git_signature_default(&sig, repo),"Unable to create a commit signature.","Perhaps 'user.name' and 'user.email' are not set");
 
-    lg2.check_lg2(git_signature_default(&sig, repo),"Could not create commit signature","");
+    lg2.check_lg2(git_signature_now(&sig, user.c_str(), email.c_str()),"Could not create commit signature","");
     /* Now let's create an empty tree for this commit */
 
 
@@ -678,7 +678,7 @@ void Project::set_verifier(){
  */
 bool Project::push(QString branchName) {
 //    lg2_add();
-    git_libgit2_init();
+//    git_libgit2_init();
     login_tries = 1;
     git_remote * remote = NULL;
 
@@ -750,7 +750,7 @@ bool Project::push(QString branchName) {
          */
         error = (git_repository_head(&head_ref, repo))
              || (git_repository_index(&index, repo))
-             || (git_signature_default(&signature, repo))
+             || (git_signature_now(&signature, mName.c_str(), mEmail.c_str()))
              || (git_index_write_tree(&tree_oid, index))
              || (git_tree_lookup(&tree, repo, &tree_oid));
 
@@ -995,9 +995,9 @@ bool Project::commit(std::string message)
     //check_lg2(git_signature_default(&sig, repo),"Unable to create a commit signature.","Perhaps 'user.name' and 'user.email' are not set");
     int klass = lg2.check_lg2(git_signature_now(&sig, mName.c_str(), mEmail.c_str()),"Could not create signature","");
     if (klass > 0) {
-        if(sig)
-            git_signature_free(sig);
-
+//        if(sig)
+//            git_signature_free(sig);
+		return 0;
     }
 
     klass = lg2.check_lg2(git_revparse_ext(&parent, &ref, repo, "HEAD"),"Head not found","");
@@ -1036,7 +1036,7 @@ bool Project::commit(std::string message)
         return 0;
     }
 
-    klass = lg2.check_lg2(git_signature_default(&sig, repo), "Error creating signature", "");
+    klass = lg2.check_lg2(git_signature_now(&sig, mName.c_str(), mEmail.c_str()), "Error creating signature", "");
     if (klass > 0) {
         return 0;
     }
@@ -1131,42 +1131,46 @@ bool Project::add_config() {
 
 bool Project::add_git_config()
 {
-    bool ret = false;
-    QSettings appSettings("IIT-B", "OpenOCRCorrect");
-    appSettings.beginGroup("GitConfig");
-    QString username = appSettings.value("user", "").toString();
-    QString email = appSettings.value("email", "").toString();
-    if (username == "" || email == "") {
-        // Take input from user and set the git config
-//        bool ok = false;
-        QString quser = "anujadumada8"; //QInputDialog::getText(nullptr, QWidget::tr("Enter username:"), QWidget::tr("Username:"), QLineEdit::Normal, "", &ok);
-//        if (!ok) {
-//            ret = ok;
-//            goto exit;
-//        }
-        QString qemail = "anujadumada08@gmail.com";//QInputDialog::getText(nullptr, QWidget::tr("Enter email:"), QWidget::tr("Email:"), QLineEdit::Normal, "", &ok);
-//        if (!ok) {
-//            ret = ok;
-//            goto exit;
-//        }
+    bool ret = true;
+	mName = "anujadumada8";
+	mEmail = "anujadumada08@gmail.com";
+	user = "anujadumada8";
+	email = "anujadumada08@gmail.com";
+//    QSettings appSettings("IIT-B", "OpenOCRCorrect");
+//    appSettings.beginGroup("GitConfig");
+//    QString username = appSettings.value("user", "").toString();
+//    QString email = appSettings.value("email", "").toString();
+//    if (username == "" || email == "") {
+//        // Take input from user and set the git config
+////        bool ok = false;
+//        QString quser = "anujadumada8"; //QInputDialog::getText(nullptr, QWidget::tr("Enter username:"), QWidget::tr("Username:"), QLineEdit::Normal, "", &ok);
+////        if (!ok) {
+////            ret = ok;
+////            goto exit;
+////        }
+//        QString qemail = "anujadumada08@gmail.com";//QInputDialog::getText(nullptr, QWidget::tr("Enter email:"), QWidget::tr("Email:"), QLineEdit::Normal, "", &ok);
+////        if (!ok) {
+////            ret = ok;
+////            goto exit;
+////        }
 
-//        if (quser.trimmed() == "" || qemail.trimmed() == "" || !qemail.contains("@")) {
-//            ret = false;
-//            goto exit;
-//        }
+////        if (quser.trimmed() == "" || qemail.trimmed() == "" || !qemail.contains("@")) {
+////            ret = false;
+////            goto exit;
+////        }
 
-        appSettings.setValue("user", quser);
-        appSettings.setValue("email", qemail);
+//        appSettings.setValue("user", quser);
+//        appSettings.setValue("email", qemail);
 
-        mName = quser.toStdString();
-        mEmail = qemail.toStdString();
-    } else {
-        mName = username.toStdString();
-        mEmail = email.toStdString();
-    }
+//        mName = quser.toStdString();
+//        mEmail = qemail.toStdString();
+//    } else {
+//        mName = username.toStdString();
+//        mEmail = email.toStdString();
+//    }
 
-exit:
-    appSettings.endGroup();
+//exit:
+//    appSettings.endGroup();
 
     return ret;
 }
