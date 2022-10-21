@@ -80,6 +80,7 @@
 #include "globalreplaceworker.h"
 #include "pdfhandling.h"
 #include "customtextbrowser.h"
+#include "pdfrangedialog.h"
 #include <QtNetworkAuth>
 #include <QOAuth2AuthorizationCodeFlow>
 #include <QCryptographicHash>
@@ -8507,8 +8508,7 @@ void MainWindow:: highlight(CustomTextBrowser *b , QString input)
 
 void MainWindow::on_actionas_PDF_triggered()
 {
-
-    //! We set the dir path to CorrectorOutput or Verifier output depending on whether it is opened
+	//! We set the dir path to CorrectorOutput or Verifier output depending on whether it is opened
     //! in Corrector or Verifier Mode.
     QString currentDirAbsolutePath;
     if(mRole=="Verifier")
@@ -8535,18 +8535,33 @@ void MainWindow::on_actionas_PDF_triggered()
     QString searchString = "background-color:#"; // string to be searched
     int l = searchString.length();
     QString whiteColor = "ffffff";
-    bool ok; int count_ = 0;
-        int i = QInputDialog::getInt(this, tr("Print pages"),
-                                     tr("Number of pages(cancel if you want whole set):"), 20, 0, 100, 1, &ok);
-        if (ok)
-            count_ = i;
-   int itr = 0;
+//	bool ok; int count_ = 0;
+//	int i = QInputDialog::getInt(this, tr("Print pages"),
+//								 tr("Number of pages(cancel if you want whole set):"), 20, 0, 100, 1, &ok);
+//	if (ok) {
+//		count_ = i;
+//	}
+	int itr = 0;
+
+	PdfRangeDialog *pdfRangeDialog = new PdfRangeDialog(this, count, 100);
+	pdfRangeDialog->exec();
+	int startPage = 0;
+	int endPage = 0;
+	if (pdfRangeDialog->isOkClicked()) {
+		startPage = pdfRangeDialog->getStartPage() - 1;
+		endPage = pdfRangeDialog->getEndPage();
+	} else {
+		startPage = 0;
+		endPage = 100;
+	}
+	qDebug() << startPage << " : " << endPage;
+
 
     //! Loop through all files
-    for(auto a : dir.entryList())
+    foreach(auto a, dir.entryList())
     {
-        QString it_file_path = a;
-        QString x=currentDirAbsolutePath+a;
+//        QString it_file_path = a;
+        QString x = currentDirAbsolutePath + a;
 
         startFrom = 0; // The position from which searchString will be scanned
         //! if condition makes sure we extract only html files for PDF Processing
@@ -8558,6 +8573,11 @@ void MainWindow::on_actionas_PDF_triggered()
             //! condition to check if file is html
             if(html_files[1]=="html")
             {
+				if (itr < startPage) {
+					itr++;
+					continue;
+				}
+
                 QFile file(x);
                 if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
                 QTextStream stream(&file);
@@ -8586,6 +8606,11 @@ void MainWindow::on_actionas_PDF_triggered()
                 }
                 file.close();
                 html_contents.append(mainHtml);
+				itr++;
+
+				if (itr == endPage) {
+					break;
+				}
 
             }
             //! if file is not html
@@ -8593,9 +8618,9 @@ void MainWindow::on_actionas_PDF_triggered()
                 continue;
             }
         }
-        itr ++;
-        if(itr == count_)
-            break;
+//        itr ++;
+//        if(itr == count_)
+//            break;
     }
 
 //    document->setHtml(html_contents);

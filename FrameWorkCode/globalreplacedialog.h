@@ -19,7 +19,7 @@ class GlobalReplaceDialog : public QDialog
 public:
     explicit GlobalReplaceDialog(QVector <QString> replacedWords,QWidget *parent = nullptr);
     QVector<int> getStatesOfCheckboxes();
-    QMap<QPair<QString,QString>,QString> *changesCheckedInPreviewMap;;
+    QMap<QPair<QString,QString>,QString> *changesCheckedInPreviewMap;
     bool clicked_applyButton();
     ~GlobalReplaceDialog();
 signals:
