@@ -10385,7 +10385,7 @@ void MainWindow::on_actionClone_Repository_triggered()
 	spinner->exec();
 
 	if ((ret = t1.result()) != 0) {
-        QMessageBox::information(this, "Error", "Project importing Failed, Check if the url entered is correct", QMessageBox::Ok, QMessageBox::Ok);
+        QMessageBox::information(this, "Error", "The zip folder is already locally downloaded or the project url in incorrect", QMessageBox::Ok, QMessageBox::Ok);
         qDebug()<<"Exited with return code"<<ret;
 	} else {
         QMessageBox::information(this, "Successful", "Successfully imported the set", QMessageBox::Ok, QMessageBox::Ok);
