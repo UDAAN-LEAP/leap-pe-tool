@@ -8554,7 +8554,7 @@ void MainWindow::on_actionas_PDF_triggered()
 		endPage = pdfRangeDialog->getEndPage();
 	} else {
 		startPage = 0;
-		endPage = 100;
+		endPage = count;
 	}
 	qDebug() << startPage << " : " << endPage;
 

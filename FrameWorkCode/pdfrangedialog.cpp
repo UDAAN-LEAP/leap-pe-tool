@@ -43,6 +43,8 @@ int PdfRangeDialog::getEndPage() const
 void PdfRangeDialog::on_button_Cancel_clicked()
 {
 	okClicked = false;
+
+	this->close();
 }
 
 void PdfRangeDialog::on_button_Ok_clicked()
