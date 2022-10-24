@@ -5987,16 +5987,41 @@ void MainWindow::on_pushButton_2_clicked()
     QString sel = selected.toHtml();
 	QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
 	//    QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
-
+if(!sel.contains("<img")){
+    QMessageBox::critical(this,"Error","Image Not selected");
+    return;
+}
 	QRegularExpressionMatchIterator itr;
 	itr = rex.globalMatch(sel);
-	int height=0;
-	int width=0;
+    int height=0;
+    int width=0;
 
-	//!setting width
-	int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
-	//!setting height
-	int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
+//	//!setting width
+//	int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
+//	//!setting height
+//	int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
+
+    QDialog dialog(this);
+    QFormLayout form(&dialog);
+
+    form.addRow(new QLabel("Insert Height and Width",this));
+
+    QLineEdit *height_textLine= new QLineEdit(&dialog);
+     QLineEdit *width_textLine= new QLineEdit(&dialog);
+
+     form.addRow("Height",height_textLine);
+       form.addRow("Width",width_textLine);
+
+       QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
+       form.addRow(&buttonbox);
+
+       QObject::connect(&buttonbox,SIGNAL(accepted()),&dialog,SLOT(accept()));
+       QObject::connect(&buttonbox,SIGNAL(rejected()),&dialog,SLOT(reject()));
+
+       if(dialog.exec() ==QDialog::Accepted){
+           height=height_textLine->text().toInt();
+           width=width_textLine->text().toInt();
+       }
 
 	while(itr.hasNext())
 	{
@@ -6024,9 +6049,9 @@ void MainWindow::on_pushButton_2_clicked()
 		str = str.substr(start,end-start+1);
 		QString imgname = QString::fromStdString(str);
 
-		if(n>0 && n1>0)
+        if(height>0 && width>0)
 		{
-			QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(n).arg(n1);
+            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(height).arg(width);
 			cursor.insertHtml(html);      //insert new image with modified attributes height and width
 		}
 	}
