@@ -5625,7 +5625,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     {
           event->accept();
 
-         if(QToolTip::isVisible())
+         if(QToolTip::text() != "")
          {
 
              QString qs =  QToolTip :: text();
