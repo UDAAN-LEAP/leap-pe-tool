@@ -1220,14 +1220,14 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     isRecentProjclick = false;
 
     // Testing of project.xml
-    VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
-    int result = verifySetObj.testProjectXML();
+//    VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
+//    int result = verifySetObj.testProjectXML();
 
-    if (result != 0) {
-        mProject.setProjectOpen(false);
-        QMessageBox::warning(0, "Project XML file Error", "Project XML File is corrupted \n\nError "+ QString::fromStdString(std::to_string(verifySetObj.getErrorCode()))+": " + verifySetObj.getErrorString()+"\n\nPlease Report this to your administrator");
-        return;
-    }
+//    if (result != 0) {
+//        mProject.setProjectOpen(false);
+//        QMessageBox::warning(0, "Project XML file Error", "Project XML File is corrupted \n\nError "+ QString::fromStdString(std::to_string(verifySetObj.getErrorCode()))+": " + verifySetObj.getErrorString()+"\n\nPlease Report this to your administrator");
+//        return;
+//    }
 
 	currentZoomLevel = 100;
 
@@ -5627,7 +5627,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     {
           event->accept();
 
-         if(QToolTip::isVisible())
+         if(QToolTip::text() != "")
          {
 
              QString qs =  QToolTip :: text();
@@ -5989,16 +5989,35 @@ void MainWindow::on_pushButton_2_clicked()
     QString sel = selected.toHtml();
 	QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
 	//    QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
+    QRegularExpressionMatchIterator itr;
+    itr = rex.globalMatch(sel);
+    int height=0;
+    int width=0;
+    if(!sel.contains("<img")){
+        QMessageBox::critical(this,"Error","Image Not selected");
+        return;
+    }
+        QDialog dialog(this);
+        QFormLayout form(&dialog);
 
-	QRegularExpressionMatchIterator itr;
-	itr = rex.globalMatch(sel);
-	int height=0;
-	int width=0;
+        form.addRow(new QLabel("Insert Height and Width",this));
 
-	//!setting width
-	int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
-	//!setting height
-	int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
+        QLineEdit *height_textLine= new QLineEdit(&dialog);
+         QLineEdit *width_textLine= new QLineEdit(&dialog);
+
+         form.addRow("Height",height_textLine);
+           form.addRow("Width",width_textLine);
+
+           QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
+           form.addRow(&buttonbox);
+
+           QObject::connect(&buttonbox,SIGNAL(accepted()),&dialog,SLOT(accept()));
+           QObject::connect(&buttonbox,SIGNAL(rejected()),&dialog,SLOT(reject()));
+
+           if(dialog.exec() ==QDialog::Accepted){
+               height=height_textLine->text().toInt();
+               width=width_textLine->text().toInt();
+           }
 
 	while(itr.hasNext())
 	{
@@ -6026,9 +6045,9 @@ void MainWindow::on_pushButton_2_clicked()
 		str = str.substr(start,end-start+1);
 		QString imgname = QString::fromStdString(str);
 
-		if(n>0 && n1>0)
+        if(height>0 && width>0)
 		{
-			QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(n).arg(n1);
+            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(height).arg(width);
 			cursor.insertHtml(html);      //insert new image with modified attributes height and width
 		}
 	}
@@ -10425,4 +10444,157 @@ void MainWindow::on_actionClone_Repository_triggered()
     dashboard d(this, importHtml, repos.size(), repoMap);
     d.exec();
 }
+
+
+
+/*
+Close Project closes the current project and side by side disables all the
+ buttons which are required when project is opened
+  */
+
+void MainWindow::on_actionClose_project_triggered()
+{
+
+
+    if(!mProject.isProjectOpen()){
+         QMessageBox::critical(this,"Error","Project Not Opened");
+         return;                                                                  //checking if the project is already
+                                                                              // empty or not
+               }
+
+
+//    QString currentFilePath = gDirTwoLevelUp + "/" + gCurrentDirName+ "/" + gCurrentPageName;
+//    QFile mFile(currentFilePath);
+//    mFile.flush();
+//    mFile.close();
+//bool g=mProject.isProjectOpen();
+ mProject.setProjectOpen(false);
+
+
+
+
+ ui->actionLoadDict->setVisible(false);
+ ui->actionLoadOCRWords->setVisible(false);
+ ui->actionLoadDomain->setVisible(false);
+ ui->actionLoadSubPS->setVisible(false);
+ ui->actionLoadConfusions->setVisible(false);
+ ui->actionLoadGDocPage->setVisible(false);
+ ui->menuSelectLanguage->setTitle("");
+ ui->menuCreateReports->setTitle("");
+
+
+ //disableing the buttons after project is closed
+ // File Menu
+ ui->actionSave->setEnabled(false);
+ ui->actionSave_As->setEnabled(false);
+ ui->actionSpell_Check->setEnabled(false);
+ ui->actionLoad_Prev_Page->setEnabled(false);
+ ui->actionLoad_Next_Page->setEnabled(false);
+ ui->actionToDevanagari->setEnabled(false);
+ ui->actionToSlp1->setEnabled(false);
+ ui->actionLoadGDocPage->setEnabled(false);
+ ui->actionLoadData->setEnabled(false);
+ ui->actionLoadDict->setEnabled(false);
+ ui->actionLoadOCRWords->setEnabled(false);
+ ui->actionLoadDomain->setEnabled(false);
+ ui->actionLoadSubPS->setEnabled(false);
+ ui->actionLoadConfusions->setEnabled(false);
+ ui->actionSugg->setEnabled(false);
+
+ // Edit Menu
+ ui->actionUndo->setEnabled(false);
+ ui->actionRedo->setEnabled(false);
+ ui->actionFind_and_Replace->setEnabled(false);
+ ui->actionUndo_Global_Replace->setEnabled(false);
+ ui->actionUpload->setEnabled(false);
+
+ // Language Menu
+ ui->actionSanskrit_2->setEnabled(false);
+ ui->actionEnglish->setEnabled(false);
+ ui->actionHindi->setEnabled(false);
+
+ // Reports Menu
+ ui->actionAccuracyLog->setEnabled(false);
+ ui->actionViewAverageAccuracies->setEnabled(false);
+
+ // View Menu
+ ui->actionAllFontProperties->setEnabled(false);
+ ui->actionBold->setEnabled(false);
+ ui->actionItalic->setEnabled(false);
+ ui->actionLeftAlign->setEnabled(false);
+ ui->actionRightAlign->setEnabled(false);
+ ui->actionCentreAlign->setEnabled(false);
+ ui->actionJusitfiedAlign->setEnabled(false);
+ ui->actionSuperscript->setEnabled(false);
+ ui->actionSubscript->setEnabled(false);
+ ui->actionInsert_Horizontal_Line->setEnabled(false);
+ ui->actionFontBlack->setEnabled(false);
+ ui->actionInsert_Tab_Space->setEnabled(false);
+ ui->actionPDF_Preview->setEnabled(false);
+ if (isVerifier)
+     ui->actionHighlight->setEnabled(false);
+
+ // Table Menu inside View Menu
+ ui->actionInsert_Table_2->setEnabled(false);
+ ui->actionInsert_Columnleft->setEnabled(false);
+ ui->actionInsert_Columnright->setEnabled(false);
+ ui->actionInsert_Rowabove->setEnabled(false);
+ ui->actionInsert_Rowbelow->setEnabled(false);
+ ui->actionRemove_Column->setEnabled(false);
+ ui->actionRemove_Row->setEnabled(false);
+
+ // Versions Menu
+ ui->actionFetch_2->setEnabled(false);
+ ui->actionTurn_In->setEnabled(false);
+ ui->actionVerifier_Turn_In->setEnabled(false);
+
+ // Download Menu
+ ui->actionas_PDF->setEnabled(false);
+
+ ui->actionSymbols->setEnabled(false);
+ ui->actionZoom_In->setEnabled(false);
+ ui->actionZoom_Out->setEnabled(false);
+ //Reset loadData flag
+ LoadDataFlag = 1;
+ //reset data
+ mFilename.clear();
+ mFilename1.clear();
+// mFile.clear();
+ LSTM.clear();
+ CPairs.clear();
+ Dict.clear();
+ GBook.clear();
+ IBook.clear();
+ PWords.clear();
+ ConfPmap.clear();
+ vGBook.clear();
+ vIBook.clear();
+ TDict.clear();
+ TGBook.clear();
+ TGBookP.clear();
+ TPWords.clear();
+ TPWordsP.clear();
+ synonym.clear();
+ synrows.clear();
+
+ if(ui->lineEdit_3->text()==""){
+     qDebug()<<"Checking if empty or not";
+ }                                                        //if the curr_browser and graphicsview
+                                                          //are empty then we dont clear the curr_browser else we do
+ else{
+     curr_browser->clear();
+ }
+
+            ui->treeView->setModel(nullptr);  //clearing tree view
+   ui->graphicsView->setScene(nullptr);   //clearing graphicsview
+               ui->lineEdit_2->clear();
+                 ui->lineEdit_3->clear();                //disabling all other buttons which are enabled when project is open
+                 ui->pushButton->setDisabled(true);
+                  ui->pushButton_2->setDisabled(true);
+                 ui->viewComments->setDisabled(true);
+                 ui->compareCorrectorOutput->setDisabled(true);
+                ui->groupBox->setDisabled(true);
+                QMessageBox::information(this,"Success","Project Closed Successfully");
+}
+
 
