@@ -2057,7 +2057,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionClone_Repository">
    <property name="text">
-    <string>Import Project</string>
+    <string>Dashboard</string>
    </property>
   </action>
  </widget>

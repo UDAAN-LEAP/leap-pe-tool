@@ -2,6 +2,8 @@
   \class mainwWindow.cpp
  */
 #include "mainwindow.h"
+#include "dashboard.h"
+#include "ui_dashboard.h"
 #include "ui_globalreplacedialog.h"
 #include "ui_mainwindow.h"
 #include "averageaccuracies.h"
@@ -83,7 +85,7 @@
 #include "pdfrangedialog.h"
 #include <QtNetworkAuth>
 #include <QOAuth2AuthorizationCodeFlow>
-#include <QCryptographicHash>
+#include <dashboard.h>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -6875,7 +6877,7 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
 {
   QStandardItemModel *model = new QStandardItemModel;
   int lineindex = 0;
-    //qDebug()<<"previewMap:"<<previewMap;
+    //qDebug()<<"previewMap:"<<previewMap;sadam
     if(previewMap.size() == 0)
   {
        QMessageBox::warning(this, "Error", "No words are selected for replacement");
@@ -10366,56 +10368,61 @@ void MainWindow::on_actionLogout_triggered()
 
 void MainWindow::on_actionClone_Repository_triggered()
 {
-    //check if user is logged in
+    /*
+     * \description
+     * Checks whether user is logged in or not
+    */
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("loginConsent");
-    QString value = settings.value("consent").toString();
+    QString value1 = settings.value("consent").toString();
     settings.endGroup();
-    if(value != "loggedIn"){
+    if(value1 != "loggedIn"){
         QMessageBox msg;
-        msg.setText("Please login to import the project [Go to settings>login]");
+        msg.setText("Please login to go to your dashboard");
+        int cnt = 2;
+        //showing the message box for 2 seconds only.
+        QTimer cntDown;
+        QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
+             if(--cnt < 0){
+                 cntDown.stop();
+                 msg.close();
+             }
+            });
+        cntDown.start(1000);
         msg.exec();
         return;
     }
+    //
+    //retrieve details from database and check if user has access to push into this repo
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    settings.endGroup();
+    QProcess process;
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"\" -o validate.json");
 
-	QString path, url_;
-	bool ok;
-	int ret;
-
-    path = QFileDialog::getExistingDirectory(this, tr("Open Directory for importing project"), "/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-	if (path == "") {
-        qDebug() << "User cancelled import #1";
-		return;
-	}
-
-    url_ = QInputDialog::getText(this, tr("Project url"),
-                                     tr("Enter Project url"), QLineEdit::Normal, "", &ok);
-	if (!ok) {
-        qDebug() << "User cancelled import #2";
+    QJsonObject mainObj = readJsonFile("validate.json");
+    QJsonArray repos = mainObj.value("repo_list").toArray();
+    QFile::remove("validate.json");
+    if(repos.size() == 0){
+        QMessageBox msg;
+        msg.setText("There is nothing to show on dashboard");
+        msg.exec();
         return;
-	}
-	if (url_.startsWith("git@github.com")) {
-        qDebug() << "Not prepared to import using SSH. Please provide HTTPS URL";
-		QMessageBox::information(this, "Use HTTPS URL", "This URL requires SSH key. Please provide HTTPS URL", QMessageBox::Ok, QMessageBox::Ok);
-		return;
-	}
-
-	QFutureWatcher<int> watcher;
-	connect(&watcher, &QFutureWatcher<int>::finished, this, &MainWindow::stopSpinning);
-
-	QFuture<int> t1 = QtConcurrent::run(Project::clone, QString(url_), QString(path));
-	watcher.setFuture(t1);
-
-	spinner = new LoadingSpinner(this);
-    spinner->SetMessage("Importing Set...", "Importing...");
-	spinner->setModal(false);
-	spinner->exec();
-
-	if ((ret = t1.result()) != 0) {
-        QMessageBox::information(this, "Error", "The zip folder is already downloaded or the project url in incorrect", QMessageBox::Ok, QMessageBox::Ok);
-        qDebug()<<"Exited with return code"<<ret;
-	} else {
-        QMessageBox::information(this, "Successful", "Successfully imported the set", QMessageBox::Ok, QMessageBox::Ok);
-	}
+    }
+    QJsonArray::iterator itr; int flag = 0;
+    int lineindex = 0;
+    QString importHtml="<table><tr><th>#Project ID</th><th>#Project name</th></tr>";
+    QStandardItemModel *model = new QStandardItemModel;
+    QMap<int, QString> repoMap;
+    for(itr = repos.begin(); itr != repos.end(); itr++){
+        lineindex++;
+        repoMap[lineindex] = itr->toString();
+        QString num = QString::number(lineindex);
+        importHtml += QString::fromStdString("<tr><td>")+num+"</td><td>"+itr->toString()+"</td></tr>";
+    }
+    importHtml += "</table>";
+    dashboard d(this, importHtml, repos.size(), repoMap);
+    d.exec();
 }
 
