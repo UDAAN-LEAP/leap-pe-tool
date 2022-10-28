@@ -1218,14 +1218,14 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     isRecentProjclick = false;
 
     // Testing of project.xml
-    VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
-    int result = verifySetObj.testProjectXML();
+//    VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
+//    int result = verifySetObj.testProjectXML();
 
-    if (result != 0) {
-        mProject.setProjectOpen(false);
-        QMessageBox::warning(0, "Project XML file Error", "Project XML File is corrupted \n\nError "+ QString::fromStdString(std::to_string(verifySetObj.getErrorCode()))+": " + verifySetObj.getErrorString()+"\n\nPlease Report this to your administrator");
-        return;
-    }
+//    if (result != 0) {
+//        mProject.setProjectOpen(false);
+//        QMessageBox::warning(0, "Project XML file Error", "Project XML File is corrupted \n\nError "+ QString::fromStdString(std::to_string(verifySetObj.getErrorCode()))+": " + verifySetObj.getErrorString()+"\n\nPlease Report this to your administrator");
+//        return;
+//    }
 
 	currentZoomLevel = 100;
 
@@ -10437,4 +10437,157 @@ void MainWindow::on_actionClone_Repository_triggered()
         QMessageBox::information(this, "Successful", "Successfully imported the set", QMessageBox::Ok, QMessageBox::Ok);
 	}
 }
+
+
+
+/*
+Close Project closes the current project and side by side disables all the
+ buttons which are required when project is opened
+  */
+
+void MainWindow::on_actionClose_project_triggered()
+{
+
+
+    if(!mProject.isProjectOpen()){
+         QMessageBox::critical(this,"Error","Project Not Opened");
+         return;                                                                  //checking if the project is already
+                                                                              // empty or not
+               }
+
+
+//    QString currentFilePath = gDirTwoLevelUp + "/" + gCurrentDirName+ "/" + gCurrentPageName;
+//    QFile mFile(currentFilePath);
+//    mFile.flush();
+//    mFile.close();
+//bool g=mProject.isProjectOpen();
+ mProject.setProjectOpen(false);
+
+
+
+
+ ui->actionLoadDict->setVisible(false);
+ ui->actionLoadOCRWords->setVisible(false);
+ ui->actionLoadDomain->setVisible(false);
+ ui->actionLoadSubPS->setVisible(false);
+ ui->actionLoadConfusions->setVisible(false);
+ ui->actionLoadGDocPage->setVisible(false);
+ ui->menuSelectLanguage->setTitle("");
+ ui->menuCreateReports->setTitle("");
+
+
+ //disableing the buttons after project is closed
+ // File Menu
+ ui->actionSave->setEnabled(false);
+ ui->actionSave_As->setEnabled(false);
+ ui->actionSpell_Check->setEnabled(false);
+ ui->actionLoad_Prev_Page->setEnabled(false);
+ ui->actionLoad_Next_Page->setEnabled(false);
+ ui->actionToDevanagari->setEnabled(false);
+ ui->actionToSlp1->setEnabled(false);
+ ui->actionLoadGDocPage->setEnabled(false);
+ ui->actionLoadData->setEnabled(false);
+ ui->actionLoadDict->setEnabled(false);
+ ui->actionLoadOCRWords->setEnabled(false);
+ ui->actionLoadDomain->setEnabled(false);
+ ui->actionLoadSubPS->setEnabled(false);
+ ui->actionLoadConfusions->setEnabled(false);
+ ui->actionSugg->setEnabled(false);
+
+ // Edit Menu
+ ui->actionUndo->setEnabled(false);
+ ui->actionRedo->setEnabled(false);
+ ui->actionFind_and_Replace->setEnabled(false);
+ ui->actionUndo_Global_Replace->setEnabled(false);
+ ui->actionUpload->setEnabled(false);
+
+ // Language Menu
+ ui->actionSanskrit_2->setEnabled(false);
+ ui->actionEnglish->setEnabled(false);
+ ui->actionHindi->setEnabled(false);
+
+ // Reports Menu
+ ui->actionAccuracyLog->setEnabled(false);
+ ui->actionViewAverageAccuracies->setEnabled(false);
+
+ // View Menu
+ ui->actionAllFontProperties->setEnabled(false);
+ ui->actionBold->setEnabled(false);
+ ui->actionItalic->setEnabled(false);
+ ui->actionLeftAlign->setEnabled(false);
+ ui->actionRightAlign->setEnabled(false);
+ ui->actionCentreAlign->setEnabled(false);
+ ui->actionJusitfiedAlign->setEnabled(false);
+ ui->actionSuperscript->setEnabled(false);
+ ui->actionSubscript->setEnabled(false);
+ ui->actionInsert_Horizontal_Line->setEnabled(false);
+ ui->actionFontBlack->setEnabled(false);
+ ui->actionInsert_Tab_Space->setEnabled(false);
+ ui->actionPDF_Preview->setEnabled(false);
+ if (isVerifier)
+     ui->actionHighlight->setEnabled(false);
+
+ // Table Menu inside View Menu
+ ui->actionInsert_Table_2->setEnabled(false);
+ ui->actionInsert_Columnleft->setEnabled(false);
+ ui->actionInsert_Columnright->setEnabled(false);
+ ui->actionInsert_Rowabove->setEnabled(false);
+ ui->actionInsert_Rowbelow->setEnabled(false);
+ ui->actionRemove_Column->setEnabled(false);
+ ui->actionRemove_Row->setEnabled(false);
+
+ // Versions Menu
+ ui->actionFetch_2->setEnabled(false);
+ ui->actionTurn_In->setEnabled(false);
+ ui->actionVerifier_Turn_In->setEnabled(false);
+
+ // Download Menu
+ ui->actionas_PDF->setEnabled(false);
+
+ ui->actionSymbols->setEnabled(false);
+ ui->actionZoom_In->setEnabled(false);
+ ui->actionZoom_Out->setEnabled(false);
+ //Reset loadData flag
+ LoadDataFlag = 1;
+ //reset data
+ mFilename.clear();
+ mFilename1.clear();
+// mFile.clear();
+ LSTM.clear();
+ CPairs.clear();
+ Dict.clear();
+ GBook.clear();
+ IBook.clear();
+ PWords.clear();
+ ConfPmap.clear();
+ vGBook.clear();
+ vIBook.clear();
+ TDict.clear();
+ TGBook.clear();
+ TGBookP.clear();
+ TPWords.clear();
+ TPWordsP.clear();
+ synonym.clear();
+ synrows.clear();
+
+ if(ui->lineEdit_3->text()==""){
+     qDebug()<<"Checking if empty or not";
+ }                                                        //if the curr_browser and graphicsview
+                                                          //are empty then we dont clear the curr_browser else we do
+ else{
+     curr_browser->clear();
+ }
+
+            ui->treeView->setModel(nullptr);  //clearing tree view
+   ui->graphicsView->setScene(nullptr);   //clearing graphicsview
+               ui->lineEdit_2->clear();
+                 ui->lineEdit_3->clear();                //disabling all other buttons which are enabled when project is open
+                 ui->pushButton->setDisabled(true);
+                  ui->pushButton_2->setDisabled(true);
+                 ui->viewComments->setDisabled(true);
+                 ui->compareCorrectorOutput->setDisabled(true);
+                ui->groupBox->setDisabled(true);
+                QMessageBox::information(this,"Success","Project Closed Successfully");
+}
+
 
