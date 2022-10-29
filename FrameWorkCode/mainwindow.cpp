@@ -1220,14 +1220,14 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     isRecentProjclick = false;
 
     // Testing of project.xml
-//    VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
-//    int result = verifySetObj.testProjectXML();
+    VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
+    int result = verifySetObj.testProjectXML();
 
-//    if (result != 0) {
-//        mProject.setProjectOpen(false);
-//        QMessageBox::warning(0, "Project XML file Error", "Project XML File is corrupted \n\nError "+ QString::fromStdString(std::to_string(verifySetObj.getErrorCode()))+": " + verifySetObj.getErrorString()+"\n\nPlease Report this to your administrator");
-//        return;
-//    }
+    if (result != 0) {
+        mProject.setProjectOpen(false);
+        QMessageBox::warning(0, "Project XML file Error", "Project XML File is corrupted \n\nError "+ QString::fromStdString(std::to_string(verifySetObj.getErrorCode()))+": " + verifySetObj.getErrorString()+"\n\nPlease Report this to your administrator");
+        return;
+    }
 
 	currentZoomLevel = 100;
 
@@ -1587,6 +1587,12 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
      TPWordsP.clear();
      synonym.clear();
      synrows.clear();
+
+     ui->pushButton->setDisabled(false);
+      ui->pushButton_2->setDisabled(false);
+     ui->viewComments->setDisabled(false);
+     ui->compareCorrectorOutput->setDisabled(false);
+    ui->groupBox->setDisabled(false);
 
 }
 
@@ -10452,6 +10458,7 @@ Close Project closes the current project and side by side disables all the
  buttons which are required when project is opened
   */
 
+
 void MainWindow::on_actionClose_project_triggered()
 {
 
@@ -10459,15 +10466,8 @@ void MainWindow::on_actionClose_project_triggered()
     if(!mProject.isProjectOpen()){
          QMessageBox::critical(this,"Error","Project Not Opened");
          return;                                                                  //checking if the project is already
-                                                                              // empty or not
+                                                                              // opened or not
                }
-
-
-//    QString currentFilePath = gDirTwoLevelUp + "/" + gCurrentDirName+ "/" + gCurrentPageName;
-//    QFile mFile(currentFilePath);
-//    mFile.flush();
-//    mFile.close();
-//bool g=mProject.isProjectOpen();
  mProject.setProjectOpen(false);
 
 
@@ -10577,13 +10577,10 @@ void MainWindow::on_actionClose_project_triggered()
  synonym.clear();
  synrows.clear();
 
- if(ui->lineEdit_3->text()==""){
-     qDebug()<<"Checking if empty or not";
+ if(ui->lineEdit_3->text()!="" && ui->lineEdit_3->text()!="Words 0" && ui->lineEdit_3->text()!="0 Words"){
+    curr_browser->clear();
  }                                                        //if the curr_browser and graphicsview
                                                           //are empty then we dont clear the curr_browser else we do
- else{
-     curr_browser->clear();
- }
 
             ui->treeView->setModel(nullptr);  //clearing tree view
    ui->graphicsView->setScene(nullptr);   //clearing graphicsview
@@ -10596,5 +10593,6 @@ void MainWindow::on_actionClose_project_triggered()
                 ui->groupBox->setDisabled(true);
                 QMessageBox::information(this,"Success","Project Closed Successfully");
 }
+
 
 
