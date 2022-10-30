@@ -46,25 +46,20 @@ dashboard::~dashboard()
 void dashboard::on_pushButton_clicked()
 {
     int id = ui->spinBox->value();
-    qDebug()<<"id "<<id<<repoMap[id];
     QString path, url_;
     bool ok;
     int ret;
+    if(id == 0){
+        QMessageBox::information(this, "Enter Project id", "Project id can't be zero", QMessageBox::Ok, QMessageBox::Ok);
+        return;
+    }
 
     path = QFileDialog::getExistingDirectory(this, tr("Open Directory for importing project"), "/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     if (path == "") {
         qDebug() << "User cancelled import #1";
         return;
     }
-
-//    url_ = QInputDialog::getText(this, tr("Project url"),
-//                                     tr("Enter Project url"), QLineEdit::Normal, "", &ok);
-    url_ = "https://github.com/UdaanContentForLogging/"+repoMap[id]+".git";
-    qDebug()<<"url "<<url_;
-//    if (!ok) {
-//        qDebug() << "User cancelled import #2";
-//        return;
-//    }
+    url_ = "https://github.com/UdaanContentForLogging/"+repoMap[id];
     if (url_.startsWith("git@github.com")) {
         qDebug() << "Not prepared to import using SSH. Please provide HTTPS URL";
         QMessageBox::information(this, "Use HTTPS URL", "This URL requires SSH key. Please provide HTTPS URL", QMessageBox::Ok, QMessageBox::Ok);
