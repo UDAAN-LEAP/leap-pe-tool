@@ -86,6 +86,7 @@
 #include <QtNetworkAuth>
 #include <QOAuth2AuthorizationCodeFlow>
 #include <dashboard.h>
+#include "printworker.h"
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -8564,14 +8565,8 @@ void MainWindow::on_actionas_PDF_triggered()
     QString searchString = "background-color:#"; // string to be searched
     int l = searchString.length();
     QString whiteColor = "ffffff";
-//	bool ok; int count_ = 0;
-//	int i = QInputDialog::getInt(this, tr("Print pages"),
-//								 tr("Number of pages(cancel if you want whole set):"), 20, 0, 100, 1, &ok);
-//	if (ok) {
-//		count_ = i;
-//	}
-	int itr = 0;
 
+	int itr = 0;
 	PdfRangeDialog *pdfRangeDialog = new PdfRangeDialog(this, count, 100);
 	pdfRangeDialog->exec();
 	int startPage = 0;
@@ -8589,7 +8584,6 @@ void MainWindow::on_actionas_PDF_triggered()
     //! Loop through all files
     foreach(auto a, dir.entryList())
     {
-//        QString it_file_path = a;
         QString x = currentDirAbsolutePath + a;
 
         startFrom = 0; // The position from which searchString will be scanned
@@ -8647,50 +8641,36 @@ void MainWindow::on_actionas_PDF_triggered()
                 continue;
             }
         }
-//        itr ++;
-//        if(itr == count_)
-//            break;
     }
 
-//    document->setHtml(html_contents);
-    QString htmlFile = toolDirAbsolutePath + "/.html_for_pdf.html";
+	// New way of printing pdf
+	QPrinter printer(QPrinter::ScreenResolution);
+    printer.setPaperSize(QPrinter::A4);
+    printer.setPageMargins(QMarginsF(5, 5, 5, 5));
+	printer.setOutputFileName(gDirTwoLevelUp + "/print.pdf");
 
-    QFile file(htmlFile);
-    if (file.exists()) {
-        qDebug() <<htmlFile<< "Cannot Create a file for that.";
-        return;
-    }
-    if (!file.open(QIODevice::ReadWrite)) {
-        qDebug() << "Error";
-        return;
-    }
-    QTextStream out(&file);
-    out.setCodec("UTF-8");
-    out << html_contents << endl;
-    file.flush();
-    file.close();
+	QPrintDialog printDialog(&printer, this);
 
-    QString program = toolDirAbsolutePath;
-    if (QSysInfo::productType() == "windows") {
-        program += "/HtmlToPdfUtil.exe";
-    } else {
-        program += "/HtmlToPdfUtil";
-    }
-    QStringList arguments;
-    arguments << htmlFile << gDirTwoLevelUp;
+	if (printDialog.exec() == QDialog::Accepted) {
+		PrintWorker *workerPrint = new PrintWorker(nullptr, html_contents);
+		QThread *thread = new QThread;
+		workerPrint->printer = printDialog.printer(); // Assigning the printer for printing (VERY IMPORTANT)
 
-    QProcess *process = new QProcess(this);
-    mPrintPdfProcess = process;
-//    process->setWorkingDirectory(toolDirAbsolutePath);
-    connect(process, &QProcess::readyReadStandardOutput, this, &MainWindow::readOutputFromPdfPrint);
-    connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &MainWindow::finishedPdfCreation);
+		connect(thread, SIGNAL(started()), workerPrint, SLOT(printPDF()));
+		connect(workerPrint, SIGNAL(finishedPrintingPDF()), thread, SLOT(quit()));
+		connect(workerPrint, SIGNAL(finishedPrintingPDF()), workerPrint, SLOT(deleteLater()));
+		connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+		connect(workerPrint, SIGNAL(finishedPrintingPDF()), this, SLOT(stopSpinning()));
 
-    process->start(program, arguments);
+		workerPrint->moveToThread(thread);
+		thread->start();
+		spinner = new LoadingSpinner(this);
+		spinner->SetMessage("Printing PDF...", "Printing...");
+		spinner->setModal(false);
+		spinner->exec();
 
-    spinner = new LoadingSpinner(this);
-    spinner->SetMessage("Saving as PDF...", "Loading...");
-    spinner->setModal(false);
-    spinner->exec();
+		QMessageBox::information(this, "Print Successful", "Printed PDF successfully", QMessageBox::Ok, QMessageBox::Ok);
+	}
 }
 
 /*!

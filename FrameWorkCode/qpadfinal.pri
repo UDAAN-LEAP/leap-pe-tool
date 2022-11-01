@@ -36,6 +36,7 @@ HEADERS += ./Filters.h \
     $$PWD/markRegion.h \
     $$PWD/pdfhandling.h \
 	$$PWD/pdfrangedialog.h \
+	$$PWD/printworker.h \
     $$PWD/progressbardialog.h \
     $$PWD/shortcutguidedialog.h \
     $$PWD/textfinder.h \
@@ -116,6 +117,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/meanStdPage.cpp \
     $$PWD/pdfhandling.cpp \
 	$$PWD/pdfrangedialog.cpp \
+	$$PWD/printworker.cpp \
     $$PWD/progressbardialog.cpp \
     $$PWD/shortcutguidedialog.cpp \
     $$PWD/slpNPatternDict.cpp \
