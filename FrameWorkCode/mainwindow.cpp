@@ -902,7 +902,8 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
             QString str = QString::fromStdString(selectedStr);
             qDebug()<<"selected str"<<str;
-            if (!selectedStr.empty()) {
+              vector<string> Alligned = trie.print5NearestEntries(TGBookP, selectedStr);
+            if (!selectedStr.empty() && !Alligned.empty()) {
 
 
                 spell_menu = new QMenu("suggestions", this);
@@ -914,7 +915,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 vector<string>  Words1 = trie.print5NearestEntries(TGBook, selectedStr);
                // if (Words1.empty()) return;
 
-                vector<string> Alligned = trie.print5NearestEntries(TGBookP, selectedStr);
+
                 //if (Alligned.empty()) return;
 
                 vector<string> PWords1 = trie.print5NearestEntries(TPWords, selectedStr);
