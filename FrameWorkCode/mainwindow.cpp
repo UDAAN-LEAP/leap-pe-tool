@@ -4056,8 +4056,19 @@ void MainWindow::on_actionAllFontProperties_triggered()
 {
 	if(!curr_browser || curr_browser->isReadOnly())
         return;
-    QFont initialFont = curr_browser->font();      // initial font face
-    QTextCursor cursor = curr_browser->textCursor();
+
+    auto cursor = curr_browser->textCursor();
+        auto selected = cursor.selection();
+        QString sel = selected.toHtml();
+
+
+//   if(!sel.contains("")){
+//         QMessageBox::critical(this,"Error","Text Not Selected");
+//                 return;
+//    }
+
+
+  QFont initialFont=curr_browser->currentFont();                                                   // initial font face
 
     auto pointsize = curr_browser->fontPointSize();
 
@@ -10565,6 +10576,7 @@ void MainWindow::on_actionClose_project_triggered()
             ui->treeView->setModel(nullptr);  //clearing tree view
    ui->graphicsView->setScene(nullptr);   //clearing graphicsview
                ui->lineEdit_2->clear();
+               ui->lineEdit->clear();
                  ui->lineEdit_3->clear();                //disabling all other buttons which are enabled when project is open
                  ui->pushButton->setDisabled(true);
                   ui->pushButton_2->setDisabled(true);
