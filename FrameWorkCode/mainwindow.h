@@ -496,6 +496,7 @@ public slots:
 
 	void insertBboxes(QFile *);
     void authenticate();
+    void preprocessing();
 
 private:
     bool mExitStatus = false;

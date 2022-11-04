@@ -7769,13 +7769,14 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 		if (!f->open(QIODevice::WriteOnly | QIODevice::Text)) {
 			qDebug() << "Cannot open file in write mode";
 		}
-		QTextStream out(f);
+        QTextStream out(f);
         out.setCodec("utf-8");
-		out << input;
-		out.flush();
-		f->close();
+        out << input;
+        out.flush();
+        f->close();
 
 		loadHtmlInDoc(f);
+        preprocessing(); //for removing dangling mathras
 		connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
 		blockCount = b->document()->blockCount();
 		if (!f->open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -10574,5 +10575,28 @@ void MainWindow::on_actionClose_project_triggered()
                 QMessageBox::information(this,"Success","Project Closed Successfully");
 }
 
+void MainWindow::preprocessing(){
 
+    slpNPatternDict slnp;
+    QTextCharFormat fmt;
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    curr_browser->moveCursor(QTextCursor::Start);
+
+    QTextCursor cursor(doc); //get the cursor
+
+    while(!cursor.atEnd()){
+        cursor.select(QTextCursor::WordUnderCursor);
+        fmt = cursor.charFormat();
+        QString str1 = cursor.selectedText();
+        auto sel = cursor.selection().toHtml();
+        if(!sel.contains("<img") && !str1.contains(QRegExp("[0-9]")) && !str1.contains(QRegExp("[a-zA-Z]")) && !str1.contains(QRegExp("[%!@#$^&*()]"))){
+            string selectedString = str1.toUtf8().constData();
+            string output = slnp.toDev(slnp.toslp1(selectedString));
+            cursor.mergeCharFormat(fmt);
+            cursor.insertText(QString::fromStdString(output));
+        }
+        cursor.setPosition(cursor.position()+1, QTextCursor::MoveAnchor);
+    }
+}
 
