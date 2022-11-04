@@ -902,7 +902,8 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
             QString str = QString::fromStdString(selectedStr);
             qDebug()<<"selected str"<<str;
-            if (!selectedStr.empty()) {
+              vector<string> Alligned = trie.print5NearestEntries(TGBookP, selectedStr);
+            if (!selectedStr.empty() && !Alligned.empty()) {
 
 
                 spell_menu = new QMenu("suggestions", this);
@@ -914,7 +915,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 vector<string>  Words1 = trie.print5NearestEntries(TGBook, selectedStr);
                // if (Words1.empty()) return;
 
-                vector<string> Alligned = trie.print5NearestEntries(TGBookP, selectedStr);
+
                 //if (Alligned.empty()) return;
 
                 vector<string> PWords1 = trie.print5NearestEntries(TPWords, selectedStr);
@@ -4056,8 +4057,19 @@ void MainWindow::on_actionAllFontProperties_triggered()
 {
 	if(!curr_browser || curr_browser->isReadOnly())
         return;
-    QFont initialFont = curr_browser->font();      // initial font face
-    QTextCursor cursor = curr_browser->textCursor();
+
+    auto cursor = curr_browser->textCursor();
+        auto selected = cursor.selection();
+        QString sel = selected.toHtml();
+
+
+//   if(!sel.contains("")){
+//         QMessageBox::critical(this,"Error","Text Not Selected");
+//                 return;
+//    }
+
+
+  QFont initialFont=curr_browser->currentFont();                                                   // initial font face
 
     auto pointsize = curr_browser->fontPointSize();
 
@@ -10566,6 +10578,7 @@ void MainWindow::on_actionClose_project_triggered()
             ui->treeView->setModel(nullptr);  //clearing tree view
    ui->graphicsView->setScene(nullptr);   //clearing graphicsview
                ui->lineEdit_2->clear();
+               ui->lineEdit->clear();
                  ui->lineEdit_3->clear();                //disabling all other buttons which are enabled when project is open
                  ui->pushButton->setDisabled(true);
                   ui->pushButton_2->setDisabled(true);
