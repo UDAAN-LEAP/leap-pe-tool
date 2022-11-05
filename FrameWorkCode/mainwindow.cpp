@@ -10586,6 +10586,7 @@ void MainWindow::on_actionClose_project_triggered()
                  ui->compareCorrectorOutput->setDisabled(true);
                 ui->groupBox->setDisabled(true);
                 QMessageBox::information(this,"Success","Project Closed Successfully");
+                curr_browser=0;
 }
 
 void MainWindow::preprocessing(){
