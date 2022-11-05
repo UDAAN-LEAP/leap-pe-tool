@@ -2,6 +2,8 @@
   \class mainwWindow.cpp
  */
 #include "mainwindow.h"
+#include "dashboard.h"
+#include "ui_dashboard.h"
 #include "ui_globalreplacedialog.h"
 #include "ui_mainwindow.h"
 #include "averageaccuracies.h"
@@ -83,7 +85,8 @@
 #include "pdfrangedialog.h"
 #include <QtNetworkAuth>
 #include <QOAuth2AuthorizationCodeFlow>
-#include <QCryptographicHash>
+#include <dashboard.h>
+#include "printworker.h"
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -899,7 +902,8 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
             QString str = QString::fromStdString(selectedStr);
             qDebug()<<"selected str"<<str;
-            if (!selectedStr.empty()) {
+              vector<string> Alligned = trie.print5NearestEntries(TGBookP, selectedStr);
+            if (!selectedStr.empty() && !Alligned.empty()) {
 
 
                 spell_menu = new QMenu("suggestions", this);
@@ -911,7 +915,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 vector<string>  Words1 = trie.print5NearestEntries(TGBook, selectedStr);
                // if (Words1.empty()) return;
 
-                vector<string> Alligned = trie.print5NearestEntries(TGBookP, selectedStr);
+
                 //if (Alligned.empty()) return;
 
                 vector<string> PWords1 = trie.print5NearestEntries(TPWords, selectedStr);
@@ -1585,6 +1589,12 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
      TPWordsP.clear();
      synonym.clear();
      synrows.clear();
+
+     ui->pushButton->setDisabled(false);
+      ui->pushButton_2->setDisabled(false);
+     ui->viewComments->setDisabled(false);
+     ui->compareCorrectorOutput->setDisabled(false);
+    ui->groupBox->setDisabled(false);
 
 }
 
@@ -4047,8 +4057,19 @@ void MainWindow::on_actionAllFontProperties_triggered()
 {
 	if(!curr_browser || curr_browser->isReadOnly())
         return;
-    QFont initialFont = curr_browser->font();      // initial font face
-    QTextCursor cursor = curr_browser->textCursor();
+
+    auto cursor = curr_browser->textCursor();
+        auto selected = cursor.selection();
+        QString sel = selected.toHtml();
+
+
+//   if(!sel.contains("")){
+//         QMessageBox::critical(this,"Error","Text Not Selected");
+//                 return;
+//    }
+
+
+  QFont initialFont=curr_browser->currentFont();                                                   // initial font face
 
     auto pointsize = curr_browser->fontPointSize();
 
@@ -5625,7 +5646,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     {
           event->accept();
 
-         if(QToolTip::isVisible())
+         if(QToolTip::text() != "")
          {
 
              QString qs =  QToolTip :: text();
@@ -5987,16 +6008,35 @@ void MainWindow::on_pushButton_2_clicked()
     QString sel = selected.toHtml();
 	QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
 	//    QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
+    QRegularExpressionMatchIterator itr;
+    itr = rex.globalMatch(sel);
+    int height=0;
+    int width=0;
+    if(!sel.contains("<img")){
+        QMessageBox::critical(this,"Error","Image Not selected");
+        return;
+    }
+        QDialog dialog(this);
+        QFormLayout form(&dialog);
 
-	QRegularExpressionMatchIterator itr;
-	itr = rex.globalMatch(sel);
-	int height=0;
-	int width=0;
+        form.addRow(new QLabel("Insert Height and Width",this));
 
-	//!setting width
-	int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
-	//!setting height
-	int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
+        QLineEdit *height_textLine= new QLineEdit(&dialog);
+         QLineEdit *width_textLine= new QLineEdit(&dialog);
+
+         form.addRow("Height",height_textLine);
+           form.addRow("Width",width_textLine);
+
+           QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
+           form.addRow(&buttonbox);
+
+           QObject::connect(&buttonbox,SIGNAL(accepted()),&dialog,SLOT(accept()));
+           QObject::connect(&buttonbox,SIGNAL(rejected()),&dialog,SLOT(reject()));
+
+           if(dialog.exec() ==QDialog::Accepted){
+               height=height_textLine->text().toInt();
+               width=width_textLine->text().toInt();
+           }
 
 	while(itr.hasNext())
 	{
@@ -6024,9 +6064,9 @@ void MainWindow::on_pushButton_2_clicked()
 		str = str.substr(start,end-start+1);
 		QString imgname = QString::fromStdString(str);
 
-		if(n>0 && n1>0)
+        if(height>0 && width>0)
 		{
-			QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(n).arg(n1);
+            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(height).arg(width);
 			cursor.insertHtml(html);      //insert new image with modified attributes height and width
 		}
 	}
@@ -6875,7 +6915,7 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
 {
   QStandardItemModel *model = new QStandardItemModel;
   int lineindex = 0;
-    //qDebug()<<"previewMap:"<<previewMap;
+    //qDebug()<<"previewMap:"<<previewMap;sadam
     if(previewMap.size() == 0)
   {
        QMessageBox::warning(this, "Error", "No words are selected for replacement");
@@ -7741,13 +7781,14 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 		if (!f->open(QIODevice::WriteOnly | QIODevice::Text)) {
 			qDebug() << "Cannot open file in write mode";
 		}
-		QTextStream out(f);
+        QTextStream out(f);
         out.setCodec("utf-8");
-		out << input;
-		out.flush();
-		f->close();
+        out << input;
+        out.flush();
+        f->close();
 
 		loadHtmlInDoc(f);
+        preprocessing(); //for removing dangling mathras
 		connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
 		blockCount = b->document()->blockCount();
 		if (!f->open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -8537,14 +8578,8 @@ void MainWindow::on_actionas_PDF_triggered()
     QString searchString = "background-color:#"; // string to be searched
     int l = searchString.length();
     QString whiteColor = "ffffff";
-//	bool ok; int count_ = 0;
-//	int i = QInputDialog::getInt(this, tr("Print pages"),
-//								 tr("Number of pages(cancel if you want whole set):"), 20, 0, 100, 1, &ok);
-//	if (ok) {
-//		count_ = i;
-//	}
-	int itr = 0;
 
+	int itr = 0;
 	PdfRangeDialog *pdfRangeDialog = new PdfRangeDialog(this, count, 100);
 	pdfRangeDialog->exec();
 	int startPage = 0;
@@ -8562,7 +8597,6 @@ void MainWindow::on_actionas_PDF_triggered()
     //! Loop through all files
     foreach(auto a, dir.entryList())
     {
-//        QString it_file_path = a;
         QString x = currentDirAbsolutePath + a;
 
         startFrom = 0; // The position from which searchString will be scanned
@@ -8620,50 +8654,36 @@ void MainWindow::on_actionas_PDF_triggered()
                 continue;
             }
         }
-//        itr ++;
-//        if(itr == count_)
-//            break;
     }
 
-//    document->setHtml(html_contents);
-    QString htmlFile = toolDirAbsolutePath + "/.html_for_pdf.html";
+	// New way of printing pdf
+	QPrinter printer(QPrinter::ScreenResolution);
+    printer.setPaperSize(QPrinter::A4);
+    printer.setPageMargins(QMarginsF(5, 5, 5, 5));
+	printer.setOutputFileName(gDirTwoLevelUp + "/print.pdf");
 
-    QFile file(htmlFile);
-    if (file.exists()) {
-        qDebug() <<htmlFile<< "Cannot Create a file for that.";
-        return;
-    }
-    if (!file.open(QIODevice::ReadWrite)) {
-        qDebug() << "Error";
-        return;
-    }
-    QTextStream out(&file);
-    out.setCodec("UTF-8");
-    out << html_contents << endl;
-    file.flush();
-    file.close();
+	QPrintDialog printDialog(&printer, this);
 
-    QString program = toolDirAbsolutePath;
-    if (QSysInfo::productType() == "windows") {
-        program += "/HtmlToPdfUtil.exe";
-    } else {
-        program += "/HtmlToPdfUtil";
-    }
-    QStringList arguments;
-    arguments << htmlFile << gDirTwoLevelUp;
+	if (printDialog.exec() == QDialog::Accepted) {
+		PrintWorker *workerPrint = new PrintWorker(nullptr, html_contents);
+		QThread *thread = new QThread;
+		workerPrint->printer = printDialog.printer(); // Assigning the printer for printing (VERY IMPORTANT)
 
-    QProcess *process = new QProcess(this);
-    mPrintPdfProcess = process;
-//    process->setWorkingDirectory(toolDirAbsolutePath);
-    connect(process, &QProcess::readyReadStandardOutput, this, &MainWindow::readOutputFromPdfPrint);
-    connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &MainWindow::finishedPdfCreation);
+		connect(thread, SIGNAL(started()), workerPrint, SLOT(printPDF()));
+		connect(workerPrint, SIGNAL(finishedPrintingPDF()), thread, SLOT(quit()));
+		connect(workerPrint, SIGNAL(finishedPrintingPDF()), workerPrint, SLOT(deleteLater()));
+		connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+		connect(workerPrint, SIGNAL(finishedPrintingPDF()), this, SLOT(stopSpinning()));
 
-    process->start(program, arguments);
+		workerPrint->moveToThread(thread);
+		thread->start();
+		spinner = new LoadingSpinner(this);
+		spinner->SetMessage("Printing PDF...", "Printing...");
+		spinner->setModal(false);
+		spinner->exec();
 
-    spinner = new LoadingSpinner(this);
-    spinner->SetMessage("Saving as PDF...", "Loading...");
-    spinner->setModal(false);
-    spinner->exec();
+		QMessageBox::information(this, "Print Successful", "Printed PDF successfully", QMessageBox::Ok, QMessageBox::Ok);
+	}
 }
 
 /*!
@@ -10366,56 +10386,231 @@ void MainWindow::on_actionLogout_triggered()
 
 void MainWindow::on_actionClone_Repository_triggered()
 {
-    //check if user is logged in
+    /*
+     * \description
+     * Checks whether user is logged in or not
+    */
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("loginConsent");
-    QString value = settings.value("consent").toString();
+    QString value1 = settings.value("consent").toString();
     settings.endGroup();
-    if(value != "loggedIn"){
+    if(value1 != "loggedIn"){
         QMessageBox msg;
-        msg.setText("Please login to import the project [Go to settings>login]");
+        msg.setText("Please login to go to your dashboard");
+        int cnt = 2;
+        //showing the message box for 2 seconds only.
+        QTimer cntDown;
+        QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
+             if(--cnt < 0){
+                 cntDown.stop();
+                 msg.close();
+             }
+            });
+        cntDown.start(1000);
         msg.exec();
         return;
     }
+    //
+    //retrieve details from database and check if user has access to push into this repo
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    settings.endGroup();
+    QProcess process;
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"\" -o validate.json");
 
-	QString path, url_;
-	bool ok;
-	int ret;
-
-    path = QFileDialog::getExistingDirectory(this, tr("Open Directory for importing project"), "/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-	if (path == "") {
-        qDebug() << "User cancelled import #1";
-		return;
-	}
-
-    url_ = QInputDialog::getText(this, tr("Project url"),
-                                     tr("Enter Project url"), QLineEdit::Normal, "", &ok);
-	if (!ok) {
-        qDebug() << "User cancelled import #2";
+    QJsonObject mainObj = readJsonFile("validate.json");
+    QJsonArray repos = mainObj.value("repo_list").toArray();
+    QFile::remove("validate.json");
+    if(repos.size() == 0){
+        QMessageBox msg;
+        msg.setText("There is nothing to show on dashboard");
+        msg.exec();
         return;
-	}
-	if (url_.startsWith("git@github.com")) {
-        qDebug() << "Not prepared to import using SSH. Please provide HTTPS URL";
-		QMessageBox::information(this, "Use HTTPS URL", "This URL requires SSH key. Please provide HTTPS URL", QMessageBox::Ok, QMessageBox::Ok);
-		return;
-	}
+    }
+    QJsonArray::iterator itr; int flag = 0;
+    int lineindex = 0;
+    QString importHtml="<table><tr><th>#Project ID</th><th>#Project name</th></tr>";
+    QStandardItemModel *model = new QStandardItemModel;
+    QMap<int, QString> repoMap;
+    for(itr = repos.begin(); itr != repos.end(); itr++){
+        lineindex++;
+        repoMap[lineindex] = itr->toString();
+        QString num = QString::number(lineindex);
+        importHtml += QString::fromStdString("<tr><td>")+num+"</td><td>"+itr->toString()+"</td></tr>";
+    }
+    importHtml += "</table>";
+    dashboard d(this, importHtml, repos.size(), repoMap);
+    d.exec();
+}
 
-	QFutureWatcher<int> watcher;
-	connect(&watcher, &QFutureWatcher<int>::finished, this, &MainWindow::stopSpinning);
 
-	QFuture<int> t1 = QtConcurrent::run(Project::clone, QString(url_), QString(path));
-	watcher.setFuture(t1);
 
-	spinner = new LoadingSpinner(this);
-    spinner->SetMessage("Importing Set...", "Importing...");
-	spinner->setModal(false);
-	spinner->exec();
+/*
+Close Project closes the current project and side by side disables all the
+ buttons which are required when project is opened
+  */
 
-	if ((ret = t1.result()) != 0) {
-        QMessageBox::information(this, "Error", "The zip folder is already downloaded or the project url in incorrect", QMessageBox::Ok, QMessageBox::Ok);
-        qDebug()<<"Exited with return code"<<ret;
-	} else {
-        QMessageBox::information(this, "Successful", "Successfully imported the set", QMessageBox::Ok, QMessageBox::Ok);
-	}
+
+void MainWindow::on_actionClose_project_triggered()
+{
+
+
+    if(!mProject.isProjectOpen()){
+         QMessageBox::critical(this,"Error","Project Not Opened");
+         return;                                                                  //checking if the project is already
+                                                                              // opened or not
+               }
+ mProject.setProjectOpen(false);
+
+
+
+
+ ui->actionLoadDict->setVisible(false);
+ ui->actionLoadOCRWords->setVisible(false);
+ ui->actionLoadDomain->setVisible(false);
+ ui->actionLoadSubPS->setVisible(false);
+ ui->actionLoadConfusions->setVisible(false);
+ ui->actionLoadGDocPage->setVisible(false);
+ ui->menuSelectLanguage->setTitle("");
+ ui->menuCreateReports->setTitle("");
+
+
+ //disableing the buttons after project is closed
+ // File Menu
+ ui->actionSave->setEnabled(false);
+ ui->actionSave_As->setEnabled(false);
+ ui->actionSpell_Check->setEnabled(false);
+ ui->actionLoad_Prev_Page->setEnabled(false);
+ ui->actionLoad_Next_Page->setEnabled(false);
+ ui->actionToDevanagari->setEnabled(false);
+ ui->actionToSlp1->setEnabled(false);
+ ui->actionLoadGDocPage->setEnabled(false);
+ ui->actionLoadData->setEnabled(false);
+ ui->actionLoadDict->setEnabled(false);
+ ui->actionLoadOCRWords->setEnabled(false);
+ ui->actionLoadDomain->setEnabled(false);
+ ui->actionLoadSubPS->setEnabled(false);
+ ui->actionLoadConfusions->setEnabled(false);
+ ui->actionSugg->setEnabled(false);
+
+ // Edit Menu
+ ui->actionUndo->setEnabled(false);
+ ui->actionRedo->setEnabled(false);
+ ui->actionFind_and_Replace->setEnabled(false);
+ ui->actionUndo_Global_Replace->setEnabled(false);
+ ui->actionUpload->setEnabled(false);
+
+ // Language Menu
+ ui->actionSanskrit_2->setEnabled(false);
+ ui->actionEnglish->setEnabled(false);
+ ui->actionHindi->setEnabled(false);
+
+ // Reports Menu
+ ui->actionAccuracyLog->setEnabled(false);
+ ui->actionViewAverageAccuracies->setEnabled(false);
+
+ // View Menu
+ ui->actionAllFontProperties->setEnabled(false);
+ ui->actionBold->setEnabled(false);
+ ui->actionItalic->setEnabled(false);
+ ui->actionLeftAlign->setEnabled(false);
+ ui->actionRightAlign->setEnabled(false);
+ ui->actionCentreAlign->setEnabled(false);
+ ui->actionJusitfiedAlign->setEnabled(false);
+ ui->actionSuperscript->setEnabled(false);
+ ui->actionSubscript->setEnabled(false);
+ ui->actionInsert_Horizontal_Line->setEnabled(false);
+ ui->actionFontBlack->setEnabled(false);
+ ui->actionInsert_Tab_Space->setEnabled(false);
+ ui->actionPDF_Preview->setEnabled(false);
+ if (isVerifier)
+     ui->actionHighlight->setEnabled(false);
+
+ // Table Menu inside View Menu
+ ui->actionInsert_Table_2->setEnabled(false);
+ ui->actionInsert_Columnleft->setEnabled(false);
+ ui->actionInsert_Columnright->setEnabled(false);
+ ui->actionInsert_Rowabove->setEnabled(false);
+ ui->actionInsert_Rowbelow->setEnabled(false);
+ ui->actionRemove_Column->setEnabled(false);
+ ui->actionRemove_Row->setEnabled(false);
+
+ // Versions Menu
+ ui->actionFetch_2->setEnabled(false);
+ ui->actionTurn_In->setEnabled(false);
+ ui->actionVerifier_Turn_In->setEnabled(false);
+
+ // Download Menu
+ ui->actionas_PDF->setEnabled(false);
+
+ ui->actionSymbols->setEnabled(false);
+ ui->actionZoom_In->setEnabled(false);
+ ui->actionZoom_Out->setEnabled(false);
+ //Reset loadData flag
+ LoadDataFlag = 1;
+ //reset data
+ mFilename.clear();
+ mFilename1.clear();
+// mFile.clear();
+ LSTM.clear();
+ CPairs.clear();
+ Dict.clear();
+ GBook.clear();
+ IBook.clear();
+ PWords.clear();
+ ConfPmap.clear();
+ vGBook.clear();
+ vIBook.clear();
+ TDict.clear();
+ TGBook.clear();
+ TGBookP.clear();
+ TPWords.clear();
+ TPWordsP.clear();
+ synonym.clear();
+ synrows.clear();
+
+ if(ui->lineEdit_3->text()!="" && ui->lineEdit_3->text()!="Words 0" && ui->lineEdit_3->text()!="0 Words"){
+    curr_browser->clear();
+ }                                                        //if the curr_browser and graphicsview
+                                                          //are empty then we dont clear the curr_browser else we do
+
+            ui->treeView->setModel(nullptr);  //clearing tree view
+   ui->graphicsView->setScene(nullptr);   //clearing graphicsview
+               ui->lineEdit_2->clear();
+               ui->lineEdit->clear();
+                 ui->lineEdit_3->clear();                //disabling all other buttons which are enabled when project is open
+                 ui->pushButton->setDisabled(true);
+                  ui->pushButton_2->setDisabled(true);
+                 ui->viewComments->setDisabled(true);
+                 ui->compareCorrectorOutput->setDisabled(true);
+                ui->groupBox->setDisabled(true);
+                QMessageBox::information(this,"Success","Project Closed Successfully");
+                curr_browser=0;
+}
+
+void MainWindow::preprocessing(){
+
+    slpNPatternDict slnp;
+    QTextCharFormat fmt;
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    curr_browser->moveCursor(QTextCursor::Start);
+
+    QTextCursor cursor(doc); //get the cursor
+
+    while(!cursor.atEnd()){
+        cursor.select(QTextCursor::WordUnderCursor);
+        fmt = cursor.charFormat();
+        QString str1 = cursor.selectedText();
+        auto sel = cursor.selection().toHtml();
+        if(!sel.contains("<img") && !str1.contains(QRegExp("[0-9]")) && !str1.contains(QRegExp("[a-zA-Z]")) && !str1.contains(QRegExp("[%!@#$^&*()]"))){
+            string selectedString = str1.toUtf8().constData();
+            string output = slnp.toDev(slnp.toslp1(selectedString));
+            cursor.mergeCharFormat(fmt);
+            cursor.insertText(QString::fromStdString(output));
+        }
+        cursor.setPosition(cursor.position()+1, QTextCursor::MoveAnchor);
+    }
 }
 

@@ -28,6 +28,7 @@ HEADERS += ./Filters.h \
     $$PWD/SimpleMail/smtpexports.h \
     $$PWD/crashlog.h \
     $$PWD/customtextbrowser.h \
+    $$PWD/dashboard.h \
     $$PWD/editdistance.h \
     $$PWD/globalreplaceworker.h \
 	$$PWD/loaddataworker.h \
@@ -35,6 +36,7 @@ HEADERS += ./Filters.h \
     $$PWD/markRegion.h \
     $$PWD/pdfhandling.h \
 	$$PWD/pdfrangedialog.h \
+	$$PWD/printworker.h \
     $$PWD/progressbardialog.h \
     $$PWD/shortcutguidedialog.h \
     $$PWD/textfinder.h \
@@ -105,6 +107,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/SimpleMail/serverreply.cpp \
     $$PWD/crashlog.cpp \
     $$PWD/customtextbrowser.cpp \
+    $$PWD/dashboard.cpp \
     $$PWD/eddis.cpp \
     $$PWD/editdistance.cpp \
     $$PWD/globalreplaceworker.cpp \
@@ -114,6 +117,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/meanStdPage.cpp \
     $$PWD/pdfhandling.cpp \
 	$$PWD/pdfrangedialog.cpp \
+	$$PWD/printworker.cpp \
     $$PWD/progressbardialog.cpp \
     $$PWD/shortcutguidedialog.cpp \
     $$PWD/slpNPatternDict.cpp \
@@ -145,6 +149,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/globalreplacepreview.cpp \
     $$PWD/globalreplaceinformation.cpp
 FORMS += ./DiffView.ui \
+    $$PWD/dashboard.ui \
     $$PWD/loadingspinner.ui \
     $$PWD/pdfrangedialog.ui \
     $$PWD/progressbardialog.ui \

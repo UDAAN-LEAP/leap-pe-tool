@@ -1138,6 +1138,7 @@ QMenu::item:selected{
     <addaction name="actionLoad_Prev_Page"/>
     <addaction name="separator"/>
     <addaction name="actionSugg"/>
+    <addaction name="actionClose_project"/>
    </widget>
    <widget class="QMenu" name="menuTool">
     <property name="styleSheet">
@@ -2058,6 +2059,11 @@ background-color: #EEF0F2;
   <action name="actionClone_Repository">
    <property name="text">
     <string>Import Project</string>
+   </property>
+  </action>
+  <action name="actionClose_project">
+   <property name="text">
+    <string>Close project</string>
    </property>
   </action>
  </widget>

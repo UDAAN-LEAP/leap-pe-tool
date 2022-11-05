@@ -469,6 +469,8 @@ private slots:
 
     void on_actionClone_Repository_triggered();
 
+    void on_actionClose_project_triggered();
+
 public slots:
     void SaveFile_Backend();
 
@@ -494,6 +496,7 @@ public slots:
 
 	void insertBboxes(QFile *);
     void authenticate();
+    void preprocessing();
 
 private:
     bool mExitStatus = false;
