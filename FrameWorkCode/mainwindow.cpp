@@ -10614,3 +10614,14 @@ void MainWindow::preprocessing(){
     }
 }
 
+
+void MainWindow::on_actionMerge_Cells_triggered()
+{
+	if (!curr_browser || curr_browser->isReadOnly()) { return; }
+	if (curr_browser->textCursor().currentTable())
+	{
+		QTextTable *table = curr_browser->textCursor().currentTable();
+		table->mergeCells(curr_browser->textCursor());
+	}
+}
+

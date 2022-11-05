@@ -471,6 +471,8 @@ private slots:
 
     void on_actionClose_project_triggered();
 
+	void on_actionMerge_Cells_triggered();
+
 public slots:
     void SaveFile_Backend();
 
