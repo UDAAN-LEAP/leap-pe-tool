@@ -2,12 +2,12 @@
 
 # -- Project information
 
-project = 'Lumache'
-copyright = '2021, Graziella'
-author = 'Graziella'
+project = 'OpenOCRCorrect'
+copyright = 'OpenOCRCorrect IITB'
+author = 'IITB Admin'
 
 release = '0.1'
-version = '0.1.0'
+version = '3.0.0'
 
 # -- General configuration
 
