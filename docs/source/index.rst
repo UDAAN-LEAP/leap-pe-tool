@@ -1,10 +1,9 @@
-Welcome to Lumache's documentation!
-===================================
+Welcome to Udaan Editing Tool's documentation!
+==============================================
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+**Udaan Editing Tool** is a framework for assisting human while correcting the OCR errors in documents, 
+mostly dedicated to Indian Languages. Tested on *Sanskrit, Hindi, Marathi and English.*
+
 
 Check out the :doc:`usage` section for further information, including
 how to :ref:`installation` the project.
@@ -18,5 +17,18 @@ Contents
 
 .. toctree::
 
-   usage
-   api
+   Open Project
+   Recent Projects
+   Import Project
+   Close Project
+   Google Login
+   Global Replacement
+   Undo Global Replace
+   Upload and Replace
+   Find and Replace
+   Save to Cloud
+   Sync from Cloud
+   PDF Preview
+   PDF Download
+   Insert Table
+   To Devanagari
