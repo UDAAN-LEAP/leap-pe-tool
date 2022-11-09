@@ -31,6 +31,7 @@ HEADERS += ./Filters.h \
     $$PWD/dashboard.h \
     $$PWD/editdistance.h \
     $$PWD/globalreplaceworker.h \
+	$$PWD/handlebbox.h \
 	$$PWD/loaddataworker.h \
     $$PWD/loadingspinner.h \
     $$PWD/markRegion.h \
@@ -111,6 +112,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/eddis.cpp \
     $$PWD/editdistance.cpp \
     $$PWD/globalreplaceworker.cpp \
+	$$PWD/handlebbox.cpp \
 	$$PWD/loaddataworker.cpp \
     $$PWD/loadingspinner.cpp \
     $$PWD/markRegion.cpp \

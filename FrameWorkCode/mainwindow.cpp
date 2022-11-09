@@ -1851,7 +1851,8 @@ void MainWindow::SaveFile_GUI_Postprocessing()
 //        filterHtml(&sFile);
         //Inserting back bbox info
 //        bboxInsertion(&sFile);
-		insertBboxes(&sFile);
+//		insertBboxes(&sFile);
+		handleBbox->insertBboxes(&sFile);
     }
 
     //! Converting html output into plain text.
@@ -7787,7 +7788,19 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
         out.flush();
         f->close();
 
-		loadHtmlInDoc(f);
+		if (handleBbox != nullptr) {
+			delete handleBbox;
+		}
+		handleBbox = new HandleBbox();
+		QTextDocument *curDoc = handleBbox->loadFileInDoc(f);
+		if (curDoc == nullptr) {
+			qDebug() << "Cannot load file";
+			return;
+		}
+		curDoc = curDoc->clone(static_cast<QObject*>(b));
+		b->setDocument(curDoc);
+		doc = b->document();
+//		loadHtmlInDoc(f);
         preprocessing(); //for removing dangling mathras
 		connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
 		blockCount = b->document()->blockCount();
@@ -10060,181 +10073,180 @@ qDebug()<<"File opened...";
 }
 
 
-void MainWindow::loadHtmlInDoc(QFile *fq)
-{
-	QTextCursor cur(doc);
-	if (!fq->open(QIODevice::ReadOnly | QIODevice::Text)) {
-		qDebug() << "Cannot open file";
-		return;
-	}
-	QString line;
-	int flag_ = 0;
-	QString inputText = "";
+//void MainWindow::loadHtmlInDoc(QFile *fq)
+//{
+//	QTextCursor cur(doc);
+//	if (!fq->open(QIODevice::ReadOnly | QIODevice::Text)) {
+//		qDebug() << "Cannot open file";
+//		return;
+//	}
+//	QString line;
+//	int flag_ = 0;
+//	QString inputText = "";
 
-//	QDir::setCurrent("/home/ajit/Internship/test_bbox/");
+////	QDir::setCurrent("/home/ajit/Internship/test_bbox/");
 
-	while(!fq->atEnd()) {
-		line=fq->readLine();
-		line = line.simplified();
-		QStringList l = line.split(" ");
-//		qDebug()<<"data line = "<<l;
-		for(int i=0; i<l.size(); i++){
-			//for parsing p tags
-			if((l[i].contains("<p") && flag_ != 2) || flag_ == 1){
-				flag_ = 1;
-				while(i<l.size() && !l[i].contains("</p>")){
-//					qDebug()<<l[i];
-					inputText += l[i];
-					inputText += " ";
-					i++;
-				}
-				if(i == l.size())
-					i = i-1;
-				if(l[i].contains("</p>")){
-					flag_ = 0;
-//					qDebug()<<l[i];
-					inputText += l[i];
-					inputText += " ";
-					cur.insertBlock();
-					cur.insertHtml(inputText);
-					inputText = "";
-				}
-			}
+//	while(!fq->atEnd()) {
+//		line=fq->readLine();
+//		line = line.simplified();
+//		QStringList l = line.split(" ");
+////		qDebug()<<"data line = "<<l;
+//		for(int i=0; i<l.size(); i++){
+//			//for parsing p tags
+//			if((l[i].contains("<p") && flag_ != 2) || flag_ == 1){
+//				flag_ = 1;
+//				while(i<l.size() && !l[i].contains("</p>")){
+////					qDebug()<<l[i];
+//					inputText += l[i];
+//					inputText += " ";
+//					i++;
+//				}
+//				if(i == l.size())
+//					i = i-1;
+//				if(l[i].contains("</p>")){
+//					flag_ = 0;
+////					qDebug()<<l[i];
+//					inputText += l[i];
+//					inputText += " ";
+//					cur.insertBlock();
+//					cur.insertHtml(inputText);
+//					inputText = "";
+//				}
+//			}
 
-			//for parsing table tags
-			else if(l[i].contains("<table") || flag_ == 2){
-				flag_ = 2;
-				while(i<l.size() && !l[i].contains("</table>")){
-//					qDebug()<<l[i];
-					inputText += l[i];
-					inputText += " ";
-					i++;
-				}
-				if(i == l.size())
-					i = i-1;
-				if(l[i].contains("</table>")){
-					flag_ = 0;
-//					qDebug()<<l[i];
-					inputText += l[i];
-					inputText += " ";
-					cur.insertBlock();
-					cur.insertHtml(inputText);
-					inputText = "";
-				}
+//			//for parsing table tags
+//			else if(l[i].contains("<table") || flag_ == 2){
+//				flag_ = 2;
+//				while(i<l.size() && !l[i].contains("</table>")){
+////					qDebug()<<l[i];
+//					inputText += l[i];
+//					inputText += " ";
+//					i++;
+//				}
+//				if(i == l.size())
+//					i = i-1;
+//				if(l[i].contains("</table>")){
+//					flag_ = 0;
+////					qDebug()<<l[i];
+//					inputText += l[i];
+//					inputText += " ";
+//					cur.insertBlock();
+//					cur.insertHtml(inputText);
+//					inputText = "";
+//				}
 
-			}
+//			}
 
-			//for parsing image tags
-			else if(l[i].contains("<img") || flag_ == 3){
-				flag_ = 3;
-				while(i<l.size() && !l[i].contains(">")){
-//					qDebug()<<l[i];
-					inputText += l[i];
-					inputText += " ";
-					i++;
-				}
-				if(i == l.size())
-					i = i-1;
-				if(l[i].contains(">")){
-					flag_ = 0;
-//					qDebug()<<l[i];
-					inputText += l[i];
-					inputText += " ";
-//					qDebug() << inputText;
-					cur.insertBlock();
-					cur.insertHtml(inputText);
-					inputText = "";
-				}
-			}
+//			//for parsing image tags
+//			else if(l[i].contains("<img") || flag_ == 3){
+//				flag_ = 3;
+//				while(i<l.size() && !l[i].contains(">")){
+////					qDebug()<<l[i];
+//					inputText += l[i];
+//					inputText += " ";
+//					i++;
+//				}
+//				if(i == l.size())
+//					i = i-1;
+//				if(l[i].contains(">")){
+//					flag_ = 0;
+////					qDebug()<<l[i];
+//					inputText += l[i];
+//					inputText += " ";
+////					qDebug() << inputText;
+//					cur.insertBlock();
+//					cur.insertHtml(inputText);
+//					inputText = "";
+//				}
+//			}
 
-		}
-		if(flag_ ==1 || flag_ == 2) {
-//			qDebug()<<"\n";
-			inputText += "\n";
-		}
-	}
+//		}
+//		if(flag_ ==1 || flag_ == 2) {
+////			qDebug()<<"\n";
+//			inputText += "\n";
+//		}
+//	}
 
-	cur = QTextCursor(doc->findBlockByNumber(0));
-	cur.select(QTextCursor::BlockUnderCursor);
-	cur.deleteChar();
-	fq->close();
+//	cur = QTextCursor(doc->findBlockByNumber(0));
+//	cur.select(QTextCursor::BlockUnderCursor);
+//	cur.deleteChar();
+//	fq->close();
 
-	storeBboxes(fq);
-}
+//	storeBboxes(fq);
+//}
 
-void MainWindow::storeBboxes(QFile *file)
-{
-	if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
-		return;
-	}
+//void MainWindow::storeBboxes(QFile *file)
+//{
+//	if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
+//		return;
+//	}
 
-	QTextStream st(file);
-	QString initial = st.readAll();
-	file->close();
-	bboxes.clear();
+//	QTextStream st(file);
+//	QString initial = st.readAll();
+//	file->close();
+//	bboxes.clear();
 
-	QRegularExpression rex("(<p[^>]*>|<img[^>]*>|<table[^>]*>|</table>|<td[^>]*>)");
-    QRegularExpressionMatchIterator itr;
+//	QRegularExpression rex("(<p[^>]*>|<img[^>]*>|<table[^>]*>|</table>|<td[^>]*>)");
+//    QRegularExpressionMatchIterator itr;
 
-    itr = rex.globalMatch(initial);
+//    itr = rex.globalMatch(initial);
 
-    QString temp_tags;
-	bool inTable = false;
+//    QString temp_tags;
+//	bool inTable = false;
 
-	while (itr.hasNext())
-	{
-		QRegularExpressionMatch match = itr.next();
-		QString bbox_tags = match.captured(1);
+//	while (itr.hasNext())
+//	{
+//		QRegularExpressionMatch match = itr.next();
+//		QString bbox_tags = match.captured(1);
 
-		int first, last;
-		first = bbox_tags.indexOf("bbox");
-		if ((bbox_tags.indexOf("title=\"bbox") == -1) || (first == -1)) { // If bbox tag is not present
-			temp_tags = "";
-		} else { // If bbox tag is present
-			int i = first;
-			while (bbox_tags[i] != "\"") {
-				i++;
-			}
-			last = i - 1;
-			temp_tags = bbox_tags.mid(first, last - first + 1);
-			temp_tags = temp_tags.simplified();
-
-//			last = bbox_tags.indexOf(">");
-//			temp_tags = bbox_tags.mid(first,last-first);
+//		int first, last;
+//		first = bbox_tags.indexOf("bbox");
+//		if ((bbox_tags.indexOf("title=\"bbox") == -1) || (first == -1)) { // If bbox tag is not present
+//			temp_tags = "";
+//		} else { // If bbox tag is present
+//			int i = first;
+//			while (bbox_tags[i] != "\"") {
+//				i++;
+//			}
+//			last = i - 1;
+//			temp_tags = bbox_tags.mid(first, last - first + 1);
 //			temp_tags = temp_tags.simplified();
-		}
 
-		/*! @todo
-		 * 1. If images are inside tables
-		 * 2. If multiple lines are there in one cell of table i.e. if there are multiple paragraphs in one table cell
-		 */
+////			last = bbox_tags.indexOf(">");
+////			temp_tags = bbox_tags.mid(first,last-first);
+////			temp_tags = temp_tags.simplified();
+//		}
 
-		if(bbox_tags.left(2) == "<i") {
-			bboxes.push_back({"img",temp_tags});
-		} else if(bbox_tags.left(2) == "<p" && (!inTable)) {
-			bboxes.push_back({"p",temp_tags});
-		} else if (bbox_tags.left(3) == "<td") {
-			bboxes.push_back({"td", temp_tags});
-		} else if (bbox_tags.left(6) == "<table") { // Table start
-			inTable = true;
-			bboxes.push_back({"table", temp_tags});
-		} else if (bbox_tags.left(7) == "</table") {
-			inTable = false;
-			bboxes.push_back({"/table", temp_tags});
-		}
-	}
-//	qDebug() << bboxes;
-//	qDebug() << "size: " << bboxes.size();
-}
+//		/*! @todo
+//		 * 1. If images are inside tables
+//		 * 2. If multiple lines are there in one cell of table i.e. if there are multiple paragraphs in one table cell
+//		 */
+
+//		if(bbox_tags.left(2) == "<i") {
+//			bboxes.push_back({"img",temp_tags});
+//		} else if(bbox_tags.left(2) == "<p" && (!inTable)) {
+//			bboxes.push_back({"p",temp_tags});
+//		} else if (bbox_tags.left(3) == "<td") {
+//			bboxes.push_back({"td", temp_tags});
+//		} else if (bbox_tags.left(6) == "<table") { // Table start
+//			inTable = true;
+//			bboxes.push_back({"table", temp_tags});
+//		} else if (bbox_tags.left(7) == "</table") {
+//			inTable = false;
+//			bboxes.push_back({"/table", temp_tags});
+//		}
+//	}
+////	qDebug() << bboxes;
+////	qDebug() << "size: " << bboxes.size();
+//}
 
 void MainWindow::blockCountChanged(int numOfBlocks)
 {
-//	qDebug() << "number of blocks: " << doc->blockCount();
 	QTextCursor cur = curr_browser->textCursor();
 	int currentBlockNum = cur.blockNumber();
 	QPair<QString, QString> bbox_value;
 
-	if (numOfBlocks > blockCount) {
+	if (numOfBlocks > handleBbox->blockCount) {
 		if (currentBlockNum == 0) {
 			bbox_value = bboxes[0];
 			for (int i = 0; i < (numOfBlocks - blockCount); i++) {
@@ -10242,21 +10254,17 @@ void MainWindow::blockCountChanged(int numOfBlocks)
 			}
 		} else {
 			int pos = currentBlockNum - (numOfBlocks - blockCount);
-			qDebug() << "pos = " << pos;
 			bbox_value = bboxes[pos];
 			bbox_value.first = "p";
 			for (int i = 0; i < (numOfBlocks - blockCount); i++) {
 				bboxes.insert(pos + 1, bbox_value);
 			}
 		}
-//		bboxes.insert(currentBlockNum, bbox_value);
 	} else if (numOfBlocks < blockCount) {
 		int pos;
 		if (cur.atBlockEnd()) {
-//			bboxes.remove(currentBlockNum + 1);
 			pos = currentBlockNum + 1;
 		} else if (cur.atBlockStart()) {
-//			bboxes.remove(currentBlockNum);
 			pos = currentBlockNum;
 		}
 
@@ -10264,91 +10272,90 @@ void MainWindow::blockCountChanged(int numOfBlocks)
 			bboxes.remove(pos);
 		}
 	}
-//	qDebug() << bboxes;
 	blockCount = numOfBlocks;
 }
 
 
-void MainWindow::insertBboxes(QFile *fptr)
-{
-//	qDebug() << "number of blocks = " << doc->blockCount();
-//	qDebug() << "size of bboxes = " << bboxes.size();
-	if (!fptr->open(QIODevice::ReadOnly | QIODevice::Text)) {
-		qDebug() << "Cannot open file for writing";
-		return;
-	}
-	QString input = fptr->readAll();
-	fptr->close();
-	QRegularExpression regex_p("(<p[^>]*>|</p>|<img[^>]*>|<table[^>]*>|<td[^>]*>|</table>)");
-	QRegularExpressionMatchIterator itr = regex_p.globalMatch(input);
+//void MainWindow::insertBboxes(QFile *fptr)
+//{
+////	qDebug() << "number of blocks = " << doc->blockCount();
+////	qDebug() << "size of bboxes = " << bboxes.size();
+//	if (!fptr->open(QIODevice::ReadOnly | QIODevice::Text)) {
+//		qDebug() << "Cannot open file for writing";
+//		return;
+//	}
+//	QString input = fptr->readAll();
+//	fptr->close();
+//	QRegularExpression regex_p("(<p[^>]*>|</p>|<img[^>]*>|<table[^>]*>|<td[^>]*>|</table>)");
+//	QRegularExpressionMatchIterator itr = regex_p.globalMatch(input);
 
-	int i = 0;
-	bool inTable = false;
-	bool inPara = false;
-	int increment = 0;
-	QString currentTag;
-	while (itr.hasNext() && i < bboxes.size()) {
-		QRegularExpressionMatch match = itr.next();
-		QString htmlTagData = match.captured(1);
-		int end = match.capturedEnd(1);
+//	int i = 0;
+//	bool inTable = false;
+//	bool inPara = false;
+//	int increment = 0;
+//	QString currentTag;
+//	while (itr.hasNext() && i < bboxes.size()) {
+//		QRegularExpressionMatch match = itr.next();
+//		QString htmlTagData = match.captured(1);
+//		int end = match.capturedEnd(1);
 
-		// If bbox is already present, move to next entry
-		if (htmlTagData.indexOf("title=\"bbox") != -1) {
-			i++;
-			continue;
-		}
+//		// If bbox is already present, move to next entry
+//		if (htmlTagData.indexOf("title=\"bbox") != -1) {
+//			i++;
+//			continue;
+//		}
 
-		if (htmlTagData.left(6) == "<table") {
-			inTable = true;
-			currentTag = "table";
-		} else if (htmlTagData.left(7) == "</table") {
-			inTable = false;
-			currentTag = "/table";
-			continue;
-		} else if (htmlTagData.left(4) == "<img") {
-			if (inPara) {
-				i--;
-			}
-			currentTag = "img";
-		} else if (htmlTagData.left(3) == "<td") {
-			currentTag = "td";
-		} else if (htmlTagData.left(2) == "<p") {
-			if (inTable) {
-				continue;
-			}
-			currentTag = "p";
-			inPara = true;
-		} else if (htmlTagData.left(3) == "</p") {
-			inPara = false;
-			continue;
-		}
+//		if (htmlTagData.left(6) == "<table") {
+//			inTable = true;
+//			currentTag = "table";
+//		} else if (htmlTagData.left(7) == "</table") {
+//			inTable = false;
+//			currentTag = "/table";
+//			continue;
+//		} else if (htmlTagData.left(4) == "<img") {
+//			if (inPara) {
+//				i--;
+//			}
+//			currentTag = "img";
+//		} else if (htmlTagData.left(3) == "<td") {
+//			currentTag = "td";
+//		} else if (htmlTagData.left(2) == "<p") {
+//			if (inTable) {
+//				continue;
+//			}
+//			currentTag = "p";
+//			inPara = true;
+//		} else if (htmlTagData.left(3) == "</p") {
+//			inPara = false;
+//			continue;
+//		}
 
-		if (bboxes[i].first != currentTag) {
-			qDebug() << "tags not matching at " << i;
-		}
-		QString temp = " title=\"" + bboxes[i++].second + "\"";
-		increment += temp.length();
+//		if (bboxes[i].first != currentTag) {
+//			qDebug() << "tags not matching at " << i;
+//		}
+//		QString temp = " title=\"" + bboxes[i++].second + "\"";
+//		increment += temp.length();
 
-		if (currentTag == "img") {
-			input.insert(end - 2, temp);
-		} else {
-			input.insert(end - 1, temp);
-		}
+//		if (currentTag == "img") {
+//			input.insert(end - 2, temp);
+//		} else {
+//			input.insert(end - 1, temp);
+//		}
 
-		itr = regex_p.globalMatch(input, end + 1);
-	}
+//		itr = regex_p.globalMatch(input, end + 1);
+//	}
 
-	if (!fptr->open(QIODevice::WriteOnly | QIODevice::Text)) {
-		qDebug() << "Cannot open file for writing";
-		return;
-	}
+//	if (!fptr->open(QIODevice::WriteOnly | QIODevice::Text)) {
+//		qDebug() << "Cannot open file for writing";
+//		return;
+//	}
 
-	QTextStream out(fptr);
-	out.setCodec("utf-8");
-	out << input;
-	out.flush();
-	fptr->close();
-}
+//	QTextStream out(fptr);
+//	out.setCodec("utf-8");
+//	out << input;
+//	out.flush();
+//	fptr->close();
+//}
 
 
 

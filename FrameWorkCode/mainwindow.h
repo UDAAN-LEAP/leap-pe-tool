@@ -58,6 +58,7 @@
 #include <QScrollBar>
 
 #include "customtextbrowser.h"
+#include "handlebbox.h"
 
 //#include <set>
 using namespace std;
@@ -490,13 +491,13 @@ public slots:
 
     void focusInEvent(QFocusEvent *e) ;
 
-	void loadHtmlInDoc(QFile *);
+//	void loadHtmlInDoc(QFile *);
 
 	void blockCountChanged(int);
 
-	void storeBboxes(QFile *);
+//	void storeBboxes(QFile *);
 
-	void insertBboxes(QFile *);
+//	void insertBboxes(QFile *);
     void authenticate();
     void preprocessing();
 
@@ -544,6 +545,7 @@ private:
 
 	int currentZoomLevel = 100;
 
+	HandleBbox *handleBbox = nullptr;
 	QVector<QPair<QString,QString> > bboxes;
 	int blockCount = -1;
     GlobalReplaceDialog *currentGlobalReplaceDialog = nullptr;
