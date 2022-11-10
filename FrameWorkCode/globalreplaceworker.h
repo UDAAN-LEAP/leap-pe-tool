@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QMap>
+#include "handlebbox.h"
 
 class QTextBrowser;
 
@@ -48,6 +49,8 @@ private:
 
     int writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap, QTextBrowser* browser);
     bool isStringInFile(QString file_path, QString searchString);
+    HandleBbox *handleBbox = nullptr;
+    QTextDocument *doc;
 
     //int pairMap;
 public slots:
