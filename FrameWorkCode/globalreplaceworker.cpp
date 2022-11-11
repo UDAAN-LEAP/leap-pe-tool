@@ -54,16 +54,31 @@ GlobalReplaceWorker::GlobalReplaceWorker(QObject *parent,
     editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
 }
 
+
 int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QString, QString> globalReplacementMap, QTextBrowser *browser)
 {
-    //save bbox information of files
-    if(file_path.endsWith(".html")){
-        saveBboxInfo(file_path);
-    }
     // if any file other than html is passed, just return back
-    if(!file_path.endsWith(".html")){ //|| file_path.endsWith(gCurrentPageName)
+    if(!file_path.endsWith(".html")){
         return 0;
     }
+    if (handleBbox != nullptr) {
+        delete handleBbox;
+    }
+    browser->clear();
+    QFile *file = new QFile(file_path);
+    handleBbox = new HandleBbox();
+    QTextDocument *curDoc = handleBbox->loadFileInDoc(file);
+    if (curDoc == nullptr) {
+        qDebug() << "Cannot load file";
+        return 0;
+    }
+    curDoc = curDoc->clone(static_cast<QObject*>(browser));
+    browser->setDocument(curDoc);
+    doc = browser->document();
+    //save bbox information of files
+//    if(file_path.endsWith(".html")){
+//        saveBboxInfo(file_path);
+//    }
     QMap <QString, QString> sentencesReplaced;
     QMap <QString, QString>::iterator grmIterator;
     QFile f(file_path);
@@ -81,9 +96,9 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
 
     //create new text browser for html files(such that replacement works on text instead of html)
 //    QTextBrowser * browser = new QTextBrowser();
-	browser->clear();
+
 //	browser->setReadOnly(false);
-    browser->setHtml(s1);
+ //   browser->setHtml(s1);
 
     QString replacementString1;
     //!Replacing words by iterating the map
@@ -200,7 +215,8 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
     f.flush();
     f.close();
 //    browser->close();
-    bboxInsertion(file_path);
+   // bboxInsertion(file_path);
+    handleBbox->insertBboxes(file);
     return tot_replaced;
 }
 

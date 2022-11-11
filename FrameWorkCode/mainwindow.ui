@@ -1018,6 +1018,7 @@ QMenu::item:selected{
      <addaction name="actionInsert_Rowbelow"/>
      <addaction name="actionRemove_Column"/>
      <addaction name="actionRemove_Row"/>
+     <addaction name="actionMerge_Cells"/>
     </widget>
     <addaction name="actionAllFontProperties"/>
     <addaction name="actionUnBold"/>
@@ -2064,6 +2065,11 @@ background-color: #EEF0F2;
   <action name="actionClose_project">
    <property name="text">
     <string>Close project</string>
+   </property>
+  </action>
+  <action name="actionMerge_Cells">
+   <property name="text">
+    <string>Merge Cells</string>
    </property>
   </action>
  </widget>
