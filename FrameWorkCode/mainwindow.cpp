@@ -8674,6 +8674,7 @@ void MainWindow::on_actionas_PDF_triggered()
     printer.setPaperSize(QPrinter::A4);
     printer.setPageMargins(QMarginsF(5, 5, 5, 5));
 	printer.setOutputFileName(gDirTwoLevelUp + "/print.pdf");
+	printer.setOutputFormat(QPrinter::NativeFormat);
 
 	QPrintDialog printDialog(&printer, this);
 
