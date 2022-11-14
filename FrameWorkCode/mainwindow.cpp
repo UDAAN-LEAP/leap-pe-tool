@@ -245,7 +245,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     gHindi+= "ग़् - $,, ऩ् - %,, ऑ - Z,, ऱ् - V,, ज़ - F,, ड़्/ड़ -x/xa,, ढ़्/ढ़  - X/Xa,, य़्  - &,, क़ - @,, ख़ - #,, फ़् - ^,, ॅ - *,, ,, ,, ";
     gHindi += common;
     gHindi.replace(",, ", "\n");
-    QFont font("Shobhika-Regular");
+    QFont font("Chandas");
     font.setWeight(14);
     font.setPointSize(12);
     ui->textEdit->setFont(font);
@@ -6390,10 +6390,10 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
     CustomTextBrowser * browser = new CustomTextBrowser();
     browser->setReadOnly(false);
 
-    QFont font("Shobhika-Regular");
+    QFont font("Chandas");
     font.setWeight(16);
     font.setPointSize(16);
-    font.setFamily("Shobhika");
+//    font.setFamily("Shobhika");
     browser->setFont(font);
     browser->setHtml(s1);
 
@@ -7708,7 +7708,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     QTextStream stream(f);
     stream.setCodec("UTF-8");
     QString input = stream.readAll();
-    QFont font("Shobhika Regular");
+    QFont font("Chandas");
     setWindowTitle(name);
     font.setPointSize(16);
     if(ext == "txt") {
@@ -7725,10 +7725,10 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
         QString qstrHtml = QString::fromStdString(strHtml);
         qstrHtml.replace("<br /></p>", "</p>");
 
-        QFont font("Shobhika-Regular");
+        QFont font("Chandas");
         font.setWeight(16);
         font.setPointSize(16);
-        font.setFamily("Shobhika");
+//        font.setFamily("Shobhika");
         b->setFont(font);
         b->setHtml(qstrHtml);
     }
@@ -7801,7 +7801,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 		b->setDocument(curDoc);
 		doc = b->document();
 //		loadHtmlInDoc(f);
-        preprocessing(); //for removing dangling mathras
+//        preprocessing(); //for removing dangling mathras
 		connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
 		blockCount = b->document()->blockCount();
 		if (!f->open(QIODevice::ReadOnly | QIODevice::Text)) {
