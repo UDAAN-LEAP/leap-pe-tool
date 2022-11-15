@@ -7205,9 +7205,6 @@ void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
                    QString qstr = QString::fromStdString(string2);
                    dict_set1.insert(qstr);
                }
-               foreach(auto &x,dict_set1){
-                   //qDebug()<<x;
-               }
 
           }
     }
@@ -7229,18 +7226,13 @@ void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
 
         while(numReplaced<count)
         {
-            if(x.size()<count){
-                break;
-            }
+//            if(x.size()<count){
+//                break;
+//            }
             int endIndex;
             indexOfReplacedWord = input.indexOf(x,from , Qt::CaseInsensitive);
             endIndex = indexOfReplacedWord;
-//            qDebug() << indexOfReplacedWord << " " <<endIndex;
-//            while(input[endIndex]!=" ")
-//                endIndex++;
-            //qDebug() << indexOfReplacedWord << " " <<endIndex;
             int len = x.length();
-            //qDebug()<<x<<x.length()<<endl;
 
             while(len > 0)
             {
@@ -7261,13 +7253,9 @@ void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
 
             QString test1=input.at(start);
             QString test2=input.at(endIndex);
-
-            //qDebug()<<"input[start-1]="<<input[start];
-            //qDebug()<<"input[endIndex]="<<input[endIndex];
             if((input[endIndex] == " " || test2.contains(regex)) && (input[start] == " " || test1.contains(regex))){
                 flag=1;
             }
-            //qDebug()<<"flag : "<<flag;
 
             if(flag==1)
             {
