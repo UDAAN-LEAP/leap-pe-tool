@@ -1,3 +1,6 @@
+
+
+
 /*!
   \class mainwWindow.cpp
  */
@@ -5392,7 +5395,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         }
         else
         {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
             return;
         }
 
@@ -5430,20 +5433,20 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
                         mProject.set_version( mProject.get_version().toInt() - 1 );
                     }
                    // mProject.set_stage_verifier();
-                    QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+                    QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
                     return;
                 }
             }
             else {
                 // user entered nothing or pressed Cancel
-                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+                QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
                 return;
             }
             mProject.set_verifier();
         }
         else
         {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
             return;
         }
 
@@ -5460,7 +5463,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
     }
     else
     {
-        QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
+        QMessageBox::critical(0, "Turn In Error", "Please Open Project Before Turning In");
     }
 }
 
