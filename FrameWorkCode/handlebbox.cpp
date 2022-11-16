@@ -1,21 +1,30 @@
 #include "handlebbox.h"
 
-#include <QFile>
-#include <QTextCursor>
-#include <QTextStream>
-#include <QRegularExpression>
-#include <QTextDocument>
-#include <QDebug>
-#include <QTextBlock>
+//#include <QFile>
+//#include <QTextCursor>
+//#include <QTextStream>
+//#include <QRegularExpression>
+//#include <QTextDocument>
+//#include <QDebug>
+//#include <QTextBlock>
 
 HandleBbox::HandleBbox()
 {
 	this->doc = new QTextDocument();
+	this->docIsPassed = true;
+}
+
+HandleBbox::HandleBbox(QTextDocument* doc)
+{
+	this->doc = doc;
+	this->docIsPassed = false;
 }
 
 HandleBbox::~HandleBbox()
 {
-	delete doc;
+	if (docIsPassed) {
+		delete doc;
+	}
 }
 
 QTextDocument *HandleBbox::loadFileInDoc(QFile *f)

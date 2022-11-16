@@ -47,10 +47,11 @@ private:
     QString editedFilesLogPath;
     int numOfChangedWords, check, *r1, *r2, *x1, *files;
 
-    int writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap, QTextBrowser* browser);
+    //int writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap, QTextBrowser* browser, QTextDocument* doc);
+    int writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap, QTextDocument* doc);
     bool isStringInFile(QString file_path, QString searchString);
     HandleBbox *handleBbox = nullptr;
-    QTextDocument *doc;
+    //QTextDocument *doc;
 
     //int pairMap;
 public slots:

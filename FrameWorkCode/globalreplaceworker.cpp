@@ -54,27 +54,29 @@ GlobalReplaceWorker::GlobalReplaceWorker(QObject *parent,
     editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
 }
 
-
-int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QString, QString> globalReplacementMap, QTextBrowser *browser)
+int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QString, QString> globalReplacementMap, QTextDocument *doc)
 {
     // if any file other than html is passed, just return back
+    doc->clear();
     if(!file_path.endsWith(".html")){
         return 0;
     }
     if (handleBbox != nullptr) {
         delete handleBbox;
     }
-    browser->clear();
+    //browser->clear();
     QFile *file = new QFile(file_path);
-    handleBbox = new HandleBbox();
+    handleBbox = new HandleBbox(doc);
     QTextDocument *curDoc = handleBbox->loadFileInDoc(file);
+    //QTextDocument* curDoc = doc;
     if (curDoc == nullptr) {
         qDebug() << "Cannot load file";
         return 0;
     }
-    curDoc = curDoc->clone(static_cast<QObject*>(browser));
-    browser->setDocument(curDoc);
-    doc = browser->document();
+    //qDebug() << "doc html: " << doc->toHtml();
+    //curDoc = curDoc->clone(static_cast<QObject*>(browser));
+    //browser->setDocument(curDoc);
+    //doc = browser->document();
     //save bbox information of files
 //    if(file_path.endsWith(".html")){
 //        saveBboxInfo(file_path);
@@ -137,7 +139,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
             QString::fromStdString(str).toUtf8();
             replacementString1 = QString::fromStdString(str);
             (*mapOfReplacements)[grmIterator.value()] = grmIterator.key().first.trimmed();
-            browser->moveCursor(QTextCursor::Start);
+            //browser->moveCursor(QTextCursor::Start);
 
             QRegularExpression re(sanstr);
             //Code to highlight replaced words only; finding sentence1 -sentence2
@@ -148,30 +150,63 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
             }
             replaced_sen = replaced_sen.simplified();
             qDebug() <<"original :"<<sanstr;
-            while(browser->find(re))
-            {
-                qDebug()<<":found in browser";
-                QTextCursor cursor = browser->textCursor(); //get the cursor
-                QTextCharFormat fmt;
-                int pos = cursor.position(); //get the cursor position
-                int ancr = pos - replacementString.size() + 1; //anchor is now cursor position - length of old word to be replaced
-                if (pos < ancr) {
-                    cursor.setPosition(pos, QTextCursor::MoveAnchor);
-                    cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+            QTextCursor docCursor(doc);
+            docCursor.movePosition(QTextCursor::Start, QTextCursor::MoveAnchor);
+            int startPos = 0;
+
+            while (true) {
+                QTextCursor cur = doc->find(re, startPos, QTextDocument::FindWholeWords);
+                QTextCursor origCur(cur);
+                if (cur.isNull()) {
+                    break;
                 }
-                fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
-                replacementString1 = replacementString1.simplified();
+
+                QTextCharFormat fmt;
+                startPos = cur.position() + 1;
+                int pos = cur.position(); // get the cursor position
+                int ancr = pos - replacementString.size() + 1; // anchor is now cursor position - length of old word to be replaced
+
+                if (pos < ancr) {
+                    cur.setPosition(pos, QTextCursor::MoveAnchor);
+                    cur.setPosition(ancr, QTextCursor::KeepAnchor);
+                }
+                fmt = cur.charFormat(); // get the QTextCharFormat of old/word phrase to be replaced
+                replacementString1 = replacementString.simplified();
                 QString final_str = replacementString1;
-                final_str = final_str.replace(replaced_sen,"<span style = \"background-color:#ffff00;\">"+replaced_sen+"</span>");
-                browser->textCursor().insertHtml(final_str);
-                cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
-                pos = cursor.position();
-                ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
-                cursor.setPosition(pos, QTextCursor::MoveAnchor);
-                cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
-                tot_replaced = tot_replaced + 1;
-                sentencesReplaced.insert(sanstr,replacementString1); // to keep track of changed sentences
+                final_str = final_str.replace(replaced_sen, "<span style = \"background-color:#ffff00;\">" + replaced_sen + "</span>");
+                origCur.insertHtml(final_str);
+                cur.setPosition(origCur.position());
+                pos = cur.position();
+                ancr = pos - replacementString1.size();
+                cur.setPosition(pos, QTextCursor::MoveAnchor);
+                cur.mergeCharFormat(fmt); // apply the text properties captured earlier
+                tot_replaced += 1;
+                sentencesReplaced.insert(sanstr, replacementString1);
             }
+            //while(browser->find(re))
+            //{
+            //    qDebug()<<":found in browser";
+            //    QTextCursor cursor = browser->textCursor(); //get the cursor
+            //    QTextCharFormat fmt;
+            //    int pos = cursor.position(); //get the cursor position
+            //    int ancr = pos - replacementString.size() + 1; //anchor is now cursor position - length of old word to be replaced
+            //    if (pos < ancr) {
+            //        cursor.setPosition(pos, QTextCursor::MoveAnchor);
+            //        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+            //    }
+            //    fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
+            //    replacementString1 = replacementString1.simplified();
+            //    QString final_str = replacementString1;
+            //    final_str = final_str.replace(replaced_sen,"<span style = \"background-color:#ffff00;\">"+replaced_sen+"</span>");
+            //    browser->textCursor().insertHtml(final_str);
+            //    cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
+            //    pos = cursor.position();
+            //    ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
+            //    cursor.setPosition(pos, QTextCursor::MoveAnchor);
+            //    cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
+            //    tot_replaced = tot_replaced + 1;
+            //    sentencesReplaced.insert(sanstr,replacementString1); // to keep track of changed sentences
+            //}
         }
     }
     else
@@ -187,30 +222,58 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
             QString::fromStdString(str).toUtf8();
             replacementString1 = QString::fromStdString(str);
             (*mapOfReplacements)[grmIterator.key()] = grmIterator.value().trimmed();
-            browser->moveCursor(QTextCursor::Start);
-            while(browser->find(re))
-            {
-                QTextCursor cursor = browser->textCursor(); //get the cursor
+            //browser->moveCursor(QTextCursor::Start);
+            QTextCursor docCursor(doc);
+            docCursor.movePosition(QTextCursor::Start, QTextCursor::MoveAnchor);
+
+            int startPos = 0;
+            while (true) {
+                QTextCursor cur = doc->find(re, startPos, QTextDocument::FindWholeWords);
+                QTextCursor origCur(cur);
+                if (cur.isNull()) {
+                    break;
+                }
                 QTextCharFormat fmt;
-                int pos = cursor.position(); //get the cursor position
+                startPos = cur.position() + 1;
+                int pos = cur.position(); //get the cursor position
                 int ancr = pos - replacementString.size() + 1; //anchor is now cursor position - length of old word to be replaced
                 if (pos < ancr) {
-                    cursor.setPosition(pos, QTextCursor::MoveAnchor);
-                    cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+                    cur.setPosition(pos, QTextCursor::MoveAnchor);
+                    cur.setPosition(ancr, QTextCursor::KeepAnchor);
                 }
-                fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
-                browser->textCursor().insertHtml("<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
-                cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
-                pos = cursor.position();
+                fmt = cur.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
+                origCur.insertHtml("<span style = \"background-color:#ffff00;\">" + replacementString1 + "</span>");
+                pos = cur.position();
                 ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
-                cursor.setPosition(pos, QTextCursor::MoveAnchor);
-                cursor.setPosition(ancr, QTextCursor::KeepAnchor);
-                cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
-                tot_replaced = tot_replaced + 1;
+                cur.setPosition(pos, QTextCursor::MoveAnchor);
+                cur.setPosition(ancr, QTextCursor::KeepAnchor);
+                cur.mergeCharFormat(fmt); //apply the text properties captured earlier
+                tot_replaced += 1;
             }
+            //while(browser->find(re))
+            //{
+            //    QTextCursor cursor = browser->textCursor(); //get the cursor
+            //    QTextCharFormat fmt;
+            //    int pos = cursor.position(); //get the cursor position
+            //    int ancr = pos - replacementString.size() + 1; //anchor is now cursor position - length of old word to be replaced
+            //    if (pos < ancr) {
+            //        cursor.setPosition(pos, QTextCursor::MoveAnchor);
+            //        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+            //    }
+            //    fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
+            //    browser->textCursor().insertHtml("<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
+            //    cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
+            //    pos = cursor.position();
+            //    ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
+            //    cursor.setPosition(pos, QTextCursor::MoveAnchor);
+            //    cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+            //    cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
+            //    tot_replaced = tot_replaced + 1;
+            //}
         }
     }
-    s1 = browser->toHtml();
+    //s1 = browser->toHtml();
+    s1 = doc->toHtml();
     in << s1;
     f.flush();
     f.close();
@@ -222,8 +285,9 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
 
 void GlobalReplaceWorker::replaceWordsInFiles()
 {
-    QTextBrowser *browser = new QTextBrowser();
-    browser->setReadOnly(false);
+    //QTextBrowser *browser = new QTextBrowser();
+    QTextDocument* doc = new QTextDocument();
+    //browser->setReadOnly(false);
     QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
     QDir currDir(currentFileDirectory);
     QString suffix;
@@ -253,13 +317,13 @@ void GlobalReplaceWorker::replaceWordsInFiles()
                 {
                     (*filesChangedUsingGlobalReplace).append(it_file_path);
                     if(suff == "html") {
-                        *r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, browser);
+                        *r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, doc);
                         *r2 = *r2 + *r1;
                         if(*r1 > 0)
                             (*files)++;
                     }
                     else if(suff != "dict"){
-                        *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, browser);
+                        *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, doc);
                     }
                 }
                 count++;
@@ -277,13 +341,13 @@ void GlobalReplaceWorker::replaceWordsInFiles()
                 QString suff = dirIterator.fileInfo().completeSuffix();
                 (*filesChangedUsingGlobalReplace).append(it_file_path);
                 if(suff == "html") {
-                    *r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, browser);
+                    *r1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, doc);
                     *r2 = *r2 + *r1;
                     if(*r1 > 0)
                         (*files)++;
                 }
                 else if(suff != "dict"){
-                    *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, browser);
+                    *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, doc);
                 }
                 count++;
                 int tempPerc = (count * 100) / numberOfFiles;
@@ -306,13 +370,13 @@ void GlobalReplaceWorker::replaceWordsInFiles()
             {
                 (*filesChangedUsingGlobalReplace).append(it_file_path);
                 if(suff == "html") {
-                    *r1 = writeGlobalCPairsToFiles(it_file_path, replaceInUneditedPages_Map, browser);
+                    *r1 = writeGlobalCPairsToFiles(it_file_path, replaceInUneditedPages_Map, doc);
                     *r2 = *r2 + *r1;
                     if(*r1 > 0)
                         (*files)++;
                 }
                 else if(suff != "dict"){
-                    *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, browser);
+                    *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, doc);
                 }
             }
             count++;
@@ -335,13 +399,13 @@ void GlobalReplaceWorker::replaceWordsInFiles()
             QString suff = dirIterator_2.fileInfo().completeSuffix();
             (*filesChangedUsingGlobalReplace).append(it_file_path);
             if(suff == "html") {
-                *r1 = writeGlobalCPairsToFiles(it_file_path, replaceInAllPages_Map, browser);
+                *r1 = writeGlobalCPairsToFiles(it_file_path, replaceInAllPages_Map, doc);
                 *r2 = *r2 + *r1;
                 if(*r1 > 0)
                     (*files)++;
             }
             else if(suff != "dict"){
-                *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, browser);
+                *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, doc);
             }
 
             count++;
@@ -353,7 +417,7 @@ void GlobalReplaceWorker::replaceWordsInFiles()
         }
     }
 
-	browser->close();
+	//browser->close();
 
     emit changeProgressBarValue(100);
     emit finishedReplacingWords();
