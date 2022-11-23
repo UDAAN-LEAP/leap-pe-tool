@@ -1,6 +1,3 @@
-
-
-
 /*!
   \class mainwWindow.cpp
  */
@@ -282,6 +279,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 	QFontDatabase::addApplicationFont(":/Fonts/fonts/Mandali/Mandali Regular.otf");
 	QFontDatabase::addApplicationFont(":/Fonts/fonts/Latha/latha.ttf");
 	QFontDatabase::addApplicationFont(":/Fonts/fonts/Nirmala/Nirmala Regular.ttf");
+	QFontDatabase::addApplicationFont(":/Fonts/fonts/Chandas/chandas.ttf");
 
     if (!isVerifier)
     {
