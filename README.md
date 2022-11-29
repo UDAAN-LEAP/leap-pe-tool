@@ -13,7 +13,7 @@ OS version: Windows 10+
 - [Linux Installation Guide](https://docs.google.com/document/d/15PbeYfdMl1eMypAMoqibG6Z5dxipfx_aZBSAhifTlec/edit)
 - [Download Source](https://drive.google.com/drive/folders/1wgJgJgdPdbUEyFI_z9izXw1tq80p7gKR?usp=sharing)
 
--- Linux (Ubuntu) : Minimum requirements: OS version: Ubuntu 18.04 +
+- Linux (Ubuntu) : Minimum requirements: OS version: Ubuntu 20.04 +
 
 1. Install qt5:
 - $ sudo apt-get install qt5-default
