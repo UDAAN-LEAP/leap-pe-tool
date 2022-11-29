@@ -1019,6 +1019,7 @@ QMenu::item:selected{
      <addaction name="actionRemove_Column"/>
      <addaction name="actionRemove_Row"/>
      <addaction name="actionMerge_Cells"/>
+     <addaction name="actionSplit_Cell"/>
     </widget>
     <addaction name="actionAllFontProperties"/>
     <addaction name="actionUnBold"/>
@@ -1062,6 +1063,9 @@ QMenu::item:selected{
     <addaction name="actionFind_and_Replace"/>
     <addaction name="separator"/>
     <addaction name="actionUndo_Global_Replace"/>
+    <addaction name="separator"/>
+    <addaction name="actionInsert_Bulleted_List"/>
+    <addaction name="actionInsert_Numbered_List"/>
    </widget>
    <widget class="QMenu" name="menuDownload">
     <property name="styleSheet">
@@ -2070,6 +2074,21 @@ background-color: #EEF0F2;
   <action name="actionMerge_Cells">
    <property name="text">
     <string>Merge Cells</string>
+   </property>
+  </action>
+  <action name="actionSplit_Cell">
+   <property name="text">
+    <string>Split Cell</string>
+   </property>
+  </action>
+  <action name="actionInsert_Bulleted_List">
+   <property name="text">
+    <string>Insert Bulleted List</string>
+   </property>
+  </action>
+  <action name="actionInsert_Numbered_List">
+   <property name="text">
+    <string>Insert Numbered List</string>
    </property>
   </action>
  </widget>

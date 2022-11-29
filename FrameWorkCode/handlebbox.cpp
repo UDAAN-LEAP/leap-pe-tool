@@ -39,88 +39,82 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
 	QString inputText = "";
 	while(!f->atEnd()) {
         line = f->readLine();
-//        line = line.simplified();
         QStringList l = line.split(" ");
 
-		for(int i = 0; i < l.size(); i++) {
-			//for parsing p tags
+        for(int i = 0; i < l.size(); i++) {
+            //for parsing p tags
             if((l[i].contains("<p") && flag_ != 2) || flag_ == 1){
-				flag_ = 1;
-				while(i < l.size() && !l[i].contains("</p>")){
-					inputText += l[i];
-					inputText += " ";
-					i++;
-				}
-				if(i == l.size())
-					i = i - 1;
-				if(l[i].contains("</p>")){
-					flag_ = 0;
-					inputText += l[i];
+                flag_ = 1;
+                while(i < l.size() && !l[i].contains("</p>")){
+                    inputText += l[i];
+                    inputText += " ";
+                    i++;
+                }
+                if(i == l.size())
+                    i = i - 1;
+                if(l[i].contains("</p>")){
+                    flag_ = 0;
+                    inputText += l[i];
                     inputText += " ";
                     QTextBlockFormat blockFormat;
-                                    if(inputText.contains("<p align=\"right\"")){
-                                           blockFormat.setAlignment(Qt::AlignRight);
-                      cur.setBlockFormat(blockFormat);
-                                       }
-                   if(inputText.contains("<p align=\"center\"")){
+                    if(inputText.contains("<p align=\"right\"")){
+                        blockFormat.setAlignment(Qt::AlignRight);
+                        cur.setBlockFormat(blockFormat);
+                    }
+                    if(inputText.contains("<p align=\"center\"")){
 
-                    blockFormat.setAlignment(Qt::AlignCenter);
-                      cur.setBlockFormat(blockFormat);
-                                       }
-            if(!inputText.contains("<p align=\"center\"") && !inputText.contains("<p align=\"right\"") ){
+                        blockFormat.setAlignment(Qt::AlignCenter);
+                        cur.setBlockFormat(blockFormat);
+                    }
+                    if(!inputText.contains("<p align=\"center\"") && !inputText.contains("<p align=\"right\"") ){
 
-                                     blockFormat.setAlignment(Qt::AlignLeft);
-                                     cur.setBlockFormat(blockFormat);
-                                   }
+                        blockFormat.setAlignment(Qt::AlignLeft);
+                        cur.setBlockFormat(blockFormat);
+                    }
 
                     cur.insertBlock();
                     cur.insertHtml(inputText);
-                    qDebug()<<inputText;
                     inputText = "";
 
 
                 }
             }
-			//for parsing table tags
-           else if(l[i].contains("<table") || flag_ == 2){
-                 qDebug()<<"inside Table";
-				flag_ = 2;
-				while(i < l.size() && !l[i].contains("</table>")){
-					inputText += l[i];
-					inputText += " ";
-					i++;
-				}
-				if(i == l.size())
-					i = i - 1;
-				if(l[i].contains("</table>")){
-					flag_ = 0;
-					inputText += l[i];
+            //for parsing table tags
+            else if(l[i].contains("<table") || flag_ == 2){
+                flag_ = 2;
+                while(i < l.size() && !l[i].contains("</table>")){
+                    inputText += l[i];
+                    inputText += " ";
+                    i++;
+                }
+                if(i == l.size())
+                    i = i - 1;
+                if(l[i].contains("</table>")){
+                    flag_ = 0;
+                    inputText += l[i];
                     inputText += " ";
                     QTextBlockFormat blockFormat;
-                                    if(inputText.contains("align=\"right\"")){
-                                        qDebug()<<"right";
-                                           blockFormat.setAlignment(Qt::AlignRight);
-                      cur.setBlockFormat(blockFormat);
-                                       }
-                                       else if(inputText.contains("align=\"center\"")){
-                                          qDebug()<<"center";
-                    blockFormat.setAlignment(Qt::AlignCenter);
-                      cur.setBlockFormat(blockFormat);
-                                       }
-                                    else if(!inputText.contains("align=\"center\"") && !inputText.contains("align=\"right\"") ){
-                                        qDebug()<<"left";
-                                     blockFormat.setAlignment(Qt::AlignLeft);
-                                     cur.setBlockFormat(blockFormat);
-                                   }
+                    if(inputText.contains("align=\"right\"")){
+                        blockFormat.setAlignment(Qt::AlignRight);
+                        cur.setBlockFormat(blockFormat);
+                    }
+                    else if(inputText.contains("align=\"center\"")){
+                        blockFormat.setAlignment(Qt::AlignCenter);
+                        cur.setBlockFormat(blockFormat);
+                    }
+                    else if(!inputText.contains("align=\"center\"") && !inputText.contains("align=\"right\"") ){
+                        blockFormat.setAlignment(Qt::AlignLeft);
+                        cur.setBlockFormat(blockFormat);
+                    }
                     cur.insertBlock();
-					cur.insertHtml(inputText);
+                    cur.insertHtml(inputText);
                     inputText = "";
-				}
+                }
 
-			}
+            }
 
-			//for parsing image tags
-         else if(l[i].contains("<img") || flag_ == 3){
+            //for parsing image tags
+            else if(l[i].contains("<img") || flag_ == 3){
                 flag_ = 3;
                 while(i < l.size() && !l[i].contains("/>")){
                     inputText += l[i];
@@ -133,44 +127,35 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                     flag_ = 0;
                     inputText += l[i];
                     inputText += " ";
-                    qDebug()<<"here";
                     QTextBlockFormat blockFormat;
-                    qDebug()<<"here2";
-    if(inputText.contains("<img align=\"right\"")){
-        qDebug()<<"here3";
-        qDebug()<<inputText;
-        qDebug()<<"okay1";
-         blockFormat.setAlignment(Qt::AlignRight);
-                      cur.setBlockFormat(blockFormat);
-                                       }
-       else if(inputText.contains("<img align=\"center\"")){
-                    blockFormat.setAlignment(Qt::AlignCenter);
-                     cur.setBlockFormat(blockFormat);
-                     qDebug()<<inputText;
-                     qDebug()<<"okay2";
-                                       }
-      else if(inputText.contains("<img align=\"left\"")){
-          blockFormat.setAlignment(Qt::AlignLeft);
-        cur.setBlockFormat(blockFormat);
-        qDebug()<<inputText;
-        qDebug()<<"okay1111";
-                                   }
+                    if(inputText.contains("<img align=\"right\"")){
+                        blockFormat.setAlignment(Qt::AlignRight);
+                        cur.setBlockFormat(blockFormat);
+                    }
+                    else if(inputText.contains("<img align=\"center\"")){
+                        blockFormat.setAlignment(Qt::AlignCenter);
+                        cur.setBlockFormat(blockFormat);
+                    }
+                    else if(inputText.contains("<img align=\"left\"")){
+                        blockFormat.setAlignment(Qt::AlignLeft);
+                        cur.setBlockFormat(blockFormat);
+                    }
                     cur.insertBlock();
                     cur.insertHtml(inputText);
                     inputText = "";
                 }
             }
 
-		}
-		if(flag_ == 1 || flag_ == 2) {
-			inputText += "\n";
-		}
-	}
+        }
+        if(flag_ == 1 || flag_ == 2) {
+            inputText += "\n";
+        }
+    }
 
-	cur = QTextCursor(doc->findBlockByNumber(0));
-	cur.select(QTextCursor::BlockUnderCursor);
-	cur.deleteChar();
-	f->close();
+    cur = QTextCursor(doc->findBlockByNumber(0));
+    cur.select(QTextCursor::BlockUnderCursor);
+    cur.deleteChar();
+    f->close();
 
 	storeBboxes(f);
 	return doc;
