@@ -30,6 +30,7 @@ public:
 	QVector<QPair<QString,QString> > bboxes;
 
 private:
+    QTextBlockFormat blockFormat;
 	QTextDocument *doc;
 	bool docIsPassed;
 	void storeBboxes(QFile *f);
