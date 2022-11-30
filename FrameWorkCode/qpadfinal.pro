@@ -54,9 +54,9 @@ INCLUDEPATH += $$PWD/../
 DEPENDPATH += $$PWD/../
 
 CONFIG(debug, debug|release) {
-    LIBS += -L$$PWD/../lib/debug/ -lYAWYSIWYGEE
-    win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../lib/debug/YAWYSIWYGEE.lib
-    else:win32-g++: PRE_TARGETDEPS += $$PWD/../lib/debug/libYAWYSIWYGEE.a
+    LIBS += -L$$PWD/../lib/ -lYAWYSIWYGEE
+    win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../lib/YAWYSIWYGEE.lib
+    else:win32-g++: PRE_TARGETDEPS += $$PWD/../lib/libYAWYSIWYGEE.a
 }else{
     LIBS += -L$$PWD/../lib/release/ -lYAWYSIWYGEE
     win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../lib/release/YAWYSIWYGEE.lib
