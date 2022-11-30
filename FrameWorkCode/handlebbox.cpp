@@ -56,6 +56,38 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                     flag_ = 0;
                     inputText += l[i];
                     inputText += " ";
+                    /* Doing equation latex to equaton png mapping
+                     * we are showing png in our tool and saving Latex form in html page */
+                    if(inputText.contains("$$")){
+
+                        QRegularExpression rex("<a(.*?)</a>",QRegularExpression::DotMatchesEverythingOption);
+                        QRegularExpressionMatchIterator itr;
+                        itr = rex.globalMatch(inputText);
+                        while(itr.hasNext()){
+
+                            QRegularExpressionMatch match = itr.next();
+                            QString text = match.captured(1);
+                            if(text.contains("Equations_"))
+                            {
+                                int sindex = match.capturedStart(1);
+                                int l_index = match.capturedEnd(1);
+                                std::string inputText_ = text.toStdString();
+                                int ind = inputText_.find("/");
+                                int lindex = inputText_.find(".tex");
+
+                                std::string str = inputText_.substr(ind,lindex-ind);
+                                QString path = QString::fromStdString(str) + ".png";
+                                QString html = "<img src=\""+path+"\">";
+                                text = "<a"+text+"</a>";
+                                inputText.replace(text,html);
+                            }
+
+                        }
+                        inputText = inputText.replace("$$","dne_nqe"); //where dne_nqe is a random string used as end delimiter here.
+                        //Note that this string should not appear as an original text - else it will cause parsing issues.
+                        QRegularExpression rex_dollar("dne_nqe(.*?)dne_nqe",QRegularExpression::DotMatchesEverythingOption);
+                        inputText = inputText.remove(rex_dollar);
+                    }
                     if(inputText.contains("align=\"right\"")){
                         blockFormat.setAlignment(Qt::AlignRight);
                     }

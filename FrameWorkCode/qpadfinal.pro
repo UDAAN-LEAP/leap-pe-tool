@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui
+QT += core gui svg widgets
 QT += printsupport
 QT +=xml
 QT +=network networkauth
@@ -47,3 +47,18 @@ DISTFILES += \
 QMAKE_CXXFLAGS += -w
 #Windows icon
 #win32:RC_FILE += qpadfinal.rc
+
+CONFIG += c++11
+INCLUDEPATH += ../include
+INCLUDEPATH += $$PWD/../
+DEPENDPATH += $$PWD/../
+
+CONFIG(debug, debug|release) {
+    LIBS += -L$$PWD/../lib/debug/ -lYAWYSIWYGEE
+    win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../lib/debug/YAWYSIWYGEE.lib
+    else:win32-g++: PRE_TARGETDEPS += $$PWD/../lib/debug/libYAWYSIWYGEE.a
+}else{
+    LIBS += -L$$PWD/../lib/release/ -lYAWYSIWYGEE
+    win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../lib/release/YAWYSIWYGEE.lib
+    else:win32-g++: PRE_TARGETDEPS += $$PWD/../lib/release/libYAWYSIWYGEE.a
+}

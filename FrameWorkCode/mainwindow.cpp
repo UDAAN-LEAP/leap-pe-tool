@@ -88,6 +88,7 @@
 #include <dashboard.h>
 #include "printworker.h"
 #include <QRadioButton>
+#include <equationeditor.h>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -1832,7 +1833,37 @@ void MainWindow::SaveFile_GUI_Postprocessing()
         out.setCodec("UTF-8");          //!Sets the codec for this stream
         gInitialTextHtml[currentTabPageName] = output;
 //        output = "<style> body{ width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; } </style>" + output;     //Formatting the output using CSS <style> tag
+        output = "<style> body{ width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; } </style><head>"
+                 "<script src=\"https://polyfill.io/v3/polyfill.min.js?features=es6\"></script>"
+                 "<script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"></script></head>" + output;//for showing math equations in browser using MathJax library
 
+        /* Doing equation png to equaton latex mapping
+         * we are showing png in our tool and saving Latex form in html page */
+
+        QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
+        QRegularExpressionMatchIterator itr;
+        itr = rex.globalMatch(output);
+        while(itr.hasNext()){
+            QRegularExpressionMatch match = itr.next();
+            QString img = match.captured();
+            if(img.contains("Equations_") && img.contains(".png")){
+                qDebug()<<img;
+                string img_ = img.toStdString();
+                int ind = img_.find("/");
+                int lindex = img_.find("png");
+                string str = img_.substr(ind, lindex-ind);
+                QString path = QString::fromStdString(str) + "tex";
+                QFile f(path);
+                if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                    qDebug() << "Cannot open file"<<f;
+                    continue;
+                }
+                QString line = f.readAll();
+                f.close();
+                output.replace(img,"<a name=\""+path+"\"></a>$$ "+line+" $$");
+
+            }
+        }
 		// Formatting the output using CSS <style> tag
 		// Add style tag just before head or add styling properties in the pre-made style tag
 		int inputDataIndex = -1;
@@ -8551,7 +8582,7 @@ void MainWindow:: highlight(CustomTextBrowser *b , QString input)
 
 void MainWindow::on_actionas_PDF_triggered()
 {
-	//! We set the dir path to CorrectorOutput or Verifier output depending on whether it is opened
+    //! We set the dir path to CorrectorOutput or Verifier output depending on whether it is opened
     //! in Corrector or Verifier Mode.
     QString currentDirAbsolutePath;
     if(mRole=="Verifier")
@@ -8579,19 +8610,19 @@ void MainWindow::on_actionas_PDF_triggered()
     int l = searchString.length();
     QString whiteColor = "ffffff";
 
-	int itr = 0;
-	PdfRangeDialog *pdfRangeDialog = new PdfRangeDialog(this, count, 100);
-	pdfRangeDialog->exec();
-	int startPage = 0;
-	int endPage = 0;
-	if (pdfRangeDialog->isOkClicked()) {
-		startPage = pdfRangeDialog->getStartPage() - 1;
-		endPage = pdfRangeDialog->getEndPage();
-	} else {
-		startPage = 0;
-		endPage = count;
-	}
-	qDebug() << startPage << " : " << endPage;
+    int itr = 0;
+    PdfRangeDialog *pdfRangeDialog = new PdfRangeDialog(this, count, 100);
+    pdfRangeDialog->exec();
+    int startPage = 0;
+    int endPage = 0;
+    if (pdfRangeDialog->isOkClicked()) {
+        startPage = pdfRangeDialog->getStartPage() - 1;
+        endPage = pdfRangeDialog->getEndPage();
+    } else {
+        startPage = 0;
+        endPage = count;
+    }
+    qDebug() << startPage << " : " << endPage;
 
 
     //! Loop through all files
@@ -8609,10 +8640,10 @@ void MainWindow::on_actionas_PDF_triggered()
             //! condition to check if file is html
             if(html_files[1]=="html")
             {
-				if (itr < startPage) {
-					itr++;
-					continue;
-				}
+                if (itr < startPage) {
+                    itr++;
+                    continue;
+                }
 
                 QFile file(x);
                 if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
@@ -8634,6 +8665,40 @@ void MainWindow::on_actionas_PDF_triggered()
                 //! append counter when one file is fully scanned
                 counter++;
 
+                //! Search for Latex code in html files and replace it by corresponding png images
+                //! We save latext for mathematical equations in html, and show png in our tool as our tool can't render Latex
+                if(mainHtml.contains("$$")){
+
+                    QRegularExpression rex_lat("<a(.*?)</a>",QRegularExpression::DotMatchesEverythingOption);
+                    QRegularExpressionMatchIterator itr_lat;
+                    itr_lat = rex_lat.globalMatch(mainHtml);
+                    while(itr_lat.hasNext()){
+
+                        QRegularExpressionMatch match = itr_lat.next();
+                        QString text = match.captured(1);
+
+                        if(text.contains("Equations_"))
+                        {
+                            int sindex = match.capturedStart(1);
+                            int l_index = match.capturedEnd(1);
+                            std::string inputText_ = text.toStdString();
+                            int ind = inputText_.find("/");
+                            int lindex = inputText_.find(".tex");
+
+                            std::string str = inputText_.substr(ind,lindex-ind);
+                            QString path = QString::fromStdString(str) + ".png";
+                            QString html = "<img src=\""+path+"\">";
+                            text = "<a"+text+"</a>";
+                            mainHtml.replace(text,html);
+                        }
+
+                    }
+                    mainHtml = mainHtml.replace("$$","dne_nqe"); //where dne_nqe is a random string used as end delimiter here.
+                    //Note that this string should not appear as an original text - else it will cause parsing issues.
+                    QRegularExpression rex_dollar("dne_nqe(.*?)dne_nqe",QRegularExpression::DotMatchesEverythingOption);
+                    mainHtml = mainHtml.remove(rex_dollar);
+                }
+
                 //! Once page html is extracted ... before we move to next page we add html tag
                 //! for page break so that the PDF printer separates the pages
                 //! We do this till all pages done
@@ -8642,11 +8707,11 @@ void MainWindow::on_actionas_PDF_triggered()
                 }
                 file.close();
                 html_contents.append(mainHtml);
-				itr++;
+                itr++;
 
-				if (itr == endPage) {
-					break;
-				}
+                if (itr == endPage) {
+                    break;
+                }
 
             }
             //! if file is not html
@@ -8656,35 +8721,35 @@ void MainWindow::on_actionas_PDF_triggered()
         }
     }
 
-	// New way of printing pdf
-	QPrinter printer(QPrinter::ScreenResolution);
+    // New way of printing pdf
+    QPrinter printer(QPrinter::ScreenResolution);
     printer.setPaperSize(QPrinter::A4);
     printer.setPageMargins(QMarginsF(5, 5, 5, 5));
-	printer.setOutputFileName(gDirTwoLevelUp + "/print.pdf");
-	printer.setOutputFormat(QPrinter::NativeFormat);
+    printer.setOutputFileName(gDirTwoLevelUp + "/print.pdf");
+    printer.setOutputFormat(QPrinter::NativeFormat);
 
-	QPrintDialog printDialog(&printer, this);
+    QPrintDialog printDialog(&printer, this);
 
-	if (printDialog.exec() == QDialog::Accepted) {
-		PrintWorker *workerPrint = new PrintWorker(nullptr, html_contents);
-		QThread *thread = new QThread;
-		workerPrint->printer = printDialog.printer(); // Assigning the printer for printing (VERY IMPORTANT)
+    if (printDialog.exec() == QDialog::Accepted) {
+        PrintWorker *workerPrint = new PrintWorker(nullptr, html_contents);
+        QThread *thread = new QThread;
+        workerPrint->printer = printDialog.printer(); // Assigning the printer for printing (VERY IMPORTANT)
 
-		connect(thread, SIGNAL(started()), workerPrint, SLOT(printPDF()));
-		connect(workerPrint, SIGNAL(finishedPrintingPDF()), thread, SLOT(quit()));
-		connect(workerPrint, SIGNAL(finishedPrintingPDF()), workerPrint, SLOT(deleteLater()));
-		connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-		connect(workerPrint, SIGNAL(finishedPrintingPDF()), this, SLOT(stopSpinning()));
+        connect(thread, SIGNAL(started()), workerPrint, SLOT(printPDF()));
+        connect(workerPrint, SIGNAL(finishedPrintingPDF()), thread, SLOT(quit()));
+        connect(workerPrint, SIGNAL(finishedPrintingPDF()), workerPrint, SLOT(deleteLater()));
+        connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+        connect(workerPrint, SIGNAL(finishedPrintingPDF()), this, SLOT(stopSpinning()));
 
-		workerPrint->moveToThread(thread);
-		thread->start();
-		spinner = new LoadingSpinner(this);
-		spinner->SetMessage("Printing PDF...", "Printing...");
-		spinner->setModal(false);
-		spinner->exec();
+        workerPrint->moveToThread(thread);
+        thread->start();
+        spinner = new LoadingSpinner(this);
+        spinner->SetMessage("Printing PDF...", "Printing...");
+        spinner->setModal(false);
+        spinner->exec();
 
-		QMessageBox::information(this, "Print Successful", "Printed PDF successfully", QMessageBox::Ok, QMessageBox::Ok);
-	}
+        QMessageBox::information(this, "Print Successful", "Printed PDF successfully", QMessageBox::Ok, QMessageBox::Ok);
+    }
 }
 
 /*!
@@ -9565,6 +9630,39 @@ void MainWindow::print(QPrinter *printer)
         stIndex += l; // increment line
         mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
         startFrom = stIndex + 6;
+    }
+    //latex to png mapping
+    if(mainHtml.contains("$$")){
+
+        QRegularExpression rex_lat("<a(.*?)</a>",QRegularExpression::DotMatchesEverythingOption);
+        QRegularExpressionMatchIterator itr_lat;
+        itr_lat = rex_lat.globalMatch(mainHtml);
+        while(itr_lat.hasNext()){
+
+            QRegularExpressionMatch match = itr_lat.next();
+            QString text = match.captured(1);
+
+            if(text.contains("Equations_"))
+            {
+                int sindex = match.capturedStart(1);
+                int l_index = match.capturedEnd(1);
+                std::string inputText_ = text.toStdString();
+                int ind = inputText_.find("/");
+                int lindex = inputText_.find(".tex");
+
+                std::string str = inputText_.substr(ind,lindex-ind);
+                QString path = QString::fromStdString(str) + ".png";
+                QString html = "<img src=\""+path+"\">";
+                text = "<a"+text+"</a>";
+                mainHtml.replace(text,html);
+                qDebug()<<text<<html;
+            }
+
+        }
+        mainHtml = mainHtml.replace("$$","dne_nqe"); //where dne_nqe is a random string used as end delimiter here.
+        //Note that this string should not appear as an original text - else it will cause parsing issues.
+        QRegularExpression rex_dollar("dne_nqe(.*?)dne_nqe",QRegularExpression::DotMatchesEverythingOption);
+        mainHtml = mainHtml.remove(rex_dollar);
     }
 
     file.close();
@@ -10759,5 +10857,50 @@ void MainWindow::insertList(QTextListFormat::Style styleIndex)
     listFmt.setStyle(styleIndex);
     cursor.createList(listFmt);
     cursor.endEditBlock();
+}
+
+
+void MainWindow::on_actionInsert_Equation_triggered()
+{
+    if(!mProject.isProjectOpen()){
+                 QMessageBox::critical(this,"Error","Please open the project first");
+                 return;                                                                  //checking if the project is already
+        }
+        if(gCurrentPageName.isEmpty()){
+            QMessageBox::critical(this,"Error","Please open the html file first");
+            return;
+        }
+        equationeditor *w = new equationeditor(this,gDirTwoLevelUp,curr_browser,"0");
+        w->show();
+}
+
+
+void MainWindow::on_actionEdit_Equation_triggered()
+{
+    if(!curr_browser) return;
+
+    auto cursor = curr_browser->textCursor();
+    auto selected = cursor.selection();
+    QString sel = selected.toHtml();
+
+    if(!sel.contains("<img") || !sel.contains(".png") || !sel.contains("Equations_")){
+        QMessageBox::critical(this,"Error","Please select an equation to edit.");
+        return;
+    }
+    QString path;
+    QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
+    QRegularExpressionMatchIterator itr;
+    itr = rex.globalMatch(sel);
+    if(itr.hasNext()){
+    QRegularExpressionMatch match = itr.next();
+    QString img = match.captured();
+    string img_ = img.toStdString();
+    int ind = img_.find("/");
+    int lindex = img_.find("png");
+    string str = img_.substr(ind, lindex-ind);
+    path = QString::fromStdString(str) + "txt";
+    }
+    equationeditor *w = new equationeditor(this,gDirTwoLevelUp,curr_browser,path);
+    w->show();
 }
 

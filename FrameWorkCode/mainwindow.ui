@@ -1031,6 +1031,8 @@ QMenu::item:selected{
     <addaction name="actionSuperscript"/>
     <addaction name="actionSubscript"/>
     <addaction name="actionInsert_Horizontal_Line"/>
+    <addaction name="actionInsert_Equation"/>
+    <addaction name="actionEdit_Equation"/>
     <addaction name="actionFontBlack"/>
     <addaction name="actionInsert_Tab_Space"/>
     <addaction name="menuTables"/>
@@ -2089,6 +2091,22 @@ background-color: #EEF0F2;
   <action name="actionInsert_Numbered_List">
    <property name="text">
     <string>Insert Numbered List</string>
+   </property>
+  </action>
+  <action name="actionInsert_Equation">
+   <property name="text">
+    <string>Insert Equation</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionEdit_Equation">
+   <property name="text">
+    <string>Edit Equation</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+E</string>
    </property>
   </action>
  </widget>

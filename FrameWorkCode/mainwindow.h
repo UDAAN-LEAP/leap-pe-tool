@@ -482,6 +482,10 @@ private slots:
 
     void insertList(QTextListFormat::Style styleIndex);
 
+    void on_actionInsert_Equation_triggered();
+
+    void on_actionEdit_Equation_triggered();
+
 public slots:
     void SaveFile_Backend();
 
