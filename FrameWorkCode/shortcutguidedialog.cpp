@@ -5,7 +5,15 @@
  */
 #include "shortcutguidedialog.h"
 #include "ui_shortcutguidedialog.h"
-
+/*!
+ * Class ShortcutGuideDialog
+ *
+ * \fn ShortcutGuideDialog::ShortcutGuideDialog
+ * \param QWidget->parent
+ * \brief
+ * 1)Sets up the user interface for the specified widget.
+ * 2)sets flag to specify how the text should react to user input
+*/
 ShortcutGuideDialog::ShortcutGuideDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ShortcutGuideDialog)
@@ -20,10 +28,11 @@ ShortcutGuideDialog::ShortcutGuideDialog(QWidget *parent) :
 //    scrollarea->setBackgroundRole(QPalette :: Dark);
 //    scrollarea->setWidget(ui->label);
 
-    //!sets flag to specify how the text should react to user input
     ui->textBrowser->setTextInteractionFlags(Qt::NoTextInteraction);
 }
-
+/*!
+ * Destructor: deletes and destroys the object after useage
+*/
 ShortcutGuideDialog::~ShortcutGuideDialog()
 {
     delete ui;

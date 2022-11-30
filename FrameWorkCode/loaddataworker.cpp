@@ -1,5 +1,32 @@
 #include "loaddataworker.h"
 
+/*!
+ * \fn LoadDataWorker::LoadDataWorker
+ * \param QObject *parent,
+ *      Project mProject,
+        QString mFilename,
+        QString mFilename1,
+        map<string, string>* LSTM,
+        std::map<string, set<string> >* CPairs,
+        map<string, int>* Dict,
+        map<string, int>* GBook,
+        map<string, int>* IBook,
+        map<string, int>* PWords,
+        map<string, int>* ConfPmap,
+        vector<string>* vGBook,
+        vector<string>* vIBook,
+        trie* TDict,
+        trie* TGBook,
+        trie* TGBookP,
+        trie* TPWords,
+        trie* TPWordsP,
+        map<string, vector<int> >* synonym,
+        vector<vector<string> >* synrows
+   *      This function sets the preface for LoadData
+   *      assigns various varaible to the parent.
+
+ */
+
 LoadDataWorker::LoadDataWorker(
         QObject *parent,
         Project* mProject,
@@ -44,9 +71,15 @@ LoadDataWorker::LoadDataWorker(
     this->synrows = synrows;
 }
 
+/*!
+ * \fn LoadData()
+ * \brief calls  functions to load files from a sanskrit dictionary
+ * also Loads the confusions for CPair,Loads OCRWords etc.
+ * stores file path in a string and later loads csv file
+ */
 void LoadDataWorker::LoadData()
 {
-    on_actionLoadDict_triggered();       //sanskrit dictionary files are called
+    on_actionLoadDict_triggered();
     //!GEROCR IEROCR PWords and CPair files are loaded and reflected in terminal
     on_actionLoadOCRWords_triggered();
     on_actionLoadDomain_triggered();

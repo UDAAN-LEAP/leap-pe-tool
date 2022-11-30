@@ -474,6 +474,14 @@ private slots:
 
 	void on_actionMerge_Cells_triggered();
 
+    void on_actionSplit_Cell_triggered();
+
+    void on_actionInsert_Bulleted_List_triggered();
+
+    void on_actionInsert_Numbered_List_triggered();
+
+    void insertList(QTextListFormat::Style styleIndex);
+
 public slots:
     void SaveFile_Backend();
 

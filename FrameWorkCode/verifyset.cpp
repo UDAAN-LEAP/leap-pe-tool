@@ -4,8 +4,11 @@
 #include <QFileInfo>
 
 /*!
+ * Class VerifySet
+ *
  * \fn VerifySet (Constructor)
- * \param QString projectXMLPath
+ * \param QString->projectXMLPath
+ * \param QString->projectXML_formatPath
  * \brief Takes absolute path of project XML file
 */
 VerifySet::VerifySet(QString projectXMLPath, QString projectXML_formatPath)

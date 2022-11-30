@@ -39,7 +39,7 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
     QString inputText = "";
     while(!f->atEnd()) {
         line = f->readLine();
-                line = line.simplified();
+        line = line.simplified();
         QStringList l = line.split(" ");
         for(int i = 0; i < l.size(); i++) {
             //for parsing p tags
@@ -56,11 +56,14 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                     flag_ = 0;
                     inputText += l[i];
                     inputText += " ";
-                    if(inputText.contains("<p align=\"right\"")){
+                    if(inputText.contains("align=\"right\"")){
                         blockFormat.setAlignment(Qt::AlignRight);
                     }
-                    else if(inputText.contains("<p align=\"center\"")){
+                    else if(inputText.contains("align=\"center\"")){
                         blockFormat.setAlignment(Qt::AlignCenter);
+                    }
+                    else if(!inputText.contains("align=\"center\"") && !inputText.contains("align=\"right\"") ){
+                        blockFormat.setAlignment(Qt::AlignLeft);
                     }
                     cur.insertBlock();
                     cur.insertHtml(inputText);
@@ -70,7 +73,6 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
             }
             //for parsing table tags
             else if(l[i].contains("<table") || flag_ == 2){
-                qDebug()<<"inside Table";
                 flag_ = 2;
                 while(i < l.size() && !l[i].contains("</table>")){
                     inputText += l[i];
@@ -83,13 +85,14 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                     flag_ = 0;
                     inputText += l[i];
                     inputText += " ";
-
                     if(inputText.contains("align=\"right\"")){
                         blockFormat.setAlignment(Qt::AlignRight);
                     }
                     else if(inputText.contains("align=\"center\"")){
                         blockFormat.setAlignment(Qt::AlignCenter);
-
+                    }
+                    else if(!inputText.contains("align=\"center\"") && !inputText.contains("align=\"right\"") ){
+                        blockFormat.setAlignment(Qt::AlignLeft);
                     }
                     cur.insertBlock();
                     cur.insertHtml(inputText);
@@ -102,13 +105,11 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
             //for parsing image tags
             else if(l[i].contains("<img") || flag_ == 3){
                 flag_ = 3;
-
                 while(i < l.size() && !l[i].contains(">")){
                     inputText += l[i];
                     inputText += " ";
                     i++;
                 }
-
                 if(i == l.size())
                     i = i - 1;
                 if(l[i].contains(">")){

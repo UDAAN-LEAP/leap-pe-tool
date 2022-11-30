@@ -87,6 +87,7 @@
 #include <QOAuth2AuthorizationCodeFlow>
 #include <dashboard.h>
 #include "printworker.h"
+#include <QRadioButton>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -764,7 +765,6 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
         DisplayTimeLog();
         if((ev->button() == Qt::RightButton) && (LoadDataFlag)){
-            qDebug()<<"data is not loaded yet";
             QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
             QTextCursor cursor = curr_browser->textCursor();
             cursor.select(QTextCursor::WordUnderCursor);
@@ -829,7 +829,6 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
             popup_menu->exec(ev->globalPos());
             popup_menu->close(); popup_menu->clear();
-            qDebug ()<<"right click";
         }
         //! if right click
         //!
@@ -902,7 +901,6 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
             connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
             QString str = QString::fromStdString(selectedStr);
-            qDebug()<<"selected str"<<str;
               vector<string> Alligned = trie.print5NearestEntries(TGBookP, selectedStr);
             if (!selectedStr.empty() && !Alligned.empty()) {
 
@@ -10620,5 +10618,146 @@ void MainWindow::on_actionMerge_Cells_triggered()
 		QTextTable *table = curr_browser->textCursor().currentTable();
 		table->mergeCells(curr_browser->textCursor());
 	}
+}
+
+
+void MainWindow::on_actionSplit_Cell_triggered()
+{
+    if (!curr_browser || curr_browser->isReadOnly()) { return; }
+    if (curr_browser->textCursor().currentTable())
+    {
+        QDialog dialog(this);
+        QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+        form.addRow(new QLabel("Split Cells", this));
+
+        //! Add the lineEdits with their respective labels
+        QLineEdit *rows = new QLineEdit(&dialog);
+        QLineEdit *columns = new QLineEdit(&dialog);                                    // Add lineEdits to get Rows
+        form.addRow("Rows", rows);                                                      // Add lineEdits to get Columns
+        form.addRow("Columns", columns);
+
+        //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+        form.addRow(&buttonBox);
+        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+        if (dialog.exec() == QDialog::Accepted) {
+            QTextTable *table = curr_browser->textCursor().currentTable();
+            QTextTableCell currentCell = table->cellAt(curr_browser->textCursor());
+            table->splitCell(currentCell.row(), currentCell.column(), rows->text().toInt(), columns->text().toInt());
+        }
+    }
+}
+
+
+void MainWindow::on_actionInsert_Bulleted_List_triggered()
+{
+    QDialog dialog(this);
+    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+
+    //! Add the lineEdits with their respective labels
+    QGroupBox *groupBox = new QGroupBox(tr("Bulleted Lists"));
+    QRadioButton *radioBtn1 = new QRadioButton("List Disc");
+    QRadioButton *radioBtn2 = new QRadioButton("List Circle");
+    QRadioButton *radioBtn3 = new QRadioButton("List Square");
+    QRadioButton *radioBtn4 = new QRadioButton("List Decimal");
+
+    radioBtn1->setChecked(true);
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(radioBtn1);
+    vbox->addWidget(radioBtn2);
+    vbox->addWidget(radioBtn3);
+    vbox->addWidget(radioBtn4);
+    vbox->addStretch(1);
+    groupBox->setLayout(vbox);
+
+    form.addRow(groupBox);
+
+    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    //! Show the dialog as modal
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        if (radioBtn1->isChecked()) {
+            insertList(QTextListFormat::ListDisc);
+        } else if (radioBtn2->isChecked()) {
+            insertList(QTextListFormat::ListCircle);
+        } else if (radioBtn3->isChecked()) {
+            insertList(QTextListFormat::ListSquare);
+        } else if (radioBtn4->isChecked()) {
+            insertList(QTextListFormat::ListDecimal);
+        }
+    }
+}
+
+
+void MainWindow::on_actionInsert_Numbered_List_triggered()
+{
+    QDialog dialog(this);
+    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+
+    //! Add the lineEdits with their respective labels
+    QGroupBox *groupBox = new QGroupBox(tr("Bulleted Lists"));
+    QRadioButton *radioBtn1 = new QRadioButton("List Lower Alpha");
+    QRadioButton *radioBtn2 = new QRadioButton("List Upper Alpha");
+    QRadioButton *radioBtn3 = new QRadioButton("List Lower Roman");
+    QRadioButton *radioBtn4 = new QRadioButton("List Upper Roman");
+
+    radioBtn1->setChecked(true);
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(radioBtn1);
+    vbox->addWidget(radioBtn2);
+    vbox->addWidget(radioBtn3);
+    vbox->addWidget(radioBtn4);
+    vbox->addStretch(1);
+    groupBox->setLayout(vbox);
+
+    form.addRow(groupBox);
+
+    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    //! Show the dialog as modal
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        if (radioBtn1->isChecked()) {
+            insertList(QTextListFormat::ListLowerAlpha);
+        } else if (radioBtn2->isChecked()) {
+            insertList(QTextListFormat::ListUpperAlpha);
+        } else if (radioBtn3->isChecked()) {
+            insertList(QTextListFormat::ListLowerRoman);
+        } else if (radioBtn4->isChecked()) {
+            insertList(QTextListFormat::ListUpperRoman);
+        }
+    }
+}
+
+
+void MainWindow::insertList(QTextListFormat::Style styleIndex)
+{
+    QTextCursor cursor(curr_browser->textCursor());
+    cursor.beginEditBlock();
+    QTextBlockFormat blockFmt = cursor.blockFormat();
+    QTextListFormat listFmt;
+
+    if (cursor.currentList()) {
+        listFmt = cursor.currentList()->format();
+    } else {
+        listFmt.setIndent(blockFmt.indent() + 1);
+        blockFmt.setIndent(0);
+        cursor.setBlockFormat(blockFmt);
+    }
+
+    listFmt.setStyle(styleIndex);
+    cursor.createList(listFmt);
+    cursor.endEditBlock();
 }
 
