@@ -649,11 +649,13 @@ void MainWindow::SaveTimeLog()
 //        page["Date/Time"]=time;
 //        mainObj.insert(i->first, page);
 //    }
+    int nMilliseconds = myTimer.elapsed();
+    int sec = nMilliseconds / 1000;
     //! Iterating over newTimeLog and and assinging time details into the page and finally inserting page into json object.
     for (auto i = newTimeLog.begin(); i != newTimeLog.end(); i++)
     {
         page["directory"] = i.key();
-        page["seconds"] = i.value().at(0).toInt();
+        page["seconds"] = i.value().at(0).toInt()+sec;
         page["Date/Time"] = i.value().at(1).toString();
         mainObj.insert(i.key(), page);
     }
@@ -674,9 +676,9 @@ void MainWindow::DisplayTimeLog()
 //    gSeconds = timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion];
     gSeconds = newTimeLog.value(mRole +":"+ gCurrentPageName +":V-"+ currentVersion).at(0).toInt();
     int nMilliseconds = myTimer.elapsed();
-    gSeconds += nMilliseconds / 1000;
-    int mins = gSeconds / 60;
-    int seconds = gSeconds - mins * 60;
+    int gSeconds_ = gSeconds + nMilliseconds / 1000;
+    int mins = gSeconds_ / 60;
+    int seconds = gSeconds_ - mins * 60;
     ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(seconds) +
                           " secs elapsed on this page(Right Click to update)");        //updating time in UI
 }
@@ -1655,9 +1657,12 @@ void MainWindow::SaveFile_GUI_Preprocessing()
     if (!mProject.isProjectOpen())
         return;
     //! Adding entries in Timelog.json about the elapsed time
-    int nMilliseconds = myTimer.elapsed();
-    gSeconds = nMilliseconds/1000;                                 //!Converting milliseconds to seconds
     QString currentVersion = mProject.get_version();
+    gSeconds = newTimeLog.value(mRole +":"+ gCurrentPageName +":V-"+ currentVersion).at(0).toInt();
+//    int nMilliseconds = myTimer.elapsed();
+//    gSeconds += nMilliseconds / 1000;
+/*    int nMilliseconds = myTimer.elapsed();
+    gSeconds = nMilliseconds/1000; */                                //!Converting milliseconds to seconds
     if(mRole == "Verifier" && mRole != currentVersion)
         currentVersion = QString::number(currentVersion.toInt() - 1);   //!Version is decremented for Verifier
 
@@ -7933,7 +7938,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 
 	// Deleting temporarily created CustomTextBrowser
 	delete b;
-
+    myTimer.start();
 	WordCount();     //for counting no of words in the document
 	readSettings();
 }
