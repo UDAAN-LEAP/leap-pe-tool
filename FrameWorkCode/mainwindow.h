@@ -486,6 +486,8 @@ private slots:
 
     void on_actionEdit_Equation_triggered();
 
+    void on_actionExit_triggered();
+
 public slots:
     void SaveFile_Backend();
 

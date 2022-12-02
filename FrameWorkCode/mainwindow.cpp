@@ -315,7 +315,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionLoadDomain->setEnabled(false);
     ui->actionLoadSubPS->setEnabled(false);
     ui->actionLoadConfusions->setEnabled(false);
-    ui->actionSugg->setEnabled(false);
+    ui->actionSugg->setVisible(false);
 
     // Edit Menu
     ui->actionUndo->setEnabled(false);
@@ -1199,6 +1199,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
      */
 
     //QString ProjFile;
+    if(mProject.isProjectOpen()){ //checking if some project is opened, then closing it before opening new project
+        on_actionClose_project_triggered();
+    }
     int totalFileCountInDir = 0;
     QMap<QString, int> fileCountInDir;
 //to choose between recent three files
@@ -10555,136 +10558,131 @@ void MainWindow::on_actionClose_project_triggered()
 
 
     if(!mProject.isProjectOpen()){
-         QMessageBox::critical(this,"Error","Project Not Opened");
-         return;                                                                  //checking if the project is already
-                                                                              // opened or not
-               }
- mProject.setProjectOpen(false);
+//        QMessageBox::critical(this,"Error","Project Not Opened");
+        return;                                                                  //checking if the project is already
+        // opened or not
+    }
+    mProject.setProjectOpen(false);
+    ui->actionLoadDict->setVisible(false);
+    ui->actionLoadOCRWords->setVisible(false);
+    ui->actionLoadDomain->setVisible(false);
+    ui->actionLoadSubPS->setVisible(false);
+    ui->actionLoadConfusions->setVisible(false);
+    ui->actionLoadGDocPage->setVisible(false);
+    ui->menuSelectLanguage->setTitle("");
+    ui->menuCreateReports->setTitle("");
 
+    //disableing the buttons after project is closed
+    // File Menu
+    ui->actionSave->setEnabled(false);
+    ui->actionSave_As->setEnabled(false);
+    ui->actionSpell_Check->setEnabled(false);
+    ui->actionLoad_Prev_Page->setEnabled(false);
+    ui->actionLoad_Next_Page->setEnabled(false);
+    ui->actionToDevanagari->setEnabled(false);
+    ui->actionToSlp1->setEnabled(false);
+    ui->actionLoadGDocPage->setEnabled(false);
+    ui->actionLoadData->setEnabled(false);
+    ui->actionLoadDict->setEnabled(false);
+    ui->actionLoadOCRWords->setEnabled(false);
+    ui->actionLoadDomain->setEnabled(false);
+    ui->actionLoadSubPS->setEnabled(false);
+    ui->actionLoadConfusions->setEnabled(false);
+    ui->actionSugg->setEnabled(false);
 
+    // Edit Menu
+    ui->actionUndo->setEnabled(false);
+    ui->actionRedo->setEnabled(false);
+    ui->actionFind_and_Replace->setEnabled(false);
+    ui->actionUndo_Global_Replace->setEnabled(false);
+    ui->actionUpload->setEnabled(false);
 
+    // Language Menu
+    ui->actionSanskrit_2->setEnabled(false);
+    ui->actionEnglish->setEnabled(false);
+    ui->actionHindi->setEnabled(false);
 
- ui->actionLoadDict->setVisible(false);
- ui->actionLoadOCRWords->setVisible(false);
- ui->actionLoadDomain->setVisible(false);
- ui->actionLoadSubPS->setVisible(false);
- ui->actionLoadConfusions->setVisible(false);
- ui->actionLoadGDocPage->setVisible(false);
- ui->menuSelectLanguage->setTitle("");
- ui->menuCreateReports->setTitle("");
+    // Reports Menu
+    ui->actionAccuracyLog->setEnabled(false);
+    ui->actionViewAverageAccuracies->setEnabled(false);
 
+    // View Menu
+    ui->actionAllFontProperties->setEnabled(false);
+    ui->actionBold->setEnabled(false);
+    ui->actionItalic->setEnabled(false);
+    ui->actionLeftAlign->setEnabled(false);
+    ui->actionRightAlign->setEnabled(false);
+    ui->actionCentreAlign->setEnabled(false);
+    ui->actionJusitfiedAlign->setEnabled(false);
+    ui->actionSuperscript->setEnabled(false);
+    ui->actionSubscript->setEnabled(false);
+    ui->actionInsert_Horizontal_Line->setEnabled(false);
+    ui->actionFontBlack->setEnabled(false);
+    ui->actionInsert_Tab_Space->setEnabled(false);
+    ui->actionPDF_Preview->setEnabled(false);
+    if (isVerifier)
+        ui->actionHighlight->setEnabled(false);
 
- //disableing the buttons after project is closed
- // File Menu
- ui->actionSave->setEnabled(false);
- ui->actionSave_As->setEnabled(false);
- ui->actionSpell_Check->setEnabled(false);
- ui->actionLoad_Prev_Page->setEnabled(false);
- ui->actionLoad_Next_Page->setEnabled(false);
- ui->actionToDevanagari->setEnabled(false);
- ui->actionToSlp1->setEnabled(false);
- ui->actionLoadGDocPage->setEnabled(false);
- ui->actionLoadData->setEnabled(false);
- ui->actionLoadDict->setEnabled(false);
- ui->actionLoadOCRWords->setEnabled(false);
- ui->actionLoadDomain->setEnabled(false);
- ui->actionLoadSubPS->setEnabled(false);
- ui->actionLoadConfusions->setEnabled(false);
- ui->actionSugg->setEnabled(false);
+    // Table Menu inside View Menu
+    ui->actionInsert_Table_2->setEnabled(false);
+    ui->actionInsert_Columnleft->setEnabled(false);
+    ui->actionInsert_Columnright->setEnabled(false);
+    ui->actionInsert_Rowabove->setEnabled(false);
+    ui->actionInsert_Rowbelow->setEnabled(false);
+    ui->actionRemove_Column->setEnabled(false);
+    ui->actionRemove_Row->setEnabled(false);
 
- // Edit Menu
- ui->actionUndo->setEnabled(false);
- ui->actionRedo->setEnabled(false);
- ui->actionFind_and_Replace->setEnabled(false);
- ui->actionUndo_Global_Replace->setEnabled(false);
- ui->actionUpload->setEnabled(false);
+    // Versions Menu
+    ui->actionFetch_2->setEnabled(false);
+    ui->actionTurn_In->setEnabled(false);
+    ui->actionVerifier_Turn_In->setEnabled(false);
 
- // Language Menu
- ui->actionSanskrit_2->setEnabled(false);
- ui->actionEnglish->setEnabled(false);
- ui->actionHindi->setEnabled(false);
+    // Download Menu
+    ui->actionas_PDF->setEnabled(false);
 
- // Reports Menu
- ui->actionAccuracyLog->setEnabled(false);
- ui->actionViewAverageAccuracies->setEnabled(false);
+    ui->actionSymbols->setEnabled(false);
+    ui->actionZoom_In->setEnabled(false);
+    ui->actionZoom_Out->setEnabled(false);
+    //Reset loadData flag
+    LoadDataFlag = 1;
+    //reset data
+    mFilename.clear();
+    mFilename1.clear();
+    // mFile.clear();
+    LSTM.clear();
+    CPairs.clear();
+    Dict.clear();
+    GBook.clear();
+    IBook.clear();
+    PWords.clear();
+    ConfPmap.clear();
+    vGBook.clear();
+    vIBook.clear();
+    TDict.clear();
+    TGBook.clear();
+    TGBookP.clear();
+    TPWords.clear();
+    TPWordsP.clear();
+    synonym.clear();
+    synrows.clear();
 
- // View Menu
- ui->actionAllFontProperties->setEnabled(false);
- ui->actionBold->setEnabled(false);
- ui->actionItalic->setEnabled(false);
- ui->actionLeftAlign->setEnabled(false);
- ui->actionRightAlign->setEnabled(false);
- ui->actionCentreAlign->setEnabled(false);
- ui->actionJusitfiedAlign->setEnabled(false);
- ui->actionSuperscript->setEnabled(false);
- ui->actionSubscript->setEnabled(false);
- ui->actionInsert_Horizontal_Line->setEnabled(false);
- ui->actionFontBlack->setEnabled(false);
- ui->actionInsert_Tab_Space->setEnabled(false);
- ui->actionPDF_Preview->setEnabled(false);
- if (isVerifier)
-     ui->actionHighlight->setEnabled(false);
+    if(ui->lineEdit_3->text()!="" && ui->lineEdit_3->text()!="Words 0" && ui->lineEdit_3->text()!="0 Words"){
+        curr_browser->clear();
+    }                                                        //if the curr_browser and graphicsview
+    //are empty then we dont clear the curr_browser else we do
 
- // Table Menu inside View Menu
- ui->actionInsert_Table_2->setEnabled(false);
- ui->actionInsert_Columnleft->setEnabled(false);
- ui->actionInsert_Columnright->setEnabled(false);
- ui->actionInsert_Rowabove->setEnabled(false);
- ui->actionInsert_Rowbelow->setEnabled(false);
- ui->actionRemove_Column->setEnabled(false);
- ui->actionRemove_Row->setEnabled(false);
-
- // Versions Menu
- ui->actionFetch_2->setEnabled(false);
- ui->actionTurn_In->setEnabled(false);
- ui->actionVerifier_Turn_In->setEnabled(false);
-
- // Download Menu
- ui->actionas_PDF->setEnabled(false);
-
- ui->actionSymbols->setEnabled(false);
- ui->actionZoom_In->setEnabled(false);
- ui->actionZoom_Out->setEnabled(false);
- //Reset loadData flag
- LoadDataFlag = 1;
- //reset data
- mFilename.clear();
- mFilename1.clear();
-// mFile.clear();
- LSTM.clear();
- CPairs.clear();
- Dict.clear();
- GBook.clear();
- IBook.clear();
- PWords.clear();
- ConfPmap.clear();
- vGBook.clear();
- vIBook.clear();
- TDict.clear();
- TGBook.clear();
- TGBookP.clear();
- TPWords.clear();
- TPWordsP.clear();
- synonym.clear();
- synrows.clear();
-
- if(ui->lineEdit_3->text()!="" && ui->lineEdit_3->text()!="Words 0" && ui->lineEdit_3->text()!="0 Words"){
-    curr_browser->clear();
- }                                                        //if the curr_browser and graphicsview
-                                                          //are empty then we dont clear the curr_browser else we do
-
-            ui->treeView->setModel(nullptr);  //clearing tree view
-   ui->graphicsView->setScene(nullptr);   //clearing graphicsview
-               ui->lineEdit_2->clear();
-               ui->lineEdit->clear();
-                 ui->lineEdit_3->clear();                //disabling all other buttons which are enabled when project is open
-                 ui->pushButton->setDisabled(true);
-                  ui->pushButton_2->setDisabled(true);
-                 ui->viewComments->setDisabled(true);
-                 ui->compareCorrectorOutput->setDisabled(true);
-                ui->groupBox->setDisabled(true);
-                QMessageBox::information(this,"Success","Project Closed Successfully");
-                curr_browser=0;
+    ui->treeView->setModel(nullptr);  //clearing tree view
+    ui->graphicsView->setScene(nullptr);   //clearing graphicsview
+    ui->lineEdit_2->clear();
+    ui->lineEdit->clear();
+    ui->lineEdit_3->clear();                //disabling all other buttons which are enabled when project is open
+    ui->pushButton->setDisabled(true);
+    ui->pushButton_2->setDisabled(true);
+    ui->viewComments->setDisabled(true);
+    ui->compareCorrectorOutput->setDisabled(true);
+    ui->groupBox->setDisabled(true);
+//    QMessageBox::information(this,"Success","Project Closed Successfully");
+    curr_browser=0;
 }
 
 void MainWindow::preprocessing(){
@@ -10907,5 +10905,11 @@ void MainWindow::on_actionEdit_Equation_triggered()
     }
     equationeditor *w = new equationeditor(this,gDirTwoLevelUp,curr_browser,path);
     w->show();
+}
+
+
+void MainWindow::on_actionExit_triggered()
+{
+    QCoreApplication::quit();
 }
 

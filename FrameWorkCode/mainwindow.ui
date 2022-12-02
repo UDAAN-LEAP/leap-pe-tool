@@ -1146,6 +1146,7 @@ QMenu::item:selected{
     <addaction name="separator"/>
     <addaction name="actionSugg"/>
     <addaction name="actionClose_project"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuTool">
     <property name="styleSheet">
@@ -1303,7 +1304,7 @@ background-color: #EEF0F2;
      <normalon>:/Images/spellcheck.png</normalon>:/Images/Resources/spell check.png</iconset>
    </property>
    <property name="text">
-    <string>Spell Check(CntrlShftC)</string>
+    <string>Spell Check</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+C</string>
@@ -1319,10 +1320,10 @@ background-color: #EEF0F2;
      <normalon>:/Images/next-page.png</normalon>:/Images/Resources/preivious page.png</iconset>
    </property>
    <property name="text">
-    <string>Page(CntlShiftR)&gt;&gt;</string>
+    <string>Next Page</string>
    </property>
    <property name="toolTip">
-    <string>Page(CntlShiftR)&gt;&gt;</string>
+    <string>Next Page</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+R</string>
@@ -1335,10 +1336,10 @@ background-color: #EEF0F2;
      <normalon>:/Images/previous-page.png</normalon>:/Images/Resources/next page.png</iconset>
    </property>
    <property name="text">
-    <string>&lt;&lt;Page(CntrlShftL)</string>
+    <string>Previous Page</string>
    </property>
    <property name="toolTip">
-    <string>&lt;&lt;Page(CntrlShftL)</string>
+    <string>Previous Page</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+L</string>
@@ -1363,7 +1364,7 @@ background-color: #EEF0F2;
      <normalon>:/Images/toDevangari.png</normalon>:/Images/Resources/english to hindi.png</iconset>
    </property>
    <property name="text">
-    <string>toDevanagari(CntrlD)</string>
+    <string>To Devanagari</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
@@ -1379,7 +1380,7 @@ background-color: #EEF0F2;
      <normalon>:/Images/LoadData.png</normalon>:/Images/Resources/load data.png</iconset>
    </property>
    <property name="text">
-    <string>LoadData</string>
+    <string>Load Data</string>
    </property>
    <property name="visible">
     <bool>true</bool>
@@ -1429,7 +1430,7 @@ background-color: #EEF0F2;
      <normaloff>:/Images/Resources/tospl.png</normaloff>:/Images/Resources/tospl.png</iconset>
    </property>
    <property name="text">
-    <string>toSlp1(CntrlG)</string>
+    <string>To Slp1</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+G</string>
@@ -2107,6 +2108,18 @@ background-color: #EEF0F2;
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+E</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset theme="window-close">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>
