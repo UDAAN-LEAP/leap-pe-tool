@@ -94,6 +94,9 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                     else if(inputText.contains("align=\"center\"")){
                         blockFormat.setAlignment(Qt::AlignCenter);
                     }
+                    else if(inputText.contains("align=\"justify\"")){
+                        blockFormat.setAlignment(Qt::AlignJustify);
+                    }
                     else if(!inputText.contains("align=\"center\"") && !inputText.contains("align=\"right\"") ){
                         blockFormat.setAlignment(Qt::AlignLeft);
                     }
@@ -122,6 +125,9 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                     }
                     else if(inputText.contains("align=\"center\"")){
                         blockFormat.setAlignment(Qt::AlignCenter);
+                    }
+                    else if(inputText.contains("align=\"justify\"")){
+                        blockFormat.setAlignment(Qt::AlignJustify);
                     }
                     else if(!inputText.contains("align=\"center\"") && !inputText.contains("align=\"right\"") ){
                         blockFormat.setAlignment(Qt::AlignLeft);
