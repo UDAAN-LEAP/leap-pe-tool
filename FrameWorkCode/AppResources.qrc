@@ -61,5 +61,6 @@
         <file>fonts/Mandali/Mandali Regular.otf</file>
         <file>fonts/Latha/latha.ttf</file>
         <file>fonts/Nirmala/Nirmala Regular.ttf</file>
+        <file>fonts/Chandas/chandas.ttf</file>
     </qresource>
 </RCC>

@@ -3,7 +3,7 @@
 
 # Qt-related files
 *.autosave
-*.a
+#*.a
 *.core
 *.moc
 *.o

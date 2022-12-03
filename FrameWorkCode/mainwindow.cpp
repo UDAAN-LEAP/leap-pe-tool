@@ -87,6 +87,8 @@
 #include <QOAuth2AuthorizationCodeFlow>
 #include <dashboard.h>
 #include "printworker.h"
+#include <QRadioButton>
+#include <equationeditor.h>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -245,7 +247,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     gHindi+= "ग़् - $,, ऩ् - %,, ऑ - Z,, ऱ् - V,, ज़ - F,, ड़्/ड़ -x/xa,, ढ़्/ढ़  - X/Xa,, य़्  - &,, क़ - @,, ख़ - #,, फ़् - ^,, ॅ - *,, ,, ,, ";
     gHindi += common;
     gHindi.replace(",, ", "\n");
-    QFont font("Shobhika-Regular");
+    QFont font("Chandas");
     font.setWeight(14);
     font.setPointSize(12);
     ui->textEdit->setFont(font);
@@ -279,6 +281,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 	QFontDatabase::addApplicationFont(":/Fonts/fonts/Mandali/Mandali Regular.otf");
 	QFontDatabase::addApplicationFont(":/Fonts/fonts/Latha/latha.ttf");
 	QFontDatabase::addApplicationFont(":/Fonts/fonts/Nirmala/Nirmala Regular.ttf");
+	QFontDatabase::addApplicationFont(":/Fonts/fonts/Chandas/chandas.ttf");
 
     if (!isVerifier)
     {
@@ -312,7 +315,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionLoadDomain->setEnabled(false);
     ui->actionLoadSubPS->setEnabled(false);
     ui->actionLoadConfusions->setEnabled(false);
-    ui->actionSugg->setEnabled(false);
+    ui->actionSugg->setVisible(false);
 
     // Edit Menu
     ui->actionUndo->setEnabled(false);
@@ -646,11 +649,13 @@ void MainWindow::SaveTimeLog()
 //        page["Date/Time"]=time;
 //        mainObj.insert(i->first, page);
 //    }
+    int nMilliseconds = myTimer.elapsed();
+    int sec = nMilliseconds / 1000;
     //! Iterating over newTimeLog and and assinging time details into the page and finally inserting page into json object.
     for (auto i = newTimeLog.begin(); i != newTimeLog.end(); i++)
     {
         page["directory"] = i.key();
-        page["seconds"] = i.value().at(0).toInt();
+        page["seconds"] = i.value().at(0).toInt()+sec;
         page["Date/Time"] = i.value().at(1).toString();
         mainObj.insert(i.key(), page);
     }
@@ -671,9 +676,9 @@ void MainWindow::DisplayTimeLog()
 //    gSeconds = timeLog[mRole +":"+ gCurrentPageName +":V-"+ currentVersion];
     gSeconds = newTimeLog.value(mRole +":"+ gCurrentPageName +":V-"+ currentVersion).at(0).toInt();
     int nMilliseconds = myTimer.elapsed();
-    gSeconds += nMilliseconds / 1000;
-    int mins = gSeconds / 60;
-    int seconds = gSeconds - mins * 60;
+    int gSeconds_ = gSeconds + nMilliseconds / 1000;
+    int mins = gSeconds_ / 60;
+    int seconds = gSeconds_ - mins * 60;
     ui->lineEdit->setText(QString::number(mins) + "mins " + QString::number(seconds) +
                           " secs elapsed on this page(Right Click to update)");        //updating time in UI
 }
@@ -763,7 +768,6 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
         DisplayTimeLog();
         if((ev->button() == Qt::RightButton) && (LoadDataFlag)){
-            qDebug()<<"data is not loaded yet";
             QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
             QTextCursor cursor = curr_browser->textCursor();
             cursor.select(QTextCursor::WordUnderCursor);
@@ -828,7 +832,6 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
             popup_menu->exec(ev->globalPos());
             popup_menu->close(); popup_menu->clear();
-            qDebug ()<<"right click";
         }
         //! if right click
         //!
@@ -901,7 +904,6 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
             connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
             QString str = QString::fromStdString(selectedStr);
-            qDebug()<<"selected str"<<str;
               vector<string> Alligned = trie.print5NearestEntries(TGBookP, selectedStr);
             if (!selectedStr.empty() && !Alligned.empty()) {
 
@@ -1197,6 +1199,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
      */
 
     //QString ProjFile;
+    if(mProject.isProjectOpen()){ //checking if some project is opened, then closing it before opening new project
+        on_actionClose_project_triggered();
+    }
     int totalFileCountInDir = 0;
     QMap<QString, int> fileCountInDir;
 //to choose between recent three files
@@ -1655,9 +1660,12 @@ void MainWindow::SaveFile_GUI_Preprocessing()
     if (!mProject.isProjectOpen())
         return;
     //! Adding entries in Timelog.json about the elapsed time
-    int nMilliseconds = myTimer.elapsed();
-    gSeconds = nMilliseconds/1000;                                 //!Converting milliseconds to seconds
     QString currentVersion = mProject.get_version();
+    gSeconds = newTimeLog.value(mRole +":"+ gCurrentPageName +":V-"+ currentVersion).at(0).toInt();
+//    int nMilliseconds = myTimer.elapsed();
+//    gSeconds += nMilliseconds / 1000;
+/*    int nMilliseconds = myTimer.elapsed();
+    gSeconds = nMilliseconds/1000; */                                //!Converting milliseconds to seconds
     if(mRole == "Verifier" && mRole != currentVersion)
         currentVersion = QString::number(currentVersion.toInt() - 1);   //!Version is decremented for Verifier
 
@@ -1833,7 +1841,37 @@ void MainWindow::SaveFile_GUI_Postprocessing()
         out.setCodec("UTF-8");          //!Sets the codec for this stream
         gInitialTextHtml[currentTabPageName] = output;
 //        output = "<style> body{ width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; } </style>" + output;     //Formatting the output using CSS <style> tag
+        output = "<style> body{ width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; } </style><head>"
+                 "<script src=\"https://polyfill.io/v3/polyfill.min.js?features=es6\"></script>"
+                 "<script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"></script></head>" + output;//for showing math equations in browser using MathJax library
 
+        /* Doing equation png to equaton latex mapping
+         * we are showing png in our tool and saving Latex form in html page */
+
+        QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
+        QRegularExpressionMatchIterator itr;
+        itr = rex.globalMatch(output);
+        while(itr.hasNext()){
+            QRegularExpressionMatch match = itr.next();
+            QString img = match.captured();
+            if(img.contains("Equations_") && img.contains(".png")){
+                qDebug()<<img;
+                string img_ = img.toStdString();
+                int ind = img_.find("/");
+                int lindex = img_.find("png");
+                string str = img_.substr(ind, lindex-ind);
+                QString path = QString::fromStdString(str) + "tex";
+                QFile f(path);
+                if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                    qDebug() << "Cannot open file"<<f;
+                    continue;
+                }
+                QString line = f.readAll();
+                f.close();
+                output.replace(img,"<a name=\""+path+"\"></a>$$ "+line+" $$");
+
+            }
+        }
 		// Formatting the output using CSS <style> tag
 		// Add style tag just before head or add styling properties in the pre-made style tag
 		int inputDataIndex = -1;
@@ -5392,7 +5430,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         }
         else
         {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
             return;
         }
 
@@ -5430,20 +5468,20 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
                         mProject.set_version( mProject.get_version().toInt() - 1 );
                     }
                    // mProject.set_stage_verifier();
-                    QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+                    QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
                     return;
                 }
             }
             else {
                 // user entered nothing or pressed Cancel
-                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+                QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
                 return;
             }
             mProject.set_verifier();
         }
         else
         {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
             return;
         }
 
@@ -5460,7 +5498,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
     }
     else
     {
-        QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
+        QMessageBox::critical(0, "Turn In Error", "Please Open Project Before Turning In");
     }
 }
 
@@ -6390,10 +6428,10 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
     CustomTextBrowser * browser = new CustomTextBrowser();
     browser->setReadOnly(false);
 
-    QFont font("Shobhika-Regular");
+    QFont font("Chandas");
     font.setWeight(16);
     font.setPointSize(16);
-    font.setFamily("Shobhika");
+//    font.setFamily("Shobhika");
     browser->setFont(font);
     browser->setHtml(s1);
 
@@ -7205,9 +7243,6 @@ void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
                    QString qstr = QString::fromStdString(string2);
                    dict_set1.insert(qstr);
                }
-               foreach(auto &x,dict_set1){
-                   //qDebug()<<x;
-               }
 
           }
     }
@@ -7229,18 +7264,13 @@ void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
 
         while(numReplaced<count)
         {
-            if(x.size()<count){
-                break;
-            }
+//            if(x.size()<count){
+//                break;
+//            }
             int endIndex;
             indexOfReplacedWord = input.indexOf(x,from , Qt::CaseInsensitive);
             endIndex = indexOfReplacedWord;
-//            qDebug() << indexOfReplacedWord << " " <<endIndex;
-//            while(input[endIndex]!=" ")
-//                endIndex++;
-            //qDebug() << indexOfReplacedWord << " " <<endIndex;
             int len = x.length();
-            //qDebug()<<x<<x.length()<<endl;
 
             while(len > 0)
             {
@@ -7261,13 +7291,9 @@ void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
 
             QString test1=input.at(start);
             QString test2=input.at(endIndex);
-
-            //qDebug()<<"input[start-1]="<<input[start];
-            //qDebug()<<"input[endIndex]="<<input[endIndex];
             if((input[endIndex] == " " || test2.contains(regex)) && (input[start] == " " || test1.contains(regex))){
                 flag=1;
             }
-            //qDebug()<<"flag : "<<flag;
 
             if(flag==1)
             {
@@ -7708,7 +7734,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     QTextStream stream(f);
     stream.setCodec("UTF-8");
     QString input = stream.readAll();
-    QFont font("Shobhika Regular");
+    QFont font("Chandas");
     setWindowTitle(name);
     font.setPointSize(16);
     if(ext == "txt") {
@@ -7725,10 +7751,10 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
         QString qstrHtml = QString::fromStdString(strHtml);
         qstrHtml.replace("<br /></p>", "</p>");
 
-        QFont font("Shobhika-Regular");
+        QFont font("Chandas");
         font.setWeight(16);
         font.setPointSize(16);
-        font.setFamily("Shobhika");
+//        font.setFamily("Shobhika");
         b->setFont(font);
         b->setHtml(qstrHtml);
     }
@@ -7801,7 +7827,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 		b->setDocument(curDoc);
 		doc = b->document();
 //		loadHtmlInDoc(f);
-        preprocessing(); //for removing dangling mathras
+//        preprocessing(); //for removing dangling mathras
 		connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
 		blockCount = b->document()->blockCount();
 		if (!f->open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -7915,7 +7941,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 
 	// Deleting temporarily created CustomTextBrowser
 	delete b;
-
+    myTimer.start();
 	WordCount();     //for counting no of words in the document
 	readSettings();
 }
@@ -8564,7 +8590,7 @@ void MainWindow:: highlight(CustomTextBrowser *b , QString input)
 
 void MainWindow::on_actionas_PDF_triggered()
 {
-	//! We set the dir path to CorrectorOutput or Verifier output depending on whether it is opened
+    //! We set the dir path to CorrectorOutput or Verifier output depending on whether it is opened
     //! in Corrector or Verifier Mode.
     QString currentDirAbsolutePath;
     if(mRole=="Verifier")
@@ -8592,19 +8618,19 @@ void MainWindow::on_actionas_PDF_triggered()
     int l = searchString.length();
     QString whiteColor = "ffffff";
 
-	int itr = 0;
-	PdfRangeDialog *pdfRangeDialog = new PdfRangeDialog(this, count, 100);
-	pdfRangeDialog->exec();
-	int startPage = 0;
-	int endPage = 0;
-	if (pdfRangeDialog->isOkClicked()) {
-		startPage = pdfRangeDialog->getStartPage() - 1;
-		endPage = pdfRangeDialog->getEndPage();
-	} else {
-		startPage = 0;
-		endPage = count;
-	}
-	qDebug() << startPage << " : " << endPage;
+    int itr = 0;
+    PdfRangeDialog *pdfRangeDialog = new PdfRangeDialog(this, count, 100);
+    pdfRangeDialog->exec();
+    int startPage = 0;
+    int endPage = 0;
+    if (pdfRangeDialog->isOkClicked()) {
+        startPage = pdfRangeDialog->getStartPage() - 1;
+        endPage = pdfRangeDialog->getEndPage();
+    } else {
+        startPage = 0;
+        endPage = count;
+    }
+    qDebug() << startPage << " : " << endPage;
 
 
     //! Loop through all files
@@ -8622,10 +8648,10 @@ void MainWindow::on_actionas_PDF_triggered()
             //! condition to check if file is html
             if(html_files[1]=="html")
             {
-				if (itr < startPage) {
-					itr++;
-					continue;
-				}
+                if (itr < startPage) {
+                    itr++;
+                    continue;
+                }
 
                 QFile file(x);
                 if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
@@ -8647,6 +8673,40 @@ void MainWindow::on_actionas_PDF_triggered()
                 //! append counter when one file is fully scanned
                 counter++;
 
+                //! Search for Latex code in html files and replace it by corresponding png images
+                //! We save latext for mathematical equations in html, and show png in our tool as our tool can't render Latex
+                if(mainHtml.contains("$$")){
+
+                    QRegularExpression rex_lat("<a(.*?)</a>",QRegularExpression::DotMatchesEverythingOption);
+                    QRegularExpressionMatchIterator itr_lat;
+                    itr_lat = rex_lat.globalMatch(mainHtml);
+                    while(itr_lat.hasNext()){
+
+                        QRegularExpressionMatch match = itr_lat.next();
+                        QString text = match.captured(1);
+
+                        if(text.contains("Equations_"))
+                        {
+                            int sindex = match.capturedStart(1);
+                            int l_index = match.capturedEnd(1);
+                            std::string inputText_ = text.toStdString();
+                            int ind = inputText_.find("/");
+                            int lindex = inputText_.find(".tex");
+
+                            std::string str = inputText_.substr(ind,lindex-ind);
+                            QString path = QString::fromStdString(str) + ".png";
+                            QString html = "<img src=\""+path+"\">";
+                            text = "<a"+text+"</a>";
+                            mainHtml.replace(text,html);
+                        }
+
+                    }
+                    mainHtml = mainHtml.replace("$$","dne_nqe"); //where dne_nqe is a random string used as end delimiter here.
+                    //Note that this string should not appear as an original text - else it will cause parsing issues.
+                    QRegularExpression rex_dollar("dne_nqe(.*?)dne_nqe",QRegularExpression::DotMatchesEverythingOption);
+                    mainHtml = mainHtml.remove(rex_dollar);
+                }
+
                 //! Once page html is extracted ... before we move to next page we add html tag
                 //! for page break so that the PDF printer separates the pages
                 //! We do this till all pages done
@@ -8655,11 +8715,11 @@ void MainWindow::on_actionas_PDF_triggered()
                 }
                 file.close();
                 html_contents.append(mainHtml);
-				itr++;
+                itr++;
 
-				if (itr == endPage) {
-					break;
-				}
+                if (itr == endPage) {
+                    break;
+                }
 
             }
             //! if file is not html
@@ -8669,34 +8729,35 @@ void MainWindow::on_actionas_PDF_triggered()
         }
     }
 
-	// New way of printing pdf
-	QPrinter printer(QPrinter::ScreenResolution);
+    // New way of printing pdf
+    QPrinter printer(QPrinter::ScreenResolution);
     printer.setPaperSize(QPrinter::A4);
     printer.setPageMargins(QMarginsF(5, 5, 5, 5));
-	printer.setOutputFileName(gDirTwoLevelUp + "/print.pdf");
+    printer.setOutputFileName(gDirTwoLevelUp + "/print.pdf");
+    printer.setOutputFormat(QPrinter::NativeFormat);
 
-	QPrintDialog printDialog(&printer, this);
+    QPrintDialog printDialog(&printer, this);
 
-	if (printDialog.exec() == QDialog::Accepted) {
-		PrintWorker *workerPrint = new PrintWorker(nullptr, html_contents);
-		QThread *thread = new QThread;
-		workerPrint->printer = printDialog.printer(); // Assigning the printer for printing (VERY IMPORTANT)
+    if (printDialog.exec() == QDialog::Accepted) {
+        PrintWorker *workerPrint = new PrintWorker(nullptr, html_contents);
+        QThread *thread = new QThread;
+        workerPrint->printer = printDialog.printer(); // Assigning the printer for printing (VERY IMPORTANT)
 
-		connect(thread, SIGNAL(started()), workerPrint, SLOT(printPDF()));
-		connect(workerPrint, SIGNAL(finishedPrintingPDF()), thread, SLOT(quit()));
-		connect(workerPrint, SIGNAL(finishedPrintingPDF()), workerPrint, SLOT(deleteLater()));
-		connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-		connect(workerPrint, SIGNAL(finishedPrintingPDF()), this, SLOT(stopSpinning()));
+        connect(thread, SIGNAL(started()), workerPrint, SLOT(printPDF()));
+        connect(workerPrint, SIGNAL(finishedPrintingPDF()), thread, SLOT(quit()));
+        connect(workerPrint, SIGNAL(finishedPrintingPDF()), workerPrint, SLOT(deleteLater()));
+        connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+        connect(workerPrint, SIGNAL(finishedPrintingPDF()), this, SLOT(stopSpinning()));
 
-		workerPrint->moveToThread(thread);
-		thread->start();
-		spinner = new LoadingSpinner(this);
-		spinner->SetMessage("Printing PDF...", "Printing...");
-		spinner->setModal(false);
-		spinner->exec();
+        workerPrint->moveToThread(thread);
+        thread->start();
+        spinner = new LoadingSpinner(this);
+        spinner->SetMessage("Printing PDF...", "Printing...");
+        spinner->setModal(false);
+        spinner->exec();
 
-		QMessageBox::information(this, "Print Successful", "Printed PDF successfully", QMessageBox::Ok, QMessageBox::Ok);
-	}
+        QMessageBox::information(this, "Print Successful", "Printed PDF successfully", QMessageBox::Ok, QMessageBox::Ok);
+    }
 }
 
 /*!
@@ -9577,6 +9638,39 @@ void MainWindow::print(QPrinter *printer)
         stIndex += l; // increment line
         mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
         startFrom = stIndex + 6;
+    }
+    //latex to png mapping
+    if(mainHtml.contains("$$")){
+
+        QRegularExpression rex_lat("<a(.*?)</a>",QRegularExpression::DotMatchesEverythingOption);
+        QRegularExpressionMatchIterator itr_lat;
+        itr_lat = rex_lat.globalMatch(mainHtml);
+        while(itr_lat.hasNext()){
+
+            QRegularExpressionMatch match = itr_lat.next();
+            QString text = match.captured(1);
+
+            if(text.contains("Equations_"))
+            {
+                int sindex = match.capturedStart(1);
+                int l_index = match.capturedEnd(1);
+                std::string inputText_ = text.toStdString();
+                int ind = inputText_.find("/");
+                int lindex = inputText_.find(".tex");
+
+                std::string str = inputText_.substr(ind,lindex-ind);
+                QString path = QString::fromStdString(str) + ".png";
+                QString html = "<img src=\""+path+"\">";
+                text = "<a"+text+"</a>";
+                mainHtml.replace(text,html);
+                qDebug()<<text<<html;
+            }
+
+        }
+        mainHtml = mainHtml.replace("$$","dne_nqe"); //where dne_nqe is a random string used as end delimiter here.
+        //Note that this string should not appear as an original text - else it will cause parsing issues.
+        QRegularExpression rex_dollar("dne_nqe(.*?)dne_nqe",QRegularExpression::DotMatchesEverythingOption);
+        mainHtml = mainHtml.remove(rex_dollar);
     }
 
     file.close();
@@ -10464,136 +10558,131 @@ void MainWindow::on_actionClose_project_triggered()
 
 
     if(!mProject.isProjectOpen()){
-         QMessageBox::critical(this,"Error","Project Not Opened");
-         return;                                                                  //checking if the project is already
-                                                                              // opened or not
-               }
- mProject.setProjectOpen(false);
+//        QMessageBox::critical(this,"Error","Project Not Opened");
+        return;                                                                  //checking if the project is already
+        // opened or not
+    }
+    mProject.setProjectOpen(false);
+    ui->actionLoadDict->setVisible(false);
+    ui->actionLoadOCRWords->setVisible(false);
+    ui->actionLoadDomain->setVisible(false);
+    ui->actionLoadSubPS->setVisible(false);
+    ui->actionLoadConfusions->setVisible(false);
+    ui->actionLoadGDocPage->setVisible(false);
+    ui->menuSelectLanguage->setTitle("");
+    ui->menuCreateReports->setTitle("");
 
+    //disableing the buttons after project is closed
+    // File Menu
+    ui->actionSave->setEnabled(false);
+    ui->actionSave_As->setEnabled(false);
+    ui->actionSpell_Check->setEnabled(false);
+    ui->actionLoad_Prev_Page->setEnabled(false);
+    ui->actionLoad_Next_Page->setEnabled(false);
+    ui->actionToDevanagari->setEnabled(false);
+    ui->actionToSlp1->setEnabled(false);
+    ui->actionLoadGDocPage->setEnabled(false);
+    ui->actionLoadData->setEnabled(false);
+    ui->actionLoadDict->setEnabled(false);
+    ui->actionLoadOCRWords->setEnabled(false);
+    ui->actionLoadDomain->setEnabled(false);
+    ui->actionLoadSubPS->setEnabled(false);
+    ui->actionLoadConfusions->setEnabled(false);
+    ui->actionSugg->setEnabled(false);
 
+    // Edit Menu
+    ui->actionUndo->setEnabled(false);
+    ui->actionRedo->setEnabled(false);
+    ui->actionFind_and_Replace->setEnabled(false);
+    ui->actionUndo_Global_Replace->setEnabled(false);
+    ui->actionUpload->setEnabled(false);
 
+    // Language Menu
+    ui->actionSanskrit_2->setEnabled(false);
+    ui->actionEnglish->setEnabled(false);
+    ui->actionHindi->setEnabled(false);
 
- ui->actionLoadDict->setVisible(false);
- ui->actionLoadOCRWords->setVisible(false);
- ui->actionLoadDomain->setVisible(false);
- ui->actionLoadSubPS->setVisible(false);
- ui->actionLoadConfusions->setVisible(false);
- ui->actionLoadGDocPage->setVisible(false);
- ui->menuSelectLanguage->setTitle("");
- ui->menuCreateReports->setTitle("");
+    // Reports Menu
+    ui->actionAccuracyLog->setEnabled(false);
+    ui->actionViewAverageAccuracies->setEnabled(false);
 
+    // View Menu
+    ui->actionAllFontProperties->setEnabled(false);
+    ui->actionBold->setEnabled(false);
+    ui->actionItalic->setEnabled(false);
+    ui->actionLeftAlign->setEnabled(false);
+    ui->actionRightAlign->setEnabled(false);
+    ui->actionCentreAlign->setEnabled(false);
+    ui->actionJusitfiedAlign->setEnabled(false);
+    ui->actionSuperscript->setEnabled(false);
+    ui->actionSubscript->setEnabled(false);
+    ui->actionInsert_Horizontal_Line->setEnabled(false);
+    ui->actionFontBlack->setEnabled(false);
+    ui->actionInsert_Tab_Space->setEnabled(false);
+    ui->actionPDF_Preview->setEnabled(false);
+    if (isVerifier)
+        ui->actionHighlight->setEnabled(false);
 
- //disableing the buttons after project is closed
- // File Menu
- ui->actionSave->setEnabled(false);
- ui->actionSave_As->setEnabled(false);
- ui->actionSpell_Check->setEnabled(false);
- ui->actionLoad_Prev_Page->setEnabled(false);
- ui->actionLoad_Next_Page->setEnabled(false);
- ui->actionToDevanagari->setEnabled(false);
- ui->actionToSlp1->setEnabled(false);
- ui->actionLoadGDocPage->setEnabled(false);
- ui->actionLoadData->setEnabled(false);
- ui->actionLoadDict->setEnabled(false);
- ui->actionLoadOCRWords->setEnabled(false);
- ui->actionLoadDomain->setEnabled(false);
- ui->actionLoadSubPS->setEnabled(false);
- ui->actionLoadConfusions->setEnabled(false);
- ui->actionSugg->setEnabled(false);
+    // Table Menu inside View Menu
+    ui->actionInsert_Table_2->setEnabled(false);
+    ui->actionInsert_Columnleft->setEnabled(false);
+    ui->actionInsert_Columnright->setEnabled(false);
+    ui->actionInsert_Rowabove->setEnabled(false);
+    ui->actionInsert_Rowbelow->setEnabled(false);
+    ui->actionRemove_Column->setEnabled(false);
+    ui->actionRemove_Row->setEnabled(false);
 
- // Edit Menu
- ui->actionUndo->setEnabled(false);
- ui->actionRedo->setEnabled(false);
- ui->actionFind_and_Replace->setEnabled(false);
- ui->actionUndo_Global_Replace->setEnabled(false);
- ui->actionUpload->setEnabled(false);
+    // Versions Menu
+    ui->actionFetch_2->setEnabled(false);
+    ui->actionTurn_In->setEnabled(false);
+    ui->actionVerifier_Turn_In->setEnabled(false);
 
- // Language Menu
- ui->actionSanskrit_2->setEnabled(false);
- ui->actionEnglish->setEnabled(false);
- ui->actionHindi->setEnabled(false);
+    // Download Menu
+    ui->actionas_PDF->setEnabled(false);
 
- // Reports Menu
- ui->actionAccuracyLog->setEnabled(false);
- ui->actionViewAverageAccuracies->setEnabled(false);
+    ui->actionSymbols->setEnabled(false);
+    ui->actionZoom_In->setEnabled(false);
+    ui->actionZoom_Out->setEnabled(false);
+    //Reset loadData flag
+    LoadDataFlag = 1;
+    //reset data
+    mFilename.clear();
+    mFilename1.clear();
+    // mFile.clear();
+    LSTM.clear();
+    CPairs.clear();
+    Dict.clear();
+    GBook.clear();
+    IBook.clear();
+    PWords.clear();
+    ConfPmap.clear();
+    vGBook.clear();
+    vIBook.clear();
+    TDict.clear();
+    TGBook.clear();
+    TGBookP.clear();
+    TPWords.clear();
+    TPWordsP.clear();
+    synonym.clear();
+    synrows.clear();
 
- // View Menu
- ui->actionAllFontProperties->setEnabled(false);
- ui->actionBold->setEnabled(false);
- ui->actionItalic->setEnabled(false);
- ui->actionLeftAlign->setEnabled(false);
- ui->actionRightAlign->setEnabled(false);
- ui->actionCentreAlign->setEnabled(false);
- ui->actionJusitfiedAlign->setEnabled(false);
- ui->actionSuperscript->setEnabled(false);
- ui->actionSubscript->setEnabled(false);
- ui->actionInsert_Horizontal_Line->setEnabled(false);
- ui->actionFontBlack->setEnabled(false);
- ui->actionInsert_Tab_Space->setEnabled(false);
- ui->actionPDF_Preview->setEnabled(false);
- if (isVerifier)
-     ui->actionHighlight->setEnabled(false);
+    if(ui->lineEdit_3->text()!="" && ui->lineEdit_3->text()!="Words 0" && ui->lineEdit_3->text()!="0 Words"){
+        curr_browser->clear();
+    }                                                        //if the curr_browser and graphicsview
+    //are empty then we dont clear the curr_browser else we do
 
- // Table Menu inside View Menu
- ui->actionInsert_Table_2->setEnabled(false);
- ui->actionInsert_Columnleft->setEnabled(false);
- ui->actionInsert_Columnright->setEnabled(false);
- ui->actionInsert_Rowabove->setEnabled(false);
- ui->actionInsert_Rowbelow->setEnabled(false);
- ui->actionRemove_Column->setEnabled(false);
- ui->actionRemove_Row->setEnabled(false);
-
- // Versions Menu
- ui->actionFetch_2->setEnabled(false);
- ui->actionTurn_In->setEnabled(false);
- ui->actionVerifier_Turn_In->setEnabled(false);
-
- // Download Menu
- ui->actionas_PDF->setEnabled(false);
-
- ui->actionSymbols->setEnabled(false);
- ui->actionZoom_In->setEnabled(false);
- ui->actionZoom_Out->setEnabled(false);
- //Reset loadData flag
- LoadDataFlag = 1;
- //reset data
- mFilename.clear();
- mFilename1.clear();
-// mFile.clear();
- LSTM.clear();
- CPairs.clear();
- Dict.clear();
- GBook.clear();
- IBook.clear();
- PWords.clear();
- ConfPmap.clear();
- vGBook.clear();
- vIBook.clear();
- TDict.clear();
- TGBook.clear();
- TGBookP.clear();
- TPWords.clear();
- TPWordsP.clear();
- synonym.clear();
- synrows.clear();
-
- if(ui->lineEdit_3->text()!="" && ui->lineEdit_3->text()!="Words 0" && ui->lineEdit_3->text()!="0 Words"){
-    curr_browser->clear();
- }                                                        //if the curr_browser and graphicsview
-                                                          //are empty then we dont clear the curr_browser else we do
-
-            ui->treeView->setModel(nullptr);  //clearing tree view
-   ui->graphicsView->setScene(nullptr);   //clearing graphicsview
-               ui->lineEdit_2->clear();
-               ui->lineEdit->clear();
-                 ui->lineEdit_3->clear();                //disabling all other buttons which are enabled when project is open
-                 ui->pushButton->setDisabled(true);
-                  ui->pushButton_2->setDisabled(true);
-                 ui->viewComments->setDisabled(true);
-                 ui->compareCorrectorOutput->setDisabled(true);
-                ui->groupBox->setDisabled(true);
-                QMessageBox::information(this,"Success","Project Closed Successfully");
-                curr_browser=0;
+    ui->treeView->setModel(nullptr);  //clearing tree view
+    ui->graphicsView->setScene(nullptr);   //clearing graphicsview
+    ui->lineEdit_2->clear();
+    ui->lineEdit->clear();
+    ui->lineEdit_3->clear();                //disabling all other buttons which are enabled when project is open
+    ui->pushButton->setDisabled(true);
+    ui->pushButton_2->setDisabled(true);
+    ui->viewComments->setDisabled(true);
+    ui->compareCorrectorOutput->setDisabled(true);
+    ui->groupBox->setDisabled(true);
+//    QMessageBox::information(this,"Success","Project Closed Successfully");
+    curr_browser=0;
 }
 
 void MainWindow::preprocessing(){
@@ -10630,5 +10719,197 @@ void MainWindow::on_actionMerge_Cells_triggered()
 		QTextTable *table = curr_browser->textCursor().currentTable();
 		table->mergeCells(curr_browser->textCursor());
 	}
+}
+
+
+void MainWindow::on_actionSplit_Cell_triggered()
+{
+    if (!curr_browser || curr_browser->isReadOnly()) { return; }
+    if (curr_browser->textCursor().currentTable())
+    {
+        QDialog dialog(this);
+        QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+        form.addRow(new QLabel("Split Cells", this));
+
+        //! Add the lineEdits with their respective labels
+        QLineEdit *rows = new QLineEdit(&dialog);
+        QLineEdit *columns = new QLineEdit(&dialog);                                    // Add lineEdits to get Rows
+        form.addRow("Rows", rows);                                                      // Add lineEdits to get Columns
+        form.addRow("Columns", columns);
+
+        //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+        form.addRow(&buttonBox);
+        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+        if (dialog.exec() == QDialog::Accepted) {
+            QTextTable *table = curr_browser->textCursor().currentTable();
+            QTextTableCell currentCell = table->cellAt(curr_browser->textCursor());
+            table->splitCell(currentCell.row(), currentCell.column(), rows->text().toInt(), columns->text().toInt());
+        }
+    }
+}
+
+
+void MainWindow::on_actionInsert_Bulleted_List_triggered()
+{
+    QDialog dialog(this);
+    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+
+    //! Add the lineEdits with their respective labels
+    QGroupBox *groupBox = new QGroupBox(tr("Bulleted Lists"));
+    QRadioButton *radioBtn1 = new QRadioButton("List Disc");
+    QRadioButton *radioBtn2 = new QRadioButton("List Circle");
+    QRadioButton *radioBtn3 = new QRadioButton("List Square");
+    QRadioButton *radioBtn4 = new QRadioButton("List Decimal");
+
+    radioBtn1->setChecked(true);
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(radioBtn1);
+    vbox->addWidget(radioBtn2);
+    vbox->addWidget(radioBtn3);
+    vbox->addWidget(radioBtn4);
+    vbox->addStretch(1);
+    groupBox->setLayout(vbox);
+
+    form.addRow(groupBox);
+
+    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    //! Show the dialog as modal
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        if (radioBtn1->isChecked()) {
+            insertList(QTextListFormat::ListDisc);
+        } else if (radioBtn2->isChecked()) {
+            insertList(QTextListFormat::ListCircle);
+        } else if (radioBtn3->isChecked()) {
+            insertList(QTextListFormat::ListSquare);
+        } else if (radioBtn4->isChecked()) {
+            insertList(QTextListFormat::ListDecimal);
+        }
+    }
+}
+
+
+void MainWindow::on_actionInsert_Numbered_List_triggered()
+{
+    QDialog dialog(this);
+    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+
+    //! Add the lineEdits with their respective labels
+    QGroupBox *groupBox = new QGroupBox(tr("Bulleted Lists"));
+    QRadioButton *radioBtn1 = new QRadioButton("List Lower Alpha");
+    QRadioButton *radioBtn2 = new QRadioButton("List Upper Alpha");
+    QRadioButton *radioBtn3 = new QRadioButton("List Lower Roman");
+    QRadioButton *radioBtn4 = new QRadioButton("List Upper Roman");
+
+    radioBtn1->setChecked(true);
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(radioBtn1);
+    vbox->addWidget(radioBtn2);
+    vbox->addWidget(radioBtn3);
+    vbox->addWidget(radioBtn4);
+    vbox->addStretch(1);
+    groupBox->setLayout(vbox);
+
+    form.addRow(groupBox);
+
+    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    //! Show the dialog as modal
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        if (radioBtn1->isChecked()) {
+            insertList(QTextListFormat::ListLowerAlpha);
+        } else if (radioBtn2->isChecked()) {
+            insertList(QTextListFormat::ListUpperAlpha);
+        } else if (radioBtn3->isChecked()) {
+            insertList(QTextListFormat::ListLowerRoman);
+        } else if (radioBtn4->isChecked()) {
+            insertList(QTextListFormat::ListUpperRoman);
+        }
+    }
+}
+
+
+void MainWindow::insertList(QTextListFormat::Style styleIndex)
+{
+    QTextCursor cursor(curr_browser->textCursor());
+    cursor.beginEditBlock();
+    QTextBlockFormat blockFmt = cursor.blockFormat();
+    QTextListFormat listFmt;
+
+    if (cursor.currentList()) {
+        listFmt = cursor.currentList()->format();
+    } else {
+        listFmt.setIndent(blockFmt.indent() + 1);
+        blockFmt.setIndent(0);
+        cursor.setBlockFormat(blockFmt);
+    }
+
+    listFmt.setStyle(styleIndex);
+    cursor.createList(listFmt);
+    cursor.endEditBlock();
+}
+
+
+void MainWindow::on_actionInsert_Equation_triggered()
+{
+    if(!mProject.isProjectOpen()){
+                 QMessageBox::critical(this,"Error","Please open the project first");
+                 return;                                                                  //checking if the project is already
+        }
+        if(gCurrentPageName.isEmpty()){
+            QMessageBox::critical(this,"Error","Please open the html file first");
+            return;
+        }
+        equationeditor *w = new equationeditor(this,gDirTwoLevelUp,curr_browser,"0");
+        w->show();
+}
+
+
+void MainWindow::on_actionEdit_Equation_triggered()
+{
+    if(!curr_browser) return;
+
+    auto cursor = curr_browser->textCursor();
+    auto selected = cursor.selection();
+    QString sel = selected.toHtml();
+
+    if(!sel.contains("<img") || !sel.contains(".png") || !sel.contains("Equations_")){
+        QMessageBox::critical(this,"Error","Please select an equation to edit.");
+        return;
+    }
+    QString path;
+    QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
+    QRegularExpressionMatchIterator itr;
+    itr = rex.globalMatch(sel);
+    if(itr.hasNext()){
+    QRegularExpressionMatch match = itr.next();
+    QString img = match.captured();
+    string img_ = img.toStdString();
+    int ind = img_.find("/");
+    int lindex = img_.find("png");
+    string str = img_.substr(ind, lindex-ind);
+    path = QString::fromStdString(str) + "txt";
+    }
+    equationeditor *w = new equationeditor(this,gDirTwoLevelUp,curr_browser,path);
+    w->show();
+}
+
+
+void MainWindow::on_actionExit_triggered()
+{
+    QCoreApplication::quit();
 }
 

@@ -30,6 +30,7 @@ HEADERS += ./Filters.h \
     $$PWD/customtextbrowser.h \
     $$PWD/dashboard.h \
     $$PWD/editdistance.h \
+    $$PWD/equationeditor.h \
     $$PWD/globalreplaceworker.h \
 	$$PWD/handlebbox.h \
 	$$PWD/loaddataworker.h \
@@ -111,6 +112,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/dashboard.cpp \
     $$PWD/eddis.cpp \
     $$PWD/editdistance.cpp \
+    $$PWD/equationeditor.cpp \
     $$PWD/globalreplaceworker.cpp \
 	$$PWD/handlebbox.cpp \
 	$$PWD/loaddataworker.cpp \
@@ -152,6 +154,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/globalreplaceinformation.cpp
 FORMS += ./DiffView.ui \
     $$PWD/dashboard.ui \
+    $$PWD/equationeditor.ui \
     $$PWD/loadingspinner.ui \
     $$PWD/pdfrangedialog.ui \
     $$PWD/progressbardialog.ui \

@@ -11,6 +11,26 @@
 #include <QCheckBox>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+
+/*! \class ResizeImageView
+ * This Class is used to Resize the image.
+ *  ---------------------------
+ * \fn ResizeImageView::ResizeImageView
+ * \param QWidget->parent
+ * \param double->imageWidth
+ * \param double->imageHight
+ * --------------------------
+ * functionality->
+ * 1)Sets the Window title as "Resize Image Size"
+ * 2)Sets up the user interface for the specified widget.
+ * 3)Maximum limit of width is kept as 1500 units and minimum as 20 units
+ * 4)Maximum limit of height is kept as 1500 units and minimum as 20 units
+ * 5)Ok and Cancel button are kept in order to perform desired tasks.
+ * 6)Translated version of sourceText is set to "Resize Image"
+ * 7)several flags are set thus giving hints on the behavior of the window.
+ *  The behavior is platform-dependent
+ * -------------------------------------
+ */
 ResizeImageView::ResizeImageView(QWidget *parent,double imageWidth,double imageHight):
     QDialog(parent),
     ui(new Ui::ResizeImageView)

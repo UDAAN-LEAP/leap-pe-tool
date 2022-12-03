@@ -23,6 +23,21 @@ extern string toslp1(string s);
 extern string toDev(string s);
 extern QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName;
 
+/*! \class TextFinder
+ * This Class is used to Resize the image.
+ *  ---------------------------
+ * \fn ResizeImageView::ResizeImageView
+ * \param QWidget->parent
+ * \param QDialog->(parent, Qt::WindowCloseButtonHint),
+ * \param ui(new Ui::TextFinder)
+ * --------------------------
+ * functionality->
+ * 1) Sets up the user interface for the specified widget.
+ * 2)Sets both the minimum and maximum sizes of the widget,
+ *  thereby preventing it from ever growing or shrinking.
+ *  3)Installs an event filter filterObj on "this" object(findLineEdit,replaceLineEdit)
+ * -------------------------------------
+ */
 TextFinder *TextFinder::textFinder = 0;
 TextFinder::TextFinder(QWidget *parent) :
     QDialog(parent, Qt::WindowCloseButtonHint),
@@ -34,6 +49,10 @@ TextFinder::TextFinder(QWidget *parent) :
     ui->replaceLineEdit->installEventFilter(this);
 }
 
+/*! \Destructor
+ *  Deletes and destroys the object after useage
+------
+ */
 TextFinder::~TextFinder()
 {
     delete ui;
@@ -437,7 +456,18 @@ bool TextFinder::eventFilter(QObject *watched, QEvent *event)
     return QDialog::eventFilter(watched, event);
 }
 
-
+/*!
+ * fn TextFinder::stringCheck
+ * param QString->path
+ * param QString searchstr
+ * \functionality:
+ * 1)Saves file path as string
+ * 2)Opens the File in readOnly mode
+ * 3)Sets the codec for this stream to codec("UTF-8")
+ * 4)Reads the entire content of the stream, and returns it as a QString.
+ * 5)closes the file
+ * 6)If string contains the specifics, function returns true else false
+ */
 bool TextFinder::stringCheck(QString path, QString searchstr)
 {
     qDebug()<<"1111111";
@@ -447,7 +477,7 @@ bool TextFinder::stringCheck(QString path, QString searchstr)
     in.setCodec("UTF-8");
     QString s1 = in.readAll();
     f->close();
-    if(s1.contains(searchstr))
+    if(s1.contains(searchstr))      //checks wheather the string is found or not
     { qDebug()<<"2222";
         return true;
     }

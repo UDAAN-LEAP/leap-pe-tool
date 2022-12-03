@@ -771,14 +771,13 @@ bool Project::push(QString branchName) {
             //goto cleanup;
         }
     }
-
+    error = git_remote_push(remote, &refspecs , &push_opts);
+    qDebug()<<"Error"<<error<<endl;
     error = git_push_init_options(&push_opts, GIT_PUSH_OPTIONS_VERSION);
     push_opts.callbacks.credentials = credentials_cb;
     //std::string str="refs/remotes/origin/master";
     //char * c = (char*)"refs/heads/master";
     //const git_strarray abc = { &c,1 };
-    error = git_remote_push(remote, &refspecs , &push_opts);
-    qDebug()<<"Error"<<error<<endl;
     /*cleanup:
     if(remote)
         git_remote_free(remote);

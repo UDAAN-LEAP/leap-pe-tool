@@ -1,7 +1,16 @@
 #ifndef HANDLEBBOX_H
 #define HANDLEBBOX_H
 
-#include <QtCore>
+//#include <QtCore>
+#include <QVector>
+#include <QString>
+#include <QFile>
+#include <QTextCursor>
+#include <QTextStream>
+#include <QRegularExpression>
+#include <QTextDocument>
+#include <QDebug>
+#include <QTextBlock>
 
 //class QFile;
 class QTextDocument;
@@ -13,6 +22,7 @@ class HandleBbox
 {
 public:
 	HandleBbox();
+	HandleBbox(QTextDocument* doc);
 	~HandleBbox();
 	QTextDocument *loadFileInDoc(QFile *f);
 	void insertBboxes(QFile *f);
@@ -20,8 +30,9 @@ public:
 	QVector<QPair<QString,QString> > bboxes;
 
 private:
+    QTextBlockFormat blockFormat;
 	QTextDocument *doc;
-
+	bool docIsPassed;
 	void storeBboxes(QFile *f);
 };
 

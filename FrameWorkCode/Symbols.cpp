@@ -14,7 +14,12 @@
 
 SymbolsView *SymbolsView::symbolsView = 0;
 
-/*!
+/*! class Symbols
+ *  params
+ *  1)QWidget->parent
+ *  2)QDialog->parent,Qt::WindowCloseButtonHint
+ *  3)ui(new Ui::SymbolsView)
+ *
  * \fn SymbolsView::SymbolsView
  * \brief sets the text for above 3 tabs and sets current tab as Diacritics
  */
