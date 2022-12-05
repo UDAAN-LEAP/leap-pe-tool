@@ -15,8 +15,6 @@
 #include "QProgressBar"
 #include <QPrinter>
 #include <QPrintPreviewDialog>
-#include <tesseract/baseapi.h>
-#include <leptonica/allheaders.h>
 #include "DiffView.h"
 #include <QtConcurrent/QtConcurrent>
 #include "diff_match_patch.h"
@@ -36,7 +34,6 @@
 #include <regex>
 #include "crashlog.h"
 #include "ProjectHierarchyWindow.h"
-#include "3rdParty/RapidXML/rapidxml.hpp"
 #include <QDomDocument>
 #include <QFormLayout>
 #include <QDialogButtonBox>
@@ -50,12 +47,9 @@
 #include <QSet>
 #include <QAction>
 #include "ProjectWizard.h"
-#include <SimpleMail/SimpleMail>
-//# include <QTask>
 #include <QDebug>
-#include<QtCore>
-#include<QtXml>
-//#include <QPainter>
+#include <QtCore>
+#include <QtXml>
 #include <QJsonObject>
 #include <QTextDocumentFragment>
 #include <sstream>
@@ -90,7 +84,6 @@
 #include <QRadioButton>
 #include <equationeditor.h>
 
-//gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
 trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
@@ -8445,44 +8438,44 @@ void MainWindow::closeEvent (QCloseEvent *event)
 }
 
 
-/*!
- * \fn MainWindow::sendEmail
- *
- * This function sends an email to "aksharanveshini.iitb@gmail.com", whenever a user, whether corrector
- * or verifier submits their book project after their work is done.
- *
- * See SimpleMail Documentation for more details.
- *
- * \param emailText
- * \return
- */
+///*!
+// * \fn MainWindow::sendEmail
+// *
+// * This function sends an email to "aksharanveshini.iitb@gmail.com", whenever a user, whether corrector
+// * or verifier submits their book project after their work is done.
+// *
+// * See SimpleMail Documentation for more details.
+// *
+// * \param emailText
+// * \return
+// */
 
-bool MainWindow::sendEmail(QString emailText)
-{
-    QString pmEmail = mProject.get_pmEmail();
-    if(pmEmail == "" || (!pmEmail.contains("@")))
-        return 0;
+//bool MainWindow::sendEmail(QString emailText)
+//{
+//    QString pmEmail = mProject.get_pmEmail();
+//    if(pmEmail == "" || (!pmEmail.contains("@")))
+//        return 0;
 
-    //!Adding Sender Address and credentials
-    SimpleMail::Sender sender ("smtp.gmail.com", 465, SimpleMail::Sender::SslConnection);
-    sender.setUser("aksharanveshini.iitb@gmail.com");
-    sender.setPassword("backend-ui"); //has to be encoded
-    SimpleMail::MimeMessage message;
-    message.setSender(SimpleMail::EmailAddress("aksharanveshini.iitb@gmail.com", "Akshar Anveshini"));
+//    //!Adding Sender Address and credentials
+//    SimpleMail::Sender sender ("smtp.gmail.com", 465, SimpleMail::Sender::SslConnection);
+//    sender.setUser("aksharanveshini.iitb@gmail.com");
+//    sender.setPassword("backend-ui"); //has to be encoded
+//    SimpleMail::MimeMessage message;
+//    message.setSender(SimpleMail::EmailAddress("aksharanveshini.iitb@gmail.com", "Akshar Anveshini"));
 
-    //!Adding recipient
-    QList <SimpleMail::EmailAddress> listRecipients;
-    listRecipients.append(pmEmail);
-    message.setToRecipients(listRecipients);
-    message.setSubject(mProject.get_setId() + " Turn In");
-    SimpleMail::MimeText *text = new SimpleMail::MimeText();
-    text->setText(emailText);
-    message.addPart(text);
-    if(!sender.sendMail(message))
-        return 0;
+//    //!Adding recipient
+//    QList <SimpleMail::EmailAddress> listRecipients;
+//    listRecipients.append(pmEmail);
+//    message.setToRecipients(listRecipients);
+//    message.setSubject(mProject.get_setId() + " Turn In");
+//    SimpleMail::MimeText *text = new SimpleMail::MimeText();
+//    text->setText(emailText);
+//    message.addPart(text);
+//    if(!sender.sendMail(message))
+//        return 0;
 
-    return 1;
-}
+//    return 1;
+//}
 
 /*!
  * \fn MainWindow::highlight

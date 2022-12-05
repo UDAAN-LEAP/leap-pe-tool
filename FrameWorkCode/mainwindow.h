@@ -9,13 +9,11 @@
 #include <fstream>
 #include <sstream>
 #include <QFileDialog>
-#include<string>
-#include<QFontDialog>
-#include<QFont>
-#include<QFile>
-//#include<hash_map>
+#include <string>
+#include <QFontDialog>
+#include <QFont>
+#include <QFile>
 #include <unordered_map>
-//#include <std::codecvt>
 #include <vector>
 #include <algorithm>
 #include <math.h>
@@ -25,42 +23,33 @@
 #include <QLabel>
 #include <QMouseEvent>
 #include <QDebug>
-//#include <tesseract/baseapi.h>
-//#include <leptonica/allheaders.h>
 #include <QPlainTextEdit>
-//#include "toFromslp1.h"
 #include "zoom.h"
-#include<QMessageBox>
-#include<QTime>
-#include<QPrinter>
-#include<QPrintDialog>
-//#include"staticDict.h"
-//#include "lcsqt.h"
+#include <QMessageBox>
+#include <QTime>
+#include <QPrinter>
+#include <QPrintDialog>
 #include <Project.h>
 #include <QTextBrowser>
 #include <QSet>
-#include<QDomDocument>
+#include <QDomDocument>
 #include <QFileSystemWatcher>
-#include<QGraphicsRectItem>
+#include <QGraphicsRectItem>
 #include "globalreplacedialog.h"
 #include "loadingspinner.h"
 #include "progressbardialog.h"
 #include "globalreplacepreview.h"
-#include<markRegion.h>
-#include<QOAuth2AuthorizationCodeFlow>
-
-
-#include<QCompleter>
-#include<QDirModel>
+#include <markRegion.h>
+#include <QOAuth2AuthorizationCodeFlow>
+#include <QCompleter>
+#include <QDirModel>
 #include <QStringListModel>
 #include <QModelIndex>
 #include <QAbstractItemModel>
 #include <QScrollBar>
-
 #include "customtextbrowser.h"
 #include "handlebbox.h"
 
-//#include <set>
 using namespace std;
 
 namespace Ui {
@@ -309,7 +298,7 @@ private slots:
 
     QJsonObject getAverageAccuracies(QJsonObject mainObj);
 
-    bool sendEmail(QString message);
+//    bool sendEmail(QString message);
 
     void on_actionInsert_Columnleft_triggered();
 

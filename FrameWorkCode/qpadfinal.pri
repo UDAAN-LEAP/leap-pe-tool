@@ -3,79 +3,38 @@
 # ------------------------------------------------------
 
 HEADERS += ./Filters.h \
-    $$PWD/SimpleMail/SimpleMail \
-    $$PWD/SimpleMail/emailaddress.h \
-    $$PWD/SimpleMail/emailaddress_p.h \
-    $$PWD/SimpleMail/mimeattachment.h \
-    $$PWD/SimpleMail/mimecontentformatter.h \
-    $$PWD/SimpleMail/mimefile.h \
-    $$PWD/SimpleMail/mimehtml.h \
-    $$PWD/SimpleMail/mimeinlinefile.h \
-    $$PWD/SimpleMail/mimemessage.h \
-    $$PWD/SimpleMail/mimemessage_p.h \
-    $$PWD/SimpleMail/mimemultipart.h \
-    $$PWD/SimpleMail/mimemultipart_p.h \
-    $$PWD/SimpleMail/mimepart.h \
-    $$PWD/SimpleMail/mimepart_p.h \
-    $$PWD/SimpleMail/mimetext.h \
-    $$PWD/SimpleMail/quotedprintable.h \
-    $$PWD/SimpleMail/sender.h \
-    $$PWD/SimpleMail/sender_p.h \
-    $$PWD/SimpleMail/server.h \
-    $$PWD/SimpleMail/server_p.h \
-    $$PWD/SimpleMail/serverreply.h \
-    $$PWD/SimpleMail/serverreply_p.h \
-    $$PWD/SimpleMail/smtpexports.h \
     $$PWD/crashlog.h \
     $$PWD/customtextbrowser.h \
     $$PWD/dashboard.h \
     $$PWD/editdistance.h \
     $$PWD/equationeditor.h \
     $$PWD/globalreplaceworker.h \
-	$$PWD/handlebbox.h \
-	$$PWD/loaddataworker.h \
+    $$PWD/handlebbox.h \
+    $$PWD/loaddataworker.h \
     $$PWD/loadingspinner.h \
     $$PWD/markRegion.h \
     $$PWD/pdfhandling.h \
-	$$PWD/pdfrangedialog.h \
-	$$PWD/printworker.h \
+    $$PWD/pdfrangedialog.h \
+    $$PWD/printworker.h \
     $$PWD/progressbardialog.h \
     $$PWD/shortcutguidedialog.h \
     $$PWD/textfinder.h \
     $$PWD/globalreplacedialog.h \
     $$PWD/undoglobalreplace.h \
-	$$PWD/verifyset.h \
+    $$PWD/verifyset.h \
     $$PWD/worker.h \
-    ./Project.h \
-    ./TreeItem.h \
-    ./tesseract/apitypes.h \
-    ./tesseract/baseapi.h \
-    ./tesseract/capi.h \
-    ./diff_match_patch.h \
-    ./eddis.h \
-    ./tesseract/genericvector.h \
-    ./tesseract/helpers.h \
-    ./lg2_common.h \
-    ./tesseract/ltrresultiterator.h \
-    ./meanStdPage.h \
-    ./tesseract/ocrclass.h \
-    ./tesseract/osdetect.h \
-    ./tesseract/pageiterator.h \
-    ./tesseract/platform.h \
-    ./tesseract/publictypes.h \
     ./3rdParty/RapidXML/rapidxml.hpp \
     ./3rdParty/RapidXML/rapidxml_iterators.hpp \
     ./3rdParty/RapidXML/rapidxml_print.hpp \
     ./3rdParty/RapidXML/rapidxml_utils.hpp \
-    ./tesseract/renderer.h \
-    ./tesseract/resultiterator.h \
-    ./tesseract/serialis.h \
+    ./Project.h \
+    ./TreeItem.h \
+    ./diff_match_patch.h \
+    ./eddis.h \
+    ./lg2_common.h \
+    ./meanStdPage.h \
     ./slpNPatternDict.h \
-    ./tesseract/strngs.h \
-    ./tesseract/thresholder.h \
     ./trieEditdis.h \
-    ./tesseract/unichar.h \
-    ./tesseract/version.h \
     ./DiffView.h \
     ./ProjectHierarchyWindow.h \
     ./Symbols.h \
@@ -85,7 +44,6 @@ HEADERS += ./Filters.h \
     ./interndiffview.h \
     ./loginpageview.h \
     ./mainwindow.h \
-#    ./qcustomplot.h \
     ./resizeimageview.h \
     ./zoom.h \
     ./ProjectWizard.h \
@@ -93,20 +51,6 @@ HEADERS += ./Filters.h \
     $$PWD/globalreplacepreview.h \
     $$PWD/globalreplaceinformation.h
 SOURCES += ./DiffView.cpp \
-    $$PWD/SimpleMail/emailaddress.cpp \
-    $$PWD/SimpleMail/mimeattachment.cpp \
-    $$PWD/SimpleMail/mimecontentformatter.cpp \
-    $$PWD/SimpleMail/mimefile.cpp \
-    $$PWD/SimpleMail/mimehtml.cpp \
-    $$PWD/SimpleMail/mimeinlinefile.cpp \
-    $$PWD/SimpleMail/mimemessage.cpp \
-    $$PWD/SimpleMail/mimemultipart.cpp \
-    $$PWD/SimpleMail/mimepart.cpp \
-    $$PWD/SimpleMail/mimetext.cpp \
-    $$PWD/SimpleMail/quotedprintable.cpp \
-    $$PWD/SimpleMail/sender.cpp \
-    $$PWD/SimpleMail/server.cpp \
-    $$PWD/SimpleMail/serverreply.cpp \
     $$PWD/crashlog.cpp \
     $$PWD/customtextbrowser.cpp \
     $$PWD/dashboard.cpp \
@@ -114,14 +58,14 @@ SOURCES += ./DiffView.cpp \
     $$PWD/editdistance.cpp \
     $$PWD/equationeditor.cpp \
     $$PWD/globalreplaceworker.cpp \
-	$$PWD/handlebbox.cpp \
-	$$PWD/loaddataworker.cpp \
+    $$PWD/handlebbox.cpp \
+    $$PWD/loaddataworker.cpp \
     $$PWD/loadingspinner.cpp \
     $$PWD/markRegion.cpp \
     $$PWD/meanStdPage.cpp \
     $$PWD/pdfhandling.cpp \
-	$$PWD/pdfrangedialog.cpp \
-	$$PWD/printworker.cpp \
+    $$PWD/pdfrangedialog.cpp \
+    $$PWD/printworker.cpp \
     $$PWD/progressbardialog.cpp \
     $$PWD/shortcutguidedialog.cpp \
     $$PWD/slpNPatternDict.cpp \
@@ -129,7 +73,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/globalreplacedialog.cpp \
     $$PWD/trieEditdis.cpp \
     $$PWD/undoglobalreplace.cpp \
-	$$PWD/verifyset.cpp \
+    $$PWD/verifyset.cpp \
     $$PWD/worker.cpp \
     ./Filters.cpp \
     ./Project.cpp \
@@ -145,7 +89,6 @@ SOURCES += ./DiffView.cpp \
     ./loginpageview.cpp \
     ./main.cpp \
     ./mainwindow.cpp \
-#    ./qcustomplot.cpp \
     ./resizeimageview.cpp \
     ./zoom.cpp \
     ./ProjectWizard.cpp \
@@ -172,8 +115,3 @@ FORMS += ./DiffView.ui \
     ./resizeimageview.ui \
     $$PWD/globalreplacepreview.ui \
     $$PWD/globalreplaceinformation.ui
-RESOURCES +=
-
-DISTFILES += \
-    $$PWD/SimpleMail/CMakeLists.txt \
-    $$PWD/SimpleMail/simplemail-qt5.pc.in
