@@ -29,13 +29,13 @@ HandleBbox::~HandleBbox()
 
 QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
 {
-    QTextCursor cur(doc);
+    QTextCursor cur(doc);QTextCursor cur2(doc);
     if (!f->open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Cannot open file";
         return nullptr;
     }
     QString line;
-    int flag_ = 0;
+    int flag_ = 0, nestedListCount = 0;
     QString inputText = "";
     while(!f->atEnd()) {
         line = f->readLine();
@@ -159,6 +159,68 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                     inputText = "";
                 }
 
+            }
+
+            //!for parsing unordered list
+            //! Checking for ul tag and waiting till its closing tag is found.
+            //! There can be a nested list - for that nestedListCount varaible is helpful.
+            //! When new list is inserted in a document, Qt inserts an empty block at strat - Qt bug.
+            //! For removing that empty block, we are finding the block count before inserting the list then deleting the block by block number found before inserting the list.
+            else if((l[i].contains("<ul") && flag_ != 1 && flag_ != 2 && flag_ != 3 && flag_ != 6) || flag_ == 5){
+                flag_ = 5;
+                if(l[i].contains("<ul")) nestedListCount += 1;  //! If opening tag of list is seen, nestedListCount is incremented to keep track of opening list tags seen in a list
+                while(i < l.size() && !l[i].contains("</ul>")){
+                    inputText += l[i];
+                    inputText += " ";
+                    i++;
+                }
+                if(i == l.size())
+                    i = i - 1;
+                if(l[i].contains("</ul>"))
+                {
+                    nestedListCount -= 1;       //! If closing tag of list is seen, nestedListCount is decremented. When this varaible reaches zero, the list has ended.
+                    inputText += l[i];
+                    inputText += " ";
+                }
+                if(l[i].contains("</ul>") && nestedListCount < 1){
+                    flag_ = 0;
+                    int num = doc->blockCount();
+                    cur.insertBlock();
+                    cur.insertHtml(inputText);
+                    cur2 = QTextCursor(doc->findBlockByNumber(num));
+                    cur2.select(QTextCursor::BlockUnderCursor);
+                    cur2.deleteChar();
+                    inputText = "";
+                }
+            }
+
+            //for parsing ordered list
+            else if((l[i].contains("<ol") && flag_ != 1 && flag_ != 2 && flag_ != 3 && flag_ !=5 ) || flag_ == 6){
+                flag_ = 6;
+                if(l[i].contains("<ol")) nestedListCount += 1;
+                while(i < l.size() && !l[i].contains("</ol>")){
+                    inputText += l[i];
+                    inputText += " ";
+                    i++;
+                }
+                if(i == l.size())
+                    i = i - 1;
+                if(l[i].contains("</ol>"))
+                {
+                    nestedListCount -= 1;
+                    inputText += l[i];
+                    inputText += " ";
+                }
+                if(l[i].contains("</ol>") && nestedListCount < 1){
+                    flag_ = 0;
+                    int num = doc->blockCount();
+                    cur.insertBlock();
+                    cur.insertHtml(inputText);
+                    cur2 = QTextCursor(doc->findBlockByNumber(num));
+                    cur2.select(QTextCursor::BlockUnderCursor);
+                    cur2.deleteChar();
+                    inputText = "";
+                }
             }
 
         }

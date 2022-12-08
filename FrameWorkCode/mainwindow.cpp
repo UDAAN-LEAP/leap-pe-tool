@@ -1874,6 +1874,9 @@ void MainWindow::SaveFile_GUI_Postprocessing()
 			output.insert(inputDataIndex - 1, "<style>\nbody { width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; }\n</style>");
 		}
 
+        //removing empty p tags inserted by Qt.
+//        QRegularExpression rex_empty("<p style=\"-qt-paragraph-type:empty;(.*?)</p>",QRegularExpression::DotMatchesEverythingOption);
+//        output = output.remove(rex_empty);
         out << output;
         sFile.flush();      //!Flushes any buffered data waiting to be written in the \a sFile
         sFile.close();      //!Closing the file
