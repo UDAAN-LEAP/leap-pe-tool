@@ -5975,9 +5975,11 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, int w, int h)
 {
     //! If directory exists then create the folders
-    if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
-    {
+    if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+    }
+    if(!QDir(gDirTwoLevelUp+"/Cropped_Images/Figures").exists())
+    {
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Figures");
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Tables");
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Equations");
