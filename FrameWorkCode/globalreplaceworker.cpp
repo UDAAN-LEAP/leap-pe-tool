@@ -476,3 +476,184 @@ bool GlobalReplaceWorker::isStringInFile(QString file_path, QString searchString
     return textFound;
 }
 
+
+void GlobalReplaceWorker::saveBboxInfo(QString htmlFile){
+    QFile gfile(htmlFile);
+    gfile.open(QIODevice::ReadOnly | QFile::Text);
+    QTextStream in(&gfile);
+    QString initial = in.readAll();
+    gfile.close();
+    QString bboxfile = gfile.fileName();
+    bboxfile = bboxfile.replace(".html", ".bbox");
+
+
+    if(!QDir(gDirTwoLevelUp+"/bboxf").exists())
+            QDir().mkdir(gDirTwoLevelUp+"/bboxf");
+
+        bboxfile=bboxfile.replace("CorrectorOutput","bboxf");
+
+
+    QFile bbox_file(bboxfile);
+    if(initial.contains("bbox") && !bbox_file.exists())
+      {
+          QMap<QString, QString> bbox;
+          QStringList plist = initial.split("<span class");
+          for(int i=0;i<plist.length();i++)
+          {
+             QString bbox_tags = plist[i];
+             int first = bbox_tags.indexOf("bbox");
+             int last = bbox_tags.indexOf(";\">");
+             bbox_tags = bbox_tags.mid(first,last-first);
+             bbox_tags = bbox_tags.remove("\">\n");
+             bbox_tags = bbox_tags.trimmed();
+
+             QStringList bbox_coordinates = bbox_tags.split(" ");
+             bbox_tags = bbox_coordinates[0] + " " + bbox_coordinates[1] + " " + bbox_coordinates[2] + " " + bbox_coordinates[3] + " " + bbox_coordinates[4];
+
+             int start = plist[i].indexOf(";\">\n");
+             int end = plist[i].indexOf("</span>");
+             QString sents = plist[i].mid(start, end-start);
+             sents = sents.remove(";\">\n");
+             sents = sents.trimmed();
+             bbox.insert(bbox_tags, sents);
+
+          }
+          bbox.erase(bbox.begin());
+          //qDebug()<<bbox;
+          bbox_file.open(QIODevice::ReadWrite | QFile::Truncate);
+          QDataStream out (&bbox_file);
+          out.setVersion(QDataStream::Qt_5_3);
+          out<<bbox;
+          bbox_file.flush();
+          bbox_file.close();
+         // qDebug() << "bbox file written succesfully ... ";
+      }
+}
+
+void GlobalReplaceWorker::bboxInsertion(QString f){
+    QFile file(f);
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "File not opened for reading";
+        return;
+    }
+
+    QTextStream in(&file);
+    in.setCodec("UTF-8");
+    QString text = in.readAll();
+    file.close();
+
+    QRegularExpression rex("<p(.*?)</p>",QRegularExpression::DotMatchesEverythingOption);
+    QRegularExpression rex_("<span(.*?)</span>",QRegularExpression::DotMatchesEverythingOption);
+
+    QRegularExpression rex2("(<p[^>]*>|<span[^>]*>)");
+    QString fBbox = f;
+    fBbox.replace(".html",".bbox");
+    fBbox.replace("CorrectorOutput","bboxf");
+    //qDebug()<<"file = "<<fBbox;
+    QFile bbox_file(fBbox);
+    if(bbox_file.exists())
+    {
+        QRegularExpressionMatchIterator itr,itr_;
+        itr = rex.globalMatch(text);
+        itr_ = rex_.globalMatch(text);
+        if (!bbox_file.open(QIODevice::ReadOnly)) {
+            qDebug() << "Unable to open bbox_file!";
+            return;
+        }
+
+        QDataStream in_(&bbox_file);
+        in_.setVersion(QDataStream::Qt_5_3);
+        QMap<QString,QString> coordinates;
+
+        in_ >> coordinates;
+        bbox_file.close();
+        QString bbox_coordinates;
+        QStringList bbox_list,bbox_list_;
+        QMap<QString, QString>::iterator ci;
+        edit_Distance edit;
+        //qDebug()<<"in_ : map="<<in_<<":"<<coordinates;
+        QRegularExpression rex3("(<[^>]*>|[^>]*>)");
+        while (itr.hasNext())
+        {
+            QRegularExpressionMatch match = itr.next();
+            QString ex = match.captured(1);
+
+            ex.remove(rex3);
+            double max = 0;
+            for(ci = coordinates.begin(); ci!=coordinates.end(); ++ci)
+            {
+                double similarity = edit.getSimilarityValue(ex.toStdString(), ci.value().toStdString());
+                if(similarity>max)
+                {
+                    bbox_coordinates = ci.key();
+                    max = similarity;
+                }
+            }
+            bbox_coordinates.remove("\">");
+            if(bbox_coordinates != "")
+            bbox_list.append(bbox_coordinates);
+        }
+        //itr_ is for span tags
+        while (itr_.hasNext())
+        {
+            QRegularExpressionMatch match_ = itr_.next();
+            QString ex_ = match_.captured(1);
+            ex_.remove(rex3);
+            double max = 0;
+            for(ci = coordinates.begin(); ci!=coordinates.end(); ++ci)
+            {
+                double similarity = edit.DiceMatch(ex_.toStdString(), ci.value().toStdString());
+
+                if(similarity>max)
+                {
+                    bbox_coordinates = ci.key();
+                    max = similarity;
+                }
+            }
+            bbox_coordinates.remove("\">");
+            if(bbox_coordinates != "")
+            bbox_list_.append(bbox_coordinates);
+        }
+        //now just insert the bbox coordinates into the file saved
+        QRegularExpressionMatchIterator itr2;
+        itr2 = rex2.globalMatch(text,0);
+        int i=0,j=0;
+//        qDebug()<<"bbox file="<<fBbox;
+//        qDebug()<<"bbox file size="<<bbox_file.size()<<coordinates;
+//        qDebug()<<"bbox_list="<<bbox_list;
+//        qDebug()<<"bbox_list_="<<bbox_list_;
+        if(bbox_list.size() == 0 && bbox_list_.size() == 0){
+            return;
+        }
+        while (itr2.hasNext()) {
+            QRegularExpressionMatch match2 = itr2.next();
+            QString ex = match2.captured(1);
+            int endIndex = match2.capturedEnd(1);
+            if((ex[1] == "p" || ex[1] == "P") && i<bbox_list.size()){
+                endIndex = endIndex-1;
+                text.insert(endIndex," title=\""+bbox_list[i]+"\"");//index+1
+                i++;
+            }
+            else if((ex[1] == "s" || ex[1] == "S") && j<bbox_list_.size()){
+                endIndex = endIndex-1;
+                text.insert(endIndex," title=\""+bbox_list_[j]+"\"");
+                j++;
+            }
+
+            itr2 = rex2.globalMatch(text,endIndex+1);
+
+        }
+        if(file.open(QFile::WriteOnly))
+        {
+            QTextStream out2(&file);
+            out2.setCodec("UTF-8");          //!Sets the codec for this stream
+            //text = "<style> body{ width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; } </style>" + text;     //Formatting the output using CSS <style> tag
+            out2 << text;
+            file.flush();      //!Flushes any buffered data waiting to be written in the \a sFile
+            file.close();      //!Closing the file
+        }
+    bbox_list.clear();bbox_list_.clear();
+    }
+
+}

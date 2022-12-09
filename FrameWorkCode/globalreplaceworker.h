@@ -54,6 +54,8 @@ private:
 public slots:
     void replaceWordsInFiles();
     void writeLogs();
+    void saveBboxInfo(QString);
+    void bboxInsertion(QString);
 
 signals:
     void finishedReplacingWords();
