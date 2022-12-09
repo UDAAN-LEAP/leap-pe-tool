@@ -20,6 +20,7 @@ HEADERS += ./Filters.h \
     $$PWD/shortcutguidedialog.h \
     $$PWD/textfinder.h \
     $$PWD/globalreplacedialog.h \
+    $$PWD/threadingpush.h \
     $$PWD/undoglobalreplace.h \
     $$PWD/verifyset.h \
     $$PWD/worker.h \
@@ -71,6 +72,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/slpNPatternDict.cpp \
     $$PWD/textfinder.cpp \
     $$PWD/globalreplacedialog.cpp \
+    $$PWD/threadingpush.cpp \
     $$PWD/trieEditdis.cpp \
     $$PWD/undoglobalreplace.cpp \
     $$PWD/verifyset.cpp \

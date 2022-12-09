@@ -3,6 +3,7 @@
  */
 #include "mainwindow.h"
 #include "dashboard.h"
+#include "qobjectdefs.h"
 #include "ui_dashboard.h"
 #include "ui_globalreplacedialog.h"
 #include "ui_mainwindow.h"
@@ -82,8 +83,13 @@
 #include <dashboard.h>
 #include "printworker.h"
 #include <QRadioButton>
+<<<<<<< Updated upstream
 #include <equationeditor.h>
 
+=======
+#include "threadingpush.h">
+#include <QThread>
+>>>>>>> Stashed changes
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -5136,11 +5142,27 @@ void MainWindow::on_actionTurn_In_triggered()
                 // mProject.set_stage_verifier();    // set_stage_verifier()inherited from project.cpp updates the stage in xml file to "verifier"
 
                 //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
-            if(!mProject.commit(commit_msg.toStdString()) || !mProject.push(branchName))
+            if(mProject.commit(commit_msg.toStdString()))
             {
-                mProject.enable_push(false);      // enable_push() increments version and sets stage in xml file
-                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-                return;
+//                    if(!mProject.push(branchName))
+//                mProject.enable_push(false);      // enable_push() increments version and sets stage in xml file
+//                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+//                return;
+                threadingPush *tp=new threadingPush(nullptr);
+                QThread *thread = new QThread;
+
+                QObject::connect(thread, SIGNAL(started()), tp, SLOT(Control_Push(branchName,repo,login_tries,is_cred_cached)));
+                QObject::connect(tp, SIGNAL(finishedLoadingData()), thread, SLOT(quit()));
+                QObject:connect(tp, SIGNAL(finishedLoadingData()), tp, SLOT(deleteLater()));
+                QObject::connect(tp, SIGNAL(finished()), thread, SLOT(deleteLater()));
+                QObject::connect(tp, SIGNAL(finishedLoadingData()), this, SLOT(stopSpinning()));
+                tp->moveToThread(thread);
+                thread->start();
+
+                spinner = new LoadingSpinner(this);
+                spinner->SetMessage("Loading Data...", "Loading...");
+                spinner->setModal(false);
+                spinner->exec();
             }
 //            }
 //            else {
