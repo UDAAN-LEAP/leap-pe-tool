@@ -32,8 +32,6 @@ std::string user, pass, email;
 
 bool takeCredentialsFromUser();
 
-
-
 void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 {
 
@@ -330,7 +328,6 @@ void Project::process_xml(QFile & pFile)
  * \fn Project::GetDir()
  * \brief returns the directory of the project when called.
  */
-
 QDir Project::GetDir()
 {
     return mProjectDir;
@@ -400,7 +397,6 @@ void Project::AddTemp(Filter * filter, QFile & file,QString prefix) {
  * \fn Project::save_xml()
  * \brief This function when called saves the xml changes to disk. We used standard c++ functions to achieve this.
  */
-
 void Project::save_xml()
 {
     try
@@ -433,7 +429,7 @@ void Project::getFile(const QString & pFileName)
 /*!
  * \fn Project::getModel
  * \brief returns the whole tree model whenever the function is called
- * \return
+ * \return TreeModel *model
  */
 TreeModel * Project::getModel()
 {
@@ -444,7 +440,7 @@ TreeModel * Project::getModel()
  * \fn make_opts
  * \brief Used to set Git options. Refer to git docs for more information
  * \param bool bare, const char * templ, uint32_t shared,
- * \return
+ * \return git_repository_init_options
  */
 git_repository_init_options make_opts(bool bare, const char * templ,
     uint32_t shared,
@@ -567,7 +563,6 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
     unsigned int allowed_types, void *payload)
 {
     int error;
-//    static std::string user, pass;
 
     /*
      * Ask the user via the UI. On error, store the information and return GIT_EUSER which will be
@@ -576,9 +571,6 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
      */
     if (!is_cred_cached)
     {
-//		if (!takeCredentialsFromUser()) {
-//			return -1;
-//		}
     }
     QProcess process;
     process.execute("curl -d -X -k -POST --header "
@@ -600,7 +592,12 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
     return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
 
-
+/*!
+ * \fn takeCredentialsFromUser
+ * \brief This function takes github username and password from the user via a graphical based inteface.
+ * \details It returns true if user gave credentials and false if it got cancelled
+ * \return bool
+ */
 bool takeCredentialsFromUser()
 {
     qDebug() << "Taking credentials";
@@ -650,7 +647,7 @@ bool takeCredentialsFromUser()
 
 /*!
  * \fn Project::set_corrector
- * \brief Sets the project stage as corrector &
+ * \brief Sets the project stage as corrector
  */
 void Project::set_corrector(){
     QString id=user_id;
@@ -673,12 +670,17 @@ void Project::set_verifier(){
 }
 
 /*!
- * \brief Project::push
- * \return
+ * \fn Project::push
+ * \brief This function is responsible for pushing the code to the remote github repository.
+ * \details It uses libgit2 library for pushing the code.
+ * 1. First store remote info from the remote repository.
+ * 2. Then fetch remote objects.
+ * 3. Merge fetched objects with local ones.
+ * 4. Now, push the merged objects to the github repo.
+ * \return bool
  */
-bool Project::push(QString branchName) {
-//    lg2_add();
-//    git_libgit2_init();
+bool Project::push(QString branchName)
+{
     login_tries = 1;
     git_remote * remote = NULL;
 
@@ -819,10 +821,28 @@ bool Project::push(QString branchName) {
     return true;//No errors
 }
 
+/*!
+ * \fn progress_cb
+ * \brief Returns the progress while fetching or pushing.
+ * \param str
+ * \param len
+ * \param data
+ * \return int
+ */
 static int progress_cb(const char *str, int len, void *data)
 {
     return 0;
 }
+
+/*!
+ * \fn update_cb
+ * \brief It prints the information about how much data is fetched or pushed.
+ * \param refname
+ * \param a
+ * \param b
+ * \param data
+ * \return int
+ */
 static int update_cb(const char *refname, const git_oid *a, const git_oid *b, void *data)
 {
     char a_str[GIT_OID_HEXSZ + 1], b_str[GIT_OID_HEXSZ + 1];
@@ -844,6 +864,14 @@ static int update_cb(const char *refname, const git_oid *a, const git_oid *b, vo
 
     return 0;
 }
+
+/*!
+ * \fn transfer_progress_cb
+ * \brief It gives the statistics of total objects and received objects.
+ * \param stats
+ * \param payload
+ * \return int
+ */
 static int transfer_progress_cb(const git_transfer_progress *stats, void *payload)
 {
     (void)payload;
@@ -859,7 +887,10 @@ static int transfer_progress_cb(const git_transfer_progress *stats, void *payloa
 }
 
 /*!
- * \brief Project::fetch
+ * \fn Project::fetch
+ * \brief This function fetches the remote objects from the remote repository. It uses the credentials to perform the fetch.
+ * \details If the local repository is not up to date with the remote one, then reset the local one to the latest commit.
+ * \return int
  */
 int Project::fetch()
 {
@@ -975,9 +1006,10 @@ cleanup:
 }
 
 /*!
- * \brief Project::commit
+ * \fn Project::commit
+ * \brief This function commits the changes done to the local repository.
  * \param message
- * \return
+ * \return bool
  */
 bool Project::commit(std::string message)
 {
@@ -1065,8 +1097,9 @@ bool Project::commit(std::string message)
 }
 
 /*!
- * \brief Project::add_config
- * \return
+ * \fn Project::add_config
+ * \brief It takes the system level config from the git if git is installed and stores them into variables.
+ * \return bool
  */
 bool Project::add_config() {
     git_config * cfg = NULL;
@@ -1128,6 +1161,11 @@ bool Project::add_config() {
     return true;
 }
 
+/*!
+ * \fn Project::add_git_config
+ * \brief It adds the git config to the variables.
+ * \return bool
+ */
 bool Project::add_git_config()
 {
     bool ret = true;
@@ -1174,6 +1212,14 @@ bool Project::add_git_config()
     return ret;
 }
 
+/*!
+ * \fn match_cb
+ * \brief It gives the information of how much remote and local objects match.
+ * \param path
+ * \param spec
+ * \param payload
+ * \return int
+ */
 int match_cb(const char *path, const char *spec, void *payload) {
 
     //match_data *d = (match_data*)payload;
@@ -1187,7 +1233,8 @@ int match_cb(const char *path, const char *spec, void *payload) {
 }
 
 /*!
- * \brief Project::lg2_add
+ * \fn Project::lg2_add
+ * \brief It adds the "workingFolder" to current git index so that they can be tracked and later pushed.
  * \param workingFolder
  */
 void Project::lg2_add(QString workingFolder)
@@ -1207,7 +1254,8 @@ void Project::lg2_add(QString workingFolder)
 }
 
 /*!
- * \brief Project::lg2_add
+ * \fn Project::lg2_add
+ * \brief It adds everything in the current directory to the current git index.
  */
 void Project::lg2_add() {
     const char * paths[] = { "/*"};
@@ -1228,6 +1276,12 @@ void Project::add_and_commit() {
 
 }
 
+/*!
+ * \fn Project::getFilter
+ * \brief Returns the pointer to the Filter whose name matches to the string passed otherwise returns nullptr.
+ * \param str
+ * \return Filter*
+ */
 Filter * Project::getFilter(QString str)
 {
     for (auto * p : mFilters) {
@@ -1239,8 +1293,9 @@ Filter * Project::getFilter(QString str)
 }
 
 /*!
- * \brief Project::get_configuration
- * \return
+ * \fn Project::get_configuration
+ * \brief Returns the configuration from project.xml
+ * \return QString
  */
 QString Project::get_configuration()
 {
@@ -1250,8 +1305,9 @@ QString Project::get_configuration()
 }
 
 /*!
- * \brief Project::get_stage
- * \return
+ * \fn Project::get_stage
+ * \brief Returns the stage from the project.xml
+ * \return QString
  */
 QString Project::get_stage()
 {
@@ -1260,6 +1316,11 @@ QString Project::get_stage()
     return stage;
 }
 
+/*!
+ * \fn Project::get_version
+ * \brief Returns the version of the set.
+ * \return QString
+ */
 QString Project::get_version()
 {
     auto c = doc.child("Project").child("Metadata");
@@ -1268,8 +1329,9 @@ QString Project::get_version()
 }
 
 /*!
- * \brief Project::get_pmEmail
- * \return
+ * \fn Project::get_pmEmail
+ * \brief Returns the project manager email
+ * \return QString
  */
 QString Project::get_pmEmail()
 {
@@ -1279,8 +1341,9 @@ QString Project::get_pmEmail()
 }
 
 /*!
- * \brief Project::get_bookId
- * \return
+ * \fn Project::get_bookId
+ * \brief Returns the book id
+ * \return QString
  */
 QString Project::get_bookId() {
     auto c = doc.child("Project").child("Metadata");
@@ -1289,8 +1352,9 @@ QString Project::get_bookId() {
 }
 
 /*!
- * \brief Project::get_setId
- * \return
+ * \fn Project::get_setId
+ * \brief Returns the set id
+ * \return QString
  */
 QString Project::get_setId()
 {
@@ -1300,8 +1364,9 @@ QString Project::get_setId()
 }
 
 /*!
- * \brief Project::get_repo
- * \return
+ * \fn Project::get_repo
+ * \brief Returns the repository link of the set
+ * \return QString
  */
 QString Project::get_repo()
 {
@@ -1311,7 +1376,8 @@ QString Project::get_repo()
 }
 
 /*!
- * \brief Project::open_git_repo
+ * \fn Project::open_git_repo
+ * \brief Opens the git repo under the hood in a git_repository variable
  */
 void Project::open_git_repo()
 {
@@ -1339,9 +1405,10 @@ void Project::open_git_repo()
 }
 
 /*!
- * \brief GetGraphemesCount
+ * \fn Project::GetGraphemesCount
+ * \brief Returns the number of graphemes in a string
  * \param string
- * \return
+ * \return int
  */
 int Project::GetGraphemesCount(QString string)
 {
@@ -1355,9 +1422,10 @@ int Project::GetGraphemesCount(QString string)
 }
 
 /*!
- * \brief LevenshteinWithGraphemes
+ * \fn Project::LevenshteinWithGraphemes
+ * \brief Returns the Levenshtein distance between the diffs
  * \param diffs
- * \return
+ * \return int
  */
 int Project::LevenshteinWithGraphemes(QList<Diff> diffs)
 {
@@ -1393,7 +1461,15 @@ int Project::LevenshteinWithGraphemes(QList<Diff> diffs)
     return levenshtein;
 }
 
-
+/*!
+ * \fn Project::GetPageNumber
+ * \brief Returns the page number from a given filename
+ * \param localFilename
+ * \param no
+ * \param loc
+ * \param ext
+ * \return int
+ */
 int Project::GetPageNumber(std::string localFilename, std::string *no, size_t *loc, QString *ext)
 {
 
@@ -1414,6 +1490,14 @@ int Project::GetPageNumber(std::string localFilename, std::string *no, size_t *l
     return 1;
 }
 
+/*!
+ * \fn Project::clone
+ * \brief It clones the git repository from the "url_" and stores the repository in the path "path" passes.
+ * \details Returns the success code
+ * \param url_
+ * \param path
+ * \return int
+ */
 int Project::clone(QString url_, QString path)
 {
     QByteArray array = url_.toLocal8Bit();
@@ -1440,6 +1524,13 @@ int Project::clone(QString url_, QString path)
 
 
 #ifdef _WIN32
+/*!
+ * \fn Project::findNumberOfFilesInDirectory
+ * \brief Returns the number of files in a directory
+ * \details It uses "dir" command for counting files
+ * \param path
+ * \return int
+ */
 int Project::findNumberOfFilesInDirectory(std::string path)
 {
     FILE* fp;
@@ -1462,6 +1553,13 @@ int Project::findNumberOfFilesInDirectory(std::string path)
 #endif
 
 #ifdef __unix__
+/*!
+ * \fn Project::findNumberOfFilesInDirectory
+ * \brief Returns the number of files in a directory
+ * \details It uses "find" command for counting files
+ * \param path
+ * \return int
+ */
 int Project::findNumberOfFilesInDirectory(std::string path)
 {
     FILE* fp;

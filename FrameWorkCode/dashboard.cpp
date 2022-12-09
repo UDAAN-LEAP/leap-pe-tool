@@ -17,25 +17,23 @@
 #include "loadingspinner.h"
 #include <Project.h>
 
-/*! \class Dashboard
- * This Class is used to preview the dashboard of Application.
+/*!
+ * \class Dashboard
+ * \brief This Class is used to preview the dashboard of Application.
  *  ---------------------------
  * \fn dashboard::dashboard
  * \param QWidget-parent
  * \param QString-s
  * \param int-max
  * \param QMap(int,QString)-repoMap
- * --------------------------
- * functionality->
+ * \details
  * 1)Contains a Dialog Box which is a base class of dialog windows.
  * 2)Sets up the user interface for the specified widget.
  * 3)Includes a message handler which logs the crashlogs of application.
  * 4)Sets up window Title.
  * 5)Sets up html in text browser.
  * 6)Sets the range of SpinBox(The maximum elements textBrowser contains).
- * -------------------------------------
  */
-
 dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> repoMap) :
     QDialog(parent),
     ui(new Ui::dashboard)
@@ -43,33 +41,26 @@ dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> rep
     ui->setupUi(this);
     qInstallMessageHandler(crashlog::myMessageHandler);
     setWindowTitle("User Dashboard");
-//    ui->tableView->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
-//    //ui->tableView->setModel(model);
-//    ui->tableView->horizontalHeader()->setMaximumSectionSize(600);
-//    ui->tableView->setWordWrap(true);
-//    ui->tableView->resizeColumnsToContents();
-//    ui->tableView->resizeRowsToContents();
     this->repoMap = repoMap;
 
     ui->textBrowser->setHtml(s);
     ui->spinBox->setRange(0,max);
 }
 
-/*! \Destructor
- * Brief: Deallocates the memory and cleans up class and it's object's.
+/*!
+ * \fn dashboard::~dashboard
+ * \brief Deallocates the memory and cleans up class and it's object's.
  */
-
-
 dashboard::~dashboard()
 {
     delete ui;
 }
 
 
-/*! function dashboard::on_pushButton_clicked()
- *  \inherited from dashboard,Executes when Clicked!
- *  ------------------------------------
- * functionality->
+/*!
+ * \fn dashboard::on_pushButton_clicked()
+ * \inherits from dashboard, Executes when Clicked!
+ * \brief
  * 1)Sets the value of spinBox to integer id.
  * 2)if there are no elemets in the textbrowser it returns
  *  or terminates the function.
@@ -83,9 +74,7 @@ dashboard::~dashboard()
 
  * 6)If the project is found already downloaded in same directory,throws an
  *  error and terminates the function else the project is downloaded Successfully
- * -------------------------------------
  */
-
 void dashboard::on_pushButton_clicked()
 {
     int id = ui->spinBox->value();
@@ -130,10 +119,9 @@ void dashboard::on_pushButton_clicked()
 }
 
 /*!
-* \fn    dashboard::stopSpinning
-* \brief This function stops the sppiner whenever called.
-*
-*/
+ * \fn dashboard::stopSpinning
+ * \brief This function stops the sppiner whenever called.
+ */
 void dashboard::stopSpinning()
 {
     spinner->close();

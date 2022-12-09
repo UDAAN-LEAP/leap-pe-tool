@@ -57,6 +57,10 @@ AverageAccuracies::AverageAccuracies(QString csvfilepath,float avgwordacc, float
 
 }
 
+/*!
+ * \fn AverageAccuracies::~AverageAccuracies
+ * \brief Destructor
+ */
 AverageAccuracies::~AverageAccuracies()
 {
     delete ui;

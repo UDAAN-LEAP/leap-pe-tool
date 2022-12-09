@@ -96,6 +96,10 @@ CreateProjectPage::CreateProjectPage(QWidget *parent)
 	
 }
 
+/*!
+ * \fn CreateProjectPage::~CreateProjectPage
+ * \brief Destructor
+ */
 CreateProjectPage::~CreateProjectPage()
 {
 }
@@ -134,12 +138,9 @@ CreateProjectPage::ProjectInfo CreateProjectPage::getProjectInfo() {
 /*!
  * \fn CreateProjectPage::OpenDirectory
  * \brief We open a QFileDialog which opens the OS File Browser Dialog Box.
- * Then we set the text of dirline i.e line edit widget to the text obtained from getExisting directory
+ * \details Then we set the text of dirline i.e line edit widget to the text obtained from getExisting directory
  * and we also intialize a QDir Object with the directory string.
- * \brief
- *
  */
-
 void CreateProjectPage::OpenDirectory()
 {
     //! The user selects a directory and this is returned by the getExistingDirectory() Function.

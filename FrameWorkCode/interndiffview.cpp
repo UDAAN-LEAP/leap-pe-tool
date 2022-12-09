@@ -25,7 +25,6 @@ InternDiffView::InternDiffView( QWidget *parent, QString page, QString fpath)
     pageNo = page.toStdString();
     ui = new Ui::InternDiffView();
     ui->setupUi(this);
-    //ui->setstyleSheet
     //!check if file exists
     QFile fcorrector(gDirTwoLevelUp+ "/CorrectorOutput/"+ page );
 
@@ -53,11 +52,8 @@ InternDiffView::InternDiffView( QWidget *parent, QString page, QString fpath)
        z->zoom_level = 200;
        auto crop_rect = new QGraphicsRectItem(0, 0, 1, 1);
        scene->addItem(crop_rect);
-       //connect(z, SIGNAL(zoomed()), this, SLOT(zoomedUsingScroll()));
        connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(zoom_slider_valueChanged(int)));
        connect(ui->horizontalSlider, SIGNAL(sliderMoved(int)), this, SLOT(zoom_slider_moved(int)));
-      // connect(ui->zoom_In_Button, SIGNAL(clicked()), this, SLOT(zoom_slider_moved(int)));
-       //connect(z, SIGNAL(zoomed()), this, SLOT(zoomedUsingScroll()));
        QString label1 = ui->InternLabel->text();
        QString acc = QString::number(correctorChangesPerc,'f',2) + "%";
        label1.append(acc+"%");
@@ -69,6 +65,10 @@ InternDiffView::InternDiffView( QWidget *parent, QString page, QString fpath)
      }
 }
 
+/*!
+ * \fn InternDiffView::~InternDiffView
+ * \brief Destructor
+ */
 InternDiffView::~InternDiffView()
 {
     delete ui;
@@ -340,8 +340,12 @@ void InternDiffView::on_prevButton_clicked()
      }
 }
 
-
-
+/*!
+ * \fn InternDiffView::on_horizontalSlider_sliderMoved
+ * \brief This SLOT gets called when slider is moved
+ * \details It also zooms the image according to the slider value
+ * \param value
+ */
 void InternDiffView::on_horizontalSlider_sliderMoved(int value)
 {
     if (value % 10 != 0) {
@@ -360,7 +364,10 @@ void InternDiffView::on_horizontalSlider_sliderMoved(int value)
     ui->horizontalSlider->setValue(value);
 }
 
-
+/*!
+ * \fn InternDiffView::on_zoom_In_Button_clicked
+ * \brief This functions zooms in the image
+ */
 void InternDiffView::on_zoom_In_Button_clicked()
 {
     if (z)
@@ -370,6 +377,10 @@ void InternDiffView::on_zoom_In_Button_clicked()
     ui->horizontalSlider->setValue(x*2);
 }
 
+/*!
+ * \fn InternDiffView::on_zoom_Out_Button_clicked
+ * \brief This function zooms out the image
+ */
 void InternDiffView::on_zoom_Out_Button_clicked()
 {
     if (z)
@@ -379,6 +390,11 @@ void InternDiffView::on_zoom_Out_Button_clicked()
     ui->horizontalSlider->setValue(x*2);
 }
 
+/*!
+ * \fn InternDiffView::on_horizontalSlider_valueChanged
+ * \brief This SLOT gets called when value of horizontal slider gets changed
+ * \param value
+ */
 void InternDiffView::on_horizontalSlider_valueChanged(int value)
 {   int x= int(z->zoom_level)/2;
     ui->zoom_level_value->setText(QString::number(x)+ "%");

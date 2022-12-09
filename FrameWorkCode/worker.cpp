@@ -5,10 +5,7 @@
 /*!
  * \class Worker
  * \brief This class is used to execute Save Function of MainWindow class in a multithreaded fashion.
- * \
  */
-
-
 Worker::Worker(QObject *parent,
                Project* mProject,
                QString gCurrentPageName,
@@ -32,17 +29,16 @@ Worker::Worker(QObject *parent,
     this->filestructure_fw = filestructure_fw;
 }
 
+slpNPatternDict slnp;
+
 /*!
  * \fn Worker::doSaveBackend()
  * \brief This function calls SaveFile_Backend functions and emits finished() whenever the function completes
  *        executing.
  * \sa SaveFile_Backend()
  */
-slpNPatternDict slnp;
 void Worker::doSaveBackend()
 {
-    qDebug() << "Started Backend Task";
-    //slpNPatternDict slnp;
     QVector <QString> changedWords;
     QString tempPageName = gCurrentPageName;
 
@@ -68,37 +64,37 @@ void Worker::doSaveBackend()
             //!Check commit condition
             if(!(*mProject).commit(commit_msg.toStdString()))
             {
-                //cout<<"Commit Unsuccessful"<<endl;
                 return;
             }
             else
             {
                 (*mProject).commit(commit_msg.toStdString());
-                //cout<<"Commit Successful"<<endl;
             }
         }
     }
-    qDebug() << "Completed Backend Task";
     emit finished();
 }
+
+/*!
+ * \fn Worker::addCpair
+ * \brief It adds the replacements done using global-replace to the CPair.
+ * \details This is done to show better suggestions to the user when he/she right clicks on a word.
+ */
 void Worker:: addCpair()
 {
-    //qDebug()<<"Adding words to Cpair";
     //! Enters entries in CPairs through CPair_editDis; allows multiple entries for a incorrent word entry
     for(auto &elem : CPair_editDis)
     {
-       std::cerr << elem.first << " " << elem.second << "\n";
-       std::cerr << slnp.toslp1(elem.first) << " " << slnp.toslp1(elem.second) << "\n";
-       //CPair.insert(make_pair(toslp1(elem.first), toslp1(elem.second)));
-       if ( (*CPairs).find(elem.first) != (*CPairs).end())
-       {
-           std::set< std::string>& s_ref = (*CPairs)[elem.first];
-           s_ref.insert(elem.second);
-       }
-       else
-       {
-           (*CPairs)[elem.first].insert(elem.second);
-       }
+        //CPair.insert(make_pair(toslp1(elem.first), toslp1(elem.second)));
+        if ( (*CPairs).find(elem.first) != (*CPairs).end())
+        {
+            std::set< std::string>& s_ref = (*CPairs)[elem.first];
+            s_ref.insert(elem.second);
+        }
+        else
+        {
+            (*CPairs)[elem.first].insert(elem.second);
+        }
     }
 
     //! Reflecting CPairs entries in the file /Dicts/CPair; Making it dynamic
@@ -107,30 +103,21 @@ void Worker:: addCpair()
     QStringList split1;
     if(!file12.exists())
     {
-       qDebug() << "No exist file "<<filename12;
+        //       qDebug() << "No exist file "<<filename12;
     }
     else
     {
-       qDebug() << filename12<<"exists";
-       /*QFile *f = new QFile(filename12);
-       f->open(QIODevice::ReadOnly);
-       QTextStream in(f);
-       in.setCodec("UTF-8");
-       QString s1 = in.readAll();
-       f->close();
-       qDebug ()<<"File is here:::"<<s1[0];*/
-       QFile myfile(filename12);
-       myfile.open(QIODevice::ReadOnly | QIODevice::Text);
-       QTextStream out1(&myfile);
-       out1.setCodec("UTF-8");
-       QString text;
-       while(!out1.atEnd())
-           {
-               text = out1.readLine();
-               //split1.append(text.split('\t').first());
-               split1.append(text.split('\t'));
-           }
-           myfile.close();
+        QFile myfile(filename12);
+        myfile.open(QIODevice::ReadOnly | QIODevice::Text);
+        QTextStream out1(&myfile);
+        out1.setCodec("UTF-8");
+        QString text;
+        while(!out1.atEnd())
+        {
+            text = out1.readLine();
+            split1.append(text.split('\t'));
+        }
+        myfile.close();
     }
 
     //! Insert entries in Correct Formatting Hello (/t) hi,(comma)hiii
@@ -165,25 +152,10 @@ void Worker:: addCpair()
             for(int i =0;i<split1.size();i+=2){
                 if(QString::fromStdString(itr->first) == split1[i]){
                     flag = 1;
-                break;}
-                }
-            if(flag == 0 && replaceFlag == 1){
-
-            /*out <<  QString::fromStdString(slnp.toDev(itr->first)) << '\t';
-            for (set_it = itr->second.begin(); set_it != itr->second.end(); ++set_it)
-            {
-                if(set_it != prev(itr->second.end()))
-                {
-                    out << QString::fromStdString(slnp.toDev(*set_it)) << ",";
-                }
-                else {
-                    out << QString::fromStdString(slnp.toDev(*set_it));
-                }
-
+                    break;}
             }
-            out <<"\n";*/
+            if(flag == 0 && replaceFlag == 1){
                 split1.append(QString::fromStdString(itr->first));
-                //split1.append('\t');
                 set_it = itr->second.begin();
                 {
                     split1.append(QString::fromStdString(*set_it));
@@ -193,12 +165,11 @@ void Worker:: addCpair()
 
             flag = 0;
         }
+
         //!Add entries to cpair file {hi \t hello \n}
-        //file12.resize(0);
         for(int i=0;i<split1.size()-1;i+=2){
-          out <<  split1[i] << '\t'<<split1[i+1]<<"\n";
+            out <<  split1[i] << '\t'<<split1[i+1]<<"\n";
         }
-         file12.close();
+        file12.close();
     }
 }
-

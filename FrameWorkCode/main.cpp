@@ -50,12 +50,10 @@ void signalHandler(int signum){
 }
 
 /*!
-* \fn    mysignal
-* \brief This function calls signal function of c++ to trap the unexpected interupts.
-*
-*
-* \sa signal()
-*/
+ * \fn    mysignal
+ * \brief This function calls signal function of c++ to trap the unexpected interupts.
+ * \sa signal()
+ */
 void mySignal(){
 
     signal(SIGSEGV, signalHandler); //!SIGSEGV for invalid access to storage
@@ -67,21 +65,21 @@ void mySignal(){
 
 
 /*!
-* \fn    main
-* \brief Main function in c++ is entry point of the software and it also serves as exit point.
-*        This function initialises git and then creates object for QApplication class which helps
-*        to manage GUI of QTC++ application and using this object this function loads logo and
-*        title of the applications. Then this function creates object for MainWindow class
-*        and loads it into the memory.
-* \param argc
-* \param argv
-*
-* \sa qInstallMessageHandler(), git_libgit2_init(), mySignal(), git_libgit2_shutdown()
-*
-* \return retn
-*
-* \note This function also used to write all logs generated into a file.
-*/
+ * \fn    main
+ * \brief Main function in c++ is entry point of the software and it also serves as exit point.
+ *        This function initialises git and then creates object for QApplication class which helps
+ *        to manage GUI of QTC++ application and using this object this function loads logo and
+ *        title of the applications. Then this function creates object for MainWindow class
+ *        and loads it into the memory.
+ * \param argc
+ * \param argv
+ *
+ * \sa qInstallMessageHandler(), git_libgit2_init(), mySignal(), git_libgit2_shutdown()
+ *
+ * \return retn
+ *
+ * \note This function also used to write all logs generated into a file.
+ */
 int main(int argc, char *argv[])
 {
     git_libgit2_init();
@@ -116,7 +114,6 @@ int main(int argc, char *argv[])
         msgBox.show();
     }
     else {
-//        w.show();         //loads main window ui and backend files
         w.showMaximized();  //loads main window ui and backend files
     }
 
@@ -125,6 +122,12 @@ int main(int argc, char *argv[])
     return retn;
 }
 
+/*!
+ * \fn return_signal
+ * \brief Returns a signal
+ * \param sig
+ * \return std::string
+ */
 std::string return_signal(int sig)
 {
     return "";

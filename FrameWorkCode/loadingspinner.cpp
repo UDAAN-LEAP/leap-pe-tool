@@ -19,6 +19,13 @@
 #include <QWidget>
 #include <mainwindow.h>
 #include "crashlog.h"
+
+
+/*!
+ * \fn LoadingSpinner::LoadingSpinner
+ * \brief This is the constructor which sets the spinner and starts it.
+ * \param parent
+ */
 LoadingSpinner::LoadingSpinner(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LoadingSpinner)
@@ -35,26 +42,23 @@ LoadingSpinner::LoadingSpinner(QWidget *parent) :
     mv->start();
 }
 
-
 /*!
- * \fn LoadingSpinner::SetMessage()
+ * \fn LoadingSpinner::SetMessage
  * \brief This function is used to set message to the loading window.
- *
- * We have called this function wherever we are calling the loading window.
- *
- * We set the body of the loading window using setText and title(i.e. head) using the setWindowTitle function
- *
- * \param QString head, QString body
+ * \details It is called for setting the title and label message specific to the task.
+ * \param head
+ * \param body
  */
-
 void LoadingSpinner::SetMessage(QString head, QString body){
     ui->label_2->setText(body);
     this->setWindowTitle(head);
 
 }
 
-
-
+/*!
+ * \fn LoadingSpinner::~LoadingSpinner
+ * \brief Destructor
+ */
 LoadingSpinner::~LoadingSpinner()
 {
     mv->stop();

@@ -4,15 +4,34 @@
 #include <QTextStream>
 #include <QDateTime>
 #include <QDebug>
-//#include <QTextBrowser>
 #include <sstream>
 #include <string>
 #include <mainwindow.h>
 #include <QFile>
 #include <editdistance.h>
-#include <QTextBrowser>
-//using namespace std;
 
+
+/*!
+ * \fn GlobalReplaceWorker::GlobalReplaceWorker
+ * \brief This is the constructor which initializes the objects needed to be shared between the main(GUI) thread and the another thread.
+ * \param parent
+ * \param filesChangedUsingGlobalReplace
+ * \param mapOfReplacements
+ * \param globalReplacementMap
+ * \param globalReplacementMapAfterCheck
+ * \param replaceInAllPages_Map
+ * \param replaceInUneditedPages_Map
+ * \param currentFileDirectory
+ * \param gDirTwoLevelUp
+ * \param gCurrentPageName
+ * \param numOfChangedWords
+ * \param check
+ * \param r1
+ * \param r2
+ * \param x1
+ * \param files
+ * \param pairMap
+ */
 GlobalReplaceWorker::GlobalReplaceWorker(QObject *parent,
                                          QList<QString> *filesChangedUsingGlobalReplace,
                                          QMap<QString, QString> *mapOfReplacements,
@@ -54,6 +73,15 @@ GlobalReplaceWorker::GlobalReplaceWorker(QObject *parent,
     editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
 }
 
+/*!
+ * \fn GlobalReplaceWorker::writeGlobalCPairsToFiles
+ * \brief This function writes the required replacements to the file specified
+ * \details It copies the contents of the file to a QTextDocument which is used for replacement purpose.
+ * \param file_path
+ * \param globalReplacementMap
+ * \param doc
+ * \return
+ */
 int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QString, QString> globalReplacementMap, QTextDocument *doc)
 {
     // if any file other than html is passed, just return back
@@ -64,23 +92,16 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
     if (handleBbox != nullptr) {
         delete handleBbox;
     }
-    //browser->clear();
+
     QFile *file = new QFile(file_path);
     handleBbox = new HandleBbox(doc);
     QTextDocument *curDoc = handleBbox->loadFileInDoc(file);
-    //QTextDocument* curDoc = doc;
+
     if (curDoc == nullptr) {
         qDebug() << "Cannot load file";
         return 0;
     }
-    //qDebug() << "doc html: " << doc->toHtml();
-    //curDoc = curDoc->clone(static_cast<QObject*>(browser));
-    //browser->setDocument(curDoc);
-    //doc = browser->document();
-    //save bbox information of files
-//    if(file_path.endsWith(".html")){
-//        saveBboxInfo(file_path);
-//    }
+
     QMap <QString, QString> sentencesReplaced;
     QMap <QString, QString>::iterator grmIterator;
     QFile f(file_path);
@@ -95,12 +116,6 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
     f.close();
     f.open(QIODevice::WriteOnly);
     int replaced = 0, tot_replaced = 0;
-
-    //create new text browser for html files(such that replacement works on text instead of html)
-//    QTextBrowser * browser = new QTextBrowser();
-
-//	browser->setReadOnly(false);
- //   browser->setHtml(s1);
 
     QString replacementString1;
     //!Replacing words by iterating the map
@@ -117,7 +132,6 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
             qDebug()<<"Going to replace in ::"<<pageName;
             QString sanstr(grmIterator.value());
             sanstr = sanstr.simplified();
-            //sanstr = "(\\b)"+sanstr+"(\\b)";
             QString replacementString = grmIterator.key().first; // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
             QStringList org_sen = sanstr.split(" ");
 
@@ -144,7 +158,6 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
             QRegularExpression re(sanstr);
             //Code to highlight replaced words only; finding sentence1 -sentence2
             for(int i=0; i<org_sen.size(); i++){
-                //qDebug()<<"Replaced_sen :: orginal "<<replaced_sen<<org_sen[i];
                 if(replaced_list.contains(org_sen[i]))
                     replaced_sen = replaced_sen.remove(org_sen[i]);
             }
@@ -183,30 +196,6 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                 tot_replaced += 1;
                 sentencesReplaced.insert(sanstr, replacementString1);
             }
-            //while(browser->find(re))
-            //{
-            //    qDebug()<<":found in browser";
-            //    QTextCursor cursor = browser->textCursor(); //get the cursor
-            //    QTextCharFormat fmt;
-            //    int pos = cursor.position(); //get the cursor position
-            //    int ancr = pos - replacementString.size() + 1; //anchor is now cursor position - length of old word to be replaced
-            //    if (pos < ancr) {
-            //        cursor.setPosition(pos, QTextCursor::MoveAnchor);
-            //        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
-            //    }
-            //    fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
-            //    replacementString1 = replacementString1.simplified();
-            //    QString final_str = replacementString1;
-            //    final_str = final_str.replace(replaced_sen,"<span style = \"background-color:#ffff00;\">"+replaced_sen+"</span>");
-            //    browser->textCursor().insertHtml(final_str);
-            //    cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
-            //    pos = cursor.position();
-            //    ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
-            //    cursor.setPosition(pos, QTextCursor::MoveAnchor);
-            //    cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
-            //    tot_replaced = tot_replaced + 1;
-            //    sentencesReplaced.insert(sanstr,replacementString1); // to keep track of changed sentences
-            //}
         }
     }
     else
@@ -215,14 +204,12 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
         for (grmIterator = globalReplacementMap2.begin(); grmIterator != globalReplacementMap2.end(); ++grmIterator)
         {
             QString sanstr(grmIterator.key());
-//            sanstr = "(\\b)"+sanstr+"(\\b)";
             QRegularExpression re(sanstr);
             QString replacementString = grmIterator.value(); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
             std::string str = replacementString.toStdString();
             QString::fromStdString(str).toUtf8();
             replacementString1 = QString::fromStdString(str);
             (*mapOfReplacements)[grmIterator.key()] = grmIterator.value().trimmed();
-            //browser->moveCursor(QTextCursor::Start);
             QTextCursor docCursor(doc);
             docCursor.movePosition(QTextCursor::Start, QTextCursor::MoveAnchor);
 
@@ -250,44 +237,23 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                 cur.mergeCharFormat(fmt); //apply the text properties captured earlier
                 tot_replaced += 1;
             }
-            //while(browser->find(re))
-            //{
-            //    QTextCursor cursor = browser->textCursor(); //get the cursor
-            //    QTextCharFormat fmt;
-            //    int pos = cursor.position(); //get the cursor position
-            //    int ancr = pos - replacementString.size() + 1; //anchor is now cursor position - length of old word to be replaced
-            //    if (pos < ancr) {
-            //        cursor.setPosition(pos, QTextCursor::MoveAnchor);
-            //        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
-            //    }
-            //    fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
-            //    browser->textCursor().insertHtml("<span style = \"background-color:#ffff00;\">"+replacementString1+"</span>");
-            //    cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
-            //    pos = cursor.position();
-            //    ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
-            //    cursor.setPosition(pos, QTextCursor::MoveAnchor);
-            //    cursor.setPosition(ancr, QTextCursor::KeepAnchor);
-            //    cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
-            //    tot_replaced = tot_replaced + 1;
-            //}
         }
     }
-    //s1 = browser->toHtml();
     s1 = doc->toHtml();
     in << s1;
     f.flush();
     f.close();
-//    browser->close();
-   // bboxInsertion(file_path);
     handleBbox->insertBboxes(file);
     return tot_replaced;
 }
 
+/*!
+ * \fn GlobalReplaceWorker::replaceWordsInFiles
+ * \brief This function traverses the user role's dir and filters the html files and passes the required files to writeGlobalCPairsToFiles() function for replacing the required replacements. It also emits the signal for updating progress bar.
+ */
 void GlobalReplaceWorker::replaceWordsInFiles()
 {
-    //QTextBrowser *browser = new QTextBrowser();
     QTextDocument* doc = new QTextDocument();
-    //browser->setReadOnly(false);
     QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
     QDir currDir(currentFileDirectory);
     QString suffix;
@@ -417,12 +383,15 @@ void GlobalReplaceWorker::replaceWordsInFiles()
         }
     }
 
-	//browser->close();
-
     emit changeProgressBarValue(100);
     emit finishedReplacingWords();
 }
 
+/*!
+ * \fn GlobalReplaceWorker::writeLogs
+ * \brief It writes the logs in the [set-name]logs.csv file which resides in the set folder.
+ * \details The format of logs is <SourceWord>,<TargetWord>,<TypeOfReplacement>,<TimeOfReplacement>,<PageName>,<SetName>
+ */
 void GlobalReplaceWorker::writeLogs()
 {
     if(globalReplacementMap.values().length()>0)
@@ -505,313 +474,5 @@ bool GlobalReplaceWorker::isStringInFile(QString file_path, QString searchString
     fileToSearchIn.close();
 
     return textFound;
-}
-void GlobalReplaceWorker::saveBboxInfo(QString htmlFile){
-    QFile gfile(htmlFile);
-    gfile.open(QIODevice::ReadOnly | QFile::Text);
-    QTextStream in(&gfile);
-    QString initial = in.readAll();
-    gfile.close();
-    QString bboxfile = gfile.fileName();
-    bboxfile = bboxfile.replace(".html", ".bbox");
-
-
-    if(!QDir(gDirTwoLevelUp+"/bboxf").exists())
-            QDir().mkdir(gDirTwoLevelUp+"/bboxf");
-
-        bboxfile=bboxfile.replace("CorrectorOutput","bboxf");
-
-
-    QFile bbox_file(bboxfile);
-    if(initial.contains("bbox") && !bbox_file.exists())
-      {
-          QMap<QString, QString> bbox;
-          QStringList plist = initial.split("<span class");
-          for(int i=0;i<plist.length();i++)
-          {
-             QString bbox_tags = plist[i];
-             int first = bbox_tags.indexOf("bbox");
-             int last = bbox_tags.indexOf(";\">");
-             bbox_tags = bbox_tags.mid(first,last-first);
-             bbox_tags = bbox_tags.remove("\">\n");
-             bbox_tags = bbox_tags.trimmed();
-
-             QStringList bbox_coordinates = bbox_tags.split(" ");
-             bbox_tags = bbox_coordinates[0] + " " + bbox_coordinates[1] + " " + bbox_coordinates[2] + " " + bbox_coordinates[3] + " " + bbox_coordinates[4];
-
-             int start = plist[i].indexOf(";\">\n");
-             int end = plist[i].indexOf("</span>");
-             QString sents = plist[i].mid(start, end-start);
-             sents = sents.remove(";\">\n");
-             sents = sents.trimmed();
-             bbox.insert(bbox_tags, sents);
-
-          }
-          bbox.erase(bbox.begin());
-          //qDebug()<<bbox;
-          bbox_file.open(QIODevice::ReadWrite | QFile::Truncate);
-          QDataStream out (&bbox_file);
-          out.setVersion(QDataStream::Qt_5_3);
-          out<<bbox;
-          bbox_file.flush();
-          bbox_file.close();
-         // qDebug() << "bbox file written succesfully ... ";
-      }
-}
-
-//void GlobalReplaceWorker::filterHtml(QString f)
-//{
-//    QFile file(f);
-
-//    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-//        qDebug() << "File not opened for reading";
-//        return;
-//    }
-
-//    QTextStream in(&file);
-//    in.setCodec("UTF-8");
-//    QString text = in.readAll();
-//    file.close();
-
-//    QRegularExpression re1("(<span[^>]*>)");
-//    QRegularExpressionMatchIterator it;
-
-//    it = re1.globalMatch(text);
-
-//    int prevStringStart = -1, prevStringEnd = -1, curStringStart = -1, curStringEnd = -1;
-//    QString prevString = "", curString = "";
-//    QVector<QVector<int> > results;
-
-//    while (it.hasNext()) {
-//        QRegularExpressionMatch match = it.next();
-//        curString = match.captured(1);
-//        curStringStart = match.capturedStart(1);
-//        curStringEnd = match.capturedEnd(1);
-
-//        // Checking if a new paragraph is starting or not
-//        if (prevString != "") {
-//            QString subString = text.mid(prevStringEnd, curStringEnd - prevStringEnd);
-//            if (subString.contains("</p>")) {
-//                prevString = "";
-//            }
-//        }
-
-//        if (prevString == "") {
-//            prevString = curString;
-//            prevStringStart = curStringStart;
-//            prevStringEnd = curStringEnd;
-//        }
-//        else if (prevString == curString) {
-//            QString subs = text.mid(prevStringEnd, curStringStart - prevStringEnd);
-//            int closingIndexOfspanClosing = subs.indexOf("</span>")+QString("</span>").length();
-
-//            if ((prevStringEnd + closingIndexOfspanClosing) == curStringStart) {
-//                results.push_back({prevStringStart, prevStringEnd, curStringStart, curStringEnd});
-//            }
-
-//            prevStringStart = curStringStart;
-//            prevStringEnd = curStringEnd;
-//        }
-//    }
-
-//    if (!file.open(QFile::WriteOnly)) {
-//        qDebug() << "File not opened for writing";
-//        return;
-//    }
-//    QTextStream out(&file);
-//    out.setCodec("UTF-8");
-
-//    int index = 0, flag = 0, flag_test = 0;
-//    int ite = 0, value_prev = 0;
-
-//    while(flag_test == 0 && index < text.size()) {
-//        QList<int> list_;
-
-//        for(int x = value_prev; x < results.size(); x++) {
-//            if(x < results.size() - 1) {
-//                if(results[x][2] == results[x+1][0]) {
-//                    int sizeList = list_.size();
-//                    if(sizeList == 0 || list_[sizeList - 1] != results[x][2]) {
-//                        list_.append(results[x][2]);
-//                    }
-//                    list_.append(results[x][3]);
-//                    list_.append(results[x+1][2]);
-//                }
-//                else {
-//                    int sizeList = list_.size();
-//                    if(sizeList == 0)
-//                        list_.append(results[x][2]);
-//                    list_.append(results[x][3]);
-//                    value_prev = x+1;
-//                    break;
-//                }
-//            }
-//            else {
-//                list_.append(results[x][2]);
-//                list_.append(results[x][3]);
-//                value_prev = x+1;
-//                break;
-//            }
-//        }
-
-//        for(int tmp = 0; tmp < list_.size(); tmp++) {
-//            if(tmp == 0) {
-//                while(index < list_[tmp]-7){
-//                    QChar s = text.at(index);
-//                    out << s;
-//                    index++;
-//                }
-//            }
-//            else {
-//                index = list_[tmp];
-//                if(tmp < list_.size() - 1)
-//                    tmp++;
-//                while(index < list_[tmp]-7) {
-//                    QChar s = text.at(index);
-//                    out << s;
-//                    index++;
-//                }
-//            }
-//        }
-
-//        if(value_prev >= results.size()) {
-//            flag_test = 1;
-//        }
-//    }
-//    while(index < text.size()) {
-//        QChar s = text.at(index);
-//        out << s;
-//        index++;
-//    }
-//    file.flush();
-//    file.close();
-//}
-
-void GlobalReplaceWorker::bboxInsertion(QString f){
-    QFile file(f);
-
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "File not opened for reading";
-        return;
-    }
-
-    QTextStream in(&file);
-    in.setCodec("UTF-8");
-    QString text = in.readAll();
-    file.close();
-
-    QRegularExpression rex("<p(.*?)</p>",QRegularExpression::DotMatchesEverythingOption);
-    QRegularExpression rex_("<span(.*?)</span>",QRegularExpression::DotMatchesEverythingOption);
-
-    QRegularExpression rex2("(<p[^>]*>|<span[^>]*>)");
-    QString fBbox = f;
-    fBbox.replace(".html",".bbox");
-    fBbox.replace("CorrectorOutput","bboxf");
-    //qDebug()<<"file = "<<fBbox;
-    QFile bbox_file(fBbox);
-    if(bbox_file.exists())
-    {
-        QRegularExpressionMatchIterator itr,itr_;
-        itr = rex.globalMatch(text);
-        itr_ = rex_.globalMatch(text);
-        if (!bbox_file.open(QIODevice::ReadOnly)) {
-            qDebug() << "Unable to open bbox_file!";
-            return;
-        }
-
-        QDataStream in_(&bbox_file);
-        in_.setVersion(QDataStream::Qt_5_3);
-        QMap<QString,QString> coordinates;
-
-        in_ >> coordinates;
-        bbox_file.close();
-        QString bbox_coordinates;
-        QStringList bbox_list,bbox_list_;
-        QMap<QString, QString>::iterator ci;
-        edit_Distance edit;
-        //qDebug()<<"in_ : map="<<in_<<":"<<coordinates;
-        QRegularExpression rex3("(<[^>]*>|[^>]*>)");
-        while (itr.hasNext())
-        {
-            QRegularExpressionMatch match = itr.next();
-            QString ex = match.captured(1);
-
-            ex.remove(rex3);
-            double max = 0;
-            for(ci = coordinates.begin(); ci!=coordinates.end(); ++ci)
-            {
-                double similarity = edit.getSimilarityValue(ex.toStdString(), ci.value().toStdString());
-                if(similarity>max)
-                {
-                    bbox_coordinates = ci.key();
-                    max = similarity;
-                }
-            }
-            bbox_coordinates.remove("\">");
-            if(bbox_coordinates != "")
-            bbox_list.append(bbox_coordinates);
-        }
-        //itr_ is for span tags
-        while (itr_.hasNext())
-        {
-            QRegularExpressionMatch match_ = itr_.next();
-            QString ex_ = match_.captured(1);
-            ex_.remove(rex3);
-            double max = 0;
-            for(ci = coordinates.begin(); ci!=coordinates.end(); ++ci)
-            {
-                double similarity = edit.DiceMatch(ex_.toStdString(), ci.value().toStdString());
-
-                if(similarity>max)
-                {
-                    bbox_coordinates = ci.key();
-                    max = similarity;
-                }
-            }
-            bbox_coordinates.remove("\">");
-            if(bbox_coordinates != "")
-            bbox_list_.append(bbox_coordinates);
-        }
-        //now just insert the bbox coordinates into the file saved
-        QRegularExpressionMatchIterator itr2;
-        itr2 = rex2.globalMatch(text,0);
-        int i=0,j=0;
-//        qDebug()<<"bbox file="<<fBbox;
-//        qDebug()<<"bbox file size="<<bbox_file.size()<<coordinates;
-//        qDebug()<<"bbox_list="<<bbox_list;
-//        qDebug()<<"bbox_list_="<<bbox_list_;
-        if(bbox_list.size() == 0 && bbox_list_.size() == 0){
-            return;
-        }
-        while (itr2.hasNext()) {
-            QRegularExpressionMatch match2 = itr2.next();
-            QString ex = match2.captured(1);
-            int endIndex = match2.capturedEnd(1);
-            if((ex[1] == "p" || ex[1] == "P") && i<bbox_list.size()){
-                endIndex = endIndex-1;
-                text.insert(endIndex," title=\""+bbox_list[i]+"\"");//index+1
-                i++;
-            }
-            else if((ex[1] == "s" || ex[1] == "S") && j<bbox_list_.size()){
-                endIndex = endIndex-1;
-                text.insert(endIndex," title=\""+bbox_list_[j]+"\"");
-                j++;
-            }
-
-            itr2 = rex2.globalMatch(text,endIndex+1);
-
-        }
-        if(file.open(QFile::WriteOnly))
-        {
-            QTextStream out2(&file);
-            out2.setCodec("UTF-8");          //!Sets the codec for this stream
-            //text = "<style> body{ width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; } </style>" + text;     //Formatting the output using CSS <style> tag
-            out2 << text;
-            file.flush();      //!Flushes any buffered data waiting to be written in the \a sFile
-            file.close();      //!Closing the file
-        }
-    bbox_list.clear();bbox_list_.clear();
-    }
-
 }
 

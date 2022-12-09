@@ -15,7 +15,23 @@
 QString commentFilename;
 QString pagename;
 
-//!Class constructer
+/*!
+ * \fn CommentsView::CommentsView
+ * \param words
+ * \param chars
+ * \param wordacc
+ * \param characc
+ * \param commentsField
+ * \param commentsFilelocation
+ * \param currentpagename
+ * \param rating
+ * \param avgAcc
+ * \param role
+ * \param version
+ * \param parent
+ * \brief This class provides a view for showing comments to the users
+ * \details It shows the "Words", "Word Accuracy", etc. values
+ */
 CommentsView::CommentsView(const int &words, const int &chars, const float &wordacc, const float &characc,const QString commentsField,const QString commentsFilelocation, const QString currentpagename, int rating, const QString avgAcc, const QString role, QString version, QWidget *parent) :
     QDialog(parent)
 {
@@ -64,7 +80,10 @@ CommentsView::CommentsView(const int &words, const int &chars, const float &word
 
 }
 
-//!Class destructer
+/*!
+ * \fn CommentsView::~CommentsView
+ * \brief Destructor
+ */
 CommentsView::~CommentsView()
 {
     delete ui;

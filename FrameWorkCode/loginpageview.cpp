@@ -20,8 +20,10 @@ LoginPageView::LoginPageView(QWidget *parent) :
     ui->setupUi(this);
     ui->passwordEdit->setEchoMode(QLineEdit::Password);
 }
+
 /*!
- * \brief LoginPageView::~LoginPageView
+ * \fn LoginPageView::~LoginPageView
+ * \brief Destructor
  */
 LoginPageView::~LoginPageView()
 {
@@ -34,26 +36,19 @@ LoginPageView::~LoginPageView()
  */
 void LoginPageView::on_loginButton_clicked()
 {
-
-
     //! Get credentials from user
 
     QString usernameString= ui->usernameEdit->text();
     QString passwordString= ui->passwordEdit->text();
-    //ui->usernameEdit->clear();
     ui->passwordEdit->clear();
 
-
-    //QString projectId = ""; //should be added in project.xml file and fetched from there
     QString userId, userRole;  //fetch on sign in   //add location
     QString userJsonFilePath = QDir::currentPath() + "/UserJson.json";  //add location
-
 
     //User JSON
     QFile userJsonFile(userJsonFilePath);
     userJsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
     QByteArray userData = userJsonFile.readAll();
-
     QJsonDocument userDocument = QJsonDocument::fromJson(userData);
     QJsonObject userObj = userDocument.object();
 
@@ -62,7 +57,7 @@ void LoginPageView::on_loginButton_clicked()
 
     if(!userObj.value(usernameString).isUndefined()) {
         QJsonObject user = userObj.value(usernameString).toObject();
-//      QString username = user["github userid"].toString();
+        //      QString username = user["github userid"].toString();
         QString password =user["github password"].toString();
         if(password==passwordString){
             userId=usernameString;
@@ -81,5 +76,4 @@ void LoginPageView::on_loginButton_clicked()
         userJsonFile.close();
         QMessageBox::information(this,"Login","Login Un-succesful!\nUsername not found");
     }
-
 }

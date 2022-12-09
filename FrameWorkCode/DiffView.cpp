@@ -22,6 +22,7 @@
 
 /*!
  * \fn DiffView::DiffView
+ * \brief Shows the diff view to the user
  * \param parent
  * \param page
  * \param fpath
@@ -54,6 +55,7 @@ DiffView::DiffView(QWidget *parent, QString page,QString fpath)
 
 /*!
  * \fn DiffView::~DiffView
+ * \brief Destructor
  */
 DiffView::~DiffView()
 {
@@ -63,7 +65,7 @@ DiffView::~DiffView()
 /*!
  * \fn DiffView::validFilePath
  * \brief Returns true if file path is valid
- * \return bool
+ * \return bool (Is File Path valid ?)
  */
 bool DiffView::validFilePath()
 {
@@ -76,7 +78,6 @@ bool DiffView::validFilePath()
  * \brief For the currently opened page, the function fetches - initial text, corrector text and verifier text
  * and produces a final color coded text representing changes. The metrics are also calculated such as
  * change percentage and accuracy.
- *
  * \sa LevenshteinWithGraphemes(),GetGraphemesCount(), diff_main(), diff_prettyHtml()
  */
 void DiffView::Load_comparePage(string page)

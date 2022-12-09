@@ -6,7 +6,10 @@
 #pragma once
 #include "TreeModel.h"
 
-
+/*!
+ * \fn TreeModel::~TreeModel
+ * \brief Destructor
+ */
 TreeModel::~TreeModel()
 {
 	delete mRootItem;
@@ -144,6 +147,12 @@ int TreeModel::columnCount(const QModelIndex & pParent) const
 	return mRootItem->column_count();
 }
 
+/*!
+ * \fn TreeModel::setupModelData
+ * \brief Setup the model data
+ * \param lines
+ * \param parent
+ */
 void TreeModel::setupModelData(const QStringList & lines, TreeItem * parent)
 {
 }
