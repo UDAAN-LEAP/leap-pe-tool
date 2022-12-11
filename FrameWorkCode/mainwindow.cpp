@@ -3,6 +3,7 @@
  */
 #include "mainwindow.h"
 #include "dashboard.h"
+#include "qobjectdefs.h"
 #include "ui_dashboard.h"
 #include "ui_globalreplacedialog.h"
 #include "ui_mainwindow.h"
@@ -15,8 +16,6 @@
 #include "QProgressBar"
 #include <QPrinter>
 #include <QPrintPreviewDialog>
-#include <tesseract/baseapi.h>
-#include <leptonica/allheaders.h>
 #include "DiffView.h"
 #include <QtConcurrent/QtConcurrent>
 #include "diff_match_patch.h"
@@ -36,7 +35,6 @@
 #include <regex>
 #include "crashlog.h"
 #include "ProjectHierarchyWindow.h"
-#include "3rdParty/RapidXML/rapidxml.hpp"
 #include <QDomDocument>
 #include <QFormLayout>
 #include <QDialogButtonBox>
@@ -50,12 +48,9 @@
 #include <QSet>
 #include <QAction>
 #include "ProjectWizard.h"
-#include <SimpleMail/SimpleMail>
-//# include <QTask>
 #include <QDebug>
-#include<QtCore>
-#include<QtXml>
-//#include <QPainter>
+#include <QtCore>
+#include <QtXml>
 #include <QJsonObject>
 #include <QTextDocumentFragment>
 #include <sstream>
@@ -89,6 +84,8 @@
 #include "printworker.h"
 #include <QRadioButton>
 #include <equationeditor.h>
+#include "threadingpush.h">
+#include <QThread>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -273,14 +270,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     qApp->installEventFilter(this);
     AddRecentProjects();
 
-	// Add custom fonts
-	QFontDatabase::addApplicationFont(":/Fonts/fonts/Meera/Meera-Regular.ttf");
-	QFontDatabase::addApplicationFont(":/Fonts/fonts/Shobhika/Shobhika-Regular.otf");
-	QFontDatabase::addApplicationFont(":/Fonts/fonts/Shobhika/Shobhika-Bold.otf");
-	QFontDatabase::addApplicationFont(":/Fonts/fonts/Mandali/Mandali Regular.otf");
-	QFontDatabase::addApplicationFont(":/Fonts/fonts/Latha/latha.ttf");
-	QFontDatabase::addApplicationFont(":/Fonts/fonts/Nirmala/Nirmala Regular.ttf");
-	QFontDatabase::addApplicationFont(":/Fonts/fonts/Chandas/chandas.ttf");
+    // Add custom fonts
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Meera/Meera-Regular.ttf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Shobhika/Shobhika-Regular.otf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Shobhika/Shobhika-Bold.otf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Mandali/Mandali Regular.otf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Latha/latha.ttf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Nirmala/Nirmala Regular.ttf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Chandas/chandas.ttf");
 
     if (!isVerifier)
     {
@@ -1236,7 +1233,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         return;
     }
 
-	currentZoomLevel = 100;
+    currentZoomLevel = 100;
 
     QFile xml(ProjFile);
     QFileInfo finfo(xml);
@@ -1872,15 +1869,18 @@ void MainWindow::SaveFile_GUI_Postprocessing()
 
             }
         }
-		// Formatting the output using CSS <style> tag
-		// Add style tag just before head or add styling properties in the pre-made style tag
-		int inputDataIndex = -1;
-		if ((inputDataIndex = output.indexOf("</style>")) != -1) {
-			output.insert(inputDataIndex - 1, "\nbody { width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; }");
-		} else if ((inputDataIndex = output.indexOf("</head>")) != -1) {
-			output.insert(inputDataIndex - 1, "<style>\nbody { width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; }\n</style>");
-		}
+        // Formatting the output using CSS <style> tag
+        // Add style tag just before head or add styling properties in the pre-made style tag
+        int inputDataIndex = -1;
+        if ((inputDataIndex = output.indexOf("</style>")) != -1) {
+            output.insert(inputDataIndex - 1, "\nbody { width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; }");
+        } else if ((inputDataIndex = output.indexOf("</head>")) != -1) {
+            output.insert(inputDataIndex - 1, "<style>\nbody { width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; }\n</style>");
+        }
 
+        //removing empty p tags inserted by Qt.
+//        QRegularExpression rex_empty("<p style=\"-qt-paragraph-type:empty;(.*?)</p>",QRegularExpression::DotMatchesEverythingOption);
+//        output = output.remove(rex_empty);
         out << output;
         sFile.flush();      //!Flushes any buffered data waiting to be written in the \a sFile
         sFile.close();      //!Closing the file
@@ -1890,7 +1890,7 @@ void MainWindow::SaveFile_GUI_Postprocessing()
         //Inserting back bbox info
 //        bboxInsertion(&sFile);
 //		insertBboxes(&sFile);
-		handleBbox->insertBboxes(&sFile);
+        handleBbox->insertBboxes(&sFile);
     }
 
     //! Converting html output into plain text.
@@ -2861,7 +2861,7 @@ void MainWindow::on_actionViewAverageAccuracies_triggered()
 */
 void MainWindow::on_actionAllFontProperties_triggered()
 {
-	if(!curr_browser || curr_browser->isReadOnly())
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
 
     auto cursor = curr_browser->textCursor();
@@ -2876,133 +2876,126 @@ void MainWindow::on_actionAllFontProperties_triggered()
     bool ok;
     QFont font = QFontDialog::getFont(&ok, initialFont, this, tr("Font Properties"), QFontDialog::DontUseNativeDialog);
 
-	/*! If user clicks OK then change to selected font with properties*/
-	if (!ok) {
-		return;
-	}
+    /*! If user clicks OK then change to selected font with properties*/
+    if (!ok) {
+        return;
+    }
 
-	int ret = QMessageBox::question(this, tr("Question"), tr("Do you want to apply this font to all pages ? (CAN'T UNDO THIS OPERATION)"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-	if (ret == QMessageBox::Yes) {
-		QString fontFamily = font.family();
-		int fontSize = font.pointSize();
-		QVector<QString> styleProperties = {"font-family:", "font-size:"};
-		QVector<QString> stylePropertyValues = {QString("\'" + fontFamily + "\'"), QString::number(fontSize) + "pt"};
-		int totalFontProperties = styleProperties.size();
-		qDebug() << "apply to all pages";
-		/*!
-		 * 1. Loop through each page except the current one
-		 * 2. Apply font size and font family
-		 */
+    int ret = QMessageBox::question(this, tr("Question"), tr("Do you want to apply this font to all pages ? (CAN'T UNDO THIS OPERATION)"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    if (ret == QMessageBox::Yes) {
+        QString fontFamily = font.family();
+        int fontSize = font.pointSize();
+        QVector<QString> styleProperties = {"font-family:", "font-size:"};
+        QVector<QString> stylePropertyValues = {QString("\'" + fontFamily + "\'"), QString::number(fontSize) + "pt"};
+        int totalFontProperties = styleProperties.size();
+        qDebug() << "apply to all pages";
+        /*!
+         * 1. Loop through each page except the current one
+         * 2. Apply font size and font family
+         */
 
-		QString directory = gDirTwoLevelUp + "/" + gCurrentDirName;
-		QString exception = gDirTwoLevelUp + "/" + gCurrentDirName + "/" + gCurrentPageName;
+        QString directory = gDirTwoLevelUp + "/" + gCurrentDirName;
+        QString exception = gDirTwoLevelUp + "/" + gCurrentDirName + "/" + gCurrentPageName;
 
-		QDirIterator filesIt(directory, {"*.html"}, QDir::Files | QDir::NoDotAndDotDot);
+        QDirIterator filesIt(directory, {"*.html"}, QDir::Files | QDir::NoDotAndDotDot);
 
-		while (filesIt.hasNext()) {
-			QString filename = filesIt.next();
-			if (filename == exception) {
-				continue;
-			}
-			QFile file(filename);
-			if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-				qDebug() << "Cannot open file in read mode";
-			}
-			QString fileText = file.readAll();
-			file.close();
+        while (filesIt.hasNext()) {
+            QString filename = filesIt.next();
+            if (filename == exception) {
+                continue;
+            }
+            QFile file(filename);
+            if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                qDebug() << "Cannot open file in read mode";
+            }
+            QString fileText = file.readAll();
+            file.close();
 
-			QRegularExpression regex_style("(<span[^>]*>)");
-			QRegularExpressionMatchIterator itr = regex_style.globalMatch(fileText);
+            QRegularExpression regex_style("(<span[^>]*>)");
+            QRegularExpressionMatchIterator itr = regex_style.globalMatch(fileText);
 
-			while (itr.hasNext()) {
-				QRegularExpressionMatch match = itr.next();
-				QString capString = match.captured(1);
-				int capStart = match.capturedStart(1);
+            while (itr.hasNext()) {
+                QRegularExpressionMatch match = itr.next();
+                QString capString = match.captured(1);
+                int capStart = match.capturedStart(1);
 
-				for (int i = 0; i < totalFontProperties; i++) {
-					QString property = styleProperties[i];
-					QString value = stylePropertyValues[i];
-					int propIndex = -1;
+                for (int i = 0; i < totalFontProperties; i++) {
+                    QString property = styleProperties[i];
+                    QString value = stylePropertyValues[i];
+                    int propIndex = -1;
 
-					if ((propIndex = capString.indexOf(property)) != -1) { // If value of the property is different
-						int endIndexOfProperty = capString.indexOf(";", propIndex);
-						int replacementLen = endIndexOfProperty - (propIndex + property.length());
-						fileText.replace(capStart + propIndex + property.length(), replacementLen, value);
-						capString.replace(propIndex + property.length(), replacementLen, value);
-					} else if (capString.indexOf("style=\"") != -1) { // If property is not present
-						int indexOfStyle = capString.indexOf("style=\"");
-						fileText.insert(capStart + indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
-						capString.insert(indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
-					} else { // If style tag is not present
-						fileText.insert(capStart + QString("<span ").length(), "style=\" " + property + value + ";\" ");
-						capString.insert(QString("<span ").length(), "style=\" " + property + value + ";\" ");
-					}
-				}
+                    if ((propIndex = capString.indexOf(property)) != -1) { // If value of the property is different
+                        int endIndexOfProperty = capString.indexOf(";", propIndex);
+                        int replacementLen = endIndexOfProperty - (propIndex + property.length());
+                        fileText.replace(capStart + propIndex + property.length(), replacementLen, value);
+                        capString.replace(propIndex + property.length(), replacementLen, value);
+                    } else if (capString.indexOf("style=\"") != -1) { // If property is not present
+                        int indexOfStyle = capString.indexOf("style=\"");
+                        fileText.insert(capStart + indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+                        capString.insert(indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+                    } else { // If style tag is not present
+                        fileText.insert(capStart + QString("<span ").length(), "style=\" " + property + value + ";\" ");
+                        capString.insert(QString("<span ").length(), "style=\" " + property + value + ";\" ");
+                    }
+                }
 
-				itr = regex_style.globalMatch(fileText, capStart + capString.length());
-			}
-			if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-				qDebug() << "Cannot open file in write mode";
-			}
-			QTextStream out(&file);
-			out.setCodec("UTF-8");
-			out << fileText;
-			file.close();
-		}
+                itr = regex_style.globalMatch(fileText, capStart + capString.length());
+            }
+            if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                qDebug() << "Cannot open file in write mode";
+            }
+            QTextStream out(&file);
+            out.setCodec("UTF-8");
+            out << fileText;
+            file.close();
+        }
 
-	}
+    }
 
-	//!Filter the font properities
-	QTextCharFormat format_to_be_applied;
+    //!Filter the font properities
+    QTextCharFormat format_to_be_applied;
 
-	qreal wgt = font.pointSize();
-	QString fam = font.family();
-	bool strike = font.strikeOut();
-	bool underline = font.underline();
-	qreal LetterSpacing=font.letterSpacing();
-	qreal WordSpacing = font.wordSpacing();
-	int stretch = font.stretch();
-	auto styleHint = font.styleHint();
-	auto styleStrategy = font.styleStrategy();
-	auto letterSpacingType = font.letterSpacingType();
-	bool overline = font.overline();
-	bool fixedpitch = font.fixedPitch();
-	auto hintingpref = font.hintingPreference();
+    qreal wgt = font.pointSize();
+    QString fam = font.family();
+    bool strike = font.strikeOut();
+    bool underline = font.underline();
+    qreal LetterSpacing=font.letterSpacing();
+    qreal WordSpacing = font.wordSpacing();
+    int stretch = font.stretch();
+    auto styleHint = font.styleHint();
+    auto styleStrategy = font.styleStrategy();
+    auto letterSpacingType = font.letterSpacingType();
+    bool overline = font.overline();
+    bool fixedpitch = font.fixedPitch();
+    auto hintingpref = font.hintingPreference();
 
-	format_to_be_applied.setFontPointSize(wgt);
-	format_to_be_applied.setFontFamily(fam);
-	format_to_be_applied.setFontStrikeOut(strike);
-	format_to_be_applied.setFontUnderline(underline);
-	format_to_be_applied.setFontLetterSpacing(LetterSpacing);
-	format_to_be_applied.setFontWordSpacing(WordSpacing);
-	format_to_be_applied.setFontStretch(stretch);
-	format_to_be_applied.setFontStyleHint(styleHint,styleStrategy);
-	format_to_be_applied.setFontLetterSpacingType(letterSpacingType);
-	format_to_be_applied.setFontOverline(overline);
-	format_to_be_applied.setFontFixedPitch(fixedpitch);
-	format_to_be_applied.setFontHintingPreference(hintingpref);
+    format_to_be_applied.setFontPointSize(wgt);
+    format_to_be_applied.setFontFamily(fam);
+    format_to_be_applied.setFontStrikeOut(strike);
+    format_to_be_applied.setFontUnderline(underline);
+    format_to_be_applied.setFontLetterSpacing(LetterSpacing);
+    format_to_be_applied.setFontWordSpacing(WordSpacing);
+    format_to_be_applied.setFontStretch(stretch);
+    format_to_be_applied.setFontStyleHint(styleHint,styleStrategy);
+    format_to_be_applied.setFontLetterSpacingType(letterSpacingType);
+    format_to_be_applied.setFontOverline(overline);
+    format_to_be_applied.setFontFixedPitch(fixedpitch);
+    format_to_be_applied.setFontHintingPreference(hintingpref);
 
 
-	//! Apply bold and italics if present
-	if(font.bold())
-	{
-		qreal weight = font.weight();
-		format_to_be_applied.setFontWeight(weight);
-	}
-	if(font.italic())
-	{
-		bool Italics = font.italic();
-		format_to_be_applied.setFontItalic(Italics);
-	}
+    //! Apply bold and italics if present
+    if(font.bold())
+    {
+        qreal weight = font.weight();
+        format_to_be_applied.setFontWeight(weight);
+    }
+    if(font.italic())
+    {
+        bool Italics = font.italic();
+        format_to_be_applied.setFontItalic(Italics);
+    }
 
-<<<<<<< Updated upstream
     curr_browser->setCurrentFont(font);
-=======
-//	cursor.mergeCharFormat(format_to_be_applied);
-//	curr_browser->textCursor().mergeCharFormat(format_to_be_applied);
-//	curr_browser->setCurrentCharFormat(format_to_be_applied);
-	curr_browser->setCurrentFont(font);
->>>>>>> Stashed changes
 }
 
 /*!
@@ -3509,12 +3502,12 @@ void MainWindow::on_actionFetch_2_triggered()
     QPushButton *noButton = forPullBox.addButton(QMessageBox::StandardButton::No);
     forPullBox.exec();
 
-	int error;
+    int error;
     if (forPullBox.clickedButton() == okButton)
     {
-		if ((error = mProject.fetch()) != 0) {
-			qDebug() << "Fetch failed with error code " << error;
-		}
+        if ((error = mProject.fetch()) != 0) {
+            qDebug() << "Fetch failed with error code " << error;
+        }
         if(mProject.get_version().toInt())
         {
             QMessageBox::information(0, "Sync Success", "Synced Succesfully");
@@ -3649,7 +3642,7 @@ void MainWindow::on_actionTurn_In_triggered()
                 // mProject.set_stage_verifier();    // set_stage_verifier()inherited from project.cpp updates the stage in xml file to "verifier"
 
                 //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
-           if(mProject.commit(commit_msg.toStdString()))
+            if(mProject.commit(commit_msg.toStdString()))
             {
 //                    if(!mProject.push(branchName))
 //                mProject.enable_push(false);      // enable_push() increments version and sets stage in xml file
@@ -3658,9 +3651,12 @@ void MainWindow::on_actionTurn_In_triggered()
                 threadingPush *tp=new threadingPush(nullptr);
                 QThread *thread = new QThread;
 
-                QObject::connect(thread, SIGNAL(started()), tp, SLOT(Control_Push(branchName,repo,login_tries,is_cred_cached)));
+                QObject::connect(thread, SIGNAL(started()), tp, SLOT(ControlPush(branchName,repo,
+                                                                      login_tries,is_cred_cached,
+                                                                      mEmail,mName,
+                                                                    user,pass)));
                 QObject::connect(tp, SIGNAL(finishedLoadingData()), thread, SLOT(quit()));
-                QObject:connect(tp, SIGNAL(finishedLoadingData()), tp, SLOT(deleteLater()));
+                QObject::connect(tp, SIGNAL(finishedLoadingData()), tp, SLOT(deleteLater()));
                 QObject::connect(tp, SIGNAL(finished()), thread, SLOT(deleteLater()));
                 QObject::connect(tp, SIGNAL(finishedLoadingData()), this, SLOT(stopSpinning()));
                 tp->moveToThread(thread);
@@ -4510,9 +4506,11 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, int w, int h)
 {
     //! If directory exists then create the folders
-    if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
-    {
+    if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+    }
+    if(!QDir(gDirTwoLevelUp+"/Cropped_Images/Figures").exists())
+    {
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Figures");
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Tables");
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Equations");
@@ -4577,8 +4575,8 @@ void MainWindow::on_pushButton_2_clicked()
     auto cursor = curr_browser->textCursor();
     auto selected = cursor.selection();
     QString sel = selected.toHtml();
-	QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
-	//    QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
+    QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
+    //    QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
     QRegularExpressionMatchIterator itr;
     itr = rex.globalMatch(sel);
     int height=0;
@@ -4609,38 +4607,38 @@ void MainWindow::on_pushButton_2_clicked()
                width=width_textLine->text().toInt();
            }
 
-	while(itr.hasNext())
-	{
-		QRegularExpressionMatch match = itr.next();
-		QString ex = match.captured(1);
-		string str = ex.toStdString();
-		int ind = str.find("src=");
-		ind+=5;
-		int start = ind;
-		int end = 0;
+    while(itr.hasNext())
+    {
+        QRegularExpressionMatch match = itr.next();
+        QString ex = match.captured(1);
+        string str = ex.toStdString();
+        int ind = str.find("src=");
+        ind+=5;
+        int start = ind;
+        int end = 0;
 
-		if (str.find(".jpg") != -1) {
-			end = str.find(".jpg");
-			end += 3;
-		} else if (str.find(".png") != -1) {
-			end = str.find(".png");
-			end += 3;
-		} else if (str.find(".jpeg") != -1) {
-			end = str.find(".jpeg");
-			end += 4;
-		} else {
-			qDebug() << "File extension not recognisable";
-		}
+        if (str.find(".jpg") != -1) {
+            end = str.find(".jpg");
+            end += 3;
+        } else if (str.find(".png") != -1) {
+            end = str.find(".png");
+            end += 3;
+        } else if (str.find(".jpeg") != -1) {
+            end = str.find(".jpeg");
+            end += 4;
+        } else {
+            qDebug() << "File extension not recognisable";
+        }
 
-		str = str.substr(start,end-start+1);
-		QString imgname = QString::fromStdString(str);
+        str = str.substr(start,end-start+1);
+        QString imgname = QString::fromStdString(str);
 
         if(height>0 && width>0)
-		{
+        {
             QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(width).arg(height);
-			cursor.insertHtml(html);      //insert new image with modified attributes height and width
-		}
-	}
+            cursor.insertHtml(html);      //insert new image with modified attributes height and width
+        }
+    }
 }
 
 /*!
@@ -6151,21 +6149,21 @@ QString GetFilter(QString & Name, const QStringList &list) {
  */
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 {
-	if(curr_browser) {
-		if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
-			QMessageBox currBox2;
-			currBox2.setWindowTitle("Save?");
-			currBox2.setIcon(QMessageBox::Question);
-			currBox2.setInformativeText("Do you want to save " + currentTabPageName + " file?");
-			QPushButton *okButton2 = currBox2.addButton(QMessageBox::StandardButton::Ok);
-			QPushButton *noButton2 = currBox2.addButton(QMessageBox::StandardButton::No);
-			currBox2.exec();
+    if(curr_browser) {
+        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
+            QMessageBox currBox2;
+            currBox2.setWindowTitle("Save?");
+            currBox2.setIcon(QMessageBox::Question);
+            currBox2.setInformativeText("Do you want to save " + currentTabPageName + " file?");
+            QPushButton *okButton2 = currBox2.addButton(QMessageBox::StandardButton::Ok);
+            QPushButton *noButton2 = currBox2.addButton(QMessageBox::StandardButton::No);
+            currBox2.exec();
 
-			if (currBox2.clickedButton() == okButton2){
-				on_actionSave_triggered();
-			}
-		}
-	}
+            if (currBox2.clickedButton() == okButton2){
+                on_actionSave_triggered();
+            }
+        }
+    }
 
     f->open(QIODevice::ReadOnly);
     QFileInfo finfo(f->fileName());
@@ -6199,39 +6197,39 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     }
     // Saves the current opened page
 
-	QSettings settings("IIT-B", "OpenOCRCorrect");
-	settings.beginGroup("RecentPageLoaded");
-	QString tmp1 = settings.value("projectName1").toString();
-	QString tmp2 = settings.value("projectName2").toString();
-	QString tmp3 = settings.value("projectName3").toString();
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("RecentPageLoaded");
+    QString tmp1 = settings.value("projectName1").toString();
+    QString tmp2 = settings.value("projectName2").toString();
+    QString tmp3 = settings.value("projectName3").toString();
 
-	if(ProjFile == tmp1){
-		settings.setValue("projectName1",ProjFile );
-		settings.setValue("name1",name );
-		settings.setValue("pageParent1",gCurrentDirName );}
-	else if(ProjFile == tmp2){
-		settings.setValue("projectName2",settings.value("projectName1").toString() );
-		settings.setValue("name2",settings.value("name1").toString() );
-		settings.setValue("pageParent2",settings.value("pageParent1").toString() );
-		settings.setValue("projectName1",ProjFile );
-		settings.setValue("name1",name );
-		settings.setValue("pageParent1",gCurrentDirName );}
-	else{
-		settings.setValue("projectName3",settings.value("projectName2").toString() );
-		settings.setValue("name3",settings.value("name2").toString() );
-		settings.setValue("pageParent3",settings.value("pageParent2").toString() );
-		settings.setValue("projectName2",settings.value("projectName1").toString() );
-		settings.setValue("name2",settings.value("name1").toString() );
-		settings.setValue("pageParent2",settings.value("pageParent1").toString() );
-		settings.setValue("projectName1",ProjFile );
-		settings.setValue("name1",name );
-		settings.setValue("pageParent1",gCurrentDirName );
-	}
-	settings.endGroup();
+    if(ProjFile == tmp1){
+        settings.setValue("projectName1",ProjFile );
+        settings.setValue("name1",name );
+        settings.setValue("pageParent1",gCurrentDirName );}
+    else if(ProjFile == tmp2){
+        settings.setValue("projectName2",settings.value("projectName1").toString() );
+        settings.setValue("name2",settings.value("name1").toString() );
+        settings.setValue("pageParent2",settings.value("pageParent1").toString() );
+        settings.setValue("projectName1",ProjFile );
+        settings.setValue("name1",name );
+        settings.setValue("pageParent1",gCurrentDirName );}
+    else{
+        settings.setValue("projectName3",settings.value("projectName2").toString() );
+        settings.setValue("name3",settings.value("name2").toString() );
+        settings.setValue("pageParent3",settings.value("pageParent2").toString() );
+        settings.setValue("projectName2",settings.value("projectName1").toString() );
+        settings.setValue("name2",settings.value("name1").toString() );
+        settings.setValue("pageParent2",settings.value("pageParent1").toString() );
+        settings.setValue("projectName1",ProjFile );
+        settings.setValue("name1",name );
+        settings.setValue("pageParent1",gCurrentDirName );
+    }
+    settings.endGroup();
 
     isProjectOpen = 1;
 
-	doc = b->document();
+    doc = b->document();
 
     //!Display format by setting font size and styles
     QTextStream stream(f);
@@ -6262,81 +6260,81 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
         b->setHtml(qstrHtml);
     }
     if (ext == "html") {
-		QSize graphicsViewSize = ui->graphicsView->size();
-		int graphicsViewHeight = graphicsViewSize.height()/4;
-		int graphicsViewWidth = graphicsViewSize.width()/3;
-		QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
-		QRegularExpressionMatchIterator itr;
-		itr = rex.globalMatch(input);
-		int height=graphicsViewHeight;
-		int width=graphicsViewWidth;
+        QSize graphicsViewSize = ui->graphicsView->size();
+        int graphicsViewHeight = graphicsViewSize.height()/4;
+        int graphicsViewWidth = graphicsViewSize.width()/3;
+        QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
+        QRegularExpressionMatchIterator itr;
+        itr = rex.globalMatch(input);
+        int height=graphicsViewHeight;
+        int width=graphicsViewWidth;
 
-		while(itr.hasNext())
-		{
-			QRegularExpressionMatch match = itr.next();
-			QString ex = match.captured(1);
+        while(itr.hasNext())
+        {
+            QRegularExpressionMatch match = itr.next();
+            QString ex = match.captured(1);
 
-			if(!ex.contains("width") && !ex.contains("height")){
-				string str = ex.toStdString();
-				int ind = str.find("src=");
-				ind += 5;
-				int start = ind;
+            if(!ex.contains("width") && !ex.contains("height")){
+                string str = ex.toStdString();
+                int ind = str.find("src=");
+                ind += 5;
+                int start = ind;
 
-				int end = 0;
-				if (str.find(".jpg") != -1) {
-					end = str.find(".jpg");
-					end += 3;
-				} else if (str.find(".png") != -1) {
-					end = str.find(".png");
-					end += 3;
-				} else if (str.find(".jpeg") != -1) {
-					end = str.find(".jpeg");
-					end += 4;
-				} else {
-					qDebug() << "File extension not recognisable";
-				}
+                int end = 0;
+                if (str.find(".jpg") != -1) {
+                    end = str.find(".jpg");
+                    end += 3;
+                } else if (str.find(".png") != -1) {
+                    end = str.find(".png");
+                    end += 3;
+                } else if (str.find(".jpeg") != -1) {
+                    end = str.find(".jpeg");
+                    end += 4;
+                } else {
+                    qDebug() << "File extension not recognisable";
+                }
 
-				string ttstr = str.substr(end+2,str.length()-end-3);// title tag string
-				str = str.substr(start,end-start+1);
-				QString imgname = QString::fromStdString(str);
-				QString titleString = QString::fromStdString(ttstr);
-				QString html = QString("\n <img src='%1' width='%2' height='%3'%4>").arg(imgname).arg(width).arg(height).arg(titleString);
-				input.replace(ex,html);
-			}
-		}
+                string ttstr = str.substr(end+2,str.length()-end-3);// title tag string
+                str = str.substr(start,end-start+1);
+                QString imgname = QString::fromStdString(str);
+                QString titleString = QString::fromStdString(ttstr);
+                QString html = QString("\n <img src='%1' width='%2' height='%3'%4>").arg(imgname).arg(width).arg(height).arg(titleString);
+                input.replace(ex,html);
+            }
+        }
 //		b->setHtml(input);
 
-		f->close();
+        f->close();
 
-		if (!f->open(QIODevice::WriteOnly | QIODevice::Text)) {
-			qDebug() << "Cannot open file in write mode";
-		}
+        if (!f->open(QIODevice::WriteOnly | QIODevice::Text)) {
+            qDebug() << "Cannot open file in write mode";
+        }
         QTextStream out(f);
         out.setCodec("utf-8");
         out << input;
         out.flush();
         f->close();
 
-		if (handleBbox != nullptr) {
-			delete handleBbox;
-		}
-		handleBbox = new HandleBbox();
-		QTextDocument *curDoc = handleBbox->loadFileInDoc(f);
-		if (curDoc == nullptr) {
-			qDebug() << "Cannot load file";
-			return;
-		}
-		curDoc = curDoc->clone(static_cast<QObject*>(b));
-		b->setDocument(curDoc);
-		doc = b->document();
+        if (handleBbox != nullptr) {
+            delete handleBbox;
+        }
+        handleBbox = new HandleBbox();
+        QTextDocument *curDoc = handleBbox->loadFileInDoc(f);
+        if (curDoc == nullptr) {
+            qDebug() << "Cannot load file";
+            return;
+        }
+        curDoc = curDoc->clone(static_cast<QObject*>(b));
+        b->setDocument(curDoc);
+        doc = b->document();
 //		loadHtmlInDoc(f);
 //        preprocessing(); //for removing dangling mathras
-		connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
-		blockCount = b->document()->blockCount();
-		if (!f->open(QIODevice::ReadOnly | QIODevice::Text)) {
-			qDebug() << "Cannot open file for reading";
-			return;
-		}
+        connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
+        blockCount = b->document()->blockCount();
+        if (!f->open(QIODevice::ReadOnly | QIODevice::Text)) {
+            qDebug() << "Cannot open file for reading";
+            return;
+        }
 
     }
     QDir::setCurrent(gDirOneLevelUp);   //changing application path to load document in a relative path
@@ -6426,27 +6424,27 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     auto model = ui->treeView->model();
     int rowCount = ui->treeView->model()->rowCount(parentIndex);
 
-	QString treeItemLabel;
-	for (int i = 0; i < rowCount; i++)
-	{
-		QModelIndex index = model->index(i, 0, parentIndex);
-		treeItemLabel = index.data(Qt::DisplayRole).toString();
+    QString treeItemLabel;
+    for (int i = 0; i < rowCount; i++)
+    {
+        QModelIndex index = model->index(i, 0, parentIndex);
+        treeItemLabel = index.data(Qt::DisplayRole).toString();
 
-		if (index.isValid())
-		{
-			if (treeItemLabel == currentTabPageName)
-			{
-				ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
-				break;
-			}
-		}
-	}
+        if (index.isValid())
+        {
+            if (treeItemLabel == currentTabPageName)
+            {
+                ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+                break;
+            }
+        }
+    }
 
-	// Deleting temporarily created CustomTextBrowser
-	delete b;
+    // Deleting temporarily created CustomTextBrowser
+    delete b;
     myTimer.start();
-	WordCount();     //for counting no of words in the document
-	readSettings();
+    WordCount();     //for counting no of words in the document
+    readSettings();
 }
 
 /*!
@@ -6487,17 +6485,17 @@ void MainWindow::LoadImageFromFile(QFile * f)
     ui->graphicsView->setMouseTracking(true);
     ui->graphicsView->viewport()->installEventFilter(this);
 
-	// Zooming upto currentZoomLevel
-	if (currentZoomLevel == z->zoom_level) {
-		return;
-	}
-	double factor_to_be_applied = 1.0;
-	if (currentZoomLevel < z->zoom_level) {
-		factor_to_be_applied = 1 - ((z->zoom_level - currentZoomLevel) / 100.0);
-	} else {
-		factor_to_be_applied = 1 + ((currentZoomLevel - z->zoom_level) / 100.0);
-	}
-	z->gentle_zoom(factor_to_be_applied);
+    // Zooming upto currentZoomLevel
+    if (currentZoomLevel == z->zoom_level) {
+        return;
+    }
+    double factor_to_be_applied = 1.0;
+    if (currentZoomLevel < z->zoom_level) {
+        factor_to_be_applied = 1 - ((z->zoom_level - currentZoomLevel) / 100.0);
+    } else {
+        factor_to_be_applied = 1 + ((currentZoomLevel - z->zoom_level) / 100.0);
+    }
+    z->gentle_zoom(factor_to_be_applied);
 }
 
 /*!
@@ -6947,46 +6945,6 @@ void MainWindow::closeEvent (QCloseEvent *event)
     }
 }
 
-
-/*!
- * \fn MainWindow::sendEmail
- *
- * This function sends an email to "aksharanveshini.iitb@gmail.com", whenever a user, whether corrector
- * or verifier submits their book project after their work is done.
- *
- * See SimpleMail Documentation for more details.
- *
- * \param emailText
- * \return
- */
-
-bool MainWindow::sendEmail(QString emailText)
-{
-    QString pmEmail = mProject.get_pmEmail();
-    if(pmEmail == "" || (!pmEmail.contains("@")))
-        return 0;
-
-    //!Adding Sender Address and credentials
-    SimpleMail::Sender sender ("smtp.gmail.com", 465, SimpleMail::Sender::SslConnection);
-    sender.setUser("aksharanveshini.iitb@gmail.com");
-    sender.setPassword("backend-ui"); //has to be encoded
-    SimpleMail::MimeMessage message;
-    message.setSender(SimpleMail::EmailAddress("aksharanveshini.iitb@gmail.com", "Akshar Anveshini"));
-
-    //!Adding recipient
-    QList <SimpleMail::EmailAddress> listRecipients;
-    listRecipients.append(pmEmail);
-    message.setToRecipients(listRecipients);
-    message.setSubject(mProject.get_setId() + " Turn In");
-    SimpleMail::MimeText *text = new SimpleMail::MimeText();
-    text->setText(emailText);
-    message.addPart(text);
-    if(!sender.sendMail(message))
-        return 0;
-
-    return 1;
-}
-
 /*!
  * \fn MainWindow::highlight
  * \brief This function highlights words of Globally Replaced Words
@@ -7394,7 +7352,7 @@ void MainWindow::zoom_slider_moved(int value)
  */
 void MainWindow::zoomedUsingScroll()
 {
-	currentZoomLevel = z->zoom_level;
+    currentZoomLevel = z->zoom_level;
     ui->horizontalSlider->setValue(z->zoom_level);
 }
 
@@ -8503,37 +8461,37 @@ void MainWindow::createMenu()
 
 void MainWindow::blockCountChanged(int numOfBlocks)
 {
-	QTextCursor cur = curr_browser->textCursor();
-	int currentBlockNum = cur.blockNumber();
-	QPair<QString, QString> bbox_value;
+    QTextCursor cur = curr_browser->textCursor();
+    int currentBlockNum = cur.blockNumber();
+    QPair<QString, QString> bbox_value;
 
-	if (numOfBlocks > handleBbox->blockCount) {
-		if (currentBlockNum == 0) {
-			bbox_value = bboxes[0];
-			for (int i = 0; i < (numOfBlocks - blockCount); i++) {
-				bboxes.insert(currentBlockNum, {"p", bbox_value.second});
-			}
-		} else {
-			int pos = currentBlockNum - (numOfBlocks - blockCount);
-			bbox_value = bboxes[pos];
-			bbox_value.first = "p";
-			for (int i = 0; i < (numOfBlocks - blockCount); i++) {
-				bboxes.insert(pos + 1, bbox_value);
-			}
-		}
-	} else if (numOfBlocks < blockCount) {
-		int pos;
-		if (cur.atBlockEnd()) {
-			pos = currentBlockNum + 1;
-		} else if (cur.atBlockStart()) {
-			pos = currentBlockNum;
-		}
+    if (numOfBlocks > handleBbox->blockCount) {
+        if (currentBlockNum == 0) {
+            bbox_value = bboxes[0];
+            for (int i = 0; i < (numOfBlocks - blockCount); i++) {
+                bboxes.insert(currentBlockNum, {"p", bbox_value.second});
+            }
+        } else {
+            int pos = currentBlockNum - (numOfBlocks - blockCount);
+            bbox_value = bboxes[pos];
+            bbox_value.first = "p";
+            for (int i = 0; i < (numOfBlocks - blockCount); i++) {
+                bboxes.insert(pos + 1, bbox_value);
+            }
+        }
+    } else if (numOfBlocks < blockCount) {
+        int pos;
+        if (cur.atBlockEnd()) {
+            pos = currentBlockNum + 1;
+        } else if (cur.atBlockStart()) {
+            pos = currentBlockNum;
+        }
 
-		for (int i = 0; i < (blockCount - numOfBlocks); i++) {
-			bboxes.remove(pos);
-		}
-	}
-	blockCount = numOfBlocks;
+        for (int i = 0; i < (blockCount - numOfBlocks); i++) {
+            bboxes.remove(pos);
+        }
+    }
+    blockCount = numOfBlocks;
 }
 
 
@@ -8790,12 +8748,12 @@ void MainWindow::on_actionClose_project_triggered()
  */
 void MainWindow::on_actionMerge_Cells_triggered()
 {
-	if (!curr_browser || curr_browser->isReadOnly()) { return; }
-	if (curr_browser->textCursor().currentTable())
-	{
-		QTextTable *table = curr_browser->textCursor().currentTable();
-		table->mergeCells(curr_browser->textCursor());
-	}
+    if (!curr_browser || curr_browser->isReadOnly()) { return; }
+    if (curr_browser->textCursor().currentTable())
+    {
+        QTextTable *table = curr_browser->textCursor().currentTable();
+        table->mergeCells(curr_browser->textCursor());
+    }
 }
 
 /*!
@@ -9006,5 +8964,4 @@ void MainWindow::on_actionExit_triggered()
 {
     QCoreApplication::quit();
 }
-
 

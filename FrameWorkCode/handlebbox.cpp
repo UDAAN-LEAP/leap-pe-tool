@@ -8,25 +8,42 @@
 //#include <QDebug>
 //#include <QTextBlock>
 
+/*!
+ * \brief HandleBbox::HandleBbox
+ */
 HandleBbox::HandleBbox()
 {
     this->doc = new QTextDocument();
     this->docIsPassed = true;
 }
-
+/*!
+ * \brief HandleBbox::HandleBbox
+ * \param doc
+ */
 HandleBbox::HandleBbox(QTextDocument* doc)
 {
     this->doc = doc;
     this->docIsPassed = false;
 }
-
+/*!
+ * \brief HandleBbox::~HandleBbox
+ */
 HandleBbox::~HandleBbox()
 {
     if (docIsPassed) {
         delete doc;
     }
 }
-
+/*!
+ * \brief HandleBbox::loadFileInDoc
+ * \param f
+ * function:
+ * input file is read
+ * paragraph,image and table,list tags are iterated
+ * the text is set as blocks.
+ * alignments are set if they are present in <p>,<img/> or <table> tags(set asblock formats)
+ * input text is insert as html inside block.
+ */
 QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
 {
     QTextCursor cur(doc);QTextCursor cur2(doc);
@@ -209,7 +226,16 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
     storeBboxes(f);
     return doc;
 }
-
+/*!
+ * \brief HandleBbox::insertBboxes
+ * \param file
+ * inserts the boxes into the file
+ * if file is not available for writing mode,function terminates
+ * all the lines of file are read and stored in varaible(input)
+ * If bbox is already present, move to next entry
+ * tages for table, image are added
+ * are successfull insertion the file is flushed and closed
+ */
 void HandleBbox::insertBboxes(QFile *file)
 {
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -231,7 +257,7 @@ void HandleBbox::insertBboxes(QFile *file)
         QString htmlTagData = match.captured(1);
         int end = match.capturedEnd(1);
 
-        // If bbox is already present, move to next entry
+
         if (htmlTagData.indexOf("title=\"bbox") != -1) {
             i++;
             continue;
@@ -288,7 +314,16 @@ void HandleBbox::insertBboxes(QFile *file)
     out.flush();
     file->close();
 }
-
+/*!
+ * \brief HandleBbox::storeBboxes
+ * \param file
+ * the boxes are stored
+ * Function terminates if file is available for writing mode
+ * text of the input file is read
+ * If bbox tag is not present,tags(variable) are set to null
+ * loop itreates through the input file
+ * several tags are check and stored inside bBox accordingly
+ */
 void HandleBbox::storeBboxes(QFile *file)
 {
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -315,7 +350,7 @@ void HandleBbox::storeBboxes(QFile *file)
 
         int first, last;
         first = bbox_tags.indexOf("bbox");
-        if ((bbox_tags.indexOf("title=\"bbox") == -1) || (first == -1)) { // If bbox tag is not present
+        if ((bbox_tags.indexOf("title=\"bbox") == -1) || (first == -1)) {
             temp_tags = "";
         } else { // If bbox tag is present
             int i = first;
@@ -348,10 +383,17 @@ void HandleBbox::storeBboxes(QFile *file)
     }
 }
 
+
+
+/*!
+ * \brief HandleBbox::latex2png
+ * \param inputText
+ * Doing equation latex to equaton png mapping
+ * we are showing png in our tool and saving Latex form in html page
+ * \return
+ */
 QString HandleBbox::latex2png(QString inputText)
-{
-    /* Doing equation latex to equaton png mapping
- * we are showing png in our tool and saving Latex form in html page */
+{ 
     if(inputText.contains("$$")){
 
         QRegularExpression rex("<a(.*?)</a>",QRegularExpression::DotMatchesEverythingOption);
@@ -384,3 +426,4 @@ QString HandleBbox::latex2png(QString inputText)
     }
     return inputText;
 }
+

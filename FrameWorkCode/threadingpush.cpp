@@ -29,12 +29,12 @@ threadingPush::threadingPush(QObject *parent)
 {
 
 }
-QString user_id;
-std::string user, pass, email,mEmail,mName;
-static int login_tries = 1;
-static bool is_cred_cached = false;
+std::string USER,PASS;
+std::string MEMAIL,MNANME;
+static int LOGIN_TRIES = 1;
+static bool IS_CRED_CACHED = false;
 
-int credentials_cb(git_cred ** out, const char *url, const char *username_from_url,
+int CREDENTIALS_CB(git_cred ** out, const char *url, const char *username_from_url,
     unsigned int allowed_types, void *payload)
 {
     int error;
@@ -45,7 +45,7 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
      * bubbled up to the code performing the fetch or push. Using GIT_EUSER allows the application
      * to know it was an error from the application instead of libgit2.
      */
-    if (!is_cred_cached)
+    if (!IS_CRED_CACHED)
     {
 //		if (!takeCredentialsFromUser()) {
 //			return -1;
@@ -66,15 +66,18 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
     QString git_token = mainObj.value("github_token").toString();
     QString git_username = mainObj.value("github_username").toString();
     QFile::remove("gitToken.json");
-    user = git_username.toStdString();
-    pass = git_token.toStdString();
-    return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
+    USER = git_username.toStdString();
+    PASS = git_token.toStdString();
+    return git_cred_userpass_plaintext_new(out, USER.c_str(), PASS.c_str());
 }
 
 
 
 
-void threadingPush::ControlPush(QString branchName,git_repository *repo,int login_tries,bool is_cred_cached){
+void threadingPush::ControlPush(QString branchName,git_repository *repo,
+                                int login_tries,bool is_cred_cached,
+                                std::string mEmail,std::string mName,
+                                std::string user,std::string pass){
     login_tries = login_tries;
     is_cred_cached=is_cred_cached;
     git_remote * remote = NULL;
@@ -113,7 +116,7 @@ void threadingPush::ControlPush(QString branchName,git_repository *repo,int logi
      * Direct pull is not available via libgit2
      */
     git_fetch_init_options(&fetch_opts, GIT_FETCH_OPTIONS_VERSION);
-    fetch_opts.callbacks.credentials = credentials_cb;
+    fetch_opts.callbacks.credentials = CREDENTIALS_CB;
     error = git_remote_fetch( remote, NULL, &fetch_opts, NULL );
     if(error){
         std::cout<<1<<endl;
@@ -171,7 +174,7 @@ void threadingPush::ControlPush(QString branchName,git_repository *repo,int logi
     error = git_remote_push(remote, &refspecs , &push_opts);
     qDebug()<<"Error"<<error<<endl;
     error = git_push_init_options(&push_opts, GIT_PUSH_OPTIONS_VERSION);
-    push_opts.callbacks.credentials = credentials_cb;
+    push_opts.callbacks.credentials = CREDENTIALS_CB;
     //std::string str="refs/remotes/origin/master";
     //char * c = (char*)"refs/heads/master";
     //const git_strarray abc = { &c,1 };
