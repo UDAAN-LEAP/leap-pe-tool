@@ -20,7 +20,7 @@ if read_the_docs_build:
     output_dir = 'build'
     configureDoxyfile(input_dir, output_dir)
     subprocess.call('doxygen', shell=True)
-    breathe_projects['Udaan Editing Tool'] = output_dir + '/xml'
+    breathe_projects['OpenOCRCorrect'] = output_dir + '/xml'
 
 # Configuration file for the Sphinx documentation builder.
 #
@@ -41,9 +41,9 @@ if read_the_docs_build:
 
 # -- Project information -----------------------------------------------------
 
-project = 'Udaan Editing Tool'
-copyright = '2022, Ajit Singh'
-author = 'Ajit Singh'
+project = 'OpenOCRCorrect'
+copyright = 'OpenOCRCorrect IITB'
+author = 'IITB Admin'
 
 
 # -- General configuration ---------------------------------------------------
@@ -78,4 +78,4 @@ html_static_path = ['_static']
 autodoc_default_options = {"members": True, "undoc-members": True, "private-members": True}
 
 # Breathe Configuration
-breathe_default_project = "Udaan Editing Tool"
+breathe_default_project = "OpenOCRCorrect"
