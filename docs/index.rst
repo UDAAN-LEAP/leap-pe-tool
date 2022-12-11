@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Udaan Editing Tool's documentation!
+Welcome to OpenOCRCorrect's documentation!
 ==============================================
 
-**Udaan Editing Tool** is a tool for post editing OCR text of not only limited to Ancient Books and Scriptures, but also the translated text of Books. It provides a lot of features for helping the user to correct the text.
+**OpenOCRCorrect** is a tool for post editing OCR text of not only limited to Ancient Books and Scriptures, but also the translated text of Books. It provides a lot of features for helping the user to correct the text.
 
 .. toctree::
    :maxdepth: 2

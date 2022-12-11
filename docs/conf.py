@@ -1,27 +1,3 @@
-import subprocess, os
-
-def configureDoxyfile(input_dir, output_dir):
-    with open('Doxyfile', 'r') as file:
-        filedata = file.read()
-
-    filedata = filedata.replace('@DOXYGEN_INPUT_DIR@', input_dir)
-    filedata = filedata.replace('@DOXYGEN_OUTPUT_DIR@', output_dir)
-
-    with open('Doxyfile', 'w') as file:
-        file.write(filedata)
-
-# Check if we're running on Read the docs' servers
-read_the_docs_build = os.environ.get('READTHEDOCS', None) == 'True'
-
-breathe_projects = {}
-
-if read_the_docs_build:
-    input_dir = '../FrameWorkCode'
-    output_dir = 'build'
-    configureDoxyfile(input_dir, output_dir)
-    subprocess.call('doxygen', shell=True)
-    breathe_projects['OpenOCRCorrect'] = output_dir + '/xml'
-
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
@@ -36,13 +12,26 @@ if read_the_docs_build:
 #
 # import os
 # import sys
-# sys.path.insert(0, os.path.abspath('mymodule'))
+# sys.path.insert(0, os.path.abspath('.'))
+
+import subprocess, os
+
+# Check if we're running on Read the docs' servers
+read_the_docs_build = os.environ.get('READTHEDOCS', None) == 'True'
+
+breathe_projects = {}
+
+if read_the_docs_build:
+    input_dir = '../FrameWorkCode'
+    output_dir = 'build'
+    subprocess.call('doxygen', shell=True)
+    breathe_projects['OpenOCRCorrect'] = output_dir + '/xml'
 
 
 # -- Project information -----------------------------------------------------
 
 project = 'OpenOCRCorrect'
-copyright = 'OpenOCRCorrect IITB'
+copyright = '2022, IITB Admin'
 author = 'IITB Admin'
 
 
