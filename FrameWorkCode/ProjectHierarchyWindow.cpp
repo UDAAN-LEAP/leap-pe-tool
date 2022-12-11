@@ -10,7 +10,12 @@
 #include "ProjectHierarchyWindow.h"
 #include "Project.h"
 
-
+/*!
+ * \fn ProjectHierarchyWindow::ProjectHierarchyWindow
+ * \brief This is the constructor which sets the tree model to the model passed and shows it.
+ * \param pProject
+ * \param parent
+ */
 ProjectHierarchyWindow::ProjectHierarchyWindow(Project & pProject,QWidget *parent)
 	: QWidget(parent)
 {
@@ -19,8 +24,10 @@ ProjectHierarchyWindow::ProjectHierarchyWindow(Project & pProject,QWidget *paren
 	ui.treeView->setModel(model);
 	ui.treeView->show();
 }
+
 /*!
- * \brief ProjectHierarchyWindow::~ProjectHierarchyWindow
+ * \fn ProjectHierarchyWindow::~ProjectHierarchyWindow
+ * \brief Destructor
  */
 ProjectHierarchyWindow::~ProjectHierarchyWindow()
 {

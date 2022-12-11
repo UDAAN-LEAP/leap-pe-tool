@@ -8,6 +8,13 @@
 #include <QDir>
 #include <QFile>
 #include <QTextStream>
+
+
+/*!
+ * \fn ProjectWizard::ProjectWizard
+ * \brief This is the constructor which adds a fresh new page and sets the window title.
+ * \param parent
+ */
 ProjectWizard::ProjectWizard(QWidget *parent)
 	: QWizard(parent)
 {
@@ -85,6 +92,10 @@ void ProjectWizard::accept()
 	}
 }
 
+/*!
+ * \fn ProjectWizard::~ProjectWizard
+ * \brief Destructor
+ */
 ProjectWizard::~ProjectWizard()
 {
 }

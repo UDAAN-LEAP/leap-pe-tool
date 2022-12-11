@@ -346,3 +346,8 @@ __pycache__/
 /FrameWorkCode/HOCRDocument.hpp
 /FrameWorkCode/HOCRDocument.cpp
 /FrameWorkCode/tessdata
+
+# Files from docs/
+_build/
+build/
+sphinx/

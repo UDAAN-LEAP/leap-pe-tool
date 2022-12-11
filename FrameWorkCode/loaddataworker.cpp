@@ -2,31 +2,28 @@
 
 /*!
  * \fn LoadDataWorker::LoadDataWorker
- * \param QObject *parent,
- *      Project mProject,
-        QString mFilename,
-        QString mFilename1,
-        map<string, string>* LSTM,
-        std::map<string, set<string> >* CPairs,
-        map<string, int>* Dict,
-        map<string, int>* GBook,
-        map<string, int>* IBook,
-        map<string, int>* PWords,
-        map<string, int>* ConfPmap,
-        vector<string>* vGBook,
-        vector<string>* vIBook,
-        trie* TDict,
-        trie* TGBook,
-        trie* TGBookP,
-        trie* TPWords,
-        trie* TPWordsP,
-        map<string, vector<int> >* synonym,
-        vector<vector<string> >* synrows
-   *      This function sets the preface for LoadData
-   *      assigns various varaible to the parent.
-
+ * \brief This is the constructor which initializes the objects needed to be shared between the main(GUI) thread and the another thread.
+ * \param parent
+ * \param mProject
+ * \param mFilename
+ * \param mFilename1
+ * \param LSTM
+ * \param CPairs
+ * \param Dict
+ * \param GBook
+ * \param IBook
+ * \param PWords
+ * \param ConfPmap
+ * \param vGBook
+ * \param vIBook
+ * \param TDict
+ * \param TGBook
+ * \param TGBookP
+ * \param TPWords
+ * \param TPWordsP
+ * \param synonym
+ * \param synrows
  */
-
 LoadDataWorker::LoadDataWorker(
         QObject *parent,
         Project* mProject,
@@ -72,10 +69,8 @@ LoadDataWorker::LoadDataWorker(
 }
 
 /*!
- * \fn LoadData()
- * \brief calls  functions to load files from a sanskrit dictionary
- * also Loads the confusions for CPair,Loads OCRWords etc.
- * stores file path in a string and later loads csv file
+ * \fn LoadDataWorker::LoadData
+ * \brief This function calls specific functions to load specific data.
  */
 void LoadDataWorker::LoadData()
 {
@@ -93,7 +88,7 @@ void LoadDataWorker::LoadData()
 
 
 /*!
- * \fn loadDict()
+ * \fn LoadDataWorker::loadDict()
  * \param current project file location
  * \brief The path of the dictionary file is fetched and the files are returned in the map
  * these words are then fetched depending upon the word selected
@@ -108,7 +103,7 @@ bool LoadDataWorker::loadDict(Project & project) {
 }
 
 /*!
- * \fn on_actionLoadDict_triggered()
+ * \fn LoadDataWorker::on_actionLoadDict_triggered()
  * \brief The path of the dictionary file is fetched and the files are returned in the map
  * these words are then fetched depending upon the word selected
  * \sa loadDict()
@@ -119,7 +114,7 @@ void LoadDataWorker::on_actionLoadDict_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionLoadOCRWords_triggered()
+ * \fn LoadDataWorker::on_actionLoadOCRWords_triggered()
  * \brief Loads the OCR files
  * The path of the GEROCR and IEROCR file is fetched and the files are returned in the map which is again,
  * used as a suggestion depending upon the word selected
@@ -140,11 +135,18 @@ void LoadDataWorker::on_actionLoadOCRWords_triggered()
 }
 
 /*!
-  \fn MainWindow::on_actionLoadDomain_triggered()
+  \fn LoadDataWorker::on_actionLoadDomain_triggered()
   \brief loads the common OCR files
  The path of the PWords file is fetched and the files are returned in the map which can be used
  for the suggestion feature
  \sa loadMapPWords()
+ */
+
+/*!
+ * \fn LoadDataWorker::on_actionLoadDomain_triggered
+ * \brief Loads the common OCR files
+ * \details  The path of the PWords file is fetched and the files are returned in the map which can be used for the suggestion feature.
+ * \sa loadMapPWords()
  */
 void LoadDataWorker::on_actionLoadDomain_triggered()
 {
@@ -154,11 +156,18 @@ void LoadDataWorker::on_actionLoadDomain_triggered()
 }
 
 /*!
-  \fn MainWindow::on_actionLoadSubPS_triggered()
+  \fn LoadDataWorker::on_actionLoadSubPS_triggered()
   \brief the CPair files
     The path of the CPair files are fetched and the files are returned in the map which is returned
     to load the suggestions
   \sa loadmaptoTrie(), loadPwordsPatternstoTrie(), loadCPair()
+ */
+
+/*!
+ * \fn LoadDataWorker::on_actionLoadSubPS_triggered
+ * \brief Load CPair files
+ * \details The path of the CPair files are fetched and the files are returned in the map which is returned to load the suggestions.
+ * \sa loadmaptoTrie(), loadPwordsPatternstoTrie(), loadCPair()
  */
 void LoadDataWorker::on_actionLoadSubPS_triggered()
 {
@@ -191,7 +200,7 @@ void LoadDataWorker::on_actionLoadSubPS_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionLoadConfusions_triggered
+ * \fn LoadDataWorker::on_actionLoadConfusions_triggered
  * \brief Loads the confusions for CPair
  */
 void LoadDataWorker::on_actionLoadConfusions_triggered()

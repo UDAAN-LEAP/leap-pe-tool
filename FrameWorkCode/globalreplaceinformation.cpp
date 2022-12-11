@@ -14,6 +14,13 @@
 #include "ui_globalreplaceinformation.h"
 #include <qtablewidget.h>
 #include "crashlog.h"
+
+
+/*!
+ * \fn globalReplaceInformation::globalReplaceInformation
+ * \brief This is the constructor of this class which sets the default size of rows and columns of the tableWidget.
+ * \param parent
+ */
 globalReplaceInformation::globalReplaceInformation(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::globalReplaceInformation)
@@ -24,11 +31,11 @@ globalReplaceInformation::globalReplaceInformation(QWidget *parent) :
     ui->tableWidget->setFocusPolicy(Qt::NoFocus);
     ui->tableWidget->resizeColumnsToContents();
     ui->tableWidget->resizeRowsToContents();
- }
-
+}
 
 /*!
  * \fn globalReplaceInformation::~globalReplaceInformation()
+ * \brief Destructor
  */
 globalReplaceInformation::~globalReplaceInformation()
 {

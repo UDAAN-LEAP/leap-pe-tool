@@ -5,36 +5,32 @@
 
 /*!
  * \fn PrintWorker::PrintWorker
- * params:
- * 1)QObject-parent 2)QString->str
- *
- * brief:
- * Takes string as input and stores it as an html(inside the parent itself)
+ * \brief This is the constructor which sets a data member to the HTML text passed to it
+ * \param parent
+ * \param str
  */
 PrintWorker::PrintWorker(QObject *parent, const QString &str)
-	: QObject{parent}
+    : QObject{parent}
 {
-	this->fullHtml = QString(str);
+    this->fullHtml = QString(str);
 }
+
 /*!
- *Destructor.
+ * \brief PrintWorker::~PrintWorker
  */
 PrintWorker::~PrintWorker()
 {
-	delete doc;
+    delete doc;
 }
+
 /*!
  * \fn PrintWorker::printPDF
- * brief:
- * 1)creats the new Text Document and stores the value inside doc
- * 2) Converts the text to html format
- * 3)Prints the document to the given printer
- * 4) emit the signal when the pdf is generated.
+ * \brief It prints the PDF in a file
  */
 void PrintWorker::printPDF()
 {
-	doc = new QTextDocument(this);
-	doc->setHtml(fullHtml);
-	doc->print(printer);
-	emit finishedPrintingPDF();
+    doc = new QTextDocument(this);
+    doc->setHtml(fullHtml);
+    doc->print(printer);
+    emit finishedPrintingPDF();
 }

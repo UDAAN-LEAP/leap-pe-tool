@@ -9,13 +9,11 @@
 #include <fstream>
 #include <sstream>
 #include <QFileDialog>
-#include<string>
-#include<QFontDialog>
-#include<QFont>
-#include<QFile>
-//#include<hash_map>
+#include <string>
+#include <QFontDialog>
+#include <QFont>
+#include <QFile>
 #include <unordered_map>
-//#include <std::codecvt>
 #include <vector>
 #include <algorithm>
 #include <math.h>
@@ -25,42 +23,33 @@
 #include <QLabel>
 #include <QMouseEvent>
 #include <QDebug>
-//#include <tesseract/baseapi.h>
-//#include <leptonica/allheaders.h>
 #include <QPlainTextEdit>
-//#include "toFromslp1.h"
 #include "zoom.h"
-#include<QMessageBox>
-#include<QTime>
-#include<QPrinter>
-#include<QPrintDialog>
-//#include"staticDict.h"
-//#include "lcsqt.h"
+#include <QMessageBox>
+#include <QTime>
+#include <QPrinter>
+#include <QPrintDialog>
 #include <Project.h>
 #include <QTextBrowser>
 #include <QSet>
-#include<QDomDocument>
+#include <QDomDocument>
 #include <QFileSystemWatcher>
-#include<QGraphicsRectItem>
+#include <QGraphicsRectItem>
 #include "globalreplacedialog.h"
 #include "loadingspinner.h"
 #include "progressbardialog.h"
 #include "globalreplacepreview.h"
-#include<markRegion.h>
-#include<QOAuth2AuthorizationCodeFlow>
-
-
-#include<QCompleter>
-#include<QDirModel>
+#include <markRegion.h>
+#include <QOAuth2AuthorizationCodeFlow>
+#include <QCompleter>
+#include <QDirModel>
 #include <QStringListModel>
 #include <QModelIndex>
 #include <QAbstractItemModel>
 #include <QScrollBar>
-
 #include "customtextbrowser.h"
 #include "handlebbox.h"
 
-//#include <set>
 using namespace std;
 
 namespace Ui {
@@ -73,27 +62,34 @@ class MainWindow : public QMainWindow
 
 signals:
     void closeSignal();
+
     void gotToken(const QString& token);
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+
     ~MainWindow();
+
     Project & GetProject() {
         return mProject;
     }
+
     bool setRole(QString role);
+
     bool exitStatus() {
         return mExitStatus;
     }
+
     int getCurrentTabIndex() {
         return currentTabIndex;
     }
+
     CustomTextBrowser * getCurrentBrowser() {
         return curr_browser;
     };
 
-    void load_data();
     void reLoadTabWindow();
+
     int insertedImagesCount;
 
     QMap<QPair<QString,QString>,QString> changesCheckedInPreviewMap;
@@ -101,21 +97,16 @@ public:
 
 private slots:
     void createActions();
+
     void WordCount();
+
     void DisplayJsonDict(CustomTextBrowser *b, QString input);
 
     bool eventFilter(QObject *, QEvent *);
 
     void saveImageRegion(QPixmap, QString, QString,int,int,int);
 
- //   void displayHolder(QString,QString,QString,int,int,int,int,int);
-
-
-    //void on_actionOpen_triggered();
-
     void AddRecentProjects();
-
-    //void actionRecent_Project_clicked();
 
     void on_actionSave_triggered();
 
@@ -128,10 +119,10 @@ private slots:
     void menuSelection(QAction* action);
 
     void translate_replace(QAction*);
-    void clipboard_paste(QAction*);
-    void keyPressEvent(QKeyEvent*);
 
-//    void SaveFile();
+    void clipboard_paste(QAction*);
+
+    void keyPressEvent(QKeyEvent*);
 
     void on_actionLoadGDocPage_triggered();
 
@@ -151,43 +142,7 @@ private slots:
 
     void on_actionSugg_triggered();
 
-    //void on_actionCreateBest2OCR_triggered();
-
     void on_actionToSlp1_triggered();
-
-    //void on_actionCreateSuggestionLog_triggered();
-
-    //void on_actionCreateSuggestionLogNearestPriority_triggered();
-
-    //void on_actionErrorDetectionRep_triggered();
-
-    //void on_actionErrorDetectWithoutAdaptation_triggered();
-
-    //void on_actionCPair_triggered();
-
-    //void on_actionToSlp1_2_triggered();
-
-    //void on_actionToDev_triggered();
-
-    //void on_actionExtractDev_triggered();
-
-    //void on_actionPrimarySecOCRPair_triggered();
-
-    //void on_actionCPairIEROcrVsCorrect_triggered();
-
-    //void on_actionEditDistRep_triggered();
-
-    //void on_actionConfusionFreqHist_triggered();
-
-    //void on_actionCPairGEROcrVsCorrect_triggered();
-
-    //void on_actionCPairGEROcrVsCorrectSeparate_triggered();
-
-    //void on_actionFilterOutGT50EditDisPairs_triggered();
-
-    //void on_actionPrepareFeatures_triggered();
-
-    //void on_actionErrorDetectionRepUniq_triggered();
 
     void on_actionSanskrit_triggered();
 
@@ -219,8 +174,6 @@ private slots:
 
     void file_click(const QModelIndex & indx);
 
-    //void LoadDocument(QFile * file, QString ext, QString name);
-
     void LoadImageFromFile(QFile * file);
 
     void CustomContextMenuTriggered(const QPoint &p);
@@ -235,8 +188,6 @@ private slots:
 
     void tabchanged(int index);
 
-    //void on_actionCommit_triggered();
-
     void on_actionTurn_In_triggered();
 
     void on_actionPush_triggered();
@@ -249,12 +200,6 @@ private slots:
 
     void on_actionAccuracyLog_triggered();
 
-    //void on_actionView_File_Hierarchy_triggered();
-
-    //void on_actionFetch_triggered();
-
-    //void on_actionCompare_Verifier_triggered();
-
     void on_compareCorrectorOutput_clicked();
 
     void on_viewComments_clicked();
@@ -265,11 +210,7 @@ private slots:
 
     void on_actionSymbols_triggered();
 
-    //void on_actionCompare_Verifier_triggered();
-
     void on_actionInsert_Tab_Space_triggered();
-
-    //void on_actionLineSpace_triggered();
 
     void on_actionInsert_Horizontal_Line_triggered();
 
@@ -291,25 +232,17 @@ private slots:
 
     void on_compareVerifierOutput_clicked();
 
-    void on_sanButton_toggled(bool checked);
-
-    void on_hinButton_toggled(bool checked);
-
     void on_actionLineSpace_triggered();
 
     void on_actionUndo_triggered();
 
     void on_actionRedo_triggered();
 
-    void on_actionNew_Project_triggered();
-
     void on_actionInsert_Table_2_triggered();
 
     void closeEvent (QCloseEvent *event);
 
     QJsonObject getAverageAccuracies(QJsonObject mainObj);
-
-    bool sendEmail(QString message);
 
     void on_actionInsert_Columnleft_triggered();
 
@@ -354,9 +287,9 @@ private slots:
     void addCurrentlyOpenFileToEditedFilesLog();
 
     void deleteEditedFilesLog();
+
     void RecentPageInfo();
 
-   // void highlight_dict(QTextBrowser *b);
     bool isStringInFile(QString file_path, QString searchString);
 
     void dumpStringToFile(QString file_path, QString string);
@@ -364,8 +297,6 @@ private slots:
     void highlight(CustomTextBrowser *b , QString input);
 
     QMap <QString, QString> getGlobalReplacementMapFromChecklistDialog(QVector <QString> replacedWords, QVector<int> *replaceInAllPages);
-
-    //void on_textEdit_dict_copyAvailable(bool b);
 
     void on_actionas_PDF_triggered();
 
@@ -407,11 +338,6 @@ private slots:
 
     QMap<QString,QStringList> getBeforeAndAfterWords(QString fPath,QMap <QString, QString> globalReplacementMap);
 
-    //QMap<QString,QStringList> getBeforeGlobalReplaceSentences(QString fPath,QMap <QString, QString> globalReplacementMap);
-
-    //QMap<QString,QStringList> getAfterGlobalReplaceSentences(QString fPath,QMap <QString, QString> globalReplacementMap);
-
-
     void on_actionUpload_triggered();
 
     void on_justify_triggered();
@@ -451,8 +377,6 @@ private slots:
     void print(QPrinter *printer);
 
     void on_actionChange_Role_triggered();
-
-    //void filterHtml(QFile *f = nullptr);
 
     void bboxInsertion(QFile *f = nullptr);
 
@@ -501,19 +425,9 @@ public slots:
 
     void readOutputFromPdfPrint();
 
-    void insertCompletion(const QString &completion);
-
-    void focusInEvent(QFocusEvent *e) ;
-
-//	void loadHtmlInDoc(QFile *);
-
 	void blockCountChanged(int);
 
-//	void storeBboxes(QFile *);
-
-//	void insertBboxes(QFile *);
     void authenticate();
-    void preprocessing();
 
 private:
     bool mExitStatus = false;
@@ -551,8 +465,6 @@ private:
 
     CustomTextBrowser *TextBrowser;
     void createMenu();
-    QAbstractItemModel *modelFromFile(const QString& fileName);
-    QString textUnderCursor();
 
 	QCompleter *c = nullptr;
 	QTextDocument *doc;

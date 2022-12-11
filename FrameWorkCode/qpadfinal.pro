@@ -6,24 +6,17 @@
 
 QT += core gui svg widgets
 QT += printsupport
-QT +=xml
-QT +=network networkauth
+QT += xml
+QT += network networkauth
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = qpadfinal
 TEMPLATE = app
 
-#LIBS += -L"/home/rohit/ExpFinal/2OCRCorrect"
-LIBS += -L"/usr/include/tesseract"
-LIBS += -L"/usr/include/leptonica"
 LIBS += -L"/usr/include/pugixml"
-#LIBS += -L"/usr/lib" -llept
-#        -ltesseract
-LIBS += -ltesseract -llept -lpugixml
-#LIBS += -L"/home/nilesh/OCRCorrection/boost_1_61_0/stage/lib" -lboost_serialization
+LIBS += -lpugixml
 LIBS += -L"/usr/include/git2"
-
 LIBS += -lgit2
 
 include(qpadfinal.pri)
@@ -41,14 +34,11 @@ HEADERS +=
 
 SOURCES +=
 
-DISTFILES += \
-    UserJson.json
-
 QMAKE_CXXFLAGS += -w
-#Windows icon
+
+# Windows icon
 #win32:RC_FILE += qpadfinal.rc
 
-CONFIG += c++11
 INCLUDEPATH += ../include
 INCLUDEPATH += $$PWD/../
 DEPENDPATH += $$PWD/../

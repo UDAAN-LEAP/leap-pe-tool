@@ -22,13 +22,7 @@
 #include <QFile>
 #include "eddis.h"
 #include "slpNPatternDict.h"
-//#include <boost/serialization/map.hpp>
-//#include <boost/serialization/vector.hpp>
-//#include <boost/serialization/serialization.hpp>
-//#include <boost/serialization/unordered_map.hpp>
-//#include <boost/archive/text_iarchive.hpp>
-//#include <boost/archive/text_oarchive.hpp>
-//#include "toFromslp1.h"
+
 using namespace std;
 bool HinFlag = 0, SanFlag = 1;
 

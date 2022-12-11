@@ -13,6 +13,13 @@
 #include <QStandardItemModel>
 #include "crashlog.h"
 
+
+/*!
+ * \fn globalReplacePreview::globalReplacePreview
+ * \brief This is the constructor of this class which sets the default values of the widgets.
+ * \param parent
+ * \param model
+ */
 globalReplacePreview::globalReplacePreview(QWidget *parent,QStandardItemModel *model) :
     QDialog(parent),
     ui(new Ui::globalReplacePreview)
@@ -32,8 +39,8 @@ globalReplacePreview::globalReplacePreview(QWidget *parent,QStandardItemModel *m
 
 /*!
  * \fn globalReplacePreview::~globalReplacePreview()
+ * \brief Destructor
  */
-
 globalReplacePreview::~globalReplacePreview()
 {
     delete ui;

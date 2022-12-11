@@ -3,6 +3,7 @@
  */
 #include "mainwindow.h"
 #include "dashboard.h"
+#include "qobjectdefs.h"
 #include "ui_dashboard.h"
 #include "ui_globalreplacedialog.h"
 #include "ui_mainwindow.h"
@@ -15,8 +16,6 @@
 #include "QProgressBar"
 #include <QPrinter>
 #include <QPrintPreviewDialog>
-#include <tesseract/baseapi.h>
-#include <leptonica/allheaders.h>
 #include "DiffView.h"
 #include <QtConcurrent/QtConcurrent>
 #include "diff_match_patch.h"
@@ -36,7 +35,6 @@
 #include <regex>
 #include "crashlog.h"
 #include "ProjectHierarchyWindow.h"
-#include "3rdParty/RapidXML/rapidxml.hpp"
 #include <QDomDocument>
 #include <QFormLayout>
 #include <QDialogButtonBox>
@@ -50,12 +48,9 @@
 #include <QSet>
 #include <QAction>
 #include "ProjectWizard.h"
-#include <SimpleMail/SimpleMail>
-//# include <QTask>
 #include <QDebug>
-#include<QtCore>
-#include<QtXml>
-//#include <QPainter>
+#include <QtCore>
+#include <QtXml>
 #include <QJsonObject>
 #include <QTextDocumentFragment>
 #include <sstream>
@@ -89,6 +84,8 @@
 #include "printworker.h"
 #include <QRadioButton>
 #include <equationeditor.h>
+#include "threadingpush.h">
+#include <QThread>
 
 //gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
@@ -147,7 +144,13 @@ int grdFlag = 0;
 QMap<QString, QString> globallyReplacedWords;
 
 QList<QString> filesChangedUsingGlobalReplace;
-//Constructor
+
+
+/*!
+ * \fn MainWindow::MainWindow
+ * \brief This is the constructor which creates the GUI and does all the prerequisites which are needed to be done
+ * \param parent
+ */
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -251,15 +254,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     font.setWeight(14);
     font.setPointSize(12);
     ui->textEdit->setFont(font);
-
     ui->sanButton->setChecked(true);
 
-
-//    ui->tabWidget_2->removeTab(0);
-//    ui->tabWidget_2->removeTab(0);
-//    bool b = connect(ui->tabWidget_2, SIGNAL(tabCloseRequested(int)), this, SLOT(closetab(int)));
-//    b = connect(ui->tabWidget_2, SIGNAL(currentChanged(int)), this, SLOT(tabchanged(int)));
-//    b = connect(&watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(directoryChanged(const QString&)));
     connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(CustomContextMenuTriggered(const QPoint&)));
     connect(ui->treeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(file_click(const QModelIndex&)));
 
@@ -274,20 +270,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     qApp->installEventFilter(this);
     AddRecentProjects();
 
-	// Add custom fonts
-	QFontDatabase::addApplicationFont(":/Fonts/fonts/Meera/Meera-Regular.ttf");
-	QFontDatabase::addApplicationFont(":/Fonts/fonts/Shobhika/Shobhika-Regular.otf");
-	QFontDatabase::addApplicationFont(":/Fonts/fonts/Shobhika/Shobhika-Bold.otf");
-	QFontDatabase::addApplicationFont(":/Fonts/fonts/Mandali/Mandali Regular.otf");
-	QFontDatabase::addApplicationFont(":/Fonts/fonts/Latha/latha.ttf");
-	QFontDatabase::addApplicationFont(":/Fonts/fonts/Nirmala/Nirmala Regular.ttf");
-	QFontDatabase::addApplicationFont(":/Fonts/fonts/Chandas/chandas.ttf");
+    // Add custom fonts
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Meera/Meera-Regular.ttf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Shobhika/Shobhika-Regular.otf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Shobhika/Shobhika-Bold.otf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Mandali/Mandali Regular.otf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Latha/latha.ttf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Nirmala/Nirmala Regular.ttf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Chandas/chandas.ttf");
 
     if (!isVerifier)
     {
         ui->actionHighlight->setEnabled(false);
     }
-    //hiding options
+
+    // Hiding options
 
     ui->actionLoadDict->setVisible(false);
     ui->actionLoadOCRWords->setVisible(false);
@@ -369,8 +366,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionSymbols->setEnabled(false);
     ui->actionZoom_In->setEnabled(false);
     ui->actionZoom_Out->setEnabled(false);
-
-
 }
 
 /*!
@@ -493,7 +488,10 @@ bool MainWindow::setRole(QString role)
     return true;
 }
 
-//destructor
+/*!
+ * \fn MainWindow::~MainWindow
+ * \brief Destructor of mainwindow
+ */
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -536,10 +534,18 @@ void writeJsonFile(QString filepath, QJsonObject mainObj)
     jsonFile.close();
 }
 
+/*!
+ * \fn MainWindow::authenticate
+ * \brief It starts the authentication process of the user.
+ */
 void MainWindow::authenticate() {
     this->google->grant();
 }
 
+/*!
+ * \fn MainWindow::googleAuth
+ * \brief Opens a browser where user has to sign in through his/her google account to authenticate
+ */
 void MainWindow::googleAuth()
 {
      google = new QOAuth2AuthorizationCodeFlow;
@@ -632,23 +638,16 @@ int secs;
 int gSeconds;
 
 /*!
-* \fn  MainWindow::SaveTimeLog()
-* \brief This function saves the time of changes commit into the log json file.
-*
-* \sa writeJsonFile()
-*/
+ * \fn  MainWindow::SaveTimeLog()
+ * \brief This function saves the time of changes commit into the log json file.
+ *
+ * \sa writeJsonFile()
+ */
 void MainWindow::SaveTimeLog()
 {
     QJsonObject mainObj;
     QJsonObject page;
 
-//    for (auto i = timeLog.begin(); i!=timeLog.end(); i++ )
-//    {
-//        page["directory"] = i->first;
-//        page["seconds"] = i->second;
-//        page["Date/Time"]=time;
-//        mainObj.insert(i->first, page);
-//    }
     int nMilliseconds = myTimer.elapsed();
     int sec = nMilliseconds / 1000;
     //! Iterating over newTimeLog and and assinging time details into the page and finally inserting page into json object.
@@ -663,10 +662,9 @@ void MainWindow::SaveTimeLog()
 }
 
 /*!
-* \fn    MainWindow::DisplayTimeLog()
-* \brief This function displays the time in statusbar and gets update on every right click.
-*
-*/
+ * \fn    MainWindow::DisplayTimeLog()
+ * \brief This function displays the time in statusbar and gets update on every right click.
+ */
 void MainWindow::DisplayTimeLog()
 {
     QString currentVersion = mProject.get_version();     //getting project version
@@ -717,26 +715,21 @@ void DisplayError(QString error)
 }
 
 vector<string> vGPage, vIPage, vCPage; // for calculating WER
-
 vector<string> vBest;
-
-/*!
-\fn mousePressEvent()
-\param event
-\brief Checks if the right click is pressed on the mouse and loads suggestion changes
-Custom mouse event is created which loads a suggestion and translation menu for the string on which the current string
-highlight is present. These are loaded with the help of dictionary files which are loaded with the help of loaddata
-function. Works with the help of a flag.
-\sa print5NearestEntries(), print2OCRSugg(), loadWConfusionsNindex1(), editDist(), make_pair()
-*/
 
 bool RightclickFlag = 0;
 string selectedStr ="";
 
-
-//!GIVE EVENT TO TEXT BROWSER INSTEAD OF MAINWINDOW
+/*!
+ * \fn MainWindow::mousePressEvent
+ * \param ev
+ * \brief Checks if the right click is pressed on the mouse and loads suggestion changes
+ * \details Custom mouse event is created which loads a suggestion and translation menu for the string on which the current string highlight is present. These are loaded with the help of dictionary files which are loaded with the help of loaddata function. Works with the help of a flag.
+ * \sa print5NearestEntries(), print2OCRSugg(), loadWConfusionsNindex1(), editDist(), make_pair()
+ */
 void MainWindow::mousePressEvent(QMouseEvent *ev)
 {
+//!GIVE EVENT TO TEXT BROWSER INSTEAD OF MAINWINDOW
     if(!curr_browser)
         return;
     slpNPatternDict slnp;
@@ -757,10 +750,8 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
     int px = point.x();
     int py = point.y();
 
-//  qDebug()<<px<<","<<py<<"\n";
 
     if(!(px>=topLeftx && px<=botRightx &&  py>=150 /*&& py<(botRighty)*/)) return;
-    //
 
     if (curr_browser)
     {
@@ -1135,6 +1126,12 @@ void MainWindow::translate_replace(QAction* action)
         cursor.endEditBlock();
     }
 }
+
+/*!
+ * \fn MainWindow::clipboard_paste
+ * \brief Inserts the text according to the action chosen
+ * \param action
+ */
 void MainWindow::clipboard_paste(QAction* action)
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -1236,7 +1233,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         return;
     }
 
-	currentZoomLevel = 100;
+    currentZoomLevel = 100;
 
     QFile xml(ProjFile);
     QFileInfo finfo(xml);
@@ -1872,15 +1869,18 @@ void MainWindow::SaveFile_GUI_Postprocessing()
 
             }
         }
-		// Formatting the output using CSS <style> tag
-		// Add style tag just before head or add styling properties in the pre-made style tag
-		int inputDataIndex = -1;
-		if ((inputDataIndex = output.indexOf("</style>")) != -1) {
-			output.insert(inputDataIndex - 1, "\nbody { width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; }");
-		} else if ((inputDataIndex = output.indexOf("</head>")) != -1) {
-			output.insert(inputDataIndex - 1, "<style>\nbody { width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; }\n</style>");
-		}
+        // Formatting the output using CSS <style> tag
+        // Add style tag just before head or add styling properties in the pre-made style tag
+        int inputDataIndex = -1;
+        if ((inputDataIndex = output.indexOf("</style>")) != -1) {
+            output.insert(inputDataIndex - 1, "\nbody { width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; }");
+        } else if ((inputDataIndex = output.indexOf("</head>")) != -1) {
+            output.insert(inputDataIndex - 1, "<style>\nbody { width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; }\n</style>");
+        }
 
+        //removing empty p tags inserted by Qt.
+//        QRegularExpression rex_empty("<p style=\"-qt-paragraph-type:empty;(.*?)</p>",QRegularExpression::DotMatchesEverythingOption);
+//        output = output.remove(rex_empty);
         out << output;
         sFile.flush();      //!Flushes any buffered data waiting to be written in the \a sFile
         sFile.close();      //!Closing the file
@@ -1890,7 +1890,7 @@ void MainWindow::SaveFile_GUI_Postprocessing()
         //Inserting back bbox info
 //        bboxInsertion(&sFile);
 //		insertBboxes(&sFile);
-		handleBbox->insertBboxes(&sFile);
+        handleBbox->insertBboxes(&sFile);
     }
 
     //! Converting html output into plain text.
@@ -1981,6 +1981,7 @@ void MainWindow::SaveFile_GUI_Postprocessing()
  * \fn MainWindow::on_actionSave_triggered()
  * \brief This function will save any changes made in the current file.
  *
+ * \details
  * In this function we first do the preprocessing needed for the save to happen.
  *
  * Then we run the function SaveFile_Backend() which will perform the actual saving and commiting of files
@@ -2055,7 +2056,10 @@ void MainWindow::stopSpinning()
     spinner->deleteLater();
 }
 
-
+/*!
+ * \fn MainWindow::GlobalReplace
+ * \brief This function runs the comparison check on the previously saved file and current document for getting the changed words for global replace
+ */
 void MainWindow::GlobalReplace()
 {
     edit_Distance ed;
@@ -2065,8 +2069,6 @@ void MainWindow::GlobalReplace()
     runGlobalReplace(currentDirAbsolutePath, changedWords);
     ConvertSlpDevFlag =0;
 }
-
-
 
 /*!
  * \fn MainWindow::on_actionSave_As_triggered()
@@ -2197,13 +2199,13 @@ void MainWindow::on_actionSpell_Check_triggered()
     }
 }
 
+int isProjectOpen = 0;
 /*!
  * \fn MainWindow::on_actionLoad_Next_Page_triggered
  * \brief Sets the browser window to display the next page
  *
  * \sa on_actionSave_triggered() ,get_version(), SaveTimeLog(), GetPageNumber(), LoadDocument()
  */
-int isProjectOpen = 0;
 void MainWindow::on_actionLoad_Next_Page_triggered()
 {
     /*Description
@@ -2215,24 +2217,9 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
      * 4. Page number extracted from the tab name is incremented and set as the new tab name
      * 5. Loads the file with the incremented page number
      * */
-//    qDebug()<<"page = "<<currentTabPageName;
-//    //! Checking if the file is saved else saves the file
+
+//! Checking if the file is saved else saves the file
     if(curr_browser) {
-//        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {    //fetching the text from the key(tab name) and comparing it to current browser text
-
-//            QMessageBox currBox;
-//            currBox.setWindowTitle("Save?");
-//            currBox.setIcon(QMessageBox::Question);
-//            currBox.setInformativeText("Do you want to save this file?");
-//            QPushButton *okButton = currBox.addButton(QMessageBox::StandardButton::Ok);
-//            QPushButton *noButton = currBox.addButton(QMessageBox::StandardButton::No);
-//            currBox.exec();
-
-
-//            if (currBox.clickedButton() == okButton)
-//                on_actionSave_triggered();
-//        }
-
         string localFilename = mFilename.toUtf8().constData();
 
         //! Extract page number from the localFilename and checks if the incremented page exists
@@ -2268,9 +2255,7 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
                     if(i==rowCount-1) i=-1;
                     index = model->index(i+1, 0, parentIndex);
                     treeItemLabel = index.data(Qt::DisplayRole).toString();
-                    //currentTabPageName = treeItemLabel;
                     file_click(index);
-//                    LoadDocument(file, ext, currentTabPageName);
                     break;
                 }
              }
@@ -2295,25 +2280,9 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
      * 4. Decrement the page number extracted from tab name and sets it as new tab name
      * 5. Loads the file with the decremented page number
      * */
-//    qDebug()<<"page "<<currentTabPageName;
-//    //! Check if the file is saved or not
+
+//! Check if the file is saved or not
     if(curr_browser) {
-//        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
-
-//            QMessageBox currBox2;
-//            currBox2.setWindowTitle("Save?");
-//            currBox2.setIcon(QMessageBox::Question);
-//            currBox2.setInformativeText("Do you want to save " + currentTabPageName + " file?");
-//            QPushButton *okButton2 = currBox2.addButton(QMessageBox::StandardButton::Ok);
-//            QPushButton *noButton2 = currBox2.addButton(QMessageBox::StandardButton::No);
-//            currBox2.exec();
-
-
-//            if (currBox2.clickedButton() == okButton2)
-//                on_actionSave_triggered();
-//        }
-//    }
-//qDebug()<<"page "<<currentTabPageName;
         string localFilename = mFilename.toUtf8().constData();
         //! Extract page number from the localFilename
         string no = "";
@@ -2346,9 +2315,7 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
                     if(i==0) i = rowCount;
                     index = model->index(i-1, 0, parentIndex);
                     treeItemLabel = index.data(Qt::DisplayRole).toString();
-                    //currentTabPageName = treeItemLabel;
                     file_click(index);
-//                    LoadDocument(file, ext, currentTabPageName);
                     break;
                 }
              }
@@ -2456,43 +2423,9 @@ void MainWindow::on_actionLoadGDocPage_triggered()
     }
 }
 
-/*!
- * \fn    MainWindow::on_actionLoadData_triggered()
- * \brief Loads the dictionary files only once
- *        This function is only called once per project to load the dictionary file of the project,
- *        dictionary files can be used to work on suggestions.
- */
+
 
 QString mFilename1, loadStr, loadStr1;
-
-
-void MainWindow::load_data(){
-    ui->actionLoadData->setDisabled(true);
-    ui->actionLoadData->setDisabled(true);
-    QString initialText = ui->lineEdit->text();
-    ui->lineEdit->setText("Loading Data...");
-    QString  localmFilename1 = mFilename;
-    string localmFilename1n = localmFilename1.toUtf8().constData();
-    localmFilename1n = localmFilename1n.substr(0, localmFilename1n.find("page"));
-    localmFilename1 = QString::fromStdString(localmFilename1n);
-
-    on_actionLoadDict_triggered();       //sanskrit dictionary files are called
-    loadStr += "\n";
-
-    //!GEROCR IEROCR PWords and CPair files are loaded and reflected in terminal
-    on_actionLoadOCRWords_triggered();
-    on_actionLoadDomain_triggered();
-    on_actionLoadSubPS_triggered();
-    on_actionLoadConfusions_triggered();
-    QString filepath = mProject.GetDir().absolutePath() + "/Dicts/synonyms.csv" ;
-    slpNPatternDict slnp;
-    slnp.loadFileCSV(synonym, synrows, filepath.toUtf8().constData());
-    ui->lineEdit->setText(initialText);
-    LoadDataFlag = 0;
-    qDebug() << "done loading ....";
-    emit closeSignal();
-
-}
 
 /*!
  * \fn    MainWindow::WordCount
@@ -2502,26 +2435,29 @@ void MainWindow::load_data(){
  */
 void MainWindow::WordCount()
 {
-
     if(curr_browser){
-    QString extText = curr_browser->toPlainText();
-  //!Removes these symbol while counting
-   extText.remove("?");
-   extText.remove("|");
-   extText.remove("`");
-   extText.remove("[");
-   extText.remove("]");
-   extText.remove("'");
-   extText.remove(",");
+        QString extText = curr_browser->toPlainText();
+        //!Removes these symbol while counting
+        extText.remove("?");
+        extText.remove("|");
+        extText.remove("`");
+        extText.remove("[");
+        extText.remove("]");
+        extText.remove("'");
+        extText.remove(",");
 
-   int wordcnt = extText.split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
-    QString toshow = QString::number(wordcnt)+" Words";
-    ui->lineEdit_3->setText(toshow);
-
-
-
+        int wordcnt = extText.split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
+        QString toshow = QString::number(wordcnt)+" Words";
+        ui->lineEdit_3->setText(toshow);
+    }
 }
-}
+
+/*!
+ * \fn    MainWindow::on_actionLoadData_triggered()
+ * \brief Loads the dictionary files only once
+ *        This function is only called once per project to load the dictionary file of the project,
+ *        dictionary files can be used to work on suggestions.
+ */
 void MainWindow::on_actionLoadData_triggered()
 {
     if (mProject.isProjectOpen())
@@ -2744,1022 +2680,6 @@ void MainWindow::on_actionFind_and_Replace_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionCreateBest2OCR_triggered
- * \brief Creates a new text file named Best2ocrRep which is appended to its original file name.
- * The new file contains the best strings of two OCR by their their edit distance
- *
- * \note vGBook and vIBook contain the loaded words from both OCR
-void MainWindow::on_actionCreateBest2OCR_triggered()
-{
-    if (curr_browser)
-    {
-        //! vGBook and vIBook contain the loaded words from both OCR
-        int vGsz = vGBook.size(), vIsz = vIBook.size();
-        int win = vGsz - vIsz;      //calculate the difference
-        if (win < 0) win = -1 * win;   //convert to positive value if it is negative
-        win = std::max(win, 5);
-
-        int mineEdDis = 1000;
-
-        //! search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
-        string localFilename = mFilename.toUtf8().constData();
-        size_t loc = localFilename.find("Inds");
-        localFilename = localFilename.substr(0, loc);
-        localFilename = localFilename + "Best2ocrRep.txt";
-        cout << "writing to" << localFilename << " please wait" << endl;
-
-        std::ofstream best2(localFilename);
-        for (int t = 0; t < vIsz; t++)
-        {
-            mineEdDis = 1000;
-            string BestString1;
-            string s1 = vIBook[t];
-
-            for (int t1 = std::max(t - win, 0); t1 < min(t + win, vGsz); t1++)
-            {
-                int EdDis = editDist(vGBook[t1], s1);
-                if (EdDis < mineEdDis) { mineEdDis = EdDis; BestString1 = vGBook[t1]; }
-                if (vGBook[t1] == s1) { BestString1 = s1; break; }
-            }
-            if (s1 == BestString1)
-            {
-                vBest.push_back(s1); best2 << toDev(s1) << " ";
-            }
-            else
-            {
-                string s22 = bestIG(s1, BestString1, Dict); vBest.push_back(s22); best2 << toDev(s22) << " ";
-            }
-        }
-        best2 << endl;
-    }
-}
-*/
-/*!
- * \fn MainWindow::on_actionCreateSuggestionLog_triggered
- * \brief The application crashes when CreateSuggestionLog is clicked under reports
- * \bug
-void MainWindow::on_actionCreateSuggestionLog_triggered()
-{
-    map<size_t, size_t> mapCorrect, mapinCorrect, mapTyping, mapSugg1, mapSugg2, mapSugg3, mapSugg4, mapSugg5, mapSugg6, mapSugg7, mapSugg8, mapSugg9, mapSugg10;
-
-    //! Load foders in strC and strI
-    QString strI = gDirTwoLevelUp + "/Inds/"+ gCurrentPageName ;
-    strI.replace(".html",".txt");
-    QString strC = gDirTwoLevelUp + "/CorrectorOutput/"+ gCurrentPageName ;
-
-    //! load text files one by one
-    //! Load page1 of Inds
-    size_t page_no = 1;
-    QString filereport;
-
-    while (1)
-    {
-        string nos = "0123456789";
-        string localFilenameI = strI.toUtf8().constData();
-        size_t loc = localFilenameI.find(".txt");
-        string s = localFilenameI.substr(loc - 1, 1); // page-123.txt s = 3
-        string no;
-
-        vector<string> wrong, right;
-        //! if s in nos, s = 2  no = 23, s = 1 no = 123, s = - break
-        while (nos.find(s) != string::npos)
-        {
-            no = s + no; loc--; s = localFilenameI.substr(loc - 1, 1);
-        }
-
-        localFilenameI.replace(loc, no.size(), to_string(page_no));//to_string(stoi(no) + 1)
-
-        //! Load page1 of C
-        string localFilenameC = strC.toUtf8().constData();
-        loc = localFilenameC.find(".txt");
-        s = localFilenameC.substr(loc - 1, 1); // page-123.txt s = 3
-        no = "";
-
-        //! if s in nos, s = 2  no = 23, s = 1 no = 123, s = - break
-        while (nos.find(s) != string::npos)
-        {
-            no = s + no; loc--; s = localFilenameC.substr(loc - 1, 1);
-        }
-
-        localFilenameC.replace(loc, no.size(), to_string(page_no));//to_string(stoi(no) + 1)
-
-        //! load fileI in vecpI and
-        vector<string> vecpI, vecpC;
-        map<string, bool> isAscii;
-        std::ifstream sIpage(localFilenameI);
-
-        if (!(sIpage.is_open())) break;   // break the while loop for page_no
-        string localstr;
-        while (sIpage >> localstr) vecpI.push_back(toslp1(localstr)); sIpage.close();
-        std::ifstream sCpage(localFilenameC);
-        while (sCpage >> localstr)
-        {
-            if (hasM40PerAsci(localstr))
-            {
-                isAscii[toslp1(localstr)] = 1;
-            }
-            vecpC.push_back(toslp1(localstr));
-        }
-
-        sIpage.close();
-
-        //! if 1st word is wrong generate suggestions
-        int vGsz = vecpC.size(), vIsz = vecpI.size();
-        if (vGsz > vIsz) mapTyping[page_no] = vGsz - vIsz;
-
-        int win = vGsz - vIsz;
-        if (win < 0) win = -1 * win;
-        win = std::max(win, 5);
-
-        //! search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
-        for (int t = 0; t < vIsz; t++)
-        {
-            size_t minedit = 1000;
-            string s1 = vecpI[t];
-            string sC;
-            for (int t1 = std::max(t - win, 0); t1 < min(t + win, vGsz); t1++)
-            {
-                string sCt1 = vecpC[t1];
-                size_t mineditIC = editDist(s1, sCt1);
-                if (mineditIC < minedit) { minedit = mineditIC; sC = sCt1; }
-                //if (sCt1 == s1) {WER++;
-                                break; }
-            }
-
-            // now we have IndsWord in s1 and correct word in sC
-            if ((sC == (s1)))
-            {
-                mapCorrect[page_no]++; //cout<< " in correct words ke liye if" << endl;
-            }
-            else if (!isAscii[sC])
-            {
-                wrong.push_back(s1);
-                right.push_back(sC);
-                vector<string>  Words1 = print5NearestEntries(TGBook, s1);
-
-                if (Words1.size() == 0) Words1.push_back("");
-                string nearestCOnfconfirmingSuggvec;
-                vector<string> vec = Words1;
-
-                int min = 100;
-                for (size_t t = 0; t < vec.size(); t++)
-                {
-                    vector<string> wordConfusions; vector<int> wCindex;
-                    int minFactor = loadWConfusionsNindex1(s1, vec[t], ConfPmap, wordConfusions, wCindex);
-                    wordConfusions.clear(); wCindex.clear();
-                    if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvec = vec[t]; }
-                }
-
-                if (nearestCOnfconfirmingSuggvec == (sC))
-                {
-                    mapSugg1[page_no]++;
-                }
-                if ((Words1[0] == (sC)))
-                {
-                    mapSugg2[page_no]++;
-                }
-                //else
-                {
-                    vector<string> Alligned = print5NearestEntries(TGBookP, s1);
-                    if (Alligned.size() == 0) Alligned.push_back("");
-
-                    string PairSugg = "";
-                    if (Alligned.size() > 0) PairSugg = print2OCRSugg(s1, Alligned[0], ConfPmap, Dict);
-
-                    if (PairSugg == sC)
-                    {
-                        mapSugg3[page_no]++;
-                    }
-                    //else
-                    {
-                        vector<string>  Words = print1OCRNearestEntries(toslp1(s1), vIBook);
-                        if (Words.size() == 0) Words.push_back("");
-                        if (Words[0] == (sC))
-                        {
-                            mapSugg4[page_no]++;
-                        }
-                        //else
-                        {
-                            string samassugg = SamasBreakLRCorrect(toslp1(s1), Dict, PWords, TPWords, TPWordsP);
-                            if (samassugg == sC) { mapSugg5[page_no]++; }
-                            //else
-                            {
-                                vector<string> PWords1 = print5NearestEntries(TPWords, s1);
-                                if (PWords1.size() == 0) PWords1.push_back("");
-                                if (PWords1[0] == (sC))
-                                {
-                                    mapSugg6[page_no]++;
-                                }
-                                //else
-                                {
-                                    string nearestCOnfconfirmingSuggvecFont;
-                                    int min = 100;
-                                    for (size_t t = 0; t < vec.size(); t++)
-                                    {
-                                        vector<string> wordConfusions; vector<int> wCindex;
-                                        int minFactor = loadWConfusionsNindex1(s1, vec[t], ConfPmapFont, wordConfusions, wCindex);
-                                        wordConfusions.clear(); wCindex.clear();
-                                        if (minFactor < min) { min = minFactor; nearestCOnfconfirmingSuggvecFont = vec[t]; }
-                                    }
-                                    if (nearestCOnfconfirmingSuggvecFont == sC)
-                                    {
-                                        mapSugg7[page_no]++;
-                                    }
-                                    //else
-                                    {
-                                        vector<string> Wordsdict;
-                                        {
-                                            Wordsdict = print5NearestEntries(TDict, s1);
-                                        }
-                                        if ((Wordsdict.size() > 0) && (Wordsdict[0] == sC))
-                                        {
-                                            mapSugg8[page_no]++;
-                                        }
-                                        //else
-                                        {
-                                            string sugg9 = generatePossibilitesNsuggest(s1, TopConfusions, TopConfusionsMask, Dict, SRules);
-                                            if (sugg9 == sC)
-                                            {
-                                                mapSugg9[page_no]++;
-                                            }
-                                            //else
-                                            {
-                                                if (LSTM[s1] == sC)
-                                                {
-                                                    mapSugg10[page_no]++;
-                                                    cout << s1 << " lstm " << sC << endl;
-                                                }
-                                                else mapTyping[page_no]++;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                mapTyping[page_no]++;
-            }
-        }// for 1st page ends
-
-        mapinCorrect[page_no] = vIsz - mapCorrect[page_no];
-
-        //!Loading PWords
-        cout << "page_no = " << page_no << endl;
-        loadMap(localFilenameC, PWords, "PWords");
-        map<string, int> PWordspage;
-        loadMap(localFilenameC, PWordspage, "PWordspage");
-        loadmaptoTrie(TPWords, PWordspage);
-
-        loadConfusionsFont(wrong, right, ConfPmap);
-        loadConfusionsFont(wrong, right, ConfPmapFont);
-        TopConfusions.clear(); TopConfusionsMask.clear();
-        loadTopConfusions(ConfPmap, TopConfusions, TopConfusionsMask);
-
-        page_no++;
-        filereport = QString::fromStdString(localFilenameC);
-    } //  while(1) ends
-
-    page_no--;
-    filereport.replace(("CorrectorOutput/page-" + QString::number(page_no) + ".txt"), "SuggReport1.txt");
-    std::ofstream rep(filereport.toUtf8().constData());
-
-    rep << "y0 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapinCorrect[i] << " "; rep << "];" << endl;
-    rep << "y1 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapCorrect[i] << " "; rep << "];" << endl;
-    rep << "y2 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapTyping[i] << " "; rep << "];" << endl;
-    rep << "y3 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg1[i] << " "; rep << "];" << endl;
-    rep << "y4 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg2[i] << " "; rep << "];" << endl;
-    rep << "y5 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg3[i] << " "; rep << "];" << endl;
-    rep << "y6 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg4[i] << " "; rep << "];" << endl;
-    rep << "y7 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg5[i] << " "; rep << "];" << endl;
-    rep << "y8 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg6[i] << " "; rep << "];" << endl;
-    rep << "y9 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg7[i] << " "; rep << "];" << endl;
-    rep << "y10 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg8[i] << " "; rep << "];" << endl;
-    rep << "y11 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg9[i] << " "; rep << "];" << endl;
-    rep << "y12 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg10[i] << " "; rep << "];" << endl;
-    rep << "x = 1:" << page_no << ";" << endl << "plot(x,y0,x,y1,x,y2,x,y3,x,y4,x,y5,x,y6,x,y7,x,y8,x,y9,x,y10,x,y11);" << endl;
-    rep << "legend(\'IncorrectWords\',\'CorrectWords\', \'#TypingCorrections\', \'#CorrectSugg1\',\'#CorrectSugg2\',\'#CorrectSugg3\',\'#CorrectSugg4\',\'#CorrectSugg5\',\'#CorrectSugg6\',\'#CorrectSugg7\',\'#CorrectSugg8\',\'#CorrectSugg9\' )" << endl;
-    rep << "TotalSuggestions =" << "sum(y3+y4+y5+y6+y7+y8+y9+y10+y11)" << endl;
-    rep << "TotalSuggestionsWithLSTM =" << "sum(y3+y4+y5+y6+y7+y8+y9+y10+y11+y12)" << endl;
-}
-*/
-
-/*!
- * \fn MainWindow::on_actionCreateSuggestionLogNearestPriority_triggered
- * \badcode Application crashes when CreateSuggestionLogNearestPriority is clicked under reports
- * \bug
-void MainWindow::on_actionCreateSuggestionLogNearestPriority_triggered()
-{
-    map<size_t, size_t> mapCorrect, mapinCorrect, mapTyping, mapSugg1, mapSugg2, mapSugg3, mapSugg4, mapSugg5, mapSugg6, mapSugg7, mapSugg8, mapSugg9, mapSugg10;
-
-    //! Load foders in strC and strI
-    QString strI = gDirTwoLevelUp + "/Inds/"+ gCurrentPageName ;
-    strI.replace(".html",".txt");
-    QString strC = gDirTwoLevelUp + "/CorrectorOutput/"+ gCurrentPageName ;
-
-    //! load text files one by one
-    //! Load page1 of Inds
-    size_t page_no = 1;
-    QString filereport;
-
-    while (1)
-    {
-        string nos = "0123456789";
-        string localFilenameI = strI.toUtf8().constData();
-        size_t loc = localFilenameI.find(".txt");
-        if(loc == string::npos)
-            loc = localFilenameI.find(".html");
-        string s = localFilenameI.substr(loc - 1, 1); // page-123.txt s = 3
-        string no;
-
-        //! if s in nos, s = 2  no = 23, s = 1 no = 123, s = - break
-        while (nos.find(s) != string::npos)
-        {
-            no = s + no; loc--; s = localFilenameI.substr(loc - 1, 1);
-        }
-
-        localFilenameI.replace(loc, no.size(), to_string(page_no));
-
-        //! Load page1 of C
-        string localFilenameC = strC.toUtf8().constData();
-        loc = localFilenameC.find(".txt");
-        if(loc == string::npos)
-            loc = localFilenameC.find(".html");
-        s = localFilenameC.substr(loc - 1, 1);   // page-123.txt s = 3
-        no = "";
-
-        //! if s in nos, s = 2  no = 23, s = 1 no = 123, s = - break
-        while (nos.find(s) != string::npos)
-        {
-            no = s + no; loc--; s = localFilenameC.substr(loc - 1, 1);
-        }
-
-        localFilenameC.replace(loc, no.size(), to_string(page_no));//to_string(stoi(no) + 1)
-
-        //! load fileI in vecpI and
-        vector<string> vecpI, vecpC;
-        std::ifstream sIpage(localFilenameI);
-        if (!(sIpage.is_open())) break; // break the while loop for page_no
-
-        string localstr;
-        while (sIpage >> localstr) vecpI.push_back(toslp1(localstr));
-        sIpage.close();
-        std::ifstream sCpage(localFilenameC);
-        while (sCpage >> localstr) vecpC.push_back(toslp1(localstr));
-        sIpage.close();
-
-        //! if 1st word is wrong generate suggestions
-        int vGsz = vecpC.size(), vIsz = vecpI.size();
-        if (vGsz > vIsz) mapTyping[page_no] = vGsz - vIsz;
-        int win = vGsz - vIsz;
-        if (win < 0) win = -1 * win;
-        win = std::max(win, 5);
-
-        //! search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
-        for (int t = 0; t < vIsz; t++)
-        {
-            size_t minedit = 1000;
-            string s1 = vecpI[t];
-            string sC;
-            for (int t1 = std::max(t - win, 0); t1 < min(t + win, vGsz); t1++)
-            {
-                string sCt1 = vecpC[t1];
-                size_t mineditIC = editDist(s1, sCt1);
-                if (mineditIC < minedit)
-                {
-                    minedit = mineditIC; sC = sCt1;
-                }
-                if (sCt1 == s1)
-                {//WER++;
-                    break;
-                }
-            }
-
-            //! now we have IndsWord in s1 and correct word in sC
-            if ((sC == (s1)))
-            {
-                mapCorrect[page_no]++;
-            }
-            else
-            {
-                vector<string>  Words1 = print5NearestEntries(TGBook, s1);
-                vector<string> Alligned = print5NearestEntries(TGBookP, s1);
-                vector<string> PWords1 = print5NearestEntries(TPWords, s1);
-                string PairSugg = print2OCRSugg(s1, Alligned[0], ConfPmap, Dict);
-                vector<string>  Words = print1OCRNearestEntries(toslp1(s1), vIBook);
-
-                //! find nearest confirming to OCR Sugg from Book
-                string nearestCOnfconfirmingSuggvec;
-                vector<string> vec = Words1;
-                int min = 100;
-                for (size_t t = 0; t < vec.size(); t++)
-                {
-                    vector<string> wordConfusions; vector<int> wCindex;
-                    int minFactor = loadWConfusionsNindex1(s1, vec[t], ConfPmap, wordConfusions, wCindex);
-                    wordConfusions.clear(); wCindex.clear();
-                    if (minFactor < min)
-                    {
-                        min = minFactor; nearestCOnfconfirmingSuggvec = vec[t];
-                    }
-                }
-
-                //! find nearest confirming to OCR Sugg from PWords
-                string nearestCOnfconfirmingSuggvec1;
-                vector<string> vec1 = PWords1;
-                min = 100;
-                for (size_t t = 0; t < vec1.size(); t++)
-                {
-                    vector<string> wordConfusions; vector<int> wCindex;
-                    int minFactor = loadWConfusionsNindex1(s1, vec1[t], ConfPmap, wordConfusions, wCindex);
-                    wordConfusions.clear(); wCindex.clear();
-                    if (minFactor < min)
-                    {
-                        min = minFactor; nearestCOnfconfirmingSuggvec1 = vec1[t];
-                    }
-                }
-
-                vector<pair<int, string>> vecSugg, vecSugg1;
-                map<string, int> mapSugg;
-                string CSugg = CPair[toslp1(s1)];
-                if (CSugg.size() > 0) mapSugg[toslp1(CSugg)]++;
-                if (Words.size() > 0)  mapSugg[toslp1(Words[0])]++;
-                if (Words1.size() > 0) mapSugg[toslp1(nearestCOnfconfirmingSuggvec)]++;
-                if (PWords1.size() > 0) mapSugg[toslp1(nearestCOnfconfirmingSuggvec1)]++;
-                if (PairSugg.size() > 0) mapSugg[toslp1(PairSugg)]++;
-                mapSugg[SamasBreakLRCorrect(toslp1(s1), Dict, PWords, TPWords, TPWordsP)]++;
-
-                map<string, int> mapsugg1;
-                for (size_t ksugg1 = 0; ksugg1 < 5; ksugg1++)
-                {
-                    if (Words.size() > ksugg1)  mapsugg1[toslp1(Words[ksugg1])]++;
-                    if (Words1.size() > ksugg1) mapsugg1[toslp1(Words1[ksugg1])]++;
-                    if (PWords1.size() > ksugg1) mapsugg1[toslp1(PWords1[ksugg1])]++;
-                }
-
-
-                for (map<string, int>::const_iterator eptr = mapSugg.begin(); eptr != mapSugg.end(); eptr++)
-                {
-                    vecSugg.push_back(make_pair(editDist(toslp1(eptr->first), toslp1(s1)), eptr->first));
-                }
-
-                for (map<string, int>::const_iterator eptr = mapsugg1.begin(); eptr != mapsugg1.end(); eptr++)
-                {
-                    vecSugg1.push_back(make_pair(editDist(toslp1(eptr->first), toslp1(s1)), eptr->first));
-                }
-
-                sort(vecSugg.begin(), vecSugg.end()); sort(vecSugg1.begin(), vecSugg1.end());
-
-                vecSugg.insert(vecSugg.end(), vecSugg1.begin(), vecSugg1.end());
-
-                if ((vecSugg.size() > 0) && (vecSugg[0].second == sC)) mapSugg1[page_no]++;
-                else if ((vecSugg.size() > 1) && (vecSugg[1].second == sC)) mapSugg2[page_no]++;
-                else if ((vecSugg.size() > 2) && (vecSugg[2].second == sC)) mapSugg3[page_no]++;
-                else if ((vecSugg.size() > 3) && (vecSugg[3].second == sC)) mapSugg4[page_no]++;
-                else if ((vecSugg.size() > 4) && (vecSugg[4].second == sC)) mapSugg5[page_no]++;
-                else if ((vecSugg.size() > 5) && (vecSugg[5].second == sC)) mapSugg6[page_no]++;
-                else mapTyping[page_no]++;
-
-            }
-        }// for 1st page ends
-
-        mapinCorrect[page_no] = vGsz - mapCorrect[page_no];
-        loadMap(localFilenameC, PWords, "PWords");
-        map<string, int> PWordspage;
-        loadMap(localFilenameC, PWordspage, "PWordspage");
-        loadmaptoTrie(TPWords, PWordspage);
-
-        page_no++;
-        filereport = QString::fromStdString(localFilenameC);
-    } //  while(1) ends
-
-    page_no--;
-    filereport.replace(("CorrectorOutput/page-" + QString::number(page_no) + ".txt"), "SuggReportNearestPriority.txt");
-    std::ofstream rep(filereport.toUtf8().constData());
-
-    rep << "y0 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapinCorrect[i] << " "; rep << "];" << endl;
-    rep << "y1 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapCorrect[i] << " "; rep << "];" << endl;
-    rep << "y2 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapTyping[i] << " "; rep << "];" << endl;
-    rep << "y3 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg1[i] << " "; rep << "];" << endl;
-    rep << "y4 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg2[i] << " "; rep << "];" << endl;
-    rep << "y5 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg3[i] << " "; rep << "];" << endl;
-    rep << "y6 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg4[i] << " "; rep << "];" << endl;
-    rep << "y7 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg5[i] << " "; rep << "];" << endl;
-    rep << "y8 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg6[i] << " "; rep << "];" << endl;
-    rep << "x = 1:" << page_no << ";" << endl << "plot(x,y0,x,y1,x,y2,x,y3,x,y4,x,y5,x,y6,x,y7,x,y8);" << endl;
-    rep << "legend(\'IncorrectWords\',\'CorrectWords\', \'#TypingCorrections\', \'#UniqueCorrectSugg1\',\'#UniqueCorrectSugg2\',\'#UniqueCorrectSugg3\',\'#UniqueCorrectSugg4\',\'#UniqueCorrectSugg5\',\'#UniqueCorrectSugg6\' )" << endl;
-}
-*/
-
-/*!
- * \fn MainWindow::on_actionErrorDetectionRep_triggered
- * \brief
- * \brief Detects if there's an error is loaded file or not
- *  Checks correct marked words if they are correct or incorrect and after mapping it adds them in PWords file.
- *  Additionally, it creates an error detection report.
- * \sa searchS1inGVec(), toslp1()
-void MainWindow::on_actionErrorDetectionRep_triggered()
-{
-    //! Load foders in strC and strI
-    QString strI = mFilename;
-    QString strC = strI, strG = strI, strIF = strI, strCF = strI;
-
-    strI.replace("CorrectorOutput", "Inds"); strC.replace("Inds", "CorrectorOutput");
-    strG.replace("CorrectorOutput/page-1.txt", "GEROCR"); strG.replace("Inds/page-1.txt", "GEROCR");
-    strIF.replace("CorrectorOutput/page-1.txt", "IEROCR"); strIF.replace("Inds/page-1.txt", "IEROCR");
-    strCF.replace("CorrectorOutput/page-1.txt", "CorrectorOutput.txt"); strCF.replace("Inds/page-1.txt", "CorrectorOutput.txt");//Dict CorrectorOutput.txt for lower upper baseline resp
-
-    //! load text files one by one
-    string locstr;
-    vector<string> iocr, gocr;
-    std::ifstream sG(strG.toUtf8().constData());
-
-    while (sG >> locstr) gocr.push_back(toslp1(locstr)); sG.close();
-    std::ifstream sInd(strIF.toUtf8().constData());
-
-    while (sInd >> locstr) iocr.push_back(toslp1(locstr)); sInd.close();
-    cout << strG.toUtf8().constData() << " " << strIF.toUtf8().constData() << endl;
-    cout << gocr.size() << " " << iocr.size() << endl;
-
-    size_t winig = iocr.size() - gocr.size();
-    if (iocr.size() < gocr.size()) winig = -1 * winig;
-    size_t iocrdone = 0;     // will be used in each page of IEROCR
-
-    map<string, int> mapCF;    // F for Full Book
-    loadMap(strCF.toUtf8().constData(), mapCF, "CorrectorOutput.txt");
-    cout << mapCF.size() << endl;
-
-    //!Load page1 of Inds
-    size_t page_no = 1;
-    QString filereport;
-
-    map<size_t, size_t> mapCorrect, mapInCorrect, mapCorrectMarkedCorrect, mapInCorrectMarkedCorrect;
-
-    while (1)
-    {
-        string nos = "0123456789";
-        string localFilenameI = strI.toUtf8().constData();
-        size_t loc = localFilenameI.find(".txt");
-        if(loc == string::npos)
-            loc = localFilenameI.find(".html");
-        string s = localFilenameI.substr(loc - 1, 1); // page-123.txt s = 3
-        string no;
-
-        //! if s in nos, s = 2  no = 23, s = 1 no = 123, s = - break
-        while (nos.find(s) != string::npos)
-        {
-            no = s + no; loc--; s = localFilenameI.substr(loc - 1, 1);
-        }
-
-        localFilenameI.replace(loc, no.size(), to_string(page_no));//to_string(stoi(no) + 1)
-
-        //!Load page1 of C
-        string localFilenameC = strC.toUtf8().constData();
-        loc = localFilenameC.find(".txt");
-        if(loc == string::npos)
-            loc = localFilenameC.find(".html");
-        s = localFilenameC.substr(loc - 1, 1); // page-123.txt s = 3
-        no = "";
-
-        //! if s in nos, s = 2  no = 23, s = 1 no = 123, s = - break
-        while (nos.find(s) != string::npos)
-        {
-            no = s + no; loc--; s = localFilenameC.substr(loc - 1, 1);
-        }
-
-        localFilenameC.replace(loc, no.size(), to_string(page_no));//to_string(stoi(no) + 1)
-
-        //! load fileI in vecpI and
-        vector<string> vecpI, vecpC;
-        std::ifstream sIpage(localFilenameI);
-        if (!(sIpage.is_open())) break; // break the while loop for page_no
-        string localstr;
-
-        while (sIpage >> localstr) vecpI.push_back(toslp1(localstr)); sIpage.close();
-        std::ifstream sCpage(localFilenameC);
-
-        while (sCpage >> localstr) vecpC.push_back(toslp1(localstr)); sIpage.close();
-
-        //! if 1st word is correct and detected correct mark 1 else mark 0
-        int vGsz = vecpC.size(), vIsz = vecpI.size();
-        int win = vGsz - vIsz;
-        if (win < 0) win = -1 * win;
-        win = std::max(win, 5);
-
-        //! search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
-        for (int t = 0; t < vIsz; t++)
-        {
-            size_t minedit = 1000;
-            string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
-            string sC;
-
-            for (int t1 = std::max(t - win, 0); t1 < min(t + win, vGsz); t1++)
-            {
-                string sCt1 = vecpC[t1];
-                size_t mineditIC = editDist(s1, sCt1);
-                if (mineditIC < minedit)
-                {
-                    minedit = mineditIC; sC = sCt1;
-                }
-                if (sCt1 == s1)
-                {//WER++;
-                    break;
-                }
-            }
-
-            //! now we have IndsWord in s1 and correct word in sC
-            if ((sC == (s1)))
-            {
-                mapCorrect[page_no]++;
-                if (searchS1inGVec(s1, iocrdone, gocr, winig)) mapCorrectMarkedCorrect[page_no]++;
-            }
-            else
-            {
-                mapInCorrect[page_no]++;  if (searchS1inGVec(s1, iocrdone, gocr, winig)) mapInCorrectMarkedCorrect[page_no]++;
-            }
-            iocrdone++;    //(PWords[s1] >0) searchS1inGVec(s1,iocrdone,gocr,winig) mapCF[s1]>0|| Dict[s1]>0
-        }
-
-        page_no++;
-        filereport = QString::fromStdString(localFilenameC);
-    } //  while(1) ends
-
-    page_no--;
-    filereport.replace(("CorrectorOutput/page-" + QString::number(page_no) + ".txt"), "ErrorDetect.txt");
-
-    std::ofstream rep(filereport.toUtf8().constData());
-    rep << "y0A = ["; for (size_t i = 1; i <= page_no; i++) rep << mapCorrectMarkedCorrect[i] << " "; rep << "];" << endl;
-    rep << "y1A = ["; for (size_t i = 1; i <= page_no; i++) rep << mapInCorrectMarkedCorrect[i] << " "; rep << "];" << endl;
-    rep << "y2A = ["; for (size_t i = 1; i <= page_no; i++) rep << mapCorrect[i] << " "; rep << "];" << endl;
-    rep << "y3A = ["; for (size_t i = 1; i <= page_no; i++) rep << mapInCorrect[i] << " "; rep << "];" << endl;
-
-    rep << "x = 1:" << page_no << ";" << endl << "plot(x,y2A,x,y3A,x,y0A,x,y1A);" << endl;
-    rep << "legend(\'CorrectA\',\'InCorrectA\',\'CorrectMarkedcorrectA\', \'InCorrectMarkedCorrectA\')" << endl;
-
-}
-*/
-
-/*!
- * \fn MainWindow::on_actionErrorDetectWithoutAdaptation_triggered
- * \brief
- * \sa toslp1(),
- * \brief Detects error in loaded file
- *  It checks correct marked words are correct or incorrect and after mapping it add them in PWords file.
- * \sa toslp1()
-void MainWindow::on_actionErrorDetectWithoutAdaptation_triggered()
-{
-    //! Load foders in strC and strI
-    QString strI = mFilename;
-    QString strC = strI;
-    strI.replace("CorrectorOutput", "Inds"); strC.replace("Inds", "CorrectorOutput");   // load text files one by one
-
-    //! Load page1 of Inds
-    size_t page_no = 1;
-    QString filereport;
-    map<size_t, size_t> mapCorrect, mapInCorrect, mapCorrectMarkedCorrect, mapInCorrectMarkedCorrect;
-    while (1)
-    {
-        string nos = "0123456789";
-        string localFilenameI = strI.toUtf8().constData();
-        size_t loc = localFilenameI.find(".txt");
-        if(loc == string::npos)
-            loc = localFilenameI.find(".html");
-        string s = localFilenameI.substr(loc - 1, 1);
-        string no;
-
-        //! if s in nos, s = 2  no = 23, s = 1 no = 123, s = - break
-        while (nos.find(s) != string::npos)
-        {
-            no = s + no; loc--; s = localFilenameI.substr(loc - 1, 1);
-        }
-
-        localFilenameI.replace(loc, no.size(), to_string(page_no));
-
-        //!Load page1 of C
-        string localFilenameC = strC.toUtf8().constData();
-        loc = localFilenameC.find(".txt");
-        if(loc == string::npos)
-            loc = localFilenameC.find(".html");
-
-        s = localFilenameC.substr(loc - 1, 1);     // page-123.txt s = 3
-        no = "";
-
-        //! if s in nos, s = 2  no = 23, s = 1 no = 123, s = - break
-        while (nos.find(s) != string::npos)
-        {
-            no = s + no; loc--; s = localFilenameC.substr(loc - 1, 1);
-        }
-
-        localFilenameC.replace(loc, no.size(), to_string(page_no));        // NOW localFilenameI and localFilenameC has page1 of both
-
-        //! load fileI in vecpI and
-        vector<string> vecpI, vecpC;
-        std::ifstream sIpage(localFilenameI);
-        if (!(sIpage.is_open())) break; // break the while loop for page_no
-
-        string localstr;
-        while (sIpage >> localstr) vecpI.push_back(toslp1(localstr)); sIpage.close();
-        std::ifstream sCpage(localFilenameC);
-        while (sCpage >> localstr) vecpC.push_back(toslp1(localstr)); sIpage.close();
-
-        //! if 1st word is correct and detected correct mark 1 else mark 0
-        int vGsz = vecpC.size(), vIsz = vecpI.size();
-        int win = vGsz - vIsz;
-        if (win < 0) win = -1 * win;
-        win = std::max(win, 5);
-
-        //! search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
-        for (int t = 0; t < vIsz; t++)
-        {
-            size_t minedit = 1000;
-            string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
-            string sC;
-            for (int t1 = std::max(t - win, 0); t1 < min(t + win, vGsz); t1++)
-            {
-                string sCt1 = vecpC[t1];
-                size_t mineditIC = editDist(s1, sCt1);
-                if (mineditIC < minedit)
-                {
-                    minedit = mineditIC; sC = sCt1;
-                }
-                if (sCt1 == s1)
-                {//WER++;
-                    break;
-                }
-            }
-
-            //! now we have IndsWord in s1 and correct word in sC
-            if ((sC == (s1)))
-            {
-                mapCorrect[page_no]++;
-                if ((GBook[s1] > 0) || (PWords[s1] > 0)) mapCorrectMarkedCorrect[page_no]++;
-            }
-            else
-            {
-                mapInCorrect[page_no]++; if ((GBook[s1] > 0) || (PWords[s1] > 0)) mapInCorrectMarkedCorrect[page_no]++;
-            }
-        }
-
-        page_no++;
-        filereport = QString::fromStdString(localFilenameC);
-    }
-
-    page_no--;
-    filereport.replace(("CorrectorOutput/page-" + QString::number(page_no) + ".txt"), "ErrorDetectWOAdapt");
-    std::ofstream rep(filereport.toUtf8().constData());
-
-    rep << "y0 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapCorrectMarkedCorrect[i] << " "; rep << "];" << endl;
-    rep << "y1 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapInCorrectMarkedCorrect[i] << " "; rep << "];" << endl;
-    rep << "y2 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapCorrect[i] << " "; rep << "];" << endl;
-    rep << "y3 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapInCorrect[i] << " "; rep << "];" << endl;
-    rep << "x = 1:" << page_no << ";" << endl << "plot(x,y2,x,y3,x,y0,x,y1);" << endl;
-    rep << "legend(\'Correct\',\'InCorrect\',\'CorrectMarkedcorrect\', \'InCorrectMarkedCorrect\')" << endl;
-}
-*/
-/*!
- * \fn MainWindow::on_actionErrorDetectionRepUniq_triggered()
- * \brief Creates Report in CorrectorOutput named SuggRepUniq.txt of all unique suggestions for current file incorrect words
- * \sa hasM40PerAsci(), loadWConfusionsNindex1(), loadMap(), loadMaptoTrie(), loadConfusionsFont(), loadTopConfusions()
-void MainWindow::on_actionErrorDetectionRepUniq_triggered()
-{
-    map<size_t, size_t> mapCorrect, mapinCorrect, mapTyping, mapSugg1, mapSugg2, mapSugg3, mapSugg4, mapSugg5, mapSugg6, mapSugg7, mapSugg8, mapSugg9, mapSugg10;
-
-    QString strI = mFilename;
-    QString strC = strI;
-    strI.replace("CorrectorOutput", "Inds"); strC.replace("Inds", "CorrectorOutput");
-    size_t page_no = 1;
-    QString filereport;
-
-    while (1)
-    {
-        string nos = "0123456789";
-        string localFilenameI = strI.toUtf8().constData();
-        size_t loc = localFilenameI.find(".txt");
-        if(loc == string::npos)
-            loc = localFilenameI.find(".html");
-
-        string s = localFilenameI.substr(loc - 1, 1);
-        string no;
-
-        vector<string> wrong, right;
-        while (nos.find(s) != string::npos)
-        {
-            no = s + no; loc--; s = localFilenameI.substr(loc - 1, 1);
-        }
-
-        localFilenameI.replace(loc, no.size(), to_string(page_no));
-        string localFilenameC = strC.toUtf8().constData();
-        loc = localFilenameC.find(".txt");
-        if(loc == string::npos)
-            loc = localFilenameC.find(".html");
-
-        s = localFilenameC.substr(loc - 1, 1);
-        no = "";
-
-        while (nos.find(s) != string::npos)
-        {
-            no = s + no; loc--; s = localFilenameC.substr(loc - 1, 1);
-        }
-
-        localFilenameC.replace(loc, no.size(), to_string(page_no));
-
-        vector<string> vecpI, vecpC;
-        map<string, bool> isAscii;
-        std::ifstream sIpage(localFilenameI);
-        if (!(sIpage.is_open())) break;
-        string localstr;
-
-        while (sIpage >> localstr) vecpI.push_back(toslp1(localstr));
-        sIpage.close();
-
-        std::ifstream sCpage(localFilenameC);
-        while (sCpage >> localstr) { if (hasM40PerAsci(localstr)) { isAscii[toslp1(localstr)] = 1; }  vecpC.push_back(toslp1(localstr)); } sIpage.close();
-        int vGsz = vecpC.size(), vIsz = vecpI.size();
-        if (vGsz > vIsz) mapTyping[page_no] = vGsz - vIsz;
-        int win = vGsz - vIsz;
-        if (win < 0) win = -1 * win;
-        win = std::max(win, 5);
-
-        for (int t = 0; t < vIsz; t++)
-        {
-            size_t minedit = 1000;
-            string s1 = vecpI[t];
-            string sC;
-            for (int t1 = std::max(t - win, 0); t1 < min(t + win, vGsz); t1++)
-            {
-                string sCt1 = vecpC[t1];
-                size_t mineditIC = editDist(s1, sCt1);
-                if (mineditIC < minedit) { minedit = mineditIC; sC = sCt1; }
-                if (sCt1 == s1) { break; }
-            }
-
-            if ((sC == (s1)))
-            {
-                mapCorrect[page_no]++;
-            }
-            else if (!isAscii[sC])
-            {
-                wrong.push_back(s1); right.push_back(sC);
-                vector<string>  Words1 = print5NearestEntries(TGBook, s1);
-                if (Words1.size() == 0) Words1.push_back("");
-                string nearestCOnfconfirmingSuggvec;
-                vector<string> vec = Words1;
-                int min = 100;
-                for (size_t t = 0; t < vec.size(); t++)
-                {
-                    vector<string> wordConfusions; vector<int> wCindex;
-                    int minFactor = loadWConfusionsNindex1(s1, vec[t], ConfPmap, wordConfusions, wCindex);
-                    wordConfusions.clear(); wCindex.clear();
-                    if (minFactor < min)
-                    {
-                        min = minFactor; nearestCOnfconfirmingSuggvec = vec[t];
-                    }
-                }
-
-                if (nearestCOnfconfirmingSuggvec == (sC))
-                {
-                    mapSugg1[page_no]++;
-                }
-                else if ((Words1[0] == (sC)))
-                {
-                    mapSugg2[page_no]++;
-                }
-                else
-                {
-                    vector<string> Alligned = print5NearestEntries(TGBookP, s1); //6
-                    if (Alligned.size() == 0) Alligned.push_back("");
-
-                    string PairSugg = "";
-                    if (Alligned.size() > 0) PairSugg = print2OCRSugg(s1, Alligned[0], ConfPmap, Dict);//3
-                    if (PairSugg == sC)
-                    {
-                        mapSugg3[page_no]++;
-                    }
-                    else
-                    {
-                        vector<string>  Words = print1OCRNearestEntries(toslp1(s1), vIBook); // 4 primary doc based
-                        if (Words.size() == 0) Words.push_back("");
-                        if (Words[0] == (sC))
-                        {
-                            mapSugg4[page_no]++;
-                        }
-                        else
-                        {
-                            string samassugg = SamasBreakLRCorrect(toslp1(s1), Dict, PWords, TPWords, TPWordsP); // 5
-                            if (samassugg == sC)
-                            {
-                                mapSugg5[page_no]++;
-                            }
-                            else
-                            {
-                                vector<string> PWords1 = print5NearestEntries(TPWords, s1); // 6
-                                if (PWords1.size() == 0) PWords1.push_back("");
-                                if (PWords1[0] == (sC))
-                                {
-                                    mapSugg6[page_no]++;
-                                }
-                                else
-                                {
-                                    string nearestCOnfconfirmingSuggvecFont;
-                                    int min = 100;
-                                    for (size_t t = 0; t < vec.size(); t++)
-                                    {
-                                        vector<string> wordConfusions; vector<int> wCindex;
-                                        int minFactor = loadWConfusionsNindex1(s1, vec[t], ConfPmapFont, wordConfusions, wCindex);
-                                        wordConfusions.clear(); wCindex.clear();
-                                        if (minFactor < min)
-                                        {
-                                            min = minFactor; nearestCOnfconfirmingSuggvecFont = vec[t];
-                                        }
-                                    }
-                                    if (nearestCOnfconfirmingSuggvecFont == sC)
-                                    {
-                                        mapSugg7[page_no]++;
-                                    }
-                                    else
-                                    {
-                                        vector<string> Wordsdict; {Wordsdict = print5NearestEntries(TDict, s1);
-                                        }
-                                        if ((Wordsdict.size() > 0) && (Wordsdict[0] == sC))
-                                        {
-                                            mapSugg8[page_no]++;
-                                        }
-                                        else
-                                        {
-                                            string sugg9 = generatePossibilitesNsuggest(s1, TopConfusions, TopConfusionsMask, Dict, SRules);
-                                            if (sugg9 == sC)
-                                            {
-                                                mapSugg9[page_no]++;
-                                            }
-                                            else
-                                            {
-                                                if (LSTM[s1] == sC)
-                                                {
-                                                    mapSugg10[page_no]++;
-                                                    cout << s1 << " lstm " << sC << endl;
-                                                }
-                                                else mapTyping[page_no]++;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                mapTyping[page_no]++;
-            } // else
-        }// for 1st page ends
-
-        mapinCorrect[page_no] = vIsz - mapCorrect[page_no];
-
-        //Loading PWords:-
-        cout << "page_no = " << page_no << endl;
-        loadMap(localFilenameC, PWords, "PWords");
-
-        map<string, int> PWordspage;
-        loadMap(localFilenameC, PWordspage, "PWordspage");
-        loadmaptoTrie(TPWords, PWordspage);
-        loadConfusionsFont(wrong, right, ConfPmap);
-        loadConfusionsFont(wrong, right, ConfPmapFont);
-
-        TopConfusions.clear(); TopConfusionsMask.clear();
-        loadTopConfusions(ConfPmap, TopConfusions, TopConfusionsMask);
-        page_no++;
-
-        filereport = QString::fromStdString(localFilenameC);
-    } //  while(1) ends
-
-    page_no--;
-    filereport.replace(("CorrectorOutput/page-" + QString::number(page_no) + ".txt"), "SuggReportUniq1.txt");
-    std::ofstream rep(filereport.toUtf8().constData());
-
-    rep << "y0 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapinCorrect[i] << " "; rep << "];" << endl;
-    rep << "y1 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapCorrect[i] << " "; rep << "];" << endl;
-    rep << "y2 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapTyping[i] << " "; rep << "];" << endl;
-    rep << "y3 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg1[i] << " "; rep << "];" << endl;
-    rep << "y4 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg2[i] << " "; rep << "];" << endl;
-    rep << "y5 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg3[i] << " "; rep << "];" << endl;
-    rep << "y6 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg4[i] << " "; rep << "];" << endl;
-    rep << "y7 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg5[i] << " "; rep << "];" << endl;
-    rep << "y8 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg6[i] << " "; rep << "];" << endl;
-    rep << "y9 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg7[i] << " "; rep << "];" << endl;
-    rep << "y10 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg8[i] << " "; rep << "];" << endl;
-    rep << "y11 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg9[i] << " "; rep << "];" << endl;
-    rep << "y12 = ["; for (size_t i = 1; i <= page_no; i++) rep << mapSugg10[i] << " "; rep << "];" << endl;
-    rep << "x = 1:" << page_no << ";" << endl << "plot(x,y0,x,y1,x,y2,x,y3,x,y4,x,y5,x,y6,x,y7,x,y8,x,y9,x,y10,x,y11);" << endl;
-    rep << "legend(\'IncorrectWords\',\'CorrectWords\', \'#TypingCorrections\', \'#CorrectSugg1\',\'#CorrectSugg2\',\'#CorrectSugg3\',\'#CorrectSugg4\',\'#CorrectSugg5\',\'#CorrectSugg6\',\'#CorrectSugg7\',\'#CorrectSugg8\',\'#CorrectSugg9\' )" << endl;
-    rep << "TotalSuggestions =" << "sum(y3+y4+y5+y6+y7+y8+y9+y10+y11)" << endl;
-    rep << "TotalSuggestionsWithLSTM =" << "sum(y3+y4+y5+y6+y7+y8+y9+y10+y11+y12)" << endl;
-}
-*/
-
-/*!
  * \fn MainWindow::on_actionAccuracyLog_triggered()
  * \brief Logs various accuracies to AccuracyLog.csv
  * Stores the following values in the csv:
@@ -3931,159 +2851,6 @@ void MainWindow::on_actionViewAverageAccuracies_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionCPair_triggered()
- * \brief generates a wrong to right pair
- * A pair of 1 wrong word to 1 right word
- * \sa slpNPatternDict::generatePairs()
-void MainWindow::on_actionCPair_triggered()
-{
-    QString strI = mFilename;
-    QString strC = strI;
-    strI.replace("CorrectorOutput", "Inds"); strC.replace("Inds", "CorrectorOutput");
-    size_t page_no = 1;
-    string localFilenameN = strI.toUtf8().constData();
-    size_t loc1 = localFilenameN.find("Inds");
-    string s1 = localFilenameN.substr(0, loc1);
-    std::ofstream repx(s1 + "Report/CPair");
-
-    while (1)
-    {
-        cout << page_no << endl;
-        string nos = "0123456789";
-        string localFilenameI = strI.toUtf8().constData();
-        size_t loc = localFilenameI.find(".txt");
-        if(loc == string::npos)
-            loc = localFilenameI.find(".html");
-        string s = localFilenameI.substr(loc - 1, 1);
-        string no;
-
-        while (nos.find(s) != string::npos)
-        {
-            no = s + no; loc--; s = localFilenameI.substr(loc - 1, 1);
-            localFilenameI.replace(loc, no.size(), to_string(page_no));
-            string localFilenameC = strC.toUtf8().constData();
-            loc = localFilenameC.find(".txt");
-            if(loc == string::npos)
-                loc = localFilenameC.find(".html");
-            s = localFilenameC.substr(loc - 1, 1);
-            no = "";
-
-            //! if s in nos, s = 2  no = 23, s = 1 no = 123, s = - break
-            while (nos.find(s) != string::npos)
-            {
-                no = s + no; loc--; s = localFilenameC.substr(loc - 1, 1);
-            }
-
-            localFilenameC.replace(loc, no.size(), to_string(page_no));
-
-            //! NOW localFilenameI and localFilenameC has page1 of both
-            std::ifstream sIpage(localFilenameI);
-            if (!(sIpage.is_open())) break;
-            std::ifstream sCpage(localFilenameI);
-            if (!(sCpage.is_open())) break;
-            vector<string> wrong1, right1;
-            generatePairs(wrong1, right1, localFilenameI, localFilenameC);
-            size_t sz = wrong1.size();
-            if (sz < right1.size()) sz = right1.size();
-            for (size_t t = 0; t < sz; t++)
-            {
-                if (right1[t] != "") repx << wrong1[t] << "\t" << right1[t] << endl;//
-            }
-
-            page_no++;
-        }
-    }
-}
-*/
-
-/*!
- * \fn MainWindow::on_actionPrimarySecOCRPair_triggered()
- * \brief Compares primary ocr to secondary ocr with the help of file inputs
- * and generates pairs with the help of generatePairsSpaced which generates
- * words with a space in betwen.
- * \sa slpNPatternDict::generatePairsSpaced()
-void MainWindow::on_actionPrimarySecOCRPair_triggered()
-{
-    QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
-
-    if (!file1.isEmpty())
-    {
-        QFile sFile(file1);
-        if (sFile.open(QFile::ReadOnly | QFile::Text))
-        {
-            string localFilenameN = file1.toUtf8().constData();
-            int loc = localFilenameN.find("IEROCR");
-            string localFilenameG = localFilenameN.substr(0, loc) + "GEROCR";
-
-            std::ofstream op(localFilenameN + "ocrPairs");
-            vector<string> wrong1, right1;
-            generatePairsSpaced(wrong1, right1, localFilenameN, localFilenameG);    //Files are compared with words
-
-            size_t sz = wrong1.size();
-            if (sz < right1.size()) sz = right1.size();
-
-            for (size_t t = 0; t < sz; t++)
-            {
-                if (right1[t] != "") op << wrong1[t] << "\t" << right1[t] << endl;
-            }
-        }
-    }
-}
-*/
-
-/*!
- * \fn MainWindow::on_actionCPairIEROcrVsCorrect_triggered()
- * \brief CPairs based upon Inds are generated with the help of
- * IEROCR files and these words are generated with the help of generatePairsIEROCR()
- * \sa slpNPatternDict::generatePairsIEROCR
-void MainWindow::on_actionCPairIEROcrVsCorrect_triggered()
-{
-    QString strI1 = mFilename;    // Load foders in strC and strI
-
-    string strInew = strI1.toUtf8().constData();
-    size_t locI = strInew.find("Inds");
-    string strI = strInew.substr(0, locI) + "IEROCR";
-    string strC = strInew.substr(0, locI) + "Correct";
-
-    //! load text files one by one
-    string localFilenameN = strI1.toUtf8().constData();
-    size_t loc1 = localFilenameN.find("Inds");
-    string s1 = localFilenameN.substr(0, loc1);
-    string sRepx = s1 + "Reports/inputx";
-    string sRepy = s1 + "Reports/inputy";
-
-    vector<string> wrong1, right1;
-    generatePairsIEROCR(strI, strC, sRepx, sRepy);
-}
-*/
-
-/*!
- * \fn MainWindow::on_actionCPairGEROcrVsCorrect_triggered()
- * \brief CPairs based upon Inds are generated with the help of
- * GEROCR files and these words are generated with the help of generatePairsGEROCR()
- * \sa slpNPatternDict::generatePairsGEROCR
-void MainWindow::on_actionCPairGEROcrVsCorrect_triggered()
-{
-    QString strI1 = mFilename;       // Load foders in strC and strI
-
-    string strInew = strI1.toUtf8().constData();
-    size_t locI = strInew.find("Inds");
-    string strI = strInew.substr(0, locI) + "GEROCR";
-    string strC = strInew.substr(0, locI) + "Correct";
-
-    //! load text files one by one
-    string localFilenameN = strI1.toUtf8().constData();
-    size_t loc1 = localFilenameN.find("Inds");
-    string s1 = localFilenameN.substr(0, loc1);
-    string sRepx = s1 + "Reports/inputx";
-    string sRepy = s1 + "Reports/inputy";
-
-    vector<string> wrong1, right1;
-    generatePairsIEROCR(strI, strC, sRepx, sRepy);
-}
-*/
-
-/*!
  * \fn MainWindow::on_actionAllFontProperties_triggered()
  * \brief Opens a pop up font properties selector and applies chosen properties to font.
  * The font selector lets you choose:
@@ -4094,19 +2861,12 @@ void MainWindow::on_actionCPairGEROcrVsCorrect_triggered()
 */
 void MainWindow::on_actionAllFontProperties_triggered()
 {
-	if(!curr_browser || curr_browser->isReadOnly())
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
 
     auto cursor = curr_browser->textCursor();
         auto selected = cursor.selection();
         QString sel = selected.toHtml();
-
-
-//   if(!sel.contains("")){
-//         QMessageBox::critical(this,"Error","Text Not Selected");
-//                 return;
-//    }
-
 
   QFont initialFont=curr_browser->currentFont();                                                   // initial font face
 
@@ -4116,129 +2876,126 @@ void MainWindow::on_actionAllFontProperties_triggered()
     bool ok;
     QFont font = QFontDialog::getFont(&ok, initialFont, this, tr("Font Properties"), QFontDialog::DontUseNativeDialog);
 
-	/*! If user clicks OK then change to selected font with properties*/
-	if (!ok) {
-		return;
-	}
+    /*! If user clicks OK then change to selected font with properties*/
+    if (!ok) {
+        return;
+    }
 
-	int ret = QMessageBox::question(this, tr("Question"), tr("Do you want to apply this font to all pages ? (CAN'T UNDO THIS OPERATION)"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-	if (ret == QMessageBox::Yes) {
-		QString fontFamily = font.family();
-		int fontSize = font.pointSize();
-		QVector<QString> styleProperties = {"font-family:", "font-size:"};
-		QVector<QString> stylePropertyValues = {QString("\'" + fontFamily + "\'"), QString::number(fontSize) + "pt"};
-		int totalFontProperties = styleProperties.size();
-		qDebug() << "apply to all pages";
-		/*!
-		 * 1. Loop through each page except the current one
-		 * 2. Apply font size and font family
-		 */
+    int ret = QMessageBox::question(this, tr("Question"), tr("Do you want to apply this font to all pages ? (CAN'T UNDO THIS OPERATION)"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    if (ret == QMessageBox::Yes) {
+        QString fontFamily = font.family();
+        int fontSize = font.pointSize();
+        QVector<QString> styleProperties = {"font-family:", "font-size:"};
+        QVector<QString> stylePropertyValues = {QString("\'" + fontFamily + "\'"), QString::number(fontSize) + "pt"};
+        int totalFontProperties = styleProperties.size();
+        qDebug() << "apply to all pages";
+        /*!
+         * 1. Loop through each page except the current one
+         * 2. Apply font size and font family
+         */
 
-		QString directory = gDirTwoLevelUp + "/" + gCurrentDirName;
-		QString exception = gDirTwoLevelUp + "/" + gCurrentDirName + "/" + gCurrentPageName;
+        QString directory = gDirTwoLevelUp + "/" + gCurrentDirName;
+        QString exception = gDirTwoLevelUp + "/" + gCurrentDirName + "/" + gCurrentPageName;
 
-		QDirIterator filesIt(directory, {"*.html"}, QDir::Files | QDir::NoDotAndDotDot);
+        QDirIterator filesIt(directory, {"*.html"}, QDir::Files | QDir::NoDotAndDotDot);
 
-		while (filesIt.hasNext()) {
-			QString filename = filesIt.next();
-			if (filename == exception) {
-				continue;
-			}
-			QFile file(filename);
-			if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-				qDebug() << "Cannot open file in read mode";
-			}
-			QString fileText = file.readAll();
-			file.close();
+        while (filesIt.hasNext()) {
+            QString filename = filesIt.next();
+            if (filename == exception) {
+                continue;
+            }
+            QFile file(filename);
+            if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                qDebug() << "Cannot open file in read mode";
+            }
+            QString fileText = file.readAll();
+            file.close();
 
-			QRegularExpression regex_style("(<span[^>]*>)");
-			QRegularExpressionMatchIterator itr = regex_style.globalMatch(fileText);
+            QRegularExpression regex_style("(<span[^>]*>)");
+            QRegularExpressionMatchIterator itr = regex_style.globalMatch(fileText);
 
-			while (itr.hasNext()) {
-				QRegularExpressionMatch match = itr.next();
-				QString capString = match.captured(1);
-				int capStart = match.capturedStart(1);
+            while (itr.hasNext()) {
+                QRegularExpressionMatch match = itr.next();
+                QString capString = match.captured(1);
+                int capStart = match.capturedStart(1);
 
-				for (int i = 0; i < totalFontProperties; i++) {
-					QString property = styleProperties[i];
-					QString value = stylePropertyValues[i];
-					int propIndex = -1;
+                for (int i = 0; i < totalFontProperties; i++) {
+                    QString property = styleProperties[i];
+                    QString value = stylePropertyValues[i];
+                    int propIndex = -1;
 
-					if ((propIndex = capString.indexOf(property)) != -1) { // If value of the property is different
-						int endIndexOfProperty = capString.indexOf(";", propIndex);
-						int replacementLen = endIndexOfProperty - (propIndex + property.length());
-						fileText.replace(capStart + propIndex + property.length(), replacementLen, value);
-						capString.replace(propIndex + property.length(), replacementLen, value);
-					} else if (capString.indexOf("style=\"") != -1) { // If property is not present
-						int indexOfStyle = capString.indexOf("style=\"");
-						fileText.insert(capStart + indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
-						capString.insert(indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
-					} else { // If style tag is not present
-						fileText.insert(capStart + QString("<span ").length(), "style=\" " + property + value + ";\" ");
-						capString.insert(QString("<span ").length(), "style=\" " + property + value + ";\" ");
-					}
-				}
+                    if ((propIndex = capString.indexOf(property)) != -1) { // If value of the property is different
+                        int endIndexOfProperty = capString.indexOf(";", propIndex);
+                        int replacementLen = endIndexOfProperty - (propIndex + property.length());
+                        fileText.replace(capStart + propIndex + property.length(), replacementLen, value);
+                        capString.replace(propIndex + property.length(), replacementLen, value);
+                    } else if (capString.indexOf("style=\"") != -1) { // If property is not present
+                        int indexOfStyle = capString.indexOf("style=\"");
+                        fileText.insert(capStart + indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+                        capString.insert(indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+                    } else { // If style tag is not present
+                        fileText.insert(capStart + QString("<span ").length(), "style=\" " + property + value + ";\" ");
+                        capString.insert(QString("<span ").length(), "style=\" " + property + value + ";\" ");
+                    }
+                }
 
-				itr = regex_style.globalMatch(fileText, capStart + capString.length());
-			}
-			if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-				qDebug() << "Cannot open file in write mode";
-			}
-			QTextStream out(&file);
-			out.setCodec("UTF-8");
-			out << fileText;
-			file.close();
-		}
+                itr = regex_style.globalMatch(fileText, capStart + capString.length());
+            }
+            if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                qDebug() << "Cannot open file in write mode";
+            }
+            QTextStream out(&file);
+            out.setCodec("UTF-8");
+            out << fileText;
+            file.close();
+        }
 
-	}
+    }
 
-	//!Filter the font properities
-	QTextCharFormat format_to_be_applied;
+    //!Filter the font properities
+    QTextCharFormat format_to_be_applied;
 
-	qreal wgt = font.pointSize();
-	QString fam = font.family();
-	bool strike = font.strikeOut();
-	bool underline = font.underline();
-	qreal LetterSpacing=font.letterSpacing();
-	qreal WordSpacing = font.wordSpacing();
-	int stretch = font.stretch();
-	auto styleHint = font.styleHint();
-	auto styleStrategy = font.styleStrategy();
-	auto letterSpacingType = font.letterSpacingType();
-	bool overline = font.overline();
-	bool fixedpitch = font.fixedPitch();
-	auto hintingpref = font.hintingPreference();
+    qreal wgt = font.pointSize();
+    QString fam = font.family();
+    bool strike = font.strikeOut();
+    bool underline = font.underline();
+    qreal LetterSpacing=font.letterSpacing();
+    qreal WordSpacing = font.wordSpacing();
+    int stretch = font.stretch();
+    auto styleHint = font.styleHint();
+    auto styleStrategy = font.styleStrategy();
+    auto letterSpacingType = font.letterSpacingType();
+    bool overline = font.overline();
+    bool fixedpitch = font.fixedPitch();
+    auto hintingpref = font.hintingPreference();
 
-	format_to_be_applied.setFontPointSize(wgt);
-	format_to_be_applied.setFontFamily(fam);
-	format_to_be_applied.setFontStrikeOut(strike);
-	format_to_be_applied.setFontUnderline(underline);
-	format_to_be_applied.setFontLetterSpacing(LetterSpacing);
-	format_to_be_applied.setFontWordSpacing(WordSpacing);
-	format_to_be_applied.setFontStretch(stretch);
-	format_to_be_applied.setFontStyleHint(styleHint,styleStrategy);
-	format_to_be_applied.setFontLetterSpacingType(letterSpacingType);
-	format_to_be_applied.setFontOverline(overline);
-	format_to_be_applied.setFontFixedPitch(fixedpitch);
-	format_to_be_applied.setFontHintingPreference(hintingpref);
+    format_to_be_applied.setFontPointSize(wgt);
+    format_to_be_applied.setFontFamily(fam);
+    format_to_be_applied.setFontStrikeOut(strike);
+    format_to_be_applied.setFontUnderline(underline);
+    format_to_be_applied.setFontLetterSpacing(LetterSpacing);
+    format_to_be_applied.setFontWordSpacing(WordSpacing);
+    format_to_be_applied.setFontStretch(stretch);
+    format_to_be_applied.setFontStyleHint(styleHint,styleStrategy);
+    format_to_be_applied.setFontLetterSpacingType(letterSpacingType);
+    format_to_be_applied.setFontOverline(overline);
+    format_to_be_applied.setFontFixedPitch(fixedpitch);
+    format_to_be_applied.setFontHintingPreference(hintingpref);
 
 
-	//! Apply bold and italics if present
-	if(font.bold())
-	{
-		qreal weight = font.weight();
-		format_to_be_applied.setFontWeight(weight);
-	}
-	if(font.italic())
-	{
-		bool Italics = font.italic();
-		format_to_be_applied.setFontItalic(Italics);
-	}
+    //! Apply bold and italics if present
+    if(font.bold())
+    {
+        qreal weight = font.weight();
+        format_to_be_applied.setFontWeight(weight);
+    }
+    if(font.italic())
+    {
+        bool Italics = font.italic();
+        format_to_be_applied.setFontItalic(Italics);
+    }
 
-//	cursor.mergeCharFormat(format_to_be_applied);
-//	curr_browser->textCursor().mergeCharFormat(format_to_be_applied);
-//	curr_browser->setCurrentCharFormat(format_to_be_applied);
-	curr_browser->setCurrentFont(font);
+    curr_browser->setCurrentFont(font);
 }
 
 /*!
@@ -4680,249 +3437,6 @@ void MainWindow::on_actionRemove_Row_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionToSlp1_2_triggered()
- * \brief Converts devanagri text to transliterated/ romanized text.
- * This function opens a file open dialogue asking you to open a devnagri text file.
- * The output is a new file containing translitrated text
- * The output is saved as input_file_nameDev.txt
-void MainWindow::on_actionToSlp1_2_triggered()
-{
-    QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
-
-    if (!file1.isEmpty())
-    {
-        QFile sFile(file1);
-        if (sFile.open(QFile::ReadOnly | QFile::Text)) {
-            string localFilenameN = file1.toUtf8().constData();
-            std::ifstream ip(localFilenameN);
-            std::ofstream op(localFilenameN + "slp1");
-            string line;
-            while (getline(ip, line)) op << toslp1(line) << endl;
-        }
-    }
-}
-*/
-
-/*!
- * \fn MainWindow::on_actionToDev_triggered()
- * \brief Converts transliterated file to devanagri file
- * Transliterated here means Hindi/ Sanskrit written in English.
- * This function opens a file open dialogue asking you to open a transliterated text file.
- * The output is saved as input_file_nameDev.txt
-void MainWindow::on_actionToDev_triggered()
-{
-    QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
-
-    if (!file1.isEmpty())
-    {
-        QFile sFile(file1);
-        if (sFile.open(QFile::ReadOnly | QFile::Text)) {
-            string localFilenameN = file1.toUtf8().constData();
-            std::ifstream ip(localFilenameN);
-            std::ofstream op(localFilenameN + "Dev");
-            string line;
-            while (getline(ip, line)) op << toDev(line) << endl;
-        }
-    }
-}
-*/
-
-/*!
- * \fn MainWindow::on_actionExtractDev_triggered()
- * \brief Extracts words from a devnagri text file to lines.
- * This function opens a file open dialogue asking you to open a devnagri text file.
- * The output is all words in the file seperated by newline
- * The output is saved as input_file_nameDev.txt
- * \sa slpNPatternDict::toDev()
-void MainWindow::on_actionExtractDev_triggered()
-{
-    QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
-
-    if (!file1.isEmpty())
-    {
-        QFile sFile(file1);
-        if (sFile.open(QFile::ReadOnly | QFile::Text)) {
-            string localFilenameN = file1.toUtf8().constData();
-            std::ifstream ip(localFilenameN);
-            std::ofstream op(localFilenameN + "Dev");
-            string line;
-            while (ip >> line) { if (hasNoAsci(line)) op << (line) << endl; }
-        }
-    }
-}
-*/
-
-/*!
- * \fn MainWindow::on_actionEditDistRep_triggered
- * \brief Creates a new file that contains the edit distance values for each line present in the user opened file.
- * \note The new file is named as EditDistRep Which is appended to its original file name that user opened via OpenFileDialog window
- * \sa editDist()
-void MainWindow::on_actionEditDistRep_triggered()
-{
-    QString file1 = QFileDialog::getOpenFileName(this, "Open a File");        //Prompts a Open File Dialog window
-
-    if (!file1.isEmpty())
-    {
-        QFile sFile(file1);
-        if (sFile.open(QFile::ReadOnly | QFile::Text))
-        {
-            string localFilenameN = file1.toUtf8().constData();
-            std::ifstream ip1(localFilenameN); std::ifstream ip2(localFilenameN + "y");
-            std::ofstream op(localFilenameN + "EditDisRep");       //append "EditDisRep" to the new file name
-            string word1, word2;
-            int max = 0;
-            op << "a = [";
-            while (getline(ip1, word1))
-            {
-                getline(ip2, word2);
-                int ed = editDist(word1, word2);         //calculate the edit distance
-                op << ed << " ";
-                if (ed > max) max = ed;
-            }
-            op << "];" << endl;
-            op << " hist(a,-0.5:0.5:max(a))" << endl << "pause()" << endl;
-        }
-    }
-}
-*/
-
-/*!
- * \fn MainWindow::on_actionConfusionFreqHist_triggered()
- * \brief Creates two new files for the user opened file. One file contains thte X-axis values and the
- * other Octaves which are neccesary to form a histogram to show the frequency of items. The alternate lines are
- * stored in two files.
- * \note The two new files are named as HistOCtaveRep and HistXaxisRep and the names are appended to its original filename.
-void MainWindow::on_actionConfusionFreqHist_triggered()
-{
-    QString file1 = QFileDialog::getOpenFileName(this, "Open a File");     //Prompts a Open File Dialog window
-    if (!file1.isEmpty())
-    {
-        QFile sFile(file1);
-        if (sFile.open(QFile::ReadOnly | QFile::Text))
-        {
-            string localFilenameN = file1.toUtf8().constData();
-            std::ifstream ip(localFilenameN);
-            std::ofstream op(localFilenameN + "HistOCtaveRep");
-            std::ofstream opx(localFilenameN + "HistXaxisRep");
-            string line;
-            op << "a = [";
-            while (getline(ip, line))
-            {
-                opx << line << "\t" << endl;
-                line = "";
-                getline(ip, line);
-                op << line << " ";
-
-            }
-            op << "];" << endl;
-            op << " hist(a,-0.5:0.5:max(a))" << endl << "pause()" << endl;
-        }
-    }
-}
-*/
-
-/*!
- * \fn MainWindow::on_actionFilterOutGT50EditDisPairs_triggered
- * \brief Opens a pop up which asks the user to select a text file which filters out the words based upon the
- * edit distance, which finds the edit distance between the 2 words that have come in and if the edit distance
- * comes out to be more than 50 then the words are not printed, else they are printed in the file which is created
- * with the same name as of project file with "EditDisLE50FilteredRep" at the end.
- * \sa editdistance::editDist()
-void MainWindow::on_actionFilterOutGT50EditDisPairs_triggered()
-{
-    QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
-
-    if (!file1.isEmpty())
-    {
-        QFile sFile(file1);
-        if (sFile.open(QFile::ReadOnly | QFile::Text)) {
-            string localFilenameN = file1.toUtf8().constData();
-            std::ifstream ip(localFilenameN);
-            std::ofstream op(localFilenameN + "EditDisLE50FilteredRep");
-            string line;
-            while (getline(ip, line)) {
-                stringstream l(line);
-                string word1, word2;
-                getline(l, word1, '\t');
-                getline(l, word2, '\t');
-                //data >> word1 >> word2;
-                int ed = editDist(word1, word2);
-                if (ed <= 50)  op << word1 << "\t" << word2 << endl;
-            }
-        }
-    }
-}
-*/
-
-/*!
- * \brief MainWindow::on_actionPrepareFeatures_triggered()
- * deprecated; crashing
-void MainWindow::on_actionPrepareFeatures_triggered()
-{
-    QString file1 = QFileDialog::getOpenFileName(this, "Open a File");
-
-    if (!file1.isEmpty())
-    {
-        QFile sFile(file1);
-        if (sFile.open(QFile::ReadOnly | QFile::Text)) {
-            string localFilenameN = file1.toUtf8().constData();
-            QString strI1 = file1;
-            strI1.replace("Dict", "CPair");
-            string strI1s = strI1.toUtf8().constData();
-            map<string, int> Dictionary;
-            map<string, int> DictionaryNGrams;
-            loadMap(localFilenameN, Dictionary, "Dictionary");
-            size_t count6 = 0;
-            loadDictPatternstoMap(DictionaryNGrams, Dictionary, count6);
-            size_t MaxElSize = 0; string line1;
-            ifstream infile1(strI1s);
-            while (getline(infile1, line1)) {
-                vector<std::string> x = split(line1, "\t");
-                string a2 = toslp1(x[0]);
-                if (a2.size() > MaxElSize) MaxElSize = a2.size();
-            }
-            infile1.close();
-            cout << "MaxElSize " << MaxElSize << endl;
-            ifstream infile(strI1s);
-            ofstream outfile;
-            outfile.open(strI1s + "out");
-            string line, a, b;
-            size_t M = (MaxElSize*(MaxElSize - 1)) / 2;
-            while (getline(infile, line)) {
-                vector<std::string> x = split(line, "\t");
-                a = toslp1(x[0]); b = toslp1(x[1]);
-                if (a == b) outfile << "1 ";
-                else outfile << "-1 ";
-                if (Dictionary[a] > 0) outfile << "1:" << Dictionary[a] << " ";
-                else outfile << "1:0 ";
-                string a1 = a;
-                size_t ia1 = 0;
-                while (ia1 < MaxElSize - a.size()) {
-                    a1 = a1 + "^";
-                    ia1 = ia1 + 1;
-                }
-                vector<bool> vecBin; vector<size_t> vecBinFreq; size_t count = 0;
-                getNgramFeaturesinVect(a1, DictionaryNGrams, vecBin, vecBinFreq, count);
-                size_t vBsz = vecBin.size();
-                for (size_t i = 0; i < vBsz; i++) {
-                    if (vecBin[i]) outfile << i + 2 << ":" << 1 << " ";
-                    else outfile << i + 2 << ":" << -1 << " ";
-                }
-                float count6f = count6;
-                for (size_t i = 0; i < vecBinFreq.size(); i++) {
-                    float vbnf = vecBinFreq[i];
-                    outfile << i + 2 + vBsz << ":" << vbnf / count6f << " ";
-                }
-                outfile << endl;
-            }
-            outfile.close();
-            infile.close();
-        }
-    }
-}
-*/
-
-/*!
  * \brief MainWindow::on_actionFetch_2_triggered()
  * Not using this function
  */
@@ -4988,12 +3502,12 @@ void MainWindow::on_actionFetch_2_triggered()
     QPushButton *noButton = forPullBox.addButton(QMessageBox::StandardButton::No);
     forPullBox.exec();
 
-	int error;
+    int error;
     if (forPullBox.clickedButton() == okButton)
     {
-		if ((error = mProject.fetch()) != 0) {
-			qDebug() << "Fetch failed with error code " << error;
-		}
+        if ((error = mProject.fetch()) != 0) {
+            qDebug() << "Fetch failed with error code " << error;
+        }
         if(mProject.get_version().toInt())
         {
             QMessageBox::information(0, "Sync Success", "Synced Succesfully");
@@ -5002,17 +3516,6 @@ void MainWindow::on_actionFetch_2_triggered()
         {
             QMessageBox::information(0, "Sync Error", "Cloud Sync Un-successful, Please Check Your Internet Connection");
         }
-//        if(!isVerifier)
-//        {
-//            if (mProject.get_stage() == "Corrector")
-//            {
-//                ui->actionTurn_In->setEnabled(true);
-//            }
-//            else
-//            {
-//                ui->actionTurn_In->setEnabled(false);
-//            }
-//        }
 
         ui->lineEdit_2->setText("Version " + mProject.get_version());
     }
@@ -5139,11 +3642,30 @@ void MainWindow::on_actionTurn_In_triggered()
                 // mProject.set_stage_verifier();    // set_stage_verifier()inherited from project.cpp updates the stage in xml file to "verifier"
 
                 //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
-            if(!mProject.commit(commit_msg.toStdString()) || !mProject.push(branchName))
+            if(mProject.commit(commit_msg.toStdString()))
             {
-                mProject.enable_push(false);      // enable_push() increments version and sets stage in xml file
-                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-                return;
+//                    if(!mProject.push(branchName))
+//                mProject.enable_push(false);      // enable_push() increments version and sets stage in xml file
+//                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+//                return;
+                threadingPush *tp=new threadingPush(nullptr);
+                QThread *thread = new QThread;
+
+                QObject::connect(thread, SIGNAL(started()), tp, SLOT(ControlPush(branchName,repo,
+                                                                      login_tries,is_cred_cached,
+                                                                      mEmail,mName,
+                                                                    user,pass)));
+                QObject::connect(tp, SIGNAL(finishedLoadingData()), thread, SLOT(quit()));
+                QObject::connect(tp, SIGNAL(finishedLoadingData()), tp, SLOT(deleteLater()));
+                QObject::connect(tp, SIGNAL(finished()), thread, SLOT(deleteLater()));
+                QObject::connect(tp, SIGNAL(finishedLoadingData()), this, SLOT(stopSpinning()));
+                tp->moveToThread(thread);
+                thread->start();
+
+                spinner = new LoadingSpinner(this);
+                spinner->SetMessage("Loading Data...", "Loading...");
+                spinner->setModal(false);
+                spinner->exec();
             }
 //            }
 //            else {
@@ -5503,8 +4025,8 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
 }
 
 /*!
- * \brief MainWindow::on_actionSymbols_triggered
- * It shows the table for various symbols
+ * \fn MainWindow::on_actionSymbols_triggered
+ * \brief It shows the table for various symbols
  * \sa Symbols.cpp
  */
 void MainWindow::on_actionSymbols_triggered()
@@ -5514,8 +4036,8 @@ void MainWindow::on_actionSymbols_triggered()
 }
 
 /*!
- * \brief MainWindow::on_actionZoom_In_triggered
- * for zoom-in operation
+ * \fn MainWindow::on_actionZoom_In_triggered
+ * \brief for zoom-in operation
  */
 void MainWindow::on_actionZoom_In_triggered()
 {
@@ -5549,8 +4071,8 @@ void MainWindow::on_actionZoom_In_triggered()
 }
 
 /*!
- * \brief MainWindow::on_actionZoom_Out_triggered
- * for zoom-out operation
+ * \fn MainWindow::on_actionZoom_Out_triggered
+ * \brief for zoom-out operation
  */
 void MainWindow::on_actionZoom_Out_triggered()
 {
@@ -5600,6 +4122,12 @@ void MainWindow::on_pushButton_clicked()
                           "QPushButton:enabled { background-color: rgb(136, 138, 133);color:white; }\n");      //apply style on button when it is triggered
      }
 }
+
+/*!
+ * \fn MainWindow::keyPressEvent
+ * \brief This function handles "Ctrl+C" for storing the copied values and showing when user right clicks. It also handles "Ctrl+D" which is used for converting english text to devanagari text
+ * \param e
+ */
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
     if ( (e->key() == Qt::Key_C)  && QApplication::keyboardModifiers() == Qt::ControlModifier)
@@ -5978,9 +4506,11 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, int w, int h)
 {
     //! If directory exists then create the folders
-    if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
-    {
+    if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+    }
+    if(!QDir(gDirTwoLevelUp+"/Cropped_Images/Figures").exists())
+    {
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Figures");
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Tables");
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Equations");
@@ -6045,8 +4575,8 @@ void MainWindow::on_pushButton_2_clicked()
     auto cursor = curr_browser->textCursor();
     auto selected = cursor.selection();
     QString sel = selected.toHtml();
-	QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
-	//    QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
+    QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
+    //    QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
     QRegularExpressionMatchIterator itr;
     itr = rex.globalMatch(sel);
     int height=0;
@@ -6077,42 +4607,43 @@ void MainWindow::on_pushButton_2_clicked()
                width=width_textLine->text().toInt();
            }
 
-	while(itr.hasNext())
-	{
-		QRegularExpressionMatch match = itr.next();
-		QString ex = match.captured(1);
-		string str = ex.toStdString();
-		int ind = str.find("src=");
-		ind+=5;
-		int start = ind;
-		int end = 0;
+    while(itr.hasNext())
+    {
+        QRegularExpressionMatch match = itr.next();
+        QString ex = match.captured(1);
+        string str = ex.toStdString();
+        int ind = str.find("src=");
+        ind+=5;
+        int start = ind;
+        int end = 0;
 
-		if (str.find(".jpg") != -1) {
-			end = str.find(".jpg");
-			end += 3;
-		} else if (str.find(".png") != -1) {
-			end = str.find(".png");
-			end += 3;
-		} else if (str.find(".jpeg") != -1) {
-			end = str.find(".jpeg");
-			end += 4;
-		} else {
-			qDebug() << "File extension not recognisable";
-		}
+        if (str.find(".jpg") != -1) {
+            end = str.find(".jpg");
+            end += 3;
+        } else if (str.find(".png") != -1) {
+            end = str.find(".png");
+            end += 3;
+        } else if (str.find(".jpeg") != -1) {
+            end = str.find(".jpeg");
+            end += 4;
+        } else {
+            qDebug() << "File extension not recognisable";
+        }
 
-		str = str.substr(start,end-start+1);
-		QString imgname = QString::fromStdString(str);
+        str = str.substr(start,end-start+1);
+        QString imgname = QString::fromStdString(str);
 
         if(height>0 && width>0)
-		{
-            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(height).arg(width);
-			cursor.insertHtml(html);      //insert new image with modified attributes height and width
-		}
-	}
+        {
+            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(width).arg(height);
+            cursor.insertHtml(html);      //insert new image with modified attributes height and width
+        }
+    }
 }
 
 /*!
- * \brief MainWindow::on_viewComments_clicked
+ * \fn MainWindow::on_viewComments_clicked
+ * \brief This function is used for viewing the Comments. It opens up the comment box for showing comments.
  */
 void MainWindow::on_viewComments_clicked()
 {
@@ -6738,24 +5269,34 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
 
 }
 
+/*!
+ * \fn MainWindow::closeProgressBar
+ * \brief This function closes the progress bar.
+ */
 void MainWindow::closeProgressBar()
 {
     progressBarDialog->close();
     progressBarDialog->deleteLater();
 }
 
+/*!
+ * \fn MainWindow::setProgressBarPerc
+ * \brief Sets the progress bar value to the passed value
+ * \param value
+ */
 void MainWindow::setProgressBarPerc(int value)
 {
     progressBarDialog->setPercentage(value);
 }
 
-
 /*!
  * \fn MainWindow::runGlobalReplace
- * \brief Replace words iteratively
+ * \brief It calls the function which replaces the words and add the words into the CPair file in a multithreaded fashion
+ * \details 1. Opens up dialog box for asking the user if he wants to do global-replace or not.
+ *          2. Then it runs another thread for doing global replace.
+ *          3. After completion of global replace, it runs another thread for adding the replaced words to CPair.
  * \param currentFileDirectory
  * \param changedWords
- *
  */
 void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QString> changedWords)
 {
@@ -6928,7 +5469,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 /*!
  * \fn MainWindow::globalReplacePreviewfn()
  * \brief This feature allows user to view the changes in advance that are going to be done by global replace
- *
+ * \details
  * This function will fetch the required data and put in a window where the users will be able to see in a
  * tabular format, the page name, the sentences where the global replace word is/are present and the same sentence
  * after making the change. This allows the user to better make decisions whether to perform global replace or not
@@ -6949,7 +5490,6 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
  * \param QMap <QString, QString> previewMap , QVector<int> allPages
  * \sa getBeforeAndAfterWords()
  */
-
 void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVector<int> allPages)
 {
   QStandardItemModel *model = new QStandardItemModel;
@@ -7075,7 +5615,7 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
  *
  * \brief This function is used by MainWindow::globalReplacePreviewfn() for fetching the context sentences where
  * the global replace is to be applied.
- *
+ * \details
  * The function first opens the file passed in parameter fPath and opens the stream.
  * Then it runs a for loop wherein we loop through the global replace word map and otain the key and value and
  * store them as oldword and newword respectively
@@ -7156,12 +5696,11 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
 
 
 
-
 //Global CPair End
 
 /*!
- * \brief MainWindow::DisplayJsonDict
- * Load and display *.dict files
+ * \fn MainWindow::DisplayJsonDict
+ * \brief Load and display *.dict files
  */
 void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
 {
@@ -7312,9 +5851,10 @@ void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
 }
 
 /*!
- * \brief MainWindow::getAverageAccuracies
+ * \fn MainWindow::getAverageAccuracies
+ * \brief Calculate average char, word accuracy of .html files w.r.t to the .txt files
  * \param mainObj
- * \return
+ * \return QJsonObject
  */
 QJsonObject MainWindow::getAverageAccuracies(QJsonObject mainObj)
 {
@@ -7447,36 +5987,6 @@ void MainWindow::updateAverageAccuracies() //Verifier only
 //end
 
 /*!
- * \brief MainWindow::on_sanButton_toggled
- * \param checked
-*/
-void MainWindow::on_sanButton_toggled(bool checked)
-{
-    if(checked)
-        on_actionSanskrit_triggered();
-}
-
-/*!
- * \brief MainWindow::on_hinButton_toggled
- * \param checked
-*/
-void MainWindow::on_hinButton_toggled(bool checked)
-{
-    if(checked)
-        on_actionHindi_triggered();
-}
-
-
-/*!
- * \brief MainWindow::on_actionNew_Project_triggered
- */
-void MainWindow::on_actionNew_Project_triggered()
-{
-    ProjectWizard* wiz = new ProjectWizard();
-    wiz->show();
-}
-
-/*!
  * \brief MainWindow::on_actionLineSpace_triggered
  */
 void MainWindow::on_actionLineSpace_triggered() //Not used, does not work as intended
@@ -7498,11 +6008,6 @@ void MainWindow::on_actionLineSpace_triggered() //Not used, does not work as int
         cursor.setBlockFormat(format);
     }
 }
-
-/*!
- * \brief MainWindow::on_actionAdd_Image_triggered
- */
-
 
 /*!
  * \fn MainWindow::on_actionAdd_Image_triggered
@@ -7558,11 +6063,6 @@ void MainWindow::on_actionAdd_Image_triggered()
 }
 
 /*!
- * \brief MainWindow::on_actionResize_Image_triggered
- */
-
-
-/*!
  * \fn MainWindow::on_actionResize_Image_triggered
  * \brief This function resizes the images in the document. User has to input the new height or width
  * and thus the image is appropriately resized.
@@ -7608,10 +6108,11 @@ void MainWindow::on_actionPush_triggered()
 }
 
 /*!
- * \brief GetFilter
+ * \fn GetFilter
+ * \brief Return the filter with name and list provided to the function
  * \param Name
  * \param list
- * \return
+ * \return Filter
  */
 QString GetFilter(QString & Name, const QStringList &list) {
 
@@ -7648,21 +6149,21 @@ QString GetFilter(QString & Name, const QStringList &list) {
  */
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 {
-	if(curr_browser) {
-		if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
-			QMessageBox currBox2;
-			currBox2.setWindowTitle("Save?");
-			currBox2.setIcon(QMessageBox::Question);
-			currBox2.setInformativeText("Do you want to save " + currentTabPageName + " file?");
-			QPushButton *okButton2 = currBox2.addButton(QMessageBox::StandardButton::Ok);
-			QPushButton *noButton2 = currBox2.addButton(QMessageBox::StandardButton::No);
-			currBox2.exec();
+    if(curr_browser) {
+        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
+            QMessageBox currBox2;
+            currBox2.setWindowTitle("Save?");
+            currBox2.setIcon(QMessageBox::Question);
+            currBox2.setInformativeText("Do you want to save " + currentTabPageName + " file?");
+            QPushButton *okButton2 = currBox2.addButton(QMessageBox::StandardButton::Ok);
+            QPushButton *noButton2 = currBox2.addButton(QMessageBox::StandardButton::No);
+            currBox2.exec();
 
-			if (currBox2.clickedButton() == okButton2){
-				on_actionSave_triggered();
-			}
-		}
-	}
+            if (currBox2.clickedButton() == okButton2){
+                on_actionSave_triggered();
+            }
+        }
+    }
 
     f->open(QIODevice::ReadOnly);
     QFileInfo finfo(f->fileName());
@@ -7696,39 +6197,39 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     }
     // Saves the current opened page
 
-	QSettings settings("IIT-B", "OpenOCRCorrect");
-	settings.beginGroup("RecentPageLoaded");
-	QString tmp1 = settings.value("projectName1").toString();
-	QString tmp2 = settings.value("projectName2").toString();
-	QString tmp3 = settings.value("projectName3").toString();
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("RecentPageLoaded");
+    QString tmp1 = settings.value("projectName1").toString();
+    QString tmp2 = settings.value("projectName2").toString();
+    QString tmp3 = settings.value("projectName3").toString();
 
-	if(ProjFile == tmp1){
-		settings.setValue("projectName1",ProjFile );
-		settings.setValue("name1",name );
-		settings.setValue("pageParent1",gCurrentDirName );}
-	else if(ProjFile == tmp2){
-		settings.setValue("projectName2",settings.value("projectName1").toString() );
-		settings.setValue("name2",settings.value("name1").toString() );
-		settings.setValue("pageParent2",settings.value("pageParent1").toString() );
-		settings.setValue("projectName1",ProjFile );
-		settings.setValue("name1",name );
-		settings.setValue("pageParent1",gCurrentDirName );}
-	else{
-		settings.setValue("projectName3",settings.value("projectName2").toString() );
-		settings.setValue("name3",settings.value("name2").toString() );
-		settings.setValue("pageParent3",settings.value("pageParent2").toString() );
-		settings.setValue("projectName2",settings.value("projectName1").toString() );
-		settings.setValue("name2",settings.value("name1").toString() );
-		settings.setValue("pageParent2",settings.value("pageParent1").toString() );
-		settings.setValue("projectName1",ProjFile );
-		settings.setValue("name1",name );
-		settings.setValue("pageParent1",gCurrentDirName );
-	}
-	settings.endGroup();
+    if(ProjFile == tmp1){
+        settings.setValue("projectName1",ProjFile );
+        settings.setValue("name1",name );
+        settings.setValue("pageParent1",gCurrentDirName );}
+    else if(ProjFile == tmp2){
+        settings.setValue("projectName2",settings.value("projectName1").toString() );
+        settings.setValue("name2",settings.value("name1").toString() );
+        settings.setValue("pageParent2",settings.value("pageParent1").toString() );
+        settings.setValue("projectName1",ProjFile );
+        settings.setValue("name1",name );
+        settings.setValue("pageParent1",gCurrentDirName );}
+    else{
+        settings.setValue("projectName3",settings.value("projectName2").toString() );
+        settings.setValue("name3",settings.value("name2").toString() );
+        settings.setValue("pageParent3",settings.value("pageParent2").toString() );
+        settings.setValue("projectName2",settings.value("projectName1").toString() );
+        settings.setValue("name2",settings.value("name1").toString() );
+        settings.setValue("pageParent2",settings.value("pageParent1").toString() );
+        settings.setValue("projectName1",ProjFile );
+        settings.setValue("name1",name );
+        settings.setValue("pageParent1",gCurrentDirName );
+    }
+    settings.endGroup();
 
     isProjectOpen = 1;
 
-	doc = b->document();
+    doc = b->document();
 
     //!Display format by setting font size and styles
     QTextStream stream(f);
@@ -7759,81 +6260,81 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
         b->setHtml(qstrHtml);
     }
     if (ext == "html") {
-		QSize graphicsViewSize = ui->graphicsView->size();
-		int graphicsViewHeight = graphicsViewSize.height()/4;
-		int graphicsViewWidth = graphicsViewSize.width()/3;
-		QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
-		QRegularExpressionMatchIterator itr;
-		itr = rex.globalMatch(input);
-		int height=graphicsViewHeight;
-		int width=graphicsViewWidth;
+        QSize graphicsViewSize = ui->graphicsView->size();
+        int graphicsViewHeight = graphicsViewSize.height()/4;
+        int graphicsViewWidth = graphicsViewSize.width()/3;
+        QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
+        QRegularExpressionMatchIterator itr;
+        itr = rex.globalMatch(input);
+        int height=graphicsViewHeight;
+        int width=graphicsViewWidth;
 
-		while(itr.hasNext())
-		{
-			QRegularExpressionMatch match = itr.next();
-			QString ex = match.captured(1);
+        while(itr.hasNext())
+        {
+            QRegularExpressionMatch match = itr.next();
+            QString ex = match.captured(1);
 
-			if(!ex.contains("width") && !ex.contains("height")){
-				string str = ex.toStdString();
-				int ind = str.find("src=");
-				ind += 5;
-				int start = ind;
+            if(!ex.contains("width") && !ex.contains("height")){
+                string str = ex.toStdString();
+                int ind = str.find("src=");
+                ind += 5;
+                int start = ind;
 
-				int end = 0;
-				if (str.find(".jpg") != -1) {
-					end = str.find(".jpg");
-					end += 3;
-				} else if (str.find(".png") != -1) {
-					end = str.find(".png");
-					end += 3;
-				} else if (str.find(".jpeg") != -1) {
-					end = str.find(".jpeg");
-					end += 4;
-				} else {
-					qDebug() << "File extension not recognisable";
-				}
+                int end = 0;
+                if (str.find(".jpg") != -1) {
+                    end = str.find(".jpg");
+                    end += 3;
+                } else if (str.find(".png") != -1) {
+                    end = str.find(".png");
+                    end += 3;
+                } else if (str.find(".jpeg") != -1) {
+                    end = str.find(".jpeg");
+                    end += 4;
+                } else {
+                    qDebug() << "File extension not recognisable";
+                }
 
-				string ttstr = str.substr(end+2,str.length()-end-3);// title tag string
-				str = str.substr(start,end-start+1);
-				QString imgname = QString::fromStdString(str);
-				QString titleString = QString::fromStdString(ttstr);
-				QString html = QString("\n <img src='%1' width='%2' height='%3'%4>").arg(imgname).arg(width).arg(height).arg(titleString);
-				input.replace(ex,html);
-			}
-		}
+                string ttstr = str.substr(end+2,str.length()-end-3);// title tag string
+                str = str.substr(start,end-start+1);
+                QString imgname = QString::fromStdString(str);
+                QString titleString = QString::fromStdString(ttstr);
+                QString html = QString("\n <img src='%1' width='%2' height='%3'%4>").arg(imgname).arg(width).arg(height).arg(titleString);
+                input.replace(ex,html);
+            }
+        }
 //		b->setHtml(input);
 
-		f->close();
+        f->close();
 
-		if (!f->open(QIODevice::WriteOnly | QIODevice::Text)) {
-			qDebug() << "Cannot open file in write mode";
-		}
+        if (!f->open(QIODevice::WriteOnly | QIODevice::Text)) {
+            qDebug() << "Cannot open file in write mode";
+        }
         QTextStream out(f);
         out.setCodec("utf-8");
         out << input;
         out.flush();
         f->close();
 
-		if (handleBbox != nullptr) {
-			delete handleBbox;
-		}
-		handleBbox = new HandleBbox();
-		QTextDocument *curDoc = handleBbox->loadFileInDoc(f);
-		if (curDoc == nullptr) {
-			qDebug() << "Cannot load file";
-			return;
-		}
-		curDoc = curDoc->clone(static_cast<QObject*>(b));
-		b->setDocument(curDoc);
-		doc = b->document();
+        if (handleBbox != nullptr) {
+            delete handleBbox;
+        }
+        handleBbox = new HandleBbox();
+        QTextDocument *curDoc = handleBbox->loadFileInDoc(f);
+        if (curDoc == nullptr) {
+            qDebug() << "Cannot load file";
+            return;
+        }
+        curDoc = curDoc->clone(static_cast<QObject*>(b));
+        b->setDocument(curDoc);
+        doc = b->document();
 //		loadHtmlInDoc(f);
 //        preprocessing(); //for removing dangling mathras
-		connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
-		blockCount = b->document()->blockCount();
-		if (!f->open(QIODevice::ReadOnly | QIODevice::Text)) {
-			qDebug() << "Cannot open file for reading";
-			return;
-		}
+        connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
+        blockCount = b->document()->blockCount();
+        if (!f->open(QIODevice::ReadOnly | QIODevice::Text)) {
+            qDebug() << "Cannot open file for reading";
+            return;
+        }
 
     }
     QDir::setCurrent(gDirOneLevelUp);   //changing application path to load document in a relative path
@@ -7923,27 +6424,27 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     auto model = ui->treeView->model();
     int rowCount = ui->treeView->model()->rowCount(parentIndex);
 
-	QString treeItemLabel;
-	for (int i = 0; i < rowCount; i++)
-	{
-		QModelIndex index = model->index(i, 0, parentIndex);
-		treeItemLabel = index.data(Qt::DisplayRole).toString();
+    QString treeItemLabel;
+    for (int i = 0; i < rowCount; i++)
+    {
+        QModelIndex index = model->index(i, 0, parentIndex);
+        treeItemLabel = index.data(Qt::DisplayRole).toString();
 
-		if (index.isValid())
-		{
-			if (treeItemLabel == currentTabPageName)
-			{
-				ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
-				break;
-			}
-		}
-	}
+        if (index.isValid())
+        {
+            if (treeItemLabel == currentTabPageName)
+            {
+                ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+                break;
+            }
+        }
+    }
 
-	// Deleting temporarily created CustomTextBrowser
-	delete b;
+    // Deleting temporarily created CustomTextBrowser
+    delete b;
     myTimer.start();
-	WordCount();     //for counting no of words in the document
-	readSettings();
+    WordCount();     //for counting no of words in the document
+    readSettings();
 }
 
 /*!
@@ -7984,17 +6485,17 @@ void MainWindow::LoadImageFromFile(QFile * f)
     ui->graphicsView->setMouseTracking(true);
     ui->graphicsView->viewport()->installEventFilter(this);
 
-	// Zooming upto currentZoomLevel
-	if (currentZoomLevel == z->zoom_level) {
-		return;
-	}
-	double factor_to_be_applied = 1.0;
-	if (currentZoomLevel < z->zoom_level) {
-		factor_to_be_applied = 1 - ((z->zoom_level - currentZoomLevel) / 100.0);
-	} else {
-		factor_to_be_applied = 1 + ((currentZoomLevel - z->zoom_level) / 100.0);
-	}
-	z->gentle_zoom(factor_to_be_applied);
+    // Zooming upto currentZoomLevel
+    if (currentZoomLevel == z->zoom_level) {
+        return;
+    }
+    double factor_to_be_applied = 1.0;
+    if (currentZoomLevel < z->zoom_level) {
+        factor_to_be_applied = 1 - ((z->zoom_level - currentZoomLevel) / 100.0);
+    } else {
+        factor_to_be_applied = 1 + ((currentZoomLevel - z->zoom_level) / 100.0);
+    }
+    z->gentle_zoom(factor_to_be_applied);
 }
 
 /*!
@@ -8444,46 +6945,6 @@ void MainWindow::closeEvent (QCloseEvent *event)
     }
 }
 
-
-/*!
- * \fn MainWindow::sendEmail
- *
- * This function sends an email to "aksharanveshini.iitb@gmail.com", whenever a user, whether corrector
- * or verifier submits their book project after their work is done.
- *
- * See SimpleMail Documentation for more details.
- *
- * \param emailText
- * \return
- */
-
-bool MainWindow::sendEmail(QString emailText)
-{
-    QString pmEmail = mProject.get_pmEmail();
-    if(pmEmail == "" || (!pmEmail.contains("@")))
-        return 0;
-
-    //!Adding Sender Address and credentials
-    SimpleMail::Sender sender ("smtp.gmail.com", 465, SimpleMail::Sender::SslConnection);
-    sender.setUser("aksharanveshini.iitb@gmail.com");
-    sender.setPassword("backend-ui"); //has to be encoded
-    SimpleMail::MimeMessage message;
-    message.setSender(SimpleMail::EmailAddress("aksharanveshini.iitb@gmail.com", "Akshar Anveshini"));
-
-    //!Adding recipient
-    QList <SimpleMail::EmailAddress> listRecipients;
-    listRecipients.append(pmEmail);
-    message.setToRecipients(listRecipients);
-    message.setSubject(mProject.get_setId() + " Turn In");
-    SimpleMail::MimeText *text = new SimpleMail::MimeText();
-    text->setText(emailText);
-    message.addPart(text);
-    if(!sender.sendMail(message))
-        return 0;
-
-    return 1;
-}
-
 /*!
  * \fn MainWindow::highlight
  * \brief This function highlights words of Globally Replaced Words
@@ -8729,11 +7190,14 @@ void MainWindow::on_actionas_PDF_triggered()
         }
     }
 
+    // Asking the path where to save the PDF
+    QString saveFileName = QFileDialog::getSaveFileName(this, "Save File", gDirTwoLevelUp, tr("PDF(*.pdf)"));
+
     // New way of printing pdf
     QPrinter printer(QPrinter::ScreenResolution);
     printer.setPaperSize(QPrinter::A4);
     printer.setPageMargins(QMarginsF(5, 5, 5, 5));
-    printer.setOutputFileName(gDirTwoLevelUp + "/print.pdf");
+    printer.setOutputFileName(saveFileName);
     printer.setOutputFormat(QPrinter::NativeFormat);
 
     QPrintDialog printDialog(&printer, this);
@@ -8815,39 +7279,6 @@ void MainWindow::on_actionShortcut_Guide_triggered()
     dialog.exec();
 }
 
-/*! \fn MainWindow::actionRecent_Project_clicked()
- *  \brief Checks if user clicked on recent project and opens the project if user has clicked recent project
- *  option.
- */
-/*void MainWindow::actionRecent_Project_clicked()
-{
-   isRecentProjclick = true;
-   //on_actionOpen_Project_triggered();
-}*/
-
-
-//class Thread1 : public QThread, public MainWindow
-//{
-//private:
-//    void run() override{
-
-//        MainWindow::load_data();
-
-//    }
-//};
-
-//class Thread2 : public QThread
-//{
-//private:
-//    void run() override{
-//        LoadingSpinner spinner;
-//        spinner.setWindowFlags(Qt::FramelessWindowHint);
-//        spinner.setModal(true);
-//        spinner.exec();
-
-//    }
-//};
-
 /*!
  * \fn MainWindow::on_textBrowser_textChanged
  * \brief Updates the word count based on browser text change
@@ -8921,7 +7352,7 @@ void MainWindow::zoom_slider_moved(int value)
  */
 void MainWindow::zoomedUsingScroll()
 {
-	currentZoomLevel = z->zoom_level;
+    currentZoomLevel = z->zoom_level;
     ui->horizontalSlider->setValue(z->zoom_level);
 }
 
@@ -9445,8 +7876,10 @@ void MainWindow::on_action3_triggered()
     on_actionOpen_Project_triggered();
 }
 
-
-
+/*!
+ * \fn MainWindow::RecentPageInfo
+ * \brief Used for storing recent page info in QSettings, so that last page opened for the set gets opened when that set is opened again
+ */
 void MainWindow::RecentPageInfo()
 {
     ui->treeView->selectionModel()->clearSelection();
@@ -9494,7 +7927,16 @@ void MainWindow::RecentPageInfo()
 
 
 
-
+/*!
+ * \fn MainWindow::on_actionCheck_for_Updates_triggered()
+ * \brief Checks for the update of the following File from Github-Repo
+ *Timer is set to 5000ms which starts the sprite animation.
+ * If the animation is already running, calling this method has no effect.
+ * Stores the response from github as string.
+ * Compares Latest Version to the Current version. If found Same then functions is returned.
+ * Latest Version is download if Current version is not equal to Latest Version.
+ * (Later) Button is also set if user does not want to upgrade this time.
+ */
 void MainWindow::on_actionCheck_for_Updates_triggered()
 {
     QUrl url("https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases");
@@ -9681,175 +8123,18 @@ void MainWindow::print(QPrinter *printer)
 }
 
 /*!
- * \brief MainWindow::on_actionChange_Role_triggered
+ *fn  MainWindow::on_actionChange_Role_triggered
+ * \brief Changes the role of the user.
+ *  provides application settings
+ *   prefix of the current group is set to(SETROLE)
  */
 void MainWindow::on_actionChange_Role_triggered()
 {
     QSettings settings("IIT-B", "OpenOCRCorrect");
-    settings.beginGroup("SetRole");
+    settings.beginGroup("Set Role");
     settings.remove("");
     settings.endGroup();
 }
-
-//void MainWindow::filterHtml(QFile *f)
-//{
-//    QFile *file = f;
-
-//    if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
-//        qDebug() << "File not opened for reading";
-//        return;
-//    }
-
-//    QTextStream in(file);
-//    in.setCodec("UTF-8");
-//    QString text = in.readAll();
-//    file->close();
-
-//    QRegularExpression re1("(<span[^>]*>)");
-//    QRegularExpressionMatchIterator it;
-
-//    it = re1.globalMatch(text);
-
-//    int prevStringStart = -1, prevStringEnd = -1, curStringStart = -1, curStringEnd = -1;
-//    QString prevString = "", curString = "";
-//    QVector<QVector<int> > results;
-
-//    while (it.hasNext()) {
-//        QRegularExpressionMatch match = it.next();
-//        curString = match.captured(1);
-//        curStringStart = match.capturedStart(1);
-//        curStringEnd = match.capturedEnd(1);
-
-//        // Checking if a new paragraph is starting or not
-//        if (prevString != "") {
-//            QString subString = text.mid(prevStringEnd, curStringEnd - prevStringEnd);
-//            if (subString.contains("</p>")) {
-//                prevString = "";
-//            }
-//        }
-
-//        if (prevString == "") {
-//            prevString = curString;
-//            prevStringStart = curStringStart;
-//            prevStringEnd = curStringEnd;
-//        }
-//        else if (prevString == curString) {
-//            QString subs = text.mid(prevStringEnd, curStringStart - prevStringEnd);
-//            int closingIndexOfspanClosing = subs.indexOf("</span>")+QString("</span>").length();
-
-//            if ((prevStringEnd + closingIndexOfspanClosing) == curStringStart) {
-//                results.push_back({prevStringStart, prevStringEnd, curStringStart, curStringEnd});
-//            }
-
-//            prevStringStart = curStringStart;
-//            prevStringEnd = curStringEnd;
-//        }
-//    }
-
-////    for(int i = 0; i < results.size(); i++) {
-////        qDebug() << "[" << results[i][0] << "," << results[i][1] << "," << results[i][2] << "," << results[i][3] << "]";
-////    }
-
-////    QFile file("/home/ajit/Internship/temp.html"); //opening temp1 file, where we will store data //temporarily
-//    if (!file->open(QFile::WriteOnly)) {
-//        qDebug() << "File not opened for writing";
-//        return;
-//    }
-//    QTextStream out(file);
-//    out.setCodec("UTF-8");
-
-//    int index = 0, flag = 0, flag_test = 0;
-//    int ite = 0, value_prev = 0;
-
-//    while(flag_test == 0 && index < text.size()) {
-//        QList<int> list_;
-
-//        for(int x = value_prev; x < results.size(); x++) {
-//            if(x < results.size() - 1) {
-//                if(results[x][2] == results[x+1][0]) {
-//                    int sizeList = list_.size();
-//                    if(sizeList == 0 || list_[sizeList - 1] != results[x][2]) {
-//                        list_.append(results[x][2]);
-//                    }
-//                    list_.append(results[x][3]);
-//                    list_.append(results[x+1][2]);
-//                }
-//                else {
-//                    int sizeList = list_.size();
-//                    if(sizeList == 0)
-//                        list_.append(results[x][2]);
-//                    list_.append(results[x][3]);
-//                    value_prev = x+1;
-//                    break;
-//                }
-//            }
-//            else {
-//                list_.append(results[x][2]);
-//                list_.append(results[x][3]);
-//                value_prev = x+1;
-//                break;
-//            }
-//        }
-
-//        for(int tmp = 0; tmp < list_.size(); tmp++) {
-//            if(tmp == 0) {
-//                while(index < list_[tmp]-7){
-//                    QChar s = text.at(index);
-//                    out << s;
-//                    index++;
-//                }
-//            }
-//            else {
-//                index = list_[tmp];
-//                if(tmp < list_.size() - 1)
-//                    tmp++;
-//                while(index < list_[tmp]-7) {
-//                    QChar s = text.at(index);
-//                    out << s;
-//                    index++;
-//                }
-//            }
-//        }
-
-////        qDebug() << "results.size() =" << results.size() << " | value_prev =" << value_prev;
-
-//        if(value_prev >= results.size()) {
-//            flag_test = 1;
-//        }
-//    }
-//    while(index < text.size()) {
-//        QChar s = text.at(index);
-//        out << s;
-//        index++;
-//    }
-//    file->close();
-//}
-
-//!This function stores bbox information of file before saving the changes
-//! It traverses html file & extracts "title" attribute from every tag and puts it in titleList.
-/*QStringList titleList; //shared between next two functions
-void MainWindow::restoreBbox(QFile *f){
-    QFile *file = f;
-
-    if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "File not opened for reading";
-        return;
-    }
-    titleList.clear();
-    QTextStream in(file);
-    in.setCodec("UTF-8");
-    QString text = in.readAll();
-    file->close();
-    QRegularExpression rex("(title=\"[^>]*\")");
-    QRegularExpressionMatchIterator itr;
-    itr = rex.globalMatch(text);
-    while (itr.hasNext()) {
-        QRegularExpressionMatch match = itr.next();
-        QString ex = match.captured(1);
-        titleList.append(ex);
-    }
-    //qDebug()<<"titleList="<<titleList;
-}*/
 
 //this function then re-introduces bbox's to saved file
 void MainWindow::bboxInsertion(QFile *f){
@@ -9981,7 +8266,17 @@ void MainWindow::bboxInsertion(QFile *f){
     }
 
 }
-
+/*!
+ *fn  MainWindow::finishedPdfCreation
+ * param int->exitCode
+ * QProcess::ExitStatus->exitStatus
+ * \brief Function is called When PDF Creation is successfull.
+ * Comapres exitcode to zero(0).If found True message is set to(PDF created Successfully)
+ * if exit code is EQUAL to -1,255,9 then PDF creation was Stopped by user.
+ * if other cases failed then PDF creation was unsuccessfull.
+ * File is Closed.
+ * Message Box of Title is Previewed.
+ */
 void MainWindow::finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStatus)
 {
     QString msg, title;
@@ -10016,7 +8311,15 @@ void MainWindow::finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStat
         QMessageBox::warning(this, title, msg, QMessageBox::Ok, QMessageBox::Ok);
     }
 }
-
+/*!
+ *fn  MainWindow::pdfPrintIsReady()
+ * \brief Pdf Creation is in the Process
+ * Loading Spinner is Stopped
+ * Users are given choice wheather to close the dialog box or wait.
+ * Window Title is set to Wait.
+ * CLose option is Added in Push Button.
+ * if close buttton is clicked then Print PDF process is called of.
+ */
 void MainWindow::pdfPrintIsReady()
 {
     stopSpinning();
@@ -10035,7 +8338,11 @@ void MainWindow::pdfPrintIsReady()
         mPrintPdfProcess->close();
     }
 }
-
+/*!
+ *fn  MainWindow::readOutputFromPdfPrint()
+ * \brief OutPut from Pdf is read.
+ * if Check String is Ready the  pdfPrintIsReady function is called.
+ */
 void MainWindow::readOutputFromPdfPrint()
 {
     QByteArray data = mPrintPdfProcess->readAllStandardOutput();
@@ -10050,7 +8357,10 @@ void MainWindow::readOutputFromPdfPrint()
     }
 }
 
-
+/*!
+ *fn  MainWindow::SearchOnGoogle()
+ * \brief selected text is searched over google to find it's meaning
+ */
 void MainWindow::SearchOnGoogle()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -10059,7 +8369,10 @@ void MainWindow::SearchOnGoogle()
 }
 
 
-
+/*!
+ *fn  MainWindow::GoogleTranslation()
+ * \brief selected Text translation is searched over google.
+ */
 void MainWindow::GoogleTranslation()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -10067,7 +8380,14 @@ void MainWindow::GoogleTranslation()
     QDesktopServices::openUrl(QUrl("https://translate.google.co.in/?sl=auto&tl=en&text=" +str+ "&op=translate", QUrl::TolerantMode));
 }
 
-
+/*!
+ *fn  MainWindow::insertImageAction()
+ * \brief Image is inserted in the opened file.
+ * File Dialog is opened,giving user choice to choose the images from their PC.
+ * if image file is empty then fucntion terminates.
+ * File information is stored(File Path)
+ * Image height and Width is set.
+ */
 void MainWindow::insertImageAction()
 {
     //qDebug()<<"Image Will Be Inserted"<<endl;
@@ -10084,52 +8404,51 @@ void MainWindow::insertImageAction()
     if(!QDir(gDirTwoLevelUp + "/Inserted_Images").exists())
             QDir().mkdir(gDirTwoLevelUp + "/Inserted_Images");
     QFile::copy(imgFilePath,copiedImgFilePath);
-
+     qDebug()<<imgFilePath<<"\n"<<copiedImgFilePath;
     int height =0;
     int width = 0;
+    QDialog dialog(this);
+    QFormLayout form(&dialog);
 
-    //!setting width
-    int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
-    //!setting height
-    int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
+    form.addRow(new QLabel("Insert Height and Width",this));
 
-    qDebug()<<imgFilePath<<"\n"<<copiedImgFilePath;
+    QLineEdit *height_textLine= new QLineEdit(&dialog);
+     QLineEdit *width_textLine= new QLineEdit(&dialog);
 
-    QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(copiedImgFilePath).arg(n).arg(n1);
+     form.addRow("Height",height_textLine);
+       form.addRow("Width",width_textLine);
+
+       QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
+       form.addRow(&buttonbox);
+
+       QObject::connect(&buttonbox,SIGNAL(accepted()),&dialog,SLOT(accept()));
+       QObject::connect(&buttonbox,SIGNAL(rejected()),&dialog,SLOT(reject()));
+
+       if(dialog.exec() ==QDialog::Accepted){
+           height=height_textLine->text().toInt();
+           width=width_textLine->text().toInt();
+       }
+
+
+
+   //setting width
+//    int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
+//    //!setting height
+//    int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
+
+
+
+    QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(copiedImgFilePath).arg(width).arg(height);
     auto cursor = curr_browser->textCursor();
     cursor.insertHtml(html);
 
 }
 
 
-
-
-//--------------------------------------------------------------------------------------------------------------------------------------
-void MainWindow::insertCompletion(const QString &completion)
-{
-
-    QTextCursor tc = TextBrowser->textCursor();
-    int extra = completion.length() - c->completionPrefix().length();
-    tc.movePosition(QTextCursor::Left);
-    tc.movePosition(QTextCursor::EndOfWord);
-    tc.insertText(completion.right(extra));
-    TextBrowser->setTextCursor(tc);
-}
-
-QString MainWindow::textUnderCursor()
-{
-    QTextCursor tc = TextBrowser->textCursor();
-    tc.select(QTextCursor::WordUnderCursor);
-    return tc.selectedText();
-}
-
-void MainWindow::focusInEvent(QFocusEvent *e)
-{
-    if (c)
-        c->setWidget(this);
-    QMainWindow::focusInEvent(e);
-}
-
+/*!
+ *fn  MainWindow::createMenu()
+ * \brief Menu is Created
+ */
 void MainWindow::createMenu()
 {
     QAction *exitAction = new QAction(tr("Exit"), this);
@@ -10140,329 +8459,60 @@ void MainWindow::createMenu()
     fileMenu->addAction(exitAction);
 }
 
-QAbstractItemModel *MainWindow::modelFromFile(const QString& fileName)
-{
-    QFile file(fileName);
-    if (!file.open(QFile::ReadOnly)){
-
-        qDebug()<<"File not opened...";
-        return new QStringListModel(c);
-    }
-qDebug()<<"File opened...";
-#ifndef QT_NO_CURSOR
-    QGuiApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-#endif
-    QStringList words;
-
-    while (!file.atEnd()) {
-        QByteArray line = file.readLine();
-        if (!line.isEmpty())
-            words << QString::fromUtf8(line.trimmed());
-    }
-
-#ifndef QT_NO_CURSOR
-    QGuiApplication::restoreOverrideCursor();
-#endif
-    return new QStringListModel(words, c);
-}
-
-
-//void MainWindow::loadHtmlInDoc(QFile *fq)
-//{
-//	QTextCursor cur(doc);
-//	if (!fq->open(QIODevice::ReadOnly | QIODevice::Text)) {
-//		qDebug() << "Cannot open file";
-//		return;
-//	}
-//	QString line;
-//	int flag_ = 0;
-//	QString inputText = "";
-
-////	QDir::setCurrent("/home/ajit/Internship/test_bbox/");
-
-//	while(!fq->atEnd()) {
-//		line=fq->readLine();
-//		line = line.simplified();
-//		QStringList l = line.split(" ");
-////		qDebug()<<"data line = "<<l;
-//		for(int i=0; i<l.size(); i++){
-//			//for parsing p tags
-//			if((l[i].contains("<p") && flag_ != 2) || flag_ == 1){
-//				flag_ = 1;
-//				while(i<l.size() && !l[i].contains("</p>")){
-////					qDebug()<<l[i];
-//					inputText += l[i];
-//					inputText += " ";
-//					i++;
-//				}
-//				if(i == l.size())
-//					i = i-1;
-//				if(l[i].contains("</p>")){
-//					flag_ = 0;
-////					qDebug()<<l[i];
-//					inputText += l[i];
-//					inputText += " ";
-//					cur.insertBlock();
-//					cur.insertHtml(inputText);
-//					inputText = "";
-//				}
-//			}
-
-//			//for parsing table tags
-//			else if(l[i].contains("<table") || flag_ == 2){
-//				flag_ = 2;
-//				while(i<l.size() && !l[i].contains("</table>")){
-////					qDebug()<<l[i];
-//					inputText += l[i];
-//					inputText += " ";
-//					i++;
-//				}
-//				if(i == l.size())
-//					i = i-1;
-//				if(l[i].contains("</table>")){
-//					flag_ = 0;
-////					qDebug()<<l[i];
-//					inputText += l[i];
-//					inputText += " ";
-//					cur.insertBlock();
-//					cur.insertHtml(inputText);
-//					inputText = "";
-//				}
-
-//			}
-
-//			//for parsing image tags
-//			else if(l[i].contains("<img") || flag_ == 3){
-//				flag_ = 3;
-//				while(i<l.size() && !l[i].contains(">")){
-////					qDebug()<<l[i];
-//					inputText += l[i];
-//					inputText += " ";
-//					i++;
-//				}
-//				if(i == l.size())
-//					i = i-1;
-//				if(l[i].contains(">")){
-//					flag_ = 0;
-////					qDebug()<<l[i];
-//					inputText += l[i];
-//					inputText += " ";
-////					qDebug() << inputText;
-//					cur.insertBlock();
-//					cur.insertHtml(inputText);
-//					inputText = "";
-//				}
-//			}
-
-//		}
-//		if(flag_ ==1 || flag_ == 2) {
-////			qDebug()<<"\n";
-//			inputText += "\n";
-//		}
-//	}
-
-//	cur = QTextCursor(doc->findBlockByNumber(0));
-//	cur.select(QTextCursor::BlockUnderCursor);
-//	cur.deleteChar();
-//	fq->close();
-
-//	storeBboxes(fq);
-//}
-
-//void MainWindow::storeBboxes(QFile *file)
-//{
-//	if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
-//		return;
-//	}
-
-//	QTextStream st(file);
-//	QString initial = st.readAll();
-//	file->close();
-//	bboxes.clear();
-
-//	QRegularExpression rex("(<p[^>]*>|<img[^>]*>|<table[^>]*>|</table>|<td[^>]*>)");
-//    QRegularExpressionMatchIterator itr;
-
-//    itr = rex.globalMatch(initial);
-
-//    QString temp_tags;
-//	bool inTable = false;
-
-//	while (itr.hasNext())
-//	{
-//		QRegularExpressionMatch match = itr.next();
-//		QString bbox_tags = match.captured(1);
-
-//		int first, last;
-//		first = bbox_tags.indexOf("bbox");
-//		if ((bbox_tags.indexOf("title=\"bbox") == -1) || (first == -1)) { // If bbox tag is not present
-//			temp_tags = "";
-//		} else { // If bbox tag is present
-//			int i = first;
-//			while (bbox_tags[i] != "\"") {
-//				i++;
-//			}
-//			last = i - 1;
-//			temp_tags = bbox_tags.mid(first, last - first + 1);
-//			temp_tags = temp_tags.simplified();
-
-////			last = bbox_tags.indexOf(">");
-////			temp_tags = bbox_tags.mid(first,last-first);
-////			temp_tags = temp_tags.simplified();
-//		}
-
-//		/*! @todo
-//		 * 1. If images are inside tables
-//		 * 2. If multiple lines are there in one cell of table i.e. if there are multiple paragraphs in one table cell
-//		 */
-
-//		if(bbox_tags.left(2) == "<i") {
-//			bboxes.push_back({"img",temp_tags});
-//		} else if(bbox_tags.left(2) == "<p" && (!inTable)) {
-//			bboxes.push_back({"p",temp_tags});
-//		} else if (bbox_tags.left(3) == "<td") {
-//			bboxes.push_back({"td", temp_tags});
-//		} else if (bbox_tags.left(6) == "<table") { // Table start
-//			inTable = true;
-//			bboxes.push_back({"table", temp_tags});
-//		} else if (bbox_tags.left(7) == "</table") {
-//			inTable = false;
-//			bboxes.push_back({"/table", temp_tags});
-//		}
-//	}
-////	qDebug() << bboxes;
-////	qDebug() << "size: " << bboxes.size();
-//}
-
 void MainWindow::blockCountChanged(int numOfBlocks)
 {
-	QTextCursor cur = curr_browser->textCursor();
-	int currentBlockNum = cur.blockNumber();
-	QPair<QString, QString> bbox_value;
+    QTextCursor cur = curr_browser->textCursor();
+    int currentBlockNum = cur.blockNumber();
+    QPair<QString, QString> bbox_value;
 
-	if (numOfBlocks > handleBbox->blockCount) {
-		if (currentBlockNum == 0) {
-			bbox_value = bboxes[0];
-			for (int i = 0; i < (numOfBlocks - blockCount); i++) {
-				bboxes.insert(currentBlockNum, {"p", bbox_value.second});
-			}
-		} else {
-			int pos = currentBlockNum - (numOfBlocks - blockCount);
-			bbox_value = bboxes[pos];
-			bbox_value.first = "p";
-			for (int i = 0; i < (numOfBlocks - blockCount); i++) {
-				bboxes.insert(pos + 1, bbox_value);
-			}
-		}
-	} else if (numOfBlocks < blockCount) {
-		int pos;
-		if (cur.atBlockEnd()) {
-			pos = currentBlockNum + 1;
-		} else if (cur.atBlockStart()) {
-			pos = currentBlockNum;
-		}
+    if (numOfBlocks > handleBbox->blockCount) {
+        if (currentBlockNum == 0) {
+            bbox_value = bboxes[0];
+            for (int i = 0; i < (numOfBlocks - blockCount); i++) {
+                bboxes.insert(currentBlockNum, {"p", bbox_value.second});
+            }
+        } else {
+            int pos = currentBlockNum - (numOfBlocks - blockCount);
+            bbox_value = bboxes[pos];
+            bbox_value.first = "p";
+            for (int i = 0; i < (numOfBlocks - blockCount); i++) {
+                bboxes.insert(pos + 1, bbox_value);
+            }
+        }
+    } else if (numOfBlocks < blockCount) {
+        int pos;
+        if (cur.atBlockEnd()) {
+            pos = currentBlockNum + 1;
+        } else if (cur.atBlockStart()) {
+            pos = currentBlockNum;
+        }
 
-		for (int i = 0; i < (blockCount - numOfBlocks); i++) {
-			bboxes.remove(pos);
-		}
-	}
-	blockCount = numOfBlocks;
+        for (int i = 0; i < (blockCount - numOfBlocks); i++) {
+            bboxes.remove(pos);
+        }
+    }
+    blockCount = numOfBlocks;
 }
 
 
-//void MainWindow::insertBboxes(QFile *fptr)
-//{
-////	qDebug() << "number of blocks = " << doc->blockCount();
-////	qDebug() << "size of bboxes = " << bboxes.size();
-//	if (!fptr->open(QIODevice::ReadOnly | QIODevice::Text)) {
-//		qDebug() << "Cannot open file for writing";
-//		return;
-//	}
-//	QString input = fptr->readAll();
-//	fptr->close();
-//	QRegularExpression regex_p("(<p[^>]*>|</p>|<img[^>]*>|<table[^>]*>|<td[^>]*>|</table>)");
-//	QRegularExpressionMatchIterator itr = regex_p.globalMatch(input);
-
-//	int i = 0;
-//	bool inTable = false;
-//	bool inPara = false;
-//	int increment = 0;
-//	QString currentTag;
-//	while (itr.hasNext() && i < bboxes.size()) {
-//		QRegularExpressionMatch match = itr.next();
-//		QString htmlTagData = match.captured(1);
-//		int end = match.capturedEnd(1);
-
-//		// If bbox is already present, move to next entry
-//		if (htmlTagData.indexOf("title=\"bbox") != -1) {
-//			i++;
-//			continue;
-//		}
-
-//		if (htmlTagData.left(6) == "<table") {
-//			inTable = true;
-//			currentTag = "table";
-//		} else if (htmlTagData.left(7) == "</table") {
-//			inTable = false;
-//			currentTag = "/table";
-//			continue;
-//		} else if (htmlTagData.left(4) == "<img") {
-//			if (inPara) {
-//				i--;
-//			}
-//			currentTag = "img";
-//		} else if (htmlTagData.left(3) == "<td") {
-//			currentTag = "td";
-//		} else if (htmlTagData.left(2) == "<p") {
-//			if (inTable) {
-//				continue;
-//			}
-//			currentTag = "p";
-//			inPara = true;
-//		} else if (htmlTagData.left(3) == "</p") {
-//			inPara = false;
-//			continue;
-//		}
-
-//		if (bboxes[i].first != currentTag) {
-//			qDebug() << "tags not matching at " << i;
-//		}
-//		QString temp = " title=\"" + bboxes[i++].second + "\"";
-//		increment += temp.length();
-
-//		if (currentTag == "img") {
-//			input.insert(end - 2, temp);
-//		} else {
-//			input.insert(end - 1, temp);
-//		}
-
-//		itr = regex_p.globalMatch(input, end + 1);
-//	}
-
-//	if (!fptr->open(QIODevice::WriteOnly | QIODevice::Text)) {
-//		qDebug() << "Cannot open file for writing";
-//		return;
-//	}
-
-//	QTextStream out(fptr);
-//	out.setCodec("utf-8");
-//	out << input;
-//	out.flush();
-//	fptr->close();
-//}
-
-
-
-
-
-
+/*!
+ *fn  MainWindow::on_actionLogin_triggered()
+ * \brief authenticate function is called.
+ * user is reDirected to Google login page
+ */
 
 void MainWindow::on_actionLogin_triggered()
 {
     authenticate();
 }
 
-
+/*!
+ *fn  MainWindow::on_actionLogout_triggered()
+ * \brief Function is executed when user logouts.
+ * Logout button is not visible
+ * login button is previewed so that user can login
+ *
+ */
 void MainWindow::on_actionLogout_triggered()
 {
     QSettings settings("IIT-B", "OpenOCRCorrect");
@@ -10483,8 +8533,15 @@ void MainWindow::on_actionLogout_triggered()
     settings.endGroup();
 
 }
-
-
+/*!
+ *fn  MainWindow::on_actionClone_Repository_triggered()
+ * \brief This function helps user to clone repositories from their account.
+ * Checks if user is already logined or not. If not then user is made to login
+ * POST request is send to udaaniitb.aicte-india.org to get the files.
+ * Json Object File is read and converted to Json Array.
+ * "validate.json" is removed from output
+ * Table is formed to preview how many file does user have in their repository
+ */
 void MainWindow::on_actionClone_Repository_triggered()
 {
     /*
@@ -10547,16 +8604,17 @@ void MainWindow::on_actionClone_Repository_triggered()
 
 
 
-/*
-Close Project closes the current project and side by side disables all the
- buttons which are required when project is opened
-  */
-
-
+/*!
+ *fn  MainWindow::on_actionClose_project_triggered()
+ * \brief Closes the current opened Project
+ * Checks wheather if projected is opened or not.If not Function terminates
+ * Clears Tree view,Current browser,graphicsView.
+ * All buttons which were enabled during the Open project are closed,Like
+ * Zoom,Compare Corrector output,save etc.
+ * Dictornary is cleared
+ */
 void MainWindow::on_actionClose_project_triggered()
 {
-
-
     if(!mProject.isProjectOpen()){
 //        QMessageBox::critical(this,"Error","Project Not Opened");
         return;                                                                  //checking if the project is already
@@ -10668,14 +8726,12 @@ void MainWindow::on_actionClose_project_triggered()
 
     if(ui->lineEdit_3->text()!="" && ui->lineEdit_3->text()!="Words 0" && ui->lineEdit_3->text()!="0 Words"){
         curr_browser->clear();
-    }                                                        //if the curr_browser and graphicsview
-    //are empty then we dont clear the curr_browser else we do
-
-    ui->treeView->setModel(nullptr);  //clearing tree view
-    ui->graphicsView->setScene(nullptr);   //clearing graphicsview
+    }
+    ui->treeView->setModel(nullptr);
+    ui->graphicsView->setScene(nullptr);
     ui->lineEdit_2->clear();
     ui->lineEdit->clear();
-    ui->lineEdit_3->clear();                //disabling all other buttons which are enabled when project is open
+    ui->lineEdit_3->clear();
     ui->pushButton->setDisabled(true);
     ui->pushButton_2->setDisabled(true);
     ui->viewComments->setDisabled(true);
@@ -10685,43 +8741,25 @@ void MainWindow::on_actionClose_project_triggered()
     curr_browser=0;
 }
 
-void MainWindow::preprocessing(){
-
-    slpNPatternDict slnp;
-    QTextCharFormat fmt;
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    curr_browser->moveCursor(QTextCursor::Start);
-
-    QTextCursor cursor(doc); //get the cursor
-
-    while(!cursor.atEnd()){
-        cursor.select(QTextCursor::WordUnderCursor);
-        fmt = cursor.charFormat();
-        QString str1 = cursor.selectedText();
-        auto sel = cursor.selection().toHtml();
-        if(!sel.contains("<img") && !str1.contains(QRegExp("[0-9]")) && !str1.contains(QRegExp("[a-zA-Z]")) && !str1.contains(QRegExp("[%!@#$^&*()]"))){
-            string selectedString = str1.toUtf8().constData();
-            string output = slnp.toDev(slnp.toslp1(selectedString));
-            cursor.mergeCharFormat(fmt);
-            cursor.insertText(QString::fromStdString(output));
-        }
-        cursor.setPosition(cursor.position()+1, QTextCursor::MoveAnchor);
+/*!
+ * \fn MainWindow::on_actionMerge_Cells_triggered
+ * \brief Merges the cells selected in the table.
+ * \details Tables are manipulated using QTextTable module from Qt.
+ */
+void MainWindow::on_actionMerge_Cells_triggered()
+{
+    if (!curr_browser || curr_browser->isReadOnly()) { return; }
+    if (curr_browser->textCursor().currentTable())
+    {
+        QTextTable *table = curr_browser->textCursor().currentTable();
+        table->mergeCells(curr_browser->textCursor());
     }
 }
 
-
-void MainWindow::on_actionMerge_Cells_triggered()
-{
-	if (!curr_browser || curr_browser->isReadOnly()) { return; }
-	if (curr_browser->textCursor().currentTable())
-	{
-		QTextTable *table = curr_browser->textCursor().currentTable();
-		table->mergeCells(curr_browser->textCursor());
-	}
-}
-
-
+/*!
+ * \fn MainWindow::on_actionSplit_Cell_triggered
+ * \brief Splits the current cell into the rows and columns specified by the user.
+ */
 void MainWindow::on_actionSplit_Cell_triggered()
 {
     if (!curr_browser || curr_browser->isReadOnly()) { return; }
@@ -10751,7 +8789,10 @@ void MainWindow::on_actionSplit_Cell_triggered()
     }
 }
 
-
+/*!
+ * \fn MainWindow::on_actionInsert_Bulleted_List_triggered
+ * \brief Adds the bulleted list to the text browser
+ */
 void MainWindow::on_actionInsert_Bulleted_List_triggered()
 {
     QDialog dialog(this);
@@ -10796,7 +8837,10 @@ void MainWindow::on_actionInsert_Bulleted_List_triggered()
     }
 }
 
-
+/*!
+ * \fn MainWindow::on_actionInsert_Numbered_List_triggered
+ * \brief Adds the Numbered list to the text browser
+ */
 void MainWindow::on_actionInsert_Numbered_List_triggered()
 {
     QDialog dialog(this);
@@ -10841,7 +8885,12 @@ void MainWindow::on_actionInsert_Numbered_List_triggered()
     }
 }
 
-
+/*!
+ * \fn MainWindow::insertList
+ * \brief Acts as a helper for adding ordered and unordered lists
+ * \details Inserts the list according to the styleIndex provided
+ * \param styleIndex
+ */
 void MainWindow::insertList(QTextListFormat::Style styleIndex)
 {
     QTextCursor cursor(curr_browser->textCursor());
@@ -10907,7 +8956,10 @@ void MainWindow::on_actionEdit_Equation_triggered()
     w->show();
 }
 
-
+/*!
+ *fn  MainWindow::on_actionExit_triggered()
+ * \brief Application is exited and Closed.
+ */
 void MainWindow::on_actionExit_triggered()
 {
     QCoreApplication::quit();

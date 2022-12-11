@@ -9,6 +9,14 @@
 #include <QAbstractItemModel>
 #include <QStringListModel>
 #include <QScrollBar>
+
+
+/*!
+ * \fn CustomTextBrowser::CustomTextBrowser
+ * \brief This class is used for creating a custom QTextBrowser which supports auto-completion
+ * \details Auto-completion suggestions are being shown on the basis of the words stored in the specific language file. It matches by taking the first 3 letters of the words and then gives suggestions whose prefix matches.
+ * \param QWidget *parent
+ */
 CustomTextBrowser::CustomTextBrowser(QWidget *parent): QTextBrowser(parent)
 {
 
@@ -27,10 +35,19 @@ CustomTextBrowser::CustomTextBrowser(QWidget *parent): QTextBrowser(parent)
     }
 }
 
+/*!
+ * \fn CustomTextBrowser::~CustomTextBrowser/
+ * \brief Destructor
+ */
 CustomTextBrowser::~CustomTextBrowser()
 {
 }
 
+/*!
+ * \fn CustomTextBrowser::setCompleter
+ * \brief This function sets the completer passed into it and connects the SIGNAL(activated) to the SLOT(insertCompletion).
+ * \param completer
+ */
 void CustomTextBrowser::setCompleter(QCompleter *completer)
 {
     if (c)
@@ -47,14 +64,23 @@ void CustomTextBrowser::setCompleter(QCompleter *completer)
     QObject::connect(c, QOverload<const QString &>::of(&QCompleter::activated),
                      this, &CustomTextBrowser::insertCompletion);
 }
-//! [2]
 
-//! [3]
+/*!
+ * \fn CustomTextBrowser::completer
+ * \brief This function returns the pointer to the QCompleter which was set earlier
+ * \return QCompleter *completer
+ */
 QCompleter *CustomTextBrowser::completer() const
 {
     return c;
 }
 
+/*!
+ * \fn CustomTextBrowser::modelFromFile
+ * \brief This function takes a filename and reads the data line by line and adds it to an array which it stores in the QStringListModel and returns this model.
+ * \param fileName
+ * \return QAbstractItemModel *model
+ */
 QAbstractItemModel *CustomTextBrowser::modelFromFile(const QString& fileName)
 {
 	QFile file(fileName);
@@ -63,7 +89,6 @@ QAbstractItemModel *CustomTextBrowser::modelFromFile(const QString& fileName)
 		qDebug()<<"File not opened...";
         return new QStringListModel(nullptr);
 	}
-//qDebug()<<"File opened...";
 #ifndef QT_NO_CURSOR
 	QGuiApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 #endif
@@ -81,6 +106,11 @@ QAbstractItemModel *CustomTextBrowser::modelFromFile(const QString& fileName)
     return new QStringListModel(words, nullptr);
 }
 
+/*!
+ * \fn CustomTextBrowser::insertCompletion
+ * \brief This function inserts the top-most suggestion in the browser
+ * \param completion
+ */
 void CustomTextBrowser::insertCompletion(const QString &completion)
 {
     if (c->widget() != this)
@@ -93,6 +123,11 @@ void CustomTextBrowser::insertCompletion(const QString &completion)
     setTextCursor(tc);
 }
 
+/*!
+ * \fn CustomTextBrowser::textUnderCursor
+ * \brief This function returns the word under the cursor.
+ * \return QString textUnderCursor
+ */
 QString CustomTextBrowser::textUnderCursor() const
 {
     QTextCursor tc = textCursor();
@@ -100,6 +135,11 @@ QString CustomTextBrowser::textUnderCursor() const
     return tc.selectedText();
 }
 
+/*!
+ * \fn CustomTextBrowser::focusInEvent
+ * \brief This function is responsible for making the text browser receive keyboard focus events.
+ * \param QFocusEvent *e
+ */
 void CustomTextBrowser::focusInEvent(QFocusEvent *e)
 {
     if (c)
@@ -107,10 +147,13 @@ void CustomTextBrowser::focusInEvent(QFocusEvent *e)
     QTextBrowser::focusInEvent(e);
 }
 
+/*!
+ * \fn CustomTextBrowser::keyPressEvent
+ * \brief The function is written to ignore key events like Qt::Key_Enter, Qt::Key_Return, Qt::Key_Escape, Qt::Key_Tab, and Qt::Key_Backtab so the completer can handle them. If there is an active completer, we cannot process the shortcut, Ctrl+E. e also handle other modifiers and shortcuts for which we do not want the completer to respond to.
+ * \param QKeyEvent *e
+ */
 void CustomTextBrowser::keyPressEvent(QKeyEvent *e)
 {
-//    qDebug()<<"textBrowser poped up...";
-
     if (c && c->popup()->isVisible()) {
         // The following keys are forwarded by the completer to the widget
        switch (e->key()) {
@@ -119,11 +162,11 @@ void CustomTextBrowser::keyPressEvent(QKeyEvent *e)
        case Qt::Key_Escape:
        case Qt::Key_Tab:
        case Qt::Key_Backtab:
-            e->ignore();
-            return;
-            // let the completer do default behavior
+       {
+           e->ignore();
+           return;
+       }
        case Qt::Key_Space:
-
        default:
            break;
        }
@@ -142,40 +185,23 @@ void CustomTextBrowser::keyPressEvent(QKeyEvent *e)
     const bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
     QString completionPrefix = textUnderCursor();
 
-
-
     if ((hasModifier || e->text().isEmpty()|| completionPrefix.length() < 3
-                      || eow.contains(e->text().right(1)))) {
+         || eow.contains(e->text().right(1)))) {
         c->popup()->hide();
         return;
     }
 
-
-
-
-
-    //.............................
     string str = completionPrefix.toStdString();
-
-
     slpNPatternDict justForCheck ;
-
-    int  x= 0;
-
-
-     x = (str==justForCheck.toDev(str));
-
-
-    if(e->key()==Qt::Key_Tab || e->key()== Qt::Key_Enter || e->key()== Qt::Key_Space) x=0;
-
+    int  x = 0;
+    x = (str == justForCheck.toDev(str));
+    if(e->key()==Qt::Key_Tab || e->key()== Qt::Key_Enter || e->key()== Qt::Key_Space) x = 0;
 
     else if(x)
     {
         x=1;
         c->setModel(devModel);
         c->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
-        //c->setCaseSensitivity(Qt::CaseInsensitive);
-        //this->setCompleter(c);
     }
     else
     {
@@ -183,48 +209,14 @@ void CustomTextBrowser::keyPressEvent(QKeyEvent *e)
         c->setModel(engModel);
         c->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
         c->setCaseSensitivity(Qt::CaseInsensitive);
-        //this->setCompleter(c);
     }
-    //.............................
-
 
     if (completionPrefix != c->completionPrefix()) {
         c->setCompletionPrefix(completionPrefix);
         c->popup()->setCurrentIndex(c->completionModel()->index(0, 0));
     }
     QRect cr = cursorRect();
-
-
-
     cr.setWidth(c->popup()->sizeHintForColumn(0)
                 + c->popup()->verticalScrollBar()->sizeHint().width());
     c->complete(cr); // popup it up!
-//    qDebug()<<"textBrowser last poped up...";
 }
-
-
-//QAbstractItemModel *CustomTextBrowser::modelFromFile(const QString& fileName)
-//{
-//    QFile file(fileName);
-//    if (!file.open(QFile::ReadOnly))
-//    {
-//        qDebug()<<"File not opened...";
-//        return new QStringListModel(c);
-//    }
-//qDebug()<<"File opened...";
-//#ifndef QT_NO_CURSOR
-//    QGuiApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-//#endif
-//    QStringList words;
-
-//    while (!file.atEnd()) {
-//        QByteArray line = file.readLine();
-//        if (!line.isEmpty())
-//            words << QString::fromUtf8(line.trimmed());
-//    }
-
-//#ifndef QT_NO_CURSOR
-//    QGuiApplication::restoreOverrideCursor();
-//#endif
-//    return new QStringListModel(words, c);
-//}

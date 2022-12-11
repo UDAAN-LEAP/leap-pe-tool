@@ -34,6 +34,7 @@ private:
 	QTextDocument *doc;
 	bool docIsPassed;
 	void storeBboxes(QFile *f);
+    QString latex2png(QString);
 };
 
 #endif // HANDLEBBOX_H

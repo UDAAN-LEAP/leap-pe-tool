@@ -13,14 +13,12 @@
 #include <QVBoxLayout>
 
 /*! \class ResizeImageView
- * This Class is used to Resize the image.
- *  ---------------------------
  * \fn ResizeImageView::ResizeImageView
+ * \brief This Class is used to Resize the image.
  * \param QWidget->parent
  * \param double->imageWidth
  * \param double->imageHight
- * --------------------------
- * functionality->
+ * \details
  * 1)Sets the Window title as "Resize Image Size"
  * 2)Sets up the user interface for the specified widget.
  * 3)Maximum limit of width is kept as 1500 units and minimum as 20 units
@@ -29,7 +27,6 @@
  * 6)Translated version of sourceText is set to "Resize Image"
  * 7)several flags are set thus giving hints on the behavior of the window.
  *  The behavior is platform-dependent
- * -------------------------------------
  */
 ResizeImageView::ResizeImageView(QWidget *parent,double imageWidth,double imageHight):
     QDialog(parent),
@@ -62,14 +59,14 @@ ResizeImageView::ResizeImageView(QWidget *parent,double imageWidth,double imageH
 }
 
 /*!
-* \fn ResizeImageView::getNewSize
-* \brief This function creates an object for ResizeImageview class and passes the width and height provided by
-*        the user as input.
-* \param parent
-* \param imageWidth
-* \param imageHight
-*
-*/
+ * \fn ResizeImageView::getNewSize
+ * \brief This function creates an object for ResizeImageview class and passes the width and height provided by
+ *        the user as input.
+ * \param parent
+ * \param imageWidth
+ * \param imageHight
+ *
+ */
 QPair<double,double> ResizeImageView::getNewSize(QWidget * parent, double imageWidth, double imageHight)
 {
     ResizeImageView rz(parent,imageWidth,imageHight);
@@ -80,17 +77,20 @@ QPair<double,double> ResizeImageView::getNewSize(QWidget * parent, double imageW
     return size;
 }
 
+/*!
+ * \fn ResizeImageView::~ResizeImageView
+ * \brief Destructor
+ */
 ResizeImageView::~ResizeImageView()
 {
     delete ui;
 }
 
 /*!
-* \fn ResizeImageView::on_widthSpinBox_valueChanged
-* \brief This function changes the height of the hightSpinBox when width is changed.
-* \param width
-*
-*/
+ * \fn ResizeImageView::on_widthSpinBox_valueChanged
+ * \brief This function changes the height of the hightSpinBox when width is changed.
+ * \param width
+ */
 void ResizeImageView::on_widthSpinBox_valueChanged(double width)
 {
     if(keepRatioCheckBox->isChecked()) {
@@ -104,10 +104,10 @@ void ResizeImageView::on_widthSpinBox_valueChanged(double width)
 }
 
 /*!
-* \fn ResizeImageView::on_hightSpinBox_valueChanged
-* \brief This function changes the width of the widthSpinBox when height is changed.
-* \param hight
-*/
+ * \fn ResizeImageView::on_hightSpinBox_valueChanged
+ * \brief This function changes the width of the widthSpinBox when height is changed.
+ * \param hight
+ */
 void ResizeImageView::on_hightSpinBox_valueChanged(double hight)
 {
     if(keepRatioCheckBox->isChecked()) {
@@ -121,22 +121,20 @@ void ResizeImageView::on_hightSpinBox_valueChanged(double hight)
 }
 
 /*!
-* \fn ResizeImageView::on_Ok_clicked
-* \brief This function called when ok is clicked for resizing
-*
-* \sa accept()
-*/
+ * \fn ResizeImageView::on_Ok_clicked
+ * \brief This function called when ok is clicked for resizing
+ * \sa accept()
+ */
 void ResizeImageView::on_Ok_clicked()
 {
     accept();
 }
 
 /*!
-* \fn ResizeImageView::on_Ok_clicked
-* \brief This function called when cancle is clicked for resizing
-*
-* \sa reject()
-*/
+ * \fn ResizeImageView::on_Ok_clicked
+ * \brief This function called when cancle is clicked for resizing
+ * \sa reject()
+ */
 void ResizeImageView::on_Cancel_clicked()
 {
     reject();

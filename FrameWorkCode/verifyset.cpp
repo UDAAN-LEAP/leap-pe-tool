@@ -62,16 +62,25 @@ bool VerifySet::LoadProjectXMLFormat()
     return true;
 }
 
+/*!
+ * \fn VerifySet::getErrorCode
+ * \brief Returns the error code
+ * \return int error_code
+ */
 int VerifySet::getErrorCode()
 {
     return error_code;
 }
 
+/*!
+ * \fn VerifySet::getErrorString
+ * \brief Returns the error string
+ * \return QString error_string
+ */
 QString VerifySet::getErrorString()
 {
     return error_string;
 }
-
 
 /*!
  * \fn verifyNode
@@ -150,7 +159,3 @@ bool VerifySet::verifyNodeAttributes(pugi::xml_node nodeTest, pugi::xml_node nod
         return false;
     return true;
 }
-
-
-
-

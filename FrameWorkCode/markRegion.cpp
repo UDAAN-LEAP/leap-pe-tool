@@ -15,17 +15,17 @@
 extern QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName;
 
 
-
 /*!
-* \fn markRegion::updateEntries
-* \brief Updating entries for figure/table/equation pagewise in image.xml
-* \param document
-* \param filename
-* \param PageNo
-* \param s2
-* \param i
-* \sa qInstallMessageHandler()
-*/
+ * \fn markRegion::updateEntries
+ * \brief Updating entries for figure/table/equation pagewise in image.xml
+ * \details It uses QDomDocument module for handling the XML and updating the values into it.
+ * \param document
+ * \param filename
+ * \param PageNo
+ * \param s2
+ * \param i
+ * \sa qInstallMessageHandler()
+ */
 void markRegion::updateEntries(QDomDocument document, QString filename,QString PageNo, QString s2, int i)
 {
     qInstallMessageHandler(crashlog::myMessageHandler);
@@ -69,11 +69,11 @@ void markRegion::updateEntries(QDomDocument document, QString filename,QString P
 
 
 /*!
-* \fn markRegion::createImageInfoXMLFile
-* \brief Genearte image.xml for figure/table/equation entries and initialize
-*        these values by 1 iff when this file does not exist.
-* \sa qInstallMessageHandler()
-*/
+ * \fn markRegion::createImageInfoXMLFile
+ * \brief Genearte image.xml for figure/table/equation entries and initialize
+ *        these values by 1 iff when this file does not exist.
+ * \sa qInstallMessageHandler()
+ */
 void markRegion::createImageInfoXMLFile()
 {
     QDomDocument document;
