@@ -15,6 +15,7 @@
 # sys.path.insert(0, os.path.abspath('.'))
 
 import subprocess, os, sys
+from sphinx.locale import _
 
 sys.path.insert(0, os.path.abspath('./docs/'))
 
@@ -29,10 +30,11 @@ if read_the_docs_build:
 
 # -- Project information -----------------------------------------------------
 
-project = 'OpenOCRCorrect'
-copyright = '2022, IITB Admin'
-author = 'IITB Admin'
+project = u'OpenOCRCorrect'
+copyright = u'2022, IITB Admin'
+author = u'IITB Admin'
 
+language = 'en'
 
 # -- General configuration ---------------------------------------------------
 
