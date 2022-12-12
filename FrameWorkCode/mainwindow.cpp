@@ -8110,7 +8110,7 @@ void MainWindow::print(QPrinter *printer)
 void MainWindow::on_actionChange_Role_triggered()
 {
     QSettings settings("IIT-B", "OpenOCRCorrect");
-    settings.beginGroup("Set Role");
+    settings.beginGroup("SetRole");
     settings.remove("");
     settings.endGroup();
 }
