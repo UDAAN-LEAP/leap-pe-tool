@@ -202,34 +202,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     settings.beginGroup("loginConsent");
     QString value = settings.value("consent").toString();
     if(value != "dna" && value != "loggedIn"){
-    QMessageBox login;
-    login.setWindowTitle("Login using Google");
-    login.setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint|Qt::WindowCloseButtonHint);
-    login.setIcon(QMessageBox::Information);
-    login.setInformativeText("You can save your edits on the cloud. To enable this feature please login using your google account now or later in settings > login");
-    QPushButton *confirmButton = login.addButton(tr("Login"),QMessageBox::AcceptRole);
-    QPushButton *cancelButton = login.addButton(tr("Cancel"),QMessageBox::ActionRole);
-    QCheckBox *cb = new QCheckBox("Do not ask again");
-    login.setCheckBox(cb);
-    cb->setStyleSheet("QCheckBox{color:rgb(227, 228, 228);border:0px;}");
-
-    login.exec();
-    if(cb->checkState() == Qt::Checked){
-        settings.setValue("consent","dna");
-    }
-    if(login.clickedButton() == confirmButton)
-    {
-      authenticate();
-      this->close();
-    }
-    if(login.clickedButton() == cancelButton){
-        login.close();
-    }
+        login();
     }
     //show login/logout options
-    QString consent = settings.value("consent").toString();
     settings.endGroup();
-    if(consent != "loggedIn"){
+    if(value != "loggedIn"){
         this->ui->actionLogin->setVisible(true);
         this->ui->actionLogout->setVisible(false);
     }
@@ -3465,10 +3442,11 @@ void MainWindow::on_actionFetch_2_triggered()
     }
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
     settings.endGroup();
     QProcess process;
     process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"\" -o validate.json");
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
 
     QStringList list = gDirTwoLevelUp.split("/");
     QString repo = list[list.size()-1];
@@ -3584,10 +3562,11 @@ void MainWindow::on_actionTurn_In_triggered()
     //retrieve details from database and check if user has access to push into this repo
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
     settings.endGroup();
     QProcess process;
     process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"\" -o validate.json");
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
 
     QStringList list = gDirTwoLevelUp.split("/");
     QString repo = list[list.size()-1];
@@ -8402,9 +8381,9 @@ void MainWindow::insertImageAction()
 
     QString copiedImgFilePath(gDirTwoLevelUp + "/Inserted_Images/"+imgFileName);
     if(!QDir(gDirTwoLevelUp + "/Inserted_Images").exists())
-            QDir().mkdir(gDirTwoLevelUp + "/Inserted_Images");
+        QDir().mkdir(gDirTwoLevelUp + "/Inserted_Images");
     QFile::copy(imgFilePath,copiedImgFilePath);
-     qDebug()<<imgFilePath<<"\n"<<copiedImgFilePath;
+    qDebug()<<imgFilePath<<"\n"<<copiedImgFilePath;
     int height =0;
     int width = 0;
     QDialog dialog(this);
@@ -8413,28 +8392,28 @@ void MainWindow::insertImageAction()
     form.addRow(new QLabel("Insert Height and Width",this));
 
     QLineEdit *height_textLine= new QLineEdit(&dialog);
-     QLineEdit *width_textLine= new QLineEdit(&dialog);
+    QLineEdit *width_textLine= new QLineEdit(&dialog);
 
-     form.addRow("Height",height_textLine);
-       form.addRow("Width",width_textLine);
+    form.addRow("Height",height_textLine);
+    form.addRow("Width",width_textLine);
 
-       QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
-       form.addRow(&buttonbox);
+    QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
+    form.addRow(&buttonbox);
 
-       QObject::connect(&buttonbox,SIGNAL(accepted()),&dialog,SLOT(accept()));
-       QObject::connect(&buttonbox,SIGNAL(rejected()),&dialog,SLOT(reject()));
+    QObject::connect(&buttonbox,SIGNAL(accepted()),&dialog,SLOT(accept()));
+    QObject::connect(&buttonbox,SIGNAL(rejected()),&dialog,SLOT(reject()));
 
-       if(dialog.exec() ==QDialog::Accepted){
-           height=height_textLine->text().toInt();
-           width=width_textLine->text().toInt();
-       }
+    if(dialog.exec() ==QDialog::Accepted){
+        height=height_textLine->text().toInt();
+        width=width_textLine->text().toInt();
+    }
 
 
 
-   //setting width
-//    int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
-//    //!setting height
-//    int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
+    //setting width
+    //    int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
+    //    //!setting height
+    //    int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
 
 
 
@@ -8503,7 +8482,8 @@ void MainWindow::blockCountChanged(int numOfBlocks)
 
 void MainWindow::on_actionLogin_triggered()
 {
-    authenticate();
+//    authenticate();
+    login();
 }
 
 /*!
@@ -8518,20 +8498,12 @@ void MainWindow::on_actionLogout_triggered()
     QSettings settings("IIT-B", "OpenOCRCorrect");
     ui->actionLogout->setVisible(false);
     ui->actionLogin->setVisible(true);
-    //QDesktopServices::openUrl(QUrl("https://myaccount.google.com/permissions?continue=https%3A%2F%2Fmyaccount.google.com%2Fsecurity", QUrl::TolerantMode));
-    settings.beginGroup("login");
-    QString token = settings.value("token").toString();
-    settings.endGroup();
-    QProcess process;
-   //qDebug()<<"curl -d -X -POST --header \"Content-type:application/x-www-form-urlencoded\" https://oauth2.googleapis.com/revoke?token="+token;
-    process.execute("curl -d -X -POST --header \"Content-type:application/x-www-form-urlencoded\" https://oauth2.googleapis.com/revoke?token="+token);
     settings.beginGroup("loginConsent");
     settings.remove("");
     settings.endGroup();
     settings.beginGroup("login");
     settings.remove("");
     settings.endGroup();
-
 }
 /*!
  *fn  MainWindow::on_actionClone_Repository_triggered()
@@ -8572,10 +8544,11 @@ void MainWindow::on_actionClone_Repository_triggered()
     //retrieve details from database and check if user has access to push into this repo
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
     settings.endGroup();
     QProcess process;
     process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"\" -o validate.json");
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
 
     QJsonObject mainObj = readJsonFile("validate.json");
     QJsonArray repos = mainObj.value("repo_list").toArray();
@@ -8965,3 +8938,76 @@ void MainWindow::on_actionExit_triggered()
     QCoreApplication::quit();
 }
 
+void MainWindow::login(){
+    QDialog login(this);
+    QFormLayout form(&login);
+    QString user_email,user_pass;
+
+    form.addRow(new QLabel("You can save your edits on the cloud. To enable this feature\nplease login using your udaan account now or later in\nsettings > login",this));
+
+    QLineEdit *email= new QLineEdit(&login);
+    QLineEdit *password= new QLineEdit(&login);
+    password->setEchoMode(QLineEdit::Password);
+
+    form.addRow("Email",email);
+    form.addRow("Password",password);
+    QLabel *label = new QLabel(&login);
+    label->setText("Forgot your password?\t<a href=\"https://udaaniitb.aicte-india.org/udaan/accounts/password_reset/\"> reset password</a>");
+    QLabel *label2 = new QLabel(&login);
+    label2->setText("Don't have an account yet?<a href=\"https://udaaniitb.aicte-india.org/udaan/auth/register/\"> create account</a>");
+    label->setOpenExternalLinks(true);
+    label2->setOpenExternalLinks(true);
+    form.addRow("",label);
+    form.addRow("",label2);
+    QCheckBox *cb = new QCheckBox("Do not ask again");
+    form.addRow("",cb);
+
+    QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&login);
+    buttonbox.button(QDialogButtonBox::Ok)->setText("Login");
+    form.addRow(&buttonbox);
+
+    QObject::connect(&buttonbox,SIGNAL(accepted()),&login,SLOT(accept()));
+    QObject::connect(&buttonbox,SIGNAL(rejected()),&login,SLOT(reject()));
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+
+    if(login.exec() ==QDialog::Accepted){
+        user_email = email->text();
+        user_pass = password->text();
+        if(!user_email.isEmpty() && !user_pass.isEmpty()){
+        QProcess process;
+        process.execute("curl -d -X -k -POST --header "
+                        "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+user_email+"&password="+user_pass+"\" -o client.json");
+
+
+        QJsonObject mainObj = readJsonFile("client.json");
+        auto status = mainObj.value("status").toBool();
+
+        if(status == true){
+            //save details in QSettings
+            settings.beginGroup("login");
+            settings.setValue("email",user_email);
+            settings.setValue("token",user_pass);
+            settings.endGroup();
+            settings.beginGroup("loginConsent");
+            settings.setValue("consent","loggedIn");
+            settings.endGroup();
+            ui->actionLogin->setVisible(false);
+            ui->actionLogout->setVisible(true);
+        }
+        else{
+            QMessageBox::information(this,"Login error","Wrong email or password, please try again.");
+            MainWindow::login();
+        }
+        }
+        else{
+            QMessageBox::information(this,"Required!","Please fill all the fields");
+            MainWindow::login();
+        }
+    }
+
+    if(cb->checkState() == Qt::Checked){
+        settings.beginGroup("loginConsent");
+        settings.setValue("consent","dna");
+        settings.endGroup();
+    }
+}

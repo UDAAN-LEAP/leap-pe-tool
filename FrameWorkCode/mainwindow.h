@@ -428,6 +428,7 @@ public slots:
 	void blockCountChanged(int);
 
     void authenticate();
+    void login();
 
 private:
     bool mExitStatus = false;
