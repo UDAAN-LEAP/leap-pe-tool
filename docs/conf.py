@@ -36,6 +36,8 @@ author = u'IITB Admin'
 
 language = 'en'
 
+source_encoding = 'utf-8'
+
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
