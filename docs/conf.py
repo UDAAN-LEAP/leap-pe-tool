@@ -14,18 +14,17 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
-import subprocess, os
+import subprocess, os, sys
+
+sys.path.insert(0, os.path.abspath('./docs/'))
 
 # Check if we're running on Read the docs' servers
 read_the_docs_build = os.environ.get('READTHEDOCS', None) == 'True'
 
-breathe_projects = {}
+breathe_projects = {"OpenOCRCorrect": "./build/xml"}
 
 if read_the_docs_build:
-    input_dir = '../FrameWorkCode'
-    output_dir = 'build'
     subprocess.call('doxygen', shell=True)
-    breathe_projects['OpenOCRCorrect'] = output_dir + '/xml'
 
 
 # -- Project information -----------------------------------------------------
