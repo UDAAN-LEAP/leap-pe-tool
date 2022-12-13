@@ -24,33 +24,21 @@
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QSettings>
-threadingPush::threadingPush(QObject *parent)
+threadingPush::threadingPush(QObject *parent, git_repository *repo)
     : QObject{parent}
 {
-
+    this->repo = repo;
 }
-std::string USER,PASS;
-std::string MEMAIL,MNAME;
-static int LOGIN_TRIES = 1;
-static bool IS_CRED_CACHED = false;
 
-int CREDENTIALS_CB(git_cred ** out, const char *url, const char *username_from_url,
+int credentials_cb_func(git_cred ** out, const char *url, const char *username_from_url,
     unsigned int allowed_types, void *payload)
 {
-    int error;
-//    static std::string user, pass;
-
     /*
      * Ask the user via the UI. On error, store the information and return GIT_EUSER which will be
      * bubbled up to the code performing the fetch or push. Using GIT_EUSER allows the application
      * to know it was an error from the application instead of libgit2.
      */
-    if (!IS_CRED_CACHED)
-    {
-//		if (!takeCredentialsFromUser()) {
-//			return -1;
-//		}
-    }
+
     QProcess process;
     process.execute("curl -d -X -k -POST --header "
                     "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o gitToken.json");
@@ -66,24 +54,13 @@ int CREDENTIALS_CB(git_cred ** out, const char *url, const char *username_from_u
     QString git_token = mainObj.value("github_token").toString();
     QString git_username = mainObj.value("github_username").toString();
     QFile::remove("gitToken.json");
-    USER = git_username.toStdString();
-    PASS = git_token.toStdString();
-    return git_cred_userpass_plaintext_new(out, USER.c_str(), PASS.c_str());
+    std::string user = git_username.toStdString();
+    std::string pass = git_token.toStdString();
+    return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
 
-
-
-
-void threadingPush::ControlPush(QString branchName,git_repository *repo,
-                                int login_tries,bool is_cred_cached,
-                                std::string mEmail,std::string mName,
-                                std::string user,std::string pass){
-    LOGIN_TRIES = login_tries;
-    IS_CRED_CACHED = is_cred_cached;
-    MEMAIL = mEmail;
-    MNAME = mName;
-    USER = user;
-    PASS = pass;
+void threadingPush::ControlPush()
+{
     git_remote * remote = NULL;
 
     QByteArray array = branchName.toLocal8Bit();
@@ -120,24 +97,12 @@ void threadingPush::ControlPush(QString branchName,git_repository *repo,
      * Direct pull is not available via libgit2
      */
     git_fetch_init_options(&fetch_opts, GIT_FETCH_OPTIONS_VERSION);
-    fetch_opts.callbacks.credentials = CREDENTIALS_CB;
+    fetch_opts.callbacks.credentials = credentials_cb_func;
     error = git_remote_fetch( remote, NULL, &fetch_opts, NULL );
     if(error){
         std::cout<<1<<endl;
-        //goto cleanup;
     }
-    // cache the credentials
-    is_cred_cached = true;
 
-    /* Merge fetched objects with local branch
-     * It will update index and current working area
-     */
-    /*char* string=(char*)"refs/remotes/origin/";
-    char buffer1[256];
-    strncpy(buffer1, string, sizeof(buffer1));
-    strncat(buffer1, char_arr, sizeof(buffer1));
-    qDebug()<<"Buffer1"<<buffer1<<endl;
-*/
     error = (git_reference_lookup(&theirs_ref, repo, "refs/remotes/origin/master") != GIT_OK);
     qDebug()<<"Error"<<error<<endl;
     if (!error)
@@ -147,7 +112,6 @@ void threadingPush::ControlPush(QString branchName,git_repository *repo,
 
         if(error){
             std::cout<<2<<endl;
-            //goto cleanup;
         }
 
         /* Get the needed ref, index, sign and tree
@@ -160,7 +124,6 @@ void threadingPush::ControlPush(QString branchName,git_repository *repo,
 
         if(error){
             std::cout<<3<<endl;
-            //goto cleanup;
         }
 
         /* Commit the merge and cleanup repo state
@@ -172,13 +135,11 @@ void threadingPush::ControlPush(QString branchName,git_repository *repo,
 
         if(error){
             std::cout<<4<<endl;
-            //goto cleanup;
         }
     }
     error = git_remote_push(remote, &refspecs , &push_opts);
-    qDebug()<<"Error"<<error<<endl;
     error = git_push_init_options(&push_opts, GIT_PUSH_OPTIONS_VERSION);
-    push_opts.callbacks.credentials = CREDENTIALS_CB;
+    push_opts.callbacks.credentials = credentials_cb_func;
     //std::string str="refs/remotes/origin/master";
     //char * c = (char*)"refs/heads/master";
     //const git_strarray abc = { &c,1 };

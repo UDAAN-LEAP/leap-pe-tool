@@ -3617,13 +3617,10 @@ void MainWindow::on_actionTurn_In_triggered()
             //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
             if(mProject.commit(commit_msg.toStdString()))
             {
-                bool is_cred_cached = false;
-                int login_tries = 1;
-                std::string user, pass;
-                threadingPush *tp = new threadingPush(nullptr);
+                threadingPush *tp = new threadingPush(nullptr, mProject.repo);
                 QThread *thread = new QThread;
 
-                connect(thread, SIGNAL(started()), tp, SLOT(ControlPush(branchName, mProject.repo, login_tries, is_cred_cached, mProject.mEmail, mProject.mName, user, pass)));
+                connect(thread, SIGNAL(started()), tp, SLOT(ControlPush()));
                 connect(tp, SIGNAL(finishedPush()), thread, SLOT(quit()));
                 connect(tp, SIGNAL(finishedPush()), tp, SLOT(deleteLater()));
                 connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
