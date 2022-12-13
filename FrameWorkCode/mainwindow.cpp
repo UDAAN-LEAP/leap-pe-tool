@@ -3588,6 +3588,23 @@ void MainWindow::on_actionTurn_In_triggered()
         return;
     }
 
+    //sending credentials
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o gitToken.json");
+
+    QFile jsonFile("gitToken.json");
+    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    QByteArray data = jsonFile.readAll();
+
+    QJsonParseError errorPtr;
+    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+    mainObj = document.object();
+    jsonFile.close();
+    QString git_token = mainObj.value("github_token").toString();//"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";//
+    QString git_username = mainObj.value("github_username").toString();//"AnujaDumada8";//
+    QFile::remove("gitToken.json");
+    std::string user = git_username.toStdString();
+    std::string pass = git_token.toStdString();
     //!Checking whether all the file are there in CorrectorOutput directory.
     if(mProject.get_version().toInt())
     {
@@ -3607,17 +3624,14 @@ void MainWindow::on_actionTurn_In_triggered()
         QPushButton *nButton = submitBox.addButton(QMessageBox::StandardButton::No);
         submitBox.exec();
 
-
-
         if (submitBox.clickedButton() == yButton)
         {
             bool ok;
-            branchName = "master";
 
             //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
             if(mProject.commit(commit_msg.toStdString()))
             {
-                threadingPush *tp = new threadingPush(nullptr, mProject.repo);
+                threadingPush *tp = new threadingPush(nullptr, mProject.repo, user, pass, gDirTwoLevelUp);
                 QThread *thread = new QThread;
 
                 connect(thread, SIGNAL(started()), tp, SLOT(ControlPush()));
@@ -3629,12 +3643,12 @@ void MainWindow::on_actionTurn_In_triggered()
                 thread->start();
 
                 spinner = new LoadingSpinner(this);
-                spinner->SetMessage("Loading Data...", "Loading...");
+                spinner->SetMessage("Saving to cloud...", "Saving...");
                 spinner->setModal(false);
                 spinner->exec();
                 if (tp->error != 0) {
                     mProject.enable_push(false);
-                    QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+                    QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
                     return;
                 }
             }
@@ -3642,25 +3656,24 @@ void MainWindow::on_actionTurn_In_triggered()
         }
         else
         {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
             return;
         }
 
         ui->lineEdit_2->setText("Version " + mProject.get_version());      //Update the version of file on ui.
 
-        QString emailText =  "Book ID: " + mProject.get_bookId()
-                + "\nSet ID: " + mProject.get_setId()
-                + "\n" + commit_msg ;       //Send an email if turn-in failed
+//        QString emailText =  "Book ID: " + mProject.get_bookId()
+//                + "\nSet ID: " + mProject.get_setId()
+//                + "\n" + commit_msg ;       //Send an email if turn-in failed
 
-       // ui->actionTurn_In->setEnabled(false);        // Deactivating the "Submit Corrector" button on ui
-        QMessageBox::information(0, "Turn In", "Turned In Successfully");
-        //deleteEditedFilesLog();
+        QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
     }
     else
     {
-        QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
+        QMessageBox::information(0, "Sync Error", "Please Open Project Before Turning In");
     }
 }
+
 
 /*!
  * \fn MainWindow::on_actionVerifier_Turn_In_triggered
@@ -3955,20 +3968,20 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
                         mProject.set_version( mProject.get_version().toInt() - 1 );
                     }
                    // mProject.set_stage_verifier();
-                    QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
+                    QMessageBox::critical(0, "Cloud sync", "Sync failed!");
                     return;
                 }
             }
             else {
                 // user entered nothing or pressed Cancel
-                QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
+                QMessageBox::critical(0, "Cloud sync", "Sync failed!");
                 return;
             }
             mProject.set_verifier();
         }
         else
         {
-            QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
+            QMessageBox::critical(0, "Cloud sync", "Sync failed");
             return;
         }
 
@@ -3980,12 +3993,12 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
 
         //! Updating the Project Version
         ui->lineEdit_2->setText("Version " + mProject.get_version());
-        QMessageBox::information(0, "Turn In", "Turned In Successfully");
+        QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
         //deleteEditedFilesLog();
     }
     else
     {
-        QMessageBox::critical(0, "Turn In Error", "Please Open Project Before Turning In");
+        QMessageBox::critical(0, "Cloud sync Error", "Please Open Project Before syncing");
     }
 }
 
@@ -8967,6 +8980,7 @@ void MainWindow::login(){
 
         QJsonObject mainObj = readJsonFile("client.json");
         auto status = mainObj.value("status").toBool();
+        QFile::remove("client.json");
 
         if(status == true){
             //save details in QSettings

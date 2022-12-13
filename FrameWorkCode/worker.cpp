@@ -62,14 +62,14 @@ void Worker::doSaveBackend()
         {
             QString commit_msg = "Corrector Turned in Version: " + (*mProject).get_version();
             //!Check commit condition
-            if(!(*mProject).commit(commit_msg.toStdString()))
-            {
-                return;
-            }
-            else
-            {
-                (*mProject).commit(commit_msg.toStdString());
-            }
+//            if(!(*mProject).commit(commit_msg.toStdString()))
+//            {
+//                return;
+//            }
+//            else
+//            {
+//                (*mProject).commit(commit_msg.toStdString());
+//            }
         }
     }
     emit finished();

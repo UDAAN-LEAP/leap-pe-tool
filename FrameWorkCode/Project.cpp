@@ -1091,6 +1091,19 @@ bool Project::commit(std::string message)
         git_index_free(index);
         return 0;
     }
+    char fullsha[42] = {0};
+    git_oid_tostr(fullsha, 41, &commit_id);
+    QString sha = QString::fromStdString(fullsha);
+//    qDebug()<<"Last commit full hash :"<<sha;
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    //qDebug()<<"email"<<email;
+    settings.endGroup();
+    QProcess process;
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/commits/ -d \"commit_no="+sha+"&email="+email+"\" ");
+
 
     /** Clean up so we don't leak memory. */
 
