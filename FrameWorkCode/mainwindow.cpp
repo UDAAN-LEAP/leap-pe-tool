@@ -3612,32 +3612,22 @@ void MainWindow::on_actionTurn_In_triggered()
         if (submitBox.clickedButton() == yButton)
         {
             bool ok;
-//            branchName = QInputDialog::getText(this, tr("Branch Name"),
-//                                               tr("Enter the branch name:"), QLineEdit::Normal,
-//                                               "", &ok );
             branchName = "master";
-//            if ( ok && !branchName.isEmpty() ) {
-                // user entered something and pressed OK
-                // mProject.set_stage_verifier();    // set_stage_verifier()inherited from project.cpp updates the stage in xml file to "verifier"
 
-                //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
+            //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
             if(mProject.commit(commit_msg.toStdString()))
             {
-//                    if(!mProject.push(branchName))
-//                mProject.enable_push(false);      // enable_push() increments version and sets stage in xml file
-//                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-//                return;
-                threadingPush *tp=new threadingPush(nullptr);
+                bool is_cred_cached = false;
+                int login_tries = 1;
+                std::string user, pass;
+                threadingPush *tp = new threadingPush(nullptr);
                 QThread *thread = new QThread;
 
-                QObject::connect(thread, SIGNAL(started()), tp, SLOT(ControlPush(branchName,repo,
-                                                                      login_tries,is_cred_cached,
-                                                                      mEmail,mName,
-                                                                    user,pass)));
-                QObject::connect(tp, SIGNAL(finishedLoadingData()), thread, SLOT(quit()));
-                QObject::connect(tp, SIGNAL(finishedLoadingData()), tp, SLOT(deleteLater()));
-                QObject::connect(tp, SIGNAL(finished()), thread, SLOT(deleteLater()));
-                QObject::connect(tp, SIGNAL(finishedLoadingData()), this, SLOT(stopSpinning()));
+                connect(thread, SIGNAL(started()), tp, SLOT(ControlPush(branchName, mProject.repo, login_tries, is_cred_cached, mProject.mEmail, mProject.mName, user, pass)));
+                connect(tp, SIGNAL(finishedPush()), thread, SLOT(quit()));
+                connect(tp, SIGNAL(finishedPush()), tp, SLOT(deleteLater()));
+                connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+                connect(tp, SIGNAL(finishedPush()), this, SLOT(stopSpinning()));
                 tp->moveToThread(thread);
                 thread->start();
 
@@ -3645,13 +3635,12 @@ void MainWindow::on_actionTurn_In_triggered()
                 spinner->SetMessage("Loading Data...", "Loading...");
                 spinner->setModal(false);
                 spinner->exec();
+                if (tp->error != 0) {
+                    mProject.enable_push(false);
+                    QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+                    return;
+                }
             }
-//            }
-//            else {
-//                // user entered nothing or pressed Cancel
-//                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-//                return;
-//            }
             mProject.set_corrector();
         }
         else

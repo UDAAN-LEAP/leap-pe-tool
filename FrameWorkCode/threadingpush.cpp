@@ -30,7 +30,7 @@ threadingPush::threadingPush(QObject *parent)
 
 }
 std::string USER,PASS;
-std::string MEMAIL,MNANME;
+std::string MEMAIL,MNAME;
 static int LOGIN_TRIES = 1;
 static bool IS_CRED_CACHED = false;
 
@@ -78,8 +78,12 @@ void threadingPush::ControlPush(QString branchName,git_repository *repo,
                                 int login_tries,bool is_cred_cached,
                                 std::string mEmail,std::string mName,
                                 std::string user,std::string pass){
-    login_tries = login_tries;
-    is_cred_cached=is_cred_cached;
+    LOGIN_TRIES = login_tries;
+    IS_CRED_CACHED = is_cred_cached;
+    MEMAIL = mEmail;
+    MNAME = mName;
+    USER = user;
+    PASS = pass;
     git_remote * remote = NULL;
 
     QByteArray array = branchName.toLocal8Bit();
@@ -196,8 +200,12 @@ void threadingPush::ControlPush(QString branchName,git_repository *repo,
     if(parents)
         free(parents);
     */
-    if (error)
+    if (error) {
+        error = -1;
+        this->error = error;
+        emit finishedPush();
         return;
+    }
 
     /* Finding the last commit on current repo and saves the entry in commit history table
      * Email | Commit_no
@@ -217,5 +225,6 @@ void threadingPush::ControlPush(QString branchName,git_repository *repo,
                     "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/commits/ -d \"commit_no="+sha+"&email="+email+"\" ");;
 
     /*return;*///No errors
-   // emit
+    this->error = 0;
+    emit finishedPush();
 }
