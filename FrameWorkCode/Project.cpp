@@ -653,7 +653,7 @@ void Project::set_corrector(){
     QString id=user_id;
     std::string role = id.toUtf8().constData();
     auto c = doc.child("Project").child("Metadata");
-    c.child("Corrector").first_child().set_value(role.c_str());
+    c.child("Corrector").first_child().set_value("None");
     save_xml();
 }
 
