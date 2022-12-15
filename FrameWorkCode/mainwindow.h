@@ -412,6 +412,10 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void on_sanButton_toggled(bool checked);
+
+    void on_hinButton_toggled(bool checked);
+
 public slots:
     void SaveFile_Backend();
 

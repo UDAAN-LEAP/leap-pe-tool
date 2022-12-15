@@ -23,7 +23,6 @@
 
 /*!
  * \fn equationeditor::equationeditor
- * \brief Equation editor
  * \param parent
  * \param gDirTwoLevelUp
  * \param b
@@ -94,6 +93,7 @@ equationeditor::equationeditor(QWidget *parent,
 
 /*!
  * \fn equationeditor::~equationeditor
+ * \brief Destructor
  */
 equationeditor::~equationeditor() {
    delete ui;
@@ -211,7 +211,7 @@ void equationeditor::on_actionShow_Line_Numbers_toggled(bool show){
 /*!
  * \fn equationeditor::on_actionVanilla_triggered
  * \brief This function changes the theme of equation ediotr.
- * \brief Two themes are available - Vanilla and Chalkboard
+ * Two themes are available - Vanilla and Chalkboard
  */
 void equationeditor::on_actionVanilla_triggered(){
     ui->actionVanilla->setChecked(true);
@@ -222,7 +222,7 @@ void equationeditor::on_actionVanilla_triggered(){
 
 /*!
  * \fn equationeditor::on_actionChalkboard_triggered
- * \brie Sets the theme to chalkboard.
+ * \brief Sets the theme to chalkboard.
  */
 void equationeditor::on_actionChalkboard_triggered(){
     ui->actionVanilla->setChecked(false);
@@ -249,7 +249,7 @@ void equationeditor::on_actionCopy_as_PNG_triggered(){
  * \fn equationeditor::load
  * \param filename
  * \brief This function opens, renders and shows an equation in editor from selected file.
- * \brief File should contain a valid MathBran code.
+ * File should contain a valid MathBran code.
  */
 void equationeditor::load(QString filename){
     QFile file(filename);
@@ -302,7 +302,7 @@ void equationeditor::save(){
  * \fn equationeditor::saveAs
  * \param save_path
  * \brief This function saves the file at specified location.
- * \brief File contents are stored in MathBran notation.
+ * File contents are stored in MathBran notation.
  */
 void equationeditor::saveAs(QString save_path){
     QFile file(save_path);
@@ -341,7 +341,7 @@ void equationeditor::savePrompt(){
 /*!
  * \fn equationeditor::printSvgPrompt
  * \brief This functions generates the svg of typeset_edit contents and saves at selected location.
- * \brief QSvgGenerator is used to generate svg file.
+ * \note QSvgGenerator is used to generate svg file.
  */
 void equationeditor::printSvgPrompt(){
     QString title = typeset_edit.documentTitle();
@@ -402,11 +402,12 @@ void equationeditor::enclosedMathBranButton(QString l, QString r){
 /*!
  * \fn equationeditor::on_actionInsert_Equation_triggered
  * \brief Inserts the equation in html file at current cursor position.
- * \details This functions converts the equation editor contents into a png image and inserts this image in browser at cursor position.
- * \details This inserted png image is also stored locally inside the project directory, within Equations_ folder.
- * \details Besides the png image, Latex code and MathBran code is also stored in separate files.
- * \details For one equation, three files are stored locally. In our udaan post editing tool, we show equations as png images but in html files, it is stored as Latex code within $$ $$ tags
- * \details which can be rendered by MathJax library in any browser. MathBran files are useful to edit already inserted images because our equation editor can render the MathBran notation only.
+ * \details
+ * This functions converts the equation editor contents into a png image and inserts this image in browser at cursor position.
+ * This inserted png image is also stored locally inside the project directory, within Equations_ folder.
+ * Besides the png image, Latex code and MathBran code is also stored in separate files.
+ * For one equation, three files are stored locally. In our udaan post editing tool, we show equations as png images but in html files, it is stored as Latex code within $$ $$ tags
+ * which can be rendered by MathJax library in any browser. MathBran files are useful to edit already inserted images because our equation editor can render the MathBran notation only.
  */
 void equationeditor::on_actionInsert_Equation_triggered()
 {
