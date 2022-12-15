@@ -10,8 +10,8 @@
 #include <qmessagebox.h>
 
 /*!
- * \fn PostError()
- * This function is used to fetch error message from the Git Client and show it as a message box to the user in
+ * \fn lg2_common::PostError
+ * \brief This function is used to fetch error message from the Git Client and show it as a message box to the user in
  * our tool.
  *
  * \param QString errorMessage
@@ -23,20 +23,18 @@ void lg2_common :: PostError(QString errorMessage) {
 
 
 /*!
- * \fn check_lg2()
- * This function is used to check any errors from our Git Client and return the error.
- *
+ * \fn lg2_common::check_lg2
+ * \brief This function is used to check any errors from our Git Client and return the error.
+ * \details
  * If there is no error then it returns 0 (i.e. returns false)
- *
  * If there is a git error then it fetches the error-message from libgit and formats it for showing it in the
  * QMessageBox.
- *
  * It then calls PostError() which facilitates showing the message on MessageBox on our tool
- *
- * \param int error, std::string message, std::string extra
+ * \param error
+ * \param message
+ * \param extra
+ * \return Class of error
  */
-
-
 int lg2_common :: check_lg2(int error, std::string message, std::string extra) {
 	const git_error* lg2err;
 	const char* lg2msg = "", * lg2spacer = "";

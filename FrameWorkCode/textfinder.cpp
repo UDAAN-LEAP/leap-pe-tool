@@ -23,19 +23,17 @@ extern string toslp1(string s);
 extern string toDev(string s);
 extern QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName;
 
-/*! \class TextFinder
+TextFinder *TextFinder::textFinder = 0;
+
+/*!
  * \fn TextFinder::TextFinder
  * \brief This Class is used to find and replace the text in text view
- * \param QWidget->parent
- * \param QDialog->(parent, Qt::WindowCloseButtonHint),
- * \param ui(new Ui::TextFinder)
  * \details
  * 1) Sets up the user interface for the specified widget.
- * 2)Sets both the minimum and maximum sizes of the widget,
- *  thereby preventing it from ever growing or shrinking.
+ * 2)Sets both the minimum and maximum sizes of the widget, thereby preventing it from ever growing or shrinking.
  * 3)Installs an event filter filterObj on "this" object(findLineEdit,replaceLineEdit)
+ * \param parent
  */
-TextFinder *TextFinder::textFinder = 0;
 TextFinder::TextFinder(QWidget *parent) :
     QDialog(parent, Qt::WindowCloseButtonHint),
     ui(new Ui::TextFinder)
@@ -55,9 +53,12 @@ TextFinder::~TextFinder()
     delete ui;
 }
 
+
 /*!
- * \fn TextFinder* TextFinder::openFindAndReplace(QWidget *parent)
+ * \fn TextFinder::openFindAndReplace
  * \brief The function checks if the window is already open else opens a new one
+ * \param parent
+ * \return TextFinder*
  */
 TextFinder* TextFinder::openFindAndReplace(QWidget *parent) {
     if (textFinder) {
@@ -69,9 +70,8 @@ TextFinder* TextFinder::openFindAndReplace(QWidget *parent) {
 }
 
 /*!
- * \fn TextFinder* TextFinder::openFindAndReplace(QWidget *parent)
- * \brief Moves the cursor to the next identified text
- *  which the user entered to search
+ * \fn TextFinder::on_findNextButton_clicked
+ * \brief Moves the cursor to the next identified text which the user entered to search.
  */
 void TextFinder::on_findNextButton_clicked()
 {
@@ -123,9 +123,8 @@ void TextFinder::on_findNextButton_clicked()
 }
 
 /*!
- * \fn void TextFinder::on_findPreviousButton_clicked()
- * \brief Moves the cursor to the previously identified
- * text which the user entered to search
+ * \fn TextFinder::on_findPreviousButton_clicked
+ * \brief Moves the cursor to the previously identified text which the user entered to search
  */
 void TextFinder::on_findPreviousButton_clicked()
 {
@@ -174,9 +173,8 @@ void TextFinder::on_findPreviousButton_clicked()
 }
 
 /*!
- * \fn void TextFinder::on_replaceButton_clicked()
- * \brief Replaces the current text under cursor
- * with a new user entered text
+ * \fn TextFinder::on_replaceButton_clicked
+ * \brief Replaces the current text under cursor with a new user entered text.
  */
 void TextFinder::on_replaceButton_clicked()
 {
@@ -199,7 +197,7 @@ void TextFinder::on_replaceButton_clicked()
 }
 
 /*!
- * \fn void TextFinder::on_replaceAllButton_clicked()
+ * \fn TextFinder::on_replaceAllButton_clicked
  * \brief Replaces all the found text with a new user entered text
  */
 void TextFinder::on_replaceAllButton_clicked()
@@ -320,9 +318,9 @@ void TextFinder::on_replaceAllButton_clicked()
 }
 
 /*!
- * \fn void TextFinder::keyPressEvent(QKeyEvent *e)
- * \brief The function translates the user entered text on the
- * textedit to Devanagari language when Ctrl+D is pressed
+ * \fn TextFinder::keyPressEvent
+ * \brief The function translates the user entered text on the textedit to Devanagari language when Ctrl+D is pressed.
+ * \param e
  * \sa toDevanagari()
  */
 void TextFinder::keyPressEvent(QKeyEvent *e)
@@ -346,8 +344,9 @@ void TextFinder::keyPressEvent(QKeyEvent *e)
 
 /*!
  * \fn TextFinder::toDevanagari
- * \brief The function assess the user entered text language
- * and converts the string of text into devanagari
+ * \brief The function assess the user entered text language and converts the string of text into devanagari
+ * \param text
+ * \return QString
  */
 QString TextFinder::toDevanagari(string text) {
     slpNPatternDict slnp;
@@ -356,9 +355,10 @@ QString TextFinder::toDevanagari(string text) {
 
 /*!
  * \fn TextFinder::eventFilter
- * \brief Filters the user key events and raises handlers if
- * ' ctrl + D' is pressed.
- * \return QDialog::eventFilter(watched, event)
+ * \brief Filters the user key events and raises handlers if 'ctrl + D' is pressed.
+ * \param watched
+ * \param event
+ * \return bool
  * \sa keyPressEvent()
  */
 bool TextFinder::eventFilter(QObject *watched, QEvent *event)
@@ -376,8 +376,7 @@ bool TextFinder::eventFilter(QObject *watched, QEvent *event)
 
 /*!
  * \fn TextFinder::stringCheck
- * \param QString->path
- * \param QString searchstr
+ * \brief Searches the string in a file
  * \details
  * 1)Saves file path as string
  * 2)Opens the File in readOnly mode
@@ -385,6 +384,9 @@ bool TextFinder::eventFilter(QObject *watched, QEvent *event)
  * 4)Reads the entire content of the stream, and returns it as a QString.
  * 5)closes the file
  * 6)If string contains the specifics, function returns true else false
+ * \param path
+ * \param searchstr
+ * \return bool
  */
 bool TextFinder::stringCheck(QString path, QString searchstr)
 {

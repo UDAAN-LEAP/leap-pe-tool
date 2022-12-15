@@ -32,6 +32,11 @@ std::string user, pass, email;
 
 bool takeCredentialsFromUser();
 
+/*!
+ * \fn Project::parse_project_xml
+ * \brief Parse the xml file of project
+ * \param pDoc
+ */
 void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 {
 
@@ -39,9 +44,8 @@ void Project::parse_project_xml(rapidxml::xml_document<>& pDoc)
 
 /*!
  * \fn Project::FindFile
- * \brief This function searches for the passed file name and
- * returns the filename and its next consecutive file name from project.xml.
- *
+ * \brief This function searches for the passed file name and returns the filename and its next consecutive file name from project.xml.
+ * \details
  * This is a recursive function wherein We keep traversing the child notes of the directory tree
  * until we find the file. If the key(i.e the name of the child node file) matches the filename
  * the search is over and we return, if there are not child node files/directories then also we return.
@@ -85,10 +89,9 @@ void Project::set_stage_verifier()
 
 /*!
  * \fn Project::set_stage
- *
  * \brief According to the pipeline once the project has been corrected it goes to verifier for further
  * verification.
- *
+ * \details
  * As such we update the XML of the project (project.xml file) and set the stage of the project to indicate
  * that it is in verification mode.
  *
@@ -105,12 +108,11 @@ void Project::set_stage(QString mRole){
  * \fn Project::enable_push
  * \brief Increments the version value by one if passed value is true
  * and sets stage value as corrector in xml file.
- *
  * We call this function to update the version of the project in the xml file.
  *
  * \param boolean
  * \sa save_xml()
- * \return
+ * \return bool
  */
 bool Project::enable_push(bool increment)
 {
@@ -153,10 +155,9 @@ void Project::set_configuration(QString val)
 /*!
  * \fn Project::removeFile
  * \brief Removes the file name from project.xml and the hierarchial project tree view in ui window
- *
- * \param QModelIndex & idx,Filter & pFilter, QFile & pFile
- *
- * \sa FindFile()
+ * \param idx
+ * \param pFilter
+ * \param pFile
  */
 void Project::removeFile(QModelIndex & idx,Filter & pFilter, QFile & pFile)
 {
@@ -182,8 +183,8 @@ void Project::removeFile(QModelIndex & idx,Filter & pFilter, QFile & pFile)
 /*!
  * \fn Project::process_node
  * \brief Here we process the nodes of the xml file by recursive iteration. Refer inline comments for more info.
- *
- * \param pugi::xml_node * pNode, TreeItem * parent
+ * \param pNode
+ * \param parent
  */
 void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
 {
@@ -286,7 +287,7 @@ void Project::process_node(pugi::xml_node * pNode, TreeItem * parent)
  * \fn Project::process_xml
  * \brief This function proecesses the xml file and creates a tree model.
  * \param pFile
- * Give XML file path and the content will be stored inside the class and processed by rapidxml
+ * \details Give XML file path and the content will be stored inside the class and processed by rapidxml
  */
 void Project::process_xml(QFile & pFile)
 {
@@ -325,7 +326,7 @@ void Project::process_xml(QFile & pFile)
 
 
 /*!
- * \fn Project::GetDir()
+ * \fn Project::GetDir
  * \brief returns the directory of the project when called.
  */
 QDir Project::GetDir()
@@ -333,14 +334,13 @@ QDir Project::GetDir()
     return mProjectDir;
 }
 
+
 /*!
  * \fn Project::addFile
  * \brief This function will add file to our project.
- *
- * The function first traverses the tree and when the appropriate branch is reached the node is added to the
- * parent
- *
- * \param Filter &f,QFile & pFile
+ * \details The function first traverses the tree and when the appropriate branch is reached the node is added to the parent
+ * \param f
+ * \param pFile
  */
 void Project::addFile(Filter &f,QFile & pFile)
 {
@@ -365,10 +365,13 @@ void Project::addFile(Filter &f,QFile & pFile)
     mTreeModel->layoutChanged();
 }
 
+
 /*!
  * \fn Project::AddTemp
  * \brief Adds only text files and html files to the project tree view whenever project is opened.
- * \param Filter * filter, QFile & file,QString prefix
+ * \param filter
+ * \param file
+ * \param prefix
  */
 void Project::AddTemp(Filter * filter, QFile & file,QString prefix) {
     QString name = filter->name();
@@ -394,7 +397,7 @@ void Project::AddTemp(Filter * filter, QFile & file,QString prefix) {
 }
 
 /*!
- * \fn Project::save_xml()
+ * \fn Project::save_xml
  * \brief This function when called saves the xml changes to disk. We used standard c++ functions to achieve this.
  */
 void Project::save_xml()
@@ -420,6 +423,7 @@ void Project::save_xml()
 
 /*!
  * \fn Project::getFile
+ * \brief Gets the file with filename
  * \param pFileName
  */
 void Project::getFile(const QString & pFileName)
@@ -543,21 +547,23 @@ struct index_options {
 static int login_tries = 1;
 static bool is_cred_cached = false;
 
+
 /*!
  * \fn credentials_cb
  * \brief This function is used to authenticate user
- *
+ * \details
  * Our Checks if there is some login cache or not, if not then it will check the number of login attempts
  * and after failed login attempts it will show message box that the login has failed and asks to try again (perhaps user entered invalid
  * credentials??)
  *
  * If there is cache then it wil try to login by getting the username and password and appropriate filtering and
  * conversion is applied and increment login_tries by 1, and releases the memory of userfield and passwordfield.
- *
- *
- * \param git_cred ** out, const char *url, const char *username_from_url,
-    unsigned int allowed_types, void *payload
-    \return
+ * \param out
+ * \param url
+ * \param username_from_url
+ * \param allowed_types
+ * \param payload
+ * \return
  */
 int credentials_cb(git_cred ** out, const char *url, const char *username_from_url,
     unsigned int allowed_types, void *payload)
@@ -653,7 +659,7 @@ void Project::set_corrector(){
     QString id=user_id;
     std::string role = id.toUtf8().constData();
     auto c = doc.child("Project").child("Metadata");
-    c.child("Corrector").first_child().set_value(role.c_str());
+    c.child("Corrector").first_child().set_value("None");
     save_xml();
 }
 
@@ -677,10 +683,9 @@ void Project::set_verifier(){
  * 2. Then fetch remote objects.
  * 3. Merge fetched objects with local ones.
  * 4. Now, push the merged objects to the github repo.
+ * \param branchName
  * \return bool
  */
-
-
 bool Project::push(QString branchName) {
 //    lg2_add();
 //    git_libgit2_init();
@@ -1091,6 +1096,19 @@ bool Project::commit(std::string message)
         git_index_free(index);
         return 0;
     }
+    char fullsha[42] = {0};
+    git_oid_tostr(fullsha, 41, &commit_id);
+    QString sha = QString::fromStdString(fullsha);
+//    qDebug()<<"Last commit full hash :"<<sha;
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    //qDebug()<<"email"<<email;
+    settings.endGroup();
+    QProcess process;
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/commits/ -d \"commit_no="+sha+"&email="+email+"\" ");
+
 
     /** Clean up so we don't leak memory. */
 
@@ -1276,6 +1294,10 @@ void Project::lg2_add() {
     git_index_free(idx);
 }
 
+/*!
+ * \fn Project::add_and_commit
+ * \brief Adds and commits the file
+ */
 void Project::add_and_commit() {
 
 }

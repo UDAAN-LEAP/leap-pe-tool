@@ -7,12 +7,17 @@ class threadingPush : public QObject
 {
     Q_OBJECT
 public:
-    explicit threadingPush(QObject *parent = nullptr);
-void ControlPush(QString branchName,git_repository *repo,
-                 int login_tries,bool is_cred_cached,
-                 std::string mEmail,std::string mName,
-                 std::string user,std::string pass);
+    explicit threadingPush(QObject *parent = nullptr, git_repository *repo = nullptr, std::string user="", std::string pass ="", QString gDirTwoLevelUp="");
+    int error;
+private:
+    git_repository *repo = nullptr;
+    std::string mEmail;
+    std::string mName;
+    QString branchName;
 signals:
+    void finishedPush();
+public slots:
+    void ControlPush();
 
 };
 

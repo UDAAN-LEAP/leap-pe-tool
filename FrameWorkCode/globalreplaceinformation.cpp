@@ -34,7 +34,7 @@ globalReplaceInformation::globalReplaceInformation(QWidget *parent) :
 }
 
 /*!
- * \fn globalReplaceInformation::~globalReplaceInformation()
+ * \fn globalReplaceInformation::~globalReplaceInformation
  * \brief Destructor
  */
 globalReplaceInformation::~globalReplaceInformation()

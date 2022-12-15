@@ -10,9 +10,12 @@
 #include "ui_undoglobalreplace.h"
 #include "crashlog.h"
 
-/*! \class UndoGlobalReplace
- *  \brief This class is used to show undo global replace window. Refer to Undo Global Replace Documentation
- *  In mainwindow class for more details.
+
+/*!
+ * \fn UndoGlobalReplace::UndoGlobalReplace
+ * \brief This class is used to show undo global replace window.
+ * \param reversedGRMap
+ * \param parent
  */
 UndoGlobalReplace::UndoGlobalReplace(QMap<QString, QString> reversedGRMap, QWidget *parent) :
     QDialog(parent),
@@ -26,17 +29,20 @@ UndoGlobalReplace::UndoGlobalReplace(QMap<QString, QString> reversedGRMap, QWidg
 
 }
 
-
+/*!
+ * \fn UndoGlobalReplace::~UndoGlobalReplace
+ * \brief Destructor
+ */
 UndoGlobalReplace::~UndoGlobalReplace()
 {
     delete ui;
 }
 
 /*!
-* \fn UndoGlobalReplace::displayListForUndoOperation
-* \brief Shows list of global replaced words for undo operation.
-* \param listMap
-*/
+ * \fn UndoGlobalReplace::displayListForUndoOperation
+ * \brief Shows list of global replaced words for undo operation.
+ * \param listMap
+ */
 void UndoGlobalReplace::displayListForUndoOperation(QMap<QString, QString> listMap)
 {
     QMap<QString, QString>::iterator i;
@@ -58,10 +64,10 @@ void UndoGlobalReplace::displayListForUndoOperation(QMap<QString, QString> listM
 
 
 /*!
-* \fn UndoGlobalReplace::highlightChecked
-* \brief Highlights checked items from the list.
-* \param item
-*/
+ * \fn UndoGlobalReplace::highlightChecked
+ * \brief Highlights checked items from the list.
+ * \param item
+ */
 void UndoGlobalReplace::highlightChecked(QListWidgetItem *item)
 {
     if ( item->checkState() == Qt::Checked )
@@ -72,8 +78,9 @@ void UndoGlobalReplace::highlightChecked(QListWidgetItem *item)
 
 
 /*!
- * \fn UndoGlobalReplace::on_applyButton_clicked()
+ * \fn UndoGlobalReplace::on_applyButton_clicked
  * \brief Updates the finalUndoMap variable with checked items only.
+ * \return bool
  */
 bool UndoGlobalReplace::on_applyButton_clicked()
 {
@@ -93,18 +100,19 @@ bool UndoGlobalReplace::on_applyButton_clicked()
 
 
 /*!
-* \fn UndoGlobalReplace::on_cancelButton_clicked()
-* \brief Closes the undo global replace dialog.
-*/
+ * \fn UndoGlobalReplace::on_cancelButton_clicked
+ * \brief Closes the undo global replace dialog.
+ */
 void UndoGlobalReplace::on_cancelButton_clicked()
 {
     this->close();
 }
 
 /*!
-* \fn UndoGlobalReplace::getFinalUndoMap()
-* \brief returns finalUndoMap variable.
-*/
+ * \fn UndoGlobalReplace::getFinalUndoMap
+ * \brief returns finalUndoMap variable.
+ * \return Final Undo map
+ */
 QMap<QString, QString> UndoGlobalReplace::getFinalUndoMap()
 {
     return this->finalUndoMap;

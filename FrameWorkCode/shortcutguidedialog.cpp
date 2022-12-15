@@ -5,10 +5,11 @@
  */
 #include "shortcutguidedialog.h"
 #include "ui_shortcutguidedialog.h"
+
+
 /*!
- * \class ShortcutGuideDialog
  * \fn ShortcutGuideDialog::ShortcutGuideDialog
- * \param QWidget->parent
+ * \param parent
  * \brief
  * 1)Sets up the user interface for the specified widget.
  * 2)sets flag to specify how the text should react to user input
@@ -22,8 +23,9 @@ ShortcutGuideDialog::ShortcutGuideDialog(QWidget *parent) :
 }
 
 /*!
- * Destructor: deletes and destroys the object after useage
-*/
+ * \fn ShortcutGuideDialog::~ShortcutGuideDialog
+ * \brief Destructor
+ */
 ShortcutGuideDialog::~ShortcutGuideDialog()
 {
     delete ui;

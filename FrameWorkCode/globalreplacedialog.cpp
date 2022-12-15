@@ -46,7 +46,8 @@ GlobalReplaceDialog::GlobalReplaceDialog(QVector <QString> replacedWords, QWidge
 }
 
 /*!
- * \brief GlobalReplaceDialog::~GlobalReplaceDialog
+ * \fn GlobalReplaceDialog::~GlobalReplaceDialog
+ * \brief Destructor
  */
 GlobalReplaceDialog::~GlobalReplaceDialog()
 {
@@ -58,6 +59,7 @@ GlobalReplaceDialog::~GlobalReplaceDialog()
  * \fn GlobalReplaceDialog::getFilteredGlobalReplacementMap
  * \brief Returns the processed globalreplacement map which contain the key value pairs of word before
  * replacement and after it is replaced.
+ * \return Filtered global replacement map
  */
 QMap <QString, QString> GlobalReplaceDialog::getFilteredGlobalReplacementMap(){
     return this->filteredGlobalReplacementMap;
@@ -67,6 +69,7 @@ QMap <QString, QString> GlobalReplaceDialog::getFilteredGlobalReplacementMap(){
  * \fn GlobalReplaceDialog::displayOriginalList
  * \brief This function is used to show the checkboxes for words that can be globally replaced in
  *        list format.
+ * \param ReplacedWords
  */
 void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords)
 {
@@ -146,6 +149,7 @@ void GlobalReplaceDialog::displayOriginalList(QVector <QString> replacedWords)
  * \fn GlobalReplaceDialog::highlightChecked
  * \brief We change the color of list to lightblue when it is checked and when it is unchecked.
  * This is done to make the GUI elegant.
+ * \param ListItem
  */
 void GlobalReplaceDialog::highlightChecked(QListWidgetItem *item){
     if(item->checkState() == Qt::Checked)
@@ -195,7 +199,7 @@ void GlobalReplaceDialog::on_applyButton_clicked()
  * \fn GlobalReplaceDialog::uncheckedItemsList
  * \brief This function returns the map of unchecked items list.
  * \param item
- * \return
+ * \return UncheckedItemMap
  */
 QMap <QString, QString> GlobalReplaceDialog::uncheckedItemsList()
 {
@@ -218,13 +222,13 @@ QMap <QString, QString> GlobalReplaceDialog::uncheckedItemsList()
 
 
 /*!
- * \fn "GlobalReplaceDialog::leftCheckBoxStateChanged"
- * \brief "This function is a SLOT which receives signal from listWidget when an item is selected"
+ * \fn GlobalReplaceDialog::leftCheckBoxStateChanged
+ * \brief This function is a SLOT which receives signal from listWidget when an item is selected
+ * \details
  * This function is called by QT whenever user checks or unchecks the left hand side checkbox
  * in the global replace window.
  * If user clicks on lecft checkbox, then right hand side checkbox gets visible.
- * \param "Address of QListWidgetItem is passed"
- * \return "void"
+ * \param item Address of QListWidgetItem is passed
  */
 void GlobalReplaceDialog::leftCheckBoxStateChanged(QListWidgetItem* item)
 {
@@ -283,6 +287,7 @@ void GlobalReplaceDialog::leftCheckBoxStateChanged(QListWidgetItem* item)
 /*!
  * \fn GlobalReplaceDialog::getStatesOfCheckboxes
  * \brief This gets the state of checkboxes at the right hand side of the pane and returns the vector.
+ * \return States of checkboxes
  */
 QVector<int> GlobalReplaceDialog::getStatesOfCheckboxes()
 {
@@ -306,6 +311,7 @@ QVector<int> GlobalReplaceDialog::getStatesOfCheckboxes()
 /*!
  * \fn GlobalReplaceDialog::clicked_applyButton
  * \brief Returns if apply button is clicked
+ * \brief If apply button was clicked or not
  */
 bool GlobalReplaceDialog::clicked_applyButton()
 {

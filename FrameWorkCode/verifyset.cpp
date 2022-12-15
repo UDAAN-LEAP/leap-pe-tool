@@ -3,14 +3,13 @@
 #include <QDebug>
 #include <QFileInfo>
 
+
 /*!
- * Class VerifySet
- *
- * \fn VerifySet (Constructor)
- * \param QString->projectXMLPath
- * \param QString->projectXML_formatPath
+ * \fn VerifySet::VerifySet
  * \brief Takes absolute path of project XML file
-*/
+ * \param projectXMLPath
+ * \param projectXML_formatPath
+ */
 VerifySet::VerifySet(QString projectXMLPath, QString projectXML_formatPath)
 {
     this->ProjectXMLPath = projectXMLPath.toStdString();
@@ -18,11 +17,11 @@ VerifySet::VerifySet(QString projectXMLPath, QString projectXML_formatPath)
 }
 
 /*!
- * \fn testProjectXML
+ * \fn VerifySet::testProjectXML
  * \brief Compares the user's project XML file and the current format of that file.
  * \return Returns 0 if not error found else -1 is returned
  * \note Uses pugi xml parsing library
-*/
+ */
 int VerifySet::testProjectXML()
 {
     const char *cstr = ProjectXMLPath.c_str();
@@ -49,10 +48,10 @@ int VerifySet::testProjectXML()
 }
 
 /*!
- * \fn LoadProjectXMLFormat
+ * \fn VerifySet::LoadProjectXMLFormat
  * \brief Loads the format of XML in docFormat var
  * \return Returns true if no error found else false is returned
-*/
+ */
 bool VerifySet::LoadProjectXMLFormat()
 {
     QFileInfo xmlFormatFile(QString::fromStdString(ProjectXML_formatPath));
@@ -75,7 +74,7 @@ int VerifySet::getErrorCode()
 /*!
  * \fn VerifySet::getErrorString
  * \brief Returns the error string
- * \return QString error_string
+ * \return error_string
  */
 QString VerifySet::getErrorString()
 {
@@ -83,12 +82,14 @@ QString VerifySet::getErrorString()
 }
 
 /*!
- * \fn verifyNode
+ * \fn VerifySet::verifyNode
+ * \param nodeTest
+ * \param nodeFormat
  * \brief Compares the user's XML node(tag) against the format of node in the current format of project XML
  * \return Returns true if verification completes else returns false
  * \note XML in pugi library is stored as a tree ( https://pugixml.org/docs/manual.html#dom )
  * \details Traversing tree in the preOrder fashion
-*/
+ */
 bool VerifySet::verifyNode(pugi::xml_node nodeTest, pugi::xml_node nodeFormat)
 {
     // Check if one of the node is NULL and other is not
@@ -134,10 +135,12 @@ bool VerifySet::verifyNode(pugi::xml_node nodeTest, pugi::xml_node nodeFormat)
 }
 
 /*!
- * \fn verifyNodeAttributes
+ * \fn VerifySet::verifyNodeAttributes
  * \brief Compares one node attribute name with the another
+ * \param nodeTest
+ * \param nodeFormat
  * \return Returns true if verification completes else returns false
-*/
+ */
 bool VerifySet::verifyNodeAttributes(pugi::xml_node nodeTest, pugi::xml_node nodeFormat)
 {
     pugi::xml_attribute attrTest = nodeTest.first_attribute();

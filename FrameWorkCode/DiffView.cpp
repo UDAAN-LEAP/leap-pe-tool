@@ -16,9 +16,6 @@
 #include <QMessageBox>
 #include "crashlog.h"
 
-/*! \class DiffView
- * This class is used to view the differences between corrector and verifier text
- */
 
 /*!
  * \fn DiffView::DiffView
@@ -250,7 +247,6 @@ void DiffView::UpdateUI()
  * \fn DiffView::on_PrevButton_clicked
  * \brief It re-loads the compare window when previous button is clicked and updates the text and metrics for
  * that page respectively.
- *
  * \sa Load_comparePage(), Update_UI()
  */
 void DiffView::on_PrevButton_clicked()
@@ -285,7 +281,6 @@ void DiffView::on_PrevButton_clicked()
  * \fn DiffView::on_NextButton_clicked
  * \brief It re-loads the compare window when next button is clicked and updates the text and metrics for
  * that page respectively.
- *
  * \sa Load_comparePage(), Update_UI()
  */
 void DiffView::on_NextButton_clicked()

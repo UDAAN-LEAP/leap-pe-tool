@@ -1,6 +1,3 @@
-/*!
-  \class mainwWindow.cpp
- */
 #include "mainwindow.h"
 #include "dashboard.h"
 #include "qobjectdefs.h"
@@ -9,7 +6,7 @@
 #include "ui_mainwindow.h"
 #include "averageaccuracies.h"
 #include "eddis.h"
-#include "slpNPatternDict.h" //as included through lcsqt.h
+#include "slpNPatternDict.h"
 #include "trieEditdis.h"
 #include "meanStdPage.h"
 #include <math.h>
@@ -87,7 +84,6 @@
 #include "threadingpush.h">
 #include <QThread>
 
-//gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
 trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
@@ -97,7 +93,7 @@ QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName;
 map<QString, QString> gInitialTextHtml;
 QString gTimeLogLocation;
 map<QString, int> timeLog;
-QMap<QString, QJsonArray> newTimeLog; // Introducing newTimeLog for storing more than one jsonvalue.
+QMap<QString, QJsonArray> newTimeLog;
 vector<QString> vs; vector<int> vx, vy, vw, vh, vright;
 map<string, vector<string>> SRules;
 map<string, string> TopConfusions;
@@ -108,9 +104,7 @@ string alignment = "left";
 bool prevTRig = 0;
 map<string, vector<int>> synonym;
 vector<vector<string>> synrows;
-//map<string, int> GPage; trie TGPage;
-//map<string, int> PWords;//Common/Possitive OCR Words // already defined before
-map<string, string> CPair;//Correction Pairs
+map<string, string> CPair;
 std::map<string, set<string> > CPairs;
 bool highlightchecked = false;
 map<int, QString> commentdict;
@@ -118,8 +112,8 @@ map<int, vector<int>> commentederrors;
 int openedFileChars;
 int openedFileWords;
 bool gSaveTriggered = 0;
-bool LoadDataFlag = 1; //To load data only once
-bool uploadReplaceFlag = 0; //To highlight in Upload and Replace
+bool LoadDataFlag = 1;
+bool uploadReplaceFlag = 0;
 map<QString, QString> filestructure_fw;
 QMap <QString, QString> mapOfReplacements;
 
@@ -130,13 +124,13 @@ map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
 
 QString gSanskrit, gHindi;
 
-bool drawRectangleFlag=false;      //This flag is to prevent inserting the IMAGEHOLDER twice
+bool drawRectangleFlag=false; //This flag is to prevent inserting the IMAGEHOLDER twice
 
-bool loadimage=false;           //Check image is loaded on not
+bool loadimage=false; //Check image is loaded on not
 
-bool shouldIDraw=false;         //button functioning over marking a region for figure/table/equations
+bool shouldIDraw=false; //button functioning over marking a region for figure/table/equations
 
-int pressedFlag;            //Resposible for dynamic rectangular drawing
+int pressedFlag; //Resposible for dynamic rectangular drawing
 QString ProjFile;
 QString branchName;
 int grdFlag = 0;
@@ -202,34 +196,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     settings.beginGroup("loginConsent");
     QString value = settings.value("consent").toString();
     if(value != "dna" && value != "loggedIn"){
-    QMessageBox login;
-    login.setWindowTitle("Login using Google");
-    login.setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint|Qt::WindowCloseButtonHint);
-    login.setIcon(QMessageBox::Information);
-    login.setInformativeText("You can save your edits on the cloud. To enable this feature please login using your google account now or later in settings > login");
-    QPushButton *confirmButton = login.addButton(tr("Login"),QMessageBox::AcceptRole);
-    QPushButton *cancelButton = login.addButton(tr("Cancel"),QMessageBox::ActionRole);
-    QCheckBox *cb = new QCheckBox("Do not ask again");
-    login.setCheckBox(cb);
-    cb->setStyleSheet("QCheckBox{color:rgb(227, 228, 228);border:0px;}");
-
-    login.exec();
-    if(cb->checkState() == Qt::Checked){
-        settings.setValue("consent","dna");
-    }
-    if(login.clickedButton() == confirmButton)
-    {
-      authenticate();
-      this->close();
-    }
-    if(login.clickedButton() == cancelButton){
-        login.close();
-    }
+        login();
     }
     //show login/logout options
-    QString consent = settings.value("consent").toString();
     settings.endGroup();
-    if(consent != "loggedIn"){
+    if(value != "loggedIn"){
         this->ui->actionLogin->setVisible(true);
         this->ui->actionLogout->setVisible(false);
     }
@@ -369,7 +340,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 }
 
 /*!
- * \fn    MainWindow::setRole
+ * \fn MainWindow::setRole
  * \brief This function is used to show a box to user to select his role as verifier, project manager or
  *        corrector. After user chooses a role then this function sets other variables accordingly for limiting
  *        the access.
@@ -498,7 +469,7 @@ MainWindow::~MainWindow()
 }
 
 /*!
- * \fn    readJsonFile
+ * \fn readJsonFile
  * \brief This function is used to load the json files into the software in read only mode or in text mode.
  * \param filepath
  * \return mainObj
@@ -518,7 +489,7 @@ QJsonObject readJsonFile(QString filepath)
 }
 
 /*!
- * \fn    readJsonFile
+ * \fn writeJsonFile
  * \brief This function is used to write into the json files in the software. It uses write only mode of fle.
  * \param filepath
  * \param mainObj
@@ -638,9 +609,8 @@ int secs;
 int gSeconds;
 
 /*!
- * \fn  MainWindow::SaveTimeLog()
+ * \fn MainWindow::SaveTimeLog
  * \brief This function saves the time of changes commit into the log json file.
- *
  * \sa writeJsonFile()
  */
 void MainWindow::SaveTimeLog()
@@ -662,7 +632,7 @@ void MainWindow::SaveTimeLog()
 }
 
 /*!
- * \fn    MainWindow::DisplayTimeLog()
+ * \fn MainWindow::DisplayTimeLog
  * \brief This function displays the time in statusbar and gets update on every right click.
  */
 void MainWindow::DisplayTimeLog()
@@ -682,7 +652,7 @@ void MainWindow::DisplayTimeLog()
 }
 
 /*!
- * \fn    MainWindow::UpdateFileBrekadown
+ * \fn MainWindow::UpdateFileBrekadown
  * \brief This function is called whenever there is changes in folder structure or files.
  *        This function updates the location of files and folder into the global variables.
  */
@@ -702,7 +672,7 @@ void MainWindow::UpdateFileBrekadown()
 }
 
 /*!
- * \fn    DisplayError
+ * \fn DisplayError
  * \brief This function is called whenever there is a expected error occured  and this function
  *        displays that error message using a message box.
  * \param error
@@ -1081,7 +1051,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 }// if mouse event
 
 /*!
- * \fn    MainWindow::menuSelection
+ * \fn MainWindow::menuSelection
  * \brief This function provides the functionality to select the menu options like slp Dict
  *        words or other to  insert into the page.
  * \param action
@@ -1107,7 +1077,7 @@ void MainWindow::menuSelection(QAction* action)
 }
 
 /*!
- * \fn    MainWindow::translate_replace
+ * \fn MainWindow::translate_replace
  * \brief This function replaces the words translated in the current page by accessing the selected
  *        text and removing old text and inserts new text on that selected part.
  * \param action
@@ -1164,7 +1134,7 @@ void MainWindow::on_actionHindi_triggered()
 
 
 /*!
- * \fn MainWindow::on_actionEnglish_triggered()
+ * \fn MainWindow::on_actionEnglish_triggered
  * \brief Sets the language of the current broweser to Hindi by passing the HinFlag and the SanFlag as false
  * \sa setText()
 */
@@ -1603,10 +1573,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 /*!
  * \fn MainWindow::AddRecentProjects
  * \brief This function will allow user to open the last opened project.
- *
  * We use QSettings which allows for persistent storage and we store the project and we load the project
  * if user selects the name of the project in recent project section.
- *
  */
 void MainWindow::AddRecentProjects()
 {
@@ -1643,13 +1611,12 @@ void MainWindow::AddRecentProjects()
 
 
 bool ConvertSlpDevFlag = 0;
+
 /*!
-* \fn MainWindow::SaveFile_GUI_Preprocessing()
-* \brief This function saves the changes made in current page opened in
-*        textbrowser.
-*
-* \sa SaveTimeLog(),DisplayTimeLog(),on_viewComments_clicked(),updateAverageAccuracies(),
-*/
+ * \fn MainWindow::SaveFile_GUI_Preprocessing
+ * \brief This function saves the changes made in current page opened in textbrowser
+ * \sa SaveTimeLog(),DisplayTimeLog(),on_viewComments_clicked(),updateAverageAccuracies(),
+ */
 void MainWindow::SaveFile_GUI_Preprocessing()
 {
 
@@ -1697,13 +1664,11 @@ void MainWindow::SaveFile_GUI_Preprocessing()
     s2 = curr_browser->toPlainText();       //!after Saving
 }
 
+
 /*!
-* \fn MainWindow::SaveFile_Backend()
-* \brief This function saves the changes made in current page opened in
-*        textbrowser and also perform all backend task like saving files on loaction,
-*        commits of the changes and perform global replce changes
-*
-*/
+ * \fn MainWindow::SaveFile_Backend
+ * \brief This function saves the changes made in current page opened in textbrowser and also perform all backend task like saving files on loaction, commits of the changes and perform global replce changes
+ */
 void MainWindow::SaveFile_Backend()
 {
     slpNPatternDict slnp;
@@ -1802,12 +1767,9 @@ void MainWindow::SaveFile_Backend()
 }
 
 /*!
-* \fn MainWindow::SaveFile_GUI_Postprocessing()
-* \brief This function saves the changes made in current page opened in
-*        textbrowser and after selcting the loaction to save the file this funtion
-*        convert all html output to plain text then perform saving.
-*
-*/
+ * \fn MainWindow::SaveFile_GUI_Postprocessing
+ * \brief This function saves the changes made in current page opened in textbrowser and after selcting the loaction to save the file this funtion convert all html output to plain text then perform saving.
+ */
 void MainWindow::SaveFile_GUI_Postprocessing()
 {
     QString tempPageName = gCurrentPageName;
@@ -1978,11 +1940,9 @@ void MainWindow::SaveFile_GUI_Postprocessing()
 
 
 /*!
- * \fn MainWindow::on_actionSave_triggered()
+ * \fn MainWindow::on_actionSave_triggered
  * \brief This function will save any changes made in the current file.
- *
- * \details
- * In this function we first do the preprocessing needed for the save to happen.
+ * \details In this function we first do the preprocessing needed for the save to happen.
  *
  * Then we run the function SaveFile_Backend() which will perform the actual saving and commiting of files
  * in a separate worker thread. We synchronise this with the loading window as well.
@@ -1997,8 +1957,7 @@ void MainWindow::SaveFile_GUI_Postprocessing()
  *
  *
  * \sa SaveFile_GUI_Preprocessing(), SaveFile_Backend(), SaveFile_GUI_Postprocessing(), writeSettings()
-*/
-
+ */
 void MainWindow::on_actionSave_triggered()
 {
     // check if file is new
@@ -2046,10 +2005,9 @@ void MainWindow::on_actionSave_triggered()
 }
 
 /*!
-* \fn    MainWindow::stopSpinning
-* \brief This function stops the sppiner whenever called.
-*
-*/
+ * \fn MainWindow::stopSpinning
+ * \brief This function stops the sppiner whenever called.
+ */
 void MainWindow::stopSpinning()
 {
     spinner->close();
@@ -2071,7 +2029,7 @@ void MainWindow::GlobalReplace()
 }
 
 /*!
- * \fn MainWindow::on_actionSave_As_triggered()
+ * \fn MainWindow::on_actionSave_As_triggered
  * \brief This function saves the file which has never been saved once.
  */
 void MainWindow::on_actionSave_As_triggered()
@@ -2088,14 +2046,14 @@ void MainWindow::on_actionSave_As_triggered()
     }
 }
 
+map<string, int> wordLineIndex;
+
 /*!
- * \fn on_actionSpell_Check_triggered()
+ * \fn MainWindow::on_actionSpell_Check_triggered
  * \brief Converts the whole html page to the original text page in orange color
  * \note works on the basis of a pre-defined flag which helps to always convert the text to Devanagari
  * \sa findDictEntries(), find_and_replace_oddInstancesblue(), find_and_replace_oddInstancesorange(),hasM40PerAsci()
  */
-map<string, int> wordLineIndex;
-
 void MainWindow::on_actionSpell_Check_triggered()
 {
     slpNPatternDict slnp;
@@ -2200,10 +2158,10 @@ void MainWindow::on_actionSpell_Check_triggered()
 }
 
 int isProjectOpen = 0;
+
 /*!
  * \fn MainWindow::on_actionLoad_Next_Page_triggered
  * \brief Sets the browser window to display the next page
- *
  * \sa on_actionSave_triggered() ,get_version(), SaveTimeLog(), GetPageNumber(), LoadDocument()
  */
 void MainWindow::on_actionLoad_Next_Page_triggered()
@@ -2264,9 +2222,8 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionLoad_Prev_Page_triggered()
+ * \fn MainWindow::on_actionLoad_Prev_Page_triggered
  * \brief Sets the browser window to display the previous page
- *
  * \sa on_actionSave_triggered() ,get_version(), SaveTimeLog(), GetPageNumber(), LoadDocument()
  */
 void MainWindow::on_actionLoad_Prev_Page_triggered()
@@ -2324,7 +2281,7 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionToDevnagri_triggered()
+ * \fn MainWindow::on_actionToDevanagari_triggered
  * \brief Converts transliterated text to devanagri text
  * Transliterated here means Hindi/ Sanskrit written in English.
  * This function converts selected translitrate text or last written translitrate word to Devanagri.
@@ -2348,7 +2305,7 @@ void MainWindow::on_actionToDevanagari_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionToSlp1_triggered()
+ * \fn MainWindow::on_actionToSlp1_triggered
  * \brief Converts devanagri/Sanskrit text to transliterated(english) text
  * This function converts selected Devanagri text to transliterated text.
 */
@@ -2371,7 +2328,7 @@ void MainWindow::on_actionToSlp1_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionLoadGDocPage_triggered()
+ * \fn MainWindow::on_actionLoadGDocPage_triggered
  * \brief Loads PWords and its associated trie data structure
  * \sa on_actionSave_As_triggered(), loadMap(), loadmaptoTrie(), generateCorrectionPairs(), loadConfusionsFont, loadTopConfusions()
 */
@@ -2428,7 +2385,7 @@ void MainWindow::on_actionLoadGDocPage_triggered()
 QString mFilename1, loadStr, loadStr1;
 
 /*!
- * \fn    MainWindow::WordCount
+ * \fn MainWindow::WordCount
  * \brief This function is called whenever there is any key pressed after opening the project.
  *        This function counts the number of word in the page and shows it in the statusbar at bottom
  *        of the window.
@@ -2453,7 +2410,7 @@ void MainWindow::WordCount()
 }
 
 /*!
- * \fn    MainWindow::on_actionLoadData_triggered()
+ * \fn MainWindow::on_actionLoadData_triggered
  * \brief Loads the dictionary files only once
  *        This function is only called once per project to load the dictionary file of the project,
  *        dictionary files can be used to work on suggestions.
@@ -2520,11 +2477,12 @@ void MainWindow::on_actionLoadData_triggered()
 }
 
 /*!
- * \fn loadDict()
+ * \fn loadDict
  * \param current project file location
  * \brief The path of the dictionary file is fetched and the files are returned in the map
  * these words are then fetched depending upon the word selected
  * \sa loadMap()
+ * \return bool
  */
 bool loadDict(Project & project) {
     slpNPatternDict slnp;
@@ -2535,7 +2493,7 @@ bool loadDict(Project & project) {
 }
 
 /*!
- * \fn on_actionLoadDict_triggered()
+ * \fn MainWindow::on_actionLoadDict_triggered
  * \brief The path of the dictionary file is fetched and the files are returned in the map
  * these words are then fetched depending upon the word selected
  * \sa loadDict()
@@ -2546,7 +2504,7 @@ void MainWindow::on_actionLoadDict_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionLoadOCRWords_triggered()
+ * \fn MainWindow::on_actionLoadOCRWords_triggered
  * \brief Loads the OCR files
  * The path of the GEROCR and IEROCR file is fetched and the files are returned in the map which is again,
  * used as a suggestion depending upon the word selected
@@ -2566,11 +2524,10 @@ void MainWindow::on_actionLoadOCRWords_triggered()
 }
 
 /*!
-  \fn MainWindow::on_actionLoadDomain_triggered()
-  \brief loads the common OCR files
- The path of the PWords file is fetched and the files are returned in the map which can be used
- for the suggestion feature
- \sa loadMapPWords()
+ * \fn MainWindow::on_actionLoadDomain_triggered
+ * \brief loads the common OCR files
+ * \details  The path of the PWords file is fetched and the files are returned in the map which can be used for the suggestion feature.
+ * \sa loadMapPWords()
  */
 void MainWindow::on_actionLoadDomain_triggered()
 {
@@ -2580,11 +2537,10 @@ void MainWindow::on_actionLoadDomain_triggered()
 }
 
 /*!
-  \fn MainWindow::on_actionLoadSubPS_triggered()
-  \brief the CPair files
-    The path of the CPair files are fetched and the files are returned in the map which is returned
-    to load the suggestions
-  \sa loadmaptoTrie(), loadPwordsPatternstoTrie(), loadCPair()
+ * \fn MainWindow::on_actionLoadSubPS_triggered
+ * \brief Loads the CPair files
+ * \details The path of the CPair files are fetched and the files are returned in the map which is returned to load the suggestions.
+ * \sa loadmaptoTrie(), loadPwordsPatternstoTrie(), loadCPair()
  */
 void MainWindow::on_actionLoadSubPS_triggered()
 {
@@ -2647,7 +2603,7 @@ void MainWindow::on_actionSugg_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionUndo_triggered()
+ * \fn MainWindow::on_actionUndo_triggered
  * \brief undo the changes made QTextBrowser
  */
 void MainWindow::on_actionUndo_triggered()
@@ -2658,7 +2614,7 @@ void MainWindow::on_actionUndo_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionRedo_triggered()
+ * \fn MainWindow::on_actionRedo_triggered
  * \brief Redo the changes made in QTextBrowser
  */
 void MainWindow::on_actionRedo_triggered()
@@ -2669,7 +2625,7 @@ void MainWindow::on_actionRedo_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionFind_and_Replace_triggered()
+ * \fn MainWindow::on_actionFind_and_Replace_triggered
  * \brief helps to find particular text and replaces them with new user entered text
  * \sa openFindAndReplace
  */
@@ -2680,9 +2636,9 @@ void MainWindow::on_actionFind_and_Replace_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionAccuracyLog_triggered()
+ * \fn MainWindow::on_actionAccuracyLog_triggered
  * \brief Logs various accuracies to AccuracyLog.csv
- * Stores the following values in the csv:
+ * \details Stores the following values in the csv:
  * Page Name
  * Percent Difference in Corrector and Verifier Text
  * Percent Character Level Accuracy (Corrector)
@@ -2824,7 +2780,7 @@ void MainWindow::on_actionAccuracyLog_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionViewAverageAccuracies_triggered()
+ * \fn MainWindow::on_actionViewAverageAccuracies_triggered
  * \brief Calculates the average accuracy of the submission based upon the comments and the csv file input which depend upon the
  * page changes. Also updates in the csv file of the current project.
  * \sa AverageAccuracies(),readJsonFile()
@@ -2851,9 +2807,9 @@ void MainWindow::on_actionViewAverageAccuracies_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionAllFontProperties_triggered()
+ * \fn MainWindow::on_actionAllFontProperties_triggered
  * \brief Opens a pop up font properties selector and applies chosen properties to font.
- * The font selector lets you choose:
+ * \details The font selector lets you choose:
  * Font face, font size, variations of those fonts (regular, bold, italic).
  * The font selector is the Operating System's native font selector.
  * All fonts installed in the system will appear in the selector
@@ -2999,7 +2955,7 @@ void MainWindow::on_actionAllFontProperties_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionBold_triggered()
+ * \fn MainWindow::on_actionBold_triggered
  * \brief Sets the font weight to bold
 */
 void MainWindow::on_actionBold_triggered()
@@ -3030,7 +2986,7 @@ void MainWindow::on_actionBold_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionUnBold_triggered()
+ * \fn MainWindow::on_actionUnBold_triggered
  * \brief Sets the font weight to regular
 */
 void MainWindow::on_actionUnBold_triggered()
@@ -3043,7 +2999,7 @@ void MainWindow::on_actionUnBold_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionItalic_triggered()
+ * \fn MainWindow::on_actionItalic_triggered
  * \brief Sets the font style to italic
 */
 void MainWindow::on_actionItalic_triggered()
@@ -3071,9 +3027,9 @@ void MainWindow::on_actionItalic_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionNonitalic_triggered()
+ * \fn MainWindow::on_actionNonitalic_triggered
  * \brief Resets the font style to non italic
-*/
+ */
 void MainWindow::on_actionNonitalic_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3084,14 +3040,14 @@ void MainWindow::on_actionNonitalic_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionHighlight_triggered()
+ * \fn MainWindow::on_actionHighlight_triggered
  * \brief Highlights selected text in text browser and then calls LogHighlights()
- * Only Verifiers can highlight the text, correctors can only remove highlights.
+ * \details Only Verifiers can highlight the text, correctors can only remove highlights.
  * Takes the start and end position of cursor and goes to the middle of the word,
  * then formats the word.LogHighlights() is called only when a highlight is made.
  * \note Text Highlight works by changing the background colour to yellow
  * \sa LogHighlights()
-*/
+ */
 void MainWindow::on_actionHighlight_triggered()
 {
      //! Check if text browser exists AND it is NOT in read only mode
@@ -3131,7 +3087,7 @@ void MainWindow::on_actionHighlight_triggered()
 }
 
 /*!
- * \fn MainWindow::LogHighlights()
+ * \fn MainWindow::LogHighlights
  * \param QString text
  * \brief Stores highlight metadata to JSON files
  * \note Meta data includes: Word highlighted, timestamp, time elapsed, page name
@@ -3169,9 +3125,9 @@ void MainWindow::LogHighlights(QString word) //Verifier Only
 }
 
 /*!
- * \fn MainWindow::on_actionLeftAlign_triggered()
+ * \fn MainWindow::on_actionLeftAlign_triggered
  * \brief Sets the browser text alignment to Left Align
-*/
+ */
 void MainWindow::on_actionLeftAlign_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3180,9 +3136,9 @@ void MainWindow::on_actionLeftAlign_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionRightAlign_triggered()
+ * \fn MainWindow::on_actionRightAlign_triggered
  * \brief Sets the browser text alignment to Right Align
-*/
+ */
 void MainWindow::on_actionRightAlign_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3191,9 +3147,9 @@ void MainWindow::on_actionRightAlign_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionCentreAlign_triggered()
+ * \fn MainWindow::on_actionCentreAlign_triggered
  * \brief Sets the browser text alignment to Center Align
-*/
+ */
 void MainWindow::on_actionCentreAlign_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3202,13 +3158,13 @@ void MainWindow::on_actionCentreAlign_triggered()
 }
 
 /*!
- * \fn    MainWindow::on_action_JustifiedAlign_triggered
+ * \fn MainWindow::on_action_JustifiedAlign_triggered
  * \brief Justifies the text.
  *        Here, whenever there is a break in the text, that is being replaced by space
  *        and then text is placed in-between paragraph tags. After that, the following
  *        selected text is justisfied aligned.
  * \note  Not used, does not work as intended
-*/
+ */
 void MainWindow::on_actionJusitfiedAlign_triggered(){
     if(!curr_browser || curr_browser->isReadOnly())
         return;
@@ -3224,9 +3180,9 @@ void MainWindow::on_actionJusitfiedAlign_triggered(){
 }
 
 /*!
- *  \fn MainWindow::on_actionSuperscript_triggered()
- *  \brief toggles superscript for selected text/ character at cursor
-*/
+ * \fn MainWindow::on_actionSuperscript_triggered
+ * \brief toggles superscript for selected text/ character at cursor
+ */
 void MainWindow::on_actionSuperscript_triggered() {
 
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3246,9 +3202,9 @@ void MainWindow::on_actionSuperscript_triggered() {
 }
 
 /*!
- *  \fn MainWindow::on_actionSubscript_triggered()
- *  \brief toggles subscript for selected text/ character at cursor
-*/
+ * \fn MainWindow::on_actionSubscript_triggered
+ * \brief toggles subscript for selected text/ character at cursor
+ */
 void MainWindow::on_actionSubscript_triggered() {
 
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3264,13 +3220,13 @@ void MainWindow::on_actionSubscript_triggered() {
 }
 
 /*!
- * \fn MainWindow::on_actionInsert_Horizontal_Line_triggered()
+ * \fn MainWindow::on_actionInsert_Horizontal_Line_triggered
  * \brief Draws a horizontal rule a line below the cursor.
- * Uses html to insert a horizontal rule using <hr> tag.
+ * \details Uses html to insert a horizontal rule using <hr> tag.
  * Selecting text and then using this fuctionality will clear the text,
  * and then insert a horizontal rule below it.
  * \note The text browser is a rich text field, so html tags and styling can be used seamlessly.
-*/
+ */
 void MainWindow::on_actionInsert_Horizontal_Line_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3279,10 +3235,10 @@ void MainWindow::on_actionInsert_Horizontal_Line_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionFontBlack_triggered()
+ * \fn MainWindow::on_actionFontBlack_triggered
  * \brief Sets the current font colour to black.
  * \note There are no further colour properties provided by the editor.
-*/
+ */
 void MainWindow::on_actionFontBlack_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3291,9 +3247,9 @@ void MainWindow::on_actionFontBlack_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionInsert_Tab_Space_triggered()
+ * \fn MainWindow::on_actionInsert_Tab_Space_triggered
  * \brief inserts tab (4 whitespaces) at cursor
-*/
+ */
 void MainWindow::on_actionInsert_Tab_Space_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3302,10 +3258,10 @@ void MainWindow::on_actionInsert_Tab_Space_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionInsert_Table_2_triggered()
+ * \fn MainWindow::on_actionInsert_Table_2_triggered
  * \brief Inserts table at text cursor
  * Creates a dialog to insert the numbr of rows and columns.
-*/
+ */
 void MainWindow::on_actionInsert_Table_2_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3341,9 +3297,9 @@ void MainWindow::on_actionInsert_Table_2_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionInsert_Columnleft_triggered()
+ * \fn MainWindow::on_actionInsert_Columnleft_triggered
  * \brief Inserts Column to the left of table
-*/
+ */
 void MainWindow::on_actionInsert_Columnleft_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3357,9 +3313,9 @@ void MainWindow::on_actionInsert_Columnleft_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionInsert_Columnright_triggered()
+ * \fn MainWindow::on_actionInsert_Columnright_triggered
  * \brief Inserts Column to the right of table
-*/
+ */
 void MainWindow::on_actionInsert_Columnright_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3373,9 +3329,9 @@ void MainWindow::on_actionInsert_Columnright_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionInsert_Rowabove_triggered()
+ * \fn MainWindow::on_actionInsert_Rowabove_triggered
  * \brief Inserts Row above the table
-*/
+ */
 void MainWindow::on_actionInsert_Rowabove_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3389,9 +3345,9 @@ void MainWindow::on_actionInsert_Rowabove_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionInsert_Rowbelow_triggered()
+ * \fn MainWindow::on_actionInsert_Rowbelow_triggered
  * \brief Inserts Row below the table
-*/
+ */
 void MainWindow::on_actionInsert_Rowbelow_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3405,9 +3361,9 @@ void MainWindow::on_actionInsert_Rowbelow_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionRemove_Column_triggered()
+ * \fn MainWindow::on_actionRemove_Column_triggered
  * \brief Delete selected column
-*/
+ */
 void MainWindow::on_actionRemove_Column_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3421,9 +3377,9 @@ void MainWindow::on_actionRemove_Column_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionRemove_Row_triggered()
+ * \fn MainWindow::on_actionRemove_Row_triggered
  * \brief Delete selected row
-*/
+ */
 void MainWindow::on_actionRemove_Row_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -3437,8 +3393,8 @@ void MainWindow::on_actionRemove_Row_triggered()
 }
 
 /*!
- * \brief MainWindow::on_actionFetch_2_triggered()
- * Not using this function
+ * \fn MainWindow::on_actionFetch_2_triggered
+ * \brief Used for syncing cloud data
  */
 void MainWindow::on_actionFetch_2_triggered()
 {
@@ -3465,10 +3421,11 @@ void MainWindow::on_actionFetch_2_triggered()
     }
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
     settings.endGroup();
     QProcess process;
     process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"\" -o validate.json");
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
 
     QStringList list = gDirTwoLevelUp.split("/");
     QString repo = list[list.size()-1];
@@ -3524,9 +3481,8 @@ void MainWindow::on_actionFetch_2_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionTurn_In_triggered()
+ * \fn MainWindow::on_actionTurn_In_triggered
  * \brief To turn-in the corrector's file to git repository when user clicks "submit corrector" button.
- *
  * \note This function turn-in files only for corrector and not for verifier.
  * \sa checkUnsavedWork(), saveAllWork(), get_version(), commit(), push(), set_stage_verifier() and enable_push()
  */
@@ -3584,10 +3540,11 @@ void MainWindow::on_actionTurn_In_triggered()
     //retrieve details from database and check if user has access to push into this repo
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
     settings.endGroup();
     QProcess process;
     process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"\" -o validate.json");
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
 
     QStringList list = gDirTwoLevelUp.split("/");
     QString repo = list[list.size()-1];
@@ -3609,6 +3566,23 @@ void MainWindow::on_actionTurn_In_triggered()
         return;
     }
 
+    //sending credentials
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o gitToken.json");
+
+    QFile jsonFile("gitToken.json");
+    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    QByteArray data = jsonFile.readAll();
+
+    QJsonParseError errorPtr;
+    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+    mainObj = document.object();
+    jsonFile.close();
+    QString git_token = mainObj.value("github_token").toString();//"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";//
+    QString git_username = mainObj.value("github_username").toString();//"AnujaDumada8";//
+    QFile::remove("gitToken.json");
+    std::string user = git_username.toStdString();
+    std::string pass = git_token.toStdString();
     //!Checking whether all the file are there in CorrectorOutput directory.
     if(mProject.get_version().toInt())
     {
@@ -3628,93 +3602,67 @@ void MainWindow::on_actionTurn_In_triggered()
         QPushButton *nButton = submitBox.addButton(QMessageBox::StandardButton::No);
         submitBox.exec();
 
-
-
         if (submitBox.clickedButton() == yButton)
         {
             bool ok;
-//            branchName = QInputDialog::getText(this, tr("Branch Name"),
-//                                               tr("Enter the branch name:"), QLineEdit::Normal,
-//                                               "", &ok );
-            branchName = "master";
-//            if ( ok && !branchName.isEmpty() ) {
-                // user entered something and pressed OK
-                // mProject.set_stage_verifier();    // set_stage_verifier()inherited from project.cpp updates the stage in xml file to "verifier"
 
-                //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
+            //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
             if(mProject.commit(commit_msg.toStdString()))
             {
-//                    if(!mProject.push(branchName))
-//                mProject.enable_push(false);      // enable_push() increments version and sets stage in xml file
-//                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-//                return;
-                threadingPush *tp=new threadingPush(nullptr);
+                threadingPush *tp = new threadingPush(nullptr, mProject.repo, user, pass, gDirTwoLevelUp);
                 QThread *thread = new QThread;
 
-                QObject::connect(thread, SIGNAL(started()), tp, SLOT(ControlPush(branchName,repo,
-                                                                      login_tries,is_cred_cached,
-                                                                      mEmail,mName,
-                                                                    user,pass)));
-                QObject::connect(tp, SIGNAL(finishedLoadingData()), thread, SLOT(quit()));
-                QObject::connect(tp, SIGNAL(finishedLoadingData()), tp, SLOT(deleteLater()));
-                QObject::connect(tp, SIGNAL(finished()), thread, SLOT(deleteLater()));
-                QObject::connect(tp, SIGNAL(finishedLoadingData()), this, SLOT(stopSpinning()));
+                connect(thread, SIGNAL(started()), tp, SLOT(ControlPush()));
+                connect(tp, SIGNAL(finishedPush()), thread, SLOT(quit()));
+                connect(tp, SIGNAL(finishedPush()), tp, SLOT(deleteLater()));
+                connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+                connect(tp, SIGNAL(finishedPush()), this, SLOT(stopSpinning()));
                 tp->moveToThread(thread);
                 thread->start();
 
                 spinner = new LoadingSpinner(this);
-                spinner->SetMessage("Loading Data...", "Loading...");
+                spinner->SetMessage("Saving to cloud...", "Saving...");
                 spinner->setModal(false);
                 spinner->exec();
+                if (tp->error != 0) {
+                    mProject.enable_push(false);
+                    QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
+                    return;
+                }
             }
-//            }
-//            else {
-//                // user entered nothing or pressed Cancel
-//                QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-//                return;
-//            }
             mProject.set_corrector();
         }
         else
         {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
             return;
         }
 
         ui->lineEdit_2->setText("Version " + mProject.get_version());      //Update the version of file on ui.
 
-        QString emailText =  "Book ID: " + mProject.get_bookId()
-                + "\nSet ID: " + mProject.get_setId()
-                + "\n" + commit_msg ;       //Send an email if turn-in failed
+//        QString emailText =  "Book ID: " + mProject.get_bookId()
+//                + "\nSet ID: " + mProject.get_setId()
+//                + "\n" + commit_msg ;       //Send an email if turn-in failed
 
-       // ui->actionTurn_In->setEnabled(false);        // Deactivating the "Submit Corrector" button on ui
-        QMessageBox::information(0, "Turn In", "Turned In Successfully");
-        //deleteEditedFilesLog();
+        QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
     }
     else
     {
-        QMessageBox::information(0, "Turn In Error", "Please Open Project Before Turning In");
+        QMessageBox::information(0, "Sync Error", "Please Open Project Before Turning In");
     }
 }
+
 
 /*!
  * \fn MainWindow::on_actionVerifier_Turn_In_triggered
  * \brief To turn-in the verifier's file to git repository when user clicks ""Submit Verifier" button.
- *
  * \note This function turn-in files for verifiers not correctors.
  * \sa checkUnsavedWork(), saveAllWork(), get_version(), get_stage(), readJsonFile(), writeJsonFile(),set_stage_verifier() and enable_push.
  */
 void MainWindow::on_actionVerifier_Turn_In_triggered()
 {
-    /*!
-     * \fn checkUnsavedWork
-     * If there's unsaved work, a message box will appear on the screen
-     * asking to save the usaved work or not.
-     * \return boolean value, true if there is unsaved work and false if not.
-    */
     if (checkUnsavedWork())
     {
-
         QMessageBox checkUnsavedBox2;
         checkUnsavedBox2.setWindowTitle("Unsaved Work");
         checkUnsavedBox2.setIcon(QMessageBox::Question);
@@ -3990,20 +3938,20 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
                         mProject.set_version( mProject.get_version().toInt() - 1 );
                     }
                    // mProject.set_stage_verifier();
-                    QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
+                    QMessageBox::critical(0, "Cloud sync", "Sync failed!");
                     return;
                 }
             }
             else {
                 // user entered nothing or pressed Cancel
-                QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
+                QMessageBox::critical(0, "Cloud sync", "Sync failed!");
                 return;
             }
             mProject.set_verifier();
         }
         else
         {
-            QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
+            QMessageBox::critical(0, "Cloud sync", "Sync failed");
             return;
         }
 
@@ -4015,12 +3963,12 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
 
         //! Updating the Project Version
         ui->lineEdit_2->setText("Version " + mProject.get_version());
-        QMessageBox::information(0, "Turn In", "Turned In Successfully");
+        QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
         //deleteEditedFilesLog();
     }
     else
     {
-        QMessageBox::critical(0, "Turn In Error", "Please Open Project Before Turning In");
+        QMessageBox::critical(0, "Cloud sync Error", "Please Open Project Before syncing");
     }
 }
 
@@ -4168,6 +4116,12 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
     }
 }
 
+/*!
+ * \fn MainWindow::toDevanagari
+ * \brief Converts a text to Devanagari script text
+ * \param text
+ * \return Devanagari text
+ */
 QString MainWindow::toDevanagari(string text) {
     slpNPatternDict slnp;
     return QString::fromStdString(slnp.toDev(slnp.toslp1(text)));
@@ -4175,18 +4129,21 @@ QString MainWindow::toDevanagari(string text) {
 
 /*!
  * \fn MainWindow::eventFilter
- * \brief event: ToolTip and ImageMarkingRegion
-      1. Responsible for drawing rectangular region
-      2. Placing a PlaceHolder for figure/table/equation entries
-      3. Set a MessageBox for figure/table/equation/cancel
-      4. Set counter for pagewise for each entry
-      5. Mark multiple image regions in a loaded image.
-      6. Set various flag: a)drawRectangleFlag: is to prevent triggering of this function twice
-      b) loadimage: check image is loaded on not; c) pressedFlag: resposible for dynamic rectangular
-      drawing.
- * \param object, event
- * \return QMainWindow::eventFilter(object, event);
+ * \brief Handles ToolTip and ImageMarkingRegion
+ * \details
+ * 1. Responsible for drawing rectangular region
+ * 2. Placing a PlaceHolder for figure/table/equation entries
+ * 3. Set a MessageBox for figure/table/equation/cancel
+ * 4. Set counter for pagewise for each entry
+ * 5. Mark multiple image regions in a loaded image.
+ * 6. Set various flag:
+ * a) drawRectangleFlag: is to prevent triggering of this function twice
+ * b) loadimage: check image is loaded on not
+ * c) pressedFlag: resposible for dynamic rectangular drawing.
+ * \param object
+ * \param event
  * \sa MainWindow::displayHolder, MainWindow::updateEntries, MainWindow::createImageInfoXMLFile, findStringSimilarity,
+ * \return bool
  */
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
@@ -4500,8 +4457,8 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
  * \param a
  * \param s1
  * \param z
- * \param h
  * \param w
+ * \param h
  */
 void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, int w, int h)
 {
@@ -4563,10 +4520,9 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
 
 
 /*!
- * \brief MainWindow::on_pushButton_2_clicked
- * Button for resizing an image
- * Captures src, width and height attributes, modifies height and width and change the image size
- * it does not chnage the quality of an image
+ * \fn MainWindow::on_pushButton_2_clicked
+ * \brief Button for resizing an image
+ * \details Captures src, width and height attributes, modifies height and width and change the image size it does not change the quality of an image.
  */
 void MainWindow::on_pushButton_2_clicked()
 {
@@ -4820,7 +4776,7 @@ void MainWindow::on_compareCorrectorOutput_clicked()
 /*!
  * \fn MainWindow::on_compareVerifierOutput_clicked
  * \brief Compares Verifier's Output, Corrector's Output and OCR text.
- * This function also displays the percentage of changes made by the Corrector and Verifier, and the accuracy of the OCR text w.r.t. the verified text.
+ * \details This function also displays the percentage of changes made by the Corrector and Verifier, and the accuracy of the OCR text w.r.t. the verified text.
  * \sa DiffView()
  */
 void MainWindow::on_compareVerifierOutput_clicked() //Verifier-Version
@@ -4926,7 +4882,7 @@ void MainWindow::addCurrentlyOpenFileToEditedFilesLog(){
 
 /*!
  * \fn MainWindow::deleteEditedFilesLog
- * \brief for now I am calling this everytime window closes
+ * \brief Deletes .EditedFiles.txt which stores the edited files list
  */
 void MainWindow::deleteEditedFilesLog(){
     QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
@@ -5025,8 +4981,8 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
  * \brief spawns a MessageBox and returns true if Replace is chosen
  * \param old_word
  * \param new_word
+ * \param chk
  * \return bool
- *
  */
 bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word, int &chk){
 
@@ -5153,15 +5109,15 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
 
 }
 
-
-
 /*!
  * \fn MainWindow::getGlobalReplacementMapFromChecklistDialog
  * \brief spawns a checklist and returns a Qmap of selected pairs
  * \param changedWords
- * \returns QMap
+ * \param replaceInAllPages
+ * \return ReplacementMap
  */
-QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords, QVector<int> *replaceInAllPages){
+QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(QVector <QString> changedWords, QVector<int> *replaceInAllPages)
+{
     QMap <QString, QString> globalReplacementMap;
     QMap<QString, QString> uncheckedItemsListMap;
     GlobalReplaceDialog grDialog(changedWords, this);
@@ -5467,7 +5423,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
 }
 
 /*!
- * \fn MainWindow::globalReplacePreviewfn()
+ * \fn MainWindow::globalReplacePreviewfn
  * \brief This feature allows user to view the changes in advance that are going to be done by global replace
  * \details
  * This function will fetch the required data and put in a window where the users will be able to see in a
@@ -5487,7 +5443,8 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
  *
  * Then we initialize QStandardItem model and feed this data to it and also set the relevant headings to it
  *
- * \param QMap <QString, QString> previewMap , QVector<int> allPages
+ * \param previewMap
+ * \param allPages
  * \sa getBeforeAndAfterWords()
  */
 void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVector<int> allPages)
@@ -5611,8 +5568,7 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
 }
 
 /*!
- * \fn MainWindow::getBeforeAndAfterWords()
- *
+ * \fn MainWindow::getBeforeAndAfterWords
  * \brief This function is used by MainWindow::globalReplacePreviewfn() for fetching the context sentences where
  * the global replace is to be applied.
  * \details
@@ -5627,9 +5583,9 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
  * and return both the sentences along with the file name.
  *
  *
- * \param QString fPath, QMap <QString, QString> globalReplacementMap
+ * \param fPath
+ * \param globalReplacementMap
  */
-
 QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap <QString, QString> globalReplacementMap)
 {
     //qDebug()<<"grm:"<<globalReplacementMap;
@@ -5701,6 +5657,8 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
 /*!
  * \fn MainWindow::DisplayJsonDict
  * \brief Load and display *.dict files
+ * \param b
+ * \param input
  */
 void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
 {
@@ -5910,7 +5868,6 @@ QJsonObject MainWindow::getAverageAccuracies(QJsonObject mainObj)
  * \fn MainWindow::updateAverageAccuracies
  * \brief The function updates accuracy and error on word and charater level to
  * the files named comments.json and AverageAccuracies.csv
- *
  * \sa readJsonFile(), writeJsonFile()
  */
 void MainWindow::updateAverageAccuracies() //Verifier only
@@ -5987,7 +5944,8 @@ void MainWindow::updateAverageAccuracies() //Verifier only
 //end
 
 /*!
- * \brief MainWindow::on_actionLineSpace_triggered
+ * \fn MainWindow::on_actionLineSpace_triggered
+ * \brief Adds line to the textbrowser
  */
 void MainWindow::on_actionLineSpace_triggered() //Not used, does not work as intended
 {
@@ -6013,7 +5971,6 @@ void MainWindow::on_actionLineSpace_triggered() //Not used, does not work as int
  * \fn MainWindow::on_actionAdd_Image_triggered
  * \brief This function is called whenever user wishes to add an image in the document in our tool.
  */
-
 void MainWindow::on_actionAdd_Image_triggered()
 {
     //! Ask user to select image from file dialog.
@@ -6100,7 +6057,8 @@ void MainWindow::on_actionResize_Image_triggered()
 }
 
 /*!
- * \brief MainWindow::on_actionPush_triggered
+ * \fn MainWindow::on_actionPush_triggered
+ * \brief Pushes the code to the repository
  */
 void MainWindow::on_actionPush_triggered()
 {
@@ -6134,7 +6092,7 @@ QString GetFilter(QString & Name, const QStringList &list) {
 }
 
 /*!
- * \fn    MainWindow::LoadDocument
+ * \fn MainWindow::LoadDocument
  * \brief This function is called whenever user wants to load a document of the project.
  *        This function  checks for the current directory of the document and finds the filepath
  *        then opens that document into the curr browser. Also before opening the document it
@@ -6145,7 +6103,7 @@ QString GetFilter(QString & Name, const QStringList &list) {
  * \param ext
  * \param name
  *
- * \sa    setMFilename(), UpdateFileBrekadown(), DisplayJsonDict(), highlight(), LoadImageFromFile(), WordCount(), readSettings(), tabchanged()
+ * \sa setMFilename(), UpdateFileBrekadown(), DisplayJsonDict(), highlight(), LoadImageFromFile(), WordCount(), readSettings(), tabchanged()
  */
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 {
@@ -6448,16 +6406,13 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 }
 
 /*!
- * \fn    MainWindow::LoadImageFromFile
+ * \fn MainWindow::LoadImageFromFile
  * \brief This functions loads the image file in the image tab and provides all the functionality
  *        like zoom , cut and resize on that image file.
- *
  * \param f
  */
 void MainWindow::LoadImageFromFile(QFile * f)
 {
-
-
     QString localFileName = f->fileName();
     loadimage = true;
     ui->horizontalSlider->setEnabled(true);
@@ -6499,11 +6454,11 @@ void MainWindow::LoadImageFromFile(QFile * f)
 }
 
 /*!
- * \fn    MainWindow::file_click
+ * \fn MainWindow::file_click
  * \brief This function checks for the type of file user clicked in the tree view then loads that file into
  *        the text browser if its not image else loads into image tab.
  * \param indx
- * \sa    LoadDocument(), LoadImageFromFile()
+ * \sa LoadDocument(), LoadImageFromFile()
  */
 void MainWindow::file_click(const QModelIndex & indx)
 {
@@ -6536,7 +6491,7 @@ void MainWindow::file_click(const QModelIndex & indx)
 }
 
 /*!
- * \fn    MainWindow::OpenDirectory
+ * \fn MainWindow::OpenDirectory
  * \brief This function is used to a folder into the tree at the current index. Also it adds
  *        that folder to the project and imports all of its files  and at it into the tree as
  *        well as project.
@@ -6557,7 +6512,7 @@ void MainWindow::OpenDirectory()
 }
 
 /*!
- * \fn    MainWindow::RemoveFile
+ * \fn MainWindow::RemoveFile
  * \brief This function provides functionality to remove a file from the project as well as
  *        from the tree at that index.
  */
@@ -6596,7 +6551,7 @@ void MainWindow::AddNewFile()
 }
 
 /*!
- * \fn    MainWindow::CustomContextMenuTriggered
+ * \fn MainWindow::CustomContextMenuTriggered
  * \brief This function is called when user wants to change Context menu. This function maps the
  *        tree view of then it regenrates it according to filetype or filter.
  * \param p
@@ -6639,13 +6594,12 @@ void MainWindow::CustomContextMenuTriggered(const QPoint & p)
 }
 
 /*!
- * \fn    MainWindow::closetab
+ * \fn MainWindow::closetab
  * \brief This function is called when tab is closed or when the page is closed. This function
  *        checks if page is in readonly mode and if condition fails then it popups a messagebox
  *        asking to save any unsaved works left.
  * \param idx
- *
- * \sa    on_actionSave_triggered()
+ * \sa on_actionSave_triggered()
  */
 void MainWindow::closetab(int idx)
 {
@@ -6679,12 +6633,11 @@ void MainWindow::closetab(int idx)
 }
 
 /*!
- * \fn    MainWindow::tabchanged
+ * \fn MainWindow::tabchanged
  * \brief When new page is opened without closing the current page or new tab is opened without closing
  *        current tab or tabs/pages gets switched then this function is called.
  * \param idx
- *
- * \sa    setMFilename(), UpdateFileBrekadown(), LoadImageFromFile(), DisplayTimeLog()
+ * \sa setMFilename(), UpdateFileBrekadown(), LoadImageFromFile(), DisplayTimeLog()
  */
 void MainWindow::tabchanged(int idx)
 {
@@ -6765,11 +6718,10 @@ void MainWindow::tabchanged(int idx)
 }
 
 /*!
- * \fn    MainWindow::setMFilename
+ * \fn MainWindow::setMFilename
  * \brief This function is used to set the file name or image file name of the project tree when
  *        opened. Also this functions removes extentions of those file and keep only name of that file.
  * \param name
- *
  */
 void MainWindow::setMFilename( QString name )
 {
@@ -6808,14 +6760,13 @@ void MainWindow::setMFilename( QString name )
 }
 
 /*!
- * \fn    MainWindow::directoryChanged
+ * \fn MainWindow::directoryChanged
  * \brief This funcction is called when directory of project is changed. This function sets all
  *        file paths of corrector output and verifier output to the new loaction.
  * \param path
  */
 void MainWindow::directoryChanged(const QString &path)
 {
-
     QDir d(path);
 
     QString dirstr = d.dirName();
@@ -6855,13 +6806,12 @@ void MainWindow::directoryChanged(const QString &path)
 }
 
 /*!
-* \fn    MainWindow::checkUnsavedWork
-* \brief This function is called when user closes a tab or page then this function checks for the
-*        unsaved changes in that tab or page and if any unsaved work found then it returns true else
-*        false.
-*
-* \return true, false
-*/
+ * \fn MainWindow::checkUnsavedWork
+ * \brief This function is called when user closes a tab or page then this function checks for the
+ *        unsaved changes in that tab or page and if any unsaved work found then it returns true else
+ *        false.
+ * \return bool
+ */
 bool MainWindow::checkUnsavedWork() {
     //!iterate over tab counts and checks for wok in the text browser of that tab
 
@@ -6876,12 +6826,11 @@ bool MainWindow::checkUnsavedWork() {
 }
 
 /*!
-* \fn    MainWindow::saveAllWork
-* \brief This function is called when user closes a tab or page and it has some unsaved work containg in that
-*        page or tab and this function saves all those changes in that page or tab.
-*
-* \sa    on_actionSave_triggered()
-*/
+ * \fn MainWindow::saveAllWork
+ * \brief This function is called when user closes a tab or page and it has some unsaved work containg in that
+ *        page or tab and this function saves all those changes in that page or tab.
+ * \sa on_actionSave_triggered()
+ */
 void MainWindow::saveAllWork()
 {
     QString closing_browserHtml = curr_browser->toHtml();
@@ -6891,12 +6840,10 @@ void MainWindow::saveAllWork()
 }
 
 /*!
-* \fn    MainWindow::on_actionSave_All_triggered
-* \brief This is called when user cloases a tab, page or the application. It saves all the unsaved work
-*        of that page.
-*
-* \sa    on_actionSave_triggered(), UpdateFileBrekadown()
-*/
+ * \fn MainWindow::on_actionSave_All_triggered
+ * \brief This is called when user cloases a tab, page or the application. It saves all the unsaved work of that page.
+ * \sa on_actionSave_triggered(), UpdateFileBrekadown()
+ */
 void MainWindow::on_actionSave_All_triggered()  //enable when required
 {
 
@@ -6948,7 +6895,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
 /*!
  * \fn MainWindow::highlight
  * \brief This function highlights words of Globally Replaced Words
- *
+ * \details
  * We have a map where we store all global replace word list and we get this data from CPair File in
  * the project set folder.
  *
@@ -6956,12 +6903,11 @@ void MainWindow::closeEvent (QCloseEvent *event)
  *
  * Now we get the index of the globally replaced word, we check if the word is a whole word and not a
  * substring and after passing all the condition we set the background of the word in yellow.
- *
+ * \param b
+ * \param input
  */
-
-void MainWindow:: highlight(CustomTextBrowser *b , QString input)
+void MainWindow::highlight(CustomTextBrowser *b , QString input)
 {
-
     QMap <QString, QString>::iterator grmIterator;
     QTextCursor cursor(b->document());
 
@@ -7040,15 +6986,13 @@ void MainWindow:: highlight(CustomTextBrowser *b , QString input)
 /*!
  * \fn MainWindow::on_actionas_PDF_triggered
  * \brief This function gets the book project set in PDF format for easy reading.
- *
+ * \details
  * Depending on whether the user has opened the tool in corrector or verifier mode the appropriate
  * folder is opened and we scan the html contents of only html files in the folder.
  *
  * We then print the html contents using QPrinter and output it in the project set folder with the
  * name "Bookset.pdf".
- *
  */
-
 void MainWindow::on_actionas_PDF_triggered()
 {
     //! We set the dir path to CorrectorOutput or Verifier output depending on whether it is opened
@@ -7366,16 +7310,14 @@ void MainWindow::createActions()
 }
 
 /*!
-* \fn MainWindow::on_actionUndo_Global_Replace_triggered()
-* \brief This feature allows user to undo global replacements when it has been done previously
-*        This function checks if last global replace was for single word or multiple word and
-*        accordingly the appropriate function is called.
-*        This function retrives a map for undo global replace in a variable "UndoGRMap" and
-*        writes all the new words back to the old words thereby undoing the last global replace
-*
-*\sa undoGlobalReplace_Single_Word(), writeGlobalCPairsToFiles(), getUndoGlobalReplaceMap_Multiple_Words()
-
-*/
+ * \fn MainWindow::on_actionUndo_Global_Replace_triggered
+ * \brief This feature allows user to undo global replacements when it has been done previously
+ *        This function checks if last global replace was for single word or multiple word and
+ *        accordingly the appropriate function is called.
+ *        This function retrives a map for undo global replace in a variable "UndoGRMap" and
+ *        writes all the new words back to the old words thereby undoing the last global replace
+ * \sa undoGlobalReplace_Single_Word(), writeGlobalCPairsToFiles(), getUndoGlobalReplaceMap_Multiple_Words()
+ */
 void MainWindow::on_actionUndo_Global_Replace_triggered()
 {
     QMap<QString, QString> undoGRMap;
@@ -7493,9 +7435,9 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
 }
 
 /*!
-* \fn MainWindow::reverseGlobalReplacedWordsMap()
-* \brief This function adds the words requested by the user for global replace undo change to a map "reversedMap"
-*/
+ * \fn MainWindow::reverseGlobalReplacedWordsMap
+ * \brief This function adds the words requested by the user for global replace undo change to a map "reversedMap"
+ */
 void MainWindow::reverseGlobalReplacedWordsMap()
 {
     QMap<QString, QString>::iterator i;
@@ -7508,11 +7450,13 @@ void MainWindow::reverseGlobalReplacedWordsMap()
 }
 
 /*!
-* \fn MainWindow::undoGlobalReplace_Single_Word()
-* \brief This function shows a dialog box asking the user whether the global replacement for the word has to be undone
-*        This function is only called when the last global replace was done for a single word ONLY.
-
-*/
+ * \fn MainWindow::undoGlobalReplace_Single_Word
+ * \brief This function shows a dialog box asking the user whether the global replacement for the word has to be undone
+ *        This function is only called when the last global replace was done for a single word ONLY.
+ * \param oldWord
+ * \param newWord
+ * \return bool
+ */
 bool MainWindow::undoGlobalReplace_Single_Word(QString oldWord, QString newWord)
 {
     QMessageBox messageBox(this);
@@ -7532,11 +7476,13 @@ bool MainWindow::undoGlobalReplace_Single_Word(QString oldWord, QString newWord)
 }
 
 /*!
-* \fn MainWindow::undoGlobalReplace_Multiple_Words()
-* \brief This function shows a dialog box asking the user whether the global replacement for the word has to be undone
-*        This function is only called when the last global replace was done for more than ONE word.
-*\sa UndoGlobalReplace::on_applyButton_clicked(),UndoGlobalReplace::getFinalUndoMap .
-*/
+ * \fn MainWindow::getUndoGlobalReplaceMap_Multiple_Words
+ * \brief This function shows a dialog box asking the user whether the global replacement for the word has to be undone
+ *        This function is only called when the last global replace was done for more than ONE word.
+ * \sa UndoGlobalReplace::on_applyButton_clicked(),UndoGlobalReplace::getFinalUndoMap .
+ * \param GRMap
+ * \return GlobalReplaceMap
+ */
 QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<QString, QString> GRMap)
 {
 
@@ -7552,14 +7498,13 @@ QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<Q
 }
 
 /*!
-* \fn    MainWindow::replaceInAllFilesFromTSVfile
-* \brief This feature allows user to perform global replace by uploading a tsv file
-*        Here the function checks if the file being uploaded by the user is valid or invalid by calling checkForValidTSVfile()
-*        If it is valid then it maps the words in the file to global replace map and asks user whether to perform global replace or not
-*        If the user clicks on Ok then the words are globally replaced
-*
-* \sa     checkForValidTSVfile(), writeGlobalCPairsToFiles()
-*/
+ * \fn MainWindow::replaceInAllFilesFromTSVfile
+ * \brief This feature allows user to perform global replace by uploading a tsv file
+ *        Here the function checks if the file being uploaded by the user is valid or invalid by calling checkForValidTSVfile()
+ *        If it is valid then it maps the words in the file to global replace map and asks user whether to perform global replace or not
+ *        If the user clicks on Ok then the words are globally replaced
+ * \sa checkForValidTSVfile(), writeGlobalCPairsToFiles()
+ */
 void MainWindow::replaceInAllFilesFromTSVfile()
 {
     QString filename = QFileDialog::getOpenFileName(this, "Open a file", gDirTwoLevelUp);
@@ -7603,16 +7548,17 @@ void MainWindow::replaceInAllFilesFromTSVfile()
 
 
 /*!
-* \fn MainWindow::checkForValidTSVfile()
-* \brief This function checks whether the tsv file uploaded for global replace is valid or not
-* This function opens the file, and starts scanning it.
-* A tsv file is a valid only when each and every line contains one tab space between text and no single spaces
-* The function loops through each line checking for the above condition. If any line violates above condition
-* then it returns false and terminates indicating that the file is invalid.
-* If the scan is successful and every line satisfies the condition, it returns true and exits indicating that file is valid.
-
-*/
-
+ * \fn MainWindow::checkForValidTSVfile
+ * \brief This function checks whether the tsv file uploaded for global replace is valid or not
+ * \details
+ * This function opens the file, and starts scanning it.
+ * A tsv file is a valid only when each and every line contains one tab space between text and no single spaces
+ * The function loops through each line checking for the above condition. If any line violates above condition
+ * then it returns false and terminates indicating that the file is invalid.
+ * If the scan is successful and every line satisfies the condition, it returns true and exits indicating that file is valid.
+ * \param file
+ * \return bool
+ */
 bool MainWindow::checkForValidTSVfile(QFile & file)
 {
     int singleSpaces, tabSpaces;
@@ -7640,11 +7586,10 @@ bool MainWindow::checkForValidTSVfile(QFile & file)
 }
 
 /*!
-* \fn    MainWindow::on_actionUpload_triggered
-* \brief When uploading any file or folder this function is called which calls replaceInAllFilesFromTSVfile function
-*
-* \sa    replaceInAllFilesFromTSVfile()
-*/
+ * \fn MainWindow::on_actionUpload_triggered
+ * \brief When uploading any file or folder this function is called which calls replaceInAllFilesFromTSVfile function
+ * \sa replaceInAllFilesFromTSVfile()
+ */
 void MainWindow::on_actionUpload_triggered()
 {
     //uploadReplaceFlag = 1;
@@ -7663,11 +7608,10 @@ void MainWindow::on_actionUpload_triggered()
 }
 
 /*!
-* \fn    MainWindow::on_justify_triggered
-* \brief This function checks if page is opened in readonly mode if false then it allows the
-*        user to change the alignment of the text in the current opened page or tab.
-*
-*/
+ * \fn MainWindow::on_justify_triggered
+ * \brief This function checks if page is opened in readonly mode if false then it allows the
+ *        user to change the alignment of the text in the current opened page or tab.
+ */
 void MainWindow::on_justify_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -7676,11 +7620,10 @@ void MainWindow::on_justify_triggered()
 }
 
 /*!
-* \fn    MainWindow::on_actionFont_Color_triggered
-* \brief This function checks if page is opened in readonly mode if false then it allows the
-*        user to select a color for the font and then changes the text font color in the page.
-*
-*/
+ * \fn MainWindow::on_actionFont_Color_triggered
+ * \brief This function checks if page is opened in readonly mode if false then it allows the
+ *        user to select a color for the font and then changes the text font color in the page.
+ */
 void MainWindow::on_actionFont_Color_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -7698,12 +7641,11 @@ void MainWindow::on_actionFont_Color_triggered()
 }
 
 /*!
-* \fn    MainWindow::reLoadTabWindow
-* \brief This function reloads the tab window that is it loads the document again into the
-*        current tab.
-*
-* \sa    LoadDocument()
-*/
+ * \fn MainWindow::reLoadTabWindow
+ * \brief This function reloads the tab window that is it loads the document again into the
+ *        current tab.
+ * \sa LoadDocument()
+ */
 void MainWindow::reLoadTabWindow()
 {
     string localFilename = mFilename.toUtf8().constData();
@@ -7713,21 +7655,19 @@ void MainWindow::reLoadTabWindow()
     if (suff == "txt" || suff == "html") {
       (file,suff,currentTabPageName );
     }
-
 }
 
 /*!
  * \fn MainWindow::on_lineEditSearch_textChanged
  * \brief This function is a part of Project File Search feature.
- *
+ * \details
  * If set is very large then user can enter page number or any keyword related to file name and get
  * it filtered. The tool will show him that page and thus he will be able to open more easily.
  *
  * This function scans the whole files and stores in a list. Whenever the user types on the search
  * text box it will check the keyword to match in the list. The respective files are highlighted.
- *
+ * \param arg1
  */
-
 void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
 {
     ui->treeView->selectionModel()->clearSelection();
@@ -7767,7 +7707,7 @@ void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
     }
 }
 
-/*! Cursor Highlight Feature
+/* Cursor Highlight Feature
  *
  *  If user is working on a page in a book and closes the tool and returns back later, when he opens the
  *  page he will be able to know in which line he was last working on by highlighting that position of
@@ -7783,10 +7723,8 @@ void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
 /*!
  * \fn MainWindow::writeSettings
  * \brief We use function write settings to write the positions of the cursor to a binary file
- *
  * We retrieve the cursor position and put it in a QMap first and then write it in the file
  * and subsequently flush it in persistent storage
- *
  */
 void MainWindow::writeSettings()
 {
@@ -7824,12 +7762,9 @@ void MainWindow::writeSettings()
  * \fn MainWindow::readSettings
  * \brief We use function read settings to read the positions of the cursor from a binary file and
  * thus get the cursor position of that file.
- *
  * We read the file by first opening it and we feed it into QMap and get the cursor position of that
  * file. Then we hughlight that area by setting stylesheet of text browser.
- *
  */
-
 void MainWindow::readSettings()
 {
     int pos1;
@@ -7855,6 +7790,10 @@ void MainWindow::readSettings()
 
 }
 
+/*!
+ * \fn MainWindow::on_action1_triggered
+ * \brief Action 1 in clipboard
+ */
 void MainWindow::on_action1_triggered()
 {
     proj_flag = '0';
@@ -7862,6 +7801,10 @@ void MainWindow::on_action1_triggered()
     on_actionOpen_Project_triggered();
 }
 
+/*!
+ * \fn MainWindow::on_action2_triggered
+ * \brief Action 2 in clipboard
+ */
 void MainWindow::on_action2_triggered()
 {
     proj_flag = '1';
@@ -7869,6 +7812,10 @@ void MainWindow::on_action2_triggered()
     on_actionOpen_Project_triggered();
 }
 
+/*!
+ * \fn MainWindow::on_action3_triggered
+ * \brief Action 3 in clipboard
+ */
 void MainWindow::on_action3_triggered()
 {
     proj_flag = '2';
@@ -7928,9 +7875,10 @@ void MainWindow::RecentPageInfo()
 
 
 /*!
- * \fn MainWindow::on_actionCheck_for_Updates_triggered()
+ * \fn MainWindow::on_actionCheck_for_Updates_triggered
  * \brief Checks for the update of the following File from Github-Repo
- *Timer is set to 5000ms which starts the sprite animation.
+ * \details
+ * Timer is set to 5000ms which starts the sprite animation.
  * If the animation is already running, calling this method has no effect.
  * Stores the response from github as string.
  * Compares Latest Version to the Current version. If found Same then functions is returned.
@@ -7996,7 +7944,8 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
 }
 
 /*!
- * \brief MainWindow::on_find_clicked
+ * \fn MainWindow::on_find_clicked
+ * \brief Finds a word in the textbrowser
  */
 void MainWindow::on_find_clicked()
 {
@@ -8032,7 +7981,8 @@ void MainWindow::on_find_clicked()
 
 
 /*!
- * \brief MainWindow::on_actionPDF_Preview_triggered
+ * \fn MainWindow::on_actionPDF_Preview_triggered
+ * \brief Previews the current file as PDF
  */
 void MainWindow::on_actionPDF_Preview_triggered()
 {
@@ -8045,7 +7995,8 @@ void MainWindow::on_actionPDF_Preview_triggered()
 }
 
 /*!
- * \brief MainWindow::print
+ * \fn MainWindow::print
+ * \brief Prints the file into PDF
  * \param printer
  */
 void MainWindow::print(QPrinter *printer)
@@ -8123,20 +8074,25 @@ void MainWindow::print(QPrinter *printer)
 }
 
 /*!
- *fn  MainWindow::on_actionChange_Role_triggered
+ * \fn MainWindow::on_actionChange_Role_triggered
  * \brief Changes the role of the user.
- *  provides application settings
- *   prefix of the current group is set to(SETROLE)
+ * \details provides application settings. prefix of the current group is set to(SETROLE)
  */
 void MainWindow::on_actionChange_Role_triggered()
 {
     QSettings settings("IIT-B", "OpenOCRCorrect");
-    settings.beginGroup("Set Role");
+    settings.beginGroup("SetRole");
     settings.remove("");
     settings.endGroup();
+    QMessageBox::information(this,"Role Reset","Role reset successfully. Please restart the tool to select your new role.");
 }
 
 //this function then re-introduces bbox's to saved file
+/*!
+ * \fn MainWindow::bboxInsertion
+ * \brief Inserts bbox into the saved file(DEPRECATED)
+ * \param f
+ */
 void MainWindow::bboxInsertion(QFile *f){
     QFile *file = f;
 
@@ -8266,16 +8222,19 @@ void MainWindow::bboxInsertion(QFile *f){
     }
 
 }
+
 /*!
- *fn  MainWindow::finishedPdfCreation
- * param int->exitCode
- * QProcess::ExitStatus->exitStatus
+ * \fn MainWindow::finishedPdfCreation
  * \brief Function is called When PDF Creation is successfull.
- * Comapres exitcode to zero(0).If found True message is set to(PDF created Successfully)
- * if exit code is EQUAL to -1,255,9 then PDF creation was Stopped by user.
- * if other cases failed then PDF creation was unsuccessfull.
- * File is Closed.
- * Message Box of Title is Previewed.
+ * \details
+ * 1. Compares exitcode to zero(0).
+ * 2. If found True message is set to(PDF created Successfully)
+ * 3. if exit code is EQUAL to -1,255,9 then PDF creation was Stopped by user.
+ * 4. if other cases failed then PDF creation was unsuccessfull.
+ * 5. File is Closed.
+ * 6. Message Box of Title is Previewed.
+ * \param exitCode
+ * \param exitStatus
  */
 void MainWindow::finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStatus)
 {
@@ -8311,14 +8270,17 @@ void MainWindow::finishedPdfCreation(int exitCode, QProcess::ExitStatus exitStat
         QMessageBox::warning(this, title, msg, QMessageBox::Ok, QMessageBox::Ok);
     }
 }
+
+
 /*!
- *fn  MainWindow::pdfPrintIsReady()
+ * \fn MainWindow::pdfPrintIsReady
  * \brief Pdf Creation is in the Process
- * Loading Spinner is Stopped
- * Users are given choice wheather to close the dialog box or wait.
- * Window Title is set to Wait.
- * CLose option is Added in Push Button.
- * if close buttton is clicked then Print PDF process is called of.
+ * \details
+ * 1. Loading Spinner is Stopped
+ * 2. Users are given choice wheather to close the dialog box or wait.
+ * 3. Window Title is set to Wait.
+ * 4. Close option is Added in Push Button.
+ * 5. if close buttton is clicked then Print PDF process is called of.
  */
 void MainWindow::pdfPrintIsReady()
 {
@@ -8338,10 +8300,11 @@ void MainWindow::pdfPrintIsReady()
         mPrintPdfProcess->close();
     }
 }
+
+
 /*!
- *fn  MainWindow::readOutputFromPdfPrint()
- * \brief OutPut from Pdf is read.
- * if Check String is Ready the  pdfPrintIsReady function is called.
+ * \fn MainWindow::readOutputFromPdfPrint
+ * \brief OutPut from Pdf is read. If Check String is Ready the  pdfPrintIsReady function is called.
  */
 void MainWindow::readOutputFromPdfPrint()
 {
@@ -8358,7 +8321,7 @@ void MainWindow::readOutputFromPdfPrint()
 }
 
 /*!
- *fn  MainWindow::SearchOnGoogle()
+ * \fn MainWindow::SearchOnGoogle
  * \brief selected text is searched over google to find it's meaning
  */
 void MainWindow::SearchOnGoogle()
@@ -8370,7 +8333,7 @@ void MainWindow::SearchOnGoogle()
 
 
 /*!
- *fn  MainWindow::GoogleTranslation()
+ * \fn MainWindow::GoogleTranslation
  * \brief selected Text translation is searched over google.
  */
 void MainWindow::GoogleTranslation()
@@ -8381,12 +8344,13 @@ void MainWindow::GoogleTranslation()
 }
 
 /*!
- *fn  MainWindow::insertImageAction()
+ * \fn MainWindow::insertImageAction
  * \brief Image is inserted in the opened file.
- * File Dialog is opened,giving user choice to choose the images from their PC.
- * if image file is empty then fucntion terminates.
- * File information is stored(File Path)
- * Image height and Width is set.
+ * \details
+ * 1. File Dialog is opened,giving user choice to choose the images from their PC.
+ * 2. if image file is empty then fucntion terminates.
+ * 3. File information is stored(File Path)
+ * 4. Image height and Width is set.
  */
 void MainWindow::insertImageAction()
 {
@@ -8402,9 +8366,9 @@ void MainWindow::insertImageAction()
 
     QString copiedImgFilePath(gDirTwoLevelUp + "/Inserted_Images/"+imgFileName);
     if(!QDir(gDirTwoLevelUp + "/Inserted_Images").exists())
-            QDir().mkdir(gDirTwoLevelUp + "/Inserted_Images");
+        QDir().mkdir(gDirTwoLevelUp + "/Inserted_Images");
     QFile::copy(imgFilePath,copiedImgFilePath);
-     qDebug()<<imgFilePath<<"\n"<<copiedImgFilePath;
+    qDebug()<<imgFilePath<<"\n"<<copiedImgFilePath;
     int height =0;
     int width = 0;
     QDialog dialog(this);
@@ -8413,28 +8377,28 @@ void MainWindow::insertImageAction()
     form.addRow(new QLabel("Insert Height and Width",this));
 
     QLineEdit *height_textLine= new QLineEdit(&dialog);
-     QLineEdit *width_textLine= new QLineEdit(&dialog);
+    QLineEdit *width_textLine= new QLineEdit(&dialog);
 
-     form.addRow("Height",height_textLine);
-       form.addRow("Width",width_textLine);
+    form.addRow("Height",height_textLine);
+    form.addRow("Width",width_textLine);
 
-       QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
-       form.addRow(&buttonbox);
+    QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
+    form.addRow(&buttonbox);
 
-       QObject::connect(&buttonbox,SIGNAL(accepted()),&dialog,SLOT(accept()));
-       QObject::connect(&buttonbox,SIGNAL(rejected()),&dialog,SLOT(reject()));
+    QObject::connect(&buttonbox,SIGNAL(accepted()),&dialog,SLOT(accept()));
+    QObject::connect(&buttonbox,SIGNAL(rejected()),&dialog,SLOT(reject()));
 
-       if(dialog.exec() ==QDialog::Accepted){
-           height=height_textLine->text().toInt();
-           width=width_textLine->text().toInt();
-       }
+    if(dialog.exec() ==QDialog::Accepted){
+        height=height_textLine->text().toInt();
+        width=width_textLine->text().toInt();
+    }
 
 
 
-   //setting width
-//    int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
-//    //!setting height
-//    int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
+    //setting width
+    //    int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
+    //    //!setting height
+    //    int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
 
 
 
@@ -8446,19 +8410,23 @@ void MainWindow::insertImageAction()
 
 
 /*!
- *fn  MainWindow::createMenu()
+ * \fn MainWindow::createMenu
  * \brief Menu is Created
  */
 void MainWindow::createMenu()
 {
     QAction *exitAction = new QAction(tr("Exit"), this);
-
-   connect(exitAction, &QAction::triggered, qApp, &QApplication::quit);
+    connect(exitAction, &QAction::triggered, qApp, &QApplication::quit);
 
     QMenu *fileMenu = menuBar()->addMenu(tr("File"));
     fileMenu->addAction(exitAction);
 }
 
+/*!
+ * \fn MainWindow::blockCountChanged
+ * \brief Tracks the change in number of blocks
+ * \param numOfBlocks
+ */
 void MainWindow::blockCountChanged(int numOfBlocks)
 {
     QTextCursor cur = curr_browser->textCursor();
@@ -8496,46 +8464,40 @@ void MainWindow::blockCountChanged(int numOfBlocks)
 
 
 /*!
- *fn  MainWindow::on_actionLogin_triggered()
- * \brief authenticate function is called.
- * user is reDirected to Google login page
+ * \fn MainWindow::on_actionLogin_triggered
+ * \brief authenticate function is called. User is redirected to Google login page
  */
-
 void MainWindow::on_actionLogin_triggered()
 {
-    authenticate();
+//    authenticate();
+    login();
 }
 
 /*!
- *fn  MainWindow::on_actionLogout_triggered()
+ * \fn MainWindow::on_actionLogout_triggered
  * \brief Function is executed when user logouts.
- * Logout button is not visible
- * login button is previewed so that user can login
- *
+ * \details
+ * 1. Logout button is not visible
+ * 2. login button is previewed so that user can login.
  */
 void MainWindow::on_actionLogout_triggered()
 {
     QSettings settings("IIT-B", "OpenOCRCorrect");
     ui->actionLogout->setVisible(false);
     ui->actionLogin->setVisible(true);
-    //QDesktopServices::openUrl(QUrl("https://myaccount.google.com/permissions?continue=https%3A%2F%2Fmyaccount.google.com%2Fsecurity", QUrl::TolerantMode));
-    settings.beginGroup("login");
-    QString token = settings.value("token").toString();
-    settings.endGroup();
-    QProcess process;
-   //qDebug()<<"curl -d -X -POST --header \"Content-type:application/x-www-form-urlencoded\" https://oauth2.googleapis.com/revoke?token="+token;
-    process.execute("curl -d -X -POST --header \"Content-type:application/x-www-form-urlencoded\" https://oauth2.googleapis.com/revoke?token="+token);
     settings.beginGroup("loginConsent");
     settings.remove("");
     settings.endGroup();
     settings.beginGroup("login");
     settings.remove("");
     settings.endGroup();
-
 }
+
+
 /*!
- *fn  MainWindow::on_actionClone_Repository_triggered()
+ * \fn MainWindow::on_actionClone_Repository_triggered
  * \brief This function helps user to clone repositories from their account.
+ * \details
  * Checks if user is already logined or not. If not then user is made to login
  * POST request is send to udaaniitb.aicte-india.org to get the files.
  * Json Object File is read and converted to Json Array.
@@ -8572,10 +8534,11 @@ void MainWindow::on_actionClone_Repository_triggered()
     //retrieve details from database and check if user has access to push into this repo
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
     settings.endGroup();
     QProcess process;
     process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"\" -o validate.json");
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
 
     QJsonObject mainObj = readJsonFile("validate.json");
     QJsonArray repos = mainObj.value("repo_list").toArray();
@@ -8603,10 +8566,10 @@ void MainWindow::on_actionClone_Repository_triggered()
 }
 
 
-
 /*!
- *fn  MainWindow::on_actionClose_project_triggered()
+ * \fn MainWindow::on_actionClose_project_triggered
  * \brief Closes the current opened Project
+ * \details
  * Checks wheather if projected is opened or not.If not Function terminates
  * Clears Tree view,Current browser,graphicsView.
  * All buttons which were enabled during the Open project are closed,Like
@@ -8840,6 +8803,7 @@ void MainWindow::on_actionInsert_Bulleted_List_triggered()
 /*!
  * \fn MainWindow::on_actionInsert_Numbered_List_triggered
  * \brief Adds the Numbered list to the text browser
+ * \details Nested lists can also be inserted.
  */
 void MainWindow::on_actionInsert_Numbered_List_triggered()
 {
@@ -8911,7 +8875,12 @@ void MainWindow::insertList(QTextListFormat::Style styleIndex)
     cursor.endEditBlock();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionInsert_Equation_triggered
+ * \brief Inserts the equation as an image in the text browser at cursor position
+ * \details This function calls the equation editor class and passes the browser pointer, pwd, and "0".
+ * \details 0 denotes that new equation needs to be inserted(If path is passed instead of 0, then selected equation is edited).
+ */
 void MainWindow::on_actionInsert_Equation_triggered()
 {
     if(!mProject.isProjectOpen()){
@@ -8926,7 +8895,11 @@ void MainWindow::on_actionInsert_Equation_triggered()
         w->show();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionEdit_Equation_triggered
+ * \brief Edits the equation using Equation editor
+ * \details This function checks if the user has selected any image or not. If image is selected then it calls the equation editor and passes pwd, browser pointer, & path to MathBran notation of selected equation.
+ */
 void MainWindow::on_actionEdit_Equation_triggered()
 {
     if(!curr_browser) return;
@@ -8957,7 +8930,7 @@ void MainWindow::on_actionEdit_Equation_triggered()
 }
 
 /*!
- *fn  MainWindow::on_actionExit_triggered()
+ * \fn MainWindow::on_actionExit_triggered
  * \brief Application is exited and Closed.
  */
 void MainWindow::on_actionExit_triggered()
@@ -8965,3 +8938,85 @@ void MainWindow::on_actionExit_triggered()
     QCoreApplication::quit();
 }
 
+/*!
+ * \fn MainWindow::login
+ * \brief Login using email and password
+ * \details Asks user for email and password, then these credentials are verified witrh database and user is logged in if the details submitted by user are correct.
+ * \details User enail is stored in cache for later usage.
+ * \details curl is used to send post request to server.
+ */
+void MainWindow::login(){
+    QDialog login(this);
+    QFormLayout form(&login);
+    QString user_email,user_pass;
+
+    form.addRow(new QLabel("You can save your edits on the cloud. To enable this feature\nplease login using your udaan account now or later in\nsettings > login",this));
+
+    QLineEdit *email= new QLineEdit(&login);
+    QLineEdit *password= new QLineEdit(&login);
+    password->setEchoMode(QLineEdit::Password);
+
+    form.addRow("Email",email);
+    form.addRow("Password",password);
+    QLabel *label = new QLabel(&login);
+    label->setText("Forgot your password?\t<a href=\"https://udaaniitb.aicte-india.org/udaan/accounts/password_reset/\"> reset password</a>");
+    QLabel *label2 = new QLabel(&login);
+    label2->setText("Don't have an account yet?<a href=\"https://udaaniitb.aicte-india.org/udaan/auth/register/\"> create account</a>");
+    label->setOpenExternalLinks(true);
+    label2->setOpenExternalLinks(true);
+    form.addRow("",label);
+    form.addRow("",label2);
+    QCheckBox *cb = new QCheckBox("Do not ask again");
+    form.addRow("",cb);
+
+    QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&login);
+    buttonbox.button(QDialogButtonBox::Ok)->setText("Login");
+    form.addRow(&buttonbox);
+
+    QObject::connect(&buttonbox,SIGNAL(accepted()),&login,SLOT(accept()));
+    QObject::connect(&buttonbox,SIGNAL(rejected()),&login,SLOT(reject()));
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+
+    if(login.exec() ==QDialog::Accepted){
+        user_email = email->text();
+        user_pass = password->text();
+        if(!user_email.isEmpty() && !user_pass.isEmpty()){
+        QProcess process;
+        process.execute("curl -d -X -k -POST --header "
+                        "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+user_email+"&password="+user_pass+"\" -o client.json");
+
+
+        QJsonObject mainObj = readJsonFile("client.json");
+        auto status = mainObj.value("status").toBool();
+        QFile::remove("client.json");
+
+        if(status == true){
+            //save details in QSettings
+            settings.beginGroup("login");
+            settings.setValue("email",user_email);
+            settings.setValue("token",user_pass);
+            settings.endGroup();
+            settings.beginGroup("loginConsent");
+            settings.setValue("consent","loggedIn");
+            settings.endGroup();
+            ui->actionLogin->setVisible(false);
+            ui->actionLogout->setVisible(true);
+            QMessageBox::information(this,"Login success","Logged in successfully.");
+        }
+        else{
+            QMessageBox::information(this,"Login error","Wrong email or password, please try again.");
+            MainWindow::login();
+        }
+        }
+        else{
+            QMessageBox::information(this,"Required!","Please fill all the fields");
+            MainWindow::login();
+        }
+    }
+
+    if(cb->checkState() == Qt::Checked){
+        settings.beginGroup("loginConsent");
+        settings.setValue("consent","dna");
+        settings.endGroup();
+    }
+}

@@ -21,6 +21,15 @@
 #include <QProcess>
 #include <QTextCursor>
 
+/*!
+ * \fn equationeditor::equationeditor
+ * \brief Equation editor
+ * \param parent
+ * \param gDirTwoLevelUp
+ * \param b
+ * \param mode
+ * \brief If mode is equal to 0, then new equation is typed and inserted. If the mode contains file path, then the previous equation is edited(Whose path is passed here).
+ */
 equationeditor::equationeditor(QWidget *parent,
                                QString gDirTwoLevelUp,
                                CustomTextBrowser *b,
@@ -82,66 +91,128 @@ equationeditor::equationeditor(QWidget *parent,
         load(mode);
     }
 }
+
+/*!
+ * \fn equationeditor::~equationeditor
+ */
 equationeditor::~equationeditor() {
    delete ui;
 }
 
+/*!
+ * \fn equationeditor::on_actionNew_triggered
+ * \brief It clears the typeset_edit and path.
+ */
 void equationeditor::on_actionNew_triggered(){
     typeset_edit.clear();
     save_path.clear();
     setWindowTitle("Equation Editor");
 }
 
+/*!
+ * \fn equationeditor::on_actionLoad_triggered
+ * \brief Loads new file in typeset_edit.
+ */
 void equationeditor::on_actionLoad_triggered(){
     loadPrompt();
 }
 
+/*!
+ * \fn equationeditor::on_actionSave_triggered
+ * \brief calls save() function when save button is clicked.
+ */
 void equationeditor::on_actionSave_triggered(){
     save();
 }
 
+/*!
+ * \fn equationeditor::on_actionSave_As_triggered
+ * \brief When user clicks on "save as" button, savePrompt() function is called.
+ */
 void equationeditor::on_actionSave_As_triggered(){
     savePrompt();
 }
 
+/*!
+ * \fn equationeditor::on_actionPrint_triggered
+ * \brief When user clicks on print button, the current content written in typeset_edit is saved as svg.
+ */
 void equationeditor::on_actionPrint_triggered(){
     printSvgPrompt();
 }
 
+/*!
+ * \fn equationeditor::on_actionExit_triggered
+ * \brief Closes equation editor
+ */
 void equationeditor::on_actionExit_triggered(){
     exit(0);
 }
 
+/*!
+ * \fn equationeditor::on_actionUndo_triggered
+ * \brief This function is called on udo operation.
+ */
 void equationeditor::on_actionUndo_triggered(){
     typeset_edit.undo();
 }
 
+/*!
+ * \fn equationeditor::on_actionRedo_triggered
+ * \brief This function is called on redo operation
+ */
 void equationeditor::on_actionRedo_triggered(){
     typeset_edit.redo();
     typeset_edit.clearErrors();
 }
 
+/*!
+ * \fn equationeditor::on_actionLoad_Test_txt_triggered
+ * \brief If user wants to load a test project in equation editor, this function is called when clicked on "load test"
+ */
 void equationeditor::on_actionLoad_Test_txt_triggered(){
     load(":/test.txt");
     save_path.clear();
 }
 
+/*!
+ * \fn equationeditor::on_actionZoom_In_triggered
+ * \brief This function zooms in the typeset_edit contents
+ */
 void equationeditor::on_actionZoom_In_triggered(){
     typeset_edit.zoomIn();
 }
 
+/*!
+ * \fn equationeditor::on_actionZoom_Out_triggered
+ * \brief This function zooms out the typeset_edit contents
+ */
 void equationeditor::on_actionZoom_Out_triggered(){
     typeset_edit.zoomOut();
 }
 
+/*!
+ * \fn equationeditor::on_actionReset_Zoom_triggered
+ * \brief This function resets the zoom level to default zoom level in the typeset_edit window
+ */
 void equationeditor::on_actionReset_Zoom_triggered(){
     typeset_edit.zoomReset();
 }
 
+/*!
+ * \fn equationeditor::on_actionShow_Line_Numbers_toggled
+ * \param show
+ * \brief There is an option to show line numbers when we type the equation in an equation editor. User can turn on/off the line numbers by using this option.
+ */
 void equationeditor::on_actionShow_Line_Numbers_toggled(bool show){
     typeset_edit.showLineNumbers(show);
 }
 
+/*!
+ * \fn equationeditor::on_actionVanilla_triggered
+ * \brief This function changes the theme of equation ediotr.
+ * \brief Two themes are available - Vanilla and Chalkboard
+ */
 void equationeditor::on_actionVanilla_triggered(){
     ui->actionVanilla->setChecked(true);
     ui->actionChalkboard->setChecked(false);
@@ -149,6 +220,10 @@ void equationeditor::on_actionVanilla_triggered(){
     typeset_edit.setPalette(palette());
 }
 
+/*!
+ * \fn equationeditor::on_actionChalkboard_triggered
+ * \brie Sets the theme to chalkboard.
+ */
 void equationeditor::on_actionChalkboard_triggered(){
     ui->actionVanilla->setChecked(false);
     ui->actionChalkboard->setChecked(true);
@@ -162,10 +237,20 @@ void equationeditor::on_actionChalkboard_triggered(){
     typeset_edit.setPalette(chalkboard);
 }
 
+/*!
+ * \fn equationeditor::on_actionCopy_as_PNG_triggered
+ * \brief This function copies the typeset_edit contents as png image.
+ */
 void equationeditor::on_actionCopy_as_PNG_triggered(){
     typeset_edit.copyPng();
 }
 
+/*!
+ * \fn equationeditor::load
+ * \param filename
+ * \brief This function opens, renders and shows an equation in editor from selected file.
+ * \brief File should contain a valid MathBran code.
+ */
 void equationeditor::load(QString filename){
     QFile file(filename);
 
@@ -194,17 +279,31 @@ void equationeditor::load(QString filename){
     save_path = filename;
 }
 
+/*!
+ * \fn equationeditor::loadPrompt
+ * \brief This function shows the dialog to select a file.
+ */
 void equationeditor::loadPrompt(){
     QString path = QFileDialog::getOpenFileName(nullptr, tr("Load File"), "./", tr("Text (*.txt)"));
     if(path.isEmpty()) return;
     else load(path);
 }
 
+/*!
+ * \fn equationeditor::save
+ * \brief If save path is empty, savePrompt() function is called, else saveAs() function is called with path.
+ */
 void equationeditor::save(){
     if(save_path.isEmpty()) savePrompt();
     else saveAs(save_path);
 }
 
+/*!
+ * \fn equationeditor::saveAs
+ * \param save_path
+ * \brief This function saves the file at specified location.
+ * \brief File contents are stored in MathBran notation.
+ */
 void equationeditor::saveAs(QString save_path){
     QFile file(save_path);
 
@@ -225,6 +324,10 @@ void equationeditor::saveAs(QString save_path){
     this->save_path = save_path;
 }
 
+/*!
+ * \fn equationeditor::savePrompt
+ * \brief Shows the pop up dialog to user to save the file at desired location.
+ */
 void equationeditor::savePrompt(){
     QString title = typeset_edit.documentTitle();
     QString prompt_name = title.isEmpty() ? "untitled.txt" : typeset_edit.documentTitle();
@@ -235,6 +338,11 @@ void equationeditor::savePrompt(){
     if(!file_name.isEmpty()) saveAs(file_name);
 }
 
+/*!
+ * \fn equationeditor::printSvgPrompt
+ * \brief This functions generates the svg of typeset_edit contents and saves at selected location.
+ * \brief QSvgGenerator is used to generate svg file.
+ */
 void equationeditor::printSvgPrompt(){
     QString title = typeset_edit.documentTitle();
     QString prompt_name = title.isEmpty() ?
@@ -252,11 +360,19 @@ void equationeditor::printSvgPrompt(){
     typeset_edit.printSvg(&svgGen);
 }
 
+/*!
+ * \fn equationeditor::on_actionCopy_as_TeX_triggered
+ * \brief This copies the equation as Latex code which can pasted by user at some other place.
+ */
 void equationeditor::on_actionCopy_as_TeX_triggered(){
     QString math_bran = typeset_edit.selectedMathBran();
     if(!math_bran.isEmpty()) QGuiApplication::clipboard()->setText(MathBran::toLatex(math_bran));
 }
 
+/*!
+ * \fn equationeditor::on_actionCopy_as_Unicode_triggered
+ * \brief This copies the equation as Unicode code which can pasted by user at some other place.
+ */
 void equationeditor::on_actionCopy_as_Unicode_triggered(){
     QString math_bran = typeset_edit.selectedMathBran();
     if(math_bran.isEmpty()) return;
@@ -271,13 +387,27 @@ void equationeditor::on_actionCopy_as_Unicode_triggered(){
     QGuiApplication::clipboard()->setText(MathBran::toUnicode(math_bran));
 }
 
+/*!
+ * \fn equationeditor::enclosedMathBranButton
+ * \param l
+ * \param r
+ * \brief Inserts the provided strings in the tpeset_edit and renders it as a valid mathematical equation.
+ */
 void equationeditor::enclosedMathBranButton(QString l, QString r){
     QString selected = typeset_edit.selectedMathBran();
     if(selected.contains('\n')) typeset_edit.insertMathBran(l + r);
     else typeset_edit.insertMathBran(l + selected + r);
 }
 
-
+/*!
+ * \fn equationeditor::on_actionInsert_Equation_triggered
+ * \brief Inserts the equation in html file at current cursor position.
+ * \details This functions converts the equation editor contents into a png image and inserts this image in browser at cursor position.
+ * \details This inserted png image is also stored locally inside the project directory, within Equations_ folder.
+ * \details Besides the png image, Latex code and MathBran code is also stored in separate files.
+ * \details For one equation, three files are stored locally. In our udaan post editing tool, we show equations as png images but in html files, it is stored as Latex code within $$ $$ tags
+ * \details which can be rendered by MathJax library in any browser. MathBran files are useful to edit already inserted images because our equation editor can render the MathBran notation only.
+ */
 void equationeditor::on_actionInsert_Equation_triggered()
 {
     if(!QDir(gDirTwoLevelUp+"/Equations_").exists())

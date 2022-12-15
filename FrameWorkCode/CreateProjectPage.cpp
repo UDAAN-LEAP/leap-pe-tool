@@ -114,7 +114,7 @@ CreateProjectPage::~CreateProjectPage()
  *
  * The function fetches all the fields and returns to the calling function.
  *
- * \return
+ * \return ProjectInfo
  */
 CreateProjectPage::ProjectInfo CreateProjectPage::getProjectInfo() {
     //! info is a struct with many sub - fields (check header file for this class - CreateProjectPage.h)

@@ -24,13 +24,13 @@ QList <QMap<QString, QString>> map_operations_list;
 QList<QMap<int, int>> map_positions_list;
 
 /*!
- * \fn edit_Distance :: editDistance
+ * \fn edit_Distance::editDistance
  * \brief This function takes two strings as argument then calculates the edit distance of both strings
  *        ie. minimum number of operation required to convert string first to string second then
  *        it returns the converted string and also it uses heuristics way to limit the searches.
  * \param a
  * \param b
- * \return something
+ * \return editDistance between two strings
  * \sa backtrace(), phrase_heuristics()
  */
 QVector <QString> edit_Distance :: editDistance(QString a, QString b)
@@ -92,7 +92,7 @@ QVector <QString> edit_Distance :: editDistance(QString a, QString b)
 }
 
 /*!
- * \fn    edit_Distance :: backtrace
+ * \fn edit_Distance::backtrace
  * \brief This function helps edit distance algorith by pointing to the previous cell which
  *         was used in calculation of the cost to convert string first to string second.
  * \param s1
@@ -168,13 +168,12 @@ void edit_Distance :: backtrace(QStringList s1, QStringList s2, int **solution)
 }
 
 /*!
- * \fn    edit_Distance :: phrase_heuristics
+ * \fn edit_Distance::phrase_heuristics
  * \brief This functions is used to eficiently retrieve the vocabulary terms likely to have
  *        low edit distance to query items by restricting searches and then returning the optimal
  *        path to convert string first to string second.
  * \param s1
  * \param s2
- *
  * \return optimalPath
  */
 QVector <QString> edit_Distance :: phrase_heuristics(QStringList s1, QStringList s2)
@@ -297,11 +296,11 @@ QVector <QString> edit_Distance :: phrase_heuristics(QStringList s1, QStringList
 }
 
 /*!
- * \fn    edit_Distance :: min
+ * \fn edit_Distance::min
  * \brief This function compares a and b an returns the smaller one.
  * \param a
  * \param b
- * \return a, b
+ * \return Minimum of a and b
  */
 int edit_Distance :: min(int a,int b)
 {
@@ -312,7 +311,7 @@ int edit_Distance :: min(int a,int b)
 }
 
 /*!
- * \fn    edit_Distance::getEditDistance
+ * \fn edit_Distance::getEditDistance
  * \brief This function takes two strings as argument then calculates the edit distance of both strings
  *        ie. minimum number of operation required to convert string first to string second.
  * \param first
@@ -350,7 +349,7 @@ int edit_Distance :: getEditDistance(std::string first, std::string second)
 }
 
 /*!
- * \fn    edit_Distance::findStringSimilarity
+ * \fn edit_Distance::findStringSimilarity
  * \brief This function takes two strings as argument then calculates the similarity between them.
  * \param first
  * \param second
@@ -364,7 +363,17 @@ double edit_Distance :: findStringSimilarity(std::string first, std::string seco
     }
     return 1.0;
 }
+
 //for string similarity
+/*!
+ * \fn edit_Distance::matchPattern
+ * \brief Returns the match result between two strings
+ * \param str1
+ * \param arLengthLeft
+ * \param str2
+ * \param arLengthRight
+ * \return Match result
+ */
 int edit_Distance ::matchPattern(std::string str1, int arLengthLeft, std::string str2, int arLengthRight)
 {
     const char* arLeft = str1.c_str();
@@ -430,7 +439,7 @@ int edit_Distance ::getSimilarityValue(std::string str1, std::string str2)
  * \details It calculates similarity between two strings. It is a token based algorithm
  * \param string1
  * \param string2
- * \return
+ * \return Dice match result between two strings
  */
 double edit_Distance::DiceMatch(std::string string1, std::string string2)
 {

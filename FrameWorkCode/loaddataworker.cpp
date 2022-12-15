@@ -88,11 +88,12 @@ void LoadDataWorker::LoadData()
 
 
 /*!
- * \fn LoadDataWorker::loadDict()
- * \param current project file location
+ * \fn LoadDataWorker::loadDict
+ * \param project current project file location
  * \brief The path of the dictionary file is fetched and the files are returned in the map
  * these words are then fetched depending upon the word selected
  * \sa loadMap()
+ * \return If file was present or not
  */
 bool LoadDataWorker::loadDict(Project & project) {
     slpNPatternDict slnp;
@@ -103,7 +104,7 @@ bool LoadDataWorker::loadDict(Project & project) {
 }
 
 /*!
- * \fn LoadDataWorker::on_actionLoadDict_triggered()
+ * \fn LoadDataWorker::on_actionLoadDict_triggered
  * \brief The path of the dictionary file is fetched and the files are returned in the map
  * these words are then fetched depending upon the word selected
  * \sa loadDict()
@@ -114,7 +115,7 @@ void LoadDataWorker::on_actionLoadDict_triggered()
 }
 
 /*!
- * \fn LoadDataWorker::on_actionLoadOCRWords_triggered()
+ * \fn LoadDataWorker::on_actionLoadOCRWords_triggered
  * \brief Loads the OCR files
  * The path of the GEROCR and IEROCR file is fetched and the files are returned in the map which is again,
  * used as a suggestion depending upon the word selected
@@ -134,13 +135,6 @@ void LoadDataWorker::on_actionLoadOCRWords_triggered()
 
 }
 
-/*!
-  \fn LoadDataWorker::on_actionLoadDomain_triggered()
-  \brief loads the common OCR files
- The path of the PWords file is fetched and the files are returned in the map which can be used
- for the suggestion feature
- \sa loadMapPWords()
- */
 
 /*!
  * \fn LoadDataWorker::on_actionLoadDomain_triggered
@@ -155,13 +149,6 @@ void LoadDataWorker::on_actionLoadDomain_triggered()
     slnp.loadMapPWords(*vGBook, *vIBook, *PWords);
 }
 
-/*!
-  \fn LoadDataWorker::on_actionLoadSubPS_triggered()
-  \brief the CPair files
-    The path of the CPair files are fetched and the files are returned in the map which is returned
-    to load the suggestions
-  \sa loadmaptoTrie(), loadPwordsPatternstoTrie(), loadCPair()
- */
 
 /*!
  * \fn LoadDataWorker::on_actionLoadSubPS_triggered

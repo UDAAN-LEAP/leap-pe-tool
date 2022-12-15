@@ -2,9 +2,20 @@
 #include "slpNPatternDict.h"
 #include "editdistance.h"
 
+
 /*!
- * \class Worker
+ * \fn Worker::Worker
  * \brief This class is used to execute Save Function of MainWindow class in a multithreaded fashion.
+ * \param parent
+ * \param mProject
+ * \param gCurrentPageName
+ * \param gCurrentDirName
+ * \param gDirTwoLevelUp
+ * \param s1
+ * \param s2
+ * \param CPair_editDis
+ * \param CPairs
+ * \param filestructure_fw
  */
 Worker::Worker(QObject *parent,
                Project* mProject,
@@ -32,7 +43,7 @@ Worker::Worker(QObject *parent,
 slpNPatternDict slnp;
 
 /*!
- * \fn Worker::doSaveBackend()
+ * \fn Worker::doSaveBackend
  * \brief This function calls SaveFile_Backend functions and emits finished() whenever the function completes
  *        executing.
  * \sa SaveFile_Backend()
@@ -62,14 +73,14 @@ void Worker::doSaveBackend()
         {
             QString commit_msg = "Corrector Turned in Version: " + (*mProject).get_version();
             //!Check commit condition
-            if(!(*mProject).commit(commit_msg.toStdString()))
-            {
-                return;
-            }
-            else
-            {
-                (*mProject).commit(commit_msg.toStdString());
-            }
+//            if(!(*mProject).commit(commit_msg.toStdString()))
+//            {
+//                return;
+//            }
+//            else
+//            {
+//                (*mProject).commit(commit_msg.toStdString());
+//            }
         }
     }
     emit finished();

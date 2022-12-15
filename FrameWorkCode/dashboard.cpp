@@ -17,15 +17,10 @@
 #include "loadingspinner.h"
 #include <Project.h>
 
+
 /*!
- * \class Dashboard
- * \brief This Class is used to preview the dashboard of Application.
- *  ---------------------------
  * \fn dashboard::dashboard
- * \param QWidget-parent
- * \param QString-s
- * \param int-max
- * \param QMap(int,QString)-repoMap
+ * \brief This Class is used to preview the dashboard of Application.
  * \details
  * 1)Contains a Dialog Box which is a base class of dialog windows.
  * 2)Sets up the user interface for the specified widget.
@@ -33,6 +28,10 @@
  * 4)Sets up window Title.
  * 5)Sets up html in text browser.
  * 6)Sets the range of SpinBox(The maximum elements textBrowser contains).
+ * \param parent
+ * \param s
+ * \param max
+ * \param repoMap
  */
 dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> repoMap) :
     QDialog(parent),
@@ -58,22 +57,16 @@ dashboard::~dashboard()
 
 
 /*!
- * \fn dashboard::on_pushButton_clicked()
+ * \fn dashboard::on_pushButton_clicked
  * \inherits from dashboard, Executes when Clicked!
  * \brief
  * 1)Sets the value of spinBox to integer id.
- * 2)if there are no elemets in the textbrowser it returns
- *  or terminates the function.
-
+ * 2)if there are no elemets in the textbrowser it returns or terminates the function.
  * 3)stores the filePath into String,if no filePath is Found,function terminates.
-
- * 4)Allows monitoring signals and slots by using QFuture and
- * QFutureWatcher Classes.
-
+ * 4)Allows monitoring signals and slots by using QFuture and QFutureWatcher Classes.
  * 5)Conations Spinner which is displayed when importing is in process
-
  * 6)If the project is found already downloaded in same directory,throws an
- *  error and terminates the function else the project is downloaded Successfully
+ * error and terminates the function else the project is downloaded Successfully
  */
 void dashboard::on_pushButton_clicked()
 {

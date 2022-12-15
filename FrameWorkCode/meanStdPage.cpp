@@ -13,7 +13,7 @@
 using namespace std;
 
 /*!
- * \fn    meanStdPage :: findMeanStd
+ * \fn meanStdPage::findMeanStd
  * \brief This function is used to find mean and standerd deviation in a page to do that it first
  *        calculates the number of words in the page and then using count it finds mean and standerd deviation.
  * \param std

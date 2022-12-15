@@ -16,7 +16,8 @@ PrintWorker::PrintWorker(QObject *parent, const QString &str)
 }
 
 /*!
- * \brief PrintWorker::~PrintWorker
+ * \fn PrintWorker::~PrintWorker
+ * \brief Destructor
  */
 PrintWorker::~PrintWorker()
 {

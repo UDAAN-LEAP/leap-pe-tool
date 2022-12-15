@@ -18,68 +18,68 @@
 #include <cstring>
 
 
-/*!
-* \namespace crashlog
-* \fn myMessageHandler
-* \brief Checks the type of the QT output message as either debug, info, warning, critical or fatal and accordingly
-*        prints it in the console. Additionally it also prints it to the file FramWorkCode/application.log.
-*        This function is called using qMessageHandler() from different class constructors in our project.
-*
-* \sa fprintf(), QFile::open(), flush(), close()
-*/
 namespace crashlog {
+/*!
+ * \fn myMessageHandler
+ * \brief Checks the type of the QT output message as either debug, info, warning, critical or fatal and accordingly
+ *        prints it in the console. Additionally it also prints it to the file FramWorkCode/application.log.
+ *        This function is called using qMessageHandler() from different class constructors in our project.
+ * \param type
+ * \param context
+ * \param msg
+ */
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString & msg)
 {
-       //! Store log in a 8 bit format
+    //! Store log in a 8 bit format
 
-       QByteArray localMsg = msg.toLocal8Bit();
+    QByteArray localMsg = msg.toLocal8Bit();
 
-       //! *file and *function are used to store the file and function where we debug the code from so it is easier
-       //! to trace the log message
+    //! *file and *function are used to store the file and function where we debug the code from so it is easier
+    //! to trace the log message
 
-       const char *file = context.file ? context.file : "";
-       const char *function = context.function ? context.function : "";
-       QString output;
+    const char *file = context.file ? context.file : "";
+    const char *function = context.function ? context.function : "";
+    QString output;
 
-       /*!
+    /*!
         * We check the type of message and we format it accordingly and we use switch case to achieve this
         */
 
-       switch (type) {
-        case QtDebugMsg:
-            fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
-            break;
-        case QtInfoMsg:
-           fprintf(stderr, "Info: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
-            break;
-        case QtWarningMsg:
-           fprintf(stderr, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
-           break;
-        case QtCriticalMsg:
-           fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
-           break;
-        case QtFatalMsg:
-           fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
-           break;
-         }
+    switch (type) {
+    case QtDebugMsg:
+        fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        break;
+    case QtInfoMsg:
+        fprintf(stderr, "Info: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        break;
+    case QtWarningMsg:
+        fprintf(stderr, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        break;
+    case QtCriticalMsg:
+        fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        break;
+    case QtFatalMsg:
+        fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        break;
+    }
 
 
-       /*! Now we peform saving the messages into a log text file */
+    /*! Now we peform saving the messages into a log text file */
 
-       //create / open log file (FrameWorkCode/application.log)
-       QFile outFile(QString::fromStdString(qApp->applicationDirPath().toStdString())+"/application.log");
-       outFile.open(QIODevice::ReadWrite | QIODevice::Append);
-       QTextStream ts1(&outFile);
-       //set codec
-       ts1.setCodec("UTF-8");
-       //output messages onto the file
-       QHash<QtMsgType, QString> msgLevelHash({{QtDebugMsg, "Debug:"}, {QtInfoMsg, "Info:"}, {QtWarningMsg, "Warning:"}, {QtCriticalMsg, "Critical:"}, {QtFatalMsg, "Fatal:"}});
-       QString logLevelName = msgLevelHash[type];
-       QString txt = QString("%1 %2 (%3)").arg(logLevelName, msg,  context.file);
+    //create / open log file (FrameWorkCode/application.log)
+    QFile outFile(QString::fromStdString(qApp->applicationDirPath().toStdString())+"/application.log");
+    outFile.open(QIODevice::ReadWrite | QIODevice::Append);
+    QTextStream ts1(&outFile);
+    //set codec
+    ts1.setCodec("UTF-8");
+    //output messages onto the file
+    QHash<QtMsgType, QString> msgLevelHash({{QtDebugMsg, "Debug:"}, {QtInfoMsg, "Info:"}, {QtWarningMsg, "Warning:"}, {QtCriticalMsg, "Critical:"}, {QtFatalMsg, "Fatal:"}});
+    QString logLevelName = msgLevelHash[type];
+    QString txt = QString("%1 %2 (%3)").arg(logLevelName, msg,  context.file);
 
-       ts1 << txt << endl;
-       outFile.flush();
-       outFile.close();
-       }
- }
+    ts1 << txt << endl;
+    outFile.flush();
+    outFile.close();
+}
+}
 

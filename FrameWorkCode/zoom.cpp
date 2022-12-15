@@ -11,10 +11,13 @@
 #include <qmath.h>
 #include <QDebug>
 
+
 /*!
- * \brief Graphics_view_zoom::Graphics_view_zoom
+ * \fn Graphics_view_zoom::Graphics_view_zoom
+ * \brief Handles zooming the image
  * \param view
- * zoom based upon the factor
+ * \param scene
+ * \param maximumzoom
  */
 Graphics_view_zoom::Graphics_view_zoom(QGraphicsView* view, QGraphicsScene *scene, int maximumzoom)
   : QObject(view), _view(view)
@@ -72,7 +75,6 @@ void Graphics_view_zoom::gentle_zoom(double factor)
 /*!
  * \fn Graphics_view_zoom::getDefaultZoomInFactor
  * \brief This function returns the default value of zoom in factor.
- *
  * \return defaultZoomInFactor
  */
 double Graphics_view_zoom::getDefaultZoomInFactor()
@@ -83,7 +85,6 @@ double Graphics_view_zoom::getDefaultZoomInFactor()
 /*!
  * \fn Graphics_view_zoom::getDefaultZoomOutFactor
  * \brief This function returns the default value of zoom out factor.
- *
  * \return defaultZoomOutFactor
  */
 double Graphics_view_zoom::getDefaultZoomOutFactor()

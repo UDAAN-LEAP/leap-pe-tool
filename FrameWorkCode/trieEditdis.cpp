@@ -22,7 +22,7 @@ using namespace std;
  * \param word
  * \param min_str
  */
-void trieEditDis :: search_impl(trie* tree, char ch, vector<int> last_row, const string& word, vector<pair<int,string>>& min_str)
+void trieEditDis::search_impl(trie* tree, char ch, vector<int> last_row, const string& word, vector<pair<int,string>>& min_str)
 {
     int sz = last_row.size();
 
@@ -60,7 +60,7 @@ void trieEditDis :: search_impl(trie* tree, char ch, vector<int> last_row, const
  * \param word
  * \return
  */
-vector<pair<int,string>> trieEditDis :: searchTrie(trie& tree, string word)
+vector<pair<int,string>> trieEditDis::searchTrie(trie& tree, string word)
 {   vector<pair<int,string>> min_str;
     min_str.clear();
     word = string("$") + word;
@@ -96,7 +96,7 @@ vector<pair<int,string>> trieEditDis :: searchTrie(trie& tree, string word)
  * \param word
  * \param min_str
  */
-void trieEditDis :: search_impl1(trie* tree, char ch, vector<int> last_row, const string& word, string& min_str)
+void trieEditDis::search_impl1(trie* tree, char ch, vector<int> last_row, const string& word, string& min_str)
 {
     int sz = last_row.size();
 
@@ -134,7 +134,7 @@ void trieEditDis :: search_impl1(trie* tree, char ch, vector<int> last_row, cons
  * \param word
  * \return
  */
-string trieEditDis :: searchTrie1(trie& tree, string word)
+string trieEditDis::searchTrie1(trie& tree, string word)
 {   string min_str;
     min_str.clear();
     word = string("$") + word;
@@ -161,7 +161,7 @@ string trieEditDis :: searchTrie1(trie& tree, string word)
 
 
 // treeonesearch ends
-void trieEditDis :: loadmaptoTrie(trie& tree,map<string,int > m2){
+void trieEditDis::loadmaptoTrie(trie& tree,map<string,int > m2){
     for( map<string,int >::const_iterator ptr=m2.begin();
          ptr!=m2.end(); ptr++) {
         tree.insert(ptr->first);
@@ -177,7 +177,7 @@ void trieEditDis :: loadmaptoTrie(trie& tree,map<string,int > m2){
  * \param OCRWord
  * \return
  */
-vector<string> trieEditDis :: print5NearestEntries(trie& tree,string OCRWord){
+vector<string> trieEditDis::print5NearestEntries(trie& tree,string OCRWord){
 vector<string> out;
 slpNPatternDict slnp;
 OCRWord = slnp.toslp1(OCRWord);
@@ -207,7 +207,7 @@ return out;
  * \param vec
  * \return
  */
-vector<string> trieEditDis :: print1OCRNearestEntries(string OCRWord, vector<string> vec){
+vector<string> trieEditDis::print1OCRNearestEntries(string OCRWord, vector<string> vec){
 
 vector<pair<int,string>> minIstr;
 size_t minEditDis = 100;
@@ -249,7 +249,7 @@ return out;
  * \param count
  * \return
  */
-bool trieEditDis :: insertPatternsOf(string str, trie& TPWordsP, size_t& count){ //map<string,int >&  PWordsP
+bool trieEditDis::insertPatternsOf(string str, trie& TPWordsP, size_t& count){ //map<string,int >&  PWordsP
     size_t sz = str.size();
     if(sz == 0) return 1;
     for(size_t i = 0; i < (sz+1); i++){
@@ -265,7 +265,7 @@ bool trieEditDis :: insertPatternsOf(string str, trie& TPWordsP, size_t& count){
  * \param PWords
  * \return
  */
-size_t trieEditDis :: loadPWordsPatternstoTrie(trie& TPWordsP, map<string,int >& PWords){ // arg1(strt from 0) ,map<string,int >& PWordsP
+size_t trieEditDis::loadPWordsPatternstoTrie(trie& TPWordsP, map<string,int >& PWords){ // arg1(strt from 0) ,map<string,int >& PWordsP
     size_t count = 0;
 
         for( map<string,int >::const_iterator ptr=PWords.begin();
@@ -278,7 +278,7 @@ size_t trieEditDis :: loadPWordsPatternstoTrie(trie& TPWordsP, map<string,int >&
 
 
 //!applicable when trieeditdisone is used as searchTrie will give str as output, else it give vector<string>
-string trieEditDis :: SamasBreakLRCorrect(string s1, map<string, int>& m1, map<string, int>& PWordsNew,trie& tree, trie& treeP) { //unordered_
+string trieEditDis::SamasBreakLRCorrect(string s1, map<string, int>& m1, map<string, int>& PWordsNew,trie& tree, trie& treeP) { //unordered_
 if((s1.size() == 0) || (s1 == "")) return "";
 if((m1[s1]>0)||PWordsNew[s1]>0) return  s1;
 //cout << "s1 "<< s1 << endl;

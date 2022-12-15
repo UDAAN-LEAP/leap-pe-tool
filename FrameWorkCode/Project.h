@@ -82,8 +82,10 @@ private:
 	QString mProjectName;
 	std::string mXML;
 	QDir mProjectDir;
-	std::string mName = "";
-	std::string mEmail = "";
     pugi::xml_document doc;
+
+public:
+    std::string mName = "";
+    std::string mEmail = "";
     git_repository * repo=nullptr;
 };
