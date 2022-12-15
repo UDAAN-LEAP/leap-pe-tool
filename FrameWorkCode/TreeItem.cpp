@@ -9,15 +9,18 @@
 #include "TreeItem.h"
 #include "Filters.h"
 
+/*!
+ * \fn TreeItem::~TreeItem
+ * \brief Destructor
+ */
 TreeItem::~TreeItem()
 {
 	qDeleteAll(mChildItems);
 }
 
 /*!
- * \fn TreeItem::append_child()
+ * \fn TreeItem::append_child
  * \brief This function appends child into the tree.
- *
  * \param child
  */
 void TreeItem::append_child(TreeItem * child)
@@ -26,11 +29,9 @@ void TreeItem::append_child(TreeItem * child)
 }
 
 /*!
- * \fn TreeItem * TreeItem::child
+ * \fn TreeItem::child
  * \brief This function returns the item present at specific row passed in parameters.
- *
  * \param row
- *
  * \return mChildItems.at(row)
  */
 TreeItem * TreeItem::child(int row)
@@ -43,7 +44,6 @@ TreeItem * TreeItem::child(int row)
 /*!
  * \fn TreeItem::child_count
  * \brief This function returns count of child items in the tree.
- *
  * \return mChildItems.count()
  */
 int TreeItem::child_count() const
@@ -54,7 +54,6 @@ int TreeItem::child_count() const
 /*!
  * \fn TreeItem::column_count
  * \brief This function returns count colums of data items.
- *
  * \return mItemData.count()
  */
 int TreeItem::column_count() const
@@ -80,10 +79,8 @@ QVariant TreeItem::data(int column) const
 /*!
  * \fn TreeItem::find
  * \brief This function implements search operation in the tree and returns if found returns item else returns nullptr.
- *
  * \param str
- *
- * \return this, t, nullptr
+ * \return This object's pointer
  */
 TreeItem * TreeItem::find(QString & str) {
 
@@ -107,7 +104,6 @@ TreeItem * TreeItem::find(QString & str) {
 /*!
  * \fn TreeItem::row
  * \brief This function returns indexes of row in the tree.
- *
  * \return mParentItem->mChildItems.indexOf(const_cast<TreeItem*>(this)),0
  */
 int TreeItem::row() const
@@ -120,7 +116,6 @@ int TreeItem::row() const
 /*!
  * \fn TreeItem::parentItem
  * \brief This function returns parent items of the tree.
- *
  * \return mParentItem
  */
 TreeItem * TreeItem::parentItem()
@@ -129,72 +124,65 @@ TreeItem * TreeItem::parentItem()
 }
 
 /*!
- * \fn TreeItem :: SetFile
+ * \fn TreeItem::SetFile
  * \brief This function assigns pFile param to file variable.
- *
  * \param pFile
  */
-void TreeItem :: SetFile( QFile * pFile)
+void TreeItem::SetFile( QFile * pFile)
 {
         file = pFile;
 }
 
 /*!
- * \fn TreeItem :: SetFilter
+ * \fn TreeItem::SetFilter
  * \brief This function assigns pFilter param to mFilter variable.
- *
  * \param pFilter
  */
-void TreeItem :: SetFilter(Filter * pFilter)
+void TreeItem::SetFilter(Filter * pFilter)
 {
         mFilter = pFilter;
 }
 
 /*!
- * \fn TreeItem :: GetNodeType
+ * \fn TreeItem::GetNodeType
  * \brief This function returns the type of node of the tree.
- *
  * \return type
  */
-NodeType TreeItem :: GetNodeType()
+NodeType TreeItem::GetNodeType()
 {
         return type;
 }
 
 /*!
- * \fn TreeItem :: GetFile
+ * \fn TreeItem::GetFile
  * \brief This function returns the file of tree.
- *
  * \return file
  */
-QFile * TreeItem :: GetFile()
+QFile * TreeItem::GetFile()
 {
    return file;
 }
 
 /*!
- * \fn TreeItem :: GetFilter
+ * \fn TreeItem::GetFilter
  * \brief This function returns mFilter when called.
- *
  * \return mFilter
  */
-Filter * TreeItem :: GetFilter()
+Filter * TreeItem::GetFilter()
 {
   return mFilter;
 }
 
+
 /*!
- * \fn TreeItem :: FindFileNode
+ * \fn TreeItem::FindFileNode
  * \brief This function is used to search for the file node in the tree and returns
  *        item if found else retuns nullptr if size gets to 0 else recursivly call itself.
- *
- * \param f, item
- *
- * \return item, retnVal, nullptr
- *
- *  \sa FindFileNode()
+ * \param f
+ * \param item
+ * \return this object's pointer
  */
-TreeItem * TreeItem :: FindFileNode(QFile*f,TreeItem * item)
+TreeItem * TreeItem::FindFileNode(QFile*f,TreeItem * item)
 {
         if (!item->file) {
             if (f->fileName() == item->file->fileName())
@@ -215,12 +203,11 @@ TreeItem * TreeItem :: FindFileNode(QFile*f,TreeItem * item)
 }
 
 /*!
- * \fn TreeItem :: RemoveNode
+ * \fn TreeItem::RemoveNode
  * \brief This function is called to remove a node from the tree.
- *
  * \param item
  */
-void TreeItem :: RemoveNode(TreeItem * item)
+void TreeItem::RemoveNode(TreeItem * item)
 {
     int id = mChildItems.indexOf(item);
     if (id < mChildItems.size()) {

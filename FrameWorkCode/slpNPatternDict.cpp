@@ -31,9 +31,9 @@ bool HinFlag = 0, SanFlag = 1;
  * \param subject
  * \param search
  * \param replace
- * \return
+ * \return string
  */
-string slpNPatternDict :: ReplaceString(string subject, const string& search, const string& replace)
+string slpNPatternDict::ReplaceString(string subject, const string& search, const string& replace)
 {
     size_t pos=0;
     while((pos=subject.find(search, pos)) != string::npos)
@@ -49,9 +49,9 @@ string slpNPatternDict :: ReplaceString(string subject, const string& search, co
  * \param subject
  * \param search
  * \param replace
- * \return
+ * \return string
  */
-string slpNPatternDict :: ReplaceStringRestricted(string subject, const string& search, const string& replace)
+string slpNPatternDict::ReplaceStringRestricted(string subject, const string& search, const string& replace)
 {
     size_t pos=0;
     char c;
@@ -79,7 +79,7 @@ string slpNPatternDict :: ReplaceStringRestricted(string subject, const string& 
  * \param synrows
  * \param filename
  */
-void slpNPatternDict :: loadFileCSV(map<string, vector<int>>& synonym, vector<vector<string>>& synrows, const string filename){
+void slpNPatternDict::loadFileCSV(map<string, vector<int>>& synonym, vector<vector<string>>& synrows, const string filename){
     QString fn = QString::fromStdString(filename);
     QFile file(fn);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -120,7 +120,7 @@ void slpNPatternDict :: loadFileCSV(map<string, vector<int>>& synonym, vector<ve
  * \param s
  * \return
  */
-string slpNPatternDict :: toDev(string s)
+string slpNPatternDict::toDev(string s)
 { //Hin:-
     if (HinFlag){
     string vowel_dn[]={"अ","आ","इ","ई","उ","ऊ","ऋ","ए","ऐ","ओ","औ","ऑ","ं","ः","ँ","ॅ"};
@@ -191,7 +191,7 @@ else if(SanFlag ){
  * \param s
  * \return
  */
-string slpNPatternDict :: toslp1(string s)
+string slpNPatternDict::toslp1(string s)
 { //Hin:-
     if (HinFlag){
         string vowel_dn[]={"अ","आ","इ","ई","उ","ऊ","ऋ","ए","ऐ","ओ","औ","ऑ","ं","ः","ँ","ॅ"};
@@ -292,7 +292,7 @@ return s;
  * \fn slpNPatternDict::printmapinDev
  * \param m1
  */
-void slpNPatternDict :: printmapinDev(map<string,int> m1){
+void slpNPatternDict::printmapinDev(map<string,int> m1){
 
 /*std::ofstream ss1("ppi.bin");
    boost::archive::text_oarchive oarch1(ss1);
@@ -305,7 +305,7 @@ for( map<string,int>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
  * \fn slpNPatternDict::printmap
  * \param m1
  */
-void slpNPatternDict :: printmap(map<string,int>& m1){
+void slpNPatternDict::printmap(map<string,int>& m1){
 
 /*std::ofstream ss1("ppi.bin");
    boost::archive::text_oarchive oarch1(ss1);
@@ -318,7 +318,7 @@ for( map<string,int>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
  * \fn slpNPatternDict::printmapstrstr
  * \param m1
  */
-void slpNPatternDict :: printmapstrstr(map<string,string>& m1){
+void slpNPatternDict::printmapstrstr(map<string,string>& m1){
 
 /*std::ofstream ss1("ppi.bin");
    boost::archive::text_oarchive oarch1(ss1);
@@ -331,7 +331,7 @@ for( map<string,string>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
  * \fn slpNPatternDict::printmapWFreq
  * \param m1
  */
-void slpNPatternDict :: printmapWFreq(map<string,int>& m1){
+void slpNPatternDict::printmapWFreq(map<string,int>& m1){
 
 /*std::ofstream ss1("ppi.bin");
    boost::archive::text_oarchive oarch1(ss1);
@@ -348,7 +348,7 @@ for( map<string,int>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
  * \param Dict
  * \param PWords
  */
-void slpNPatternDict :: loadCwordsPair(string wordL,string wordR, map<string, string>& CPair,map<string,int>& Dict,map<string,int>&  PWords){
+void slpNPatternDict::loadCwordsPair(string wordL,string wordR, map<string, string>& CPair,map<string,int>& Dict,map<string,int>&  PWords){
 if ((Dict[wordL] ==0) && (PWords[wordL] == 0)) CPair[wordL] = wordR;
 }
 
@@ -378,7 +378,7 @@ slnp.loadCwordsPair(slnp.toslp1(str1),slnp.toslp1(str2),CPair,Dict,PWords);}
  * \param Dict
  * \param PWords
  */
-void slpNPatternDict :: loadCwordsPairs(string wordL,string wordR, map<string, set<string> >& CPairs,map<string,int>& Dict,map<string,int>&  PWords)
+void slpNPatternDict::loadCwordsPairs(string wordL,string wordR, map<string, set<string> >& CPairs,map<string,int>& Dict,map<string,int>&  PWords)
 {
     //cout<< "hello"<<wordR<<endl;
     std::replace(wordR.begin(), wordR.end(), ',', ' ');
@@ -401,7 +401,7 @@ void slpNPatternDict :: loadCwordsPairs(string wordL,string wordR, map<string, s
  * \param Dict
  * \param PWords
  */
-void slpNPatternDict :: loadCPairs(string filename, map<string, set<string> >& CPairs,map<string,int>&  Dict, map<string,int>&  PWords)
+void slpNPatternDict::loadCPairs(string filename, map<string, set<string> >& CPairs,map<string,int>&  Dict, map<string,int>&  PWords)
 {
     ifstream myfile(filename);
     if (myfile.is_open())
@@ -456,7 +456,7 @@ void slpNPatternDict :: loadCPairs(string filename, map<string, set<string> >& C
  * \param vec
  * \param GBook
  */
-void slpNPatternDict :: loadMapNV(string fileName, map<string,int>& OCRWords, vector<string>& vec, string GBook){
+void slpNPatternDict::loadMapNV(string fileName, map<string,int>& OCRWords, vector<string>& vec, string GBook){
 ifstream myfile(fileName);
       if (myfile.is_open())
       { string str1;
@@ -465,11 +465,11 @@ ifstream myfile(fileName);
     } else cout <<"Error:" << GBook<<  "Words NOT Loaded in mapNvector" << endl;
 }
 
-int slpNPatternDict :: minIG(int a, int b){ if(a>b)return b; else return a;}
-int slpNPatternDict :: maxIG(int a, int b){ if(a<b)return b; else return a;}
+int slpNPatternDict::minIG(int a, int b){ if(a>b)return b; else return a;}
+int slpNPatternDict::maxIG(int a, int b){ if(a<b)return b; else return a;}
 
 
-void slpNPatternDict :: loadMapPWords(vector<string>& vGBook,vector<string>& vIBook, map<string,int>& PWords){
+void slpNPatternDict::loadMapPWords(vector<string>& vGBook,vector<string>& vIBook, map<string,int>& PWords){
     int vGsz = vGBook.size(), vIsz =  vIBook.size();
     int win = vGsz  - vIsz;
     if(win<0) win = -1*win;
@@ -483,7 +483,7 @@ void slpNPatternDict :: loadMapPWords(vector<string>& vGBook,vector<string>& vIB
 cout << PWords.size() << " words loaded in PWords" << endl;
 }
 
-string slpNPatternDict :: findDictEntries1(string s1,  map<string, int>& m2, map<string, int>& m1, int size) { //unordered_
+string slpNPatternDict::findDictEntries1(string s1,  map<string, int>& m2, map<string, int>& m1, int size) { //unordered_
 
 if((s1.size() == 0) || (s1 == "")) return "";
 
@@ -509,7 +509,7 @@ for(size_t j =0; j < s1.size() ; j++){ //- i +1 j= 0:8
 return ("<font color=\'red\'>" + toDev(s1) + "</font>");
 }
 
-string slpNPatternDict :: findDictEntries(string s1,  map<string, int>& m2, map<string, int>& m1, int size) { //unordered_
+string slpNPatternDict::findDictEntries(string s1,  map<string, int>& m2, map<string, int>& m1, int size) { //unordered_
 m2["rAma"]++;
 m2["rAm"]++;
 string s = findDictEntries1(s1,m2,m1, size);
@@ -537,7 +537,7 @@ return sL + sR;
  * \param word1
  * \return
  */
-bool slpNPatternDict :: hasM40PerAsci(string word1){
+bool slpNPatternDict::hasM40PerAsci(string word1){
     if(SanFlag||HinFlag){
     string asc = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     size_t sz = word1.size();
@@ -555,7 +555,7 @@ bool slpNPatternDict :: hasM40PerAsci(string word1){
  * \param word1
  * \return
  */
-bool slpNPatternDict :: hasNoAsci(string word1){
+bool slpNPatternDict::hasNoAsci(string word1){
     string asc = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     size_t sz = word1.size();
     for(size_t t =0; t < sz; t++){
@@ -570,7 +570,7 @@ bool slpNPatternDict :: hasNoAsci(string word1){
  * \param OCRWords
  * \param GBook
  */
-void slpNPatternDict :: loadMap(string fileName, map<string,int>& OCRWords, string GBook){
+void slpNPatternDict::loadMap(string fileName, map<string,int>& OCRWords, string GBook){
     size_t szp = OCRWords.size();
 ifstream myfile(fileName);
       if (myfile.is_open())
@@ -588,7 +588,7 @@ ifstream myfile(fileName);
  * \param count6
  * \return
  */
-bool slpNPatternDict :: insertPatternstoMap(string str, map<string,int>& TPWordsP, size_t& count ,size_t& count6){ //map<string,int >&  PWordsP
+bool slpNPatternDict::insertPatternstoMap(string str, map<string,int>& TPWordsP, size_t& count ,size_t& count6){ //map<string,int >&  PWordsP
     //! ADDED FOR FEATYRE EXTRACTION
     size_t sz = str.size();
     if(sz == 0) return 1;
@@ -609,7 +609,7 @@ bool slpNPatternDict :: insertPatternstoMap(string str, map<string,int>& TPWords
  * \param count6
  * \return
  */
-size_t slpNPatternDict :: loadDictPatternstoMap(map<string,int >& TPWordsP, map<string,int >& PWords,size_t& count6){ // arg1(strt from 0) ,map<string,int >& PWordsP
+size_t slpNPatternDict::loadDictPatternstoMap(map<string,int >& TPWordsP, map<string,int >& PWords,size_t& count6){ // arg1(strt from 0) ,map<string,int >& PWordsP
     //! ADDED FOR FEATYRE EXTRACTION
     size_t count = 0,maxsiz = 0;
         for( map<string,int >::const_iterator ptr=PWords.begin();
@@ -631,7 +631,7 @@ size_t slpNPatternDict :: loadDictPatternstoMap(map<string,int >& TPWordsP, map<
  * \param count
  * \return
  */
-bool slpNPatternDict :: getNgramFeaturesinVect(string str,map<string,int>& Dict,vector<bool>& vb,vector<size_t>& vbf, size_t& count){
+bool slpNPatternDict::getNgramFeaturesinVect(string str,map<string,int>& Dict,vector<bool>& vb,vector<size_t>& vbf, size_t& count){
     //! ADDED FOR FEATYRE EXTRACTION
     size_t sz = str.size();
     //cout<<sz<<endl;
@@ -659,14 +659,14 @@ bool slpNPatternDict :: getNgramFeaturesinVect(string str,map<string,int>& Dict,
  * \note //https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
  * \return
  */
-bool slpNPatternDict :: endsWith(const std::string& s, const std::string& suffix)
+bool slpNPatternDict::endsWith(const std::string& s, const std::string& suffix)
 {
     //! ADDED FOR FEATYRE EXTRACTION
     return s.size() >= suffix.size() &&
            s.substr(s.size() - suffix.size()) == suffix;
 }
 // ADDED FOR FEATYRE EXTRACTION
-std::vector<std::string> slpNPatternDict :: split(const std::string& s, const std::string& delimiter, const bool& removeEmptyEntries)
+std::vector<std::string> slpNPatternDict::split(const std::string& s, const std::string& delimiter, const bool& removeEmptyEntries)
 {
     std::vector<std::string> tokens;
 
@@ -700,7 +700,7 @@ std::vector<std::string> slpNPatternDict :: split(const std::string& s, const st
  * \param winig
  * \return
  */
-bool slpNPatternDict :: searchS1inGVec(string s1,size_t iocrdone,vector<string>& gocr,size_t winig){
+bool slpNPatternDict::searchS1inGVec(string s1,size_t iocrdone,vector<string>& gocr,size_t winig){
 
     //!ADDED FOR ERROR DETECTION REPORT
     for(int t1 = maxIG(iocrdone-winig,0); t1 < min(iocrdone+winig,gocr.size()); t1++){
@@ -717,7 +717,7 @@ bool slpNPatternDict :: searchS1inGVec(string s1,size_t iocrdone,vector<string>&
  * \param m1
  * \return
  */
-string slpNPatternDict :: findDictEntries(string s1,  map<string, int>& m2, map<string, int>& m1) {//unordered_
+string slpNPatternDict::findDictEntries(string s1,  map<string, int>& m2, map<string, int>& m1) {//unordered_
 
 if((s1.size() == 0) || (s1 == "")) return "";
 
@@ -744,7 +744,7 @@ return ("<font color=\'red\'>" + toDev(s1) + "</font>");//("#" + s1 + "#");//
  * \param find
  * \param replace
  */
-void slpNPatternDict :: find_and_replace(string& source, string const& find, string const& replace)
+void slpNPatternDict::find_and_replace(string& source, string const& find, string const& replace)
 {
     for(string::size_type i = 0; (i = source.find(find, i)) != string::npos;)
     {
@@ -758,7 +758,7 @@ void slpNPatternDict :: find_and_replace(string& source, string const& find, str
  * \param source
  * \return
  */
-string slpNPatternDict :: find_and_replace_oddInstancesblue(string source)
+string slpNPatternDict::find_and_replace_oddInstancesblue(string source)
 {
     string find = "green";
     string replace = "blue";
@@ -777,7 +777,7 @@ string slpNPatternDict :: find_and_replace_oddInstancesblue(string source)
  * \param source
  * \return
  */
-string slpNPatternDict :: find_and_replace_oddInstancesorange(string source)
+string slpNPatternDict::find_and_replace_oddInstancesorange(string source)
 {
     string find = "cyan";
     string replace = "orange";
@@ -799,7 +799,7 @@ using namespace std;
  * \param str2
  * \param str3
  */
-void slpNPatternDict :: allignlcsnew(string& str1,string& str2,string& str3){
+void slpNPatternDict::allignlcsnew(string& str1,string& str2,string& str3){
 string str1new, str2new;
 size_t t1 = 0;
 size_t t2 =0;
@@ -860,7 +860,7 @@ typedef std::vector<bool> members;
   lcs - an output results iterator
 */
 template <typename it, typename ot>
-void slpNPatternDict :: set_lcs(it x, members const & xs_in_lcs, ot lcs)
+void slpNPatternDict::set_lcs(it x, members const & xs_in_lcs, ot lcs)
 {
     for (members::const_iterator xs_in = xs_in_lcs.begin();
          xs_in != xs_in_lcs.end(); ++xs_in, ++x)
@@ -877,7 +877,7 @@ void slpNPatternDict :: set_lcs(it x, members const & xs_in_lcs, ot lcs)
   On completion, `lens` holds LCS lengths in the final row.
 */
 template <typename it>
-void slpNPatternDict :: lcs_lens(it xlo, it xhi, it ylo, it yhi, lengths & lens)
+void slpNPatternDict::lcs_lens(it xlo, it xhi, it ylo, it yhi, lengths & lens)
 {
     // Two rows of workspace.
     // Careful! We need the 1 for the leftmost column.
@@ -913,7 +913,7 @@ void slpNPatternDict :: lcs_lens(it xlo, it xhi, it ylo, it yhi, lengths & lens)
   Parameter xs_in_lcs holds the members of xs in the LCS.
 */
 template <typename it>
-void slpNPatternDict :: calculate_lcs(it xo, it xlo, it xhi, it ylo, it yhi, members & xs_in_lcs)
+void slpNPatternDict::calculate_lcs(it xo, it xlo, it xhi, it ylo, it yhi, members & xs_in_lcs)
 {
     unsigned const nx = distance(xlo, xhi);
 
@@ -971,7 +971,7 @@ void slpNPatternDict :: calculate_lcs(it xo, it xlo, it xhi, it ylo, it yhi, mem
 
 // Calculate an LCS of (xs, ys), returning the result in an_lcs.
 template <typename seq>
-void slpNPatternDict :: lcs(seq const & xs, seq const & ys, seq & an_lcs)
+void slpNPatternDict::lcs(seq const & xs, seq const & ys, seq & an_lcs)
 {
     members xs_in_lcs(xs.size(), false);
     calculate_lcs(xs.begin(), xs.begin(), xs.end(),
@@ -984,7 +984,7 @@ void slpNPatternDict :: lcs(seq const & xs, seq const & ys, seq & an_lcs)
  * \param ocrp
  * \return
  */
-bool slpNPatternDict :: isNonVowel(string ocrp){
+bool slpNPatternDict::isNonVowel(string ocrp){
     string a = "aeiouAEIOU";
     for(size_t t =0; t< a.size(); t ++){
     if (ocrp == a.substr(t,1)) return 0;
@@ -998,7 +998,7 @@ bool slpNPatternDict :: isNonVowel(string ocrp){
  * \param input
  * \return
  */
-string slpNPatternDict :: removeSpaces(string input)
+string slpNPatternDict::removeSpaces(string input)
 { string output;
   int length = input.length();
   for (int i = 0; i < length; i++) {
@@ -1013,7 +1013,7 @@ string slpNPatternDict :: removeSpaces(string input)
  * \param correct
  * \param vec
  */
-void slpNPatternDict :: findConfisions(string ocr, string correct, vector<string>& vec){
+void slpNPatternDict::findConfisions(string ocr, string correct, vector<string>& vec){
     //vector<string> vec;
     //ocrp = “”; correctp = “”;
     // for( t = 0 t< s.size) // load ocrp correctp if t > 0 with substr(t-1,1)
@@ -1062,7 +1062,7 @@ void slpNPatternDict :: findConfisions(string ocr, string correct, vector<string
  * \param vec
  * \param vind
  */
-void slpNPatternDict :: findConfisionsNindex(string ocr, string correct, vector<string>& vec, vector<int>& vind){
+void slpNPatternDict::findConfisionsNindex(string ocr, string correct, vector<string>& vec, vector<int>& vind){
     //vector<string> vec;
     //ocrp = “”; correctp = “”;
     // for( t = 0 t< s.size) // load ocrp correctp if t > 0 with substr(t-1,1)
@@ -1112,7 +1112,7 @@ void slpNPatternDict :: findConfisionsNindex(string ocr, string correct, vector<
  * \param str1
  * \param str2
  */
-void slpNPatternDict :: removeEndCommonSpaces(string& str1, string& str2){
+void slpNPatternDict::removeEndCommonSpaces(string& str1, string& str2){
     size_t t = str1.size();
     string s1 = str1.substr(t-1,1), s2 = str1.substr(t-1,1);
     while((s1 == " ") && (s2 == " ")) {str1 = str1.substr(0,t-1); str2 = str2.substr(0,t-1); t = str1.size(); s1 = str1.substr(t-1,1), s2 = str1.substr(t-1,1);}
@@ -1136,7 +1136,7 @@ vector<string> findConfisionsPair(string str1, string str2){
  * \param str2
  * \param vec
  */
-void slpNPatternDict :: appendConfusionsPairs(string str1, string str2, vector<string>& vec){
+void slpNPatternDict::appendConfusionsPairs(string str1, string str2, vector<string>& vec){
     str1 = "@" + toslp1(str1) + "#"; str2 = "@" + toslp1(str2) + "#";
     string str3;
     lcs(str1,str2,str3);
@@ -1155,7 +1155,7 @@ void slpNPatternDict :: appendConfusionsPairs(string str1, string str2, vector<s
  * \param vecind
  * \return
  */
-string slpNPatternDict :: appendConfusionsPairsNindex(string str1, string str2, vector<string>& vec, vector<int>& vecind){
+string slpNPatternDict::appendConfusionsPairsNindex(string str1, string str2, vector<string>& vec, vector<int>& vecind){
     str1 = "@" + toslp1(str1) + "#"; str2 = "@" + toslp1(str2) + "#";
     string str3;
     lcs(str1,str2,str3);
@@ -1172,7 +1172,7 @@ string slpNPatternDict :: appendConfusionsPairsNindex(string str1, string str2, 
  * \param ConfP
  * \param ConfPmap
  */
-void slpNPatternDict :: loadvectomap(vector<string> ConfP, map<string,int>& ConfPmap){
+void slpNPatternDict::loadvectomap(vector<string> ConfP, map<string,int>& ConfPmap){
 
 for(size_t t = 0; t<ConfP.size(); t++) ConfPmap[ConfP[t]]++;
 
@@ -1182,7 +1182,7 @@ for(size_t t = 0; t<ConfP.size(); t++) ConfPmap[ConfP[t]]++;
  * \fn slpNPatternDict::printvecstr
  * \param ConfP
  */
-void slpNPatternDict :: printvecstr(vector<string> ConfP){
+void slpNPatternDict::printvecstr(vector<string> ConfP){
 
 for(size_t t = 0; t<ConfP.size(); t++) cout << ConfP[t] << endl;
 
@@ -1192,7 +1192,7 @@ for(size_t t = 0; t<ConfP.size(); t++) cout << ConfP[t] << endl;
  * \fn slpNPatternDict::printvecint
  * \param ConfP
  */
-void slpNPatternDict :: printvecint(vector<int> ConfP){
+void slpNPatternDict::printvecint(vector<int> ConfP){
 
 for(size_t t = 0; t<ConfP.size(); t++) cout << ConfP[t] << endl;
 
@@ -1204,7 +1204,7 @@ for(size_t t = 0; t<ConfP.size(); t++) cout << ConfP[t] << endl;
  * \param fileName
  * \param ConfPmap
  */
-void slpNPatternDict :: loadConfusions(string fileName,map<string,int>& ConfPmap){
+void slpNPatternDict::loadConfusions(string fileName,map<string,int>& ConfPmap){
     vector<string> ConfP;
     string str1, str2;
     ifstream myfile(fileName);
@@ -1227,7 +1227,7 @@ void slpNPatternDict :: loadConfusions(string fileName,map<string,int>& ConfPmap
  * \param fileName2
  * \param ConfPmap
  */
-void slpNPatternDict :: loadConfusions2(string fileName1,string fileName2,map<string,int>& ConfPmap){
+void slpNPatternDict::loadConfusions2(string fileName1,string fileName2,map<string,int>& ConfPmap){
     vector<string> ConfP;
     string str1, str2;
     ifstream myfile(fileName1);
@@ -1251,7 +1251,7 @@ void slpNPatternDict :: loadConfusions2(string fileName1,string fileName2,map<st
  * \param fileName2
  * \param ConfPmap
  */
-void slpNPatternDict :: loadConfusionsFont(vector<string> fileName1,vector<string> fileName2,map<string,int>& ConfPmap){
+void slpNPatternDict::loadConfusionsFont(vector<string> fileName1,vector<string> fileName2,map<string,int>& ConfPmap){
     vector<string> ConfP;
         if (fileName1.size() > 0)
       { for(size_t i =0;i < fileName1.size(); i++ ){
@@ -1269,7 +1269,7 @@ void slpNPatternDict :: loadConfusionsFont(vector<string> fileName1,vector<strin
  * \param localFilenameI
  * \param localFilenameC
  */
-void slpNPatternDict :: generateCorrectionPairs(vector<string> &wrong,vector<string> &right,string localFilenameI,string localFilenameC){
+void slpNPatternDict::generateCorrectionPairs(vector<string> &wrong,vector<string> &right,string localFilenameI,string localFilenameC){
         vector<string> vecpI, vecpC;
         std::ifstream sIpage(localFilenameI);
         if (!(sIpage.is_open())) {cout << "cannot open inds/corrected file" <<endl;  return;} // break the while loop for page_no
@@ -1313,7 +1313,7 @@ void slpNPatternDict :: generateCorrectionPairs(vector<string> &wrong,vector<str
  * \param localFilenameI
  * \param localFilenameC
  */
-void slpNPatternDict :: generatePairs(vector<string> &wrong,vector<string> &right,string localFilenameI,string localFilenameC){
+void slpNPatternDict::generatePairs(vector<string> &wrong,vector<string> &right,string localFilenameI,string localFilenameC){
         vector<string> vecpI, vecpC;
         std::ifstream sIpage(localFilenameI);
         if (!(sIpage.is_open())) {cout << "cannot open inds/corrected file" <<endl;  return;} // break the while loop for page_no
@@ -1362,7 +1362,7 @@ void slpNPatternDict :: generatePairs(vector<string> &wrong,vector<string> &righ
  * \param Rep
  * \param Repy
  */
-void slpNPatternDict :: generatePairsIEROCR(string localFilenameI,string localFilenameC, string Rep, string Repy){
+void slpNPatternDict::generatePairsIEROCR(string localFilenameI,string localFilenameC, string Rep, string Repy){
     vector<string> vecpI, vecpC;
     std::ofstream repPair(Rep);
     std::ofstream repPairy(Repy);
@@ -1414,7 +1414,7 @@ void slpNPatternDict :: generatePairsIEROCR(string localFilenameI,string localFi
  * \param localFilenameI
  * \param localFilenameC
  */
-void slpNPatternDict :: generatePairsSpaced(vector<string> &wrong,vector<string> &right,string localFilenameI,string localFilenameC){
+void slpNPatternDict::generatePairsSpaced(vector<string> &wrong,vector<string> &right,string localFilenameI,string localFilenameC){
         vector<string> vecpI, vecpC;
         std::ifstream sIpage(localFilenameI);
         if (!(sIpage.is_open())) {cout << "cannot open inds/corrected file" <<endl;  return;} // break the while loop for page_no
@@ -1462,7 +1462,7 @@ void slpNPatternDict :: generatePairsSpaced(vector<string> &wrong,vector<string>
  * \param fileName2
  * \param CPair
  */
-void slpNPatternDict :: loadCPair(string fileName1,string fileName2,map<string,string>& CPair){
+void slpNPatternDict::loadCPair(string fileName1,string fileName2,map<string,string>& CPair){
     string str1, str2;
     ifstream myfile(fileName1);
     ifstream myfile2(fileName2);
@@ -1485,7 +1485,7 @@ void slpNPatternDict :: loadCPair(string fileName1,string fileName2,map<string,s
  * \param TopConfusions
  * \param TopConfusionsMask
  */
-void slpNPatternDict :: loadTopConfusions(map<string,int>& ConfPmap,map<string, string>& TopConfusions,map<string, int>& TopConfusionsMask){
+void slpNPatternDict::loadTopConfusions(map<string,int>& ConfPmap,map<string, string>& TopConfusions,map<string, int>& TopConfusionsMask){
 map<string, int> TopSuggFreq;
 for(map<string, int >::const_iterator it = ConfPmap.begin();
         it != ConfPmap.end(); ++it)
@@ -1506,7 +1506,7 @@ for(map<string, int >::const_iterator it = ConfPmap.begin();
  * \param s
  * \return
  */
-std::string slpNPatternDict :: tokenize(const std::string& s) {
+std::string slpNPatternDict::tokenize(const std::string& s) {
    if (!s.size()) {
      return "";
    }
@@ -1523,7 +1523,7 @@ std::string slpNPatternDict :: tokenize(const std::string& s) {
  * \fn slpNPatternDict::printConfusionRulesmap
  * \param ConfPmap
  */
-void slpNPatternDict :: printConfusionRulesmap(map<string,int>& ConfPmap){
+void slpNPatternDict::printConfusionRulesmap(map<string,int>& ConfPmap){
     //! print only rules in Pattern Miner's Rule Input form
     map<string,vector<string> > rulesCorrectFormat;
    //! print the Map rule and correct the format
@@ -1557,7 +1557,7 @@ void slpNPatternDict :: printConfusionRulesmap(map<string,int>& ConfPmap){
  * \param wCindex
  * \return
  */
-int slpNPatternDict :: loadWConfusionsNindex1(string str1,string str2,map<string,int>& ConfPmap,vector<string>& wordConfusions,vector<int>& wCindex){
+int slpNPatternDict::loadWConfusionsNindex1(string str1,string str2,map<string,int>& ConfPmap,vector<string>& wordConfusions,vector<int>& wCindex){
 string str1New = appendConfusionsPairsNindex(str1,str2,wordConfusions,wCindex);
 
 //!for choosing best out of nearest suggestions:-
@@ -1569,7 +1569,7 @@ int szold = wordConfusions.size();// more confusions more szold
 }
 
 //! for alligning OCR Pair words
-string slpNPatternDict :: loadWConfusionsNindex(string str1,string str2,map<string,int>& ConfPmap,vector<string>& wordConfusions,vector<int>& wCindex){
+string slpNPatternDict::loadWConfusionsNindex(string str1,string str2,map<string,int>& ConfPmap,vector<string>& wordConfusions,vector<int>& wCindex){
 string str1New = appendConfusionsPairsNindex(str1,str2,wordConfusions,wCindex);
 
         //filter confusions:-
@@ -1585,7 +1585,7 @@ string str1New = appendConfusionsPairsNindex(str1,str2,wordConfusions,wCindex);
  * \param i
  * \param cnfn
  */
-void slpNPatternDict :: replacestrcnf(string& newstring,size_t i,string cnfn)
+void slpNPatternDict::replacestrcnf(string& newstring,size_t i,string cnfn)
 {
 istringstream s(cnfn);
 string lhs,rhs;
@@ -1600,7 +1600,7 @@ newstring = newstring.replace(i,lhs.length(),rhs);
  * \param str
  * \return
  */
-bool slpNPatternDict :: endswithHalanta(string str) {
+bool slpNPatternDict::endswithHalanta(string str) {
 if (str.size() <= 2) return 1; //ALSO INCLUDING ONE/TWO CHARS
 if (str.size() >= 4) return 0; //ignoring Words with Halanta having more than 4 chars
 string lastchar = str.substr(str.size()-1,1);
@@ -1615,7 +1615,7 @@ return 1;
  * \fn slpNPatternDict::removeEndSpaces
  * \param str1
  */
-void slpNPatternDict :: removeEndSpaces(string& str1){
+void slpNPatternDict::removeEndSpaces(string& str1){
     size_t t = str1.size();
     string s1 = str1.substr(t-1,1);
     //cout << "1 s1 " << s1<< endl;
@@ -1635,7 +1635,7 @@ void slpNPatternDict :: removeEndSpaces(string& str1){
  * \param input
  * \return
  */
-string slpNPatternDict :: deletePoornaVirams(string input){
+string slpNPatternDict::deletePoornaVirams(string input){
 string out;
 for(size_t t = 0; t < input.size(); t++){
 string s; s += input[t];
@@ -1674,7 +1674,7 @@ return "";
  * \param out
  * \return
  */
-size_t slpNPatternDict :: cntSamas(string in, string& out){
+size_t slpNPatternDict::cntSamas(string in, string& out){
 out = "";
 size_t cnt = 0;
 string word;
@@ -1691,7 +1691,7 @@ return cnt;
  * \param m1
  * \return
  */
-string slpNPatternDict :: SamasLR(string s1, map<string, int>& m1) {//, map<string, int>& PWordsNew
+string slpNPatternDict::SamasLR(string s1, map<string, int>& m1) {//, map<string, int>& PWordsNew
 
 if((s1.size() == 0) || (s1 == "")) return "";
 if((m1[s1]>0)) return " " + s1 + " ";//||PWordsNew[s1]>0
@@ -1720,7 +1720,7 @@ return (" #" + s1 + "# ");
  * \param m1
  * \return
  */
-string slpNPatternDict :: SamasRL(string s1, map<string, int>& m1) { //, map<string, int>& PWordsNew
+string slpNPatternDict::SamasRL(string s1, map<string, int>& m1) { //, map<string, int>& PWordsNew
 
 if((s1.size() == 0) || (s1 == "")) return "";
 if((m1[s1]>0)) return " " + s1 + " ";//||PWordsNew[s1]>0
@@ -1747,7 +1747,7 @@ return (" #" + s1 + "# ");
 // samas corrector.h ends
 
 // str1cnt = minsize_t(cntSamas(SamasLR(toslp1(str1),Dict,SmasWords),partsLR), cntSamas(SamasRL(toslp1(str1),Dict,SmasWords),partsRL),FlagLR);
-size_t slpNPatternDict :: minsize_t(size_t a,size_t b,bool& FlagLR){
+size_t slpNPatternDict::minsize_t(size_t a,size_t b,bool& FlagLR){
 if (b < a) {FlagLR = 0; return b;} else {FlagLR =1; return a;}
 }
 
@@ -1760,7 +1760,7 @@ if (b < a) {FlagLR = 0; return b;} else {FlagLR =1; return a;}
  * \param Dict
  * \return
  */
-string slpNPatternDict :: print2OCRSugg(string str1, string str2, map<string,int>& ConfPmap,map<string,int>& Dict){//,map<string,int> SmasWords
+string slpNPatternDict::print2OCRSugg(string str1, string str2, map<string,int>& ConfPmap,map<string,int>& Dict){//,map<string,int> SmasWords
 
         //cout << "generating Pair Sugg for "<<str1<< " ";//<<"suggestion for " << endl
         if((str2 == "") || (str2 == " ") || (str2 == "  ")) {/*cout << "no suggestion" << endl;*/ return "";}
@@ -1810,7 +1810,7 @@ string slpNPatternDict :: print2OCRSugg(string str1, string str2, map<string,int
  * \param m1
  * \return
  */
-string slpNPatternDict :: bestIG(string s1,string s2,map<string, int>& m1){
+string slpNPatternDict::bestIG(string s1,string s2,map<string, int>& m1){
 string s11 = s1; string s21 = s2;
 s1 = toslp1(s1); s2=toslp1(s2);
 string RL1 = SamasRL(s1,m1); string RLout1;
@@ -1833,7 +1833,7 @@ if(minsize_t(cRL1,cLR1,lolz) < minsize_t(cRL2,cLR2,lolz)) return s11; else retur
  * \param fileName
  * \param SRules
  */
-void slpNPatternDict :: loadSandhiRules(string fileName, map<string, vector<string>>& SRules){
+void slpNPatternDict::loadSandhiRules(string fileName, map<string, vector<string>>& SRules){
     ifstream s(fileName);
     string sR1,sRl1, sRr1;
     while(s>>sR1) {s>>sRl1; s>>sRr1; SRules[sR1].push_back(sRl1 + " " + sRr1);}
@@ -1843,7 +1843,7 @@ void slpNPatternDict :: loadSandhiRules(string fileName, map<string, vector<stri
  * \fn slpNPatternDict::printSandhiRUles
  * \param SRules
  */
-void slpNPatternDict :: printSandhiRUles(map<string,vector<string> >& SRules){
+void slpNPatternDict::printSandhiRUles(map<string,vector<string> >& SRules){
 
     for( map<string,vector<string> >::const_iterator ptr=SRules.begin();
                  ptr!=SRules.end(); ptr++) { string s = (ptr->first);
@@ -1862,7 +1862,7 @@ void slpNPatternDict :: printSandhiRUles(map<string,vector<string> >& SRules){
  * \param Dict
  * \return
  */
-bool slpNPatternDict :: SamasCheck(string OCRNew, map<string, int>& Dict){
+bool slpNPatternDict::SamasCheck(string OCRNew, map<string, int>& Dict){
 if (OCRNew == "") return 1;
 if (Dict[OCRNew] > 0) return 1;
 //cout << endl<< "heres " << OCRNew << endl;
@@ -1883,7 +1883,7 @@ return 0;
  * \param SRules
  * \return
  */
-bool slpNPatternDict :: SandhiCheck(string OCRNew, map<string, int>& Dict,map<string, vector<string>>& SRules){
+bool slpNPatternDict::SandhiCheck(string OCRNew, map<string, int>& Dict,map<string, vector<string>>& SRules){
 // Sandhi Check
 //if (OCRNew == "") return 1;
 if (Dict[OCRNew] > 0) return 1;
@@ -1930,7 +1930,7 @@ return 0;
  * \param SRules
  * \return
  */
-string slpNPatternDict :: generatePossibilitesNsuggest(string OCRWord,map<string,string>& TopConfusions,map<string,int>& TopConfusionsMask,map<string, int>& Dict, map<string, vector<string>>& SRules){
+string slpNPatternDict::generatePossibilitesNsuggest(string OCRWord,map<string,string>& TopConfusions,map<string,int>& TopConfusionsMask,map<string, int>& Dict, map<string, vector<string>>& SRules){
 string OCRWordOrig = OCRWord;
 size_t sz = OCRWord.size() + 2;
 // one confusion one sandhi at a time

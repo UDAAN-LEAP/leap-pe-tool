@@ -10,12 +10,12 @@
 #include "eddis.h"
 
 /*!
- * \fn size_t eddis :: min
+ * \fn size_t eddis::min
  * \brief This functions compares x,y and z an returns the smallest one among them.
  * \param x
  * \param y
  * \param z
- * \return x,y,z
+ * \return Minimum of x, y, z
  */
 size_t eddis :: min(size_t x, size_t y, size_t z)
 {

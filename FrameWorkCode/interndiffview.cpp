@@ -15,7 +15,7 @@
 /*!
  * \fn InternDiffView::InternDiffView
  * \brief Constructor for interndiffview
- * \brief Checks if the image file exists, if yes then loads the file to graphics view object and
+ * \details Checks if the image file exists, if yes then loads the file to graphics view object and
  * sets zoom configuration and sets relevant labels. Throws error message if file does not exists
 */
 InternDiffView::InternDiffView( QWidget *parent, QString page, QString fpath)
@@ -77,7 +77,7 @@ InternDiffView::~InternDiffView()
 /*!
  * \fn InternDiffView::validFilePath
  * \brief returns whether the file path is valid or invalid in a boolean variable
-*/
+ */
 bool InternDiffView::validFilePath()
 {
     return isValidFile;
@@ -281,7 +281,6 @@ void InternDiffView::Update_UI()
  * \fn InterDiffView::on_NextButton_clicked
  * \brief It re-loads the compare window when next button is clicked and updates the text and metrics for
  * that page respectively.
- *
  * \sa Load_comparePage(), Update_UI()
  */
 void InternDiffView::on_NextButton_clicked()

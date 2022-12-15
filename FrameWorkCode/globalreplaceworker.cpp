@@ -80,7 +80,7 @@ GlobalReplaceWorker::GlobalReplaceWorker(QObject *parent,
  * \param file_path
  * \param globalReplacementMap
  * \param doc
- * \return
+ * \return Number of replaced words
  */
 int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QString, QString> globalReplacementMap, QTextDocument *doc)
 {
@@ -476,7 +476,11 @@ bool GlobalReplaceWorker::isStringInFile(QString file_path, QString searchString
     return textFound;
 }
 
-
+/*!
+ * \fn GlobalReplaceWorker::saveBboxInfo
+ * \brief Saves the bbox info
+ * \param htmlFile
+ */
 void GlobalReplaceWorker::saveBboxInfo(QString htmlFile){
     QFile gfile(htmlFile);
     gfile.open(QIODevice::ReadOnly | QFile::Text);
@@ -530,6 +534,11 @@ void GlobalReplaceWorker::saveBboxInfo(QString htmlFile){
       }
 }
 
+/*!
+ * \fn GlobalReplaceWorker::bboxInsertion
+ * \brief Inserts bbox into the saved file
+ * \param f
+ */
 void GlobalReplaceWorker::bboxInsertion(QString f){
     QFile file(f);
 

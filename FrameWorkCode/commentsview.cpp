@@ -90,13 +90,13 @@ CommentsView::~CommentsView()
 }
 
 /*!
-* \fn CommentsView::on_pushButton_clicked()
-* \brief This functions get called when push button is clicked in dialog.
-*        It allows verifier to save the comments and rating in a json file
-*        with page details.
-*
-*\note Verifier-Version
-*/
+ * \fn CommentsView::on_pushButton_clicked
+ * \brief This functions get called when push button is clicked in dialog.
+ *        It allows verifier to save the comments and rating in a json file
+ *        with page details.
+ *
+ *\note Verifier-Version
+ */
 void CommentsView::on_pushButton_clicked() //Verifier-Version
 {
 

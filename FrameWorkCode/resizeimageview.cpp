@@ -12,12 +12,12 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
-/*! \class ResizeImageView
+/*!
  * \fn ResizeImageView::ResizeImageView
  * \brief This Class is used to Resize the image.
- * \param QWidget->parent
- * \param double->imageWidth
- * \param double->imageHight
+ * \param parent
+ * \param imageWidth
+ * \param imageHight
  * \details
  * 1)Sets the Window title as "Resize Image Size"
  * 2)Sets up the user interface for the specified widget.
@@ -65,7 +65,6 @@ ResizeImageView::ResizeImageView(QWidget *parent,double imageWidth,double imageH
  * \param parent
  * \param imageWidth
  * \param imageHight
- *
  */
 QPair<double,double> ResizeImageView::getNewSize(QWidget * parent, double imageWidth, double imageHight)
 {
@@ -106,7 +105,7 @@ void ResizeImageView::on_widthSpinBox_valueChanged(double width)
 /*!
  * \fn ResizeImageView::on_hightSpinBox_valueChanged
  * \brief This function changes the width of the widthSpinBox when height is changed.
- * \param hight
+ * \param height
  */
 void ResizeImageView::on_hightSpinBox_valueChanged(double hight)
 {

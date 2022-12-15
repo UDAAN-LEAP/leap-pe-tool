@@ -21,6 +21,14 @@
 #include <QProcess>
 #include <QTextCursor>
 
+/*!
+ * \fn equationeditor::equationeditor
+ * \brief Equation editor
+ * \param parent
+ * \param gDirTwoLevelUp
+ * \param b
+ * \param mode
+ */
 equationeditor::equationeditor(QWidget *parent,
                                QString gDirTwoLevelUp,
                                CustomTextBrowser *b,
@@ -82,66 +90,113 @@ equationeditor::equationeditor(QWidget *parent,
         load(mode);
     }
 }
+
+/*!
+ * \fn equationeditor::~equationeditor
+ */
 equationeditor::~equationeditor() {
    delete ui;
 }
 
+/*!
+ * \fn equationeditor::on_actionNew_triggered
+ */
 void equationeditor::on_actionNew_triggered(){
     typeset_edit.clear();
     save_path.clear();
     setWindowTitle("Equation Editor");
 }
 
+/*!
+ * \fn equationeditor::on_actionLoad_triggered
+ */
 void equationeditor::on_actionLoad_triggered(){
     loadPrompt();
 }
 
+/*!
+ * \fn equationeditor::on_actionSave_triggered
+ */
 void equationeditor::on_actionSave_triggered(){
     save();
 }
 
+/*!
+ * \fn equationeditor::on_actionSave_As_triggered
+ */
 void equationeditor::on_actionSave_As_triggered(){
     savePrompt();
 }
 
+/*!
+ * \fn equationeditor::on_actionPrint_triggered
+ */
 void equationeditor::on_actionPrint_triggered(){
     printSvgPrompt();
 }
 
+/*!
+ * \fn equationeditor::on_actionExit_triggered
+ */
 void equationeditor::on_actionExit_triggered(){
     exit(0);
 }
 
+/*!
+ * \fn equationeditor::on_actionUndo_triggered
+ */
 void equationeditor::on_actionUndo_triggered(){
     typeset_edit.undo();
 }
 
+/*!
+ * \fn equationeditor::on_actionRedo_triggered
+ */
 void equationeditor::on_actionRedo_triggered(){
     typeset_edit.redo();
     typeset_edit.clearErrors();
 }
 
+/*!
+ * \fn equationeditor::on_actionLoad_Test_txt_triggered
+ */
 void equationeditor::on_actionLoad_Test_txt_triggered(){
     load(":/test.txt");
     save_path.clear();
 }
 
+/*!
+ * \fn equationeditor::on_actionZoom_In_triggered
+ */
 void equationeditor::on_actionZoom_In_triggered(){
     typeset_edit.zoomIn();
 }
 
+/*!
+ * \fn equationeditor::on_actionZoom_Out_triggered
+ */
 void equationeditor::on_actionZoom_Out_triggered(){
     typeset_edit.zoomOut();
 }
 
+/*!
+ * \fn equationeditor::on_actionReset_Zoom_triggered
+ */
 void equationeditor::on_actionReset_Zoom_triggered(){
     typeset_edit.zoomReset();
 }
 
+/*!
+ * \fn equationeditor::on_actionShow_Line_Numbers_toggled
+ * \param show
+ */
 void equationeditor::on_actionShow_Line_Numbers_toggled(bool show){
     typeset_edit.showLineNumbers(show);
 }
 
+/*!
+ * \fn equationeditor::on_actionVanilla_triggered
+ */
 void equationeditor::on_actionVanilla_triggered(){
     ui->actionVanilla->setChecked(true);
     ui->actionChalkboard->setChecked(false);
@@ -149,6 +204,9 @@ void equationeditor::on_actionVanilla_triggered(){
     typeset_edit.setPalette(palette());
 }
 
+/*!
+ * \fn equationeditor::on_actionChalkboard_triggered
+ */
 void equationeditor::on_actionChalkboard_triggered(){
     ui->actionVanilla->setChecked(false);
     ui->actionChalkboard->setChecked(true);
@@ -162,10 +220,17 @@ void equationeditor::on_actionChalkboard_triggered(){
     typeset_edit.setPalette(chalkboard);
 }
 
+/*!
+ * \fn equationeditor::on_actionCopy_as_PNG_triggered
+ */
 void equationeditor::on_actionCopy_as_PNG_triggered(){
     typeset_edit.copyPng();
 }
 
+/*!
+ * \fn equationeditor::load
+ * \param filename
+ */
 void equationeditor::load(QString filename){
     QFile file(filename);
 
@@ -194,17 +259,27 @@ void equationeditor::load(QString filename){
     save_path = filename;
 }
 
+/*!
+ * \fn equationeditor::loadPrompt
+ */
 void equationeditor::loadPrompt(){
     QString path = QFileDialog::getOpenFileName(nullptr, tr("Load File"), "./", tr("Text (*.txt)"));
     if(path.isEmpty()) return;
     else load(path);
 }
 
+/*!
+ * \fn equationeditor::save
+ */
 void equationeditor::save(){
     if(save_path.isEmpty()) savePrompt();
     else saveAs(save_path);
 }
 
+/*!
+ * \fn equationeditor::saveAs
+ * \param save_path
+ */
 void equationeditor::saveAs(QString save_path){
     QFile file(save_path);
 
@@ -225,6 +300,9 @@ void equationeditor::saveAs(QString save_path){
     this->save_path = save_path;
 }
 
+/*!
+ * \fn equationeditor::savePrompt
+ */
 void equationeditor::savePrompt(){
     QString title = typeset_edit.documentTitle();
     QString prompt_name = title.isEmpty() ? "untitled.txt" : typeset_edit.documentTitle();
@@ -235,6 +313,9 @@ void equationeditor::savePrompt(){
     if(!file_name.isEmpty()) saveAs(file_name);
 }
 
+/*!
+ * \fn equationeditor::printSvgPrompt
+ */
 void equationeditor::printSvgPrompt(){
     QString title = typeset_edit.documentTitle();
     QString prompt_name = title.isEmpty() ?
@@ -252,11 +333,17 @@ void equationeditor::printSvgPrompt(){
     typeset_edit.printSvg(&svgGen);
 }
 
+/*!
+ * \fn equationeditor::on_actionCopy_as_TeX_triggered
+ */
 void equationeditor::on_actionCopy_as_TeX_triggered(){
     QString math_bran = typeset_edit.selectedMathBran();
     if(!math_bran.isEmpty()) QGuiApplication::clipboard()->setText(MathBran::toLatex(math_bran));
 }
 
+/*!
+ * \fn equationeditor::on_actionCopy_as_Unicode_triggered
+ */
 void equationeditor::on_actionCopy_as_Unicode_triggered(){
     QString math_bran = typeset_edit.selectedMathBran();
     if(math_bran.isEmpty()) return;
@@ -271,13 +358,20 @@ void equationeditor::on_actionCopy_as_Unicode_triggered(){
     QGuiApplication::clipboard()->setText(MathBran::toUnicode(math_bran));
 }
 
+/*!
+ * \fn equationeditor::enclosedMathBranButton
+ * \param l
+ * \param r
+ */
 void equationeditor::enclosedMathBranButton(QString l, QString r){
     QString selected = typeset_edit.selectedMathBran();
     if(selected.contains('\n')) typeset_edit.insertMathBran(l + r);
     else typeset_edit.insertMathBran(l + selected + r);
 }
 
-
+/*!
+ * \fn equationeditor::on_actionInsert_Equation_triggered
+ */
 void equationeditor::on_actionInsert_Equation_triggered()
 {
     if(!QDir(gDirTwoLevelUp+"/Equations_").exists())

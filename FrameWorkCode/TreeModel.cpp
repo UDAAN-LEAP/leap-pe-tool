@@ -100,7 +100,7 @@ QModelIndex TreeModel::index(int pRow, int pColumn, const QModelIndex & pParent)
  * \fn TreeModel::parent
  * \brief Validates and creates a new parent index
  * \param pIndex
- * \return
+ * \return index
  */
 QModelIndex TreeModel::parent(const QModelIndex & pIndex) const
 {
@@ -138,7 +138,7 @@ int TreeModel::rowCount(const QModelIndex & pParent) const
  * \fn TreeModel::columnCount
  * \brief It returns the count of column
  * \param pParent
- * \return
+ * \return number of columns
  */
 int TreeModel::columnCount(const QModelIndex & pParent) const
 {

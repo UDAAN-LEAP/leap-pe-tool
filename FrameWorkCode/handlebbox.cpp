@@ -9,7 +9,8 @@
 //#include <QTextBlock>
 
 /*!
- * \brief HandleBbox::HandleBbox
+ * \fn HandleBbox::HandleBbox
+ * \brief This class is used for handling the bbox info which was getting lost after saving earlier
  */
 HandleBbox::HandleBbox()
 {
@@ -17,7 +18,8 @@ HandleBbox::HandleBbox()
     this->docIsPassed = true;
 }
 /*!
- * \brief HandleBbox::HandleBbox
+ * \fn HandleBbox::HandleBbox
+ * \brief Overloaded construcor which passes doc to the class
  * \param doc
  */
 HandleBbox::HandleBbox(QTextDocument* doc)
@@ -26,7 +28,8 @@ HandleBbox::HandleBbox(QTextDocument* doc)
     this->docIsPassed = false;
 }
 /*!
- * \brief HandleBbox::~HandleBbox
+ * \fn HandleBbox::~HandleBbox
+ * \brief Destructor
  */
 HandleBbox::~HandleBbox()
 {
@@ -34,15 +37,19 @@ HandleBbox::~HandleBbox()
         delete doc;
     }
 }
+
+
 /*!
- * \brief HandleBbox::loadFileInDoc
- * \param f
- * function:
+ * \fn HandleBbox::loadFileInDoc
+ * \brief To Load the file in document
+ * \details
  * input file is read
  * paragraph,image and table,list tags are iterated
  * the text is set as blocks.
  * alignments are set if they are present in <p>,<img/> or <table> tags(set asblock formats)
  * input text is insert as html inside block.
+ * \param f
+ * \return Document in which file is loaded
  */
 QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
 {
@@ -226,10 +233,12 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
     storeBboxes(f);
     return doc;
 }
+
 /*!
- * \brief HandleBbox::insertBboxes
+ * \fn HandleBbox::insertBboxes
  * \param file
- * inserts the boxes into the file
+ * \brief Inserts the boxes into the file
+ * \details
  * if file is not available for writing mode,function terminates
  * all the lines of file are read and stored in varaible(input)
  * If bbox is already present, move to next entry
@@ -314,10 +323,12 @@ void HandleBbox::insertBboxes(QFile *file)
     out.flush();
     file->close();
 }
+
 /*!
- * \brief HandleBbox::storeBboxes
+ * \fn HandleBbox::storeBboxes
  * \param file
- * the boxes are stored
+ * \brief Stores the bboxes in the vector
+ * \details
  * Function terminates if file is available for writing mode
  * text of the input file is read
  * If bbox tag is not present,tags(variable) are set to null
@@ -386,11 +397,13 @@ void HandleBbox::storeBboxes(QFile *file)
 
 
 /*!
- * \brief HandleBbox::latex2png
+ * \fn HandleBbox::latex2png
  * \param inputText
+ * \brief Converting Latex to PNG
+ * \details
  * Doing equation latex to equaton png mapping
  * we are showing png in our tool and saving Latex form in html page
- * \return
+ * \return Returns the input text
  */
 QString HandleBbox::latex2png(QString inputText)
 { 

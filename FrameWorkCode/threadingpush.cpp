@@ -13,6 +13,17 @@
 #include <QSettings>
 std::string user_,pass_;
 QString gDir;
+
+
+/*!
+ * \fn threadingPush::threadingPush
+ * \brief Constructor
+ * \param parent
+ * \param repo
+ * \param user
+ * \param pass
+ * \param gDirTwoLevelUp
+ */
 threadingPush::threadingPush(QObject *parent, git_repository *repo, std::string user, std::string pass, QString gDirTwoLevelUp)
     : QObject{parent}
 {
@@ -22,6 +33,16 @@ threadingPush::threadingPush(QObject *parent, git_repository *repo, std::string 
     gDir = gDirTwoLevelUp+"/.git/config";
 }
 
+/*!
+ * \fn credentials_cb_func
+ * \brief
+ * \param out
+ * \param url
+ * \param username_from_url
+ * \param allowed_types
+ * \param payload
+ * \return
+ */
 int credentials_cb_func(git_cred ** out, const char *url, const char *username_from_url,
                         unsigned int allowed_types, void *payload)
 {
@@ -33,7 +54,10 @@ int credentials_cb_func(git_cred ** out, const char *url, const char *username_f
     return git_cred_userpass_plaintext_new(out, user_.c_str(), pass_.c_str());
 }
 
-
+/*!
+ * \fn threadingPush::ControlPush
+ * \brief
+ */
 void threadingPush::ControlPush()
 {
     git_libgit2_init();

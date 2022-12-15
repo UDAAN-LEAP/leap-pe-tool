@@ -20,15 +20,15 @@ QAbstractItemModel* CustomTextBrowser::devModel = nullptr;
 int CustomTextBrowser::modelFlag = 0;
 
 /*!
-* \fn    signalHandler
-* \brief This function takes signal number as argument and then calls signal function
-*        of c++ which is used to trap unexpected interupts and events causing program to
-*        stop. This function identifies the type of signal caused interupt and then prints it in
-*        log.
-* \param signum
-*
-* \sa signal()
-*/
+ * \fn signalHandler
+ * \brief This function takes signal number as argument and then calls signal function
+ *        of c++ which is used to trap unexpected interupts and events causing program to
+ *        stop. This function identifies the type of signal caused interupt and then prints it in
+ *        log.
+ * \param signum
+ *
+ * \sa signal()
+ */
 void signalHandler(int signum){
     signal(signum, SIG_DFL);
     std:string signame;
@@ -50,7 +50,7 @@ void signalHandler(int signum){
 }
 
 /*!
- * \fn    mysignal
+ * \fn mysignal
  * \brief This function calls signal function of c++ to trap the unexpected interupts.
  * \sa signal()
  */
@@ -65,7 +65,7 @@ void mySignal(){
 
 
 /*!
- * \fn    main
+ * \fn main
  * \brief Main function in c++ is entry point of the software and it also serves as exit point.
  *        This function initialises git and then creates object for QApplication class which helps
  *        to manage GUI of QTC++ application and using this object this function loads logo and

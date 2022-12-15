@@ -38,7 +38,7 @@ globalReplacePreview::globalReplacePreview(QWidget *parent,QStandardItemModel *m
 }
 
 /*!
- * \fn globalReplacePreview::~globalReplacePreview()
+ * \fn globalReplacePreview::~globalReplacePreview
  * \brief Destructor
  */
 globalReplacePreview::~globalReplacePreview()

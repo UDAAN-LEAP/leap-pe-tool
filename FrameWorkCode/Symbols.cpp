@@ -14,7 +14,7 @@
 
 SymbolsView *SymbolsView::symbolsView = 0;
 
-/*! \class Symbols
+/*!
  * \fn SymbolsView::SymbolsView
  * \param QWidget->parent
  * \param QDialog->parent,Qt::WindowCloseButtonHint
@@ -151,6 +151,7 @@ A᳙  B᳙  C᳙  D᳙  E᳙  F᳙  G᳙  H᳙  I᳙  J᳙  K᳙  L᳙  M᳙  N�
     currentTab = ui->Diacritics;
     bool b = connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 }
+
 /*!
  * \fn SymbolsView::tabChanged
  * \brief Function for when tab is changed. Takes tab index (int idx) as a param
@@ -158,16 +159,17 @@ A᳙  B᳙  C᳙  D᳙  E᳙  F᳙  G᳙  H᳙  I᳙  J᳙  K᳙  L᳙  M᳙  N�
  * \param int idx
  */
 void SymbolsView::tabChanged(int idx)
- {
+{
     QWidget *widget = ui->tabWidget->widget(idx);
     QList<QTextEdit*> allTextEdits = widget->findChildren<QTextEdit*>();
     if(allTextEdits.count()!= 1)
-      return;
+        return;
     currentTab = allTextEdits[0];
- }
+}
 
- /*!
- * \brief SymbolsView::~SymbolsView
+/*!
+ * \fn SymbolsView::~SymbolsView
+ * \brief Destructor
  */
 SymbolsView::~SymbolsView()
 {
@@ -176,9 +178,7 @@ SymbolsView::~SymbolsView()
 
 /*!
  * \fn SymbolsView::on_copyButton_clicked
- *
  * \brief copies the symbol(s) so that user can effortlessly paste to their page
- *
  */
 void SymbolsView::on_copyButton_clicked()
 {
