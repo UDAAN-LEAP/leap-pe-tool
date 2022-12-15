@@ -1,6 +1,3 @@
-/*!
-  \class mainwWindow.cpp
- */
 #include "mainwindow.h"
 #include "dashboard.h"
 #include "qobjectdefs.h"
@@ -9,7 +6,7 @@
 #include "ui_mainwindow.h"
 #include "averageaccuracies.h"
 #include "eddis.h"
-#include "slpNPatternDict.h" //as included through lcsqt.h
+#include "slpNPatternDict.h"
 #include "trieEditdis.h"
 #include "meanStdPage.h"
 #include <math.h>
@@ -87,7 +84,6 @@
 #include "threadingpush.h">
 #include <QThread>
 
-//gs -dNOPAUSE -dBATCH -sDEVICE=jpeg -r300 -sOutputFile='page-%00d.jpeg' Book.pdf
 map<string, string> LSTM;
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
 trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
@@ -97,7 +93,7 @@ QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName;
 map<QString, QString> gInitialTextHtml;
 QString gTimeLogLocation;
 map<QString, int> timeLog;
-QMap<QString, QJsonArray> newTimeLog; // Introducing newTimeLog for storing more than one jsonvalue.
+QMap<QString, QJsonArray> newTimeLog;
 vector<QString> vs; vector<int> vx, vy, vw, vh, vright;
 map<string, vector<string>> SRules;
 map<string, string> TopConfusions;
@@ -108,9 +104,7 @@ string alignment = "left";
 bool prevTRig = 0;
 map<string, vector<int>> synonym;
 vector<vector<string>> synrows;
-//map<string, int> GPage; trie TGPage;
-//map<string, int> PWords;//Common/Possitive OCR Words // already defined before
-map<string, string> CPair;//Correction Pairs
+map<string, string> CPair;
 std::map<string, set<string> > CPairs;
 bool highlightchecked = false;
 map<int, QString> commentdict;
@@ -118,8 +112,8 @@ map<int, vector<int>> commentederrors;
 int openedFileChars;
 int openedFileWords;
 bool gSaveTriggered = 0;
-bool LoadDataFlag = 1; //To load data only once
-bool uploadReplaceFlag = 0; //To highlight in Upload and Replace
+bool LoadDataFlag = 1;
+bool uploadReplaceFlag = 0;
 map<QString, QString> filestructure_fw;
 QMap <QString, QString> mapOfReplacements;
 
@@ -130,13 +124,13 @@ map<QString, QString> filestructure_bw = { {"VerifierOutput","CorrectorOutput"},
 
 QString gSanskrit, gHindi;
 
-bool drawRectangleFlag=false;      //This flag is to prevent inserting the IMAGEHOLDER twice
+bool drawRectangleFlag=false; //This flag is to prevent inserting the IMAGEHOLDER twice
 
-bool loadimage=false;           //Check image is loaded on not
+bool loadimage=false; //Check image is loaded on not
 
-bool shouldIDraw=false;         //button functioning over marking a region for figure/table/equations
+bool shouldIDraw=false; //button functioning over marking a region for figure/table/equations
 
-int pressedFlag;            //Resposible for dynamic rectangular drawing
+int pressedFlag; //Resposible for dynamic rectangular drawing
 QString ProjFile;
 QString branchName;
 int grdFlag = 0;
