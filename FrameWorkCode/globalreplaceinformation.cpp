@@ -1,6 +1,6 @@
 /*!
- * \class globalReplaceInformation::globalReplaceInformation()
- * This constructor function is used to initialize dialog box for Global Replace Information
+ * \class globalReplaceInformation
+ * \brief This constructor function is used to initialize dialog box for Global Replace Information
  *
  * Global Replace is a feature in our tool which we invoke after a user has changed a word and saved the file,
  * this feature allows the change made to be applied globally i.e in all pages of the project.
