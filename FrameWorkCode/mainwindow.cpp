@@ -495,7 +495,7 @@ QJsonObject readJsonFile(QString filepath)
 }
 
 /*!
- * \fn readJsonFile
+ * \fn writeJsonFile
  * \brief This function is used to write into the json files in the software. It uses write only mode of fle.
  * \param filepath
  * \param mainObj
