@@ -8084,6 +8084,7 @@ void MainWindow::on_actionChange_Role_triggered()
     settings.beginGroup("SetRole");
     settings.remove("");
     settings.endGroup();
+    QMessageBox::information(this,"Role Reset","Role reset successfully. Please restart the tool to select your new role.");
 }
 
 //this function then re-introduces bbox's to saved file
@@ -8802,6 +8803,7 @@ void MainWindow::on_actionInsert_Bulleted_List_triggered()
 /*!
  * \fn MainWindow::on_actionInsert_Numbered_List_triggered
  * \brief Adds the Numbered list to the text browser
+ * \details Nested lists can also be inserted.
  */
 void MainWindow::on_actionInsert_Numbered_List_triggered()
 {
@@ -8875,7 +8877,9 @@ void MainWindow::insertList(QTextListFormat::Style styleIndex)
 
 /*!
  * \fn MainWindow::on_actionInsert_Equation_triggered
- * \brief Inserts the equation as an image in the text browser
+ * \brief Inserts the equation as an image in the text browser at cursor position
+ * \details This function calls the equation editor class and passes the browser pointer, pwd, and "0".
+ * \details 0 denotes that new equation needs to be inserted(If path is passed instead of 0, then selected equation is edited).
  */
 void MainWindow::on_actionInsert_Equation_triggered()
 {
@@ -8894,6 +8898,7 @@ void MainWindow::on_actionInsert_Equation_triggered()
 /*!
  * \fn MainWindow::on_actionEdit_Equation_triggered
  * \brief Edits the equation using Equation editor
+ * \details This function checks if the user has selected any image or not. If image is selected then it calls the equation editor and passes pwd, browser pointer, & path to MathBran notation of selected equation.
  */
 void MainWindow::on_actionEdit_Equation_triggered()
 {
@@ -8936,6 +8941,9 @@ void MainWindow::on_actionExit_triggered()
 /*!
  * \fn MainWindow::login
  * \brief Login using email and password
+ * \details Asks user for email and password, then these credentials are verified witrh database and user is logged in if the details submitted by user are correct.
+ * \details User enail is stored in cache for later usage.
+ * \details curl is used to send post request to server.
  */
 void MainWindow::login(){
     QDialog login(this);
@@ -8993,6 +9001,7 @@ void MainWindow::login(){
             settings.endGroup();
             ui->actionLogin->setVisible(false);
             ui->actionLogout->setVisible(true);
+            QMessageBox::information(this,"Login success","Logged in successfully.");
         }
         else{
             QMessageBox::information(this,"Login error","Wrong email or password, please try again.");
