@@ -40,7 +40,8 @@ class_list = [
         "UndoGlobalReplace",
         "VerifySet",
         "Worker",
-        "Graphics_view_zoom"
+        "Graphics_view_zoom",
+        "threadingPush"
 ]
 
 for cpp_class in class_list:
