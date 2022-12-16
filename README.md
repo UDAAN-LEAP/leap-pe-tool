@@ -1,4 +1,5 @@
 # [Project website](https://udaanproject.org)
+## [Read the docs](https://posteditingtool.readthedocs.io/en/latest/)
 
 # Installation
 
