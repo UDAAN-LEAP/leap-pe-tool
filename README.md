@@ -15,7 +15,7 @@ Following information is updated on the fly, after correction of each page:-
 # Video demo
 
 https://tinyurl.com/y7wbpo6m 
-1. After laoding the OCR page, as user clicks on Spell Check, the correct words remain black.
+1. After loading the OCR page, as user clicks on Spell Check, the correct words remain black.
 2. The purple words are the auto corrections.
 3. The incorrect words are colored with blue, green and red strings from Dictionary. This improves readability.
 4. The user can type in slp1 format or right click on the word (right click suggestion may be a partially corrected word) to correct the words. "Ctrl+d" converts the slp1 word-under-cursor to Devanagari and removes the color coding from the word-under-cursor.
