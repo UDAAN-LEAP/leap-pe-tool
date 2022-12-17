@@ -1166,9 +1166,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
      */
 
     //QString ProjFile;
-    if(mProject.isProjectOpen()){ //checking if some project is opened, then closing it before opening new project
-        on_actionClose_project_triggered();
-    }
+//    if(mProject.isProjectOpen()){ //checking if some project is opened, then closing it before opening new project
+//        on_actionClose_project_triggered();
+//    }
     int totalFileCountInDir = 0;
     QMap<QString, int> fileCountInDir;
 //to choose between recent three files
@@ -1198,7 +1198,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     int result = verifySetObj.testProjectXML();
 
     if (result != 0) {
-        mProject.setProjectOpen(false);
+        on_actionClose_project_triggered();
+//        mProject.setProjectOpen(false);
         QMessageBox::warning(0, "Project XML file Error", "Project XML File is corrupted \n\nError "+ QString::fromStdString(std::to_string(verifySetObj.getErrorCode()))+": " + verifySetObj.getErrorString()+"\n\nPlease Report this to your administrator");
         return;
     }
@@ -1275,13 +1276,14 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         //Filter * filter1 = mProject.getFilter("VerifierOutput");
         //!Adds each file present in CorrectorOutput directory to treeView
         auto list = cdir.entryList(QDir::Filter::Files);
-
+        QString t;
+        QStringList x;
         for (auto f : list)
-        {   QStringList x = f.split(QRegExp("[.]"));
-
-            QString t = str1 + "/" + f;
-            QFile f2(t);
+        {
+            x = f.split(QRegExp("[.]"));
+          t = str1 + "/" + f;
             if(x[1]=="html") {
+                QFile f2(t);
                 totalFileCountInDir++;
                 mProject.AddTemp(filter,f2,"");
             }
@@ -1289,6 +1291,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         }
         fileCountInDir["Corrector"] = totalFileCountInDir;
         totalFileCountInDir = 0;
+
+          QMessageBox::information(0, "Success", "Project opened successfully.");
+
         //!Adds each file present in VerifierOutput directory to treeView
         cdir.setPath(str2);
 
@@ -1296,11 +1301,12 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list)
         {
-            QStringList x = f.split(QRegExp("[.]"));
+             x= f.split(QRegExp("[.]"));
 
-            QString t = str2 + "/" + f;
-            QFile f2(t);
+            t= str2 + "/" + f;
+
             if(x[1]=="html") {
+                QFile f2(t);
                 totalFileCountInDir++;
                 mProject.AddTemp(filter, f2, "");
             }
@@ -1316,10 +1322,12 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list)
         {
-            QString t = str3 + "/" + f;
+           t = str3 + "/" + f;
             QFile f2(t);
+             totalFileCountInDir++;
             mProject.AddTemp(filter, f2, "");
-            totalFileCountInDir++;
+
+
         }
         fileCountInDir["Inds"] = totalFileCountInDir;
         totalFileCountInDir = 0;
@@ -1332,10 +1340,12 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
         list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list) {
-            QString t = str4 + "/" + f;
+           t= str4 + "/" + f;
             QFile f2(t);
-            mProject.AddTemp(filter, f2, "");
             totalFileCountInDir++;
+            mProject.AddTemp(filter, f2, "");
+
+
         }
         fileCountInDir["Image"] = totalFileCountInDir;
         totalFileCountInDir = 0; // Resetting variable to 0
@@ -1410,7 +1420,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         //if(!QDir(mProject.GetDir().absolutePath() + "/Images/Inserted").exists())
         //    QDir().mkdir(mProject.GetDir().absolutePath() + "/Images/Inserted");
 
-        QMessageBox::information(0, "Success", "Project opened successfully.");
+
 //        ui->tabWidget_2->removeTab(0);
         //!Genearte image.xml for figure/table/equation entries and initialize these values by 1.
 
@@ -1569,7 +1579,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->groupBox->setDisabled(false);
 
 }
-
 /*!
  * \fn MainWindow::AddRecentProjects
  * \brief This function will allow user to open the last opened project.
