@@ -56,7 +56,14 @@ int credentials_cb_func(git_cred ** out, const char *url, const char *username_f
 
 /*!
  * \fn threadingPush::ControlPush
- * \brief
+ * \brief 
+ * This function helps in pushing the changes to the cloud in a thread.
+ * The branch Name is Store as an QByte Array 
+ * This function first looks for the repo where changes are to be pushed.
+ * Then fetch options are initialized 
+ * Then are commit is successful, The changes are pushed.
+ * This function is being called in mainwindow.cpp file where with the help of threads this function is called so that in
+ * large sets the changes are successfully pushed. 
  */
 void threadingPush::ControlPush()
 {
