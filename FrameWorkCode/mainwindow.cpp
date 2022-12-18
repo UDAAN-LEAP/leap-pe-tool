@@ -170,7 +170,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->lineEdit_2->setReadOnly(true);
     ui->lineEdit_3->setReadOnly(true);
 
-    googleAuth();
+//    googleAuth();
 
     QString password  = "";
     QString passwordFilePath = QDir::currentPath() + "/pass.txt";
@@ -1149,43 +1149,35 @@ void MainWindow::on_actionEnglish_triggered()
  * \fn MainWindow::on_actionOpen_Project_triggered
  * \brief Opens a new OCR project
  * \note Every project contains six folders - Images, Inds, CorrectorOutput, VerifierOutput, Dicts and Comments.
- *
+ * \details 1. Check if file named "project.xml" exists else terminates the function.
+ * \details 2. Create a new directory if CorrectorOutput, VerifierOutput or Comments folders does not exist.
+ * \details 3. Loading the requisites.
+ * \details a) Processing the project.xml file.
+ * \details b) Load git repository.
+ * \details Set the model for ProjectHierarchyWindow(TreeView). TreeView is composed of Documents and Images.
+ * \details Reset the current file name and directory levels.
+ * \details Get the value for time elapsed from Timelog.json.
  * \sa process_xml(), open_git_repo(), get_stage(), get_version(), getModel(), AddTemp(), getFilter(), insert(), UpdateFileBrekadown(), readJsonFile()
  */
 void MainWindow::on_actionOpen_Project_triggered() { //Version Based
-
-    /* Description
-     * 1. Check if file named "project.xml" exists else terminates the function.
-     * 2. Create a new directory if CorrectorOutput, VerifierOutput or Comments folders does not exist.
-     * 3. Loading the requisites.
-     *    a) Processing the project.xml file.
-     *    b) Load git repository.
-     * 4. Set the model for ProjectHierarchyWindow(TreeView). TreeView is composed of Documents and Images.
-     * 5. Reset the current file name and directory levels.
-     * 6. Get the value for time elapsed from Timelog.json.
-     */
-
     //QString ProjFile;
-//    if(mProject.isProjectOpen()){ //checking if some project is opened, then closing it before opening new project
-//        on_actionClose_project_triggered();
-//    }
     int totalFileCountInDir = 0;
     QMap<QString, int> fileCountInDir;
-//to choose between recent three files
+    //to choose between recent three files
     if(isRecentProjclick == true && proj_flag == '0')
     {
-      ProjFile = RecentProjFile;
+        ProjFile = RecentProjFile;
     }
     else if(isRecentProjclick == true && proj_flag == '1')
     {
-      ProjFile = RecentProjFile2;
+        ProjFile = RecentProjFile2;
     }
     else if(isRecentProjclick == true && proj_flag == '2')
     {
-      ProjFile = RecentProjFile3;
+        ProjFile = RecentProjFile3;
     }
     else{
-      ProjFile = QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)"));   //Opens only if the file name is Project.xml
+        ProjFile = QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)"));   //Opens only if the file name is Project.xml
     }
 
     if (ProjFile == "")
@@ -1196,10 +1188,11 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     // Testing of project.xml
     VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
     int result = verifySetObj.testProjectXML();
+    if(mProject.isProjectOpen()){ //checking if some project is opened, then closing it before opening new project
+        on_actionClose_project_triggered();
+    }
 
     if (result != 0) {
-        on_actionClose_project_triggered();
-//        mProject.setProjectOpen(false);
         QMessageBox::warning(0, "Project XML file Error", "Project XML File is corrupted \n\nError "+ QString::fromStdString(std::to_string(verifySetObj.getErrorCode()))+": " + verifySetObj.getErrorString()+"\n\nPlease Report this to your administrator");
         return;
     }
@@ -1272,8 +1265,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         QDir cdir(str1);
 
         Filter * filter = mProject.getFilter("CorrectorOutput");
-        //Filter * filter2 = mProject.getFilter("CorrectorOutput");
-        //Filter * filter1 = mProject.getFilter("VerifierOutput");
         //!Adds each file present in CorrectorOutput directory to treeView
         auto list = cdir.entryList(QDir::Filter::Files);
         QString t;
@@ -1281,7 +1272,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         for (auto f : list)
         {
             x = f.split(QRegExp("[.]"));
-          t = str1 + "/" + f;
+            t = str1 + "/" + f;
             if(x[1]=="html") {
                 QFile f2(t);
                 totalFileCountInDir++;
@@ -1292,7 +1283,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         fileCountInDir["Corrector"] = totalFileCountInDir;
         totalFileCountInDir = 0;
 
-          QMessageBox::information(0, "Success", "Project opened successfully.");
+        QMessageBox::information(0, "Success", "Project opened successfully.");
 
         //!Adds each file present in VerifierOutput directory to treeView
         cdir.setPath(str2);
@@ -1301,10 +1292,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list)
         {
-             x= f.split(QRegExp("[.]"));
-
+            x= f.split(QRegExp("[.]"));
             t= str2 + "/" + f;
-
             if(x[1]=="html") {
                 QFile f2(t);
                 totalFileCountInDir++;
@@ -1322,12 +1311,10 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list)
         {
-           t = str3 + "/" + f;
+            t = str3 + "/" + f;
             QFile f2(t);
-             totalFileCountInDir++;
+            totalFileCountInDir++;
             mProject.AddTemp(filter, f2, "");
-
-
         }
         fileCountInDir["Inds"] = totalFileCountInDir;
         totalFileCountInDir = 0;
@@ -1340,12 +1327,10 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
         list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list) {
-           t= str4 + "/" + f;
+            t= str4 + "/" + f;
             QFile f2(t);
             totalFileCountInDir++;
             mProject.AddTemp(filter, f2, "");
-
-
         }
         fileCountInDir["Image"] = totalFileCountInDir;
         totalFileCountInDir = 0; // Resetting variable to 0
@@ -1379,7 +1364,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             int endIndex;
             for (int i = startIndex; projectWindowStylesheet[i] != ';'; i++)
                 endIndex = i;
-
             int replaceSize = endIndex - startIndex + 1;
             projectWindowStylesheet.replace(startIndex, replaceSize, heightValue);
         }
@@ -1389,16 +1373,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         }
         ui->treeView->setStyleSheet(projectWindowStylesheet);
 
-
-
-//        //!Disable Corrector Turn In once the Corrector has Turned in until the next version is fetched.
-//        if(!isVerifier)
-//        {
-//            if (stage != "Corrector")
-//            {
-//                ui->actionTurn_In->setEnabled(false);
-//            }
-//        }
         UpdateFileBrekadown();    //Reset the current file and dir levels
 
         //!Get the elapsed time in Timelog.json file under Comments folder
@@ -1413,15 +1387,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             QString dateTime = val.toObject().value("Date/Time").toString();
 
             newTimeLog[directory] = {seconds, dateTime};
-//            timeLog[directory] = seconds;
+            //            timeLog[directory] = seconds;
         }
-
-        //bool isSet = QDir::setCurrent(mProject.GetDir().absolutePath() + "/CorrectorOutput") ; //Change application Directory to any subfolder of mProject folder for Image Insertion feature.
-        //if(!QDir(mProject.GetDir().absolutePath() + "/Images/Inserted").exists())
-        //    QDir().mkdir(mProject.GetDir().absolutePath() + "/Images/Inserted");
-
-
-//        ui->tabWidget_2->removeTab(0);
         //!Genearte image.xml for figure/table/equation entries and initialize these values by 1.
 
         markRegion objectMarkRegion;
@@ -1432,11 +1399,11 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         QSettings settings("IIT-B", "OpenOCRCorrect");
         QString new_project = finfo.path()+"/project.xml";
         if(new_project != RecentProjFile && new_project != RecentProjFile2 && new_project != RecentProjFile3 ){
-        settings.beginGroup("RecentProjects");
-        settings.setValue("Project3",RecentProjFile2 );
-        settings.setValue("Project2",RecentProjFile );
-        settings.setValue("Project",finfo.path()+"/project.xml" );
-        settings.endGroup();}
+            settings.beginGroup("RecentProjects");
+            settings.setValue("Project3",RecentProjFile2 );
+            settings.setValue("Project2",RecentProjFile );
+            settings.setValue("Project",finfo.path()+"/project.xml" );
+            settings.endGroup();}
         //changing priorities of recent opened projects
         if(new_project == RecentProjFile2){
             QSettings settings("IIT-B", "OpenOCRCorrect");
@@ -1454,130 +1421,122 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             settings.endGroup();
         }
         isRecentProjclick = false;
-
-        // Setting Project window size and dict window size = 50% - 50%
-//        QList<int> list1 = ui->splitter_2->sizes();
-//        int totalHeight;
-//        totalHeight = list1.at(0) + list1.at(1);
-//        ui->splitter_2->setSizes(QList<int>() << totalHeight/2 << totalHeight/2);
     }
     else
     {
         QMessageBox::warning(0, "Project Error", "Couldn't open project. Please check your project.");
         return;
     }
-     AddRecentProjects();//to load recent project without restarting app
-     //--for last opened page--//
-     QSettings settings("IIT-B", "OpenOCRCorrect");
-     settings.beginGroup("RecentPageLoaded");
-     QString stored_project = settings.value("projectName1").toString();
-     QString stored_project2 = settings.value("projectName2").toString();
-     QString stored_project3 = settings.value("projectName3").toString();
-     settings.endGroup();
-     if(ProjFile == stored_project || ProjFile == stored_project2 || ProjFile == stored_project3){
-         RecentPageInfo();
-     }
+    AddRecentProjects();//to load recent project without restarting app
+    //--for last opened page--//
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("RecentPageLoaded");
+    QString stored_project = settings.value("projectName1").toString();
+    QString stored_project2 = settings.value("projectName2").toString();
+    QString stored_project3 = settings.value("projectName3").toString();
+    settings.endGroup();
+    if(ProjFile == stored_project || ProjFile == stored_project2 || ProjFile == stored_project3){
+        RecentPageInfo();
+    }
 
-     // Enabling the buttons again after a project is opened
+    // Enabling the buttons again after a project is opened
+    // File Menu
+    ui->actionSave->setEnabled(true);
+    ui->actionSave_As->setEnabled(true);
+    ui->actionSpell_Check->setEnabled(true);
+    ui->actionLoad_Prev_Page->setEnabled(true);
+    ui->actionLoad_Next_Page->setEnabled(true);
+    ui->actionToDevanagari->setEnabled(true);
+    ui->actionToSlp1->setEnabled(true);
+    ui->actionLoadGDocPage->setEnabled(true);
+    ui->actionLoadData->setEnabled(true);
+    ui->actionLoadDict->setEnabled(true);
+    ui->actionLoadOCRWords->setEnabled(true);
+    ui->actionLoadDomain->setEnabled(true);
+    ui->actionLoadSubPS->setEnabled(true);
+    ui->actionLoadConfusions->setEnabled(true);
+    ui->actionSugg->setEnabled(true);
 
-     // File Menu
-     ui->actionSave->setEnabled(true);
-     ui->actionSave_As->setEnabled(true);
-     ui->actionSpell_Check->setEnabled(true);
-     ui->actionLoad_Prev_Page->setEnabled(true);
-     ui->actionLoad_Next_Page->setEnabled(true);
-     ui->actionToDevanagari->setEnabled(true);
-     ui->actionToSlp1->setEnabled(true);
-     ui->actionLoadGDocPage->setEnabled(true);
-     ui->actionLoadData->setEnabled(true);
-     ui->actionLoadDict->setEnabled(true);
-     ui->actionLoadOCRWords->setEnabled(true);
-     ui->actionLoadDomain->setEnabled(true);
-     ui->actionLoadSubPS->setEnabled(true);
-     ui->actionLoadConfusions->setEnabled(true);
-     ui->actionSugg->setEnabled(true);
+    // Edit Menu
+    ui->actionUndo->setEnabled(true);
+    ui->actionRedo->setEnabled(true);
+    ui->actionFind_and_Replace->setEnabled(true);
+    ui->actionUndo_Global_Replace->setEnabled(true);
+    ui->actionUpload->setEnabled(true);
 
-     // Edit Menu
-     ui->actionUndo->setEnabled(true);
-     ui->actionRedo->setEnabled(true);
-     ui->actionFind_and_Replace->setEnabled(true);
-     ui->actionUndo_Global_Replace->setEnabled(true);
-     ui->actionUpload->setEnabled(true);
+    // Language Menu
+    ui->actionSanskrit_2->setEnabled(true);
+    ui->actionEnglish->setEnabled(true);
+    ui->actionHindi->setEnabled(true);
 
-     // Language Menu
-     ui->actionSanskrit_2->setEnabled(true);
-     ui->actionEnglish->setEnabled(true);
-     ui->actionHindi->setEnabled(true);
+    // Reports Menu
+    ui->actionAccuracyLog->setEnabled(true);
+    ui->actionViewAverageAccuracies->setEnabled(true);
 
-     // Reports Menu
-     ui->actionAccuracyLog->setEnabled(true);
-     ui->actionViewAverageAccuracies->setEnabled(true);
+    // View Menu
+    ui->actionAllFontProperties->setEnabled(true);
+    ui->actionBold->setEnabled(true);
+    ui->actionItalic->setEnabled(true);
+    ui->actionLeftAlign->setEnabled(true);
+    ui->actionRightAlign->setEnabled(true);
+    ui->actionCentreAlign->setEnabled(true);
+    ui->actionJusitfiedAlign->setEnabled(true);
+    ui->actionSuperscript->setEnabled(true);
+    ui->actionSubscript->setEnabled(true);
+    ui->actionInsert_Horizontal_Line->setEnabled(true);
+    ui->actionFontBlack->setEnabled(true);
+    ui->actionInsert_Tab_Space->setEnabled(true);
+    ui->actionPDF_Preview->setEnabled(true);
+    if (isVerifier)
+        ui->actionHighlight->setEnabled(true);
 
-     // View Menu
-     ui->actionAllFontProperties->setEnabled(true);
-     ui->actionBold->setEnabled(true);
-     ui->actionItalic->setEnabled(true);
-     ui->actionLeftAlign->setEnabled(true);
-     ui->actionRightAlign->setEnabled(true);
-     ui->actionCentreAlign->setEnabled(true);
-     ui->actionJusitfiedAlign->setEnabled(true);
-     ui->actionSuperscript->setEnabled(true);
-     ui->actionSubscript->setEnabled(true);
-     ui->actionInsert_Horizontal_Line->setEnabled(true);
-     ui->actionFontBlack->setEnabled(true);
-     ui->actionInsert_Tab_Space->setEnabled(true);
-     ui->actionPDF_Preview->setEnabled(true);
-     if (isVerifier)
-         ui->actionHighlight->setEnabled(true);
+    // Table Menu inside View Menu
+    ui->actionInsert_Table_2->setEnabled(true);
+    ui->actionInsert_Columnleft->setEnabled(true);
+    ui->actionInsert_Columnright->setEnabled(true);
+    ui->actionInsert_Rowabove->setEnabled(true);
+    ui->actionInsert_Rowbelow->setEnabled(true);
+    ui->actionRemove_Column->setEnabled(true);
+    ui->actionRemove_Row->setEnabled(true);
 
-     // Table Menu inside View Menu
-     ui->actionInsert_Table_2->setEnabled(true);
-     ui->actionInsert_Columnleft->setEnabled(true);
-     ui->actionInsert_Columnright->setEnabled(true);
-     ui->actionInsert_Rowabove->setEnabled(true);
-     ui->actionInsert_Rowbelow->setEnabled(true);
-     ui->actionRemove_Column->setEnabled(true);
-     ui->actionRemove_Row->setEnabled(true);
+    // Versions Menu
+    ui->actionFetch_2->setEnabled(true);
+    ui->actionTurn_In->setEnabled(true);
+    ui->actionVerifier_Turn_In->setEnabled(true);
 
-     // Versions Menu
-     ui->actionFetch_2->setEnabled(true);
-     ui->actionTurn_In->setEnabled(true);
-     ui->actionVerifier_Turn_In->setEnabled(true);
+    // Download Menu
+    ui->actionas_PDF->setEnabled(true);
 
-     // Download Menu
-     ui->actionas_PDF->setEnabled(true);
+    ui->actionSymbols->setEnabled(true);
+    ui->actionZoom_In->setEnabled(true);
+    ui->actionZoom_Out->setEnabled(true);
+    //Reset loadData flag
+    LoadDataFlag = 1;
+    //reset data
+    mFilename.clear();
+    //mFilename1.clear();
+    LSTM.clear();
+    CPairs.clear();
+    Dict.clear();
+    GBook.clear();
+    IBook.clear();
+    PWords.clear();
+    ConfPmap.clear();
+    vGBook.clear();
+    vIBook.clear();
+    TDict.clear();
+    TGBook.clear();
+    TGBookP.clear();
+    TPWords.clear();
+    TPWordsP.clear();
+    synonym.clear();
+    synrows.clear();
 
-     ui->actionSymbols->setEnabled(true);
-     ui->actionZoom_In->setEnabled(true);
-     ui->actionZoom_Out->setEnabled(true);
-     //Reset loadData flag
-     LoadDataFlag = 1;
-     //reset data
-     mFilename.clear();
-     //mFilename1.clear();
-     LSTM.clear();
-     CPairs.clear();
-     Dict.clear();
-     GBook.clear();
-     IBook.clear();
-     PWords.clear();
-     ConfPmap.clear();
-     vGBook.clear();
-     vIBook.clear();
-     TDict.clear();
-     TGBook.clear();
-     TGBookP.clear();
-     TPWords.clear();
-     TPWordsP.clear();
-     synonym.clear();
-     synrows.clear();
-
-     ui->pushButton->setDisabled(false);
-      ui->pushButton_2->setDisabled(false);
-     ui->viewComments->setDisabled(false);
-     ui->compareCorrectorOutput->setDisabled(false);
+    ui->pushButton->setDisabled(false);
+    ui->pushButton_2->setDisabled(false);
+    ui->viewComments->setDisabled(false);
+    ui->compareCorrectorOutput->setDisabled(false);
     ui->groupBox->setDisabled(false);
-
 }
 /*!
  * \fn MainWindow::AddRecentProjects
