@@ -6277,7 +6277,6 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 
     curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
     curr_browser->setDocument(b->document()->clone(curr_browser));
-    curr_browser->document()->clearUndoRedoStacks();
 
     QFileInfo info(*f);
     currentTabPageName = info.fileName();
@@ -7877,7 +7876,8 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
         if(json[0]["name"].toString() == "")
         {
             qDebug() << QString("Timeout .... Internet Not Available");
-           // return "";
+            QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Check your internet connection.");
+            return;
         }
         QString latestVersion=json[0]["name"].toString();
         QString newFeatures = json[0]["body"].toString();
@@ -8954,8 +8954,16 @@ void MainWindow::login(){
         process.execute("curl -d -X -k -POST --header "
                         "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+user_email+"&password="+user_pass+"\" -o client.json");
 
-
-        QJsonObject mainObj = readJsonFile("client.json");
+        QFile jsonFile("client.json");
+        if(!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+            QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Try switching your network or contact your administrator.");
+            return;
+        }
+        QByteArray data = jsonFile.readAll();
+        QJsonParseError errorPtr;
+        QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+        QJsonObject mainObj = document.object();
+        jsonFile.close();
         auto status = mainObj.value("status").toBool();
         QFile::remove("client.json");
 
