@@ -26,7 +26,8 @@ Worker::Worker(QObject *parent,
                QString s2,
                std::map<std::string, std::string> CPair_editDis,
                std::map<string, set<string> >* CPairs,
-               map<QString, QString> filestructure_fw
+               map<QString, QString> filestructure_fw,
+               QSet<QString>* dict_set1
                ) : QObject(parent)
 {
     this->CPairs = CPairs;
@@ -38,6 +39,7 @@ Worker::Worker(QObject *parent,
     this->gCurrentDirName = gCurrentDirName;
     this->gDirTwoLevelUp = gDirTwoLevelUp;
     this->filestructure_fw = filestructure_fw;
+    this->dict_set1 = dict_set1;
 }
 
 slpNPatternDict slnp;
@@ -46,6 +48,10 @@ slpNPatternDict slnp;
  * \fn Worker::doSaveBackend
  * \brief This function calls SaveFile_Backend functions and emits finished() whenever the function completes
  *        executing.
+ * \details This functions checks if user has changed any dictionary word or not. If some dictionary word is changed by
+ * \details the user, we main a log file of the same.
+ * \details Log filename : DictChanges. Location /Dicts/
+ * \details Entries are stored as old word \t New word
  * \sa SaveFile_Backend()
  */
 void Worker::doSaveBackend()
@@ -62,9 +68,26 @@ void Worker::doSaveBackend()
     QFile sFile(localFilename);
     edit_Distance ed;
     changedWords = ed.editDistance(s1, s2);             // Update CPair by editdistance
+
     QVectorIterator<QString> i(changedWords);
-    while (i.hasNext())
-        qDebug() << i.next()<<endl;
+    QString filename_ = (*mProject).GetDir().absolutePath() + "/Dicts/" + "DictChanges";
+    QFile file_(filename_);
+    if(!file_.open(QIODevice::WriteOnly | QIODevice::Append)) qDebug()<<"Can't open DictChanges file";
+    else{
+    QTextStream out(&file_);
+    out.setCodec("UTF-8");
+    while (i.hasNext()){
+        QString next = i.next();
+        QString first = next.split("=>")[0].trimmed().remove(".").remove(",");
+        QStringList words = first.split(" ");
+        foreach(auto &x, *dict_set1){
+            if(words.contains(x, Qt::CaseInsensitive)){
+                qDebug()<<first<<" is dict word being replaced.";
+                out <<  first << '\t'<<next.split("=>")[1].trimmed()<<"\n";
+            }
+        }
+    }}
+    file_.close();
 
     //! Do commit when there are some changes in previous and new html file on the basis of editdistance.
     if(changedWords.size())

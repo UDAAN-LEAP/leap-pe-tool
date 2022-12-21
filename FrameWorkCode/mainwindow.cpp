@@ -1946,7 +1946,8 @@ void MainWindow::on_actionSave_triggered()
                                     s2,
                                     CPair_editDis,
                                     &CPairs,
-                                    filestructure_fw);
+                                    filestructure_fw,
+                                    &dict_set1);
         QThread *thread = new QThread;
 
         connect(thread, SIGNAL(started()), worker, SLOT(doSaveBackend()));
@@ -5636,7 +5637,7 @@ void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
     QByteArray data_json;
     QStringList list1;
     QSet<QString> dict_set;
-    QSet<QString> dict_set1;
+    dict_set1.clear();
     //! Get dict file from current opened file
     QString dictFilename;
     if(mRole=="Verifier")
