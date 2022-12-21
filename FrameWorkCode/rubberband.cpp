@@ -7,6 +7,11 @@
 #include <QPointF>
 #include <QRectF>
 
+/*!
+ * \fn RubberBand::RubberBand
+ * \brief Initializes the gripColor, gripSize, dragPos, dragGrip and moveEnabled
+ * \param parent Passed to QWidget to set the parent
+ */
 RubberBand::RubberBand(QWidget *parent)
     : QWidget{parent}
 {
@@ -17,21 +22,41 @@ RubberBand::RubberBand(QWidget *parent)
     m_dragGrip = NoGrip;
 }
 
+/*!
+ * \fn RubberBand::isMoveEnabled
+ * \brief Returns value accordingly if move is enabled/disabled
+ * \return true if move is enabled otherwise false
+ */
 bool RubberBand::isMoveEnabled() const
 {
     return m_moveEnabled;
 }
 
+/*!
+ * \fn RubberBand::setMoveEnabled
+ * \brief Sets the moveEnabled to the value passed
+ * \param enabled Used for setting if move is enabled
+ */
 void RubberBand::setMoveEnabled(bool enabled)
 {
     m_moveEnabled = enabled;
 }
 
+/*!
+ * \fn RubberBand::gripSize
+ * \brief Returns the grip size
+ * \return Grip size (QSize)
+ */
 QSize RubberBand::gripSize() const
 {
     return m_gripSize;
 }
 
+/*!
+ * \fn RubberBand::setGripSize
+ * \brief Sets the grip size if size passed is valid
+ * \param size Grip size is set to the value of this parameter
+ */
 void RubberBand::setGripSize(const QSize &size)
 {
     if (m_gripSize != size && size.isValid()) {
@@ -40,11 +65,21 @@ void RubberBand::setGripSize(const QSize &size)
     }
 }
 
+/*!
+ * \fn RubberBand::gripColor
+ * \brief Returns the Grip Color
+ * \return Grip color (QColor)
+ */
 QColor RubberBand::gripColor() const
 {
     return m_gripColor;
 }
 
+/*!
+ * \fn RubberBand::setGripColor
+ * \brief Sets the grip color to the color passed
+ * \param color Grip color is set to the value of this parameter
+ */
 void RubberBand::setGripColor(const QColor &color)
 {
     if (m_gripColor != color) {
@@ -53,6 +88,15 @@ void RubberBand::setGripColor(const QColor &color)
     }
 }
 
+/*!
+ * \fn RubberBand::paintEvent
+ * \brief This functions paints the entire rubber band and the grips
+ * \details
+ * 1. Calculates the grip positions.
+ * 2. Draws big rectangle in which image is enclosed
+ * 3. Draws all grips
+ * \param event Unused parameter
+ */
 void RubberBand::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
@@ -70,6 +114,16 @@ void RubberBand::paintEvent(QPaintEvent *event)
     }
 }
 
+/*!
+ * \fn RubberBand::mousePressEvent
+ * \brief When mouse button is clicked this function gets fired which is used for getting the grip which is grabbed
+ * \details
+ * 1. Calculate grip positions.
+ * 2. Find the grip rectangle inside which mouse button was pressed.
+ * 3. If move is enabled store the original position in a data member
+ * \param event Used for getting the position where mouse button was pressed.
+ * \sa gripPositions()
+ */
 void RubberBand::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton && isVisible()) {
@@ -92,6 +146,14 @@ void RubberBand::mousePressEvent(QMouseEvent *event)
     }
 }
 
+/*!
+ * \fn RubberBand::mouseMoveEvent
+ * \brief This function keeps track of mouse pointer. It handles resizing the geometry of the rubber band.
+ * \details
+ * 1. Mark the cursor style according to the grip box chosen.
+ * 2. Resize the rect of original rubber band and if rect is not less than minimum size or not more than the maximum size of the widget set then emit the resized/moved signals accordingly.
+ * \param event Used for getting the position of the mouse pointer
+ */
 void RubberBand::mouseMoveEvent(QMouseEvent *event)
 {
     if (m_dragPos.isNull()) {
@@ -191,6 +253,11 @@ void RubberBand::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
+/*!
+ * \fn RubberBand::mouseReleaseEvent
+ * \brief Emits the moveFinished or resizeFinished signals according to the action performed when mouse button is released
+ * \param event Unused parameter
+ */
 void RubberBand::mouseReleaseEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
@@ -211,6 +278,11 @@ void RubberBand::mouseReleaseEvent(QMouseEvent *event)
     update();
 }
 
+/*!
+ * \fn RubberBand::gripPositions
+ * \brief Returns the mapping of the widget grips' to their position on the rubber band
+ * \return Mapping of the grip to its position in the widget
+ */
 QMap<RubberBand::Grip, QRectF> RubberBand::gripPositions() const
 {
     QMap<Grip, QRectF> positions;

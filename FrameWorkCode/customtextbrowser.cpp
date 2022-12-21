@@ -130,6 +130,11 @@ void CustomTextBrowser::insertCompletion(const QString &completion)
     setTextCursor(tc);
 }
 
+/*!
+ * \fn CustomTextBrowser::updateGripBand
+ * \brief This function updates the geometry of rubber band
+ * whenever a signal like cursorPositionChanged or value of horizontal and vertical scroll bars is emitted.
+ */
 void CustomTextBrowser::updateGripBand()
 {
     QTextCursor cursor = textCursor();
@@ -156,6 +161,11 @@ void CustomTextBrowser::updateGripBand()
     }
 }
 
+/*!
+ * \fn CustomTextBrowser::resizeObject
+ * \brief Resizes the image to the geometry of rubber band after the mouse button is released.
+ * \param rect Used for resizing the image object to the geometry of this rect
+ */
 void CustomTextBrowser::resizeObject(const QRect &rect)
 {
     QTextCursor cursor = textCursor();
@@ -204,6 +214,11 @@ void CustomTextBrowser::focusInEvent(QFocusEvent *e)
     QTextBrowser::focusInEvent(e);
 }
 
+/*!
+ * \fn CustomTextBrowser::resizeEvent
+ * \brief Updates the rubber band whenever geometry of this browser is altered.
+ * \param event QResizeEvent is used for passing it to QTextBrowser but not used for updating rubber band.
+ */
 void CustomTextBrowser::resizeEvent(QResizeEvent *event)
 {
     updateGripBand();
