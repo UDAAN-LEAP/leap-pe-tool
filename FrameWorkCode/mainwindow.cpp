@@ -6277,6 +6277,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 
     curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
     curr_browser->setDocument(b->document()->clone(curr_browser));
+    curr_browser->document()->clearUndoRedoStacks();
 
     QFileInfo info(*f);
     currentTabPageName = info.fileName();

@@ -19,20 +19,27 @@
  */
 CustomTextBrowser::CustomTextBrowser(QWidget *parent): QTextBrowser(parent)
 {
-
     this->setReadOnly(false);
     c = new QCompleter((CustomTextBrowser *)this);
-    //c->setModel(modelFromFile(":/WordList/wordlists/english.txt"));
-    //c->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
-    //c->setCaseSensitivity(Qt::CaseInsensitive);
 	this->setCompleter(c);
 
-    QAbstractItemModel *temp;
     if(modelFlag == 0){
         engModel = modelFromFile(":/WordList/wordlists/english.txt");
         devModel = modelFromFile(":/WordList/wordlists/sanskrit.txt");
         modelFlag = 1;
     }
+
+    // Setup grip band
+    m_gripBand = new RubberBand(this);
+    m_gripBand->setMoveEnabled(false);
+    m_gripBand->setVisible(false);
+
+    connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(updateGripBand()));
+    connect(this, SIGNAL(textChanged()), this, SLOT(updateGripBand()));
+    connect(this, SIGNAL(currentCharFormatChanged(const QTextCharFormat&)), this, SLOT(updateGripBand()));
+    connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateGripBand()));
+    connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateGripBand()));
+    connect(m_gripBand, SIGNAL(resizeFinished(QRect)), this, SLOT(resizeObject(QRect)));
 }
 
 /*!
@@ -123,6 +130,56 @@ void CustomTextBrowser::insertCompletion(const QString &completion)
     setTextCursor(tc);
 }
 
+void CustomTextBrowser::updateGripBand()
+{
+    QTextCursor cursor = textCursor();
+    m_gripBand->setVisible(!cursor.hasSelection() && cursor.charFormat().isImageFormat());
+
+    if (!cursor.hasSelection() && cursor.charFormat().isImageFormat()) {
+        QTextImageFormat fmt = cursor.charFormat().toImageFormat();
+
+        if (!cursor.atBlockStart())
+            cursor.movePosition(QTextCursor::Left);
+
+        QRect rc = cursorRect(cursor);
+        rc.setLeft(rc.left() + 1);
+        rc.setTop(rc.top() + 1);
+        rc.setWidth(fmt.width());
+        rc.setHeight(rc.height() + 1);
+
+        if (!rc.width()) {
+            QImage image = document()->resource(QTextDocument::ImageResource, fmt.name()).value<QImage>();
+            rc.setWidth(image.width());
+        }
+
+        m_gripBand->setGeometry(rc);
+    }
+}
+
+void CustomTextBrowser::resizeObject(const QRect &rect)
+{
+    QTextCursor cursor = textCursor();
+
+    if (cursor.charFormat().isImageFormat()) {
+        QTextImageFormat fmt = cursor.charFormat().toImageFormat();
+        fmt.setWidth(rect.width());
+        fmt.setHeight(rect.height());
+        cursor.setCharFormat(fmt);
+
+        QTextCursor temp = cursor;
+
+        if (!temp.atBlockStart()) {
+            temp.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor);
+        } else {
+            temp.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+        }
+
+        setTextCursor(temp);
+        setCurrentCharFormat(fmt);
+        setTextCursor(cursor);
+    }
+}
+
 /*!
  * \fn CustomTextBrowser::textUnderCursor
  * \brief This function returns the word under the cursor.
@@ -145,6 +202,13 @@ void CustomTextBrowser::focusInEvent(QFocusEvent *e)
     if (c)
         c->setWidget(this);
     QTextBrowser::focusInEvent(e);
+}
+
+void CustomTextBrowser::resizeEvent(QResizeEvent *event)
+{
+    updateGripBand();
+
+    QTextBrowser::resizeEvent(event);
 }
 
 /*!
