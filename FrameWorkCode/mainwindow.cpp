@@ -83,6 +83,7 @@
 #include <equationeditor.h>
 #include "threadingpush.h">
 #include <QThread>
+#include <git2.h>
 
 map<string, string> LSTM;
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -3396,8 +3397,20 @@ void MainWindow::on_actionFetch_2_triggered()
     process.execute("curl -d -X -k -POST --header "
                     "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
 
-    QStringList list = gDirTwoLevelUp.split("/");
-    QString repo = list[list.size()-1];
+    //to find the repo name from .git/congig file
+    QString repo = "";
+    QString gDir = gDirTwoLevelUp+"/.git/config";
+    QFile f(gDir);
+    f.open(QIODevice::ReadOnly);
+    while(!f.atEnd()) {
+        QString line = f.readLine();
+        if(line.contains("https://github.com")){
+            QStringList l = line.split("/");
+            repo = l[l.size()-1].remove("\n");
+            break;
+        }
+    }
+    f.close();
     QJsonObject mainObj = readJsonFile("validate.json");
     QJsonArray repos = mainObj.value("repo_list").toArray();
     QJsonArray::iterator itr; int flag = 0;
@@ -3515,8 +3528,20 @@ void MainWindow::on_actionTurn_In_triggered()
     process.execute("curl -d -X -k -POST --header "
                     "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
 
-    QStringList list = gDirTwoLevelUp.split("/");
-    QString repo = list[list.size()-1];
+    //to find the repo name from .git/congig file
+    QString repo = "";
+    QString gDir = gDirTwoLevelUp+"/.git/config";
+    QFile f(gDir);
+    f.open(QIODevice::ReadOnly);
+    while(!f.atEnd()) {
+        QString line = f.readLine();
+        if(line.contains("https://github.com")){
+            QStringList l = line.split("/");
+            repo = l[l.size()-1].remove("\n");
+            break;
+        }
+    }
+    f.close();
     QJsonObject mainObj = readJsonFile("validate.json");
     QJsonArray repos = mainObj.value("repo_list").toArray();
     QJsonArray::iterator itr; int flag = 0;
@@ -3669,15 +3694,73 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         //showing the message box for 2 seconds only.
         QTimer cntDown;
         QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
-             if(--cnt < 0){
-                 cntDown.stop();
-                 msg.close();
-             }
-            });
+            if(--cnt < 0){
+                cntDown.stop();
+                msg.close();
+            }
+        });
         cntDown.start(1000);
         msg.exec();
         return;
     }
+    //retrieve details from database and check if user has access to push into this repo
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
+    settings.endGroup();
+    QProcess process;
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
+
+    //to find the repo name from .git/congig file
+    QString repo = "";
+    QString gDir = gDirTwoLevelUp+"/.git/config";
+    QFile f(gDir);
+    f.open(QIODevice::ReadOnly);
+    while(!f.atEnd()) {
+        QString line = f.readLine();
+        if(line.contains("https://github.com")){
+            QStringList l = line.split("/");
+            repo = l[l.size()-1].remove("\n");
+            break;
+        }
+    }
+    f.close();
+    QJsonObject mainObj = readJsonFile("validate.json");
+    QJsonArray repos = mainObj.value("repo_list").toArray();
+    QJsonArray::iterator itr; int flag = 0;
+    for(itr = repos.begin(); itr != repos.end(); itr++){
+        // qDebug()<<itr->toString();
+        if(itr->toString() == repo){
+            flag = 1;
+            break;
+        }
+    }
+    QFile::remove("validate.json");
+    if(repos.size() == 0 || flag == 0){
+        QMessageBox msg;
+        msg.setText("You don't have access to this project on cloud.");
+        msg.exec();
+        return;
+    }
+
+    //sending credentials
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o gitToken.json");
+
+    QFile jsonFile("gitToken.json");
+    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    QByteArray data = jsonFile.readAll();
+
+    QJsonParseError errorPtr;
+    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+    mainObj = document.object();
+    jsonFile.close();
+    QString git_token = mainObj.value("github_token").toString();
+    QString git_username = mainObj.value("github_username").toString();
+    QFile::remove("gitToken.json");
+    std::string user = git_username.toStdString();
+    std::string pass = git_token.toStdString();
     /*
      * \description
      * 1. Checks if any project is opened or not.
@@ -3831,13 +3914,6 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         */
         if (messageBox.clickedButton() == resubmitButton)
         {
-            //mProject.enable_push( false ); //Increment = false
-//             if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
-//                     != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
-//             {
-//                 QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
-//                 return;
-//             }
             s = SubmissionType::resubmit;
             commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
         }
@@ -3857,13 +3933,6 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         */
         else if (messageBox.clickedButton() == finaliseButton)
         {
-            //mProject.enable_push( false ); //Increment = false
-//             if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
-//                     != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
-//             {
-//                 QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
-//                 return;
-//             }
             s = SubmissionType::finalise;
             commit_msg = "Verifier Finalised Version:" + mProject.get_version();
         }
@@ -3881,34 +3950,28 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         QPushButton *nButton2 = submitBox2.addButton(QMessageBox::StandardButton::No);
         submitBox2.exec();
 
-
-
-       if (submitBox2.clickedButton() == yButton2)
-       {
+        if (submitBox2.clickedButton() == yButton2)
+        {
             bool ok;
-//            branchName = QInputDialog::getText(this, tr("Branch Name"),
-//                                                 tr("Enter the branch name:"), QLineEdit::Normal,
-//                                                 "", &ok );
-            branchName ="master";
-            if (!branchName.isEmpty() ) {
-                // user entered something and pressed OK
-                if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
-                {
-                    mProject.enable_push( true );
-                }
-                else if (s == SubmissionType::resubmit)    //If yes button is clicked and submission type is resubmit then enable push
-                {
-                    mProject.enable_push( false );
-                }
-                if(!mProject.commit(commit_msg.toStdString()) || !mProject.push(branchName))
-                {
-                    if(s == SubmissionType::return_set)
-                    {
-                        mProject.set_version( mProject.get_version().toInt() - 1 );
-                    }
-                   // mProject.set_stage_verifier();
-                    QMessageBox::critical(0, "Cloud sync", "Sync failed!");
+            // user entered something and pressed OK
+            if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
+            {
+                mProject.enable_push( true );
+            }
+            else if (s == SubmissionType::resubmit)    //If yes button is clicked and submission type is resubmit then enable push
+            {
+                mProject.enable_push( false );
+            }
+            if(mProject.commit(commit_msg.toStdString()))
+            {
+                if(!mProject.push(gDirTwoLevelUp)){
+                    mProject.enable_push(false);
+                    QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
                     return;
+                }
+                if(s == SubmissionType::return_set)
+                {
+                    mProject.set_version( mProject.get_version().toInt() - 1 );
                 }
             }
             else {
@@ -3933,7 +3996,6 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         //! Updating the Project Version
         ui->lineEdit_2->setText("Version " + mProject.get_version());
         QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
-        //deleteEditedFilesLog();
     }
     else
     {
