@@ -266,6 +266,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionLoadGDocPage->setVisible(false);
     ui->menuSelectLanguage->setTitle("");
     ui->menuCreateReports->setTitle("");
+    ui->pushButton_2->setVisible(false);
 
     // Disabling some buttons while opening the tool
 
@@ -362,7 +363,7 @@ bool MainWindow::setRole(QString role)
         settings.endGroup();
         if(!role.isEmpty()){
             mRole = role;
-            qDebug()<<"mRole Admin if: "<<mRole<<endl;
+            qDebug()<<"Role: "<<mRole<<endl;
         }
         else
         {
@@ -447,6 +448,9 @@ bool MainWindow::setRole(QString role)
 
         ui->actionVerifier_Turn_In->setVisible(false);
         ui->actionVerifier_Turn_In->setEnabled(false);
+
+        ui->viewComments->setVisible(false);
+        ui->viewComments->setEnabled(false);
 
         isVerifier = 0;
         this->setWindowTitle("Udaan Editing Tool-Corrector");
@@ -7048,12 +7052,12 @@ void MainWindow::on_actionas_PDF_triggered()
     int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
     int counter=0;
 
-    int stIndex, startFrom = 0;
+//    int stIndex, startFrom = 0;
 
-    //! Set the background of the pdf to be printed to be white
-    QString searchString = "background-color:#"; // string to be searched
-    int l = searchString.length();
-    QString whiteColor = "ffffff";
+//    //! Set the background of the pdf to be printed to be white
+//    QString searchString = "background-color:#"; // string to be searched
+//    int l = searchString.length();
+//    QString whiteColor = "ffffff";
 
     int itr = 0;
     PdfRangeDialog *pdfRangeDialog = new PdfRangeDialog(this, count, 100);
@@ -7075,7 +7079,7 @@ void MainWindow::on_actionas_PDF_triggered()
     {
         QString x = currentDirAbsolutePath + a;
 
-        startFrom = 0; // The position from which searchString will be scanned
+//        startFrom = 0; // The position from which searchString will be scanned
         //! if condition makes sure we extract only html files for PDF Processing
         //! (folder has hocr, dict, htranslate, and other such files)
         if(x.contains("."))
@@ -7098,15 +7102,17 @@ void MainWindow::on_actionas_PDF_triggered()
                 //! Read the file
 
                 mainHtml=stream.readAll();
-                //! Changing the text background to white by setting the background to #fffff
-                while (true){
-                    stIndex = mainHtml.indexOf(searchString, startFrom);
-                    if (stIndex == -1)
-                        break;
-                    stIndex += l; // increment line
-                    mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
-                    startFrom = stIndex + 6;
-                }
+                mainHtml.remove("background-color:#00ff00");
+                mainHtml.remove("background-color:#ffff00");
+//                //! Changing the text background to white by setting the background to #fffff
+//                while (true){
+//                    stIndex = mainHtml.indexOf(searchString, startFrom);
+//                    if (stIndex == -1)
+//                        break;
+//                    stIndex += l; // increment line
+//                    mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
+//                    startFrom = stIndex + 6;
+//                }
                 //! append counter when one file is fully scanned
                 counter++;
 
@@ -7920,13 +7926,13 @@ void MainWindow::RecentPageInfo()
 void MainWindow::on_actionCheck_for_Updates_triggered()
 {
     QUrl url("https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases");
-    qInfo() << url.toString();
+//    qInfo() << url.toString();
     QNetworkRequest request(url);               //requesting url over the network
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QNetworkAccessManager nam;                  //sending network request
     QNetworkReply * reply = nam.get(request);
-    QTimer *timer = new QTimer();
-    timer->start(5000);
+//    QTimer *timer = new QTimer();
+//    timer->start(5000);
 
     while(true){
         qApp->processEvents();
@@ -8039,14 +8045,14 @@ void MainWindow::print(QPrinter *printer)
 
     QString html_contents="";
     QString mainHtml ;
-    int startFrom,stIndex = 0;
+//    int startFrom,stIndex = 0;
 
-    //! Set the background of the pdf to be printed to be white
-    QString searchString = "background-color:#";
-    int l = searchString.length();
-    QString whiteColor = "ffffff";
+//    //! Set the background of the pdf to be printed to be white
+//    QString searchString = "background-color:#";
+//    int l = searchString.length();
+//    QString whiteColor = "ffffff";
 
-    startFrom = 0;
+//    startFrom = 0;
 
     QFile file(htmlFile);
     if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
@@ -8057,14 +8063,16 @@ void MainWindow::print(QPrinter *printer)
     mainHtml=stream.readAll();
 
     //! Changing the text background to white by setting the background to #fffff
-    while (true){
-        stIndex = mainHtml.indexOf(searchString, startFrom);
-        if (stIndex == -1)
-            break;
-        stIndex += l; // increment line
-        mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
-        startFrom = stIndex + 6;
-    }
+//    while (true){
+//        stIndex = mainHtml.indexOf(searchString, startFrom);
+//        if (stIndex == -1)
+//            break;
+//        stIndex += l; // increment line
+//        mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
+//        startFrom = stIndex + 6;
+//    }
+    mainHtml.remove("background-color:#00ff00");
+    mainHtml.remove("background-color:#ffff00");
     //latex to png mapping
     if(mainHtml.contains("$$")){
 
