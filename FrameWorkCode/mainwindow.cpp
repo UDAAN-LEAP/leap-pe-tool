@@ -4501,11 +4501,11 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
     if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
     }
-    if(!QDir(gDirTwoLevelUp+"/Cropped_Images/Figures").exists())
+    if(!QDir(gDirTwoLevelUp+"/Cropped_Images/tables").exists())
     {
-        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Figures");
-        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Tables");
-        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Equations");
+        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/figures");
+        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/tables");
+        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/equations");
     }
 
     //! Adding picture to the respective directory
@@ -4513,7 +4513,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
     {
         if(s1 == "IMGHOLDER")
         {
-            QString path = "/Cropped_Images/Figures/Figure"+a+"-"+QString::number(z)+".jpg";
+            QString path = "/Cropped_Images/figures/Figure"+a+"-"+QString::number(z)+".jpg";
 
             cropped.save(gDirTwoLevelUp+path,"JPG",100);       //100 is storing the image in uncompressed high resolution
 
@@ -4524,7 +4524,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
         }
         else if(s1 == "TBHOLDER")
         {
-            QString path = "/Cropped_Images/Tables/Table"+a+"-"+QString::number(z)+".jpg";
+            QString path = "/Cropped_Images/tables/Table"+a+"-"+QString::number(z)+".jpg";
 
             cropped.save(gDirTwoLevelUp+path,"JPG", 100);
 
@@ -4537,7 +4537,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
         }
         else if(s1 == "EQHOLDER")
         {
-            QString path = "/Cropped_Images/Equations/Equation"+a+"-"+QString::number(z)+".jpg";
+            QString path = "/Cropped_Images/equations/Equation"+a+"-"+QString::number(z)+".jpg";
 
             cropped.save(gDirTwoLevelUp+path,"JPG",100);
 
