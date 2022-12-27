@@ -6527,6 +6527,14 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
             }
         }
     }
+  
+  QString x=finfo.fileName();
+  if(x.contains("txt")){
+    curr_browser->setReadOnly(true);
+  }
+  else{
+    curr_browser->setReadonly(false);
+  }
 
     // Deleting temporarily created CustomTextBrowser
     delete b;
