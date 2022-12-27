@@ -15,7 +15,7 @@
 RubberBand::RubberBand(QWidget *parent)
     : QWidget{parent}
 {
-    m_moveEnabled = true;
+    m_moveEnabled = false;
     m_gripSize = QSize(8, 8);
     m_gripColor = QColor(Qt::blue);
     m_dragPos = QPointF();
@@ -136,6 +136,26 @@ void RubberBand::mousePressEvent(QMouseEvent *event)
             if (rc.contains(pos)) {
                 m_dragPos = event->windowPos();
                 m_dragGrip = key;
+                switch (m_dragGrip) {
+                case NoGrip:
+                    break;
+                case Left:
+                case Right:
+                    setCursor(Qt::SizeHorCursor);
+                    break;
+                case TopMiddle:
+                case BottomMiddle:
+                    setCursor(Qt::SizeVerCursor);
+                    break;
+                case TopLeft:
+                case BottomRight:
+                    setCursor(Qt::SizeFDiagCursor);
+                    break;
+                case TopRight:
+                case BottomLeft:
+                    setCursor(Qt::SizeBDiagCursor);
+                    break;
+                }
                 break;
             }
         }
@@ -274,6 +294,7 @@ void RubberBand::mouseReleaseEvent(QMouseEvent *event)
     m_diffBetweenPrevNowGeometry = false;
     m_dragPos = QPointF();
     m_dragGrip = NoGrip;
+    setCursor(Qt::ArrowCursor);
 
     update();
 }
