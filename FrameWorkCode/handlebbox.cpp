@@ -111,6 +111,7 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                     i = i - 1;
                 if(l[i].contains("</table>")){
                     flag_ = 0;
+                    int num = doc->blockCount();
                     inputText += l[i];
                     inputText += " ";
                     inputText = latex2png(inputText);
@@ -128,8 +129,12 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                     }
                     cur.insertBlock();
                     cur.insertHtml(inputText);
+                    cur2 = QTextCursor(doc->findBlockByNumber(num));
+                    cur2.select(QTextCursor::BlockUnderCursor);
+                    cur2.deletePreviousChar();
                     cur.setBlockFormat(blockFormat);
                     inputText = "";
+
                 }
 
             }

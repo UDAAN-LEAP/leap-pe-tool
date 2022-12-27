@@ -222,7 +222,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     gHindi+= "ग़् - $,, ऩ् - %,, ऑ - Z,, ऱ् - V,, ज़ - F,, ड़्/ड़ -x/xa,, ढ़्/ढ़  - X/Xa,, य़्  - &,, क़ - @,, ख़ - #,, फ़् - ^,, ॅ - *,, ,, ,, ";
     gHindi += common;
     gHindi.replace(",, ", "\n");
-    QFont font("Chandas");
+    QFont font("Shobhika");
     font.setWeight(14);
     font.setPointSize(12);
     ui->textEdit->setFont(font);
@@ -2841,11 +2841,42 @@ void MainWindow::on_actionAllFontProperties_triggered()
             QString fileText = file.readAll();
             file.close();
 
-            QRegularExpression regex_style("(<span[^>]*>)");
+            QRegularExpression regex_style("(<p[^>]*>)");
             QRegularExpressionMatchIterator itr = regex_style.globalMatch(fileText);
 
             while (itr.hasNext()) {
                 QRegularExpressionMatch match = itr.next();
+                QString capString = match.captured(1);
+                int capStart = match.capturedStart(1);
+
+                for (int i = 0; i < totalFontProperties; i++) {
+                    QString property = styleProperties[i];
+                    QString value = stylePropertyValues[i];
+                    int propIndex = -1;
+
+                    if ((propIndex = capString.indexOf(property)) != -1) { // If value of the property is different
+                        int endIndexOfProperty = capString.indexOf(";", propIndex);
+                        int replacementLen = endIndexOfProperty - (propIndex + property.length());
+                        fileText.replace(capStart + propIndex + property.length(), replacementLen, value);
+                        capString.replace(propIndex + property.length(), replacementLen, value);
+                    } else if (capString.indexOf("style=\"") != -1) { // If property is not present
+                        int indexOfStyle = capString.indexOf("style=\"");
+                        fileText.insert(capStart + indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+                        capString.insert(indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+                    } else { // If style tag is not present
+                        fileText.insert(capStart + QString("<p ").length(), "style=\" " + property + value + ";\" ");
+                        capString.insert(QString("<p ").length(), "style=\" " + property + value + ";\" ");
+                    }
+                }
+
+                itr = regex_style.globalMatch(fileText, capStart + capString.length());
+            }
+            //for span tags
+            QRegularExpression regex_style_span("(<span[^>]*>)");
+            QRegularExpressionMatchIterator itr_span = regex_style_span.globalMatch(fileText);
+
+            while (itr_span.hasNext()) {
+                QRegularExpressionMatch match = itr_span.next();
                 QString capString = match.captured(1);
                 int capStart = match.capturedStart(1);
 
@@ -2869,8 +2900,71 @@ void MainWindow::on_actionAllFontProperties_triggered()
                     }
                 }
 
-                itr = regex_style.globalMatch(fileText, capStart + capString.length());
+                itr_span = regex_style_span.globalMatch(fileText, capStart + capString.length());
             }
+            //for unordered list
+
+            QRegularExpression regex_style_ul("(<li[^>]*>)");
+            QRegularExpressionMatchIterator itr_ul = regex_style_ul.globalMatch(fileText);
+
+            while (itr_ul.hasNext()) {
+                QRegularExpressionMatch match = itr_ul.next();
+                QString capString = match.captured(1);
+                int capStart = match.capturedStart(1);
+
+                for (int i = 0; i < totalFontProperties; i++) {
+                    QString property = styleProperties[i];
+                    QString value = stylePropertyValues[i];
+                    int propIndex = -1;
+
+                    if ((propIndex = capString.indexOf(property)) != -1) { // If value of the property is different
+                        int endIndexOfProperty = capString.indexOf(";", propIndex);
+                        int replacementLen = endIndexOfProperty - (propIndex + property.length());
+                        fileText.replace(capStart + propIndex + property.length(), replacementLen, value);
+                        capString.replace(propIndex + property.length(), replacementLen, value);
+                    } else if (capString.indexOf("style=\"") != -1) { // If property is not present
+                        int indexOfStyle = capString.indexOf("style=\"");
+                        fileText.insert(capStart + indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+                        capString.insert(indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+                    } else { // If style tag is not present
+                        fileText.insert(capStart + QString("<li ").length(), "style=\" " + property + value + ";\" ");
+                        capString.insert(QString("<li ").length(), "style=\" " + property + value + ";\" ");
+                    }
+                }
+
+                itr_ul = regex_style_ul.globalMatch(fileText, capStart + capString.length());
+            }
+            //for ol tags
+//            QRegularExpression regex_style_ol("(<span[^>]*>)");
+//            QRegularExpressionMatchIterator itr_ol = regex_style_ol.globalMatch(fileText);
+
+//            while (itr_ol.hasNext()) {
+//                QRegularExpressionMatch match = itr_ol.next();
+//                QString capString = match.captured(1);
+//                int capStart = match.capturedStart(1);
+
+//                for (int i = 0; i < totalFontProperties; i++) {
+//                    QString property = styleProperties[i];
+//                    QString value = stylePropertyValues[i];
+//                    int propIndex = -1;
+
+//                    if ((propIndex = capString.indexOf(property)) != -1) { // If value of the property is different
+//                        int endIndexOfProperty = capString.indexOf(";", propIndex);
+//                        int replacementLen = endIndexOfProperty - (propIndex + property.length());
+//                        fileText.replace(capStart + propIndex + property.length(), replacementLen, value);
+//                        capString.replace(propIndex + property.length(), replacementLen, value);
+//                    } else if (capString.indexOf("style=\"") != -1) { // If property is not present
+//                        int indexOfStyle = capString.indexOf("style=\"");
+//                        fileText.insert(capStart + indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+//                        capString.insert(indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+//                    } else { // If style tag is not present
+//                        fileText.insert(capStart + QString("<ol ").length(), "style=\" " + property + value + ";\" ");
+//                        capString.insert(QString("<ol ").length(), "style=\" " + property + value + ";\" ");
+//                    }
+//                }
+
+//                itr_ol = regex_style_ol.globalMatch(fileText, capStart + capString.length());
+//            }
             if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
                 qDebug() << "Cannot open file in write mode";
             }
@@ -4950,10 +5044,10 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
     CustomTextBrowser * browser = new CustomTextBrowser();
     browser->setReadOnly(false);
 
-    QFont font("Chandas");
+    QFont font("Shobhika-Regular");
     font.setWeight(16);
     font.setPointSize(16);
-//    font.setFamily("Shobhika");
+    font.setFamily("Shobhika");
     browser->setFont(font);
     browser->setHtml(s1);
 
@@ -6228,7 +6322,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     QTextStream stream(f);
     stream.setCodec("UTF-8");
     QString input = stream.readAll();
-    QFont font("Chandas");
+    QFont font("Shobhika");
     setWindowTitle(name);
     font.setPointSize(16);
     if(ext == "txt") {
@@ -6245,10 +6339,10 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
         QString qstrHtml = QString::fromStdString(strHtml);
         qstrHtml.replace("<br /></p>", "</p>");
 
-        QFont font("Chandas");
+        QFont font("Shobhika-Regular");
         font.setWeight(16);
         font.setPointSize(16);
-//        font.setFamily("Shobhika");
+        font.setFamily("Shobhika");
         b->setFont(font);
         b->setHtml(qstrHtml);
     }
