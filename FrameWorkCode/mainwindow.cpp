@@ -6533,7 +6533,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     curr_browser->setReadOnly(true);
   }
   else{
-    curr_browser->setReadonly(false);
+    curr_browser->setReadOnly(false);
   }
 
     // Deleting temporarily created CustomTextBrowser
