@@ -20,6 +20,9 @@ public slots:
     void on_copyButton_clicked();
     void tabChanged(int idx);
 
+private slots:
+
+
 private:
     Ui::SymbolsView *ui;
     QTextEdit *currentTab;
