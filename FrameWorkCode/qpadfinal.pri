@@ -17,6 +17,7 @@ HEADERS += ./Filters.h \
     $$PWD/pdfrangedialog.h \
     $$PWD/printworker.h \
     $$PWD/progressbardialog.h \
+    $$PWD/rubberband.h \
     $$PWD/shortcutguidedialog.h \
     $$PWD/textfinder.h \
     $$PWD/globalreplacedialog.h \
@@ -68,6 +69,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/pdfrangedialog.cpp \
     $$PWD/printworker.cpp \
     $$PWD/progressbardialog.cpp \
+    $$PWD/rubberband.cpp \
     $$PWD/shortcutguidedialog.cpp \
     $$PWD/slpNPatternDict.cpp \
     $$PWD/textfinder.cpp \

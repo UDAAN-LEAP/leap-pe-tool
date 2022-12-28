@@ -83,6 +83,7 @@
 #include <equationeditor.h>
 #include "threadingpush.h">
 #include <QThread>
+#include <git2.h>
 
 map<string, string> LSTM;
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -170,7 +171,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->lineEdit_2->setReadOnly(true);
     ui->lineEdit_3->setReadOnly(true);
 
-    googleAuth();
+//    googleAuth();
 
     QString password  = "";
     QString passwordFilePath = QDir::currentPath() + "/pass.txt";
@@ -221,7 +222,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     gHindi+= "ग़् - $,, ऩ् - %,, ऑ - Z,, ऱ् - V,, ज़ - F,, ड़्/ड़ -x/xa,, ढ़्/ढ़  - X/Xa,, य़्  - &,, क़ - @,, ख़ - #,, फ़् - ^,, ॅ - *,, ,, ,, ";
     gHindi += common;
     gHindi.replace(",, ", "\n");
-    QFont font("Chandas");
+    QFont font("Shobhika");
     font.setWeight(14);
     font.setPointSize(12);
     ui->textEdit->setFont(font);
@@ -265,6 +266,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionLoadGDocPage->setVisible(false);
     ui->menuSelectLanguage->setTitle("");
     ui->menuCreateReports->setTitle("");
+    ui->pushButton_2->setVisible(false);
 
     // Disabling some buttons while opening the tool
 
@@ -361,7 +363,7 @@ bool MainWindow::setRole(QString role)
         settings.endGroup();
         if(!role.isEmpty()){
             mRole = role;
-            qDebug()<<"mRole Admin if: "<<mRole<<endl;
+            qDebug()<<"Role: "<<mRole<<endl;
         }
         else
         {
@@ -446,6 +448,9 @@ bool MainWindow::setRole(QString role)
 
         ui->actionVerifier_Turn_In->setVisible(false);
         ui->actionVerifier_Turn_In->setEnabled(false);
+
+        ui->viewComments->setVisible(false);
+        ui->viewComments->setEnabled(false);
 
         isVerifier = 0;
         this->setWindowTitle("Udaan Editing Tool-Corrector");
@@ -1149,43 +1154,35 @@ void MainWindow::on_actionEnglish_triggered()
  * \fn MainWindow::on_actionOpen_Project_triggered
  * \brief Opens a new OCR project
  * \note Every project contains six folders - Images, Inds, CorrectorOutput, VerifierOutput, Dicts and Comments.
- *
+ * \details 1. Check if file named "project.xml" exists else terminates the function.
+ * \details 2. Create a new directory if CorrectorOutput, VerifierOutput or Comments folders does not exist.
+ * \details 3. Loading the requisites.
+ * \details a) Processing the project.xml file.
+ * \details b) Load git repository.
+ * \details Set the model for ProjectHierarchyWindow(TreeView). TreeView is composed of Documents and Images.
+ * \details Reset the current file name and directory levels.
+ * \details Get the value for time elapsed from Timelog.json.
  * \sa process_xml(), open_git_repo(), get_stage(), get_version(), getModel(), AddTemp(), getFilter(), insert(), UpdateFileBrekadown(), readJsonFile()
  */
 void MainWindow::on_actionOpen_Project_triggered() { //Version Based
-
-    /* Description
-     * 1. Check if file named "project.xml" exists else terminates the function.
-     * 2. Create a new directory if CorrectorOutput, VerifierOutput or Comments folders does not exist.
-     * 3. Loading the requisites.
-     *    a) Processing the project.xml file.
-     *    b) Load git repository.
-     * 4. Set the model for ProjectHierarchyWindow(TreeView). TreeView is composed of Documents and Images.
-     * 5. Reset the current file name and directory levels.
-     * 6. Get the value for time elapsed from Timelog.json.
-     */
-
     //QString ProjFile;
-    if(mProject.isProjectOpen()){ //checking if some project is opened, then closing it before opening new project
-        on_actionClose_project_triggered();
-    }
     int totalFileCountInDir = 0;
     QMap<QString, int> fileCountInDir;
-//to choose between recent three files
+    //to choose between recent three files
     if(isRecentProjclick == true && proj_flag == '0')
     {
-      ProjFile = RecentProjFile;
+        ProjFile = RecentProjFile;
     }
     else if(isRecentProjclick == true && proj_flag == '1')
     {
-      ProjFile = RecentProjFile2;
+        ProjFile = RecentProjFile2;
     }
     else if(isRecentProjclick == true && proj_flag == '2')
     {
-      ProjFile = RecentProjFile3;
+        ProjFile = RecentProjFile3;
     }
     else{
-      ProjFile = QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)"));   //Opens only if the file name is Project.xml
+        ProjFile = QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)"));   //Opens only if the file name is Project.xml
     }
 
     if (ProjFile == "")
@@ -1196,9 +1193,11 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     // Testing of project.xml
     VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
     int result = verifySetObj.testProjectXML();
+    if(mProject.isProjectOpen()){ //checking if some project is opened, then closing it before opening new project
+        on_actionClose_project_triggered();
+    }
 
     if (result != 0) {
-        mProject.setProjectOpen(false);
         QMessageBox::warning(0, "Project XML file Error", "Project XML File is corrupted \n\nError "+ QString::fromStdString(std::to_string(verifySetObj.getErrorCode()))+": " + verifySetObj.getErrorString()+"\n\nPlease Report this to your administrator");
         return;
     }
@@ -1271,17 +1270,16 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         QDir cdir(str1);
 
         Filter * filter = mProject.getFilter("CorrectorOutput");
-        //Filter * filter2 = mProject.getFilter("CorrectorOutput");
-        //Filter * filter1 = mProject.getFilter("VerifierOutput");
         //!Adds each file present in CorrectorOutput directory to treeView
         auto list = cdir.entryList(QDir::Filter::Files);
-
+        QString t;
+        QStringList x;
         for (auto f : list)
-        {   QStringList x = f.split(QRegExp("[.]"));
-
-            QString t = str1 + "/" + f;
-            QFile f2(t);
+        {
+            x = f.split(QRegExp("[.]"));
+            t = str1 + "/" + f;
             if(x[1]=="html") {
+                QFile f2(t);
                 totalFileCountInDir++;
                 mProject.AddTemp(filter,f2,"");
             }
@@ -1289,6 +1287,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         }
         fileCountInDir["Corrector"] = totalFileCountInDir;
         totalFileCountInDir = 0;
+
+        QMessageBox::information(0, "Success", "Project opened successfully.");
+
         //!Adds each file present in VerifierOutput directory to treeView
         cdir.setPath(str2);
 
@@ -1296,11 +1297,10 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list)
         {
-            QStringList x = f.split(QRegExp("[.]"));
-
-            QString t = str2 + "/" + f;
-            QFile f2(t);
+            x= f.split(QRegExp("[.]"));
+            t= str2 + "/" + f;
             if(x[1]=="html") {
+                QFile f2(t);
                 totalFileCountInDir++;
                 mProject.AddTemp(filter, f2, "");
             }
@@ -1316,10 +1316,10 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list)
         {
-            QString t = str3 + "/" + f;
+            t = str3 + "/" + f;
             QFile f2(t);
-            mProject.AddTemp(filter, f2, "");
             totalFileCountInDir++;
+            mProject.AddTemp(filter, f2, "");
         }
         fileCountInDir["Inds"] = totalFileCountInDir;
         totalFileCountInDir = 0;
@@ -1332,10 +1332,10 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
         list = cdir.entryList(QDir::Filter::Files);
         for (auto f : list) {
-            QString t = str4 + "/" + f;
+            t= str4 + "/" + f;
             QFile f2(t);
-            mProject.AddTemp(filter, f2, "");
             totalFileCountInDir++;
+            mProject.AddTemp(filter, f2, "");
         }
         fileCountInDir["Image"] = totalFileCountInDir;
         totalFileCountInDir = 0; // Resetting variable to 0
@@ -1369,7 +1369,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             int endIndex;
             for (int i = startIndex; projectWindowStylesheet[i] != ';'; i++)
                 endIndex = i;
-
             int replaceSize = endIndex - startIndex + 1;
             projectWindowStylesheet.replace(startIndex, replaceSize, heightValue);
         }
@@ -1379,16 +1378,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         }
         ui->treeView->setStyleSheet(projectWindowStylesheet);
 
-
-
-//        //!Disable Corrector Turn In once the Corrector has Turned in until the next version is fetched.
-//        if(!isVerifier)
-//        {
-//            if (stage != "Corrector")
-//            {
-//                ui->actionTurn_In->setEnabled(false);
-//            }
-//        }
         UpdateFileBrekadown();    //Reset the current file and dir levels
 
         //!Get the elapsed time in Timelog.json file under Comments folder
@@ -1403,15 +1392,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             QString dateTime = val.toObject().value("Date/Time").toString();
 
             newTimeLog[directory] = {seconds, dateTime};
-//            timeLog[directory] = seconds;
+            //            timeLog[directory] = seconds;
         }
-
-        //bool isSet = QDir::setCurrent(mProject.GetDir().absolutePath() + "/CorrectorOutput") ; //Change application Directory to any subfolder of mProject folder for Image Insertion feature.
-        //if(!QDir(mProject.GetDir().absolutePath() + "/Images/Inserted").exists())
-        //    QDir().mkdir(mProject.GetDir().absolutePath() + "/Images/Inserted");
-
-        QMessageBox::information(0, "Success", "Project opened successfully.");
-//        ui->tabWidget_2->removeTab(0);
         //!Genearte image.xml for figure/table/equation entries and initialize these values by 1.
 
         markRegion objectMarkRegion;
@@ -1422,11 +1404,11 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         QSettings settings("IIT-B", "OpenOCRCorrect");
         QString new_project = finfo.path()+"/project.xml";
         if(new_project != RecentProjFile && new_project != RecentProjFile2 && new_project != RecentProjFile3 ){
-        settings.beginGroup("RecentProjects");
-        settings.setValue("Project3",RecentProjFile2 );
-        settings.setValue("Project2",RecentProjFile );
-        settings.setValue("Project",finfo.path()+"/project.xml" );
-        settings.endGroup();}
+            settings.beginGroup("RecentProjects");
+            settings.setValue("Project3",RecentProjFile2 );
+            settings.setValue("Project2",RecentProjFile );
+            settings.setValue("Project",finfo.path()+"/project.xml" );
+            settings.endGroup();}
         //changing priorities of recent opened projects
         if(new_project == RecentProjFile2){
             QSettings settings("IIT-B", "OpenOCRCorrect");
@@ -1444,132 +1426,123 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             settings.endGroup();
         }
         isRecentProjclick = false;
-
-        // Setting Project window size and dict window size = 50% - 50%
-//        QList<int> list1 = ui->splitter_2->sizes();
-//        int totalHeight;
-//        totalHeight = list1.at(0) + list1.at(1);
-//        ui->splitter_2->setSizes(QList<int>() << totalHeight/2 << totalHeight/2);
     }
     else
     {
         QMessageBox::warning(0, "Project Error", "Couldn't open project. Please check your project.");
         return;
     }
-     AddRecentProjects();//to load recent project without restarting app
-     //--for last opened page--//
-     QSettings settings("IIT-B", "OpenOCRCorrect");
-     settings.beginGroup("RecentPageLoaded");
-     QString stored_project = settings.value("projectName1").toString();
-     QString stored_project2 = settings.value("projectName2").toString();
-     QString stored_project3 = settings.value("projectName3").toString();
-     settings.endGroup();
-     if(ProjFile == stored_project || ProjFile == stored_project2 || ProjFile == stored_project3){
-         RecentPageInfo();
-     }
+    AddRecentProjects();//to load recent project without restarting app
+    //--for last opened page--//
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("RecentPageLoaded");
+    QString stored_project = settings.value("projectName1").toString();
+    QString stored_project2 = settings.value("projectName2").toString();
+    QString stored_project3 = settings.value("projectName3").toString();
+    settings.endGroup();
+    if(ProjFile == stored_project || ProjFile == stored_project2 || ProjFile == stored_project3){
+        RecentPageInfo();
+    }
 
-     // Enabling the buttons again after a project is opened
+    // Enabling the buttons again after a project is opened
+    // File Menu
+    ui->actionSave->setEnabled(true);
+    ui->actionSave_As->setEnabled(true);
+    ui->actionSpell_Check->setEnabled(true);
+    ui->actionLoad_Prev_Page->setEnabled(true);
+    ui->actionLoad_Next_Page->setEnabled(true);
+    ui->actionToDevanagari->setEnabled(true);
+    ui->actionToSlp1->setEnabled(true);
+    ui->actionLoadGDocPage->setEnabled(true);
+    ui->actionLoadData->setEnabled(true);
+    ui->actionLoadDict->setEnabled(true);
+    ui->actionLoadOCRWords->setEnabled(true);
+    ui->actionLoadDomain->setEnabled(true);
+    ui->actionLoadSubPS->setEnabled(true);
+    ui->actionLoadConfusions->setEnabled(true);
+    ui->actionSugg->setEnabled(true);
 
-     // File Menu
-     ui->actionSave->setEnabled(true);
-     ui->actionSave_As->setEnabled(true);
-     ui->actionSpell_Check->setEnabled(true);
-     ui->actionLoad_Prev_Page->setEnabled(true);
-     ui->actionLoad_Next_Page->setEnabled(true);
-     ui->actionToDevanagari->setEnabled(true);
-     ui->actionToSlp1->setEnabled(true);
-     ui->actionLoadGDocPage->setEnabled(true);
-     ui->actionLoadData->setEnabled(true);
-     ui->actionLoadDict->setEnabled(true);
-     ui->actionLoadOCRWords->setEnabled(true);
-     ui->actionLoadDomain->setEnabled(true);
-     ui->actionLoadSubPS->setEnabled(true);
-     ui->actionLoadConfusions->setEnabled(true);
-     ui->actionSugg->setEnabled(true);
+    // Edit Menu
+    ui->actionUndo->setEnabled(true);
+    ui->actionRedo->setEnabled(true);
+    ui->actionFind_and_Replace->setEnabled(true);
+    ui->actionUndo_Global_Replace->setEnabled(true);
+    ui->actionUpload->setEnabled(true);
 
-     // Edit Menu
-     ui->actionUndo->setEnabled(true);
-     ui->actionRedo->setEnabled(true);
-     ui->actionFind_and_Replace->setEnabled(true);
-     ui->actionUndo_Global_Replace->setEnabled(true);
-     ui->actionUpload->setEnabled(true);
+    // Language Menu
+    ui->actionSanskrit_2->setEnabled(true);
+    ui->actionEnglish->setEnabled(true);
+    ui->actionHindi->setEnabled(true);
 
-     // Language Menu
-     ui->actionSanskrit_2->setEnabled(true);
-     ui->actionEnglish->setEnabled(true);
-     ui->actionHindi->setEnabled(true);
+    // Reports Menu
+    ui->actionAccuracyLog->setEnabled(true);
+    ui->actionViewAverageAccuracies->setEnabled(true);
 
-     // Reports Menu
-     ui->actionAccuracyLog->setEnabled(true);
-     ui->actionViewAverageAccuracies->setEnabled(true);
+    // View Menu
+    ui->actionAllFontProperties->setEnabled(true);
+    ui->actionBold->setEnabled(true);
+    ui->actionItalic->setEnabled(true);
+    ui->actionLeftAlign->setEnabled(true);
+    ui->actionRightAlign->setEnabled(true);
+    ui->actionCentreAlign->setEnabled(true);
+    ui->actionJusitfiedAlign->setEnabled(true);
+    ui->actionSuperscript->setEnabled(true);
+    ui->actionSubscript->setEnabled(true);
+    ui->actionInsert_Horizontal_Line->setEnabled(true);
+    ui->actionFontBlack->setEnabled(true);
+    ui->actionInsert_Tab_Space->setEnabled(true);
+    ui->actionPDF_Preview->setEnabled(true);
+    if (isVerifier)
+        ui->actionHighlight->setEnabled(true);
 
-     // View Menu
-     ui->actionAllFontProperties->setEnabled(true);
-     ui->actionBold->setEnabled(true);
-     ui->actionItalic->setEnabled(true);
-     ui->actionLeftAlign->setEnabled(true);
-     ui->actionRightAlign->setEnabled(true);
-     ui->actionCentreAlign->setEnabled(true);
-     ui->actionJusitfiedAlign->setEnabled(true);
-     ui->actionSuperscript->setEnabled(true);
-     ui->actionSubscript->setEnabled(true);
-     ui->actionInsert_Horizontal_Line->setEnabled(true);
-     ui->actionFontBlack->setEnabled(true);
-     ui->actionInsert_Tab_Space->setEnabled(true);
-     ui->actionPDF_Preview->setEnabled(true);
-     if (isVerifier)
-         ui->actionHighlight->setEnabled(true);
+    // Table Menu inside View Menu
+    ui->actionInsert_Table_2->setEnabled(true);
+    ui->actionInsert_Columnleft->setEnabled(true);
+    ui->actionInsert_Columnright->setEnabled(true);
+    ui->actionInsert_Rowabove->setEnabled(true);
+    ui->actionInsert_Rowbelow->setEnabled(true);
+    ui->actionRemove_Column->setEnabled(true);
+    ui->actionRemove_Row->setEnabled(true);
 
-     // Table Menu inside View Menu
-     ui->actionInsert_Table_2->setEnabled(true);
-     ui->actionInsert_Columnleft->setEnabled(true);
-     ui->actionInsert_Columnright->setEnabled(true);
-     ui->actionInsert_Rowabove->setEnabled(true);
-     ui->actionInsert_Rowbelow->setEnabled(true);
-     ui->actionRemove_Column->setEnabled(true);
-     ui->actionRemove_Row->setEnabled(true);
+    // Versions Menu
+    ui->actionFetch_2->setEnabled(true);
+    ui->actionTurn_In->setEnabled(true);
+    ui->actionVerifier_Turn_In->setEnabled(true);
 
-     // Versions Menu
-     ui->actionFetch_2->setEnabled(true);
-     ui->actionTurn_In->setEnabled(true);
-     ui->actionVerifier_Turn_In->setEnabled(true);
+    // Download Menu
+    ui->actionas_PDF->setEnabled(true);
 
-     // Download Menu
-     ui->actionas_PDF->setEnabled(true);
+    ui->actionSymbols->setEnabled(true);
+    ui->actionZoom_In->setEnabled(true);
+    ui->actionZoom_Out->setEnabled(true);
+    //Reset loadData flag
+    LoadDataFlag = 1;
+    //reset data
+    mFilename.clear();
+    //mFilename1.clear();
+    LSTM.clear();
+    CPairs.clear();
+    Dict.clear();
+    GBook.clear();
+    IBook.clear();
+    PWords.clear();
+    ConfPmap.clear();
+    vGBook.clear();
+    vIBook.clear();
+    TDict.clear();
+    TGBook.clear();
+    TGBookP.clear();
+    TPWords.clear();
+    TPWordsP.clear();
+    synonym.clear();
+    synrows.clear();
 
-     ui->actionSymbols->setEnabled(true);
-     ui->actionZoom_In->setEnabled(true);
-     ui->actionZoom_Out->setEnabled(true);
-     //Reset loadData flag
-     LoadDataFlag = 1;
-     //reset data
-     mFilename.clear();
-     //mFilename1.clear();
-     LSTM.clear();
-     CPairs.clear();
-     Dict.clear();
-     GBook.clear();
-     IBook.clear();
-     PWords.clear();
-     ConfPmap.clear();
-     vGBook.clear();
-     vIBook.clear();
-     TDict.clear();
-     TGBook.clear();
-     TGBookP.clear();
-     TPWords.clear();
-     TPWordsP.clear();
-     synonym.clear();
-     synrows.clear();
-
-     ui->pushButton->setDisabled(false);
-      ui->pushButton_2->setDisabled(false);
-     ui->viewComments->setDisabled(false);
-     ui->compareCorrectorOutput->setDisabled(false);
+    ui->pushButton->setDisabled(false);
+    ui->pushButton_2->setDisabled(false);
+    ui->viewComments->setDisabled(false);
+    ui->compareCorrectorOutput->setDisabled(false);
     ui->groupBox->setDisabled(false);
-
 }
-
 /*!
  * \fn MainWindow::AddRecentProjects
  * \brief This function will allow user to open the last opened project.
@@ -1978,7 +1951,8 @@ void MainWindow::on_actionSave_triggered()
                                     s2,
                                     CPair_editDis,
                                     &CPairs,
-                                    filestructure_fw);
+                                    filestructure_fw,
+                                    &dict_set1);
         QThread *thread = new QThread;
 
         connect(thread, SIGNAL(started()), worker, SLOT(doSaveBackend()));
@@ -2867,11 +2841,42 @@ void MainWindow::on_actionAllFontProperties_triggered()
             QString fileText = file.readAll();
             file.close();
 
-            QRegularExpression regex_style("(<span[^>]*>)");
+            QRegularExpression regex_style("(<p[^>]*>)");
             QRegularExpressionMatchIterator itr = regex_style.globalMatch(fileText);
 
             while (itr.hasNext()) {
                 QRegularExpressionMatch match = itr.next();
+                QString capString = match.captured(1);
+                int capStart = match.capturedStart(1);
+
+                for (int i = 0; i < totalFontProperties; i++) {
+                    QString property = styleProperties[i];
+                    QString value = stylePropertyValues[i];
+                    int propIndex = -1;
+
+                    if ((propIndex = capString.indexOf(property)) != -1) { // If value of the property is different
+                        int endIndexOfProperty = capString.indexOf(";", propIndex);
+                        int replacementLen = endIndexOfProperty - (propIndex + property.length());
+                        fileText.replace(capStart + propIndex + property.length(), replacementLen, value);
+                        capString.replace(propIndex + property.length(), replacementLen, value);
+                    } else if (capString.indexOf("style=\"") != -1) { // If property is not present
+                        int indexOfStyle = capString.indexOf("style=\"");
+                        fileText.insert(capStart + indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+                        capString.insert(indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+                    } else { // If style tag is not present
+                        fileText.insert(capStart + QString("<p ").length(), "style=\" " + property + value + ";\" ");
+                        capString.insert(QString("<p ").length(), "style=\" " + property + value + ";\" ");
+                    }
+                }
+
+                itr = regex_style.globalMatch(fileText, capStart + capString.length());
+            }
+            //for span tags
+            QRegularExpression regex_style_span("(<span[^>]*>)");
+            QRegularExpressionMatchIterator itr_span = regex_style_span.globalMatch(fileText);
+
+            while (itr_span.hasNext()) {
+                QRegularExpressionMatch match = itr_span.next();
                 QString capString = match.captured(1);
                 int capStart = match.capturedStart(1);
 
@@ -2895,8 +2900,71 @@ void MainWindow::on_actionAllFontProperties_triggered()
                     }
                 }
 
-                itr = regex_style.globalMatch(fileText, capStart + capString.length());
+                itr_span = regex_style_span.globalMatch(fileText, capStart + capString.length());
             }
+            //for unordered list
+
+            QRegularExpression regex_style_ul("(<li[^>]*>)");
+            QRegularExpressionMatchIterator itr_ul = regex_style_ul.globalMatch(fileText);
+
+            while (itr_ul.hasNext()) {
+                QRegularExpressionMatch match = itr_ul.next();
+                QString capString = match.captured(1);
+                int capStart = match.capturedStart(1);
+
+                for (int i = 0; i < totalFontProperties; i++) {
+                    QString property = styleProperties[i];
+                    QString value = stylePropertyValues[i];
+                    int propIndex = -1;
+
+                    if ((propIndex = capString.indexOf(property)) != -1) { // If value of the property is different
+                        int endIndexOfProperty = capString.indexOf(";", propIndex);
+                        int replacementLen = endIndexOfProperty - (propIndex + property.length());
+                        fileText.replace(capStart + propIndex + property.length(), replacementLen, value);
+                        capString.replace(propIndex + property.length(), replacementLen, value);
+                    } else if (capString.indexOf("style=\"") != -1) { // If property is not present
+                        int indexOfStyle = capString.indexOf("style=\"");
+                        fileText.insert(capStart + indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+                        capString.insert(indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+                    } else { // If style tag is not present
+                        fileText.insert(capStart + QString("<li ").length(), "style=\" " + property + value + ";\" ");
+                        capString.insert(QString("<li ").length(), "style=\" " + property + value + ";\" ");
+                    }
+                }
+
+                itr_ul = regex_style_ul.globalMatch(fileText, capStart + capString.length());
+            }
+            //for ol tags
+//            QRegularExpression regex_style_ol("(<span[^>]*>)");
+//            QRegularExpressionMatchIterator itr_ol = regex_style_ol.globalMatch(fileText);
+
+//            while (itr_ol.hasNext()) {
+//                QRegularExpressionMatch match = itr_ol.next();
+//                QString capString = match.captured(1);
+//                int capStart = match.capturedStart(1);
+
+//                for (int i = 0; i < totalFontProperties; i++) {
+//                    QString property = styleProperties[i];
+//                    QString value = stylePropertyValues[i];
+//                    int propIndex = -1;
+
+//                    if ((propIndex = capString.indexOf(property)) != -1) { // If value of the property is different
+//                        int endIndexOfProperty = capString.indexOf(";", propIndex);
+//                        int replacementLen = endIndexOfProperty - (propIndex + property.length());
+//                        fileText.replace(capStart + propIndex + property.length(), replacementLen, value);
+//                        capString.replace(propIndex + property.length(), replacementLen, value);
+//                    } else if (capString.indexOf("style=\"") != -1) { // If property is not present
+//                        int indexOfStyle = capString.indexOf("style=\"");
+//                        fileText.insert(capStart + indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+//                        capString.insert(indexOfStyle + QString("style=\"").length(), " " + property + value + ";");
+//                    } else { // If style tag is not present
+//                        fileText.insert(capStart + QString("<ol ").length(), "style=\" " + property + value + ";\" ");
+//                        capString.insert(QString("<ol ").length(), "style=\" " + property + value + ";\" ");
+//                    }
+//                }
+
+//                itr_ol = regex_style_ol.globalMatch(fileText, capStart + capString.length());
+//            }
             if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
                 qDebug() << "Cannot open file in write mode";
             }
@@ -3427,8 +3495,20 @@ void MainWindow::on_actionFetch_2_triggered()
     process.execute("curl -d -X -k -POST --header "
                     "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
 
-    QStringList list = gDirTwoLevelUp.split("/");
-    QString repo = list[list.size()-1];
+    //to find the repo name from .git/congig file
+    QString repo = "";
+    QString gDir = gDirTwoLevelUp+"/.git/config";
+    QFile f(gDir);
+    f.open(QIODevice::ReadOnly);
+    while(!f.atEnd()) {
+        QString line = f.readLine();
+        if(line.contains("https://github.com")){
+            QStringList l = line.split("/");
+            repo = l[l.size()-1].remove("\n");
+            break;
+        }
+    }
+    f.close();
     QJsonObject mainObj = readJsonFile("validate.json");
     QJsonArray repos = mainObj.value("repo_list").toArray();
     QJsonArray::iterator itr; int flag = 0;
@@ -3546,8 +3626,20 @@ void MainWindow::on_actionTurn_In_triggered()
     process.execute("curl -d -X -k -POST --header "
                     "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
 
-    QStringList list = gDirTwoLevelUp.split("/");
-    QString repo = list[list.size()-1];
+    //to find the repo name from .git/congig file
+    QString repo = "";
+    QString gDir = gDirTwoLevelUp+"/.git/config";
+    QFile f(gDir);
+    f.open(QIODevice::ReadOnly);
+    while(!f.atEnd()) {
+        QString line = f.readLine();
+        if(line.contains("https://github.com")){
+            QStringList l = line.split("/");
+            repo = l[l.size()-1].remove("\n");
+            break;
+        }
+    }
+    f.close();
     QJsonObject mainObj = readJsonFile("validate.json");
     QJsonArray repos = mainObj.value("repo_list").toArray();
     QJsonArray::iterator itr; int flag = 0;
@@ -3700,15 +3792,73 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         //showing the message box for 2 seconds only.
         QTimer cntDown;
         QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
-             if(--cnt < 0){
-                 cntDown.stop();
-                 msg.close();
-             }
-            });
+            if(--cnt < 0){
+                cntDown.stop();
+                msg.close();
+            }
+        });
         cntDown.start(1000);
         msg.exec();
         return;
     }
+    //retrieve details from database and check if user has access to push into this repo
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
+    settings.endGroup();
+    QProcess process;
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
+
+    //to find the repo name from .git/congig file
+    QString repo = "";
+    QString gDir = gDirTwoLevelUp+"/.git/config";
+    QFile f(gDir);
+    f.open(QIODevice::ReadOnly);
+    while(!f.atEnd()) {
+        QString line = f.readLine();
+        if(line.contains("https://github.com")){
+            QStringList l = line.split("/");
+            repo = l[l.size()-1].remove("\n");
+            break;
+        }
+    }
+    f.close();
+    QJsonObject mainObj = readJsonFile("validate.json");
+    QJsonArray repos = mainObj.value("repo_list").toArray();
+    QJsonArray::iterator itr; int flag = 0;
+    for(itr = repos.begin(); itr != repos.end(); itr++){
+        // qDebug()<<itr->toString();
+        if(itr->toString() == repo){
+            flag = 1;
+            break;
+        }
+    }
+    QFile::remove("validate.json");
+    if(repos.size() == 0 || flag == 0){
+        QMessageBox msg;
+        msg.setText("You don't have access to this project on cloud.");
+        msg.exec();
+        return;
+    }
+
+    //sending credentials
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o gitToken.json");
+
+    QFile jsonFile("gitToken.json");
+    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    QByteArray data = jsonFile.readAll();
+
+    QJsonParseError errorPtr;
+    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+    mainObj = document.object();
+    jsonFile.close();
+    QString git_token = mainObj.value("github_token").toString();
+    QString git_username = mainObj.value("github_username").toString();
+    QFile::remove("gitToken.json");
+    std::string user = git_username.toStdString();
+    std::string pass = git_token.toStdString();
     /*
      * \description
      * 1. Checks if any project is opened or not.
@@ -3862,13 +4012,6 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         */
         if (messageBox.clickedButton() == resubmitButton)
         {
-            //mProject.enable_push( false ); //Increment = false
-//             if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
-//                     != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
-//             {
-//                 QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
-//                 return;
-//             }
             s = SubmissionType::resubmit;
             commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
         }
@@ -3888,13 +4031,6 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         */
         else if (messageBox.clickedButton() == finaliseButton)
         {
-            //mProject.enable_push( false ); //Increment = false
-//             if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/VerifierOutput/)")
-//                     != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
-//             {
-//                 QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in VerifierOutput directory");
-//                 return;
-//             }
             s = SubmissionType::finalise;
             commit_msg = "Verifier Finalised Version:" + mProject.get_version();
         }
@@ -3912,34 +4048,28 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         QPushButton *nButton2 = submitBox2.addButton(QMessageBox::StandardButton::No);
         submitBox2.exec();
 
-
-
-       if (submitBox2.clickedButton() == yButton2)
-       {
+        if (submitBox2.clickedButton() == yButton2)
+        {
             bool ok;
-//            branchName = QInputDialog::getText(this, tr("Branch Name"),
-//                                                 tr("Enter the branch name:"), QLineEdit::Normal,
-//                                                 "", &ok );
-            branchName ="master";
-            if (!branchName.isEmpty() ) {
-                // user entered something and pressed OK
-                if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
-                {
-                    mProject.enable_push( true );
-                }
-                else if (s == SubmissionType::resubmit)    //If yes button is clicked and submission type is resubmit then enable push
-                {
-                    mProject.enable_push( false );
-                }
-                if(!mProject.commit(commit_msg.toStdString()) || !mProject.push(branchName))
-                {
-                    if(s == SubmissionType::return_set)
-                    {
-                        mProject.set_version( mProject.get_version().toInt() - 1 );
-                    }
-                   // mProject.set_stage_verifier();
-                    QMessageBox::critical(0, "Cloud sync", "Sync failed!");
+            // user entered something and pressed OK
+            if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
+            {
+                mProject.enable_push( true );
+            }
+            else if (s == SubmissionType::resubmit)    //If yes button is clicked and submission type is resubmit then enable push
+            {
+                mProject.enable_push( false );
+            }
+            if(mProject.commit(commit_msg.toStdString()))
+            {
+                if(!mProject.push(gDirTwoLevelUp)){
+                    mProject.enable_push(false);
+                    QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
                     return;
+                }
+                if(s == SubmissionType::return_set)
+                {
+                    mProject.set_version( mProject.get_version().toInt() - 1 );
                 }
             }
             else {
@@ -3964,7 +4094,6 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         //! Updating the Project Version
         ui->lineEdit_2->setText("Version " + mProject.get_version());
         QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
-        //deleteEditedFilesLog();
     }
     else
     {
@@ -4466,11 +4595,11 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
     if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
     }
-    if(!QDir(gDirTwoLevelUp+"/Cropped_Images/Figures").exists())
+    if(!QDir(gDirTwoLevelUp+"/Cropped_Images/tables").exists())
     {
-        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Figures");
-        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Tables");
-        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/Equations");
+        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/figures");
+        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/tables");
+        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/equations");
     }
 
     //! Adding picture to the respective directory
@@ -4478,7 +4607,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
     {
         if(s1 == "IMGHOLDER")
         {
-            QString path = "/Cropped_Images/Figures/Figure"+a+"-"+QString::number(z)+".jpg";
+            QString path = "/Cropped_Images/figures/Figure"+a+"-"+QString::number(z)+".jpg";
 
             cropped.save(gDirTwoLevelUp+path,"JPG",100);       //100 is storing the image in uncompressed high resolution
 
@@ -4489,7 +4618,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
         }
         else if(s1 == "TBHOLDER")
         {
-            QString path = "/Cropped_Images/Tables/Table"+a+"-"+QString::number(z)+".jpg";
+            QString path = "/Cropped_Images/tables/Table"+a+"-"+QString::number(z)+".jpg";
 
             cropped.save(gDirTwoLevelUp+path,"JPG", 100);
 
@@ -4502,7 +4631,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
         }
         else if(s1 == "EQHOLDER")
         {
-            QString path = "/Cropped_Images/Equations/Equation"+a+"-"+QString::number(z)+".jpg";
+            QString path = "/Cropped_Images/equations/Equation"+a+"-"+QString::number(z)+".jpg";
 
             cropped.save(gDirTwoLevelUp+path,"JPG",100);
 
@@ -4915,10 +5044,10 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
     CustomTextBrowser * browser = new CustomTextBrowser();
     browser->setReadOnly(false);
 
-    QFont font("Chandas");
+    QFont font("Shobhika-Regular");
     font.setWeight(16);
     font.setPointSize(16);
-//    font.setFamily("Shobhika");
+    font.setFamily("Shobhika");
     browser->setFont(font);
     browser->setHtml(s1);
 
@@ -5668,7 +5797,7 @@ void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
     QByteArray data_json;
     QStringList list1;
     QSet<QString> dict_set;
-    QSet<QString> dict_set1;
+    dict_set1.clear();
     //! Get dict file from current opened file
     QString dictFilename;
     if(mRole=="Verifier")
@@ -6193,7 +6322,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     QTextStream stream(f);
     stream.setCodec("UTF-8");
     QString input = stream.readAll();
-    QFont font("Chandas");
+    QFont font("Shobhika");
     setWindowTitle(name);
     font.setPointSize(16);
     if(ext == "txt") {
@@ -6210,10 +6339,10 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
         QString qstrHtml = QString::fromStdString(strHtml);
         qstrHtml.replace("<br /></p>", "</p>");
 
-        QFont font("Chandas");
+        QFont font("Shobhika-Regular");
         font.setWeight(16);
         font.setPointSize(16);
-//        font.setFamily("Shobhika");
+        font.setFamily("Shobhika");
         b->setFont(font);
         b->setHtml(qstrHtml);
     }
@@ -6309,6 +6438,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 
     curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
     curr_browser->setDocument(b->document()->clone(curr_browser));
+    curr_browser->document()->clearUndoRedoStacks();
 
     QFileInfo info(*f);
     currentTabPageName = info.fileName();
@@ -6397,6 +6527,14 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
             }
         }
     }
+  
+  QString x=finfo.fileName();
+  if(x.contains("txt")){
+    curr_browser->setReadOnly(true);
+  }
+  else{
+    curr_browser->setReadOnly(false);
+  }
 
     // Deleting temporarily created CustomTextBrowser
     delete b;
@@ -7016,12 +7154,12 @@ void MainWindow::on_actionas_PDF_triggered()
     int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
     int counter=0;
 
-    int stIndex, startFrom = 0;
+//    int stIndex, startFrom = 0;
 
-    //! Set the background of the pdf to be printed to be white
-    QString searchString = "background-color:#"; // string to be searched
-    int l = searchString.length();
-    QString whiteColor = "ffffff";
+//    //! Set the background of the pdf to be printed to be white
+//    QString searchString = "background-color:#"; // string to be searched
+//    int l = searchString.length();
+//    QString whiteColor = "ffffff";
 
     int itr = 0;
     PdfRangeDialog *pdfRangeDialog = new PdfRangeDialog(this, count, 100);
@@ -7043,7 +7181,7 @@ void MainWindow::on_actionas_PDF_triggered()
     {
         QString x = currentDirAbsolutePath + a;
 
-        startFrom = 0; // The position from which searchString will be scanned
+//        startFrom = 0; // The position from which searchString will be scanned
         //! if condition makes sure we extract only html files for PDF Processing
         //! (folder has hocr, dict, htranslate, and other such files)
         if(x.contains("."))
@@ -7066,15 +7204,17 @@ void MainWindow::on_actionas_PDF_triggered()
                 //! Read the file
 
                 mainHtml=stream.readAll();
-                //! Changing the text background to white by setting the background to #fffff
-                while (true){
-                    stIndex = mainHtml.indexOf(searchString, startFrom);
-                    if (stIndex == -1)
-                        break;
-                    stIndex += l; // increment line
-                    mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
-                    startFrom = stIndex + 6;
-                }
+                mainHtml.remove("background-color:#00ff00");
+                mainHtml.remove("background-color:#ffff00");
+//                //! Changing the text background to white by setting the background to #fffff
+//                while (true){
+//                    stIndex = mainHtml.indexOf(searchString, startFrom);
+//                    if (stIndex == -1)
+//                        break;
+//                    stIndex += l; // increment line
+//                    mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
+//                    startFrom = stIndex + 6;
+//                }
                 //! append counter when one file is fully scanned
                 counter++;
 
@@ -7888,13 +8028,13 @@ void MainWindow::RecentPageInfo()
 void MainWindow::on_actionCheck_for_Updates_triggered()
 {
     QUrl url("https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases");
-    qInfo() << url.toString();
+//    qInfo() << url.toString();
     QNetworkRequest request(url);               //requesting url over the network
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QNetworkAccessManager nam;                  //sending network request
     QNetworkReply * reply = nam.get(request);
-    QTimer *timer = new QTimer();
-    timer->start(5000);
+//    QTimer *timer = new QTimer();
+//    timer->start(5000);
 
     while(true){
         qApp->processEvents();
@@ -7908,7 +8048,8 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
         if(json[0]["name"].toString() == "")
         {
             qDebug() << QString("Timeout .... Internet Not Available");
-           // return "";
+            QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Check your internet connection.");
+            return;
         }
         QString latestVersion=json[0]["name"].toString();
         QString newFeatures = json[0]["body"].toString();
@@ -8006,14 +8147,14 @@ void MainWindow::print(QPrinter *printer)
 
     QString html_contents="";
     QString mainHtml ;
-    int startFrom,stIndex = 0;
+//    int startFrom,stIndex = 0;
 
-    //! Set the background of the pdf to be printed to be white
-    QString searchString = "background-color:#";
-    int l = searchString.length();
-    QString whiteColor = "ffffff";
+//    //! Set the background of the pdf to be printed to be white
+//    QString searchString = "background-color:#";
+//    int l = searchString.length();
+//    QString whiteColor = "ffffff";
 
-    startFrom = 0;
+//    startFrom = 0;
 
     QFile file(htmlFile);
     if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
@@ -8024,14 +8165,16 @@ void MainWindow::print(QPrinter *printer)
     mainHtml=stream.readAll();
 
     //! Changing the text background to white by setting the background to #fffff
-    while (true){
-        stIndex = mainHtml.indexOf(searchString, startFrom);
-        if (stIndex == -1)
-            break;
-        stIndex += l; // increment line
-        mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
-        startFrom = stIndex + 6;
-    }
+//    while (true){
+//        stIndex = mainHtml.indexOf(searchString, startFrom);
+//        if (stIndex == -1)
+//            break;
+//        stIndex += l; // increment line
+//        mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
+//        startFrom = stIndex + 6;
+//    }
+    mainHtml.remove("background-color:#00ff00");
+    mainHtml.remove("background-color:#ffff00");
     //latex to png mapping
     if(mainHtml.contains("$$")){
 
@@ -8985,8 +9128,16 @@ void MainWindow::login(){
         process.execute("curl -d -X -k -POST --header "
                         "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+user_email+"&password="+user_pass+"\" -o client.json");
 
-
-        QJsonObject mainObj = readJsonFile("client.json");
+        QFile jsonFile("client.json");
+        if(!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+            QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Try switching your network or contact your administrator.");
+            return;
+        }
+        QByteArray data = jsonFile.readAll();
+        QJsonParseError errorPtr;
+        QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+        QJsonObject mainObj = document.object();
+        jsonFile.close();
         auto status = mainObj.value("status").toBool();
         QFile::remove("client.json");
 

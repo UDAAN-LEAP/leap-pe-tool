@@ -1,10 +1,10 @@
-
 #ifndef CUSTOMTEXTBROWSER_H
 #define CUSTOMTEXTBROWSER_H
 
 #include <QTextBrowser>
-#include<QAbstractItemModel>
-#include"slpNPatternDict.h"
+#include <QAbstractItemModel>
+#include "slpNPatternDict.h"
+#include "rubberband.h"
 
 QT_BEGIN_NAMESPACE
 class QCompleter;
@@ -30,16 +30,19 @@ public:
 protected:
     void keyPressEvent(QKeyEvent *e) override;
     void focusInEvent(QFocusEvent *e) override;
+    void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void insertCompletion(const QString &completion);
+    void updateGripBand();
+    void resizeObject(const QRect &rect);
 
 private:
     QString textUnderCursor() const;
 
-
 private:
     QCompleter *c = nullptr;
+    RubberBand *m_gripBand;
 };
 //! [0]
 

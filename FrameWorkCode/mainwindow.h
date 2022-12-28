@@ -482,6 +482,7 @@ private:
     GlobalReplaceDialog *currentGlobalReplaceDialog = nullptr;
     QOAuth2AuthorizationCodeFlow * google;
     void googleAuth();
+    QSet<QString> dict_set1; //! Keep it available globally so that we need not to parse dictionary file at the time of saving logs.
 };
 
 #endif // MAINWINDOW_H

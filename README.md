@@ -1,8 +1,8 @@
 # [Project website](https://udaanproject.org)
 ## [Read the docs](https://posteditingtool.readthedocs.io/en/latest/)
 
-# Installation
 
+# Installation
 
 ## Windows 
 - [Windows Installation Guide](https://docs.google.com/document/d/16P1UZ2t1Dd8qhAsl2UqL5hTkrsOkBJqr/edit)

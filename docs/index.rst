@@ -55,6 +55,7 @@ Welcome to OpenOCRCorrect's documentation!
    modules/undoglobalreplace.rst
    modules/verifyset.rst
    modules/worker.rst
+   modules/threadingpush.rst
 
 
 Indices and tables

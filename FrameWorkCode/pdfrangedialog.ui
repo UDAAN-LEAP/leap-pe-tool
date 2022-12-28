@@ -83,7 +83,7 @@
    <item>
     <widget class="QLabel" name="info_2">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Cancel&lt;/span&gt; if you want to download whole set&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click&lt;span style=&quot; font-weight:700;&quot;&gt; 'Print Set'&lt;/span&gt; if you want to download whole set or &lt;span style=&quot; font-weight:700;&quot;&gt;'Print Range'&lt;/span&gt;, to print selected pages.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
@@ -105,14 +105,14 @@
      <item>
       <widget class="QPushButton" name="button_Cancel">
        <property name="text">
-        <string>Cancel</string>
+        <string>Print Set</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="button_Ok">
        <property name="text">
-        <string>Ok</string>
+        <string>Print Range</string>
        </property>
       </widget>
      </item>
