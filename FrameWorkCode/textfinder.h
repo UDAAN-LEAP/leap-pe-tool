@@ -37,6 +37,8 @@ private slots:
     bool stringCheck(QString path, QString searchstr);
 
 
+    void on_ReplaceAllPages_stateChanged(int arg1);
+
 private:
     Ui::TextFinder *ui;
     explicit TextFinder(QWidget *parent = nullptr);

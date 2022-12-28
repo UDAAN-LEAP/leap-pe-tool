@@ -405,3 +405,14 @@ bool TextFinder::stringCheck(QString path, QString searchstr)
         return false;
     }
 }
+
+void TextFinder::on_ReplaceAllPages_stateChanged(int arg1)
+{
+    if(ui->ReplaceAllPages->checkState()==Qt::Checked){
+        ui->replaceButton->setDisabled(true);
+    }
+    else if(ui->ReplaceAllPages->checkState()==Qt::Unchecked){
+           ui->replaceButton->setEnabled(true);
+    }
+}
+
