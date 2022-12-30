@@ -3356,7 +3356,7 @@ void MainWindow::on_actionInsert_Table_2_triggered()
     {
 
         QTextTableFormat tf;
-        tf.setBorderBrush(Qt::black);
+//        tf.setBorderBrush(Qt::black);
         tf.setCellSpacing(0);
         tf.setCellPadding(7);
         QTextCursor cursor = curr_browser->textCursor();
@@ -9183,5 +9183,18 @@ void MainWindow::on_hinButton_toggled(bool checked)
 {
     if(checked)
         on_actionHindi_triggered();
+}
+
+
+void MainWindow::on_actionTwo_Column_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if(!cursor.hasSelection())
+    {;
+        QString column1 = curr_browser->toHtml();
+        curr_browser->clear();
+        QString html = "<table cellspacing=\"0\"><tr><td style=\"padding-right:15; border-right:2px; border-right-color:#000000; border-right-style:solid;\" >"+column1+"</td><td style=\"padding-left:15;\">Paste Column 2 data here</td></tr></table>";
+        cursor.insertHtml(html);
+    }
 }
 

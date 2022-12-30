@@ -416,6 +416,8 @@ private slots:
 
     void on_hinButton_toggled(bool checked);
 
+    void on_actionTwo_Column_triggered();
+
 public slots:
     void SaveFile_Backend();
 

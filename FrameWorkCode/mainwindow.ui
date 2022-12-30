@@ -1023,6 +1023,12 @@ QMenu::item:selected{
      <addaction name="actionMerge_Cells"/>
      <addaction name="actionSplit_Cell"/>
     </widget>
+    <widget class="QMenu" name="menuLayout">
+     <property name="title">
+      <string>Layout</string>
+     </property>
+     <addaction name="actionTwo_Column"/>
+    </widget>
     <addaction name="actionAllFontProperties"/>
     <addaction name="actionUnBold"/>
     <addaction name="actionHighlight"/>
@@ -1040,6 +1046,7 @@ QMenu::item:selected{
     <addaction name="menuTables"/>
     <addaction name="separator"/>
     <addaction name="actionPDF_Preview"/>
+    <addaction name="menuLayout"/>
    </widget>
    <widget class="QMenu" name="menuGit">
     <property name="styleSheet">
@@ -2122,6 +2129,11 @@ background-color: #EEF0F2;
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionTwo_Column">
+   <property name="text">
+    <string>Two Column</string>
    </property>
   </action>
  </widget>
