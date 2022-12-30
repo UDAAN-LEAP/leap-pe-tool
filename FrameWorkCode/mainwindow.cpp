@@ -1104,7 +1104,7 @@ void MainWindow::translate_replace(QAction* action)
 
 /*!
  * \fn MainWindow::clipboard_paste
- * \brief Inserts the text according to the action chosen
+ * \brief Inserts the text copied into the clipboard using the clipboard menu in context menu
  * \param action
  */
 void MainWindow::clipboard_paste(QAction* action)
@@ -1127,7 +1127,7 @@ void MainWindow::on_actionSanskrit_triggered()
 
 /*!
  * \fn MainWindow::on_actionHindi_triggered
- * \brief Sets the language of the current broweser to Hindi by by passing the HinFlag as true
+ * \brief Sets the language of the current browser to Hindi by by passing the HinFlag as true
  * \sa setText()
 */
 void MainWindow::on_actionHindi_triggered()
@@ -1639,107 +1639,6 @@ void MainWindow::SaveFile_GUI_Preprocessing()
 
 
 /*!
- * \fn MainWindow::SaveFile_Backend
- * \brief This function saves the changes made in current page opened in textbrowser and also perform all backend task like saving files on loaction, commits of the changes and perform global replce changes
- */
-void MainWindow::SaveFile_Backend()
-{
-    slpNPatternDict slnp;
-    QVector <QString> changedWords;
-    QString tempPageName = gCurrentPageName;
-
-    //! Selecting the location where file is to be saved
-    QString changefiledir = filestructure_fw[gCurrentDirName];
-    QString localFilename = gDirTwoLevelUp + "/" +changefiledir +"/" + tempPageName;
-
-    localFilename.replace(".txt",".html");
-
-    QFile sFile(localFilename);
-    edit_Distance ed;
-    changedWords = ed.editDistance(s1, s2);             // Update CPair by editdistance
-    QVectorIterator<QString> i(changedWords);
-    while (i.hasNext())
-        qDebug() << i.next()<<endl;
-
-    //! Do commit when there are some changes in previous and new html file on the basis of editdistance.
-    if(changedWords.size())
-    {
-        if(mProject.get_version().toInt())     //Check version number
-        {
-            QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();
-            //!Check commit condition
-            if(!mProject.commit(commit_msg.toStdString()))
-            {
-                //cout<<"Commit Unsuccessful"<<endl;
-                return;
-            }
-            else
-            {
-                mProject.commit(commit_msg.toStdString());
-                //cout<<"Commit Successful"<<endl;
-            }
-        }
-    }
-
-    //CPair.insert(CPair_editDis.begin(), CPair_editDis.end());
-    //! Enters entries in CPairs through CPair_editDis; allows multiple entries for a incorrent word entry
-    for(auto elem : CPair_editDis)
-    {
-       std::cerr << elem.first << " " << elem.second << "\n";
-       std::cerr << slnp.toslp1(elem.first) << " " << slnp.toslp1(elem.second) << "\n";
-       //CPair.insert(make_pair(toslp1(elem.first), toslp1(elem.second)));
-       if ( CPairs.find(slnp.toslp1(elem.first)) != CPairs.end())
-       {
-           std::set< std::string>& s_ref = CPairs[slnp.toslp1(elem.first)];
-           s_ref.insert(slnp.toslp1(elem.second));
-       }
-       else
-       {
-           CPairs[slnp.toslp1(elem.first)].insert(slnp.toslp1(elem.second));
-       }
-    }
-
-    //! Reflecting CPairs entries in the file /Dicts/CPair; Making it dynamic
-    QString filename12 = mProject.GetDir().absolutePath() + "/Dicts/" + "CPair";
-    QFile file12(filename12);
-    if(!file12.exists())
-    {
-       qDebug() << "No exist file "<<filename12;
-    }
-    else
-    {
-       qDebug() << filename12<<"exists";
-    }
-
-    //! Insert entries in Correct Formatting Hello (/t) hi,(comma)hiii
-    if (file12.open(QIODevice::ReadWrite  | QIODevice::Text | QIODevice::Append))
-    {
-        QTextStream out(&file12);
-        out.setCodec("UTF-8");
-        map<string, set<string>>::iterator itr;
-        set<string>::iterator set_it;
-
-        for (itr = CPairs.begin(); itr != CPairs.end(); ++itr)
-        {
-            out <<  QString::fromStdString(slnp.toDev(itr->first)) << '\t';
-            for (set_it = itr->second.begin(); set_it != itr->second.end(); ++set_it)
-            {
-                if(set_it != prev(itr->second.end()))
-                {
-                    out << QString::fromStdString(slnp.toDev(*set_it)) << ",";
-                }
-                else {
-                    out << QString::fromStdString(slnp.toDev(*set_it));
-                }
-
-            }
-            out <<"\n";
-        }
-         file12.close();
-    }
-}
-
-/*!
  * \fn MainWindow::SaveFile_GUI_Postprocessing
  * \brief This function saves the changes made in current page opened in textbrowser and after selcting the loaction to save the file this funtion convert all html output to plain text then perform saving.
  */
@@ -2136,6 +2035,7 @@ int isProjectOpen = 0;
 /*!
  * \fn MainWindow::on_actionLoad_Next_Page_triggered
  * \brief Sets the browser window to display the next page
+ * \details It traverses over the tree view and clicks on the item succeded by the current item programatically
  * \sa on_actionSave_triggered() ,get_version(), SaveTimeLog(), GetPageNumber(), LoadDocument()
  */
 void MainWindow::on_actionLoad_Next_Page_triggered()
@@ -2198,6 +2098,7 @@ void MainWindow::on_actionLoad_Next_Page_triggered()
 /*!
  * \fn MainWindow::on_actionLoad_Prev_Page_triggered
  * \brief Sets the browser window to display the previous page
+ * \details It traverses over the tree view and clicks on the item preceded by the current item programatically
  * \sa on_actionSave_triggered() ,get_version(), SaveTimeLog(), GetPageNumber(), LoadDocument()
  */
 void MainWindow::on_actionLoad_Prev_Page_triggered()
@@ -2257,7 +2158,7 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
 /*!
  * \fn MainWindow::on_actionToDevanagari_triggered
  * \brief Converts transliterated text to devanagri text
- * Transliterated here means Hindi/ Sanskrit written in English.
+ * \details Transliterated here means Hindi/ Sanskrit written in English.
  * This function converts selected translitrate text or last written translitrate word to Devanagri.
 */
 void MainWindow::on_actionToDevanagari_triggered()
@@ -2281,7 +2182,7 @@ void MainWindow::on_actionToDevanagari_triggered()
 /*!
  * \fn MainWindow::on_actionToSlp1_triggered
  * \brief Converts devanagri/Sanskrit text to transliterated(english) text
- * This function converts selected Devanagri text to transliterated text.
+ * This function converts selected Devanagari text to transliterated text.
 */
 void MainWindow::on_actionToSlp1_triggered()
 {
@@ -2304,6 +2205,7 @@ void MainWindow::on_actionToSlp1_triggered()
 /*!
  * \fn MainWindow::on_actionLoadGDocPage_triggered
  * \brief Loads PWords and its associated trie data structure
+ * \details It first saves the file and then loads the data into the variables
  * \sa on_actionSave_As_triggered(), loadMap(), loadmaptoTrie(), generateCorrectionPairs(), loadConfusionsFont, loadTopConfusions()
 */
 void MainWindow::on_actionLoadGDocPage_triggered()
@@ -2451,114 +2353,6 @@ void MainWindow::on_actionLoadData_triggered()
 }
 
 /*!
- * \fn loadDict
- * \param current project file location
- * \brief The path of the dictionary file is fetched and the files are returned in the map
- * these words are then fetched depending upon the word selected
- * \sa loadMap()
- * \return bool
- */
-bool loadDict(Project & project) {
-    slpNPatternDict slnp;
-    QString localmFilename1 = project.GetDir().absolutePath() + "/Dicts/" + "Dict";
-    if (!QFile::exists(localmFilename1)) return false;
-    slnp.loadMap(localmFilename1.toUtf8().constData(), Dict, "Dict");
-    return true;
-}
-
-/*!
- * \fn MainWindow::on_actionLoadDict_triggered
- * \brief The path of the dictionary file is fetched and the files are returned in the map
- * these words are then fetched depending upon the word selected
- * \sa loadDict()
- */
-void MainWindow::on_actionLoadDict_triggered()
-{
-    loadDict(mProject);
-}
-
-/*!
- * \fn MainWindow::on_actionLoadOCRWords_triggered
- * \brief Loads the OCR files
- * The path of the GEROCR and IEROCR file is fetched and the files are returned in the map which is again,
- * used as a suggestion depending upon the word selected
- * \sa LoadMapNV()
- */
-void MainWindow::on_actionLoadOCRWords_triggered()
-{
-    slpNPatternDict slnp;
-    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "GEROCR";
-    cout << localmFilename1.toUtf8().constData() << endl;
-    slnp.loadMapNV(localmFilename1.toUtf8().constData(), GBook, vGBook, "GBook"); localmFilename1 = mFilename1;
-    cout << localmFilename1.toUtf8().constData() << endl;
-    localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "IEROCR";
-    slnp.loadMapNV(localmFilename1.toUtf8().constData(), IBook, vIBook, "IBook");
-    cout << GBook.size() << " " << IBook.size() << endl;
-
-}
-
-/*!
- * \fn MainWindow::on_actionLoadDomain_triggered
- * \brief loads the common OCR files
- * \details  The path of the PWords file is fetched and the files are returned in the map which can be used for the suggestion feature.
- * \sa loadMapPWords()
- */
-void MainWindow::on_actionLoadDomain_triggered()
-{
-    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "/PWords";
-    slpNPatternDict slnp;
-    slnp.loadMapPWords(vGBook, vIBook, PWords);
-}
-
-/*!
- * \fn MainWindow::on_actionLoadSubPS_triggered
- * \brief Loads the CPair files
- * \details The path of the CPair files are fetched and the files are returned in the map which is returned to load the suggestions.
- * \sa loadmaptoTrie(), loadPwordsPatternstoTrie(), loadCPair()
- */
-void MainWindow::on_actionLoadSubPS_triggered()
-{
-    slpNPatternDict slnp;
-    trieEditDis trie;
-    size_t count = trie.loadPWordsPatternstoTrie(TPWordsP, PWords);// justsubstrings not patterns exactly // PWordsP,
-    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "CPair";
-
-    slnp.loadCPairs(localmFilename1.toUtf8().constData(), CPairs, Dict, PWords);
-    localmFilename1 = mFilename1;
-
-    localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "LSTM";
-    ifstream myfile(localmFilename1.toUtf8().constData());
-    if (myfile.is_open())
-    {
-        string str1, str2, line;
-        while (getline(myfile, line))
-        {
-            istringstream slinenew(line); slinenew >> str1; slinenew >> str2;
-            if (str2.size() > 0) LSTM[str1] = str2;
-        }
-    }
-    cout << LSTM.size() << "LSTM Pairs Loaded";
-    localmFilename1 = mFilename1;
-
-    trie.loadmaptoTrie(TPWords, PWords);
-    trie.loadmaptoTrie(TDict, Dict);
-    trie.loadmaptoTrie(TGBook, GBook);
-    trie.loadPWordsPatternstoTrie(TGBookP, GBook);
-}
-
-/*!
- * \fn MainWindow::on_actionLoadConfusions_triggered
- * \brief Loads the confusions for CPair
- */
-void MainWindow::on_actionLoadConfusions_triggered()
-{
-    slpNPatternDict slnp;
-    QString localmFilename1 = mProject.GetDir().absolutePath() + "/Dicts/" + "CPair";
-    slnp.loadConfusions(localmFilename1.toUtf8().constData(), ConfPmap);
-    localmFilename1 = mFilename;
-}
-
-/*!
  * \fn MainWindow::on_actionSugg_triggered
  * \brief Displays the context menu that has suggestion item
  * \note It works only when the data is loaded
@@ -2578,7 +2372,7 @@ void MainWindow::on_actionSugg_triggered()
 
 /*!
  * \fn MainWindow::on_actionUndo_triggered
- * \brief undo the changes made QTextBrowser
+ * \brief Undo the changes made in QTextBrowser
  */
 void MainWindow::on_actionUndo_triggered()
 {
@@ -2600,8 +2394,8 @@ void MainWindow::on_actionRedo_triggered()
 
 /*!
  * \fn MainWindow::on_actionFind_and_Replace_triggered
- * \brief helps to find particular text and replaces them with new user entered text
- * \sa openFindAndReplace
+ * \brief Helps to find particular text and replaces them with new user entered text
+ * \sa openFindAndReplace()
  */
 void MainWindow::on_actionFind_and_Replace_triggered()
 {
@@ -3158,6 +2952,7 @@ void MainWindow::on_actionHighlight_triggered()
  * \fn MainWindow::LogHighlights
  * \param QString text
  * \brief Stores highlight metadata to JSON files
+ * \sa writeJsonFile()
  * \note Meta data includes: Word highlighted, timestamp, time elapsed, page name
 */
 void MainWindow::LogHighlights(QString word) //Verifier Only
@@ -3578,8 +3373,6 @@ void MainWindow::on_actionTurn_In_triggered()
         QPushButton *cancelButton = checkUnsavedBox.addButton(QMessageBox::Cancel);
         QPushButton *saveButton = checkUnsavedBox.addButton(QMessageBox::Save);
         checkUnsavedBox.exec();
-
-
 
         if (checkUnsavedBox.clickedButton() == cancelButton)
         {
@@ -4114,7 +3907,7 @@ void MainWindow::on_actionSymbols_triggered()
 
 /*!
  * \fn MainWindow::on_actionZoom_In_triggered
- * \brief for zoom-in operation
+ * \brief Increases the font size of the text at the cursor
  */
 void MainWindow::on_actionZoom_In_triggered()
 {
@@ -4149,7 +3942,7 @@ void MainWindow::on_actionZoom_In_triggered()
 
 /*!
  * \fn MainWindow::on_actionZoom_Out_triggered
- * \brief for zoom-out operation
+ * \brief Decreases the font size of the text at the cursor
  */
 void MainWindow::on_actionZoom_Out_triggered()
 {
@@ -4186,7 +3979,6 @@ void MainWindow::on_actionZoom_Out_triggered()
 /*!
  * \fn MainWindow::on_pushButton_clicked
  * \brief When button is clicked, then we can add placeholders for figure/table/equation.
- * \sa eventFilter
  */
 void MainWindow::on_pushButton_clicked()
 {
@@ -4197,7 +3989,7 @@ void MainWindow::on_pushButton_clicked()
         auto p = (QPushButton*)ui->pushButton;       //get the pushButton
         p->setStyleSheet("QPushButton { background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; }\n"
                           "QPushButton:enabled { background-color: rgb(136, 138, 133);color:white; }\n");      //apply style on button when it is triggered
-     }
+    }
 }
 
 /*!
@@ -4582,6 +4374,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 /*!
  * \fn MainWindow::saveImageRegion
  * \brief Saving Image  cropped regions to their respective folder(Figure/Table/Equation)
+ * \details Saves the files in the set folder under the folder "Cropped_Images"
  * \param cropped
  * \param a
  * \param s1
@@ -4945,7 +4738,7 @@ void MainWindow::on_compareVerifierOutput_clicked() //Verifier-Version
 
 /*!
  * \fn MainWindow::dumpStringToFile
- * \brief dumps given QString to file at file_path
+ * \brief Writes given QString to file at file_path
  * \param file_path
  * \param string
  */
@@ -5240,7 +5033,7 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
 
 /*!
  * \fn MainWindow::getGlobalReplacementMapFromChecklistDialog
- * \brief spawns a checklist and returns a Qmap of selected pairs
+ * \brief Spawns a checklist and returns a QMap of selected pairs
  * \param changedWords
  * \param replaceInAllPages
  * \return ReplacementMap
@@ -5786,6 +5579,7 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
 /*!
  * \fn MainWindow::DisplayJsonDict
  * \brief Load and display *.dict files
+ * \details These *.dict files are used for showing translations used in the current page
  * \param b
  * \param input
  */
@@ -6070,31 +5864,6 @@ void MainWindow::updateAverageAccuracies() //Verifier only
     }
 }
 
-//end
-
-/*!
- * \fn MainWindow::on_actionLineSpace_triggered
- * \brief Adds line to the textbrowser
- */
-void MainWindow::on_actionLineSpace_triggered() //Not used, does not work as intended
-{
-    if(!curr_browser)
-        return;
-    QTextCursor cursor = curr_browser->textCursor();
-    QTextBlockFormat format = cursor.blockFormat();
-    double lineHeight = format.lineHeight()/100;
-    bool False = false;
-    bool *ok = &False;
-    if(lineHeight == 0)
-        lineHeight = 1;
-    double inputLineSpace = QInputDialog::getDouble(this, "Custom Line Space", "Line Space", lineHeight, 0, 10, 2,ok);
-    if(*ok) {
-        // LineHeight(x,1) sets x as a percentage with base as 100
-        //200 is Double LineSpace and 50 is half LineSpace
-        format.setLineHeight(inputLineSpace*100, 1);
-        cursor.setBlockFormat(format);
-    }
-}
 
 /*!
  * \fn MainWindow::on_actionAdd_Image_triggered
@@ -6150,7 +5919,7 @@ void MainWindow::on_actionAdd_Image_triggered()
 
 /*!
  * \fn MainWindow::on_actionResize_Image_triggered
- * \brief This function resizes the images in the document. User has to input the new height or width
+ * \brief This function resizes the images in the document. User has to input the new height and width
  * and thus the image is appropriately resized.
  */
 void MainWindow::on_actionResize_Image_triggered()
@@ -6188,6 +5957,7 @@ void MainWindow::on_actionResize_Image_triggered()
 /*!
  * \fn MainWindow::on_actionPush_triggered
  * \brief Pushes the code to the repository
+ * \sa Project::push(QString)
  */
 void MainWindow::on_actionPush_triggered()
 {
@@ -6984,10 +6754,8 @@ void MainWindow::saveAllWork()
  */
 void MainWindow::on_actionSave_All_triggered()  //enable when required
 {
-
     UpdateFileBrekadown();
     on_actionSave_triggered();
-
 }
 
 /*!
@@ -7001,7 +6769,6 @@ void MainWindow::closeEvent (QCloseEvent *event)
 
     if (isUnsaved)
     {
-
         //!confusion
         QMessageBox saveBox;
         saveBox.setWindowTitle("Close");
@@ -7374,7 +7141,7 @@ void MainWindow::on_textBrowser_textChanged()
 
 /*!
  * \fn MainWindow::on_zoom_Out_Button_clicked
- * \brief sets zoom out to graphics view
+ * \brief Zooms out the image set in the graphics view
  */
 void MainWindow::on_zoom_Out_Button_clicked()
 {
@@ -7384,7 +7151,7 @@ void MainWindow::on_zoom_Out_Button_clicked()
 
 /*!
  * \fn MainWindow::on_zoom_In_Button_clicked
- * \brief sets zoom in to graphics view
+ * \brief Zooms in the image set in the graphics view
  */
 void MainWindow::on_zoom_In_Button_clicked()
 {
@@ -7932,7 +7699,7 @@ void MainWindow::readSettings()
 
 /*!
  * \fn MainWindow::on_action1_triggered
- * \brief Action 1 in clipboard
+ * \brief Opens up the project 1 in recent project list
  */
 void MainWindow::on_action1_triggered()
 {
@@ -7943,7 +7710,7 @@ void MainWindow::on_action1_triggered()
 
 /*!
  * \fn MainWindow::on_action2_triggered
- * \brief Action 2 in clipboard
+ * \brief Opens up the project 2 in recent project list
  */
 void MainWindow::on_action2_triggered()
 {
@@ -7954,7 +7721,7 @@ void MainWindow::on_action2_triggered()
 
 /*!
  * \fn MainWindow::on_action3_triggered
- * \brief Action 3 in clipboard
+ * \brief Opens up the project 3 in recent project list
  */
 void MainWindow::on_action3_triggered()
 {
@@ -7969,47 +7736,48 @@ void MainWindow::on_action3_triggered()
  */
 void MainWindow::RecentPageInfo()
 {
-    ui->treeView->selectionModel()->clearSelection();
-    QModelIndex currentTreeItemIndex=ui->treeView->selectionModel()->currentIndex();
-    QModelIndex parentIndex = currentTreeItemIndex.parent();
-    auto *model = ui->treeView->model();
-    int rowCount = ui->treeView->model()->rowCount(parentIndex);
-    //qDebug()<<"rowCount"<<rowCount;
-    QModelIndexList children;
-    QString var1,var2;
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    settings.beginGroup("RecentPageLoaded");
-    QString stored_project = settings.value("projectName1").toString();
-    QString stored_project2 = settings.value("projectName2").toString();
-    QString stored_project3 = settings.value("projectName3").toString();
-    if(ProjFile == stored_project){
-    var1 = settings.value("name1").toString();
-    var2 = settings.value("pageParent1").toString();}
-    else if(ProjFile == stored_project2){
-        var1 = settings.value("name2").toString();
-        var2 = settings.value("pageParent2").toString();
-    }
-    else if(ProjFile == stored_project3){
-        var1 = settings.value("name3").toString();
-        var2 = settings.value("pageParent3").toString();
-    }
-    settings.endGroup();
-    QString item,item1;
-    for(int i=0;i<model->rowCount();i++){
-        children<<model->index(i,0);
-        item=children[i].data(Qt::DisplayRole).toString();
-        if(item == var2){
-            for(int j=0;j<model->rowCount(children[i]);j++){
-                children<<children[i].child(j,0);
-                item1 = children[i].child(j,0).data(Qt::DisplayRole).toString();
-                //qDebug ()<<"Item1"<<item1;
-                if(item1 == var1){
-                    auto location = children[i].child(j,0);
-                    ui->treeView->selectionModel()->setCurrentIndex(children[i].child(j,0),QItemSelectionModel::Select);
-                    file_click(location);
-                }
-        }
-    }}
+	ui->treeView->selectionModel()->clearSelection();
+	QModelIndex currentTreeItemIndex=ui->treeView->selectionModel()->currentIndex();
+	QModelIndex parentIndex = currentTreeItemIndex.parent();
+	auto *model = ui->treeView->model();
+	int rowCount = ui->treeView->model()->rowCount(parentIndex);
+	//qDebug()<<"rowCount"<<rowCount;
+	QModelIndexList children;
+	QString var1,var2;
+	QSettings settings("IIT-B", "OpenOCRCorrect");
+	settings.beginGroup("RecentPageLoaded");
+	QString stored_project = settings.value("projectName1").toString();
+	QString stored_project2 = settings.value("projectName2").toString();
+	QString stored_project3 = settings.value("projectName3").toString();
+	if(ProjFile == stored_project){
+		var1 = settings.value("name1").toString();
+		var2 = settings.value("pageParent1").toString();}
+	else if(ProjFile == stored_project2){
+		var1 = settings.value("name2").toString();
+		var2 = settings.value("pageParent2").toString();
+	}
+	else if(ProjFile == stored_project3){
+		var1 = settings.value("name3").toString();
+		var2 = settings.value("pageParent3").toString();
+	}
+	settings.endGroup();
+	QString item,item1;
+	for(int i=0;i<model->rowCount();i++){
+		children<<model->index(i,0);
+		item=children[i].data(Qt::DisplayRole).toString();
+		if(item == var2){
+			for(int j=0;j<model->rowCount(children[i]);j++){
+				children<<children[i].child(j,0);
+				item1 = children[i].child(j,0).data(Qt::DisplayRole).toString();
+				//qDebug ()<<"Item1"<<item1;
+				if(item1 == var1){
+					auto location = children[i].child(j,0);
+					ui->treeView->selectionModel()->setCurrentIndex(children[i].child(j,0),QItemSelectionModel::Select);
+					file_click(location);
+				}
+			}
+		}
+	}
 }
 
 
@@ -8123,7 +7891,7 @@ void MainWindow::on_find_clicked()
 
 /*!
  * \fn MainWindow::on_actionPDF_Preview_triggered
- * \brief Previews the current file as PDF
+ * \brief Previews the current file as PDF. Uses Qt's QPrintPreviewDialog for showing preview
  */
 void MainWindow::on_actionPDF_Preview_triggered()
 {
@@ -8138,6 +7906,10 @@ void MainWindow::on_actionPDF_Preview_triggered()
 /*!
  * \fn MainWindow::print
  * \brief Prints the file into PDF
+ * \details
+ * 1. Traverses all the files in the current role folder
+ * 2. Merges the content of those html files into one
+ * 3. Forward this merged file to the QPrinter for printing the file by the given printer
  * \param printer
  */
 void MainWindow::print(QPrinter *printer)
@@ -8233,7 +8005,7 @@ void MainWindow::on_actionChange_Role_triggered()
 //this function then re-introduces bbox's to saved file
 /*!
  * \fn MainWindow::bboxInsertion
- * \brief Inserts bbox into the saved file(DEPRECATED)
+ * \brief Inserts bbox into the saved file(DEPRECATED) but used in Find & Replace module
  * \param f
  */
 void MainWindow::bboxInsertion(QFile *f){
@@ -8554,7 +8326,7 @@ void MainWindow::insertImageAction()
 
 /*!
  * \fn MainWindow::createMenu
- * \brief Menu is Created
+ * \brief Adds the "Exit" menu in the File menu of menu bar
  */
 void MainWindow::createMenu()
 {
@@ -8568,6 +8340,7 @@ void MainWindow::createMenu()
 /*!
  * \fn MainWindow::blockCountChanged
  * \brief Tracks the change in number of blocks
+ * \details Copies the bbox of previous block to current block if number of blocks are increased and deletes the bbox of a block if a number of blocks decrease
  * \param numOfBlocks
  */
 void MainWindow::blockCountChanged(int numOfBlocks)
@@ -8865,6 +8638,7 @@ void MainWindow::on_actionMerge_Cells_triggered()
 /*!
  * \fn MainWindow::on_actionSplit_Cell_triggered
  * \brief Splits the current cell into the rows and columns specified by the user.
+ * \details Tables are manipulated using QTextTable module from Qt.
  */
 void MainWindow::on_actionSplit_Cell_triggered()
 {
@@ -8898,6 +8672,8 @@ void MainWindow::on_actionSplit_Cell_triggered()
 /*!
  * \fn MainWindow::on_actionInsert_Bulleted_List_triggered
  * \brief Adds the bulleted list to the text browser
+ * \details Shows the radio buttons to chose the list type to be added
+ * \sa insertList
  */
 void MainWindow::on_actionInsert_Bulleted_List_triggered()
 {
@@ -8946,7 +8722,8 @@ void MainWindow::on_actionInsert_Bulleted_List_triggered()
 /*!
  * \fn MainWindow::on_actionInsert_Numbered_List_triggered
  * \brief Adds the Numbered list to the text browser
- * \details Nested lists can also be inserted.
+ * \details Shows the radio buttons to chose the list type to be added
+ * \sa insertList
  */
 void MainWindow::on_actionInsert_Numbered_List_triggered()
 {
@@ -9172,13 +8949,22 @@ void MainWindow::login(){
     }
 }
 
+/*!
+ * \fn MainWindow::on_sanButton_toggled
+ * \brief Toggles the dict view to the Sanskrit SLP Dict
+ * \param checked
+ */
 void MainWindow::on_sanButton_toggled(bool checked)
 {
     if(checked)
         on_actionSanskrit_triggered();
 }
 
-
+/*!
+ * \fn MainWindow::on_hinButton_toggled
+ * \brief Toggles the dict view to the Hindi SLP Dict
+ * \param checked
+ */
 void MainWindow::on_hinButton_toggled(bool checked)
 {
     if(checked)
@@ -9197,4 +8983,3 @@ void MainWindow::on_actionTwo_Column_triggered()
         cursor.insertHtml(html);
     }
 }
-
