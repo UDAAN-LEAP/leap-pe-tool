@@ -406,6 +406,8 @@ private slots:
 
     void on_actionTwo_Column_triggered();
 
+    void on_pushButton_3_clicked();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

@@ -8984,9 +8984,19 @@ void MainWindow::on_actionTwo_Column_triggered()
     }
 }
 
-
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_actionRotate_triggered(QFile *f)
 {
-    ui->graphicsView->rotate(90);
+//    QString fileName = f->fileName();
+//    loadimage = true;
+//    imageOrig.load(fileName);
+//    QPixmap image = QPixmap::fromImage(imageOrig);
+//     QTextCursor cursor = curr_browser->textCursor();
+//    if(clicked)
+//    {
+////    QPixmap p1(image);
+////    QPixmap p2 = p1.transformed(QTransform().rotate(90));
+////    label->setPixmap(p2);
+//    }
+
 }
 

@@ -49,6 +49,7 @@
         <file>spinbar-white-tp.gif</file>
         <file>PDF-Preview.png</file>
         <file>Resources/logonew.png</file>
+        <file>Resources/Old Icons/rotate.png</file>
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>

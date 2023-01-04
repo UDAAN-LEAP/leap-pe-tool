@@ -793,6 +793,18 @@ color: rgb(0, 0, 0); height:37.39px; border:0px; width:184.8px; padding-left:7.8
        </spacer>
       </item>
       <item>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);
+image: url(:/Images/Resources/Old Icons/rotate.png);
+background-color: rgb(255, 255, 255);  height:37.39px; width:32.73px; border:0px; padding:0px 3.6px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QGroupBox" name="groupBox">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
