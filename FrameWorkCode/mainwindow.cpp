@@ -2,13 +2,11 @@
 #include "dashboard.h"
 #include "qobjectdefs.h"
 #include "ui_dashboard.h"
-#include "ui_globalreplacedialog.h"
 #include "ui_mainwindow.h"
 #include "averageaccuracies.h"
 #include "eddis.h"
 #include "slpNPatternDict.h"
 #include "trieEditdis.h"
-#include "meanStdPage.h"
 #include <math.h>
 #include "QProgressBar"
 #include <QPrinter>
@@ -9185,7 +9183,13 @@ void MainWindow::on_hinButton_toggled(bool checked)
         on_actionHindi_triggered();
 }
 
-
+/*!
+ * \brief MainWindow::on_actionTwo_Column_triggered
+ * \details When Two column Layout button is clicked, this function is called. This function creates a table with two columns and one row, then puts the browser data in first column.
+ * \details It will not be shown as table to user. User can see two column data with vertical line in between.
+ * \details User can take cursor to text editor, go to "View > Layout > Two Column Layout" to use this feature.
+ * \author Sadam
+ */
 void MainWindow::on_actionTwo_Column_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
