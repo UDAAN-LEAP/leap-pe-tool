@@ -1068,8 +1068,8 @@ QMenu::item:selected{
      <string>Sync</string>
     </property>
     <addaction name="actionTurn_In"/>
-    <addaction name="actionFetch_2"/>
     <addaction name="actionVerifier_Turn_In"/>
+    <addaction name="actionFetch_2"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="styleSheet">
@@ -1117,6 +1117,7 @@ QMenu::item:selected{
      <addaction name="actionWindows"/>
     </widget>
     <addaction name="actionGet_Help"/>
+    <addaction name="actionUser_Guide"/>
     <addaction name="menuInstallation_Guide"/>
     <addaction name="actionTutorial"/>
     <addaction name="actionShortcut_Guide"/>
@@ -2146,6 +2147,11 @@ background-color: #EEF0F2;
   <action name="actionTwo_Column">
    <property name="text">
     <string>Two Column</string>
+   </property>
+  </action>
+  <action name="actionUser_Guide">
+   <property name="text">
+    <string>User Guide</string>
    </property>
   </action>
  </widget>

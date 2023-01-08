@@ -408,6 +408,8 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_actionUser_Guide_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

@@ -247,6 +247,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     QFontDatabase::addApplicationFont(":/Fonts/fonts/Latha/latha.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/fonts/Nirmala/Nirmala Regular.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/fonts/Chandas/chandas.ttf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/shruti_regular/shruti.ttf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Gujrati_Saral-1/Gujrati-Saral-1.ttf");
 
     if (!isVerifier)
     {
@@ -263,7 +265,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionLoadGDocPage->setVisible(false);
     ui->menuSelectLanguage->setTitle("");
     ui->menuCreateReports->setTitle("");
-    ui->pushButton_2->setVisible(false);
+//    ui->pushButton_2->setVisible(false);
 
     // Disabling some buttons while opening the tool
 
@@ -6925,6 +6927,15 @@ void MainWindow::on_actionGet_Help_triggered()
 }
 
 /*!
+ * \brief MainWindow::on_actionUser_Guide_triggered
+ * \details Redirects user to OCR Tool User guide.
+ */
+void MainWindow::on_actionUser_Guide_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/1HGKTkCWLSzHkgWoWtQGvB0A8PAWyw86xVhVWeWTYxfA/edit", QUrl::TolerantMode));
+}
+
+/*!
  * \fn MainWindow::on_actionTutorial_triggered
  * \brief Redirects user to Team OCR Youtube channel
  */
@@ -6939,7 +6950,7 @@ void MainWindow::on_actionTutorial_triggered()
  */
 void MainWindow::on_actionLinux_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/15PbeYfdMl1eMypAMoqibG6Z5dxipfx_aZBSAhifTlec/edit?usp=sharing", QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/1b5C9F2f3oMSjUPIfr9qkShpjSkXK7iDQG3C6rdEKw2g/edit", QUrl::TolerantMode));
 }
 
 /*!
@@ -6948,7 +6959,7 @@ void MainWindow::on_actionLinux_triggered()
  */
 void MainWindow::on_actionWindows_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/16P1UZ2t1Dd8qhAsl2UqL5hTkrsOkBJqr/edit?usp=sharing&ouid=105473566501828143797&rtpof=true&sd=true", QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/12Zbe9OLYOoguGu7HWRnpYkHD0BaW8SOvjYh96DYZ_8Y/edit", QUrl::TolerantMode));
 }
 
 /*!
@@ -7635,7 +7646,7 @@ void MainWindow::RecentPageInfo()
  */
 void MainWindow::on_actionCheck_for_Updates_triggered()
 {
-    QUrl url("https://api.github.com/repos/IITB-OpenOCRCorrect/iitb-openocr-digit-tool/releases");
+    QUrl url("https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/releases");
 //    qInfo() << url.toString();
     QNetworkRequest request(url);               //requesting url over the network
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -9051,3 +9062,4 @@ bool MainWindow::verifier_save(QString commit_msg)
     }
     return true;
 }
+
