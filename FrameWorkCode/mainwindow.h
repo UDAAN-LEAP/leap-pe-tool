@@ -473,6 +473,13 @@ private:
     QOAuth2AuthorizationCodeFlow * google;
     void googleAuth();
     QSet<QString> dict_set1; //! Keep it available globally so that we need not to parse dictionary file at the time of saving logs.
+    bool check();
+    bool check_access();
+    void cloud_save();
+    bool verifier_save(QString);
+    int saved = 0;
+    void autoSave();
+    void messageTimer();
 };
 
 #endif // MAINWINDOW_H

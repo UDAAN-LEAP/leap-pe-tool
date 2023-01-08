@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "dashboard.h"
 #include "qobjectdefs.h"
-#include "ui_dashboard.h"
 #include "ui_mainwindow.h"
 #include "averageaccuracies.h"
 #include "eddis.h"
@@ -29,7 +28,6 @@
 #include <utility>
 #include <regex>
 #include "crashlog.h"
-#include "ProjectHierarchyWindow.h"
 #include <QDomDocument>
 #include <QFormLayout>
 #include <QDialogButtonBox>
@@ -42,7 +40,6 @@
 #include <algorithm>
 #include <QSet>
 #include <QAction>
-#include "ProjectWizard.h"
 #include <QDebug>
 #include <QtCore>
 #include <QtXml>
@@ -70,7 +67,6 @@
 #include "verifyset.h"
 #include "loaddataworker.h"
 #include "globalreplaceworker.h"
-#include "pdfhandling.h"
 #include "customtextbrowser.h"
 #include "pdfrangedialog.h"
 #include <QtNetworkAuth>
@@ -170,6 +166,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->lineEdit_3->setReadOnly(true);
 
 //    googleAuth();
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("cloudSave");
+    settings.remove("");
+    settings.endGroup();
 
     QString password  = "";
     QString passwordFilePath = QDir::currentPath() + "/pass.txt";
@@ -191,7 +191,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     this->show();
     this->setWindowState(Qt::WindowState::WindowActive);
     //ask for login
-    QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("loginConsent");
     QString value = settings.value("consent").toString();
     if(value != "dna" && value != "loggedIn"){
@@ -1199,7 +1198,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         QMessageBox::warning(0, "Project XML file Error", "Project XML File is corrupted \n\nError "+ QString::fromStdString(std::to_string(verifySetObj.getErrorCode()))+": " + verifySetObj.getErrorString()+"\n\nPlease Report this to your administrator");
         return;
     }
-
     currentZoomLevel = 100;
 
     QFile xml(ProjFile);
@@ -1872,6 +1870,7 @@ void MainWindow::on_actionSave_triggered()
     // Run Global Replace
 
     GlobalReplace();
+    saved = 1;
 
 }
 
@@ -3408,75 +3407,17 @@ void MainWindow::on_actionTurn_In_triggered()
         return;
     }
 
-    //retrieve details from database and check if user has access to push into this repo
-    settings.beginGroup("login");
-    QString email = settings.value("email").toString();
-    QString token = settings.value("token").toString();
-    settings.endGroup();
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
-
-    //to find the repo name from .git/congig file
-    QString repo = "";
-    QString gDir = gDirTwoLevelUp+"/.git/config";
-    QFile f(gDir);
-    f.open(QIODevice::ReadOnly);
-    while(!f.atEnd()) {
-        QString line = f.readLine();
-        if(line.contains("https://github.com")){
-            QStringList l = line.split("/");
-            repo = l[l.size()-1].remove("\n");
-            break;
-        }
-    }
-    f.close();
-    QJsonObject mainObj = readJsonFile("validate.json");
-    QJsonArray repos = mainObj.value("repo_list").toArray();
-    QJsonArray::iterator itr; int flag = 0;
-    for(itr = repos.begin(); itr != repos.end(); itr++){
-       // qDebug()<<itr->toString();
-        if(itr->toString() == repo){
-            flag = 1;
-            break;
-        }
-    }
-    QFile::remove("validate.json");
-    if(repos.size() == 0 || flag == 0){
+    if(!check_access()){
         QMessageBox msg;
         msg.setText("You don't have access to this project on cloud.");
         msg.exec();
         return;
     }
 
-    //sending credentials
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o gitToken.json");
 
-    QFile jsonFile("gitToken.json");
-    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    QByteArray data = jsonFile.readAll();
-
-    QJsonParseError errorPtr;
-    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-    mainObj = document.object();
-    jsonFile.close();
-    QString git_token = mainObj.value("github_token").toString();//"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";//
-    QString git_username = mainObj.value("github_username").toString();//"AnujaDumada8";//
-    QFile::remove("gitToken.json");
-    std::string user = git_username.toStdString();
-    std::string pass = git_token.toStdString();
     //!Checking whether all the file are there in CorrectorOutput directory.
     if(mProject.get_version().toInt())
     {
-//         if(mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/CorrectorOutput/)")
-//                 != 2* mProject.findNumberOfFilesInDirectory(mProject.GetDir().absolutePath().toStdString() + R"(/Inds/)"))
-//         {
-//             QMessageBox::information(0, "Couldn't Turn In", "Make sure all files are there in CorrectorOutput directory");
-//             return;
-//         }
-        QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();     // append current version
-
         QMessageBox submitBox;
         submitBox.setWindowTitle("Submit ?");
         submitBox.setIcon(QMessageBox::Question);
@@ -3487,47 +3428,8 @@ void MainWindow::on_actionTurn_In_triggered()
 
         if (submitBox.clickedButton() == yButton)
         {
-            bool ok;
-
-            //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
-            if(mProject.commit(commit_msg.toStdString()))
-            {
-                threadingPush *tp = new threadingPush(nullptr, mProject.repo, user, pass, gDirTwoLevelUp);
-                QThread *thread = new QThread;
-
-                connect(thread, SIGNAL(started()), tp, SLOT(ControlPush()));
-                connect(tp, SIGNAL(finishedPush()), thread, SLOT(quit()));
-                connect(tp, SIGNAL(finishedPush()), tp, SLOT(deleteLater()));
-                connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-                connect(tp, SIGNAL(finishedPush()), this, SLOT(stopSpinning()));
-                tp->moveToThread(thread);
-                thread->start();
-
-                spinner = new LoadingSpinner(this);
-                spinner->SetMessage("Saving to cloud...", "Saving...");
-                spinner->setModal(false);
-                spinner->exec();
-                if (tp->error != 0) {
-                    mProject.enable_push(false);
-                    QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
-                    return;
-                }
-            }
-            mProject.set_corrector();
+            cloud_save();
         }
-        else
-        {
-            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
-            return;
-        }
-
-        ui->lineEdit_2->setText("Version " + mProject.get_version());      //Update the version of file on ui.
-
-//        QString emailText =  "Book ID: " + mProject.get_bookId()
-//                + "\nSet ID: " + mProject.get_setId()
-//                + "\n" + commit_msg ;       //Send an email if turn-in failed
-
-        QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
     }
     else
     {
@@ -3592,64 +3494,13 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         msg.exec();
         return;
     }
-    //retrieve details from database and check if user has access to push into this repo
-    settings.beginGroup("login");
-    QString email = settings.value("email").toString();
-    QString token = settings.value("token").toString();
-    settings.endGroup();
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
-
-    //to find the repo name from .git/congig file
-    QString repo = "";
-    QString gDir = gDirTwoLevelUp+"/.git/config";
-    QFile f(gDir);
-    f.open(QIODevice::ReadOnly);
-    while(!f.atEnd()) {
-        QString line = f.readLine();
-        if(line.contains("https://github.com")){
-            QStringList l = line.split("/");
-            repo = l[l.size()-1].remove("\n");
-            break;
-        }
-    }
-    f.close();
-    QJsonObject mainObj = readJsonFile("validate.json");
-    QJsonArray repos = mainObj.value("repo_list").toArray();
-    QJsonArray::iterator itr; int flag = 0;
-    for(itr = repos.begin(); itr != repos.end(); itr++){
-        // qDebug()<<itr->toString();
-        if(itr->toString() == repo){
-            flag = 1;
-            break;
-        }
-    }
-    QFile::remove("validate.json");
-    if(repos.size() == 0 || flag == 0){
+    if(!check_access()){
         QMessageBox msg;
         msg.setText("You don't have access to this project on cloud.");
         msg.exec();
         return;
     }
 
-    //sending credentials
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o gitToken.json");
-
-    QFile jsonFile("gitToken.json");
-    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    QByteArray data = jsonFile.readAll();
-
-    QJsonParseError errorPtr;
-    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-    mainObj = document.object();
-    jsonFile.close();
-    QString git_token = mainObj.value("github_token").toString();
-    QString git_username = mainObj.value("github_username").toString();
-    QFile::remove("gitToken.json");
-    std::string user = git_username.toStdString();
-    std::string pass = git_token.toStdString();
     /*
      * \description
      * 1. Checks if any project is opened or not.
@@ -3851,22 +3702,10 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
             {
                 mProject.enable_push( false );
             }
-            if(mProject.commit(commit_msg.toStdString()))
+            if(!verifier_save(commit_msg)) return;
+            if(s == SubmissionType::return_set)
             {
-                if(!mProject.push(gDirTwoLevelUp)){
-                    mProject.enable_push(false);
-                    QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
-                    return;
-                }
-                if(s == SubmissionType::return_set)
-                {
-                    mProject.set_version( mProject.get_version().toInt() - 1 );
-                }
-            }
-            else {
-                // user entered nothing or pressed Cancel
-                QMessageBox::critical(0, "Cloud sync", "Sync failed!");
-                return;
+                mProject.set_version( mProject.get_version().toInt() - 1 );
             }
             mProject.set_verifier();
         }
@@ -3885,6 +3724,10 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         //! Updating the Project Version
         ui->lineEdit_2->setText("Version " + mProject.get_version());
         QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("cloudSave");
+        settings.setValue("save","success" );
+        settings.endGroup();
     }
     else
     {
@@ -6777,8 +6620,6 @@ void MainWindow::closeEvent (QCloseEvent *event)
         QPushButton *cncButton = saveBox.addButton(QMessageBox::Cancel);
         saveBox.exec();
 
-
-
         if (saveBox.clickedButton() == cncButton)
         {
             event->ignore();
@@ -6793,6 +6634,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
             event->accept();
         }
     }
+    autoSave();
 }
 
 /*!
@@ -8853,6 +8695,7 @@ void MainWindow::on_actionEdit_Equation_triggered()
  */
 void MainWindow::on_actionExit_triggered()
 {
+    autoSave();
     QCoreApplication::quit();
 }
 
@@ -8988,9 +8831,223 @@ void MainWindow::on_actionTwo_Column_triggered()
     }
 }
 
-
+/*!
+ * \brief MainWindow::on_pushButton_3_clicked
+ * \details This function rotates the graphics view by 90 degree which contains the original image of the page.
+ */
 void MainWindow::on_pushButton_3_clicked()
 {
     ui->graphicsView->rotate(90);
 }
 
+/*!
+ * \brief MainWindow::check
+ * \details This function checks whether the computer is connected to internet or not
+ * \return Returns true if computer is connected to internet else returns false.
+ */
+bool MainWindow::check()
+{
+    QTcpSocket* sock = new QTcpSocket(this);
+    sock->connectToHost("www.google.com", 80);
+    bool connected = sock->waitForConnected(2000);//waiting for 1000 ms
+
+    if (!connected)
+    {
+        sock->abort();
+        return false;
+    }
+    sock->close();
+    return true;
+}
+
+/*!
+ * \brief MainWindow::autoSave
+ * \details This function is called when tool is closed.
+ * \details It checks if there are some local changes and calls the cloud_save() or verifier_save() function to save the changes to cloud.
+ */
+void MainWindow::autoSave(){
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("cloudSave");
+    QString value = settings.value("save").toString();
+    settings.endGroup();
+    if(mProject.get_version().toInt() && value != "success" && saved == 1){
+        if(check()){
+            if(!check_access()){
+                qDebug()<<"You don't have access to this set.";
+                return;
+            }
+            if(mRole == "Corrector")
+            cloud_save();
+            else if(mRole == "Verifier"){
+                if(verifier_save("Verifier cloud save - auto"))
+                    QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
+            }
+        }
+        else
+            qDebug()<<"Internet unavailable!";
+    }
+}
+
+/*!
+ * \brief MainWindow::check_access
+ * \details This function checks whether the user has access to the opened set on cloud.
+ * \return Returns true if the logged in user has access to the opened set else returns the false.
+ */
+bool MainWindow::check_access()
+{
+    //retrieve details from database and check if user has access to push into this repo
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
+    settings.endGroup();
+    QProcess process;
+    process.execute("curl -d -X -k -POST --header "
+                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
+
+    //to find the repo name from .git/congig file
+    QString repo = "";
+    QString gDir = gDirTwoLevelUp+"/.git/config";
+    QFile f(gDir);
+    f.open(QIODevice::ReadOnly);
+    while(!f.atEnd()) {
+        QString line = f.readLine();
+        if(line.contains("https://github.com")){
+            QStringList l = line.split("/");
+            repo = l[l.size()-1].remove("\n");
+            break;
+        }
+    }
+    f.close();
+    QJsonObject mainObj = readJsonFile("validate.json");
+    QJsonArray repos = mainObj.value("repo_list").toArray();
+    QJsonArray::iterator itr; int flag = 0;
+    for(itr = repos.begin(); itr != repos.end(); itr++){
+       // qDebug()<<itr->toString();
+        if(itr->toString() == repo){
+            flag = 1;
+            break;
+        }
+    }
+    QFile::remove("validate.json");
+    if(repos.size() == 0 || flag == 0){
+        return false;
+    }
+    return true;
+}
+
+/*!
+ * \brief MainWindow::messageTimer
+ * \details This function shows the message box to user for the specified time(5 seconds in our case).
+ */
+void MainWindow::messageTimer(){
+    QMessageBox msg;
+    msg.setText("Saving your changes to cloud. Don't close the application until you see a success message.");
+    int cnt = 5;
+    //showing the message box for 2 seconds only.
+    QTimer cntDown;
+    QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
+         if(--cnt < 0){
+             cntDown.stop();
+             msg.close();
+         }
+        });
+    cntDown.start(1000);
+    msg.exec();
+}
+
+/*!
+ * \brief MainWindow::cloud_save
+ * \details This function calls the commit and push functions to push the details to cloud.
+ * \details Saves the cloud save success message using QSettings.
+ */
+void MainWindow::cloud_save(){
+    messageTimer();
+    //sending credentials
+//    QProcess process;
+//    process.execute("curl -d -X -k -POST --header "
+//                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o gitToken.json");
+
+//    QFile jsonFile("gitToken.json");
+//    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+//    QByteArray data = jsonFile.readAll();
+
+//    QJsonParseError errorPtr;
+//    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+//    QJsonObject mainObj = document.object();
+//    jsonFile.close();
+//    QString git_token = mainObj.value("github_token").toString();
+//    QString git_username = mainObj.value("github_username").toString();
+//    QFile::remove("gitToken.json");
+//    std::string user = git_username.toStdString();
+//    std::string pass = git_token.toStdString();
+
+    QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();     // append current version
+
+//    bool ok;
+
+    //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
+//    if(mProject.commit(commit_msg.toStdString()))
+//    {
+//        threadingPush *tp = new threadingPush(nullptr, mProject.repo, user, pass, gDirTwoLevelUp);
+//        QThread *thread = new QThread;
+
+//        connect(thread, SIGNAL(started()), tp, SLOT(ControlPush()));
+//        connect(tp, SIGNAL(finishedPush()), thread, SLOT(quit()));
+//        connect(tp, SIGNAL(finishedPush()), tp, SLOT(deleteLater()));
+//        connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+//        connect(tp, SIGNAL(finishedPush()), this, SLOT(stopSpinning()));
+//        tp->moveToThread(thread);
+//        thread->start();
+
+//        spinner = new LoadingSpinner(this);
+//        spinner->SetMessage("Saving to cloud...", "Saving...");
+//        spinner->setModal(false);
+//        spinner->exec();
+//        if (tp->error != 0) {
+//            mProject.enable_push(false);
+//            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
+//            return;
+//        }
+//    }
+    if(mProject.commit(commit_msg.toStdString())){
+    if(!mProject.push(gDirTwoLevelUp)){
+        mProject.enable_push(false);
+        QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
+            return;
+    }
+    mProject.set_corrector();
+
+    ui->lineEdit_2->setText("Version " + mProject.get_version());      //Update the version of file on ui.
+
+    //        QString emailText =  "Book ID: " + mProject.get_bookId()
+    //                + "\nSet ID: " + mProject.get_setId()
+    //                + "\n" + commit_msg ;       //Send an email if turn-in failed
+    QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("cloudSave");
+    settings.setValue("save","success" );
+    settings.endGroup();
+    }
+}
+
+/*!
+ * \brief MainWindow::verifier_save
+ * \param commit_msg
+ * \details This function is called in verifier mode when tool is closed.
+ * \details Calls commit and push functions
+ * \return Returns true if pushed successfully or false if failed.
+ */
+bool MainWindow::verifier_save(QString commit_msg)
+{
+    messageTimer();
+    if(mProject.commit(commit_msg.toStdString()))
+    {
+        if(!mProject.push(gDirTwoLevelUp)){
+            mProject.enable_push(false);
+            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
+                return false;
+        }
+    }
+    return true;
+}
