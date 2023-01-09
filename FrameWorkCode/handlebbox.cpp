@@ -63,15 +63,19 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
     QString inputText = "";
     while(!f->atEnd()) {
         line = f->readLine();
-        line = line.simplified();
+    line = line.replace("    ","\t");
+        line = line.trimmed();
+//        QStringList l1 = line.split("    ");
         QStringList l = line.split(" ");
         for(int i = 0; i < l.size(); i++) {
             //for parsing p tags
             if((l[i].contains("<p") && flag_ != 2) || flag_ == 1){
                 flag_ = 1;
-                while(i < l.size() && !l[i].contains("</p>")){
-                    inputText += l[i];
-                    inputText += " ";
+                while(i < l.size() && !l[i].contains("</p>")){                   
+                        inputText += l[i];
+                        inputText += " ";
+
+
                     i++;
                 }
                 if(i == l.size())
@@ -99,6 +103,7 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                     inputText = "";
                 }
             }
+
             //for parsing table tags
             else if(l[i].contains("<table") || flag_ == 2){
                 flag_ = 2;
@@ -229,7 +234,7 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
             inputText += "\n";
         }
     }
-
+//      l.replace("    ","\t");
     cur = QTextCursor(doc->findBlockByNumber(0));
     cur.select(QTextCursor::BlockUnderCursor);
     cur.deleteChar();

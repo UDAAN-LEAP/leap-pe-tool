@@ -5437,23 +5437,32 @@ void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
     dict_set1.clear();
     //! Get dict file from current opened file
     QString dictFilename;
-    if(mRole=="Verifier")
-    {
-        dictFilename = gDirTwoLevelUp + "/" + "VerifierOutput" + "/" + gCurrentPageName;
-    }
-    else if(mRole=="Corrector")
-    {
+//    if(mRole=="Verifier")
+//    {
+//        if(gCurrentDirName == "CorrectorOutput")
+//        dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
+//        else
+//        dictFilename = gDirTwoLevelUp + "/" + "VerifierOutput" + "/" + gCurrentPageName;
+
+//        qDebug()<<"here";
+//    }
+//    else if(mRole=="Corrector")
+//    {
         dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
-    }
+
+//    }
+     qDebug()<<"here THREE";
     dictFilename.replace(".txt", ".dict");
     dictFilename.replace(".html", ".dict");
-    QFile dictQFile(dictFilename);
+//    QFile dictQFile(dictFilename);
 
     ui->textEdit_dict->clear();
     ui->textEdit_dict->setFontPointSize(14);
+     qDebug()<<"here TOO";
     //! Open the dict file and display it in textedit view
     if(QFile::exists(dictFilename))
     {
+
             QFile dictQFile(dictFilename);
             if(dictQFile.open(QIODevice::ReadOnly | QIODevice::Text))
             {
@@ -5467,6 +5476,7 @@ void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
                }
                QJsonValue jv = obj.value(obj.keys().at(0));
                QJsonObject item = jv.toObject();
+
                for(int i = 0; i < item.count(); i++)
                {
                   ui->textEdit_dict->append(item.keys().at(i)+":");
