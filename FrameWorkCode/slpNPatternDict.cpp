@@ -14,9 +14,8 @@
 #include <QMessageBox>
 #include <iostream>
 #include "qdebug.h"
-#include "qtextstream.h"
 #include <cassert>
- #include <cmath>
+#include <cmath>
 #include <string>
 #include <unordered_map>
 #include <QFile>
@@ -62,7 +61,7 @@ string slpNPatternDict::ReplaceStringRestricted(string subject, const string& se
     {   if(pos == subject.size()) break;
         //cout << subject<< " "<<pos <<" "<<subject.size()<< endl;
         if( subject.size() == pos + 3) c=subject.at(pos+2); else c=subject.at(pos+3);
-          //CHANGE TO 3 IF EVERYTHING DOES NOT WORK
+        //CHANGE TO 3 IF EVERYTHING DOES NOT WORK
         if(c=='A' || c=='i' || c=='I' || c=='u' || c=='U' || c=='f' || c=='F' || c=='x' || c=='X' || c=='e' || c=='E' || c=='o' || c=='O')
             subject.replace(pos, search.length(),replace);
         else
@@ -90,28 +89,28 @@ void slpNPatternDict::loadFileCSV(map<string, vector<int>>& synonym, vector<vect
     QStringList wordList;
     int j = 0;
     while (!in.atEnd()) {
-       QString line = in.readLine();
-       QList<QString> L = line.split(',');
-       qDebug() << L.first() << endl;
-       vector<string> V;
-       synrows.push_back(V);
-       for(int i=0 ; i  < L.size(); i++){
-           string S = L[i].toUtf8().constData();
-           if(S != "" && j){
-               S.erase(remove(S.begin(), S.end(), ' '), S.end());
-               if(S.substr(0, 1) == "\""){
-                   S = S.substr(1, S.size()-1);
-               }
-               if(S.substr(S.size()-1, 1) == "\""){
-                   S = S.substr(0, S.size()-1);
-               }
-               cout << S << endl;
-               synrows[j].push_back(S);
-               synonym[S].push_back(j);
-           }
-       }
-       cout << j << endl;
-       j++;
+        QString line = in.readLine();
+        QList<QString> L = line.split(',');
+        qDebug() << L.first() << endl;
+        vector<string> V;
+        synrows.push_back(V);
+        for(int i=0 ; i  < L.size(); i++){
+            string S = L[i].toUtf8().constData();
+            if(S != "" && j){
+                S.erase(remove(S.begin(), S.end(), ' '), S.end());
+                if(S.substr(0, 1) == "\""){
+                    S = S.substr(1, S.size()-1);
+                }
+                if(S.substr(S.size()-1, 1) == "\""){
+                    S = S.substr(0, S.size()-1);
+                }
+                cout << S << endl;
+                synrows[j].push_back(S);
+                synonym[S].push_back(j);
+            }
+        }
+        cout << j << endl;
+        j++;
     }
 }
 
@@ -123,7 +122,7 @@ void slpNPatternDict::loadFileCSV(map<string, vector<int>>& synonym, vector<vect
 string slpNPatternDict::toDev(string s)
 { //Hin:-
     if (HinFlag){
-    string vowel_dn[]={"अ","आ","इ","ई","उ","ऊ","ऋ","ए","ऐ","ओ","औ","ऑ","ं","ः","ँ","ॅ"};
+        string vowel_dn[]={"अ","आ","इ","ई","उ","ऊ","ऋ","ए","ऐ","ओ","औ","ऑ","ं","ः","ँ","ॅ"};
         string vowel_dn_joiner[]={"","ा","ि","ी","ु","ू","ृ","े","ै","ो","ौ","ॉ"};
         string vowel_slp1[]={"a","A","i","I","u","U","f","e","E","o","O","Z","M","H","~","*"};
         string consonants_dn[]={"क","ख","ग","घ","ङ","च","छ","ज","झ","ञ","ट","ठ","ड","ढ","ण","त","थ","द","ध","न","प","फ","ब","भ","म","य","र","ल","व","श","ष","स","ह","क़","ख़","ग़","ज़","ड़","ढ़","ऩ","फ़","य़","ऱ","ळ"};
@@ -149,38 +148,37 @@ string slpNPatternDict::toDev(string s)
             s=ReplaceString(s,no_slp1[i],no_dn[i]);
         }
     }
-else if(SanFlag ){
-    string vowel_dn[]={"अ","आ","इ","ई","उ","ऊ","ऋ","ॠ","ऌ","ॡ","ए","ऐ","ओ","औ","ं","ः","ँ","ᳲ","ᳳ","ऽ","ॐ"};
-    string vowel_dn_joiner[]={"","ा","ि","ी","ु","ू","ृ","ॄ","ॢ","ॣ","े","ै","ो","ौ"};
-    //string consonants_dn[]={"क","ख","ग","घ","ङ","च","छ","ज","झ","ञ","ट","ठ","ड","ढ","ण","त","थ","द","ध","न","प","फ","ब","भ","म","य","र","ल","व","श","ष","स","ह","ळ"};
-    string consonants_dn_halanta[]={"क्","ख्","ग्","घ्","ङ्","च्","छ्","ज्","झ्","ञ्","ट्","ठ्","ड्","ढ्","ण्","त्","थ्","द्","ध्","न्","प्","फ्","ब्","भ्","म्","य्","र्","ल्","व्","श्","ष्","स्","ह्","ळ्"};
-    string vowel_slp1[]={"a","A","i","I","u","U","f","F","x","X","e","E","o","O","M","H","~","Z","V","$","%"};
-    string consonants_slp1[]={"k","K","g","G","N","c","C","j","J","Y","w","W","q","Q","R","t","T","d","D","n","p","P","b","B","m","y","r","l","v","S","z","s","h","L"};
-    string numbers_etc_dn[]={"॥","।","॰","ऽ","‘","’","“","”","ॐ","१","२","३","४","५","६","७","८","९","०"};
-    string numbers_eng[]={"||","|","^0","$","-'","'","-\"","\"","%","1","2","3","4","5","6","7","8","9","0"};
+    else if(SanFlag ){
+        string vowel_dn[]={"अ","आ","इ","ई","उ","ऊ","ऋ","ॠ","ऌ","ॡ","ए","ऐ","ओ","औ","ं","ः","ँ","ᳲ","ᳳ","ऽ","ॐ"};
+        string vowel_dn_joiner[]={"","ा","ि","ी","ु","ू","ृ","ॄ","ॢ","ॣ","े","ै","ो","ौ"};
+        //string consonants_dn[]={"क","ख","ग","घ","ङ","च","छ","ज","झ","ञ","ट","ठ","ड","ढ","ण","त","थ","द","ध","न","प","फ","ब","भ","म","य","र","ल","व","श","ष","स","ह","ळ"};
+        string consonants_dn_halanta[]={"क्","ख्","ग्","घ्","ङ्","च्","छ्","ज्","झ्","ञ्","ट्","ठ्","ड्","ढ्","ण्","त्","थ्","द्","ध्","न्","प्","फ्","ब्","भ्","म्","य्","र्","ल्","व्","श्","ष्","स्","ह्","ळ्"};
+        string vowel_slp1[]={"a","A","i","I","u","U","f","F","x","X","e","E","o","O","M","H","~","Z","V","$","%"};
+        string consonants_slp1[]={"k","K","g","G","N","c","C","j","J","Y","w","W","q","Q","R","t","T","d","D","n","p","P","b","B","m","y","r","l","v","S","z","s","h","L"};
+        string numbers_etc_dn[]={"॥","।","॰","ऽ","‘","’","“","”","ॐ","१","२","३","४","५","६","७","८","९","०"};
+        string numbers_eng[]={"||","|","^0","$","-'","'","-\"","\"","%","1","2","3","4","5","6","7","8","9","0"};
 
 
-       for(int i=0;i<34;i++)
-       {
-           s=ReplaceString(s,consonants_slp1[i],consonants_dn_halanta[i]);
-       }
-       //cout << "here1 " << s <<endl;
-       for(int i=0;i<14;i++)
-       {
-           s=ReplaceString(s,"्"+vowel_slp1[i],vowel_dn_joiner[i]);
-       }
-       //cout << "here2 " << s <<endl;
-       for(int i=0;i<21;i++)
-       {
-           s=ReplaceString(s,vowel_slp1[i],vowel_dn[i]);
-       }
-       //cout << "here3 " << s <<endl;
-       for(unsigned int i=0;i<(sizeof(numbers_etc_dn)/sizeof(numbers_etc_dn[0]));i++)
-       {
-           s=ReplaceString(s,numbers_eng[i],numbers_etc_dn[i]);
-       }
-       //cout << "here3 " << s <<endl;
-       //cout<<s<<endl;
+        for(int i=0;i<34;i++)
+        {
+            s=ReplaceString(s,consonants_slp1[i],consonants_dn_halanta[i]);
+        }
+
+        for(int i=0;i<14;i++)
+        {
+            s=ReplaceString(s,"्"+vowel_slp1[i],vowel_dn_joiner[i]);
+        }
+
+        for(int i=0;i<21;i++)
+        {
+            s=ReplaceString(s,vowel_slp1[i],vowel_dn[i]);
+        }
+
+        for(unsigned int i=0;i<(sizeof(numbers_etc_dn)/sizeof(numbers_etc_dn[0]));i++)
+        {
+            s=ReplaceString(s,numbers_eng[i],numbers_etc_dn[i]);
+        }
+
     }
 
     return s;
@@ -204,29 +202,29 @@ string slpNPatternDict::toslp1(string s)
         string no_slp1[]={"0","1","2","3","4","5","6","7","8","9","||","|","-","-"};
 
         for(int i=0;i<44;i++)
-                {
-                    s=ReplaceString(s,consonants_dn_halanta[i],consonants_slp1[i]);
-                }
-                for(int i=0;i<11;i++)
-                {
-                    s=ReplaceString(s,vowel_dn_joiner[i],vowel_slp1[i+1]);
-                }
-                for(int i=0;i<16;i++)
-                {
-                    s=ReplaceString(s,vowel_dn[i],vowel_slp1[i]);
-                }
-                for(int i=0;i<43;i++)
-                {
-                    s=ReplaceStringRestricted(s,consonants_dn[i],consonants_slp1[i]);
-                }
-                for(int i=0;i<14;i++)
-                {
-                    s=ReplaceString(s,no_dn[i],no_slp1[i]);
-                }
+        {
+            s=ReplaceString(s,consonants_dn_halanta[i],consonants_slp1[i]);
+        }
+        for(int i=0;i<11;i++)
+        {
+            s=ReplaceString(s,vowel_dn_joiner[i],vowel_slp1[i+1]);
+        }
+        for(int i=0;i<16;i++)
+        {
+            s=ReplaceString(s,vowel_dn[i],vowel_slp1[i]);
+        }
+        for(int i=0;i<43;i++)
+        {
+            s=ReplaceStringRestricted(s,consonants_dn[i],consonants_slp1[i]);
+        }
+        for(int i=0;i<14;i++)
+        {
+            s=ReplaceString(s,no_dn[i],no_slp1[i]);
+        }
 
     }
     else if(SanFlag){
- //San:-
+        //San:-
         string vowel_dn[]={"अ","आ","इ","ई","उ","ऊ","ऋ","ॠ","ऌ","ॡ","ए","ऐ","ओ","औ","ं","ः","ँ","ᳲ","ᳳ"};
         string vowel_dn_joiner[]={"ा","ि","ी","ु","ू","ृ","ॄ","ॢ","ॣ","े","ै","ो","ौ"};
         string consonants_dn[]={"क","ख","ग","घ","ङ","च","छ","ज","झ","ञ","ट","ठ","ड","ढ","ण","त","थ","द","ध","न","प","फ","ब","भ","म","य","र","ल","व","श","ष","स","ह","ळ"};
@@ -236,15 +234,15 @@ string slpNPatternDict::toslp1(string s)
         //cout<<s<<endl;
         size_t pos = 0;
         while((pos=s.find("ॆ", pos)) != string::npos)
-        s.replace(pos, 3,"े");
+            s.replace(pos, 3,"े");
 
         pos = 0;
         while((pos=s.find("ऎ", pos)) != string::npos)
-        s.replace(pos, 3,"एे");
+            s.replace(pos, 3,"एे");
 
         size_t pos1 = 0;
         while((pos1=s.find("ॊ", pos1)) != string::npos)
-        s.replace(pos1, 3,"ो");
+            s.replace(pos1, 3,"ो");
         //cout<<s<<endl;
         pos1 = 0;
         //cout<<s<<" "<<s.find("ऴ्", pos1)<<endl;
@@ -252,7 +250,7 @@ string slpNPatternDict::toslp1(string s)
         {s.replace(pos1, 6,"ळ्"); }
         //cout<<s<<endl;
         pos1 = 0;
-        //cout<<s<<" "<<s.find("ऴ", pos1)<<endl;
+
         while((pos1=s.find("ऴ", pos1)) != string::npos)//"ळ" is valid, dot below "ळ" is invalid char
         {s.replace(pos1, 6,"ळ"); }
         //cout<<s<<endl;
@@ -267,17 +265,16 @@ string slpNPatternDict::toslp1(string s)
             s=ReplaceString(s,vowel_dn_joiner[i],vowel_slp1[i+1]);
         }
 
-        for(int i=0;i<19;i++)
-        {
-            s=ReplaceString(s,vowel_dn[i],vowel_slp1[i]);
-        }
-        //cout<<"here "<< s<<endl;
         for(int i=0;i<34;i++)
         {   //cout<< i << " " << consonants_dn[i] << " " << consonants_slp1[i] << endl;
             s=ReplaceStringRestricted(s,consonants_dn[i],consonants_slp1[i]);
         }
-        //cout<<"here1 "<< s<<endl;
-        //cout<<s<<"…"<<s.find("…", pos1)<<endl;
+
+        for(int i=0;i<19;i++)
+        {
+            s=ReplaceString(s,vowel_dn[i],vowel_slp1[i]);
+        }
+
         string numbers_etc_dn[]={"॥","।","॰","ऽ","‘","’","“","”","ॐ","१","२","३","४","५","६","७","८","९","०"};
         string numbers_eng[]={"||","|","^0","$","-'","'","-\"","\"","%","1","2","3","4","5","6","7","8","9","0"};
         for(uint i=0;i<(sizeof(numbers_etc_dn)/sizeof(numbers_etc_dn[0]));i++)
@@ -285,7 +282,7 @@ string slpNPatternDict::toslp1(string s)
             s=ReplaceString(s,numbers_etc_dn[i],numbers_eng[i]);
         }
     } //ifSanflag over
-return s;
+    return s;
 }
 
 /*!
@@ -294,11 +291,11 @@ return s;
  */
 void slpNPatternDict::printmapinDev(map<string,int> m1){
 
-/*std::ofstream ss1("ppi.bin");
+    /*std::ofstream ss1("ppi.bin");
    boost::archive::text_oarchive oarch1(ss1);
    oarch1 << PatWInst;*/
-for( map<string,int>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
-               cout << toDev(eptr->first) << endl;
+    for( map<string,int>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
+        cout << toDev(eptr->first) << endl;
 }
 
 /*!
@@ -307,11 +304,11 @@ for( map<string,int>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
  */
 void slpNPatternDict::printmap(map<string,int>& m1){
 
-/*std::ofstream ss1("ppi.bin");
+    /*std::ofstream ss1("ppi.bin");
    boost::archive::text_oarchive oarch1(ss1);
    oarch1 << PatWInst;*/
-for( map<string,int>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
-               cout << (eptr->first) << endl;
+    for( map<string,int>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
+        cout << (eptr->first) << endl;
 }
 
 /*!
@@ -320,11 +317,11 @@ for( map<string,int>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
  */
 void slpNPatternDict::printmapstrstr(map<string,string>& m1){
 
-/*std::ofstream ss1("ppi.bin");
+    /*std::ofstream ss1("ppi.bin");
    boost::archive::text_oarchive oarch1(ss1);
    oarch1 << PatWInst;*/
-for( map<string,string>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
-               cout << (eptr->first) << " " <<(eptr->second) << endl;
+    for( map<string,string>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
+        cout << (eptr->first) << " " <<(eptr->second) << endl;
 }
 
 /*!
@@ -333,11 +330,11 @@ for( map<string,string>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
  */
 void slpNPatternDict::printmapWFreq(map<string,int>& m1){
 
-/*std::ofstream ss1("ppi.bin");
+    /*std::ofstream ss1("ppi.bin");
    boost::archive::text_oarchive oarch1(ss1);
    oarch1 << PatWInst;*/
-for( map<string,int>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
-               cout << (eptr->first) << " " <<(eptr->second) << endl;
+    for( map<string,int>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
+        cout << (eptr->first) << " " <<(eptr->second) << endl;
 }
 
 /*!
@@ -349,7 +346,7 @@ for( map<string,int>::const_iterator eptr=m1.begin(); eptr!=m1.end(); eptr++)
  * \param PWords
  */
 void slpNPatternDict::loadCwordsPair(string wordL,string wordR, map<string, string>& CPair,map<string,int>& Dict,map<string,int>&  PWords){
-if ((Dict[wordL] ==0) && (PWords[wordL] == 0)) CPair[wordL] = wordR;
+    if ((Dict[wordL] ==0) && (PWords[wordL] == 0)) CPair[wordL] = wordR;
 }
 
 /*!
@@ -360,14 +357,14 @@ if ((Dict[wordL] ==0) && (PWords[wordL] == 0)) CPair[wordL] = wordR;
  * \param PWords
  */
 void loadCPair(string filename, map<string, string>& CPair,map<string,int>&  Dict, map<string,int>&  PWords){
-ifstream myfile(filename);
-slpNPatternDict slnp;
-          if (myfile.is_open())
-          { string str1, str2;
+    ifstream myfile(filename);
+    slpNPatternDict slnp;
+    if (myfile.is_open())
+    { string str1, str2;
         while (myfile >> str1 ) {myfile >> str2;
-slnp.loadCwordsPair(slnp.toslp1(str1),slnp.toslp1(str2),CPair,Dict,PWords);}
+            slnp.loadCwordsPair(slnp.toslp1(str1),slnp.toslp1(str2),CPair,Dict,PWords);}
         cout <<"CPairs " << CPair.size() <<  " loaded" << endl;
-          } else cout <<"Error:" << filename <<  "CPair NOT there/loaded" << endl;
+    } else cout <<"Error:" << filename <<  "CPair NOT there/loaded" << endl;
 }
 
 /*!
@@ -445,7 +442,7 @@ void slpNPatternDict::loadCPairs(string filename, map<string, set<string> >& CPa
             }
         }
         cout <<"CPairs " << CPairs.size() <<  " loaded" << endl;
-     }
+    }
     else cout <<"Error:" << filename <<  "CPair NOT there/loaded" << endl;
 }
 
@@ -457,11 +454,11 @@ void slpNPatternDict::loadCPairs(string filename, map<string, set<string> >& CPa
  * \param GBook
  */
 void slpNPatternDict::loadMapNV(string fileName, map<string,int>& OCRWords, vector<string>& vec, string GBook){
-ifstream myfile(fileName);
-      if (myfile.is_open())
-      { string str1;
-    while (myfile >> str1 ) { str1 = toslp1(str1); OCRWords[str1] = OCRWords[str1] + 1;vec.push_back(str1);}
-    cout <<GBook <<" " <<OCRWords.size() <<" Words Loaded in mapNvector" << endl;
+    ifstream myfile(fileName);
+    if (myfile.is_open())
+    { string str1;
+        while (myfile >> str1 ) { str1 = toslp1(str1); OCRWords[str1] = OCRWords[str1] + 1;vec.push_back(str1);}
+        cout <<GBook <<" " <<OCRWords.size() <<" Words Loaded in mapNvector" << endl;
     } else cout <<"Error:" << GBook<<  "Words NOT Loaded in mapNvector" << endl;
 }
 
@@ -480,55 +477,55 @@ void slpNPatternDict::loadMapPWords(vector<string>& vGBook,vector<string>& vIBoo
             if( (vGBook[t1].find(s1) != string::npos)|| (vGBook[t1].find(s1 + " ") != string::npos) || (vGBook[t1].find(" " + s1) != string::npos)) {PWords[s1]++; break;}
         }
     }
-cout << PWords.size() << " words loaded in PWords" << endl;
+    cout << PWords.size() << " words loaded in PWords" << endl;
 }
 
 string slpNPatternDict::findDictEntries1(string s1,  map<string, int>& m2, map<string, int>& m1, int size) { //unordered_
 
-if((s1.size() == 0) || (s1 == "")) return "";
+    if((s1.size() == 0) || (s1 == "")) return "";
 
-//cout << "s1  "<< s1 << endl;
+    //cout << "s1  "<< s1 << endl;
 
-//cout << s1 << endl;
-//rAmaAnand
-for(size_t j =0; j < s1.size() ; j++){ //- i +1 j= 0:8
-    for(size_t i = s1.size() - j; i > 0; i--){// j0 i = 9:1 rAmaAnand rAmaAnan rAmaAna.. , j1  8:2
-    string str = s1.substr(j,i); //&&((str.size() >= 3)|| ( (str.size()==2) && (str[1] != 'a') &&( size< 3) ) || ((str.size() ==1)&&( size< 2) ) ))
-    //cout << "str  "<< str << endl;
-    if((m2[str]>0)||(m1[str]>0)) { //cout << "here "<< str << "L " << s1.substr(0,j) << "R " << s1.substr(j+i,s1.size()-i) << endl;
-            //colorFlag = !colorFlag;
-            //string strcolor = color[colorFlag];// << endl;
+    //cout << s1 << endl;
+    //rAmaAnand
+    for(size_t j =0; j < s1.size() ; j++){ //- i +1 j= 0:8
+        for(size_t i = s1.size() - j; i > 0; i--){// j0 i = 9:1 rAmaAnand rAmaAnan rAmaAna.. , j1  8:2
+            string str = s1.substr(j,i); //&&((str.size() >= 3)|| ( (str.size()==2) && (str[1] != 'a') &&( size< 3) ) || ((str.size() ==1)&&( size< 2) ) ))
             //cout << "str  "<< str << endl;
-            return findDictEntries1(s1.substr(0,j),m2,m1,size) + "<font color=\'" + "green" + "\'>" + toDev(str) + "</font>" +  findDictEntries1(s1.substr(j+i,s1.size()-i),m2,m1,size);
+            if((m2[str]>0)||(m1[str]>0)) { //cout << "here "<< str << "L " << s1.substr(0,j) << "R " << s1.substr(j+i,s1.size()-i) << endl;
+                //colorFlag = !colorFlag;
+                //string strcolor = color[colorFlag];// << endl;
+                //cout << "str  "<< str << endl;
+                return findDictEntries1(s1.substr(0,j),m2,m1,size) + "<font color=\'" + "green" + "\'>" + toDev(str) + "</font>" +  findDictEntries1(s1.substr(j+i,s1.size()-i),m2,m1,size);
 
 
             }
+        }
     }
-    }
-//cout << "here2 "<< str << "sd"<< endl;
-return ("<font color=\'red\'>" + toDev(s1) + "</font>");
+    //cout << "here2 "<< str << "sd"<< endl;
+    return ("<font color=\'red\'>" + toDev(s1) + "</font>");
 }
 
 string slpNPatternDict::findDictEntries(string s1,  map<string, int>& m2, map<string, int>& m1, int size) { //unordered_
-m2["rAma"]++;
-m2["rAm"]++;
-string s = findDictEntries1(s1,m2,m1, size);
+    m2["rAma"]++;
+    m2["rAm"]++;
+    string s = findDictEntries1(s1,m2,m1, size);
 
-string vowel_dn[]={"आ","इ","ई","उ","ऊ","ऋ","ॠ","ऌ","ॡ","ए","ऐ","ओ","औ"};
-string vowel_dn_joiner[]={"ा","ि","ी","ु","ू","ृ","ॄ","ॢ","ॣ","े","ै","ो","ौ"};
-//cout << s << endl;
-size_t t1 = s.find("\'>");
-string sL = s.substr(0,t1+3);
-string sR = s.substr(t1+3,s.size()-t1-3);
-//cout << sL << " " << sR << endl;
-for(size_t t =0; t< 12; t++){
-    string tofind = "\'>" + vowel_dn[t];
-while((sR.find(tofind) != string::npos)){
-    //cout << s << endl; cout << s.find(tofind) << endl;
-   sR.replace(sR.find(tofind),tofind.size(), "\'>" + vowel_dn_joiner[t]); //cout << s << endl;
-}
-}
-return sL + sR;
+    string vowel_dn[]={"आ","इ","ई","उ","ऊ","ऋ","ॠ","ऌ","ॡ","ए","ऐ","ओ","औ"};
+    string vowel_dn_joiner[]={"ा","ि","ी","ु","ू","ृ","ॄ","ॢ","ॣ","े","ै","ो","ौ"};
+    //cout << s << endl;
+    size_t t1 = s.find("\'>");
+    string sL = s.substr(0,t1+3);
+    string sR = s.substr(t1+3,s.size()-t1-3);
+    //cout << sL << " " << sR << endl;
+    for(size_t t =0; t< 12; t++){
+        string tofind = "\'>" + vowel_dn[t];
+        while((sR.find(tofind) != string::npos)){
+            //cout << s << endl; cout << s.find(tofind) << endl;
+            sR.replace(sR.find(tofind),tofind.size(), "\'>" + vowel_dn_joiner[t]); //cout << s << endl;
+        }
+    }
+    return sL + sR;
 
 }
 
@@ -539,13 +536,13 @@ return sL + sR;
  */
 bool slpNPatternDict::hasM40PerAsci(string word1){
     if(SanFlag||HinFlag){
-    string asc = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-    size_t sz = word1.size();
-    double cnt = 0;
-    for(size_t t =0; t < sz; t++){
-        if(asc.find(word1.substr(t,1)) != string::npos) cnt ++;
-        if (cnt/(0.4) >= sz) return 1;
-    }
+        string asc = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        size_t sz = word1.size();
+        double cnt = 0;
+        for(size_t t =0; t < sz; t++){
+            if(asc.find(word1.substr(t,1)) != string::npos) cnt ++;
+            if (cnt/(0.4) >= sz) return 1;
+        }
     }
     return 0;
 }
@@ -572,11 +569,11 @@ bool slpNPatternDict::hasNoAsci(string word1){
  */
 void slpNPatternDict::loadMap(string fileName, map<string,int>& OCRWords, string GBook){
     size_t szp = OCRWords.size();
-ifstream myfile(fileName);
-      if (myfile.is_open())
-      { string str1;
-    while (myfile >> str1 ) { if(!hasM40PerAsci(str1)) {str1 = toslp1(str1); /*cout <<str1<<endl;*/ OCRWords[str1] = OCRWords[str1] + 1;}}
-    cout << GBook <<" " <<OCRWords.size() - szp<<" Words Loaded" << endl;
+    ifstream myfile(fileName);
+    if (myfile.is_open())
+    { string str1;
+        while (myfile >> str1 ) { if(!hasM40PerAsci(str1)) {str1 = toslp1(str1); /*cout <<str1<<endl;*/ OCRWords[str1] = OCRWords[str1] + 1;}}
+        cout << GBook <<" " <<OCRWords.size() - szp<<" Words Loaded" << endl;
     } else cout <<"Error:" << GBook<<  "Words NOT Loaded" << endl;
 }
 
@@ -595,7 +592,7 @@ bool slpNPatternDict::insertPatternstoMap(string str, map<string,int>& TPWordsP,
     for(size_t i = 0; i < (sz+1); i++){
         string s1 = str.substr(0,i);
         if (s1.size()<9) count6++;
-       TPWordsP[s1]++; count++;//PWordsP[s1]++;
+        TPWordsP[s1]++; count++;//PWordsP[s1]++;
     }
     return insertPatternstoMap(str.substr(1,sz-1),TPWordsP,count,count6);//PWordsP
 }
@@ -612,15 +609,15 @@ bool slpNPatternDict::insertPatternstoMap(string str, map<string,int>& TPWordsP,
 size_t slpNPatternDict::loadDictPatternstoMap(map<string,int >& TPWordsP, map<string,int >& PWords,size_t& count6){ // arg1(strt from 0) ,map<string,int >& PWordsP
     //! ADDED FOR FEATYRE EXTRACTION
     size_t count = 0,maxsiz = 0;
-        for( map<string,int >::const_iterator ptr=PWords.begin();
-             ptr!=PWords.end(); ptr++) {
-           insertPatternstoMap(ptr->first, TPWordsP,count,count6);
-           if (ptr->first.size() > maxsiz) maxsiz = ptr->first.size();
-        }
-        cout << count <<" patterns loaded " << endl;
-               //cout << "m2 size " << m2.size() << endl;
-        return maxsiz;
+    for( map<string,int >::const_iterator ptr=PWords.begin();
+         ptr!=PWords.end(); ptr++) {
+        insertPatternstoMap(ptr->first, TPWordsP,count,count6);
+        if (ptr->first.size() > maxsiz) maxsiz = ptr->first.size();
     }
+    cout << count <<" patterns loaded " << endl;
+    //cout << "m2 size " << m2.size() << endl;
+    return maxsiz;
+}
 
 /*!
  * \fn slpNPatternDict::getNgramFeaturesinVect
@@ -639,11 +636,11 @@ bool slpNPatternDict::getNgramFeaturesinVect(string str,map<string,int>& Dict,ve
     for(size_t i = 2; i < (sz+1); i++){
         string s1 = str.substr(0,i);
         //cout<<s1<<endl;
-       if(s1.size() < 9){
-       if (Dict[s1]>0){vb.push_back(1); vbf.push_back(Dict[s1]);} else {vb.push_back(0); vbf.push_back(0);}
-       count++;
-       }
-       //cout << vb[count]<<endl;
+        if(s1.size() < 9){
+            if (Dict[s1]>0){vb.push_back(1); vbf.push_back(Dict[s1]);} else {vb.push_back(0); vbf.push_back(0);}
+            count++;
+        }
+        //cout << vb[count]<<endl;
     }
     return getNgramFeaturesinVect(str.substr(1,sz-1),Dict,vb,vbf, count);//PWordsP
 }
@@ -663,7 +660,7 @@ bool slpNPatternDict::endsWith(const std::string& s, const std::string& suffix)
 {
     //! ADDED FOR FEATYRE EXTRACTION
     return s.size() >= suffix.size() &&
-           s.substr(s.size() - suffix.size()) == suffix;
+            s.substr(s.size() - suffix.size()) == suffix;
 }
 // ADDED FOR FEATYRE EXTRACTION
 std::vector<std::string> slpNPatternDict::split(const std::string& s, const std::string& delimiter, const bool& removeEmptyEntries)
@@ -672,18 +669,18 @@ std::vector<std::string> slpNPatternDict::split(const std::string& s, const std:
 
     for (size_t start = 0, end; start < s.length(); start = end + delimiter.length())
     {
-         size_t position = s.find(delimiter, start);
-         end = position != string::npos ? position : s.length();
+        size_t position = s.find(delimiter, start);
+        end = position != string::npos ? position : s.length();
 
-         std::string token = s.substr(start, end - start);
-         if (!removeEmptyEntries || !token.empty())
-         {
-             tokens.push_back(token);
-         }
+        std::string token = s.substr(start, end - start);
+        if (!removeEmptyEntries || !token.empty())
+        {
+            tokens.push_back(token);
+        }
     }
 
     if (!removeEmptyEntries &&
-        (s.empty() || endsWith(s, delimiter)))
+            (s.empty() || endsWith(s, delimiter)))
     {
         tokens.push_back("");
     }
@@ -719,23 +716,23 @@ bool slpNPatternDict::searchS1inGVec(string s1,size_t iocrdone,vector<string>& g
  */
 string slpNPatternDict::findDictEntries(string s1,  map<string, int>& m2, map<string, int>& m1) {//unordered_
 
-if((s1.size() == 0) || (s1 == "")) return "";
+    if((s1.size() == 0) || (s1 == "")) return "";
 
 
 
-//cout << s1 << endl;
-for(size_t i = s1.size(); i > 0; i --){
-    for(size_t j =0; j < s1.size() - i +1; j++){
-    string str = s1.substr(j,i);
-    if((m1[str]>0) ) { //cout << "here "<< str << "L " << s1.substr(0,j) << "R " << s1.substr(j+i,s1.size()-i) << endl;
-        return findDictEntries(s1.substr(0,j),m2,m1) + "<font color=\'" + "green" + "\'>" + toDev(str) + "</font>" +  findDictEntries(s1.substr(j+i,s1.size()-i),m2,m1);
+    //cout << s1 << endl;
+    for(size_t i = s1.size(); i > 0; i --){
+        for(size_t j =0; j < s1.size() - i +1; j++){
+            string str = s1.substr(j,i);
+            if((m1[str]>0) ) { //cout << "here "<< str << "L " << s1.substr(0,j) << "R " << s1.substr(j+i,s1.size()-i) << endl;
+                return findDictEntries(s1.substr(0,j),m2,m1) + "<font color=\'" + "green" + "\'>" + toDev(str) + "</font>" +  findDictEntries(s1.substr(j+i,s1.size()-i),m2,m1);
             } else if(m2[str]>4) {//cout << "here "<< str << "L " << s1.substr(0,j) << "R " << s1.substr(j+i,s1.size()-i) << endl;
-        return findDictEntries(s1.substr(0,j),m2,m1) + "<font color=\'" + "cyan" + "\'>" + toDev(str) + "</font>" +  findDictEntries(s1.substr(j+i,s1.size()-i),m2,m1);
+                return findDictEntries(s1.substr(0,j),m2,m1) + "<font color=\'" + "cyan" + "\'>" + toDev(str) + "</font>" +  findDictEntries(s1.substr(j+i,s1.size()-i),m2,m1);
+            }
         }
     }
-}
-//cout << "here2 "<< str << "sd"<< endl;
-return ("<font color=\'red\'>" + toDev(s1) + "</font>");//("#" + s1 + "#");//
+    //cout << "here2 "<< str << "sd"<< endl;
+    return ("<font color=\'red\'>" + toDev(s1) + "</font>");//("#" + s1 + "#");//
 }
 
 /*!
@@ -800,46 +797,46 @@ using namespace std;
  * \param str3
  */
 void slpNPatternDict::allignlcsnew(string& str1,string& str2,string& str3){
-string str1new, str2new;
-size_t t1 = 0;
-size_t t2 =0;
-size_t t3 =0;
-string s1,s2,s3;
+    string str1new, str2new;
+    size_t t1 = 0;
+    size_t t2 =0;
+    size_t t3 =0;
+    string s1,s2,s3;
 
 
-// while1
-// a) addition if s1 == s3, and s2 differs add space to s1n, append t2 only so that we can reach close to s1 == s3 == s2
-// b) deletion if s2 == s3, and s1 differs add space to s2n, append t1 only so that we can reach close to s2 == s3 == s1
-// substitution if s1 != s2 != s3 s1n += s1, s2n += s2 append t1 and t2
-// nothing if s1 == s2 == s3 s1n += s1, s2n += s2 append t1 and t2 and t3; if t3 == str3.size() Up3Flag = 1 break;
+    // while1
+    // a) addition if s1 == s3, and s2 differs add space to s1n, append t2 only so that we can reach close to s1 == s3 == s2
+    // b) deletion if s2 == s3, and s1 differs add space to s2n, append t1 only so that we can reach close to s2 == s3 == s1
+    // substitution if s1 != s2 != s3 s1n += s1, s2n += s2 append t1 and t2
+    // nothing if s1 == s2 == s3 s1n += s1, s2n += s2 append t1 and t2 and t3; if t3 == str3.size() Up3Flag = 1 break;
 
-// if Up3Flag find which is smaller, add spaces in end of smaller smallstr = min(str1.size() - t1,str2.size() - t2);
+    // if Up3Flag find which is smaller, add spaces in end of smaller smallstr = min(str1.size() - t1,str2.size() - t2);
 
-while(1){
-    s1 = str1.substr(t1,1); s2 = str2.substr(t2,1); s3 = str3.substr(t3,1);
-    //a) add
-    //cout << t1 << " " << t2 << " " << t3<< endl;
-    //cout << s1 << " " << s2 << " " << s3<< endl;
-    if((s1 == s3) && (s2 != s3)) {str1new += " "; str2new += s2; t2++; /*cout << "a growing str1new " << str1new <<endl;*/  }
-    if((s2 == s3) && (s1 != s3)) {str2new += " ";  str1new += s1; t1++; /*cout << "d growing str2new " << str2new <<endl;*/ } // b)
-    if((s2 != s3) && (s1 != s3)) {str1new += s1; str2new += s2; t1++; t2++; /*cout << "s growing str12new " << str1new<<" " <<str2new <<endl;*/ } //c)
-    if((s2 == s3) && (s1 == s3)) {str1new += s1; str2new += s2; t1++; t2++;t3++;   /*cout << "n growing str12new " << str1new<<" " <<str2new <<endl;*/  if(t3 == str3.size()) {break;}} //d)
-}
-//cout << " " << str1new << " " << str2new << endl;
-uint max = str1.size() ; if(max < str2.size() ) max = str2.size() ;
+    while(1){
+        s1 = str1.substr(t1,1); s2 = str2.substr(t2,1); s3 = str3.substr(t3,1);
+        //a) add
+        //cout << t1 << " " << t2 << " " << t3<< endl;
+        //cout << s1 << " " << s2 << " " << s3<< endl;
+        if((s1 == s3) && (s2 != s3)) {str1new += " "; str2new += s2; t2++; /*cout << "a growing str1new " << str1new <<endl;*/  }
+        if((s2 == s3) && (s1 != s3)) {str2new += " ";  str1new += s1; t1++; /*cout << "d growing str2new " << str2new <<endl;*/ } // b)
+        if((s2 != s3) && (s1 != s3)) {str1new += s1; str2new += s2; t1++; t2++; /*cout << "s growing str12new " << str1new<<" " <<str2new <<endl;*/ } //c)
+        if((s2 == s3) && (s1 == s3)) {str1new += s1; str2new += s2; t1++; t2++;t3++;   /*cout << "n growing str12new " << str1new<<" " <<str2new <<endl;*/  if(t3 == str3.size()) {break;}} //d)
+    }
+    //cout << " " << str1new << " " << str2new << endl;
+    uint max = str1.size() ; if(max < str2.size() ) max = str2.size() ;
 
-//cout << t1 << " " << t2 << " " << max<< endl;
-while(1)
-{   if((t1>=max) && (t2>=max)) break;
-    if(t1<str1.size()) s1 = str1.substr(t1,1); else s1 = " "; if(t2<str2.size()) s2 = str2.substr(t2,1); else s2 = " ";
     //cout << t1 << " " << t2 << " " << max<< endl;
-    //cout << s1 << " " << s2 << " " << endl;
-    if(t1 < max) str1new += s1; else str1new += " ";
-    if(t2 < max) str2new += s2; else str2new += " ";
-    t1++; t2++;
-}
-str1 = str1new;
-str2 = str2new;
+    while(1)
+    {   if((t1>=max) && (t2>=max)) break;
+        if(t1<str1.size()) s1 = str1.substr(t1,1); else s1 = " "; if(t2<str2.size()) s2 = str2.substr(t2,1); else s2 = " ";
+        //cout << t1 << " " << t2 << " " << max<< endl;
+        //cout << s1 << " " << s2 << " " << endl;
+        if(t1 < max) str1new += s1; else str1new += " ";
+        if(t2 < max) str2new += s2; else str2new += " ";
+        t1++; t2++;
+    }
+    str1 = str1new;
+    str2 = str2new;
 
 }
 
@@ -891,8 +888,8 @@ void slpNPatternDict::lcs_lens(it xlo, it xhi, it ylo, it yhi, lengths & lens)
         for (it y = ylo; y != yhi; ++y, ++i)
         {
             curr[i + 1] = *x == *y
-                ? prev[i] + 1
-                : std::max(curr[i], prev[i + 1]);
+                    ? prev[i] + 1
+                    : std::max(curr[i], prev[i + 1]);
         }
     }
     swap(lens, curr);
@@ -987,7 +984,7 @@ void slpNPatternDict::lcs(seq const & xs, seq const & ys, seq & an_lcs)
 bool slpNPatternDict::isNonVowel(string ocrp){
     string a = "aeiouAEIOU";
     for(size_t t =0; t< a.size(); t ++){
-    if (ocrp == a.substr(t,1)) return 0;
+        if (ocrp == a.substr(t,1)) return 0;
     }
     return 1;
 
@@ -1000,11 +997,11 @@ bool slpNPatternDict::isNonVowel(string ocrp){
  */
 string slpNPatternDict::removeSpaces(string input)
 { string output;
-  int length = input.length();
-  for (int i = 0; i < length; i++) {
-     if(input[i] != ' ') output+= input[i];
-  }
-  return output;
+    int length = input.length();
+    for (int i = 0; i < length; i++) {
+        if(input[i] != ' ') output+= input[i];
+    }
+    return output;
 }
 
 /*!
@@ -1052,7 +1049,7 @@ void slpNPatternDict::findConfisions(string ocr, string correct, vector<string>&
         ocrp = s1;
         if(t >= sz) break;
     }
-//return vec;
+    //return vec;
 }
 
 /*!
@@ -1081,7 +1078,7 @@ void slpNPatternDict::findConfisionsNindex(string ocr, string correct, vector<st
         string ocrn ="";
         string correctn ="";
         string s1 = ocr.substr(t,1), s2 = correct.substr(t,1);
-    int s1t = t;
+        int s1t = t;
         //cout << "t = " << t << " " << sz << endl;
         // deletion
         if(s2 == " ") {
@@ -1104,7 +1101,7 @@ void slpNPatternDict::findConfisionsNindex(string ocr, string correct, vector<st
         ocrp = s1; s1p = s1t;
         if(t >= sz) break;
     }
-//return vec;
+    //return vec;
 }
 
 /*!
@@ -1174,7 +1171,7 @@ string slpNPatternDict::appendConfusionsPairsNindex(string str1, string str2, ve
  */
 void slpNPatternDict::loadvectomap(vector<string> ConfP, map<string,int>& ConfPmap){
 
-for(size_t t = 0; t<ConfP.size(); t++) ConfPmap[ConfP[t]]++;
+    for(size_t t = 0; t<ConfP.size(); t++) ConfPmap[ConfP[t]]++;
 
 }
 
@@ -1184,7 +1181,7 @@ for(size_t t = 0; t<ConfP.size(); t++) ConfPmap[ConfP[t]]++;
  */
 void slpNPatternDict::printvecstr(vector<string> ConfP){
 
-for(size_t t = 0; t<ConfP.size(); t++) cout << ConfP[t] << endl;
+    for(size_t t = 0; t<ConfP.size(); t++) cout << ConfP[t] << endl;
 
 }
 
@@ -1194,7 +1191,7 @@ for(size_t t = 0; t<ConfP.size(); t++) cout << ConfP[t] << endl;
  */
 void slpNPatternDict::printvecint(vector<int> ConfP){
 
-for(size_t t = 0; t<ConfP.size(); t++) cout << ConfP[t] << endl;
+    for(size_t t = 0; t<ConfP.size(); t++) cout << ConfP[t] << endl;
 
 }
 
@@ -1208,15 +1205,11 @@ void slpNPatternDict::loadConfusions(string fileName,map<string,int>& ConfPmap){
     vector<string> ConfP;
     string str1, str2;
     ifstream myfile(fileName);
-        if (myfile.is_open())
-      { while(myfile >> str1){
-        myfile >> str2;
-        appendConfusionsPairs((str1),(str2),ConfP);//toslp1
-    //cout << str1 << " " << str2 << endl;
-
-    //vec.clear();
-
-    } cout << ConfP.size() << " Confusions Loaded" << endl;} else cout <<"Error Confusions NOT Loaded" << endl;
+    if (myfile.is_open())
+    { while(myfile >> str1){
+            myfile >> str2;
+            appendConfusionsPairs((str1),(str2),ConfP);//toslp1
+        } cout << ConfP.size() << " Confusions Loaded" << endl;} else cout <<"Error Confusions NOT Loaded" << endl;
     loadvectomap(ConfP,ConfPmap);
 
 }
@@ -1232,15 +1225,11 @@ void slpNPatternDict::loadConfusions2(string fileName1,string fileName2,map<stri
     string str1, str2;
     ifstream myfile(fileName1);
     ifstream myfile2(fileName2);
-        if ((myfile.is_open()) && (myfile2.is_open()))
-      { while(myfile >> str1){
-        myfile2 >> str2;
-        appendConfusionsPairs((str1),(str2),ConfP);//toslp1
-    //cout << str1 << " " << str2 << endl;
-
-    //vec.clear();
-
-    } cout <<ConfP.size() << " Confusions Loaded" << endl;} else cout <<"Error Confusions NOT Loaded" << endl;
+    if ((myfile.is_open()) && (myfile2.is_open()))
+    { while(myfile >> str1){
+            myfile2 >> str2;
+            appendConfusionsPairs((str1),(str2),ConfP);//toslp1
+        } cout <<ConfP.size() << " Confusions Loaded" << endl;} else cout <<"Error Confusions NOT Loaded" << endl;
     loadvectomap(ConfP,ConfPmap);
 
 }
@@ -1253,12 +1242,12 @@ void slpNPatternDict::loadConfusions2(string fileName1,string fileName2,map<stri
  */
 void slpNPatternDict::loadConfusionsFont(vector<string> fileName1,vector<string> fileName2,map<string,int>& ConfPmap){
     vector<string> ConfP;
-        if (fileName1.size() > 0)
-      { for(size_t i =0;i < fileName1.size(); i++ ){
+    if (fileName1.size() > 0)
+    { for(size_t i =0;i < fileName1.size(); i++ ){
 
-        appendConfusionsPairs(fileName1[i],fileName2[i],ConfP);//toslp1
+            appendConfusionsPairs(fileName1[i],fileName2[i],ConfP);//toslp1
 
-    } cout << ConfP.size() << " Confusions Loaded from" << fileName1.size() <<" pairs"<< endl;} else cout <<"Error Confusions NOT Loaded" << endl;
+        } cout << ConfP.size() << " Confusions Loaded from" << fileName1.size() <<" pairs"<< endl;} else cout <<"Error Confusions NOT Loaded" << endl;
     loadvectomap(ConfP,ConfPmap);
 }
 
@@ -1270,40 +1259,40 @@ void slpNPatternDict::loadConfusionsFont(vector<string> fileName1,vector<string>
  * \param localFilenameC
  */
 void slpNPatternDict::generateCorrectionPairs(vector<string> &wrong,vector<string> &right,string localFilenameI,string localFilenameC){
-        vector<string> vecpI, vecpC;
-        std::ifstream sIpage(localFilenameI);
-        if (!(sIpage.is_open())) {cout << "cannot open inds/corrected file" <<endl;  return;} // break the while loop for page_no
-        string localstr;
-        map<string, bool> isEngOrNOT;
-        while(sIpage >> localstr) vecpI.push_back(toslp1(localstr)); sIpage.close();
-        std::ifstream sCpage(localFilenameC);
-        while(sCpage >> localstr) { vecpC.push_back(toslp1(localstr)); sIpage.close(); if(hasM40PerAsci(localstr)) isEngOrNOT[toslp1(localstr)] = 1;}
-        int sizew = wrong.size();
-        // if 1st word is wrong generate suggestions
-        int vGsz = vecpC.size(), vIsz =  vecpI.size();
-        //if (vGsz >vIsz ) mapTyping[page_no] = vGsz - vIsz;
-        //cout << vGsz << " " << vIsz << endl;
-        int win = vGsz  - vIsz;
-        if(win<0) win = -1*win;
-        win = maxIG(win,5);
-        //cout << win << endl;
-        //float WER = 0;
-        // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
-        for(int t = 0; t < vIsz;t++){
-            size_t minedit = 1000;
-            string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
-            string sC;
-            for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
-                string sCt1 = vecpC[t1];
-                eddis e;
-                size_t mineditIC = e.editDist(s1,sCt1);
-                if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1;   }
-                if (sCt1 == s1) {/*WER++;*/ break;}
-            }
-
-            if((s1 != sC) && (/*isEngOrNOT[sC] != */1)) {wrong.push_back(s1); right.push_back(sC); /*cout << s1 <<" " << sC << endl;*/}
+    vector<string> vecpI, vecpC;
+    std::ifstream sIpage(localFilenameI);
+    if (!(sIpage.is_open())) {cout << "cannot open inds/corrected file" <<endl;  return;} // break the while loop for page_no
+    string localstr;
+    map<string, bool> isEngOrNOT;
+    while(sIpage >> localstr) vecpI.push_back(toslp1(localstr)); sIpage.close();
+    std::ifstream sCpage(localFilenameC);
+    while(sCpage >> localstr) { vecpC.push_back(toslp1(localstr)); sIpage.close(); if(hasM40PerAsci(localstr)) isEngOrNOT[toslp1(localstr)] = 1;}
+    int sizew = wrong.size();
+    // if 1st word is wrong generate suggestions
+    int vGsz = vecpC.size(), vIsz =  vecpI.size();
+    //if (vGsz >vIsz ) mapTyping[page_no] = vGsz - vIsz;
+    //cout << vGsz << " " << vIsz << endl;
+    int win = vGsz  - vIsz;
+    if(win<0) win = -1*win;
+    win = maxIG(win,5);
+    //cout << win << endl;
+    //float WER = 0;
+    // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
+    for(int t = 0; t < vIsz;t++){
+        size_t minedit = 1000;
+        string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
+        string sC;
+        for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
+            string sCt1 = vecpC[t1];
+            eddis e;
+            size_t mineditIC = e.editDist(s1,sCt1);
+            if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1;   }
+            if (sCt1 == s1) {/*WER++;*/ break;}
         }
-        cout << wrong.size() - sizew << " new correction pairs loaded" << endl;
+
+        if((s1 != sC) && (/*isEngOrNOT[sC] != */1)) {wrong.push_back(s1); right.push_back(sC); /*cout << s1 <<" " << sC << endl;*/}
+    }
+    cout << wrong.size() - sizew << " new correction pairs loaded" << endl;
 }
 
 /*!
@@ -1314,45 +1303,45 @@ void slpNPatternDict::generateCorrectionPairs(vector<string> &wrong,vector<strin
  * \param localFilenameC
  */
 void slpNPatternDict::generatePairs(vector<string> &wrong,vector<string> &right,string localFilenameI,string localFilenameC){
-        vector<string> vecpI, vecpC;
-        std::ifstream sIpage(localFilenameI);
-        if (!(sIpage.is_open())) {cout << "cannot open inds/corrected file" <<endl;  return;} // break the while loop for page_no
-        string localstr;
-        map<string, bool> isEngOrNOT;
-        while(sIpage >> localstr) vecpI.push_back(toslp1(localstr)); sIpage.close();
-        std::ifstream sCpage(localFilenameC);
-        while(sCpage >> localstr) { vecpC.push_back(toslp1(localstr)); sIpage.close(); if(hasM40PerAsci(localstr)) isEngOrNOT[toslp1(localstr)] = 1;}
-        int sizew = wrong.size();
-        // if 1st word is wrong generate suggestions
-        int vGsz = vecpC.size(), vIsz =  vecpI.size();
-        //if (vGsz >vIsz ) mapTyping[page_no] = vGsz - vIsz;
-        //cout << vGsz << " " << vIsz << endl;
-        int win = vGsz  - vIsz;
-        if(win<0) win = -1*win;
-        win = maxIG(win,5);
-        //cout << win << endl;
-        //float WER = 0;
-        // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
-        for(int t = 0; t < vIsz;t++){
-            size_t minedit = 1000,minediti;
-            string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
-            string sC;
-            for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
-                string sCt1 = vecpC[t1];
-                eddis e;
-                size_t mineditIC = e.editDist(s1,sCt1);
-                if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1; minediti = t1;  }
-                if (sCt1 == s1) {/*WER++;*/ sC = s1; vecpC[t1] = ""; break;}
-                /*size_t szt = sCt1.find(s1); size_t sCt1sz = sCt1.size();
+    vector<string> vecpI, vecpC;
+    std::ifstream sIpage(localFilenameI);
+    if (!(sIpage.is_open())) {cout << "cannot open inds/corrected file" <<endl;  return;} // break the while loop for page_no
+    string localstr;
+    map<string, bool> isEngOrNOT;
+    while(sIpage >> localstr) vecpI.push_back(toslp1(localstr)); sIpage.close();
+    std::ifstream sCpage(localFilenameC);
+    while(sCpage >> localstr) { vecpC.push_back(toslp1(localstr)); sIpage.close(); if(hasM40PerAsci(localstr)) isEngOrNOT[toslp1(localstr)] = 1;}
+    int sizew = wrong.size();
+    // if 1st word is wrong generate suggestions
+    int vGsz = vecpC.size(), vIsz =  vecpI.size();
+    //if (vGsz >vIsz ) mapTyping[page_no] = vGsz - vIsz;
+    //cout << vGsz << " " << vIsz << endl;
+    int win = vGsz  - vIsz;
+    if(win<0) win = -1*win;
+    win = maxIG(win,5);
+    //cout << win << endl;
+    //float WER = 0;
+    // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
+    for(int t = 0; t < vIsz;t++){
+        size_t minedit = 1000,minediti;
+        string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
+        string sC;
+        for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
+            string sCt1 = vecpC[t1];
+            eddis e;
+            size_t mineditIC = e.editDist(s1,sCt1);
+            if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1; minediti = t1;  }
+            if (sCt1 == s1) {/*WER++;*/ sC = s1; vecpC[t1] = ""; break;}
+            /*size_t szt = sCt1.find(s1); size_t sCt1sz = sCt1.size();
                 if((szt != string::npos) && (szt == 0)){/WER++;/ sC = s1; vecpC[t1] = sCt1.substr(s1.size(),sCt1sz - s1.size()); break;}
                 if((szt != string::npos) && (szt == sCt1sz - s1.size())){ sC = s1; vecpC[t1] = sCt1.substr(0,sCt1sz - s1.size()); break;}
                 */
-            }
-            if(sC != s1) vecpC[minediti] = "";
-            if( (/*isEngOrNOT[sC] != */1)) {wrong.push_back(s1); right.push_back(sC); /*cout << s1 <<" " << sC << endl;*/} //(s1 != sC) &&
         }
-        cout << wrong.size() - sizew << " new correction pairs loaded" << endl;
-        if(wrong.size() != right.size()) cout <<"ERROR (wrong.size() != right.size() ) "<<endl;
+        if(sC != s1) vecpC[minediti] = "";
+        if( (/*isEngOrNOT[sC] != */1)) {wrong.push_back(s1); right.push_back(sC); /*cout << s1 <<" " << sC << endl;*/} //(s1 != sC) &&
+    }
+    cout << wrong.size() - sizew << " new correction pairs loaded" << endl;
+    if(wrong.size() != right.size()) cout <<"ERROR (wrong.size() != right.size() ) "<<endl;
 }
 
 /*!
@@ -1400,7 +1389,7 @@ void slpNPatternDict::generatePairsIEROCR(string localFilenameI,string localFile
             */
         }
         if( (/*isEngOrNOT[sC] != */1) && (sC != "")) {
-        repPair << s1 << endl; repPairy << sC << endl;
+            repPair << s1 << endl; repPairy << sC << endl;
         }
     }
     repPairy.close(); repPair.close(); sIpage.close();sCpage.close();
@@ -1415,45 +1404,45 @@ void slpNPatternDict::generatePairsIEROCR(string localFilenameI,string localFile
  * \param localFilenameC
  */
 void slpNPatternDict::generatePairsSpaced(vector<string> &wrong,vector<string> &right,string localFilenameI,string localFilenameC){
-        vector<string> vecpI, vecpC;
-        std::ifstream sIpage(localFilenameI);
-        if (!(sIpage.is_open())) {cout << "cannot open inds/corrected file" <<endl;  return;} // break the while loop for page_no
-        string localstr;
-        map<string, bool> isEngOrNOT;
-        while(sIpage >> localstr) vecpI.push_back(toslp1(localstr)); sIpage.close();
-        std::ifstream sCpage(localFilenameC);
-        while(sCpage >> localstr) { vecpC.push_back(toslp1(localstr)); sIpage.close(); if(hasM40PerAsci(localstr)) isEngOrNOT[toslp1(localstr)] = 1;}
-        int sizew = wrong.size();
-        // if 1st word is wrong generate suggestions
-        int vGsz = vecpC.size(), vIsz =  vecpI.size();
-        //if (vGsz >vIsz ) mapTyping[page_no] = vGsz - vIsz;
-        //cout << vGsz << " " << vIsz << endl;
-        int win = vGsz  - vIsz;
-        if(win<0) win = -1*win;
-        win = maxIG(win,5);
-        //cout << win << endl;
-        //float WER = 0;
-        // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
-        for(int t = 0; t < vIsz;t++){
-            size_t minedit = 1000,minediti;
-            string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
-            string sC;
-            for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
-                string sCt1 = vecpC[t1];
-                eddis e;
-                size_t mineditIC = e.editDist(s1,sCt1);
-                if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1; minediti = t1;  }
-                if (sCt1 == s1) {/*WER++;*/ sC = s1; vecpC[t1] = ""; break;}
-                /*size_t szt = sCt1.find(s1); size_t sCt1sz = sCt1.size();
+    vector<string> vecpI, vecpC;
+    std::ifstream sIpage(localFilenameI);
+    if (!(sIpage.is_open())) {cout << "cannot open inds/corrected file" <<endl;  return;} // break the while loop for page_no
+    string localstr;
+    map<string, bool> isEngOrNOT;
+    while(sIpage >> localstr) vecpI.push_back(toslp1(localstr)); sIpage.close();
+    std::ifstream sCpage(localFilenameC);
+    while(sCpage >> localstr) { vecpC.push_back(toslp1(localstr)); sIpage.close(); if(hasM40PerAsci(localstr)) isEngOrNOT[toslp1(localstr)] = 1;}
+    int sizew = wrong.size();
+    // if 1st word is wrong generate suggestions
+    int vGsz = vecpC.size(), vIsz =  vecpI.size();
+    //if (vGsz >vIsz ) mapTyping[page_no] = vGsz - vIsz;
+    //cout << vGsz << " " << vIsz << endl;
+    int win = vGsz  - vIsz;
+    if(win<0) win = -1*win;
+    win = maxIG(win,5);
+    //cout << win << endl;
+    //float WER = 0;
+    // search for a word(pre space, post space as well) in Indsenz within win sized window in GDocs and if found then add to PWords
+    for(int t = 0; t < vIsz;t++){
+        size_t minedit = 1000,minediti;
+        string s1 = vecpI[t]; //(vGBook[t1].find(s1) != string::npos) || (vGBook[t1] == s1)
+        string sC;
+        for(int t1 = maxIG(t-win,0); t1 < min(t+win,vGsz); t1++){
+            string sCt1 = vecpC[t1];
+            eddis e;
+            size_t mineditIC = e.editDist(s1,sCt1);
+            if(mineditIC < minedit) {minedit = mineditIC; sC = sCt1; minediti = t1;  }
+            if (sCt1 == s1) {/*WER++;*/ sC = s1; vecpC[t1] = ""; break;}
+            /*size_t szt = sCt1.find(s1); size_t sCt1sz = sCt1.size();
                 if((szt != string::npos) && (szt == 0)){/WER++;/ sC = s1; vecpC[t1] = sCt1.substr(s1.size(),sCt1sz - s1.size()); break;}
                 if((szt != string::npos) && (szt == sCt1sz - s1.size())){ sC = s1; vecpC[t1] = sCt1.substr(0,sCt1sz - s1.size()); break;}
                 */
-            }
-            if(sC != s1) {vecpC[minediti] = "";}
-            if( (/*isEngOrNOT[sC] != */1)) {wrong.push_back(s1); right.push_back(sC); /*cout << s1 <<" " << sC << endl;*/} else {wrong.push_back(s1); right.push_back("");}//(s1 != sC) &&
         }
-        cout << wrong.size() - sizew << " new correction pairs loaded" << endl;
-        if(wrong.size() != right.size()) cout <<"ERROR (wrong.size() != right.size() ) "<<endl;
+        if(sC != s1) {vecpC[minediti] = "";}
+        if( (/*isEngOrNOT[sC] != */1)) {wrong.push_back(s1); right.push_back(sC); /*cout << s1 <<" " << sC << endl;*/} else {wrong.push_back(s1); right.push_back("");}//(s1 != sC) &&
+    }
+    cout << wrong.size() - sizew << " new correction pairs loaded" << endl;
+    if(wrong.size() != right.size()) cout <<"ERROR (wrong.size() != right.size() ) "<<endl;
 }
 
 /*!
@@ -1466,15 +1455,15 @@ void slpNPatternDict::loadCPair(string fileName1,string fileName2,map<string,str
     string str1, str2;
     ifstream myfile(fileName1);
     ifstream myfile2(fileName2);
-        if ((myfile.is_open()) && (myfile2.is_open()))
-      { while(myfile >> str1){
-        myfile2 >> str2;
-        CPair[str1] = str2;//toslp1
-    //cout << str1 << " " << str2 << endl;
+    if ((myfile.is_open()) && (myfile2.is_open()))
+    { while(myfile >> str1){
+            myfile2 >> str2;
+            CPair[str1] = str2;//toslp1
+            //cout << str1 << " " << str2 << endl;
 
-    //vec.clear();
+            //vec.clear();
 
-    } cout <<CPair.size() << " CPairs Loaded" << endl;} else cout <<"Error CPairs NOT Loaded" << endl;
+        } cout <<CPair.size() << " CPairs Loaded" << endl;} else cout <<"Error CPairs NOT Loaded" << endl;
     //loadvectomap(ConfP,ConfPmap);
 
 }
@@ -1486,18 +1475,18 @@ void slpNPatternDict::loadCPair(string fileName1,string fileName2,map<string,str
  * \param TopConfusionsMask
  */
 void slpNPatternDict::loadTopConfusions(map<string,int>& ConfPmap,map<string, string>& TopConfusions,map<string, int>& TopConfusionsMask){
-map<string, int> TopSuggFreq;
-for(map<string, int >::const_iterator it = ConfPmap.begin();
+    map<string, int> TopSuggFreq;
+    for(map<string, int >::const_iterator it = ConfPmap.begin();
         it != ConfPmap.end(); ++it)
-        {
+    {
         //std::cout << it->first << " " << it->second<< "\n";
-    string rule = it->first; istringstream s(rule);string l,r; s>>l; s>>r;
-    //if(TopSuggFreq[l] < it->second){
+        string rule = it->first; istringstream s(rule);string l,r; s>>l; s>>r;
+        //if(TopSuggFreq[l] < it->second){
         TopSuggFreq[l] = it->second;
         TopConfusions[l] = r;
         TopConfusionsMask[l] ++;
         //}
-    l.clear(); r.clear();
+        l.clear(); r.clear();
     }
 }
 
@@ -1507,15 +1496,15 @@ for(map<string, int >::const_iterator it = ConfPmap.begin();
  * \return
  */
 std::string slpNPatternDict::tokenize(const std::string& s) {
-   if (!s.size()) {
-     return "";
-   }
-   std::stringstream ss;
-   ss << s[0];
-   for (uint i = 1; i < s.size(); i++) {
-     ss << ' ' << s[i];
-   }
-   return ss.str();
+    if (!s.size()) {
+        return "";
+    }
+    std::stringstream ss;
+    ss << s[0];
+    for (uint i = 1; i < s.size(); i++) {
+        ss << ' ' << s[i];
+    }
+    return ss.str();
 }
 
 
@@ -1526,25 +1515,25 @@ std::string slpNPatternDict::tokenize(const std::string& s) {
 void slpNPatternDict::printConfusionRulesmap(map<string,int>& ConfPmap){
     //! print only rules in Pattern Miner's Rule Input form
     map<string,vector<string> > rulesCorrectFormat;
-   //! print the Map rule and correct the format
+    //! print the Map rule and correct the format
     for(map<string, int >::const_iterator it = ConfPmap.begin();
         it != ConfPmap.end(); ++it)
     {
         //std::cout << it->first << " " << it->second<< "\n";
-    string rule = it->first; istringstream s(rule);  string l,r; s>>l; s>>r;
+        string rule = it->first; istringstream s(rule);  string l,r; s>>l; s>>r;
         if((l.size() < 3) && (r.size() < 3)) rulesCorrectFormat[r].push_back(l);
     }
     //file.close();
 
     //! print in correct format
     for( map<string,vector<string> >::const_iterator ptr=rulesCorrectFormat.begin();
-             ptr!=rulesCorrectFormat.end(); ptr++) { string s = (ptr->first);
-            cout << tokenize(s) << " -> ";
-            for( vector<string>::const_iterator eptr=ptr->second.begin();
-                 eptr!=ptr->second.end(); eptr++){ string s1 = *eptr;
-                    cout << tokenize(s1) << " ! "; }
-            cout << endl;
-        }
+         ptr!=rulesCorrectFormat.end(); ptr++) { string s = (ptr->first);
+        cout << tokenize(s) << " -> ";
+        for( vector<string>::const_iterator eptr=ptr->second.begin();
+             eptr!=ptr->second.end(); eptr++){ string s1 = *eptr;
+            cout << tokenize(s1) << " ! "; }
+        cout << endl;
+    }
 
 }
 
@@ -1558,23 +1547,23 @@ void slpNPatternDict::printConfusionRulesmap(map<string,int>& ConfPmap){
  * \return
  */
 int slpNPatternDict::loadWConfusionsNindex1(string str1,string str2,map<string,int>& ConfPmap,vector<string>& wordConfusions,vector<int>& wCindex){
-string str1New = appendConfusionsPairsNindex(str1,str2,wordConfusions,wCindex);
+    string str1New = appendConfusionsPairsNindex(str1,str2,wordConfusions,wCindex);
 
-//!for choosing best out of nearest suggestions:-
-int szold = wordConfusions.size();// more confusions more szold
-        //filter confusions:-
-        //cout<< str1New << endl;
-        for(size_t t = 0; t<wordConfusions.size(); t++) { if(ConfPmap[wordConfusions[t]]>0) {/*cout << wCindex[t] << " "<< toDev(wordConfusions[t]) << endl;*/} else {wordConfusions.erase(wordConfusions.begin() + t); wCindex.erase(wCindex.begin() + t); t--;}}
+    //!for choosing best out of nearest suggestions:-
+    int szold = wordConfusions.size();// more confusions more szold
+    //filter confusions:-
+    //cout<< str1New << endl;
+    for(size_t t = 0; t<wordConfusions.size(); t++) { if(ConfPmap[wordConfusions[t]]>0) {/*cout << wCindex[t] << " "<< toDev(wordConfusions[t]) << endl;*/} else {wordConfusions.erase(wordConfusions.begin() + t); wCindex.erase(wCindex.begin() + t); t--;}}
     return 	(szold - wordConfusions.size());//  more confusions are Indsenz OCR Confusions, less will be difference
 }
 
 //! for alligning OCR Pair words
 string slpNPatternDict::loadWConfusionsNindex(string str1,string str2,map<string,int>& ConfPmap,vector<string>& wordConfusions,vector<int>& wCindex){
-string str1New = appendConfusionsPairsNindex(str1,str2,wordConfusions,wCindex);
+    string str1New = appendConfusionsPairsNindex(str1,str2,wordConfusions,wCindex);
 
-        //filter confusions:-
-        //cout<< str1New << endl;
-        for(size_t t = 0; t<wordConfusions.size(); t++) { if(ConfPmap[wordConfusions[t]]>0) {/*cout << wCindex[t] << " "<< toDev(wordConfusions[t]) << endl;*/} else {wordConfusions.erase(wordConfusions.begin() + t); wCindex.erase(wCindex.begin() + t); t--;}}
+    //filter confusions:-
+    //cout<< str1New << endl;
+    for(size_t t = 0; t<wordConfusions.size(); t++) { if(ConfPmap[wordConfusions[t]]>0) {/*cout << wCindex[t] << " "<< toDev(wordConfusions[t]) << endl;*/} else {wordConfusions.erase(wordConfusions.begin() + t); wCindex.erase(wCindex.begin() + t); t--;}}
     return 	str1New;
 }
 
@@ -1587,10 +1576,10 @@ string str1New = appendConfusionsPairsNindex(str1,str2,wordConfusions,wCindex);
  */
 void slpNPatternDict::replacestrcnf(string& newstring,size_t i,string cnfn)
 {
-istringstream s(cnfn);
-string lhs,rhs;
-s >> lhs; s >> rhs;
-newstring = newstring.replace(i,lhs.length(),rhs);
+    istringstream s(cnfn);
+    string lhs,rhs;
+    s >> lhs; s >> rhs;
+    newstring = newstring.replace(i,lhs.length(),rhs);
 
 }
 
@@ -1601,14 +1590,14 @@ newstring = newstring.replace(i,lhs.length(),rhs);
  * \return
  */
 bool slpNPatternDict::endswithHalanta(string str) {
-if (str.size() <= 2) return 1; //ALSO INCLUDING ONE/TWO CHARS
-if (str.size() >= 4) return 0; //ignoring Words with Halanta having more than 4 chars
-string lastchar = str.substr(str.size()-1,1);
-string str1 = "aeiouAEIOUH";
-for(size_t i = 0; i < str1.size(); i++) {
-    if(str1.substr(i,1) == lastchar) return 0;
-}
-return 1;
+    if (str.size() <= 2) return 1; //ALSO INCLUDING ONE/TWO CHARS
+    if (str.size() >= 4) return 0; //ignoring Words with Halanta having more than 4 chars
+    string lastchar = str.substr(str.size()-1,1);
+    string str1 = "aeiouAEIOUH";
+    for(size_t i = 0; i < str1.size(); i++) {
+        if(str1.substr(i,1) == lastchar) return 0;
+    }
+    return 1;
 }
 
 /*!
@@ -1636,12 +1625,12 @@ void slpNPatternDict::removeEndSpaces(string& str1){
  * \return
  */
 string slpNPatternDict::deletePoornaVirams(string input){
-string out;
-for(size_t t = 0; t < input.size(); t++){
-string s; s += input[t];
-if( s != "|") out += s;
-}
-return out;
+    string out;
+    for(size_t t = 0; t < input.size(); t++){
+        string s; s += input[t];
+        if( s != "|") out += s;
+    }
+    return out;
 }
 
 /* applicable when trieeditdisone is used as searchTrie will give str as output, else it give vector<string>
@@ -1675,14 +1664,14 @@ return "";
  * \return
  */
 size_t slpNPatternDict::cntSamas(string in, string& out){
-out = "";
-size_t cnt = 0;
-string word;
-removeEndSpaces(in);
-istringstream s(in);
-while(s >> word) {out += word + " "; cnt ++; /*cout << cnt << " " << word << " " << out << endl;*/}
-if(endswithHalanta(word)) cnt++;
-return cnt;
+    out = "";
+    size_t cnt = 0;
+    string word;
+    removeEndSpaces(in);
+    istringstream s(in);
+    while(s >> word) {out += word + " "; cnt ++; /*cout << cnt << " " << word << " " << out << endl;*/}
+    if(endswithHalanta(word)) cnt++;
+    return cnt;
 }
 
 /*!
@@ -1693,25 +1682,25 @@ return cnt;
  */
 string slpNPatternDict::SamasLR(string s1, map<string, int>& m1) {//, map<string, int>& PWordsNew
 
-if((s1.size() == 0) || (s1 == "")) return "";
-if((m1[s1]>0)) return " " + s1 + " ";//||PWordsNew[s1]>0
-//cout << "s1 "<< s1 << endl;
-for(size_t i = s1.size(); i > 0; i --){// DASOAHAM 8
-    for(size_t j =0; j < s1.size() - i+1; j++){ // i determinze size of substring
-    string str = s1.substr(j,i);//  i = 8, j = 0:0 DASOAHAM ; i = 7, j = 0:1  DASOAHA ASOAHAM..... ;i =1, j = 0:7 D A S O A H A M
-    // checking str
-    //cout <<"str outside " << str << endl;
-    if((m1[str]>0)) {//||PWordsNew[str]>0 //cout << "here "<< str << " L " << s1.substr(0,j) << "R " << s1.substr(j+i,s1.size()-i) << endl;
-    //cout <<"str inside " << str << endl;
-    //cout <<"left "<< s1.substr(0,j) << " nearest "<< searchTrie(s1.substr(0,j)) << endl;
-    //cout <<"right "<< s1.substr(j+i,s1.size()-i) << " nearest "<< searchTrie(s1.substr(j+i,s1.size()-i)) << endl;
-    return (SamasLR(s1.substr(0,j),m1) + " " + (str)+ " " + SamasLR(s1.substr(j+i,s1.size()-i),m1) ); //,PWordsNew,PWordsNew
+    if((s1.size() == 0) || (s1 == "")) return "";
+    if((m1[s1]>0)) return " " + s1 + " ";//||PWordsNew[s1]>0
+    //cout << "s1 "<< s1 << endl;
+    for(size_t i = s1.size(); i > 0; i --){// DASOAHAM 8
+        for(size_t j =0; j < s1.size() - i+1; j++){ // i determinze size of substring
+            string str = s1.substr(j,i);//  i = 8, j = 0:0 DASOAHAM ; i = 7, j = 0:1  DASOAHA ASOAHAM..... ;i =1, j = 0:7 D A S O A H A M
+            // checking str
+            //cout <<"str outside " << str << endl;
+            if((m1[str]>0)) {//||PWordsNew[str]>0 //cout << "here "<< str << " L " << s1.substr(0,j) << "R " << s1.substr(j+i,s1.size()-i) << endl;
+                //cout <<"str inside " << str << endl;
+                //cout <<"left "<< s1.substr(0,j) << " nearest "<< searchTrie(s1.substr(0,j)) << endl;
+                //cout <<"right "<< s1.substr(j+i,s1.size()-i) << " nearest "<< searchTrie(s1.substr(j+i,s1.size()-i)) << endl;
+                return (SamasLR(s1.substr(0,j),m1) + " " + (str)+ " " + SamasLR(s1.substr(j+i,s1.size()-i),m1) ); //,PWordsNew,PWordsNew
             }
+        }
     }
-}
-return (" #" + s1 + "# ");
-//
-//return ((s1));//("#" + s1 + "#");//
+    return (" #" + s1 + "# ");
+    //
+    //return ((s1));//("#" + s1 + "#");//
 }
 
 /*!
@@ -1722,25 +1711,25 @@ return (" #" + s1 + "# ");
  */
 string slpNPatternDict::SamasRL(string s1, map<string, int>& m1) { //, map<string, int>& PWordsNew
 
-if((s1.size() == 0) || (s1 == "")) return "";
-if((m1[s1]>0)) return " " + s1 + " ";//||PWordsNew[s1]>0
-//cout << "s1 "<< s1 << endl;
-for(size_t i = s1.size(); i > 0; i --){// DASOAHAM 8
-    for(size_t j =0; j < s1.size() - i+1; j++){ // i determinze size of substring
-    //cout << s1.size() << " " << j << endl;
-    size_t jd =s1.size() - i - j;
-    string str = s1.substr(jd,i);
-    if((m1[str]>0)) {//||PWordsNew[str]>0 //cout << "here "<< str << " L " << s1.substr(0,j) << "R " << s1.substr(j+i,s1.size()-i) << endl;
-    //cout <<"str inside " << str << endl;
-    //cout <<"left "<< s1.substr(0,j) << " nearest "<< searchTrie(s1.substr(0,j)) << endl;
-    //cout <<"right "<< s1.substr(j+i,s1.size()-i) << " nearest "<< searchTrie(s1.substr(j+i,s1.size()-i)) << endl;
-    return (SamasRL(s1.substr(0,jd),m1) + " " + (str)+ " " + SamasRL(s1.substr(jd+i,s1.size()-i),m1) );//,PWordsNew,PWordsNew
+    if((s1.size() == 0) || (s1 == "")) return "";
+    if((m1[s1]>0)) return " " + s1 + " ";//||PWordsNew[s1]>0
+    //cout << "s1 "<< s1 << endl;
+    for(size_t i = s1.size(); i > 0; i --){// DASOAHAM 8
+        for(size_t j =0; j < s1.size() - i+1; j++){ // i determinze size of substring
+            //cout << s1.size() << " " << j << endl;
+            size_t jd =s1.size() - i - j;
+            string str = s1.substr(jd,i);
+            if((m1[str]>0)) {//||PWordsNew[str]>0 //cout << "here "<< str << " L " << s1.substr(0,j) << "R " << s1.substr(j+i,s1.size()-i) << endl;
+                //cout <<"str inside " << str << endl;
+                //cout <<"left "<< s1.substr(0,j) << " nearest "<< searchTrie(s1.substr(0,j)) << endl;
+                //cout <<"right "<< s1.substr(j+i,s1.size()-i) << " nearest "<< searchTrie(s1.substr(j+i,s1.size()-i)) << endl;
+                return (SamasRL(s1.substr(0,jd),m1) + " " + (str)+ " " + SamasRL(s1.substr(jd+i,s1.size()-i),m1) );//,PWordsNew,PWordsNew
             }
+        }
     }
-}
-return (" #" + s1 + "# ");
-//
-//return ((s1));//("#" + s1 + "#");//
+    return (" #" + s1 + "# ");
+    //
+    //return ((s1));//("#" + s1 + "#");//
 }
 
 
@@ -1748,7 +1737,7 @@ return (" #" + s1 + "# ");
 
 // str1cnt = minsize_t(cntSamas(SamasLR(toslp1(str1),Dict,SmasWords),partsLR), cntSamas(SamasRL(toslp1(str1),Dict,SmasWords),partsRL),FlagLR);
 size_t slpNPatternDict::minsize_t(size_t a,size_t b,bool& FlagLR){
-if (b < a) {FlagLR = 0; return b;} else {FlagLR =1; return a;}
+    if (b < a) {FlagLR = 0; return b;} else {FlagLR =1; return a;}
 }
 
 //print2OCRSugg("RemGOCR",ConfPmap,Dict,SmasWords)
@@ -1762,45 +1751,45 @@ if (b < a) {FlagLR = 0; return b;} else {FlagLR =1; return a;}
  */
 string slpNPatternDict::print2OCRSugg(string str1, string str2, map<string,int>& ConfPmap,map<string,int>& Dict){//,map<string,int> SmasWords
 
-        //cout << "generating Pair Sugg for "<<str1<< " ";//<<"suggestion for " << endl
-        if((str2 == "") || (str2 == " ") || (str2 == "  ")) {/*cout << "no suggestion" << endl;*/ return "";}
-        string partsLR,partsRL;
-        string twoOCRsugg = str1;
-        bool FlagLR,Flag1stSuggGenerated; Flag1stSuggGenerated =1; //Flag1stSuggGenerated :- if cnt 8 for str1 and <=8 for a suggestion then look for cnt <8 hence forth
-        size_t str1cnt = minsize_t(cntSamas(SamasLR(toslp1(str1),Dict),partsLR), cntSamas(SamasRL(toslp1(str1),Dict),partsRL),FlagLR);//,SmasWords,SmasWords
-        vector<string> wordConfusions; vector<int> wCindex;
-        string str1New = loadWConfusionsNindex(str1,str2,ConfPmap,wordConfusions,wCindex);
-        //cout << str1New << endl; printvecint(wCindex); printvecstr(wordConfusions);
+    //cout << "generating Pair Sugg for "<<str1<< " ";//<<"suggestion for " << endl
+    if((str2 == "") || (str2 == " ") || (str2 == "  ")) {/*cout << "no suggestion" << endl;*/ return "";}
+    string partsLR,partsRL;
+    string twoOCRsugg = str1;
+    bool FlagLR,Flag1stSuggGenerated; Flag1stSuggGenerated =1; //Flag1stSuggGenerated :- if cnt 8 for str1 and <=8 for a suggestion then look for cnt <8 hence forth
+    size_t str1cnt = minsize_t(cntSamas(SamasLR(toslp1(str1),Dict),partsLR), cntSamas(SamasRL(toslp1(str1),Dict),partsRL),FlagLR);//,SmasWords,SmasWords
+    vector<string> wordConfusions; vector<int> wCindex;
+    string str1New = loadWConfusionsNindex(str1,str2,ConfPmap,wordConfusions,wCindex);
+    //cout << str1New << endl; printvecint(wCindex); printvecstr(wordConfusions);
 
-        //apply confusions wordConfusions.size() .. 2 1
-        // lcs can give index of confusions say left are 3 6 9
-        // we need to try 3 6 9, 3 6, 6 9 ,3 9, 3 , 6 ,9 if any dec no of parts through min(samasLR,samasRL) stop and give suggestion
-        //cout << str1New << endl;
-        size_t sz = wordConfusions.size(); //cout << sz<< endl;
-        size_t max = pow(2,sz) - 1;
+    //apply confusions wordConfusions.size() .. 2 1
+    // lcs can give index of confusions say left are 3 6 9
+    // we need to try 3 6 9, 3 6, 6 9 ,3 9, 3 , 6 ,9 if any dec no of parts through min(samasLR,samasRL) stop and give suggestion
+    //cout << str1New << endl;
+    size_t sz = wordConfusions.size(); //cout << sz<< endl;
+    size_t max = pow(2,sz) - 1;
 
-        for(size_t i =max; i > 0; i--){
-            size_t mask = pow(2,sz-1);
-            string newstring = str1New;
-                for(size_t j =sz; j > 0; j--){
-                //generate new string using mask say 101 i.e. 210 :-
-                if((mask & i) != 0){ replacestrcnf(newstring,wCindex[log2(mask)],wordConfusions[log2(mask)]);}   mask = mask >> 1 ; }
-            string newstring1 = removeSpaces(newstring.substr(1,newstring.size()-2));
-            size_t cntSamasNew;
-            if(FlagLR) cntSamasNew = cntSamas(SamasRL(newstring1,Dict),partsRL); // ,SmasWords
-            else cntSamasNew = cntSamas(SamasLR(newstring1,Dict),partsLR); // ,SmasWords
+    for(size_t i =max; i > 0; i--){
+        size_t mask = pow(2,sz-1);
+        string newstring = str1New;
+        for(size_t j =sz; j > 0; j--){
+            //generate new string using mask say 101 i.e. 210 :-
+            if((mask & i) != 0){ replacestrcnf(newstring,wCindex[log2(mask)],wordConfusions[log2(mask)]);}   mask = mask >> 1 ; }
+        string newstring1 = removeSpaces(newstring.substr(1,newstring.size()-2));
+        size_t cntSamasNew;
+        if(FlagLR) cntSamasNew = cntSamas(SamasRL(newstring1,Dict),partsRL); // ,SmasWords
+        else cntSamasNew = cntSamas(SamasLR(newstring1,Dict),partsLR); // ,SmasWords
 
-            //cout << cntSamasNew <<" "<< str1cnt<< endl;
+        //cout << cntSamasNew <<" "<< str1cnt<< endl;
         //Flag1stSuggGenerated :- if cnt 8 for str1 and <=8 for a suggestion then look for cnt <8 hence forth
-            if(Flag1stSuggGenerated){if(cntSamasNew <= str1cnt) {twoOCRsugg = (newstring1); str1cnt = cntSamasNew; Flag1stSuggGenerated = 0;}}
+        if(Flag1stSuggGenerated){if(cntSamasNew <= str1cnt) {twoOCRsugg = (newstring1); str1cnt = cntSamasNew; Flag1stSuggGenerated = 0;}}
         else {if(cntSamasNew < str1cnt) {twoOCRsugg = (newstring1); str1cnt = cntSamasNew;}}
 
-            }
-        //cout << toDev(twoOCRsugg)<<endl;
-        wordConfusions.clear();
-        wCindex.clear();
-        return twoOCRsugg;
-        //break;
+    }
+    //cout << toDev(twoOCRsugg)<<endl;
+    wordConfusions.clear();
+    wCindex.clear();
+    return twoOCRsugg;
+    //break;
 }
 
 /*!
@@ -1811,18 +1800,18 @@ string slpNPatternDict::print2OCRSugg(string str1, string str2, map<string,int>&
  * \return
  */
 string slpNPatternDict::bestIG(string s1,string s2,map<string, int>& m1){
-string s11 = s1; string s21 = s2;
-s1 = toslp1(s1); s2=toslp1(s2);
-string RL1 = SamasRL(s1,m1); string RLout1;
-size_t cRL1 = cntSamas(RL1,RLout1);
-string RL2 = SamasRL(s2,m1); string RLout2;
-size_t cRL2 = cntSamas(RL2,RLout2);
-string LR1 = SamasLR(s1,m1); string LRout1;
-size_t cLR1 = cntSamas(LR1,LRout1);
-string LR2 = SamasLR(s2,m1); string LRout2;
-size_t cLR2 = cntSamas(LR2,LRout2);
-bool lolz;
-if(minsize_t(cRL1,cLR1,lolz) < minsize_t(cRL2,cLR2,lolz)) return s11; else return s21;
+    string s11 = s1; string s21 = s2;
+    s1 = toslp1(s1); s2=toslp1(s2);
+    string RL1 = SamasRL(s1,m1); string RLout1;
+    size_t cRL1 = cntSamas(RL1,RLout1);
+    string RL2 = SamasRL(s2,m1); string RLout2;
+    size_t cRL2 = cntSamas(RL2,RLout2);
+    string LR1 = SamasLR(s1,m1); string LRout1;
+    size_t cLR1 = cntSamas(LR1,LRout1);
+    string LR2 = SamasLR(s2,m1); string LRout2;
+    size_t cLR2 = cntSamas(LR2,LRout2);
+    bool lolz;
+    if(minsize_t(cRL1,cLR1,lolz) < minsize_t(cRL2,cLR2,lolz)) return s11; else return s21;
 
 }
 
@@ -1846,13 +1835,13 @@ void slpNPatternDict::loadSandhiRules(string fileName, map<string, vector<string
 void slpNPatternDict::printSandhiRUles(map<string,vector<string> >& SRules){
 
     for( map<string,vector<string> >::const_iterator ptr=SRules.begin();
-                 ptr!=SRules.end(); ptr++) { string s = (ptr->first);
-                cout << (s) << " -> ";
-                for( vector<string>::const_iterator eptr=ptr->second.begin();
-                     eptr!=ptr->second.end(); eptr++){ string s1 = *eptr;
-                        cout << (s1) << " | "; }
-                cout << endl;
-            }
+         ptr!=SRules.end(); ptr++) { string s = (ptr->first);
+        cout << (s) << " -> ";
+        for( vector<string>::const_iterator eptr=ptr->second.begin();
+             eptr!=ptr->second.end(); eptr++){ string s1 = *eptr;
+            cout << (s1) << " | "; }
+        cout << endl;
+    }
 
 }
 
@@ -1863,17 +1852,17 @@ void slpNPatternDict::printSandhiRUles(map<string,vector<string> >& SRules){
  * \return
  */
 bool slpNPatternDict::SamasCheck(string OCRNew, map<string, int>& Dict){
-if (OCRNew == "") return 1;
-if (Dict[OCRNew] > 0) return 1;
-//cout << endl<< "heres " << OCRNew << endl;
-size_t sz = OCRNew.size();
+    if (OCRNew == "") return 1;
+    if (Dict[OCRNew] > 0) return 1;
+    //cout << endl<< "heres " << OCRNew << endl;
+    size_t sz = OCRNew.size();
 
-for(size_t ts = sz ; ts > 0; ts--){// Bapyopetam Bapy 0 4 10
-string s1 = OCRNew.substr(0,ts); string rem = OCRNew.substr(ts,sz-ts);
-//cout << "s1 " << s1 << " rem " << rem << endl;
-if((Dict[s1] > 0) &&(s1.size() >3) &&(rem.size() >3))/*try && rem.size >3*/ return SamasCheck(rem,Dict); // apply ending with a to aH, ending with consonants say c to ca etc // if not 1st leftstarting with a to remove a
-}
-return 0;
+    for(size_t ts = sz ; ts > 0; ts--){// Bapyopetam Bapy 0 4 10
+        string s1 = OCRNew.substr(0,ts); string rem = OCRNew.substr(ts,sz-ts);
+        //cout << "s1 " << s1 << " rem " << rem << endl;
+        if((Dict[s1] > 0) &&(s1.size() >3) &&(rem.size() >3))/*try && rem.size >3*/ return SamasCheck(rem,Dict); // apply ending with a to aH, ending with consonants say c to ca etc // if not 1st leftstarting with a to remove a
+    }
+    return 0;
 }
 
 /*!
@@ -1884,37 +1873,37 @@ return 0;
  * \return
  */
 bool slpNPatternDict::SandhiCheck(string OCRNew, map<string, int>& Dict,map<string, vector<string>>& SRules){
-// Sandhi Check
-//if (OCRNew == "") return 1;
-if (Dict[OCRNew] > 0) return 1;
-//cout << endl<< "hereS " << OCRNew << endl;
-size_t sz = OCRNew.size();
-for(size_t ts = sz ; ts > 0; ts--){// Bapyopetam Bapy 0 4 10
-string s1 = OCRNew.substr(0,ts); string rem = OCRNew.substr(ts,sz-ts);
+    // Sandhi Check
+    //if (OCRNew == "") return 1;
+    if (Dict[OCRNew] > 0) return 1;
+    //cout << endl<< "hereS " << OCRNew << endl;
+    size_t sz = OCRNew.size();
+    for(size_t ts = sz ; ts > 0; ts--){// Bapyopetam Bapy 0 4 10
+        string s1 = OCRNew.substr(0,ts); string rem = OCRNew.substr(ts,sz-ts);
 
-//cout << "S1 " << s1 << " " << ts << " " << sz  << endl;
-if( (s1.size() >3)&&(rem.size() >2)){ //as r of S -> l+r will be added to rem
-    //cout << "s1 " << s1 << endl;
-    // applying o -> a u Sandhi rules i.e. k =1 for o, k = 2 for yu in yu -> yu -> i u | I u |
-    size_t k = 1;
-    vector<string> v = SRules[s1.substr(ts-k,k)];
-    size_t vsz = v.size();
-    //cout << " vsz " << vsz << endl;
-        if(vsz > 0) {
-            bool SandhiFlag = 0;
-            for(size_t vt =0; vt < vsz; vt++) {
-                istringstream s(v[vt]); string l,r; s>>l; s>>r;
+        //cout << "S1 " << s1 << " " << ts << " " << sz  << endl;
+        if( (s1.size() >3)&&(rem.size() >2)){ //as r of S -> l+r will be added to rem
+            //cout << "s1 " << s1 << endl;
+            // applying o -> a u Sandhi rules i.e. k =1 for o, k = 2 for yu in yu -> yu -> i u | I u |
+            size_t k = 1;
+            vector<string> v = SRules[s1.substr(ts-k,k)];
+            size_t vsz = v.size();
+            //cout << " vsz " << vsz << endl;
+            if(vsz > 0) {
+                bool SandhiFlag = 0;
+                for(size_t vt =0; vt < vsz; vt++) {
+                    istringstream s(v[vt]); string l,r; s>>l; s>>r;
                     string s1new = s1.substr(0,s1.size()-1)+l;
                     if((Dict[s1new] > 0) ){
                         //cout << "found " << s1new << endl;
                         SandhiFlag = (SandhiFlag | SamasCheck(r+rem,Dict));
                     } else { SandhiFlag = (SandhiFlag | (SandhiCheck(s1new,Dict,SRules) & SamasCheck(r+rem,Dict)) | (SamasCheck(s1new,Dict) & SamasCheck(r+rem,Dict)));} //else
                 }// for
-        return  SandhiFlag;
-        }// if vsz >0
+                return  SandhiFlag;
+            }// if vsz >0
         }
     }
-return 0;
+    return 0;
 }
 
 
@@ -1931,27 +1920,27 @@ return 0;
  * \return
  */
 string slpNPatternDict::generatePossibilitesNsuggest(string OCRWord,map<string,string>& TopConfusions,map<string,int>& TopConfusionsMask,map<string, int>& Dict, map<string, vector<string>>& SRules){
-string OCRWordOrig = OCRWord;
-size_t sz = OCRWord.size() + 2;
-// one confusion one sandhi at a time
-size_t tSandhi = 0;
-for( size_t t2 =1; t2 < 4 ; t2++){
-for( size_t t =0; t <sz- t2 + 1 ; t++){
-OCRWord = "@" + OCRWordOrig + "#";
-// apply a confusion
-string OCRNew = OCRWord;
-//cout << "OCRWord " << OCRWord << endl;
-size_t tc = t; while( tc < sz - t2 + 1) {  string s1 = OCRWord.substr(tc,t2); //cout << s1<< " "<< tc << " " << t2 << endl;
-if (TopConfusionsMask[s1] > 0) { OCRNew = OCRWord;  OCRNew.replace(tc,s1.size(),TopConfusions[s1]);  t = tc; break; } else tc++; }
-//cout << "OCRWord1 " << OCRNew << endl;
-// apply Samas s
-OCRNew = OCRNew.substr(0,OCRNew.size()-1); OCRNew = OCRNew.substr(1,OCRNew.size()-1);
-//cout << "OCRWord2 " << OCRNew << endl;
-if (SamasCheck(OCRNew, Dict)) return OCRNew;
-// apply Sandhi S Rules
-if (SandhiCheck(OCRNew, Dict,SRules)) return OCRNew;
-}
-}
-return "";
+    string OCRWordOrig = OCRWord;
+    size_t sz = OCRWord.size() + 2;
+    // one confusion one sandhi at a time
+    size_t tSandhi = 0;
+    for( size_t t2 =1; t2 < 4 ; t2++){
+        for( size_t t =0; t <sz- t2 + 1 ; t++){
+            OCRWord = "@" + OCRWordOrig + "#";
+            // apply a confusion
+            string OCRNew = OCRWord;
+            //cout << "OCRWord " << OCRWord << endl;
+            size_t tc = t; while( tc < sz - t2 + 1) {  string s1 = OCRWord.substr(tc,t2); //cout << s1<< " "<< tc << " " << t2 << endl;
+                if (TopConfusionsMask[s1] > 0) { OCRNew = OCRWord;  OCRNew.replace(tc,s1.size(),TopConfusions[s1]);  t = tc; break; } else tc++; }
+            //cout << "OCRWord1 " << OCRNew << endl;
+            // apply Samas s
+            OCRNew = OCRNew.substr(0,OCRNew.size()-1); OCRNew = OCRNew.substr(1,OCRNew.size()-1);
+            //cout << "OCRWord2 " << OCRNew << endl;
+            if (SamasCheck(OCRNew, Dict)) return OCRNew;
+            // apply Sandhi S Rules
+            if (SandhiCheck(OCRNew, Dict,SRules)) return OCRNew;
+        }
+    }
+    return "";
 }
 
