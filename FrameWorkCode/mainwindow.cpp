@@ -249,6 +249,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     QFontDatabase::addApplicationFont(":/Fonts/fonts/Chandas/chandas.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/fonts/shruti_regular/shruti.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/fonts/Gujrati_Saral-1/Gujrati-Saral-1.ttf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/SolaimanLipi/SolaimanLipi.ttf");
 
     if (!isVerifier)
     {

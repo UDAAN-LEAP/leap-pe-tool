@@ -66,5 +66,6 @@
         <file>fonts/Chandas/chandas.ttf</file>
         <file>fonts/Gujrati_Saral-1/Gujrati-Saral-1.ttf</file>
         <file>fonts/shruti_regular/shruti.ttf</file>
+        <file>fonts/SolaimanLipi/SolaimanLipi.ttf</file>
     </qresource>
 </RCC>
