@@ -73,9 +73,7 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                 while(i < l.size() && !l[i].contains("</p>")){                   
                         inputText += l[i];
                         inputText += " ";
-
-
-                    i++;
+                        i++;
                 }
                 if(i == l.size())
                     i = i - 1;
@@ -98,6 +96,7 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                         blockFormat.setAlignment(Qt::AlignLeft);
                     }
                     cur.insertBlock();
+                    inputText.replace("\\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                     cur.insertHtml(inputText);
                     cur.setBlockFormat(blockFormat);
                     inputText = "";
@@ -134,6 +133,7 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                         blockFormat.setAlignment(Qt::AlignLeft);
                     }
                     cur.insertBlock();
+                    inputText.replace("\\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                     cur.insertHtml(inputText);
                     cur2 = QTextCursor(doc->findBlockByNumber(num));
                     cur2.select(QTextCursor::BlockUnderCursor);
@@ -194,6 +194,7 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                     inputText = latex2png(inputText);
                     int num = doc->blockCount();
                     cur.insertBlock();
+                    inputText.replace("\\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                     cur.insertHtml(inputText);
                     if(isPrevUl == "no")
                     {
@@ -229,6 +230,7 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                     inputText = latex2png(inputText);
                     int num = doc->blockCount();
                     cur.insertBlock();
+                    inputText.replace("\\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                     cur.insertHtml(inputText);
                     if(isPrevOl == "no")
                     {
@@ -246,7 +248,6 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
             inputText += "\n";
         }
     }
-//      l.replace("    ","\t");
     cur = QTextCursor(doc->findBlockByNumber(0));
     cur.select(QTextCursor::BlockUnderCursor);
     cur.deleteChar();

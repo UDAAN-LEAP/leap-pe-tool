@@ -1709,10 +1709,8 @@ void MainWindow::SaveFile_GUI_Postprocessing()
         } else if ((inputDataIndex = output.indexOf("</head>")) != -1) {
             output.insert(inputDataIndex - 1, "<style>\nbody { width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; }\n</style>");
         }
-
-        //removing empty p tags inserted by Qt.
-//        QRegularExpression rex_empty("<p style=\"-qt-paragraph-type:empty;(.*?)</p>",QRegularExpression::DotMatchesEverythingOption);
-//        output = output.remove(rex_empty);
+        output.replace("    ","\\t");
+        output.replace("        ","\\t");
         out << output;
         sFile.flush();      //!Flushes any buffered data waiting to be written in the \a sFile
         sFile.close();      //!Closing the file
@@ -3116,7 +3114,7 @@ void MainWindow::on_actionInsert_Tab_Space_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
         return;
-    curr_browser->insertPlainText("    ");
+    curr_browser->insertHtml("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 }
 
 /*!
@@ -5451,14 +5449,12 @@ void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
         dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
 
 //    }
-     qDebug()<<"here THREE";
     dictFilename.replace(".txt", ".dict");
     dictFilename.replace(".html", ".dict");
 //    QFile dictQFile(dictFilename);
 
     ui->textEdit_dict->clear();
     ui->textEdit_dict->setFontPointSize(14);
-     qDebug()<<"here TOO";
     //! Open the dict file and display it in textedit view
     if(QFile::exists(dictFilename))
     {
@@ -8268,6 +8264,7 @@ void MainWindow::on_actionLogout_triggered()
     settings.beginGroup("login");
     settings.remove("");
     settings.endGroup();
+    QMessageBox::information(0,"Logout","Logged out successfully :(");
 }
 
 

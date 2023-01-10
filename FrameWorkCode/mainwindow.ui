@@ -1543,7 +1543,13 @@ background-color: #EEF0F2;
      <normalon>:/Images/AllFont.png</normalon>:/Images/Resources/all font properties 2.png</iconset>
    </property>
    <property name="text">
-    <string>AllFontProperties</string>
+    <string>All Font Properties</string>
+   </property>
+   <property name="toolTip">
+    <string>All Font Properties</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+A</string>
    </property>
   </action>
   <action name="actionBold">
