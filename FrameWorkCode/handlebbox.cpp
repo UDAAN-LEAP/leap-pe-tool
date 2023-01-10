@@ -61,15 +61,14 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
     QString line;
     int flag_ = 0, nestedListCount = 0;
     QString inputText = "";
+    QString isPrevUl = "no", isPrevOl = "no";
     while(!f->atEnd()) {
         line = f->readLine();
-    line = line.replace("    ","\t");
-        line = line.trimmed();
-//        QStringList l1 = line.split("    ");
+        line = line.simplified();
         QStringList l = line.split(" ");
         for(int i = 0; i < l.size(); i++) {
             //for parsing p tags
-            if((l[i].contains("<p") && flag_ != 2) || flag_ == 1){
+            if((l[i].contains("<p") && flag_ != 2 && flag_ != 5 && flag_ != 6) || flag_ == 1){
                 flag_ = 1;
                 while(i < l.size() && !l[i].contains("</p>")){                   
                         inputText += l[i];
@@ -82,6 +81,7 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                     i = i - 1;
                 if(l[i].contains("</p>")){
                     flag_ = 0;
+                    isPrevOl = isPrevUl = "no";
                     inputText += l[i];
                     inputText += " ";
                     inputText = latex2png(inputText);
@@ -105,7 +105,7 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
             }
 
             //for parsing table tags
-            else if(l[i].contains("<table") || flag_ == 2){
+            else if((l[i].contains("<table") && flag_ != 5 && flag_ != 6) || flag_ == 2){
                 flag_ = 2;
                 while(i < l.size() && !l[i].contains("</table>")){
                     inputText += l[i];
@@ -116,6 +116,7 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                     i = i - 1;
                 if(l[i].contains("</table>")){
                     flag_ = 0;
+                    isPrevOl = isPrevUl = "no";
                     int num = doc->blockCount();
                     inputText += l[i];
                     inputText += " ";
@@ -145,7 +146,7 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
             }
 
             //for parsing image tags
-            else if(l[i].contains("<img") || flag_ == 3){
+            else if((l[i].contains("<img") && flag_ != 5 && flag_ != 6) || flag_ == 3){
                 flag_ = 3;
                 while(i < l.size() && !l[i].contains(">")){
                     inputText += l[i];
@@ -156,6 +157,7 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                     i = i - 1;
                 if(l[i].contains(">")){
                     flag_ = 0;
+                    isPrevOl = isPrevUl = "no";
                     inputText += l[i];
                     inputText += " ";
                     cur.insertBlock();
@@ -188,13 +190,18 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                 }
                 if(l[i].contains("</ul>") && nestedListCount < 1){
                     flag_ = 0;
+                    isPrevOl = "no";
                     inputText = latex2png(inputText);
                     int num = doc->blockCount();
                     cur.insertBlock();
                     cur.insertHtml(inputText);
-                    cur2 = QTextCursor(doc->findBlockByNumber(num));
-                    cur2.select(QTextCursor::BlockUnderCursor);
-                    cur2.deleteChar();
+                    if(isPrevUl == "no")
+                    {
+                        cur2 = QTextCursor(doc->findBlockByNumber(num));
+                        cur2.select(QTextCursor::BlockUnderCursor);
+                        cur2.deleteChar();
+                    }
+                    isPrevUl = "yes";
                     inputText = "";
                 }
             }
@@ -218,13 +225,18 @@ QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
                 }
                 if(l[i].contains("</ol>") && nestedListCount < 1){
                     flag_ = 0;
+                    isPrevUl = "no";
                     inputText = latex2png(inputText);
                     int num = doc->blockCount();
                     cur.insertBlock();
                     cur.insertHtml(inputText);
-                    cur2 = QTextCursor(doc->findBlockByNumber(num));
-                    cur2.select(QTextCursor::BlockUnderCursor);
-                    cur2.deleteChar();
+                    if(isPrevOl == "no")
+                    {
+                        cur2 = QTextCursor(doc->findBlockByNumber(num));
+                        cur2.select(QTextCursor::BlockUnderCursor);
+                        cur2.deleteChar();
+                    }
+                    isPrevOl = "yes";
                     inputText = "";
                 }
             }
