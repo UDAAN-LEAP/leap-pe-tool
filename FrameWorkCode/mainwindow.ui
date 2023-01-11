@@ -173,7 +173,7 @@ QTabWidget::pane {
 </string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -793,6 +793,18 @@ color: rgb(0, 0, 0); height:37.39px; border:0px; width:184.8px; padding-left:7.8
        </spacer>
       </item>
       <item>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);
+image: url(:/Images/Resources/Old Icons/rotate.png);
+background-color: rgb(255, 255, 255);  height:37.39px; width:32.73px; border:0px; padding:0px 3.6px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QGroupBox" name="groupBox">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -1023,6 +1035,12 @@ QMenu::item:selected{
      <addaction name="actionMerge_Cells"/>
      <addaction name="actionSplit_Cell"/>
     </widget>
+    <widget class="QMenu" name="menuLayout">
+     <property name="title">
+      <string>Layout</string>
+     </property>
+     <addaction name="actionTwo_Column"/>
+    </widget>
     <addaction name="actionAllFontProperties"/>
     <addaction name="actionUnBold"/>
     <addaction name="actionHighlight"/>
@@ -1040,6 +1058,7 @@ QMenu::item:selected{
     <addaction name="menuTables"/>
     <addaction name="separator"/>
     <addaction name="actionPDF_Preview"/>
+    <addaction name="menuLayout"/>
    </widget>
    <widget class="QMenu" name="menuGit">
     <property name="styleSheet">
@@ -1049,8 +1068,8 @@ QMenu::item:selected{
      <string>Sync</string>
     </property>
     <addaction name="actionTurn_In"/>
-    <addaction name="actionFetch_2"/>
     <addaction name="actionVerifier_Turn_In"/>
+    <addaction name="actionFetch_2"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="styleSheet">
@@ -1098,6 +1117,7 @@ QMenu::item:selected{
      <addaction name="actionWindows"/>
     </widget>
     <addaction name="actionGet_Help"/>
+    <addaction name="actionUser_Guide"/>
     <addaction name="menuInstallation_Guide"/>
     <addaction name="actionTutorial"/>
     <addaction name="actionShortcut_Guide"/>
@@ -1523,7 +1543,13 @@ background-color: #EEF0F2;
      <normalon>:/Images/AllFont.png</normalon>:/Images/Resources/all font properties 2.png</iconset>
    </property>
    <property name="text">
-    <string>AllFontProperties</string>
+    <string>All Font Properties</string>
+   </property>
+   <property name="toolTip">
+    <string>All Font Properties</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+A</string>
    </property>
   </action>
   <action name="actionBold">
@@ -2122,6 +2148,16 @@ background-color: #EEF0F2;
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionTwo_Column">
+   <property name="text">
+    <string>Two Column</string>
+   </property>
+  </action>
+  <action name="actionUser_Guide">
+   <property name="text">
+    <string>User Guide</string>
    </property>
   </action>
  </widget>

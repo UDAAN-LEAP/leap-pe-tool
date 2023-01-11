@@ -49,6 +49,7 @@
         <file>spinbar-white-tp.gif</file>
         <file>PDF-Preview.png</file>
         <file>Resources/logonew.png</file>
+        <file>Resources/Old Icons/rotate.png</file>
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>
@@ -63,5 +64,8 @@
         <file>fonts/Latha/latha.ttf</file>
         <file>fonts/Nirmala/Nirmala Regular.ttf</file>
         <file>fonts/Chandas/chandas.ttf</file>
+        <file>fonts/Gujrati_Saral-1/Gujrati-Saral-1.ttf</file>
+        <file>fonts/shruti_regular/shruti.ttf</file>
+        <file>fonts/SolaimanLipi/SolaimanLipi.ttf</file>
     </qresource>
 </RCC>

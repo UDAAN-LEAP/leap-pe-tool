@@ -152,7 +152,7 @@ void threadingPush::ControlPush()
             std::cout<<3<<endl;
             //goto cleanup;
         }
-
+        if(git_index_has_conflicts(index))qDebug()<<"conflict";
         /* Commit the merge and cleanup repo state
              */
         error = (git_reference_peel((git_object **)&parents[0], head_ref, GIT_OBJ_COMMIT))

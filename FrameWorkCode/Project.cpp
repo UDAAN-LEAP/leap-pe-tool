@@ -784,6 +784,11 @@ bool Project::push(QString gDirTwoLevelUp) {
             std::cout<<3<<endl;
             //goto cleanup;
         }
+        if(git_index_has_conflicts(index)){
+            qDebug()<<"merge conflict";
+            QMessageBox::information(0, "CONFLICT (content)", "Automatic merge failed; fix conflicts and then save the result. Exiting because of an unresolved conflict.");
+            return false;
+        }
 
         /* Commit the merge and cleanup repo state
          */

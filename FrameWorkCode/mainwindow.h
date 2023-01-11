@@ -130,16 +130,6 @@ private slots:
 
     void on_actionLoadData_triggered();
 
-    void on_actionLoadDict_triggered();
-
-    void on_actionLoadOCRWords_triggered();
-
-    void on_actionLoadDomain_triggered();
-
-    void on_actionLoadSubPS_triggered();
-
-    void on_actionLoadConfusions_triggered();
-
     void on_actionSugg_triggered();
 
     void on_actionToSlp1_triggered();
@@ -231,8 +221,6 @@ private slots:
     void LogHighlights(QString word);
 
     void on_compareVerifierOutput_clicked();
-
-    void on_actionLineSpace_triggered();
 
     void on_actionUndo_triggered();
 
@@ -416,9 +404,13 @@ private slots:
 
     void on_hinButton_toggled(bool checked);
 
-public slots:
-    void SaveFile_Backend();
+    void on_actionTwo_Column_triggered();
 
+    void on_pushButton_3_clicked();
+
+    void on_actionUser_Guide_triggered();
+
+public slots:
     void on_actionLoad_Next_Page_triggered();
 
     void on_actionLoad_Prev_Page_triggered();
@@ -483,6 +475,13 @@ private:
     QOAuth2AuthorizationCodeFlow * google;
     void googleAuth();
     QSet<QString> dict_set1; //! Keep it available globally so that we need not to parse dictionary file at the time of saving logs.
+    bool check();
+    bool check_access();
+    void cloud_save();
+    bool verifier_save(QString);
+    int saved = 0;
+    void autoSave();
+    void messageTimer();
 };
 
 #endif // MAINWINDOW_H
