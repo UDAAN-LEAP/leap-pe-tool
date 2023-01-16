@@ -410,6 +410,8 @@ private slots:
 
     void on_actionUser_Guide_triggered();
 
+    void preprocessing();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

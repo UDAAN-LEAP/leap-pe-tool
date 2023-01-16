@@ -339,6 +339,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionSymbols->setEnabled(false);
     ui->actionZoom_In->setEnabled(false);
     ui->actionZoom_Out->setEnabled(false);
+    //to set default tab to project widget
+    ui->tabWidget->setCurrentWidget(ui->tab_2);
 }
 
 /*!
@@ -4232,11 +4234,16 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
     }
     if(!QDir(gDirTwoLevelUp+"/Cropped_Images/tables").exists())
     {
-        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/figures");
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/tables");
+    }
+    if(!QDir(gDirTwoLevelUp+"/Cropped_Images/figures").exists())
+    {
+        QDir(gDirTwoLevelUp).mkdir("Cropped_Images/figures");
+    }
+    if(!QDir(gDirTwoLevelUp+"/Cropped_Images/equations").exists())
+    {
         QDir(gDirTwoLevelUp).mkdir("Cropped_Images/equations");
     }
-
     //! Adding picture to the respective directory
     if(QDir(gDirTwoLevelUp+"/Cropped_Images").exists())
     {
@@ -5878,6 +5885,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     if(!(finfo.exists() && finfo.isFile())){
         return;
     }
+    int danFlag = 0;
 
     //!Retreives current folder details
     current_folder = finfo.dir().dirName();
@@ -5937,7 +5945,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     isProjectOpen = 1;
 
     doc = b->document();
-
+    curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
     //!Display format by setting font size and styles
     QTextStream stream(f);
     stream.setCodec("UTF-8");
@@ -6035,7 +6043,16 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
         b->setDocument(curDoc);
         doc = b->document();
 //		loadHtmlInDoc(f);
-//        preprocessing(); //for removing dangling mathras
+
+        QFile sFile("../.dan.log");
+        if(!sFile.open(QIODevice::ReadOnly)) {qDebug()<<"can't read the dan logs";}
+        QString logs = sFile.readAll();
+        sFile.close();
+        if(!logs.contains(gCurrentPageName)){
+            qDebug()<<"called preprocessing";
+        preprocessing(); //for removing dangling mathras
+        danFlag = 1;
+        }
         connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
         blockCount = b->document()->blockCount();
         if (!f->open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -6056,7 +6073,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     b->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
     b->setUndoRedoEnabled(true);
 
-    curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
+//    curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
     curr_browser->setDocument(b->document()->clone(curr_browser));
     curr_browser->document()->clearUndoRedoStacks();
 
@@ -6161,6 +6178,10 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     myTimer.start();
     WordCount();     //for counting no of words in the document
     readSettings();
+    if(danFlag == 1){
+    on_actionSave_triggered();
+    saved = 0;
+    }
 }
 
 /*!
@@ -9071,3 +9092,41 @@ bool MainWindow::verifier_save(QString commit_msg)
     return true;
 }
 
+/*!
+ * \brief MainWindow::preprocessing
+ * \details This function is called when is html file is loaded for the first timne in tool.
+ * \details This functions scans the non-english text and removes the dangling mathra(if any) by converting text to slnp first followed by converting the previous output to devanagari.
+ * \details This function is called once in a lifetime(per page).
+ */
+void MainWindow::preprocessing(){
+    QFile sFile("../.dan.log");
+    slpNPatternDict slnp;
+    QTextCharFormat fmt;
+    qDebug()<<curr_browser;
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    curr_browser->moveCursor(QTextCursor::Start);
+
+    QTextCursor cursor(doc); //get the cursor
+
+    while(!cursor.atEnd()){
+        cursor.select(QTextCursor::WordUnderCursor);
+        fmt = cursor.charFormat();
+        QString str1 = cursor.selectedText();
+        auto sel = cursor.selection().toHtml();
+        if(!sel.contains("<img") && !str1.contains(QRegExp("[0-9]")) && !str1.contains(QRegExp("[a-zA-Z]")) && !str1.contains(QRegExp("[%!@#$^&*()]"))){
+            string selectedString = str1.toUtf8().constData();
+            string output = slnp.toDev(slnp.toslp1(selectedString));
+            cursor.mergeCharFormat(fmt);
+            cursor.insertText(QString::fromStdString(output));
+        }
+        cursor.setPosition(cursor.position()+1, QTextCursor::MoveAnchor);
+    }
+    //on_actionSave_triggered();
+    if(!sFile.open(QIODevice::WriteOnly | QIODevice::Append)) {qDebug()<<"Can't open Dangling logs file";return;}
+    QTextStream out(&sFile);
+    out.setCodec("UTF-8");
+    out << gCurrentPageName <<endl;
+    sFile.close();
+
+}

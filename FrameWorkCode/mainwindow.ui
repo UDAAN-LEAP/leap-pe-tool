@@ -1588,7 +1588,7 @@ background-color: #EEF0F2;
      <normalon>:/Images/AlignLeft.png</normalon>:/Images/Resources/allign left.png</iconset>
    </property>
    <property name="text">
-    <string>LeftAlign</string>
+    <string>Left Align</string>
    </property>
   </action>
   <action name="actionRightAlign">
@@ -1598,7 +1598,7 @@ background-color: #EEF0F2;
      <normalon>:/Images/AlignCenter.png</normalon>:/Images/Resources/align right.png</iconset>
    </property>
    <property name="text">
-    <string>RightAlign</string>
+    <string>Right Align</string>
    </property>
   </action>
   <action name="actionCentreAlign">
@@ -1608,7 +1608,7 @@ background-color: #EEF0F2;
      <normalon>:/Images/AlignCenter.png</normalon>:/Images/Resources/align center.png</iconset>
    </property>
    <property name="text">
-    <string>CentreAlign</string>
+    <string>Centre Align</string>
    </property>
   </action>
   <action name="actionJusitfiedAlign">
@@ -1618,12 +1618,12 @@ background-color: #EEF0F2;
      <normalon>:/Images/JustifiedAlign.png</normalon>:/Images/Resources/align para.png</iconset>
    </property>
    <property name="text">
-    <string>JusitfiedAlign</string>
+    <string>Jusitfied Align</string>
    </property>
   </action>
   <action name="actionAccuracyLog">
    <property name="text">
-    <string>AccuracyLog</string>
+    <string>Accuracy Log</string>
    </property>
   </action>
   <action name="actionView_File_Hierarchy">
@@ -1794,7 +1794,7 @@ background-color: #EEF0F2;
      <normaloff>:/Images/Resources/font black.png</normaloff>:/Images/Resources/font black.png</iconset>
    </property>
    <property name="text">
-    <string>FontBlack</string>
+    <string>Font Black</string>
    </property>
   </action>
   <action name="actionLineSpace">
