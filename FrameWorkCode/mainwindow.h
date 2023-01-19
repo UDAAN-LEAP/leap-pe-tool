@@ -484,6 +484,7 @@ private:
     int saved = 0;
     void autoSave();
     void messageTimer();
+    bool initialSave = false;
 };
 
 #endif // MAINWINDOW_H
