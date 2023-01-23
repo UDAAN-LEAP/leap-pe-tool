@@ -67,5 +67,8 @@
         <file>fonts/Gujrati_Saral-1/Gujrati-Saral-1.ttf</file>
         <file>fonts/shruti_regular/shruti.ttf</file>
         <file>fonts/SolaimanLipi/SolaimanLipi.ttf</file>
+        <file>fonts/brhkndrn/brhkndrn.ttf</file>
+        <file>fonts/Nudi 1/Nudi 01 e Regular.ttf</file>
+        <file>fonts/Nudi 3/Nudi 03 e Regular.ttf</file>
     </qresource>
 </RCC>

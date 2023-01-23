@@ -250,6 +250,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     QFontDatabase::addApplicationFont(":/Fonts/fonts/shruti_regular/shruti.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/fonts/Gujrati_Saral-1/Gujrati-Saral-1.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/fonts/SolaimanLipi/SolaimanLipi.ttf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Nudi 3/Nudi 03 e Regular.ttf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/brhkndrn/brhkndrn.ttf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Nudi 1/Nudi 01 e Regular.ttf");
 
     if (!isVerifier)
     {
