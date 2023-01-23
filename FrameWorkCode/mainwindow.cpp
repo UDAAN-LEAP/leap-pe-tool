@@ -2918,13 +2918,13 @@ void MainWindow::on_actionHighlight_triggered()
             QTextCharFormat  format = cursor.charFormat();         // gets word character format properties
 
             //! If word background is already yellow, set it to transparent, else set it to yellow (yellow is the highlight colour).
-            if (format.background() == Qt::yellow)
+            if (format.background() == Qt::darkGray)
             {
                 format.setBackground(Qt::transparent);
             }
             else
             {
-                format.setBackground(Qt::yellow);
+                format.setBackground(Qt::darkGray);
 
                 LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
             }
@@ -6837,8 +6837,8 @@ void MainWindow::on_actionas_PDF_triggered()
                 //! Read the file
 
                 mainHtml=stream.readAll();
-                mainHtml.remove("background-color:#00ff00");
-                mainHtml.remove("background-color:#ffff00");
+                mainHtml.remove("background-color:");
+//                mainHtml.remove("background-color:#ffff00");
                 //                //! Changing the text background to white by setting the background to #fffff
                 //                while (true){
                 //                    stIndex = mainHtml.indexOf(searchString, startFrom);
@@ -7820,8 +7820,8 @@ void MainWindow::print(QPrinter *printer)
     //        mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
     //        startFrom = stIndex + 6;
     //    }
-    mainHtml.remove("background-color:#00ff00");
-    mainHtml.remove("background-color:#ffff00");
+    mainHtml.remove("background-color:");
+//    mainHtml.remove("background-color:#ffff00");
     //latex to png mapping
     if(mainHtml.contains("$$")){
 
