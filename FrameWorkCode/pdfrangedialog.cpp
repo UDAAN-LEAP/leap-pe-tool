@@ -99,3 +99,14 @@ void PdfRangeDialog::on_button_Ok_clicked()
     this->close();
 }
 
+/*!
+ * \brief PdfRangeDialog::on_checkBox_clicked
+ * \return
+ * \details Checks whether the user wants to print the empty pages in pdf or not.
+ */
+bool PdfRangeDialog::on_checkBox_clicked()
+{
+    if(ui->checkBox->checkState() == Qt::Checked)
+        return true;
+    return false;
+}

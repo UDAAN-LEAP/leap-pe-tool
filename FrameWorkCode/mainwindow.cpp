@@ -6850,6 +6850,14 @@ void MainWindow::on_actionas_PDF_triggered()
                 //                }
                 //! append counter when one file is fully scanned
                 counter++;
+                if(pdfRangeDialog->on_checkBox_clicked())
+                {
+                    QTextDocument doc;
+                    doc.setHtml(mainHtml);
+                    QString s1 = doc.toPlainText();
+                    if(s1.count() == 0)
+                        continue;
+                }
 
                 //! Search for Latex code in html files and replace it by corresponding png images
                 //! We save latext for mathematical equations in html, and show png in our tool as our tool can't render Latex

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>616</width>
+    <width>642</width>
     <height>243</height>
    </rect>
   </property>
@@ -79,6 +79,13 @@
       </spacer>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox">
+     <property name="text">
+      <string>Do you want to skip empty pages in the PDF?</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="info_2">
