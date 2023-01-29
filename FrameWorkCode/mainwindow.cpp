@@ -745,7 +745,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             QMenu* popup_menu = curr_browser->createStandardContextMenu();
             QMenu* clipboard_menu;
             clipboard_menu = new QMenu("clipboard", this);
-            clipboard_menu->setStyleSheet("height: 6em; width: 10em; overflow: hidden; white-space: nowrap; color: black; background-color: white;");
+            clipboard_menu->setStyleSheet("height: 4.7em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
             QString menuStyle(
                         "QMenu::item{"
                         "background-color: rgb(255,255,255);"
@@ -763,7 +763,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
                         );
             popup_menu->setStyleSheet(menuStyle);
-            clipboard_menu->setStyleSheet(menuStyle);
+//            clipboard_menu->setStyleSheet(menuStyle);
 
             //QFont font("Shobhika-Regular");
             //font.setWeight(16);
