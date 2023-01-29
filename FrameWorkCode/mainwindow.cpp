@@ -9124,3 +9124,67 @@ void MainWindow::preprocessing(){
     sFile.close();
 
 }
+
+void MainWindow::on_actionCopy_Format_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    QFont font = curr_browser->fontFamily();
+    auto size = curr_browser->fontPointSize();
+    int pos = cursor.position();
+    int ancr = cursor.anchor();
+    if (pos < ancr) {
+        cursor.setPosition(pos, QTextCursor::MoveAnchor);
+        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+    }
+    bool isBold = cursor.charFormat().font().bold();
+    bool isItalic = cursor.charFormat().font().italic();
+    QColor color = curr_browser->textColor();
+    Qt::Alignment align = curr_browser->alignment();
+    auto var=0;
+    if(align == Qt::AlignRight)
+        var=1;
+    else if(align == Qt::AlignLeft)
+        var=2;
+    else if(align == Qt::AlignCenter)
+        var=3;
+    else if(align == Qt::AlignJustify)
+        var=4;
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("format_painter");
+    settings.setValue("font",font);
+    settings.setValue("size",size);
+    settings.setValue("isBold",isBold);
+    settings.setValue("isItalic",isItalic);
+    settings.setValue("color",color);
+    settings.setValue("var",var);
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionPaste_Format_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("format_painter");
+    QString font = settings.value("font").toString();
+    auto size = settings.value("size").toInt();
+    auto var = settings.value("var").toInt();
+    QString color = settings.value("color").toString();
+    QString isBold =  settings.value("isBold").toString();
+    QString isItalic =  settings.value("isItalic").toString();
+
+    curr_browser->setFontFamily(font);
+    curr_browser->setFontPointSize(size);
+    curr_browser->setFontWeight(isBold=="false" ? QFont::Normal : QFont::Bold);
+    curr_browser->setFontItalic(isItalic == "false" ? false:true);
+    if(var==1)
+        curr_browser->setAlignment(Qt::AlignRight);
+    else if(var==2)
+        curr_browser->setAlignment(Qt::AlignLeft);
+    else if(var==3)
+        curr_browser->setAlignment(Qt::AlignCenter);
+    else if(var==4)
+        curr_browser->setAlignment(Qt::AlignJustify);
+    curr_browser->setTextColor(color);
+}
+

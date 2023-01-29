@@ -412,6 +412,10 @@ private slots:
 
     void preprocessing();
 
+    void on_actionCopy_Format_triggered();
+
+    void on_actionPaste_Format_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

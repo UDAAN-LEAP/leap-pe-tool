@@ -1041,6 +1041,13 @@ QMenu::item:selected{
      </property>
      <addaction name="actionTwo_Column"/>
     </widget>
+    <widget class="QMenu" name="menuFormat_Painter">
+     <property name="title">
+      <string>Format Painter</string>
+     </property>
+     <addaction name="actionCopy_Format"/>
+     <addaction name="actionPaste_Format"/>
+    </widget>
     <addaction name="actionAllFontProperties"/>
     <addaction name="actionUnBold"/>
     <addaction name="actionHighlight"/>
@@ -1059,6 +1066,7 @@ QMenu::item:selected{
     <addaction name="separator"/>
     <addaction name="actionPDF_Preview"/>
     <addaction name="menuLayout"/>
+    <addaction name="menuFormat_Painter"/>
    </widget>
    <widget class="QMenu" name="menuGit">
     <property name="styleSheet">
@@ -2158,6 +2166,16 @@ background-color: #EEF0F2;
   <action name="actionUser_Guide">
    <property name="text">
     <string>User Guide</string>
+   </property>
+  </action>
+  <action name="actionCopy_Format">
+   <property name="text">
+    <string>Copy Format</string>
+   </property>
+  </action>
+  <action name="actionPaste_Format">
+   <property name="text">
+    <string>Paste Format</string>
    </property>
   </action>
  </widget>
