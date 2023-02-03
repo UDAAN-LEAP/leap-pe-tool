@@ -9110,8 +9110,8 @@ void MainWindow::preprocessing(){
     curr_browser->moveCursor(QTextCursor::Start);
 
     QTextCursor cursor(doc); //get the cursor
-
-    while(!cursor.atEnd()){
+int position=cursor.position();
+    while(position< cursor.document()->characterCount()){
         cursor.select(QTextCursor::WordUnderCursor);
         fmt = cursor.charFormat();
         QString str1 = cursor.selectedText();
@@ -9122,7 +9122,9 @@ void MainWindow::preprocessing(){
             cursor.mergeCharFormat(fmt);
             cursor.insertText(QString::fromStdString(output));
         }
-        cursor.setPosition(cursor.position()+1, QTextCursor::MoveAnchor);
+        //cursor.setPosition(cursor.position()+1, QTextCursor::MoveAnchor);
+        position++;
+        cursor.setPosition(position);
     }
 
     if(!sFile.open(QIODevice::WriteOnly | QIODevice::Append)) {qDebug()<<"Can't open Dangling logs file";return;}
