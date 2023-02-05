@@ -416,6 +416,10 @@ private slots:
 
     void on_actionPaste_Format_triggered();
 
+    void on_actionUnderline_triggered();
+
+    void on_actionUndoUnderline_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

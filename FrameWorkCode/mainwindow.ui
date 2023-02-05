@@ -1270,6 +1270,7 @@ background-color: #EEF0F2;
    <addaction name="actionBold"/>
    <addaction name="actionItalic"/>
    <addaction name="actionUnBold"/>
+   <addaction name="actionUnderline"/>
    <addaction name="actionFontBlack"/>
    <addaction name="actionSuperscript"/>
    <addaction name="actionSubscript"/>
@@ -2176,6 +2177,23 @@ background-color: #EEF0F2;
   <action name="actionPaste_Format">
    <property name="text">
     <string>Paste Format</string>
+   </property>
+  </action>
+  <action name="actionUnderline">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/underline 1.png</normaloff>:/Images/Resources/underline 1.png</iconset>
+   </property>
+   <property name="text">
+    <string>Underline</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
+   </property>
+  </action>
+  <action name="actionUndoUnderline">
+   <property name="text">
+    <string>UndoUnderline</string>
    </property>
   </action>
  </widget>
