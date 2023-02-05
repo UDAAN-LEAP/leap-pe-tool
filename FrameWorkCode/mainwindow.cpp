@@ -1495,7 +1495,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->actionFontBlack->setEnabled(true);
     ui->actionInsert_Tab_Space->setEnabled(true);
     ui->actionPDF_Preview->setEnabled(true);
-    if (isVerifier)
+//    if (isVerifier)
         ui->actionHighlight->setEnabled(true);
 
     // Table Menu inside View Menu
@@ -2905,8 +2905,7 @@ void MainWindow::on_actionHighlight_triggered()
     if(curr_browser && !curr_browser->isReadOnly())
     {
         //! Verifier gets to add and remove highlight the text
-        if(isVerifier)
-        {
+
             QTextCursor cursor = curr_browser->textCursor();
             QString text = cursor.selectedText().toUtf8().constData();
             int pos1 = curr_browser->textCursor().selectionStart();
@@ -2918,6 +2917,8 @@ void MainWindow::on_actionHighlight_triggered()
             QTextCharFormat  format = cursor.charFormat();         // gets word character format properties
 
             //! If word background is already yellow, set it to transparent, else set it to yellow (yellow is the highlight colour).
+            if(isVerifier)
+            {
             if (format.background() == Qt::darkGray)
             {
                 format.setBackground(Qt::transparent);
@@ -2932,7 +2933,17 @@ void MainWindow::on_actionHighlight_triggered()
         }
         else
         {
-            curr_browser->setTextBackgroundColor(Qt::transparent); //Correctors are only allowed to remove highlights.
+                if (format.background() == Qt::yellow)
+                {
+                    format.setBackground(Qt::transparent);
+                }
+                else
+                {
+                    format.setBackground(Qt::yellow);
+
+                    LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
+                }
+                curr_browser->textCursor().mergeCharFormat(format); //Correctors are only allowed to remove highlights.
         }
     }
 }
@@ -8441,7 +8452,7 @@ void MainWindow::on_actionClose_project_triggered()
     ui->actionFontBlack->setEnabled(false);
     ui->actionInsert_Tab_Space->setEnabled(false);
     ui->actionPDF_Preview->setEnabled(false);
-    if (isVerifier)
+//    if (isVerifier)
         ui->actionHighlight->setEnabled(false);
 
     // Table Menu inside View Menu
@@ -9196,5 +9207,34 @@ void MainWindow::on_actionPaste_Format_triggered()
     else if(var==4)
         curr_browser->setAlignment(Qt::AlignJustify);
     curr_browser->setTextColor(color);
+}
+
+
+void MainWindow::on_actionUnderline_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+               return;
+           QTextCursor cursor = curr_browser->textCursor();
+           int pos = cursor.position();
+           int ancr = cursor.anchor();
+           if (pos < ancr) {
+               cursor.setPosition(pos, QTextCursor::MoveAnchor);
+               cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+           }
+           bool isUnderline = cursor.charFormat().font().underline();
+           QTextCharFormat fmt;
+           fmt.setFontUnderline(isUnderline ? false : true);
+           cursor.mergeCharFormat(fmt);
+           curr_browser->mergeCurrentCharFormat(fmt);
+}
+
+
+void MainWindow::on_actionUndoUnderline_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+            return;
+        QTextCharFormat format;
+        format.setFontUnderline(false);
+        curr_browser->textCursor().mergeCharFormat(format);
 }
 
