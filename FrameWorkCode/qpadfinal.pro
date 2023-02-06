@@ -8,6 +8,7 @@ QT += core gui svg widgets
 QT += printsupport
 QT += xml
 QT += network networkauth
+QT += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

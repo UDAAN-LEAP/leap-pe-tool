@@ -51,6 +51,26 @@ color:white;
          </spacer>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButton_4">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
+} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
+          </property>
+          <property name="text">
+           <string>Speech to text</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBox">
+          <property name="styleSheet">
+           <string notr="true">QComboBox{background-color:rgb(227, 228, 228);border:0px; 	height:26.96px; width: 105.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
+	color: rgb(26, 95, 180);
+} QComboBox:checked{background-color: rgb(136, 138, 133);} QComboBox:pressed {background-color: rgb(136, 138, 133);}</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="pushButton_2">
           <property name="styleSheet">
            <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
@@ -2194,6 +2214,15 @@ background-color: #EEF0F2;
   <action name="actionUndoUnderline">
    <property name="text">
     <string>UndoUnderline</string>
+   </property>
+  </action>
+  <action name="actionSpeech_to_Text">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/voice.png</normaloff>:/Images/Resources/voice.png</iconset>
+   </property>
+   <property name="text">
+    <string>Speech to Text</string>
    </property>
   </action>
  </widget>

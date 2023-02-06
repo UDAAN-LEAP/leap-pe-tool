@@ -75,9 +75,14 @@
 #include "printworker.h"
 #include <QRadioButton>
 #include <equationeditor.h>
-#include "threadingpush.h">
 #include <QThread>
 #include <git2.h>
+#include <QAudioProbe>
+#include <QAudioRecorder>
+#include <QDir>
+#include <QFileDialog>
+#include <QMediaRecorder>
+#include <QStandardPaths>
 
 map<string, string> LSTM;
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -344,6 +349,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionZoom_Out->setEnabled(false);
     //to set default tab to project widget
     ui->tabWidget->setCurrentWidget(ui->tab_2);
+    //recording
+    m_audioRecorder = new QAudioRecorder();
+    m_probe = new QAudioProbe();
+    QString fileName = "../../audio.flac";
+    m_audioRecorder->setOutputLocation(QUrl::fromLocalFile(fileName));
+    //channels
+    ui->comboBox->addItem(tr("English"), QVariant("en-US"));
+    ui->comboBox->addItem(QStringLiteral("English(India)"), QVariant("en-IN"));
+    ui->comboBox->addItem(QStringLiteral("Bengali"), QVariant("bn-IN"));
+    ui->comboBox->addItem(QStringLiteral("Gujarati"), QVariant("gu-IN"));
+    ui->comboBox->addItem(QStringLiteral("Hindi"), QVariant("hi-IN"));
+    ui->comboBox->addItem(QStringLiteral("Kannada"), QVariant("ka-IN"));
+    ui->comboBox->addItem(QStringLiteral("Malayalam"), QVariant("ml-IN"));
+    ui->comboBox->addItem(QStringLiteral("Marathi"), QVariant("mr-IN"));
+    ui->comboBox->addItem(QStringLiteral("Tamil"), QVariant("ta-IN"));
+    ui->comboBox->addItem(QStringLiteral("Telugu"), QVariant("te-IN"));
+    ui->comboBox->addItem(QStringLiteral("Urdu"), QVariant("ur-IN"));
+    ui->comboBox->addItem(QStringLiteral("Punjabi"), QVariant("pa-Guru-IN"));
 }
 
 /*!
@@ -9236,5 +9259,107 @@ void MainWindow::on_actionUndoUnderline_triggered()
         QTextCharFormat format;
         format.setFontUnderline(false);
         curr_browser->textCursor().mergeCharFormat(format);
+}
+
+/*!
+ * \brief MainWindow::speechToTextCall
+ * \details This function is called when recording is stopped.
+ * \details This function sends request to Google Speech-to-text api and receives back response text.
+ * \details Response text is pasted at cursor position.
+ */
+void MainWindow::speechToTextCall()
+{
+    QString fileName = "../audio.flac";
+    QFile audioFile(fileName);
+    if(!audioFile.open(QIODevice::ReadOnly)){
+        QMessageBox::critical(0,"Error","Error recording your audio! Try again");
+        return;
+    }
+
+    int idx = ui->comboBox->currentIndex();
+    QString enc;
+    if (idx == -1)
+        enc = "en-US";
+    else
+        enc = ui->comboBox->itemData(idx).toString();
+    QByteArray audioData=audioFile.readAll();
+
+    QUrl url("https://speech.googleapis.com/v1/speech:recognize");
+    QUrlQuery query;
+    query.addQueryItem("key","AIzaSyAxmEOabgIUU5oM4spTNC0yL9oJoCyhpBE");
+    url.setQuery(query);
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader,"audio/x-flac");
+
+    QJsonObject json;
+    QJsonObject config;
+    config["encoding"]="FLAC";
+    config["sampleRateHertz"]=44100;
+    config["languageCode"]=enc;
+    json["config"]=config;
+    QJsonObject audio;
+    audio["content"]=QString::fromLatin1(audioData.toBase64());
+    json["audio"]=audio;
+    QByteArray jsonData=QJsonDocument(json).toJson();
+
+    QNetworkAccessManager *manager=new QNetworkAccessManager();
+    QNetworkReply *reply=manager->post(request,jsonData);
+
+    QObject::connect(reply,&QNetworkReply::finished,[this,reply](){
+        if(reply->error()!=QNetworkReply::NoError){
+            QMessageBox::critical(0,"Error Occured",reply->errorString());
+            return;
+        }
+        else if(reply->error()==QNetworkReply::UnknownNetworkError){
+            QMessageBox::warning(0,"Network Error","Please check your internet connection and try again!");
+
+        }
+        else if(reply->isFinished() && reply->error()==QNetworkReply::NoError){
+
+            QJsonDocument responseJson=QJsonDocument::fromJson(reply->readAll());
+            QJsonObject object=responseJson.object();
+            QString ResponseText=object["results"].toArray()[0].toObject()
+                    ["alternatives"].toArray()[0].toObject()["transcript"].toString();
+            QTextCursor cur = curr_browser->textCursor();
+            cur.insertText(ResponseText);
+            ui->pushButton_4->setText("Speech to text");
+
+        }
+
+        reply->deleteLater();
+    });
+}
+
+/*!
+ * \brief MainWindow::on_pushButton_4_clicked
+ * \details User needs to select a language from language drop down menu(Language in which user will record an audio).
+ * \details When "Speech to text" button is clicked, this functon is called. This function records the user audio and shows status on the same button.
+ * \details "Speech to text" status means user can start recording. "Stop ?" means audio recording is in progress and user can stop it by clicking the "Stop ?" button.
+ * \details "Processing ..." means the user input is in process and the requested audio will be converted into text and pasted at cursor position. Text is inserted at cursor position
+ * \details and status of button is changed back to "Speech to text".
+ */
+void MainWindow::on_pushButton_4_clicked()
+{
+    if(!isProjectOpen) return;
+    if (m_audioRecorder->state() == QMediaRecorder::StoppedState) {
+        qDebug()<<"Recording your audio!!";
+        ui->pushButton_4->setText("Stop ?");
+        QAudioEncoderSettings settings;
+        settings.setCodec("audio/x-flac");
+        settings.setSampleRate(0);
+        settings.setBitRate(0);
+        settings.setChannelCount(1);
+        settings.setQuality(QMultimedia::EncodingQuality(2));
+        settings.setEncodingMode(QMultimedia::ConstantQualityEncoding);
+
+        m_audioRecorder->setEncodingSettings(settings, QVideoEncoderSettings(), "");
+        m_audioRecorder->record();
+    }
+    else {
+        qDebug()<<"stopped your recording!";
+        ui->pushButton_4->setText("Processing ...");
+        m_audioRecorder->stop();
+        speechToTextCall();
+    }
 }
 

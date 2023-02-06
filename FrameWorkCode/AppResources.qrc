@@ -50,6 +50,7 @@
         <file>PDF-Preview.png</file>
         <file>Resources/logonew.png</file>
         <file>Resources/Old Icons/rotate.png</file>
+        <file>Resources/voice.png</file>
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>
