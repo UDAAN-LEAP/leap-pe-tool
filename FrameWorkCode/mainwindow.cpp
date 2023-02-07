@@ -352,8 +352,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     //recording
     m_audioRecorder = new QAudioRecorder();
     m_probe = new QAudioProbe();
-    QString fileName = "../../audio.flac";
-    m_audioRecorder->setOutputLocation(QUrl::fromLocalFile(fileName));
+
     //channels
     ui->comboBox->addItem(tr("English"), QVariant("en-US"));
     ui->comboBox->addItem(QStringLiteral("English(India)"), QVariant("en-IN"));
@@ -9020,7 +9019,7 @@ bool MainWindow::check_access()
 void MainWindow::messageTimer(){
     QMessageBox msg;
     msg.setText("Saving your changes to cloud. Don't close the application until you see a success message.");
-    int cnt = 5;
+    int cnt = 3;
     //showing the message box for 2 seconds only.
     QTimer cntDown;
     QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
@@ -9269,10 +9268,12 @@ void MainWindow::on_actionUndoUnderline_triggered()
  */
 void MainWindow::speechToTextCall()
 {
-    QString fileName = "../audio.flac";
+    QString fileName = QDir::currentPath() + "/audio.flac";
     QFile audioFile(fileName);
+    qDebug()<<"audio file:"<<audioFile;
     if(!audioFile.open(QIODevice::ReadOnly)){
         QMessageBox::critical(0,"Error","Error recording your audio! Try again");
+        ui->pushButton_4->setText("Speech to text");
         return;
     }
 
@@ -9342,6 +9343,8 @@ void MainWindow::on_pushButton_4_clicked()
 {
     if(!isProjectOpen) return;
     if (m_audioRecorder->state() == QMediaRecorder::StoppedState) {
+        QString fileName = QDir::currentPath() + "/audio.flac";
+        m_audioRecorder->setOutputLocation(QUrl::fromLocalFile(fileName));
         qDebug()<<"Recording your audio!!";
         ui->pushButton_4->setText("Stop ?");
         QAudioEncoderSettings settings;
