@@ -9268,9 +9268,8 @@ void MainWindow::on_actionUndoUnderline_triggered()
  */
 void MainWindow::speechToTextCall()
 {
-    QString fileName = QDir::currentPath() + "/audio.flac";
+    QString fileName = QDir::currentPath() + "/audio.wav";
     QFile audioFile(fileName);
-    qDebug()<<"audio file:"<<audioFile;
     if(!audioFile.open(QIODevice::ReadOnly)){
         QMessageBox::critical(0,"Error","Error recording your audio! Try again");
         ui->pushButton_4->setText("Speech to text");
@@ -9290,11 +9289,19 @@ void MainWindow::speechToTextCall()
     query.addQueryItem("key","AIzaSyAxmEOabgIUU5oM4spTNC0yL9oJoCyhpBE");
     url.setQuery(query);
     QNetworkRequest request(url);
+#ifdef Q_OS_WIN
+    request.setHeader(QNetworkRequest::ContentTypeHeader,"audio/pcm");
+#else
     request.setHeader(QNetworkRequest::ContentTypeHeader,"audio/x-flac");
+#endif
 
     QJsonObject json;
     QJsonObject config;
+#ifdef Q_OS_WIN
+    config["encoding"]="LINEAR16";
+#else
     config["encoding"]="FLAC";
+#endif
     config["sampleRateHertz"]=44100;
     config["languageCode"]=enc;
     json["config"]=config;
@@ -9308,7 +9315,8 @@ void MainWindow::speechToTextCall()
 
     QObject::connect(reply,&QNetworkReply::finished,[this,reply](){
         if(reply->error()!=QNetworkReply::NoError){
-            QMessageBox::critical(0,"Error Occured",reply->errorString());
+            QMessageBox::critical(0,"Error Occured","Error connecting to server...Please try again after some time");
+            ui->pushButton_4->setText("Speech to text");
             return;
         }
         else if(reply->error()==QNetworkReply::UnknownNetworkError){
@@ -9323,9 +9331,8 @@ void MainWindow::speechToTextCall()
                     ["alternatives"].toArray()[0].toObject()["transcript"].toString();
             QTextCursor cur = curr_browser->textCursor();
             cur.insertText(ResponseText);
-            ui->pushButton_4->setText("Speech to text");
-
         }
+        ui->pushButton_4->setText("Speech to text");
 
         reply->deleteLater();
     });
@@ -9343,12 +9350,16 @@ void MainWindow::on_pushButton_4_clicked()
 {
     if(!isProjectOpen) return;
     if (m_audioRecorder->state() == QMediaRecorder::StoppedState) {
-        QString fileName = QDir::currentPath() + "/audio.flac";
+        QString fileName = QDir::currentPath() + "/audio.wav";
         m_audioRecorder->setOutputLocation(QUrl::fromLocalFile(fileName));
         qDebug()<<"Recording your audio!!";
         ui->pushButton_4->setText("Stop ?");
         QAudioEncoderSettings settings;
+        #ifdef Q_OS_WIN
+        settings.setCodec("audio/pcm");
+        #else
         settings.setCodec("audio/x-flac");
+        #endif
         settings.setSampleRate(0);
         settings.setBitRate(0);
         settings.setChannelCount(1);
