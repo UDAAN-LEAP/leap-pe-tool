@@ -76,7 +76,9 @@ TextFinder* TextFinder::openFindAndReplace(QWidget *parent) {
 void TextFinder::on_findNextButton_clicked()
 {
     QString searchstr = ui->findLineEdit->text();
-    QRegExp searchExpr = QRegExp(ui->findLineEdit->text());
+    QString temp = searchstr;
+    searchstr.replace("\(","\\(");searchstr.replace("\)","\\)");
+    QRegExp searchExpr = QRegExp(searchstr);
     QTextBrowser *curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();   //getCurrentBrowser() returns the current QTextBrower
     if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
         searchExpr.setCaseSensitivity(Qt::CaseSensitive);
@@ -86,7 +88,6 @@ void TextFinder::on_findNextButton_clicked()
     if (!curr_browser) {
         return;
     }
-
     if(!curr_browser->find(searchExpr, QTextDocument::FindFlags()))
     {
         QString currentFileDirectory = gDirTwoLevelUp + "/" + gCurrentDirName;
@@ -106,7 +107,7 @@ void TextFinder::on_findNextButton_clicked()
             fileInfo = list.at(i);
             path = fileInfo.filePath();
 
-            if(stringCheck(path,searchstr)){
+            if(stringCheck(path,temp)){
                 gCurrentPageName = fileInfo.fileName();
                 break;
             }
@@ -129,7 +130,9 @@ void TextFinder::on_findNextButton_clicked()
 void TextFinder::on_findPreviousButton_clicked()
 {
     QString searchstr = ui->findLineEdit->text();
-    QRegExp searchExpr = QRegExp(ui->findLineEdit->text());
+    QString temp = searchstr;
+    searchstr.replace("\(","\\(");searchstr.replace("\)","\\)");
+    QRegExp searchExpr = QRegExp(searchstr);
     QTextBrowser *curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
     if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
         searchExpr.setCaseSensitivity(Qt::CaseSensitive);
@@ -157,7 +160,7 @@ void TextFinder::on_findPreviousButton_clicked()
         {
             fileInfo = list.at(i);
             path = fileInfo.filePath();
-            if(stringCheck(path,searchstr)){
+            if(stringCheck(path,temp)){
                 gCurrentPageName = fileInfo.fileName();
                 break;
             }
@@ -202,8 +205,10 @@ void TextFinder::on_replaceButton_clicked()
  */
 void TextFinder::on_replaceAllButton_clicked()
 {
-    QString temp1 =  "(\\b)" +ui->findLineEdit->text() + "(\\b)";
-    QRegExp searchExpr(temp1);
+    QString temp1 =  ui->findLineEdit->text();// + "(\\b)";
+    QString temp = temp1;
+    temp.replace("\(","\\(");temp.replace("\)","\\)");
+    QRegExp searchExpr(temp);
     QString replaceString = ui->replaceLineEdit->text();
     QTextBrowser *curr_browser = ((MainWindow *)(parent()))->getCurrentBrowser();
     if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
@@ -251,13 +256,14 @@ void TextFinder::on_replaceAllButton_clicked()
                QString replacementString1 =QString::fromStdString(str);
                string str2 = ui->findLineEdit->text().toStdString();
                QString::fromStdString(str2).toUtf8();
-               QString temp2 = "(\\b)" + ui->findLineEdit->text() + "(\\b)";
-               QRegExp findWord(temp2);
+//               QString temp2 = "(\\b)" + ui->findLineEdit->text() + "(\\b)";
+//               temp2.replace("\(","\\(");temp2.replace("\)","\\)");
+//               QRegExp findWord(temp2);
 
-               if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
-                   findWord.setCaseSensitivity(Qt::CaseSensitive);
-               else
-                   findWord.setCaseSensitivity(Qt::CaseInsensitive);
+//               if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
+//                   findWord.setCaseSensitivity(Qt::CaseSensitive);
+//               else
+//                   findWord.setCaseSensitivity(Qt::CaseInsensitive);
                //replace words on text instead of html files
 
                QTextBrowser * browser = new QTextBrowser();
@@ -269,7 +275,7 @@ void TextFinder::on_replaceAllButton_clicked()
                browser->setFont(font);
                browser->setHtml(s1);
 
-               while(browser->find(findWord))
+               while(browser->find(searchExpr))
                {
                    QTextCursor cursor = browser->textCursor(); //get the cursor
                    QTextCharFormat fmt;
@@ -309,6 +315,7 @@ void TextFinder::on_replaceAllButton_clicked()
        curr_browser->moveCursor(QTextCursor::Start);
        QTextCharFormat format = saved_cursor.charFormat();
        format.setBackground(QColor("#ADD8E6"));
+       qDebug()<<searchExpr;
        while(curr_browser->find(searchExpr))
        {
            curr_browser->textCursor().insertText(replaceString,format);

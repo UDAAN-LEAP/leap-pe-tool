@@ -129,8 +129,9 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
             {
                 continue;
             }
-            qDebug()<<"Going to replace in ::"<<pageName;
+//            qDebug()<<"Going to replace in ::"<<pageName;
             QString sanstr(grmIterator.value());
+            sanstr.replace("\(","\\(");sanstr.replace("\)","\\)");
             sanstr = sanstr.simplified();
             QString replacementString = grmIterator.key().first; // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
             QStringList org_sen = sanstr.split(" ");
@@ -204,6 +205,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
         for (grmIterator = globalReplacementMap2.begin(); grmIterator != globalReplacementMap2.end(); ++grmIterator)
         {
             QString sanstr(grmIterator.key());
+            sanstr.replace("\(","\\(");sanstr.replace("\)","\\)");
             QRegularExpression re(sanstr);
             QString replacementString = grmIterator.value(); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
             std::string str = replacementString.toStdString();
