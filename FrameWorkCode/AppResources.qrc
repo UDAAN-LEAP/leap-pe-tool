@@ -71,5 +71,6 @@
         <file>fonts/brhkndrn/brhkndrn.ttf</file>
         <file>fonts/Nudi 1/Nudi 01 e Regular.ttf</file>
         <file>fonts/Nudi 3/Nudi 03 e Regular.ttf</file>
+        <file>fonts/Chanakya Regular/Chanakya Regular.ttf</file>
     </qresource>
 </RCC>

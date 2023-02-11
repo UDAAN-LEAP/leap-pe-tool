@@ -258,6 +258,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     QFontDatabase::addApplicationFont(":/Fonts/fonts/Nudi 3/Nudi 03 e Regular.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/fonts/brhkndrn/brhkndrn.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/fonts/Nudi 1/Nudi 01 e Regular.ttf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Chanakya Regular/Chanakya Regular.ttf");
 
     if (!isVerifier)
     {
@@ -8848,6 +8849,7 @@ void MainWindow::login(){
                 ui->actionLogin->setVisible(false);
                 ui->actionLogout->setVisible(true);
                 QMessageBox::information(this,"Login success","Logged in successfully.");
+                qDebug()<<settings.fileName();
             }
             else{
                 QMessageBox::information(this,"Login error","Wrong email or password, please try again.");
