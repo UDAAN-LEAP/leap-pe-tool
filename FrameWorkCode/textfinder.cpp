@@ -220,108 +220,101 @@ void TextFinder::on_replaceAllButton_clicked()
     }
 
     //! Replace in All Pages
-   if(ui->ReplaceAllPages->checkState()== Qt::Checked)
-   {
-      if(replaceString=="")
-      {
-          QMessageBox infoBox;
-          infoBox.information(0, "Error","Choose a replacement word to replace");
-          return;
-      }
-      QString currentFileDirectory = gDirTwoLevelUp + "/" + gCurrentDirName;
-      QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
+    if(ui->ReplaceAllPages->checkState()== Qt::Checked)
+    {
+        if(replaceString=="")
+        {
+            QMessageBox infoBox;
+            infoBox.information(0, "Error","Choose a replacement word to replace");
+            return;
+        }
+        tot_replaced = 0;
+        int pages = 0;
+        QTextDocument* doc = new QTextDocument();
+        QString currentFileDirectory = gDirTwoLevelUp + "/" + gCurrentDirName;
+        QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
 
-      //!Get all the file names by iterating the directory
-      while (dirIterator.hasNext())
-      {
-          QString it_file_path = dirIterator.next();
-          QString suff = dirIterator.fileInfo().completeSuffix();
+        //!Get all the file names by iterating the directory
+        while (dirIterator.hasNext())
+        {
+            QString it_file_path = dirIterator.next();
+            QString suff = dirIterator.fileInfo().completeSuffix();
 
-          if(suff == "html")
+            if(suff == "html")
             {
-              //!Get the file string
-               GlobalReplaceWorker grw;
-               grw.saveBboxInfo(it_file_path); //to save bbox information
-               QFile *f = new QFile(it_file_path);
-               f->open(QIODevice::ReadOnly);
-               QTextStream in(f);
-               in.setCodec("UTF-8");
-               QString s1 = in.readAll();
-               f->close();
+                if (handleBbox != nullptr) {
+                    delete handleBbox;
+                }
+                pages += 1;
+                QFile *file = new QFile(it_file_path);
+                handleBbox = new HandleBbox(doc);
+                QTextDocument *curDoc = handleBbox->loadFileInDoc(file);
+                QTextCursor docCursor(doc);
+                docCursor.movePosition(QTextCursor::Start, QTextCursor::MoveAnchor);
 
-               //!Replacing Words
-               string str = replaceString.toStdString();
-               QString::fromStdString(str).toUtf8();
-               //QString replacementString1 = "<span style = \"background-color:#ADD8E6;\">" + QString::fromStdString(str) + "</span>";
-               QString replacementString1 =QString::fromStdString(str);
-               string str2 = ui->findLineEdit->text().toStdString();
-               QString::fromStdString(str2).toUtf8();
-//               QString temp2 = "(\\b)" + ui->findLineEdit->text() + "(\\b)";
-//               temp2.replace("\(","\\(");temp2.replace("\)","\\)");
-//               QRegExp findWord(temp2);
+                if (curDoc == nullptr) {
+                    qDebug() << "Cannot load file";
+                    return;
+                }
 
-//               if (ui->matchCaseCheckBox->checkState() == Qt::Checked)
-//                   findWord.setCaseSensitivity(Qt::CaseSensitive);
-//               else
-//                   findWord.setCaseSensitivity(Qt::CaseInsensitive);
-               //replace words on text instead of html files
+                //!Replacing Words
+                string str = replaceString.toStdString();
+                QString::fromStdString(str).toUtf8();
+                QString replacementString1 =QString::fromStdString(str);
+                string str2 = ui->findLineEdit->text().toStdString();
+                QString::fromStdString(str2).toUtf8();
+                int startPos = 0;
+                while(true)
+                {
+                    QTextCursor cur = doc->find(searchExpr, startPos, QTextDocument::FindWholeWords);
+                    QTextCursor origCur(cur);
+                    if (cur.isNull()) {
+                        break;
+                    }
 
-               QTextBrowser * browser = new QTextBrowser();
-               browser->setReadOnly(false);
-               QFont font("Shobhika-Regular");
-               font.setWeight(16);
-               font.setPointSize(16);
-               font.setFamily("Shobhika");
-               browser->setFont(font);
-               browser->setHtml(s1);
-
-               while(browser->find(searchExpr))
-               {
-                   QTextCursor cursor = browser->textCursor(); //get the cursor
-                   QTextCharFormat fmt;
-                   int pos = cursor.position(); //get the cursor position
-                   int ancr = pos - replaceString.size() + 1; //anchor is now cursor position - length of old word to be replaced
-                   if (pos < ancr) {
-                       cursor.setPosition(pos, QTextCursor::MoveAnchor);
-                       cursor.setPosition(ancr, QTextCursor::KeepAnchor);
-                   }
-                   fmt = cursor.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
-
-                   browser->textCursor().insertHtml("<span style = \"background-color:#ADD8E6;\">" +replacementString1+ "</span>");
-
-                   cursor = browser->textCursor(); //get new cursor position after old word is replaced by new one
-
-                   pos = cursor.position();
-                   ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
-                   cursor.setPosition(pos, QTextCursor::MoveAnchor);
-                   cursor.setPosition(ancr, QTextCursor::KeepAnchor);
-                   cursor.mergeCharFormat(fmt); //apply the text properties captured earlier
-
-               }
-               s1 = browser->toHtml();
-               f->open(QIODevice::WriteOnly);
-               f->write(s1.toUtf8());
-               f->close();
-               grw.bboxInsertion(it_file_path); //insert back bbox info
+                    QTextCharFormat fmt;
+                    startPos = cur.position() + 1;
+                    int pos = cur.position(); //get the cursor position
+                    int ancr = pos - temp.size() + 1; //anchor is now cursor position - length of old word to be replaced
+                    if (pos < ancr) {
+                        cur.setPosition(pos, QTextCursor::MoveAnchor);
+                        cur.setPosition(ancr, QTextCursor::KeepAnchor);
+                    }
+                    fmt = cur.charFormat(); //get the QTextCharFormat of old word/phrase to be replaced
+                    origCur.insertHtml("<span style = \"background-color:#ADD8E6;\">" + replacementString1 + "</span>");
+                    pos = cur.position();
+                    ancr = pos - replacementString1.size();//anchor is cursor position - new word/phrase length
+                    cur.setPosition(pos, QTextCursor::MoveAnchor);
+                    cur.setPosition(ancr, QTextCursor::KeepAnchor);
+                    cur.mergeCharFormat(fmt); //apply the text properties captured earlier
+                    tot_replaced += 1;
+                }
+                QString s1 = doc->toHtml();
+                doc->clear();
+                file->open(QIODevice::WriteOnly);
+                file->write(s1.toUtf8());
+                file->close();
+                handleBbox->insertBboxes(file);
             }
-      }
-      ((MainWindow *)(parent()))->reLoadTabWindow();
-      //!Display message
-      QMessageBox messageBox;
-      messageBox.information(0, "Replacement Successful","Replaced in All Pages.");
-   }
-   else{
-       QTextCursor saved_cursor = curr_browser->textCursor();
-       curr_browser->moveCursor(QTextCursor::Start);
-       QTextCharFormat format = saved_cursor.charFormat();
-       format.setBackground(QColor("#ADD8E6"));
-       qDebug()<<searchExpr;
-       while(curr_browser->find(searchExpr))
-       {
-           curr_browser->textCursor().insertText(replaceString,format);
-       }
-       curr_browser->setTextCursor(saved_cursor);               //Moves the cursor to the last text location placed by the user
-   }
+        }
+        ((MainWindow *)(parent()))->reLoadTabWindow();
+        //!Display message
+        QMessageBox messageBox;
+        QString msg = QString::number(tot_replaced) + " words in "+QString::number(pages)+" Pages.";
+        messageBox.information(0, "Replacement Successful","Replaced "+msg);
+    }
+    else{
+        QTextCursor saved_cursor = curr_browser->textCursor();
+        curr_browser->moveCursor(QTextCursor::Start);
+        QTextCharFormat format = saved_cursor.charFormat();
+        format.setBackground(QColor("#ADD8E6"));
+        qDebug()<<searchExpr;
+        while(curr_browser->find(searchExpr))
+        {
+            curr_browser->textCursor().insertText(replaceString,format);
+        }
+        curr_browser->setTextCursor(saved_cursor);               //Moves the cursor to the last text location placed by the user
+    }
 }
 
 /*!
@@ -334,18 +327,18 @@ void TextFinder::keyPressEvent(QKeyEvent *e)
 {
     if ( (e->key() == Qt::Key_D)  && QApplication::keyboardModifiers() == Qt::ControlModifier)
     {
-       QString convertedText;
-       string selectedStr;
-       if(ui->findLineEdit->hasFocus()) {
-           selectedStr = ui->findLineEdit->text().toUtf8().constData();
-           convertedText = toDevanagari(selectedStr);
-           ui->findLineEdit->setText(convertedText);
-       }
-       if(ui->replaceLineEdit->hasFocus()) {
-           selectedStr = ui->replaceLineEdit->text().toUtf8().constData();
-           convertedText = toDevanagari(selectedStr);
-           ui->replaceLineEdit->setText(convertedText);
-       }
+        QString convertedText;
+        string selectedStr;
+        if(ui->findLineEdit->hasFocus()) {
+            selectedStr = ui->findLineEdit->text().toUtf8().constData();
+            convertedText = toDevanagari(selectedStr);
+            ui->findLineEdit->setText(convertedText);
+        }
+        if(ui->replaceLineEdit->hasFocus()) {
+            selectedStr = ui->replaceLineEdit->text().toUtf8().constData();
+            convertedText = toDevanagari(selectedStr);
+            ui->replaceLineEdit->setText(convertedText);
+        }
     }
 }
 
@@ -419,7 +412,7 @@ void TextFinder::on_ReplaceAllPages_stateChanged(int arg1)
         ui->replaceButton->setDisabled(true);
     }
     else if(ui->ReplaceAllPages->checkState()==Qt::Unchecked){
-           ui->replaceButton->setEnabled(true);
+        ui->replaceButton->setEnabled(true);
     }
 }
 
