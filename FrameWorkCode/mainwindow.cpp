@@ -275,6 +275,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionLoadGDocPage->setVisible(false);
     ui->menuSelectLanguage->setTitle("");
     ui->menuCreateReports->setTitle("");
+    //compare options
+    ui->viewComments->setVisible(false);
+    ui->compareCorrectorOutput->setVisible(false);
+    ui->compareVerifierOutput->setVisible(false);
     //    ui->pushButton_2->setVisible(false);
 
     // Disabling some buttons while opening the tool
@@ -3544,7 +3548,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         int ver = mProject.get_version().toInt();
         QString commit_msg;
 
-        QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
+        /*QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
         float avgcharacc = 0;
         bool formatting = false;
         int rating = 0;
@@ -3566,7 +3570,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
          * 1. Check formatting dialog box will be opened
          * 2. Dialog box will show the current rating out of 4 and a checkbox.
         */
-        QDialog dialog(this);
+        /*QDialog dialog(this);
         dialog.setWindowTitle("Check Formatting");
 
         QFormLayout form(&dialog);
@@ -3652,7 +3656,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
              * 2. If no, display \a msg1 and remove the resubmit button.
              * 3. If yes, display \a msg2.
         */
-        if(mRole != mProject.get_stage())
+        /*if(mRole != mProject.get_stage())
         {
             messageBox.setText(msg1);
             messageBox.removeButton(resubmitButton);
@@ -3673,14 +3677,14 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
          * \value return_set To turn-in and increment the version.
          * \value finalise To approve the set as the final version.
         */
-        enum class SubmissionType {resubmit, return_set, finalise};
+        /*enum class SubmissionType {resubmit, return_set, finalise};
         SubmissionType s ;
 
         /*
             * Checking the condition: CorrectorOutputFiles != 2*IndsFiles
             * If true, then \a s and \a commit_msg are updated.
         */
-        if (messageBox.clickedButton() == resubmitButton)
+        /*if (messageBox.clickedButton() == resubmitButton)
         {
             s = SubmissionType::resubmit;
             commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
@@ -3699,7 +3703,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
          * If true, a message box of \value Couldn't Turn in will be displayed,
          * else \a s and \a commit_msg are updated.
         */
-        else if (messageBox.clickedButton() == finaliseButton)
+        /*else if (messageBox.clickedButton() == finaliseButton)
         {
             s = SubmissionType::finalise;
             commit_msg = "Verifier Finalised Version:" + mProject.get_version();
@@ -3708,7 +3712,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         {
             QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
             return;
-        }
+        }*/
 
         QMessageBox submitBox2;
         submitBox2.setWindowTitle("Submit ?");
@@ -3720,21 +3724,22 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
 
         if (submitBox2.clickedButton() == yButton2)
         {
-            bool ok;
-            // user entered something and pressed OK
-            if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
-            {
+//            bool ok;
+//            // user entered something and pressed OK
+//            if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
+//            {
                 mProject.enable_push( true );
-            }
-            else if (s == SubmissionType::resubmit)    //If yes button is clicked and submission type is resubmit then enable push
-            {
-                mProject.enable_push( false );
-            }
+//            }
+//            else if (s == SubmissionType::resubmit)    //If yes button is clicked and submission type is resubmit then enable push
+//            {
+//                mProject.enable_push( false );
+//            }
+            commit_msg = "Verifier saved";
             if(!verifier_save(commit_msg)) return;
-            if(s == SubmissionType::return_set)
-            {
-                mProject.set_version( mProject.get_version().toInt() - 1 );
-            }
+//            if(s == SubmissionType::return_set)
+//            {
+//                mProject.set_version( mProject.get_version().toInt() - 1 );
+//            }
             mProject.set_verifier();
         }
         else
@@ -3744,10 +3749,10 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
         }
 
         //! Sending email with the following information
-        QString emailText =  "Book ID: " + mProject.get_bookId()
+        /*QString emailText =  "Book ID: " + mProject.get_bookId()
                 + "\nSet ID: " + mProject.get_setId()
                 + "\nRating Provided: " + QString::number(rating)
-                + "\n" + commit_msg ;
+                + "\n" + commit_msg ;*/
 
         //! Updating the Project Version
         ui->lineEdit_2->setText("Version " + mProject.get_version());
