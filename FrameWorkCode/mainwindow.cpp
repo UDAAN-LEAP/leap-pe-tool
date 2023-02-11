@@ -790,7 +790,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
                         );
             popup_menu->setStyleSheet(menuStyle);
-//            clipboard_menu->setStyleSheet(menuStyle);
+            //            clipboard_menu->setStyleSheet(menuStyle);
 
             //QFont font("Shobhika-Regular");
             //font.setWeight(16);
@@ -1522,8 +1522,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->actionFontBlack->setEnabled(true);
     ui->actionInsert_Tab_Space->setEnabled(true);
     ui->actionPDF_Preview->setEnabled(true);
-//    if (isVerifier)
-        ui->actionHighlight->setEnabled(true);
+    //    if (isVerifier)
+    ui->actionHighlight->setEnabled(true);
 
     // Table Menu inside View Menu
     ui->actionInsert_Table_2->setEnabled(true);
@@ -2933,19 +2933,19 @@ void MainWindow::on_actionHighlight_triggered()
     {
         //! Verifier gets to add and remove highlight the text
 
-            QTextCursor cursor = curr_browser->textCursor();
-            QString text = cursor.selectedText().toUtf8().constData();
-            int pos1 = curr_browser->textCursor().selectionStart();
-            int pos2 = curr_browser->textCursor().selectionEnd();
+        QTextCursor cursor = curr_browser->textCursor();
+        QString text = cursor.selectedText().toUtf8().constData();
+        int pos1 = curr_browser->textCursor().selectionStart();
+        int pos2 = curr_browser->textCursor().selectionEnd();
 
-            int cursorpos = round(((float)(pos1 + pos2)) / 2);      // goes to mid of the selection
-            cursor.setPosition(cursorpos);
+        int cursorpos = round(((float)(pos1 + pos2)) / 2);      // goes to mid of the selection
+        cursor.setPosition(cursorpos);
 
-            QTextCharFormat  format = cursor.charFormat();         // gets word character format properties
+        QTextCharFormat  format = cursor.charFormat();         // gets word character format properties
 
-            //! If word background is already yellow, set it to transparent, else set it to yellow (yellow is the highlight colour).
-            if(isVerifier)
-            {
+        //! If word background is already yellow, set it to transparent, else set it to yellow (yellow is the highlight colour).
+        if(isVerifier)
+        {
             if (format.background() == Qt::darkGray)
             {
                 format.setBackground(Qt::transparent);
@@ -2960,17 +2960,17 @@ void MainWindow::on_actionHighlight_triggered()
         }
         else
         {
-                if (format.background() == Qt::yellow)
-                {
-                    format.setBackground(Qt::transparent);
-                }
-                else
-                {
-                    format.setBackground(Qt::yellow);
+            if (format.background() == Qt::yellow)
+            {
+                format.setBackground(Qt::transparent);
+            }
+            else
+            {
+                format.setBackground(Qt::yellow);
 
-                    LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
-                }
-                curr_browser->textCursor().mergeCharFormat(format); //Correctors are only allowed to remove highlights.
+                LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
+            }
+            curr_browser->textCursor().mergeCharFormat(format); //Correctors are only allowed to remove highlights.
         }
     }
 }
@@ -3182,7 +3182,7 @@ void MainWindow::on_actionInsert_Table_2_triggered()
         tf.setBorderBrush(Qt::black);
         tf.setCellSpacing(0);
         tf.setCellPadding(7);
-//        tf.setAlignment(Qt::AlignCenter);
+        //        tf.setAlignment(Qt::AlignCenter);
         QTextCursor cursor = curr_browser->textCursor();
         cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
     }
@@ -3724,22 +3724,22 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
 
         if (submitBox2.clickedButton() == yButton2)
         {
-//            bool ok;
-//            // user entered something and pressed OK
-//            if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
-//            {
-                mProject.enable_push( true );
-//            }
-//            else if (s == SubmissionType::resubmit)    //If yes button is clicked and submission type is resubmit then enable push
-//            {
-//                mProject.enable_push( false );
-//            }
+            //            bool ok;
+            //            // user entered something and pressed OK
+            //            if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
+            //            {
+            mProject.enable_push( true );
+            //            }
+            //            else if (s == SubmissionType::resubmit)    //If yes button is clicked and submission type is resubmit then enable push
+            //            {
+            //                mProject.enable_push( false );
+            //            }
             commit_msg = "Verifier saved";
             if(!verifier_save(commit_msg)) return;
-//            if(s == SubmissionType::return_set)
-//            {
-//                mProject.set_version( mProject.get_version().toInt() - 1 );
-//            }
+            //            if(s == SubmissionType::return_set)
+            //            {
+            //                mProject.set_version( mProject.get_version().toInt() - 1 );
+            //            }
             mProject.set_verifier();
         }
         else
@@ -6877,7 +6877,7 @@ void MainWindow::on_actionas_PDF_triggered()
 
                 mainHtml=stream.readAll();
                 mainHtml.remove("background-color:");
-//                mainHtml.remove("background-color:#ffff00");
+                //                mainHtml.remove("background-color:#ffff00");
                 //                //! Changing the text background to white by setting the background to #fffff
                 //                while (true){
                 //                    stIndex = mainHtml.indexOf(searchString, startFrom);
@@ -7868,7 +7868,7 @@ void MainWindow::print(QPrinter *printer)
     //        startFrom = stIndex + 6;
     //    }
     mainHtml.remove("background-color:");
-//    mainHtml.remove("background-color:#ffff00");
+    //    mainHtml.remove("background-color:#ffff00");
     //latex to png mapping
     if(mainHtml.contains("$$")){
 
@@ -8480,8 +8480,8 @@ void MainWindow::on_actionClose_project_triggered()
     ui->actionFontBlack->setEnabled(false);
     ui->actionInsert_Tab_Space->setEnabled(false);
     ui->actionPDF_Preview->setEnabled(false);
-//    if (isVerifier)
-        ui->actionHighlight->setEnabled(false);
+    //    if (isVerifier)
+    ui->actionHighlight->setEnabled(false);
 
     // Table Menu inside View Menu
     ui->actionInsert_Table_2->setEnabled(false);
@@ -9150,7 +9150,7 @@ void MainWindow::preprocessing(){
     curr_browser->moveCursor(QTextCursor::Start);
 
     QTextCursor cursor(doc); //get the cursor
-int position=cursor.position();
+    int position=cursor.position();
     while(position< cursor.document()->characterCount()){
         cursor.select(QTextCursor::WordUnderCursor);
         fmt = cursor.charFormat();
@@ -9242,29 +9242,29 @@ void MainWindow::on_actionPaste_Format_triggered()
 void MainWindow::on_actionUnderline_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
-               return;
-           QTextCursor cursor = curr_browser->textCursor();
-           int pos = cursor.position();
-           int ancr = cursor.anchor();
-           if (pos < ancr) {
-               cursor.setPosition(pos, QTextCursor::MoveAnchor);
-               cursor.setPosition(ancr, QTextCursor::KeepAnchor);
-           }
-           bool isUnderline = cursor.charFormat().font().underline();
-           QTextCharFormat fmt;
-           fmt.setFontUnderline(isUnderline ? false : true);
-           cursor.mergeCharFormat(fmt);
-           curr_browser->mergeCurrentCharFormat(fmt);
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    int pos = cursor.position();
+    int ancr = cursor.anchor();
+    if (pos < ancr) {
+        cursor.setPosition(pos, QTextCursor::MoveAnchor);
+        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+    }
+    bool isUnderline = cursor.charFormat().font().underline();
+    QTextCharFormat fmt;
+    fmt.setFontUnderline(isUnderline ? false : true);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
 }
 
 
 void MainWindow::on_actionUndoUnderline_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
-            return;
-        QTextCharFormat format;
-        format.setFontUnderline(false);
-        curr_browser->textCursor().mergeCharFormat(format);
+        return;
+    QTextCharFormat format;
+    format.setFontUnderline(false);
+    curr_browser->textCursor().mergeCharFormat(format);
 }
 
 /*!
@@ -9362,11 +9362,11 @@ void MainWindow::on_pushButton_4_clicked()
         qDebug()<<"Recording your audio!!";
         ui->pushButton_4->setText("Stop ?");
         QAudioEncoderSettings settings;
-        #ifdef Q_OS_WIN
+#ifdef Q_OS_WIN
         settings.setCodec("audio/pcm");
-        #else
+#else
         settings.setCodec("audio/x-flac");
-        #endif
+#endif
         settings.setSampleRate(0);
         settings.setBitRate(0);
         settings.setChannelCount(1);
