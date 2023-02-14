@@ -492,7 +492,7 @@ private:
     bool check();
     bool check_access();
     void cloud_save();
-    bool verifier_save(QString);
+    bool verifier_save();
     int saved = 0;
     void autoSave();
     void messageTimer();

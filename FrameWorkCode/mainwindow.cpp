@@ -1752,50 +1752,50 @@ void MainWindow::SaveFile_GUI_Postprocessing()
     }
 
     //! Converting html output into plain text.
-    QTextDocumentFragment qtextdocfragment;
-    QString plain = qtextdocfragment.fromHtml(output).toPlainText();
+//    QTextDocumentFragment qtextdocfragment;
+//    QString plain = qtextdocfragment.fromHtml(output).toPlainText();
 
-    std::stringstream ss(plain.toStdString());
-    std::string to;
-    //! Appending the plain text in QVector<QString> object.
-    QVector<QString> s;
-    if (plain != NULL)
-    {
-        while(std::getline(ss,to,'\n'))
-        {
-            QString qstr = QString::fromStdString(to);
-            s.append(qstr);
-        }
-    }
+//    std::stringstream ss(plain.toStdString());
+//    std::string to;
+//    //! Appending the plain text in QVector<QString> object.
+//    QVector<QString> s;
+//    if (plain != NULL)
+//    {
+//        while(std::getline(ss,to,'\n'))
+//        {
+//            QString qstr = QString::fromStdString(to);
+//            s.append(qstr);
+//        }
+//    }
 
-    //! Inserting string values in \a qjsonobj.
-    QJsonObject qjsonobj;
-    for(int i = 0;i < s.size(); i++)
-    {
-        QString z = QString::number(i);
-        qjsonobj.insert(z, QJsonValue(s[i]));
-    }
-    int len = qjsonobj.length();
+//    //! Inserting string values in \a qjsonobj.
+//    QJsonObject qjsonobj;
+//    for(int i = 0;i < s.size(); i++)
+//    {
+//        QString z = QString::number(i);
+//        qjsonobj.insert(z, QJsonValue(s[i]));
+//    }
+//    int len = qjsonobj.length();
 
-    localFilename.replace(".html",".json");         //!Replacing extension of file from .html to .json
-    QFile sFile2(localFilename);
+//    localFilename.replace(".html",".json");         //!Replacing extension of file from .html to .json
+//    QFile sFile2(localFilename);
 
-    //! Sets codec value and then adding values in file
-    if(sFile2.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        QTextStream out(&sFile2);
-        out.setCodec("UTF-8");
-        out << "{\n";
-        for(int x = 0; x<len; x++)
-        {
-            QString z = QString::number(x);
-            out << "\"" << x << "\"" << ":" << "\"" << qjsonobj[z].toString() << "\"" <<","<< '\n';
-        }
-        out << "}";
+//    //! Sets codec value and then adding values in file
+//    if(sFile2.open(QIODevice::WriteOnly | QIODevice::Text))
+//    {
+//        QTextStream out(&sFile2);
+//        out.setCodec("UTF-8");
+//        out << "{\n";
+//        for(int x = 0; x<len; x++)
+//        {
+//            QString z = QString::number(x);
+//            out << "\"" << x << "\"" << ":" << "\"" << qjsonobj[z].toString() << "\"" <<","<< '\n';
+//        }
+//        out << "}";
 
-        sFile2.flush();
-        sFile2.close();
-    }
+//        sFile2.flush();
+//        sFile2.close();
+//    }
 
     //! Set Inds file readonly after saving - Corrector mode
     if (!isVerifier && gCurrentDirName == "Inds")
@@ -3734,8 +3734,7 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
             //            {
             //                mProject.enable_push( false );
             //            }
-            commit_msg = "Verifier saved";
-            if(!verifier_save(commit_msg)) return;
+            if(!verifier_save()) return;
             //            if(s == SubmissionType::return_set)
             //            {
             //                mProject.set_version( mProject.get_version().toInt() - 1 );
@@ -8963,7 +8962,7 @@ void MainWindow::autoSave(){
             if(mRole == "Corrector")
                 cloud_save();
             else if(mRole == "Verifier"){
-                if(verifier_save("Verifier cloud save - auto"))
+                if(verifier_save())
                     QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
             }
         }
@@ -9046,6 +9045,13 @@ void MainWindow::messageTimer(){
  */
 void MainWindow::cloud_save(){
     messageTimer();
+    QString corrected_count = gDirTwoLevelUp + "/Comments/count.json";
+    QJsonObject mainObj;
+    mainObj = readJsonFile(corrected_count);
+    QString Verifier = mainObj["Verifier"].toString();
+    mainObj.insert("Corrector", gCurrentPageName);
+    mainObj.insert("Verifier", Verifier);
+    writeJsonFile(corrected_count, mainObj);
     //sending credentials
     //    QProcess process;
     //    process.execute("curl -d -X -k -POST --header "
@@ -9065,7 +9071,7 @@ void MainWindow::cloud_save(){
     //    std::string user = git_username.toStdString();
     //    std::string pass = git_token.toStdString();
 
-    QString commit_msg = "Corrector Turned in Version: " + mProject.get_version();     // append current version
+    QString commit_msg = gCurrentPageName+" updated by corrector";    // append current version
 
     //    bool ok;
 
@@ -9121,9 +9127,18 @@ void MainWindow::cloud_save(){
  * \details Calls commit and push functions
  * \return Returns true if pushed successfully or false if failed.
  */
-bool MainWindow::verifier_save(QString commit_msg)
+bool MainWindow::verifier_save()
 {
     messageTimer();
+    QString corrected_count = gDirTwoLevelUp + "/Comments/count.json";
+    QJsonObject mainObj;
+    mainObj = readJsonFile(corrected_count);
+    QString Corrector = mainObj["Corrector"].toString();
+    mainObj.insert("Corrector", Corrector);
+    mainObj.insert("Verifier", gCurrentPageName);
+    writeJsonFile(corrected_count, mainObj);
+
+    QString commit_msg = gCurrentPageName+" verified by verifier";
     if(mProject.commit(commit_msg.toStdString()))
     {
         if(!mProject.push(gDirTwoLevelUp)){
