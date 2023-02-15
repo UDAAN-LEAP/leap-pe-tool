@@ -420,8 +420,6 @@ private slots:
 
     void on_actionUnderline_triggered();
 
-    void on_actionUndoUnderline_triggered();
-
     void on_pushButton_4_clicked();
 
 public slots:

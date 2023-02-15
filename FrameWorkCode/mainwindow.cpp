@@ -6072,7 +6072,8 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
         doc = b->document();
         //		loadHtmlInDoc(f);
 
-        QFile sFile("../.dan.log");
+        QString loc = gDirTwoLevelUp + "/.dan.log";
+        QFile sFile(loc);
         if(!sFile.open(QIODevice::ReadOnly)) {qDebug()<<"can't read the dan logs";}
         QString logs = sFile.readAll();
         sFile.close();
@@ -9157,7 +9158,8 @@ bool MainWindow::verifier_save()
  * \details This function is called once in a lifetime(per page).
  */
 void MainWindow::preprocessing(){
-    QFile sFile("../.dan.log");
+    QString loc = gDirTwoLevelUp + "/.dan.log";
+    QFile sFile(loc);
     slpNPatternDict slnp;
     QTextCharFormat fmt;
     if(!curr_browser || curr_browser->isReadOnly())
@@ -9171,14 +9173,18 @@ void MainWindow::preprocessing(){
         fmt = cursor.charFormat();
         QString str1 = cursor.selectedText();
         auto sel = cursor.selection().toHtml();
-        if(!sel.contains("<img") && !str1.contains(QRegExp("[0-9]")) && !str1.contains(QRegExp("[a-zA-Z]")) && !str1.contains(QRegExp("[%!@#$^&*()]"))){
+        if(!sel.contains("<img") && !str1.contains(QRegExp("[0-9]")) && !str1.contains(QRegExp("[a-zA-Z]")) && !str1.contains(QRegExp("[%!@#$^&*()]")) && !str1.contains(" ")){
             string selectedString = str1.toUtf8().constData();
             string output = slnp.toDev(slnp.toslp1(selectedString));
             cursor.mergeCharFormat(fmt);
             cursor.insertText(QString::fromStdString(output));
         }
-        //cursor.setPosition(cursor.position()+1, QTextCursor::MoveAnchor);
-        position++;
+        if(sel.contains("<img") || str1.isEmpty()) position++;
+        else{
+            position += str1.size()+1;
+        }
+        if(position >= cursor.document()->characterCount())
+            break;
         cursor.setPosition(position);
     }
 
@@ -9187,7 +9193,6 @@ void MainWindow::preprocessing(){
     out.setCodec("UTF-8");
     out << gCurrentPageName <<endl;
     sFile.close();
-
 }
 
 void MainWindow::on_actionCopy_Format_triggered()
@@ -9270,16 +9275,6 @@ void MainWindow::on_actionUnderline_triggered()
     fmt.setFontUnderline(isUnderline ? false : true);
     cursor.mergeCharFormat(fmt);
     curr_browser->mergeCurrentCharFormat(fmt);
-}
-
-
-void MainWindow::on_actionUndoUnderline_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-    QTextCharFormat format;
-    format.setFontUnderline(false);
-    curr_browser->textCursor().mergeCharFormat(format);
 }
 
 /*!
