@@ -24,6 +24,8 @@
 #include <QMouseEvent>
 #include <QDebug>
 #include <QPlainTextEdit>
+#include "qaudioprobe.h"
+#include "qaudiorecorder.h"
 #include "zoom.h"
 #include <QMessageBox>
 #include <QTime>
@@ -38,7 +40,6 @@
 #include "globalreplacedialog.h"
 #include "loadingspinner.h"
 #include "progressbardialog.h"
-#include "globalreplacepreview.h"
 #include <markRegion.h>
 #include <QOAuth2AuthorizationCodeFlow>
 #include <QCompleter>
@@ -49,9 +50,10 @@
 #include <QScrollBar>
 #include "customtextbrowser.h"
 #include "handlebbox.h"
+#include <QMediaRecorder>
 
 using namespace std;
-
+class AudioLevel;
 namespace Ui {
 class MainWindow;
 }
@@ -410,6 +412,16 @@ private slots:
 
     void on_actionUser_Guide_triggered();
 
+    void preprocessing();
+
+    void on_actionCopy_Format_triggered();
+
+    void on_actionPaste_Format_triggered();
+
+    void on_actionUnderline_triggered();
+
+    void on_pushButton_4_clicked();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
@@ -478,10 +490,15 @@ private:
     bool check();
     bool check_access();
     void cloud_save();
-    bool verifier_save(QString);
+    bool verifier_save();
     int saved = 0;
     void autoSave();
     void messageTimer();
+    bool initialSave = false;
+    QAudioRecorder *m_audioRecorder = nullptr;
+    QAudioProbe *m_probe = nullptr;
+    QList<AudioLevel*> m_audioLevels;
+    void speechToTextCall();
 };
 
 #endif // MAINWINDOW_H

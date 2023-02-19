@@ -1,6 +1,7 @@
 #ifndef TEXTFINDER_H
 #define TEXTFINDER_H
 
+#include "handlebbox.h"
 #include <QDialog>
 #include <string>
 #include <QString>
@@ -43,6 +44,8 @@ private:
     Ui::TextFinder *ui;
     explicit TextFinder(QWidget *parent = nullptr);
     static TextFinder *textFinder;
+    int tot_replaced = 0;
+    HandleBbox *handleBbox = nullptr;
 };
 
 #endif // TEXTFINDER_H

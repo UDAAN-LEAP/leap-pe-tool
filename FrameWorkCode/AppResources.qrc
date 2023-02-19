@@ -50,6 +50,7 @@
         <file>PDF-Preview.png</file>
         <file>Resources/logonew.png</file>
         <file>Resources/Old Icons/rotate.png</file>
+        <file>Resources/voice.png</file>
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>
@@ -67,5 +68,9 @@
         <file>fonts/Gujrati_Saral-1/Gujrati-Saral-1.ttf</file>
         <file>fonts/shruti_regular/shruti.ttf</file>
         <file>fonts/SolaimanLipi/SolaimanLipi.ttf</file>
+        <file>fonts/brhkndrn/brhkndrn.ttf</file>
+        <file>fonts/Nudi 1/Nudi 01 e Regular.ttf</file>
+        <file>fonts/Nudi 3/Nudi 03 e Regular.ttf</file>
+        <file>fonts/Chanakya Regular/Chanakya Regular.ttf</file>
     </qresource>
 </RCC>

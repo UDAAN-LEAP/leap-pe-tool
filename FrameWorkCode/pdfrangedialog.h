@@ -34,6 +34,8 @@ private:
 public:
 	int getStartPage() const;
 	int getEndPage() const;
+    bool on_checkBox_clicked();
+
 private slots:
 	void on_button_Cancel_clicked();
 	void on_button_Ok_clicked();
