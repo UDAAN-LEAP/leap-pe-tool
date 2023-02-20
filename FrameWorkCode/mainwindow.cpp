@@ -9046,13 +9046,16 @@ void MainWindow::messageTimer(){
  */
 void MainWindow::cloud_save(){
     messageTimer();
+    QString date = QDate::currentDate().toString();
     QString corrected_count = gDirTwoLevelUp + "/Comments/count.json";
-    QJsonObject mainObj;
-    mainObj = readJsonFile(corrected_count);
+    QJsonObject mainObj, parObj;
+    parObj = readJsonFile(corrected_count);
+    mainObj = parObj[date].toObject();
     QString Verifier = mainObj["Verifier"].toString();
     mainObj.insert("Corrector", gCurrentPageName);
     mainObj.insert("Verifier", Verifier);
-    writeJsonFile(corrected_count, mainObj);
+    parObj.insert(date, mainObj);
+    writeJsonFile(corrected_count, parObj);
     //sending credentials
     //    QProcess process;
     //    process.execute("curl -d -X -k -POST --header "
@@ -9131,13 +9134,16 @@ void MainWindow::cloud_save(){
 bool MainWindow::verifier_save()
 {
     messageTimer();
+    QString date = QDate::currentDate().toString();
     QString corrected_count = gDirTwoLevelUp + "/Comments/count.json";
-    QJsonObject mainObj;
-    mainObj = readJsonFile(corrected_count);
+    QJsonObject mainObj, parObj;
+    parObj = readJsonFile(corrected_count);
+    mainObj = parObj[date].toObject();
     QString Corrector = mainObj["Corrector"].toString();
     mainObj.insert("Corrector", Corrector);
     mainObj.insert("Verifier", gCurrentPageName);
-    writeJsonFile(corrected_count, mainObj);
+    parObj.insert(date, mainObj);
+    writeJsonFile(corrected_count, parObj);
 
     QString commit_msg = gCurrentPageName+" verified by verifier";
     if(mProject.commit(commit_msg.toStdString()))
