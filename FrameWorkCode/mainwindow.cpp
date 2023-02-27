@@ -352,6 +352,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionSymbols->setEnabled(false);
     ui->actionZoom_In->setEnabled(false);
     ui->actionZoom_Out->setEnabled(false);
+     ui->actionUnderline->setDisabled(true);
+        ui->actionJusitfiedAlign->setEnabled(false);
     //to set default tab to project widget
     ui->tabWidget->setCurrentWidget(ui->tab_2);
     //recording
@@ -1522,6 +1524,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->actionFontBlack->setEnabled(true);
     ui->actionInsert_Tab_Space->setEnabled(true);
     ui->actionPDF_Preview->setEnabled(true);
+     ui->actionUnderline->setDisabled(false);
+     ui->actionJusitfiedAlign->setEnabled(true);
     //    if (isVerifier)
     ui->actionHighlight->setEnabled(true);
 
@@ -1738,8 +1742,6 @@ void MainWindow::SaveFile_GUI_Postprocessing()
         } else if ((inputDataIndex = output.indexOf("</head>")) != -1) {
             output.insert(inputDataIndex - 1, "<style>\nbody { width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; }\n</style>");
         }
-//        output.replace("    ","\\t");
-//        output.replace("        ","\\t");
         out << output;
         sFile.flush();      //!Flushes any buffered data waiting to be written in the \a sFile
         sFile.close();      //!Closing the file
@@ -8504,6 +8506,8 @@ void MainWindow::on_actionClose_project_triggered()
     ui->actionSymbols->setEnabled(false);
     ui->actionZoom_In->setEnabled(false);
     ui->actionZoom_Out->setEnabled(false);
+    ui->actionUnderline->setDisabled(true);
+    ui->actionJusitfiedAlign->setEnabled(false);
     //Reset loadData flag
     LoadDataFlag = 1;
     //reset data
