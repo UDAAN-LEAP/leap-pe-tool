@@ -1738,8 +1738,8 @@ void MainWindow::SaveFile_GUI_Postprocessing()
         } else if ((inputDataIndex = output.indexOf("</head>")) != -1) {
             output.insert(inputDataIndex - 1, "<style>\nbody { width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; }\n</style>");
         }
-        output.replace("    ","\\t");
-        output.replace("        ","\\t");
+//        output.replace("    ","\\t");
+//        output.replace("        ","\\t");
         out << output;
         sFile.flush();      //!Flushes any buffered data waiting to be written in the \a sFile
         sFile.close();      //!Closing the file
@@ -6876,7 +6876,7 @@ void MainWindow::on_actionas_PDF_triggered()
                 //! Read the file
 
                 mainHtml=stream.readAll();
-                mainHtml.remove("background-color:");
+//                mainHtml.remove("background-color:");
                 //                mainHtml.remove("background-color:#ffff00");
                 //                //! Changing the text background to white by setting the background to #fffff
                 //                while (true){
@@ -7867,7 +7867,8 @@ void MainWindow::print(QPrinter *printer)
     //        mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
     //        startFrom = stIndex + 6;
     //    }
-    mainHtml.remove("background-color:");
+//    mainHtml.remove("background-color:");
+    mainHtml.replace("background-color:","Background-colour:");
     //    mainHtml.remove("background-color:#ffff00");
     //latex to png mapping
     if(mainHtml.contains("$$")){

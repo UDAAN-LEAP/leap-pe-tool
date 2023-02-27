@@ -53,206 +53,214 @@ HandleBbox::~HandleBbox()
  */
 QTextDocument *HandleBbox::loadFileInDoc(QFile *f)
 {
-    QTextCursor cur(doc);QTextCursor cur2(doc);
+    QTextCursor cur(doc);//QTextCursor cur2(doc);
     if (!f->open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Cannot open file";
         return nullptr;
     }
-    QString line;
-    int flag_ = 0, nestedListCount = 0;
-    QString inputText = "";
-    QString isPrevUl = "no", isPrevOl = "no";
-    while(!f->atEnd()) {
-        line = f->readLine();
-        line = line.simplified();
-        QStringList l = line.split(" ");
-        for(int i = 0; i < l.size(); i++) {
-            //for parsing p tags
-            if((l[i].contains("<p") && flag_ != 2 && flag_ != 5 && flag_ != 6) || flag_ == 1){
-                flag_ = 1;
-                while(i < l.size() && !l[i].contains("</p>")){                   
-                        inputText += l[i];
-                        inputText += " ";
-                        i++;
-                }
-                if(i == l.size())
-                    i = i - 1;
-                if(l[i].contains("</p>")){
-                    flag_ = 0;
-                    isPrevOl = isPrevUl = "no";
-                    inputText += l[i];
-                    inputText += " ";
-                    inputText = latex2png(inputText);
-                    if(inputText.contains("align=\"right\"")){
-                        blockFormat.setAlignment(Qt::AlignRight);
-                    }
-                    else if(inputText.contains("align=\"center\"")){
-                        blockFormat.setAlignment(Qt::AlignCenter);
-                    }
-                    else if(inputText.contains("align=\"justify\"")){
-                        blockFormat.setAlignment(Qt::AlignJustify);
-                    }
-                    else if(!inputText.contains("align=\"center\"") && !inputText.contains("align=\"right\"") ){
-                        blockFormat.setAlignment(Qt::AlignLeft);
-                    }
-                    cur.insertBlock();
-                    inputText.replace("\\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-                    cur.insertHtml(inputText);
-                    cur.setBlockFormat(blockFormat);
-                    inputText = "";
-                }
-            }
-
-            //for parsing table tags
-            else if((l[i].contains("<table") && flag_ != 5 && flag_ != 6) || flag_ == 2){
-                flag_ = 2;
-                while(i < l.size() && !l[i].contains("</table>")){
-                    inputText += l[i];
-                    inputText += " ";
-                    i++;
-                }
-                if(i == l.size())
-                    i = i - 1;
-                if(l[i].contains("</table>")){
-                    flag_ = 0;
-                    isPrevOl = isPrevUl = "no";
-                    int num = doc->blockCount();
-                    inputText += l[i];
-                    inputText += " ";
-                    inputText = latex2png(inputText);
-                    if(inputText.contains("align=\"right\"")){
-                        blockFormat.setAlignment(Qt::AlignRight);
-                    }
-                    else if(inputText.contains("align=\"center\"")){
-                        blockFormat.setAlignment(Qt::AlignCenter);
-                    }
-                    else if(inputText.contains("align=\"justify\"")){
-                        blockFormat.setAlignment(Qt::AlignJustify);
-                    }
-                    else if(!inputText.contains("align=\"center\"") && !inputText.contains("align=\"right\"") ){
-                        blockFormat.setAlignment(Qt::AlignLeft);
-                    }
-                    cur.insertBlock();
-                    inputText.replace("\\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-                    cur.insertHtml(inputText);
-                    cur2 = QTextCursor(doc->findBlockByNumber(num));
-                    cur2.select(QTextCursor::BlockUnderCursor);
-                    cur2.deletePreviousChar();
-                    cur.setBlockFormat(blockFormat);
-                    inputText = "";
-
-                }
-
-            }
-
-            //for parsing image tags
-            else if((l[i].contains("<img") && flag_ != 5 && flag_ != 6) || flag_ == 3){
-                flag_ = 3;
-                while(i < l.size() && !l[i].contains(">")){
-                    inputText += l[i];
-                    inputText += " ";
-                    i++;
-                }
-                if(i == l.size())
-                    i = i - 1;
-                if(l[i].contains(">")){
-                    flag_ = 0;
-                    isPrevOl = isPrevUl = "no";
-                    inputText += l[i];
-                    inputText += " ";
-                    cur.insertBlock();
-                    cur.insertHtml(inputText);
-                    inputText = "";
-                }
-
-            }
-
-            //!for parsing unordered list
-            //! Checking for ul tag and waiting till its closing tag is found.
-            //! There can be a nested list - for that nestedListCount varaible is helpful.
-            //! When new list is inserted in a document, Qt inserts an empty block at strat - Qt bug.
-            //! For removing that empty block, we are finding the block count before inserting the list then deleting the block by block number found before inserting the list.
-            else if((l[i].contains("<ul") && flag_ != 1 && flag_ != 2 && flag_ != 3 && flag_ != 6) || flag_ == 5){
-                flag_ = 5;
-                if(l[i].contains("<ul")) nestedListCount += 1;  //! If opening tag of list is seen, nestedListCount is incremented to keep track of opening list tags seen in a list
-                while(i < l.size() && !l[i].contains("</ul>")){
-                    inputText += l[i];
-                    inputText += " ";
-                    i++;
-                }
-                if(i == l.size())
-                    i = i - 1;
-                if(l[i].contains("</ul>"))
-                {
-                    nestedListCount -= 1;       //! If closing tag of list is seen, nestedListCount is decremented. When this varaible reaches zero, the list has ended.
-                    inputText += l[i];
-                    inputText += " ";
-                }
-                if(l[i].contains("</ul>") && nestedListCount < 1){
-                    flag_ = 0;
-                    isPrevOl = "no";
-                    inputText = latex2png(inputText);
-                    int num = doc->blockCount();
-                    cur.insertBlock();
-                    inputText.replace("\\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-                    cur.insertHtml(inputText);
-                    if(isPrevUl == "no")
-                    {
-                        cur2 = QTextCursor(doc->findBlockByNumber(num));
-                        cur2.select(QTextCursor::BlockUnderCursor);
-                        cur2.deleteChar();
-                    }
-                    isPrevUl = "yes";
-                    inputText = "";
-                }
-            }
-
-            //for parsing ordered list
-            else if((l[i].contains("<ol") && flag_ != 1 && flag_ != 2 && flag_ != 3 && flag_ !=5 ) || flag_ == 6){
-                flag_ = 6;
-                if(l[i].contains("<ol")) nestedListCount += 1;
-                while(i < l.size() && !l[i].contains("</ol>")){
-                    inputText += l[i];
-                    inputText += " ";
-                    i++;
-                }
-                if(i == l.size())
-                    i = i - 1;
-                if(l[i].contains("</ol>"))
-                {
-                    nestedListCount -= 1;
-                    inputText += l[i];
-                    inputText += " ";
-                }
-                if(l[i].contains("</ol>") && nestedListCount < 1){
-                    flag_ = 0;
-                    isPrevUl = "no";
-                    inputText = latex2png(inputText);
-                    int num = doc->blockCount();
-                    cur.insertBlock();
-                    inputText.replace("\\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-                    cur.insertHtml(inputText);
-                    if(isPrevOl == "no")
-                    {
-                        cur2 = QTextCursor(doc->findBlockByNumber(num));
-                        cur2.select(QTextCursor::BlockUnderCursor);
-                        cur2.deleteChar();
-                    }
-                    isPrevOl = "yes";
-                    inputText = "";
-                }
-            }
-
-        }
-        if(flag_ == 1 || flag_ == 2) {
-            inputText += "\n";
-        }
-    }
-    cur = QTextCursor(doc->findBlockByNumber(0));
-    cur.select(QTextCursor::BlockUnderCursor);
-    cur.deleteChar();
+    QString line = f->readAll();
     f->close();
+    QFont font("Shobhika-Regular");
+    font.setWeight(16);
+    font.setPointSize(16);
+    font.setFamily("Shobhika");
+    doc->setDefaultFont(font);
+//    int flag_ = 0, nestedListCount = 0;
+//    QString inputText = "";
+//    QString isPrevUl = "no", isPrevOl = "no";
+//    while(!f->atEnd()) {
+//        line = f->readLine();
+//        line = line.simplified();
+//        QStringList l = line.split(" ");
+//        for(int i = 0; i < l.size(); i++) {
+//            //for parsing p tags
+//            if((l[i].contains("<p") && flag_ != 2 && flag_ != 5 && flag_ != 6) || flag_ == 1){
+//                flag_ = 1;
+//                while(i < l.size() && !l[i].contains("</p>")){
+//                        inputText += l[i];
+//                        inputText += " ";
+//                        i++;
+//                }
+//                if(i == l.size())
+//                    i = i - 1;
+//                if(l[i].contains("</p>")){
+//                    flag_ = 0;
+//                    isPrevOl = isPrevUl = "no";
+//                    inputText += l[i];
+//                    inputText += " ";
+//                    inputText = latex2png(inputText);
+//                    if(inputText.contains("align=\"right\"")){
+//                        blockFormat.setAlignment(Qt::AlignRight);
+//                    }
+//                    else if(inputText.contains("align=\"center\"")){
+//                        blockFormat.setAlignment(Qt::AlignCenter);
+//                    }
+//                    else if(inputText.contains("align=\"justify\"")){
+//                        blockFormat.setAlignment(Qt::AlignJustify);
+//                    }
+//                    else if(!inputText.contains("align=\"center\"") && !inputText.contains("align=\"right\"") ){
+//                        blockFormat.setAlignment(Qt::AlignLeft);
+//                    }
+//                    cur.insertBlock();
+//                    inputText.replace("\\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+//                    cur.insertHtml(inputText);
+//                    cur.setBlockFormat(blockFormat);
+//                    inputText = "";
+//                }
+//            }
 
+//            //for parsing table tags
+//            else if((l[i].contains("<table") && flag_ != 5 && flag_ != 6) || flag_ == 2){
+//                flag_ = 2;
+//                while(i < l.size() && !l[i].contains("</table>")){
+//                    inputText += l[i];
+//                    inputText += " ";
+//                    i++;
+//                }
+//                if(i == l.size())
+//                    i = i - 1;
+//                if(l[i].contains("</table>")){
+//                    flag_ = 0;
+//                    isPrevOl = isPrevUl = "no";
+//                    int num = doc->blockCount();
+//                    inputText += l[i];
+//                    inputText += " ";
+//                    inputText = latex2png(inputText);
+//                    if(inputText.contains("align=\"right\"")){
+//                        blockFormat.setAlignment(Qt::AlignRight);
+//                    }
+//                    else if(inputText.contains("align=\"center\"")){
+//                        blockFormat.setAlignment(Qt::AlignCenter);
+//                    }
+//                    else if(inputText.contains("align=\"justify\"")){
+//                        blockFormat.setAlignment(Qt::AlignJustify);
+//                    }
+//                    else if(!inputText.contains("align=\"center\"") && !inputText.contains("align=\"right\"") ){
+//                        blockFormat.setAlignment(Qt::AlignLeft);
+//                    }
+//                    cur.insertBlock();
+//                    inputText.replace("\\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+//                    cur.insertHtml(inputText);
+//                    cur2 = QTextCursor(doc->findBlockByNumber(num));
+//                    cur2.select(QTextCursor::BlockUnderCursor);
+//                    cur2.deletePreviousChar();
+//                    cur.setBlockFormat(blockFormat);
+//                    inputText = "";
+
+//                }
+
+//            }
+
+//            //for parsing image tags
+//            else if((l[i].contains("<img") && flag_ != 5 && flag_ != 6) || flag_ == 3){
+//                flag_ = 3;
+//                while(i < l.size() && !l[i].contains(">")){
+//                    inputText += l[i];
+//                    inputText += " ";
+//                    i++;
+//                }
+//                if(i == l.size())
+//                    i = i - 1;
+//                if(l[i].contains(">")){
+//                    flag_ = 0;
+//                    isPrevOl = isPrevUl = "no";
+//                    inputText += l[i];
+//                    inputText += " ";
+//                    cur.insertBlock();
+//                    cur.insertHtml(inputText);
+//                    inputText = "";
+//                }
+
+//            }
+
+//            //!for parsing unordered list
+//            //! Checking for ul tag and waiting till its closing tag is found.
+//            //! There can be a nested list - for that nestedListCount varaible is helpful.
+//            //! When new list is inserted in a document, Qt inserts an empty block at strat - Qt bug.
+//            //! For removing that empty block, we are finding the block count before inserting the list then deleting the block by block number found before inserting the list.
+//            else if((l[i].contains("<ul") && flag_ != 1 && flag_ != 2 && flag_ != 3 && flag_ != 6) || flag_ == 5){
+//                flag_ = 5;
+//                if(l[i].contains("<ul")) nestedListCount += 1;  //! If opening tag of list is seen, nestedListCount is incremented to keep track of opening list tags seen in a list
+//                while(i < l.size() && !l[i].contains("</ul>")){
+//                    inputText += l[i];
+//                    inputText += " ";
+//                    i++;
+//                }
+//                if(i == l.size())
+//                    i = i - 1;
+//                if(l[i].contains("</ul>"))
+//                {
+//                    nestedListCount -= 1;       //! If closing tag of list is seen, nestedListCount is decremented. When this varaible reaches zero, the list has ended.
+//                    inputText += l[i];
+//                    inputText += " ";
+//                }
+//                if(l[i].contains("</ul>") && nestedListCount < 1){
+//                    flag_ = 0;
+//                    isPrevOl = "no";
+//                    inputText = latex2png(inputText);
+//                    int num = doc->blockCount();
+//                    cur.insertBlock();
+//                    inputText.replace("\\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+//                    cur.insertHtml(inputText);
+//                    if(isPrevUl == "no")
+//                    {
+//                        cur2 = QTextCursor(doc->findBlockByNumber(num));
+//                        cur2.select(QTextCursor::BlockUnderCursor);
+//                        cur2.deleteChar();
+//                    }
+//                    isPrevUl = "yes";
+//                    inputText = "";
+//                }
+//            }
+
+//            //for parsing ordered list
+//            else if((l[i].contains("<ol") && flag_ != 1 && flag_ != 2 && flag_ != 3 && flag_ !=5 ) || flag_ == 6){
+//                flag_ = 6;
+//                if(l[i].contains("<ol")) nestedListCount += 1;
+//                while(i < l.size() && !l[i].contains("</ol>")){
+//                    inputText += l[i];
+//                    inputText += " ";
+//                    i++;
+//                }
+//                if(i == l.size())
+//                    i = i - 1;
+//                if(l[i].contains("</ol>"))
+//                {
+//                    nestedListCount -= 1;
+//                    inputText += l[i];
+//                    inputText += " ";
+//                }
+//                if(l[i].contains("</ol>") && nestedListCount < 1){
+//                    flag_ = 0;
+//                    isPrevUl = "no";
+//                    inputText = latex2png(inputText);
+//                    int num = doc->blockCount();
+//                    cur.insertBlock();
+//                    inputText.replace("\\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+//                    cur.insertHtml(inputText);
+//                    if(isPrevOl == "no")
+//                    {
+//                        cur2 = QTextCursor(doc->findBlockByNumber(num));
+//                        cur2.select(QTextCursor::BlockUnderCursor);
+//                        cur2.deleteChar();
+//                    }
+//                    isPrevOl = "yes";
+//                    inputText = "";
+//                }
+//            }
+
+//        }
+//        if(flag_ == 1 || flag_ == 2) {
+//            inputText += "\n";
+//        }
+//    }
+//    cur = QTextCursor(doc->findBlockByNumber(0));
+//    cur.select(QTextCursor::BlockUnderCursor);
+//    cur.deleteChar();
+//    f->close();
+
+    line = latex2png(line);
+    cur.insertHtml(line);
     storeBboxes(f);
     return doc;
 }
