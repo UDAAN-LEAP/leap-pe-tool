@@ -2962,13 +2962,13 @@ void MainWindow::on_actionHighlight_triggered()
         }
         else
         {
-            if (format.background() == Qt::yellow)
+            if (format.background() == Qt::darkYellow)
             {
                 format.setBackground(Qt::transparent);
             }
             else
             {
-                format.setBackground(Qt::yellow);
+                format.setBackground(Qt::darkYellow);
 
                 LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
             }
