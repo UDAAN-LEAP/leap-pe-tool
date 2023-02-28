@@ -53,3 +53,14 @@ CONFIG(debug, debug|release) {
     win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../lib/YAWYSIWYGEE.lib
     else:win32-g++: PRE_TARGETDEPS += $$PWD/../lib/libYAWYSIWYGEE.a
 }
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../lib/release/ -lYAWYSIWYGEE
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../lib/debug/ -lYAWYSIWYGEE
+
+INCLUDEPATH += $$PWD/../include
+DEPENDPATH += $$PWD/../include
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../lib/release/libYAWYSIWYGEE.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../lib/debug/libYAWYSIWYGEE.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../lib/release/YAWYSIWYGEE.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../lib/debug/YAWYSIWYGEE.lib
