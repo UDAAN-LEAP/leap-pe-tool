@@ -422,6 +422,8 @@ private slots:
 
     void on_pushButton_4_clicked();
 
+    void on_actionFill_Table_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

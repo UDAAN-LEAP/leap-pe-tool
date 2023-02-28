@@ -3025,6 +3025,18 @@ void MainWindow::on_actionLeftAlign_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->setAlignment(Qt::AlignLeft);
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextTable *selectedTable = cursor.currentTable();
+
+    // If no table is selected, return
+    if (!selectedTable) {
+        return;
+    }
+
+    // Get the table format and set the alignment to center
+    QTextTableFormat tableFormat = selectedTable->format();
+    tableFormat.setAlignment(Qt::AlignLeft);
+    selectedTable->setFormat(tableFormat);
 }
 
 /*!
@@ -3036,6 +3048,18 @@ void MainWindow::on_actionRightAlign_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->setAlignment(Qt::AlignRight);
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextTable *selectedTable = cursor.currentTable();
+
+    // If no table is selected, return
+    if (!selectedTable) {
+        return;
+    }
+
+    // Get the table format and set the alignment to center
+    QTextTableFormat tableFormat = selectedTable->format();
+    tableFormat.setAlignment(Qt::AlignRight);
+    selectedTable->setFormat(tableFormat);
 }
 
 /*!
@@ -3048,6 +3072,18 @@ void MainWindow::on_actionCentreAlign_triggered()
         return;
 
     curr_browser->setAlignment(Qt::AlignCenter);
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextTable *selectedTable = cursor.currentTable();
+
+    // If no table is selected, return
+    if (!selectedTable) {
+        return;
+    }
+
+    // Get the table format and set the alignment to center
+    QTextTableFormat tableFormat = selectedTable->format();
+    tableFormat.setAlignment(Qt::AlignCenter);
+    selectedTable->setFormat(tableFormat);
 }
 
 /*!
@@ -3070,6 +3106,18 @@ void MainWindow::on_actionJusitfiedAlign_triggered(){
     auto newFrag = selected.fromHtml(sel);
     cursor.insertFragment(newFrag);
     curr_browser->setAlignment(Qt::AlignJustify);
+
+    QTextTable *selectedTable = cursor.currentTable();
+
+    // If no table is selected, return
+    if (!selectedTable) {
+        return;
+    }
+
+    // Get the table format and set the alignment to center
+    QTextTableFormat tableFormat = selectedTable->format();
+    tableFormat.setAlignment(Qt::AlignJustify);
+    selectedTable->setFormat(tableFormat);
 }
 
 /*!
@@ -9403,5 +9451,32 @@ void MainWindow::on_pushButton_4_clicked()
         m_audioRecorder->stop();
         speechToTextCall();
     }
+}
+
+void MainWindow::on_actionFill_Table_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextTable *selectedTable = cursor.currentTable();
+
+    // If no table is selected, return
+    if (!selectedTable) {
+        return;
+    }
+
+    // Get the table format and set the alignment to center
+    QTextTableFormat tableFormat = selectedTable->format();
+
+    // Open a color picker dialog to get the user's chosen color
+    QColorDialog colorDialog(curr_browser);
+    colorDialog.setWindowTitle("Select Table Background Color");
+    if (colorDialog.exec() != QDialog::Accepted) {
+        return;
+    }
+    QColor color = colorDialog.selectedColor();
+
+    // Set the background color for each selected cell in the table
+    QTextCharFormat cellFormat = curr_browser->textCursor().blockCharFormat();
+    cellFormat.setBackground(color);
+    curr_browser->textCursor().setBlockCharFormat(cellFormat);
 }
 
