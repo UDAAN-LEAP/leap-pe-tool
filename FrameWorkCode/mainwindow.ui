@@ -2229,7 +2229,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionFill_Table">
    <property name="text">
-    <string>Fill Table</string>
+    <string>Shade Table</string>
    </property>
   </action>
  </widget>

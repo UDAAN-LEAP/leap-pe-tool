@@ -819,16 +819,20 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             gtrans = new QAction("Google translate",popup_menu);
             QAction* insertImage;
             insertImage = new QAction("Insert image",popup_menu);
+            QAction* fillTable;
+            fillTable = new QAction("Shade table",popup_menu);
             popup_menu->insertSeparator(popup_menu->actions()[0]);
             popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
             popup_menu->addAction(gsearch);
             popup_menu->addAction(gtrans);
             popup_menu->addAction(insertImage);
+            popup_menu->addAction(fillTable);
 
             connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
             connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
             connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
             connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
+            connect(fillTable, SIGNAL(triggered()), this, SLOT(on_actionFill_Table_triggered()));
             popup_menu->exec(ev->globalPos());
             popup_menu->close(); popup_menu->clear();
         }
