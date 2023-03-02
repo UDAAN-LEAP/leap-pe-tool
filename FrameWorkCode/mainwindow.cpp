@@ -2975,7 +2975,7 @@ void MainWindow::on_actionHighlight_triggered()
             {
                 format.setBackground(Qt::darkYellow);
 
-                LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
+//                LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
             }
             curr_browser->textCursor().mergeCharFormat(format); //Correctors are only allowed to remove highlights.
         }
