@@ -27,7 +27,8 @@ Worker::Worker(QObject *parent,
                std::map<std::string, std::string> CPair_editDis,
                std::map<string, set<string> >* CPairs,
                map<QString, QString> filestructure_fw,
-               QSet<QString>* dict_set1
+               QSet<QString>* dict_set1,
+               QString mRole
                ) : QObject(parent)
 {
     this->CPairs = CPairs;
@@ -40,6 +41,7 @@ Worker::Worker(QObject *parent,
     this->gDirTwoLevelUp = gDirTwoLevelUp;
     this->filestructure_fw = filestructure_fw;
     this->dict_set1 = dict_set1;
+    this->mRole = mRole;
 }
 
 slpNPatternDict slnp;
@@ -70,7 +72,7 @@ void Worker::doSaveBackend()
     changedWords = ed.editDistance(s1, s2);             // Update CPair by editdistance
 
     QVectorIterator<QString> i(changedWords);
-    QString filename_ = (*mProject).GetDir().absolutePath() + "/Dicts/" + "DictChanges";
+    QString filename_ = (*mProject).GetDir().absolutePath() + "/Dicts/" +mRole+ "_DictChanges";
     QFile file_(filename_);
     if(!file_.open(QIODevice::WriteOnly | QIODevice::Append)) qDebug()<<"Can't open DictChanges file";
     else{
@@ -132,7 +134,7 @@ void Worker:: addCpair()
     }
 
     //! Reflecting CPairs entries in the file /Dicts/CPair; Making it dynamic
-    QString filename12 = (*mProject).GetDir().absolutePath() + "/Dicts/" + "CPair";
+    QString filename12 = (*mProject).GetDir().absolutePath() + "/Dicts/" + mRole +"_CPair";
     QFile file12(filename12);
     QStringList split1;
     if(!file12.exists())

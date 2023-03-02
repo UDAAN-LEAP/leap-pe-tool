@@ -1417,7 +1417,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         UpdateFileBrekadown();    //Reset the current file and dir levels
 
         //!Get the elapsed time in Timelog.json file under Comments folder
-        gTimeLogLocation = gDirTwoLevelUp + "/Comments/Timelog.json";     //Navigate to Timelog.json uder Comments folder
+        gTimeLogLocation = gDirTwoLevelUp + "/Comments/"+mRole+"_Timelog.json";     //Navigate to Timelog.json uder Comments folder
         QJsonObject mainObj =  readJsonFile(gTimeLogLocation);
 
         //!Get the seconds elapsed for their file name in json file
@@ -1872,7 +1872,8 @@ void MainWindow::on_actionSave_triggered()
                                     CPair_editDis,
                                     &CPairs,
                                     filestructure_fw,
-                                    &dict_set1);
+                                    &dict_set1,
+                                    mRole);
         QThread *thread = new QThread;
 
         connect(thread, SIGNAL(started()), worker, SLOT(doSaveBackend()));
@@ -4719,7 +4720,7 @@ bool MainWindow::isStringInFile(QString file_path, QString searchString){
  * \brief adds currently opened file in editor in .EditedFiles.txt to mark it as dirty
  */
 void MainWindow::addCurrentlyOpenFileToEditedFilesLog(){
-    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/." +mRole+ "_EditedFiles.txt";
     QString currentFilePath = gDirTwoLevelUp + "/" + gCurrentDirName+ "/" + gCurrentPageName;
 
     bool fileFound = isStringInFile(editedFilesLogPath, currentFilePath);
@@ -4739,7 +4740,7 @@ void MainWindow::addCurrentlyOpenFileToEditedFilesLog(){
  * \brief Deletes .EditedFiles.txt which stores the edited files list
  */
 void MainWindow::deleteEditedFilesLog(){
-    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/." + mRole+"_EditedFiles.txt";
     QFile file(editedFilesLogPath);
     file.remove();
 }
@@ -4930,7 +4931,9 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     if (messageBox.clickedButton() == cancelButton){
         QDir directory(gDirTwoLevelUp);
         QString setName=directory.dirName();
-        QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
+        if(!QDir(gDirTwoLevelUp+"/logs").exists())
+                QDir().mkdir(gDirTwoLevelUp+"/logs");
+        QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
         QFile csvFile(filename);
         if(!csvFile.exists())
         {
@@ -4999,7 +5002,9 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
             //!Writing logs
             QDir directory(gDirTwoLevelUp);
             QString setName=directory.dirName();
-            QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
+            if(!QDir(gDirTwoLevelUp+"/logs").exists())
+                    QDir().mkdir(gDirTwoLevelUp+"/logs");
+            QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
             QFile csvFile(filename);
             if(!csvFile.exists())     //for first time creation
             {
@@ -5042,7 +5047,9 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
 
             QDir directory(gDirTwoLevelUp);
             QString setName=directory.dirName();
-            QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
+            if(!QDir(gDirTwoLevelUp+"/logs").exists())
+                    QDir().mkdir(gDirTwoLevelUp+"/logs");
+            QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
             QFile csvFile(filename);
             if(!csvFile.exists())
             {
@@ -5121,7 +5128,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     */
     QVector<int> replaceInAllPages;
 
-    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/." + mRole+"_EditedFiles.txt";
 
     int noOfChangedWords = changedWords.size();
     int files = 0;
@@ -5221,7 +5228,8 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
                     &r2,
                     &x1,
                     &files,
-                    pairMap
+                    pairMap,
+                    mRole
                     );
 
         QThread *thread = new QThread;
@@ -5260,7 +5268,9 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
                                 s2,
                                 new_cpair,
                                 &CPairs,
-                                filestructure_fw);
+                                filestructure_fw,
+                                &dict_set1,
+                                mRole);
     QThread *thread = new QThread;
 
     connect(thread, SIGNAL(started()), worker, SLOT(addCpair()));
@@ -5326,7 +5336,7 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
 
         if(previewMap.size() >= 1)
         {
-            QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+            QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/." + mRole+"_EditedFiles.txt";
             QString currentFileDirectory =gDirTwoLevelUp + "/" + gCurrentDirName;;
             QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
             QMap<QString,QStringList> lines;
@@ -6126,7 +6136,9 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
         doc = b->document();
         //		loadHtmlInDoc(f);
 
-        QString loc = gDirTwoLevelUp + "/.dan.log";
+        if(!QDir(gDirTwoLevelUp+"/logs").exists())
+                QDir().mkdir(gDirTwoLevelUp+"/logs");
+        QString loc = gDirTwoLevelUp + "/logs/."+mRole+"_dan.log";
         QFile sFile(loc);
         if(!sFile.open(QIODevice::ReadOnly)) {qDebug()<<"can't read the dan logs";}
         QString logs = sFile.readAll();
@@ -7248,7 +7260,9 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
 
         QDir directory(gDirTwoLevelUp);
         QString setName=directory.dirName();
-        QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
+        if(!QDir(gDirTwoLevelUp+"/logs").exists())
+                QDir().mkdir(gDirTwoLevelUp+"/logs");
+        QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
         //qDebug()<<filename;
         QFile csvFile(filename);
         if(!csvFile.exists())
@@ -7617,7 +7631,9 @@ void MainWindow::writeSettings()
     {
         QFile::remove(f);
     }
-    QString filename = gDirTwoLevelUp + "/.cursor.txt";
+    if(!QDir(gDirTwoLevelUp+"/logs").exists())
+            QDir().mkdir(gDirTwoLevelUp+"/logs");
+    QString filename = gDirTwoLevelUp + "/logs/."+mRole+"_cursor.txt";
     QFile myFile (filename);
     myFile.open(QIODevice::ReadWrite);
     QDataStream in (&myFile);
@@ -7652,7 +7668,9 @@ void MainWindow::readSettings()
 {
     int pos1;
 
-    QString filename = gDirTwoLevelUp + "/.cursor.txt";
+    if(!QDir(gDirTwoLevelUp+"/logs").exists())
+            QDir().mkdir(gDirTwoLevelUp+"/logs");
+    QString filename = gDirTwoLevelUp + "/logs/."+mRole+"_cursor.txt";
     QFile myFile (filename);
     myFile.open(QIODevice::ReadOnly);
     QMap<QString,int> map;
@@ -9104,13 +9122,13 @@ void MainWindow::messageTimer(){
 void MainWindow::cloud_save(){
     messageTimer();
     QString date = QDate::currentDate().toString();
-    QString corrected_count = gDirTwoLevelUp + "/Comments/count.json";
+    QString corrected_count = gDirTwoLevelUp + "/Comments/"+mRole+"_count.json";
     QJsonObject mainObj, parObj;
     parObj = readJsonFile(corrected_count);
     mainObj = parObj[date].toObject();
-    QString Verifier = mainObj["Verifier"].toString();
+//    QString Verifier = mainObj["Verifier"].toString();
     mainObj.insert("Corrector", gCurrentPageName);
-    mainObj.insert("Verifier", Verifier);
+//    mainObj.insert("Verifier", Verifier);
     parObj.insert(date, mainObj);
     writeJsonFile(corrected_count, parObj);
     //sending credentials
@@ -9192,12 +9210,12 @@ bool MainWindow::verifier_save()
 {
     messageTimer();
     QString date = QDate::currentDate().toString();
-    QString corrected_count = gDirTwoLevelUp + "/Comments/count.json";
+    QString corrected_count = gDirTwoLevelUp + "/Comments/"+mRole+"_count.json";
     QJsonObject mainObj, parObj;
     parObj = readJsonFile(corrected_count);
     mainObj = parObj[date].toObject();
-    QString Corrector = mainObj["Corrector"].toString();
-    mainObj.insert("Corrector", Corrector);
+//    QString Corrector = mainObj["Corrector"].toString();
+//    mainObj.insert("Corrector", Corrector);
     mainObj.insert("Verifier", gCurrentPageName);
     parObj.insert(date, mainObj);
     writeJsonFile(corrected_count, parObj);
@@ -9221,7 +9239,9 @@ bool MainWindow::verifier_save()
  * \details This function is called once in a lifetime(per page).
  */
 void MainWindow::preprocessing(){
-    QString loc = gDirTwoLevelUp + "/.dan.log";
+    if(!QDir(gDirTwoLevelUp+"/logs").exists())
+            QDir().mkdir(gDirTwoLevelUp+"/logs");
+    QString loc = gDirTwoLevelUp + "/logs/."+mRole+"_dan.log";
     QFile sFile(loc);
     slpNPatternDict slnp;
     QTextCharFormat fmt;

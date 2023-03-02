@@ -161,7 +161,7 @@ void LoadDataWorker::on_actionLoadSubPS_triggered()
     slpNPatternDict slnp;
     trieEditDis trie;
     size_t count = trie.loadPWordsPatternstoTrie(*TPWordsP, *PWords);// justsubstrings not patterns exactly // PWordsP,
-    QString localmFilename1 = (*mProject).GetDir().absolutePath() + "/Dicts/" + "CPair";
+    QString localmFilename1 = (*mProject).GetDir().absolutePath() + "/Dicts/" + "Corrector_CPair";
 
     slnp.loadCPairs(localmFilename1.toUtf8().constData(), *CPairs, *Dict, *PWords);
     localmFilename1 = mFilename1;
@@ -193,7 +193,7 @@ void LoadDataWorker::on_actionLoadSubPS_triggered()
 void LoadDataWorker::on_actionLoadConfusions_triggered()
 {
     slpNPatternDict slnp;
-    QString localmFilename1 = (*mProject).GetDir().absolutePath() + "/Dicts/" + "CPair";
+    QString localmFilename1 = (*mProject).GetDir().absolutePath() + "/Dicts/" + "CorrectorCPair";
     slnp.loadConfusions(localmFilename1.toUtf8().constData(), *ConfPmap);
     localmFilename1 = mFilename;
 }

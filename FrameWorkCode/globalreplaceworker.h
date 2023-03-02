@@ -28,7 +28,8 @@ public:
             int *r2 = nullptr,
             int *x1 = nullptr,
             int *files = nullptr,
-            int pairMap = 1
+            int pairMap = 1,
+            QString mRole ="Corrector"
             );
     int pairMap;
 
@@ -50,6 +51,7 @@ private:
     int writeGlobalCPairsToFiles(QString file_path, QMap <QString, QString> globalReplacementMap, QTextDocument* doc);
     bool isStringInFile(QString file_path, QString searchString);
     HandleBbox *handleBbox = nullptr;
+    QString mRole;
 
 public slots:
     void replaceWordsInFiles();
