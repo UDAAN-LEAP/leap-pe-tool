@@ -1750,7 +1750,8 @@ void MainWindow::SaveFile_GUI_Postprocessing()
         sFile.flush();      //!Flushes any buffered data waiting to be written in the \a sFile
         sFile.close();      //!Closing the file
 
-        handleBbox->insertBboxes(&sFile);
+        if(tempPageName.endsWith(".html"))
+            handleBbox->insertBboxes(&sFile);
     }
     if(initialSave == true){
         initialSave = false;
