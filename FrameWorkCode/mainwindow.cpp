@@ -9467,12 +9467,12 @@ void MainWindow::on_actionFill_Table_triggered()
     QTextTableFormat tableFormat = selectedTable->format();
 
     // Open a color picker dialog to get the user's chosen color
-    QColorDialog colorDialog(curr_browser);
-    colorDialog.setWindowTitle("Select Table Background Color");
-    if (colorDialog.exec() != QDialog::Accepted) {
-        return;
-    }
-    QColor color = colorDialog.selectedColor();
+//    QColorDialog colorDialog(curr_browser);
+//    colorDialog.setWindowTitle("Select Table Background Color");
+//    if (colorDialog.exec() != QDialog::Accepted) {
+//        return;
+//    }
+    QColor color = QColorDialog::getColor();
 
     // Set the background color for each selected cell in the table
     QTextCharFormat cellFormat = curr_browser->textCursor().blockCharFormat();
