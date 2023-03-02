@@ -240,6 +240,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(zoom_slider_valueChanged(int)));
     connect(ui->horizontalSlider, SIGNAL(sliderMoved(int)), this, SLOT(zoom_slider_moved(int)));
+    connect(&watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(directoryChanged(const QString&)));
 
     qApp->installEventFilter(this);
     AddRecentProjects();
@@ -506,6 +507,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 
 /*!
  * \fn readJsonFile
