@@ -240,6 +240,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(zoom_slider_valueChanged(int)));
     connect(ui->horizontalSlider, SIGNAL(sliderMoved(int)), this, SLOT(zoom_slider_moved(int)));
+    connect(&watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(directoryChanged(const QString&)));
 
     qApp->installEventFilter(this);
     AddRecentProjects();
@@ -352,6 +353,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionSymbols->setEnabled(false);
     ui->actionZoom_In->setEnabled(false);
     ui->actionZoom_Out->setEnabled(false);
+     ui->actionUnderline->setDisabled(true);
+        ui->actionJusitfiedAlign->setEnabled(false);
     //to set default tab to project widget
     ui->tabWidget->setCurrentWidget(ui->tab_2);
     //recording
@@ -504,6 +507,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 
 /*!
  * \fn readJsonFile
@@ -817,16 +821,20 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             gtrans = new QAction("Google translate",popup_menu);
             QAction* insertImage;
             insertImage = new QAction("Insert image",popup_menu);
+            QAction* fillTable;
+            fillTable = new QAction("Shade table",popup_menu);
             popup_menu->insertSeparator(popup_menu->actions()[0]);
             popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
             popup_menu->addAction(gsearch);
             popup_menu->addAction(gtrans);
             popup_menu->addAction(insertImage);
+            popup_menu->addAction(fillTable);
 
             connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
             connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
             connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
             connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
+            connect(fillTable, SIGNAL(triggered()), this, SLOT(on_actionFill_Table_triggered()));
             popup_menu->exec(ev->globalPos());
             popup_menu->close(); popup_menu->clear();
         }
@@ -1411,7 +1419,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         UpdateFileBrekadown();    //Reset the current file and dir levels
 
         //!Get the elapsed time in Timelog.json file under Comments folder
-        gTimeLogLocation = gDirTwoLevelUp + "/Comments/Timelog.json";     //Navigate to Timelog.json uder Comments folder
+        gTimeLogLocation = gDirTwoLevelUp + "/Comments/"+mRole+"_Timelog.json";     //Navigate to Timelog.json uder Comments folder
         QJsonObject mainObj =  readJsonFile(gTimeLogLocation);
 
         //!Get the seconds elapsed for their file name in json file
@@ -1522,6 +1530,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->actionFontBlack->setEnabled(true);
     ui->actionInsert_Tab_Space->setEnabled(true);
     ui->actionPDF_Preview->setEnabled(true);
+     ui->actionUnderline->setDisabled(false);
+     ui->actionJusitfiedAlign->setEnabled(true);
     //    if (isVerifier)
     ui->actionHighlight->setEnabled(true);
 
@@ -1738,13 +1748,12 @@ void MainWindow::SaveFile_GUI_Postprocessing()
         } else if ((inputDataIndex = output.indexOf("</head>")) != -1) {
             output.insert(inputDataIndex - 1, "<style>\nbody { width: 21cm; height: 29.7cm; margin: 30mm 45mm 30mm 45mm; }\n</style>");
         }
-        output.replace("    ","\\t");
-        output.replace("        ","\\t");
         out << output;
         sFile.flush();      //!Flushes any buffered data waiting to be written in the \a sFile
         sFile.close();      //!Closing the file
 
-        handleBbox->insertBboxes(&sFile);
+        if(tempPageName.endsWith(".html"))
+            handleBbox->insertBboxes(&sFile);
     }
     if(initialSave == true){
         initialSave = false;
@@ -1866,7 +1875,8 @@ void MainWindow::on_actionSave_triggered()
                                     CPair_editDis,
                                     &CPairs,
                                     filestructure_fw,
-                                    &dict_set1);
+                                    &dict_set1,
+                                    mRole);
         QThread *thread = new QThread;
 
         connect(thread, SIGNAL(started()), worker, SLOT(doSaveBackend()));
@@ -2960,15 +2970,15 @@ void MainWindow::on_actionHighlight_triggered()
         }
         else
         {
-            if (format.background() == Qt::yellow)
+            if (format.background() == Qt::darkYellow)
             {
                 format.setBackground(Qt::transparent);
             }
             else
             {
-                format.setBackground(Qt::yellow);
+                format.setBackground(Qt::darkYellow);
 
-                LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
+//                LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
             }
             curr_browser->textCursor().mergeCharFormat(format); //Correctors are only allowed to remove highlights.
         }
@@ -3023,6 +3033,18 @@ void MainWindow::on_actionLeftAlign_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->setAlignment(Qt::AlignLeft);
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextTable *selectedTable = cursor.currentTable();
+
+    // If no table is selected, return
+    if (!selectedTable) {
+        return;
+    }
+
+    // Get the table format and set the alignment to center
+    QTextTableFormat tableFormat = selectedTable->format();
+    tableFormat.setAlignment(Qt::AlignLeft);
+    selectedTable->setFormat(tableFormat);
 }
 
 /*!
@@ -3034,6 +3056,18 @@ void MainWindow::on_actionRightAlign_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->setAlignment(Qt::AlignRight);
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextTable *selectedTable = cursor.currentTable();
+
+    // If no table is selected, return
+    if (!selectedTable) {
+        return;
+    }
+
+    // Get the table format and set the alignment to center
+    QTextTableFormat tableFormat = selectedTable->format();
+    tableFormat.setAlignment(Qt::AlignRight);
+    selectedTable->setFormat(tableFormat);
 }
 
 /*!
@@ -3046,6 +3080,18 @@ void MainWindow::on_actionCentreAlign_triggered()
         return;
 
     curr_browser->setAlignment(Qt::AlignCenter);
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextTable *selectedTable = cursor.currentTable();
+
+    // If no table is selected, return
+    if (!selectedTable) {
+        return;
+    }
+
+    // Get the table format and set the alignment to center
+    QTextTableFormat tableFormat = selectedTable->format();
+    tableFormat.setAlignment(Qt::AlignCenter);
+    selectedTable->setFormat(tableFormat);
 }
 
 /*!
@@ -3068,6 +3114,18 @@ void MainWindow::on_actionJusitfiedAlign_triggered(){
     auto newFrag = selected.fromHtml(sel);
     cursor.insertFragment(newFrag);
     curr_browser->setAlignment(Qt::AlignJustify);
+
+    QTextTable *selectedTable = cursor.currentTable();
+
+    // If no table is selected, return
+    if (!selectedTable) {
+        return;
+    }
+
+    // Get the table format and set the alignment to center
+    QTextTableFormat tableFormat = selectedTable->format();
+    tableFormat.setAlignment(Qt::AlignJustify);
+    selectedTable->setFormat(tableFormat);
 }
 
 /*!
@@ -4665,7 +4723,7 @@ bool MainWindow::isStringInFile(QString file_path, QString searchString){
  * \brief adds currently opened file in editor in .EditedFiles.txt to mark it as dirty
  */
 void MainWindow::addCurrentlyOpenFileToEditedFilesLog(){
-    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/." +mRole+ "_EditedFiles.txt";
     QString currentFilePath = gDirTwoLevelUp + "/" + gCurrentDirName+ "/" + gCurrentPageName;
 
     bool fileFound = isStringInFile(editedFilesLogPath, currentFilePath);
@@ -4685,7 +4743,7 @@ void MainWindow::addCurrentlyOpenFileToEditedFilesLog(){
  * \brief Deletes .EditedFiles.txt which stores the edited files list
  */
 void MainWindow::deleteEditedFilesLog(){
-    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/." + mRole+"_EditedFiles.txt";
     QFile file(editedFilesLogPath);
     file.remove();
 }
@@ -4876,7 +4934,9 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
     if (messageBox.clickedButton() == cancelButton){
         QDir directory(gDirTwoLevelUp);
         QString setName=directory.dirName();
-        QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
+        if(!QDir(gDirTwoLevelUp+"/logs").exists())
+                QDir().mkdir(gDirTwoLevelUp+"/logs");
+        QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
         QFile csvFile(filename);
         if(!csvFile.exists())
         {
@@ -4945,7 +5005,9 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
             //!Writing logs
             QDir directory(gDirTwoLevelUp);
             QString setName=directory.dirName();
-            QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
+            if(!QDir(gDirTwoLevelUp+"/logs").exists())
+                    QDir().mkdir(gDirTwoLevelUp+"/logs");
+            QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
             QFile csvFile(filename);
             if(!csvFile.exists())     //for first time creation
             {
@@ -4988,7 +5050,9 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
 
             QDir directory(gDirTwoLevelUp);
             QString setName=directory.dirName();
-            QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
+            if(!QDir(gDirTwoLevelUp+"/logs").exists())
+                    QDir().mkdir(gDirTwoLevelUp+"/logs");
+            QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
             QFile csvFile(filename);
             if(!csvFile.exists())
             {
@@ -5067,7 +5131,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
     */
     QVector<int> replaceInAllPages;
 
-    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+    QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/." + mRole+"_EditedFiles.txt";
 
     int noOfChangedWords = changedWords.size();
     int files = 0;
@@ -5167,7 +5231,8 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
                     &r2,
                     &x1,
                     &files,
-                    pairMap
+                    pairMap,
+                    mRole
                     );
 
         QThread *thread = new QThread;
@@ -5206,7 +5271,9 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
                                 s2,
                                 new_cpair,
                                 &CPairs,
-                                filestructure_fw);
+                                filestructure_fw,
+                                &dict_set1,
+                                mRole);
     QThread *thread = new QThread;
 
     connect(thread, SIGNAL(started()), worker, SLOT(addCpair()));
@@ -5272,7 +5339,7 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
 
         if(previewMap.size() >= 1)
         {
-            QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+            QString editedFilesLogPath = gDirTwoLevelUp + "/Dicts/." + mRole+"_EditedFiles.txt";
             QString currentFileDirectory =gDirTwoLevelUp + "/" + gCurrentDirName;;
             QDirIterator dirIterator(currentFileDirectory, QDirIterator::Subdirectories);
             QMap<QString,QStringList> lines;
@@ -6072,7 +6139,9 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
         doc = b->document();
         //		loadHtmlInDoc(f);
 
-        QString loc = gDirTwoLevelUp + "/.dan.log";
+        if(!QDir(gDirTwoLevelUp+"/logs").exists())
+                QDir().mkdir(gDirTwoLevelUp+"/logs");
+        QString loc = gDirTwoLevelUp + "/logs/."+mRole+"_dan.log";
         QFile sFile(loc);
         if(!sFile.open(QIODevice::ReadOnly)) {qDebug()<<"can't read the dan logs";}
         QString logs = sFile.readAll();
@@ -6876,7 +6945,7 @@ void MainWindow::on_actionas_PDF_triggered()
                 //! Read the file
 
                 mainHtml=stream.readAll();
-                mainHtml.remove("background-color:");
+//                mainHtml.remove("background-color:");
                 //                mainHtml.remove("background-color:#ffff00");
                 //                //! Changing the text background to white by setting the background to #fffff
                 //                while (true){
@@ -7194,7 +7263,9 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
 
         QDir directory(gDirTwoLevelUp);
         QString setName=directory.dirName();
-        QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
+        if(!QDir(gDirTwoLevelUp+"/logs").exists())
+                QDir().mkdir(gDirTwoLevelUp+"/logs");
+        QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
         //qDebug()<<filename;
         QFile csvFile(filename);
         if(!csvFile.exists())
@@ -7563,7 +7634,9 @@ void MainWindow::writeSettings()
     {
         QFile::remove(f);
     }
-    QString filename = gDirTwoLevelUp + "/.cursor.txt";
+    if(!QDir(gDirTwoLevelUp+"/logs").exists())
+            QDir().mkdir(gDirTwoLevelUp+"/logs");
+    QString filename = gDirTwoLevelUp + "/logs/."+mRole+"_cursor.txt";
     QFile myFile (filename);
     myFile.open(QIODevice::ReadWrite);
     QDataStream in (&myFile);
@@ -7598,7 +7671,9 @@ void MainWindow::readSettings()
 {
     int pos1;
 
-    QString filename = gDirTwoLevelUp + "/.cursor.txt";
+    if(!QDir(gDirTwoLevelUp+"/logs").exists())
+            QDir().mkdir(gDirTwoLevelUp+"/logs");
+    QString filename = gDirTwoLevelUp + "/logs/."+mRole+"_cursor.txt";
     QFile myFile (filename);
     myFile.open(QIODevice::ReadOnly);
     QMap<QString,int> map;
@@ -7867,7 +7942,8 @@ void MainWindow::print(QPrinter *printer)
     //        mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
     //        startFrom = stIndex + 6;
     //    }
-    mainHtml.remove("background-color:");
+//    mainHtml.remove("background-color:");
+    mainHtml.replace("background-color:","Background-colour:");
     //    mainHtml.remove("background-color:#ffff00");
     //latex to png mapping
     if(mainHtml.contains("$$")){
@@ -8503,6 +8579,8 @@ void MainWindow::on_actionClose_project_triggered()
     ui->actionSymbols->setEnabled(false);
     ui->actionZoom_In->setEnabled(false);
     ui->actionZoom_Out->setEnabled(false);
+    ui->actionUnderline->setDisabled(true);
+    ui->actionJusitfiedAlign->setEnabled(false);
     //Reset loadData flag
     LoadDataFlag = 1;
     //reset data
@@ -9046,13 +9124,16 @@ void MainWindow::messageTimer(){
  */
 void MainWindow::cloud_save(){
     messageTimer();
-    QString corrected_count = gDirTwoLevelUp + "/Comments/count.json";
-    QJsonObject mainObj;
-    mainObj = readJsonFile(corrected_count);
-    QString Verifier = mainObj["Verifier"].toString();
+    QString date = QDate::currentDate().toString();
+    QString corrected_count = gDirTwoLevelUp + "/Comments/"+mRole+"_count.json";
+    QJsonObject mainObj, parObj;
+    parObj = readJsonFile(corrected_count);
+    mainObj = parObj[date].toObject();
+//    QString Verifier = mainObj["Verifier"].toString();
     mainObj.insert("Corrector", gCurrentPageName);
-    mainObj.insert("Verifier", Verifier);
-    writeJsonFile(corrected_count, mainObj);
+//    mainObj.insert("Verifier", Verifier);
+    parObj.insert(date, mainObj);
+    writeJsonFile(corrected_count, parObj);
     //sending credentials
     //    QProcess process;
     //    process.execute("curl -d -X -k -POST --header "
@@ -9131,13 +9212,16 @@ void MainWindow::cloud_save(){
 bool MainWindow::verifier_save()
 {
     messageTimer();
-    QString corrected_count = gDirTwoLevelUp + "/Comments/count.json";
-    QJsonObject mainObj;
-    mainObj = readJsonFile(corrected_count);
-    QString Corrector = mainObj["Corrector"].toString();
-    mainObj.insert("Corrector", Corrector);
+    QString date = QDate::currentDate().toString();
+    QString corrected_count = gDirTwoLevelUp + "/Comments/"+mRole+"_count.json";
+    QJsonObject mainObj, parObj;
+    parObj = readJsonFile(corrected_count);
+    mainObj = parObj[date].toObject();
+//    QString Corrector = mainObj["Corrector"].toString();
+//    mainObj.insert("Corrector", Corrector);
     mainObj.insert("Verifier", gCurrentPageName);
-    writeJsonFile(corrected_count, mainObj);
+    parObj.insert(date, mainObj);
+    writeJsonFile(corrected_count, parObj);
 
     QString commit_msg = gCurrentPageName+" verified by verifier";
     if(mProject.commit(commit_msg.toStdString()))
@@ -9158,7 +9242,9 @@ bool MainWindow::verifier_save()
  * \details This function is called once in a lifetime(per page).
  */
 void MainWindow::preprocessing(){
-    QString loc = gDirTwoLevelUp + "/.dan.log";
+    if(!QDir(gDirTwoLevelUp+"/logs").exists())
+            QDir().mkdir(gDirTwoLevelUp+"/logs");
+    QString loc = gDirTwoLevelUp + "/logs/."+mRole+"_dan.log";
     QFile sFile(loc);
     slpNPatternDict slnp;
     QTextCharFormat fmt;
@@ -9392,5 +9478,32 @@ void MainWindow::on_pushButton_4_clicked()
         m_audioRecorder->stop();
         speechToTextCall();
     }
+}
+
+void MainWindow::on_actionFill_Table_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextTable *selectedTable = cursor.currentTable();
+
+    // If no table is selected, return
+    if (!selectedTable) {
+        return;
+    }
+
+    // Get the table format and set the alignment to center
+    QTextTableFormat tableFormat = selectedTable->format();
+
+    // Open a color picker dialog to get the user's chosen color
+//    QColorDialog colorDialog(curr_browser);
+//    colorDialog.setWindowTitle("Select Table Background Color");
+//    if (colorDialog.exec() != QDialog::Accepted) {
+//        return;
+//    }
+    QColor color = QColorDialog::getColor();
+
+    // Set the background color for each selected cell in the table
+    QTextCharFormat cellFormat = curr_browser->textCursor().blockCharFormat();
+    cellFormat.setBackground(color);
+    curr_browser->textCursor().setBlockCharFormat(cellFormat);
 }
 

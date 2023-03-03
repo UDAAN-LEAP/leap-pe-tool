@@ -48,7 +48,8 @@ GlobalReplaceWorker::GlobalReplaceWorker(QObject *parent,
                                          int *r2,
                                          int *x1,
                                          int *files,
-                                         int pairMap
+                                         int pairMap,
+                                         QString mRole
                                          ) : QObject(parent)
 {
     this->filesChangedUsingGlobalReplace = filesChangedUsingGlobalReplace;
@@ -69,8 +70,9 @@ GlobalReplaceWorker::GlobalReplaceWorker(QObject *parent,
 
     this-> globalReplacementMapAfterCheck = globalReplacementMapAfterCheck;
     this->pairMap = pairMap;
+    this->mRole = mRole;
 
-    editedFilesLogPath = gDirTwoLevelUp + "/Dicts/" + ".EditedFiles.txt";
+    editedFilesLogPath = gDirTwoLevelUp + "/Dicts/." +mRole+"_EditedFiles.txt";
 }
 
 /*!
@@ -402,7 +404,9 @@ void GlobalReplaceWorker::writeLogs()
 
         QDir directory(gDirTwoLevelUp);
         QString setName=directory.dirName();
-        QString filename = gDirTwoLevelUp+"/"+setName+"_logs.csv";
+        if(!QDir(gDirTwoLevelUp+"/logs").exists())
+                QDir().mkdir(gDirTwoLevelUp+"/logs");
+        QString filename = gDirTwoLevelUp+"/logs/"+mRole+setName+"_logs.csv";
         QFile csvFile(filename);
         if(!csvFile.exists())
         {

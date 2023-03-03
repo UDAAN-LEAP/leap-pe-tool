@@ -1117,6 +1117,8 @@ QMenu::item:selected{
     <addaction name="separator"/>
     <addaction name="actionInsert_Bulleted_List"/>
     <addaction name="actionInsert_Numbered_List"/>
+    <addaction name="separator"/>
+    <addaction name="actionFill_Table"/>
    </widget>
    <widget class="QMenu" name="menuDownload">
     <property name="styleSheet">
@@ -2223,6 +2225,11 @@ background-color: #EEF0F2;
    </property>
    <property name="text">
     <string>Speech to Text</string>
+   </property>
+  </action>
+  <action name="actionFill_Table">
+   <property name="text">
+    <string>Shade Table</string>
    </property>
   </action>
  </widget>

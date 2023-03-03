@@ -19,7 +19,8 @@ public:
                     std::map<std::string, std::string> CPair_editDis = {},
                     std::map<std::string, std::set<std::string> >* CPairs = nullptr,
                     std::map<QString, QString> filestructure_fw = {},
-                    QSet<QString>* dict_set1 = {});
+                    QSet<QString>* dict_set1 = {},
+                    QString mRole = "Corrector");
 
 private:
     QString gCurrentPageName;
@@ -31,6 +32,7 @@ private:
     std::map<QString, QString> filestructure_fw;
     std::map<std::string, std::set<std::string> >* CPairs;
     QSet<QString>* dict_set1;
+    QString mRole;
 
 signals:
     void finished();
