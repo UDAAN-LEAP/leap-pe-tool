@@ -169,6 +169,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->lineEdit->setReadOnly(true);
     ui->lineEdit_2->setReadOnly(true);
     ui->lineEdit_3->setReadOnly(true);
+    ui->forward_Button->setVisible(false);
 
     //    googleAuth();
     QSettings settings("IIT-B", "OpenOCRCorrect");
@@ -9505,5 +9506,21 @@ void MainWindow::on_actionFill_Table_triggered()
     QTextCharFormat cellFormat = curr_browser->textCursor().blockCharFormat();
     cellFormat.setBackground(color);
     curr_browser->textCursor().setBlockCharFormat(cellFormat);
+}
+
+
+void MainWindow::on_backward_Button_clicked()
+{
+    ui->tabWidget->setVisible(false);
+    ui->backward_Button->hide();
+    ui->forward_Button->show();
+}
+
+
+void MainWindow::on_forward_Button_clicked()
+{
+    ui->tabWidget->setVisible(true);
+    ui->forward_Button->hide();
+    ui->backward_Button->show();
 }
 

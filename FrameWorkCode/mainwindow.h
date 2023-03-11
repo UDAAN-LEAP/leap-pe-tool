@@ -424,6 +424,10 @@ private slots:
 
     void on_actionFill_Table_triggered();
 
+    void on_backward_Button_clicked();
+
+    void on_forward_Button_clicked();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

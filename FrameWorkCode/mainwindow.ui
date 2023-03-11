@@ -38,6 +38,30 @@ color:white;
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
+         <widget class="QPushButton" name="forward_Button">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);
+image: url(:/Images/Resources/forwardf.png);
+background-color: rgb(255, 255, 255);  height:26.96px; width:30.03px; border:0px; padding:0px 3.6px;border-radius:4.8px;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="backward_Button">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);
+image: url(:/Images/Resources/backward.png);
+background-color: rgb(255, 255, 255);  height:26.96px; width:32.73px; border:0px; padding:0px 3.6px;border-radius:4.8px;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>

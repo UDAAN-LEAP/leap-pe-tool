@@ -51,6 +51,8 @@
         <file>Resources/logonew.png</file>
         <file>Resources/Old Icons/rotate.png</file>
         <file>Resources/voice.png</file>
+        <file>Resources/backward.png</file>
+        <file>Resources/forwardf.png</file>
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>
