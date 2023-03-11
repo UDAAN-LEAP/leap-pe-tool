@@ -41,7 +41,7 @@ color:white;
          <widget class="QPushButton" name="forward_Button">
           <property name="styleSheet">
            <string notr="true">color: rgb(0, 0, 0);
-image: url(:/Images/Resources/forwardf.png);
+image: url(:/Images/Resources/forfinal.png);
 background-color: rgb(255, 255, 255);  height:26.96px; width:30.03px; border:0px; padding:0px 3.6px;border-radius:4.8px;</string>
           </property>
           <property name="text">
@@ -53,8 +53,8 @@ background-color: rgb(255, 255, 255);  height:26.96px; width:30.03px; border:0px
          <widget class="QPushButton" name="backward_Button">
           <property name="styleSheet">
            <string notr="true">color: rgb(0, 0, 0);
-image: url(:/Images/Resources/backward.png);
-background-color: rgb(255, 255, 255);  height:26.96px; width:32.73px; border:0px; padding:0px 3.6px;border-radius:4.8px;</string>
+image: url(:/Images/Resources/backfinal.png);
+background-color: rgb(255, 255, 255);  height:26.96px; width:30.03px; border:0px; padding:0px 3.6px;border-radius:4.8px;</string>
           </property>
           <property name="text">
            <string/>
