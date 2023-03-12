@@ -6946,6 +6946,7 @@ void MainWindow::on_actionas_PDF_triggered()
                 //! Read the file
 
                 mainHtml=stream.readAll();
+                mainHtml.replace("background-color:","Background-colour:");
 //                mainHtml.remove("background-color:");
                 //                mainHtml.remove("background-color:#ffff00");
                 //                //! Changing the text background to white by setting the background to #fffff
