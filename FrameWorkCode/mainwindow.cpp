@@ -139,6 +139,8 @@ QMap<QString, QString> globallyReplacedWords;
 
 QList<QString> filesChangedUsingGlobalReplace;
 
+QString defaultStyle;
+
 
 /*!
  * \fn MainWindow::MainWindow
@@ -6172,6 +6174,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     b->setUndoRedoEnabled(true);
 
     //    curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
+    defaultStyle = curr_browser->styleSheet();
     curr_browser->setDocument(b->document()->clone(curr_browser));
     curr_browser->document()->clearUndoRedoStacks();
 
@@ -8608,6 +8611,7 @@ void MainWindow::on_actionClose_project_triggered()
 
     if(ui->lineEdit_3->text()!="" && ui->lineEdit_3->text()!="Words 0" && ui->lineEdit_3->text()!="0 Words"){
         curr_browser->clear();
+        curr_browser->setStyleSheet(defaultStyle);
     }
     ui->treeView->setModel(nullptr);
     ui->graphicsView->setScene(nullptr);

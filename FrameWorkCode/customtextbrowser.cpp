@@ -22,6 +22,17 @@ CustomTextBrowser::CustomTextBrowser(QWidget *parent): QTextBrowser(parent)
     this->setReadOnly(false);
     c = new QCompleter((CustomTextBrowser *)this);
 	this->setCompleter(c);
+    this->setPlaceholderText("Open a project\n"
+                                "―――――――――――――――――――――――――――――――――――――\n"
+                                "If your project is in a zip folder,\n"
+                                "  ⚫ Extract the project\n"
+                                "  ⚫ File Project\n"
+                                "  Shortcut to open a project is Ctrl + on"
+                                " If you want to download a project,\n"
+                                "  ⚫ File Project\n"
+                                "To open a recent project,\n"
+                                "  ⚫ File Project\n"
+                                "For detailed instructions, you can refer to the User Guide under the Help menu");
 
     if(modelFlag == 0){
         engModel = modelFromFile(":/WordList/wordlists/english.txt");
