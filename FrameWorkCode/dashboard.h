@@ -14,7 +14,7 @@ class dashboard : public QDialog
     Q_OBJECT
 
 public:
-    explicit dashboard(QWidget *parent, QString s, int max, QMap<int, QString> repoMap);
+    explicit dashboard(QWidget *parent, QString s, int max, QMap<int, QString> repoMap, QString *p);
     ~dashboard();
 
 private slots:
@@ -25,6 +25,7 @@ private:
     Ui::dashboard *ui;
     QMap<int, QString> repoMap;
     LoadingSpinner *spinner;
+    QString *p;
 };
 
 #endif // DASHBOARD_H

@@ -505,6 +505,7 @@ private:
     QAudioProbe *m_probe = nullptr;
     QList<AudioLevel*> m_audioLevels;
     void speechToTextCall();
+    bool import_flag = false;
 };
 
 #endif // MAINWINDOW_H

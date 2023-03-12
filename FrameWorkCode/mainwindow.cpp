@@ -1223,7 +1223,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     {
         ProjFile = RecentProjFile3;
     }
-    else{
+    else if(!import_flag){
         ProjFile = QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)"));   //Opens only if the file name is Project.xml
     }
 
@@ -8481,8 +8481,15 @@ void MainWindow::on_actionClone_Repository_triggered()
         importHtml += QString::fromStdString("<tr><td>")+num+"</td><td>"+itr->toString()+"</td></tr>";
     }
     importHtml += "</table>";
-    dashboard d(this, importHtml, repos.size(), repoMap);
+    QString p = "";
+    dashboard d(this, importHtml, repos.size(), repoMap, &p);
     d.exec();
+    if(!mProject.isProjectOpen()){
+        import_flag = true;
+        ProjFile = p;
+        on_actionOpen_Project_triggered();
+        import_flag = false;
+    }
 }
 
 

@@ -33,7 +33,7 @@
  * \param max
  * \param repoMap
  */
-dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> repoMap) :
+dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> repoMap, QString *p) :
     QDialog(parent),
     ui(new Ui::dashboard)
 {
@@ -44,6 +44,7 @@ dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> rep
 
     ui->textBrowser->setHtml(s);
     ui->spinBox->setRange(0,max);
+    this->p = p;
 }
 
 /*!
@@ -107,6 +108,7 @@ void dashboard::on_pushButton_clicked()
         qDebug()<<"Exited with return code"<<ret;
     } else {
         QMessageBox::information(this, "Successful", "Successfully imported the set", QMessageBox::Ok, QMessageBox::Ok);
+        *p = path+"/"+repoMap[id]+"/project.xml";
     }
     dashboard::close();
 }
