@@ -155,6 +155,29 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->splitter->replaceWidget(1,customtextbrowser);
     customtextbrowser->show();
 
+
+    customtextbrowser->setStyleSheet("padding-top: 100%; padding-left: 40%; color: #1c1c1c; background-color: white;");
+    connect(customtextbrowser, &QTextBrowser::textChanged, this, [=]() {
+        if(!QString::compare(QString(), customtextbrowser->toPlainText())) {
+            customtextbrowser->setStyleSheet("padding-top: 100%; padding-left: 40%; color: #1c1c1c; background-color: white;");
+            customtextbrowser->setPlaceholderText("Open a project\n"
+                                                "―――――――――――――――――――――――――――――――――――――\n"
+                                                "If your project is in a zip folder,\n"
+                                                "  ⚫ Extract the project\n"
+                                                "  ⚫ File > Open Project\n"
+                                                "    Shortcut to open a project is 'Ctrl + o'\n"
+                                                "If you want to download a project,\n"
+                                                "  ⚫ File > Import Project\n"
+                                                "To open a recent project,\n"
+                                                "  ⚫ File > Recent Project\n"
+                                                "For detailed instructions, you can refer to the User Guide under the Help menu");
+        } else {
+            customtextbrowser->setStyleSheet("padding-top: 0; padding-left: 0; color: black; background-color: white;");
+            customtextbrowser->setPlaceholderText("<b>hello</b>");
+        }
+    });
+
+
     ui->splitter->setStyleSheet("background-color:white;color:black;");
     ui->splitter_2->setStyleSheet("background-color:rgb(32, 33, 72);color:black;");
 
