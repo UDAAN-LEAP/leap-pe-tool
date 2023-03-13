@@ -4007,6 +4007,16 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     QString bboxf = currentTabPageName;
     QFile bbox_file(gDirTwoLevelUp + "/bboxf/"+bboxf.replace(".html", ".bbox"));
     //! When user moves his mouse the system will ask user to download new update.
+   if(event->type() == QEvent::MouseMove){
+       if(ui->tabWidget->width() == 0 && flag_tab != 1){
+           ui->backward_Button->setVisible(false);
+           ui->forward_Button->setVisible(true);
+           ui->tabWidget->setVisible(false);
+           flag_tab = 1;
+       }
+       else if(ui->tabWidget->width() > 0 && flag_tab == 1)
+           flag_tab = 0;
+   }
 
     if(event->type() == QEvent::MouseButtonPress)
     {

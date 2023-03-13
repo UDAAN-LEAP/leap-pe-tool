@@ -506,6 +506,7 @@ private:
     QList<AudioLevel*> m_audioLevels;
     void speechToTextCall();
     bool import_flag = false;
+    int flag_tab = 0;
 };
 
 #endif // MAINWINDOW_H

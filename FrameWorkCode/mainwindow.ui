@@ -42,7 +42,7 @@ color:white;
           <property name="styleSheet">
            <string notr="true">color: rgb(0, 0, 0);
 image: url(:/Images/Resources/forfinal.png);
-background-color: rgb(255, 255, 255);  height:26.96px; width:30.03px; border:0px; padding:0px 3.6px;border-radius:4.8px;</string>
+background-color: #BCBDBD; height:26.96px; width:30.03px; border:0px; padding:0px 3.6px;border-radius:6px;</string>
           </property>
           <property name="text">
            <string/>
@@ -54,7 +54,7 @@ background-color: rgb(255, 255, 255);  height:26.96px; width:30.03px; border:0px
           <property name="styleSheet">
            <string notr="true">color: rgb(0, 0, 0);
 image: url(:/Images/Resources/backfinal.png);
-background-color: rgb(255, 255, 255);  height:26.96px; width:30.03px; border:0px; padding:0px 3.6px;border-radius:4.8px;</string>
+background-color: #BCBDBD; height:26.96px; width:30.03px; border:0px; padding:0px 3.6px;border-radius:6px;</string>
           </property>
           <property name="text">
            <string/>

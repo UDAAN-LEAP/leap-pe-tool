@@ -51,8 +51,6 @@
         <file>Resources/logonew.png</file>
         <file>Resources/Old Icons/rotate.png</file>
         <file>Resources/voice.png</file>
-        <file>Resources/backward.png</file>
-        <file>Resources/forwardf.png</file>
         <file>Resources/backfinal.png</file>
         <file>Resources/forfinal.png</file>
     </qresource>
