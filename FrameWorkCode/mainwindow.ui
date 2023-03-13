@@ -1211,10 +1211,17 @@ QMenu::item:selected{
      <addaction name="action2"/>
      <addaction name="action3"/>
     </widget>
+    <widget class="QMenu" name="menuImport_Project">
+     <property name="title">
+      <string>Import Project</string>
+     </property>
+     <addaction name="actionImport_and_Open"/>
+     <addaction name="actionImport"/>
+    </widget>
     <addaction name="actionNew_Project"/>
     <addaction name="actionOpen_Project"/>
     <addaction name="menuRecent_Project"/>
-    <addaction name="actionClone_Repository"/>
+    <addaction name="menuImport_Project"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
     <addaction name="actionLoad_Next_Page"/>
@@ -2147,11 +2154,6 @@ background-color: #EEF0F2;
     <string>Logout</string>
    </property>
   </action>
-  <action name="actionClone_Repository">
-   <property name="text">
-    <string>Import Project</string>
-   </property>
-  </action>
   <action name="actionClose_project">
    <property name="text">
     <string>Close project</string>
@@ -2254,6 +2256,16 @@ background-color: #EEF0F2;
   <action name="actionFill_Table">
    <property name="text">
     <string>Shade Table</string>
+   </property>
+  </action>
+  <action name="actionImport_and_Open">
+   <property name="text">
+    <string>Import and Open</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import</string>
    </property>
   </action>
  </widget>

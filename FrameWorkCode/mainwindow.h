@@ -382,7 +382,7 @@ private slots:
 
     void on_actionLogout_triggered();
 
-    void on_actionClone_Repository_triggered();
+    void on_actionClone_Repository();
 
     void on_actionClose_project_triggered();
 
@@ -427,6 +427,10 @@ private slots:
     void on_backward_Button_clicked();
 
     void on_forward_Button_clicked();
+
+    void on_actionImport_and_Open_triggered();
+
+    void on_actionImport_triggered();
 
 public slots:
     void on_actionLoad_Next_Page_triggered();

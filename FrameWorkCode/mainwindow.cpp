@@ -114,6 +114,7 @@ int openedFileWords;
 bool gSaveTriggered = 0;
 bool LoadDataFlag = 1;
 bool uploadReplaceFlag = 0;
+
 map<QString, QString> filestructure_fw;
 QMap <QString, QString> mapOfReplacements;
 
@@ -8446,9 +8447,8 @@ void MainWindow::on_actionLogout_triggered()
     QMessageBox::information(0,"Logout","Logged out successfully :(");
 }
 
-
 /*!
- * \fn MainWindow::on_actionClone_Repository_triggered
+ * \fn MainWindow::on_actionImport_triggered
  * \brief This function helps user to clone repositories from their account.
  * \details
  * Checks if user is already logined or not. If not then user is made to login
@@ -8457,7 +8457,7 @@ void MainWindow::on_actionLogout_triggered()
  * "validate.json" is removed from output
  * Table is formed to preview how many file does user have in their repository
  */
-void MainWindow::on_actionClone_Repository_triggered()
+void MainWindow::on_actionClone_Repository()
 {
     /*
      * \description
@@ -8514,15 +8514,15 @@ void MainWindow::on_actionClone_Repository_triggered()
         importHtml += QString::fromStdString("<tr><td>")+num+"</td><td>"+itr->toString()+"</td></tr>";
     }
     importHtml += "</table>";
-    QString p = "";
-    dashboard d(this, importHtml, repos.size(), repoMap, &p);
+    QString p_str = "";
+    dashboard d(this, importHtml, repos.size(), repoMap, &p_str);
     d.exec();
-    if(!mProject.isProjectOpen()){
-        import_flag = true;
-        ProjFile = p;
-        on_actionOpen_Project_triggered();
-        import_flag = false;
-    }
+    import_flag = true;
+    ProjFile = p_str;
+
+//    if(!mProject.isProjectOpen()){
+
+//    }
 }
 
 
@@ -9568,4 +9568,22 @@ void MainWindow::on_forward_Button_clicked()
     ui->forward_Button->hide();
     ui->backward_Button->show();
 }
+
+/*!
+ * Project is opened after importing
+ */
+void MainWindow::on_actionImport_and_Open_triggered(){
+
+
+    on_actionClone_Repository();
+    on_actionOpen_Project_triggered();
+    import_flag = false;
+}
+
+void MainWindow::on_actionImport_triggered()
+{
+    on_actionClone_Repository();
+    import_flag = false;
+}
+
 
