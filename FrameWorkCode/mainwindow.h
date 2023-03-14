@@ -447,6 +447,7 @@ public slots:
 
     void authenticate();
     void login();
+    void createTable();
 
 private:
     bool mExitStatus = false;

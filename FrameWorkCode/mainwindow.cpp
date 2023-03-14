@@ -141,6 +141,8 @@ QMap<QString, QString> globallyReplacedWords;
 QList<QString> filesChangedUsingGlobalReplace;
 
 QString defaultStyle;
+ QList<QTableWidgetItem *> selectedItems;
+ QTableWidget *m_table;
 
 
 /*!
@@ -3261,47 +3263,78 @@ void MainWindow::on_actionInsert_Table_2_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
 
-    QDialog dialog(this);
-    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
-    form.addRow(new QLabel("Insert Table", this));                                  // Create a dialog for asking table dimensions
+QDialog dialog(this);
+setWindowTitle("Table Dialog");
 
-    //! Add the lineEdits with their respective labels
-    QLineEdit *rows = new QLineEdit(&dialog);
-    QLineEdit *columns = new QLineEdit(&dialog);                                    // Add lineEdits to get Rows
-    form.addRow("Rows", rows);                                                      // Add lineEdits to get Columns
-    form.addRow("Columns", columns);
 
-    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-    form.addRow(&buttonBox);
-    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+    QVBoxLayout *layout = new QVBoxLayout(&dialog);
 
-    //! Show the dialog as modal
-    if (dialog.exec() == QDialog::Accepted)
-    {
 
-        QTextTableFormat tf;
+    QLabel *label = new QLabel("Please select the cells you want to use for the table:");
+
+    layout->addWidget(label);
+
+
+    m_table = new QTableWidget(10, 10,this);
+    m_table->setFocus();
+
+    m_table->setSelectionMode(QAbstractItemView::MultiSelection);
+
+    layout->addWidget(m_table);
+
+
+    QPushButton *button = new QPushButton("Create Table",this);
+    
+    // selectedItems = m_table->selectedItems();
+    
+    QObject::connect(m_table,&QTableWidget::itemSelectionChanged,this,[=](){
+    selectedItems=m_table->selectedItems();
+    });
+    
+
+    QObject::connect(button, &QPushButton::clicked, this, &MainWindow::createTable);
+
+    layout->addWidget(button);
+
+
+    dialog.setLayout(layout);
+    
+dialog.exec();
+}
+void MainWindow::createTable(){
+    
+
+        if (selectedItems.isEmpty()) {
+
+            QMessageBox::information(this, "Table Dialog", "Please select at least one cell.");
+
+            return;
+
+        }
+
+
+QSet<int>selectedRows;
+QSet<int>selectedColumns;
+int rw,col;
+foreach(QTableWidgetItem *items,selectedItems){
+rw=items->row();
+col=items->column();
+selectedRows.insert(rw);
+selectedColumns.insert(col);
+}
+int rows,columns;
+rows=selectedRows.size();
+columns=selectedColumns.size();
+
+  QTextTableFormat tf;
         tf.setBorderBrush(Qt::black);
         tf.setCellSpacing(0);
         tf.setCellPadding(7);
 
-        //        tf.setAlignment(Qt::AlignCenter);
+QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertTable(rows,columns,tf);
 
-//        QTextBlockFormat block;
-//        block.setRightMargin(curr_browser->contentsMargins().right());
-
-//        //!1st
-//        tf.setWidth(QTextLength(QTextLength::Type::VariableLength,25));
-//        qDebug() << curr_browser->contentsMargins().right();
-//        tf.setRightMargin(curr_browser->contentsMargins().right());
-
-        QTextCursor cursor = curr_browser->textCursor();
-//        cursor.setBlockFormat(block);
-        cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
-    }
 }
-
 /*!
  * \fn MainWindow::on_actionInsert_Columnleft_triggered
  * \brief Inserts Column to the left of table
