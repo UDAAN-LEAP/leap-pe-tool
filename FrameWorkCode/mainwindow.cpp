@@ -161,17 +161,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     connect(customtextbrowser, &QTextBrowser::textChanged, this, [=]() {
         if(!QString::compare(QString(), customtextbrowser->toPlainText())) {
             customtextbrowser->setStyleSheet("padding-top: 100%; padding-left: 40%; color: #1c1c1c; background-color: white;");
-            customtextbrowser->setPlaceholderText("Open a project\n"
-                                                "―――――――――――――――――――――――――――――――――――――\n"
-                                                "If your project is in a zip folder,\n"
-                                                "  ⚫ Extract the project\n"
-                                                "  ⚫ File > Open Project\n"
-                                                "    Shortcut to open a project is 'Ctrl + o'\n"
-                                                "If you want to download a project,\n"
-                                                "  ⚫ File > Import Project\n"
-                                                "To open a recent project,\n"
-                                                "  ⚫ File > Recent Project\n"
-                                                "For detailed instructions, you can refer to the User Guide under the Help menu");
+            customtextbrowser->setPlaceholderText("How to Open a Project:\n"
+                                                  "―――――――――――――――――――――――――――――――――――――\n"
+                                                  "If your project is in a zip folder:\n"
+                                                  "  ⚫ Extract the project to a location of your choice,\n"
+                                                  "  ⚫ File > Open Project ('Ctrl + o'),\n"
+                                                  "  ⚫ Browse to the location where you extracted your project, and select it,\n"
+                                                  "  ⚫ Click 'Open'.\n"
+                                                  "If you want to download a project:\n"
+                                                  "  ⚫ File > Import Project > Import.\n"
+                                                  "If you want to download & open a project:\n"
+                                                  "  ⚫ File > Import Project > Import and Open.\n"
+                                                  "User dashboard: Enter project ID, click 'Import Project' button, browse and select location to import project.\n"
+                                                  "To open a recent project:\n"
+                                                  "  ⚫ File > Recent Project,\n"
+                                                  "  ⚫ Select the project you want to open from the list of recent projects.\n"
+                                                  "For detailed instructions, you can refer to the User Guide under the 'Help' menu.");
         } else {
             customtextbrowser->setStyleSheet("padding-top: 0; padding-left: 0; color: black; background-color: white;");
             customtextbrowser->setPlaceholderText("<b>hello</b>");
@@ -9478,6 +9483,11 @@ void MainWindow::speechToTextCall()
             QJsonObject object=responseJson.object();
             QString ResponseText=object["results"].toArray()[0].toObject()
                     ["alternatives"].toArray()[0].toObject()["transcript"].toString();
+            QString ResponseTextAlt=object["results"].toArray()[1].toObject()
+                    ["alternatives"].toArray()[0].toObject()["transcript"].toString();
+            if(!ResponseTextAlt.isEmpty()){
+                ResponseText += " " + ResponseTextAlt;
+            }
             QTextCursor cur = curr_browser->textCursor();
             cur.insertText(ResponseText);
         }
@@ -9494,12 +9504,13 @@ void MainWindow::speechToTextCall()
  * \details "Speech to text" status means user can start recording. "Stop ?" means audio recording is in progress and user can stop it by clicking the "Stop ?" button.
  * \details "Processing ..." means the user input is in process and the requested audio will be converted into text and pasted at cursor position. Text is inserted at cursor position
  * \details and status of button is changed back to "Speech to text".
+ * \author Sadam
  */
 void MainWindow::on_pushButton_4_clicked()
 {
     if(!isProjectOpen) return;
+    QString fileName = QDir::currentPath() + "/audio.wav";
     if (m_audioRecorder->state() == QMediaRecorder::StoppedState) {
-        QString fileName = QDir::currentPath() + "/audio.wav";
         m_audioRecorder->setOutputLocation(QUrl::fromLocalFile(fileName));
         qDebug()<<"Recording your audio!!";
         ui->pushButton_4->setText("Stop ?");
@@ -9523,9 +9534,17 @@ void MainWindow::on_pushButton_4_clicked()
         ui->pushButton_4->setText("Processing ...");
         m_audioRecorder->stop();
         speechToTextCall();
+        QFile::remove(fileName);
     }
 }
 
+/*!
+ * \brief MainWindow::on_actionFill_Table_triggered
+ * \details When shade Table is clicked, this function is called. It checked if the selected text is table or not.
+ * \details If the selection doesn't contain table, control returns back, else it highlights selected cells of the
+ * \details current table with the user selected color.
+ * \author Sadam
+ */
 void MainWindow::on_actionFill_Table_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -9538,13 +9557,6 @@ void MainWindow::on_actionFill_Table_triggered()
 
     // Get the table format and set the alignment to center
     QTextTableFormat tableFormat = selectedTable->format();
-
-    // Open a color picker dialog to get the user's chosen color
-//    QColorDialog colorDialog(curr_browser);
-//    colorDialog.setWindowTitle("Select Table Background Color");
-//    if (colorDialog.exec() != QDialog::Accepted) {
-//        return;
-//    }
     QColor color = QColorDialog::getColor();
 
     // Set the background color for each selected cell in the table

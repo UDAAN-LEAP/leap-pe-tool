@@ -22,17 +22,22 @@ CustomTextBrowser::CustomTextBrowser(QWidget *parent): QTextBrowser(parent)
     this->setReadOnly(false);
     c = new QCompleter((CustomTextBrowser *)this);
     this->setCompleter(c);
-    this->setPlaceholderText("Open a project\n"
-                                "―――――――――――――――――――――――――――――――――――――\n"
-                                "If your project is in a zip folder,\n"
-                                "  ⚫ Extract the project\n"
-                                "  ⚫ File > Open Project\n"
-                                "    Shortcut to open a project is 'Ctrl + o'\n"
-                                "If you want to download a project,\n"
-                                "  ⚫ File > Import Project\n"
-                                "To open a recent project,\n"
-                                "  ⚫ File > Recent Project\n"
-                                "For detailed instructions, you can refer to the User Guide under the Help menu");
+    this->setPlaceholderText("How to Open a Project:\n"
+                                        "―――――――――――――――――――――――――――――――――――――\n"
+                                        "If your project is in a zip folder:\n"
+                                        "  ⚫ Extract the project to a location of your choice,\n"
+                                        "  ⚫ File > Open Project ('Ctrl + o'),\n"
+                                        "  ⚫ Browse to the location where you extracted your project, and select it,\n"
+                                        "  ⚫ Click 'Open'.\n"
+                                        "If you want to download a project:\n"
+                                        "  ⚫ File > Import Project > Import.\n"
+                                        "If you want to download & open a project:\n"
+                                        "  ⚫ File > Import Project > Import and Open.\n"
+                                        "User dashboard: Enter project ID, click 'Import Project' button, browse and select location to import project.\n"
+                                        "To open a recent project:\n"
+                                        "  ⚫ File > Recent Project,\n"
+                                        "  ⚫ Select the project you want to open from the list of recent projects.\n"
+                                        "For detailed instructions, you can refer to the User Guide under the 'Help' menu.");
 
     if(modelFlag == 0){
         engModel = modelFromFile(":/WordList/wordlists/english.txt");

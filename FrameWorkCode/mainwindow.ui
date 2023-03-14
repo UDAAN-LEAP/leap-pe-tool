@@ -2262,10 +2262,16 @@ background-color: #EEF0F2;
    <property name="text">
     <string>Import and Open</string>
    </property>
+   <property name="toolTip">
+    <string>This will import and open project in tool.</string>
+   </property>
   </action>
   <action name="actionImport">
    <property name="text">
     <string>Import</string>
+   </property>
+   <property name="toolTip">
+    <string>This will download the project.</string>
    </property>
   </action>
  </widget>
