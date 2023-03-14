@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "dashboard.h"
 #include "qobjectdefs.h"
+#include "qtablewidget.h"
 #include "ui_mainwindow.h"
 #include "averageaccuracies.h"
 #include "eddis.h"
@@ -3277,6 +3278,7 @@ setWindowTitle("Table Dialog");
 
     m_table = new QTableWidget(10, 10,this);
     m_table->setFocus();
+    
 
     m_table->setSelectionMode(QAbstractItemView::MultiSelection);
 
@@ -3285,16 +3287,25 @@ setWindowTitle("Table Dialog");
 
     QPushButton *button = new QPushButton("Create Table",this);
     
-    // selectedItems = m_table->selectedItems();
+   
     
     QObject::connect(m_table,&QTableWidget::itemSelectionChanged,this,[=](){
-    selectedItems=m_table->selectedItems();
+  selectedItems=m_table->selectedItems();
+    
     });
     
 
     QObject::connect(button, &QPushButton::clicked, this, &MainWindow::createTable);
 
     layout->addWidget(button);
+    
+    for(int i=0;i<10;i++){
+        for(int j=0;j<10;j++){
+        QTableWidgetItem *itm = new QTableWidgetItem();
+        itm->setData(Qt::DisplayRole,QString("%1,%2").arg(i+1).arg(j+1));
+        m_table->setItem(i,j,itm);
+        }
+    }
 
 
     dialog.setLayout(layout);
