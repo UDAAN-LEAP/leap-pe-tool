@@ -3075,6 +3075,7 @@ void MainWindow::on_actionLeftAlign_triggered()
 
     // Get the table format and set the alignment to center
     QTextTableFormat tableFormat = selectedTable->format();
+
     tableFormat.setAlignment(Qt::AlignLeft);
     selectedTable->setFormat(tableFormat);
 }
@@ -3088,6 +3089,8 @@ void MainWindow::on_actionRightAlign_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->setAlignment(Qt::AlignRight);
+
+
     QTextCursor cursor = curr_browser->textCursor();
     QTextTable *selectedTable = cursor.currentTable();
 
@@ -3096,8 +3099,13 @@ void MainWindow::on_actionRightAlign_triggered()
         return;
     }
 
-    // Get the table format and set the alignment to center
+    // Get the table format and set the alignment to right
     QTextTableFormat tableFormat = selectedTable->format();
+
+    // Setting RightMargin = { Content RightMargin + border width }
+    QMargins margin = curr_browser->contentsMargins();
+    tableFormat.setRightMargin(margin.right()* 72 + tableFormat.border());
+
     tableFormat.setAlignment(Qt::AlignRight);
     selectedTable->setFormat(tableFormat);
 }
@@ -3122,6 +3130,11 @@ void MainWindow::on_actionCentreAlign_triggered()
 
     // Get the table format and set the alignment to center
     QTextTableFormat tableFormat = selectedTable->format();
+
+    // Setting RightMargin = { Content RightMargin + border width }
+    QMargins margin = curr_browser->contentsMargins();
+    tableFormat.setRightMargin(margin.right()* 72 + tableFormat.border());
+
     tableFormat.setAlignment(Qt::AlignCenter);
     selectedTable->setFormat(tableFormat);
 }
@@ -3272,8 +3285,19 @@ void MainWindow::on_actionInsert_Table_2_triggered()
         tf.setBorderBrush(Qt::black);
         tf.setCellSpacing(0);
         tf.setCellPadding(7);
+
         //        tf.setAlignment(Qt::AlignCenter);
+
+//        QTextBlockFormat block;
+//        block.setRightMargin(curr_browser->contentsMargins().right());
+
+//        //!1st
+//        tf.setWidth(QTextLength(QTextLength::Type::VariableLength,25));
+//        qDebug() << curr_browser->contentsMargins().right();
+//        tf.setRightMargin(curr_browser->contentsMargins().right());
+
         QTextCursor cursor = curr_browser->textCursor();
+//        cursor.setBlockFormat(block);
         cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
     }
 }
@@ -7937,6 +7961,7 @@ void MainWindow::on_find_clicked()
 void MainWindow::on_actionPDF_Preview_triggered()
 {
     QPrinter printer(QPrinter::PrinterResolution);
+
     QPrintPreviewDialog preview(&printer,this);
     preview.setMinimumHeight(800);
     preview.setMinimumWidth(800);
