@@ -144,6 +144,7 @@ QList<QString> filesChangedUsingGlobalReplace;
 QString defaultStyle;
  QList<QTableWidgetItem *> selectedItems;
  QTableWidget *m_table;
+ QDialog *tableDialog;
 
 
 /*!
@@ -3264,11 +3265,11 @@ void MainWindow::on_actionInsert_Table_2_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
 
-QDialog dialog(this);
+ tableDialog=new QDialog();
 setWindowTitle("Table Dialog");
 
 
-    QVBoxLayout *layout = new QVBoxLayout(&dialog);
+    QVBoxLayout *layout = new QVBoxLayout(tableDialog);
 
 
     QLabel *label = new QLabel("Please select the cells you want to use for the table:");
@@ -3276,7 +3277,7 @@ setWindowTitle("Table Dialog");
     layout->addWidget(label);
 
 
-    m_table = new QTableWidget(10, 10,this);
+    m_table = new QTableWidget(20,20,this);
     m_table->setFocus();
     
 
@@ -3298,26 +3299,28 @@ setWindowTitle("Table Dialog");
     QObject::connect(button, &QPushButton::clicked, this, &MainWindow::createTable);
 
     layout->addWidget(button);
-    
-    for(int i=0;i<10;i++){
-        for(int j=0;j<10;j++){
-        QTableWidgetItem *itm = new QTableWidgetItem();
-        itm->setData(Qt::DisplayRole,QString("%1,%2").arg(i+1).arg(j+1));
-        m_table->setItem(i,j,itm);
+    QTableWidgetItem *itm; 
+    for(int i=0;i<20;i++){
+        for(int j=0;j<20;j++){
+       itm = new QTableWidgetItem();
+        itm->setData(Qt::DisplayRole,QString("."));
+        m_table->setItem(i,j,itm);    
+    itm->setForeground(QBrush(QColor(255,255,255)));
         }
     }
-
-
-    dialog.setLayout(layout);
     
-dialog.exec();
+    
+    tableDialog->setLayout(layout); 
+    tableDialog->exec();
+    
+   
 }
 void MainWindow::createTable(){
     
 
         if (selectedItems.isEmpty()) {
 
-            QMessageBox::information(this, "Table Dialog", "Please select at least one cell.");
+            QMessageBox::information(0,"Table Dialog", "Please select at least one cell.");
 
             return;
 
@@ -3344,7 +3347,8 @@ columns=selectedColumns.size();
 
 QTextCursor cursor = curr_browser->textCursor();
         cursor.insertTable(rows,columns,tf);
-
+        
+   tableDialog->close();
 }
 /*!
  * \fn MainWindow::on_actionInsert_Columnleft_triggered
