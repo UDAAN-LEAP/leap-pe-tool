@@ -8589,7 +8589,7 @@ void MainWindow::on_actionClone_Repository()
         lineindex++;
         repoMap[lineindex] = itr->toString();
         QString num = QString::number(lineindex);
-        importHtml += QString::fromStdString("<tr><td>")+num+"</td><td>"+itr->toString()+"</td></tr>";
+        importHtml += QString::fromStdString("<tr><td>")+num+"</td><td>"+itr->toString()+"</td></tr";
     }
     importHtml += "</table>";
     QString p_str = "";

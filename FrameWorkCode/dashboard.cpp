@@ -42,7 +42,18 @@ dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> rep
     setWindowTitle("User Dashboard");
     this->repoMap = repoMap;
 
-    ui->textBrowser->setHtml(s);
+//    ui->textBrowser->setHtml(s);
+    ui->verticalLayout->setAlignment(Qt::AlignHCenter);
+
+    QMapIterator<int,QString>i(repoMap);
+    while(i.hasNext()){
+        i.next();
+        auto btn = new QPushButton();
+
+        btn->setText(i.value());
+        btn->setFixedHeight(50);
+        ui->verticalLayout->addWidget(btn);
+    }
     ui->spinBox->setRange(0,max);
     this->p = p;
 }

@@ -22,22 +22,6 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <widget class="QTextBrowser" name="textBrowser">
-   <property name="geometry">
-    <rect>
-     <x>-15</x>
-     <y>11</y>
-     <width>801</width>
-     <height>441</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 16pt &quot;Shobhika&quot;;
-background-color: rgb(238, 238, 236);
-color: rgb(0, 0, 0);
-margin-left: 25%;</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
@@ -111,6 +95,17 @@ margin-top:5px;</string>
     <string notr="true">QSpinBox{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
 } QSpinBox:checked{background-color: rgb(136, 138, 133);} QSpinBox:pressed {background-color: rgb(136, 138, 133);}</string>
    </property>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>19</y>
+     <width>771</width>
+     <height>431</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout"/>
   </widget>
  </widget>
  <resources>
