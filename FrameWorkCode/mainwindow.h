@@ -228,8 +228,6 @@ private slots:
 
     void on_actionRedo_triggered();
 
-    void on_actionInsert_Table_2_triggered();
-
     void closeEvent (QCloseEvent *event);
 
     QJsonObject getAverageAccuracies(QJsonObject mainObj);
@@ -431,6 +429,9 @@ private slots:
     void on_actionImport_and_Open_triggered();
 
     void on_actionImport_triggered();
+
+    void on_actionEnter_manauly_triggered();
+    void on_actionuse_grid_triggered();
 
 public slots:
     void on_actionLoad_Next_Page_triggered();

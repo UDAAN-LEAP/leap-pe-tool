@@ -370,7 +370,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionPDF_Preview->setEnabled(false);
 
     // Table Menu inside View Menu
-    ui->actionInsert_Table_2->setEnabled(false);
+    //ui->actionInsert_Table_2->setEnabled(false);
     ui->actionInsert_Columnleft->setEnabled(false);
     ui->actionInsert_Columnright->setEnabled(false);
     ui->actionInsert_Rowabove->setEnabled(false);
@@ -1572,7 +1572,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->actionHighlight->setEnabled(true);
 
     // Table Menu inside View Menu
-    ui->actionInsert_Table_2->setEnabled(true);
+    //ui->actionInsert_Table_2->setEnabled(true);
     ui->actionInsert_Columnleft->setEnabled(true);
     ui->actionInsert_Columnright->setEnabled(true);
     ui->actionInsert_Rowabove->setEnabled(true);
@@ -3260,61 +3260,7 @@ void MainWindow::on_actionInsert_Tab_Space_triggered()
  * \brief Inserts table at text cursor
  * Creates a dialog to insert the numbr of rows and columns.
  */
-void MainWindow::on_actionInsert_Table_2_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
 
- tableDialog=new QDialog();
-setWindowTitle("Table Dialog");
-
-
-    QVBoxLayout *layout = new QVBoxLayout(tableDialog);
-
-
-    QLabel *label = new QLabel("Please select the cells you want to use for the table:");
-
-    layout->addWidget(label);
-
-
-    m_table = new QTableWidget(20,20,this);
-    m_table->setFocus();
-    
-
-    m_table->setSelectionMode(QAbstractItemView::MultiSelection);
-
-    layout->addWidget(m_table);
-
-
-    QPushButton *button = new QPushButton("Create Table",this);
-    
-   
-    
-    QObject::connect(m_table,&QTableWidget::itemSelectionChanged,this,[=](){
-  selectedItems=m_table->selectedItems();
-    
-    });
-    
-
-    QObject::connect(button, &QPushButton::clicked, this, &MainWindow::createTable);
-
-    layout->addWidget(button);
-    QTableWidgetItem *itm; 
-    for(int i=0;i<20;i++){
-        for(int j=0;j<20;j++){
-       itm = new QTableWidgetItem();
-        itm->setData(Qt::DisplayRole,QString("."));
-        m_table->setItem(i,j,itm);    
-    itm->setForeground(QBrush(QColor(255,255,255)));
-        }
-    }
-    
-    
-    tableDialog->setLayout(layout); 
-    tableDialog->exec();
-    
-   
-}
 void MainWindow::createTable(){
     
 
@@ -8683,7 +8629,7 @@ void MainWindow::on_actionClose_project_triggered()
     ui->actionHighlight->setEnabled(false);
 
     // Table Menu inside View Menu
-    ui->actionInsert_Table_2->setEnabled(false);
+    //ui->actionInsert_Table_2->setEnabled(false);
     ui->actionInsert_Columnleft->setEnabled(false);
     ui->actionInsert_Columnright->setEnabled(false);
     ui->actionInsert_Rowabove->setEnabled(false);
@@ -9671,4 +9617,95 @@ void MainWindow::on_actionImport_triggered()
     import_flag = false;
 }
 
+
+
+void MainWindow::on_actionEnter_manauly_triggered()
+{
+if(!curr_browser || curr_browser->isReadOnly())
+	        return;
+	
+	    QDialog dialog(this);
+	    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+	    form.addRow(new QLabel("Insert Table", this));                                  // Create a dialog for asking table dimensions
+	
+	    //! Add the lineEdits with their respective labels
+	    QLineEdit *rows = new QLineEdit(&dialog);
+	    QLineEdit *columns = new QLineEdit(&dialog);                                    // Add lineEdits to get Rows
+	    form.addRow("Rows", rows);                                                      // Add lineEdits to get Columns
+	    form.addRow("Columns", columns);
+	
+	    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+	    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+	    form.addRow(&buttonBox);
+	    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+	    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+	
+	    //! Show the dialog as modal
+	    if (dialog.exec() == QDialog::Accepted)
+	    {
+	
+	        QTextTableFormat tf;
+	        tf.setBorderBrush(Qt::black);
+	        tf.setCellSpacing(0);
+	        tf.setCellPadding(7);
+	        //        tf.setAlignment(Qt::AlignCenter);
+	        QTextCursor cursor = curr_browser->textCursor();
+	        cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
+}
+
+}
+void MainWindow::on_actionuse_grid_triggered()
+{
+if(!curr_browser || curr_browser->isReadOnly())
+        return;
+
+ tableDialog=new QDialog();
+setWindowTitle("Table Dialog");
+
+
+    QVBoxLayout *layout = new QVBoxLayout(tableDialog);
+
+
+    QLabel *label = new QLabel("Please select the cells you want to use for the table:");
+
+    layout->addWidget(label);
+
+
+    m_table = new QTableWidget(20,20,this);
+    
+ 
+
+    m_table->setSelectionMode(QAbstractItemView::MultiSelection);
+
+    layout->addWidget(m_table);
+
+
+    QPushButton *button = new QPushButton("Create Table",this);
+    
+
+    QObject::connect(button, &QPushButton::clicked, this, &MainWindow::createTable);
+
+    layout->addWidget(button);
+    QTableWidgetItem *itm; 
+    for(int i=0;i<20;i++){
+        for(int j=0;j<20;j++){
+       itm = new QTableWidgetItem();
+        itm->setData(Qt::DisplayRole,QString("."));
+          itm->setForeground(QBrush(QColor(255,255,255)));
+        m_table->setItem(i,j,itm);    
+  
+        }
+    }
+    
+    
+    QObject::connect(m_table,&QTableWidget::itemSelectionChanged,this,[=](){
+  selectedItems=m_table->selectedItems();
+
+    });
+    
+    tableDialog->setLayout(layout); 
+    tableDialog->exec();
+    
+   
+}
 
