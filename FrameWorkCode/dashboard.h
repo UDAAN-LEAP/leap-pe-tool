@@ -20,12 +20,14 @@ public:
 private slots:
     void on_pushButton_clicked();
     void stopSpinning();
+    void clicked(int id);
 
 private:
     Ui::dashboard *ui;
     QMap<int, QString> repoMap;
     LoadingSpinner *spinner;
     QString *p;
+    int id = 0;
 };
 
 #endif // DASHBOARD_H

@@ -44,17 +44,20 @@ dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> rep
 
 //    ui->textBrowser->setHtml(s);
     ui->verticalLayout->setAlignment(Qt::AlignHCenter);
-
+    int index = 0;
     QMapIterator<int,QString>i(repoMap);
     while(i.hasNext()){
+        index++;
         i.next();
         auto btn = new QPushButton();
 
         btn->setText(i.value());
         btn->setFixedHeight(50);
+
+        connect(btn, &QPushButton::clicked , [this, index] {clicked(index);});
         ui->verticalLayout->addWidget(btn);
     }
-    ui->spinBox->setRange(0,max);
+//    ui->spinBox->setRange(0,max);
     this->p = p;
 }
 
@@ -82,7 +85,8 @@ dashboard::~dashboard()
  */
 void dashboard::on_pushButton_clicked()
 {
-    int id = ui->spinBox->value();
+//    int id = ui->spinBox->value();
+    int id = this->id;
     QString path, url_;
     bool ok;
     int ret;
@@ -134,3 +138,12 @@ void dashboard::stopSpinning()
     spinner->deleteLater();
 }
 
+/*!
+ * \fn dashboard::clicked
+ * \brief This function sets index for each button's onClick slot
+ * \param integer index of button
+*/
+void dashboard::clicked(int index){
+    this->id = index;
+    on_pushButton_clicked();
+}
