@@ -22,6 +22,8 @@ private slots:
     void stopSpinning();
     void clicked(int id);
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::dashboard *ui;
     QMap<int, QString> repoMap;

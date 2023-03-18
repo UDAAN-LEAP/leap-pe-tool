@@ -42,8 +42,9 @@ dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> rep
     setWindowTitle("User Dashboard");
     this->repoMap = repoMap;
 
-//    ui->textBrowser->setHtml(s);
-    ui->verticalLayout->setAlignment(Qt::AlignHCenter);
+    ui->scrollArea->setWidget(ui->verticalLayout->widget());
+    ui->verticalLayout->setAlignment(Qt::AlignLeft);
+
     int index = 0;
     QMapIterator<int,QString>i(repoMap);
     while(i.hasNext()){
@@ -53,11 +54,12 @@ dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> rep
 
         btn->setText(i.value());
         btn->setFixedHeight(50);
-
+        btn->setMinimumWidth(ui->scrollArea->width());
+        btn->setStyleSheet("color : black; text-align : left; padding : 10px;background-color :rgb(229,228,226); border-radius :5px;");
         connect(btn, &QPushButton::clicked , [this, index] {clicked(index);});
         ui->verticalLayout->addWidget(btn);
     }
-//    ui->spinBox->setRange(0,max);
+
     this->p = p;
 }
 
@@ -147,3 +149,16 @@ void dashboard::clicked(int index){
     this->id = index;
     on_pushButton_clicked();
 }
+
+/*!
+ * \fn dashboard::on_pushButton_2_clicked
+ * \brief This function will give info while clicking 'i' button
+*/
+void dashboard::on_pushButton_2_clicked()
+{
+    QMessageBox * msg = new QMessageBox();
+
+    msg->setText("* All your books will appear here.\n* You can save changes to cloud to these books only.\n* Click on book name to import it locally.");
+    msg->exec();
+}
+
