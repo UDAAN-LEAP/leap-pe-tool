@@ -53,6 +53,7 @@
         <file>Resources/voice.png</file>
         <file>Resources/backfinal.png</file>
         <file>Resources/forfinal.png</file>
+        <file>Resources/user_login.png</file>
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>

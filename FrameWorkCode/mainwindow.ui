@@ -62,6 +62,18 @@ background-color: #BCBDBD; height:26.96px; width:30.03px; border:0px; padding:0p
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButton_5">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:30px; width:30px;padding-top:1px; border-radius:3px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
+margin-top:10px;
+} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -651,6 +663,8 @@ QScrollBar::sub-line:vertical {
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:20pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
@@ -837,9 +851,10 @@ color: rgb(0, 0, 0); height:37.39px; border:0px; width:184.8px; padding-left:7.8
       <item>
        <widget class="QPushButton" name="pushButton_3">
         <property name="styleSheet">
-         <string notr="true">color: rgb(0, 0, 0);
+         <string notr="true">QPushButton{color: rgb(0, 0, 0);
 image: url(:/Images/Resources/Old Icons/rotate.png);
-background-color: rgb(255, 255, 255);  height:37.39px; width:32.73px; border:0px; padding:0px 3.6px;</string>
+background-color: rgb(255, 255, 255);  height:37.39px; width:32.73px; border:0px; padding:0px 3.6px;}
+QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
         </property>
         <property name="text">
          <string/>
@@ -1009,16 +1024,16 @@ background: grey;
      <x>0</x>
      <y>0</y>
      <width>1366</width>
-     <height>50</height>
+     <height>46</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">QMenuBar{
-font-size:17px;
+font-size:16px;
 }
 QMenuBar::item{
  /* spacing between menu bar items */
-padding: 15px 15px 15px 15px;
+padding: 14px 14px 14px 14px;
 background: transparent;
 }
 QMenuBar::item:selected{
@@ -1026,7 +1041,7 @@ QMenuBar::item:selected{
 }
 QMenu::item {
     spacing: 2px; /* spacing between menu bar items */
-    padding: 10px 85px 10px 20px;
+    padding: 10px 20px 10px 20px;
     background: transparent;
 }
 QMenu::item:selected{
@@ -1043,125 +1058,19 @@ QMenu::item:selected{
 
 </string>
    </property>
-   <widget class="QMenu" name="menuCreateReports">
-    <property name="styleSheet">
-     <string notr="true">font-size: 17px;</string>
-    </property>
-    <property name="title">
-     <string>Reports</string>
-    </property>
-    <addaction name="actionAccuracyLog"/>
-    <addaction name="actionViewAverageAccuracies"/>
-   </widget>
-   <widget class="QMenu" name="menuFontAndLayout">
-    <property name="styleSheet">
-     <string notr="true">font-size: 17px;</string>
-    </property>
-    <property name="title">
-     <string>View</string>
-    </property>
-    <widget class="QMenu" name="menuTables">
-     <property name="styleSheet">
-      <string notr="true">font-size: 17px;</string>
-     </property>
-     <property name="title">
-      <string>Tables</string>
-     </property>
-     <widget class="QMenu" name="menuInsert_Table">
-      <property name="title">
-       <string>Insert Table</string>
-      </property>
-      <addaction name="separator"/>
-      <addaction name="actionEnter_manauly"/>
-      <addaction name="actionuse_grid"/>
-     </widget>
-     <addaction name="menuInsert_Table"/>
-     <addaction name="actionInsert_Columnleft"/>
-     <addaction name="actionInsert_Columnright"/>
-     <addaction name="actionInsert_Rowabove"/>
-     <addaction name="actionInsert_Rowbelow"/>
-     <addaction name="actionRemove_Column"/>
-     <addaction name="actionRemove_Row"/>
-     <addaction name="actionMerge_Cells"/>
-     <addaction name="actionSplit_Cell"/>
-    </widget>
-    <widget class="QMenu" name="menuLayout">
-     <property name="title">
-      <string>Layout</string>
-     </property>
-     <addaction name="actionTwo_Column"/>
-    </widget>
-    <widget class="QMenu" name="menuFormat_Painter">
-     <property name="title">
-      <string>Format Painter</string>
-     </property>
-     <addaction name="actionCopy_Format"/>
-     <addaction name="actionPaste_Format"/>
-    </widget>
-    <addaction name="actionAllFontProperties"/>
-    <addaction name="actionUnBold"/>
-    <addaction name="actionHighlight"/>
-    <addaction name="separator"/>
-    <addaction name="actionLeftAlign"/>
-    <addaction name="actionRightAlign"/>
-    <addaction name="actionCentreAlign"/>
-    <addaction name="actionSuperscript"/>
-    <addaction name="actionSubscript"/>
-    <addaction name="actionInsert_Horizontal_Line"/>
-    <addaction name="actionInsert_Equation"/>
-    <addaction name="actionEdit_Equation"/>
-    <addaction name="actionFontBlack"/>
-    <addaction name="actionInsert_Tab_Space"/>
-    <addaction name="menuTables"/>
-    <addaction name="separator"/>
-    <addaction name="actionPDF_Preview"/>
-    <addaction name="menuLayout"/>
-    <addaction name="menuFormat_Painter"/>
-   </widget>
    <widget class="QMenu" name="menuGit">
     <property name="styleSheet">
-     <string notr="true">font-size: 17px;</string>
+     <string notr="true">font-size: 16px;</string>
     </property>
     <property name="title">
      <string>Sync</string>
     </property>
     <addaction name="actionTurn_In"/>
-    <addaction name="actionVerifier_Turn_In"/>
     <addaction name="actionFetch_2"/>
-   </widget>
-   <widget class="QMenu" name="menuEdit">
-    <property name="styleSheet">
-     <string notr="true">font-size: 17px;</string>
-    </property>
-    <property name="title">
-     <string>Edit</string>
-    </property>
-    <addaction name="actionUndo"/>
-    <addaction name="actionRedo"/>
-    <addaction name="separator"/>
-    <addaction name="actionBold"/>
-    <addaction name="actionItalic"/>
-    <addaction name="actionFind_and_Replace"/>
-    <addaction name="separator"/>
-    <addaction name="actionUndo_Global_Replace"/>
-    <addaction name="separator"/>
-    <addaction name="actionInsert_Bulleted_List"/>
-    <addaction name="actionInsert_Numbered_List"/>
-    <addaction name="separator"/>
-    <addaction name="actionFill_Table"/>
-   </widget>
-   <widget class="QMenu" name="menuDownload">
-    <property name="styleSheet">
-     <string notr="true">font-size: 17px;</string>
-    </property>
-    <property name="title">
-     <string>Download</string>
-    </property>
-    <addaction name="actionas_PDF"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="styleSheet">
-     <string notr="true">font-size: 17px;</string>
+     <string notr="true">font-size: 16px;</string>
     </property>
     <property name="title">
      <string>Help</string>
@@ -1180,23 +1089,19 @@ QMenu::item:selected{
     <addaction name="actionUser_Guide"/>
     <addaction name="menuInstallation_Guide"/>
     <addaction name="actionTutorial"/>
+    <addaction name="separator"/>
     <addaction name="actionShortcut_Guide"/>
+    <addaction name="separator"/>
     <addaction name="actionCheck_for_Updates"/>
-   </widget>
-   <widget class="QMenu" name="menuSelectLanguage">
-    <property name="styleSheet">
-     <string notr="true">font-size: 17px;</string>
-    </property>
-    <property name="title">
-     <string>Language</string>
-    </property>
-    <addaction name="actionSanskrit_2"/>
-    <addaction name="actionHindi"/>
-    <addaction name="actionEnglish"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout_Udaan_PE"/>
+    <addaction name="separator"/>
+    <addaction name="actionShare_Feedback"/>
+    <addaction name="actionContact_Us"/>
    </widget>
    <widget class="QMenu" name="menuOCR_Correction_Window">
     <property name="styleSheet">
-     <string notr="true">font-size: 17px;
+     <string notr="true">font-size: 16px;
 
 </string>
     </property>
@@ -1229,59 +1134,177 @@ QMenu::item:selected{
     <addaction name="menuRecent_Project"/>
     <addaction name="menuImport_Project"/>
     <addaction name="actionSave"/>
-    <addaction name="actionSave_As"/>
     <addaction name="actionLoad_Next_Page"/>
     <addaction name="actionLoad_Prev_Page"/>
     <addaction name="separator"/>
-    <addaction name="actionSugg"/>
+    <addaction name="actionPDF_Preview"/>
+    <addaction name="actionas_PDF"/>
+    <addaction name="separator"/>
     <addaction name="actionClose_project"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuTool">
     <property name="styleSheet">
-     <string notr="true">font-size: 17px;</string>
+     <string notr="true">font-size: 16px;</string>
     </property>
     <property name="title">
      <string>Tools</string>
     </property>
+    <addaction name="actionVoice_Typing"/>
+    <addaction name="actionSpell_Check"/>
+    <addaction name="actionWord_Count"/>
+    <addaction name="separator"/>
     <addaction name="actionUpload"/>
     <addaction name="actionLoadData"/>
-    <addaction name="actionLoadDict"/>
-    <addaction name="actionLoadOCRWords"/>
-    <addaction name="actionLoadDomain"/>
-    <addaction name="actionLoadSubPS"/>
-    <addaction name="actionLoadConfusions"/>
     <addaction name="separator"/>
-    <addaction name="actionSpell_Check"/>
     <addaction name="actionToDevanagari"/>
     <addaction name="actionToSlp1"/>
-    <addaction name="actionLoadGDocPage"/>
    </widget>
-   <widget class="QMenu" name="menuSetting">
-    <property name="font">
-     <font>
-      <pointsize>-1</pointsize>
-     </font>
-    </property>
+   <widget class="QMenu" name="menuFormat">
     <property name="styleSheet">
-     <string notr="true">font-size: 17px;</string>
+     <string notr="true">font-size: 16px;</string>
     </property>
     <property name="title">
-     <string>Setting</string>
+     <string>Format</string>
     </property>
-    <addaction name="actionLogin"/>
-    <addaction name="actionLogout"/>
+    <widget class="QMenu" name="menuText">
+     <property name="title">
+      <string>Text</string>
+     </property>
+     <widget class="QMenu" name="menuSize">
+      <property name="title">
+       <string>Size</string>
+      </property>
+      <addaction name="actionIncrease_size"/>
+      <addaction name="actionDecrease_Size"/>
+     </widget>
+     <addaction name="actionBold"/>
+     <addaction name="actionItalic"/>
+     <addaction name="actionUnderline_2"/>
+     <addaction name="actionSuperscript"/>
+     <addaction name="actionSubscript"/>
+     <addaction name="separator"/>
+     <addaction name="menuSize"/>
+     <addaction name="actionCapitalisation"/>
+    </widget>
+    <widget class="QMenu" name="menuTable">
+     <property name="title">
+      <string>Table</string>
+     </property>
+     <widget class="QMenu" name="menuTable_Properties">
+      <property name="title">
+       <string>Table Properties</string>
+      </property>
+      <addaction name="actionFill_Table"/>
+      <addaction name="actionTable_Border_Color"/>
+      <addaction name="actionCell_Padding"/>
+     </widget>
+     <addaction name="actionInsert_Rowabove"/>
+     <addaction name="actionInsert_Rowbelow"/>
+     <addaction name="actionInsert_Columnleft"/>
+     <addaction name="actionInsert_Columnright"/>
+     <addaction name="separator"/>
+     <addaction name="actionRemove_Row"/>
+     <addaction name="actionRemove_Column"/>
+     <addaction name="actionDelete_Table"/>
+     <addaction name="separator"/>
+     <addaction name="actionMerge_Cells"/>
+     <addaction name="actionUnmerge_Cells"/>
+     <addaction name="separator"/>
+     <addaction name="actionSplit_Cell"/>
+     <addaction name="menuTable_Properties"/>
+    </widget>
+    <widget class="QMenu" name="menuBullets_and_Numbering">
+     <property name="title">
+      <string>Bullets and Numbering</string>
+     </property>
+     <addaction name="actionInsert_Numbered_List"/>
+     <addaction name="actionInsert_Bulleted_List"/>
+    </widget>
+    <widget class="QMenu" name="menuAlign_and_Indent">
+     <property name="title">
+      <string>Align and Indent</string>
+     </property>
+     <addaction name="actionLeftAlign"/>
+     <addaction name="actionCentreAlign"/>
+     <addaction name="actionRightAlign"/>
+     <addaction name="actionJustified"/>
+     <addaction name="separator"/>
+     <addaction name="actionIncrease_Indent"/>
+     <addaction name="actionDecrease_Indent"/>
+     <addaction name="actionIndentation_Options"/>
+    </widget>
+    <widget class="QMenu" name="menuColumns">
+     <property name="title">
+      <string>Columns</string>
+     </property>
+     <addaction name="actionTwo_Column"/>
+    </widget>
+    <addaction name="menuText"/>
+    <addaction name="menuAlign_and_Indent"/>
+    <addaction name="menuColumns"/>
+    <addaction name="menuBullets_and_Numbering"/>
+    <addaction name="separator"/>
+    <addaction name="menuTable"/>
+    <addaction name="actionResize_Image_2"/>
+    <addaction name="separator"/>
+    <addaction name="actionCopy_Format"/>
+    <addaction name="actionPaste_Format"/>
+    <addaction name="actionFontBlack"/>
+    <addaction name="separator"/>
+    <addaction name="actionClear_Formatting"/>
+    <addaction name="actionHighlight"/>
+   </widget>
+   <widget class="QMenu" name="menuInsert">
+    <property name="styleSheet">
+     <string notr="true">font-size: 16px;</string>
+    </property>
+    <property name="title">
+     <string>Insert</string>
+    </property>
+    <addaction name="actionImage"/>
+    <addaction name="actionTable_2"/>
+    <addaction name="actionInsert_Horizontal_Line"/>
+    <addaction name="actionDate"/>
+    <addaction name="separator"/>
+    <addaction name="actionSpecial_Characters"/>
+    <addaction name="actionInsert_Equation"/>
+    <addaction name="actionLink"/>
+    <addaction name="actionInsert_Tab_Space"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="styleSheet">
+     <string notr="true">font-size: 16px;</string>
+    </property>
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+    <addaction name="separator"/>
+    <addaction name="actionCut"/>
+    <addaction name="actionCopy"/>
+    <addaction name="actionPaste"/>
+    <addaction name="separator"/>
+    <addaction name="actionSelect_All"/>
+    <addaction name="actionDelete"/>
+    <addaction name="separator"/>
+    <addaction name="actionFind_and_Replace"/>
+    <addaction name="separator"/>
+    <addaction name="actionUndo_Global_Replace"/>
+    <addaction name="separator"/>
+    <addaction name="actionAllFontProperties"/>
+    <addaction name="separator"/>
+    <addaction name="actionEdit_Equation"/>
+    <addaction name="separator"/>
     <addaction name="actionChange_Role"/>
    </widget>
    <addaction name="menuOCR_Correction_Window"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuInsert"/>
+   <addaction name="menuFormat"/>
    <addaction name="menuTool"/>
-   <addaction name="menuSelectLanguage"/>
-   <addaction name="menuCreateReports"/>
-   <addaction name="menuFontAndLayout"/>
    <addaction name="menuGit"/>
-   <addaction name="menuDownload"/>
-   <addaction name="menuSetting"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -1520,7 +1543,7 @@ background-color: #EEF0F2;
      <normaloff>:/Images/Resources/tospl.png</normaloff>:/Images/Resources/tospl.png</iconset>
    </property>
    <property name="text">
-    <string>To Slp1</string>
+    <string>To Slp</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+G</string>
@@ -1611,7 +1634,7 @@ background-color: #EEF0F2;
      <normalon>:/Images/AllFont.png</normalon>:/Images/Resources/all font properties 2.png</iconset>
    </property>
    <property name="text">
-    <string>All Font Properties</string>
+    <string>Font Properties</string>
    </property>
    <property name="toolTip">
     <string>All Font Properties</string>
@@ -1656,7 +1679,7 @@ background-color: #EEF0F2;
      <normalon>:/Images/AlignLeft.png</normalon>:/Images/Resources/allign left.png</iconset>
    </property>
    <property name="text">
-    <string>Left Align</string>
+    <string>Left</string>
    </property>
   </action>
   <action name="actionRightAlign">
@@ -1666,7 +1689,7 @@ background-color: #EEF0F2;
      <normalon>:/Images/AlignCenter.png</normalon>:/Images/Resources/align right.png</iconset>
    </property>
    <property name="text">
-    <string>Right Align</string>
+    <string>Right</string>
    </property>
   </action>
   <action name="actionCentreAlign">
@@ -1676,7 +1699,7 @@ background-color: #EEF0F2;
      <normalon>:/Images/AlignCenter.png</normalon>:/Images/Resources/align center.png</iconset>
    </property>
    <property name="text">
-    <string>Centre Align</string>
+    <string>Centre</string>
    </property>
   </action>
   <action name="actionJusitfiedAlign">
@@ -1885,7 +1908,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionInsert_Tab_Space">
    <property name="text">
-    <string>Insert Tab Space</string>
+    <string>Tab space</string>
    </property>
    <property name="toolTip">
     <string>Insert Tab Space (Ctrl+T)</string>
@@ -1940,17 +1963,17 @@ background-color: #EEF0F2;
   </action>
   <action name="actionInsert_Columnleft">
    <property name="text">
-    <string>Insert Column at Left</string>
+    <string>Insert Column Left</string>
    </property>
   </action>
   <action name="actionInsert_Columnright">
    <property name="text">
-    <string>Insert Column at Right</string>
+    <string>Insert Column Right</string>
    </property>
   </action>
   <action name="actionInsert_Rowabove">
    <property name="text">
-    <string>Insert Row above</string>
+    <string>Insert Row Above</string>
    </property>
   </action>
   <action name="actionInsert_Rowbelow">
@@ -1960,12 +1983,12 @@ background-color: #EEF0F2;
   </action>
   <action name="actionRemove_Column">
    <property name="text">
-    <string>Remove Column</string>
+    <string>Delete Column</string>
    </property>
   </action>
   <action name="actionRemove_Row">
    <property name="text">
-    <string>Remove Row</string>
+    <string>Delete Row</string>
    </property>
   </action>
   <action name="actionItalic">
@@ -2004,7 +2027,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionas_PDF">
    <property name="text">
-    <string>as PDF</string>
+    <string>Download PDF</string>
    </property>
   </action>
   <action name="actionGet_Help">
@@ -2014,6 +2037,9 @@ background-color: #EEF0F2;
    </property>
    <property name="text">
     <string>Get Help</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
    </property>
   </action>
   <action name="actionTutorial">
@@ -2056,7 +2082,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionShortcut_Guide">
    <property name="text">
-    <string>Shortcut Guide</string>
+    <string>Keyboard Shortcuts</string>
    </property>
   </action>
   <action name="action1">
@@ -2172,17 +2198,17 @@ background-color: #EEF0F2;
   </action>
   <action name="actionInsert_Bulleted_List">
    <property name="text">
-    <string>Insert Bulleted List</string>
+    <string>Bulleted List Menu</string>
    </property>
   </action>
   <action name="actionInsert_Numbered_List">
    <property name="text">
-    <string>Insert Numbered List</string>
+    <string>Numbered List Menu</string>
    </property>
   </action>
   <action name="actionInsert_Equation">
    <property name="text">
-    <string>Insert Equation</string>
+    <string>Equation</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+E</string>
@@ -2190,7 +2216,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionEdit_Equation">
    <property name="text">
-    <string>Edit Equation</string>
+    <string>Equation</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+E</string>
@@ -2210,7 +2236,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionTwo_Column">
    <property name="text">
-    <string>Two Column</string>
+    <string>Two</string>
    </property>
   </action>
   <action name="actionUser_Guide">
@@ -2256,7 +2282,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionFill_Table">
    <property name="text">
-    <string>Shade Table</string>
+    <string>Cell Background Color</string>
    </property>
   </action>
   <action name="actionImport_and_Open">
@@ -2283,6 +2309,171 @@ background-color: #EEF0F2;
   <action name="actionuse_grid">
    <property name="text">
     <string>Use Grid</string>
+   </property>
+  </action>
+  <action name="actionPDF_Preview_2">
+   <property name="text">
+    <string>PDF Preview</string>
+   </property>
+  </action>
+  <action name="actionDownload_PDF">
+   <property name="text">
+    <string>Download PDF</string>
+   </property>
+  </action>
+  <action name="actionResize_Image_2">
+   <property name="text">
+    <string>Resize Image</string>
+   </property>
+  </action>
+  <action name="actionClear_Formatting">
+   <property name="text">
+    <string>Clear Formatting</string>
+   </property>
+  </action>
+  <action name="actionDelete_Table">
+   <property name="text">
+    <string>Delete Table</string>
+   </property>
+  </action>
+  <action name="actionUnmerge_Cells">
+   <property name="text">
+    <string>Unmerge Cells</string>
+   </property>
+  </action>
+  <action name="actionTable_Border_Color">
+   <property name="text">
+    <string>Table Border Color</string>
+   </property>
+  </action>
+  <action name="actionCell_Padding">
+   <property name="text">
+    <string>Cell Padding</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="text">
+    <string>Cut</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="text">
+    <string>Copy</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="text">
+    <string>Paste</string>
+   </property>
+  </action>
+  <action name="actionSelect_All">
+   <property name="text">
+    <string>Select All</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="text">
+    <string>Delete</string>
+   </property>
+  </action>
+  <action name="actionImage">
+   <property name="text">
+    <string>Image</string>
+   </property>
+  </action>
+  <action name="actionTable_2">
+   <property name="text">
+    <string>Table</string>
+   </property>
+  </action>
+  <action name="actionDate">
+   <property name="text">
+    <string>Date</string>
+   </property>
+  </action>
+  <action name="actionSpecial_Characters">
+   <property name="text">
+    <string>Special Characters</string>
+   </property>
+  </action>
+  <action name="actionLink">
+   <property name="text">
+    <string>Link</string>
+   </property>
+  </action>
+  <action name="actionTabspace">
+   <property name="text">
+    <string>Tabspace</string>
+   </property>
+  </action>
+  <action name="actionVoice_Typing">
+   <property name="text">
+    <string>Voice Typing</string>
+   </property>
+  </action>
+  <action name="actionWord_Count">
+   <property name="text">
+    <string>Word Count</string>
+   </property>
+  </action>
+  <action name="actionKeyboard_Shortcuts">
+   <property name="text">
+    <string>Keyboard Shortcuts</string>
+   </property>
+  </action>
+  <action name="actionContact_Us">
+   <property name="text">
+    <string>Contact Us</string>
+   </property>
+  </action>
+  <action name="actionShare_Feedback">
+   <property name="text">
+    <string>Share Feedback</string>
+   </property>
+  </action>
+  <action name="actionAbout_Udaan_PE">
+   <property name="text">
+    <string>About Udaan-PE </string>
+   </property>
+  </action>
+  <action name="actionUnderline_2">
+   <property name="text">
+    <string>Underline</string>
+   </property>
+  </action>
+  <action name="actionCapitalisation">
+   <property name="text">
+    <string>Capitalisation</string>
+   </property>
+  </action>
+  <action name="actionIncrease_size">
+   <property name="text">
+    <string>Increase size</string>
+   </property>
+  </action>
+  <action name="actionDecrease_Size">
+   <property name="text">
+    <string>Decrease Size</string>
+   </property>
+  </action>
+  <action name="actionJustified">
+   <property name="text">
+    <string>Justified</string>
+   </property>
+  </action>
+  <action name="actionIncrease_Indent">
+   <property name="text">
+    <string>Increase Indent</string>
+   </property>
+  </action>
+  <action name="actionDecrease_Indent">
+   <property name="text">
+    <string>Decrease Indent</string>
+   </property>
+  </action>
+  <action name="actionIndentation_Options">
+   <property name="text">
+    <string>Indentation Options</string>
    </property>
   </action>
  </widget>

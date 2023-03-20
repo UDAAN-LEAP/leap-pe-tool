@@ -142,9 +142,9 @@ QMap<QString, QString> globallyReplacedWords;
 QList<QString> filesChangedUsingGlobalReplace;
 
 QString defaultStyle;
- QList<QTableWidgetItem *> selectedItems;
- QTableWidget *m_table;
- QDialog *tableDialog;
+QList<QTableWidgetItem *> selectedItems;
+QTableWidget *m_table;
+QDialog *tableDialog;
 
 
 /*!
@@ -155,6 +155,10 @@ QString defaultStyle;
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QMenuBar *menubar = this->menuBar();
+    QIcon icon = QIcon(":/Images/Resources/user_login.png");
+    ui->pushButton_5->setIcon(icon);
+    menubar->setCornerWidget(ui->pushButton_5, Qt::TopRightCorner);
     CustomTextBrowser *customtextbrowser = new CustomTextBrowser();
     customtextbrowser->setStyleSheet("background-color:white; color:black;");
     ui->splitter->replaceWidget(1,customtextbrowser);
@@ -206,7 +210,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->lineEdit_3->setReadOnly(true);
     ui->forward_Button->setVisible(false);
 
-    //    googleAuth();
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("cloudSave");
     settings.remove("");
@@ -236,16 +239,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     QString value = settings.value("consent").toString();
     if(value != "dna" && value != "loggedIn"){
         login();
-    }
-    //show login/logout options
-    settings.endGroup();
-    if(value != "loggedIn"){
-        this->ui->actionLogin->setVisible(true);
-        this->ui->actionLogout->setVisible(false);
-    }
-    else{
-        this->ui->actionLogin->setVisible(false);
-        this->ui->actionLogout->setVisible(true);
     }
 
     QString common = "डॉ - xZ,, अ  - a,, आ/ ा  - A,, इ/ ि  - i,, ई/ ी  - I,, उ/ ु  - u,, ऊ/ ू  - U,, ऋ/ ृ  - f,, ए/ े  - e,, ऐ/ ै  - E,, ओ/ ो  - o,, औ/ ौ  - O,, ं  - M,, ः  - H,,  ँ   - ~,, ज्ञ  - jYa,, त्र  - tra,, श्र  - Sra,, क्ष्/क्ष  - kz/kza,, द्य्/द्य  - dy/dya,, क्/क  - k/ka,, ख्/ख  - K/Ka,, ग्/ग  - g/ga,, घ्/घ  - G/Ga,, ङ्/ङ  - N/Na,, च्/च  - c/ca,, छ्/छ  - C/Ca,, ज्/ज  - j/ja,, झ्/झ  - J/Ja,, ञ्/ञ  - Y/Ya,, ट्/ट  - w/wa,, ठ्/ठ  - W/Wa,, ड्/ड  - q/qa,, ढ्/ढ  - Q/Qa,, ण्/ण  - R/Ra,, त्/त  - t/ta,, थ्/थ  - T/Ta,, द्/द  - d/da,, ध्/ध  - D/Da,, न्/न  - n/na,, प्/प  - p/pa,, फ्/फ  - P/Pa,, ब्/ब  - b/ba,, भ्/भ  - B/Ba,, म्/म  - m/ma,, य्/य  - y/ya,, र्/र  - r/ra,, ल्/ल  - l/la,, व्/व  - v/va,, श्/श  - S/Sa,, ष्/ष  - z/za,, स्/स  - s/sa,, ह्/ह  - h/ha,, ळ्/ळ  - L/La,, १  - 1,, २  - 2,, ३  - 3,, ४  - 4,, ५  - 5,, ६  - 6,, ७  - 7,, ८  - 8,, ९  - 9,, ०  - 0,, ।  - |,, ॥  - ||";
@@ -303,94 +296,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     }
 
     // Hiding options
-
-    ui->actionLoadDict->setVisible(false);
-    ui->actionLoadOCRWords->setVisible(false);
-    ui->actionLoadDomain->setVisible(false);
-    ui->actionLoadSubPS->setVisible(false);
-    ui->actionLoadConfusions->setVisible(false);
-    ui->actionLoadGDocPage->setVisible(false);
-    ui->menuSelectLanguage->setTitle("");
-    ui->menuCreateReports->setTitle("");
-    //compare options
     ui->viewComments->setVisible(false);
     ui->compareCorrectorOutput->setVisible(false);
     ui->compareVerifierOutput->setVisible(false);
-    //    ui->pushButton_2->setVisible(false);
 
-    // Disabling some buttons while opening the tool
-
-    // File Menu
-    ui->actionSave->setEnabled(false);
-    ui->actionSave_As->setEnabled(false);
-    ui->actionSpell_Check->setEnabled(false);
-    ui->actionLoad_Prev_Page->setEnabled(false);
-    ui->actionLoad_Next_Page->setEnabled(false);
-    ui->actionToDevanagari->setEnabled(false);
-    ui->actionToSlp1->setEnabled(false);
-    ui->actionLoadGDocPage->setEnabled(false);
-    ui->actionLoadData->setEnabled(false);
-    ui->actionLoadDict->setEnabled(false);
-    ui->actionLoadOCRWords->setEnabled(false);
-    ui->actionLoadDomain->setEnabled(false);
-    ui->actionLoadSubPS->setEnabled(false);
-    ui->actionLoadConfusions->setEnabled(false);
-    ui->actionSugg->setVisible(false);
-
-    // Edit Menu
-    ui->actionUndo->setEnabled(false);
-    ui->actionRedo->setEnabled(false);
-    ui->actionFind_and_Replace->setEnabled(false);
-    ui->actionUndo_Global_Replace->setEnabled(false);
-    ui->actionUpload->setEnabled(false);
-
-    // Language Menu
-    ui->actionSanskrit_2->setEnabled(false);
-    ui->actionEnglish->setEnabled(false);
-    ui->actionHindi->setEnabled(false);
-
-    // Reports Menu
-    ui->actionAccuracyLog->setEnabled(false);
-    ui->actionViewAverageAccuracies->setEnabled(false);
-
-    // View Menu
-    ui->actionAllFontProperties->setEnabled(false);
-    ui->actionBold->setEnabled(false);
-    ui->actionItalic->setEnabled(false);
-    ui->actionHighlight->setEnabled(false); // Already disabled in Corrector mode
-    ui->actionLeftAlign->setEnabled(false);
-    ui->actionRightAlign->setEnabled(false);
-    ui->actionCentreAlign->setEnabled(false);
-    ui->actionJusitfiedAlign->setEnabled(false);
-    ui->actionSuperscript->setEnabled(false);
-    ui->actionSubscript->setEnabled(false);
-    ui->actionInsert_Horizontal_Line->setEnabled(false);
-    ui->actionFontBlack->setEnabled(false);
-    ui->actionInsert_Tab_Space->setEnabled(false);
-    ui->actionPDF_Preview->setEnabled(false);
-
-    // Table Menu inside View Menu
-    //ui->actionInsert_Table_2->setEnabled(false);
-    ui->actionInsert_Columnleft->setEnabled(false);
-    ui->actionInsert_Columnright->setEnabled(false);
-    ui->actionInsert_Rowabove->setEnabled(false);
-    ui->actionInsert_Rowbelow->setEnabled(false);
-    ui->actionRemove_Column->setEnabled(false);
-    ui->actionRemove_Row->setEnabled(false);
-
-    // Versions Menu
-    ui->actionFetch_2->setEnabled(false);
-    ui->actionTurn_In->setEnabled(false);
-    ui->actionVerifier_Turn_In->setEnabled(false);
-
-    // Download Menu
-    ui->actionas_PDF->setEnabled(false);
-
-    ui->actionSymbols->setEnabled(false);
-    ui->actionZoom_In->setEnabled(false);
-    ui->actionZoom_Out->setEnabled(false);
-     ui->actionUnderline->setDisabled(true);
-        ui->actionJusitfiedAlign->setEnabled(false);
     //to set default tab to project widget
     ui->tabWidget->setCurrentWidget(ui->tab_2);
     //recording
@@ -410,6 +319,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->comboBox->addItem(QStringLiteral("Telugu"), QVariant("te-IN"));
     ui->comboBox->addItem(QStringLiteral("Urdu"), QVariant("ur-IN"));
     ui->comboBox->addItem(QStringLiteral("Punjabi"), QVariant("pa-Guru-IN"));
+
+    //disable features
+    e_d_features(false);
 }
 
 /*!
@@ -1519,78 +1431,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     }
 
     // Enabling the buttons again after a project is opened
-    // File Menu
-    ui->actionSave->setEnabled(true);
-    ui->actionSave_As->setEnabled(true);
-    ui->actionSpell_Check->setEnabled(true);
-    ui->actionLoad_Prev_Page->setEnabled(true);
-    ui->actionLoad_Next_Page->setEnabled(true);
-    ui->actionToDevanagari->setEnabled(true);
-    ui->actionToSlp1->setEnabled(true);
-    ui->actionLoadGDocPage->setEnabled(true);
-    ui->actionLoadData->setEnabled(true);
-    ui->actionLoadDict->setEnabled(true);
-    ui->actionLoadOCRWords->setEnabled(true);
-    ui->actionLoadDomain->setEnabled(true);
-    ui->actionLoadSubPS->setEnabled(true);
-    ui->actionLoadConfusions->setEnabled(true);
-    ui->actionSugg->setEnabled(true);
-
-    // Edit Menu
-    ui->actionUndo->setEnabled(true);
-    ui->actionRedo->setEnabled(true);
-    ui->actionFind_and_Replace->setEnabled(true);
-    ui->actionUndo_Global_Replace->setEnabled(true);
-    ui->actionUpload->setEnabled(true);
-
-    // Language Menu
-    ui->actionSanskrit_2->setEnabled(true);
-    ui->actionEnglish->setEnabled(true);
-    ui->actionHindi->setEnabled(true);
-
-    // Reports Menu
-    ui->actionAccuracyLog->setEnabled(true);
-    ui->actionViewAverageAccuracies->setEnabled(true);
-
-    // View Menu
-    ui->actionAllFontProperties->setEnabled(true);
-    ui->actionBold->setEnabled(true);
-    ui->actionItalic->setEnabled(true);
-    ui->actionLeftAlign->setEnabled(true);
-    ui->actionRightAlign->setEnabled(true);
-    ui->actionCentreAlign->setEnabled(true);
-    ui->actionJusitfiedAlign->setEnabled(true);
-    ui->actionSuperscript->setEnabled(true);
-    ui->actionSubscript->setEnabled(true);
-    ui->actionInsert_Horizontal_Line->setEnabled(true);
-    ui->actionFontBlack->setEnabled(true);
-    ui->actionInsert_Tab_Space->setEnabled(true);
-    ui->actionPDF_Preview->setEnabled(true);
-     ui->actionUnderline->setDisabled(false);
-     ui->actionJusitfiedAlign->setEnabled(true);
-    //    if (isVerifier)
-    ui->actionHighlight->setEnabled(true);
-
-    // Table Menu inside View Menu
-    //ui->actionInsert_Table_2->setEnabled(true);
-    ui->actionInsert_Columnleft->setEnabled(true);
-    ui->actionInsert_Columnright->setEnabled(true);
-    ui->actionInsert_Rowabove->setEnabled(true);
-    ui->actionInsert_Rowbelow->setEnabled(true);
-    ui->actionRemove_Column->setEnabled(true);
-    ui->actionRemove_Row->setEnabled(true);
-
-    // Versions Menu
-    ui->actionFetch_2->setEnabled(true);
-    ui->actionTurn_In->setEnabled(true);
-    ui->actionVerifier_Turn_In->setEnabled(true);
-
-    // Download Menu
-    ui->actionas_PDF->setEnabled(true);
-
-    ui->actionSymbols->setEnabled(true);
-    ui->actionZoom_In->setEnabled(true);
-    ui->actionZoom_Out->setEnabled(true);
+    e_d_features(true);
     //Reset loadData flag
     LoadDataFlag = 1;
     //reset data
@@ -1797,50 +1638,50 @@ void MainWindow::SaveFile_GUI_Postprocessing()
     }
 
     //! Converting html output into plain text.
-//    QTextDocumentFragment qtextdocfragment;
-//    QString plain = qtextdocfragment.fromHtml(output).toPlainText();
+    //    QTextDocumentFragment qtextdocfragment;
+    //    QString plain = qtextdocfragment.fromHtml(output).toPlainText();
 
-//    std::stringstream ss(plain.toStdString());
-//    std::string to;
-//    //! Appending the plain text in QVector<QString> object.
-//    QVector<QString> s;
-//    if (plain != NULL)
-//    {
-//        while(std::getline(ss,to,'\n'))
-//        {
-//            QString qstr = QString::fromStdString(to);
-//            s.append(qstr);
-//        }
-//    }
+    //    std::stringstream ss(plain.toStdString());
+    //    std::string to;
+    //    //! Appending the plain text in QVector<QString> object.
+    //    QVector<QString> s;
+    //    if (plain != NULL)
+    //    {
+    //        while(std::getline(ss,to,'\n'))
+    //        {
+    //            QString qstr = QString::fromStdString(to);
+    //            s.append(qstr);
+    //        }
+    //    }
 
-//    //! Inserting string values in \a qjsonobj.
-//    QJsonObject qjsonobj;
-//    for(int i = 0;i < s.size(); i++)
-//    {
-//        QString z = QString::number(i);
-//        qjsonobj.insert(z, QJsonValue(s[i]));
-//    }
-//    int len = qjsonobj.length();
+    //    //! Inserting string values in \a qjsonobj.
+    //    QJsonObject qjsonobj;
+    //    for(int i = 0;i < s.size(); i++)
+    //    {
+    //        QString z = QString::number(i);
+    //        qjsonobj.insert(z, QJsonValue(s[i]));
+    //    }
+    //    int len = qjsonobj.length();
 
-//    localFilename.replace(".html",".json");         //!Replacing extension of file from .html to .json
-//    QFile sFile2(localFilename);
+    //    localFilename.replace(".html",".json");         //!Replacing extension of file from .html to .json
+    //    QFile sFile2(localFilename);
 
-//    //! Sets codec value and then adding values in file
-//    if(sFile2.open(QIODevice::WriteOnly | QIODevice::Text))
-//    {
-//        QTextStream out(&sFile2);
-//        out.setCodec("UTF-8");
-//        out << "{\n";
-//        for(int x = 0; x<len; x++)
-//        {
-//            QString z = QString::number(x);
-//            out << "\"" << x << "\"" << ":" << "\"" << qjsonobj[z].toString() << "\"" <<","<< '\n';
-//        }
-//        out << "}";
+    //    //! Sets codec value and then adding values in file
+    //    if(sFile2.open(QIODevice::WriteOnly | QIODevice::Text))
+    //    {
+    //        QTextStream out(&sFile2);
+    //        out.setCodec("UTF-8");
+    //        out << "{\n";
+    //        for(int x = 0; x<len; x++)
+    //        {
+    //            QString z = QString::number(x);
+    //            out << "\"" << x << "\"" << ":" << "\"" << qjsonobj[z].toString() << "\"" <<","<< '\n';
+    //        }
+    //        out << "}";
 
-//        sFile2.flush();
-//        sFile2.close();
-//    }
+    //        sFile2.flush();
+    //        sFile2.close();
+    //    }
 
     //! Set Inds file readonly after saving - Corrector mode
     if (!isVerifier && gCurrentDirName == "Inds")
@@ -3014,7 +2855,7 @@ void MainWindow::on_actionHighlight_triggered()
             {
                 format.setBackground(Qt::darkYellow);
 
-//                LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
+                //                LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
             }
             curr_browser->textCursor().mergeCharFormat(format); //Correctors are only allowed to remove highlights.
         }
@@ -3264,37 +3105,37 @@ void MainWindow::on_actionInsert_Tab_Space_triggered()
 void MainWindow::createTable(){
     
 
-        if (selectedItems.isEmpty()) {
+    if (selectedItems.isEmpty()) {
 
-            QMessageBox::information(0,"Table Dialog", "Please select at least one cell.");
+        QMessageBox::information(0,"Table Dialog", "Please select at least one cell.");
 
-            return;
+        return;
 
-        }
+    }
 
 
-QSet<int>selectedRows;
-QSet<int>selectedColumns;
-int rw,col;
-foreach(QTableWidgetItem *items,selectedItems){
-rw=items->row();
-col=items->column();
-selectedRows.insert(rw);
-selectedColumns.insert(col);
-}
-int rows,columns;
-rows=selectedRows.size();
-columns=selectedColumns.size();
+    QSet<int>selectedRows;
+    QSet<int>selectedColumns;
+    int rw,col;
+    foreach(QTableWidgetItem *items,selectedItems){
+        rw=items->row();
+        col=items->column();
+        selectedRows.insert(rw);
+        selectedColumns.insert(col);
+    }
+    int rows,columns;
+    rows=selectedRows.size();
+    columns=selectedColumns.size();
 
-  QTextTableFormat tf;
-        tf.setBorderBrush(Qt::black);
-        tf.setCellSpacing(0);
-        tf.setCellPadding(7);
+    QTextTableFormat tf;
+    tf.setBorderBrush(Qt::black);
+    tf.setCellSpacing(0);
+    tf.setCellPadding(7);
 
-QTextCursor cursor = curr_browser->textCursor();
-        cursor.insertTable(rows,columns,tf);
-        
-   tableDialog->close();
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.insertTable(rows,columns,tf);
+
+    tableDialog->close();
 }
 /*!
  * \fn MainWindow::on_actionInsert_Columnleft_triggered
@@ -4054,16 +3895,16 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     QString bboxf = currentTabPageName;
     QFile bbox_file(gDirTwoLevelUp + "/bboxf/"+bboxf.replace(".html", ".bbox"));
     //! When user moves his mouse the system will ask user to download new update.
-   if(event->type() == QEvent::MouseMove){
-       if(ui->tabWidget->width() == 0 && flag_tab != 1){
-           ui->backward_Button->setVisible(false);
-           ui->forward_Button->setVisible(true);
-           ui->tabWidget->setVisible(false);
-           flag_tab = 1;
-       }
-       else if(ui->tabWidget->width() > 0 && flag_tab == 1)
-           flag_tab = 0;
-   }
+    if(event->type() == QEvent::MouseMove){
+        if(ui->tabWidget->width() == 0 && flag_tab != 1){
+            ui->backward_Button->setVisible(false);
+            ui->forward_Button->setVisible(true);
+            ui->tabWidget->setVisible(false);
+            flag_tab = 1;
+        }
+        else if(ui->tabWidget->width() > 0 && flag_tab == 1)
+            flag_tab = 0;
+    }
 
     if(event->type() == QEvent::MouseButtonPress)
     {
@@ -4995,7 +4836,7 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
         QDir directory(gDirTwoLevelUp);
         QString setName=directory.dirName();
         if(!QDir(gDirTwoLevelUp+"/logs").exists())
-                QDir().mkdir(gDirTwoLevelUp+"/logs");
+            QDir().mkdir(gDirTwoLevelUp+"/logs");
         QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
         QFile csvFile(filename);
         if(!csvFile.exists())
@@ -5066,7 +4907,7 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
             QDir directory(gDirTwoLevelUp);
             QString setName=directory.dirName();
             if(!QDir(gDirTwoLevelUp+"/logs").exists())
-                    QDir().mkdir(gDirTwoLevelUp+"/logs");
+                QDir().mkdir(gDirTwoLevelUp+"/logs");
             QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
             QFile csvFile(filename);
             if(!csvFile.exists())     //for first time creation
@@ -5111,7 +4952,7 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
             QDir directory(gDirTwoLevelUp);
             QString setName=directory.dirName();
             if(!QDir(gDirTwoLevelUp+"/logs").exists())
-                    QDir().mkdir(gDirTwoLevelUp+"/logs");
+                QDir().mkdir(gDirTwoLevelUp+"/logs");
             QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
             QFile csvFile(filename);
             if(!csvFile.exists())
@@ -6200,7 +6041,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
         //		loadHtmlInDoc(f);
 
         if(!QDir(gDirTwoLevelUp+"/logs").exists())
-                QDir().mkdir(gDirTwoLevelUp+"/logs");
+            QDir().mkdir(gDirTwoLevelUp+"/logs");
         QString loc = gDirTwoLevelUp + "/logs/."+mRole+"_dan.log";
         QFile sFile(loc);
         if(!sFile.open(QIODevice::ReadOnly)) {qDebug()<<"can't read the dan logs";}
@@ -7007,7 +6848,7 @@ void MainWindow::on_actionas_PDF_triggered()
 
                 mainHtml=stream.readAll();
                 mainHtml.replace("background-color:","Background-colour:");
-//                mainHtml.remove("background-color:");
+                //                mainHtml.remove("background-color:");
                 //                mainHtml.remove("background-color:#ffff00");
                 //                //! Changing the text background to white by setting the background to #fffff
                 //                while (true){
@@ -7326,7 +7167,7 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
         QDir directory(gDirTwoLevelUp);
         QString setName=directory.dirName();
         if(!QDir(gDirTwoLevelUp+"/logs").exists())
-                QDir().mkdir(gDirTwoLevelUp+"/logs");
+            QDir().mkdir(gDirTwoLevelUp+"/logs");
         QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
         //qDebug()<<filename;
         QFile csvFile(filename);
@@ -7697,7 +7538,7 @@ void MainWindow::writeSettings()
         QFile::remove(f);
     }
     if(!QDir(gDirTwoLevelUp+"/logs").exists())
-            QDir().mkdir(gDirTwoLevelUp+"/logs");
+        QDir().mkdir(gDirTwoLevelUp+"/logs");
     QString filename = gDirTwoLevelUp + "/logs/."+mRole+"_cursor.txt";
     QFile myFile (filename);
     myFile.open(QIODevice::ReadWrite);
@@ -7734,7 +7575,7 @@ void MainWindow::readSettings()
     int pos1;
 
     if(!QDir(gDirTwoLevelUp+"/logs").exists())
-            QDir().mkdir(gDirTwoLevelUp+"/logs");
+        QDir().mkdir(gDirTwoLevelUp+"/logs");
     QString filename = gDirTwoLevelUp + "/logs/."+mRole+"_cursor.txt";
     QFile myFile (filename);
     myFile.open(QIODevice::ReadOnly);
@@ -8005,7 +7846,7 @@ void MainWindow::print(QPrinter *printer)
     //        mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
     //        startFrom = stIndex + 6;
     //    }
-//    mainHtml.remove("background-color:");
+    //    mainHtml.remove("background-color:");
     mainHtml.replace("background-color:","Background-colour:");
     //    mainHtml.remove("background-color:#ffff00");
     //latex to png mapping
@@ -8439,38 +8280,6 @@ void MainWindow::blockCountChanged(int numOfBlocks)
     blockCount = numOfBlocks;
 }
 
-
-/*!
- * \fn MainWindow::on_actionLogin_triggered
- * \brief authenticate function is called. User is redirected to Google login page
- */
-void MainWindow::on_actionLogin_triggered()
-{
-    //    authenticate();
-    login();
-}
-
-/*!
- * \fn MainWindow::on_actionLogout_triggered
- * \brief Function is executed when user logouts.
- * \details
- * 1. Logout button is not visible
- * 2. login button is previewed so that user can login.
- */
-void MainWindow::on_actionLogout_triggered()
-{
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    ui->actionLogout->setVisible(false);
-    ui->actionLogin->setVisible(true);
-    settings.beginGroup("loginConsent");
-    settings.remove("");
-    settings.endGroup();
-    settings.beginGroup("login");
-    settings.remove("");
-    settings.endGroup();
-    QMessageBox::information(0,"Logout","Logged out successfully :(");
-}
-
 /*!
  * \fn MainWindow::on_actionImport_triggered
  * \brief This function helps user to clone repositories from their account.
@@ -8544,9 +8353,9 @@ void MainWindow::on_actionClone_Repository()
     import_flag = true;
     ProjFile = p_str;
 
-//    if(!mProject.isProjectOpen()){
+    //    if(!mProject.isProjectOpen()){
 
-//    }
+    //    }
 }
 
 
@@ -8568,88 +8377,8 @@ void MainWindow::on_actionClose_project_triggered()
         // opened or not
     }
     mProject.setProjectOpen(false);
-    ui->actionLoadDict->setVisible(false);
-    ui->actionLoadOCRWords->setVisible(false);
-    ui->actionLoadDomain->setVisible(false);
-    ui->actionLoadSubPS->setVisible(false);
-    ui->actionLoadConfusions->setVisible(false);
-    ui->actionLoadGDocPage->setVisible(false);
-    ui->menuSelectLanguage->setTitle("");
-    ui->menuCreateReports->setTitle("");
-
     //disableing the buttons after project is closed
-    // File Menu
-    ui->actionSave->setEnabled(false);
-    ui->actionSave_As->setEnabled(false);
-    ui->actionSpell_Check->setEnabled(false);
-    ui->actionLoad_Prev_Page->setEnabled(false);
-    ui->actionLoad_Next_Page->setEnabled(false);
-    ui->actionToDevanagari->setEnabled(false);
-    ui->actionToSlp1->setEnabled(false);
-    ui->actionLoadGDocPage->setEnabled(false);
-    ui->actionLoadData->setEnabled(false);
-    ui->actionLoadDict->setEnabled(false);
-    ui->actionLoadOCRWords->setEnabled(false);
-    ui->actionLoadDomain->setEnabled(false);
-    ui->actionLoadSubPS->setEnabled(false);
-    ui->actionLoadConfusions->setEnabled(false);
-    ui->actionSugg->setEnabled(false);
-
-    // Edit Menu
-    ui->actionUndo->setEnabled(false);
-    ui->actionRedo->setEnabled(false);
-    ui->actionFind_and_Replace->setEnabled(false);
-    ui->actionUndo_Global_Replace->setEnabled(false);
-    ui->actionUpload->setEnabled(false);
-
-    // Language Menu
-    ui->actionSanskrit_2->setEnabled(false);
-    ui->actionEnglish->setEnabled(false);
-    ui->actionHindi->setEnabled(false);
-
-    // Reports Menu
-    ui->actionAccuracyLog->setEnabled(false);
-    ui->actionViewAverageAccuracies->setEnabled(false);
-
-    // View Menu
-    ui->actionAllFontProperties->setEnabled(false);
-    ui->actionBold->setEnabled(false);
-    ui->actionItalic->setEnabled(false);
-    ui->actionLeftAlign->setEnabled(false);
-    ui->actionRightAlign->setEnabled(false);
-    ui->actionCentreAlign->setEnabled(false);
-    ui->actionJusitfiedAlign->setEnabled(false);
-    ui->actionSuperscript->setEnabled(false);
-    ui->actionSubscript->setEnabled(false);
-    ui->actionInsert_Horizontal_Line->setEnabled(false);
-    ui->actionFontBlack->setEnabled(false);
-    ui->actionInsert_Tab_Space->setEnabled(false);
-    ui->actionPDF_Preview->setEnabled(false);
-    //    if (isVerifier)
-    ui->actionHighlight->setEnabled(false);
-
-    // Table Menu inside View Menu
-    //ui->actionInsert_Table_2->setEnabled(false);
-    ui->actionInsert_Columnleft->setEnabled(false);
-    ui->actionInsert_Columnright->setEnabled(false);
-    ui->actionInsert_Rowabove->setEnabled(false);
-    ui->actionInsert_Rowbelow->setEnabled(false);
-    ui->actionRemove_Column->setEnabled(false);
-    ui->actionRemove_Row->setEnabled(false);
-
-    // Versions Menu
-    ui->actionFetch_2->setEnabled(false);
-    ui->actionTurn_In->setEnabled(false);
-    ui->actionVerifier_Turn_In->setEnabled(false);
-
-    // Download Menu
-    ui->actionas_PDF->setEnabled(false);
-
-    ui->actionSymbols->setEnabled(false);
-    ui->actionZoom_In->setEnabled(false);
-    ui->actionZoom_Out->setEnabled(false);
-    ui->actionUnderline->setDisabled(true);
-    ui->actionJusitfiedAlign->setEnabled(false);
+    e_d_features(false);
     //Reset loadData flag
     LoadDataFlag = 1;
     //reset data
@@ -8682,12 +8411,6 @@ void MainWindow::on_actionClose_project_triggered()
     ui->lineEdit_2->clear();
     ui->lineEdit->clear();
     ui->lineEdit_3->clear();
-    ui->pushButton->setDisabled(true);
-    ui->pushButton_2->setDisabled(true);
-    ui->viewComments->setDisabled(true);
-    ui->compareCorrectorOutput->setDisabled(true);
-    ui->groupBox->setDisabled(true);
-    //    QMessageBox::information(this,"Success","Project Closed Successfully");
     curr_browser=0;
 }
 
@@ -9199,9 +8922,9 @@ void MainWindow::cloud_save(){
     QJsonObject mainObj, parObj;
     parObj = readJsonFile(corrected_count);
     mainObj = parObj[date].toObject();
-//    QString Verifier = mainObj["Verifier"].toString();
+    //    QString Verifier = mainObj["Verifier"].toString();
     mainObj.insert("Corrector", gCurrentPageName);
-//    mainObj.insert("Verifier", Verifier);
+    //    mainObj.insert("Verifier", Verifier);
     parObj.insert(date, mainObj);
     writeJsonFile(corrected_count, parObj);
     //sending credentials
@@ -9287,8 +9010,8 @@ bool MainWindow::verifier_save()
     QJsonObject mainObj, parObj;
     parObj = readJsonFile(corrected_count);
     mainObj = parObj[date].toObject();
-//    QString Corrector = mainObj["Corrector"].toString();
-//    mainObj.insert("Corrector", Corrector);
+    //    QString Corrector = mainObj["Corrector"].toString();
+    //    mainObj.insert("Corrector", Corrector);
     mainObj.insert("Verifier", gCurrentPageName);
     parObj.insert(date, mainObj);
     writeJsonFile(corrected_count, parObj);
@@ -9313,7 +9036,7 @@ bool MainWindow::verifier_save()
  */
 void MainWindow::preprocessing(){
     if(!QDir(gDirTwoLevelUp+"/logs").exists())
-            QDir().mkdir(gDirTwoLevelUp+"/logs");
+        QDir().mkdir(gDirTwoLevelUp+"/logs");
     QString loc = gDirTwoLevelUp + "/logs/."+mRole+"_dan.log";
     QFile sFile(loc);
     slpNPatternDict slnp;
@@ -9621,46 +9344,46 @@ void MainWindow::on_actionImport_triggered()
 
 void MainWindow::on_actionEnter_manauly_triggered()
 {
-if(!curr_browser || curr_browser->isReadOnly())
-	        return;
-	
-	    QDialog dialog(this);
-	    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
-	    form.addRow(new QLabel("Insert Table", this));                                  // Create a dialog for asking table dimensions
-	
-	    //! Add the lineEdits with their respective labels
-	    QLineEdit *rows = new QLineEdit(&dialog);
-	    QLineEdit *columns = new QLineEdit(&dialog);                                    // Add lineEdits to get Rows
-	    form.addRow("Rows", rows);                                                      // Add lineEdits to get Columns
-	    form.addRow("Columns", columns);
-	
-	    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-	    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-	    form.addRow(&buttonBox);
-	    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-	    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-	
-	    //! Show the dialog as modal
-	    if (dialog.exec() == QDialog::Accepted)
-	    {
-	
-	        QTextTableFormat tf;
-	        tf.setBorderBrush(Qt::black);
-	        tf.setCellSpacing(0);
-	        tf.setCellPadding(7);
-	        //        tf.setAlignment(Qt::AlignCenter);
-	        QTextCursor cursor = curr_browser->textCursor();
-	        cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
-}
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+
+    QDialog dialog(this);
+    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+    form.addRow(new QLabel("Insert Table", this));                                  // Create a dialog for asking table dimensions
+
+    //! Add the lineEdits with their respective labels
+    QLineEdit *rows = new QLineEdit(&dialog);
+    QLineEdit *columns = new QLineEdit(&dialog);                                    // Add lineEdits to get Rows
+    form.addRow("Rows", rows);                                                      // Add lineEdits to get Columns
+    form.addRow("Columns", columns);
+
+    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    //! Show the dialog as modal
+    if (dialog.exec() == QDialog::Accepted)
+    {
+
+        QTextTableFormat tf;
+        tf.setBorderBrush(Qt::black);
+        tf.setCellSpacing(0);
+        tf.setCellPadding(7);
+        //        tf.setAlignment(Qt::AlignCenter);
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
+    }
 
 }
 void MainWindow::on_actionuse_grid_triggered()
 {
-if(!curr_browser || curr_browser->isReadOnly())
+    if(!curr_browser || curr_browser->isReadOnly())
         return;
 
- tableDialog=new QDialog();
-setWindowTitle("Table Dialog");
+    tableDialog=new QDialog();
+    setWindowTitle("Table Dialog");
 
 
     QVBoxLayout *layout = new QVBoxLayout(tableDialog);
@@ -9672,8 +9395,7 @@ setWindowTitle("Table Dialog");
 
 
     m_table = new QTableWidget(20,20,this);
-    
- 
+
 
     m_table->setSelectionMode(QAbstractItemView::MultiSelection);
 
@@ -9686,26 +9408,91 @@ setWindowTitle("Table Dialog");
     QObject::connect(button, &QPushButton::clicked, this, &MainWindow::createTable);
 
     layout->addWidget(button);
-    QTableWidgetItem *itm; 
+    QTableWidgetItem *itm;
     for(int i=0;i<20;i++){
         for(int j=0;j<20;j++){
-       itm = new QTableWidgetItem();
-        itm->setData(Qt::DisplayRole,QString("."));
-          itm->setForeground(QBrush(QColor(255,255,255)));
-        m_table->setItem(i,j,itm);    
-  
+            itm = new QTableWidgetItem();
+            itm->setData(Qt::DisplayRole,QString("."));
+            itm->setForeground(QBrush(QColor(255,255,255)));
+            m_table->setItem(i,j,itm);
+
         }
     }
     
     
     QObject::connect(m_table,&QTableWidget::itemSelectionChanged,this,[=](){
-  selectedItems=m_table->selectedItems();
+        selectedItems=m_table->selectedItems();
 
     });
     
-    tableDialog->setLayout(layout); 
+    tableDialog->setLayout(layout);
     tableDialog->exec();
     
-   
+
 }
 
+/*!
+ * \fn MainWindow::on_pushButton_5_clicked
+ * \brief Function is executed when user clicks on top right corner user icon.
+ * \details If user is not logged in, login dialog prompts.
+ * \details Else logout dialog prompts.
+ * \details If the user clicks on 'sign out' button, user is signed out of the Udaan PE tool.
+ */
+void MainWindow::on_pushButton_5_clicked()
+{
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    settings.endGroup();
+    if(email.isEmpty()){
+        login();
+    }
+    else{
+        QDialog logout(this);
+        QFormLayout form(&logout);
+        form.addRow(new QLabel("You are signed in as\n"+email+"\n",this));
+        QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&logout);
+        buttonbox.button(QDialogButtonBox::Ok)->setText("Sign Out");
+        buttonbox.button(QDialogButtonBox::Cancel)->setText("Close");
+        form.addRow(&buttonbox);
+
+        QObject::connect(&buttonbox,SIGNAL(accepted()),&logout,SLOT(accept()));
+        QObject::connect(&buttonbox,SIGNAL(rejected()),&logout,SLOT(reject()));
+        if(logout.exec() ==QDialog::Accepted){
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            ui->actionLogout->setVisible(false);
+            ui->actionLogin->setVisible(true);
+            settings.beginGroup("loginConsent");
+            settings.remove("");
+            settings.endGroup();
+            settings.beginGroup("login");
+            settings.remove("");
+            settings.endGroup();
+            QMessageBox::information(0,"Logout","Logged out successfully :(");
+        }
+
+    }
+
+}
+
+void MainWindow::e_d_features(bool value)
+{
+    ui->actionSave->setEnabled(value);
+    ui->actionLoad_Prev_Page->setEnabled(value);
+    ui->actionLoad_Next_Page->setEnabled(value);
+    ui->actionClose_project->setEnabled(value);
+    ui->actionPDF_Preview->setEnabled(value);
+    ui->actionas_PDF->setEnabled(value);
+    ui->mainToolBar->setEnabled(value);
+    ui->pushButton->setEnabled(value);
+    ui->pushButton_2->setEnabled(value);
+    ui->pushButton_4->setEnabled(value);
+    ui->comboBox->setEnabled(value);
+    ui->pushButton_3->setEnabled(value);
+    ui->menuEdit->setEnabled(value);
+    ui->menuInsert->setEnabled(value);
+    ui->menuFormat->setEnabled(value);
+    ui->menuTool->setEnabled(value);
+    ui->menuGit->setEnabled(value);
+    ui->comboBox->setEnabled(value);
+}

@@ -376,10 +376,6 @@ private slots:
 
     void insertImageAction();
 
-    void on_actionLogin_triggered();
-
-    void on_actionLogout_triggered();
-
     void on_actionClone_Repository();
 
     void on_actionClose_project_triggered();
@@ -433,6 +429,8 @@ private slots:
     void on_actionEnter_manauly_triggered();
     void on_actionuse_grid_triggered();
 
+    void on_pushButton_5_clicked();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
@@ -449,6 +447,7 @@ public slots:
     void authenticate();
     void login();
     void createTable();
+    void e_d_features(bool value);
 
 private:
     bool mExitStatus = false;
