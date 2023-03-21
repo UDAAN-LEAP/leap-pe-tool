@@ -1122,17 +1122,10 @@ QMenu::item:selected{
      <addaction name="action2"/>
      <addaction name="action3"/>
     </widget>
-    <widget class="QMenu" name="menuImport_Project">
-     <property name="title">
-      <string>Import Project</string>
-     </property>
-     <addaction name="actionImport_and_Open"/>
-     <addaction name="actionImport"/>
-    </widget>
     <addaction name="actionNew_Project"/>
     <addaction name="actionOpen_Project"/>
     <addaction name="menuRecent_Project"/>
-    <addaction name="menuImport_Project"/>
+    <addaction name="actionImport_2"/>
     <addaction name="actionSave"/>
     <addaction name="actionLoad_Next_Page"/>
     <addaction name="actionLoad_Prev_Page"/>
@@ -2474,6 +2467,14 @@ background-color: #EEF0F2;
   <action name="actionIndentation_Options">
    <property name="text">
     <string>Indentation Options</string>
+    </property>
+    </action>
+  <action name="actionImport_2">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Import Project</string>
    </property>
   </action>
  </widget>

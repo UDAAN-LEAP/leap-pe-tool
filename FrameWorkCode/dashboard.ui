@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>586</width>
-    <height>535</height>
+    <width>589</width>
+    <height>574</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -98,6 +98,32 @@ margin-top:5px;</string>
      </layout>
     </widget>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="Import_Open_btn">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>530</y>
+     <width>131</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Import And Open</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Import_btn">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>530</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Import</string>
+   </property>
   </widget>
  </widget>
  <resources>

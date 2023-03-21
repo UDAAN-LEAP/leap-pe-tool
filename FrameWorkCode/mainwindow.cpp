@@ -8348,7 +8348,8 @@ void MainWindow::on_actionClone_Repository()
     }
     importHtml += "</table>";
     QString p_str = "";
-    dashboard d(this, importHtml, repos.size(), repoMap, &p_str);
+    bool open = false;
+    dashboard d(this, importHtml, repos.size(), repoMap, &p_str, &open);
     d.exec();
     import_flag = true;
     ProjFile = p_str;
@@ -8356,6 +8357,10 @@ void MainWindow::on_actionClone_Repository()
     //    if(!mProject.isProjectOpen()){
 
     //    }
+    if(open == true){
+        on_actionOpen_Project_triggered();
+    }
+
 }
 
 
@@ -9495,4 +9500,11 @@ void MainWindow::e_d_features(bool value)
     ui->menuTool->setEnabled(value);
     ui->menuGit->setEnabled(value);
     ui->comboBox->setEnabled(value);
+}
+
+
+void MainWindow::on_actionImport_2_triggered()
+{
+    on_actionClone_Repository();
+    import_flag = false;
 }
