@@ -3103,17 +3103,11 @@ void MainWindow::on_actionInsert_Tab_Space_triggered()
  */
 
 void MainWindow::createTable(){
-    
-
     if (selectedItems.isEmpty()) {
 
-        QMessageBox::information(0,"Table Dialog", "Please select at least one cell.");
-
+        QMessageBox::information(0,"Insert Table", "Please select at least one cell.");
         return;
-
     }
-
-
     QSet<int>selectedRows;
     QSet<int>selectedColumns;
     int rw,col;
@@ -3136,6 +3130,7 @@ void MainWindow::createTable(){
     cursor.insertTable(rows,columns,tf);
 
     tableDialog->close();
+    selectedItems.clear();
 }
 /*!
  * \fn MainWindow::on_actionInsert_Columnleft_triggered
@@ -3915,6 +3910,51 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
                 curr_browser->setStyleSheet("CustomTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}");
             }
+        }
+    }
+    if(event->type() == QEvent::MouseButtonDblClick && !selectedItems.isEmpty()){
+        createTable();
+        selectedItems.clear();
+    }
+    if(event->type() == QEvent::MouseMove && !selectedItems.isEmpty()){
+        QSet<int>selectedRows;
+        QSet<int>selectedColumns;
+        int rw,col;
+        foreach(QTableWidgetItem *items,selectedItems){
+            rw=items->row();
+            col=items->column();
+            selectedRows.insert(rw);
+            selectedColumns.insert(col);
+        }
+        int rows,columns;
+        rows=selectedRows.size();
+        columns=selectedColumns.size();
+        if(rows==m_table->rowCount()-1){
+            QTableWidgetItem *itm;
+            m_table->insertRow(m_table->rowCount());
+            for(int i=m_table->rowCount()-1;i<m_table->rowCount();i++){
+                for(int j=0;j<m_table->columnCount();j++){
+                    itm = new QTableWidgetItem();
+                    itm->setData(Qt::DisplayRole,QString("."));
+                    itm->setForeground(QBrush(QColor(255,255,255)));
+                    m_table->setItem(i,j,itm);
+                }
+            }
+            tableDialog->resize(tableDialog->size()+QSize(0,35));
+        }
+        if(columns == m_table->columnCount()-1){
+            QTableWidgetItem *itm;
+            m_table->insertColumn(m_table->columnCount());
+            m_table->setColumnWidth(m_table->columnCount()-1,1);
+            for(int i=0;i<m_table->rowCount();i++){
+                for(int j=m_table->columnCount()-1;j<m_table->columnCount();j++){
+                    itm = new QTableWidgetItem();
+                    itm->setData(Qt::DisplayRole,QString("."));
+                    itm->setForeground(QBrush(QColor(255,255,255)));
+                    m_table->setItem(i,j,itm);
+                }
+            }
+            tableDialog->resize(tableDialog->size()+QSize(55,0));
         }
     }
 
@@ -9349,11 +9389,11 @@ void MainWindow::on_actionEnter_manauly_triggered()
 
     QDialog dialog(this);
     QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
-    form.addRow(new QLabel("Insert Table", this));                                  // Create a dialog for asking table dimensions
+    form.addRow(new QLabel("Enter number of rows & columns", this));                                  // Create a dialog for asking table dimensions
 
     //! Add the lineEdits with their respective labels
-    QLineEdit *rows = new QLineEdit(&dialog);
-    QLineEdit *columns = new QLineEdit(&dialog);                                    // Add lineEdits to get Rows
+    QSpinBox *rows = new QSpinBox(&dialog);
+    QSpinBox *columns = new QSpinBox(&dialog);                                    // Add lineEdits to get Rows
     form.addRow("Rows", rows);                                                      // Add lineEdits to get Columns
     form.addRow("Columns", columns);
 
@@ -9375,60 +9415,7 @@ void MainWindow::on_actionEnter_manauly_triggered()
         QTextCursor cursor = curr_browser->textCursor();
         cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
     }
-
-}
-void MainWindow::on_actionuse_grid_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
-        return;
-
-    tableDialog=new QDialog();
-    setWindowTitle("Table Dialog");
-
-
-    QVBoxLayout *layout = new QVBoxLayout(tableDialog);
-
-
-    QLabel *label = new QLabel("Please select the cells you want to use for the table:");
-
-    layout->addWidget(label);
-
-
-    m_table = new QTableWidget(20,20,this);
-
-
-    m_table->setSelectionMode(QAbstractItemView::MultiSelection);
-
-    layout->addWidget(m_table);
-
-
-    QPushButton *button = new QPushButton("Create Table",this);
-    
-
-    QObject::connect(button, &QPushButton::clicked, this, &MainWindow::createTable);
-
-    layout->addWidget(button);
-    QTableWidgetItem *itm;
-    for(int i=0;i<20;i++){
-        for(int j=0;j<20;j++){
-            itm = new QTableWidgetItem();
-            itm->setData(Qt::DisplayRole,QString("."));
-            itm->setForeground(QBrush(QColor(255,255,255)));
-            m_table->setItem(i,j,itm);
-
-        }
-    }
-    
-    
-    QObject::connect(m_table,&QTableWidget::itemSelectionChanged,this,[=](){
-        selectedItems=m_table->selectedItems();
-
-    });
-    
-    tableDialog->setLayout(layout);
-    tableDialog->exec();
-    
-
+    tableDialog->close();
 }
 
 /*!
@@ -9495,4 +9482,46 @@ void MainWindow::e_d_features(bool value)
     ui->menuTool->setEnabled(value);
     ui->menuGit->setEnabled(value);
     ui->comboBox->setEnabled(value);
+    ui->zoom_In_Button->setEnabled(value);
+    ui->zoom_Out_Button->setEnabled(value);
+    ui->horizontalSlider->setEnabled(value);
 }
+
+void MainWindow::on_actionTable_2_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    tableDialog=new QDialog();
+    tableDialog->setWindowTitle("Insert Table");
+    QVBoxLayout *layout = new QVBoxLayout(tableDialog);
+    QLabel *label = new QLabel("Use mouse to select cells\nDouble click to insert table.");
+    layout->addWidget(label);
+    m_table = new QTableWidget(5, 5,this);
+    m_table->setSelectionMode(QAbstractItemView::MultiSelection);
+    layout->addWidget(m_table);
+    QPushButton *button = new QPushButton("Insert table manually...");
+    button->setStyleSheet("border: 1px solid #efefef;text-align:left; margin-top: 10px;");
+    QObject::connect(button, &QPushButton::clicked, this, &MainWindow::on_actionEnter_manauly_triggered);
+
+    layout->addWidget(button);
+    QTableWidgetItem *itm;
+    for(int i=0;i<5;i++){
+        for(int j=0;j<5;j++){
+            itm = new QTableWidgetItem();
+            itm->setData(Qt::DisplayRole,QString("."));
+            itm->setForeground(QBrush(QColor(255,255,255)));
+            m_table->setItem(i,j,itm);
+            m_table->setColumnWidth(i,1);
+        }
+    }
+
+    QObject::connect(m_table,&QTableWidget::itemSelectionChanged,this,[=](){
+        selectedItems=m_table->selectedItems();
+    });
+
+    tableDialog->setLayout(layout);
+    tableDialog->setSizeGripEnabled(true);
+    tableDialog->resize(QSize(320,280));
+    tableDialog->exec();
+}
+
