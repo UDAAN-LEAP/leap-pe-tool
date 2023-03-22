@@ -463,6 +463,10 @@ private slots:
 
     void on_actionTitle_Case_triggered();
 
+    void on_actionDelete_Table_triggered();
+
+    void on_actionClear_Formatting_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

@@ -9571,7 +9571,10 @@ void MainWindow::on_actionSelect_All_triggered()
 
 void MainWindow::on_actionDelete_triggered()
 {
-    curr_browser->clear();
+    QTextCursor cursor = curr_browser->textCursor();
+    if(cursor.hasSelection()) {
+        cursor.removeSelectedText();
+    }
 }
 
 
@@ -9594,7 +9597,7 @@ void MainWindow::on_actionLink_triggered()
     QLineEdit *link = new QLineEdit(&dialog);
     QLineEdit *text = new QLineEdit(&dialog);
     form.addRow("Link", link);
-    form.addRow("Columns", text);
+    form.addRow("Text", text);
 
     //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
@@ -9664,3 +9667,32 @@ void MainWindow::on_actionTitle_Case_triggered()
     curr_browser->mergeCurrentCharFormat(fmt);
 }
 
+
+void MainWindow::on_actionDelete_Table_triggered()
+{
+    // Buggy, yet to be fixed
+    QTextDocument *doc = curr_browser->document();
+    QTextCursor cursor = curr_browser->textCursor();
+    if(!cursor.hasSelection()) {
+        return;
+    }
+    int start = cursor.selectionStart();
+    int end = cursor.selectionEnd();
+    QString html = doc->toHtml().mid(start, end - start);
+    QRegExp tableRegex("<table\\b[^>]*>(.*?)</table>");
+    int pos = 0;
+    while((pos = tableRegex.indexIn(html, pos)) != -1) {
+        html.remove(pos, tableRegex.matchedLength());
+        pos += tableRegex.matchedLength();
+    }
+    cursor.beginEditBlock();
+    cursor.removeSelectedText();
+    cursor.insertHtml(html);
+    cursor.endEditBlock();
+}
+
+void MainWindow::on_actionClear_Formatting_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.setCharFormat(QTextCharFormat());
+}
