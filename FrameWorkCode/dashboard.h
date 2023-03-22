@@ -36,8 +36,10 @@ private:
     QString *p;
     QMap<int,int> presentId;
     QMap<int,QPushButton*>btnMap;
-    int selectedBooks = 0;
+    int selectedBooks = -1;
+    int totalClickedBooks = 0;
     bool* toOpen;
+
 };
 
 #endif // DASHBOARD_H

@@ -427,11 +427,15 @@ private slots:
     void on_actionImport_triggered();
 
     void on_actionEnter_manauly_triggered();
-    void on_actionuse_grid_triggered();
-    void on_pushButton_5_clicked();
+
+
 
     void on_actionImport_2_triggered();
 
+
+    void on_pushButton_5_clicked();
+
+    void on_actionTable_2_triggered();
 
 public slots:
     void on_actionLoad_Next_Page_triggered();

@@ -102,7 +102,7 @@ margin-top:5px;</string>
   <widget class="QPushButton" name="Import_Open_btn">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>350</x>
      <y>530</y>
      <width>131</width>
      <height>31</height>
