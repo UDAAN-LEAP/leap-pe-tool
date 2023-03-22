@@ -9525,3 +9525,68 @@ void MainWindow::on_actionTable_2_triggered()
     tableDialog->exec();
 }
 
+
+void MainWindow::on_actionCut_triggered()
+{
+    curr_browser->cut();
+}
+
+void MainWindow::on_actionCopy_triggered()
+{
+    curr_browser->copy();
+}
+
+
+void MainWindow::on_actionPaste_triggered()
+{
+    curr_browser->paste();
+}
+
+
+void MainWindow::on_actionSelect_All_triggered()
+{
+    curr_browser->selectAll();
+}
+
+
+void MainWindow::on_actionDelete_triggered()
+{
+    curr_browser->clear();
+}
+
+
+void MainWindow::on_actionDate_triggered()
+{
+    QDate date = QDate::currentDate();
+    QString currentDate = date.toString("dd.MM.yyyy");
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.insertText(currentDate);
+}
+
+
+void MainWindow::on_actionLink_triggered()
+{
+    QDialog dialog(this);
+    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+    form.addRow(new QLabel("Enter the link and the placeholder", this));
+
+    //! Add the lineEdits with their respective labels
+    QLineEdit *link = new QLineEdit(&dialog);
+    QLineEdit *text = new QLineEdit(&dialog);
+    form.addRow("Link", link);
+    form.addRow("Columns", text);
+
+    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    //! Show the dialog as modal
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertHtml("<a href=\"" + link->text() + "\">" + text->text() + "</a>");
+    }
+}
+

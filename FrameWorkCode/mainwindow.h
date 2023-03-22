@@ -432,6 +432,20 @@ private slots:
 
     void on_actionTable_2_triggered();
 
+    void on_actionCut_triggered();
+
+    void on_actionCopy_triggered();
+
+    void on_actionPaste_triggered();
+
+    void on_actionSelect_All_triggered();
+
+    void on_actionDelete_triggered();
+
+    void on_actionDate_triggered();
+
+    void on_actionLink_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
