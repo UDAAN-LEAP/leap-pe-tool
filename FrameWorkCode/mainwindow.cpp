@@ -3287,7 +3287,7 @@ void MainWindow::on_actionFetch_2_triggered()
             break;
         }
     }
-    QFile::remove("validate.json");
+  //  QFile::remove("validate.json");
     if(repos.size() == 0 || flag == 0){
         QMessageBox msg;
         msg.setText("You don't have access to this project on cloud.");
@@ -8356,16 +8356,23 @@ void MainWindow::on_actionClone_Repository()
         msg.exec();
         return;
     }
+
     //
     //retrieve details from database and check if user has access to push into this repo
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
     QString token = settings.value("token").toString();
     settings.endGroup();
+
     QProcess process;
     process.execute("curl -d -X -k -POST --header "
                     "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
 
+    QFile jsonFile("validate.json");
+    if(!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+    QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Try switching your network or contact your administrator.");
+        return;
+    }
     QJsonObject mainObj = readJsonFile("validate.json");
     QJsonArray repos = mainObj.value("repo_list").toArray();
     QFile::remove("validate.json");
@@ -8899,7 +8906,11 @@ bool MainWindow::check_access()
     QProcess process;
     process.execute("curl -d -X -k -POST --header "
                     "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
-
+    QFile jsonFile("validate.json");
+    if(!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Try switching your network or contact your administrator.");
+        return false;
+    }
     //to find the repo name from .git/congig file
     QString repo = "";
     QString gDir = gDirTwoLevelUp+"/.git/config";
