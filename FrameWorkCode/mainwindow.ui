@@ -1178,6 +1178,14 @@ QMenu::item:selected{
       <addaction name="actionIncrease_size"/>
       <addaction name="actionDecrease_Size"/>
      </widget>
+     <widget class="QMenu" name="menuCapitalisation">
+      <property name="title">
+       <string>Capitalisation</string>
+      </property>
+      <addaction name="actionlower_case"/>
+      <addaction name="actionUPPER_CASE"/>
+      <addaction name="actionTitle_Case"/>
+     </widget>
      <addaction name="actionBold"/>
      <addaction name="actionItalic"/>
      <addaction name="actionUnderline_2"/>
@@ -1185,7 +1193,7 @@ QMenu::item:selected{
      <addaction name="actionSubscript"/>
      <addaction name="separator"/>
      <addaction name="menuSize"/>
-     <addaction name="actionCapitalisation"/>
+     <addaction name="menuCapitalisation"/>
     </widget>
     <widget class="QMenu" name="menuTable">
      <property name="title">
@@ -2437,13 +2445,15 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionUnderline_2">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/underline 1.png</normaloff>:/Images/Resources/underline 1.png</iconset>
+   </property>
    <property name="text">
     <string>Underline</string>
    </property>
-  </action>
-  <action name="actionCapitalisation">
-   <property name="text">
-    <string>Capitalisation</string>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
    </property>
   </action>
   <action name="actionIncrease_size">
@@ -2474,6 +2484,21 @@ background-color: #EEF0F2;
   <action name="actionIndentation_Options">
    <property name="text">
     <string>Indentation Options</string>
+   </property>
+  </action>
+  <action name="actionlower_case">
+   <property name="text">
+    <string>lower case</string>
+   </property>
+  </action>
+  <action name="actionUPPER_CASE">
+   <property name="text">
+    <string>UPPER CASE</string>
+   </property>
+  </action>
+  <action name="actionTitle_Case">
+   <property name="text">
+    <string>Title Case</string>
    </property>
   </action>
  </widget>

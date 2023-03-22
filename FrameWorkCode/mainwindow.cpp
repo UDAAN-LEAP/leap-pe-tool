@@ -9601,3 +9601,57 @@ void MainWindow::on_actionLink_triggered()
     }
 }
 
+
+void MainWindow::on_actionUnderline_2_triggered()
+{
+    on_actionUnderline_triggered();
+}
+
+
+void MainWindow::on_actionIncrease_size_triggered()
+{
+    on_actionZoom_In_triggered();
+}
+
+
+void MainWindow::on_actionDecrease_Size_triggered()
+{
+    on_actionZoom_Out_triggered();
+}
+
+
+void MainWindow::on_actionlower_case_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextCharFormat fmt;
+    fmt.setFontCapitalization(QFont::AllLowercase);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
+}
+
+
+void MainWindow::on_actionUPPER_CASE_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextCharFormat fmt;
+    fmt.setFontCapitalization(QFont::AllUppercase);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
+}
+
+
+void MainWindow::on_actionTitle_Case_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextCharFormat fmt;
+    fmt.setFontCapitalization(QFont::Capitalize);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
+}
+

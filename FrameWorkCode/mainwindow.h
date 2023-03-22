@@ -446,6 +446,18 @@ private slots:
 
     void on_actionLink_triggered();
 
+    void on_actionUnderline_2_triggered();
+
+    void on_actionIncrease_size_triggered();
+
+    void on_actionDecrease_Size_triggered();
+
+    void on_actionlower_case_triggered();
+
+    void on_actionUPPER_CASE_triggered();
+
+    void on_actionTitle_Case_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
