@@ -3287,7 +3287,7 @@ void MainWindow::on_actionFetch_2_triggered()
             break;
         }
     }
-    QFile::remove("validate.json");
+  //  QFile::remove("validate.json");
     if(repos.size() == 0 || flag == 0){
         QMessageBox msg;
         msg.setText("You don't have access to this project on cloud.");
@@ -8356,16 +8356,23 @@ void MainWindow::on_actionClone_Repository()
         msg.exec();
         return;
     }
+
     //
     //retrieve details from database and check if user has access to push into this repo
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
     QString token = settings.value("token").toString();
     settings.endGroup();
+
     QProcess process;
     process.execute("curl -d -X -k -POST --header "
                     "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
 
+    QFile jsonFile("validate.json");
+    if(!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+    QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Try switching your network or contact your administrator.");
+        return;
+    }
     QJsonObject mainObj = readJsonFile("validate.json");
     QJsonArray repos = mainObj.value("repo_list").toArray();
     QFile::remove("validate.json");
@@ -8901,7 +8908,11 @@ bool MainWindow::check_access()
     QProcess process;
     process.execute("curl -d -X -k -POST --header "
                     "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
-
+    QFile jsonFile("validate.json");
+    if(!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Try switching your network or contact your administrator.");
+        return false;
+    }
     //to find the repo name from .git/congig file
     QString repo = "";
     QString gDir = gDirTwoLevelUp+"/.git/config";
@@ -9534,3 +9545,122 @@ void MainWindow::on_actionTable_2_triggered()
     tableDialog->resize(QSize(320,280));
     tableDialog->exec();
 }
+
+void MainWindow::on_actionCut_triggered()
+{
+    curr_browser->cut();
+}
+
+void MainWindow::on_actionCopy_triggered()
+{
+    curr_browser->copy();
+}
+
+
+void MainWindow::on_actionPaste_triggered()
+{
+    curr_browser->paste();
+}
+
+
+void MainWindow::on_actionSelect_All_triggered()
+{
+    curr_browser->selectAll();
+}
+
+
+void MainWindow::on_actionDelete_triggered()
+{
+    curr_browser->clear();
+}
+
+
+void MainWindow::on_actionDate_triggered()
+{
+    QDate date = QDate::currentDate();
+    QString currentDate = date.toString("dd.MM.yyyy");
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.insertText(currentDate);
+}
+
+
+void MainWindow::on_actionLink_triggered()
+{
+    QDialog dialog(this);
+    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+    form.addRow(new QLabel("Enter the link and the placeholder", this));
+
+    //! Add the lineEdits with their respective labels
+    QLineEdit *link = new QLineEdit(&dialog);
+    QLineEdit *text = new QLineEdit(&dialog);
+    form.addRow("Link", link);
+    form.addRow("Columns", text);
+
+    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    //! Show the dialog as modal
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertHtml("<a href=\"" + link->text() + "\">" + text->text() + "</a>");
+    }
+}
+
+
+void MainWindow::on_actionUnderline_2_triggered()
+{
+    on_actionUnderline_triggered();
+}
+
+
+void MainWindow::on_actionIncrease_size_triggered()
+{
+    on_actionZoom_In_triggered();
+}
+
+
+void MainWindow::on_actionDecrease_Size_triggered()
+{
+    on_actionZoom_Out_triggered();
+}
+
+
+void MainWindow::on_actionlower_case_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextCharFormat fmt;
+    fmt.setFontCapitalization(QFont::AllLowercase);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
+}
+
+
+void MainWindow::on_actionUPPER_CASE_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextCharFormat fmt;
+    fmt.setFontCapitalization(QFont::AllUppercase);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
+}
+
+
+void MainWindow::on_actionTitle_Case_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextCharFormat fmt;
+    fmt.setFontCapitalization(QFont::Capitalize);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
+}
+

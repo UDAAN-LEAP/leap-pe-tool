@@ -437,6 +437,32 @@ private slots:
 
     void on_actionTable_2_triggered();
 
+    void on_actionCut_triggered();
+
+    void on_actionCopy_triggered();
+
+    void on_actionPaste_triggered();
+
+    void on_actionSelect_All_triggered();
+
+    void on_actionDelete_triggered();
+
+    void on_actionDate_triggered();
+
+    void on_actionLink_triggered();
+
+    void on_actionUnderline_2_triggered();
+
+    void on_actionIncrease_size_triggered();
+
+    void on_actionDecrease_Size_triggered();
+
+    void on_actionlower_case_triggered();
+
+    void on_actionUPPER_CASE_triggered();
+
+    void on_actionTitle_Case_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
