@@ -84,6 +84,7 @@
 #include <QFileDialog>
 #include <QMediaRecorder>
 #include <QStandardPaths>
+#include <about.h>
 
 map<string, string> LSTM;
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -9692,5 +9693,12 @@ void MainWindow::on_actionClear_Formatting_triggered()
 void MainWindow::on_actionImage_triggered()
 {
     insertImageAction();
+}
+
+
+void MainWindow::on_actionAbout_Udaan_PE_triggered()
+{
+    about ab;
+    ab.exec();
 }
 

@@ -469,6 +469,8 @@ private slots:
 
     void on_actionImage_triggered();
 
+    void on_actionAbout_Udaan_PE_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

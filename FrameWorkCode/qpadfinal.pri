@@ -3,6 +3,7 @@
 # ------------------------------------------------------
 
 HEADERS += ./Filters.h \
+    $$PWD/about.h \
     $$PWD/crashlog.h \
     $$PWD/customtextbrowser.h \
     $$PWD/dashboard.h \
@@ -53,6 +54,7 @@ HEADERS += ./Filters.h \
     $$PWD/globalreplacepreview.h \
     $$PWD/globalreplaceinformation.h
 SOURCES += ./DiffView.cpp \
+    $$PWD/about.cpp \
     $$PWD/crashlog.cpp \
     $$PWD/customtextbrowser.cpp \
     $$PWD/dashboard.cpp \
@@ -100,6 +102,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/globalreplacepreview.cpp \
     $$PWD/globalreplaceinformation.cpp
 FORMS += ./DiffView.ui \
+    $$PWD/about.ui \
     $$PWD/dashboard.ui \
     $$PWD/equationeditor.ui \
     $$PWD/loadingspinner.ui \
