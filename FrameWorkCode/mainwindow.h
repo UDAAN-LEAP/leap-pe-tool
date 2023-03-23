@@ -467,6 +467,8 @@ private slots:
 
     void on_actionClear_Formatting_triggered();
 
+    void on_actionImage_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

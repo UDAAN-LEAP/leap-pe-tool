@@ -1606,6 +1606,8 @@ void MainWindow::SaveFile_GUI_Postprocessing()
                 int lindex = img_.find("png");
                 string str = img_.substr(ind, lindex-ind);
                 QString path = QString::fromStdString(str) + "tex";
+                QStringList imgpath = path.split("/");
+                path = "../"+imgpath[imgpath.size()-2]+"/"+imgpath[imgpath.size()-1];
                 QFile f(path);
                 if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
                     qDebug() << "Cannot open file"<<f;
@@ -8221,48 +8223,38 @@ void MainWindow::insertImageAction()
     imgFileName = imgFileInfo.fileName();
     QString imgFilePath = imgFileInfo.filePath();
 
-    QString copiedImgFilePath(gDirTwoLevelUp + "/Inserted_Images/"+imgFileName);
-    if(!QDir(gDirTwoLevelUp + "/Inserted_Images").exists())
-        QDir().mkdir(gDirTwoLevelUp + "/Inserted_Images");
+    QString copiedImgFilePath("../Inserted_Images/"+imgFileName);
+    if(!QDir("../Inserted_Images").exists())
+        QDir().mkdir("../Inserted_Images");
     QFile::copy(imgFilePath,copiedImgFilePath);
     qDebug()<<imgFilePath<<"\n"<<copiedImgFilePath;
-    int height =0;
-    int width = 0;
-    QDialog dialog(this);
-    QFormLayout form(&dialog);
+//    int height =0;
+//    int width = 0;
+//    QDialog dialog(this);
+//    QFormLayout form(&dialog);
 
-    form.addRow(new QLabel("Insert Height and Width",this));
+//    form.addRow(new QLabel("Insert Height and Width",this));
 
-    QLineEdit *height_textLine= new QLineEdit(&dialog);
-    QLineEdit *width_textLine= new QLineEdit(&dialog);
+//    QLineEdit *height_textLine= new QLineEdit(&dialog);
+//    QLineEdit *width_textLine= new QLineEdit(&dialog);
 
-    form.addRow("Height",height_textLine);
-    form.addRow("Width",width_textLine);
+//    form.addRow("Height",height_textLine);
+//    form.addRow("Width",width_textLine);
 
-    QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
-    form.addRow(&buttonbox);
+//    QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
+//    form.addRow(&buttonbox);
 
-    QObject::connect(&buttonbox,SIGNAL(accepted()),&dialog,SLOT(accept()));
-    QObject::connect(&buttonbox,SIGNAL(rejected()),&dialog,SLOT(reject()));
+//    QObject::connect(&buttonbox,SIGNAL(accepted()),&dialog,SLOT(accept()));
+//    QObject::connect(&buttonbox,SIGNAL(rejected()),&dialog,SLOT(reject()));
 
-    if(dialog.exec() ==QDialog::Accepted){
-        height=height_textLine->text().toInt();
-        width=width_textLine->text().toInt();
-    }
+//    if(dialog.exec() ==QDialog::Accepted){
+//        height=height_textLine->text().toInt();
+//        width=width_textLine->text().toInt();
+//    }
 
-
-
-    //setting width
-    //    int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
-    //    //!setting height
-    //    int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
-
-
-
-    QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(copiedImgFilePath).arg(width).arg(height);
+    QString html = QString("\n <img src='%1'>").arg(copiedImgFilePath);
     auto cursor = curr_browser->textCursor();
     cursor.insertHtml(html);
-
 }
 
 
@@ -8827,7 +8819,7 @@ void MainWindow::on_actionTwo_Column_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
     if(!cursor.hasSelection())
-    {;
+    {
         QString column1 = curr_browser->toHtml();
         curr_browser->clear();
         QString html = "<table cellspacing=\"0\"><tr><td style=\"padding-right:15; border-right:2px; border-right-color:#000000; border-right-style:solid;\" >"+column1+"</td><td style=\"padding-left:15;\">Paste Column 2 data here</td></tr></table>";
@@ -9696,3 +9688,9 @@ void MainWindow::on_actionClear_Formatting_triggered()
     QTextCursor cursor = curr_browser->textCursor();
     cursor.setCharFormat(QTextCharFormat());
 }
+
+void MainWindow::on_actionImage_triggered()
+{
+    insertImageAction();
+}
+

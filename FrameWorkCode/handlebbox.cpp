@@ -457,6 +457,7 @@ QString HandleBbox::latex2png(QString inputText)
 
                 std::string str = inputText_.substr(ind,lindex-ind);
                 QString path = QString::fromStdString(str) + ".png";
+                path = ".."+path;
                 QString html = "<img src=\""+path+"\">";
                 text = "<a"+text+"</a>";
                 inputText.replace(text,html);

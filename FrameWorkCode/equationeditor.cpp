@@ -411,12 +411,12 @@ void equationeditor::enclosedMathBranButton(QString l, QString r){
  */
 void equationeditor::on_actionInsert_Equation_triggered()
 {
-    if(!QDir(gDirTwoLevelUp+"/Equations_").exists())
-            QDir().mkdir(gDirTwoLevelUp+"/Equations_");
+    if(!QDir("../Equations_").exists())
+            QDir().mkdir("../Equations_");
 
-    QDir dir(gDirTwoLevelUp+"/Equations_");
+    QDir dir("../Equations_");
     QString count = QString::number((dir.count()-1)/3 +1);
-    QString file_name = gDirTwoLevelUp+"/Equations_/"+count+".png";
+    QString file_name = "../Equations_/"+count+".png";
     typeset_edit.copyPng(2);
     QImage img = QGuiApplication::clipboard()->image();
     img.save(file_name);
@@ -424,7 +424,7 @@ void equationeditor::on_actionInsert_Equation_triggered()
     QString math_bran = typeset_edit.selectedMathBran();
     if(!math_bran.isEmpty()) QGuiApplication::clipboard()->setText(MathBran::toLatex(math_bran));
 //    QString cnt = QString::number((dir.count()-1)/2 +1);
-    QFile file(gDirTwoLevelUp+"/Equations_/"+count+".tex");
+    QFile file("../Equations_/"+count+".tex");
     file.open(QIODevice::WriteOnly);
     QTextStream in(&file);
     in.setCodec("UTF-8");
@@ -432,7 +432,7 @@ void equationeditor::on_actionInsert_Equation_triggered()
     file.flush();
     file.close();
     //Save Mathbran notation file which will be useful in editing equations
-    QFile f(gDirTwoLevelUp+"/Equations_/"+count+".txt");
+    QFile f("../Equations_/"+count+".txt");
 
     if(!f.open(QIODevice::WriteOnly | QIODevice::Text)){
         qDebug()<<"Can't open the file to save Mathbran notation!";
@@ -446,11 +446,10 @@ void equationeditor::on_actionInsert_Equation_triggered()
     f.close();
 
     //Insert equation png at cursor position
-    QString filename = gDirTwoLevelUp+"/Equations_/"+count+".png";
+    QString filename = "../Equations_/"+count+".png";
     QString html = "<img src=\""+filename+"\">";
     QTextCursor cursor = curr_browser->textCursor();
     cursor.insertHtml(html);
-
     equationeditor::close();
 }
 
