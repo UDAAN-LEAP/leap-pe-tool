@@ -471,6 +471,12 @@ private slots:
 
     void on_actionAbout_Udaan_PE_triggered();
 
+    void on_actionIncrease_Indent_triggered(int left = 0, int right = 0);
+
+    void on_actionDecrease_Indent_triggered();
+
+    void on_actionIndentation_Options_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

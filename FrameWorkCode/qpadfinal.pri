@@ -11,6 +11,7 @@ HEADERS += ./Filters.h \
     $$PWD/equationeditor.h \
     $$PWD/globalreplaceworker.h \
     $$PWD/handlebbox.h \
+    $$PWD/indentoptions.h \
     $$PWD/loaddataworker.h \
     $$PWD/loadingspinner.h \
     $$PWD/markRegion.h \
@@ -63,6 +64,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/equationeditor.cpp \
     $$PWD/globalreplaceworker.cpp \
     $$PWD/handlebbox.cpp \
+    $$PWD/indentoptions.cpp \
     $$PWD/loaddataworker.cpp \
     $$PWD/loadingspinner.cpp \
     $$PWD/markRegion.cpp \
@@ -105,6 +107,7 @@ FORMS += ./DiffView.ui \
     $$PWD/about.ui \
     $$PWD/dashboard.ui \
     $$PWD/equationeditor.ui \
+    $$PWD/indentoptions.ui \
     $$PWD/loadingspinner.ui \
     $$PWD/pdfrangedialog.ui \
     $$PWD/progressbardialog.ui \

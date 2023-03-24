@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "dashboard.h"
+#include "indentoptions.h"
 #include "qobjectdefs.h"
 #include "qtablewidget.h"
 #include "ui_mainwindow.h"
@@ -9660,7 +9661,6 @@ void MainWindow::on_actionTitle_Case_triggered()
     curr_browser->mergeCurrentCharFormat(fmt);
 }
 
-
 void MainWindow::on_actionDelete_Table_triggered()
 {
     // Buggy, yet to be fixed
@@ -9700,5 +9700,79 @@ void MainWindow::on_actionAbout_Udaan_PE_triggered()
 {
     about ab;
     ab.exec();
+}
+/*!
+ * \fn MainWindow::on_actionIncrease_Indent_triggered
+ * \brief Adding Indentation upto 14.65 {i.e. touched right margin} {in cm}
+*/
+void MainWindow::on_actionIncrease_Indent_triggered(int left, int right)
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QMargins margin = curr_browser->contentsMargins();
+    QTextCursor cursor = curr_browser->textCursor();
+
+    QTextBlock block = cursor.block();
+    QTextBlockFormat blockFormat = block.blockFormat();
+
+    int presentIndent = blockFormat.indent();
+
+
+    int indent = 1+presentIndent;
+
+    if(left != 0) indent = left;
+    if(indent > 14) return;
+
+    if(right == 0)blockFormat.setRightMargin(margin.right());
+    else blockFormat.setRightMargin(right);
+    blockFormat.setIndent(indent);
+
+//    qDebug()<<"Increase Indent ->"<<blockFormat.indent();
+
+    cursor.mergeBlockFormat(blockFormat);
+
+}
+
+/*!
+ * \fn MainWindow::on_actionDecrease_Indent_triggered
+ * \brief Removing Indentation upto 0 {i.e. touches Left margin} {in cm}
+*/
+void MainWindow::on_actionDecrease_Indent_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QMargins margin = curr_browser->contentsMargins();
+    QTextCursor cursor = curr_browser->textCursor();
+
+    QTextBlock block = cursor.block();
+    QTextBlockFormat blockFormat = block.blockFormat();
+
+    int presentIndent = blockFormat.indent();
+
+    int indent = presentIndent-1;
+
+    if(indent < 0) return;
+
+    blockFormat.setLeftMargin(margin.left());
+    blockFormat.setIndent(presentIndent - 1);
+
+//    qDebug()<<"Decrease Indent ->"<<blockFormat.indent();
+
+    cursor.mergeBlockFormat(blockFormat);
+}
+
+void MainWindow::on_actionIndentation_Options_triggered()
+{
+
+    int left = 0, right = 0;
+    indentOptions i(this,&left,&right);
+
+    i.exec();
+
+    if(left + right > 14){
+        return;
+    }
+
+    on_actionIncrease_Indent_triggered(left,right);
 }
 
