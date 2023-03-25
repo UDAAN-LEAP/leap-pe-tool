@@ -5,6 +5,7 @@
  */
 #include "shortcutguidedialog.h"
 #include "ui_shortcutguidedialog.h"
+#include"addkeyshortcut.h"
 
 
 /*!
@@ -19,7 +20,7 @@ ShortcutGuideDialog::ShortcutGuideDialog(QWidget *parent) :
     ui(new Ui::ShortcutGuideDialog)
 {
     ui->setupUi(this);
-    ui->textBrowser->setTextInteractionFlags(Qt::NoTextInteraction);
+    ui->textBrowser->setMarkdown(this->list);
 }
 
 /*!

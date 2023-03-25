@@ -29,12 +29,6 @@ RESOURCES += \
 
 CONFIG += c++11
 
-FORMS +=
-
-HEADERS +=
-
-SOURCES +=
-
 QMAKE_CXXFLAGS += -w
 
 # Windows icon
