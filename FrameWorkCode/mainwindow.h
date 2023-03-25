@@ -476,6 +476,13 @@ private slots:
     void on_actionDecrease_Indent_triggered();
 
     void on_actionIndentation_Options_triggered();
+    void on_actionSpecial_Characters_triggered();
+    void on_actionResize_Image_2_triggered();
+
+
+    void on_actionWord_Count_triggered();
+
+    void on_actionVoice_Typing_triggered();
 
 public slots:
     void on_actionLoad_Next_Page_triggered();
