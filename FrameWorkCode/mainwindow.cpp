@@ -9663,25 +9663,27 @@ void MainWindow::on_actionTitle_Case_triggered()
 
 void MainWindow::on_actionDelete_Table_triggered()
 {
-    // Buggy, yet to be fixed
-    QTextDocument *doc = curr_browser->document();
-    QTextCursor cursor = curr_browser->textCursor();
-    if(!cursor.hasSelection()) {
-        return;
+    QTextCursor cursor = curr_browser->textCursor(); // Get the text cursor of the QTextBrowser
+    if (cursor.hasSelection()) { // Check if there is a selection
+        QTextTable *table = cursor.currentTable(); // Get the current table that contains the selected text
+        if (table) { // Check if the selected text is inside a table
+            QTextTableFormat format = table->format();
+            int numRows = table->rows();
+            int numColumns = table->columns();
+            cursor.setPosition(table->firstPosition()); // Move the cursor to the beginning of the table
+            for (int row = 0; row < numRows; ++row) {
+                for (int column = 0; column < numColumns; ++column) {
+                    QTextTableCell cell = table->cellAt(row, column); // Get the cell at the current row and column
+                    cursor.setPosition(cell.firstCursorPosition(), QTextCursor::KeepAnchor); // Select the cell's content
+                    cursor.removeSelectedText(); // Remove the selected text
+                }
+            }
+            cursor.movePosition(QTextCursor::PreviousBlock); // Move the cursor to the previous block (i.e., outside the table)
+            cursor.deleteChar(); // Delete the table's last newline character
+        } else {
+            cursor.removeSelectedText(); // If the selected text is not inside a table, just remove it
+        }
     }
-    int start = cursor.selectionStart();
-    int end = cursor.selectionEnd();
-    QString html = doc->toHtml().mid(start, end - start);
-    QRegExp tableRegex("<table\\b[^>]*>(.*?)</table>");
-    int pos = 0;
-    while((pos = tableRegex.indexIn(html, pos)) != -1) {
-        html.remove(pos, tableRegex.matchedLength());
-        pos += tableRegex.matchedLength();
-    }
-    cursor.beginEditBlock();
-    cursor.removeSelectedText();
-    cursor.insertHtml(html);
-    cursor.endEditBlock();
 }
 
 void MainWindow::on_actionClear_Formatting_triggered()
