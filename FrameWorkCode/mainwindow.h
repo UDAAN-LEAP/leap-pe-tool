@@ -51,6 +51,7 @@
 #include "customtextbrowser.h"
 #include "handlebbox.h"
 #include <QMediaRecorder>
+#include <QCalendarWidget>
 
 using namespace std;
 class AudioLevel;
@@ -483,6 +484,8 @@ private slots:
     void on_actionWord_Count_triggered();
 
     void on_actionVoice_Typing_triggered();
+
+    void getDate(QDate date, QCalendarWidget *calendar);
 
 public slots:
     void on_actionLoad_Next_Page_triggered();

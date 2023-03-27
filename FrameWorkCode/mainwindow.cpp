@@ -86,6 +86,7 @@
 #include <QMediaRecorder>
 #include <QStandardPaths>
 #include <about.h>
+#include <QCalendarWidget>
 
 map<string, string> LSTM;
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -9574,10 +9575,21 @@ void MainWindow::on_actionDelete_triggered()
 
 void MainWindow::on_actionDate_triggered()
 {
-    QDate date = QDate::currentDate();
-    QString currentDate = date.toString("dd.MM.yyyy");
+    QDate date;
+    QCalendarWidget *calendar = new QCalendarWidget(this);
+    calendar->setGeometry(100, 100, 400, 400);
+    calendar->show();
+
+    connect(calendar, &QCalendarWidget::selectionChanged, this, [=](){
+        getDate(date, calendar);
+    });
+}
+
+void MainWindow::getDate(QDate date, QCalendarWidget *calendar) {
+    date = calendar->selectedDate();
     QTextCursor cursor = curr_browser->textCursor();
-    cursor.insertText(currentDate);
+    cursor.insertText(date.toString("dd/MMMM/yyyy"));
+    calendar->deleteLater();
 }
 
 
@@ -9674,7 +9686,7 @@ void MainWindow::on_actionDelete_Table_triggered()
             for (int row = 0; row < numRows; ++row) {
                 for (int column = 0; column < numColumns; ++column) {
                     QTextTableCell cell = table->cellAt(row, column); // Get the cell at the current row and column
-                    cursor.setPosition(cell.firstCursorPosition(), QTextCursor::KeepAnchor); // Select the cell's content
+                    cursor.setPosition(cell.firstCursorPosition().position(), QTextCursor::KeepAnchor); // Select the cell's content
                     cursor.removeSelectedText(); // Remove the selected text
                 }
             }
