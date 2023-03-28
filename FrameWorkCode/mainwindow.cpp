@@ -9675,25 +9675,16 @@ void MainWindow::on_actionTitle_Case_triggered()
 
 void MainWindow::on_actionDelete_Table_triggered()
 {
-    QTextCursor cursor = curr_browser->textCursor(); // Get the text cursor of the QTextBrowser
-    if (cursor.hasSelection()) { // Check if there is a selection
-        QTextTable *table = cursor.currentTable(); // Get the current table that contains the selected text
-        if (table) { // Check if the selected text is inside a table
-            QTextTableFormat format = table->format();
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    if(curr_browser->textCursor().currentTable())
+    {
+        QTextCursor cursor = curr_browser->textCursor();
+        if(cursor.currentTable() != nullptr) {
+            cursor.setPosition(cursor.currentTable()->cellAt(0, 0).firstCursorPosition().position());
+            QTextTable *table = cursor.currentTable();
             int numRows = table->rows();
-            int numColumns = table->columns();
-            cursor.setPosition(table->firstPosition()); // Move the cursor to the beginning of the table
-            for (int row = 0; row < numRows; ++row) {
-                for (int column = 0; column < numColumns; ++column) {
-                    QTextTableCell cell = table->cellAt(row, column); // Get the cell at the current row and column
-                    cursor.setPosition(cell.firstCursorPosition().position(), QTextCursor::KeepAnchor); // Select the cell's content
-                    cursor.removeSelectedText(); // Remove the selected text
-                }
-            }
-            cursor.movePosition(QTextCursor::PreviousBlock); // Move the cursor to the previous block (i.e., outside the table)
-            cursor.deleteChar(); // Delete the table's last newline character
-        } else {
-            cursor.removeSelectedText(); // If the selected text is not inside a table, just remove it
+            table->removeRows(0, numRows);
         }
     }
 }
