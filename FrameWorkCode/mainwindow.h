@@ -187,8 +187,6 @@ private slots:
 
     void on_actionFetch_2_triggered();
 
-    void on_actionVerifier_Turn_In_triggered();
-
     void directoryChanged(const QString &path);
 
     void on_actionAccuracyLog_triggered();
@@ -557,7 +555,6 @@ private:
     bool check();
     bool check_access();
     void cloud_save();
-    bool verifier_save();
     int saved = 0;
     void autoSave();
     void messageTimer();
