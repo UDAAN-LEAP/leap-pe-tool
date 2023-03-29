@@ -487,6 +487,10 @@ private slots:
 
     void getDate(QDate date, QCalendarWidget *calendar);
 
+    void on_actionTable_Border_Color_triggered();
+
+    void on_actionCell_Padding_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

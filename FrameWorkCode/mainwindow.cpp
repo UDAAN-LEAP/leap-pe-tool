@@ -9900,3 +9900,56 @@ void MainWindow::on_actionVoice_Typing_triggered()
     on_pushButton_4_clicked();
 }
 
+
+void MainWindow::on_actionTable_Border_Color_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    if(curr_browser->textCursor().currentTable()) {
+        QColor color = QColorDialog::getColor(Qt::black, this, tr("Select color"));
+        if(color.isValid()) {
+            QTextCursor cursor = curr_browser->textCursor();
+            QTextTable *table = cursor.currentTable();
+            QTextTableFormat format = table->format();
+            format.setBorderBrush(color);
+            table->setFormat(format);
+        }
+    }
+}
+
+
+void MainWindow::on_actionCell_Padding_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QDialog dialog(this);
+    QFormLayout form(&dialog);
+    form.addRow(new QLabel("Enter the amount of padding to be applied", this));
+
+    QSpinBox *inp = new QSpinBox(&dialog);
+    inp->setRange(0, 10);
+    form.addRow("Padding", inp);
+
+    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+    int padding;
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        padding = inp->value();
+        if(curr_browser->textCursor().currentTable())
+        {
+            QTextCursor cursor = curr_browser->textCursor();
+            if(cursor.currentTable() != nullptr) {
+                cursor.setPosition(cursor.currentTable()->cellAt(0, 0).firstCursorPosition().position());
+                QTextTable *table = cursor.currentTable();
+                QTextTableFormat format = table->format();
+                format.setCellPadding(padding);
+                table->setFormat(format);
+            }
+        }
+    }
+}
+
