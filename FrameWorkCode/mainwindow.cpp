@@ -12,6 +12,7 @@
 #include "QProgressBar"
 #include <QPrinter>
 #include <QPrintPreviewDialog>
+#include "contacts.h"
 #include "DiffView.h"
 #include <QtConcurrent/QtConcurrent>
 #include "diff_match_patch.h"
@@ -9892,5 +9893,21 @@ void MainWindow::on_actionWord_Count_triggered()
 void MainWindow::on_actionVoice_Typing_triggered()
 {
     on_pushButton_4_clicked();
+}
+
+
+void MainWindow::on_actionUdaan_Contact_Us_triggered()
+{
+    ContactUsDialog dialog;
+        dialog.setModal(true);
+        //    dialog.setWindowFlags(Qt::FramelessWindowHint);
+
+        QScreen *screen = QGuiApplication::primaryScreen();
+        QRect  screenGeometry = screen->geometry();
+        float height = screenGeometry.height()*0.3;
+        float width = screenGeometry.width()*0.4;
+
+        dialog.setFixedSize(width, height);
+        dialog.exec();
 }
 
