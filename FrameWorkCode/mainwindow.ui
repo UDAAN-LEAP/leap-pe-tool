@@ -1097,7 +1097,7 @@ QMenu::item:selected{
     <addaction name="actionAbout_Udaan_PE"/>
     <addaction name="separator"/>
     <addaction name="actionShare_Feedback"/>
-    <addaction name="actionContact_Us"/>
+    <addaction name="actionUdaan_Contact_Us"/>
    </widget>
    <widget class="QMenu" name="menuOCR_Correction_Window">
     <property name="styleSheet">
@@ -2422,7 +2422,7 @@ background-color: #EEF0F2;
     <string>Keyboard Shortcuts</string>
    </property>
   </action>
-  <action name="actionContact_Us">
+  <action name="actionUdaan_Contact_Us">
    <property name="text">
     <string>Contact Us</string>
    </property>
@@ -2477,8 +2477,8 @@ background-color: #EEF0F2;
   <action name="actionIndentation_Options">
    <property name="text">
     <string>Indentation Options</string>
-    </property>
-    </action>
+   </property>
+  </action>
   <action name="actionImport_2">
    <property name="checkable">
     <bool>false</bool>

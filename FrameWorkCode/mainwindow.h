@@ -187,8 +187,6 @@ private slots:
 
     void on_actionFetch_2_triggered();
 
-    void on_actionVerifier_Turn_In_triggered();
-
     void directoryChanged(const QString &path);
 
     void on_actionAccuracyLog_triggered();
@@ -487,9 +485,13 @@ private slots:
 
     void getDate(QDate date, QCalendarWidget *calendar);
 
+<<<<<<< HEAD
     void on_actionTable_Border_Color_triggered();
 
     void on_actionCell_Padding_triggered();
+=======
+    void on_actionUdaan_Contact_Us_triggered();
+>>>>>>> acabc7196c9016ff638eb113e0fc79177994ac4b
 
 public slots:
     void on_actionLoad_Next_Page_triggered();
@@ -561,7 +563,6 @@ private:
     bool check();
     bool check_access();
     void cloud_save();
-    bool verifier_save();
     int saved = 0;
     void autoSave();
     void messageTimer();

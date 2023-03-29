@@ -4,6 +4,7 @@
 
 HEADERS += ./Filters.h \
     $$PWD/about.h \
+    $$PWD/contacts.h \
     $$PWD/crashlog.h \
     $$PWD/customtextbrowser.h \
     $$PWD/dashboard.h \
@@ -56,6 +57,7 @@ HEADERS += ./Filters.h \
     $$PWD/globalreplaceinformation.h
 SOURCES += ./DiffView.cpp \
     $$PWD/about.cpp \
+    $$PWD/contacts.cpp \
     $$PWD/crashlog.cpp \
     $$PWD/customtextbrowser.cpp \
     $$PWD/dashboard.cpp \

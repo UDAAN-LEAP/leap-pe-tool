@@ -12,6 +12,7 @@
 #include "QProgressBar"
 #include <QPrinter>
 #include <QPrintPreviewDialog>
+#include "contacts.h"
 #include "DiffView.h"
 #include <QtConcurrent/QtConcurrent>
 #include "diff_match_patch.h"
@@ -415,10 +416,7 @@ bool MainWindow::setRole(QString role)
                              {"VerifierOutput","VerifierOutput" }
                            };
         isVerifier = 1;
-        ui->actionTurn_In->setVisible(false);      //set false to its visibility; now shown
-        ui->actionTurn_In->setEnabled(false);      //disable the option
-
-        this->setWindowTitle("Udaan Editing Tool-Verifier");
+        this->setWindowTitle("Udaan PE Tool-Verifier");
 
     }
     else if(mRole == "Corrector")
@@ -432,14 +430,11 @@ bool MainWindow::setRole(QString role)
         ui->compareVerifierOutput->setVisible(false);
         ui->compareVerifierOutput->setEnabled(false);
 
-        ui->actionVerifier_Turn_In->setVisible(false);
-        ui->actionVerifier_Turn_In->setEnabled(false);
-
         ui->viewComments->setVisible(false);
         ui->viewComments->setEnabled(false);
 
         isVerifier = 0;
-        this->setWindowTitle("Udaan Editing Tool-Corrector");
+        this->setWindowTitle("Udaan PE Tool-Corrector");
     }
     else
     {
@@ -3425,296 +3420,296 @@ void MainWindow::on_actionTurn_In_triggered()
  * \note This function turn-in files for verifiers not correctors.
  * \sa checkUnsavedWork(), saveAllWork(), get_version(), get_stage(), readJsonFile(), writeJsonFile(),set_stage_verifier() and enable_push.
  */
-void MainWindow::on_actionVerifier_Turn_In_triggered()
-{
-    if (checkUnsavedWork())
-    {
-        QMessageBox checkUnsavedBox2;
-        checkUnsavedBox2.setWindowTitle("Unsaved Work");
-        checkUnsavedBox2.setIcon(QMessageBox::Question);
-        checkUnsavedBox2.setInformativeText("You have unsaved files. Save it before turn-in.\n");
-        QPushButton *cancelButton2 = checkUnsavedBox2.addButton(QMessageBox::Cancel);
-        QPushButton *saveButton2 = checkUnsavedBox2.addButton(QMessageBox::Save);
-        checkUnsavedBox2.exec();
+//void MainWindow::on_actionVerifier_Turn_In_triggered()
+//{
+//    if (checkUnsavedWork())
+//    {
+//        QMessageBox checkUnsavedBox2;
+//        checkUnsavedBox2.setWindowTitle("Unsaved Work");
+//        checkUnsavedBox2.setIcon(QMessageBox::Question);
+//        checkUnsavedBox2.setInformativeText("You have unsaved files. Save it before turn-in.\n");
+//        QPushButton *cancelButton2 = checkUnsavedBox2.addButton(QMessageBox::Cancel);
+//        QPushButton *saveButton2 = checkUnsavedBox2.addButton(QMessageBox::Save);
+//        checkUnsavedBox2.exec();
 
 
 
-        if (checkUnsavedBox2.clickedButton() == cancelButton2)
-        {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-            return;
-        }
-        else
-        {
-            saveAllWork();
-        }
-    }
+//        if (checkUnsavedBox2.clickedButton() == cancelButton2)
+//        {
+//            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+//            return;
+//        }
+//        else
+//        {
+//            saveAllWork();
+//        }
+//    }
 
-    /*
-     * \description
-     * Checks whether user is logged in or not
-    */
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    qDebug() << settings.fileName();
-    settings.beginGroup("loginConsent");
-    QString value = settings.value("consent").toString();
-    settings.endGroup();
-    if(value != "loggedIn"){
-        QMessageBox msg;
-        msg.setText("Please login to save your changes on cloud");
-        int cnt = 2;
-        //showing the message box for 2 seconds only.
-        QTimer cntDown;
-        QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
-            if(--cnt < 0){
-                cntDown.stop();
-                msg.close();
-            }
-        });
-        cntDown.start(1000);
-        msg.exec();
-        return;
-    }
-    if(!check_access()){
-        QMessageBox msg;
-        msg.setText("You don't have access to this project on cloud.");
-        msg.exec();
-        return;
-    }
+//    /*
+//     * \description
+//     * Checks whether user is logged in or not
+//    */
+//    QSettings settings("IIT-B", "OpenOCRCorrect");
+//    qDebug() << settings.fileName();
+//    settings.beginGroup("loginConsent");
+//    QString value = settings.value("consent").toString();
+//    settings.endGroup();
+//    if(value != "loggedIn"){
+//        QMessageBox msg;
+//        msg.setText("Please login to save your changes on cloud");
+//        int cnt = 2;
+//        //showing the message box for 2 seconds only.
+//        QTimer cntDown;
+//        QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
+//            if(--cnt < 0){
+//                cntDown.stop();
+//                msg.close();
+//            }
+//        });
+//        cntDown.start(1000);
+//        msg.exec();
+//        return;
+//    }
+//    if(!check_access()){
+//        QMessageBox msg;
+//        msg.setText("You don't have access to this project on cloud.");
+//        msg.exec();
+//        return;
+//    }
 
-    /*
-     * \description
-     * 1. Checks if any project is opened or not.
-     * 2. Reads the comments.json file in Comments folder in the opened project.
-     * 3. Calculates AverageCharAccuracy.
-     * 4. mRoleCheck
-     * 5. Sets the rating and formatting.
-    */
+//    /*
+//     * \description
+//     * 1. Checks if any project is opened or not.
+//     * 2. Reads the comments.json file in Comments folder in the opened project.
+//     * 3. Calculates AverageCharAccuracy.
+//     * 4. mRoleCheck
+//     * 5. Sets the rating and formatting.
+//    */
 
-    if(mProject.get_version().toInt())
-    {
+//    if(mProject.get_version().toInt())
+//    {
 
-        int ver = mProject.get_version().toInt();
-        QString commit_msg;
+//        int ver = mProject.get_version().toInt();
+//        QString commit_msg;
 
-        /*QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
-        float avgcharacc = 0;
-        bool formatting = false;
-        int rating = 0;
+//        /*QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
+//        float avgcharacc = 0;
+//        bool formatting = false;
+//        int rating = 0;
 
-        QJsonObject mainObj = readJsonFile(commentFilename);
+//        QJsonObject mainObj = readJsonFile(commentFilename);
 
-        avgcharacc = mainObj["AverageCharAccuracy"].toDouble();
+//        avgcharacc = mainObj["AverageCharAccuracy"].toDouble();
 
-        //! Calcuates the rating for the current set.
-        if(mProject.get_stage() != mRole)
-            rating = mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)].toInt();
-        else
-            rating = mainObj["Rating-V"+ mProject.get_version()].toInt();
-        if(((!mainObj["Formatting"].isNull())) || (! mainObj["Formatting"].isUndefined()))
-            formatting = mainObj["Formatting"].toBool();
+//        //! Calcuates the rating for the current set.
+//        if(mProject.get_stage() != mRole)
+//            rating = mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)].toInt();
+//        else
+//            rating = mainObj["Rating-V"+ mProject.get_version()].toInt();
+//        if(((!mainObj["Formatting"].isNull())) || (! mainObj["Formatting"].isUndefined()))
+//            formatting = mainObj["Formatting"].toBool();
 
-        /*
-         * \description
-         * 1. Check formatting dialog box will be opened
-         * 2. Dialog box will show the current rating out of 4 and a checkbox.
-        */
-        /*QDialog dialog(this);
-        dialog.setWindowTitle("Check Formatting");
+//        /*
+//         * \description
+//         * 1. Check formatting dialog box will be opened
+//         * 2. Dialog box will show the current rating out of 4 and a checkbox.
+//        */
+//        /*QDialog dialog(this);
+//        dialog.setWindowTitle("Check Formatting");
 
-        QFormLayout form(&dialog);
-        form.addRow(new QLabel("Average Rating of Current Set  : " + QString::number(rating) + " out of 4"));
+//        QFormLayout form(&dialog);
+//        form.addRow(new QLabel("Average Rating of Current Set  : " + QString::number(rating) + " out of 4"));
 
-        QCheckBox *cb = new QCheckBox("Perfect Formatting?" ,&dialog);
-        cb->setChecked(formatting);
-        form.addRow(cb);
+//        QCheckBox *cb = new QCheckBox("Perfect Formatting?" ,&dialog);
+//        cb->setChecked(formatting);
+//        form.addRow(cb);
 
-        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-                                   Qt::Horizontal, &dialog);
-        form.addRow(&buttonBox);
+//        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+//                                   Qt::Horizontal, &dialog);
+//        form.addRow(&buttonBox);
 
-        //! Checking which signal has been passed i.e. accept or reject.
-        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));     //when ok is pressed.
-        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));     //when cancel is pressed.
+//        //! Checking which signal has been passed i.e. accept or reject.
+//        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));     //when ok is pressed.
+//        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));     //when cancel is pressed.
 
-        if (dialog.exec() == QDialog::Accepted)
-        {
-            formatting = cb->isChecked();
+//        if (dialog.exec() == QDialog::Accepted)
+//        {
+//            formatting = cb->isChecked();
 
-            //! If the checkbox is checked, increment rating by 1 else decrement the rating value by 1.
-            if(rating == 4 && formatting)
-                rating = 5;
-            else if(rating == 5 && (!formatting))
-                rating = 4;
-        }
-        else
-        {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-            return;
-        }
+//            //! If the checkbox is checked, increment rating by 1 else decrement the rating value by 1.
+//            if(rating == 4 && formatting)
+//                rating = 5;
+//            else if(rating == 5 && (!formatting))
+//                rating = 4;
+//        }
+//        else
+//        {
+//            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+//            return;
+//        }
 
-        //! Updating the formatting and rating parameters value in the comments.json file, if any
-        mainObj["Formatting"] = formatting;
+//        //! Updating the formatting and rating parameters value in the comments.json file, if any
+//        mainObj["Formatting"] = formatting;
 
-        //! Calcuates the rating for the current set.
-        if(mProject.get_stage() != mRole)
-            mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;
-        else
-            mainObj["Rating-V"+ mProject.get_version()] = rating;
+//        //! Calcuates the rating for the current set.
+//        if(mProject.get_stage() != mRole)
+//            mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;
+//        else
+//            mainObj["Rating-V"+ mProject.get_version()] = rating;
 
-        writeJsonFile(commentFilename, mainObj);
+//        writeJsonFile(commentFilename, mainObj);
 
-        QMessageBox messageBox(this);
-        QString msg1 = QString(
-                    "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
+//        QMessageBox messageBox(this);
+//        QString msg1 = QString(
+//                    "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
 
-                    + "\n\nDo you want to Return the Set to the Corrector or Finalise the set?"
+//                    + "\n\nDo you want to Return the Set to the Corrector or Finalise the set?"
 
-                    + "\n\nClick \"Return Set\" to Increment the Version from "
-                    + QString::number(ver) +" to "+QString::number(ver + 1)
+//                    + "\n\nClick \"Return Set\" to Increment the Version from "
+//                    + QString::number(ver) +" to "+QString::number(ver + 1)
 
-                    + "\nClick \"Finalise\" to Approve the set as the Final Version"
-                    );
+//                    + "\nClick \"Finalise\" to Approve the set as the Final Version"
+//                    );
 
-        QString msg2 = QString(
-                    "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
+//        QString msg2 = QString(
+//                    "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
 
-                    + "\n\nDo you want to Return or Resubmit or Finalise the set?"
+//                    + "\n\nDo you want to Return or Resubmit or Finalise the set?"
 
-                    + "\n\nClick \"Return Set\" to Turnin and Increment the Version from "
-                    + QString::number(ver) +" to "+QString::number(ver + 1)
+//                    + "\n\nClick \"Return Set\" to Turnin and Increment the Version from "
+//                    + QString::number(ver) +" to "+QString::number(ver + 1)
 
-                    + " \nClick \"Resubmit\" to Turn In without Incrementing Version."
+//                    + " \nClick \"Resubmit\" to Turn In without Incrementing Version."
 
-                    + "\nClick \"Finalise\" to Approve the set as the Final Version"
-                    );
+//                    + "\nClick \"Finalise\" to Approve the set as the Final Version"
+//                    );
 
-        messageBox.setWindowTitle("Turn In");
-        QAbstractButton *resubmitButton =
-                messageBox.addButton(tr("Resubmit"), QMessageBox::ActionRole);
-        QAbstractButton *returnSetButton =
-                messageBox.addButton(tr("Return Set"), QMessageBox::ActionRole);
-        QAbstractButton *finaliseButton =
-                messageBox.addButton(tr("Finalise"), QMessageBox::ActionRole);
-        QAbstractButton *cancelButton =
-                messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+//        messageBox.setWindowTitle("Turn In");
+//        QAbstractButton *resubmitButton =
+//                messageBox.addButton(tr("Resubmit"), QMessageBox::ActionRole);
+//        QAbstractButton *returnSetButton =
+//                messageBox.addButton(tr("Return Set"), QMessageBox::ActionRole);
+//        QAbstractButton *finaliseButton =
+//                messageBox.addButton(tr("Finalise"), QMessageBox::ActionRole);
+//        QAbstractButton *cancelButton =
+//                messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
 
-        /*
-             * \description
-             * 1.Checks if the project content is added to the staging area or not
-             * 2. If no, display \a msg1 and remove the resubmit button.
-             * 3. If yes, display \a msg2.
-        */
-        /*if(mRole != mProject.get_stage())
-        {
-            messageBox.setText(msg1);
-            messageBox.removeButton(resubmitButton);
-        }
-        else
-        {
-            messageBox.setText(msg2);
-        }
+//        /*
+//             * \description
+//             * 1.Checks if the project content is added to the staging area or not
+//             * 2. If no, display \a msg1 and remove the resubmit button.
+//             * 3. If yes, display \a msg2.
+//        */
+//        /*if(mRole != mProject.get_stage())
+//        {
+//            messageBox.setText(msg1);
+//            messageBox.removeButton(resubmitButton);
+//        }
+//        else
+//        {
+//            messageBox.setText(msg2);
+//        }
 
-        messageBox.exec();
+//        messageBox.exec();
 
-        /*!
-         * \enum class SubmissionType
-         *
-         * This enum describes the type of submission type.
-         *
-         * \value resubmit To turn in without incrementing version.
-         * \value return_set To turn-in and increment the version.
-         * \value finalise To approve the set as the final version.
-        */
-        /*enum class SubmissionType {resubmit, return_set, finalise};
-        SubmissionType s ;
+//        /*!
+//         * \enum class SubmissionType
+//         *
+//         * This enum describes the type of submission type.
+//         *
+//         * \value resubmit To turn in without incrementing version.
+//         * \value return_set To turn-in and increment the version.
+//         * \value finalise To approve the set as the final version.
+//        */
+//        /*enum class SubmissionType {resubmit, return_set, finalise};
+//        SubmissionType s ;
 
-        /*
-            * Checking the condition: CorrectorOutputFiles != 2*IndsFiles
-            * If true, then \a s and \a commit_msg are updated.
-        */
-        /*if (messageBox.clickedButton() == resubmitButton)
-        {
-            s = SubmissionType::resubmit;
-            commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
-        }
+//        /*
+//            * Checking the condition: CorrectorOutputFiles != 2*IndsFiles
+//            * If true, then \a s and \a commit_msg are updated.
+//        */
+//        /*if (messageBox.clickedButton() == resubmitButton)
+//        {
+//            s = SubmissionType::resubmit;
+//            commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
+//        }
 
-        //! \a s and \a commit_msg are updated
-        else if (messageBox.clickedButton() == returnSetButton)
-        {
-            //mProject.enable_push( true ); //Increment = true
-            s = SubmissionType::return_set;
-            commit_msg = "Verifier has Turned in the Next Version:" + mProject.get_version();
-        }
+//        //! \a s and \a commit_msg are updated
+//        else if (messageBox.clickedButton() == returnSetButton)
+//        {
+//            //mProject.enable_push( true ); //Increment = true
+//            s = SubmissionType::return_set;
+//            commit_msg = "Verifier has Turned in the Next Version:" + mProject.get_version();
+//        }
 
-        /*
-         * Checking the condition: CorrectorOutputFiles != 2*IndsFiles
-         * If true, a message box of \value Couldn't Turn in will be displayed,
-         * else \a s and \a commit_msg are updated.
-        */
-        /*else if (messageBox.clickedButton() == finaliseButton)
-        {
-            s = SubmissionType::finalise;
-            commit_msg = "Verifier Finalised Version:" + mProject.get_version();
-        }
-        else
-        {
-            QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
-            return;
-        }*/
+//        /*
+//         * Checking the condition: CorrectorOutputFiles != 2*IndsFiles
+//         * If true, a message box of \value Couldn't Turn in will be displayed,
+//         * else \a s and \a commit_msg are updated.
+//        */
+//        /*else if (messageBox.clickedButton() == finaliseButton)
+//        {
+//            s = SubmissionType::finalise;
+//            commit_msg = "Verifier Finalised Version:" + mProject.get_version();
+//        }
+//        else
+//        {
+//            QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
+//            return;
+//        }*/
 
-        QMessageBox submitBox2;
-        submitBox2.setWindowTitle("Submit ?");
-        submitBox2.setIcon(QMessageBox::Question);
-        submitBox2.setInformativeText("Are you ready to submit your changes?");
-        QPushButton *yButton2 = submitBox2.addButton(QMessageBox::StandardButton::Yes);
-        QPushButton *nButton2 = submitBox2.addButton(QMessageBox::StandardButton::No);
-        submitBox2.exec();
+//        QMessageBox submitBox2;
+//        submitBox2.setWindowTitle("Submit ?");
+//        submitBox2.setIcon(QMessageBox::Question);
+//        submitBox2.setInformativeText("Are you ready to submit your changes?");
+//        QPushButton *yButton2 = submitBox2.addButton(QMessageBox::StandardButton::Yes);
+//        QPushButton *nButton2 = submitBox2.addButton(QMessageBox::StandardButton::No);
+//        submitBox2.exec();
 
-        if (submitBox2.clickedButton() == yButton2)
-        {
-            //            bool ok;
-            //            // user entered something and pressed OK
-            //            if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
-            //            {
-            mProject.enable_push( true );
-            //            }
-            //            else if (s == SubmissionType::resubmit)    //If yes button is clicked and submission type is resubmit then enable push
-            //            {
-            //                mProject.enable_push( false );
-            //            }
-            if(!verifier_save()) return;
-            //            if(s == SubmissionType::return_set)
-            //            {
-            //                mProject.set_version( mProject.get_version().toInt() - 1 );
-            //            }
-            mProject.set_verifier();
-        }
-        else
-        {
-            QMessageBox::critical(0, "Cloud sync", "Sync failed");
-            return;
-        }
+//        if (submitBox2.clickedButton() == yButton2)
+//        {
+//            //            bool ok;
+//            //            // user entered something and pressed OK
+//            //            if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
+//            //            {
+//            mProject.enable_push( true );
+//            //            }
+//            //            else if (s == SubmissionType::resubmit)    //If yes button is clicked and submission type is resubmit then enable push
+//            //            {
+//            //                mProject.enable_push( false );
+//            //            }
+//            if(!verifier_save()) return;
+//            //            if(s == SubmissionType::return_set)
+//            //            {
+//            //                mProject.set_version( mProject.get_version().toInt() - 1 );
+//            //            }
+//            mProject.set_verifier();
+//        }
+//        else
+//        {
+//            QMessageBox::critical(0, "Cloud sync", "Sync failed");
+//            return;
+//        }
 
-        //! Sending email with the following information
-        /*QString emailText =  "Book ID: " + mProject.get_bookId()
-                + "\nSet ID: " + mProject.get_setId()
-                + "\nRating Provided: " + QString::number(rating)
-                + "\n" + commit_msg ;*/
+//        //! Sending email with the following information
+//        /*QString emailText =  "Book ID: " + mProject.get_bookId()
+//                + "\nSet ID: " + mProject.get_setId()
+//                + "\nRating Provided: " + QString::number(rating)
+//                + "\n" + commit_msg ;*/
 
-        //! Updating the Project Version
-        ui->lineEdit_2->setText("Version " + mProject.get_version());
-        QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
-        QSettings settings("IIT-B", "OpenOCRCorrect");
-        settings.beginGroup("cloudSave");
-        settings.setValue("save","success" );
-        settings.endGroup();
-    }
-    else
-    {
-        QMessageBox::critical(0, "Cloud sync Error", "Please Open Project Before syncing");
-    }
-}
+//        //! Updating the Project Version
+//        ui->lineEdit_2->setText("Version " + mProject.get_version());
+//        QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
+//        QSettings settings("IIT-B", "OpenOCRCorrect");
+//        settings.beginGroup("cloudSave");
+//        settings.setValue("save","success" );
+//        settings.endGroup();
+//    }
+//    else
+//    {
+//        QMessageBox::critical(0, "Cloud sync Error", "Please Open Project Before syncing");
+//    }
+//}
 
 /*!
  * \fn MainWindow::on_actionSymbols_triggered
@@ -8875,12 +8870,12 @@ void MainWindow::autoSave(){
                 qDebug()<<"You don't have access to this set.";
                 return;
             }
-            if(mRole == "Corrector")
-                cloud_save();
-            else if(mRole == "Verifier"){
-                if(verifier_save())
-                    QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
-            }
+//            if(mRole == "Corrector")
+            cloud_save();
+//            else if(mRole == "Verifier"){
+//                if(verifier_save())
+//                    QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
+//            }
         }
         else
             qDebug()<<"Internet unavailable!";
@@ -8971,7 +8966,7 @@ void MainWindow::cloud_save(){
     parObj = readJsonFile(corrected_count);
     mainObj = parObj[date].toObject();
     //    QString Verifier = mainObj["Verifier"].toString();
-    mainObj.insert("Corrector", gCurrentPageName);
+    mainObj.insert(mRole, gCurrentPageName);
     //    mainObj.insert("Verifier", Verifier);
     parObj.insert(date, mainObj);
     writeJsonFile(corrected_count, parObj);
@@ -8994,7 +8989,7 @@ void MainWindow::cloud_save(){
     //    std::string user = git_username.toStdString();
     //    std::string pass = git_token.toStdString();
 
-    QString commit_msg = gCurrentPageName+" updated by corrector";    // append current version
+    QString commit_msg = gCurrentPageName + " completed by "+ mRole;    // append current version
 
     //    bool ok;
 
@@ -9028,7 +9023,7 @@ void MainWindow::cloud_save(){
             QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
             return;
         }
-        mProject.set_corrector();
+//        mProject.set_corrector();
 
         ui->lineEdit_2->setText("Version " + mProject.get_version());      //Update the version of file on ui.
 
@@ -9050,31 +9045,31 @@ void MainWindow::cloud_save(){
  * \details Calls commit and push functions
  * \return Returns true if pushed successfully or false if failed.
  */
-bool MainWindow::verifier_save()
-{
-    messageTimer();
-    QString date = QDate::currentDate().toString();
-    QString corrected_count = gDirTwoLevelUp + "/Comments/"+mRole+"_count.json";
-    QJsonObject mainObj, parObj;
-    parObj = readJsonFile(corrected_count);
-    mainObj = parObj[date].toObject();
-    //    QString Corrector = mainObj["Corrector"].toString();
-    //    mainObj.insert("Corrector", Corrector);
-    mainObj.insert("Verifier", gCurrentPageName);
-    parObj.insert(date, mainObj);
-    writeJsonFile(corrected_count, parObj);
+//bool MainWindow::verifier_save()
+//{
+//    messageTimer();
+//    QString date = QDate::currentDate().toString();
+//    QString corrected_count = gDirTwoLevelUp + "/Comments/"+mRole+"_count.json";
+//    QJsonObject mainObj, parObj;
+//    parObj = readJsonFile(corrected_count);
+//    mainObj = parObj[date].toObject();
+//    //    QString Corrector = mainObj["Corrector"].toString();
+//    //    mainObj.insert("Corrector", Corrector);
+//    mainObj.insert("Verifier", gCurrentPageName);
+//    parObj.insert(date, mainObj);
+//    writeJsonFile(corrected_count, parObj);
 
-    QString commit_msg = gCurrentPageName+" verified by verifier";
-    if(mProject.commit(commit_msg.toStdString()))
-    {
-        if(!mProject.push(gDirTwoLevelUp)){
-            mProject.enable_push(false);
-            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
-            return false;
-        }
-    }
-    return true;
-}
+//    QString commit_msg = gCurrentPageName+" verified by verifier";
+//    if(mProject.commit(commit_msg.toStdString()))
+//    {
+//        if(!mProject.push(gDirTwoLevelUp)){
+//            mProject.enable_push(false);
+//            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
+//            return false;
+//        }
+//    }
+//    return true;
+//}
 
 /*!
  * \brief MainWindow::preprocessing
@@ -9597,13 +9592,13 @@ void MainWindow::on_actionLink_triggered()
 {
     QDialog dialog(this);
     QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
-    form.addRow(new QLabel("Enter the link and the placeholder", this));
+    form.addRow(new QLabel("Enter the url and the placeholder", this));
 
     //! Add the lineEdits with their respective labels
     QLineEdit *link = new QLineEdit(&dialog);
     QLineEdit *text = new QLineEdit(&dialog);
-    form.addRow("Link", link);
-    form.addRow("Text", text);
+    form.addRow("url", link);
+    form.addRow("title", text);
 
     //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
@@ -9901,6 +9896,7 @@ void MainWindow::on_actionVoice_Typing_triggered()
 }
 
 
+<<<<<<< HEAD
 void MainWindow::on_actionTable_Border_Color_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -9951,5 +9947,20 @@ void MainWindow::on_actionCell_Padding_triggered()
             }
         }
     }
+=======
+void MainWindow::on_actionUdaan_Contact_Us_triggered()
+{
+    ContactUsDialog dialog;
+        dialog.setModal(true);
+        //    dialog.setWindowFlags(Qt::FramelessWindowHint);
+
+        QScreen *screen = QGuiApplication::primaryScreen();
+        QRect  screenGeometry = screen->geometry();
+        float height = screenGeometry.height()*0.3;
+        float width = screenGeometry.width()*0.4;
+
+        dialog.setFixedSize(width, height);
+        dialog.exec();
+>>>>>>> acabc7196c9016ff638eb113e0fc79177994ac4b
 }
 
