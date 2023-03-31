@@ -485,13 +485,13 @@ private slots:
 
     void getDate(QDate date, QCalendarWidget *calendar);
 
-<<<<<<< HEAD
+
     void on_actionTable_Border_Color_triggered();
 
     void on_actionCell_Padding_triggered();
-=======
+
     void on_actionUdaan_Contact_Us_triggered();
->>>>>>> acabc7196c9016ff638eb113e0fc79177994ac4b
+
 
 public slots:
     void on_actionLoad_Next_Page_triggered();

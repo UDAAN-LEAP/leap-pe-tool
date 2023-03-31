@@ -9896,7 +9896,7 @@ void MainWindow::on_actionVoice_Typing_triggered()
 }
 
 
-<<<<<<< HEAD
+
 void MainWindow::on_actionTable_Border_Color_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -9947,7 +9947,7 @@ void MainWindow::on_actionCell_Padding_triggered()
             }
         }
     }
-=======
+}
 void MainWindow::on_actionUdaan_Contact_Us_triggered()
 {
     ContactUsDialog dialog;
@@ -9961,6 +9961,6 @@ void MainWindow::on_actionUdaan_Contact_Us_triggered()
 
         dialog.setFixedSize(width, height);
         dialog.exec();
->>>>>>> acabc7196c9016ff638eb113e0fc79177994ac4b
+
 }
 
