@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>40</y>
+     <y>30</y>
      <width>71</width>
      <height>61</height>
     </rect>
@@ -36,7 +36,7 @@
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>20</y>
+     <y>10</y>
      <width>241</width>
      <height>21</height>
     </rect>
@@ -49,20 +49,20 @@
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>60</y>
-     <width>461</width>
-     <height>191</height>
+     <y>40</y>
+     <width>471</width>
+     <height>241</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Based on Qt 5.15.2&lt;br/&gt;From revision &lt;a href=&quot;https://github.com/UDAAN-LEAP/leap-pe-tool/commits/master&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;visit logs&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;Copyright 2019-2023 The Project Udaan, IIT Bombay.&lt;br/&gt;&lt;br/&gt;The program is provided AS IS with NO WARRANTY OF ANY KIND,&lt;br/&gt;INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND &lt;br/&gt;FITNESS FOR A PARTICULAR PURPOSE.&lt;br/&gt;&lt;br/&gt;The application logo is registered trademark of The Project Udaan,&lt;br/&gt;IIT Bombay.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Based on Qt 5.15.2&lt;br/&gt;From revision &lt;a href=&quot;https://github.com/UDAAN-LEAP/leap-pe-tool/commits/master&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;visit logs&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;Copyright 2019-2023 The Project Udaan, IIT Bombay.&lt;br/&gt;&lt;br/&gt;The program is provided AS IS with NO WARRANTY OF ANY KIND,&lt;br/&gt;INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND &lt;br/&gt;FITNESS FOR A PARTICULAR PURPOSE.&lt;br/&gt;&lt;br/&gt;The application logo is registered trademark of The &lt;a href=&quot;https://udaanproject.org/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Project Udaan&lt;/span&gt;&lt;/a&gt;,&lt;br/&gt;IIT Bombay.&lt;/p&gt;&lt;p&gt;Contact us at: &lt;a href=&quot;mailto:udaanprojectiitb@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;udaanprojectiitb@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;To share your feedback, &lt;a href=&quot;https://udaanproject.org/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;fill this form&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>270</y>
+     <y>290</y>
      <width>341</width>
      <height>16</height>
     </rect>

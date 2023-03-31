@@ -12,7 +12,6 @@
 #include "QProgressBar"
 #include <QPrinter>
 #include <QPrintPreviewDialog>
-#include "contacts.h"
 #include "DiffView.h"
 #include <QtConcurrent/QtConcurrent>
 #include "diff_match_patch.h"
@@ -7768,22 +7767,40 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
         if(curr_version==latestVersion)
         {
             QMessageBox box;
-            box.setText("Software is already on the latest version");
+            box.setText("There are currently no updates available");
             box.exec();
         }
         else{
             QMessageBox msg;
             msg.setWindowTitle("Update Available");
             msg.setIcon(QMessageBox::Information);
-            msg.setText("A New Version of Udaan Editing Tool is Available!!\n\nUdaan Editing Tool "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below\nWhat's New:-\n\n" + newFeatures);
-            QAbstractButton *download = msg.addButton(tr("Go to Download Page"), QMessageBox::ActionRole);
-            download->setMinimumWidth(160);
+            msg.setText("A New Version of Udaan Editing Tool is Available!!\n\nUdaan Editing Tool "+latestVersion+"\nTo Download the latest version of this software click 'Update' button below");
+
             QAbstractButton *rml = msg.addButton(tr("Later"), QMessageBox::RejectRole);
-            rml->setMaximumWidth(80);
+            rml->setMaximumWidth(60);
+            QAbstractButton *features = msg.addButton(tr("What's New?"), QMessageBox::ApplyRole);
+            features->setMinimumWidth(80);
+            QAbstractButton *download = msg.addButton(tr("Update"), QMessageBox::ActionRole);
+            download->setMinimumWidth(60);
+
             msg.exec();
 
+            if(msg.clickedButton() == features){
+                QDialog new_features(this);
+                QFormLayout form(&new_features);
+                form.addRow(new QLabel("What's new in "+latestVersion + "\n" + newFeatures,this));
+
+                QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&new_features);
+                buttonbox.button(QDialogButtonBox::Ok)->setText("Update");
+                form.addRow(&buttonbox);
+
+                QObject::connect(&buttonbox,SIGNAL(accepted()),&new_features,SLOT(accept()));
+                QObject::connect(&buttonbox,SIGNAL(rejected()),&new_features,SLOT(reject()));
+                if(new_features.exec() ==QDialog::Accepted)
+                    update_tool();
+            }
             if(msg.clickedButton() == download){
-                QDesktopServices::openUrl(QUrl("https://drive.google.com/drive/folders/1DZn72n6gH0r459hTGsL2f7qhoZnHQPEI"));
+                update_tool();
             }
             else {
                 msg.close();
@@ -9948,19 +9965,31 @@ void MainWindow::on_actionCell_Padding_triggered()
         }
     }
 }
-void MainWindow::on_actionUdaan_Contact_Us_triggered()
-{
-    ContactUsDialog dialog;
-        dialog.setModal(true);
-        //    dialog.setWindowFlags(Qt::FramelessWindowHint);
 
-        QScreen *screen = QGuiApplication::primaryScreen();
-        QRect  screenGeometry = screen->geometry();
-        float height = screenGeometry.height()*0.3;
-        float width = screenGeometry.width()*0.4;
+void MainWindow::update_tool(){
+    #ifdef Q_OS_WIN
+    QUrl downloadUrl("https://www.cse.iitb.ac.in/~ayusham/Udaan-Windows-v3.5.9.zip");
+    #else
+    QUrl downloadUrl("https://www.cse.iitb.ac.in/~ayusham/Udaan-Linux-v3.5.9.tar.xz");
+    #endif
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QNetworkReply *reply = manager->get(QNetworkRequest(downloadUrl));
 
-        dialog.setFixedSize(width, height);
-        dialog.exec();
+    QFile file("fileName");
+    if(!file.open(QIODevice::WriteOnly))
+    {
+        qDebug() << "Failed to open file for writing";
+        return;
+    }
 
+    QObject::connect(reply, &QNetworkReply::readyRead, [reply, &file](){
+        file.write(reply->readAll());
+    });
+
+    QObject::connect(reply, &QNetworkReply::finished, [reply, &file, manager](){
+        file.flush();
+        file.close();
+        reply->deleteLater();
+        manager->deleteLater();
+    });
 }
-

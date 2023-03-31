@@ -32,6 +32,7 @@ about::about(QWidget *parent) :
         date = json[0]["published_at"].toString();
     }
     ui->label_3->setText("Build released on: "+(!date.isEmpty()?date:"No info available"));
+    ui->label_2->setOpenExternalLinks(true);
 }
 
 about::~about()

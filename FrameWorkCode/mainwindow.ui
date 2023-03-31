@@ -1096,8 +1096,6 @@ QMenu::item:selected{
     <addaction name="separator"/>
     <addaction name="actionAbout_Udaan_PE"/>
     <addaction name="separator"/>
-    <addaction name="actionShare_Feedback"/>
-    <addaction name="actionUdaan_Contact_Us"/>
    </widget>
    <widget class="QMenu" name="menuOCR_Correction_Window">
     <property name="styleSheet">

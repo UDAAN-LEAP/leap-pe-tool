@@ -490,8 +490,6 @@ private slots:
 
     void on_actionCell_Padding_triggered();
 
-    void on_actionUdaan_Contact_Us_triggered();
-
 
 public slots:
     void on_actionLoad_Next_Page_triggered();
@@ -510,6 +508,7 @@ public slots:
     void login();
     void createTable();
     void e_d_features(bool value);
+    void update_tool();
 
 private:
     bool mExitStatus = false;
