@@ -9972,24 +9972,50 @@ void MainWindow::update_tool(){
     #else
     QUrl downloadUrl("https://www.cse.iitb.ac.in/~ayusham/Udaan-Linux-v3.5.9.tar.xz");
     #endif
+    QDialog dialog(this);
+    QFormLayout form(&dialog);
+    QProgressBar pb(this);
+    QLabel *label = new QLabel(this);
+    label->setText("Update in progress...");
+    form.addRow(label);
+    form.addWidget(&pb);
+    dialog.show();
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QNetworkReply *reply = manager->get(QNetworkRequest(downloadUrl));
+    QNetworkRequest request(downloadUrl);
+    QNetworkReply *reply = manager->get(request);
 
-    QFile file("fileName");
-    if(!file.open(QIODevice::WriteOnly))
-    {
-        qDebug() << "Failed to open file for writing";
-        return;
-    }
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/v3.5.9.tar.xz";
+    ui->textBrowser->setText(path);
+    QFile *file = new QFile(path);
+    file->open(QIODevice::WriteOnly);
 
-    QObject::connect(reply, &QNetworkReply::readyRead, [reply, &file](){
-        file.write(reply->readAll());
+    connect(reply, &QNetworkReply::readyRead, this, [=]() {
+        file->write(reply->readAll());
     });
 
-    QObject::connect(reply, &QNetworkReply::finished, [reply, &file, manager](){
-        file.flush();
-        file.close();
+    connect(reply, &QNetworkReply::finished, this, [&]() {
+        QProcess process;
+        process.setProgram("tar");
+        process.setArguments(QStringList() << "-xf" << path);
+        process.start();
+        process.waitForFinished();
+        QFile::remove(path);
+        file->close();
         reply->deleteLater();
-        manager->deleteLater();
+        dialog.deleteLater();
+        delete file;
     });
+
+    connect(reply, &QNetworkReply::downloadProgress, this, [&](qint64 bytesReceived, qint64 bytesTotal) {
+        qDebug() << "Downloaded" << bytesReceived << "of" << bytesTotal << "bytes.";
+        processProgress(bytesReceived, bytesTotal, &pb);
+    });
+
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+}
+void MainWindow::processProgress(qint64 bytesReceived, qint64 bytesTotal, QProgressBar *pb) {
+    pb->setValue((bytesReceived * 100) / bytesTotal);
 }

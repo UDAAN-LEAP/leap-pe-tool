@@ -52,6 +52,7 @@
 #include "handlebbox.h"
 #include <QMediaRecorder>
 #include <QCalendarWidget>
+#include <QProgressBar>
 
 using namespace std;
 class AudioLevel;
@@ -490,6 +491,7 @@ private slots:
 
     void on_actionCell_Padding_triggered();
 
+    void processProgress(qint64 bytesReceived, qint64 bytesTotal, QProgressBar *pb);
 
 public slots:
     void on_actionLoad_Next_Page_triggered();
