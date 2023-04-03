@@ -212,6 +212,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->lineEdit_2->setReadOnly(true);
     ui->lineEdit_3->setReadOnly(true);
     ui->forward_Button->setVisible(false);
+    ui->pushButton_6->setVisible(false);
 
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("cloudSave");
@@ -1796,11 +1797,15 @@ void MainWindow::stopSpinning()
 void MainWindow::GlobalReplace()
 {
     edit_Distance ed;
-    QVector <QString> changedWords;
-    changedWords = ed.editDistance(s1, s2);             // Update CPair by editdistance
-    QString currentDirAbsolutePath = gDirTwoLevelUp + "/" + gCurrentDirName;
-    runGlobalReplace(currentDirAbsolutePath, changedWords);
-    ConvertSlpDevFlag =0;
+        changedWords += ed.editDistance(s1, s2);
+        if(changedWords.size() > 0 )
+        {
+          QString str = ui->pushButton_6->text();
+            str = "Replace Globally [" + QString::number(changedWords.size()) + "]";
+            ui->pushButton_6->setText(str);
+            ui->pushButton_6->setVisible(true);
+        }
+
 }
 
 /*!
@@ -6227,6 +6232,8 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     if (!isVerifier && (current_folder == "Inds" || current_folder == "VerifierOutput")) {
         curr_browser->setReadOnly(true);
     }
+    changedWords.clear();
+        ui->pushButton_6->setVisible(false);
 }
 
 /*!
@@ -9631,25 +9638,37 @@ void MainWindow::on_actionLink_triggered()
     }
 }
 
-
+/*!
+ * \fn MainWindow::on_actionUnderline_2_triggered()
+ * \brief This function underlines the selected text
+ */
 void MainWindow::on_actionUnderline_2_triggered()
 {
     on_actionUnderline_triggered();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionIncrease_size_triggered()
+ * \brief This function increases the font size of selected text
+ */
 void MainWindow::on_actionIncrease_size_triggered()
 {
     on_actionZoom_In_triggered();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionDecrease_Size_triggered()
+ * \brief This function descreases the font size of selected text
+ */
 void MainWindow::on_actionDecrease_Size_triggered()
 {
     on_actionZoom_Out_triggered();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionlower_case_triggered()
+ * \brief This function displays the letter in lower case
+ */
 void MainWindow::on_actionlower_case_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -9661,7 +9680,10 @@ void MainWindow::on_actionlower_case_triggered()
     curr_browser->mergeCurrentCharFormat(fmt);
 }
 
-
+/*!
+ * \fn MainWindow::on_actionUPPER_CASE_triggered()
+ * \brief This function displays the letter in upper case
+ */
 void MainWindow::on_actionUPPER_CASE_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -9673,7 +9695,10 @@ void MainWindow::on_actionUPPER_CASE_triggered()
     curr_browser->mergeCurrentCharFormat(fmt);
 }
 
-
+/*!
+ * \fn MainWindow::on_actionTitle_Case_triggered()
+ * \brief This function changes the case of a word where first letter is upper and rest is lower
+ */
 void MainWindow::on_actionTitle_Case_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -9793,19 +9818,28 @@ void MainWindow::on_actionIndentation_Options_triggered()
     on_actionIncrease_Indent_triggered(left,right);
 }
 
-
+/*!
+ * \fn MainWindow::on_actionSpecial_Characters_triggered()
+ * \brief This function displays the special symbol dialog
+ */
 void MainWindow::on_actionSpecial_Characters_triggered()
 {
     on_actionSymbols_triggered();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionResize_Image_2_triggered()
+ * \brief This function resize image by inserting width and height
+ */
 void MainWindow::on_actionResize_Image_2_triggered()
 {
     on_actionResize_Image_triggered();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionWord_Count_triggered()
+ * \brief This function displays word count in current page ,total number of pages and total number of words in all pages
+ */
 void MainWindow::on_actionWord_Count_triggered()
 {
     if(curr_browser){
@@ -9907,6 +9941,11 @@ void MainWindow::on_actionWord_Count_triggered()
             dialog.exec();
 }
 }
+
+/*!
+ * \fn MainWindow::on_actionVoice_Typing_triggered()
+ * \brief This function starts recording the voice
+ */
 void MainWindow::on_actionVoice_Typing_triggered()
 {
     on_pushButton_4_clicked();
@@ -10019,3 +10058,17 @@ void MainWindow::update_tool(){
 void MainWindow::processProgress(qint64 bytesReceived, qint64 bytesTotal, QProgressBar *pb) {
     pb->setValue((bytesReceived * 100) / bytesTotal);
 }
+
+/*!
+ * \fn MainWindow::on_pushButton_6_clicked()
+ * \brief This function replaces all the changed words globally
+ */
+void MainWindow::on_pushButton_6_clicked()
+{
+    QString currentDirAbsolutePath = gDirTwoLevelUp + "/" + gCurrentDirName;
+        runGlobalReplace(currentDirAbsolutePath, changedWords);
+        ConvertSlpDevFlag =0;
+        changedWords.clear();
+        ui->pushButton_6->setVisible(false);
+}
+

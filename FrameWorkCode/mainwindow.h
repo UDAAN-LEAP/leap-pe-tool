@@ -493,6 +493,8 @@ private slots:
 
     void processProgress(qint64 bytesReceived, qint64 bytesTotal, QProgressBar *pb);
 
+    void on_pushButton_6_clicked();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
@@ -574,6 +576,7 @@ private:
     void speechToTextCall();
     bool import_flag = false;
     int flag_tab = 0;
+     QVector <QString> changedWords;
 };
 
 #endif // MAINWINDOW_H
