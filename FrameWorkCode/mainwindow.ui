@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1366</width>
+    <width>1399</width>
     <height>1190</height>
    </rect>
   </property>
@@ -1034,7 +1034,7 @@ background: grey;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1366</width>
+     <width>1399</width>
      <height>46</height>
     </rect>
    </property>
@@ -1218,10 +1218,9 @@ QMenu::item:selected{
      <addaction name="actionRemove_Column"/>
      <addaction name="actionDelete_Table"/>
      <addaction name="separator"/>
-     <addaction name="actionMerge_Cells"/>
-     <addaction name="actionUnmerge_Cells"/>
-     <addaction name="separator"/>
      <addaction name="actionSplit_Cell"/>
+     <addaction name="actionMerge_Cells"/>
+     <addaction name="separator"/>
      <addaction name="menuTable_Properties"/>
     </widget>
     <widget class="QMenu" name="menuBullets_and_Numbering">

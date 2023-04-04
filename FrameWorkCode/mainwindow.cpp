@@ -1703,7 +1703,7 @@ void MainWindow::GlobalReplace()
     if(changedWords.size() > 0 )
     {
         QString str = ui->pushButton_6->text();
-        str = "Replace Globally [" + QString::number(changedWords.size()) + "]";
+        str = "Global Replace[" + QString::number(changedWords.size()) + "]";
         ui->pushButton_6->setText(str);
         ui->pushButton_6->setVisible(true);
     }
@@ -3212,12 +3212,6 @@ void MainWindow::on_actionFetch_2_triggered()
         else
             return;
     }
-    else {
-        QMessageBox msg;
-        msg.setText("You don't have access to this project on cloud.");
-        msg.exec();
-        return;
-    }
 }
 
 /*!
@@ -3274,11 +3268,7 @@ void MainWindow::on_actionTurn_In_triggered()
         msg.exec();
         return;
     }
-    bool x = check_access();
-    if(!x){
-        QMessageBox msg;
-        msg.setText("You don't have access to this project on cloud. x is");
-        msg.exec();
+    if(!check_access()){
         return;
     }
 
@@ -8867,6 +8857,9 @@ bool MainWindow::check_access()
             if(repos.size() == 0 || flag == 0){
                 loop.quit(); // exit the event loop
                 result = false; // set the result to false
+                QMessageBox msg;
+                msg.setText("You don't have access to this project on cloud.");
+                msg.exec();
             }
             else{
                 loop.quit(); // exit the event loop

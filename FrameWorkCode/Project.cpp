@@ -15,6 +15,8 @@
 #include <QDialog>
 #include <QInputDialog>
 #include "lg2_common.h"
+#include "qnetworkaccessmanager.h"
+#include "qnetworkreply.h"
 #include <QObject>
 #include <git2.h>
 #include <QProcess>
@@ -578,23 +580,39 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
     if (!is_cred_cached)
     {
     }
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o gitToken.json");
+    QNetworkAccessManager* manager = new QNetworkAccessManager();
+    QUrl url_("https://udaaniitb.aicte-india.org/udaan/email/");
 
-    QFile jsonFile("gitToken.json");
-    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    QByteArray data = jsonFile.readAll();
+    QByteArray postData;
+    postData.append("username=username&password=password");
 
-    QJsonParseError errorPtr;
-    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-    QJsonObject mainObj = document.object();
-    jsonFile.close();
-    QString git_token = mainObj.value("github_token").toString();
-    QString git_username = mainObj.value("github_username").toString();
-    QFile::remove("gitToken.json");
-    user = git_username.toStdString();
-    pass = git_token.toStdString();
+    QNetworkRequest request(url_);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    // Disable SSL certificate verification
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    QNetworkReply* reply = manager->post(request, postData);
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, [=, &loop]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            QJsonParseError errorPtr;
+            QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+            QJsonObject mainObj = document.object();
+            QString git_token = mainObj.value("github_token").toString();
+            QString git_username = mainObj.value("github_username").toString();
+            // use git_token and git_username here
+            user = git_username.toStdString();
+            pass = git_token.toStdString();
+            loop.quit();
+        } else {
+            qDebug() << "Error:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+    loop.exec();
     return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
 
@@ -837,17 +855,6 @@ bool Project::push(QString gDirTwoLevelUp) {
      */
     char fullsha[42] = {0};
     git_oid_tostr(fullsha, 41, &id);
-    QString sha = QString::fromStdString(fullsha);
-    //qDebug()<<"Last commit full hash :"<<sha;
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    settings.beginGroup("login");
-    QString email = settings.value("email").toString();
-    //qDebug()<<"email"<<email;
-    settings.endGroup();
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/commits/ -d \"commit_no="+sha+"&email="+email+"\" ");;
-
     return true;//No errors
 }
 
@@ -1126,11 +1133,31 @@ bool Project::commit(std::string message)
     QString email = settings.value("email").toString();
     //qDebug()<<"email"<<email;
     settings.endGroup();
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/commits/ -d \"commit_no="+sha+"&email="+email+"\" ");
+    QNetworkAccessManager* manager = new QNetworkAccessManager();
+    QUrl url_("https://udaaniitb.aicte-india.org/udaan/commits/");
 
+    QByteArray postData;
+    postData.append("commit_no="+sha+"&email="+email);
 
+    QNetworkRequest request(url_);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    // Disable SSL certificate verification
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    QNetworkReply* reply = manager->post(request, postData);
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, [=, &loop]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            loop.quit();
+        } else {
+            qDebug() << "Error:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+    loop.exec();
     /** Clean up so we don't leak memory. */
 
     git_tree_free(tree);
