@@ -71,8 +71,6 @@
 #include "globalreplaceworker.h"
 #include "customtextbrowser.h"
 #include "pdfrangedialog.h"
-#include <QtNetworkAuth>
-#include <QOAuth2AuthorizationCodeFlow>
 #include <dashboard.h>
 #include "printworker.h"
 #include <QRadioButton>
@@ -492,102 +490,6 @@ void writeJsonFile(QString filepath, QJsonObject mainObj)
     jsonFile.close();
 }
 
-/*!
- * \fn MainWindow::authenticate
- * \brief It starts the authentication process of the user.
- */
-void MainWindow::authenticate() {
-    this->google->grant();
-}
-
-/*!
- * \fn MainWindow::googleAuth
- * \brief Opens a browser where user has to sign in through his/her google account to authenticate
- */
-void MainWindow::googleAuth()
-{
-    google = new QOAuth2AuthorizationCodeFlow;
-    google->setScope("email");
-    connect(google, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser,
-            &QDesktopServices::openUrl);
-
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o client.json");
-
-    QFile jsonFile("client.json");
-    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    QByteArray data = jsonFile.readAll();
-
-    QJsonParseError errorPtr;
-    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-    QJsonObject mainObj = document.object();
-    jsonFile.close();
-    QString id = mainObj.value("client_id").toString();
-    QString secret = mainObj.value("client_secret").toString();
-    QFile::remove("client.json");
-    QByteArray array = id.toLocal8Bit();
-    const auto clientId = array.data();
-    const QUrl authUri("https://accounts.google.com/o/oauth2/auth");
-    const QUrl tokenUri("https://oauth2.googleapis.com/token");
-    array = secret.toLocal8Bit();
-    const auto clientSecret = array.data();
-    const auto port = 8080;
-
-    google->setAuthorizationUrl(authUri);
-    google->setClientIdentifier(clientId);
-    google->setAccessTokenUrl(tokenUri);
-    google->setClientIdentifierSharedKey(clientSecret);
-
-    google->setModifyParametersFunction([](QAbstractOAuth::Stage stage, QVariantMap* parameters) {
-        // Percent-decode the "code" parameter so Google can match it
-        if (stage == QAbstractOAuth::Stage::RequestingAccessToken) {
-            QByteArray code = parameters->value("code").toByteArray();
-            (*parameters)["code"] = QUrl::fromPercentEncoding(code);
-        }
-    });
-
-    QOAuthHttpServerReplyHandler* replyHandler = new QOAuthHttpServerReplyHandler(port, this);
-    google->setReplyHandler(replyHandler);
-    connect(this->google, &QOAuth2AuthorizationCodeFlow::granted, [=](){
-        const QString token = this->google->token();
-        emit gotToken(token);
-
-        auto reply = this->google->get(QUrl("https://www.googleapis.com/oauth2/v2/userinfo?access_token="+token));
-        connect(reply, &QNetworkReply::finished, [reply, token, this](){
-            const auto objectDetails = (QString)reply->readAll();
-            QJsonDocument jsonResponse = QJsonDocument::fromJson(objectDetails.toUtf8());
-            QJsonObject jsonObject = jsonResponse.object();
-            QString email = jsonObject["email"].toString();
-            QString id = jsonObject["id"].toString();
-            //                const QByteArray data = email.toUtf8();
-            //                qDebug()<<"hash"<<QCryptographicHash::hash(data, QCryptographicHash::Sha256).toHex();
-            // qDebug()<<"email"<<email;
-            //save details in QSettings
-            QSettings settings("IIT-B", "OpenOCRCorrect");
-            settings.beginGroup("login");
-            settings.setValue("token",token);
-            settings.setValue("email",email);
-            settings.setValue("id",id);
-            settings.endGroup();
-
-            //saving details in database via Post request to api
-            //                QProcess process;
-
-            //               //qDebug()<<"curl -d -X -POST --header \"Content-type:application/x-www-form-urlencoded\" https://oauth2.googleapis.com/revoke?token="+token;
-            //                process.execute("curl -d -X -k -POST --header "
-            //                                "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/user_detail/{email:"+email+",user_id:"+id+",token:"+token+"}/");
-
-            //now login dialog should not appear
-            settings.beginGroup("loginConsent");
-            settings.setValue("consent","loggedIn");
-            settings.endGroup();
-            this->ui->actionLogin->setVisible(false);
-            this->ui->actionLogout->setVisible(true);
-        });
-    });
-
-}
 QString file = "";
 bool fileFlag = 0;
 QElapsedTimer myTimer;
@@ -1797,14 +1699,14 @@ void MainWindow::stopSpinning()
 void MainWindow::GlobalReplace()
 {
     edit_Distance ed;
-        changedWords += ed.editDistance(s1, s2);
-        if(changedWords.size() > 0 )
-        {
-          QString str = ui->pushButton_6->text();
-            str = "Replace Globally [" + QString::number(changedWords.size()) + "]";
-            ui->pushButton_6->setText(str);
-            ui->pushButton_6->setVisible(true);
-        }
+    changedWords += ed.editDistance(s1, s2);
+    if(changedWords.size() > 0 )
+    {
+        QString str = ui->pushButton_6->text();
+        str = "Replace Globally [" + QString::number(changedWords.size()) + "]";
+        ui->pushButton_6->setText(str);
+        ui->pushButton_6->setVisible(true);
+    }
 
 }
 
@@ -3263,73 +3165,59 @@ void MainWindow::on_actionFetch_2_triggered()
     QString email = settings.value("email").toString();
     QString token = settings.value("token").toString();
     settings.endGroup();
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
-
-    //to find the repo name from .git/congig file
-    QString repo = "";
-    QString gDir = gDirTwoLevelUp+"/.git/config";
-    QFile f(gDir);
-    f.open(QIODevice::ReadOnly);
-    while(!f.atEnd()) {
-        QString line = f.readLine();
-        if(line.contains("https://github.com")){
-            QStringList l = line.split("/");
-            repo = l[l.size()-1].remove("\n");
-            break;
+    if(check_access()){
+        QString repo = "";
+        QString gDir = gDirTwoLevelUp+"/.git/config";
+        QFile f(gDir);
+        f.open(QIODevice::ReadOnly);
+        while(!f.atEnd()) {
+            QString line = f.readLine();
+            if(line.contains("https://github.com")){
+                QStringList l = line.split("/");
+                repo = l[l.size()-1].remove("\n");
+                break;
+            }
         }
-    }
-    f.close();
-    QJsonObject mainObj = readJsonFile("validate.json");
-    QJsonArray repos = mainObj.value("repo_list").toArray();
-    QJsonArray::iterator itr; int flag = 0;
-    for(itr = repos.begin(); itr != repos.end(); itr++){
+        f.close();
 
-        if(itr->toString() == repo){
-            flag = 1;
-            break;
+        QString stage = mProject.get_stage();
+        QString prvs_stage = (stage=="Verifier")?"Verifier":"Corrector";
+        QString prvs_output_dir = prvs_stage + "Output"; //"VerifierOutput" or "CorrectorOutput"
+
+        QMessageBox forPullBox;
+        forPullBox.setWindowTitle("Sync ?");
+        forPullBox.setIcon(QMessageBox::Question);
+        forPullBox.setInformativeText("This will overwrite files in " + prvs_output_dir + " directory. Do you want to Continue?");
+        QPushButton *okButton = forPullBox.addButton(QMessageBox::StandardButton::Yes);
+        QPushButton *noButton = forPullBox.addButton(QMessageBox::StandardButton::No);
+        forPullBox.exec();
+
+        int error;
+        if (forPullBox.clickedButton() == okButton)
+        {
+            if ((error = mProject.fetch()) != 0) {
+                qDebug() << "Fetch failed with error code " << error;
+            }
+            if(mProject.get_version().toInt())
+            {
+                QMessageBox::information(0, "Sync Success", "Synced Succesfully");
+            }
+            else
+            {
+                QMessageBox::information(0, "Sync Error", "Cloud Sync Un-successful, Please Check Your Internet Connection");
+            }
+
+            ui->lineEdit_2->setText("Version " + mProject.get_version());
         }
+        else
+            return;
     }
-  //  QFile::remove("validate.json");
-    if(repos.size() == 0 || flag == 0){
+    else {
         QMessageBox msg;
         msg.setText("You don't have access to this project on cloud.");
         msg.exec();
         return;
     }
-
-    QString stage = mProject.get_stage();
-    QString prvs_stage = (stage=="Verifier")?"Verifier":"Corrector";
-    QString prvs_output_dir = prvs_stage + "Output"; //"VerifierOutput" or "CorrectorOutput"
-
-    QMessageBox forPullBox;
-    forPullBox.setWindowTitle("Pull ?");
-    forPullBox.setIcon(QMessageBox::Question);
-    forPullBox.setInformativeText("This will overwrite files in " + prvs_output_dir + " directory. Do you want to Continue?");
-    QPushButton *okButton = forPullBox.addButton(QMessageBox::StandardButton::Yes);
-    QPushButton *noButton = forPullBox.addButton(QMessageBox::StandardButton::No);
-    forPullBox.exec();
-
-    int error;
-    if (forPullBox.clickedButton() == okButton)
-    {
-        if ((error = mProject.fetch()) != 0) {
-            qDebug() << "Fetch failed with error code " << error;
-        }
-        if(mProject.get_version().toInt())
-        {
-            QMessageBox::information(0, "Sync Success", "Synced Succesfully");
-        }
-        else
-        {
-            QMessageBox::information(0, "Sync Error", "Cloud Sync Un-successful, Please Check Your Internet Connection");
-        }
-
-        ui->lineEdit_2->setText("Version " + mProject.get_version());
-    }
-    else
-        return;
 }
 
 /*!
@@ -3386,10 +3274,10 @@ void MainWindow::on_actionTurn_In_triggered()
         msg.exec();
         return;
     }
-
-    if(!check_access()){
+    bool x = check_access();
+    if(!x){
         QMessageBox msg;
-        msg.setText("You don't have access to this project on cloud.");
+        msg.setText("You don't have access to this project on cloud. x is");
         msg.exec();
         return;
     }
@@ -6233,7 +6121,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
         curr_browser->setReadOnly(true);
     }
     changedWords.clear();
-        ui->pushButton_6->setVisible(false);
+    ui->pushButton_6->setVisible(false);
 }
 
 /*!
@@ -8250,29 +8138,29 @@ void MainWindow::insertImageAction()
         QDir().mkdir("../Inserted_Images");
     QFile::copy(imgFilePath,copiedImgFilePath);
     qDebug()<<imgFilePath<<"\n"<<copiedImgFilePath;
-//    int height =0;
-//    int width = 0;
-//    QDialog dialog(this);
-//    QFormLayout form(&dialog);
+    //    int height =0;
+    //    int width = 0;
+    //    QDialog dialog(this);
+    //    QFormLayout form(&dialog);
 
-//    form.addRow(new QLabel("Insert Height and Width",this));
+    //    form.addRow(new QLabel("Insert Height and Width",this));
 
-//    QLineEdit *height_textLine= new QLineEdit(&dialog);
-//    QLineEdit *width_textLine= new QLineEdit(&dialog);
+    //    QLineEdit *height_textLine= new QLineEdit(&dialog);
+    //    QLineEdit *width_textLine= new QLineEdit(&dialog);
 
-//    form.addRow("Height",height_textLine);
-//    form.addRow("Width",width_textLine);
+    //    form.addRow("Height",height_textLine);
+    //    form.addRow("Width",width_textLine);
 
-//    QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
-//    form.addRow(&buttonbox);
+    //    QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
+    //    form.addRow(&buttonbox);
 
-//    QObject::connect(&buttonbox,SIGNAL(accepted()),&dialog,SLOT(accept()));
-//    QObject::connect(&buttonbox,SIGNAL(rejected()),&dialog,SLOT(reject()));
+    //    QObject::connect(&buttonbox,SIGNAL(accepted()),&dialog,SLOT(accept()));
+    //    QObject::connect(&buttonbox,SIGNAL(rejected()),&dialog,SLOT(reject()));
 
-//    if(dialog.exec() ==QDialog::Accepted){
-//        height=height_textLine->text().toInt();
-//        width=width_textLine->text().toInt();
-//    }
+    //    if(dialog.exec() ==QDialog::Accepted){
+    //        height=height_textLine->text().toInt();
+    //        width=width_textLine->text().toInt();
+    //    }
 
     QString html = QString("\n <img src='%1'>").arg(copiedImgFilePath);
     auto cursor = curr_browser->textCursor();
@@ -8341,7 +8229,6 @@ void MainWindow::blockCountChanged(int numOfBlocks)
  * Checks if user is already logined or not. If not then user is made to login
  * POST request is send to udaaniitb.aicte-india.org to get the files.
  * Json Object File is read and converted to Json Array.
- * "validate.json" is removed from output
  * Table is formed to preview how many file does user have in their repository
  */
 void MainWindow::on_actionClone_Repository()
@@ -8370,55 +8257,66 @@ void MainWindow::on_actionClone_Repository()
         msg.exec();
         return;
     }
-
-    //
     //retrieve details from database and check if user has access to push into this repo
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
     QString token = settings.value("token").toString();
     settings.endGroup();
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QUrl url("https://udaaniitb.aicte-india.org/udaan/email/");
+    QUrlQuery params;
+    params.addQueryItem("email", email);
+    params.addQueryItem("password", token);
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    // Disable SSL certificate verification
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    manager->post(request, params.toString(QUrl::FullyEncoded).toUtf8());
+    connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        if (reply->error() == QNetworkReply::NoError) {
+            m_data = reply->readAll();
+            QJsonParseError errorPtr;
+            QJsonDocument document = QJsonDocument::fromJson(m_data, &errorPtr);
+            QJsonObject mainObj = document.object();
+            QJsonArray repos = mainObj.value("repo_list").toArray();
+            if(repos.size() == 0){
+                QMessageBox msg;
+                msg.setText("There is nothing to show on dashboard");
+                msg.exec();
+                return;
+            }
+            QJsonArray::iterator itr; int flag = 0;
+            int lineindex = 0;
+            QString importHtml="<table><tr><th>#Project ID</th><th>#Project name</th></tr>";
+            QStandardItemModel *model = new QStandardItemModel;
+            QMap<int, QString> repoMap;
+            for(itr = repos.begin(); itr != repos.end(); itr++){
+                lineindex++;
+                repoMap[lineindex] = itr->toString();
+                QString num = QString::number(lineindex);
+                importHtml += QString::fromStdString("<tr><td>")+num+"</td><td>"+itr->toString()+"</td></tr";
+            }
+            importHtml += "</table>";
+            QString p_str = "";
+            bool open = false;
+            dashboard d(this, importHtml, repos.size(), repoMap, &p_str, &open);
+            d.exec();
+            import_flag = true;
+            ProjFile = p_str;
 
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
+            if(open == true){
+                on_actionOpen_Project_triggered();
+            }
 
-    QFile jsonFile("validate.json");
-    if(!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)){
-    QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Try switching your network or contact your administrator.");
-        return;
-    }
-    QJsonObject mainObj = readJsonFile("validate.json");
-    QJsonArray repos = mainObj.value("repo_list").toArray();
-    QFile::remove("validate.json");
-    if(repos.size() == 0){
-        QMessageBox msg;
-        msg.setText("There is nothing to show on dashboard");
-        msg.exec();
-        return;
-    }
-    QJsonArray::iterator itr; int flag = 0;
-    int lineindex = 0;
-    QString importHtml="<table><tr><th>#Project ID</th><th>#Project name</th></tr>";
-    QStandardItemModel *model = new QStandardItemModel;
-    QMap<int, QString> repoMap;
-    for(itr = repos.begin(); itr != repos.end(); itr++){
-        lineindex++;
-        repoMap[lineindex] = itr->toString();
-        QString num = QString::number(lineindex);
-        importHtml += QString::fromStdString("<tr><td>")+num+"</td><td>"+itr->toString()+"</td></tr";
-    }
-    importHtml += "</table>";
-    QString p_str = "";
-    bool open = false;
-    dashboard d(this, importHtml, repos.size(), repoMap, &p_str, &open);
-    d.exec();
-    import_flag = true;
-    ProjFile = p_str;
-
-    if(open == true){
-        on_actionOpen_Project_triggered();
-    }
-
+        } else {
+            QMessageBox::information(this,"Network error",reply->errorString()+"\nThere was an error in the network request. Please try again later or switch your network.");
+            return;
+        }
+        reply->deleteLater();
+    });
 }
 
 
@@ -8721,7 +8619,7 @@ void MainWindow::on_actionExit_triggered()
  * \brief Login using email and password
  * \details Asks user for email and password, then these credentials are verified witrh database and user is logged in if the details submitted by user are correct.
  * \details User enail is stored in cache for later usage.
- * \details curl is used to send post request to server.
+ * \details QNetwork module is used to send post request to server.
  */
 void MainWindow::login(){
     QDialog login(this);
@@ -8759,41 +8657,47 @@ void MainWindow::login(){
         user_email = email->text();
         user_pass = password->text();
         if(!user_email.isEmpty() && !user_pass.isEmpty()){
-            QProcess process;
-            process.execute("curl -d -X -k -POST --header "
-                            "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+user_email+"&password="+user_pass+"\" -o client.json");
-
-            QFile jsonFile("client.json");
-            if(!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)){
-                QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Try switching your network or contact your administrator.");
-                return;
-            }
-            QByteArray data = jsonFile.readAll();
-            QJsonParseError errorPtr;
-            QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-            QJsonObject mainObj = document.object();
-            jsonFile.close();
-            auto status = mainObj.value("status").toBool();
-            QFile::remove("client.json");
-
-            if(status == true){
-                //save details in QSettings
-                settings.beginGroup("login");
-                settings.setValue("email",user_email);
-                settings.setValue("token",user_pass);
-                settings.endGroup();
-                settings.beginGroup("loginConsent");
-                settings.setValue("consent","loggedIn");
-                settings.endGroup();
-                ui->actionLogin->setVisible(false);
-                ui->actionLogout->setVisible(true);
-                QMessageBox::information(this,"Login success","Logged in successfully.");
-                qDebug()<<settings.fileName();
-            }
-            else{
-                QMessageBox::information(this,"Login error","Wrong email or password, please try again.");
-                MainWindow::login();
-            }
+            QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+            QUrl url("https://udaaniitb.aicte-india.org/udaan/email/");
+            QUrlQuery params;
+            params.addQueryItem("email", user_email);
+            params.addQueryItem("password", user_pass);
+            QNetworkRequest request(url);
+            request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+            // Disable SSL certificate verification
+            QSslConfiguration sslConfig = request.sslConfiguration();
+            sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+            request.setSslConfiguration(sslConfig);
+            manager->post(request, params.toString(QUrl::FullyEncoded).toUtf8());
+            connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
+                QSettings settings("IIT-B", "OpenOCRCorrect");
+                if (reply->error() == QNetworkReply::NoError) {
+                    m_data = reply->readAll();
+                    QJsonParseError errorPtr;
+                    QJsonDocument document = QJsonDocument::fromJson(m_data, &errorPtr);
+                    QJsonObject mainObj = document.object();
+                    auto status = mainObj.value("status").toBool();
+                    if(status == true){
+                        //save details in QSettings
+                        settings.beginGroup("login");
+                        settings.setValue("email",user_email);
+                        settings.setValue("token",user_pass);
+                        settings.endGroup();
+                        settings.beginGroup("loginConsent");
+                        settings.setValue("consent","loggedIn");
+                        settings.endGroup();
+                        QMessageBox::information(this,"Login success","Logged in successfully.");
+                    }
+                    else{
+                        QMessageBox::information(this,"Login error","Wrong email or password, please try again.");
+                        this->login();
+                    }
+                } else {
+                    QMessageBox::information(this,"Network error",reply->errorString()+"\nThere was an error in the network request. Please try again later or switch your network.");
+                    return;
+                }
+                reply->deleteLater();
+            });
         }
         else{
             QMessageBox::information(this,"Required!","Please fill all the fields");
@@ -8894,12 +8798,12 @@ void MainWindow::autoSave(){
                 qDebug()<<"You don't have access to this set.";
                 return;
             }
-//            if(mRole == "Corrector")
+            //            if(mRole == "Corrector")
             cloud_save();
-//            else if(mRole == "Verifier"){
-//                if(verifier_save())
-//                    QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
-//            }
+            //            else if(mRole == "Verifier"){
+            //                if(verifier_save())
+            //                    QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
+            //            }
         }
         else
             qDebug()<<"Internet unavailable!";
@@ -8919,42 +8823,64 @@ bool MainWindow::check_access()
     QString email = settings.value("email").toString();
     QString token = settings.value("token").toString();
     settings.endGroup();
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
-    QFile jsonFile("validate.json");
-    if(!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)){
-        QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Try switching your network or contact your administrator.");
-        return false;
-    }
-    //to find the repo name from .git/congig file
-    QString repo = "";
-    QString gDir = gDirTwoLevelUp+"/.git/config";
-    QFile f(gDir);
-    f.open(QIODevice::ReadOnly);
-    while(!f.atEnd()) {
-        QString line = f.readLine();
-        if(line.contains("https://github.com")){
-            QStringList l = line.split("/");
-            repo = l[l.size()-1].remove("\n");
-            break;
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QUrl url("https://udaaniitb.aicte-india.org/udaan/email/");
+    QUrlQuery params;
+    params.addQueryItem("email", email);
+    params.addQueryItem("password", token);
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    // Disable SSL certificate verification
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    manager->post(request, params.toString(QUrl::FullyEncoded).toUtf8());
+    QEventLoop loop;
+    bool result = false; // initialize the result to false
+    connect(manager, &QNetworkAccessManager::finished, this, [=, &loop, &result](QNetworkReply *reply) {
+        if (reply->error() == QNetworkReply::NoError) {
+            m_data = reply->readAll();
+            QString repo = "";
+            QString gDir = gDirTwoLevelUp+"/.git/config";
+            QFile f(gDir);
+            f.open(QIODevice::ReadOnly);
+            while(!f.atEnd()) {
+                QString line = f.readLine();
+                if(line.contains("https://github.com")){
+                    QStringList l = line.split("/");
+                    repo = l[l.size()-1].remove("\n");
+                    break;
+                }
+            }
+            f.close();
+            QJsonParseError errors;
+            QJsonDocument doc = QJsonDocument::fromJson(m_data, &errors);
+            QJsonObject obj = doc.object();
+            QJsonArray repos = obj.value("repo_list").toArray();
+            QJsonArray::iterator itr; int flag = 0;
+            for(itr = repos.begin(); itr != repos.end(); itr++){
+                if(itr->toString() == repo){
+                    flag = 1;
+                    break;
+                }
+            }
+            if(repos.size() == 0 || flag == 0){
+                loop.quit(); // exit the event loop
+                result = false; // set the result to false
+            }
+            else{
+                loop.quit(); // exit the event loop
+                result = true; // set the result to true
+            }
+        } else {
+            QMessageBox::information(this,"Network error",reply->errorString()+"\nThere was an error in the network request. Please try again later or switch your network.");
+            loop.quit(); // exit the event loop
+            result = false; // set the result to false
         }
-    }
-    f.close();
-    QJsonObject mainObj = readJsonFile("validate.json");
-    QJsonArray repos = mainObj.value("repo_list").toArray();
-    QJsonArray::iterator itr; int flag = 0;
-    for(itr = repos.begin(); itr != repos.end(); itr++){
-        if(itr->toString() == repo){
-            flag = 1;
-            break;
-        }
-    }
-    QFile::remove("validate.json");
-    if(repos.size() == 0 || flag == 0){
-        return false;
-    }
-    return true;
+        reply->deleteLater();
+    });
+    loop.exec(); // start the event loop
+    return result; // return the result after the event loop has finished
 }
 
 /*!
@@ -9047,7 +8973,6 @@ void MainWindow::cloud_save(){
             QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
             return;
         }
-//        mProject.set_corrector();
 
         ui->lineEdit_2->setText("Version " + mProject.get_version());      //Update the version of file on ui.
 
@@ -9061,39 +8986,6 @@ void MainWindow::cloud_save(){
         settings.endGroup();
     }
 }
-
-/*!
- * \brief MainWindow::verifier_save
- * \param commit_msg
- * \details This function is called in verifier mode when tool is closed.
- * \details Calls commit and push functions
- * \return Returns true if pushed successfully or false if failed.
- */
-//bool MainWindow::verifier_save()
-//{
-//    messageTimer();
-//    QString date = QDate::currentDate().toString();
-//    QString corrected_count = gDirTwoLevelUp + "/Comments/"+mRole+"_count.json";
-//    QJsonObject mainObj, parObj;
-//    parObj = readJsonFile(corrected_count);
-//    mainObj = parObj[date].toObject();
-//    //    QString Corrector = mainObj["Corrector"].toString();
-//    //    mainObj.insert("Corrector", Corrector);
-//    mainObj.insert("Verifier", gCurrentPageName);
-//    parObj.insert(date, mainObj);
-//    writeJsonFile(corrected_count, parObj);
-
-//    QString commit_msg = gCurrentPageName+" verified by verifier";
-//    if(mProject.commit(commit_msg.toStdString()))
-//    {
-//        if(!mProject.push(gDirTwoLevelUp)){
-//            mProject.enable_push(false);
-//            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
-//            return false;
-//        }
-//    }
-//    return true;
-//}
 
 /*!
  * \brief MainWindow::preprocessing
@@ -9512,6 +9404,7 @@ void MainWindow::e_d_features(bool value)
     ui->zoom_In_Button->setEnabled(value);
     ui->zoom_Out_Button->setEnabled(value);
     ui->horizontalSlider->setEnabled(value);
+    ui->actionFetch_2->setEnabled(true);
 }
 
 
@@ -9769,7 +9662,7 @@ void MainWindow::on_actionIncrease_Indent_triggered(int left, int right)
     else blockFormat.setRightMargin(right);
     blockFormat.setIndent(indent);
 
-//    qDebug()<<"Increase Indent ->"<<blockFormat.indent();
+    //    qDebug()<<"Increase Indent ->"<<blockFormat.indent();
 
     cursor.mergeBlockFormat(blockFormat);
 
@@ -9798,7 +9691,7 @@ void MainWindow::on_actionDecrease_Indent_triggered()
     blockFormat.setLeftMargin(margin.left());
     blockFormat.setIndent(presentIndent - 1);
 
-//    qDebug()<<"Decrease Indent ->"<<blockFormat.indent();
+    //    qDebug()<<"Decrease Indent ->"<<blockFormat.indent();
 
     cursor.mergeBlockFormat(blockFormat);
 }
@@ -9843,103 +9736,103 @@ void MainWindow::on_actionResize_Image_2_triggered()
 void MainWindow::on_actionWord_Count_triggered()
 {
     if(curr_browser){
-            QString extText = curr_browser->toPlainText();
-            //!Removes these symbol while counting
-            extText.remove("?");
-            extText.remove("|");
-            extText.remove("`");
-            extText.remove("[");
-            extText.remove("]");
-            extText.remove("'");
-            extText.remove(",");
+        QString extText = curr_browser->toPlainText();
+        //!Removes these symbol while counting
+        extText.remove("?");
+        extText.remove("|");
+        extText.remove("`");
+        extText.remove("[");
+        extText.remove("]");
+        extText.remove("'");
+        extText.remove(",");
 
-            int wordcnt = extText.split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
-            QString str = QString::number(wordcnt);
-            QString currentDirAbsolutePath;
-            if(mRole=="Verifier")
-                currentDirAbsolutePath = gDirTwoLevelUp + "/VerifierOutput/";
-            else if (mRole=="Corrector") {
-                currentDirAbsolutePath = gDirTwoLevelUp + "/CorrectorOutput/";
-            }
+        int wordcnt = extText.split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
+        QString str = QString::number(wordcnt);
+        QString currentDirAbsolutePath;
+        if(mRole=="Verifier")
+            currentDirAbsolutePath = gDirTwoLevelUp + "/VerifierOutput/";
+        else if (mRole=="Corrector") {
+            currentDirAbsolutePath = gDirTwoLevelUp + "/CorrectorOutput/";
+        }
 
 
-            //! We then open this directory and set sorting preferences.
-            QDir dir(currentDirAbsolutePath);
-            dir.setSorting(QDir::SortFlag::DirsFirst | QDir::SortFlag::Name);
-            QDirIterator dirIterator(dir,QDirIterator::NoIteratorFlags);
-            qDebug()<<dir;
-            //! Set count of files in directory
+        //! We then open this directory and set sorting preferences.
+        QDir dir(currentDirAbsolutePath);
+        dir.setSorting(QDir::SortFlag::DirsFirst | QDir::SortFlag::Name);
+        QDirIterator dirIterator(dir,QDirIterator::NoIteratorFlags);
+        qDebug()<<dir;
+        //! Set count of files in directory
 
-            int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
-            QString str1 = QString::number(count);
-            int t_words=0;
-            foreach(auto a, dir.entryList())
+        int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
+        QString str1 = QString::number(count);
+        int t_words=0;
+        foreach(auto a, dir.entryList())
+        {
+            QString x = currentDirAbsolutePath + a;
+            QString mainHtml;
+            int count=0;
+            if(x.contains("."))
             {
-                QString x = currentDirAbsolutePath + a;
-                QString mainHtml;
-                int count=0;
-                if(x.contains("."))
+                QStringList html_files = x.split(QRegExp("[.]"));
+                if(html_files[1]=="html")
                 {
-                    QStringList html_files = x.split(QRegExp("[.]"));
-                    if(html_files[1]=="html")
+                    QFile file(x);
+                    if (!file.open(QIODevice::ReadOnly))
+                        qDebug() << "Error reading file main.html";
+                    QTextStream stream(&file);
+                    stream.setCodec("UTF-8");
+                    mainHtml=stream.readAll();
+                    QRegularExpression rex_dollar("(?<=\\$\\$)(.*?)(?=\\$\\$)",QRegularExpression::DotMatchesEverythingOption);
+
+                    auto itr = rex_dollar.globalMatch(mainHtml);
+                    QTextDocument doc;
+                    doc.setHtml(mainHtml);
+                    QString s1 = doc.toPlainText();
+
+
+
+                    while(itr.hasNext())
                     {
-                        QFile file(x);
-                        if (!file.open(QIODevice::ReadOnly))
-                            qDebug() << "Error reading file main.html";
-                        QTextStream stream(&file);
-                        stream.setCodec("UTF-8");
-                        mainHtml=stream.readAll();
-                        QRegularExpression rex_dollar("(?<=\\$\\$)(.*?)(?=\\$\\$)",QRegularExpression::DotMatchesEverythingOption);
-
-                        auto itr = rex_dollar.globalMatch(mainHtml);
-                        QTextDocument doc;
-                        doc.setHtml(mainHtml);
-                        QString s1 = doc.toPlainText();
-
-
-
-                         while(itr.hasNext())
-                         {
-                             count++;
-                             itr.next();
-                         }
-                        s1.remove("?");
-                        s1.remove("|");
-                        s1.remove("`");
-                        s1.remove("[");
-                        s1.remove("]");
-                        s1.remove("'");
-                        s1.remove(",");
-                        s1.remove(rex_dollar);
-
-                        int wordcnt = s1.split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
-                        wordcnt += (count-1)/2;
-                        t_words += wordcnt;
-
+                        count++;
+                        itr.next();
                     }
+                    s1.remove("?");
+                    s1.remove("|");
+                    s1.remove("`");
+                    s1.remove("[");
+                    s1.remove("]");
+                    s1.remove("'");
+                    s1.remove(",");
+                    s1.remove(rex_dollar);
+
+                    int wordcnt = s1.split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
+                    wordcnt += (count-1)/2;
+                    t_words += wordcnt;
+
                 }
             }
+        }
 
-            QString str3 = QString::number(t_words);
-            QDialog dialog(this);
-            QFormLayout form(&dialog);
-            form.addRow(new QLabel("Word Count", this));
+        QString str3 = QString::number(t_words);
+        QDialog dialog(this);
+        QFormLayout form(&dialog);
+        form.addRow(new QLabel("Word Count", this));
 
-            QLineEdit *page = new QLineEdit(&dialog);
-            QLineEdit *c_page = new QLineEdit(&dialog);
-            QLineEdit *total_words = new QLineEdit(&dialog);
+        QLineEdit *page = new QLineEdit(&dialog);
+        QLineEdit *c_page = new QLineEdit(&dialog);
+        QLineEdit *total_words = new QLineEdit(&dialog);
 
-            c_page->setText(str);
-            page->setText(str1);
-            total_words->setText(str3);
-            page->setReadOnly(true);
-            c_page->setReadOnly(true);
-            total_words->setReadOnly(true);
-            form.addRow("Current Page", c_page);
-            form.addRow("Total Pages", page);
-            form.addRow("Total Words",total_words);
-            dialog.exec();
-}
+        c_page->setText(str);
+        page->setText(str1);
+        total_words->setText(str3);
+        page->setReadOnly(true);
+        c_page->setReadOnly(true);
+        total_words->setReadOnly(true);
+        form.addRow("Current Page", c_page);
+        form.addRow("Total Pages", page);
+        form.addRow("Total Words",total_words);
+        dialog.exec();
+    }
 }
 
 /*!
@@ -10006,11 +9899,11 @@ void MainWindow::on_actionCell_Padding_triggered()
 }
 
 void MainWindow::update_tool(){
-    #ifdef Q_OS_WIN
+#ifdef Q_OS_WIN
     QUrl downloadUrl("https://www.cse.iitb.ac.in/~ayusham/Udaan-Windows-v3.5.9.zip");
-    #else
+#else
     QUrl downloadUrl("https://www.cse.iitb.ac.in/~ayusham/Udaan-Linux-v3.5.9.tar.xz");
-    #endif
+#endif
     QDialog dialog(this);
     QFormLayout form(&dialog);
     QProgressBar pb(this);
@@ -10066,9 +9959,9 @@ void MainWindow::processProgress(qint64 bytesReceived, qint64 bytesTotal, QProgr
 void MainWindow::on_pushButton_6_clicked()
 {
     QString currentDirAbsolutePath = gDirTwoLevelUp + "/" + gCurrentDirName;
-        runGlobalReplace(currentDirAbsolutePath, changedWords);
-        ConvertSlpDevFlag =0;
-        changedWords.clear();
-        ui->pushButton_6->setVisible(false);
+    runGlobalReplace(currentDirAbsolutePath, changedWords);
+    ConvertSlpDevFlag =0;
+    changedWords.clear();
+    ui->pushButton_6->setVisible(false);
 }
 

@@ -41,7 +41,6 @@
 #include "loadingspinner.h"
 #include "progressbardialog.h"
 #include <markRegion.h>
-#include <QOAuth2AuthorizationCodeFlow>
 #include <QCompleter>
 #include <QDirModel>
 #include <QStringListModel>
@@ -508,10 +507,12 @@ public slots:
 
 	void blockCountChanged(int);
 
-    void authenticate();
     void login();
+
     void createTable();
+
     void e_d_features(bool value);
+
     void update_tool();
 
 private:
@@ -560,8 +561,6 @@ private:
 	QVector<QPair<QString,QString> > bboxes;
 	int blockCount = -1;
     GlobalReplaceDialog *currentGlobalReplaceDialog = nullptr;
-    QOAuth2AuthorizationCodeFlow * google;
-    void googleAuth();
     QSet<QString> dict_set1; //! Keep it available globally so that we need not to parse dictionary file at the time of saving logs.
     bool check();
     bool check_access();
@@ -576,7 +575,8 @@ private:
     void speechToTextCall();
     bool import_flag = false;
     int flag_tab = 0;
-     QVector <QString> changedWords;
+    QVector <QString> changedWords;
+    QByteArray m_data;
 };
 
 #endif // MAINWINDOW_H
