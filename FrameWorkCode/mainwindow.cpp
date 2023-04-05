@@ -291,6 +291,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     QFontDatabase::addApplicationFont(":/Fonts/fonts/brhkndrn/brhkndrn.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/fonts/Nudi 1/Nudi 01 e Regular.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/fonts/Chanakya Regular/Chanakya Regular.ttf");
+    QFontDatabase::addApplicationFont(":/Fonts/fonts/Jameel Noori Nastaleeq Regular/Jameel Noori Nastaleeq Regular.ttf");
 
     if (!isVerifier)
     {
