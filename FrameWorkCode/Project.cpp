@@ -929,7 +929,7 @@ static int transfer_progress_cb(const git_transfer_progress *stats, void *payloa
  * \details If the local repository is not up to date with the remote one, then reset the local one to the latest commit.
  * \return int
  */
-int Project::fetch()
+int Project::fetch(QString gDirTwoLevelUp)
 {
     int error = 0;
     git_remote *remote = NULL;
@@ -999,42 +999,46 @@ int Project::fetch()
     }
     git_revwalk_free(walker);
     qDebug() << "Final count = " << count;
-
     if (count > 0) {
-        // perform git reset
-        QFile fetchHeadFile("../.git/refs/remotes/origin/HEAD");
-        if (!fetchHeadFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            qDebug() << "cannot open file: " << QFileInfo(fetchHeadFile).absoluteFilePath();
-            goto cleanup;
+        //find local branch name
+        QString branchName;
+        QString gDir = gDirTwoLevelUp+"/.git/config";
+        QFile f(gDir);
+        f.open(QIODevice::ReadOnly);
+        while(!f.atEnd()) {
+            QString line = f.readLine();
+            if(line.contains("branch")){
+                QStringList l = line.split(" ");
+                l[1] = l[1].remove("\"");
+                branchName = l[1].remove("]").simplified();
+                break;
+            }
         }
-
-        QString text = fetchHeadFile.readAll();
-        QString nameOfFileStoresCommitID = text.remove("ref: ").remove("\n");
-        fetchHeadFile.close();
-
-        nameOfFileStoresCommitID = "../.git/" + nameOfFileStoresCommitID;
-        QFile fileStoresCommitID(nameOfFileStoresCommitID);
-        if (!fileStoresCommitID.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            qDebug() << "Cannot open file: " << QFileInfo(fileStoresCommitID).absoluteFilePath();
-            goto cleanup;
-        }
-        QString commit_id = fileStoresCommitID.readAll();
-        fileStoresCommitID.close();
-
-        const char *sha = commit_id.toLocal8Bit();
-        git_oid oid;
-        error = git_oid_fromstr(&oid, sha);
+        f.close();
+        // perform git merge
+        git_reference *local_branch_ref = NULL;
+        error = git_branch_lookup(&local_branch_ref, repo, branchName.toUtf8().constData(), GIT_BRANCH_LOCAL);
         if (error < 0) {
-            goto cleanup;
-        }
-        git_object *obj;
-        error = git_object_lookup(&obj, repo, &oid, GIT_OBJECT_ANY);
-        if (error < 0) {
+            qDebug() << "Cannot find local branch";
             goto cleanup;
         }
 
-        git_reset(repo, obj, GIT_RESET_HARD, NULL);
-        git_object_free(obj);
+        git_annotated_commit *remote_commit = NULL;
+        error = git_annotated_commit_lookup(&remote_commit, repo, &oid);
+        if (error < 0) {
+            qDebug() << "Cannot find remote commit";
+            goto cleanup;
+        }
+
+        git_merge_options merge_opts = GIT_MERGE_OPTIONS_INIT;
+        error = git_merge(repo, (const git_annotated_commit **) &remote_commit, 1, &merge_opts, NULL);
+        if (error < 0) {
+            qDebug() << "Cannot merge changes from remote branch";
+            goto cleanup;
+        }
+
+        git_reference_free(local_branch_ref);
+        git_annotated_commit_free(remote_commit);
     }
 
 cleanup:

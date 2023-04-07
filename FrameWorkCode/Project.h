@@ -31,7 +31,7 @@ public:
     bool push(QString branchName);
 	bool add_config();
 	bool add_git_config(); // New function which does not looks up the git configurations (regardless of any level)
-	int fetch();
+    int fetch(QString);
     bool enable_push(bool increment);
 	void AddTemp(Filter * f, QFile &pFile,QString prefix);
     int findNumberOfFilesInDirectory(std::string);

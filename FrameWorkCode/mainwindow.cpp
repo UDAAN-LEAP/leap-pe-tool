@@ -3198,7 +3198,7 @@ void MainWindow::on_actionFetch_2_triggered()
         int error;
         if (forPullBox.clickedButton() == okButton)
         {
-            if ((error = mProject.fetch()) != 0) {
+            if ((error = mProject.fetch(gDirTwoLevelUp)) != 0) {
                 qDebug() << "Fetch failed with error code " << error;
             }
             if(mProject.get_version().toInt())
