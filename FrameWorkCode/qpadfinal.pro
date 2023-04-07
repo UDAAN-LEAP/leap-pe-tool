@@ -58,3 +58,10 @@ win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../lib/release
 else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../lib/debug/libYAWYSIWYGEE.a
 else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../lib/release/YAWYSIWYGEE.lib
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../lib/debug/YAWYSIWYGEE.lib
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../Downloads/quazip-0.7.3/quazip/release/ -lquazip
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../Downloads/quazip-0.7.3/quazip/debug/ -lquazip
+else:unix: LIBS += -L$$PWD/../../../../Downloads/quazip-0.7.3/quazip/ -lquazip
+
+INCLUDEPATH += $$PWD/../../../../Downloads/quazip-0.7.3/quazip
+DEPENDPATH += $$PWD/../../../../Downloads/quazip-0.7.3/quazip

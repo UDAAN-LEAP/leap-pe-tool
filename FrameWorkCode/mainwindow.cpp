@@ -85,6 +85,8 @@
 #include <QStandardPaths>
 #include <about.h>
 #include <QCalendarWidget>
+#include <quazip.h>
+#include <quazipfile.h>
 
 map<string, string> LSTM;
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -9920,20 +9922,38 @@ void MainWindow::update_tool(){
     });
 
     connect(reply, &QNetworkReply::finished, this, [&]() {
-        QProcess process;
-        process.setProgram("tar");
-        process.setArguments(QStringList() << "-xf" << path);
-        process.start();
-        process.waitForFinished();
+        QuaZip zip(path);
+        zip.open(QuaZip::mdUnzip);
+        QString outputPath = QDir::current().absolutePath();
+        QuaZipFileInfo info;
+        QuaZipFile file(&zip);
+
+        for(bool more = zip.goToFirstFile(); more; more = zip.goToNextFile()) {
+            if(!zip.getCurrentFileInfo(&info)) break;
+
+            QString name = info.name;
+            QString outputFilePath = outputPath + name;
+            if(!file.open(QIODevice::ReadOnly)) break;
+            QByteArray data = file.readAll();
+            file.close();
+            QFile outputFile(outputFilePath);
+            QString temp = outputFilePath;
+            QStringList list = outputFilePath.split("/");
+            temp.remove(list[list.size() - 1]);
+            QFile tempFile(temp);
+            if(!tempFile.exists()) {
+                QDir().mkdir(temp);
+            }
+            outputFile.open(QIODevice::WriteOnly);
+            outputFile.write(data);
+            outputFile.close();
+        }
         QFile::remove(path);
-        file->close();
         reply->deleteLater();
         dialog.deleteLater();
-        delete file;
     });
 
     connect(reply, &QNetworkReply::downloadProgress, this, [&](qint64 bytesReceived, qint64 bytesTotal) {
-        qDebug() << "Downloaded" << bytesReceived << "of" << bytesTotal << "bytes.";
         processProgress(bytesReceived, bytesTotal, &pb);
     });
 
