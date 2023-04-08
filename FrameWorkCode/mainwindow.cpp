@@ -9922,7 +9922,7 @@ void MainWindow::update_tool(){
     });
 
     connect(reply, &QNetworkReply::finished, this, [&]() {
-        QuaZip zip(path);
+        /*QuaZip zip(path);
         zip.open(QuaZip::mdUnzip);
         QString outputPath = QDir::current().absolutePath();
         QuaZipFileInfo info;
@@ -9947,7 +9947,24 @@ void MainWindow::update_tool(){
             outputFile.open(QIODevice::WriteOnly);
             outputFile.write(data);
             outputFile.close();
+        }*/
+
+        QProcess *process = new QProcess(this);
+
+        QString currentDirectory = QDir().currentPath();
+        QDir directory(currentDirectory);
+        directory.cdUp();
+        QString input = path;
+        QString output = directory.absolutePath();
+        QString command = "tar -xJf " + input + " -C " + output;
+        process->start("/bin/sh", QStringList() << "-c" << command);
+        qDebug() << process->arguments();
+        process->waitForFinished(100000000);
+
+        if(process->exitCode() != QProcess::NormalExit || process->exitStatus()!= QProcess::NormalExit) {
+            qDebug() << process->readAllStandardError();
         }
+
         QFile::remove(path);
         reply->deleteLater();
         dialog.deleteLater();
