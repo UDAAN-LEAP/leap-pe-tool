@@ -490,7 +490,7 @@ private slots:
 
     void on_actionCell_Padding_triggered();
 
-    void processProgress(qint64 bytesReceived, qint64 bytesTotal, QProgressBar *pb);
+    void processProgress(qint64 bytesReceived, qint64 bytesTotal, QProgressBar *pb, QLabel *labelProgress);
 
     void on_pushButton_6_clicked();
 
