@@ -51,7 +51,10 @@
 #include "handlebbox.h"
 #include <QMediaRecorder>
 #include <QCalendarWidget>
+
 #include <QProgressBar>
+
+
 
 using namespace std;
 class AudioLevel;
@@ -486,6 +489,7 @@ private slots:
     void getDate(QDate date, QCalendarWidget *calendar);
 
 
+
     void on_actionTable_Border_Color_triggered();
 
     void on_actionCell_Padding_triggered();
@@ -493,6 +497,29 @@ private slots:
     void processProgress(qint64 bytesReceived, qint64 bytesTotal, QProgressBar *pb, QLabel *labelProgress);
 
     void on_pushButton_6_clicked();
+
+    //<<<<<Changes
+    void on_corrected_clicked();
+
+    void on_verified_clicked();
+
+    void write_corrected_pages();
+
+    void write_verified_pages();
+
+    void read_corrected_pages();
+
+    void read_verified_pages();
+
+    void on_mark_review_clicked();
+
+    void read_review_pages();
+
+    void write_review_pages();
+
+
+    //>>>>>>>
+
 
 public slots:
     void on_actionLoad_Next_Page_triggered();
@@ -575,8 +602,20 @@ private:
     void speechToTextCall();
     bool import_flag = false;
     int flag_tab = 0;
+
     QVector <QString> changedWords;
     QByteArray m_data;
+
+
+
+    //<<<<< Changes
+    //Storing the status of the pages :-> Corrected || Verified
+    QMap<QString,int>correct;
+    QMap<QString,int>verify;
+    QString currentFile = "";
+    QMap<QString,int>markForReview;
+    //>>>>>
+
 };
 
 #endif // MAINWINDOW_H

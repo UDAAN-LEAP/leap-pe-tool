@@ -85,8 +85,8 @@
 #include <QStandardPaths>
 #include <about.h>
 #include <QCalendarWidget>
-#include <quazip.h>
-#include <quazipfile.h>
+
+
 
 map<string, string> LSTM;
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -327,6 +327,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     //disable features
     e_d_features(false);
+
+    //<<<<<<<Changes
+    ui->corrected->setVisible(false);
+    ui->verified->setVisible(false);
+    ui->mark_review->setVisible(false);
+    ui->status->setVisible(false);
+    ui->label->setVisible(false);
+
+    ui->corrected->setEnabled(false);
+    ui->verified->setEnabled(false);
+    ui->mark_review->setEnabled(false);
+
+    //>>>>>>
 }
 
 /*!
@@ -417,7 +430,16 @@ bool MainWindow::setRole(QString role)
                              {"VerifierOutput","VerifierOutput" }
                            };
         isVerifier = 1;
-        this->setWindowTitle("Udaan PE Tool-Verifier");
+
+
+
+        ui->actionTurn_In->setVisible(false);      //set false to its visibility; now shown
+        ui->actionTurn_In->setEnabled(false);      //disable the option
+
+
+
+        this->setWindowTitle("Udaan Editing Tool-Verifier");
+
 
     }
     else if(mRole == "Corrector")
@@ -433,6 +455,8 @@ bool MainWindow::setRole(QString role)
 
         ui->viewComments->setVisible(false);
         ui->viewComments->setEnabled(false);
+
+
 
         isVerifier = 0;
         this->setWindowTitle("Udaan PE Tool-Corrector");
@@ -1056,6 +1080,8 @@ void MainWindow::on_actionEnglish_triggered()
  */
 void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     //QString ProjFile;
+
+
     int totalFileCountInDir = 0;
     QMap<QString, int> fileCountInDir;
     //to choose between recent three files
@@ -1086,6 +1112,27 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     if(mProject.isProjectOpen()){ //checking if some project is opened, then closing it before opening new project
         on_actionClose_project_triggered();
     }
+
+    //<<<<<<<<Changes
+    correct.clear();
+    verify.clear();
+    markForReview.clear();
+
+    ui->label->setVisible(true);
+    ui->status->setVisible(true);
+
+    if(mRole == "Corrector"){
+        ui->corrected->setVisible(true);
+        ui->corrected->setEnabled(true);
+    }
+
+    if(mRole == "Verifier"){
+        ui->verified->setVisible(true);
+        ui->mark_review->setVisible(true);
+        ui->verified->setEnabled(true);
+        ui->mark_review->setEnabled(true);
+    }
+    //>>>>>>>
 
     if (result != 0) {
         QMessageBox::warning(0, "Project XML file Error", "Project XML File is corrupted \n\nError "+ QString::fromStdString(std::to_string(verifySetObj.getErrorCode()))+": " + verifySetObj.getErrorString()+"\n\nPlease Report this to your administrator");
@@ -1250,6 +1297,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         }
 
         QString projectWindowStylesheet = ui->treeView->styleSheet();
+
+
         int indexOfScrollBarProp = projectWindowStylesheet.indexOf("QScrollBar::handle:vertical");
         int heightProp = projectWindowStylesheet.indexOf("height:", indexOfScrollBarProp);
 
@@ -1265,6 +1314,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             int insertHeightProp = projectWindowStylesheet.indexOf("{", indexOfScrollBarProp) + 1;
             projectWindowStylesheet.insert(insertHeightProp, "height:" + heightValue);
         }
+
         ui->treeView->setStyleSheet(projectWindowStylesheet);
 
         UpdateFileBrekadown();    //Reset the current file and dir levels
@@ -1362,6 +1412,50 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->viewComments->setDisabled(false);
     ui->compareCorrectorOutput->setDisabled(false);
     ui->groupBox->setDisabled(false);
+
+    //<<<<<<<Changes
+    read_review_pages();
+    read_corrected_pages();
+    read_verified_pages();
+
+
+    if(verify[gCurrentPageName] != 0){
+        curr_browser->setReadOnly(true);
+        ui->status->setText("Verified");
+        ui->verified->setChecked(true);
+        ui->corrected->setChecked(true);
+        ui->verified->setEnabled(true);
+        ui->mark_review->setEnabled(false);
+        ui->corrected->setEnabled(false);
+    }
+    else if(markForReview[gCurrentPageName] != 0){
+        ui->status->setText("Marked For Review");
+        curr_browser->setReadOnly(false);
+        ui->mark_review->setChecked(true);
+        ui->corrected->setChecked(false);
+        ui->corrected->setEnabled(true);
+        ui->verified->setEnabled(false);
+        ui->mark_review->setEnabled(true);
+    }
+    else if(correct[gCurrentPageName] != 0){
+        curr_browser->setReadOnly(false);
+        ui->corrected->setChecked(true);
+        ui->corrected->setEnabled(true);
+        ui->status->setText("Corrected");
+        ui->verified->setEnabled(true);
+        ui->mark_review->setEnabled(true);
+    }
+    else{
+        curr_browser->setReadOnly(false);
+        ui->corrected->setChecked(false);
+        ui->corrected->setEnabled(true);
+        ui->verified->setChecked(false);
+        ui->mark_review->setChecked(false);
+        ui->verified->setEnabled(false);
+        ui->mark_review->setEnabled(false);
+        ui->status->setText("None");
+    }
+    //>>>>>>
 }
 /*!
  * \fn MainWindow::AddRecentProjects
@@ -6068,6 +6162,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 
     //! Enabling Selection in treeView
     ui->treeView->selectionModel()->clearSelection();
+
     QModelIndex currentTreeItemIndex = ui->treeView->selectionModel()->currentIndex();
     QModelIndex parentIndex = currentTreeItemIndex.parent();
     auto model = ui->treeView->model();
@@ -6077,10 +6172,12 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     for (int i = 0; i < rowCount; i++)
     {
         QModelIndex index = model->index(i, 0, parentIndex);
+
         treeItemLabel = index.data(Qt::DisplayRole).toString();
 
         if (index.isValid())
         {
+
             if (treeItemLabel == currentTabPageName)
             {
                 ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
@@ -6180,12 +6277,15 @@ void MainWindow::file_click(const QModelIndex & indx)
         return;
     auto file = item->GetFile();
     QString fileName = file->fileName();          //gets filename
+
+
     NodeType type = item->GetNodeType();
     switch (type) {
     case NodeType::_FILETYPE:
     {
         QFileInfo f(*file);
         QString suff = f.completeSuffix();
+
         if (suff == "txt" || suff == "html") {
             LoadDocument(file,suff,qvar);     //loads not image files
         }
@@ -6194,11 +6294,69 @@ void MainWindow::file_click(const QModelIndex & indx)
         {
             LoadImageFromFile(file);          //loads image files
         }
+
+        //<<<<<<<Changes
+        currentFile = gCurrentPageName;
+
+        if(currentFile != ""){
+            if(verify[currentFile] != 0){
+                ui->status->setText("Verified");
+                curr_browser->setReadOnly(true);
+
+                ui->verified->setChecked(true);
+                ui->verified->setEnabled(true);
+                ui->corrected->setChecked(true);
+                ui->mark_review->setChecked(false);
+                ui->mark_review->setEnabled(false);
+                ui->corrected->setEnabled(false);
+            }
+            else if(markForReview[currentFile] != 0){
+                ui->status->setText("Marked For Review");
+                curr_browser->setReadOnly(false);
+
+                ui->mark_review->setChecked(true);
+                ui->mark_review->setEnabled(true);
+
+                ui->corrected->setChecked(false);
+                ui->corrected->setEnabled(true);
+
+                ui->verified->setChecked(false);
+                ui->verified->setEnabled(false);
+            }
+            else if(correct[currentFile] != 0){
+                ui->corrected->setChecked(true);
+                ui->corrected->setEnabled(true);
+                ui->status->setText("Corrected");
+
+                curr_browser->setReadOnly(false);
+
+                ui->verified->setChecked(false);
+                ui->verified->setEnabled(true);
+
+                ui->mark_review->setEnabled(true);
+                ui->mark_review->setChecked(false);
+            }
+            else{
+                ui->corrected->setChecked(false);
+                ui->verified->setChecked(false);
+                ui->mark_review->setChecked(false);
+
+                ui->corrected->setEnabled(true);
+                ui->verified->setEnabled(false);
+                ui->mark_review->setEnabled(false);
+
+                ui->status->setText("None");
+
+                curr_browser->setReadOnly(false);
+            }
+        }
+        //>>>>>>>>>
         break;
     }
     default:
         break;
     }
+
 
 }
 
@@ -6597,6 +6755,16 @@ void MainWindow::closeEvent (QCloseEvent *event)
             event->accept();
         }
     }
+
+    //<<<<<<Changes
+    write_verified_pages();
+    write_corrected_pages();
+    write_review_pages();
+    correct.clear();
+    verify.clear();
+    markForReview.clear();
+    //>>>>>>>
+
     autoSave();
 }
 
@@ -7532,6 +7700,7 @@ void MainWindow::on_action1_triggered()
 {
     proj_flag = '0';
     isRecentProjclick = true;
+
     on_actionOpen_Project_triggered();
 }
 
@@ -7543,6 +7712,7 @@ void MainWindow::on_action2_triggered()
 {
     proj_flag = '1';
     isRecentProjclick = true;
+
     on_actionOpen_Project_triggered();
 }
 
@@ -7554,6 +7724,7 @@ void MainWindow::on_action3_triggered()
 {
     proj_flag = '2';
     isRecentProjclick = true;
+
     on_actionOpen_Project_triggered();
 }
 
@@ -8325,6 +8496,30 @@ void MainWindow::on_actionClone_Repository()
  */
 void MainWindow::on_actionClose_project_triggered()
 {
+    //<<<<<<Changes
+    write_corrected_pages();
+    write_verified_pages();
+    write_review_pages();
+    correct.clear();
+    verify.clear();
+    markForReview.clear();
+
+    ui->corrected->setVisible(false);
+    ui->verified->setVisible(false);
+    ui->mark_review->setVisible(false);
+    ui->status->setVisible(false);
+    ui->label->setVisible(false);
+
+    ui->corrected->setEnabled(false);
+    ui->verified->setEnabled(false);
+    ui->mark_review->setEnabled(false);
+
+    ui->corrected->setChecked(false);
+    ui->verified->setChecked(false);
+    ui->mark_review->setChecked(false);
+    ui->status->setText("None");
+    //>>>>>>>
+
     if(!mProject.isProjectOpen()){
         //        QMessageBox::critical(this,"Error","Project Not Opened");
         return;                                                                  //checking if the project is already
@@ -8338,6 +8533,7 @@ void MainWindow::on_actionClose_project_triggered()
     //reset data
     mFilename.clear();
     mFilename1.clear();
+
     // mFile.clear();
     LSTM.clear();
     CPairs.clear();
@@ -8603,6 +8799,15 @@ void MainWindow::on_actionEdit_Equation_triggered()
  */
 void MainWindow::on_actionExit_triggered()
 {
+    //<<<<<<<Changes
+    write_corrected_pages();
+    write_verified_pages();
+    write_review_pages();
+    markForReview.clear();
+    correct.clear();
+    verify.clear();
+    //>>>>>>>>>
+
     autoSave();
     QCoreApplication::quit();
 }
@@ -8905,6 +9110,7 @@ void MainWindow::messageTimer(){
  * \details Saves the cloud save success message using QSettings.
  */
 void MainWindow::cloud_save(){
+
     messageTimer();
     QString date = QDate::currentDate().toString();
     QString corrected_count = gDirTwoLevelUp + "/Comments/"+mRole+"_count.json";
@@ -9400,7 +9606,9 @@ void MainWindow::e_d_features(bool value)
     ui->zoom_In_Button->setEnabled(value);
     ui->zoom_Out_Button->setEnabled(value);
     ui->horizontalSlider->setEnabled(value);
+
     ui->actionFetch_2->setEnabled(true);
+
 }
 
 
@@ -9842,6 +10050,7 @@ void MainWindow::on_actionVoice_Typing_triggered()
 
 
 
+
 void MainWindow::on_actionTable_Border_Color_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
@@ -9855,8 +10064,64 @@ void MainWindow::on_actionTable_Border_Color_triggered()
             format.setBorderBrush(color);
             table->setFormat(format);
         }
+
     }
 }
+//<<<<<<<Changes
+void MainWindow::on_corrected_clicked()
+{
+    QString fileName = currentFile;
+
+    if(ui->corrected->checkState() == Qt::Checked){
+        correct[fileName] = 1;
+
+        ui->corrected->setChecked(true);
+        ui->status->setText("Corrected");
+    }
+    else{
+        correct[fileName] = 0;
+
+        ui->corrected->setChecked(false);
+        ui->status->setText("None");
+    }
+    verify[fileName] = 0;
+    markForReview[fileName] = 0;
+}
+
+
+void MainWindow::on_verified_clicked()
+{
+    QString fileName = currentFile;
+
+    if(ui->mark_review->checkState() == Qt::Checked){
+        ui->verified->setChecked(false);
+        ui->verified->setEnabled(false);
+        ui->status->setText("Marked For Review");
+        return;
+    }
+
+    if(ui->verified->checkState() == Qt::Checked && correct[currentFile] != 0){
+        verify[fileName] = 1;
+        ui->verified->setChecked(true);
+        ui->corrected->setChecked(true);
+        ui->mark_review->setEnabled(false);
+        ui->status->setText("Verified");
+    }
+    else if(correct[currentFile] != 0){
+        verify[fileName] = 0;
+        ui->status->setText("Corrected");
+        ui->verified->setEnabled(true);
+        ui->mark_review->setEnabled(true);
+    }
+    else{
+        verify[fileName] = 0;
+        ui->verified->setChecked(false);
+        ui->mark_review->setEnabled(true);
+        ui->status->setText("None");
+
+    }
+}
+
 
 
 void MainWindow::on_actionCell_Padding_triggered()
@@ -10060,4 +10325,176 @@ void MainWindow::on_pushButton_6_clicked()
     changedWords.clear();
     ui->pushButton_6->setVisible(false);
 }
+
+
+void MainWindow::on_mark_review_clicked()
+{
+    QString fileName = currentFile;
+
+    if(ui->verified->checkState() == Qt::Checked) {
+        ui->mark_review->setChecked(false);
+        ui->mark_review->setEnabled(false);
+        ui->status->setText("Verified");
+        return;
+    }
+
+    if(ui->mark_review->checkState() == Qt::Checked && correct[currentFile] != 0){
+        markForReview[currentFile] = 1;
+        ui->mark_review->setChecked(true);
+        ui->verified->setEnabled(false);
+        ui->status->setText("Marked For Review");
+    }
+    else if(correct[currentFile] != 0){
+        markForReview[fileName] = 0;
+        ui->status->setText("Corrected");
+        ui->verified->setEnabled(true);
+        ui->mark_review->setEnabled(true);
+    }
+    else{
+        markForReview[fileName] = 0;
+        ui->verified->setChecked(false);
+        ui->verified->setEnabled(true);
+        ui->status->setText("None");
+    }
+}
+
+
+void MainWindow::write_corrected_pages(){
+    QString directory = mProject.GetDir().absolutePath();
+
+    //Logs folder
+    QString folder = directory + "/logs";
+
+    if(!QDir(folder).exists()){
+        QDir(gDirTwoLevelUp).mkdir("logs");
+    }
+
+    QString file = folder + "/corrected_page.txt";
+
+    QFile f(file);
+    f.remove();
+
+    if(f.open(QIODevice::WriteOnly)){
+        QTextStream outputStream(&f);
+        QString string;
+        QMapIterator<QString , int>i(correct);
+        while(i.hasNext()){
+            i.next();
+            string = i.key();
+            if(i.value() != 0 and markForReview[i.key()] == 0){
+                outputStream << string << endl;
+            }
+
+        }
+        f.close();
+    }
+}
+
+void MainWindow::read_corrected_pages(){
+    QString fstring = mProject.GetDir().absolutePath() + "/logs/corrected_page.txt";
+    QFile f(fstring);
+    if(!f.open(QIODevice::ReadOnly))
+        return;
+
+    QTextStream in(&f);
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+        if(markForReview[line] == 0)correct[line] = 1;
+    }
+    f.close();
+
+
+}
+
+void MainWindow::write_verified_pages(){
+    QString directory = mProject.GetDir().absolutePath();
+
+    //Logs folder
+    QString folder = directory + "/logs";
+
+    if(!QDir(folder).exists()){
+        QDir(gDirTwoLevelUp).mkdir("logs");
+    }
+
+    QString file = folder + "/verified_page.txt";
+
+    QFile f(file);
+    f.remove();
+
+    if(f.open(QIODevice::WriteOnly)){
+        QTextStream outputStream(&f);
+        QString string;
+        QMapIterator<QString , int>i(verify);
+        while(i.hasNext()){
+            i.next();
+            string = i.key();
+            if(i.value() != 0){
+                outputStream << string << endl;
+            }
+
+        }
+        f.close();
+    }
+}
+
+void MainWindow::read_verified_pages(){
+    QString fstring = mProject.GetDir().absolutePath() + "/logs/verified_page.txt";
+    QFile f(fstring);
+    if(!f.open(QIODevice::ReadOnly))
+        return;
+
+    QTextStream in(&f);
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+        verify[line] = 1;
+    }
+    f.close();
+}
+
+void MainWindow::read_review_pages(){
+    QString fstring = mProject.GetDir().absolutePath() + "/logs/marked_for_review_page.txt";
+    QFile f(fstring);
+    if(!f.open(QIODevice::ReadOnly))
+        return;
+
+    QTextStream in(&f);
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+        markForReview[line] = 1;
+        correct[line] = 0;
+    }
+    f.close();
+}
+
+void MainWindow::write_review_pages(){
+    QString directory = mProject.GetDir().absolutePath();
+
+    //Logs folder
+    QString folder = directory + "/logs";
+
+    if(!QDir(folder).exists()){
+        QDir(gDirTwoLevelUp).mkdir("logs");
+    }
+
+    QString file = folder + "/marked_for_review_page.txt";
+
+    QFile f(file);
+    f.remove();
+
+    if(f.open(QIODevice::WriteOnly)){
+        QTextStream outputStream(&f);
+        QString string;
+        QMapIterator<QString , int>i(markForReview);
+        while(i.hasNext()){
+            i.next();
+            string = i.key();
+            if(i.value() != 0){
+                outputStream << string << endl;
+            }
+
+        }
+        f.close();
+    }
+}
+// >>>>>>>>>>
 
