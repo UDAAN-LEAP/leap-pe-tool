@@ -1,4 +1,5 @@
 #include "threadingpush.h"
+#include "qmessagebox.h"
 #include <QDir>
 #include <QFileInfo>
 #include <QTextStream>
@@ -69,6 +70,10 @@ void threadingPush::ControlPush()
 {
     git_libgit2_init();
     git_remote * remote = NULL;
+    if(!fetch_n_merge()){
+        error = -100;
+        emit finishedPush();
+    }
     QFile f(gDir);
     f.open(QIODevice::ReadOnly);
     while(!f.atEnd()) {
@@ -172,4 +177,125 @@ void threadingPush::ControlPush()
     push_opts.callbacks.credentials = credentials_cb_func;
     error = git_remote_push(remote, &refspecs , &push_opts);
     emit finishedPush();
+}
+
+/*!
+ * \fn MainWindow::on_actionFetch_2_triggered
+ * \brief Used for syncing cloud data
+ */
+bool threadingPush::fetch_n_merge()
+{
+    //check whether user is logged in or not
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("loginConsent");
+    QString value = settings.value("consent").toString();
+    settings.endGroup();
+    if(value != "loggedIn"){
+        QMessageBox msg;
+        msg.setText("Please login to sync cloud data");
+        msg.exec();
+        return false;
+    }
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
+    settings.endGroup();
+        int error = 0;
+        git_remote *remote = NULL;
+    //	const git_indexer_progress *stats;
+        git_fetch_options fetch_opts = GIT_FETCH_OPTIONS_INIT;
+
+        /* Figure out whether it's a named remote or a URL */
+        error = git_remote_lookup(&remote, repo, "origin");
+        if (error < 0) {
+            error = git_remote_create_anonymous(&remote, repo, "origin");
+            if (error < 0) {
+                qDebug() << "error in git_remote";
+                goto cleanup;
+            }
+        }
+
+        /* Set up the callbacks (only update_tips for now) */
+        fetch_opts.callbacks.credentials = credentials_cb_func;
+
+        /**
+         * Perform the fetch with the configured refspecs from the
+         * config. Update the reflog for the updated references with
+         * "fetch".
+         */
+        error = git_remote_fetch(remote, NULL, &fetch_opts, "pull");
+        if (error < 0) {
+            qDebug() << "error in fetch";
+            goto cleanup;
+        }
+
+        /**
+         * 1. Check if the repository is already up to date (Don't perform git reset)
+         * 2. If it is not up to date then reset the repo to the latest commit (This will delete the modifications done by user)
+         */
+
+        git_revwalk *walker;
+        error = git_revwalk_new(&walker, repo);
+        if (error < 0) {
+            goto cleanup;
+        }
+        error = git_revwalk_push_range(walker, "HEAD..refs/remotes/origin/HEAD");
+        if (error < 0) {
+            goto cleanup;
+        }
+
+        git_oid oid;
+        int count;
+        count = 0;
+        while(!git_revwalk_next(&oid, walker)) {
+            count++;
+        }
+        git_revwalk_free(walker);
+        qDebug() << "Final count = " << count;
+        if (count > 0) {
+            //find local branch name
+            QString branchName;
+            QFile f(gDir);
+            if(!f.open(QIODevice::ReadOnly)){
+                qDebug()<<"unable to open "<<gDir;
+            }
+            while(!f.atEnd()) {
+                QString line = f.readLine();
+                if(line.contains("branch")){
+                    QStringList l = line.split(" ");
+                    l[1] = l[1].remove("\"");
+                    branchName = l[1].remove("]").simplified();
+                    break;
+                }
+            }
+            f.close();
+            // perform git merge
+            git_reference *local_branch_ref = NULL;
+            error = git_branch_lookup(&local_branch_ref, repo, branchName.toUtf8().constData(), GIT_BRANCH_LOCAL);
+            if (error < 0) {
+                qDebug() << "Cannot find local branch"<<branchName;
+                goto cleanup;
+            }
+
+            git_annotated_commit *remote_commit = NULL;
+            error = git_annotated_commit_lookup(&remote_commit, repo, &oid);
+            if (error < 0) {
+                qDebug() << "Cannot find remote commit";
+                goto cleanup;
+            }
+
+            git_merge_options merge_opts = GIT_MERGE_OPTIONS_INIT;
+            error = git_merge(repo, (const git_annotated_commit **) &remote_commit, 1, &merge_opts, NULL);
+            if (error < 0) {
+                qDebug() << "Cannot merge changes from remote branch";
+                goto cleanup;
+            }
+
+            git_reference_free(local_branch_ref);
+            git_annotated_commit_free(remote_commit);
+        }
+        cleanup:
+            git_remote_free(remote);
+            if(error<0) return false;
+            else return true;
 }

@@ -605,6 +605,7 @@ private:
 
     QVector <QString> changedWords;
     QByteArray m_data;
+    std::string m_user, m_pass;
 
 
 

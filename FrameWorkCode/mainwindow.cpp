@@ -3,6 +3,7 @@
 #include "indentoptions.h"
 #include "qobjectdefs.h"
 #include "qtablewidget.h"
+#include "threadingpush.h"
 #include "ui_mainwindow.h"
 #include "averageaccuracies.h"
 #include "eddis.h"
@@ -213,6 +214,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->lineEdit_3->setReadOnly(true);
     ui->forward_Button->setVisible(false);
     ui->pushButton_6->setVisible(false);
+    ui->actionFetch_2->setVisible(false);
 
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("cloudSave");
@@ -333,7 +335,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->verified->setVisible(false);
     ui->mark_review->setVisible(false);
     ui->status->setVisible(false);
-    ui->label->setVisible(false);
 
     ui->corrected->setEnabled(false);
     ui->verified->setEnabled(false);
@@ -1117,8 +1118,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     correct.clear();
     verify.clear();
     markForReview.clear();
-
-    ui->label->setVisible(true);
     ui->status->setVisible(true);
 
     if(mRole == "Corrector"){
@@ -1453,7 +1452,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         ui->mark_review->setChecked(false);
         ui->verified->setEnabled(false);
         ui->mark_review->setEnabled(false);
-        ui->status->setText("None");
+        ui->status->setText("Status - None");
     }
     //>>>>>>
 }
@@ -5833,7 +5832,7 @@ void MainWindow::on_actionResize_Image_triggered()
  */
 void MainWindow::on_actionPush_triggered()
 {
-    mProject.push(branchName);
+    //mProject.push(branchName);
 }
 
 /*!
@@ -6277,8 +6276,19 @@ void MainWindow::file_click(const QModelIndex & indx)
         return;
     auto file = item->GetFile();
     QString fileName = file->fileName();          //gets filename
+    // Set the file's permissions to readonly
+    if(fileName.contains("CorrectorOutput") && mRole == "Verifier"){
+        QFile::setPermissions(fileName, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
+    }
+    else if(fileName.contains("VerifierOutput") && mRole == "Corrector"){
+        QFile::setPermissions(fileName, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
+    }
+    else{
+        // Set the file's permissions to both read and write mode
+        QFile::setPermissions(fileName, QFile::WriteOwner | QFile::WriteGroup | QFile::WriteOther |
+                                         QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
 
-
+    }
     NodeType type = item->GetNodeType();
     switch (type) {
     case NodeType::_FILETYPE:
@@ -6345,7 +6355,7 @@ void MainWindow::file_click(const QModelIndex & indx)
                 ui->verified->setEnabled(false);
                 ui->mark_review->setEnabled(false);
 
-                ui->status->setText("None");
+                ui->status->setText("Status - None");
 
                 curr_browser->setReadOnly(false);
             }
@@ -8508,7 +8518,6 @@ void MainWindow::on_actionClose_project_triggered()
     ui->verified->setVisible(false);
     ui->mark_review->setVisible(false);
     ui->status->setVisible(false);
-    ui->label->setVisible(false);
 
     ui->corrected->setEnabled(false);
     ui->verified->setEnabled(false);
@@ -8517,7 +8526,7 @@ void MainWindow::on_actionClose_project_triggered()
     ui->corrected->setChecked(false);
     ui->verified->setChecked(false);
     ui->mark_review->setChecked(false);
-    ui->status->setText("None");
+    ui->status->setText("Status - None");
     //>>>>>>>
 
     if(!mProject.isProjectOpen()){
@@ -9111,7 +9120,7 @@ void MainWindow::messageTimer(){
  */
 void MainWindow::cloud_save(){
 
-    messageTimer();
+//    messageTimer();
     QString date = QDate::currentDate().toString();
     QString corrected_count = gDirTwoLevelUp + "/Comments/"+mRole+"_count.json";
     QJsonObject mainObj, parObj;
@@ -9122,71 +9131,95 @@ void MainWindow::cloud_save(){
     //    mainObj.insert("Verifier", Verifier);
     parObj.insert(date, mainObj);
     writeJsonFile(corrected_count, parObj);
-    //sending credentials
-    //    QProcess process;
-    //    process.execute("curl -d -X -k -POST --header "
-    //                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o gitToken.json");
+    QNetworkAccessManager* manager = new QNetworkAccessManager();
+    QUrl url_("https://udaaniitb.aicte-india.org/udaan/email/");
 
-    //    QFile jsonFile("gitToken.json");
-    //    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    //    QByteArray data = jsonFile.readAll();
+    QByteArray postData;
+    postData.append("username=username&password=password");
 
-    //    QJsonParseError errorPtr;
-    //    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-    //    QJsonObject mainObj = document.object();
-    //    jsonFile.close();
-    //    QString git_token = mainObj.value("github_token").toString();
-    //    QString git_username = mainObj.value("github_username").toString();
-    //    QFile::remove("gitToken.json");
-    //    std::string user = git_username.toStdString();
-    //    std::string pass = git_token.toStdString();
+    QNetworkRequest request(url_);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    // Disable SSL certificate verification
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    QNetworkReply* reply = manager->post(request, postData);
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, [=, &loop]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            QJsonParseError errorPtr;
+            QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+            QJsonObject mainObj = document.object();
+            QString git_token = mainObj.value("github_token").toString();
+            QString git_username = mainObj.value("github_username").toString();
+            // use git_token and git_username here
+            m_user = git_username.toStdString();
+            m_pass = git_token.toStdString();
+            loop.quit();
+        } else {
+            qDebug() << "Error:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+    loop.exec();
 
     QString commit_msg = gCurrentPageName + " completed by "+ mRole;    // append current version
 
-    //    bool ok;
-
     //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
-    //    if(mProject.commit(commit_msg.toStdString()))
-    //    {
-    //        threadingPush *tp = new threadingPush(nullptr, mProject.repo, user, pass, gDirTwoLevelUp);
-    //        QThread *thread = new QThread;
+        if(mProject.commit(commit_msg.toStdString()))
+        {
+            threadingPush *tp = new threadingPush(nullptr, mProject.repo, m_user, m_pass, gDirTwoLevelUp);
+            QThread *thread = new QThread;
 
-    //        connect(thread, SIGNAL(started()), tp, SLOT(ControlPush()));
-    //        connect(tp, SIGNAL(finishedPush()), thread, SLOT(quit()));
-    //        connect(tp, SIGNAL(finishedPush()), tp, SLOT(deleteLater()));
-    //        connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-    //        connect(tp, SIGNAL(finishedPush()), this, SLOT(stopSpinning()));
-    //        tp->moveToThread(thread);
-    //        thread->start();
+            connect(thread, SIGNAL(started()), tp, SLOT(ControlPush()));
+            connect(tp, SIGNAL(finishedPush()), thread, SLOT(quit()));
+            connect(tp, SIGNAL(finishedPush()), tp, SLOT(deleteLater()));
+            connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+            connect(tp, SIGNAL(finishedPush()), this, SLOT(stopSpinning()));
+            tp->moveToThread(thread);
+            thread->start();
 
-    //        spinner = new LoadingSpinner(this);
-    //        spinner->SetMessage("Saving to cloud...", "Saving...");
-    //        spinner->setModal(false);
-    //        spinner->exec();
-    //        if (tp->error != 0) {
-    //            mProject.enable_push(false);
-    //            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
-    //            return;
-    //        }
-    //    }
-    if(mProject.commit(commit_msg.toStdString())){
-        if(!mProject.push(gDirTwoLevelUp)){
-            mProject.enable_push(false);
-            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
-            return;
+            spinner = new LoadingSpinner(this);
+            spinner->SetMessage("Cloud sync...", "Syncing...");
+            spinner->setModal(false);
+            spinner->exec();
+            if (tp->error != 0) {
+                mProject.enable_push(false);
+                if(tp->error == -100)
+                    QMessageBox::information(0, "Cloud sync", "Fetch and merge failed!");
+                else
+                    QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
+                return;
+            }
+            else{
+                QMessageBox::information(0, "Cloud sync", "Cloud sync successful!");
+                QSettings settings("IIT-B", "OpenOCRCorrect");
+                settings.beginGroup("cloudSave");
+                settings.setValue("save","success" );
+                settings.endGroup();
+            }
+
         }
+//    if(mProject.commit(commit_msg.toStdString())){
+//        if(!mProject.push(gDirTwoLevelUp)){
+//            mProject.enable_push(false);
+//            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
+//            return;
+//        }
 
-        ui->lineEdit_2->setText("Version " + mProject.get_version());      //Update the version of file on ui.
+//        ui->lineEdit_2->setText("Version " + mProject.get_version());      //Update the version of file on ui.
 
-        //        QString emailText =  "Book ID: " + mProject.get_bookId()
-        //                + "\nSet ID: " + mProject.get_setId()
-        //                + "\n" + commit_msg ;       //Send an email if turn-in failed
-        QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
-        QSettings settings("IIT-B", "OpenOCRCorrect");
-        settings.beginGroup("cloudSave");
-        settings.setValue("save","success" );
-        settings.endGroup();
-    }
+//        //        QString emailText =  "Book ID: " + mProject.get_bookId()
+//        //                + "\nSet ID: " + mProject.get_setId()
+//        //                + "\n" + commit_msg ;       //Send an email if turn-in failed
+//        QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
+//        QSettings settings("IIT-B", "OpenOCRCorrect");
+//        settings.beginGroup("cloudSave");
+//        settings.setValue("save","success" );
+//        settings.endGroup();
+//    }
 }
 
 /*!
@@ -10082,7 +10115,7 @@ void MainWindow::on_corrected_clicked()
         correct[fileName] = 0;
 
         ui->corrected->setChecked(false);
-        ui->status->setText("None");
+        ui->status->setText("Status - None");
     }
     verify[fileName] = 0;
     markForReview[fileName] = 0;
@@ -10117,7 +10150,7 @@ void MainWindow::on_verified_clicked()
         verify[fileName] = 0;
         ui->verified->setChecked(false);
         ui->mark_review->setEnabled(true);
-        ui->status->setText("None");
+        ui->status->setText("Status - None");
 
     }
 }
@@ -10354,7 +10387,7 @@ void MainWindow::on_mark_review_clicked()
         markForReview[fileName] = 0;
         ui->verified->setChecked(false);
         ui->verified->setEnabled(true);
-        ui->status->setText("None");
+        ui->status->setText("Status - None");
     }
 }
 

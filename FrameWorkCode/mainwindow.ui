@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1867</width>
+    <width>1928</width>
     <height>1190</height>
    </rect>
   </property>
@@ -98,21 +98,14 @@ margin-top:10px;
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>STATUS:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QPushButton" name="status">
           <property name="styleSheet">
-           <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 140px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
+           <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 120px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
 } 
 </string>
           </property>
           <property name="text">
-           <string>None</string>
+           <string>Status - None</string>
           </property>
          </widget>
         </item>
@@ -1102,7 +1095,7 @@ background: grey;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1867</width>
+     <width>1928</width>
      <height>46</height>
     </rect>
    </property>
@@ -1795,7 +1788,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionTurn_In">
    <property name="text">
-    <string>Save to Cloud</string>
+    <string>Cloud Sync</string>
    </property>
   </action>
   <action name="actionFetch">
