@@ -434,8 +434,8 @@ bool MainWindow::setRole(QString role)
 
 
 
-        ui->actionTurn_In->setVisible(false);      //set false to its visibility; now shown
-        ui->actionTurn_In->setEnabled(false);      //disable the option
+        //ui->actionTurn_In->setVisible(false);      //set false to its visibility; now shown
+        //ui->actionTurn_In->setEnabled(false);      //disable the option
 
 
 
@@ -1106,6 +1106,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         return;
 
     isRecentProjclick = false;
+    // Set the file's permissions to readonly
+    qDebug()<<ProjFile;
+    QFile::setPermissions(ProjFile, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
 
     // Testing of project.xml
     VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
