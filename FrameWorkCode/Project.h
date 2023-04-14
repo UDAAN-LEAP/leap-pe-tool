@@ -72,6 +72,7 @@ public:
 	void setProjectOpen(bool open) {
 		m_isOpen = open;
 	}
+    bool fetch_n_merge(QString gDirTwoLevelUp, QString mRole);
 private:
 	bool m_isOpen = false;
 	QVector<QFile*> mFiles;

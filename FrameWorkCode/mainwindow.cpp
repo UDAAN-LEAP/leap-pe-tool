@@ -295,7 +295,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     QFontDatabase::addApplicationFont(":/Fonts/fonts/brhkndrn/brhkndrn.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/fonts/Nudi 1/Nudi 01 e Regular.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/fonts/Chanakya Regular/Chanakya Regular.ttf");
-//    QFontDatabase::addApplicationFont(":/Fonts/fonts/Jameel Noori Nastaleeq Regular/Jameel Noori Nastaleeq Regular.ttf");
+    //    QFontDatabase::addApplicationFont(":/Fonts/fonts/Jameel Noori Nastaleeq Regular/Jameel Noori Nastaleeq Regular.ttf");
 
     if (!isVerifier)
     {
@@ -6289,7 +6289,7 @@ void MainWindow::file_click(const QModelIndex & indx)
     else{
         // Set the file's permissions to both read and write mode
         QFile::setPermissions(fileName, QFile::WriteOwner | QFile::WriteGroup | QFile::WriteOther |
-                                         QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
+                              QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
 
     }
     NodeType type = item->GetNodeType();
@@ -9123,7 +9123,7 @@ void MainWindow::messageTimer(){
  */
 void MainWindow::cloud_save(){
 
-//    messageTimer();
+    messageTimer();
     QString date = QDate::currentDate().toString();
     QString corrected_count = gDirTwoLevelUp + "/Comments/"+mRole+"_count.json";
     QJsonObject mainObj, parObj;
@@ -9171,58 +9171,71 @@ void MainWindow::cloud_save(){
     QString commit_msg = gCurrentPageName + " completed by "+ mRole;    // append current version
 
     //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
-        if(mProject.commit(commit_msg.toStdString()))
-        {
-            threadingPush *tp = new threadingPush(nullptr, mProject.repo, m_user, m_pass, gDirTwoLevelUp);
-            QThread *thread = new QThread;
+    if(mProject.commit(commit_msg.toStdString()))
+    {
+        if(mProject.fetch_n_merge(gDirTwoLevelUp, mRole)){
+            //            threadingPush *tp = new threadingPush(nullptr, mProject.repo, m_user, m_pass, gDirTwoLevelUp);
+            //            QThread *thread = new QThread;
 
-            connect(thread, SIGNAL(started()), tp, SLOT(ControlPush()));
-            connect(tp, SIGNAL(finishedPush()), thread, SLOT(quit()));
-            connect(tp, SIGNAL(finishedPush()), tp, SLOT(deleteLater()));
-            connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-            connect(tp, SIGNAL(finishedPush()), this, SLOT(stopSpinning()));
-            tp->moveToThread(thread);
-            thread->start();
+            //            connect(thread, SIGNAL(started()), tp, SLOT(ControlPush()));
+            //            connect(tp, SIGNAL(finishedPush()), thread, SLOT(quit()));
+            //            connect(tp, SIGNAL(finishedPush()), tp, SLOT(deleteLater()));
+            //            connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+            //            connect(tp, SIGNAL(finishedPush()), this, SLOT(stopSpinning()));
+            //            tp->moveToThread(thread);
+            //            thread->start();
 
-            spinner = new LoadingSpinner(this);
-            spinner->SetMessage("Cloud sync...", "Syncing...");
-            spinner->setModal(false);
-            spinner->exec();
-            if (tp->error != 0) {
+            //            spinner = new LoadingSpinner(this);
+            //            spinner->SetMessage("Cloud sync...", "Syncing...");
+            //            spinner->setModal(false);
+            //            spinner->exec();
+            //            if (tp->error != 0) {
+            //                mProject.enable_push(false);
+            //                QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
+            //                return;
+            //            }
+            //            else{
+            //                QMessageBox::information(0, "Cloud sync", "Cloud sync successful!");
+            //                QSettings settings("IIT-B", "OpenOCRCorrect");
+            //                settings.beginGroup("cloudSave");
+            //                settings.setValue("save","success" );
+            //                settings.endGroup();
+            //            }
+            if(!mProject.push(gDirTwoLevelUp)){
                 mProject.enable_push(false);
-                if(tp->error == -100)
-                    QMessageBox::information(0, "Cloud sync", "Fetch and merge failed!");
-                else
-                    QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
+                QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
                 return;
             }
-            else{
-                QMessageBox::information(0, "Cloud sync", "Cloud sync successful!");
-                QSettings settings("IIT-B", "OpenOCRCorrect");
-                settings.beginGroup("cloudSave");
-                settings.setValue("save","success" );
-                settings.endGroup();
-            }
-
+            QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            settings.beginGroup("cloudSave");
+            settings.setValue("save","success" );
+            settings.endGroup();
         }
-//    if(mProject.commit(commit_msg.toStdString())){
-//        if(!mProject.push(gDirTwoLevelUp)){
-//            mProject.enable_push(false);
-//            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
-//            return;
-//        }
+        else{
+            QMessageBox::information(0, "Cloud sync", "Failed to Sync and merge remote changes!");
+            return;
+        }
 
-//        ui->lineEdit_2->setText("Version " + mProject.get_version());      //Update the version of file on ui.
+    }
+    //    if(mProject.commit(commit_msg.toStdString())){
+    //        if(!mProject.push(gDirTwoLevelUp)){
+    //            mProject.enable_push(false);
+    //            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
+    //            return;
+    //        }
 
-//        //        QString emailText =  "Book ID: " + mProject.get_bookId()
-//        //                + "\nSet ID: " + mProject.get_setId()
-//        //                + "\n" + commit_msg ;       //Send an email if turn-in failed
-//        QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
-//        QSettings settings("IIT-B", "OpenOCRCorrect");
-//        settings.beginGroup("cloudSave");
-//        settings.setValue("save","success" );
-//        settings.endGroup();
-//    }
+    //        ui->lineEdit_2->setText("Version " + mProject.get_version());      //Update the version of file on ui.
+
+    //        //        QString emailText =  "Book ID: " + mProject.get_bookId()
+    //        //                + "\nSet ID: " + mProject.get_setId()
+    //        //                + "\n" + commit_msg ;       //Send an email if turn-in failed
+    //        QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
+    //        QSettings settings("IIT-B", "OpenOCRCorrect");
+    //        settings.beginGroup("cloudSave");
+    //        settings.setValue("save","success" );
+    //        settings.endGroup();
+    //    }
 }
 
 /*!
