@@ -17,11 +17,13 @@
  * \param reversedGRMap
  * \param parent
  */
-UndoGlobalReplace::UndoGlobalReplace(QMap<QString, QString> reversedGRMap, QWidget *parent) :
+UndoGlobalReplace::UndoGlobalReplace(QMap<QString, QString> reversedGRMap, QWidget *parent,QString mRole,QString path) :
     QDialog(parent),
     ui(new Ui::UndoGlobalReplace)
 {
     ui->setupUi(this);
+    this->mRole = mRole;
+    this->path = path;
     qInstallMessageHandler(crashlog::myMessageHandler);
     setWindowTitle("Undo Globally Replace Words");
     displayListForUndoOperation(reversedGRMap);
@@ -117,3 +119,31 @@ QMap<QString, QString> UndoGlobalReplace::getFinalUndoMap()
 {
     return this->finalUndoMap;
 }
+
+void UndoGlobalReplace::on_pushButton_clicked()
+{
+    QMap<QString, QString> new_cpair;
+
+        QString filename = path + "/Dicts/" + mRole +"_CPair";
+        QFile file(filename);
+        QStringList split1;
+
+            if(file.open(QIODevice::ReadOnly | QIODevice::Text))
+            {
+                QTextStream out1(&file);
+                out1.setCodec("UTF-8");
+                QString text;
+                while(!out1.atEnd())
+                {
+                    text = out1.readLine();
+                    split1 = text.split('\t');
+                   // CPairs = {split1[0],split1[1]};
+                    new_cpair[split1[1]]= split1[0];
+                }
+                file.close();
+            }
+
+        displayListForUndoOperation(new_cpair);
+
+}
+

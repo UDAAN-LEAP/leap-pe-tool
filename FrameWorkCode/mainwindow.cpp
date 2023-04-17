@@ -7235,22 +7235,9 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
     int files = 0;
 
     reverseGlobalReplacedWordsMap();
-    if ( globallyReplacedWords.size() == 1 )
-    {
-        QString oldWord = globallyReplacedWords.firstKey();
-        QString newWord = globallyReplacedWords.value(oldWord);
-        oldWord=oldWord.trimmed();
-        newWord=newWord.trimmed();
-        bool replace = undoGlobalReplace_Single_Word(oldWord, newWord);
 
-        if ( replace )
-            undoGRMap.insert(oldWord, newWord);
-    }
-    else if ( globallyReplacedWords.size() > 1 )
-    {
-        //qDebug() << "For Multiple Words";
-        undoGRMap = getUndoGlobalReplaceMap_Multiple_Words(globallyReplacedWords);
-    }
+    undoGRMap = getUndoGlobalReplaceMap_Multiple_Words(globallyReplacedWords);
+
 
     QString currentDirAbsolutePath = gDirTwoLevelUp + "/" + gCurrentDirName;
     QDirIterator dirIterator(currentDirAbsolutePath, QDirIterator::Subdirectories);
@@ -7398,14 +7385,14 @@ QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<Q
 {
 
     QMap<QString, QString> undoGRMap;
-    UndoGlobalReplace ugrWindow(GRMap, this);
+    UndoGlobalReplace ugrWindow(GRMap, this,mRole,gDirTwoLevelUp);
 
     ugrWindow.setModal(true);
     ugrWindow.exec();
 
     if ( ugrWindow.on_applyButton_clicked() )
         undoGRMap = ugrWindow.getFinalUndoMap();
-    return GRMap;
+    return undoGRMap;
 }
 
 /*!
