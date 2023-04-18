@@ -1385,6 +1385,45 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         RecentPageInfo();
     }
 
+    //<<<<<<<Changes
+
+        read_review_pages();
+        read_corrected_pages();
+        read_verified_pages();
+
+        if(mRole == "Corrector"){
+            ui->corrected->setEnabled(true);
+            if(markForReview[gCurrentPageName] != 0){
+                ui->status->setText("Marked For Review");
+
+            }
+            else if(correct[gCurrentPageName] != 0){
+                ui->status->setText("Corrected");
+                ui->corrected->setChecked(true);
+
+            }
+        }
+        if(mRole == "Verifier"){
+            if(markForReview[gCurrentPageName] != 0){
+                ui->status->setText("Marked For Review");
+                ui->mark_review->setChecked(true);
+                ui->verified->setEnabled(false);
+            }
+            else if(verify[gCurrentPageName] != 0){
+                ui->status->setText("Verified");
+                ui->verified->setChecked(true);
+                ui->mark_review->setEnabled(false);
+            }
+            else if( correct[gCurrentPageName] != 0){
+                ui->status->setText("Corrected");
+                ui->mark_review->setEnabled(true);
+                ui->verified->setEnabled(true);
+            }
+        }
+
+
+      //>>>>>>
+
     // Enabling the buttons again after a project is opened
     e_d_features(true);
     //Reset loadData flag
@@ -3321,6 +3360,11 @@ void MainWindow::on_actionFetch_2_triggered()
  */
 void MainWindow::on_actionTurn_In_triggered()
 {
+    //Save to cloud after writing the pages to files
+        write_corrected_pages();
+        write_verified_pages();
+        write_review_pages();
+
     //! Checking if the files are saved or not.
     if (checkUnsavedWork())
     {
