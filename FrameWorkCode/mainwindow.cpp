@@ -7900,10 +7900,10 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
                 QObject::connect(&buttonbox,SIGNAL(accepted()),&new_features,SLOT(accept()));
                 QObject::connect(&buttonbox,SIGNAL(rejected()),&new_features,SLOT(reject()));
                 if(new_features.exec() ==QDialog::Accepted)
-                    update_tool();
+                    update_tool(latestVersion);
             }
             if(msg.clickedButton() == download){
-                update_tool();
+                update_tool(latestVersion);
             }
             else {
                 msg.close();
@@ -10239,9 +10239,14 @@ void MainWindow::on_actionCell_Padding_triggered()
     }
 }
 
-void MainWindow::update_tool(){
+void MainWindow::update_tool(QString latestVersion){
 #ifdef Q_OS_WIN
-    QUrl downloadUrl("https://www.cse.iitb.ac.in/~ayusham/Udaan-Windows-v3.5.9.zip");
+    QUrl downloadUrl("https://www.cse.iitb.ac.in/~ayusham/Udaan-Windows-"+latestVersion+".zip");
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/v3.5.9.zip";
+#else
+    QUrl downloadUrl("https://www.cse.iitb.ac.in/~ayusham/Udaan-Linux-"+latestVersion+".tar.xz");
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/v3.5.9.tar.xz";
+#endif
     QDialog dialog(this);
     QFormLayout form(&dialog);
     QProgressBar pb(&dialog);
@@ -10256,20 +10261,25 @@ void MainWindow::update_tool(){
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QNetworkRequest request(downloadUrl);
     QNetworkReply *reply = manager->get(request);
-
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/v3.5.9.tar.xz";
     ui->textBrowser->setText(path);
     QFile *file = new QFile(path);
     file->open(QIODevice::WriteOnly);
 
+    QString currentDirectory = QDir().currentPath();
+    QDir directory(currentDirectory);
+    directory.cdUp();
+    directory.cdUp();
+    QString output = directory.absolutePath();
+
     connect(reply, &QNetworkReply::readyRead, this, [=]() {
         file->write(reply->readAll());
+        file->close();
     });
 
     connect(reply, &QNetworkReply::finished, this, [&]() {
+#ifdef Q_OS_WIN
         QuaZip zip(path);
         zip.open(QuaZip::mdUnzip);
-        QString outputPath = QDir::current().absolutePath();
         QuaZipFileInfo info;
         QuaZipFile file(&zip);
 
@@ -10277,7 +10287,7 @@ void MainWindow::update_tool(){
             if(!zip.getCurrentFileInfo(&info)) break;
 
             QString name = info.name;
-            QString outputFilePath = outputPath + name;
+            QString outputFilePath = output + name;
             if(!file.open(QIODevice::ReadOnly)) break;
             QByteArray data = file.readAll();
             file.close();
@@ -10293,12 +10303,8 @@ void MainWindow::update_tool(){
             outputFile.write(data);
             outputFile.close();
         }
-
-        QFile::remove(path);
-
-        QDialog dialog1 = new QDialog(this);
+        QDialog dialog1(this);
         QLabel *label1 = new QLabel(&dialog1);
-        dialog1->setTitle("Update status");
         QFormLayout form1(&dialog1);
         label1->setText("Udaan pe tool has been successfully updated.");
         form1.addRow(label1);
@@ -10310,57 +10316,10 @@ void MainWindow::update_tool(){
             QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
             qApp->exit();
         });
-
-        reply->deleteLater();
-        dialog.deleteLater();
         dialog1.deleteLater();
-    });
-
-    connect(reply, &QNetworkReply::downloadProgress, this, [&](qint64 bytesReceived, qint64 bytesTotal) {
-        processProgress(bytesReceived, bytesTotal, &pb);
-    });
-
-    QEventLoop loop;
-    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-    loop.exec();
-
 #else
-    QUrl downloadUrl("https://www.cse.iitb.ac.in/~ayusham/Udaan-Linux-v3.5.9.tar.xz");
-    QDialog dialog(this);
-    QFormLayout form(&dialog);
-    QProgressBar pb(&dialog);
-    QLabel *label = new QLabel(&dialog);
-    QLabel *labelProgress = new QLabel(&dialog);
-    labelProgress->setText("");
-    label->setText("Update in progress...");
-    form.addRow(label);
-    form.addWidget(&pb);
-    form.addRow(labelProgress);
-    dialog.show();
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QNetworkRequest request(downloadUrl);
-    QNetworkReply *reply = manager->get(request);
-
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/v3.5.9.tar.xz";
-    ui->textBrowser->setText(path);
-    QFile *file = new QFile(path);
-    file->open(QIODevice::WriteOnly);
-
-    connect(reply, &QNetworkReply::readyRead, this, [=]() {
-        file->write(reply->readAll());
-    });
-
-    connect(reply, &QNetworkReply::finished, this, [&]() {
-
         QProcess *process = new QProcess(this);
-
-        QString currentDirectory = QDir().currentPath();
-        QDir directory(currentDirectory);
-        directory.cdUp();
-        directory.cdUp();
-        QString input = path;
-        QString output = directory.absolutePath();
-        QString command = "tar -xJf " + input + " -C " + output;
+        QString command = "tar -xJf " + path + " -C " + output;
         process->start("/bin/sh", QStringList() << "-c" << command);
         qDebug() << process->arguments();
         process->waitForFinished(100000000);
@@ -10369,12 +10328,13 @@ void MainWindow::update_tool(){
             qDebug() << process->readAllStandardError();
         }
 
-        QFile::remove(path);
         QMessageBox::information(this, "Update status", "Extraction of the Udaan pe tool udpate file is successfully completed."
                                                         "\nTo rebuild the application, run these following commands in order - "
                                                         "\n⚫ make clean"
                                                         "\n⚫ qmake qpadfinal.pro"
                                                         "\n⚫ make", QMessageBox::Button::Ok);
+#endif
+        QFile::remove(path);
         reply->deleteLater();
         dialog.deleteLater();
     });
@@ -10386,11 +10346,11 @@ void MainWindow::update_tool(){
     QEventLoop loop;
     connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
-#endif
 }
 void MainWindow::processProgress(qint64 bytesReceived, qint64 bytesTotal, QProgressBar *pb, QLabel *labelProgress) {
+    qDebug()<<bytesReceived<<bytesTotal;
     pb->setValue((bytesReceived * 100) / bytesTotal);
-    labelProgress->setText(QString((int)bytesReceived) + "/" + QString((int)bytesTotal));
+    labelProgress->setText(QString::number(bytesReceived/1000000) + "MB/" + QString::number(bytesTotal/1000000) +"MB");
 }
 
 /*!

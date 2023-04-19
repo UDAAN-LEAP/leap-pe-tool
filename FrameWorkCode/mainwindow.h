@@ -540,7 +540,7 @@ public slots:
 
     void e_d_features(bool value);
 
-    void update_tool();
+    void update_tool(QString latestVersion);
 
 private:
     bool mExitStatus = false;
