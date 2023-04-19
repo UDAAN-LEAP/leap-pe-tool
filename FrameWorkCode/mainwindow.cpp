@@ -9242,6 +9242,45 @@ void MainWindow::cloud_save(){
             settings.beginGroup("cloudSave");
             settings.setValue("save","success" );
             settings.endGroup();
+
+            //<<<<<<<Changes
+
+                read_review_pages();
+                read_corrected_pages();
+                read_verified_pages();
+
+                if(mRole == "Corrector"){
+                    ui->corrected->setEnabled(true);
+                    if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0){
+                        ui->status->setText("Marked For Review");
+
+                    }
+                    else if(correct.contains(gCurrentPageName) && correct[gCurrentPageName] != 0){
+                        ui->status->setText("Corrected");
+                        ui->corrected->setChecked(true);
+
+                    }
+                }
+                if(mRole == "Verifier"){
+                    if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0){
+                        ui->status->setText("Marked For Review");
+                        ui->mark_review->setChecked(true);
+                        ui->verified->setEnabled(false);
+                    }
+                    else if(verify.contains(gCurrentPageName) && verify[gCurrentPageName] != 0){
+                        ui->status->setText("Verified");
+                        ui->verified->setChecked(true);
+                        ui->mark_review->setEnabled(false);
+                    }
+                    else if(correct.contains(gCurrentPageName) && correct[gCurrentPageName] != 0){
+                        ui->status->setText("Corrected");
+                        ui->mark_review->setEnabled(true);
+                        ui->verified->setEnabled(true);
+                    }
+                }
+
+
+              //>>>>>>
         }
         else{
             QMessageBox::information(0, "Cloud sync", "Failed to Sync and merge remote changes!");
@@ -10439,6 +10478,7 @@ void MainWindow::read_corrected_pages(){
     QTextStream in(&f);
     while(!in.atEnd()) {
         QString line = in.readLine();
+        if(!line.contains(".html"))continue;
         if(markForReview[line] == 0)correct[line] = 1;
     }
     f.close();
@@ -10486,6 +10526,7 @@ void MainWindow::read_verified_pages(){
     QTextStream in(&f);
     while(!in.atEnd()) {
         QString line = in.readLine();
+        if(!line.contains(".html"))continue;
         verify[line] = 1;
     }
     f.close();
@@ -10500,6 +10541,7 @@ void MainWindow::read_review_pages(){
     QTextStream in(&f);
     while(!in.atEnd()) {
         QString line = in.readLine();
+        if(!line.contains(".html"))continue;
         markForReview[line] = 1;
         correct[line] = 0;
     }
