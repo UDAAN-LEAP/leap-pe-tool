@@ -182,7 +182,7 @@ void threadingPush::ControlPush()
 //
 // Function to fetch changes from GitHub and merge with local changes
 bool threadingPush::fetch_n_merge() {
-
+    return false;//yet to be moved here..currently in project.cpp
 }
 
 

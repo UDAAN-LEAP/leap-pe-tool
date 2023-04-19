@@ -86,6 +86,10 @@
 #include <QStandardPaths>
 #include <about.h>
 #include <QCalendarWidget>
+#ifdef Q_OS_WIN
+#include <quazip.h>
+#include <quazipfile.h>
+#endif
 
 
 
@@ -341,6 +345,25 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->mark_review->setEnabled(false);
 
     //>>>>>>
+        //delete previous version after update
+
+    settings.beginGroup("prev-version");
+    QString link = settings.value("link").toString();
+    qDebug() << "path: " << link;
+    if (!link.isEmpty()) {
+        qDebug() << "removed :" << link;
+        QDir folderDir(link);
+
+        // Remove the folder and its contents recursively
+        if (folderDir.exists() && folderDir.removeRecursively()) {
+            qDebug() << link<<"Folder removed successfully!";
+        }
+        else {
+            qDebug() << link<<"Failed to remove folder!";
+        }
+    }
+    settings.remove("");
+    settings.endGroup();
 }
 
 /*!
@@ -10283,10 +10306,10 @@ void MainWindow::on_actionCell_Padding_triggered()
 void MainWindow::update_tool(QString latestVersion){
 #ifdef Q_OS_WIN
     QUrl downloadUrl("https://www.cse.iitb.ac.in/~ayusham/Udaan-Windows-"+latestVersion+".zip");
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/v3.5.9.zip";
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/"+latestVersion+".zip";
 #else
     QUrl downloadUrl("https://www.cse.iitb.ac.in/~ayusham/Udaan-Linux-"+latestVersion+".tar.xz");
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/v3.5.9.tar.xz";
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/"+latestVersion+".tar.xz";
 #endif
     QDialog dialog(this);
     QFormLayout form(&dialog);
@@ -10302,84 +10325,107 @@ void MainWindow::update_tool(QString latestVersion){
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QNetworkRequest request(downloadUrl);
     QNetworkReply *reply = manager->get(request);
-    ui->textBrowser->setText(path);
     QFile *file = new QFile(path);
     file->open(QIODevice::WriteOnly);
 
     QString currentDirectory = QDir().currentPath();
     QDir directory(currentDirectory);
+    QString m_t_path = directory.absolutePath();
     directory.cdUp();
     directory.cdUp();
     QString output = directory.absolutePath();
 
     connect(reply, &QNetworkReply::readyRead, this, [=]() {
         file->write(reply->readAll());
-        file->close();
+        //file->close();
     });
-
     connect(reply, &QNetworkReply::finished, this, [&]() {
+        file->close();
 #ifdef Q_OS_WIN
-        QuaZip zip(path);
-        zip.open(QuaZip::mdUnzip);
-        QuaZipFileInfo info;
-        QuaZipFile file(&zip);
+    QuaZip zip(path);
+    if (!zip.open(QuaZip::mdUnzip)) {
+        qDebug() << "Failed to open ZIP file:" << zip.getZipError();
+        QMessageBox::warning(this, "Update error", "We were unable to find the zip file\nSource: "+path, QMessageBox::Ok);
+        return;
+    }
 
-        for(bool more = zip.goToFirstFile(); more; more = zip.goToNextFile()) {
-            if(!zip.getCurrentFileInfo(&info)) break;
+    QuaZipFile file(&zip);
 
-            QString name = info.name;
-            QString outputFilePath = output + name;
-            if(!file.open(QIODevice::ReadOnly)) break;
-            QByteArray data = file.readAll();
-            file.close();
-            QFile outputFile(outputFilePath);
-            QString temp = outputFilePath;
-            QStringList list = outputFilePath.split("/");
-            temp.remove(list[list.size() - 1]);
-            QFile tempFile(temp);
-            if(!tempFile.exists()) {
-                QDir().mkdir(temp);
-            }
-            outputFile.open(QIODevice::WriteOnly);
-            outputFile.write(data);
-            outputFile.close();
+    QuaZipFileInfo info;
+
+    for (bool more = zip.goToFirstFile(); more; more = zip.goToNextFile()) {
+        if (!zip.getCurrentFileInfo(&info)) break;
+
+        QString name = info.name;
+        QDir().mkdir(output + "Udaan-" + latestVersion + "/");
+        QString outputFilePath = output + "Udaan-" + latestVersion + "/" + name;
+        qDebug() << "This is the path" << outputFilePath;
+        if (!file.open(QIODevice::ReadOnly)) break;
+        QByteArray data = file.readAll();
+        file.close();
+        QFile outputFile(outputFilePath);
+        QString temp = outputFilePath;
+        QStringList list = outputFilePath.split("/");
+        temp.remove(list[list.size() - 1]);
+        QFile tempFile(temp);
+        if (!tempFile.exists()) {
+            QDir().mkdir(temp);
         }
-        QDialog dialog1(this);
-        QLabel *label1 = new QLabel(&dialog1);
-        QFormLayout form1(&dialog1);
-        label1->setText("Udaan pe tool has been successfully updated.");
-        form1.addRow(label1);
-        QPushButton *button = new QPushButton("Restart", &dialog1);
-        button->setFixedSize(80, 30);
-        form1.addWidget(button);
+        if (!outputFile.open(QIODevice::WriteOnly)) {
+            qDebug() << "Failed to open output file:" << outputFile.errorString() << outputFile.fileName();
+            continue;
+        }
+        outputFile.write(data);
+        outputFile.close();
+    }
+    zip.close();
 
-        QObject::connect(button, &QPushButton::clicked, [](){
-            QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
-            qApp->exit();
-        });
-        dialog1.deleteLater();
+    QMessageBox::StandardButton reply_d;
+    reply_d = QMessageBox::question(this, "Restart Application",
+        "qpadfinal has been successfully updated to latest version\nAre you sure you want to restart the application to use the updated version?",
+        QMessageBox::Yes | QMessageBox::No);
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    if (reply_d == QMessageBox::Yes) {
+        // Quit the application
+        QProcess process;
+        QStringList arguments;
+        QString command = "start " + output + "Udaan-" + latestVersion + "/" + latestVersion + "/qpadfinal.exe";
+        arguments << "/c" << command;
+        process.startDetached("cmd.exe", arguments);
+        process.waitForFinished();
+
+        qDebug() << "saved " << m_t_path;
+        settings.beginGroup("prev-version");
+        settings.setValue("link", m_t_path);
+        settings.endGroup();
+        qApp->quit();
+    }
+
+    qDebug() << "saved " << m_t_path;
+    settings.beginGroup("prev-version");
+    settings.setValue("link", m_t_path);
+    settings.endGroup();
+
 #else
-        QProcess *process = new QProcess(this);
-        QString command = "tar -xJf " + path + " -C " + output;
-        process->start("/bin/sh", QStringList() << "-c" << command);
-        qDebug() << process->arguments();
-        process->waitForFinished(100000000);
+    QProcess* process = new QProcess(this);
+    QString command = "tar -xJf " + path + " -C " + output;
+    process->start("/bin/sh", QStringList() << "-c" << command);
+    qDebug() << process->arguments();
+    process->waitForFinished(100000000);
 
-        if(process->exitCode() != QProcess::NormalExit || process->exitStatus()!= QProcess::NormalExit) {
-            qDebug() << process->readAllStandardError();
-        }
+    if (process->exitCode() != QProcess::NormalExit || process->exitStatus() != QProcess::NormalExit) {
+        qDebug() << process->readAllStandardError();
+    }
 
-        QMessageBox::information(this, "Update status", "Extraction of the Udaan pe tool udpate file is successfully completed."
-                                                        "\nTo rebuild the application, run these following commands in order - "
-                                                        "\n⚫ make clean"
-                                                        "\n⚫ qmake qpadfinal.pro"
-                                                        "\n⚫ make", QMessageBox::Button::Ok);
+    QMessageBox::information(this, "Update status", "Extraction of the Udaan pe tool udpate file is successfully completed."
+        "\nTo rebuild the application, run these following commands in order - "
+        "\n⚫ make clean"
+        "\n⚫ qmake qpadfinal.pro"
+        "\n⚫ make", QMessageBox::Button::Ok);
 #endif
-        QFile::remove(path);
-        reply->deleteLater();
-        dialog.deleteLater();
-    });
-
+    QFile::remove(path);
+    reply->deleteLater();
+});
     connect(reply, &QNetworkReply::downloadProgress, this, [&](qint64 bytesReceived, qint64 bytesTotal) {
         processProgress(bytesReceived, bytesTotal, &pb, labelProgress);
     });
@@ -10462,7 +10508,7 @@ void MainWindow::write_corrected_pages(){
         while(i.hasNext()){
             i.next();
             string = i.key();
-            if(i.value() != 0 and markForReview[i.key()] == 0){
+            if(i.value() != 0 && markForReview[i.key()] == 0){
                 outputStream << string << endl;
             }
 

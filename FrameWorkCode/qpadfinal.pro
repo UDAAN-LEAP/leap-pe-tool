@@ -32,7 +32,7 @@ CONFIG += c++11
 QMAKE_CXXFLAGS += -w
 
 # Windows icon
-#win32:RC_FILE += qpadfinal.rc
+win32:RC_FILE += qpadfinal.rc
 
 INCLUDEPATH += ../include
 INCLUDEPATH += $$PWD/../
@@ -59,3 +59,8 @@ else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../lib/debu
 else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../lib/release/YAWYSIWYGEE.lib
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../lib/debug/YAWYSIWYGEE.lib
 
+
+win32: LIBS += -L$$PWD/../lib/ -lquazip
+
+INCLUDEPATH += $$PWD/../include
+DEPENDPATH += $$PWD/../include
