@@ -3743,8 +3743,10 @@ void MainWindow::on_actionTurn_In_triggered()
  */
 void MainWindow::on_actionSymbols_triggered()
 {
-    SymbolsView *dialog = SymbolsView::openSymbolTable(this);
-    dialog->show();
+    if(curr_browser){
+        SymbolsView *dialog = SymbolsView::openSymbolTable(this, curr_browser);
+        dialog->show();
+    }
 }
 
 /*!

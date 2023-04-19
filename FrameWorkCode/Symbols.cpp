@@ -10,6 +10,7 @@
  *
  */
 #include "Symbols.h"
+#include "qclipboard.h"
 #include "ui_Symbols.h"
 
 SymbolsView *SymbolsView::symbolsView = 0;
@@ -21,11 +22,12 @@ SymbolsView *SymbolsView::symbolsView = 0;
  * \param ui(new Ui::SymbolsView)
  * \brief sets the text for above 3 tabs and sets current tab as Diacritics
  */
-SymbolsView::SymbolsView(QWidget *parent) : QDialog(parent, Qt::WindowCloseButtonHint), ui(new Ui::SymbolsView)
+SymbolsView::SymbolsView(QWidget *parent, CustomTextBrowser *curr_brow) : QDialog(parent, Qt::WindowCloseButtonHint), ui(new Ui::SymbolsView)
 {
     ui->setupUi(this);
+    this->cust_brow = curr_brow;
     ui->MathematicalSymbols->setText(
-        R"(𝑥 𝑦 𝑧 x̄ ȳ z̄
+                R"(𝑥 𝑦 𝑧 x̄ ȳ z̄
 ∀ ∁ ∂ ∃ ∄ ∅ ∆ ∇ ∈ ∉ ∊ ∋ ∌ ∍ ∎ ∏
 ∐ ∑ − ± ∓ ∔ ∕ ∖ ∗ ∘ ∙ √ ∛ ∜ ∝ ∞ ∟ ∠
 ∡ ∢ ∣ ∤ ∥ ∦ ∧ ∨ ∩ ∪ ∫ ∬ ∭ ∮ ∯ ∰
@@ -184,7 +186,10 @@ SymbolsView::~SymbolsView()
  */
 void SymbolsView::on_copyButton_clicked()
 {
-      currentTab->copy();
+    QClipboard *clipboard = QApplication::clipboard();
+    currentTab->copy();
+    QString copiedText = clipboard->text();
+    cust_brow->textCursor().insertText(copiedText);
 }
 
 /*!
@@ -192,13 +197,12 @@ void SymbolsView::on_copyButton_clicked()
  * \brief Opens the symbol table whenever 𝛺 button is clicked on the tool menu
  * \param parent
  */
-SymbolsView* SymbolsView::openSymbolTable(QWidget *parent)
+SymbolsView* SymbolsView::openSymbolTable(QWidget *parent, CustomTextBrowser *curr_brow)
 {
     if (symbolsView)
     {
         return symbolsView;
     }
-
-    symbolsView = new SymbolsView(parent);
+    symbolsView = new SymbolsView(parent, curr_brow);
     return symbolsView;
 }
