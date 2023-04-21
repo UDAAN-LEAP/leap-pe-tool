@@ -334,7 +334,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     //disable features
     e_d_features(false);
 
-    //<<<<<<<Changes
+
     ui->corrected->setVisible(false);
     ui->verified->setVisible(false);
     ui->mark_review->setVisible(false);
@@ -344,7 +344,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->verified->setEnabled(false);
     ui->mark_review->setEnabled(false);
 
-    //>>>>>>
+
         //delete previous version after update
 
     settings.beginGroup("prev-version");
@@ -1140,7 +1140,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         on_actionClose_project_triggered();
     }
 
-    //<<<<<<<<Changes
+
     correct.clear();
     verify.clear();
     markForReview.clear();
@@ -1157,7 +1157,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         ui->verified->setEnabled(true);
         ui->mark_review->setEnabled(true);
     }
-    //>>>>>>>
+
 
     if (result != 0) {
         QMessageBox::warning(0, "Project XML file Error", "Project XML File is corrupted \n\nError "+ QString::fromStdString(std::to_string(verifySetObj.getErrorCode()))+": " + verifySetObj.getErrorString()+"\n\nPlease Report this to your administrator");
@@ -1408,7 +1408,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         RecentPageInfo();
     }
 
-    //<<<<<<<Changes
+
 
         read_review_pages();
         read_corrected_pages();
@@ -1445,7 +1445,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         }
 
 
-      //>>>>>>
+
 
     // Enabling the buttons again after a project is opened
     e_d_features(true);
@@ -1477,7 +1477,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->compareCorrectorOutput->setDisabled(false);
     ui->groupBox->setDisabled(false);
 
-    //<<<<<<<Changes
+
     read_review_pages();
     read_corrected_pages();
     read_verified_pages();
@@ -1519,7 +1519,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         ui->mark_review->setEnabled(false);
         ui->status->setText("Status - None");
     }
-    //>>>>>>
+
 }
 /*!
  * \fn MainWindow::AddRecentProjects
@@ -1558,6 +1558,11 @@ void MainWindow::AddRecentProjects()
         ui->menuRecent_Project->addAction(FileAction);
         connect(FileAction, &QAction::triggered, this , &MainWindow::on_action3_triggered);
     }
+
+    QAction *FileAction = new QAction(this);
+    FileAction->setIconText("Clear Menu");
+    ui->menuRecent_Project->addAction(FileAction);
+    connect(FileAction, &QAction::triggered, this , &MainWindow::on_actionClear_Menu_triggered);
 }
 
 
@@ -6377,7 +6382,7 @@ void MainWindow::file_click(const QModelIndex & indx)
             LoadImageFromFile(file);          //loads image files
         }
 
-        //<<<<<<<Changes
+
         currentFile = gCurrentPageName;
 
         if(currentFile != ""){
@@ -6432,7 +6437,7 @@ void MainWindow::file_click(const QModelIndex & indx)
                 curr_browser->setReadOnly(false);
             }
         }
-        //>>>>>>>>>
+
         break;
     }
     default:
@@ -6838,14 +6843,14 @@ void MainWindow::closeEvent (QCloseEvent *event)
         }
     }
 
-    //<<<<<<Changes
+
     write_verified_pages();
     write_corrected_pages();
     write_review_pages();
     correct.clear();
     verify.clear();
     markForReview.clear();
-    //>>>>>>>
+
 
     autoSave();
 }
@@ -8366,6 +8371,25 @@ void MainWindow::insertImageAction()
     imgFileName = imgFileInfo.fileName();
     QString imgFilePath = imgFileInfo.filePath();
 
+
+    qDebug()<<imgFileName;
+
+    if(!imgFileName.contains(".raw")
+            && !imgFileName.contains(".eps")
+            && !imgFileName.contains(".tiff")
+            && !imgFileName.contains(".svg")
+            && !imgFileName.contains(".jpg")
+            && !imgFileName.contains(".jpeg")
+            && !imgFileName.contains(".png")
+            && !imgFileName.contains(".bmp")
+            && !imgFileName.contains(".gif")){
+        QMessageBox msg;
+        msg.setText("Select proper image");
+        msg.exec();
+        return;
+    }
+
+
     QString copiedImgFilePath("../Inserted_Images/"+imgFileName);
     if(!QDir("../Inserted_Images").exists())
         QDir().mkdir("../Inserted_Images");
@@ -8544,6 +8568,7 @@ void MainWindow::on_actionClone_Repository()
                 on_actionOpen_Project_triggered();
             }
 
+
         } else {
             QMessageBox::information(this,"Network error",reply->errorString()+"\nThere was an error in the network request. Please try again later or switch your network.");
             return;
@@ -8565,7 +8590,8 @@ void MainWindow::on_actionClone_Repository()
  */
 void MainWindow::on_actionClose_project_triggered()
 {
-    //<<<<<<Changes
+    AddRecentProjects();
+
     write_corrected_pages();
     write_verified_pages();
     write_review_pages();
@@ -8586,7 +8612,7 @@ void MainWindow::on_actionClose_project_triggered()
     ui->verified->setChecked(false);
     ui->mark_review->setChecked(false);
     ui->status->setText("Status - None");
-    //>>>>>>>
+
 
     if(!mProject.isProjectOpen()){
         //        QMessageBox::critical(this,"Error","Project Not Opened");
@@ -8867,14 +8893,14 @@ void MainWindow::on_actionEdit_Equation_triggered()
  */
 void MainWindow::on_actionExit_triggered()
 {
-    //<<<<<<<Changes
+
     write_corrected_pages();
     write_verified_pages();
     write_review_pages();
     markForReview.clear();
     correct.clear();
     verify.clear();
-    //>>>>>>>>>
+
 
     autoSave();
     QCoreApplication::quit();
@@ -9268,7 +9294,7 @@ void MainWindow::cloud_save(){
             settings.setValue("save","success" );
             settings.endGroup();
 
-            //<<<<<<<Changes
+
 
                 read_review_pages();
                 read_corrected_pages();
@@ -9305,7 +9331,7 @@ void MainWindow::cloud_save(){
                 }
 
 
-              //>>>>>>
+
         }
         else{
             QMessageBox::information(0, "Cloud sync", "Failed to Sync and merge remote changes!");
@@ -9631,12 +9657,11 @@ void MainWindow::on_forward_Button_clicked()
 /*!
  * Project is opened after importing
  */
-void MainWindow::on_actionImport_and_Open_triggered(){
-
-
+void MainWindow::on_actionImport_and_Open_triggered()
+{
     on_actionClone_Repository();
-    on_actionOpen_Project_triggered();
     import_flag = false;
+    on_actionOpen_Project_triggered();
 }
 
 void MainWindow::on_actionImport_triggered()
@@ -10211,7 +10236,7 @@ void MainWindow::on_actionTable_Border_Color_triggered()
 
     }
 }
-//<<<<<<<Changes
+
 void MainWindow::on_corrected_clicked()
 {
     QString fileName = currentFile;
@@ -10626,5 +10651,24 @@ void MainWindow::write_review_pages(){
         f.close();
     }
 }
-// >>>>>>>>>>
+
+
+void MainWindow::on_actionClear_Menu_triggered()
+{
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("RecentProjects");
+    if(mProject.isProjectOpen()) settings.setValue("Project", RecentProjFile);
+    else settings.setValue("Project", "");
+    settings.setValue("Project2","");
+    settings.setValue("Project3","");
+    ui->menuRecent_Project->clear();
+    isRecentProjclick = false;
+    settings.endGroup();
+}
+
+void MainWindow::on_actionJustified_triggered()
+{
+    on_actionJusitfiedAlign_triggered();
+}
 

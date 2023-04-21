@@ -498,7 +498,7 @@ private slots:
 
     void on_pushButton_6_clicked();
 
-    //<<<<<Changes
+
     void on_corrected_clicked();
 
     void on_verified_clicked();
@@ -518,8 +518,9 @@ private slots:
     void write_review_pages();
 
 
-    //>>>>>>>
+    void on_actionClear_Menu_triggered();
 
+    void on_actionJustified_triggered();
 
 public slots:
     void on_actionLoad_Next_Page_triggered();
@@ -609,13 +610,13 @@ private:
 
 
 
-    //<<<<< Changes
+
     //Storing the status of the pages :-> Corrected || Verified
     QMap<QString,int>correct;
     QMap<QString,int>verify;
     QString currentFile = "";
     QMap<QString,int>markForReview;
-    //>>>>>
+
 
 };
 

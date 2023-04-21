@@ -1185,6 +1185,7 @@ QMenu::item:selected{
      <addaction name="action1"/>
      <addaction name="action2"/>
      <addaction name="action3"/>
+     <addaction name="actionClear_Menu"/>
     </widget>
     <addaction name="actionNew_Project"/>
     <addaction name="actionOpen_Project"/>
@@ -1787,6 +1788,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionTurn_In">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/sync_from_cloud-modified.png</normaloff>:/Images/Resources/sync_from_cloud-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Cloud Sync</string>
    </property>
@@ -1971,6 +1976,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionInsert_Tab_Space">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/tab-modified.png</normaloff>:/Images/Resources/tab-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Tab space</string>
    </property>
@@ -2090,6 +2099,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionas_PDF">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/download-modified.png</normaloff>:/Images/Resources/download-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Download PDF</string>
    </property>
@@ -2107,16 +2120,28 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionTutorial">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/tutorial-modified.png</normaloff>:/Images/Resources/tutorial-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Tutorial</string>
    </property>
   </action>
   <action name="actionLinux">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/linux-modified.png</normaloff>:/Images/Resources/linux-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Linux</string>
    </property>
   </action>
   <action name="actionWindows">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/windows-modified.png</normaloff>:/Images/Resources/windows-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Windows</string>
    </property>
@@ -2145,6 +2170,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionShortcut_Guide">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/keyboard_shortcuts-modified.png</normaloff>:/Images/Resources/keyboard_shortcuts-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Keyboard Shortcuts</string>
    </property>
@@ -2204,6 +2233,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionCheck_for_Updates">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/update-modified.png</normaloff>:/Images/Resources/update-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Check for Updates</string>
    </property>
@@ -2246,6 +2279,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionClose_project">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/close_project-modified.png</normaloff>:/Images/Resources/close_project-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Close project</string>
    </property>
@@ -2261,16 +2298,28 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionInsert_Bulleted_List">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/bulleted_list-modified.png</normaloff>:/Images/Resources/bulleted_list-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Bulleted List Menu</string>
    </property>
   </action>
   <action name="actionInsert_Numbered_List">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/numbered_list-modified.png</normaloff>:/Images/Resources/numbered_list-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Numbered List Menu</string>
    </property>
   </action>
   <action name="actionInsert_Equation">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/equation-modified.png</normaloff>:/Images/Resources/equation-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Equation</string>
    </property>
@@ -2279,6 +2328,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionEdit_Equation">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/equation-modified.png</normaloff>:/Images/Resources/equation-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Equation</string>
    </property>
@@ -2288,8 +2341,8 @@ background-color: #EEF0F2;
   </action>
   <action name="actionExit">
    <property name="icon">
-    <iconset theme="window-close">
-     <normaloff>.</normaloff>.</iconset>
+    <iconset>
+     <normaloff>Resources/exit-modified.png</normaloff>Resources/exit-modified.png</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -2304,6 +2357,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionUser_Guide">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/user-guide-modified.png</normaloff>:/Images/Resources/user-guide-modified.png</iconset>
+   </property>
    <property name="text">
     <string>User Guide</string>
    </property>
@@ -2386,6 +2443,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionResize_Image_2">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/resize-modified.png</normaloff>:/Images/Resources/resize-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Resize Image</string>
    </property>
@@ -2416,51 +2477,91 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionCut">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/cut-modified.png</normaloff>:/Images/Resources/cut-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Cut</string>
    </property>
   </action>
   <action name="actionCopy">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/copy-modified.png</normaloff>:/Images/Resources/copy-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Copy</string>
    </property>
   </action>
   <action name="actionPaste">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/paste(1)-modified.png</normaloff>:/Images/Resources/paste(1)-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Paste</string>
    </property>
   </action>
   <action name="actionSelect_All">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/select_all-modified.png</normaloff>:/Images/Resources/select_all-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Select All</string>
    </property>
   </action>
   <action name="actionDelete">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/delete-modified.png</normaloff>:/Images/Resources/delete-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Delete</string>
    </property>
   </action>
   <action name="actionImage">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/image-modified.png</normaloff>:/Images/Resources/image-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Image</string>
    </property>
   </action>
   <action name="actionTable_2">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/table-modified.png</normaloff>:/Images/Resources/table-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Table</string>
    </property>
   </action>
   <action name="actionDate">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/date-modified.png</normaloff>:/Images/Resources/date-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Date</string>
    </property>
   </action>
   <action name="actionSpecial_Characters">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/spl symbol.png</normaloff>:/Images/Resources/spl symbol.png</iconset>
+   </property>
    <property name="text">
     <string>Special Characters</string>
    </property>
   </action>
   <action name="actionLink">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/link-modified.png</normaloff>:/Images/Resources/link-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Link</string>
    </property>
@@ -2471,6 +2572,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionVoice_Typing">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/voice_typing-modified.png</normaloff>:/Images/Resources/voice_typing-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Voice Typing</string>
    </property>
@@ -2496,6 +2601,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionAbout_Udaan_PE">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/about-modified.png</normaloff>:/Images/Resources/about-modified.png</iconset>
+   </property>
    <property name="text">
     <string>About Udaan-PE </string>
    </property>
@@ -2513,26 +2622,46 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionIncrease_size">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/increase_size-modified.png</normaloff>:/Images/Resources/increase_size-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Increase size</string>
    </property>
   </action>
   <action name="actionDecrease_Size">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/decrease_size-modified.png</normaloff>:/Images/Resources/decrease_size-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Decrease Size</string>
    </property>
   </action>
   <action name="actionJustified">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/align para.png</normaloff>:/Images/Resources/align para.png</iconset>
+   </property>
    <property name="text">
     <string>Justified</string>
    </property>
   </action>
   <action name="actionIncrease_Indent">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/indent-modified.png</normaloff>:/Images/Resources/indent-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Increase Indent</string>
    </property>
   </action>
   <action name="actionDecrease_Indent">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/outdent-modified.png</normaloff>:/Images/Resources/outdent-modified.png</iconset>
+   </property>
    <property name="text">
     <string>Decrease Indent</string>
    </property>
@@ -2545,6 +2674,10 @@ background-color: #EEF0F2;
   <action name="actionImport_2">
    <property name="checkable">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/import-modified.png</normaloff>:/Images/Resources/import-modified.png</iconset>
    </property>
    <property name="text">
     <string>Import Project</string>
@@ -2563,6 +2696,11 @@ background-color: #EEF0F2;
   <action name="actionTitle_Case">
    <property name="text">
     <string>Title Case</string>
+   </property>
+  </action>
+  <action name="actionClear_Menu">
+   <property name="text">
+    <string>Clear Menu</string>
    </property>
   </action>
  </widget>
