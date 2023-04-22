@@ -204,5 +204,7 @@ SymbolsView* SymbolsView::openSymbolTable(QWidget *parent, CustomTextBrowser *cu
         return symbolsView;
     }
     symbolsView = new SymbolsView(parent, curr_brow);
+    //<<Changes
+    symbolsView->currentTab = symbolsView->ui->SpecialCharacters;
     return symbolsView;
 }

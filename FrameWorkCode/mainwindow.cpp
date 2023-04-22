@@ -8568,7 +8568,8 @@ void MainWindow::on_actionClone_Repository()
                 on_actionOpen_Project_triggered();
             }
 
-
+            //<<Changes
+            import_flag = false;
         } else {
             QMessageBox::information(this,"Network error",reply->errorString()+"\nThere was an error in the network request. Please try again later or switch your network.");
             return;
@@ -9659,9 +9660,8 @@ void MainWindow::on_forward_Button_clicked()
  */
 void MainWindow::on_actionImport_and_Open_triggered()
 {
-    on_actionClone_Repository();
-    import_flag = false;
     on_actionOpen_Project_triggered();
+    import_flag = false;
 }
 
 void MainWindow::on_actionImport_triggered()
