@@ -4839,6 +4839,9 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
  * \return bool
  */
 bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word, int &chk){
+    //if condition will avoid replacing images globally.
+    if(old_word.isEmpty() || old_word.length() == 1)
+    {qDebug()<<"Can't replace this word globally";return false;}
 
     //!Disable global replace on special symbols
     //QRegularExpression ss("[^a-zA-Z0-9]+");
