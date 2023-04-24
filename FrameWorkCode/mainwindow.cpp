@@ -341,25 +341,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     //saves current path - useful for auto upgrade feature
     m_update_path = QDir().currentPath();
-        //delete previous version after update
-
-    settings.beginGroup("prev-version");
-    QString link = settings.value("link").toString();
-    qDebug() << "path: " << link;
-    if (!link.isEmpty()) {
-        qDebug() << "removed :" << link;
-        QDir folderDir(link);
-
-        // Remove the folder and its contents recursively
-        if (folderDir.exists() && folderDir.removeRecursively()) {
-            qDebug() << link<<"Folder removed successfully!";
-        }
-        else {
-            qDebug() << link<<"Failed to remove folder!";
-        }
-    }
-    settings.remove("");
-    settings.endGroup();
 }
 
 /*!
@@ -373,11 +354,31 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 bool MainWindow::setRole(QString role)
 {
     this->mRole = role;
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("prev-version");
+    QString link;
+    link = settings.value("link").toString();
+    qDebug() << "path: " << link;
+    if (!link.isEmpty()) {
+        qDebug() << "removed :" << link;
+        QDir folderDir(link);
+
+        // Remove the folder and its contents recursively
+        if (folderDir.exists() && folderDir.removeRecursively()) {
+            qDebug() << link << "Folder removed successfully!";
+            settings.remove("");
+        }
+        else {
+            qDebug() << link << "Failed to remove folder!";
+        }
+
+    }
+    settings.endGroup();
 
     //! Checking role
     if(mRole == "Admin")
     {
-        QSettings settings("IIT-B", "OpenOCRCorrect");
+
         settings.beginGroup("SetRole");
         QString role;
         role = settings.value("role").toString();
