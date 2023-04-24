@@ -616,6 +616,7 @@ private:
     QMap<QString,int>verify;
     QString currentFile = "";
     QMap<QString,int>markForReview;
+    QString m_update_path = "";
 
 
 };

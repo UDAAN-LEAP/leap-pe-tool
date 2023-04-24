@@ -18,7 +18,7 @@
     <rect>
      <x>71</x>
      <y>19</y>
-     <width>221</width>
+     <width>271</width>
      <height>41</height>
     </rect>
    </property>
@@ -26,7 +26,7 @@
     <string notr="true">font: 700 14pt &quot;Ubuntu&quot;;</string>
    </property>
    <property name="text">
-    <string>Set Indentation (in cm)</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Set Indentation (in cm)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -34,7 +34,7 @@
     <rect>
      <x>41</x>
      <y>99</y>
-     <width>51</width>
+     <width>81</width>
      <height>16</height>
     </rect>
    </property>
@@ -42,7 +42,7 @@
     <string notr="true">font: 15pt &quot;Ubuntu&quot;;</string>
    </property>
    <property name="text">
-    <string>Left</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Left&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QTextEdit" name="textEdit_right">
@@ -58,17 +58,17 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>41</x>
-     <y>149</y>
-     <width>52</width>
-     <height>24</height>
+     <x>40</x>
+     <y>140</y>
+     <width>71</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 15pt &quot;Ubuntu&quot;;</string>
    </property>
    <property name="text">
-    <string>Right</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Right&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QTextEdit" name="textEdit_left">

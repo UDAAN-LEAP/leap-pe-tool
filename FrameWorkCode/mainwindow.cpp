@@ -301,11 +301,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     QFontDatabase::addApplicationFont(":/Fonts/fonts/Chanakya Regular/Chanakya Regular.ttf");
     //    QFontDatabase::addApplicationFont(":/Fonts/fonts/Jameel Noori Nastaleeq Regular/Jameel Noori Nastaleeq Regular.ttf");
 
-    if (!isVerifier)
-    {
-        ui->actionHighlight->setEnabled(false);
-    }
-
     // Hiding options
     ui->viewComments->setVisible(false);
     ui->compareCorrectorOutput->setVisible(false);
@@ -344,7 +339,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->verified->setEnabled(false);
     ui->mark_review->setEnabled(false);
 
-
+    //saves current path - useful for auto upgrade feature
+    m_update_path = QDir().currentPath();
         //delete previous version after update
 
     settings.beginGroup("prev-version");
@@ -10356,7 +10352,7 @@ void MainWindow::update_tool(QString latestVersion){
     QFile *file = new QFile(path);
     file->open(QIODevice::WriteOnly);
 
-    QString currentDirectory = QDir().currentPath();
+    QString currentDirectory = m_update_path;
     QDir directory(currentDirectory);
     QString m_t_path = directory.absolutePath();
     directory.cdUp();
