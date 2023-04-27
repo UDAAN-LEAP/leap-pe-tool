@@ -1440,6 +1440,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         if(verify.contains(gCurrentPageName) && verify[gCurrentPageName] != 0){
             ui->status->setText("Verified");
             ui->verified->setChecked(true);
+            ui->verified->setEnabled(true);
             ui->mark_review->setEnabled(false);
         }
         else if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0
@@ -1452,6 +1453,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         else if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0){
             ui->status->setText("Marked For Review");
             ui->mark_review->setChecked(true);
+            ui->mark_review->setEnabled(true);
             ui->verified->setEnabled(false);
         }
         else if(correct.contains(gCurrentPageName) && correct[gCurrentPageName] != 0){
