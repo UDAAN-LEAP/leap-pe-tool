@@ -1421,9 +1421,13 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             if(curr_browser) curr_browser->setReadOnly(true);
         }
         else {
-            if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0){
-                ui->status->setText("Marked For Review");
+            if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0 && correct.contains(gCurrentPageName) && correct[gCurrentPageName] != 0){
+                ui->status->setText("Corrected");
+                ui->corrected->setChecked(true);
 
+            }
+            else if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0){
+                ui->status->setText("Marked For Review");
             }
             else if(correct.contains(gCurrentPageName) && correct[gCurrentPageName] != 0){
                 ui->status->setText("Corrected");
@@ -10478,6 +10482,10 @@ void MainWindow::on_mark_review_clicked()
 
     if(ui->mark_review->checkState() == Qt::Checked && correct[currentFile] != 0){
         markForReview[currentFile] = 1;
+
+        //<<<<<<Change
+        correct[currentFile] = 0;
+
         ui->mark_review->setChecked(true);
         ui->verified->setEnabled(false);
         ui->status->setText("Marked For Review");
