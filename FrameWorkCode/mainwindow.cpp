@@ -1407,12 +1407,20 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
 
 
-        read_review_pages();
-        read_corrected_pages();
-        read_verified_pages();
+    read_review_pages();
+    read_corrected_pages();
+    read_verified_pages();
 
-        if(mRole == "Corrector"){
-            ui->corrected->setEnabled(true);
+    //<<<<<<Change
+    if(mRole == "Corrector"){
+        ui->corrected->setEnabled(true);
+        if(verify[gCurrentPageName] != 0){
+            ui->status->setText("Verified");
+            ui->corrected->setChecked(true);
+            ui->corrected->setEnabled(false);
+            if(curr_browser) curr_browser->setReadOnly(true);
+        }
+        else {
             if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0){
                 ui->status->setText("Marked For Review");
 
@@ -1420,26 +1428,45 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             else if(correct.contains(gCurrentPageName) && correct[gCurrentPageName] != 0){
                 ui->status->setText("Corrected");
                 ui->corrected->setChecked(true);
-
             }
+            else{
+                ui->status->setText("Status - None");
+                ui->corrected->setChecked(false);
+            }
+            if(curr_browser) curr_browser->setReadOnly(false);
         }
-        if(mRole == "Verifier"){
-            if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0){
-                ui->status->setText("Marked For Review");
-                ui->mark_review->setChecked(true);
-                ui->verified->setEnabled(false);
-            }
-            else if(verify.contains(gCurrentPageName) && verify[gCurrentPageName] != 0){
-                ui->status->setText("Verified");
-                ui->verified->setChecked(true);
-                ui->mark_review->setEnabled(false);
-            }
-            else if(correct.contains(gCurrentPageName) && correct[gCurrentPageName] != 0){
-                ui->status->setText("Corrected");
-                ui->mark_review->setEnabled(true);
-                ui->verified->setEnabled(true);
-            }
+    }
+    if(mRole == "Verifier"){
+        if(verify.contains(gCurrentPageName) && verify[gCurrentPageName] != 0){
+            ui->status->setText("Verified");
+            ui->verified->setChecked(true);
+            ui->mark_review->setEnabled(false);
         }
+        else if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0
+                && correct.contains(gCurrentPageName) && correct[gCurrentPageName] != 0){
+            ui->status->setText("Corrected");
+            ui->mark_review->setChecked(true);
+            ui->mark_review->setEnabled(true);
+            ui->verified->setEnabled(false);
+        }
+        else if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0){
+            ui->status->setText("Marked For Review");
+            ui->mark_review->setChecked(true);
+            ui->verified->setEnabled(false);
+        }
+        else if(correct.contains(gCurrentPageName) && correct[gCurrentPageName] != 0){
+            ui->status->setText("Corrected");
+            ui->mark_review->setEnabled(true);
+            ui->verified->setEnabled(true);
+        }
+        else{
+            ui->status->setText("Status - None");
+            ui->mark_review->setEnabled(false);
+            ui->verified->setEnabled(false);
+            ui->mark_review->setChecked(false);
+            ui->verified->setChecked(false);
+        }
+    }
 
 
 
@@ -1473,49 +1500,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->viewComments->setDisabled(false);
     ui->compareCorrectorOutput->setDisabled(false);
     ui->groupBox->setDisabled(false);
-
-
-    read_review_pages();
-    read_corrected_pages();
-    read_verified_pages();
-
-
-    if(verify[gCurrentPageName] != 0){
-        if(curr_browser)curr_browser->setReadOnly(true);
-        ui->status->setText("Verified");
-        ui->verified->setChecked(true);
-        ui->corrected->setChecked(true);
-        ui->verified->setEnabled(true);
-        ui->mark_review->setEnabled(false);
-        ui->corrected->setEnabled(false);
-    }
-    else if(markForReview[gCurrentPageName] != 0){
-        ui->status->setText("Marked For Review");
-        if(curr_browser)curr_browser->setReadOnly(false);
-        ui->mark_review->setChecked(true);
-        ui->corrected->setChecked(false);
-        ui->corrected->setEnabled(true);
-        ui->verified->setEnabled(false);
-        ui->mark_review->setEnabled(true);
-    }
-    else if(correct[gCurrentPageName] != 0){
-        if(curr_browser)curr_browser->setReadOnly(false);
-        ui->corrected->setChecked(true);
-        ui->corrected->setEnabled(true);
-        ui->status->setText("Corrected");
-        ui->verified->setEnabled(true);
-        ui->mark_review->setEnabled(true);
-    }
-    else{
-        if(curr_browser)curr_browser->setReadOnly(false);
-        ui->corrected->setChecked(false);
-        ui->corrected->setEnabled(true);
-        ui->verified->setChecked(false);
-        ui->mark_review->setChecked(false);
-        ui->verified->setEnabled(false);
-        ui->mark_review->setEnabled(false);
-        ui->status->setText("Status - None");
-    }
 
 }
 /*!
@@ -8568,7 +8552,7 @@ void MainWindow::on_actionClone_Repository()
                 on_actionOpen_Project_triggered();
             }
 
-            //<<Changes
+
             import_flag = false;
         } else {
             QMessageBox::information(this,"Network error",reply->errorString()+"\nThere was an error in the network request. Please try again later or switch your network.");
@@ -10253,8 +10237,8 @@ void MainWindow::on_corrected_clicked()
         ui->corrected->setChecked(false);
         ui->status->setText("Status - None");
     }
+
     verify[fileName] = 0;
-    markForReview[fileName] = 0;
 }
 
 
@@ -10533,10 +10517,14 @@ void MainWindow::write_corrected_pages(){
         while(i.hasNext()){
             i.next();
             string = i.key();
-            if(i.value() != 0 && markForReview[i.key()] == 0){
+
+            //<<<<<<Change
+//            if(i.value() != 0 && markForReview[i.key()] == 0){
+//                outputStream << string << endl;
+//            }
+            if(i.value() != 0){
                 outputStream << string << endl;
             }
-
         }
         f.close();
     }
@@ -10552,7 +10540,9 @@ void MainWindow::read_corrected_pages(){
     while(!in.atEnd()) {
         QString line = in.readLine();
         if(!line.contains(".html"))continue;
-        if(markForReview[line] == 0)correct[line] = 1;
+        //<<<<<<Change
+//        if(markForReview[line] == 0)correct[line] = 1;
+        correct[line] = 1;
     }
     f.close();
 
@@ -10616,7 +10606,9 @@ void MainWindow::read_review_pages(){
         QString line = in.readLine();
         if(!line.contains(".html"))continue;
         markForReview[line] = 1;
-        correct[line] = 0;
+
+        //<<<<<<Change
+//        correct[line] = 0;
     }
     f.close();
 }
