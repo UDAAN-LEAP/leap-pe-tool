@@ -517,6 +517,9 @@ private slots:
 
     void write_review_pages();
 
+    //<<<<<<Change
+    void read_recorrected_pages();
+    void write_recorrected_pages();
 
     void on_actionClear_Menu_triggered();
 
@@ -614,6 +617,7 @@ private:
     //Storing the status of the pages :-> Corrected || Verified
     QMap<QString,int>correct;
     QMap<QString,int>verify;
+    QMap<QString,int>recorrect;
     QString currentFile = "";
     QMap<QString,int>markForReview;
     QString m_update_path = "";

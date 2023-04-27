@@ -1405,8 +1405,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         RecentPageInfo();
     }
 
-
-
+    read_recorrected_pages();
     read_review_pages();
     read_corrected_pages();
     read_verified_pages();
@@ -1421,12 +1420,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             if(curr_browser) curr_browser->setReadOnly(true);
         }
         else {
-            if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0 && correct.contains(gCurrentPageName) && correct[gCurrentPageName] != 0){
-                ui->status->setText("Corrected");
-                ui->corrected->setChecked(true);
-
-            }
-            else if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0){
+            if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0){
                 ui->status->setText("Marked For Review");
             }
             else if(correct.contains(gCurrentPageName) && correct[gCurrentPageName] != 0){
@@ -1447,13 +1441,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             ui->verified->setEnabled(true);
             ui->mark_review->setEnabled(false);
         }
-        else if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0
-                && correct.contains(gCurrentPageName) && correct[gCurrentPageName] != 0){
-            ui->status->setText("Corrected");
-            ui->mark_review->setChecked(true);
-            ui->mark_review->setEnabled(true);
-            ui->verified->setEnabled(false);
-        }
         else if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0){
             ui->status->setText("Marked For Review");
             ui->mark_review->setChecked(true);
@@ -1471,6 +1458,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             ui->verified->setEnabled(false);
             ui->mark_review->setChecked(false);
             ui->verified->setChecked(false);
+        }
+        if(recorrect[gCurrentPageName] != 0){
+            ui->mark_review->setChecked(true);
         }
     }
 
@@ -3379,6 +3369,8 @@ void MainWindow::on_actionTurn_In_triggered()
         write_corrected_pages();
         write_verified_pages();
         write_review_pages();
+        if(mRole == "Verifier") recorrect.clear();
+        write_recorrected_pages();
 
     //! Checking if the files are saved or not.
     if (checkUnsavedWork())
@@ -6426,6 +6418,10 @@ void MainWindow::file_click(const QModelIndex & indx)
 
                 curr_browser->setReadOnly(false);
             }
+
+            if(recorrect[currentFile] != 0){
+                ui->mark_review->setChecked(true);
+            }
         }
 
         break;
@@ -6837,9 +6833,13 @@ void MainWindow::closeEvent (QCloseEvent *event)
     write_verified_pages();
     write_corrected_pages();
     write_review_pages();
+
+    if(mRole == "Verifier")recorrect.clear();
+    write_recorrected_pages();
     correct.clear();
     verify.clear();
     markForReview.clear();
+    recorrect.clear();
 
 
     autoSave();
@@ -8586,9 +8586,14 @@ void MainWindow::on_actionClose_project_triggered()
     write_corrected_pages();
     write_verified_pages();
     write_review_pages();
+
+    if(mRole == "Verifier") recorrect.clear();
+
+    write_recorrected_pages();
     correct.clear();
     verify.clear();
     markForReview.clear();
+    recorrect.clear();
 
     ui->corrected->setVisible(false);
     ui->verified->setVisible(false);
@@ -8888,9 +8893,13 @@ void MainWindow::on_actionExit_triggered()
     write_corrected_pages();
     write_verified_pages();
     write_review_pages();
+
+    if(mRole == "Verifier") recorrect.clear();
+    write_recorrected_pages();
     markForReview.clear();
     correct.clear();
     verify.clear();
+    recorrect.clear();
 
 
     autoSave();
@@ -9285,41 +9294,65 @@ void MainWindow::cloud_save(){
             settings.setValue("save","success" );
             settings.endGroup();
 
+            //<<<<<<Change
+            read_recorrected_pages();
+            read_review_pages();
+            read_corrected_pages();
+            read_verified_pages();
 
-
-                read_review_pages();
-                read_corrected_pages();
-                read_verified_pages();
-
-                if(mRole == "Corrector"){
-                    ui->corrected->setEnabled(true);
+            if(mRole == "Corrector"){
+                ui->corrected->setEnabled(true);
+                if(verify[gCurrentPageName] != 0){
+                    ui->status->setText("Verified");
+                    ui->corrected->setChecked(true);
+                    ui->corrected->setEnabled(false);
+                    if(curr_browser) curr_browser->setReadOnly(true);
+                }
+                else {
                     if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0){
                         ui->status->setText("Marked For Review");
-
                     }
                     else if(correct.contains(gCurrentPageName) && correct[gCurrentPageName] != 0){
                         ui->status->setText("Corrected");
                         ui->corrected->setChecked(true);
+                    }
+                    else{
+                        ui->status->setText("Status - None");
+                        ui->corrected->setChecked(false);
+                    }
+                    if(curr_browser) curr_browser->setReadOnly(false);
+                }
+            }
+            if(mRole == "Verifier"){
+                if(verify.contains(gCurrentPageName) && verify[gCurrentPageName] != 0){
+                    ui->status->setText("Verified");
+                    ui->verified->setChecked(true);
+                    ui->verified->setEnabled(true);
+                    ui->mark_review->setEnabled(false);
+                }
+                else if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0){
+                    ui->status->setText("Marked For Review");
+                    ui->mark_review->setChecked(true);
+                    ui->mark_review->setEnabled(true);
+                    ui->verified->setEnabled(false);
+                }
+                else if(correct.contains(gCurrentPageName) && correct[gCurrentPageName] != 0){
+                    ui->status->setText("Corrected");
+                    ui->mark_review->setEnabled(true);
+                    ui->verified->setEnabled(true);
+                }
+                else{
+                    ui->status->setText("Status - None");
+                    ui->mark_review->setEnabled(false);
+                    ui->verified->setEnabled(false);
+                    ui->mark_review->setChecked(false);
+                    ui->verified->setChecked(false);
+                }
 
-                    }
+                if(recorrect[gCurrentPageName] != 0){
+                    ui->mark_review->setChecked(true);
                 }
-                if(mRole == "Verifier"){
-                    if(markForReview.contains(gCurrentPageName) && markForReview[gCurrentPageName] != 0){
-                        ui->status->setText("Marked For Review");
-                        ui->mark_review->setChecked(true);
-                        ui->verified->setEnabled(false);
-                    }
-                    else if(verify.contains(gCurrentPageName) && verify[gCurrentPageName] != 0){
-                        ui->status->setText("Verified");
-                        ui->verified->setChecked(true);
-                        ui->mark_review->setEnabled(false);
-                    }
-                    else if(correct.contains(gCurrentPageName) && correct[gCurrentPageName] != 0){
-                        ui->status->setText("Corrected");
-                        ui->mark_review->setEnabled(true);
-                        ui->verified->setEnabled(true);
-                    }
-                }
+            }
 
 
 
@@ -10234,6 +10267,10 @@ void MainWindow::on_corrected_clicked()
     if(ui->corrected->checkState() == Qt::Checked){
         correct[fileName] = 1;
 
+        //<<<<<<Change
+        if(markForReview[fileName] != 0 || recorrect[fileName] != 0){
+            recorrect[fileName] = 1;
+        }
         ui->corrected->setChecked(true);
         ui->status->setText("Corrected");
     }
@@ -10245,6 +10282,7 @@ void MainWindow::on_corrected_clicked()
     }
 
     verify[fileName] = 0;
+    markForReview[fileName] = 0;
 }
 
 
@@ -10253,8 +10291,9 @@ void MainWindow::on_verified_clicked()
     QString fileName = currentFile;
 
     if(ui->mark_review->checkState() == Qt::Checked){
-        ui->verified->setChecked(false);
         ui->verified->setEnabled(false);
+        ui->verified->setChecked(false);
+        if(recorrect[currentFile] != 0) return;
         ui->status->setText("Marked For Review");
         return;
     }
@@ -10482,10 +10521,6 @@ void MainWindow::on_mark_review_clicked()
 
     if(ui->mark_review->checkState() == Qt::Checked && correct[currentFile] != 0){
         markForReview[currentFile] = 1;
-
-        //<<<<<<Change
-        correct[currentFile] = 0;
-
         ui->mark_review->setChecked(true);
         ui->verified->setEnabled(false);
         ui->status->setText("Marked For Review");
@@ -10616,9 +10651,7 @@ void MainWindow::read_review_pages(){
         QString line = in.readLine();
         if(!line.contains(".html"))continue;
         markForReview[line] = 1;
-
-        //<<<<<<Change
-//        correct[line] = 0;
+        correct[line] = 0;
     }
     f.close();
 }
@@ -10654,6 +10687,51 @@ void MainWindow::write_review_pages(){
     }
 }
 
+void MainWindow::read_recorrected_pages(){
+    QString fstring = mProject.GetDir().absolutePath() + "/logs/recorrected_page.txt";
+    QFile f(fstring);
+    if(!f.open(QIODevice::ReadOnly))
+        return;
+
+    QTextStream in(&f);
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+        if(!line.contains(".html"))continue;
+        recorrect[line] = 1;
+    }
+    f.close();
+}
+
+void MainWindow::write_recorrected_pages(){
+    QString directory = mProject.GetDir().absolutePath();
+
+    //Logs folder
+    QString folder = directory + "/logs";
+
+    if(!QDir(folder).exists()){
+        QDir(gDirTwoLevelUp).mkdir("logs");
+    }
+
+    QString file = folder + "/recorrected_page.txt";
+
+    QFile f(file);
+    f.remove();
+
+    if(f.open(QIODevice::WriteOnly)){
+        QTextStream outputStream(&f);
+        QString string;
+        QMapIterator<QString , int>i(recorrect);
+        while(i.hasNext()){
+            i.next();
+            string = i.key();
+            if(i.value() != 0){
+                outputStream << string << endl;
+            }
+
+        }
+        f.close();
+    }
+}
 
 void MainWindow::on_actionClear_Menu_triggered()
 {
