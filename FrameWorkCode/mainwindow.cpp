@@ -3369,7 +3369,7 @@ void MainWindow::on_actionTurn_In_triggered()
         write_corrected_pages();
         write_verified_pages();
         write_review_pages();
-        if(mRole == "Verifier") recorrect.clear();
+
         write_recorrected_pages();
 
     //! Checking if the files are saved or not.
@@ -6419,7 +6419,7 @@ void MainWindow::file_click(const QModelIndex & indx)
                 curr_browser->setReadOnly(false);
             }
 
-            if(recorrect[currentFile] != 0){
+            if(recorrect[currentFile] != 0 && markForReview[currentFile] == 0 && verify[currentFile] == 0){
                 ui->mark_review->setChecked(true);
             }
         }
@@ -6834,7 +6834,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
     write_corrected_pages();
     write_review_pages();
 
-    if(mRole == "Verifier")recorrect.clear();
+
     write_recorrected_pages();
     correct.clear();
     verify.clear();
@@ -8587,8 +8587,6 @@ void MainWindow::on_actionClose_project_triggered()
     write_verified_pages();
     write_review_pages();
 
-    if(mRole == "Verifier") recorrect.clear();
-
     write_recorrected_pages();
     correct.clear();
     verify.clear();
@@ -8894,7 +8892,6 @@ void MainWindow::on_actionExit_triggered()
     write_verified_pages();
     write_review_pages();
 
-    if(mRole == "Verifier") recorrect.clear();
     write_recorrected_pages();
     markForReview.clear();
     correct.clear();
@@ -10300,6 +10297,7 @@ void MainWindow::on_verified_clicked()
 
     if(ui->verified->checkState() == Qt::Checked && correct[currentFile] != 0){
         verify[fileName] = 1;
+
         ui->verified->setChecked(true);
         ui->corrected->setChecked(true);
         ui->mark_review->setEnabled(false);
@@ -10724,7 +10722,8 @@ void MainWindow::write_recorrected_pages(){
         while(i.hasNext()){
             i.next();
             string = i.key();
-            if(i.value() != 0){
+
+            if(i.value() != 0 && verify[string] == 0 && markForReview[string] == 0){
                 outputStream << string << endl;
             }
 
