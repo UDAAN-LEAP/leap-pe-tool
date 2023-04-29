@@ -516,10 +516,9 @@ private slots:
     void read_review_pages();
 
     void write_review_pages();
-
-    //<<<<<<Change
     void read_recorrected_pages();
     void write_recorrected_pages();
+    void pageStatusHandler();
 
     void on_actionClear_Menu_triggered();
 
