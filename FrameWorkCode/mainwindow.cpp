@@ -10511,20 +10511,45 @@ void MainWindow::write_review_pages(){
     QFile f(file);
     f.remove();
 
-    if(f.open(QIODevice::WriteOnly)){
-        QTextStream outputStream(&f);
-        QString string;
-        QMapIterator<QString , int>i(markForReview);
-        while(i.hasNext()){
-            i.next();
-            string = i.key();
-            if(mRole == "Verifier")correct[string] = 0;
-            if(i.value() != 0){
-                outputStream << string << endl;
+    if(mRole == "Corrector"){
+        if(f.open(QIODevice::WriteOnly)){
+            QTextStream outputStream(&f);
+            QString string;
+            QMapIterator<QString , int>i(markForReview);
+            while(i.hasNext()){
+                i.next();
+                string = i.key();
+
+                if(i.value() != 0){
+                    outputStream << string << endl;
+                }
+            }
+            f.close();
+        }
+    }
+    if(mRole == "Verifier"){
+        if(f.open(QIODevice::Append | QIODevice::ReadOnly)){
+            QMap<QString,int>alreadyThere;
+            QTextStream in(&f);
+            while(!in.atEnd()) {
+                QString line = in.readLine();
+                if(!line.contains(".html"))continue;
+                alreadyThere[line] = 1;
             }
 
+            QTextStream outputStream(&f);
+            QString string;
+            QMapIterator<QString , int>i(markForReview);
+            while(i.hasNext()){
+                i.next();
+                string = i.key();
+                if(mRole == "Verifier")correct[string] = 0;
+                if(i.value() != 0 && alreadyThere[string] == 0){
+                    outputStream << string << endl;
+                }
+            }
+            f.close();
         }
-        f.close();
     }
 }
 
