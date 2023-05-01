@@ -10509,9 +10509,8 @@ void MainWindow::write_review_pages(){
     QString file = folder + "/marked_for_review_page.txt";
 
     QFile f(file);
-    f.remove();
 
-    if(mRole == "Corrector"){
+ /*  if (mRole == "Corrector") {
         if(f.open(QIODevice::WriteOnly)){
             QTextStream outputStream(&f);
             QString string;
@@ -10526,25 +10525,24 @@ void MainWindow::write_review_pages(){
             }
             f.close();
         }
-    }
+    }*/
     if(mRole == "Verifier"){
-        if(f.open(QIODevice::Append | QIODevice::ReadOnly)){
-            QMap<QString,int>alreadyThere;
+        if(f.open(QIODevice::ReadWrite)){
             QTextStream in(&f);
+            QString line = "";
             while(!in.atEnd()) {
-                QString line = in.readLine();
-                if(!line.contains(".html"))continue;
-                alreadyThere[line] = 1;
+                line = in.readAll();
             }
 
             QTextStream outputStream(&f);
             QString string;
             QMapIterator<QString , int>i(markForReview);
+            outputStream << line << endl; qDebug() << line;
             while(i.hasNext()){
                 i.next();
                 string = i.key();
                 if(mRole == "Verifier")correct[string] = 0;
-                if(i.value() != 0 && alreadyThere[string] == 0){
+                if(i.value() != 0){
                     outputStream << string << endl;
                 }
             }
