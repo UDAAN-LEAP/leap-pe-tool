@@ -3,6 +3,7 @@
 # ------------------------------------------------------
 
 HEADERS += ./Filters.h \
+    $$PWD/about.h \
     $$PWD/crashlog.h \
     $$PWD/customtextbrowser.h \
     $$PWD/dashboard.h \
@@ -10,6 +11,7 @@ HEADERS += ./Filters.h \
     $$PWD/equationeditor.h \
     $$PWD/globalreplaceworker.h \
     $$PWD/handlebbox.h \
+    $$PWD/indentoptions.h \
     $$PWD/loaddataworker.h \
     $$PWD/loadingspinner.h \
     $$PWD/markRegion.h \
@@ -53,6 +55,7 @@ HEADERS += ./Filters.h \
     $$PWD/globalreplacepreview.h \
     $$PWD/globalreplaceinformation.h
 SOURCES += ./DiffView.cpp \
+    $$PWD/about.cpp \
     $$PWD/crashlog.cpp \
     $$PWD/customtextbrowser.cpp \
     $$PWD/dashboard.cpp \
@@ -61,6 +64,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/equationeditor.cpp \
     $$PWD/globalreplaceworker.cpp \
     $$PWD/handlebbox.cpp \
+    $$PWD/indentoptions.cpp \
     $$PWD/loaddataworker.cpp \
     $$PWD/loadingspinner.cpp \
     $$PWD/markRegion.cpp \
@@ -100,8 +104,10 @@ SOURCES += ./DiffView.cpp \
     $$PWD/globalreplacepreview.cpp \
     $$PWD/globalreplaceinformation.cpp
 FORMS += ./DiffView.ui \
+    $$PWD/about.ui \
     $$PWD/dashboard.ui \
     $$PWD/equationeditor.ui \
+    $$PWD/indentoptions.ui \
     $$PWD/loadingspinner.ui \
     $$PWD/pdfrangedialog.ui \
     $$PWD/progressbardialog.ui \

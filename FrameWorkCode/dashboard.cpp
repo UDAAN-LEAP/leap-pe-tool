@@ -33,17 +33,42 @@
  * \param max
  * \param repoMap
  */
-dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> repoMap) :
+dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> repoMap, QString *p, bool * open) :
     QDialog(parent),
     ui(new Ui::dashboard)
 {
     ui->setupUi(this);
+    this->presentId.clear();
+    this->btnMap.clear();
+
+    ui->Import_btn->setStyleSheet("color : rgb(20,52,167); text-align : centre; background-color :rgb(229,228,226); border-radius :5px;");
+    ui->Import_Open_btn->setStyleSheet("color : rgb(20,52,167); text-align : centre; background-color :rgb(229,228,226); border-radius :5px;");
+
     qInstallMessageHandler(crashlog::myMessageHandler);
     setWindowTitle("User Dashboard");
     this->repoMap = repoMap;
 
-    ui->textBrowser->setHtml(s);
-    ui->spinBox->setRange(0,max);
+    ui->scrollArea->setWidget(ui->verticalLayout->widget());
+    ui->verticalLayout->setAlignment(Qt::AlignLeft);
+
+    int index = 0;
+    QMapIterator<int,QString>i(repoMap);
+    while(i.hasNext()){
+        i.next();
+        index = i.key();
+        auto btn = new QPushButton();
+
+        btn->setText(i.value());
+        btn->setFixedHeight(50);
+        btn->setMinimumWidth(ui->scrollArea->width());
+        btn->setStyleSheet("color : black; text-align : left; padding : 10px;background-color :rgb(229,228,226); border-radius :5px;");
+        connect(btn, &QPushButton::clicked , [this, index] {clicked(index);});
+        this->btnMap[index] = btn;
+        ui->verticalLayout->addWidget(btn);
+    }
+
+    this->p = p;
+    this->toOpen = open;
 }
 
 /*!
@@ -70,20 +95,24 @@ dashboard::~dashboard()
  */
 void dashboard::on_pushButton_clicked()
 {
-    int id = ui->spinBox->value();
+    QMapIterator<int,int>i(presentId);
     QString path, url_;
     bool ok;
     int ret;
-    if(id == 0){
-        QMessageBox::information(this, "Enter Project id", "Project id can't be zero", QMessageBox::Ok, QMessageBox::Ok);
-        return;
-    }
 
-    path = QFileDialog::getExistingDirectory(this, tr("Open Directory for importing project"), "/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    path = QFileDialog::getExistingDirectory(this, tr("Open Directory for importing all projects"), "/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     if (path == "") {
         qDebug() << "User cancelled import #1";
         return;
     }
+
+
+    int id = 0;
+    while(i.hasNext()){
+        i.next();
+        if(i.value() == 1) id = i.key();
+    }
+
     url_ = "https://github.com/UdaanContentForLogging/"+repoMap[id];
     if (url_.startsWith("git@github.com")) {
         qDebug() << "Not prepared to import using SSH. Please provide HTTPS URL";
@@ -96,18 +125,21 @@ void dashboard::on_pushButton_clicked()
 
     QFuture<int> t1 = QtConcurrent::run(Project::clone, QString(url_), QString(path));
     watcher.setFuture(t1);
+    QString s = "Importing "+repoMap[id] + "...";
 
     spinner = new LoadingSpinner(this);
-    spinner->SetMessage("Importing Set...", "Importing...");
+    spinner->SetMessage("Importing Set...", s);
     spinner->setModal(false);
     spinner->exec();
 
     if ((ret = t1.result()) != 0) {
-        QMessageBox::information(this, "Error", "The project is already downloaded", QMessageBox::Ok, QMessageBox::Ok);
+        QMessageBox::information(this, "Error", ("The project is already downloaded\n" + repoMap[id]), QMessageBox::Ok, QMessageBox::Ok);
         qDebug()<<"Exited with return code"<<ret;
     } else {
         QMessageBox::information(this, "Successful", "Successfully imported the set", QMessageBox::Ok, QMessageBox::Ok);
+        *p = path+"/"+repoMap[id]+"/project.xml";
     }
+
     dashboard::close();
 }
 
@@ -119,5 +151,63 @@ void dashboard::stopSpinning()
 {
     spinner->close();
     spinner->deleteLater();
+}
+
+/*!
+ * \fn dashboard::clicked
+ * \brief This function sets index for each button's onClick slot
+ * \param integer index of button
+*/
+void dashboard::clicked(int index){
+    QPushButton* btn = this->btnMap[index];
+    if(this->presentId[index] == 0){
+        this->presentId[index] = 1;
+        this->totalClickedBooks++;
+        btn->setStyleSheet("color : black; text-align : left; padding : 10px;background-color :rgb(137,207,240); border-radius :5px;");
+    }
+    else{
+        this->presentId[index] = 0;
+        this->totalClickedBooks--;
+        btn->setStyleSheet("color : black; text-align : left; padding : 10px;background-color :rgb(229,228,226); border-radius :5px;");
+    }
+}
+
+/*!
+ * \fn dashboard::on_pushButton_2_clicked
+ * \brief This function will give info while clicking 'i' button
+*/
+void dashboard::on_pushButton_2_clicked()
+{
+    QMessageBox * msg = new QMessageBox();
+
+    msg->setText("* All your books will appear here.\n* You can save changes to cloud to these books only.\n* Click on book name to import it locally.");
+    msg->exec();
+}
+
+
+void dashboard::on_Import_Open_btn_clicked()
+{
+    if(this->totalClickedBooks == 1){
+        on_pushButton_clicked();
+        * (this->toOpen) = true;
+    }
+    else{
+        QMessageBox * errMsg = new QMessageBox();
+        errMsg->setText("Please select any one book");
+        errMsg->exec();
+    }
+}
+
+
+void dashboard::on_Import_btn_clicked()
+{
+    if(this->totalClickedBooks == 1){
+        on_pushButton_clicked();
+    }
+    else{
+        QMessageBox * errMsg = new QMessageBox();
+        errMsg->setText("Please select any one book");
+        errMsg->exec();
+    }
 }
 

@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "dashboard.h"
+#include "indentoptions.h"
 #include "qobjectdefs.h"
+#include "qtablewidget.h"
+#include "threadingpush.h"
 #include "ui_mainwindow.h"
 #include "averageaccuracies.h"
 #include "eddis.h"
@@ -69,8 +72,6 @@
 #include "globalreplaceworker.h"
 #include "customtextbrowser.h"
 #include "pdfrangedialog.h"
-#include <QtNetworkAuth>
-#include <QOAuth2AuthorizationCodeFlow>
 #include <dashboard.h>
 #include "printworker.h"
 #include <QRadioButton>
@@ -83,6 +84,14 @@
 #include <QFileDialog>
 #include <QMediaRecorder>
 #include <QStandardPaths>
+#include <about.h>
+#include <QCalendarWidget>
+#ifdef Q_OS_WIN
+#include <quazip.h>
+#include <quazipfile.h>
+#endif
+
+
 
 map<string, string> LSTM;
 map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPairRight;
@@ -114,6 +123,7 @@ int openedFileWords;
 bool gSaveTriggered = 0;
 bool LoadDataFlag = 1;
 bool uploadReplaceFlag = 0;
+
 map<QString, QString> filestructure_fw;
 QMap <QString, QString> mapOfReplacements;
 
@@ -139,6 +149,11 @@ QMap<QString, QString> globallyReplacedWords;
 
 QList<QString> filesChangedUsingGlobalReplace;
 
+QString defaultStyle;
+QList<QTableWidgetItem *> selectedItems;
+QTableWidget *m_table;
+QDialog *tableDialog;
+
 
 /*!
  * \fn MainWindow::MainWindow
@@ -148,10 +163,42 @@ QList<QString> filesChangedUsingGlobalReplace;
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QMenuBar *menubar = this->menuBar();
+    QIcon icon = QIcon(":/Images/Resources/user_login.png");
+    ui->pushButton_5->setIcon(icon);
+    menubar->setCornerWidget(ui->pushButton_5, Qt::TopRightCorner);
     CustomTextBrowser *customtextbrowser = new CustomTextBrowser();
     customtextbrowser->setStyleSheet("background-color:white; color:black;");
     ui->splitter->replaceWidget(1,customtextbrowser);
     customtextbrowser->show();
+
+
+    customtextbrowser->setStyleSheet("padding-top: 100%; padding-left: 40%; color: #1c1c1c; background-color: white;");
+    connect(customtextbrowser, &QTextBrowser::textChanged, this, [=]() {
+        if(!QString::compare(QString(), customtextbrowser->toPlainText())) {
+            customtextbrowser->setStyleSheet("padding-top: 100%; padding-left: 40%; color: #1c1c1c; background-color: white;");
+            customtextbrowser->setPlaceholderText("How to Open a Project:\n"
+                                                  "―――――――――――――――――――――――――――――――――――――\n"
+                                                  "If your project is in a zip folder:\n"
+                                                  "  ⚫ Extract the project to a location of your choice,\n"
+                                                  "  ⚫ File > Open Project ('Ctrl + o'),\n"
+                                                  "  ⚫ Browse to the location where you extracted your project, and select it,\n"
+                                                  "  ⚫ Click 'Open'.\n"
+                                                  "If you want to download a project:\n"
+                                                  "  ⚫ File > Import Project > Import.\n"
+                                                  "If you want to download & open a project:\n"
+                                                  "  ⚫ File > Import Project > Import and Open.\n"
+                                                  "User dashboard: Enter project ID, click 'Import Project' button, browse and select location to import project.\n"
+                                                  "To open a recent project:\n"
+                                                  "  ⚫ File > Recent Project,\n"
+                                                  "  ⚫ Select the project you want to open from the list of recent projects.\n"
+                                                  "For detailed instructions, you can refer to the User Guide under the 'Help' menu.");
+        } else {
+            customtextbrowser->setStyleSheet("padding-top: 0; padding-left: 0; color: black; background-color: white;");
+            customtextbrowser->setPlaceholderText("<b>hello</b>");
+        }
+    });
+
 
     ui->splitter->setStyleSheet("background-color:white;color:black;");
     ui->splitter_2->setStyleSheet("background-color:rgb(32, 33, 72);color:black;");
@@ -169,8 +216,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->lineEdit->setReadOnly(true);
     ui->lineEdit_2->setReadOnly(true);
     ui->lineEdit_3->setReadOnly(true);
+    ui->forward_Button->setVisible(false);
+    ui->pushButton_6->setVisible(false);
+    ui->actionFetch_2->setVisible(false);
 
-    //    googleAuth();
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("cloudSave");
     settings.remove("");
@@ -200,16 +249,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     QString value = settings.value("consent").toString();
     if(value != "dna" && value != "loggedIn"){
         login();
-    }
-    //show login/logout options
-    settings.endGroup();
-    if(value != "loggedIn"){
-        this->ui->actionLogin->setVisible(true);
-        this->ui->actionLogout->setVisible(false);
-    }
-    else{
-        this->ui->actionLogin->setVisible(false);
-        this->ui->actionLogout->setVisible(true);
     }
 
     QString common = "डॉ - xZ,, अ  - a,, आ/ ा  - A,, इ/ ि  - i,, ई/ ी  - I,, उ/ ु  - u,, ऊ/ ू  - U,, ऋ/ ृ  - f,, ए/ े  - e,, ऐ/ ै  - E,, ओ/ ो  - o,, औ/ ौ  - O,, ं  - M,, ः  - H,,  ँ   - ~,, ज्ञ  - jYa,, त्र  - tra,, श्र  - Sra,, क्ष्/क्ष  - kz/kza,, द्य्/द्य  - dy/dya,, क्/क  - k/ka,, ख्/ख  - K/Ka,, ग्/ग  - g/ga,, घ्/घ  - G/Ga,, ङ्/ङ  - N/Na,, च्/च  - c/ca,, छ्/छ  - C/Ca,, ज्/ज  - j/ja,, झ्/झ  - J/Ja,, ञ्/ञ  - Y/Ya,, ट्/ट  - w/wa,, ठ्/ठ  - W/Wa,, ड्/ड  - q/qa,, ढ्/ढ  - Q/Qa,, ण्/ण  - R/Ra,, त्/त  - t/ta,, थ्/थ  - T/Ta,, द्/द  - d/da,, ध्/ध  - D/Da,, न्/न  - n/na,, प्/प  - p/pa,, फ्/फ  - P/Pa,, ब्/ब  - b/ba,, भ्/भ  - B/Ba,, म्/म  - m/ma,, य्/य  - y/ya,, र्/र  - r/ra,, ल्/ल  - l/la,, व्/व  - v/va,, श्/श  - S/Sa,, ष्/ष  - z/za,, स्/स  - s/sa,, ह्/ह  - h/ha,, ळ्/ळ  - L/La,, १  - 1,, २  - 2,, ३  - 3,, ४  - 4,, ५  - 5,, ६  - 6,, ७  - 7,, ८  - 8,, ९  - 9,, ०  - 0,, ।  - |,, ॥  - ||";
@@ -260,101 +299,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     QFontDatabase::addApplicationFont(":/Fonts/fonts/brhkndrn/brhkndrn.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/fonts/Nudi 1/Nudi 01 e Regular.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/fonts/Chanakya Regular/Chanakya Regular.ttf");
-
-    if (!isVerifier)
-    {
-        ui->actionHighlight->setEnabled(false);
-    }
+    //    QFontDatabase::addApplicationFont(":/Fonts/fonts/Jameel Noori Nastaleeq Regular/Jameel Noori Nastaleeq Regular.ttf");
 
     // Hiding options
-
-    ui->actionLoadDict->setVisible(false);
-    ui->actionLoadOCRWords->setVisible(false);
-    ui->actionLoadDomain->setVisible(false);
-    ui->actionLoadSubPS->setVisible(false);
-    ui->actionLoadConfusions->setVisible(false);
-    ui->actionLoadGDocPage->setVisible(false);
-    ui->menuSelectLanguage->setTitle("");
-    ui->menuCreateReports->setTitle("");
-    //compare options
     ui->viewComments->setVisible(false);
     ui->compareCorrectorOutput->setVisible(false);
     ui->compareVerifierOutput->setVisible(false);
-    //    ui->pushButton_2->setVisible(false);
 
-    // Disabling some buttons while opening the tool
-
-    // File Menu
-    ui->actionSave->setEnabled(false);
-    ui->actionSave_As->setEnabled(false);
-    ui->actionSpell_Check->setEnabled(false);
-    ui->actionLoad_Prev_Page->setEnabled(false);
-    ui->actionLoad_Next_Page->setEnabled(false);
-    ui->actionToDevanagari->setEnabled(false);
-    ui->actionToSlp1->setEnabled(false);
-    ui->actionLoadGDocPage->setEnabled(false);
-    ui->actionLoadData->setEnabled(false);
-    ui->actionLoadDict->setEnabled(false);
-    ui->actionLoadOCRWords->setEnabled(false);
-    ui->actionLoadDomain->setEnabled(false);
-    ui->actionLoadSubPS->setEnabled(false);
-    ui->actionLoadConfusions->setEnabled(false);
-    ui->actionSugg->setVisible(false);
-
-    // Edit Menu
-    ui->actionUndo->setEnabled(false);
-    ui->actionRedo->setEnabled(false);
-    ui->actionFind_and_Replace->setEnabled(false);
-    ui->actionUndo_Global_Replace->setEnabled(false);
-    ui->actionUpload->setEnabled(false);
-
-    // Language Menu
-    ui->actionSanskrit_2->setEnabled(false);
-    ui->actionEnglish->setEnabled(false);
-    ui->actionHindi->setEnabled(false);
-
-    // Reports Menu
-    ui->actionAccuracyLog->setEnabled(false);
-    ui->actionViewAverageAccuracies->setEnabled(false);
-
-    // View Menu
-    ui->actionAllFontProperties->setEnabled(false);
-    ui->actionBold->setEnabled(false);
-    ui->actionItalic->setEnabled(false);
-    ui->actionHighlight->setEnabled(false); // Already disabled in Corrector mode
-    ui->actionLeftAlign->setEnabled(false);
-    ui->actionRightAlign->setEnabled(false);
-    ui->actionCentreAlign->setEnabled(false);
-    ui->actionJusitfiedAlign->setEnabled(false);
-    ui->actionSuperscript->setEnabled(false);
-    ui->actionSubscript->setEnabled(false);
-    ui->actionInsert_Horizontal_Line->setEnabled(false);
-    ui->actionFontBlack->setEnabled(false);
-    ui->actionInsert_Tab_Space->setEnabled(false);
-    ui->actionPDF_Preview->setEnabled(false);
-
-    // Table Menu inside View Menu
-    ui->actionInsert_Table_2->setEnabled(false);
-    ui->actionInsert_Columnleft->setEnabled(false);
-    ui->actionInsert_Columnright->setEnabled(false);
-    ui->actionInsert_Rowabove->setEnabled(false);
-    ui->actionInsert_Rowbelow->setEnabled(false);
-    ui->actionRemove_Column->setEnabled(false);
-    ui->actionRemove_Row->setEnabled(false);
-
-    // Versions Menu
-    ui->actionFetch_2->setEnabled(false);
-    ui->actionTurn_In->setEnabled(false);
-    ui->actionVerifier_Turn_In->setEnabled(false);
-
-    // Download Menu
-    ui->actionas_PDF->setEnabled(false);
-
-    ui->actionSymbols->setEnabled(false);
-    ui->actionZoom_In->setEnabled(false);
-    ui->actionZoom_Out->setEnabled(false);
-     ui->actionUnderline->setDisabled(true);
-        ui->actionJusitfiedAlign->setEnabled(false);
     //to set default tab to project widget
     ui->tabWidget->setCurrentWidget(ui->tab_2);
     //recording
@@ -367,13 +318,29 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->comboBox->addItem(QStringLiteral("Bengali"), QVariant("bn-IN"));
     ui->comboBox->addItem(QStringLiteral("Gujarati"), QVariant("gu-IN"));
     ui->comboBox->addItem(QStringLiteral("Hindi"), QVariant("hi-IN"));
-    ui->comboBox->addItem(QStringLiteral("Kannada"), QVariant("ka-IN"));
+    ui->comboBox->addItem(QStringLiteral("Kannada"), QVariant("kn-IN"));
     ui->comboBox->addItem(QStringLiteral("Malayalam"), QVariant("ml-IN"));
     ui->comboBox->addItem(QStringLiteral("Marathi"), QVariant("mr-IN"));
     ui->comboBox->addItem(QStringLiteral("Tamil"), QVariant("ta-IN"));
     ui->comboBox->addItem(QStringLiteral("Telugu"), QVariant("te-IN"));
     ui->comboBox->addItem(QStringLiteral("Urdu"), QVariant("ur-IN"));
     ui->comboBox->addItem(QStringLiteral("Punjabi"), QVariant("pa-Guru-IN"));
+
+    //disable features
+    e_d_features(false);
+
+
+    ui->corrected->setVisible(false);
+    ui->verified->setVisible(false);
+    ui->mark_review->setVisible(false);
+    ui->status->setVisible(false);
+
+    ui->corrected->setEnabled(false);
+    ui->verified->setEnabled(false);
+    ui->mark_review->setEnabled(false);
+
+    //saves current path - useful for auto upgrade feature
+    m_update_path = QDir().currentPath();
 }
 
 /*!
@@ -387,11 +354,31 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 bool MainWindow::setRole(QString role)
 {
     this->mRole = role;
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("prev-version");
+    QString link;
+    link = settings.value("link").toString();
+    qDebug() << "path: " << link;
+    if (!link.isEmpty()) {
+        qDebug() << "removed :" << link;
+        QDir folderDir(link);
+
+        // Remove the folder and its contents recursively
+        if (folderDir.exists() && folderDir.removeRecursively()) {
+            qDebug() << link << "Folder removed successfully!";
+            settings.remove("");
+        }
+        else {
+            qDebug() << link << "Failed to remove folder!";
+        }
+
+    }
+    settings.endGroup();
 
     //! Checking role
     if(mRole == "Admin")
     {
-        QSettings settings("IIT-B", "OpenOCRCorrect");
+
         settings.beginGroup("SetRole");
         QString role;
         role = settings.value("role").toString();
@@ -464,10 +451,16 @@ bool MainWindow::setRole(QString role)
                              {"VerifierOutput","VerifierOutput" }
                            };
         isVerifier = 1;
-        ui->actionTurn_In->setVisible(false);      //set false to its visibility; now shown
-        ui->actionTurn_In->setEnabled(false);      //disable the option
+
+
+
+        //ui->actionTurn_In->setVisible(false);      //set false to its visibility; now shown
+        //ui->actionTurn_In->setEnabled(false);      //disable the option
+
+
 
         this->setWindowTitle("Udaan Editing Tool-Verifier");
+
 
     }
     else if(mRole == "Corrector")
@@ -481,14 +474,13 @@ bool MainWindow::setRole(QString role)
         ui->compareVerifierOutput->setVisible(false);
         ui->compareVerifierOutput->setEnabled(false);
 
-        ui->actionVerifier_Turn_In->setVisible(false);
-        ui->actionVerifier_Turn_In->setEnabled(false);
-
         ui->viewComments->setVisible(false);
         ui->viewComments->setEnabled(false);
 
+
+
         isVerifier = 0;
-        this->setWindowTitle("Udaan Editing Tool-Corrector");
+        this->setWindowTitle("Udaan PE Tool-Corrector");
     }
     else
     {
@@ -546,102 +538,6 @@ void writeJsonFile(QString filepath, QJsonObject mainObj)
     jsonFile.close();
 }
 
-/*!
- * \fn MainWindow::authenticate
- * \brief It starts the authentication process of the user.
- */
-void MainWindow::authenticate() {
-    this->google->grant();
-}
-
-/*!
- * \fn MainWindow::googleAuth
- * \brief Opens a browser where user has to sign in through his/her google account to authenticate
- */
-void MainWindow::googleAuth()
-{
-    google = new QOAuth2AuthorizationCodeFlow;
-    google->setScope("email");
-    connect(google, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser,
-            &QDesktopServices::openUrl);
-
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o client.json");
-
-    QFile jsonFile("client.json");
-    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    QByteArray data = jsonFile.readAll();
-
-    QJsonParseError errorPtr;
-    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-    QJsonObject mainObj = document.object();
-    jsonFile.close();
-    QString id = mainObj.value("client_id").toString();
-    QString secret = mainObj.value("client_secret").toString();
-    QFile::remove("client.json");
-    QByteArray array = id.toLocal8Bit();
-    const auto clientId = array.data();
-    const QUrl authUri("https://accounts.google.com/o/oauth2/auth");
-    const QUrl tokenUri("https://oauth2.googleapis.com/token");
-    array = secret.toLocal8Bit();
-    const auto clientSecret = array.data();
-    const auto port = 8080;
-
-    google->setAuthorizationUrl(authUri);
-    google->setClientIdentifier(clientId);
-    google->setAccessTokenUrl(tokenUri);
-    google->setClientIdentifierSharedKey(clientSecret);
-
-    google->setModifyParametersFunction([](QAbstractOAuth::Stage stage, QVariantMap* parameters) {
-        // Percent-decode the "code" parameter so Google can match it
-        if (stage == QAbstractOAuth::Stage::RequestingAccessToken) {
-            QByteArray code = parameters->value("code").toByteArray();
-            (*parameters)["code"] = QUrl::fromPercentEncoding(code);
-        }
-    });
-
-    QOAuthHttpServerReplyHandler* replyHandler = new QOAuthHttpServerReplyHandler(port, this);
-    google->setReplyHandler(replyHandler);
-    connect(this->google, &QOAuth2AuthorizationCodeFlow::granted, [=](){
-        const QString token = this->google->token();
-        emit gotToken(token);
-
-        auto reply = this->google->get(QUrl("https://www.googleapis.com/oauth2/v2/userinfo?access_token="+token));
-        connect(reply, &QNetworkReply::finished, [reply, token, this](){
-            const auto objectDetails = (QString)reply->readAll();
-            QJsonDocument jsonResponse = QJsonDocument::fromJson(objectDetails.toUtf8());
-            QJsonObject jsonObject = jsonResponse.object();
-            QString email = jsonObject["email"].toString();
-            QString id = jsonObject["id"].toString();
-            //                const QByteArray data = email.toUtf8();
-            //                qDebug()<<"hash"<<QCryptographicHash::hash(data, QCryptographicHash::Sha256).toHex();
-            // qDebug()<<"email"<<email;
-            //save details in QSettings
-            QSettings settings("IIT-B", "OpenOCRCorrect");
-            settings.beginGroup("login");
-            settings.setValue("token",token);
-            settings.setValue("email",email);
-            settings.setValue("id",id);
-            settings.endGroup();
-
-            //saving details in database via Post request to api
-            //                QProcess process;
-
-            //               //qDebug()<<"curl -d -X -POST --header \"Content-type:application/x-www-form-urlencoded\" https://oauth2.googleapis.com/revoke?token="+token;
-            //                process.execute("curl -d -X -k -POST --header "
-            //                                "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/user_detail/{email:"+email+",user_id:"+id+",token:"+token+"}/");
-
-            //now login dialog should not appear
-            settings.beginGroup("loginConsent");
-            settings.setValue("consent","loggedIn");
-            settings.endGroup();
-            this->ui->actionLogin->setVisible(false);
-            this->ui->actionLogout->setVisible(true);
-        });
-    });
-
-}
 QString file = "";
 bool fileFlag = 0;
 QElapsedTimer myTimer;
@@ -1205,6 +1101,8 @@ void MainWindow::on_actionEnglish_triggered()
  */
 void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     //QString ProjFile;
+
+
     int totalFileCountInDir = 0;
     QMap<QString, int> fileCountInDir;
     //to choose between recent three files
@@ -1220,7 +1118,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     {
         ProjFile = RecentProjFile3;
     }
-    else{
+    else if(!import_flag){
         ProjFile = QFileDialog::getOpenFileName(this, "Open Project", "./", tr("Project(*.xml)"));   //Opens only if the file name is Project.xml
     }
 
@@ -1228,6 +1126,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         return;
 
     isRecentProjclick = false;
+    // Set the file's permissions to readonly
+    qDebug()<<ProjFile;
+    QFile::setPermissions(ProjFile, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
 
     // Testing of project.xml
     VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
@@ -1235,6 +1136,25 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     if(mProject.isProjectOpen()){ //checking if some project is opened, then closing it before opening new project
         on_actionClose_project_triggered();
     }
+
+
+    correct.clear();
+    verify.clear();
+    markForReview.clear();
+    ui->status->setVisible(true);
+
+    if(mRole == "Corrector"){
+        ui->corrected->setVisible(true);
+        ui->corrected->setEnabled(true);
+    }
+
+    if(mRole == "Verifier"){
+        ui->verified->setVisible(true);
+        ui->mark_review->setVisible(true);
+        ui->verified->setEnabled(true);
+        ui->mark_review->setEnabled(true);
+    }
+
 
     if (result != 0) {
         QMessageBox::warning(0, "Project XML file Error", "Project XML File is corrupted \n\nError "+ QString::fromStdString(std::to_string(verifySetObj.getErrorCode()))+": " + verifySetObj.getErrorString()+"\n\nPlease Report this to your administrator");
@@ -1399,6 +1319,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         }
 
         QString projectWindowStylesheet = ui->treeView->styleSheet();
+
+
         int indexOfScrollBarProp = projectWindowStylesheet.indexOf("QScrollBar::handle:vertical");
         int heightProp = projectWindowStylesheet.indexOf("height:", indexOfScrollBarProp);
 
@@ -1414,6 +1336,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
             int insertHeightProp = projectWindowStylesheet.indexOf("{", indexOfScrollBarProp) + 1;
             projectWindowStylesheet.insert(insertHeightProp, "height:" + heightValue);
         }
+
         ui->treeView->setStyleSheet(projectWindowStylesheet);
 
         UpdateFileBrekadown();    //Reset the current file and dir levels
@@ -1482,79 +1405,19 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         RecentPageInfo();
     }
 
+    read_recorrected_pages();
+    read_review_pages();
+    read_corrected_pages();
+    read_verified_pages();
+
+    //<<<<<<Change
+    pageStatusHandler();
+
+
+
+
     // Enabling the buttons again after a project is opened
-    // File Menu
-    ui->actionSave->setEnabled(true);
-    ui->actionSave_As->setEnabled(true);
-    ui->actionSpell_Check->setEnabled(true);
-    ui->actionLoad_Prev_Page->setEnabled(true);
-    ui->actionLoad_Next_Page->setEnabled(true);
-    ui->actionToDevanagari->setEnabled(true);
-    ui->actionToSlp1->setEnabled(true);
-    ui->actionLoadGDocPage->setEnabled(true);
-    ui->actionLoadData->setEnabled(true);
-    ui->actionLoadDict->setEnabled(true);
-    ui->actionLoadOCRWords->setEnabled(true);
-    ui->actionLoadDomain->setEnabled(true);
-    ui->actionLoadSubPS->setEnabled(true);
-    ui->actionLoadConfusions->setEnabled(true);
-    ui->actionSugg->setEnabled(true);
-
-    // Edit Menu
-    ui->actionUndo->setEnabled(true);
-    ui->actionRedo->setEnabled(true);
-    ui->actionFind_and_Replace->setEnabled(true);
-    ui->actionUndo_Global_Replace->setEnabled(true);
-    ui->actionUpload->setEnabled(true);
-
-    // Language Menu
-    ui->actionSanskrit_2->setEnabled(true);
-    ui->actionEnglish->setEnabled(true);
-    ui->actionHindi->setEnabled(true);
-
-    // Reports Menu
-    ui->actionAccuracyLog->setEnabled(true);
-    ui->actionViewAverageAccuracies->setEnabled(true);
-
-    // View Menu
-    ui->actionAllFontProperties->setEnabled(true);
-    ui->actionBold->setEnabled(true);
-    ui->actionItalic->setEnabled(true);
-    ui->actionLeftAlign->setEnabled(true);
-    ui->actionRightAlign->setEnabled(true);
-    ui->actionCentreAlign->setEnabled(true);
-    ui->actionJusitfiedAlign->setEnabled(true);
-    ui->actionSuperscript->setEnabled(true);
-    ui->actionSubscript->setEnabled(true);
-    ui->actionInsert_Horizontal_Line->setEnabled(true);
-    ui->actionFontBlack->setEnabled(true);
-    ui->actionInsert_Tab_Space->setEnabled(true);
-    ui->actionPDF_Preview->setEnabled(true);
-     ui->actionUnderline->setDisabled(false);
-     ui->actionJusitfiedAlign->setEnabled(true);
-    //    if (isVerifier)
-    ui->actionHighlight->setEnabled(true);
-
-    // Table Menu inside View Menu
-    ui->actionInsert_Table_2->setEnabled(true);
-    ui->actionInsert_Columnleft->setEnabled(true);
-    ui->actionInsert_Columnright->setEnabled(true);
-    ui->actionInsert_Rowabove->setEnabled(true);
-    ui->actionInsert_Rowbelow->setEnabled(true);
-    ui->actionRemove_Column->setEnabled(true);
-    ui->actionRemove_Row->setEnabled(true);
-
-    // Versions Menu
-    ui->actionFetch_2->setEnabled(true);
-    ui->actionTurn_In->setEnabled(true);
-    ui->actionVerifier_Turn_In->setEnabled(true);
-
-    // Download Menu
-    ui->actionas_PDF->setEnabled(true);
-
-    ui->actionSymbols->setEnabled(true);
-    ui->actionZoom_In->setEnabled(true);
-    ui->actionZoom_Out->setEnabled(true);
+    e_d_features(true);
     //Reset loadData flag
     LoadDataFlag = 1;
     //reset data
@@ -1582,6 +1445,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->viewComments->setDisabled(false);
     ui->compareCorrectorOutput->setDisabled(false);
     ui->groupBox->setDisabled(false);
+
 }
 /*!
  * \fn MainWindow::AddRecentProjects
@@ -1620,6 +1484,11 @@ void MainWindow::AddRecentProjects()
         ui->menuRecent_Project->addAction(FileAction);
         connect(FileAction, &QAction::triggered, this , &MainWindow::on_action3_triggered);
     }
+
+    QAction *FileAction = new QAction(this);
+    FileAction->setIconText("Clear Menu");
+    ui->menuRecent_Project->addAction(FileAction);
+    connect(FileAction, &QAction::triggered, this , &MainWindow::on_actionClear_Menu_triggered);
 }
 
 
@@ -1729,6 +1598,8 @@ void MainWindow::SaveFile_GUI_Postprocessing()
                 int lindex = img_.find("png");
                 string str = img_.substr(ind, lindex-ind);
                 QString path = QString::fromStdString(str) + "tex";
+                QStringList imgpath = path.split("/");
+                path = "../"+imgpath[imgpath.size()-2]+"/"+imgpath[imgpath.size()-1];
                 QFile f(path);
                 if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
                     qDebug() << "Cannot open file"<<f;
@@ -1761,50 +1632,50 @@ void MainWindow::SaveFile_GUI_Postprocessing()
     }
 
     //! Converting html output into plain text.
-//    QTextDocumentFragment qtextdocfragment;
-//    QString plain = qtextdocfragment.fromHtml(output).toPlainText();
+    //    QTextDocumentFragment qtextdocfragment;
+    //    QString plain = qtextdocfragment.fromHtml(output).toPlainText();
 
-//    std::stringstream ss(plain.toStdString());
-//    std::string to;
-//    //! Appending the plain text in QVector<QString> object.
-//    QVector<QString> s;
-//    if (plain != NULL)
-//    {
-//        while(std::getline(ss,to,'\n'))
-//        {
-//            QString qstr = QString::fromStdString(to);
-//            s.append(qstr);
-//        }
-//    }
+    //    std::stringstream ss(plain.toStdString());
+    //    std::string to;
+    //    //! Appending the plain text in QVector<QString> object.
+    //    QVector<QString> s;
+    //    if (plain != NULL)
+    //    {
+    //        while(std::getline(ss,to,'\n'))
+    //        {
+    //            QString qstr = QString::fromStdString(to);
+    //            s.append(qstr);
+    //        }
+    //    }
 
-//    //! Inserting string values in \a qjsonobj.
-//    QJsonObject qjsonobj;
-//    for(int i = 0;i < s.size(); i++)
-//    {
-//        QString z = QString::number(i);
-//        qjsonobj.insert(z, QJsonValue(s[i]));
-//    }
-//    int len = qjsonobj.length();
+    //    //! Inserting string values in \a qjsonobj.
+    //    QJsonObject qjsonobj;
+    //    for(int i = 0;i < s.size(); i++)
+    //    {
+    //        QString z = QString::number(i);
+    //        qjsonobj.insert(z, QJsonValue(s[i]));
+    //    }
+    //    int len = qjsonobj.length();
 
-//    localFilename.replace(".html",".json");         //!Replacing extension of file from .html to .json
-//    QFile sFile2(localFilename);
+    //    localFilename.replace(".html",".json");         //!Replacing extension of file from .html to .json
+    //    QFile sFile2(localFilename);
 
-//    //! Sets codec value and then adding values in file
-//    if(sFile2.open(QIODevice::WriteOnly | QIODevice::Text))
-//    {
-//        QTextStream out(&sFile2);
-//        out.setCodec("UTF-8");
-//        out << "{\n";
-//        for(int x = 0; x<len; x++)
-//        {
-//            QString z = QString::number(x);
-//            out << "\"" << x << "\"" << ":" << "\"" << qjsonobj[z].toString() << "\"" <<","<< '\n';
-//        }
-//        out << "}";
+    //    //! Sets codec value and then adding values in file
+    //    if(sFile2.open(QIODevice::WriteOnly | QIODevice::Text))
+    //    {
+    //        QTextStream out(&sFile2);
+    //        out.setCodec("UTF-8");
+    //        out << "{\n";
+    //        for(int x = 0; x<len; x++)
+    //        {
+    //            QString z = QString::number(x);
+    //            out << "\"" << x << "\"" << ":" << "\"" << qjsonobj[z].toString() << "\"" <<","<< '\n';
+    //        }
+    //        out << "}";
 
-//        sFile2.flush();
-//        sFile2.close();
-//    }
+    //        sFile2.flush();
+    //        sFile2.close();
+    //    }
 
     //! Set Inds file readonly after saving - Corrector mode
     if (!isVerifier && gCurrentDirName == "Inds")
@@ -1920,11 +1791,15 @@ void MainWindow::stopSpinning()
 void MainWindow::GlobalReplace()
 {
     edit_Distance ed;
-    QVector <QString> changedWords;
-    changedWords = ed.editDistance(s1, s2);             // Update CPair by editdistance
-    QString currentDirAbsolutePath = gDirTwoLevelUp + "/" + gCurrentDirName;
-    runGlobalReplace(currentDirAbsolutePath, changedWords);
-    ConvertSlpDevFlag =0;
+    changedWords += ed.editDistance(s1, s2);
+    if(changedWords.size() > 0 )
+    {
+        QString str = ui->pushButton_6->text();
+        str = "Global Replace[" + QString::number(changedWords.size()) + "]";
+        ui->pushButton_6->setText(str);
+        ui->pushButton_6->setVisible(true);
+    }
+
 }
 
 /*!
@@ -2978,7 +2853,7 @@ void MainWindow::on_actionHighlight_triggered()
             {
                 format.setBackground(Qt::darkYellow);
 
-//                LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
+                //                LogHighlights(text);       // Add log to HighlightsLog file if word is highlighted
             }
             curr_browser->textCursor().mergeCharFormat(format); //Correctors are only allowed to remove highlights.
         }
@@ -3043,6 +2918,7 @@ void MainWindow::on_actionLeftAlign_triggered()
 
     // Get the table format and set the alignment to center
     QTextTableFormat tableFormat = selectedTable->format();
+
     tableFormat.setAlignment(Qt::AlignLeft);
     selectedTable->setFormat(tableFormat);
 }
@@ -3056,6 +2932,8 @@ void MainWindow::on_actionRightAlign_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->setAlignment(Qt::AlignRight);
+
+
     QTextCursor cursor = curr_browser->textCursor();
     QTextTable *selectedTable = cursor.currentTable();
 
@@ -3064,8 +2942,13 @@ void MainWindow::on_actionRightAlign_triggered()
         return;
     }
 
-    // Get the table format and set the alignment to center
+    // Get the table format and set the alignment to right
     QTextTableFormat tableFormat = selectedTable->format();
+
+    // Setting RightMargin = { Content RightMargin + border width }
+    QMargins margin = curr_browser->contentsMargins();
+    tableFormat.setRightMargin(margin.right()* 72 + tableFormat.border());
+
     tableFormat.setAlignment(Qt::AlignRight);
     selectedTable->setFormat(tableFormat);
 }
@@ -3090,6 +2973,11 @@ void MainWindow::on_actionCentreAlign_triggered()
 
     // Get the table format and set the alignment to center
     QTextTableFormat tableFormat = selectedTable->format();
+
+    // Setting RightMargin = { Content RightMargin + border width }
+    QMargins margin = curr_browser->contentsMargins();
+    tableFormat.setRightMargin(margin.right()* 72 + tableFormat.border());
+
     tableFormat.setAlignment(Qt::AlignCenter);
     selectedTable->setFormat(tableFormat);
 }
@@ -3211,41 +3099,37 @@ void MainWindow::on_actionInsert_Tab_Space_triggered()
  * \brief Inserts table at text cursor
  * Creates a dialog to insert the numbr of rows and columns.
  */
-void MainWindow::on_actionInsert_Table_2_triggered()
-{
-    if(!curr_browser || curr_browser->isReadOnly())
+
+void MainWindow::createTable(){
+    if (selectedItems.isEmpty()) {
+
+        QMessageBox::information(0,"Insert Table", "Please select at least one cell.");
         return;
-
-    QDialog dialog(this);
-    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
-    form.addRow(new QLabel("Insert Table", this));                                  // Create a dialog for asking table dimensions
-
-    //! Add the lineEdits with their respective labels
-    QLineEdit *rows = new QLineEdit(&dialog);
-    QLineEdit *columns = new QLineEdit(&dialog);                                    // Add lineEdits to get Rows
-    form.addRow("Rows", rows);                                                      // Add lineEdits to get Columns
-    form.addRow("Columns", columns);
-
-    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-    form.addRow(&buttonBox);
-    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
-    //! Show the dialog as modal
-    if (dialog.exec() == QDialog::Accepted)
-    {
-
-        QTextTableFormat tf;
-        tf.setBorderBrush(Qt::black);
-        tf.setCellSpacing(0);
-        tf.setCellPadding(7);
-        //        tf.setAlignment(Qt::AlignCenter);
-        QTextCursor cursor = curr_browser->textCursor();
-        cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
     }
-}
+    QSet<int>selectedRows;
+    QSet<int>selectedColumns;
+    int rw,col;
+    foreach(QTableWidgetItem *items,selectedItems){
+        rw=items->row();
+        col=items->column();
+        selectedRows.insert(rw);
+        selectedColumns.insert(col);
+    }
+    int rows,columns;
+    rows=selectedRows.size();
+    columns=selectedColumns.size();
 
+    QTextTableFormat tf;
+    tf.setBorderBrush(Qt::black);
+    tf.setCellSpacing(0);
+    tf.setCellPadding(7);
+
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.insertTable(rows,columns,tf);
+
+    tableDialog->close();
+    selectedItems.clear();
+}
 /*!
  * \fn MainWindow::on_actionInsert_Columnleft_triggered
  * \brief Inserts Column to the left of table
@@ -3373,73 +3257,53 @@ void MainWindow::on_actionFetch_2_triggered()
     QString email = settings.value("email").toString();
     QString token = settings.value("token").toString();
     settings.endGroup();
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
-
-    //to find the repo name from .git/congig file
-    QString repo = "";
-    QString gDir = gDirTwoLevelUp+"/.git/config";
-    QFile f(gDir);
-    f.open(QIODevice::ReadOnly);
-    while(!f.atEnd()) {
-        QString line = f.readLine();
-        if(line.contains("https://github.com")){
-            QStringList l = line.split("/");
-            repo = l[l.size()-1].remove("\n");
-            break;
+    if(check_access()){
+        QString repo = "";
+        QString gDir = gDirTwoLevelUp+"/.git/config";
+        QFile f(gDir);
+        f.open(QIODevice::ReadOnly);
+        while(!f.atEnd()) {
+            QString line = f.readLine();
+            if(line.contains("https://github.com")){
+                QStringList l = line.split("/");
+                repo = l[l.size()-1].remove("\n");
+                break;
+            }
         }
-    }
-    f.close();
-    QJsonObject mainObj = readJsonFile("validate.json");
-    QJsonArray repos = mainObj.value("repo_list").toArray();
-    QJsonArray::iterator itr; int flag = 0;
-    for(itr = repos.begin(); itr != repos.end(); itr++){
+        f.close();
 
-        if(itr->toString() == repo){
-            flag = 1;
-            break;
-        }
-    }
-    QFile::remove("validate.json");
-    if(repos.size() == 0 || flag == 0){
-        QMessageBox msg;
-        msg.setText("You don't have access to this project on cloud.");
-        msg.exec();
-        return;
-    }
+        QString stage = mProject.get_stage();
+        QString prvs_stage = (stage=="Verifier")?"Verifier":"Corrector";
+        QString prvs_output_dir = prvs_stage + "Output"; //"VerifierOutput" or "CorrectorOutput"
 
-    QString stage = mProject.get_stage();
-    QString prvs_stage = (stage=="Verifier")?"Verifier":"Corrector";
-    QString prvs_output_dir = prvs_stage + "Output"; //"VerifierOutput" or "CorrectorOutput"
+        QMessageBox forPullBox;
+        forPullBox.setWindowTitle("Sync ?");
+        forPullBox.setIcon(QMessageBox::Question);
+        forPullBox.setInformativeText("This will overwrite files in " + prvs_output_dir + " directory. Do you want to Continue?");
+        QPushButton *okButton = forPullBox.addButton(QMessageBox::StandardButton::Yes);
+        QPushButton *noButton = forPullBox.addButton(QMessageBox::StandardButton::No);
+        forPullBox.exec();
 
-    QMessageBox forPullBox;
-    forPullBox.setWindowTitle("Pull ?");
-    forPullBox.setIcon(QMessageBox::Question);
-    forPullBox.setInformativeText("This will overwrite files in " + prvs_output_dir + " directory. Do you want to Continue?");
-    QPushButton *okButton = forPullBox.addButton(QMessageBox::StandardButton::Yes);
-    QPushButton *noButton = forPullBox.addButton(QMessageBox::StandardButton::No);
-    forPullBox.exec();
-
-    int error;
-    if (forPullBox.clickedButton() == okButton)
-    {
-        if ((error = mProject.fetch()) != 0) {
-            qDebug() << "Fetch failed with error code " << error;
-        }
-        if(mProject.get_version().toInt())
+        int error;
+        if (forPullBox.clickedButton() == okButton)
         {
-            QMessageBox::information(0, "Sync Success", "Synced Succesfully");
+            if ((error = mProject.fetch(gDirTwoLevelUp)) != 0) {
+                qDebug() << "Fetch failed with error code " << error;
+            }
+            if(mProject.get_version().toInt())
+            {
+                QMessageBox::information(0, "Sync Success", "Synced Succesfully");
+            }
+            else
+            {
+                QMessageBox::information(0, "Sync Error", "Cloud Sync Un-successful, Please Check Your Internet Connection");
+            }
+
+            ui->lineEdit_2->setText("Version " + mProject.get_version());
         }
         else
-        {
-            QMessageBox::information(0, "Sync Error", "Cloud Sync Un-successful, Please Check Your Internet Connection");
-        }
-
-        ui->lineEdit_2->setText("Version " + mProject.get_version());
+            return;
     }
-    else
-        return;
 }
 
 /*!
@@ -3450,6 +3314,13 @@ void MainWindow::on_actionFetch_2_triggered()
  */
 void MainWindow::on_actionTurn_In_triggered()
 {
+    //Save to cloud after writing the pages to files
+    write_verified_pages();
+    write_corrected_pages();
+    write_review_pages();
+    write_recorrected_pages();
+
+
     //! Checking if the files are saved or not.
     if (checkUnsavedWork())
     {
@@ -3496,11 +3367,7 @@ void MainWindow::on_actionTurn_In_triggered()
         msg.exec();
         return;
     }
-
     if(!check_access()){
-        QMessageBox msg;
-        msg.setText("You don't have access to this project on cloud.");
-        msg.exec();
         return;
     }
 
@@ -3534,296 +3401,296 @@ void MainWindow::on_actionTurn_In_triggered()
  * \note This function turn-in files for verifiers not correctors.
  * \sa checkUnsavedWork(), saveAllWork(), get_version(), get_stage(), readJsonFile(), writeJsonFile(),set_stage_verifier() and enable_push.
  */
-void MainWindow::on_actionVerifier_Turn_In_triggered()
-{
-    if (checkUnsavedWork())
-    {
-        QMessageBox checkUnsavedBox2;
-        checkUnsavedBox2.setWindowTitle("Unsaved Work");
-        checkUnsavedBox2.setIcon(QMessageBox::Question);
-        checkUnsavedBox2.setInformativeText("You have unsaved files. Save it before turn-in.\n");
-        QPushButton *cancelButton2 = checkUnsavedBox2.addButton(QMessageBox::Cancel);
-        QPushButton *saveButton2 = checkUnsavedBox2.addButton(QMessageBox::Save);
-        checkUnsavedBox2.exec();
+//void MainWindow::on_actionVerifier_Turn_In_triggered()
+//{
+//    if (checkUnsavedWork())
+//    {
+//        QMessageBox checkUnsavedBox2;
+//        checkUnsavedBox2.setWindowTitle("Unsaved Work");
+//        checkUnsavedBox2.setIcon(QMessageBox::Question);
+//        checkUnsavedBox2.setInformativeText("You have unsaved files. Save it before turn-in.\n");
+//        QPushButton *cancelButton2 = checkUnsavedBox2.addButton(QMessageBox::Cancel);
+//        QPushButton *saveButton2 = checkUnsavedBox2.addButton(QMessageBox::Save);
+//        checkUnsavedBox2.exec();
 
 
 
-        if (checkUnsavedBox2.clickedButton() == cancelButton2)
-        {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-            return;
-        }
-        else
-        {
-            saveAllWork();
-        }
-    }
+//        if (checkUnsavedBox2.clickedButton() == cancelButton2)
+//        {
+//            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+//            return;
+//        }
+//        else
+//        {
+//            saveAllWork();
+//        }
+//    }
 
-    /*
-     * \description
-     * Checks whether user is logged in or not
-    */
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    qDebug() << settings.fileName();
-    settings.beginGroup("loginConsent");
-    QString value = settings.value("consent").toString();
-    settings.endGroup();
-    if(value != "loggedIn"){
-        QMessageBox msg;
-        msg.setText("Please login to save your changes on cloud");
-        int cnt = 2;
-        //showing the message box for 2 seconds only.
-        QTimer cntDown;
-        QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
-            if(--cnt < 0){
-                cntDown.stop();
-                msg.close();
-            }
-        });
-        cntDown.start(1000);
-        msg.exec();
-        return;
-    }
-    if(!check_access()){
-        QMessageBox msg;
-        msg.setText("You don't have access to this project on cloud.");
-        msg.exec();
-        return;
-    }
+//    /*
+//     * \description
+//     * Checks whether user is logged in or not
+//    */
+//    QSettings settings("IIT-B", "OpenOCRCorrect");
+//    qDebug() << settings.fileName();
+//    settings.beginGroup("loginConsent");
+//    QString value = settings.value("consent").toString();
+//    settings.endGroup();
+//    if(value != "loggedIn"){
+//        QMessageBox msg;
+//        msg.setText("Please login to save your changes on cloud");
+//        int cnt = 2;
+//        //showing the message box for 2 seconds only.
+//        QTimer cntDown;
+//        QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
+//            if(--cnt < 0){
+//                cntDown.stop();
+//                msg.close();
+//            }
+//        });
+//        cntDown.start(1000);
+//        msg.exec();
+//        return;
+//    }
+//    if(!check_access()){
+//        QMessageBox msg;
+//        msg.setText("You don't have access to this project on cloud.");
+//        msg.exec();
+//        return;
+//    }
 
-    /*
-     * \description
-     * 1. Checks if any project is opened or not.
-     * 2. Reads the comments.json file in Comments folder in the opened project.
-     * 3. Calculates AverageCharAccuracy.
-     * 4. mRoleCheck
-     * 5. Sets the rating and formatting.
-    */
+//    /*
+//     * \description
+//     * 1. Checks if any project is opened or not.
+//     * 2. Reads the comments.json file in Comments folder in the opened project.
+//     * 3. Calculates AverageCharAccuracy.
+//     * 4. mRoleCheck
+//     * 5. Sets the rating and formatting.
+//    */
 
-    if(mProject.get_version().toInt())
-    {
+//    if(mProject.get_version().toInt())
+//    {
 
-        int ver = mProject.get_version().toInt();
-        QString commit_msg;
+//        int ver = mProject.get_version().toInt();
+//        QString commit_msg;
 
-        /*QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
-        float avgcharacc = 0;
-        bool formatting = false;
-        int rating = 0;
+//        /*QString commentFilename = gDirTwoLevelUp + "/Comments/comments.json";
+//        float avgcharacc = 0;
+//        bool formatting = false;
+//        int rating = 0;
 
-        QJsonObject mainObj = readJsonFile(commentFilename);
+//        QJsonObject mainObj = readJsonFile(commentFilename);
 
-        avgcharacc = mainObj["AverageCharAccuracy"].toDouble();
+//        avgcharacc = mainObj["AverageCharAccuracy"].toDouble();
 
-        //! Calcuates the rating for the current set.
-        if(mProject.get_stage() != mRole)
-            rating = mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)].toInt();
-        else
-            rating = mainObj["Rating-V"+ mProject.get_version()].toInt();
-        if(((!mainObj["Formatting"].isNull())) || (! mainObj["Formatting"].isUndefined()))
-            formatting = mainObj["Formatting"].toBool();
+//        //! Calcuates the rating for the current set.
+//        if(mProject.get_stage() != mRole)
+//            rating = mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)].toInt();
+//        else
+//            rating = mainObj["Rating-V"+ mProject.get_version()].toInt();
+//        if(((!mainObj["Formatting"].isNull())) || (! mainObj["Formatting"].isUndefined()))
+//            formatting = mainObj["Formatting"].toBool();
 
-        /*
-         * \description
-         * 1. Check formatting dialog box will be opened
-         * 2. Dialog box will show the current rating out of 4 and a checkbox.
-        */
-        /*QDialog dialog(this);
-        dialog.setWindowTitle("Check Formatting");
+//        /*
+//         * \description
+//         * 1. Check formatting dialog box will be opened
+//         * 2. Dialog box will show the current rating out of 4 and a checkbox.
+//        */
+//        /*QDialog dialog(this);
+//        dialog.setWindowTitle("Check Formatting");
 
-        QFormLayout form(&dialog);
-        form.addRow(new QLabel("Average Rating of Current Set  : " + QString::number(rating) + " out of 4"));
+//        QFormLayout form(&dialog);
+//        form.addRow(new QLabel("Average Rating of Current Set  : " + QString::number(rating) + " out of 4"));
 
-        QCheckBox *cb = new QCheckBox("Perfect Formatting?" ,&dialog);
-        cb->setChecked(formatting);
-        form.addRow(cb);
+//        QCheckBox *cb = new QCheckBox("Perfect Formatting?" ,&dialog);
+//        cb->setChecked(formatting);
+//        form.addRow(cb);
 
-        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-                                   Qt::Horizontal, &dialog);
-        form.addRow(&buttonBox);
+//        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+//                                   Qt::Horizontal, &dialog);
+//        form.addRow(&buttonBox);
 
-        //! Checking which signal has been passed i.e. accept or reject.
-        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));     //when ok is pressed.
-        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));     //when cancel is pressed.
+//        //! Checking which signal has been passed i.e. accept or reject.
+//        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));     //when ok is pressed.
+//        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));     //when cancel is pressed.
 
-        if (dialog.exec() == QDialog::Accepted)
-        {
-            formatting = cb->isChecked();
+//        if (dialog.exec() == QDialog::Accepted)
+//        {
+//            formatting = cb->isChecked();
 
-            //! If the checkbox is checked, increment rating by 1 else decrement the rating value by 1.
-            if(rating == 4 && formatting)
-                rating = 5;
-            else if(rating == 5 && (!formatting))
-                rating = 4;
-        }
-        else
-        {
-            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
-            return;
-        }
+//            //! If the checkbox is checked, increment rating by 1 else decrement the rating value by 1.
+//            if(rating == 4 && formatting)
+//                rating = 5;
+//            else if(rating == 5 && (!formatting))
+//                rating = 4;
+//        }
+//        else
+//        {
+//            QMessageBox::information(0, "Turn In", "Turn In Cancelled");
+//            return;
+//        }
 
-        //! Updating the formatting and rating parameters value in the comments.json file, if any
-        mainObj["Formatting"] = formatting;
+//        //! Updating the formatting and rating parameters value in the comments.json file, if any
+//        mainObj["Formatting"] = formatting;
 
-        //! Calcuates the rating for the current set.
-        if(mProject.get_stage() != mRole)
-            mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;
-        else
-            mainObj["Rating-V"+ mProject.get_version()] = rating;
+//        //! Calcuates the rating for the current set.
+//        if(mProject.get_stage() != mRole)
+//            mainObj["Rating-V"+ QString::number(mProject.get_version().toInt() - 1)] = rating;
+//        else
+//            mainObj["Rating-V"+ mProject.get_version()] = rating;
 
-        writeJsonFile(commentFilename, mainObj);
+//        writeJsonFile(commentFilename, mainObj);
 
-        QMessageBox messageBox(this);
-        QString msg1 = QString(
-                    "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
+//        QMessageBox messageBox(this);
+//        QString msg1 = QString(
+//                    "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
 
-                    + "\n\nDo you want to Return the Set to the Corrector or Finalise the set?"
+//                    + "\n\nDo you want to Return the Set to the Corrector or Finalise the set?"
 
-                    + "\n\nClick \"Return Set\" to Increment the Version from "
-                    + QString::number(ver) +" to "+QString::number(ver + 1)
+//                    + "\n\nClick \"Return Set\" to Increment the Version from "
+//                    + QString::number(ver) +" to "+QString::number(ver + 1)
 
-                    + "\nClick \"Finalise\" to Approve the set as the Final Version"
-                    );
+//                    + "\nClick \"Finalise\" to Approve the set as the Final Version"
+//                    );
 
-        QString msg2 = QString(
-                    "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
+//        QString msg2 = QString(
+//                    "Rating for Current Version Based on the Formatting Input: " + QString::number(rating) + " out of 5"
 
-                    + "\n\nDo you want to Return or Resubmit or Finalise the set?"
+//                    + "\n\nDo you want to Return or Resubmit or Finalise the set?"
 
-                    + "\n\nClick \"Return Set\" to Turnin and Increment the Version from "
-                    + QString::number(ver) +" to "+QString::number(ver + 1)
+//                    + "\n\nClick \"Return Set\" to Turnin and Increment the Version from "
+//                    + QString::number(ver) +" to "+QString::number(ver + 1)
 
-                    + " \nClick \"Resubmit\" to Turn In without Incrementing Version."
+//                    + " \nClick \"Resubmit\" to Turn In without Incrementing Version."
 
-                    + "\nClick \"Finalise\" to Approve the set as the Final Version"
-                    );
+//                    + "\nClick \"Finalise\" to Approve the set as the Final Version"
+//                    );
 
-        messageBox.setWindowTitle("Turn In");
-        QAbstractButton *resubmitButton =
-                messageBox.addButton(tr("Resubmit"), QMessageBox::ActionRole);
-        QAbstractButton *returnSetButton =
-                messageBox.addButton(tr("Return Set"), QMessageBox::ActionRole);
-        QAbstractButton *finaliseButton =
-                messageBox.addButton(tr("Finalise"), QMessageBox::ActionRole);
-        QAbstractButton *cancelButton =
-                messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+//        messageBox.setWindowTitle("Turn In");
+//        QAbstractButton *resubmitButton =
+//                messageBox.addButton(tr("Resubmit"), QMessageBox::ActionRole);
+//        QAbstractButton *returnSetButton =
+//                messageBox.addButton(tr("Return Set"), QMessageBox::ActionRole);
+//        QAbstractButton *finaliseButton =
+//                messageBox.addButton(tr("Finalise"), QMessageBox::ActionRole);
+//        QAbstractButton *cancelButton =
+//                messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
 
-        /*
-             * \description
-             * 1.Checks if the project content is added to the staging area or not
-             * 2. If no, display \a msg1 and remove the resubmit button.
-             * 3. If yes, display \a msg2.
-        */
-        /*if(mRole != mProject.get_stage())
-        {
-            messageBox.setText(msg1);
-            messageBox.removeButton(resubmitButton);
-        }
-        else
-        {
-            messageBox.setText(msg2);
-        }
+//        /*
+//             * \description
+//             * 1.Checks if the project content is added to the staging area or not
+//             * 2. If no, display \a msg1 and remove the resubmit button.
+//             * 3. If yes, display \a msg2.
+//        */
+//        /*if(mRole != mProject.get_stage())
+//        {
+//            messageBox.setText(msg1);
+//            messageBox.removeButton(resubmitButton);
+//        }
+//        else
+//        {
+//            messageBox.setText(msg2);
+//        }
 
-        messageBox.exec();
+//        messageBox.exec();
 
-        /*!
-         * \enum class SubmissionType
-         *
-         * This enum describes the type of submission type.
-         *
-         * \value resubmit To turn in without incrementing version.
-         * \value return_set To turn-in and increment the version.
-         * \value finalise To approve the set as the final version.
-        */
-        /*enum class SubmissionType {resubmit, return_set, finalise};
-        SubmissionType s ;
+//        /*!
+//         * \enum class SubmissionType
+//         *
+//         * This enum describes the type of submission type.
+//         *
+//         * \value resubmit To turn in without incrementing version.
+//         * \value return_set To turn-in and increment the version.
+//         * \value finalise To approve the set as the final version.
+//        */
+//        /*enum class SubmissionType {resubmit, return_set, finalise};
+//        SubmissionType s ;
 
-        /*
-            * Checking the condition: CorrectorOutputFiles != 2*IndsFiles
-            * If true, then \a s and \a commit_msg are updated.
-        */
-        /*if (messageBox.clickedButton() == resubmitButton)
-        {
-            s = SubmissionType::resubmit;
-            commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
-        }
+//        /*
+//            * Checking the condition: CorrectorOutputFiles != 2*IndsFiles
+//            * If true, then \a s and \a commit_msg are updated.
+//        */
+//        /*if (messageBox.clickedButton() == resubmitButton)
+//        {
+//            s = SubmissionType::resubmit;
+//            commit_msg = "Verifier Resubmitted Version:" + mProject.get_version();
+//        }
 
-        //! \a s and \a commit_msg are updated
-        else if (messageBox.clickedButton() == returnSetButton)
-        {
-            //mProject.enable_push( true ); //Increment = true
-            s = SubmissionType::return_set;
-            commit_msg = "Verifier has Turned in the Next Version:" + mProject.get_version();
-        }
+//        //! \a s and \a commit_msg are updated
+//        else if (messageBox.clickedButton() == returnSetButton)
+//        {
+//            //mProject.enable_push( true ); //Increment = true
+//            s = SubmissionType::return_set;
+//            commit_msg = "Verifier has Turned in the Next Version:" + mProject.get_version();
+//        }
 
-        /*
-         * Checking the condition: CorrectorOutputFiles != 2*IndsFiles
-         * If true, a message box of \value Couldn't Turn in will be displayed,
-         * else \a s and \a commit_msg are updated.
-        */
-        /*else if (messageBox.clickedButton() == finaliseButton)
-        {
-            s = SubmissionType::finalise;
-            commit_msg = "Verifier Finalised Version:" + mProject.get_version();
-        }
-        else
-        {
-            QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
-            return;
-        }*/
+//        /*
+//         * Checking the condition: CorrectorOutputFiles != 2*IndsFiles
+//         * If true, a message box of \value Couldn't Turn in will be displayed,
+//         * else \a s and \a commit_msg are updated.
+//        */
+//        /*else if (messageBox.clickedButton() == finaliseButton)
+//        {
+//            s = SubmissionType::finalise;
+//            commit_msg = "Verifier Finalised Version:" + mProject.get_version();
+//        }
+//        else
+//        {
+//            QMessageBox::critical(0, "Turn In", "Turn In Cancelled");
+//            return;
+//        }*/
 
-        QMessageBox submitBox2;
-        submitBox2.setWindowTitle("Submit ?");
-        submitBox2.setIcon(QMessageBox::Question);
-        submitBox2.setInformativeText("Are you ready to submit your changes?");
-        QPushButton *yButton2 = submitBox2.addButton(QMessageBox::StandardButton::Yes);
-        QPushButton *nButton2 = submitBox2.addButton(QMessageBox::StandardButton::No);
-        submitBox2.exec();
+//        QMessageBox submitBox2;
+//        submitBox2.setWindowTitle("Submit ?");
+//        submitBox2.setIcon(QMessageBox::Question);
+//        submitBox2.setInformativeText("Are you ready to submit your changes?");
+//        QPushButton *yButton2 = submitBox2.addButton(QMessageBox::StandardButton::Yes);
+//        QPushButton *nButton2 = submitBox2.addButton(QMessageBox::StandardButton::No);
+//        submitBox2.exec();
 
-        if (submitBox2.clickedButton() == yButton2)
-        {
-            //            bool ok;
-            //            // user entered something and pressed OK
-            //            if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
-            //            {
-            mProject.enable_push( true );
-            //            }
-            //            else if (s == SubmissionType::resubmit)    //If yes button is clicked and submission type is resubmit then enable push
-            //            {
-            //                mProject.enable_push( false );
-            //            }
-            if(!verifier_save()) return;
-            //            if(s == SubmissionType::return_set)
-            //            {
-            //                mProject.set_version( mProject.get_version().toInt() - 1 );
-            //            }
-            mProject.set_verifier();
-        }
-        else
-        {
-            QMessageBox::critical(0, "Cloud sync", "Sync failed");
-            return;
-        }
+//        if (submitBox2.clickedButton() == yButton2)
+//        {
+//            //            bool ok;
+//            //            // user entered something and pressed OK
+//            //            if(s == SubmissionType::return_set)   //If yes button is clicked and submission type is return_set then enable push
+//            //            {
+//            mProject.enable_push( true );
+//            //            }
+//            //            else if (s == SubmissionType::resubmit)    //If yes button is clicked and submission type is resubmit then enable push
+//            //            {
+//            //                mProject.enable_push( false );
+//            //            }
+//            if(!verifier_save()) return;
+//            //            if(s == SubmissionType::return_set)
+//            //            {
+//            //                mProject.set_version( mProject.get_version().toInt() - 1 );
+//            //            }
+//            mProject.set_verifier();
+//        }
+//        else
+//        {
+//            QMessageBox::critical(0, "Cloud sync", "Sync failed");
+//            return;
+//        }
 
-        //! Sending email with the following information
-        /*QString emailText =  "Book ID: " + mProject.get_bookId()
-                + "\nSet ID: " + mProject.get_setId()
-                + "\nRating Provided: " + QString::number(rating)
-                + "\n" + commit_msg ;*/
+//        //! Sending email with the following information
+//        /*QString emailText =  "Book ID: " + mProject.get_bookId()
+//                + "\nSet ID: " + mProject.get_setId()
+//                + "\nRating Provided: " + QString::number(rating)
+//                + "\n" + commit_msg ;*/
 
-        //! Updating the Project Version
-        ui->lineEdit_2->setText("Version " + mProject.get_version());
-        QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
-        QSettings settings("IIT-B", "OpenOCRCorrect");
-        settings.beginGroup("cloudSave");
-        settings.setValue("save","success" );
-        settings.endGroup();
-    }
-    else
-    {
-        QMessageBox::critical(0, "Cloud sync Error", "Please Open Project Before syncing");
-    }
-}
+//        //! Updating the Project Version
+//        ui->lineEdit_2->setText("Version " + mProject.get_version());
+//        QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
+//        QSettings settings("IIT-B", "OpenOCRCorrect");
+//        settings.beginGroup("cloudSave");
+//        settings.setValue("save","success" );
+//        settings.endGroup();
+//    }
+//    else
+//    {
+//        QMessageBox::critical(0, "Cloud sync Error", "Please Open Project Before syncing");
+//    }
+//}
 
 /*!
  * \fn MainWindow::on_actionSymbols_triggered
@@ -3832,8 +3699,10 @@ void MainWindow::on_actionVerifier_Turn_In_triggered()
  */
 void MainWindow::on_actionSymbols_triggered()
 {
-    SymbolsView *dialog = SymbolsView::openSymbolTable(this);
-    dialog->show();
+    if(curr_browser){
+        SymbolsView *dialog = SymbolsView::openSymbolTable(this, curr_browser);
+        dialog->show();
+    }
 }
 
 /*!
@@ -4004,6 +3873,16 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     QString bboxf = currentTabPageName;
     QFile bbox_file(gDirTwoLevelUp + "/bboxf/"+bboxf.replace(".html", ".bbox"));
     //! When user moves his mouse the system will ask user to download new update.
+    if(event->type() == QEvent::MouseMove){
+        if(ui->tabWidget->width() == 0 && flag_tab != 1){
+            ui->backward_Button->setVisible(false);
+            ui->forward_Button->setVisible(true);
+            ui->tabWidget->setVisible(false);
+            flag_tab = 1;
+        }
+        else if(ui->tabWidget->width() > 0 && flag_tab == 1)
+            flag_tab = 0;
+    }
 
     if(event->type() == QEvent::MouseButtonPress)
     {
@@ -4014,6 +3893,51 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
                 curr_browser->setStyleSheet("CustomTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}");
             }
+        }
+    }
+    if(event->type() == QEvent::MouseButtonDblClick && !selectedItems.isEmpty()){
+        createTable();
+        selectedItems.clear();
+    }
+    if(event->type() == QEvent::MouseMove && !selectedItems.isEmpty()){
+        QSet<int>selectedRows;
+        QSet<int>selectedColumns;
+        int rw,col;
+        foreach(QTableWidgetItem *items,selectedItems){
+            rw=items->row();
+            col=items->column();
+            selectedRows.insert(rw);
+            selectedColumns.insert(col);
+        }
+        int rows,columns;
+        rows=selectedRows.size();
+        columns=selectedColumns.size();
+        if(rows==m_table->rowCount()-1){
+            QTableWidgetItem *itm;
+            m_table->insertRow(m_table->rowCount());
+            for(int i=m_table->rowCount()-1;i<m_table->rowCount();i++){
+                for(int j=0;j<m_table->columnCount();j++){
+                    itm = new QTableWidgetItem();
+                    itm->setData(Qt::DisplayRole,QString("."));
+                    itm->setForeground(QBrush(QColor(255,255,255)));
+                    m_table->setItem(i,j,itm);
+                }
+            }
+            tableDialog->resize(tableDialog->size()+QSize(0,35));
+        }
+        if(columns == m_table->columnCount()-1){
+            QTableWidgetItem *itm;
+            m_table->insertColumn(m_table->columnCount());
+            m_table->setColumnWidth(m_table->columnCount()-1,1);
+            for(int i=0;i<m_table->rowCount();i++){
+                for(int j=m_table->columnCount()-1;j<m_table->columnCount();j++){
+                    itm = new QTableWidgetItem();
+                    itm->setData(Qt::DisplayRole,QString("."));
+                    itm->setForeground(QBrush(QColor(255,255,255)));
+                    m_table->setItem(i,j,itm);
+                }
+            }
+            tableDialog->resize(tableDialog->size()+QSize(55,0));
         }
     }
 
@@ -4843,6 +4767,9 @@ int MainWindow::writeGlobalCPairsToFiles(QString file_path, QMap <QString, QStri
  * \return bool
  */
 bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word, int &chk){
+    //if condition will avoid replacing images globally.
+    if(old_word.isEmpty() || old_word.length() == 1)
+    {qDebug()<<"Can't replace this word globally";return false;}
 
     //!Disable global replace on special symbols
     //QRegularExpression ss("[^a-zA-Z0-9]+");
@@ -4935,7 +4862,7 @@ bool MainWindow::globalReplaceQueryMessageBox(QString old_word, QString new_word
         QDir directory(gDirTwoLevelUp);
         QString setName=directory.dirName();
         if(!QDir(gDirTwoLevelUp+"/logs").exists())
-                QDir().mkdir(gDirTwoLevelUp+"/logs");
+            QDir().mkdir(gDirTwoLevelUp+"/logs");
         QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
         QFile csvFile(filename);
         if(!csvFile.exists())
@@ -5006,7 +4933,7 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
             QDir directory(gDirTwoLevelUp);
             QString setName=directory.dirName();
             if(!QDir(gDirTwoLevelUp+"/logs").exists())
-                    QDir().mkdir(gDirTwoLevelUp+"/logs");
+                QDir().mkdir(gDirTwoLevelUp+"/logs");
             QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
             QFile csvFile(filename);
             if(!csvFile.exists())     //for first time creation
@@ -5051,7 +4978,7 @@ QMap <QString, QString> MainWindow::getGlobalReplacementMapFromChecklistDialog(Q
             QDir directory(gDirTwoLevelUp);
             QString setName=directory.dirName();
             if(!QDir(gDirTwoLevelUp+"/logs").exists())
-                    QDir().mkdir(gDirTwoLevelUp+"/logs");
+                QDir().mkdir(gDirTwoLevelUp+"/logs");
             QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
             QFile csvFile(filename);
             if(!csvFile.exists())
@@ -5913,7 +5840,7 @@ void MainWindow::on_actionResize_Image_triggered()
  */
 void MainWindow::on_actionPush_triggered()
 {
-    mProject.push(branchName);
+    //mProject.push(branchName);
 }
 
 /*!
@@ -6140,7 +6067,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
         //		loadHtmlInDoc(f);
 
         if(!QDir(gDirTwoLevelUp+"/logs").exists())
-                QDir().mkdir(gDirTwoLevelUp+"/logs");
+            QDir().mkdir(gDirTwoLevelUp+"/logs");
         QString loc = gDirTwoLevelUp + "/logs/."+mRole+"_dan.log";
         QFile sFile(loc);
         if(!sFile.open(QIODevice::ReadOnly)) {qDebug()<<"can't read the dan logs";}
@@ -6171,6 +6098,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     b->setUndoRedoEnabled(true);
 
     //    curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
+    defaultStyle = curr_browser->styleSheet();
     curr_browser->setDocument(b->document()->clone(curr_browser));
     curr_browser->document()->clearUndoRedoStacks();
 
@@ -6241,6 +6169,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 
     //! Enabling Selection in treeView
     ui->treeView->selectionModel()->clearSelection();
+
     QModelIndex currentTreeItemIndex = ui->treeView->selectionModel()->currentIndex();
     QModelIndex parentIndex = currentTreeItemIndex.parent();
     auto model = ui->treeView->model();
@@ -6250,10 +6179,12 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     for (int i = 0; i < rowCount; i++)
     {
         QModelIndex index = model->index(i, 0, parentIndex);
+
         treeItemLabel = index.data(Qt::DisplayRole).toString();
 
         if (index.isValid())
         {
+
             if (treeItemLabel == currentTabPageName)
             {
                 ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
@@ -6286,6 +6217,8 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     if (!isVerifier && (current_folder == "Inds" || current_folder == "VerifierOutput")) {
         curr_browser->setReadOnly(true);
     }
+    changedWords.clear();
+    ui->pushButton_6->setVisible(false);
 }
 
 /*!
@@ -6351,12 +6284,26 @@ void MainWindow::file_click(const QModelIndex & indx)
         return;
     auto file = item->GetFile();
     QString fileName = file->fileName();          //gets filename
+    // Set the file's permissions to readonly
+    if(fileName.contains("CorrectorOutput") && mRole == "Verifier"){
+        QFile::setPermissions(fileName, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
+    }
+    else if(fileName.contains("VerifierOutput") && mRole == "Corrector"){
+        QFile::setPermissions(fileName, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
+    }
+    else{
+        // Set the file's permissions to both read and write mode
+        QFile::setPermissions(fileName, QFile::WriteOwner | QFile::WriteGroup | QFile::WriteOther |
+                              QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
+
+    }
     NodeType type = item->GetNodeType();
     switch (type) {
     case NodeType::_FILETYPE:
     {
         QFileInfo f(*file);
         QString suff = f.completeSuffix();
+
         if (suff == "txt" || suff == "html") {
             LoadDocument(file,suff,qvar);     //loads not image files
         }
@@ -6365,11 +6312,20 @@ void MainWindow::file_click(const QModelIndex & indx)
         {
             LoadImageFromFile(file);          //loads image files
         }
+
+
+        currentFile = gCurrentPageName;
+
+        if(currentFile != ""){
+            pageStatusHandler();
+        }
+
         break;
     }
     default:
         break;
     }
+
 
 }
 
@@ -6768,6 +6724,19 @@ void MainWindow::closeEvent (QCloseEvent *event)
             event->accept();
         }
     }
+
+
+    write_verified_pages();
+    write_corrected_pages();
+    write_review_pages();
+    write_recorrected_pages();
+
+    correct.clear();
+    verify.clear();
+    markForReview.clear();
+    recorrect.clear();
+
+
     autoSave();
 }
 
@@ -6945,7 +6914,8 @@ void MainWindow::on_actionas_PDF_triggered()
                 //! Read the file
 
                 mainHtml=stream.readAll();
-//                mainHtml.remove("background-color:");
+                mainHtml.replace("background-color:","Background-colour:");
+                //                mainHtml.remove("background-color:");
                 //                mainHtml.remove("background-color:#ffff00");
                 //                //! Changing the text background to white by setting the background to #fffff
                 //                while (true){
@@ -7224,22 +7194,9 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
     int files = 0;
 
     reverseGlobalReplacedWordsMap();
-    if ( globallyReplacedWords.size() == 1 )
-    {
-        QString oldWord = globallyReplacedWords.firstKey();
-        QString newWord = globallyReplacedWords.value(oldWord);
-        oldWord=oldWord.trimmed();
-        newWord=newWord.trimmed();
-        bool replace = undoGlobalReplace_Single_Word(oldWord, newWord);
 
-        if ( replace )
-            undoGRMap.insert(oldWord, newWord);
-    }
-    else if ( globallyReplacedWords.size() > 1 )
-    {
-        //qDebug() << "For Multiple Words";
-        undoGRMap = getUndoGlobalReplaceMap_Multiple_Words(globallyReplacedWords);
-    }
+    undoGRMap = getUndoGlobalReplaceMap_Multiple_Words(globallyReplacedWords);
+
 
     QString currentDirAbsolutePath = gDirTwoLevelUp + "/" + gCurrentDirName;
     QDirIterator dirIterator(currentDirAbsolutePath, QDirIterator::Subdirectories);
@@ -7264,7 +7221,7 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
         QDir directory(gDirTwoLevelUp);
         QString setName=directory.dirName();
         if(!QDir(gDirTwoLevelUp+"/logs").exists())
-                QDir().mkdir(gDirTwoLevelUp+"/logs");
+            QDir().mkdir(gDirTwoLevelUp+"/logs");
         QString filename = gDirTwoLevelUp+"/logs/"+mRole+"_"+setName+"_logs.csv";
         //qDebug()<<filename;
         QFile csvFile(filename);
@@ -7387,14 +7344,14 @@ QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<Q
 {
 
     QMap<QString, QString> undoGRMap;
-    UndoGlobalReplace ugrWindow(GRMap, this);
+    UndoGlobalReplace ugrWindow(GRMap, this,mRole,gDirTwoLevelUp);
 
     ugrWindow.setModal(true);
     ugrWindow.exec();
 
     if ( ugrWindow.on_applyButton_clicked() )
         undoGRMap = ugrWindow.getFinalUndoMap();
-    return GRMap;
+    return undoGRMap;
 }
 
 /*!
@@ -7635,7 +7592,7 @@ void MainWindow::writeSettings()
         QFile::remove(f);
     }
     if(!QDir(gDirTwoLevelUp+"/logs").exists())
-            QDir().mkdir(gDirTwoLevelUp+"/logs");
+        QDir().mkdir(gDirTwoLevelUp+"/logs");
     QString filename = gDirTwoLevelUp + "/logs/."+mRole+"_cursor.txt";
     QFile myFile (filename);
     myFile.open(QIODevice::ReadWrite);
@@ -7672,7 +7629,7 @@ void MainWindow::readSettings()
     int pos1;
 
     if(!QDir(gDirTwoLevelUp+"/logs").exists())
-            QDir().mkdir(gDirTwoLevelUp+"/logs");
+        QDir().mkdir(gDirTwoLevelUp+"/logs");
     QString filename = gDirTwoLevelUp + "/logs/."+mRole+"_cursor.txt";
     QFile myFile (filename);
     myFile.open(QIODevice::ReadOnly);
@@ -7702,6 +7659,7 @@ void MainWindow::on_action1_triggered()
 {
     proj_flag = '0';
     isRecentProjclick = true;
+
     on_actionOpen_Project_triggered();
 }
 
@@ -7713,6 +7671,7 @@ void MainWindow::on_action2_triggered()
 {
     proj_flag = '1';
     isRecentProjclick = true;
+
     on_actionOpen_Project_triggered();
 }
 
@@ -7724,6 +7683,7 @@ void MainWindow::on_action3_triggered()
 {
     proj_flag = '2';
     isRecentProjclick = true;
+
     on_actionOpen_Project_triggered();
 }
 
@@ -7825,22 +7785,40 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
         if(curr_version==latestVersion)
         {
             QMessageBox box;
-            box.setText("Software is already on the latest version");
+            box.setText("There are currently no updates available");
             box.exec();
         }
         else{
             QMessageBox msg;
             msg.setWindowTitle("Update Available");
             msg.setIcon(QMessageBox::Information);
-            msg.setText("A New Version of Udaan Editing Tool is Available!!\n\nUdaan Editing Tool "+latestVersion+"\nTo Download the latest version of this software click 'Go to Download Page' button below\nWhat's New:-\n\n" + newFeatures);
-            QAbstractButton *download = msg.addButton(tr("Go to Download Page"), QMessageBox::ActionRole);
-            download->setMinimumWidth(160);
+            msg.setText("A New Version of Udaan Editing Tool is Available!!\n\nUdaan Editing Tool "+latestVersion+"\nTo Download the latest version of this software click 'Update' button below");
+
             QAbstractButton *rml = msg.addButton(tr("Later"), QMessageBox::RejectRole);
-            rml->setMaximumWidth(80);
+            rml->setMaximumWidth(60);
+            QAbstractButton *features = msg.addButton(tr("What's New?"), QMessageBox::ApplyRole);
+            features->setMinimumWidth(80);
+            QAbstractButton *download = msg.addButton(tr("Update"), QMessageBox::ActionRole);
+            download->setMinimumWidth(60);
+
             msg.exec();
 
+            if(msg.clickedButton() == features){
+                QDialog new_features(this);
+                QFormLayout form(&new_features);
+                form.addRow(new QLabel("What's new in "+latestVersion + "\n" + newFeatures,this));
+
+                QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&new_features);
+                buttonbox.button(QDialogButtonBox::Ok)->setText("Update");
+                form.addRow(&buttonbox);
+
+                QObject::connect(&buttonbox,SIGNAL(accepted()),&new_features,SLOT(accept()));
+                QObject::connect(&buttonbox,SIGNAL(rejected()),&new_features,SLOT(reject()));
+                if(new_features.exec() ==QDialog::Accepted)
+                    update_tool(latestVersion);
+            }
             if(msg.clickedButton() == download){
-                QDesktopServices::openUrl(QUrl("https://drive.google.com/drive/folders/1DZn72n6gH0r459hTGsL2f7qhoZnHQPEI"));
+                update_tool(latestVersion);
             }
             else {
                 msg.close();
@@ -7893,6 +7871,7 @@ void MainWindow::on_find_clicked()
 void MainWindow::on_actionPDF_Preview_triggered()
 {
     QPrinter printer(QPrinter::PrinterResolution);
+
     QPrintPreviewDialog preview(&printer,this);
     preview.setMinimumHeight(800);
     preview.setMinimumWidth(800);
@@ -7942,7 +7921,7 @@ void MainWindow::print(QPrinter *printer)
     //        mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
     //        startFrom = stIndex + 6;
     //    }
-//    mainHtml.remove("background-color:");
+    //    mainHtml.remove("background-color:");
     mainHtml.replace("background-color:","Background-colour:");
     //    mainHtml.remove("background-color:#ffff00");
     //latex to png mapping
@@ -8277,48 +8256,57 @@ void MainWindow::insertImageAction()
     imgFileName = imgFileInfo.fileName();
     QString imgFilePath = imgFileInfo.filePath();
 
-    QString copiedImgFilePath(gDirTwoLevelUp + "/Inserted_Images/"+imgFileName);
-    if(!QDir(gDirTwoLevelUp + "/Inserted_Images").exists())
-        QDir().mkdir(gDirTwoLevelUp + "/Inserted_Images");
-    QFile::copy(imgFilePath,copiedImgFilePath);
-    qDebug()<<imgFilePath<<"\n"<<copiedImgFilePath;
-    int height =0;
-    int width = 0;
-    QDialog dialog(this);
-    QFormLayout form(&dialog);
 
-    form.addRow(new QLabel("Insert Height and Width",this));
+    qDebug()<<imgFileName;
 
-    QLineEdit *height_textLine= new QLineEdit(&dialog);
-    QLineEdit *width_textLine= new QLineEdit(&dialog);
-
-    form.addRow("Height",height_textLine);
-    form.addRow("Width",width_textLine);
-
-    QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
-    form.addRow(&buttonbox);
-
-    QObject::connect(&buttonbox,SIGNAL(accepted()),&dialog,SLOT(accept()));
-    QObject::connect(&buttonbox,SIGNAL(rejected()),&dialog,SLOT(reject()));
-
-    if(dialog.exec() ==QDialog::Accepted){
-        height=height_textLine->text().toInt();
-        width=width_textLine->text().toInt();
+    if(!imgFileName.contains(".raw")
+            && !imgFileName.contains(".eps")
+            && !imgFileName.contains(".tiff")
+            && !imgFileName.contains(".svg")
+            && !imgFileName.contains(".jpg")
+            && !imgFileName.contains(".jpeg")
+            && !imgFileName.contains(".png")
+            && !imgFileName.contains(".bmp")
+            && !imgFileName.contains(".gif")){
+        QMessageBox msg;
+        msg.setText("Select proper image");
+        msg.exec();
+        return;
     }
 
 
+    QString copiedImgFilePath("../Inserted_Images/"+imgFileName);
+    if(!QDir("../Inserted_Images").exists())
+        QDir().mkdir("../Inserted_Images");
+    QFile::copy(imgFilePath,copiedImgFilePath);
+    qDebug()<<imgFilePath<<"\n"<<copiedImgFilePath;
+    //    int height =0;
+    //    int width = 0;
+    //    QDialog dialog(this);
+    //    QFormLayout form(&dialog);
 
-    //setting width
-    //    int n = QInputDialog::getInt(this, "Set Width","Width",width,-2147483647,2147483647,1);
-    //    //!setting height
-    //    int n1 = QInputDialog::getInt(this, "Set Height","height",height,-2147483647,2147483647,1);
+    //    form.addRow(new QLabel("Insert Height and Width",this));
 
+    //    QLineEdit *height_textLine= new QLineEdit(&dialog);
+    //    QLineEdit *width_textLine= new QLineEdit(&dialog);
 
+    //    form.addRow("Height",height_textLine);
+    //    form.addRow("Width",width_textLine);
 
-    QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(copiedImgFilePath).arg(width).arg(height);
+    //    QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
+    //    form.addRow(&buttonbox);
+
+    //    QObject::connect(&buttonbox,SIGNAL(accepted()),&dialog,SLOT(accept()));
+    //    QObject::connect(&buttonbox,SIGNAL(rejected()),&dialog,SLOT(reject()));
+
+    //    if(dialog.exec() ==QDialog::Accepted){
+    //        height=height_textLine->text().toInt();
+    //        width=width_textLine->text().toInt();
+    //    }
+
+    QString html = QString("\n <img src='%1'>").arg(copiedImgFilePath);
     auto cursor = curr_browser->textCursor();
     cursor.insertHtml(html);
-
 }
 
 
@@ -8376,50 +8364,16 @@ void MainWindow::blockCountChanged(int numOfBlocks)
     blockCount = numOfBlocks;
 }
 
-
 /*!
- * \fn MainWindow::on_actionLogin_triggered
- * \brief authenticate function is called. User is redirected to Google login page
- */
-void MainWindow::on_actionLogin_triggered()
-{
-    //    authenticate();
-    login();
-}
-
-/*!
- * \fn MainWindow::on_actionLogout_triggered
- * \brief Function is executed when user logouts.
- * \details
- * 1. Logout button is not visible
- * 2. login button is previewed so that user can login.
- */
-void MainWindow::on_actionLogout_triggered()
-{
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    ui->actionLogout->setVisible(false);
-    ui->actionLogin->setVisible(true);
-    settings.beginGroup("loginConsent");
-    settings.remove("");
-    settings.endGroup();
-    settings.beginGroup("login");
-    settings.remove("");
-    settings.endGroup();
-    QMessageBox::information(0,"Logout","Logged out successfully :(");
-}
-
-
-/*!
- * \fn MainWindow::on_actionClone_Repository_triggered
+ * \fn MainWindow::on_actionImport_triggered
  * \brief This function helps user to clone repositories from their account.
  * \details
  * Checks if user is already logined or not. If not then user is made to login
  * POST request is send to udaaniitb.aicte-india.org to get the files.
  * Json Object File is read and converted to Json Array.
- * "validate.json" is removed from output
  * Table is formed to preview how many file does user have in their repository
  */
-void MainWindow::on_actionClone_Repository_triggered()
+void MainWindow::on_actionClone_Repository()
 {
     /*
      * \description
@@ -8445,39 +8399,68 @@ void MainWindow::on_actionClone_Repository_triggered()
         msg.exec();
         return;
     }
-    //
     //retrieve details from database and check if user has access to push into this repo
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
     QString token = settings.value("token").toString();
     settings.endGroup();
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QUrl url("https://udaaniitb.aicte-india.org/udaan/email/");
+    QUrlQuery params;
+    params.addQueryItem("email", email);
+    params.addQueryItem("password", token);
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    // Disable SSL certificate verification
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    manager->post(request, params.toString(QUrl::FullyEncoded).toUtf8());
+    connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        if (reply->error() == QNetworkReply::NoError) {
+            m_data = reply->readAll();
+            QJsonParseError errorPtr;
+            QJsonDocument document = QJsonDocument::fromJson(m_data, &errorPtr);
+            QJsonObject mainObj = document.object();
+            QJsonArray repos = mainObj.value("repo_list").toArray();
+            if(repos.size() == 0){
+                QMessageBox msg;
+                msg.setText("There is nothing to show on dashboard");
+                msg.exec();
+                return;
+            }
+            QJsonArray::iterator itr; int flag = 0;
+            int lineindex = 0;
+            QString importHtml="<table><tr><th>#Project ID</th><th>#Project name</th></tr>";
+            QStandardItemModel *model = new QStandardItemModel;
+            QMap<int, QString> repoMap;
+            for(itr = repos.begin(); itr != repos.end(); itr++){
+                lineindex++;
+                repoMap[lineindex] = itr->toString();
+                QString num = QString::number(lineindex);
+                importHtml += QString::fromStdString("<tr><td>")+num+"</td><td>"+itr->toString()+"</td></tr";
+            }
+            importHtml += "</table>";
+            QString p_str = "";
+            bool open = false;
+            dashboard d(this, importHtml, repos.size(), repoMap, &p_str, &open);
+            d.exec();
+            import_flag = true;
+            ProjFile = p_str;
 
-    QJsonObject mainObj = readJsonFile("validate.json");
-    QJsonArray repos = mainObj.value("repo_list").toArray();
-    QFile::remove("validate.json");
-    if(repos.size() == 0){
-        QMessageBox msg;
-        msg.setText("There is nothing to show on dashboard");
-        msg.exec();
-        return;
-    }
-    QJsonArray::iterator itr; int flag = 0;
-    int lineindex = 0;
-    QString importHtml="<table><tr><th>#Project ID</th><th>#Project name</th></tr>";
-    QStandardItemModel *model = new QStandardItemModel;
-    QMap<int, QString> repoMap;
-    for(itr = repos.begin(); itr != repos.end(); itr++){
-        lineindex++;
-        repoMap[lineindex] = itr->toString();
-        QString num = QString::number(lineindex);
-        importHtml += QString::fromStdString("<tr><td>")+num+"</td><td>"+itr->toString()+"</td></tr>";
-    }
-    importHtml += "</table>";
-    dashboard d(this, importHtml, repos.size(), repoMap);
-    d.exec();
+            if(open == true){
+                on_actionOpen_Project_triggered();
+            }
+
+
+            import_flag = false;
+        } else {
+            QMessageBox::information(this,"Network error",reply->errorString()+"\nThere was an error in the network request. Please try again later or switch your network.");
+            return;
+        }
+        reply->deleteLater();
+    });
 }
 
 
@@ -8493,99 +8476,49 @@ void MainWindow::on_actionClone_Repository_triggered()
  */
 void MainWindow::on_actionClose_project_triggered()
 {
+    AddRecentProjects();
+
+
+    write_verified_pages();
+    write_corrected_pages();
+    write_review_pages();
+    write_recorrected_pages();
+
+
+    correct.clear();
+    verify.clear();
+    markForReview.clear();
+    recorrect.clear();
+
+    ui->corrected->setVisible(false);
+    ui->verified->setVisible(false);
+    ui->mark_review->setVisible(false);
+    ui->status->setVisible(false);
+
+    ui->corrected->setEnabled(false);
+    ui->verified->setEnabled(false);
+    ui->mark_review->setEnabled(false);
+
+    ui->corrected->setChecked(false);
+    ui->verified->setChecked(false);
+    ui->mark_review->setChecked(false);
+    ui->status->setText("Status - None");
+
+
     if(!mProject.isProjectOpen()){
         //        QMessageBox::critical(this,"Error","Project Not Opened");
         return;                                                                  //checking if the project is already
         // opened or not
     }
     mProject.setProjectOpen(false);
-    ui->actionLoadDict->setVisible(false);
-    ui->actionLoadOCRWords->setVisible(false);
-    ui->actionLoadDomain->setVisible(false);
-    ui->actionLoadSubPS->setVisible(false);
-    ui->actionLoadConfusions->setVisible(false);
-    ui->actionLoadGDocPage->setVisible(false);
-    ui->menuSelectLanguage->setTitle("");
-    ui->menuCreateReports->setTitle("");
-
     //disableing the buttons after project is closed
-    // File Menu
-    ui->actionSave->setEnabled(false);
-    ui->actionSave_As->setEnabled(false);
-    ui->actionSpell_Check->setEnabled(false);
-    ui->actionLoad_Prev_Page->setEnabled(false);
-    ui->actionLoad_Next_Page->setEnabled(false);
-    ui->actionToDevanagari->setEnabled(false);
-    ui->actionToSlp1->setEnabled(false);
-    ui->actionLoadGDocPage->setEnabled(false);
-    ui->actionLoadData->setEnabled(false);
-    ui->actionLoadDict->setEnabled(false);
-    ui->actionLoadOCRWords->setEnabled(false);
-    ui->actionLoadDomain->setEnabled(false);
-    ui->actionLoadSubPS->setEnabled(false);
-    ui->actionLoadConfusions->setEnabled(false);
-    ui->actionSugg->setEnabled(false);
-
-    // Edit Menu
-    ui->actionUndo->setEnabled(false);
-    ui->actionRedo->setEnabled(false);
-    ui->actionFind_and_Replace->setEnabled(false);
-    ui->actionUndo_Global_Replace->setEnabled(false);
-    ui->actionUpload->setEnabled(false);
-
-    // Language Menu
-    ui->actionSanskrit_2->setEnabled(false);
-    ui->actionEnglish->setEnabled(false);
-    ui->actionHindi->setEnabled(false);
-
-    // Reports Menu
-    ui->actionAccuracyLog->setEnabled(false);
-    ui->actionViewAverageAccuracies->setEnabled(false);
-
-    // View Menu
-    ui->actionAllFontProperties->setEnabled(false);
-    ui->actionBold->setEnabled(false);
-    ui->actionItalic->setEnabled(false);
-    ui->actionLeftAlign->setEnabled(false);
-    ui->actionRightAlign->setEnabled(false);
-    ui->actionCentreAlign->setEnabled(false);
-    ui->actionJusitfiedAlign->setEnabled(false);
-    ui->actionSuperscript->setEnabled(false);
-    ui->actionSubscript->setEnabled(false);
-    ui->actionInsert_Horizontal_Line->setEnabled(false);
-    ui->actionFontBlack->setEnabled(false);
-    ui->actionInsert_Tab_Space->setEnabled(false);
-    ui->actionPDF_Preview->setEnabled(false);
-    //    if (isVerifier)
-    ui->actionHighlight->setEnabled(false);
-
-    // Table Menu inside View Menu
-    ui->actionInsert_Table_2->setEnabled(false);
-    ui->actionInsert_Columnleft->setEnabled(false);
-    ui->actionInsert_Columnright->setEnabled(false);
-    ui->actionInsert_Rowabove->setEnabled(false);
-    ui->actionInsert_Rowbelow->setEnabled(false);
-    ui->actionRemove_Column->setEnabled(false);
-    ui->actionRemove_Row->setEnabled(false);
-
-    // Versions Menu
-    ui->actionFetch_2->setEnabled(false);
-    ui->actionTurn_In->setEnabled(false);
-    ui->actionVerifier_Turn_In->setEnabled(false);
-
-    // Download Menu
-    ui->actionas_PDF->setEnabled(false);
-
-    ui->actionSymbols->setEnabled(false);
-    ui->actionZoom_In->setEnabled(false);
-    ui->actionZoom_Out->setEnabled(false);
-    ui->actionUnderline->setDisabled(true);
-    ui->actionJusitfiedAlign->setEnabled(false);
+    e_d_features(false);
     //Reset loadData flag
     LoadDataFlag = 1;
     //reset data
     mFilename.clear();
     mFilename1.clear();
+
     // mFile.clear();
     LSTM.clear();
     CPairs.clear();
@@ -8606,18 +8539,13 @@ void MainWindow::on_actionClose_project_triggered()
 
     if(ui->lineEdit_3->text()!="" && ui->lineEdit_3->text()!="Words 0" && ui->lineEdit_3->text()!="0 Words"){
         curr_browser->clear();
+        curr_browser->setStyleSheet(defaultStyle);
     }
     ui->treeView->setModel(nullptr);
     ui->graphicsView->setScene(nullptr);
     ui->lineEdit_2->clear();
     ui->lineEdit->clear();
     ui->lineEdit_3->clear();
-    ui->pushButton->setDisabled(true);
-    ui->pushButton_2->setDisabled(true);
-    ui->viewComments->setDisabled(true);
-    ui->compareCorrectorOutput->setDisabled(true);
-    ui->groupBox->setDisabled(true);
-    //    QMessageBox::information(this,"Success","Project Closed Successfully");
     curr_browser=0;
 }
 
@@ -8856,6 +8784,18 @@ void MainWindow::on_actionEdit_Equation_triggered()
  */
 void MainWindow::on_actionExit_triggered()
 {
+
+    write_verified_pages();
+    write_corrected_pages();
+    write_review_pages();
+    write_recorrected_pages();
+
+    markForReview.clear();
+    correct.clear();
+    verify.clear();
+    recorrect.clear();
+
+
     autoSave();
     QCoreApplication::quit();
 }
@@ -8865,7 +8805,7 @@ void MainWindow::on_actionExit_triggered()
  * \brief Login using email and password
  * \details Asks user for email and password, then these credentials are verified witrh database and user is logged in if the details submitted by user are correct.
  * \details User enail is stored in cache for later usage.
- * \details curl is used to send post request to server.
+ * \details QNetwork module is used to send post request to server.
  */
 void MainWindow::login(){
     QDialog login(this);
@@ -8903,41 +8843,47 @@ void MainWindow::login(){
         user_email = email->text();
         user_pass = password->text();
         if(!user_email.isEmpty() && !user_pass.isEmpty()){
-            QProcess process;
-            process.execute("curl -d -X -k -POST --header "
-                            "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+user_email+"&password="+user_pass+"\" -o client.json");
-
-            QFile jsonFile("client.json");
-            if(!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)){
-                QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Try switching your network or contact your administrator.");
-                return;
-            }
-            QByteArray data = jsonFile.readAll();
-            QJsonParseError errorPtr;
-            QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-            QJsonObject mainObj = document.object();
-            jsonFile.close();
-            auto status = mainObj.value("status").toBool();
-            QFile::remove("client.json");
-
-            if(status == true){
-                //save details in QSettings
-                settings.beginGroup("login");
-                settings.setValue("email",user_email);
-                settings.setValue("token",user_pass);
-                settings.endGroup();
-                settings.beginGroup("loginConsent");
-                settings.setValue("consent","loggedIn");
-                settings.endGroup();
-                ui->actionLogin->setVisible(false);
-                ui->actionLogout->setVisible(true);
-                QMessageBox::information(this,"Login success","Logged in successfully.");
-                qDebug()<<settings.fileName();
-            }
-            else{
-                QMessageBox::information(this,"Login error","Wrong email or password, please try again.");
-                MainWindow::login();
-            }
+            QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+            QUrl url("https://udaaniitb.aicte-india.org/udaan/email/");
+            QUrlQuery params;
+            params.addQueryItem("email", user_email);
+            params.addQueryItem("password", user_pass);
+            QNetworkRequest request(url);
+            request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+            // Disable SSL certificate verification
+            QSslConfiguration sslConfig = request.sslConfiguration();
+            sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+            request.setSslConfiguration(sslConfig);
+            manager->post(request, params.toString(QUrl::FullyEncoded).toUtf8());
+            connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
+                QSettings settings("IIT-B", "OpenOCRCorrect");
+                if (reply->error() == QNetworkReply::NoError) {
+                    m_data = reply->readAll();
+                    QJsonParseError errorPtr;
+                    QJsonDocument document = QJsonDocument::fromJson(m_data, &errorPtr);
+                    QJsonObject mainObj = document.object();
+                    auto status = mainObj.value("status").toBool();
+                    if(status == true){
+                        //save details in QSettings
+                        settings.beginGroup("login");
+                        settings.setValue("email",user_email);
+                        settings.setValue("token",user_pass);
+                        settings.endGroup();
+                        settings.beginGroup("loginConsent");
+                        settings.setValue("consent","loggedIn");
+                        settings.endGroup();
+                        QMessageBox::information(this,"Login success","Logged in successfully.");
+                    }
+                    else{
+                        QMessageBox::information(this,"Login error","Wrong email or password, please try again.");
+                        this->login();
+                    }
+                } else {
+                    QMessageBox::information(this,"Network error",reply->errorString()+"\nThere was an error in the network request. Please try again later or switch your network.");
+                    return;
+                }
+                reply->deleteLater();
+            });
         }
         else{
             QMessageBox::information(this,"Required!","Please fill all the fields");
@@ -8985,7 +8931,7 @@ void MainWindow::on_actionTwo_Column_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
     if(!cursor.hasSelection())
-    {;
+    {
         QString column1 = curr_browser->toHtml();
         curr_browser->clear();
         QString html = "<table cellspacing=\"0\"><tr><td style=\"padding-right:15; border-right:2px; border-right-color:#000000; border-right-style:solid;\" >"+column1+"</td><td style=\"padding-left:15;\">Paste Column 2 data here</td></tr></table>";
@@ -9038,12 +8984,12 @@ void MainWindow::autoSave(){
                 qDebug()<<"You don't have access to this set.";
                 return;
             }
-            if(mRole == "Corrector")
-                cloud_save();
-            else if(mRole == "Verifier"){
-                if(verifier_save())
-                    QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
-            }
+            //            if(mRole == "Corrector")
+            cloud_save();
+            //            else if(mRole == "Verifier"){
+            //                if(verifier_save())
+            //                    QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
+            //            }
         }
         else
             qDebug()<<"Internet unavailable!";
@@ -9063,38 +9009,67 @@ bool MainWindow::check_access()
     QString email = settings.value("email").toString();
     QString token = settings.value("token").toString();
     settings.endGroup();
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -d \"email="+email+"&password="+token+"\" -o validate.json");
-
-    //to find the repo name from .git/congig file
-    QString repo = "";
-    QString gDir = gDirTwoLevelUp+"/.git/config";
-    QFile f(gDir);
-    f.open(QIODevice::ReadOnly);
-    while(!f.atEnd()) {
-        QString line = f.readLine();
-        if(line.contains("https://github.com")){
-            QStringList l = line.split("/");
-            repo = l[l.size()-1].remove("\n");
-            break;
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QUrl url("https://udaaniitb.aicte-india.org/udaan/email/");
+    QUrlQuery params;
+    params.addQueryItem("email", email);
+    params.addQueryItem("password", token);
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    // Disable SSL certificate verification
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    manager->post(request, params.toString(QUrl::FullyEncoded).toUtf8());
+    QEventLoop loop;
+    bool result = false; // initialize the result to false
+    connect(manager, &QNetworkAccessManager::finished, this, [=, &loop, &result](QNetworkReply *reply) {
+        if (reply->error() == QNetworkReply::NoError) {
+            m_data = reply->readAll();
+            QString repo = "";
+            QString gDir = gDirTwoLevelUp+"/.git/config";
+            QFile f(gDir);
+            f.open(QIODevice::ReadOnly);
+            while(!f.atEnd()) {
+                QString line = f.readLine();
+                if(line.contains("https://github.com")){
+                    QStringList l = line.split("/");
+                    repo = l[l.size()-1].remove("\n");
+                    break;
+                }
+            }
+            f.close();
+            QJsonParseError errors;
+            QJsonDocument doc = QJsonDocument::fromJson(m_data, &errors);
+            QJsonObject obj = doc.object();
+            QJsonArray repos = obj.value("repo_list").toArray();
+            QJsonArray::iterator itr; int flag = 0;
+            for(itr = repos.begin(); itr != repos.end(); itr++){
+                if(itr->toString() == repo){
+                    flag = 1;
+                    break;
+                }
+            }
+            if(repos.size() == 0 || flag == 0){
+                loop.quit(); // exit the event loop
+                result = false; // set the result to false
+                QMessageBox msg;
+                msg.setText("You don't have access to this project on cloud.");
+                msg.exec();
+            }
+            else{
+                loop.quit(); // exit the event loop
+                result = true; // set the result to true
+            }
+        } else {
+            QMessageBox::information(this,"Network error",reply->errorString()+"\nThere was an error in the network request. Please try again later or switch your network.");
+            loop.quit(); // exit the event loop
+            result = false; // set the result to false
         }
-    }
-    f.close();
-    QJsonObject mainObj = readJsonFile("validate.json");
-    QJsonArray repos = mainObj.value("repo_list").toArray();
-    QJsonArray::iterator itr; int flag = 0;
-    for(itr = repos.begin(); itr != repos.end(); itr++){
-        if(itr->toString() == repo){
-            flag = 1;
-            break;
-        }
-    }
-    QFile::remove("validate.json");
-    if(repos.size() == 0 || flag == 0){
-        return false;
-    }
-    return true;
+        reply->deleteLater();
+    });
+    loop.exec(); // start the event loop
+    return result; // return the result after the event loop has finished
 }
 
 /*!
@@ -9123,116 +9098,128 @@ void MainWindow::messageTimer(){
  * \details Saves the cloud save success message using QSettings.
  */
 void MainWindow::cloud_save(){
+
     messageTimer();
     QString date = QDate::currentDate().toString();
     QString corrected_count = gDirTwoLevelUp + "/Comments/"+mRole+"_count.json";
     QJsonObject mainObj, parObj;
     parObj = readJsonFile(corrected_count);
     mainObj = parObj[date].toObject();
-//    QString Verifier = mainObj["Verifier"].toString();
-    mainObj.insert("Corrector", gCurrentPageName);
-//    mainObj.insert("Verifier", Verifier);
+    //    QString Verifier = mainObj["Verifier"].toString();
+    mainObj.insert(mRole, gCurrentPageName);
+    //    mainObj.insert("Verifier", Verifier);
     parObj.insert(date, mainObj);
     writeJsonFile(corrected_count, parObj);
-    //sending credentials
-    //    QProcess process;
-    //    process.execute("curl -d -X -k -POST --header "
-    //                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o gitToken.json");
+    QNetworkAccessManager* manager = new QNetworkAccessManager();
+    QUrl url_("https://udaaniitb.aicte-india.org/udaan/email/");
 
-    //    QFile jsonFile("gitToken.json");
-    //    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    //    QByteArray data = jsonFile.readAll();
+    QByteArray postData;
+    postData.append("username=username&password=password");
 
-    //    QJsonParseError errorPtr;
-    //    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-    //    QJsonObject mainObj = document.object();
-    //    jsonFile.close();
-    //    QString git_token = mainObj.value("github_token").toString();
-    //    QString git_username = mainObj.value("github_username").toString();
-    //    QFile::remove("gitToken.json");
-    //    std::string user = git_username.toStdString();
-    //    std::string pass = git_token.toStdString();
+    QNetworkRequest request(url_);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
-    QString commit_msg = gCurrentPageName+" updated by corrector";    // append current version
+    // Disable SSL certificate verification
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    QNetworkReply* reply = manager->post(request, postData);
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, [=, &loop]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            QJsonParseError errorPtr;
+            QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+            QJsonObject mainObj = document.object();
+            QString git_token = mainObj.value("github_token").toString();
+            QString git_username = mainObj.value("github_username").toString();
+            // use git_token and git_username here
+            m_user = git_username.toStdString();
+            m_pass = git_token.toStdString();
+            loop.quit();
+        } else {
+            qDebug() << "Error:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+    loop.exec();
 
-    //    bool ok;
+    QString commit_msg = gCurrentPageName + " completed by "+ mRole;    // append current version
 
     //! commits and pushes the file. commit() and push() from Project.cpp creates a commit and pushes the file to git repo
-    //    if(mProject.commit(commit_msg.toStdString()))
-    //    {
-    //        threadingPush *tp = new threadingPush(nullptr, mProject.repo, user, pass, gDirTwoLevelUp);
-    //        QThread *thread = new QThread;
+    if(mProject.commit(commit_msg.toStdString()))
+    {
+        if(mProject.fetch_n_merge(gDirTwoLevelUp, mRole)){
+            //            threadingPush *tp = new threadingPush(nullptr, mProject.repo, m_user, m_pass, gDirTwoLevelUp);
+            //            QThread *thread = new QThread;
 
-    //        connect(thread, SIGNAL(started()), tp, SLOT(ControlPush()));
-    //        connect(tp, SIGNAL(finishedPush()), thread, SLOT(quit()));
-    //        connect(tp, SIGNAL(finishedPush()), tp, SLOT(deleteLater()));
-    //        connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-    //        connect(tp, SIGNAL(finishedPush()), this, SLOT(stopSpinning()));
-    //        tp->moveToThread(thread);
-    //        thread->start();
+            //            connect(thread, SIGNAL(started()), tp, SLOT(ControlPush()));
+            //            connect(tp, SIGNAL(finishedPush()), thread, SLOT(quit()));
+            //            connect(tp, SIGNAL(finishedPush()), tp, SLOT(deleteLater()));
+            //            connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+            //            connect(tp, SIGNAL(finishedPush()), this, SLOT(stopSpinning()));
+            //            tp->moveToThread(thread);
+            //            thread->start();
 
-    //        spinner = new LoadingSpinner(this);
-    //        spinner->SetMessage("Saving to cloud...", "Saving...");
-    //        spinner->setModal(false);
-    //        spinner->exec();
-    //        if (tp->error != 0) {
+            //            spinner = new LoadingSpinner(this);
+            //            spinner->SetMessage("Cloud sync...", "Syncing...");
+            //            spinner->setModal(false);
+            //            spinner->exec();
+            //            if (tp->error != 0) {
+            //                mProject.enable_push(false);
+            //                QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
+            //                return;
+            //            }
+            //            else{
+            //                QMessageBox::information(0, "Cloud sync", "Cloud sync successful!");
+            //                QSettings settings("IIT-B", "OpenOCRCorrect");
+            //                settings.beginGroup("cloudSave");
+            //                settings.setValue("save","success" );
+            //                settings.endGroup();
+            //            }
+            if(!mProject.push(gDirTwoLevelUp)){
+                mProject.enable_push(false);
+                QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
+                return;
+            }
+            QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            settings.beginGroup("cloudSave");
+            settings.setValue("save","success" );
+            settings.endGroup();
+
+            //<<<<<<Change
+            read_recorrected_pages();
+            read_review_pages();
+            read_corrected_pages();
+            read_verified_pages();
+
+            pageStatusHandler();
+        }
+        else{
+            QMessageBox::information(0, "Cloud sync", "Failed to Sync and merge remote changes!");
+            return;
+        }
+
+    }
+    //    if(mProject.commit(commit_msg.toStdString())){
+    //        if(!mProject.push(gDirTwoLevelUp)){
     //            mProject.enable_push(false);
     //            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
     //            return;
     //        }
+
+    //        ui->lineEdit_2->setText("Version " + mProject.get_version());      //Update the version of file on ui.
+
+    //        //        QString emailText =  "Book ID: " + mProject.get_bookId()
+    //        //                + "\nSet ID: " + mProject.get_setId()
+    //        //                + "\n" + commit_msg ;       //Send an email if turn-in failed
+    //        QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
+    //        QSettings settings("IIT-B", "OpenOCRCorrect");
+    //        settings.beginGroup("cloudSave");
+    //        settings.setValue("save","success" );
+    //        settings.endGroup();
     //    }
-    if(mProject.commit(commit_msg.toStdString())){
-        if(!mProject.push(gDirTwoLevelUp)){
-            mProject.enable_push(false);
-            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
-            return;
-        }
-        mProject.set_corrector();
-
-        ui->lineEdit_2->setText("Version " + mProject.get_version());      //Update the version of file on ui.
-
-        //        QString emailText =  "Book ID: " + mProject.get_bookId()
-        //                + "\nSet ID: " + mProject.get_setId()
-        //                + "\n" + commit_msg ;       //Send an email if turn-in failed
-        QMessageBox::information(0, "Cloud sync", "Cloud save successful!");
-        QSettings settings("IIT-B", "OpenOCRCorrect");
-        settings.beginGroup("cloudSave");
-        settings.setValue("save","success" );
-        settings.endGroup();
-    }
-}
-
-/*!
- * \brief MainWindow::verifier_save
- * \param commit_msg
- * \details This function is called in verifier mode when tool is closed.
- * \details Calls commit and push functions
- * \return Returns true if pushed successfully or false if failed.
- */
-bool MainWindow::verifier_save()
-{
-    messageTimer();
-    QString date = QDate::currentDate().toString();
-    QString corrected_count = gDirTwoLevelUp + "/Comments/"+mRole+"_count.json";
-    QJsonObject mainObj, parObj;
-    parObj = readJsonFile(corrected_count);
-    mainObj = parObj[date].toObject();
-//    QString Corrector = mainObj["Corrector"].toString();
-//    mainObj.insert("Corrector", Corrector);
-    mainObj.insert("Verifier", gCurrentPageName);
-    parObj.insert(date, mainObj);
-    writeJsonFile(corrected_count, parObj);
-
-    QString commit_msg = gCurrentPageName+" verified by verifier";
-    if(mProject.commit(commit_msg.toStdString()))
-    {
-        if(!mProject.push(gDirTwoLevelUp)){
-            mProject.enable_push(false);
-            QMessageBox::information(0, "Cloud sync", "Cloud save failed!");
-            return false;
-        }
-    }
-    return true;
 }
 
 /*!
@@ -9243,7 +9230,7 @@ bool MainWindow::verifier_save()
  */
 void MainWindow::preprocessing(){
     if(!QDir(gDirTwoLevelUp+"/logs").exists())
-            QDir().mkdir(gDirTwoLevelUp+"/logs");
+        QDir().mkdir(gDirTwoLevelUp+"/logs");
     QString loc = gDirTwoLevelUp + "/logs/."+mRole+"_dan.log";
     QFile sFile(loc);
     slpNPatternDict slnp;
@@ -9432,6 +9419,11 @@ void MainWindow::speechToTextCall()
             QJsonObject object=responseJson.object();
             QString ResponseText=object["results"].toArray()[0].toObject()
                     ["alternatives"].toArray()[0].toObject()["transcript"].toString();
+            QString ResponseTextAlt=object["results"].toArray()[1].toObject()
+                    ["alternatives"].toArray()[0].toObject()["transcript"].toString();
+            if(!ResponseTextAlt.isEmpty()){
+                ResponseText += " " + ResponseTextAlt;
+            }
             QTextCursor cur = curr_browser->textCursor();
             cur.insertText(ResponseText);
         }
@@ -9448,12 +9440,13 @@ void MainWindow::speechToTextCall()
  * \details "Speech to text" status means user can start recording. "Stop ?" means audio recording is in progress and user can stop it by clicking the "Stop ?" button.
  * \details "Processing ..." means the user input is in process and the requested audio will be converted into text and pasted at cursor position. Text is inserted at cursor position
  * \details and status of button is changed back to "Speech to text".
+ * \author Sadam
  */
 void MainWindow::on_pushButton_4_clicked()
 {
     if(!isProjectOpen) return;
+    QString fileName = QDir::currentPath() + "/audio.wav";
     if (m_audioRecorder->state() == QMediaRecorder::StoppedState) {
-        QString fileName = QDir::currentPath() + "/audio.wav";
         m_audioRecorder->setOutputLocation(QUrl::fromLocalFile(fileName));
         qDebug()<<"Recording your audio!!";
         ui->pushButton_4->setText("Stop ?");
@@ -9477,9 +9470,17 @@ void MainWindow::on_pushButton_4_clicked()
         ui->pushButton_4->setText("Processing ...");
         m_audioRecorder->stop();
         speechToTextCall();
+        QFile::remove(fileName);
     }
 }
 
+/*!
+ * \brief MainWindow::on_actionFill_Table_triggered
+ * \details When shade Table is clicked, this function is called. It checked if the selected text is table or not.
+ * \details If the selection doesn't contain table, control returns back, else it highlights selected cells of the
+ * \details current table with the user selected color.
+ * \author Sadam
+ */
 void MainWindow::on_actionFill_Table_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -9492,13 +9493,6 @@ void MainWindow::on_actionFill_Table_triggered()
 
     // Get the table format and set the alignment to center
     QTextTableFormat tableFormat = selectedTable->format();
-
-    // Open a color picker dialog to get the user's chosen color
-//    QColorDialog colorDialog(curr_browser);
-//    colorDialog.setWindowTitle("Select Table Background Color");
-//    if (colorDialog.exec() != QDialog::Accepted) {
-//        return;
-//    }
     QColor color = QColorDialog::getColor();
 
     // Set the background color for each selected cell in the table
@@ -9507,3 +9501,1195 @@ void MainWindow::on_actionFill_Table_triggered()
     curr_browser->textCursor().setBlockCharFormat(cellFormat);
 }
 
+
+void MainWindow::on_backward_Button_clicked()
+{
+    ui->tabWidget->setVisible(false);
+    ui->backward_Button->hide();
+    ui->forward_Button->show();
+}
+
+
+void MainWindow::on_forward_Button_clicked()
+{
+    ui->tabWidget->setVisible(true);
+    ui->forward_Button->hide();
+    ui->backward_Button->show();
+}
+
+/*!
+ * Project is opened after importing
+ */
+void MainWindow::on_actionImport_and_Open_triggered()
+{
+    on_actionOpen_Project_triggered();
+    import_flag = false;
+}
+
+void MainWindow::on_actionImport_triggered()
+{
+    on_actionClone_Repository();
+    import_flag = false;
+}
+
+
+
+void MainWindow::on_actionEnter_manauly_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+
+    QDialog dialog(this);
+    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+    form.addRow(new QLabel("Enter number of rows & columns", this));                                  // Create a dialog for asking table dimensions
+
+    //! Add the lineEdits with their respective labels
+    QSpinBox *rows = new QSpinBox(&dialog);
+    QSpinBox *columns = new QSpinBox(&dialog);                                    // Add lineEdits to get Rows
+    form.addRow("Rows", rows);                                                      // Add lineEdits to get Columns
+    form.addRow("Columns", columns);
+
+    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    //! Show the dialog as modal
+    if (dialog.exec() == QDialog::Accepted)
+    {
+
+        QTextTableFormat tf;
+        tf.setBorderBrush(Qt::black);
+        tf.setCellSpacing(0);
+        tf.setCellPadding(7);
+        //        tf.setAlignment(Qt::AlignCenter);
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
+    }
+    tableDialog->close();
+}
+
+/*!
+ * \fn MainWindow::on_pushButton_5_clicked
+ * \brief Function is executed when user clicks on top right corner user icon.
+ * \details If user is not logged in, login dialog prompts.
+ * \details Else logout dialog prompts.
+ * \details If the user clicks on 'sign out' button, user is signed out of the Udaan PE tool.
+ */
+void MainWindow::on_pushButton_5_clicked()
+{
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    settings.endGroup();
+    if(email.isEmpty()){
+        login();
+    }
+    else{
+        QDialog logout(this);
+        QFormLayout form(&logout);
+        form.addRow(new QLabel("You are signed in as\n"+email+"\n",this));
+        QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&logout);
+        buttonbox.button(QDialogButtonBox::Ok)->setText("Sign Out");
+        buttonbox.button(QDialogButtonBox::Cancel)->setText("Close");
+        form.addRow(&buttonbox);
+
+        QObject::connect(&buttonbox,SIGNAL(accepted()),&logout,SLOT(accept()));
+        QObject::connect(&buttonbox,SIGNAL(rejected()),&logout,SLOT(reject()));
+        if(logout.exec() ==QDialog::Accepted){
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            ui->actionLogout->setVisible(false);
+            ui->actionLogin->setVisible(true);
+            settings.beginGroup("loginConsent");
+            settings.remove("");
+            settings.endGroup();
+            settings.beginGroup("login");
+            settings.remove("");
+            settings.endGroup();
+            QMessageBox::information(0,"Logout","Logged out successfully :(");
+        }
+
+    }
+
+}
+
+void MainWindow::e_d_features(bool value)
+{
+    ui->actionSave->setEnabled(value);
+    ui->actionLoad_Prev_Page->setEnabled(value);
+    ui->actionLoad_Next_Page->setEnabled(value);
+    ui->actionClose_project->setEnabled(value);
+    ui->actionPDF_Preview->setEnabled(value);
+    ui->actionas_PDF->setEnabled(value);
+    ui->mainToolBar->setEnabled(value);
+    ui->pushButton->setEnabled(value);
+    ui->pushButton_2->setEnabled(value);
+    ui->pushButton_4->setEnabled(value);
+    ui->comboBox->setEnabled(value);
+    ui->pushButton_3->setEnabled(value);
+    ui->menuEdit->setEnabled(value);
+    ui->menuInsert->setEnabled(value);
+    ui->menuFormat->setEnabled(value);
+    ui->menuTool->setEnabled(value);
+    ui->menuGit->setEnabled(value);
+    ui->comboBox->setEnabled(value);
+    ui->zoom_In_Button->setEnabled(value);
+    ui->zoom_Out_Button->setEnabled(value);
+    ui->horizontalSlider->setEnabled(value);
+
+    ui->actionFetch_2->setEnabled(true);
+
+}
+
+
+
+void MainWindow::on_actionImport_2_triggered()
+{
+    on_actionClone_Repository();
+    import_flag = false;
+}
+
+void MainWindow::on_actionTable_2_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    tableDialog=new QDialog();
+    tableDialog->setWindowTitle("Insert Table");
+    QVBoxLayout *layout = new QVBoxLayout(tableDialog);
+    QLabel *label = new QLabel("Use mouse to select cells\nDouble click to insert table.");
+    layout->addWidget(label);
+    m_table = new QTableWidget(5, 5,this);
+    m_table->setSelectionMode(QAbstractItemView::MultiSelection);
+    layout->addWidget(m_table);
+    QPushButton *button = new QPushButton("Insert table manually...");
+    button->setStyleSheet("border: 1px solid #efefef;text-align:left; margin-top: 10px;");
+    QObject::connect(button, &QPushButton::clicked, this, &MainWindow::on_actionEnter_manauly_triggered);
+
+    layout->addWidget(button);
+    QTableWidgetItem *itm;
+    for(int i=0;i<5;i++){
+        for(int j=0;j<5;j++){
+            itm = new QTableWidgetItem();
+            itm->setData(Qt::DisplayRole,QString("."));
+            itm->setForeground(QBrush(QColor(255,255,255)));
+            m_table->setItem(i,j,itm);
+            m_table->setColumnWidth(i,1);
+        }
+    }
+
+    QObject::connect(m_table,&QTableWidget::itemSelectionChanged,this,[=](){
+        selectedItems=m_table->selectedItems();
+    });
+
+    tableDialog->setLayout(layout);
+    tableDialog->setSizeGripEnabled(true);
+    tableDialog->resize(QSize(320,280));
+    tableDialog->exec();
+}
+
+void MainWindow::on_actionCut_triggered()
+{
+    curr_browser->cut();
+}
+
+void MainWindow::on_actionCopy_triggered()
+{
+    curr_browser->copy();
+}
+
+
+void MainWindow::on_actionPaste_triggered()
+{
+    curr_browser->paste();
+}
+
+
+void MainWindow::on_actionSelect_All_triggered()
+{
+    curr_browser->selectAll();
+}
+
+
+void MainWindow::on_actionDelete_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if(cursor.hasSelection()) {
+        cursor.removeSelectedText();
+    }
+}
+
+
+void MainWindow::on_actionDate_triggered()
+{
+    QDate date;
+    QCalendarWidget *calendar = new QCalendarWidget(this);
+    calendar->setGeometry(100, 100, 400, 400);
+    calendar->show();
+
+    connect(calendar, &QCalendarWidget::selectionChanged, this, [=](){
+        getDate(date, calendar);
+    });
+}
+
+void MainWindow::getDate(QDate date, QCalendarWidget *calendar) {
+    date = calendar->selectedDate();
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.insertText(date.toString("dd/MMMM/yyyy"));
+    calendar->deleteLater();
+}
+
+
+void MainWindow::on_actionLink_triggered()
+{
+    QDialog dialog(this);
+    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+    form.addRow(new QLabel("Enter the url and the placeholder", this));
+
+    //! Add the lineEdits with their respective labels
+    QLineEdit *link = new QLineEdit(&dialog);
+    QLineEdit *text = new QLineEdit(&dialog);
+    form.addRow("url", link);
+    form.addRow("title", text);
+
+    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    //! Show the dialog as modal
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertHtml("<a href=\"" + link->text() + "\">" + text->text() + "</a>");
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionUnderline_2_triggered()
+ * \brief This function underlines the selected text
+ */
+void MainWindow::on_actionUnderline_2_triggered()
+{
+    on_actionUnderline_triggered();
+}
+
+/*!
+ * \fn MainWindow::on_actionIncrease_size_triggered()
+ * \brief This function increases the font size of selected text
+ */
+void MainWindow::on_actionIncrease_size_triggered()
+{
+    on_actionZoom_In_triggered();
+}
+
+/*!
+ * \fn MainWindow::on_actionDecrease_Size_triggered()
+ * \brief This function descreases the font size of selected text
+ */
+void MainWindow::on_actionDecrease_Size_triggered()
+{
+    on_actionZoom_Out_triggered();
+}
+
+/*!
+ * \fn MainWindow::on_actionlower_case_triggered()
+ * \brief This function displays the letter in lower case
+ */
+void MainWindow::on_actionlower_case_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextCharFormat fmt;
+    fmt.setFontCapitalization(QFont::AllLowercase);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
+}
+
+/*!
+ * \fn MainWindow::on_actionUPPER_CASE_triggered()
+ * \brief This function displays the letter in upper case
+ */
+void MainWindow::on_actionUPPER_CASE_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextCharFormat fmt;
+    fmt.setFontCapitalization(QFont::AllUppercase);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
+}
+
+/*!
+ * \fn MainWindow::on_actionTitle_Case_triggered()
+ * \brief This function changes the case of a word where first letter is upper and rest is lower
+ */
+void MainWindow::on_actionTitle_Case_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextCharFormat fmt;
+    fmt.setFontCapitalization(QFont::Capitalize);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
+}
+
+void MainWindow::on_actionDelete_Table_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    if(curr_browser->textCursor().currentTable())
+    {
+        QTextCursor cursor = curr_browser->textCursor();
+        if(cursor.currentTable() != nullptr) {
+            cursor.setPosition(cursor.currentTable()->cellAt(0, 0).firstCursorPosition().position());
+            QTextTable *table = cursor.currentTable();
+            int numRows = table->rows();
+            table->removeRows(0, numRows);
+        }
+    }
+}
+
+void MainWindow::on_actionClear_Formatting_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.setCharFormat(QTextCharFormat());
+}
+
+void MainWindow::on_actionImage_triggered()
+{
+    insertImageAction();
+}
+
+
+void MainWindow::on_actionAbout_Udaan_PE_triggered()
+{
+    about ab;
+    ab.exec();
+}
+/*!
+ * \fn MainWindow::on_actionIncrease_Indent_triggered
+ * \brief Adding Indentation upto 14.65 {i.e. touched right margin} {in cm}
+*/
+void MainWindow::on_actionIncrease_Indent_triggered(int left, int right)
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QMargins margin = curr_browser->contentsMargins();
+    QTextCursor cursor = curr_browser->textCursor();
+
+    QTextBlock block = cursor.block();
+    QTextBlockFormat blockFormat = block.blockFormat();
+
+    int presentIndent = blockFormat.indent();
+
+
+    int indent = 1+presentIndent;
+
+    if(left != 0) indent = left;
+    if(indent > 14) return;
+
+    if(right == 0)blockFormat.setRightMargin(margin.right());
+    else blockFormat.setRightMargin(right);
+    blockFormat.setIndent(indent);
+
+    //    qDebug()<<"Increase Indent ->"<<blockFormat.indent();
+
+    cursor.mergeBlockFormat(blockFormat);
+
+}
+
+/*!
+ * \fn MainWindow::on_actionDecrease_Indent_triggered
+ * \brief Removing Indentation upto 0 {i.e. touches Left margin} {in cm}
+*/
+void MainWindow::on_actionDecrease_Indent_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QMargins margin = curr_browser->contentsMargins();
+    QTextCursor cursor = curr_browser->textCursor();
+
+    QTextBlock block = cursor.block();
+    QTextBlockFormat blockFormat = block.blockFormat();
+
+    int presentIndent = blockFormat.indent();
+
+    int indent = presentIndent-1;
+
+    if(indent < 0) return;
+
+    blockFormat.setLeftMargin(margin.left());
+    blockFormat.setIndent(presentIndent - 1);
+
+    //    qDebug()<<"Decrease Indent ->"<<blockFormat.indent();
+
+    cursor.mergeBlockFormat(blockFormat);
+}
+
+void MainWindow::on_actionIndentation_Options_triggered()
+{
+
+    int left = 0, right = 0;
+    indentOptions i(this,&left,&right);
+
+    i.exec();
+
+    if(left + right > 14){
+        return;
+    }
+
+    on_actionIncrease_Indent_triggered(left,right);
+}
+
+/*!
+ * \fn MainWindow::on_actionSpecial_Characters_triggered()
+ * \brief This function displays the special symbol dialog
+ */
+void MainWindow::on_actionSpecial_Characters_triggered()
+{
+    on_actionSymbols_triggered();
+}
+
+/*!
+ * \fn MainWindow::on_actionResize_Image_2_triggered()
+ * \brief This function resize image by inserting width and height
+ */
+void MainWindow::on_actionResize_Image_2_triggered()
+{
+    on_actionResize_Image_triggered();
+}
+
+/*!
+ * \fn MainWindow::on_actionWord_Count_triggered()
+ * \brief This function displays word count in current page ,total number of pages and total number of words in all pages
+ */
+void MainWindow::on_actionWord_Count_triggered()
+{
+    if(curr_browser){
+        QString extText = curr_browser->toPlainText();
+        //!Removes these symbol while counting
+        extText.remove("?");
+        extText.remove("|");
+        extText.remove("`");
+        extText.remove("[");
+        extText.remove("]");
+        extText.remove("'");
+        extText.remove(",");
+
+        int wordcnt = extText.split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
+        QString str = QString::number(wordcnt);
+        QString currentDirAbsolutePath;
+        if(mRole=="Verifier")
+            currentDirAbsolutePath = gDirTwoLevelUp + "/VerifierOutput/";
+        else if (mRole=="Corrector") {
+            currentDirAbsolutePath = gDirTwoLevelUp + "/CorrectorOutput/";
+        }
+
+
+        //! We then open this directory and set sorting preferences.
+        QDir dir(currentDirAbsolutePath);
+        dir.setSorting(QDir::SortFlag::DirsFirst | QDir::SortFlag::Name);
+        QDirIterator dirIterator(dir,QDirIterator::NoIteratorFlags);
+        qDebug()<<dir;
+        //! Set count of files in directory
+
+        int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
+        QString str1 = QString::number(count);
+        int t_words=0;
+        foreach(auto a, dir.entryList())
+        {
+            QString x = currentDirAbsolutePath + a;
+            QString mainHtml;
+            int count=0;
+            if(x.contains("."))
+            {
+                QStringList html_files = x.split(QRegExp("[.]"));
+                if(html_files[1]=="html")
+                {
+                    QFile file(x);
+                    if (!file.open(QIODevice::ReadOnly))
+                        qDebug() << "Error reading file main.html";
+                    QTextStream stream(&file);
+                    stream.setCodec("UTF-8");
+                    mainHtml=stream.readAll();
+                    QRegularExpression rex_dollar("(?<=\\$\\$)(.*?)(?=\\$\\$)",QRegularExpression::DotMatchesEverythingOption);
+
+                    auto itr = rex_dollar.globalMatch(mainHtml);
+                    QTextDocument doc;
+                    doc.setHtml(mainHtml);
+                    QString s1 = doc.toPlainText();
+
+
+
+                    while(itr.hasNext())
+                    {
+                        count++;
+                        itr.next();
+                    }
+                    s1.remove("?");
+                    s1.remove("|");
+                    s1.remove("`");
+                    s1.remove("[");
+                    s1.remove("]");
+                    s1.remove("'");
+                    s1.remove(",");
+                    s1.remove(rex_dollar);
+
+                    int wordcnt = s1.split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
+                    wordcnt += (count-1)/2;
+                    t_words += wordcnt;
+
+                }
+            }
+        }
+
+        QString str3 = QString::number(t_words);
+        QDialog dialog(this);
+        QFormLayout form(&dialog);
+        form.addRow(new QLabel("Word Count", this));
+
+        QLineEdit *page = new QLineEdit(&dialog);
+        QLineEdit *c_page = new QLineEdit(&dialog);
+        QLineEdit *total_words = new QLineEdit(&dialog);
+
+        c_page->setText(str);
+        page->setText(str1);
+        total_words->setText(str3);
+        page->setReadOnly(true);
+        c_page->setReadOnly(true);
+        total_words->setReadOnly(true);
+        form.addRow("Current Page", c_page);
+        form.addRow("Total Pages", page);
+        form.addRow("Total Words",total_words);
+        dialog.exec();
+    }
+}
+
+/*!
+ * \fn MainWindow::on_actionVoice_Typing_triggered()
+ * \brief This function starts recording the voice
+ */
+void MainWindow::on_actionVoice_Typing_triggered()
+{
+    on_pushButton_4_clicked();
+}
+
+
+
+
+void MainWindow::on_actionTable_Border_Color_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    if(curr_browser->textCursor().currentTable()) {
+        QColor color = QColorDialog::getColor(Qt::black, this, tr("Select color"));
+        if(color.isValid()) {
+            QTextCursor cursor = curr_browser->textCursor();
+            QTextTable *table = cursor.currentTable();
+            QTextTableFormat format = table->format();
+            format.setBorderBrush(color);
+            table->setFormat(format);
+        }
+
+    }
+}
+
+void MainWindow::on_corrected_clicked()
+{
+    QString fileName = currentFile;
+
+    if(ui->corrected->checkState() == Qt::Checked && markForReview[fileName] != 0){
+        correct[fileName] = 1;
+        recorrect[fileName] = 1;
+        ui->corrected->setChecked(true);
+        ui->status->setText("Corrected");
+    }
+    else if(ui->corrected->checkState() == Qt::Checked ){
+        correct[fileName] = 1;
+        recorrect[fileName] = 0;
+        ui->corrected->setChecked(true);
+        ui->status->setText("Corrected");
+    }
+    else if(markForReview[fileName] != 0){
+        ui->status->setText("Marked For Review");
+        recorrect[fileName] = 0;
+        correct[fileName] = 0;
+        ui->corrected->setEnabled(true);
+        ui->corrected->setChecked(false);
+    }
+    else{
+        correct[fileName] = 0;
+        recorrect[fileName] = 0;
+        ui->corrected->setChecked(false);
+        ui->status->setText("Status - None");
+    }
+}
+
+
+void MainWindow::on_verified_clicked()
+{
+    QString fileName = currentFile;
+
+    if(ui->mark_review->checkState() == Qt::Checked){
+        ui->verified->setEnabled(false);
+        ui->verified->setChecked(false);
+        ui->status->setText("Marked For Review");
+        return;
+    }
+
+    if(ui->verified->checkState() == Qt::Checked && correct[currentFile] != 0){
+        verify[fileName] = 1;
+
+        ui->verified->setChecked(true);
+        ui->corrected->setChecked(true);
+        ui->mark_review->setEnabled(false);
+        ui->status->setText("Verified");
+    }
+    else if(correct[currentFile] != 0){
+        verify[fileName] = 0;
+        ui->status->setText("Corrected");
+        ui->verified->setEnabled(true);
+        ui->mark_review->setEnabled(true);
+    }
+    else{
+        verify[fileName] = 0;
+        ui->verified->setChecked(false);
+        ui->mark_review->setEnabled(true);
+        ui->status->setText("Status - None");
+    }
+}
+
+
+
+void MainWindow::on_actionCell_Padding_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    QDialog dialog(this);
+    QFormLayout form(&dialog);
+    form.addRow(new QLabel("Enter the amount of padding to be applied", this));
+
+    QSpinBox *inp = new QSpinBox(&dialog);
+    inp->setRange(0, 10);
+    form.addRow("Padding", inp);
+
+    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+    int padding;
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        padding = inp->value();
+        if(curr_browser->textCursor().currentTable())
+        {
+            QTextCursor cursor = curr_browser->textCursor();
+            if(cursor.currentTable() != nullptr) {
+                cursor.setPosition(cursor.currentTable()->cellAt(0, 0).firstCursorPosition().position());
+                QTextTable *table = cursor.currentTable();
+                QTextTableFormat format = table->format();
+                format.setCellPadding(padding);
+                table->setFormat(format);
+            }
+        }
+    }
+}
+
+void MainWindow::update_tool(QString latestVersion){
+#ifdef Q_OS_WIN
+    QUrl downloadUrl("https://www.cse.iitb.ac.in/~ayusham/Udaan-Windows-"+latestVersion+".zip");
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/"+latestVersion+".zip";
+#else
+    QUrl downloadUrl("https://www.cse.iitb.ac.in/~ayusham/Udaan-Linux-"+latestVersion+".tar.xz");
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/"+latestVersion+".tar.xz";
+#endif
+    QDialog dialog(this);
+    QFormLayout form(&dialog);
+    QProgressBar pb(&dialog);
+    QLabel *label = new QLabel(&dialog);
+    QLabel *labelProgress = new QLabel(&dialog);
+    labelProgress->setText("");
+    label->setText("Update in progress...");
+    form.addRow(label);
+    form.addWidget(&pb);
+    form.addRow(labelProgress);
+    dialog.show();
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QNetworkRequest request(downloadUrl);
+    QNetworkReply *reply = manager->get(request);
+    QFile *file = new QFile(path);
+    file->open(QIODevice::WriteOnly);
+
+    QString currentDirectory = m_update_path;
+    QDir directory(currentDirectory);
+    QString m_t_path = directory.absolutePath();
+    directory.cdUp();
+    directory.cdUp();
+    QString output = directory.absolutePath();
+
+    connect(reply, &QNetworkReply::readyRead, this, [=]() {
+        file->write(reply->readAll());
+        //file->close();
+    });
+    connect(reply, &QNetworkReply::finished, this, [&]() {
+        file->close();
+#ifdef Q_OS_WIN
+    QuaZip zip(path);
+    if (!zip.open(QuaZip::mdUnzip)) {
+        qDebug() << "Failed to open ZIP file:" << zip.getZipError();
+        QMessageBox::warning(this, "Update error", "We were unable to find the zip file\nSource: "+path, QMessageBox::Ok);
+        return;
+    }
+
+    QuaZipFile file(&zip);
+
+    QuaZipFileInfo info;
+
+    for (bool more = zip.goToFirstFile(); more; more = zip.goToNextFile()) {
+        if (!zip.getCurrentFileInfo(&info)) break;
+
+        QString name = info.name;
+        QDir().mkdir(output + "Udaan-" + latestVersion + "/");
+        QString outputFilePath = output + "Udaan-" + latestVersion + "/" + name;
+        qDebug() << "This is the path" << outputFilePath;
+        if (!file.open(QIODevice::ReadOnly)) break;
+        QByteArray data = file.readAll();
+        file.close();
+        QFile outputFile(outputFilePath);
+        QString temp = outputFilePath;
+        QStringList list = outputFilePath.split("/");
+        temp.remove(list[list.size() - 1]);
+        QFile tempFile(temp);
+        if (!tempFile.exists()) {
+            QDir().mkdir(temp);
+        }
+        if (!outputFile.open(QIODevice::WriteOnly)) {
+            qDebug() << "Failed to open output file:" << outputFile.errorString() << outputFile.fileName();
+            continue;
+        }
+        outputFile.write(data);
+        outputFile.close();
+    }
+    zip.close();
+
+    QMessageBox::StandardButton reply_d;
+    reply_d = QMessageBox::question(this, "Restart Application",
+        "qpadfinal has been successfully updated to latest version\nAre you sure you want to restart the application to use the updated version?",
+        QMessageBox::Yes | QMessageBox::No);
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    if (reply_d == QMessageBox::Yes) {
+        // Quit the application
+        QProcess process;
+        QStringList arguments;
+        QString command = "start " + output + "Udaan-" + latestVersion + "/" + latestVersion + "/qpadfinal.exe";
+        arguments << "/c" << command;
+        process.startDetached("cmd.exe", arguments);
+        process.waitForFinished();
+
+        qDebug() << "saved " << m_t_path;
+        settings.beginGroup("prev-version");
+        settings.setValue("link", m_t_path);
+        settings.endGroup();
+        qApp->quit();
+    }
+
+    qDebug() << "saved " << m_t_path;
+    settings.beginGroup("prev-version");
+    settings.setValue("link", m_t_path);
+    settings.endGroup();
+
+#else
+    QProcess* process = new QProcess(this);
+    QString command = "tar -xJf " + path + " -C " + output;
+    process->start("/bin/sh", QStringList() << "-c" << command);
+    qDebug() << process->arguments();
+    process->waitForFinished(100000000);
+
+    if (process->exitCode() != QProcess::NormalExit || process->exitStatus() != QProcess::NormalExit) {
+        qDebug() << process->readAllStandardError();
+    }
+
+    QMessageBox::information(this, "Update status", "Extraction of the Udaan pe tool udpate file is successfully completed."
+        "\nTo rebuild the application, run these following commands in order - "
+        "\n⚫ make clean"
+        "\n⚫ qmake qpadfinal.pro"
+        "\n⚫ make", QMessageBox::Button::Ok);
+#endif
+    QFile::remove(path);
+    reply->deleteLater();
+});
+    connect(reply, &QNetworkReply::downloadProgress, this, [&](qint64 bytesReceived, qint64 bytesTotal) {
+        processProgress(bytesReceived, bytesTotal, &pb, labelProgress);
+    });
+
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+}
+void MainWindow::processProgress(qint64 bytesReceived, qint64 bytesTotal, QProgressBar *pb, QLabel *labelProgress) {
+    qDebug()<<bytesReceived<<bytesTotal;
+    pb->setValue((bytesReceived * 100) / bytesTotal);
+    labelProgress->setText(QString::number(bytesReceived/1000000) + "MB/" + QString::number(bytesTotal/1000000) +"MB");
+}
+
+/*!
+ * \fn MainWindow::on_pushButton_6_clicked()
+ * \brief This function replaces all the changed words globally
+ */
+void MainWindow::on_pushButton_6_clicked()
+{
+    QString currentDirAbsolutePath = gDirTwoLevelUp + "/" + gCurrentDirName;
+    runGlobalReplace(currentDirAbsolutePath, changedWords);
+    ConvertSlpDevFlag =0;
+    changedWords.clear();
+    ui->pushButton_6->setVisible(false);
+}
+
+
+void MainWindow::on_mark_review_clicked()
+{
+    QString fileName = currentFile;
+
+    if(ui->verified->checkState() == Qt::Checked) {
+        ui->mark_review->setChecked(false);
+        ui->mark_review->setEnabled(false);
+        ui->status->setText("Verified");
+        return;
+    }
+
+    if(ui->mark_review->checkState() == Qt::Checked && correct[currentFile] != 0){
+        markForReview[currentFile] = 1;
+        ui->mark_review->setChecked(true);
+        ui->verified->setEnabled(false);
+        ui->status->setText("Marked For Review");
+    }
+    else if(correct[currentFile] != 0){
+        markForReview[fileName] = 0;
+        ui->status->setText("Corrected");
+        ui->verified->setEnabled(true);
+        ui->mark_review->setEnabled(true);
+    }
+    else{
+        markForReview[fileName] = 0;
+        ui->verified->setChecked(false);
+        ui->verified->setEnabled(false);
+        ui->mark_review->setEnabled(false);
+        ui->status->setText("Status - None");
+    }
+}
+
+
+void MainWindow::write_corrected_pages(){
+    QString directory = mProject.GetDir().absolutePath();
+
+    //Logs folder
+    QString folder = directory + "/logs";
+
+    if(!QDir(folder).exists()){
+        QDir(gDirTwoLevelUp).mkdir("logs");
+    }
+
+    QString file = folder + "/corrected_page.txt";
+
+    QFile f(file);
+    f.remove();
+
+    if(f.open(QIODevice::WriteOnly)){
+        QTextStream outputStream(&f);
+        QString string;
+        QMapIterator<QString , int>i(correct);
+        while(i.hasNext()){
+            i.next();
+            string = i.key();
+
+            if(i.value() != 0){
+                outputStream << string << endl;
+            }
+        }
+        f.close();
+    }
+}
+
+void MainWindow::read_corrected_pages(){
+    QString fstring = mProject.GetDir().absolutePath() + "/logs/corrected_page.txt";
+    QFile f(fstring);
+    if(!f.open(QIODevice::ReadOnly))
+        return;
+
+    QTextStream in(&f);
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+        if(!line.contains(".html"))continue;
+
+        correct[line] = 1;
+    }
+    f.close();
+
+
+}
+
+void MainWindow::write_verified_pages(){
+    QString directory = mProject.GetDir().absolutePath();
+
+    //Logs folder
+    QString folder = directory + "/logs";
+
+    if(!QDir(folder).exists()){
+        QDir(gDirTwoLevelUp).mkdir("logs");
+    }
+
+    QString file = folder + "/verified_page.txt";
+
+    QFile f(file);
+    f.remove();
+
+    if(f.open(QIODevice::WriteOnly)){
+        QTextStream outputStream(&f);
+        QString string;
+        QMapIterator<QString , int>i(verify);
+        while(i.hasNext()){
+            i.next();
+            string = i.key();
+            if(i.value() != 0){
+                outputStream << string << endl;
+            }
+
+        }
+        f.close();
+    }
+}
+
+void MainWindow::read_verified_pages(){
+    QString fstring = mProject.GetDir().absolutePath() + "/logs/verified_page.txt";
+    QFile f(fstring);
+    if(!f.open(QIODevice::ReadOnly))
+        return;
+
+    QTextStream in(&f);
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+        if(!line.contains(".html"))continue;
+        verify[line] = 1;
+    }
+    f.close();
+}
+
+void MainWindow::read_review_pages(){
+    QString fstring = mProject.GetDir().absolutePath() + "/logs/marked_for_review_page.txt";
+    QFile f(fstring);
+    if(!f.open(QIODevice::ReadOnly))
+        return;
+
+    QTextStream in(&f);
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+        if(!line.contains(".html"))continue;
+        markForReview[line] = 1;
+
+    }
+    f.close();
+}
+
+void MainWindow::write_review_pages(){
+    QString directory = mProject.GetDir().absolutePath();
+
+    //Logs folder
+    QString folder = directory + "/logs";
+
+    if(!QDir(folder).exists()){
+        QDir(gDirTwoLevelUp).mkdir("logs");
+    }
+
+    QString file = folder + "/marked_for_review_page.txt";
+
+    QFile f(file);
+
+ /*  if (mRole == "Corrector") {
+        if(f.open(QIODevice::WriteOnly)){
+            QTextStream outputStream(&f);
+            QString string;
+            QMapIterator<QString , int>i(markForReview);
+            while(i.hasNext()){
+                i.next();
+                string = i.key();
+
+                if(i.value() != 0){
+                    outputStream << string << endl;
+                }
+            }
+            f.close();
+        }
+    }*/
+    if(mRole == "Verifier"){
+        if(f.open(QIODevice::ReadWrite)){
+            QTextStream in(&f);
+            QString line = "";
+            while(!in.atEnd()) {
+                line = in.readAll();
+            }
+
+            QTextStream outputStream(&f);
+            QString string;
+            QMapIterator<QString , int>i(markForReview);
+            outputStream << line << endl; qDebug() << line;
+            while(i.hasNext()){
+                i.next();
+                string = i.key();
+                if(mRole == "Verifier")correct[string] = 0;
+                if(i.value() != 0){
+                    outputStream << string << endl;
+                }
+            }
+            f.close();
+        }
+    }
+}
+
+void MainWindow::read_recorrected_pages(){
+    QString fstring = mProject.GetDir().absolutePath() + "/logs/recorrected_page.txt";
+    QFile f(fstring);
+    if(!f.open(QIODevice::ReadOnly))
+        return;
+
+    QTextStream in(&f);
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+        if(!line.contains(".html"))continue;
+        recorrect[line] = 1;
+    }
+    f.close();
+}
+
+void MainWindow::write_recorrected_pages(){
+    QString directory = mProject.GetDir().absolutePath();
+
+    //Logs folder
+    QString folder = directory + "/logs";
+
+    if(!QDir(folder).exists()){
+        QDir(gDirTwoLevelUp).mkdir("logs");
+    }
+
+    QString file = folder + "/recorrected_page.txt";
+
+    QFile f(file);
+    f.remove();
+
+    if(f.open(QIODevice::WriteOnly)){
+        QTextStream outputStream(&f);
+        QString string;
+        QMapIterator<QString , int>i(recorrect);
+        while(i.hasNext()){
+            i.next();
+            string = i.key();
+
+            if(i.value() != 0){
+                outputStream << string << endl;
+            }
+        }
+        f.close();
+    }
+}
+
+void MainWindow::on_actionClear_Menu_triggered()
+{
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("RecentProjects");
+    if(mProject.isProjectOpen()) settings.setValue("Project", RecentProjFile);
+    else settings.setValue("Project", "");
+    settings.setValue("Project2","");
+    settings.setValue("Project3","");
+    ui->menuRecent_Project->clear();
+    isRecentProjclick = false;
+    settings.endGroup();
+}
+
+void MainWindow::on_actionJustified_triggered()
+{
+    on_actionJusitfiedAlign_triggered();
+}
+
+void MainWindow::pageStatusHandler(){
+    if(mRole == "Corrector"){
+        ui->corrected->setEnabled(true);
+        if(verify[gCurrentPageName] != 0){
+            ui->status->setText("Verified");
+            ui->corrected->setChecked(true);
+            ui->corrected->setEnabled(false);
+            if(curr_browser) curr_browser->setReadOnly(true);
+        }
+        else {
+            if(recorrect[gCurrentPageName] != 0){
+                ui->status->setText("Corrected");
+                ui->corrected->setChecked(true);
+            }
+            else if(markForReview[gCurrentPageName] != 0){
+                ui->status->setText("Marked For Review");
+                ui->corrected->setChecked(false);
+            }
+            else if(correct[gCurrentPageName] != 0){
+                ui->status->setText("Corrected");
+                ui->corrected->setChecked(true);
+            }
+            else{
+                ui->status->setText("Status - None");
+                ui->corrected->setChecked(false);
+            }
+            if(curr_browser) curr_browser->setReadOnly(false);
+        }
+    }
+    if(mRole == "Verifier"){
+        if(correct[gCurrentPageName] != 0){
+            ui->verified->setEnabled(true);
+            ui->mark_review->setEnabled(true);
+
+            if(verify[gCurrentPageName] != 0){
+                ui->status->setText("Verified");
+                ui->verified->setChecked(true);
+                ui->mark_review->setChecked(false);
+                ui->mark_review->setEnabled(false);
+            }
+            else if(recorrect[gCurrentPageName] != 0){
+                ui->status->setText("Corrected");
+                ui->mark_review->setChecked(true);
+                ui->verified->setChecked(false);
+                ui->verified->setEnabled(false);
+            }
+            else if(markForReview[gCurrentPageName] != 0){
+                ui->status->setText("Marked For Review");
+                ui->mark_review->setChecked(true);
+                ui->verified->setChecked(false);
+                ui->mark_review->setEnabled(true);
+                ui->verified->setEnabled(false);
+            }
+            else if(correct[gCurrentPageName] != 0){
+                ui->status->setText("Corrected");
+                ui->mark_review->setChecked(false);
+                ui->verified->setChecked(false);
+            }
+        }
+        else if(markForReview[gCurrentPageName] != 0){
+            ui->status->setText("Marked For Review");
+            ui->mark_review->setChecked(true);
+            ui->mark_review->setEnabled(true);
+            ui->verified->setEnabled(false);
+            ui->verified->setChecked(false);
+        }
+        else{
+            ui->status->setText("Status - None");
+            ui->mark_review->setEnabled(false);
+            ui->verified->setEnabled(false);
+            ui->mark_review->setChecked(false);
+            ui->verified->setChecked(false);
+        }
+
+    }
+
+}

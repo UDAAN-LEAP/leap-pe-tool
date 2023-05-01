@@ -88,11 +88,13 @@ int main(int argc, char *argv[])
 
     //!Setting Icons and stylesheet
     QApplication a(argc, argv);
+#ifdef __unix__
     QIcon windowIcon(":/Images/Resources/logonew.png");
     a.setWindowIcon(windowIcon);             //Sets icon of the GUI window.
+#endif
     a.setStyleSheet("QMessageBox{font: 15px \"Work Sans\"; background:rgb(32, 33, 72);} QMessageBox QLabel{color:white;} QMessageBox QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);} QMessageBox QPushButton:checked{background-color: rgb(136, 138, 133);} QMessageBox QPushButton:pressed {background-color: rgb(136, 138, 133);}");
     a.setApplicationName( QStringLiteral( "Udaan Editing Tool" ) );
-    a.setApplicationVersion("v3.5.9");
+    a.setApplicationVersion("v4.0");
     a.setAttribute(Qt::AA_EnableHighDpiScaling);
 
     //! Writing Log Files

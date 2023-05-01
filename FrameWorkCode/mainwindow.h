@@ -41,7 +41,6 @@
 #include "loadingspinner.h"
 #include "progressbardialog.h"
 #include <markRegion.h>
-#include <QOAuth2AuthorizationCodeFlow>
 #include <QCompleter>
 #include <QDirModel>
 #include <QStringListModel>
@@ -51,6 +50,11 @@
 #include "customtextbrowser.h"
 #include "handlebbox.h"
 #include <QMediaRecorder>
+#include <QCalendarWidget>
+
+#include <QProgressBar>
+
+
 
 using namespace std;
 class AudioLevel;
@@ -186,8 +190,6 @@ private slots:
 
     void on_actionFetch_2_triggered();
 
-    void on_actionVerifier_Turn_In_triggered();
-
     void directoryChanged(const QString &path);
 
     void on_actionAccuracyLog_triggered();
@@ -227,8 +229,6 @@ private slots:
     void on_actionUndo_triggered();
 
     void on_actionRedo_triggered();
-
-    void on_actionInsert_Table_2_triggered();
 
     void closeEvent (QCloseEvent *event);
 
@@ -378,11 +378,7 @@ private slots:
 
     void insertImageAction();
 
-    void on_actionLogin_triggered();
-
-    void on_actionLogout_triggered();
-
-    void on_actionClone_Repository_triggered();
+    void on_actionClone_Repository();
 
     void on_actionClose_project_triggered();
 
@@ -424,6 +420,110 @@ private slots:
 
     void on_actionFill_Table_triggered();
 
+    void on_backward_Button_clicked();
+
+    void on_forward_Button_clicked();
+
+    void on_actionImport_and_Open_triggered();
+
+    void on_actionImport_triggered();
+
+    void on_actionEnter_manauly_triggered();
+
+
+
+    void on_actionImport_2_triggered();
+
+
+    void on_pushButton_5_clicked();
+
+    void on_actionTable_2_triggered();
+
+    void on_actionCut_triggered();
+
+    void on_actionCopy_triggered();
+
+    void on_actionPaste_triggered();
+
+    void on_actionSelect_All_triggered();
+
+    void on_actionDelete_triggered();
+
+    void on_actionDate_triggered();
+
+    void on_actionLink_triggered();
+
+    void on_actionUnderline_2_triggered();
+
+    void on_actionIncrease_size_triggered();
+
+    void on_actionDecrease_Size_triggered();
+
+    void on_actionlower_case_triggered();
+
+    void on_actionUPPER_CASE_triggered();
+
+    void on_actionTitle_Case_triggered();
+
+    void on_actionDelete_Table_triggered();
+
+    void on_actionClear_Formatting_triggered();
+
+    void on_actionImage_triggered();
+
+    void on_actionAbout_Udaan_PE_triggered();
+
+    void on_actionIncrease_Indent_triggered(int left = 0, int right = 0);
+
+    void on_actionDecrease_Indent_triggered();
+
+    void on_actionIndentation_Options_triggered();
+    void on_actionSpecial_Characters_triggered();
+    void on_actionResize_Image_2_triggered();
+
+
+    void on_actionWord_Count_triggered();
+
+    void on_actionVoice_Typing_triggered();
+
+    void getDate(QDate date, QCalendarWidget *calendar);
+
+
+
+    void on_actionTable_Border_Color_triggered();
+
+    void on_actionCell_Padding_triggered();
+
+    void processProgress(qint64 bytesReceived, qint64 bytesTotal, QProgressBar *pb, QLabel *labelProgress);
+
+    void on_pushButton_6_clicked();
+
+
+    void on_corrected_clicked();
+
+    void on_verified_clicked();
+
+    void write_corrected_pages();
+
+    void write_verified_pages();
+
+    void read_corrected_pages();
+
+    void read_verified_pages();
+
+    void on_mark_review_clicked();
+
+    void read_review_pages();
+
+    void write_review_pages();
+    void read_recorrected_pages();
+    void write_recorrected_pages();
+    void pageStatusHandler();
+
+    void on_actionClear_Menu_triggered();
+
+    void on_actionJustified_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
@@ -437,8 +537,13 @@ public slots:
 
 	void blockCountChanged(int);
 
-    void authenticate();
     void login();
+
+    void createTable();
+
+    void e_d_features(bool value);
+
+    void update_tool(QString latestVersion);
 
 private:
     bool mExitStatus = false;
@@ -486,13 +591,10 @@ private:
 	QVector<QPair<QString,QString> > bboxes;
 	int blockCount = -1;
     GlobalReplaceDialog *currentGlobalReplaceDialog = nullptr;
-    QOAuth2AuthorizationCodeFlow * google;
-    void googleAuth();
     QSet<QString> dict_set1; //! Keep it available globally so that we need not to parse dictionary file at the time of saving logs.
     bool check();
     bool check_access();
     void cloud_save();
-    bool verifier_save();
     int saved = 0;
     void autoSave();
     void messageTimer();
@@ -501,6 +603,25 @@ private:
     QAudioProbe *m_probe = nullptr;
     QList<AudioLevel*> m_audioLevels;
     void speechToTextCall();
+    bool import_flag = false;
+    int flag_tab = 0;
+
+    QVector <QString> changedWords;
+    QByteArray m_data;
+    std::string m_user, m_pass;
+
+
+
+
+    //Storing the status of the pages :-> Corrected || Verified
+    QMap<QString,int>correct;
+    QMap<QString,int>verify;
+    QMap<QString,int>recorrect;
+    QString currentFile = "";
+    QMap<QString,int>markForReview;
+    QString m_update_path = "";
+
+
 };
 
 #endif // MAINWINDOW_H

@@ -46,7 +46,7 @@ Qt::ItemFlags TreeModel::flags(const QModelIndex & pIndex) const
 	if (!pIndex.isValid()) {
 		return Qt::NoItemFlags;
 	}
-	return QAbstractItemModel::flags(pIndex);
+    return  QAbstractItemModel::flags(pIndex);
 }
 
 /*!
@@ -90,6 +90,7 @@ QModelIndex TreeModel::index(int pRow, int pColumn, const QModelIndex & pParent)
 
     //!Creates a new index on the given row if it doesn't exists
 	TreeItem * childItem = parentItem->child(pRow);
+
 	if (childItem) {
 		return createIndex(pRow, pColumn,childItem);
 	}

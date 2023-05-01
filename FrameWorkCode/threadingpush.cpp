@@ -11,6 +11,7 @@
 #include <string>
 #include <QJsonObject>
 #include <QSettings>
+
 std::string user_,pass_;
 QString gDir;
 
@@ -56,14 +57,14 @@ int credentials_cb_func(git_cred ** out, const char *url, const char *username_f
 
 /*!
  * \fn threadingPush::ControlPush
- * \brief 
+ * \brief
  * This function helps in pushing the changes to the cloud in a thread.
- * The branch Name is Store as an QByte Array 
+ * The branch Name is stored as a QByte Array
  * This function first looks for the repo where changes are to be pushed.
- * Then fetch options are initialized 
- * Then are commit is successful, The changes are pushed.
+ * Then fetch options are initialized
+ * Then the changes are pushed.
  * This function is being called in mainwindow.cpp file where with the help of threads this function is called so that in
- * large sets the changes are successfully pushed. 
+ * large sets the changes are successfully pushed.
  */
 void threadingPush::ControlPush()
 {
@@ -106,8 +107,8 @@ void threadingPush::ControlPush()
 
     // Store remote info from repo
     error = git_remote_lookup(&remote, repo, "origin");
-    if(error){
-        std::cout<<0<<endl;
+    if(error<0){
+        std::cout<<error<<endl;
         //goto cleanup;
     }
 
@@ -118,8 +119,8 @@ void threadingPush::ControlPush()
     git_fetch_init_options(&fetch_opts, GIT_FETCH_OPTIONS_VERSION);
     fetch_opts.callbacks.credentials = credentials_cb_func;
     error = git_remote_fetch( remote, NULL, &fetch_opts, NULL );
-    if(error){
-        std::cout<<1<<endl;
+    if(error<0){
+        std::cout<<error<<endl;
         //goto cleanup;
     }
 
@@ -135,8 +136,8 @@ void threadingPush::ControlPush()
         error = (git_annotated_commit_from_ref(heads, repo, theirs_ref) != GIT_OK)
                 || (git_merge(repo, (const git_annotated_commit **)heads, 1, &merge_opts, &checkout_opts) != GIT_OK);
 
-        if(error){
-            std::cout<<2<<endl;
+        if(error<0){
+            std::cout<<error<<endl;
             //goto cleanup;
         }
 
@@ -148,7 +149,7 @@ void threadingPush::ControlPush()
                 || (git_index_write_tree(&tree_oid, index))
                 || (git_tree_lookup(&tree, repo, &tree_oid));
 
-        if(error){
+        if(error<0){
             std::cout<<3<<endl;
             //goto cleanup;
         }
@@ -160,7 +161,7 @@ void threadingPush::ControlPush()
                 || (git_commit_create(&id, repo, "HEAD", signature, signature, NULL, "Merge commit", tree, 0, (const git_commit **)parents))
                 || (git_repository_state_cleanup(repo));
 
-        if(error){
+        if(error<0){
             std::cout<<4<<endl;
             //goto cleanup;
         }
@@ -171,5 +172,19 @@ void threadingPush::ControlPush()
     error = git_push_init_options(&push_opts, GIT_PUSH_OPTIONS_VERSION);
     push_opts.callbacks.credentials = credentials_cb_func;
     error = git_remote_push(remote, &refspecs , &push_opts);
+    if(error<0){
+        qDebug()<<error;
+    }
     emit finishedPush();
 }
+
+
+//
+// Function to fetch changes from GitHub and merge with local changes
+bool threadingPush::fetch_n_merge() {
+    return false;//yet to be moved here..currently in project.cpp
+}
+
+
+
+

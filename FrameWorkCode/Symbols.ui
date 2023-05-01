@@ -25,7 +25,7 @@ background-color: rgb(32, 33, 72);</string>
 } QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
      </property>
      <property name="text">
-      <string>Copy</string>
+      <string>Insert Symbol</string>
      </property>
     </widget>
    </item>

@@ -31,7 +31,7 @@ public:
     bool push(QString branchName);
 	bool add_config();
 	bool add_git_config(); // New function which does not looks up the git configurations (regardless of any level)
-	int fetch();
+    int fetch(QString);
     bool enable_push(bool increment);
 	void AddTemp(Filter * f, QFile &pFile,QString prefix);
     int findNumberOfFilesInDirectory(std::string);
@@ -72,6 +72,7 @@ public:
 	void setProjectOpen(bool open) {
 		m_isOpen = open;
 	}
+    bool fetch_n_merge(QString gDirTwoLevelUp, QString mRole);
 private:
 	bool m_isOpen = false;
 	QVector<QFile*> mFiles;

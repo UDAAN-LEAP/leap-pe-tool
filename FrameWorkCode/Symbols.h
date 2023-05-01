@@ -1,6 +1,7 @@
 #ifndef SymbolsView_H
 #define SymbolsView_H
 
+#include "customtextbrowser.h"
 #include <QDialog>
 #include <QTextEdit>
 
@@ -14,7 +15,7 @@ class SymbolsView : public QDialog
 
 public:
     ~SymbolsView();
-    static SymbolsView* openSymbolTable(QWidget *);
+    static SymbolsView* openSymbolTable(QWidget *, CustomTextBrowser *);
 
 public slots:
     void on_copyButton_clicked();
@@ -27,7 +28,8 @@ private:
     Ui::SymbolsView *ui;
     QTextEdit *currentTab;
     static SymbolsView *symbolsView;
-    explicit SymbolsView(QWidget *parent = 0);
+    explicit SymbolsView(QWidget *parent = 0, CustomTextBrowser *curr_brow=0);
+    CustomTextBrowser *cust_brow;
 
 };
 

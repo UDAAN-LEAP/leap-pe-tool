@@ -51,6 +51,41 @@
         <file>Resources/logonew.png</file>
         <file>Resources/Old Icons/rotate.png</file>
         <file>Resources/voice.png</file>
+        <file>Resources/backfinal.png</file>
+        <file>Resources/forfinal.png</file>
+        <file>Resources/user_login.png</file>
+        <file>Resources/windows-modified.png</file>
+        <file>Resources/voice_typing-modified.png</file>
+        <file>Resources/user-guide-modified.png</file>
+        <file>Resources/update-modified.png</file>
+        <file>Resources/tutorial-modified.png</file>
+        <file>Resources/table-modified.png</file>
+        <file>Resources/tab-modified.png</file>
+        <file>Resources/sync_from_cloud-modified.png</file>
+        <file>Resources/select_all-modified.png</file>
+        <file>Resources/save_to_cloud-modified.png</file>
+        <file>Resources/resize-modified.png</file>
+        <file>Resources/numbered_list-modified.png</file>
+        <file>Resources/linux-modified.png</file>
+        <file>Resources/link-modified.png</file>
+        <file>Resources/keyboard_shortcuts-modified.png</file>
+        <file>Resources/increase_size-modified.png</file>
+        <file>Resources/import-modified.png</file>
+        <file>Resources/image-modified.png</file>
+        <file>Resources/exit-modified.png</file>
+        <file>Resources/equation-modified.png</file>
+        <file>Resources/download-modified.png</file>
+        <file>Resources/delete-modified.png</file>
+        <file>Resources/decrease_size-modified.png</file>
+        <file>Resources/date-modified.png</file>
+        <file>Resources/close_project-modified.png</file>
+        <file>Resources/bulleted_list-modified.png</file>
+        <file>Resources/about-modified.png</file>
+        <file>Resources/outdent-modified.png</file>
+        <file>Resources/indent-modified.png</file>
+        <file>Resources/paste(1)-modified.png</file>
+        <file>Resources/copy-modified.png</file>
+        <file>Resources/cut-modified.png</file>
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>

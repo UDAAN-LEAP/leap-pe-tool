@@ -10,6 +10,7 @@
  *
  */
 #include "Symbols.h"
+#include "qclipboard.h"
 #include "ui_Symbols.h"
 
 SymbolsView *SymbolsView::symbolsView = 0;
@@ -21,11 +22,12 @@ SymbolsView *SymbolsView::symbolsView = 0;
  * \param ui(new Ui::SymbolsView)
  * \brief sets the text for above 3 tabs and sets current tab as Diacritics
  */
-SymbolsView::SymbolsView(QWidget *parent) : QDialog(parent, Qt::WindowCloseButtonHint), ui(new Ui::SymbolsView)
+SymbolsView::SymbolsView(QWidget *parent, CustomTextBrowser *curr_brow) : QDialog(parent, Qt::WindowCloseButtonHint), ui(new Ui::SymbolsView)
 {
     ui->setupUi(this);
+    this->cust_brow = curr_brow;
     ui->MathematicalSymbols->setText(
-        R"(𝑥 𝑦 𝑧 x̄ ȳ z̄
+                R"(𝑥 𝑦 𝑧 x̄ ȳ z̄
 ∀ ∁ ∂ ∃ ∄ ∅ ∆ ∇ ∈ ∉ ∊ ∋ ∌ ∍ ∎ ∏
 ∐ ∑ − ± ∓ ∔ ∕ ∖ ∗ ∘ ∙ √ ∛ ∜ ∝ ∞ ∟ ∠
 ∡ ∢ ∣ ∤ ∥ ∦ ∧ ∨ ∩ ∪ ∫ ∬ ∭ ∮ ∯ ∰
@@ -58,7 +60,7 @@ SymbolsView::SymbolsView(QWidget *parent) : QDialog(parent, Qt::WindowCloseButto
 A᳒  B᳒  C᳒  D᳒  E᳒  F᳒  G᳒  H᳒  I᳒  J᳒  K᳒  L᳒  M᳒  N᳒  O᳒  P᳒  Q᳒  R᳒  S᳒  T᳒  U᳒  V᳒  W᳒  X᳒  Y᳒  Z᳒
 A᳙  B᳙  C᳙  D᳙  E᳙  F᳙  G᳙  H᳙  I᳙  J᳙  K᳙  L᳙  M᳙  N᳙  O᳙  P᳙  Q᳙  R᳙  S᳙  T᳙  U᳙  V᳙  W᳙  X᳙  Y᳙  Z᳙
 •  ⊙  ◉  ○  ◌  ●  ⦿  ◆  ◇  ★  □  ✓  ✦  ➢  ➣  ➤  ▶  ▷  ⬛  ◼  ◾  ♦  ⚫ .   ~   `   !   @   #   $   %
-^   &   *   (   )   -   =   +   _   {   [   ]   }   \   |   /   :   ;   '   "   <   ,   >   .   ?)");
+^   &   *   (   )   -   =   +   _   {   [   ]   }   \   |   /   :   ;   '   "   <   ,   >   .   ?   ₹)");
     setWindowTitle("Special Symbols");
     ui->Diacritics->setText(
                 R"(A
@@ -184,7 +186,10 @@ SymbolsView::~SymbolsView()
  */
 void SymbolsView::on_copyButton_clicked()
 {
-      currentTab->copy();
+    QClipboard *clipboard = QApplication::clipboard();
+    currentTab->copy();
+    QString copiedText = clipboard->text();
+    cust_brow->textCursor().insertText(copiedText);
 }
 
 /*!
@@ -192,13 +197,14 @@ void SymbolsView::on_copyButton_clicked()
  * \brief Opens the symbol table whenever 𝛺 button is clicked on the tool menu
  * \param parent
  */
-SymbolsView* SymbolsView::openSymbolTable(QWidget *parent)
+SymbolsView* SymbolsView::openSymbolTable(QWidget *parent, CustomTextBrowser *curr_brow)
 {
     if (symbolsView)
     {
         return symbolsView;
     }
-
-    symbolsView = new SymbolsView(parent);
+    symbolsView = new SymbolsView(parent, curr_brow);
+    //<<Changes
+    symbolsView->currentTab = symbolsView->ui->SpecialCharacters;
     return symbolsView;
 }

@@ -133,10 +133,14 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
             }
 //            qDebug()<<"Going to replace in ::"<<pageName;
             QString sanstr(grmIterator.value());
+            //if condition will avoid replacing images globally.
+            if(sanstr.isEmpty() || sanstr.length() == 1)
+                continue;
             sanstr.replace("\(","\\(");sanstr.replace("\)","\\)");
             sanstr = sanstr.simplified();
             QString replacementString = grmIterator.key().first; // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
             QStringList org_sen = sanstr.split(" ");
+
 
             std::string rep = replacementString.toStdString();
             QString::fromStdString(rep).toUtf8();
@@ -207,6 +211,9 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
         for (grmIterator = globalReplacementMap2.begin(); grmIterator != globalReplacementMap2.end(); ++grmIterator)
         {
             QString sanstr(grmIterator.key());
+            //if condition will avoid replacing images globally.
+            if(sanstr.isEmpty() || sanstr.length() == 1)
+                continue;
             sanstr.replace("\(","\\(");sanstr.replace("\)","\\)");
             QRegularExpression re(sanstr);
             QString replacementString = grmIterator.value(); // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex

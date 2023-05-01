@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>248</width>
-    <height>88</height>
+    <width>293</width>
+    <height>158</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,13 +46,19 @@
    <property name="geometry">
     <rect>
      <x>120</x>
-     <y>40</y>
-     <width>111</width>
-     <height>31</height>
+     <y>50</y>
+     <width>151</width>
+     <height>91</height>
     </rect>
    </property>
    <property name="text">
     <string>Loading...</string>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>

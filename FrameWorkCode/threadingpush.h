@@ -18,6 +18,7 @@ signals:
     void finishedPush();
 public slots:
     void ControlPush();
+    bool fetch_n_merge();
 
 };
 

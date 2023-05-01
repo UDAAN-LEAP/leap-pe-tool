@@ -15,6 +15,8 @@
 #include <QDialog>
 #include <QInputDialog>
 #include "lg2_common.h"
+#include "qnetworkaccessmanager.h"
+#include "qnetworkreply.h"
 #include <QObject>
 #include <git2.h>
 #include <QProcess>
@@ -447,9 +449,9 @@ TreeModel * Project::getModel()
  * \return git_repository_init_options
  */
 git_repository_init_options make_opts(bool bare, const char * templ,
-    uint32_t shared,
-    const char * gitdir,
-    const char * dir)
+                                      uint32_t shared,
+                                      const char * gitdir,
+                                      const char * dir)
 {
     git_repository_init_options opts = GIT_REPOSITORY_INIT_OPTIONS_INIT;
 
@@ -566,7 +568,7 @@ static bool is_cred_cached = false;
  * \return
  */
 int credentials_cb(git_cred ** out, const char *url, const char *username_from_url,
-    unsigned int allowed_types, void *payload)
+                   unsigned int allowed_types, void *payload)
 {
     int error;
 
@@ -578,23 +580,39 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
     if (!is_cred_cached)
     {
     }
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/email/ -o gitToken.json");
+    QNetworkAccessManager* manager = new QNetworkAccessManager();
+    QUrl url_("https://udaaniitb.aicte-india.org/udaan/email/");
 
-    QFile jsonFile("gitToken.json");
-    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    QByteArray data = jsonFile.readAll();
+    QByteArray postData;
+    postData.append("username=username&password=password");
 
-    QJsonParseError errorPtr;
-    QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-    QJsonObject mainObj = document.object();
-    jsonFile.close();
-    QString git_token = mainObj.value("github_token").toString();
-    QString git_username = mainObj.value("github_username").toString();
-    QFile::remove("gitToken.json");
-    user = git_username.toStdString();
-    pass = git_token.toStdString();
+    QNetworkRequest request(url_);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    // Disable SSL certificate verification
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    QNetworkReply* reply = manager->post(request, postData);
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, [=, &loop]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            QJsonParseError errorPtr;
+            QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+            QJsonObject mainObj = document.object();
+            QString git_token = mainObj.value("github_token").toString();
+            QString git_username = mainObj.value("github_username").toString();
+            // use git_token and git_username here
+            user = git_username.toStdString();
+            pass = git_token.toStdString();
+            loop.quit();
+        } else {
+            qDebug() << "Error:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+    loop.exec();
     return git_cred_userpass_plaintext_new(out, user.c_str(), pass.c_str());
 }
 
@@ -765,7 +783,7 @@ bool Project::push(QString gDirTwoLevelUp) {
     if (!error)
     {
         error = (git_annotated_commit_from_ref(heads, repo, theirs_ref) != GIT_OK)
-             || (git_merge(repo, (const git_annotated_commit **)heads, 1, &merge_opts, &checkout_opts) != GIT_OK);
+                || (git_merge(repo, (const git_annotated_commit **)heads, 1, &merge_opts, &checkout_opts) != GIT_OK);
 
         if(error){
             std::cout<<2<<endl;
@@ -775,10 +793,10 @@ bool Project::push(QString gDirTwoLevelUp) {
         /* Get the needed ref, index, sign and tree
          */
         error = (git_repository_head(&head_ref, repo))
-             || (git_repository_index(&index, repo))
-             || (git_signature_now(&signature, mName.c_str(), mEmail.c_str()))
-             || (git_index_write_tree(&tree_oid, index))
-             || (git_tree_lookup(&tree, repo, &tree_oid));
+                || (git_repository_index(&index, repo))
+                || (git_signature_now(&signature, mName.c_str(), mEmail.c_str()))
+                || (git_index_write_tree(&tree_oid, index))
+                || (git_tree_lookup(&tree, repo, &tree_oid));
 
         if(error){
             std::cout<<3<<endl;
@@ -793,9 +811,9 @@ bool Project::push(QString gDirTwoLevelUp) {
         /* Commit the merge and cleanup repo state
          */
         error = (git_reference_peel((git_object **)&parents[0], head_ref, GIT_OBJ_COMMIT))
-             || (git_commit_lookup(&parents[1], repo, git_annotated_commit_id(heads[0])))
-             || (git_commit_create(&id, repo, "HEAD", signature, signature, NULL, "Merge commit - Udaan Translation Tool", tree, 2, (const git_commit **)parents))
-             || (git_repository_state_cleanup(repo));
+                || (git_commit_lookup(&parents[1], repo, git_annotated_commit_id(heads[0])))
+                || (git_commit_create(&id, repo, "HEAD", signature, signature, NULL, "Merge commit - Udaan Translation Tool", tree, 2, (const git_commit **)parents))
+                || (git_repository_state_cleanup(repo));
 
         if(error){
             std::cout<<4<<endl;
@@ -828,8 +846,16 @@ bool Project::push(QString gDirTwoLevelUp) {
     if(parents)
         free(parents);
     */
-    if (error)
+    if(error<0){
+        // An error occurred, print the error message
+        const git_error* err = giterr_last();
+        if (err) {
+            std::cout << "Error: " << err->message << std::endl;
+        } else {
+            std::cout << "Unknown error occurred" << std::endl;
+        }
         return false;
+    }
 
     /* Finding the last commit on current repo and saves the entry in commit history table
      * Email | Commit_no
@@ -837,17 +863,6 @@ bool Project::push(QString gDirTwoLevelUp) {
      */
     char fullsha[42] = {0};
     git_oid_tostr(fullsha, 41, &id);
-    QString sha = QString::fromStdString(fullsha);
-    //qDebug()<<"Last commit full hash :"<<sha;
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    settings.beginGroup("login");
-    QString email = settings.value("email").toString();
-    //qDebug()<<"email"<<email;
-    settings.endGroup();
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/commits/ -d \"commit_no="+sha+"&email="+email+"\" ");;
-
     return true;//No errors
 }
 
@@ -922,11 +937,11 @@ static int transfer_progress_cb(const git_transfer_progress *stats, void *payloa
  * \details If the local repository is not up to date with the remote one, then reset the local one to the latest commit.
  * \return int
  */
-int Project::fetch()
+int Project::fetch(QString gDirTwoLevelUp)
 {
     int error = 0;
     git_remote *remote = NULL;
-//	const git_indexer_progress *stats;
+    //	const git_indexer_progress *stats;
     git_fetch_options fetch_opts = GIT_FETCH_OPTIONS_INIT;
 
     /* Figure out whether it's a named remote or a URL */
@@ -954,20 +969,20 @@ int Project::fetch()
     }
     is_cred_cached = true;
 
-//	stats = git_remote_stats(remote);
-//	char buffer[200];
-//	int ck;
+    //	stats = git_remote_stats(remote);
+    //	char buffer[200];
+    //	int ck;
 
-//	if (stats->local_objects > 0) {
-//		ck = snprintf(buffer, 200, "Received %u/%u objects in %zu bytes (used %u local objects)",
-//				 stats->indexed_objects, stats->total_objects, stats->received_bytes, stats->local_objects);
-//	} else {
-//		ck = snprintf(buffer, 200, "Received %u/%u objects in %zu bytes\n",
-//			   stats->indexed_objects, stats->total_objects, stats->received_bytes);
-//	}
-//	if (ck >= 0 && ck < 200) {
-//		qDebug() << QString::fromLocal8Bit(buffer);
-//	}
+    //	if (stats->local_objects > 0) {
+    //		ck = snprintf(buffer, 200, "Received %u/%u objects in %zu bytes (used %u local objects)",
+    //				 stats->indexed_objects, stats->total_objects, stats->received_bytes, stats->local_objects);
+    //	} else {
+    //		ck = snprintf(buffer, 200, "Received %u/%u objects in %zu bytes\n",
+    //			   stats->indexed_objects, stats->total_objects, stats->received_bytes);
+    //	}
+    //	if (ck >= 0 && ck < 200) {
+    //		qDebug() << QString::fromLocal8Bit(buffer);
+    //	}
 
     /**
      * 1. Check if the repository is already up to date (Don't perform git reset)
@@ -992,42 +1007,46 @@ int Project::fetch()
     }
     git_revwalk_free(walker);
     qDebug() << "Final count = " << count;
-
     if (count > 0) {
-        // perform git reset
-        QFile fetchHeadFile("../.git/refs/remotes/origin/HEAD");
-        if (!fetchHeadFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            qDebug() << "cannot open file: " << QFileInfo(fetchHeadFile).absoluteFilePath();
-            goto cleanup;
+        //find local branch name
+        QString branchName;
+        QString gDir = gDirTwoLevelUp+"/.git/config";
+        QFile f(gDir);
+        f.open(QIODevice::ReadOnly);
+        while(!f.atEnd()) {
+            QString line = f.readLine();
+            if(line.contains("branch")){
+                QStringList l = line.split(" ");
+                l[1] = l[1].remove("\"");
+                branchName = l[1].remove("]").simplified();
+                break;
+            }
         }
-
-        QString text = fetchHeadFile.readAll();
-        QString nameOfFileStoresCommitID = text.remove("ref: ").remove("\n");
-        fetchHeadFile.close();
-
-        nameOfFileStoresCommitID = "../.git/" + nameOfFileStoresCommitID;
-        QFile fileStoresCommitID(nameOfFileStoresCommitID);
-        if (!fileStoresCommitID.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            qDebug() << "Cannot open file: " << QFileInfo(fileStoresCommitID).absoluteFilePath();
-            goto cleanup;
-        }
-        QString commit_id = fileStoresCommitID.readAll();
-        fileStoresCommitID.close();
-
-        const char *sha = commit_id.toLocal8Bit();
-        git_oid oid;
-        error = git_oid_fromstr(&oid, sha);
+        f.close();
+        // perform git merge
+        git_reference *local_branch_ref = NULL;
+        error = git_branch_lookup(&local_branch_ref, repo, branchName.toUtf8().constData(), GIT_BRANCH_LOCAL);
         if (error < 0) {
-            goto cleanup;
-        }
-        git_object *obj;
-        error = git_object_lookup(&obj, repo, &oid, GIT_OBJECT_ANY);
-        if (error < 0) {
+            qDebug() << "Cannot find local branch";
             goto cleanup;
         }
 
-        git_reset(repo, obj, GIT_RESET_HARD, NULL);
-        git_object_free(obj);
+        git_annotated_commit *remote_commit = NULL;
+        error = git_annotated_commit_lookup(&remote_commit, repo, &oid);
+        if (error < 0) {
+            qDebug() << "Cannot find remote commit";
+            goto cleanup;
+        }
+
+        git_merge_options merge_opts = GIT_MERGE_OPTIONS_INIT;
+        error = git_merge(repo, (const git_annotated_commit **) &remote_commit, 1, &merge_opts, NULL);
+        if (error < 0) {
+            qDebug() << "Cannot merge changes from remote branch";
+            goto cleanup;
+        }
+
+        git_reference_free(local_branch_ref);
+        git_annotated_commit_free(remote_commit);
     }
 
 cleanup:
@@ -1056,9 +1075,9 @@ bool Project::commit(std::string message)
     //check_lg2(git_signature_default(&sig, repo),"Unable to create a commit signature.","Perhaps 'user.name' and 'user.email' are not set");
     int klass = lg2.check_lg2(git_signature_now(&sig, mName.c_str(), mEmail.c_str()),"Could not create signature","");
     if (klass > 0) {
-//        if(sig)
-//            git_signature_free(sig);
-		return 0;
+        //        if(sig)
+        //            git_signature_free(sig);
+        return 0;
     }
 
     klass = lg2.check_lg2(git_revparse_ext(&parent, &ref, repo, "HEAD"),"Head not found","");
@@ -1120,17 +1139,37 @@ bool Project::commit(std::string message)
     char fullsha[42] = {0};
     git_oid_tostr(fullsha, 41, &commit_id);
     QString sha = QString::fromStdString(fullsha);
-//    qDebug()<<"Last commit full hash :"<<sha;
+    //    qDebug()<<"Last commit full hash :"<<sha;
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
     //qDebug()<<"email"<<email;
     settings.endGroup();
-    QProcess process;
-    process.execute("curl -d -X -k -POST --header "
-                    "\"Content-type:application/x-www-form-urlencoded\" https://udaaniitb.aicte-india.org/udaan/commits/ -d \"commit_no="+sha+"&email="+email+"\" ");
+    QNetworkAccessManager* manager = new QNetworkAccessManager();
+    QUrl url_("https://udaaniitb.aicte-india.org/udaan/commits/");
 
+    QByteArray postData;
+    postData.append("commit_no="+sha+"&email="+email);
 
+    QNetworkRequest request(url_);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    // Disable SSL certificate verification
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    QNetworkReply* reply = manager->post(request, postData);
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, [=, &loop]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            loop.quit();
+        } else {
+            qDebug() << "Error:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+    loop.exec();
     /** Clean up so we don't leak memory. */
 
     git_tree_free(tree);
@@ -1167,8 +1206,8 @@ bool Project::add_config() {
         //add username
         bool ok = false;
         QString quser = QInputDialog::getText(nullptr, QWidget::tr("Enter name:"),
-            QWidget::tr("Username:"), QLineEdit::Normal,
-            " ", &ok);
+                                              QWidget::tr("Username:"), QLineEdit::Normal,
+                                              " ", &ok);
 
         str = quser.toStdString();
         error = git_config_set_string(sys_cfg, "user.name", (char*)str.c_str());
@@ -1189,8 +1228,8 @@ bool Project::add_config() {
         //add username
         bool ok = false;
         QString quser = QInputDialog::getText(nullptr, QWidget::tr("Enter email:"),
-            QWidget::tr("Email:"), QLineEdit::Normal,
-            " ", &ok);
+                                              QWidget::tr("Email:"), QLineEdit::Normal,
+                                              " ", &ok);
         std::string str = quser.toStdString();
         error = git_config_set_string(sys_cfg, "user.email", (char*)str.c_str());
         lg2.check_lg2(error, "Could not set user.email", "");
@@ -1212,45 +1251,45 @@ bool Project::add_config() {
 bool Project::add_git_config()
 {
     bool ret = true;
-	mName = "anujadumada8";
-	mEmail = "anujadumada08@gmail.com";
-	user = "anujadumada8";
-	email = "anujadumada08@gmail.com";
-//    QSettings appSettings("IIT-B", "OpenOCRCorrect");
-//    appSettings.beginGroup("GitConfig");
-//    QString username = appSettings.value("user", "").toString();
-//    QString email = appSettings.value("email", "").toString();
-//    if (username == "" || email == "") {
-//        // Take input from user and set the git config
-////        bool ok = false;
-//        QString quser = "anujadumada8"; //QInputDialog::getText(nullptr, QWidget::tr("Enter username:"), QWidget::tr("Username:"), QLineEdit::Normal, "", &ok);
-////        if (!ok) {
-////            ret = ok;
-////            goto exit;
-////        }
-//        QString qemail = "anujadumada08@gmail.com";//QInputDialog::getText(nullptr, QWidget::tr("Enter email:"), QWidget::tr("Email:"), QLineEdit::Normal, "", &ok);
-////        if (!ok) {
-////            ret = ok;
-////            goto exit;
-////        }
+    mName = "anujadumada8";
+    mEmail = "anujadumada08@gmail.com";
+    user = "anujadumada8";
+    email = "anujadumada08@gmail.com";
+    //    QSettings appSettings("IIT-B", "OpenOCRCorrect");
+    //    appSettings.beginGroup("GitConfig");
+    //    QString username = appSettings.value("user", "").toString();
+    //    QString email = appSettings.value("email", "").toString();
+    //    if (username == "" || email == "") {
+    //        // Take input from user and set the git config
+    ////        bool ok = false;
+    //        QString quser = "anujadumada8"; //QInputDialog::getText(nullptr, QWidget::tr("Enter username:"), QWidget::tr("Username:"), QLineEdit::Normal, "", &ok);
+    ////        if (!ok) {
+    ////            ret = ok;
+    ////            goto exit;
+    ////        }
+    //        QString qemail = "anujadumada08@gmail.com";//QInputDialog::getText(nullptr, QWidget::tr("Enter email:"), QWidget::tr("Email:"), QLineEdit::Normal, "", &ok);
+    ////        if (!ok) {
+    ////            ret = ok;
+    ////            goto exit;
+    ////        }
 
-////        if (quser.trimmed() == "" || qemail.trimmed() == "" || !qemail.contains("@")) {
-////            ret = false;
-////            goto exit;
-////        }
+    ////        if (quser.trimmed() == "" || qemail.trimmed() == "" || !qemail.contains("@")) {
+    ////            ret = false;
+    ////            goto exit;
+    ////        }
 
-//        appSettings.setValue("user", quser);
-//        appSettings.setValue("email", qemail);
+    //        appSettings.setValue("user", quser);
+    //        appSettings.setValue("email", qemail);
 
-//        mName = quser.toStdString();
-//        mEmail = qemail.toStdString();
-//    } else {
-//        mName = username.toStdString();
-//        mEmail = email.toStdString();
-//    }
+    //        mName = quser.toStdString();
+    //        mEmail = qemail.toStdString();
+    //    } else {
+    //        mName = username.toStdString();
+    //        mEmail = email.toStdString();
+    //    }
 
-//exit:
-//    appSettings.endGroup();
+    //exit:
+    //    appSettings.endGroup();
 
     return ret;
 }
@@ -1437,13 +1476,13 @@ void Project::open_git_repo()
     if (gitdir.exists())
     {
         lg2.check_lg2(git_repository_open(&repo, dir.c_str()), "Failed to Open", "");
-//        add_config();
+        //        add_config();
         add_git_config();
     }
     else
     {
         lg2.check_lg2(git_repository_init(&repo, dir.c_str(),0), "Failed to Open", "");
-//        add_config();
+        //        add_config();
         add_git_config();
         lg2_add();
         create_initial_commit(repo);
@@ -1569,6 +1608,139 @@ int Project::clone(QString url_, QString path)
     return error;
 }
 
+bool Project::fetch_n_merge(QString gDirTwoLevelUp, QString mRole) {
+    int error = 0;
+    git_remote *remote = NULL;
+    git_reference *local_branch_ref = NULL;
+    git_annotated_commit *remote_commit = NULL;
+    git_revwalk *walker = NULL;
+
+    git_fetch_options fetch_opts = GIT_FETCH_OPTIONS_INIT;
+    fetch_opts.callbacks.credentials = credentials_cb;
+
+    git_merge_options merge_opts = GIT_MERGE_OPTIONS_INIT;
+    QString branchName;
+    QString gDir = gDirTwoLevelUp+"/.git/config";
+    QFile f(gDir);QString folderPath;
+    if(mRole =="Verifier")
+        folderPath = gDirTwoLevelUp + "/CorrectorOutput/"; // specify the folder path
+    else if(mRole == "Corrector")
+        folderPath = gDirTwoLevelUp + "/VerifierOutput/"; // specify the folder path
+    QDir dir(folderPath);
+    QFileInfoList fileList = dir.entryInfoList(QDir::Files);
+
+    // Check if 'origin' remote exists, if not create an anonymous remote
+    error = git_remote_lookup(&remote, repo, "origin");
+    if (error < 0) {
+        error = git_remote_create_anonymous(&remote, repo, "origin");
+        if (error < 0) {
+            qDebug() << "Error in git_remote";
+            goto cleanup;
+        }
+    }
+
+    // Perform the fetch with the configured refspecs from the config
+    error = git_remote_fetch(remote, NULL, &fetch_opts, "pull");
+    if (error < 0) {
+        qDebug() << "Error in fetch";
+        goto cleanup;
+    }
+
+    // Check if the repository is already up to date
+    git_oid local_oid, remote_oid;
+    error = git_reference_name_to_id(&local_oid, repo, "HEAD");
+    if (error < 0) {
+        qDebug() << "Error getting local OID";
+        goto cleanup;
+    }
+    error = git_reference_name_to_id(&remote_oid, repo, "refs/remotes/origin/HEAD");
+    if (error < 0) {
+        qDebug() << "Error getting remote OID";
+        goto cleanup;
+    }
+
+    if (git_oid_equal(&local_oid, &remote_oid)) {
+        qDebug() << "Repository is already up to date";
+        git_reference_free(local_branch_ref);
+        git_annotated_commit_free(remote_commit);
+        git_remote_free(remote);
+        return true;
+    }
+
+    // update the local branch to the latest commit
+
+    f.open(QIODevice::ReadOnly);
+    while(!f.atEnd()) {
+        QString line = f.readLine();
+        if(line.contains("branch")){
+            QStringList l = line.split(" ");
+            l[1] = l[1].remove("\"");
+            branchName = l[1].remove("]").simplified();
+            break;
+        }
+    }
+    f.close();
+
+    error = git_branch_lookup(&local_branch_ref, repo, branchName.toUtf8().constData(), GIT_BRANCH_LOCAL);
+    if (error < 0) {
+        qDebug() << "Cannot find local branch";
+        goto cleanup;
+    }
+
+    error = git_annotated_commit_lookup(&remote_commit, repo, &remote_oid);
+    if (error < 0) {
+        qDebug() << "Cannot find remote commit";
+        goto cleanup;
+    }
+
+    if(error<0){
+        // An error occurred, print the error message
+        const git_error* err = giterr_last();
+        if (err) {
+            std::cout << "Error: " << err->message << std::endl;
+        } else {
+            std::cout << "Unknown error occurred" << std::endl;
+        }
+    }
+    // change permissions of files
+
+    for (const QFileInfo& fileInfo : fileList) {
+        QString filePath = fileInfo.filePath();
+        // Set the file's permissions to both read and write mode
+        QFile::setPermissions(filePath, QFile::WriteOwner | QFile::WriteGroup | QFile::WriteOther |
+                              QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
+    }
+    error = git_merge(repo, (const git_annotated_commit **)&remote_commit, 1, &merge_opts, NULL);
+    for (const QFileInfo& fileInfo : fileList) {
+        QString filePath = fileInfo.filePath();
+        // Set the file's permissions to read only
+        QFile::setPermissions(filePath, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
+    }
+    if (error < 0) {
+        qDebug() << "Cannot merge changes from remote branch";
+        // An error occurred, print the error message
+        const git_error* err = giterr_last();
+        if (err) {
+            std::cout << "Error: " << err->message << std::endl;
+        } else {
+            std::cout << "Unknown error occurred" << std::endl;
+        }
+        goto cleanup;
+    }
+
+    qDebug() << "Changes merged successfully";
+    git_reference_free(local_branch_ref);
+    git_annotated_commit_free(remote_commit);
+    git_remote_free(remote);
+    return true;
+
+cleanup:
+    git_reference_free(local_branch_ref);
+    git_annotated_commit_free(remote_commit);
+    git_remote_free(remote);
+    return false;
+}
+
 
 #ifdef _WIN32
 /*!
@@ -1584,7 +1756,7 @@ int Project::findNumberOfFilesInDirectory(std::string path)
     int file_count;
     replace(path.begin(), path.end(), '/', '\\');
 
- //   std::string command = R"(dir /b /a-s-d ")" + path + R"(" | find /c /v "")"; //  non-recursive count -> files in sub-directories will not be counted
+    //   std::string command = R"(dir /b /a-s-d ")" + path + R"(" | find /c /v "")"; //  non-recursive count -> files in sub-directories will not be counted
     std::string command = R"(dir /b /s /a-s-d ")" + path + R"(" | find /c /v "")"; // recursive count
     fp = _popen(command.c_str(), "r");
     if (!fp) {
@@ -1612,7 +1784,7 @@ int Project::findNumberOfFilesInDirectory(std::string path)
     FILE* fp;
     int file_count;
 
-//    std::string command = R"(find ")" + path + R"(" -maxdepth 1 -not -path '*/\.*' -type f | wc -l)"; //  non-recursive count -> files in sub-directories will not be counted
+    //    std::string command = R"(find ")" + path + R"(" -maxdepth 1 -not -path '*/\.*' -type f | wc -l)"; //  non-recursive count -> files in sub-directories will not be counted
     std::string command = R"(find ")" + path + R"(" -not -path '*/\.*' -type f | wc -l)"; // recursive count
 
     fp = popen(command.c_str(), "r");
