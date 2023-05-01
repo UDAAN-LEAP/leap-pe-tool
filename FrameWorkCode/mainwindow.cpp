@@ -318,7 +318,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->comboBox->addItem(QStringLiteral("Bengali"), QVariant("bn-IN"));
     ui->comboBox->addItem(QStringLiteral("Gujarati"), QVariant("gu-IN"));
     ui->comboBox->addItem(QStringLiteral("Hindi"), QVariant("hi-IN"));
-    ui->comboBox->addItem(QStringLiteral("Kannada"), QVariant("ka-IN"));
+    ui->comboBox->addItem(QStringLiteral("Kannada"), QVariant("kn-IN"));
     ui->comboBox->addItem(QStringLiteral("Malayalam"), QVariant("ml-IN"));
     ui->comboBox->addItem(QStringLiteral("Marathi"), QVariant("mr-IN"));
     ui->comboBox->addItem(QStringLiteral("Tamil"), QVariant("ta-IN"));
