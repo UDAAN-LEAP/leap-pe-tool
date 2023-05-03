@@ -3,6 +3,7 @@
 #include"Filters.h"
 #include "TreeItem.h"
 #include "TreeModel.h"
+#include "loadingspinner.h"
 #include <QDir>
 #include <pugixml.hpp>
 #include <git2.h>
@@ -38,7 +39,7 @@ public:
     int LevenshteinWithGraphemes(QList<Diff> diffs);
     int GetGraphemesCount(QString string);
     int GetPageNumber(std::string localFilename, std::string *no, size_t *loc, QString *ext);
-    static int clone(QString url_, QString path);
+    static int clone(QString url_, QString path, LoadingSpinner* spinner);
 
 	~Project() {
 		for (auto p : mFiles) {
