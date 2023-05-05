@@ -8772,8 +8772,9 @@ void MainWindow::on_actionEdit_Equation_triggered()
         int ind = img_.find("/");
         int lindex = img_.find("png");
         string str = img_.substr(ind, lindex-ind);
-        path = QString::fromStdString(str) + "txt";
+        path = ".." + QString::fromStdString(str) + "txt";
     }
+
     equationeditor *w = new equationeditor(this,gDirTwoLevelUp,curr_browser,path);
     w->show();
 }
