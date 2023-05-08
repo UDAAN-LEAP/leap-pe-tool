@@ -6876,13 +6876,12 @@ void MainWindow::on_actionas_PDF_triggered()
     pdfRangeDialog->exec();
     int startPage = 0;
     int endPage = 0;
-    if (pdfRangeDialog->isOkClicked()) {
+    if(pdfRangeDialog->isOkClicked()==false) cout<<"mai kabhi true ni hota"<<endl;
+    if (pdfRangeDialog->isOkClicked()==true) {
         startPage = pdfRangeDialog->getStartPage() - 1;
         endPage = pdfRangeDialog->getEndPage();
-    } else {
-        startPage = 0;
-        endPage = count;
-    }
+
+
     qDebug() << startPage << " : " << endPage;
 
 
@@ -7023,7 +7022,13 @@ void MainWindow::on_actionas_PDF_triggered()
         spinner->setModal(false);
         spinner->exec();
 
+
         QMessageBox::information(this, "Print Successful", "Printed PDF successfully", QMessageBox::Ok, QMessageBox::Ok);
+    }
+}
+else
+    {
+    return;
     }
 }
 

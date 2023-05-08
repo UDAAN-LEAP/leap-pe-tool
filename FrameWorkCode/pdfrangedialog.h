@@ -39,6 +39,7 @@ public:
 private slots:
 	void on_button_Cancel_clicked();
 	void on_button_Ok_clicked();
+    void on_pushButton_clicked();
 };
 
 #endif // PDFRANGEDIALOG_H

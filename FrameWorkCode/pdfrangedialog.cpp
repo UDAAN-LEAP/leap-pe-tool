@@ -72,7 +72,7 @@ int PdfRangeDialog::getEndPage() const
  */
 void PdfRangeDialog::on_button_Cancel_clicked()
 {
-    okClicked = false;
+    okClicked = true;
 
     this->close();
 }
@@ -110,3 +110,10 @@ bool PdfRangeDialog::on_checkBox_clicked()
         return true;
     return false;
 }
+
+void PdfRangeDialog::on_pushButton_clicked()
+{
+    okClicked=false;
+        this->close();
+}
+
