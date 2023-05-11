@@ -28,7 +28,7 @@ UndoGlobalReplace::UndoGlobalReplace(QMap<QString, QString> reversedGRMap, QWidg
     setWindowTitle("Undo Globally Replace Words");
     displayListForUndoOperation(reversedGRMap);
     QObject::connect(ui->listWidget, SIGNAL(itemChanged(QlistWidgetItem*)), this, SLOT(highlightChecked(QListWidgetItem*)));
-
+     connect(ui->listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(checkBoxStateChanged(QListWidgetItem*)));
 }
 
 /*!
@@ -145,5 +145,46 @@ void UndoGlobalReplace::on_pushButton_clicked()
 
         displayListForUndoOperation(new_cpair);
 
+}
+
+
+
+void UndoGlobalReplace::checkBoxStateChanged(QListWidgetItem* item)
+{
+    int itemRow;
+    itemRow = ui->listWidget->row(item);
+    QListWidgetItem* item_ = 0;
+    int count_=0;
+    for(int j = 0; j < ui ->listWidget->count(); ++j){
+        item_ = ui->listWidget->item(j);
+        if(item_->checkState() == Qt::Checked){
+            count_ ++;
+        }
+    }
+    if(count_ == ui ->listWidget->count()){
+        ui->checkBox->setCheckState(Qt::Checked);
+    }
+    else if( count_ != ui ->listWidget->count() ){
+        ui->checkBox->setCheckState(Qt::Unchecked);
+    }
+
+    return;
+
+}
+
+void UndoGlobalReplace::on_checkBox_clicked()
+{
+    QListWidgetItem* item = 0;
+    for(int i = 0; i < ui ->listWidget->count(); ++i){
+        item = ui->listWidget->item(i);
+        item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+        if(ui->checkBox->checkState() == Qt::Unchecked){
+            item->setCheckState(Qt::Unchecked);
+        }
+        else if(ui->checkBox->checkState() == Qt::Checked){
+            item->setCheckState(Qt::Checked);
+        }
+    }
+    return;
 }
 

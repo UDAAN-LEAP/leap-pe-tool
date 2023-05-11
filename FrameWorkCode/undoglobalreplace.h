@@ -17,11 +17,16 @@ public:
     ~UndoGlobalReplace();
 
 private slots:
+    void checkBoxStateChanged(QListWidgetItem*);
     void displayListForUndoOperation(QMap<QString, QString> reversedGRMap);
 
     void on_cancelButton_clicked();
 
     void on_pushButton_clicked();
+
+
+
+    void on_checkBox_clicked();
 
 public slots:
     void highlightChecked(QListWidgetItem*);

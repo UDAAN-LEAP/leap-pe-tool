@@ -5254,6 +5254,7 @@ void MainWindow::globalReplacePreviewfn(QMap <QString, QString> previewMap , QVe
         QMap<QString, QString> replaceInAllPages_Map;
         QMap<QString, QString> replaceInUneditedPages_Map;
         QMap<QString, QString>::iterator it = previewMap.begin();
+        qDebug()<<previewMap;
         for (int i = 0; i < previewMap.size(); i++)
         {
             if (allPages.at(i) == 1)
@@ -5424,6 +5425,10 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
                 //qDebug()<<oldWord<<newWord;
                 oldWord = oldWord.trimmed();
                 newSentence = newSentence.replace(oldWord,newWord,Qt::CaseSensitive);
+                QTextCursor cursor;
+                QTextCharFormat fmt;
+                fmt.setBackground(Qt::blue);
+                cursor.mergeCharFormat(fmt);
                 QString finalSentence = matched + "==>" + newSentence;
                 //              qDebug() << "Final Sentence" << finalSentence;
                 if(newSentence.length() >0 )
@@ -6876,7 +6881,7 @@ void MainWindow::on_actionas_PDF_triggered()
     pdfRangeDialog->exec();
     int startPage = 0;
     int endPage = 0;
-    if(pdfRangeDialog->isOkClicked()==false) cout<<"mai kabhi true ni hota"<<endl;
+    if(pdfRangeDialog->isOkClicked()==false) cout<<endl;
     if (pdfRangeDialog->isOkClicked()==true) {
         startPage = pdfRangeDialog->getStartPage() - 1;
         endPage = pdfRangeDialog->getEndPage();
@@ -9277,8 +9282,9 @@ void MainWindow::preprocessing(){
 void MainWindow::on_actionCopy_Format_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
-    QFont font = curr_browser->fontFamily();
+    QFont font = curr_browser->currentFont();
     auto size = curr_browser->fontPointSize();
+    QString fam = font.family();
     int pos = cursor.position();
     int ancr = cursor.anchor();
     if (pos < ancr) {
@@ -9287,6 +9293,10 @@ void MainWindow::on_actionCopy_Format_triggered()
     }
     bool isBold = cursor.charFormat().font().bold();
     bool isItalic = cursor.charFormat().font().italic();
+    bool isUnderline = cursor.charFormat().font().underline();
+    bool isStrike = cursor.charFormat().font().strikeOut();
+    int val = cursor.charFormat().font().capitalization();
+   QColor cl = curr_browser->textBackgroundColor();
     QColor color = curr_browser->textColor();
     Qt::Alignment align = curr_browser->alignment();
     auto var=0;
@@ -9300,12 +9310,17 @@ void MainWindow::on_actionCopy_Format_triggered()
         var=4;
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("format_painter");
-    settings.setValue("font",font);
+    //settings.setValue("font",font);
+    settings.setValue("fam",fam);
     settings.setValue("size",size);
     settings.setValue("isBold",isBold);
     settings.setValue("isItalic",isItalic);
     settings.setValue("color",color);
     settings.setValue("var",var);
+    settings.setValue("isUnderline",isUnderline);
+    settings.setValue("cl",cl);
+    settings.setValue("isStrike",isStrike);
+    settings.setValue("val",val);
     settings.endGroup();
 }
 
@@ -9315,17 +9330,36 @@ void MainWindow::on_actionPaste_Format_triggered()
     QTextCursor cursor = curr_browser->textCursor();
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("format_painter");
-    QString font = settings.value("font").toString();
+    QTextCharFormat fmt;
+   // QString font = settings.value("font").toString();
+    QString fam = settings.value("fam").toString();
+    qDebug()<<fam;
     auto size = settings.value("size").toInt();
+    qDebug()<<size;
     auto var = settings.value("var").toInt();
     QString color = settings.value("color").toString();
     QString isBold =  settings.value("isBold").toString();
     QString isItalic =  settings.value("isItalic").toString();
-
-    curr_browser->setFontFamily(font);
+    QString isUnderline = settings.value("isUnderline").toString();
+    QString back = settings.value("cl").toString();
+    int val = settings.value("val").toInt();
+    QString isStrike = settings.value("isStrike").toString();
+   // curr_browser->setFontFamily(fam);
     curr_browser->setFontPointSize(size);
     curr_browser->setFontWeight(isBold=="false" ? QFont::Normal : QFont::Bold);
     curr_browser->setFontItalic(isItalic == "false" ? false:true);
+    curr_browser->setFontUnderline(isUnderline =="false" ? false:true);
+    fmt.setFontFamily(fam);
+    if(val == 2)
+    fmt.setFontCapitalization(QFont::AllLowercase);
+    else if(val == 1)
+        fmt.setFontCapitalization(QFont::AllUppercase);
+    else if(val == 4)
+        fmt.setFontCapitalization(QFont::Capitalize);
+    fmt.setFontStrikeOut(isStrike == "false" ? false:true);
+    if(back != "#000000")
+    curr_browser->setTextBackgroundColor(back);
+
     if(var==1)
         curr_browser->setAlignment(Qt::AlignRight);
     else if(var==2)
@@ -9335,9 +9369,12 @@ void MainWindow::on_actionPaste_Format_triggered()
     else if(var==4)
         curr_browser->setAlignment(Qt::AlignJustify);
     curr_browser->setTextColor(color);
+//    curr_browser->setCurrentFont(font);
+//    curr_browser->setFont(font);
+    cursor.mergeCharFormat(fmt);
+    curr_browser->mergeCurrentCharFormat(fmt);
+
 }
-
-
 void MainWindow::on_actionUnderline_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
