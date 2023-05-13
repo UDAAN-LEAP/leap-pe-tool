@@ -524,6 +524,8 @@ private slots:
 
     void on_actionJustified_triggered();
 
+
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

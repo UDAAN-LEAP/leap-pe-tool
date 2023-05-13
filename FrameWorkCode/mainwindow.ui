@@ -2703,6 +2703,11 @@ background-color: #EEF0F2;
     <string>Clear Menu</string>
    </property>
   </action>
+  <action name="actionPasste">
+   <property name="text">
+    <string>Passte</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

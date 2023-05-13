@@ -1,4 +1,5 @@
 #include "customtextbrowser.h"
+#include "qclipboard.h"
 
 #include <QCompleter>
 #include <QKeyEvent>
@@ -56,6 +57,7 @@ CustomTextBrowser::CustomTextBrowser(QWidget *parent): QTextBrowser(parent)
     connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateGripBand()));
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateGripBand()));
     connect(m_gripBand, SIGNAL(resizeFinished(QRect)), this, SLOT(resizeObject(QRect)));
+
 }
 
 /*!
