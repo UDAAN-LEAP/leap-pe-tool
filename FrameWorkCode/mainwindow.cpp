@@ -9754,7 +9754,11 @@ void MainWindow::on_actionCopy_triggered()
 
 void MainWindow::on_actionPaste_triggered()
 {
+    QImage img;
+        if(!clipboardone->image().isNull())
+         img = clipboardone->image();
 
+        curr_browser->textCursor().insertImage(img);
     curr_browser->paste();
 }
 
