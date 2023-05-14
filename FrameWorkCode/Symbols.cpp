@@ -154,8 +154,20 @@ A᳙  B᳙  C᳙  D᳙  E᳙  F᳙  G᳙  H᳙  I᳙  J᳙  K᳙  L᳙  M᳙  N�
             );
     currentTab = ui->Diacritics;
     bool b = connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
+    ui->Diacritics->installEventFilter(this);
+    ui->SpecialCharacters->installEventFilter(this);
+    ui->MathematicalSymbols->installEventFilter(this);
+
+    // Install event filter for double-click detection
+    installEventFilter(this);
 }
 
+bool SymbolsView::eventFilter(QObject *obj, QEvent *event){
+    if (event->type() == QEvent::MouseButtonPress) {
+        on_copyButton_clicked();
+        return true; // Event has been handled
+    }   return QDialog::eventFilter(obj, event);
+}
 /*!
  * \fn SymbolsView::tabChanged
  * \brief Function for when tab is changed. Takes tab index (int idx) as a param
@@ -208,3 +220,4 @@ SymbolsView* SymbolsView::openSymbolTable(QWidget *parent, CustomTextBrowser *cu
     symbolsView->currentTab = symbolsView->ui->SpecialCharacters;
     return symbolsView;
 }
+

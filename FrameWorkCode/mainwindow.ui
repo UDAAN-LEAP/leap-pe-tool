@@ -2502,6 +2502,9 @@ background-color: #EEF0F2;
    <property name="text">
     <string>Paste</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+V</string>
+   </property>
   </action>
   <action name="actionSelect_All">
    <property name="icon">

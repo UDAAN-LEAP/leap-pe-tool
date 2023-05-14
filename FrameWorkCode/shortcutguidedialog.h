@@ -1,3 +1,4 @@
+
 #ifndef SHORTCUTGUIDEDIALOG_H
 #define SHORTCUTGUIDEDIALOG_H
 
@@ -53,7 +54,9 @@ private:
                     "- Press **Ctrl + E** to open equation editor to write an equation\n"
                     "#### 15. Edit Equation\n"
                     "- Press **Ctrl + Shift + E** to edit teh selected Equation\n"
-                    "#### 16. Exit\n"
+                    "#### 16. Paste\n"
+                    "- Press **Ctrl + Shift + V** to paste the text/image\n"
+                    "#### 17. Exit\n"
                     "- Press **Ctrl + Q** to exit the Udaan PE Tool\n";
 };
 

@@ -1043,12 +1043,8 @@ void MainWindow::translate_replace(QAction* action)
  */
 void MainWindow::clipboard_paste(QAction* action)
 {
-    QImage img;
-    if(!clipboardone->image().isNull())
-     img = clipboardone->image();
-    qDebug()<<img;
-    curr_browser->textCursor().insertImage(img);
     QTextCursor cursor = curr_browser->textCursor();
+    cursor.insertText(action->text());
 }
 /*!
  * \fn MainWindow::on_actionSanskrit_triggered()

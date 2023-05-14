@@ -22,7 +22,7 @@ public slots:
     void tabChanged(int idx);
 
 private slots:
-
+bool eventFilter(QObject *obj, QEvent *event);
 
 private:
     Ui::SymbolsView *ui;
