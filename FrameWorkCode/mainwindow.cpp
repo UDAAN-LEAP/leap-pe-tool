@@ -329,16 +329,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     //disable features
     e_d_features(false);
-
-
+    ui->status->setVisible(false);
     ui->corrected->setVisible(false);
     ui->verified->setVisible(false);
     ui->mark_review->setVisible(false);
-    ui->status->setVisible(false);
-
-    ui->corrected->setEnabled(false);
-    ui->verified->setEnabled(false);
-    ui->mark_review->setEnabled(false);
 
     //saves current path - useful for auto upgrade feature
     m_update_path = QDir().currentPath();
@@ -1137,22 +1131,22 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     }
 
 
-    correct.clear();
-    verify.clear();
-    markForReview.clear();
-    ui->status->setVisible(true);
+//    correct.clear();
+//    verify.clear();
+//    markForReview.clear();
+//    ui->status->setVisible(true);
 
-    if(mRole == "Corrector"){
-        ui->corrected->setVisible(true);
-        ui->corrected->setEnabled(true);
-    }
+//    if(mRole == "Corrector"){
+//        ui->corrected->setVisible(true);
+//        ui->corrected->setEnabled(true);
+//    }
 
-    if(mRole == "Verifier"){
-        ui->verified->setVisible(true);
-        ui->mark_review->setVisible(true);
-        ui->verified->setEnabled(true);
-        ui->mark_review->setEnabled(true);
-    }
+//    if(mRole == "Verifier"){
+//        ui->verified->setVisible(true);
+//        ui->mark_review->setVisible(true);
+//        ui->verified->setEnabled(true);
+//        ui->mark_review->setEnabled(true);
+//    }
 
 
     if (result != 0) {
@@ -1245,7 +1239,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         fileCountInDir["Corrector"] = totalFileCountInDir;
         totalFileCountInDir = 0;
 
-        QMessageBox::information(0, "Success", "Project opened successfully.");
+
 
         //!Adds each file present in VerifierOutput directory to treeView
         cdir.setPath(str2);
@@ -1404,16 +1398,16 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         RecentPageInfo();
     }
 
-    read_recorrected_pages();
-    read_review_pages();
-    read_corrected_pages();
-    read_verified_pages();
+//    read_recorrected_pages();
+//    read_review_pages();
+//    read_corrected_pages();
+//    read_verified_pages();
 
-    //<<<<<<Change
-    pageStatusHandler();
+//    //<<<<<<Change
+//    pageStatusHandler();
 
 
-
+    QMessageBox::information(0, "Success", "Project opened successfully.");
 
     // Enabling the buttons again after a project is opened
     e_d_features(true);
@@ -3314,10 +3308,10 @@ void MainWindow::on_actionFetch_2_triggered()
 void MainWindow::on_actionTurn_In_triggered()
 {
     //Save to cloud after writing the pages to files
-    write_verified_pages();
-    write_corrected_pages();
-    write_review_pages();
-    write_recorrected_pages();
+//    write_verified_pages();
+//    write_corrected_pages();
+//    write_review_pages();
+//    write_recorrected_pages();
 
 
     //! Checking if the files are saved or not.
@@ -6730,10 +6724,10 @@ void MainWindow::closeEvent (QCloseEvent *event)
     }
 
 
-    write_verified_pages();
-    write_corrected_pages();
-    write_review_pages();
-    write_recorrected_pages();
+//    write_verified_pages();
+//    write_corrected_pages();
+//    write_review_pages();
+//    write_recorrected_pages();
 
     correct.clear();
     verify.clear();
@@ -8488,10 +8482,10 @@ void MainWindow::on_actionClose_project_triggered()
     AddRecentProjects();
 
 
-    write_verified_pages();
-    write_corrected_pages();
-    write_review_pages();
-    write_recorrected_pages();
+//    write_verified_pages();
+//    write_corrected_pages();
+//    write_review_pages();
+//    write_recorrected_pages();
 
 
     correct.clear();
@@ -8795,10 +8789,10 @@ void MainWindow::on_actionEdit_Equation_triggered()
 void MainWindow::on_actionExit_triggered()
 {
 
-    write_verified_pages();
-    write_corrected_pages();
-    write_review_pages();
-    write_recorrected_pages();
+//    write_verified_pages();
+//    write_corrected_pages();
+//    write_review_pages();
+//    write_recorrected_pages();
 
     markForReview.clear();
     correct.clear();
@@ -9198,11 +9192,11 @@ void MainWindow::cloud_save(){
             settings.setValue("save","success" );
             settings.endGroup();
 
-            //<<<<<<Change
-            read_recorrected_pages();
-            read_review_pages();
-            read_corrected_pages();
-            read_verified_pages();
+//            //<<<<<<Change
+//            read_recorrected_pages();
+//            read_review_pages();
+//            read_corrected_pages();
+//            read_verified_pages();
 
             pageStatusHandler();
         }
