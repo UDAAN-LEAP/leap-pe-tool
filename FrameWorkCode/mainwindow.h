@@ -444,6 +444,7 @@ private slots:
     void on_actionCopy_triggered();
 
     void on_actionPaste_triggered();
+    void insertImage(QImage img);
 
     void on_actionSelect_All_triggered();
 

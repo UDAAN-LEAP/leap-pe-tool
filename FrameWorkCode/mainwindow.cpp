@@ -9740,17 +9740,31 @@ void MainWindow::on_actionCopy_triggered()
     curr_browser->copy();
 
 }
-
-
 void MainWindow::on_actionPaste_triggered()
 {
     QImage img;
-        if(!clipboardone->image().isNull())
-         img = clipboardone->image();
-
-        curr_browser->textCursor().insertImage(img);
+    if(!clipboardone->image().isNull())
+    {
+        img = clipboardone->image();
+       insertImage(img);
+    }
+    else
     curr_browser->paste();
 }
+void MainWindow::insertImage(QImage img)
+{
+    if(!QDir("../Inserted_Images").exists())
+            QDir().mkdir("../Inserted_Images");
+
+    QDir dir("../Inserted_Images");
+    QString count = QString::number(dir.count() +1);
+    QString file_name = "../Inserted_Images/"+count+".png";
+    img.save(file_name);
+    QString html = "<img src=\""+file_name+"\">";
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.insertHtml(html);
+}
+
 
 
 void MainWindow::on_actionSelect_All_triggered()
