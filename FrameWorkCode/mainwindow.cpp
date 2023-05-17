@@ -153,8 +153,9 @@ QList<QString> filesChangedUsingGlobalReplace;
 QString defaultStyle;
 QList<QTableWidgetItem *> selectedItems;
 QTableWidget *m_table;
+//QCalendarWidget *calendar;
 QDialog *tableDialog;
-
+//QDialog *dateDialog;
 
 /*!
  * \fn MainWindow::MainWindow
@@ -3876,7 +3877,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         else if(ui->tabWidget->width() > 0 && flag_tab == 1)
             flag_tab = 0;
     }
-
     if(event->type() == QEvent::MouseButtonPress)
     {
 
@@ -9784,23 +9784,23 @@ void MainWindow::on_actionDelete_triggered()
 
 void MainWindow::on_actionDate_triggered()
 {
-    QDate date;
+    QDialog *dateDialog=new QDialog();
+    dateDialog->setWindowTitle("Select Date");
+    QVBoxLayout *layout = new QVBoxLayout(dateDialog);
     QCalendarWidget *calendar = new QCalendarWidget(this);
-    calendar->setGeometry(100, 100, 400, 400);
-    calendar->show();
-
-    connect(calendar, &QCalendarWidget::selectionChanged, this, [=](){
-        getDate(date, calendar);
-    });
+    layout->addWidget(calendar);
+    QObject::connect(calendar, &QCalendarWidget::selectionChanged, this, [=](){
+            getDate(calendar);
+        });
+    dateDialog->setLayout(layout);
+    dateDialog->exec();
 }
 
-void MainWindow::getDate(QDate date, QCalendarWidget *calendar) {
-    date = calendar->selectedDate();
-    QTextCursor cursor = curr_browser->textCursor();
-    cursor.insertText(date.toString("dd/MMMM/yyyy"));
-    calendar->deleteLater();
+ void MainWindow::getDate(QCalendarWidget *calendar) {
+        QDate date = calendar->selectedDate();
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertText(date.toString("dd/MMMM/yyyy"));
 }
-
 
 void MainWindow::on_actionLink_triggered()
 {

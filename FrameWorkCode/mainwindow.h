@@ -487,7 +487,7 @@ private slots:
 
     void on_actionVoice_Typing_triggered();
 
-    void getDate(QDate date, QCalendarWidget *calendar);
+    void getDate(QCalendarWidget *calendar);
 
 
 
