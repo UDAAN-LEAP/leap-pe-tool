@@ -1264,6 +1264,7 @@ QMenu::item:selected{
       <addaction name="actionFill_Table"/>
       <addaction name="actionTable_Border_Color"/>
       <addaction name="actionCell_Padding"/>
+      <addaction name="actionColumn_Width"/>
      </widget>
      <addaction name="actionInsert_Rowabove"/>
      <addaction name="actionInsert_Rowbelow"/>
@@ -2706,9 +2707,15 @@ background-color: #EEF0F2;
     <string>Clear Menu</string>
    </property>
   </action>
+
   <action name="actionPasste">
    <property name="text">
     <string>Passte</string>
+    </property>
+   </action>
+  <action name="actionColumn_Width">
+   <property name="text">
+    <string>Column Width</string>
    </property>
   </action>
  </widget>

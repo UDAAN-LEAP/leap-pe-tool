@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "dashboard.h"
+#include"column_width.h"
 #include "indentoptions.h"
 #include "qobjectdefs.h"
 #include "qtablewidget.h"
@@ -52,6 +53,7 @@
 #include <QVector>
 #include <QThread>
 #include <vector>
+#include<QVector>
 #include <QJsonValue>
 #include <QGraphicsRectItem>
 #include <QToolTip>
@@ -715,6 +717,10 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             insertImage = new QAction("Insert image",popup_menu);
             QAction* fillTable;
             fillTable = new QAction("Shade table",popup_menu);
+
+            QAction * setColumnWidth;
+            setColumnWidth = new QAction("Column Width", popup_menu);
+
             popup_menu->insertSeparator(popup_menu->actions()[0]);
             popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
             popup_menu->addAction(gsearch);
@@ -722,11 +728,24 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             popup_menu->addAction(insertImage);
             popup_menu->addAction(fillTable);
 
+            QTextCursor cursor2 = curr_browser->textCursor();
+            QTextTable * table = cursor2.currentTable();
+            if(table != nullptr) {
+                int no_of_col = table->columns();
+                int position = cursor.position() % no_of_col;
+                if(position == 0) position = no_of_col;
+                popup_menu->addAction(setColumnWidth);
+                currentTablePosition = position-1;
+            }
+
+
             connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
             connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
             connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
             connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
             connect(fillTable, SIGNAL(triggered()), this, SLOT(on_actionFill_Table_triggered()));
+
+            connect(setColumnWidth, SIGNAL(triggered()), this ,SLOT(on_actionColumn_Width_triggered()));
             popup_menu->exec(ev->globalPos());
             popup_menu->close(); popup_menu->clear();
         }
@@ -3117,9 +3136,15 @@ void MainWindow::createTable(){
     tf.setBorderBrush(Qt::black);
     tf.setCellSpacing(0);
     tf.setCellPadding(7);
+    QVector<QTextLength> columnWidth;
+    for(int i = 0; i < columns;i++){
+        columnWidth.append(QTextLength(QTextLength::FixedLength,50));
+    }
+    tf.setColumnWidthConstraints(columnWidth);
 
     QTextCursor cursor = curr_browser->textCursor();
-    cursor.insertTable(rows,columns,tf);
+
+    QTextTable * table = cursor.insertTable(rows,columns,tf);
 
     tableDialog->close();
     selectedItems.clear();
@@ -9605,6 +9630,11 @@ void MainWindow::on_actionEnter_manauly_triggered()
         tf.setBorderBrush(Qt::black);
         tf.setCellSpacing(0);
         tf.setCellPadding(7);
+        QVector<QTextLength> columnWidth;
+        for(int i = 0; i < columns->text().toInt();i++){
+            columnWidth.append(QTextLength(QTextLength::FixedLength,50));
+        }
+        tf.setColumnWidthConstraints(columnWidth);
         //        tf.setAlignment(Qt::AlignCenter);
         QTextCursor cursor = curr_browser->textCursor();
         cursor.insertTable(rows->text().toInt(),columns->text().toInt(),tf);
@@ -10751,8 +10781,40 @@ void MainWindow::pageStatusHandler(){
             ui->mark_review->setChecked(false);
             ui->verified->setChecked(false);
         }
-
     }
+}
 
+void MainWindow::on_actionColumn_Width_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextTable * table = cursor.currentTable();
+    if(table == nullptr) return;
+    int no_of_col = table->columns();
+    int position = cursor.position() % no_of_col;
+    if(position == 0) position = no_of_col;
+    if(position > no_of_col) return;
+
+    QTextTableFormat tf = table->format();
+    QVector<QTextLength> columnWidth = tf.columnWidthConstraints();
+    QTextLength * data = columnWidth.data();
+    presentWidth = data[position-1].rawValue();
+    currentTablePosition = position-1;
+
+    column_width * col = new column_width(&presentWidth, nullptr);
+    connect(col,SIGNAL(changed()),this,SLOT(changeColumnWidth()));
+    col->exec();
+}
+
+void MainWindow::changeColumnWidth(){
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextTable * table = cursor.currentTable();
+
+    QTextTableFormat tf = table->format();
+    QVector<QTextLength> columnWidth = tf.columnWidthConstraints();
+    QTextLength * data = columnWidth.data();
+    const QTextLength length = QTextLength(QTextLength::FixedLength,presentWidth);
+    data[currentTablePosition] = length;
+    tf.setColumnWidthConstraints(columnWidth);
+    table->setFormat(tf);
 }
 

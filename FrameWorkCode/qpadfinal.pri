@@ -4,6 +4,7 @@
 
 HEADERS += ./Filters.h \
     $$PWD/about.h \
+    $$PWD/column_width.h \
     $$PWD/crashlog.h \
     $$PWD/customtextbrowser.h \
     $$PWD/dashboard.h \
@@ -56,6 +57,7 @@ HEADERS += ./Filters.h \
     $$PWD/globalreplaceinformation.h
 SOURCES += ./DiffView.cpp \
     $$PWD/about.cpp \
+    $$PWD/column_width.cpp \
     $$PWD/crashlog.cpp \
     $$PWD/customtextbrowser.cpp \
     $$PWD/dashboard.cpp \
@@ -105,6 +107,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/globalreplaceinformation.cpp
 FORMS += ./DiffView.ui \
     $$PWD/about.ui \
+    $$PWD/column_width.ui \
     $$PWD/dashboard.ui \
     $$PWD/equationeditor.ui \
     $$PWD/indentoptions.ui \

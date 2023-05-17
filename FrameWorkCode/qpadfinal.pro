@@ -64,3 +64,9 @@ win32: LIBS += -L$$PWD/../lib/ -lquazip
 
 INCLUDEPATH += $$PWD/../include
 DEPENDPATH += $$PWD/../include
+
+FORMS +=
+
+HEADERS +=
+
+SOURCES +=

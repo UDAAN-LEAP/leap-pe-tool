@@ -6,6 +6,7 @@
 #include <QSize>
 #include <QPointF>
 #include <QRectF>
+#include<QDebug>
 
 /*!
  * \fn RubberBand::RubberBand
@@ -288,6 +289,7 @@ void RubberBand::mouseReleaseEvent(QMouseEvent *event)
         } else {
             if (m_diffBetweenPrevNowGeometry)
                 emit resizeFinished(geometry());
+                qDebug()<<"Resize Finished";
         }
     }
 

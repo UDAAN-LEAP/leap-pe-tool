@@ -525,6 +525,7 @@ private slots:
 
     void on_actionJustified_triggered();
 
+    void on_actionColumn_Width_triggered();
 
 
 public slots:
@@ -547,6 +548,8 @@ public slots:
     void e_d_features(bool value);
 
     void update_tool(QString latestVersion);
+
+    void changeColumnWidth();
 
 private:
     bool mExitStatus = false;
@@ -624,6 +627,9 @@ private:
     QMap<QString,int>markForReview;
     QString m_update_path = "";
 
+
+    int presentWidth;
+    int currentTablePosition;
 
 };
 
