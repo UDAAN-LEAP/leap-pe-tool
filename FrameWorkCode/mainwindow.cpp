@@ -10699,6 +10699,10 @@ void MainWindow::write_recorrected_pages(){
     }
 }
 
+/*!
+ * \fn MainWindow::on_actionClear_Menu_triggered()
+ * \brief This function clears the recent project menu
+ */
 void MainWindow::on_actionClear_Menu_triggered()
 {
 
@@ -10713,11 +10717,19 @@ void MainWindow::on_actionClear_Menu_triggered()
     settings.endGroup();
 }
 
+/*!
+ * \fn MainWindow::on_actionJustified_triggered
+ * \brief Justified Alignment
+ */
 void MainWindow::on_actionJustified_triggered()
 {
     on_actionJusitfiedAlign_triggered();
 }
 
+/*!
+ * \fn MainWindow::pageStatusHandler
+ * \brief This sets the status(Corrected, Verified or Marked For Review) of the page open in the curr_browser
+ */
 void MainWindow::pageStatusHandler(){
     if(mRole == "Corrector"){
         ui->corrected->setEnabled(true);
@@ -10794,15 +10806,27 @@ void MainWindow::pageStatusHandler(){
     }
 }
 
+/*!
+ * \fn MainWindow::on_actionColumn_Width_triggered
+ * \brief This function changes the Fixed Width of the insertedTable
+ * \class column_width class is used to get the input from the user
+ */
 void MainWindow::on_actionColumn_Width_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
+
     QTextTable * table = cursor.currentTable();
     if(table == nullptr) return;
-    int no_of_col = table->columns();
-    int position = cursor.position() % no_of_col;
-    if(position == 0) position = no_of_col;
-    if(position > no_of_col) return;
+
+    int presentCell = cursor.position();
+
+//    qDebug()<<cursor.position();
+
+    QTextCursor cur(cursor);
+    cursor = table->rowStart(cur);
+    int position = (presentCell - cursor.position());
+
+//    qDebug()<<cursor.position();
 
     QTextTableFormat tf = table->format();
     QVector<QTextLength> columnWidth = tf.columnWidthConstraints();
@@ -10810,11 +10834,18 @@ void MainWindow::on_actionColumn_Width_triggered()
     presentWidth = data[position-1].rawValue();
     currentTablePosition = position-1;
 
+//    qDebug()<<currentTablePosition;
+
+
     column_width * col = new column_width(&presentWidth, nullptr);
     connect(col,SIGNAL(changed()),this,SLOT(changeColumnWidth()));
     col->exec();
 }
 
+/*!
+ * \fn MainWindow::changeColumnWidth
+ * \brief This slot sets the column width constraints for the current table
+ */
 void MainWindow::changeColumnWidth(){
     QTextCursor cursor = curr_browser->textCursor();
     QTextTable * table = cursor.currentTable();
