@@ -10843,6 +10843,6 @@ void MainWindow::on_actionEnable_Disable_Suggestions_triggered()
         ui->actionEnable_Disable_Suggestions->setText("Enable auto suggestions");
     }
     settings.endGroup();
-    QMessageBox(this, "Suggestions status", "Restart the tool.", 0);
+    QMessageBox::information(this, "Suggestions status", "Restart the tool.", 0);
 }
 
