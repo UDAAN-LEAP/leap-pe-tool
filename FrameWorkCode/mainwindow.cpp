@@ -171,6 +171,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     QIcon icon = QIcon(":/Images/Resources/user_login.png");
     ui->pushButton_5->setIcon(icon);
     menubar->setCornerWidget(ui->pushButton_5, Qt::TopRightCorner);
+
+    //enable/disable suggestions
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("suggestions");
+    QString choice = settings.value("choice").toString();
+    if(choice=="false")
+        ui->actionEnable_Disable_Suggestions->setText("Enable auto suggestions");
+    else
+        ui->actionEnable_Disable_Suggestions->setText("Disable auto suggestions");
+    settings.endGroup();
     CustomTextBrowser *customtextbrowser = new CustomTextBrowser();
     customtextbrowser->setStyleSheet("background-color:white; color:black;");
     ui->splitter->replaceWidget(1,customtextbrowser);
@@ -224,7 +234,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->pushButton_6->setVisible(false);
     ui->actionFetch_2->setVisible(false);
 
-    QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("cloudSave");
     settings.remove("");
     settings.endGroup();
@@ -339,6 +348,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     //saves current path - useful for auto upgrade feature
     m_update_path = QDir().currentPath();
+
 }
 
 /*!
@@ -10816,5 +10826,23 @@ void MainWindow::changeColumnWidth(){
     data[currentTablePosition] = length;
     tf.setColumnWidthConstraints(columnWidth);
     table->setFormat(tf);
+}
+
+
+void MainWindow::on_actionEnable_Disable_Suggestions_triggered()
+{
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("suggestions");
+    QString choice = settings.value("choice").toString();
+    if(choice=="false"){
+        settings.setValue("choice","true");
+        ui->actionEnable_Disable_Suggestions->setText("Disable auto suggestions");
+    }
+    else{
+        settings.setValue("choice","false");
+        ui->actionEnable_Disable_Suggestions->setText("Enable auto suggestions");
+    }
+    settings.endGroup();
+    QMessageBox(this, "Suggestions status", "Restart the tool.", 0);
 }
 

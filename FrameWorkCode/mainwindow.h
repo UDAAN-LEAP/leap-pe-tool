@@ -528,6 +528,8 @@ private slots:
     void on_actionColumn_Width_triggered();
 
 
+    void on_actionEnable_Disable_Suggestions_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

@@ -1,5 +1,6 @@
 #include "customtextbrowser.h"
 #include "qclipboard.h"
+#include "qsettings.h"
 
 #include <QCompleter>
 #include <QKeyEvent>
@@ -24,25 +25,34 @@ CustomTextBrowser::CustomTextBrowser(QWidget *parent): QTextBrowser(parent)
     c = new QCompleter((CustomTextBrowser *)this);
     this->setCompleter(c);
     this->setPlaceholderText("How to Open a Project:\n"
-                                        "―――――――――――――――――――――――――――――――――――――\n"
-                                        "If your project is in a zip folder:\n"
-                                        "  ⚫ Extract the project to a location of your choice,\n"
-                                        "  ⚫ File > Open Project ('Ctrl + o'),\n"
-                                        "  ⚫ Browse to the location where you extracted your project, and select it,\n"
-                                        "  ⚫ Click 'Open'.\n"
-                                        "If you want to download a project:\n"
-                                        "  ⚫ File > Import Project > Import.\n"
-                                        "If you want to download & open a project:\n"
-                                        "  ⚫ File > Import Project > Import and Open.\n"
-                                        "User dashboard: Enter project ID, click 'Import Project' button, browse and select location to import project.\n"
-                                        "To open a recent project:\n"
-                                        "  ⚫ File > Recent Project,\n"
-                                        "  ⚫ Select the project you want to open from the list of recent projects.\n"
-                                        "For detailed instructions, you can refer to the User Guide under the 'Help' menu.");
+                             "―――――――――――――――――――――――――――――――――――――\n"
+                             "If your project is in a zip folder:\n"
+                             "  ⚫ Extract the project to a location of your choice,\n"
+                             "  ⚫ File > Open Project ('Ctrl + o'),\n"
+                             "  ⚫ Browse to the location where you extracted your project, and select it,\n"
+                             "  ⚫ Click 'Open'.\n"
+                             "If you want to download a project:\n"
+                             "  ⚫ File > Import Project > Import.\n"
+                             "If you want to download & open a project:\n"
+                             "  ⚫ File > Import Project > Import and Open.\n"
+                             "User dashboard: Enter project ID, click 'Import Project' button, browse and select location to import project.\n"
+                             "To open a recent project:\n"
+                             "  ⚫ File > Recent Project,\n"
+                             "  ⚫ Select the project you want to open from the list of recent projects.\n"
+                             "For detailed instructions, you can refer to the User Guide under the 'Help' menu.");
 
     if(modelFlag == 0){
-        engModel = modelFromFile(":/WordList/wordlists/english.txt");
-        devModel = modelFromFile(":/WordList/wordlists/sanskrit.txt");
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("suggestions");
+        QString choice = settings.value("choice").toString();
+        if(choice=="false"){
+            qDebug()<<"Auto Sugggestions are disabbled.";
+        }
+        else{
+            engModel = modelFromFile(":/WordList/wordlists/english.txt");
+            devModel = modelFromFile(":/WordList/wordlists/sanskrit.txt");
+        }
+        settings.endGroup();
         modelFlag = 1;
     }
 
@@ -108,25 +118,25 @@ QCompleter *CustomTextBrowser::completer() const
  */
 QAbstractItemModel *CustomTextBrowser::modelFromFile(const QString& fileName)
 {
-	QFile file(fileName);
-	if (!file.open(QFile::ReadOnly)){
+    QFile file(fileName);
+    if (!file.open(QFile::ReadOnly)){
 
-		qDebug()<<"File not opened...";
+        qDebug()<<"File not opened...";
         return new QStringListModel(nullptr);
-	}
+    }
 #ifndef QT_NO_CURSOR
-	QGuiApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    QGuiApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 #endif
-	QStringList words;
+    QStringList words;
 
-	while (!file.atEnd()) {
-		QByteArray line = file.readLine();
-		if (!line.isEmpty())
-			words << QString::fromUtf8(line.trimmed());
-	}
+    while (!file.atEnd()) {
+        QByteArray line = file.readLine();
+        if (!line.isEmpty())
+            words << QString::fromUtf8(line.trimmed());
+    }
 
 #ifndef QT_NO_CURSOR
-	QGuiApplication::restoreOverrideCursor();
+    QGuiApplication::restoreOverrideCursor();
 #endif
     return new QStringListModel(words, nullptr);
 }
@@ -253,20 +263,20 @@ void CustomTextBrowser::keyPressEvent(QKeyEvent *e)
 {
     if (c && c->popup()->isVisible()) {
         // The following keys are forwarded by the completer to the widget
-       switch (e->key()) {
-       case Qt::Key_Enter:
-       case Qt::Key_Return:
-       case Qt::Key_Escape:
-       case Qt::Key_Tab:
-       case Qt::Key_Backtab:
-       {
-           e->ignore();
-           return;
-       }
-       case Qt::Key_Space:
-       default:
-           break;
-       }
+        switch (e->key()) {
+        case Qt::Key_Enter:
+        case Qt::Key_Return:
+        case Qt::Key_Escape:
+        case Qt::Key_Tab:
+        case Qt::Key_Backtab:
+        {
+            e->ignore();
+            return;
+        }
+        case Qt::Key_Space:
+        default:
+            break;
+        }
     }
 
     const bool isShortcut = (e->modifiers().testFlag(Qt::ControlModifier) && e->key() == Qt::Key_E); // CTRL+E
@@ -274,7 +284,7 @@ void CustomTextBrowser::keyPressEvent(QKeyEvent *e)
         QTextBrowser::keyPressEvent(e);
 
     const bool ctrlOrShift = e->modifiers().testFlag(Qt::ControlModifier) ||
-                             e->modifiers().testFlag(Qt::ShiftModifier);
+            e->modifiers().testFlag(Qt::ShiftModifier);
     if (!c || (ctrlOrShift && e->text().isEmpty()))
         return;
 

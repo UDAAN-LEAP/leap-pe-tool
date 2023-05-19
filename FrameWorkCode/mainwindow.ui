@@ -1217,6 +1217,8 @@ QMenu::item:selected{
     <addaction name="separator"/>
     <addaction name="actionToDevanagari"/>
     <addaction name="actionToSlp1"/>
+    <addaction name="separator"/>
+    <addaction name="actionEnable_Disable_Suggestions"/>
    </widget>
    <widget class="QMenu" name="menuFormat">
     <property name="styleSheet">
@@ -2707,15 +2709,19 @@ background-color: #EEF0F2;
     <string>Clear Menu</string>
    </property>
   </action>
-
   <action name="actionPasste">
    <property name="text">
     <string>Passte</string>
-    </property>
-   </action>
+   </property>
+  </action>
   <action name="actionColumn_Width">
    <property name="text">
     <string>Column Width</string>
+   </property>
+  </action>
+  <action name="actionEnable_Disable_Suggestions">
+   <property name="text">
+    <string>Enable/Disable Suggestions</string>
    </property>
   </action>
  </widget>
