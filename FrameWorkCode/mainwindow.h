@@ -358,6 +358,9 @@ private slots:
 
     void setProgressBarPerc(int);
 
+    //Change -> to change the message
+    void setProgressBarText(int);
+
     QString toDevanagari(string text);
 
     void on_find_clicked();

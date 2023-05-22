@@ -5065,6 +5065,15 @@ void MainWindow::setProgressBarPerc(int value)
 }
 
 /*!
+ * \fn MainWindow::setProgressBarText
+ * \brief Sets the progress bar text to the passed value to show time left in min.
+ * \param value
+ */
+void MainWindow::setProgressBarText(int value){
+    progressBarDialog->setMessage(QString::number(value) + " secs left...");
+}
+
+/*!
  * \fn MainWindow::runGlobalReplace
  * \brief It calls the function which replaces the words and add the words into the CPair file in a multithreaded fashion
  * \details 1. Opens up dialog box for asking the user if he wants to do global-replace or not.
@@ -5198,6 +5207,7 @@ void MainWindow::runGlobalReplace(QString currentFileDirectory , QVector <QStrin
         connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
         connect(grWorker, SIGNAL(finishedWritingLogs()), this, SLOT(closeProgressBar()));
         connect(grWorker, SIGNAL(changeProgressBarValue(int)), this, SLOT(setProgressBarPerc(int)));
+        connect(grWorker, SIGNAL(changeProgressText(int)), this, SLOT(setProgressBarText(int)));
         grWorker->moveToThread(thread);
         thread->start();
 

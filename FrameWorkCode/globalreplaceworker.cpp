@@ -269,6 +269,9 @@ void GlobalReplaceWorker::replaceWordsInFiles()
     QDir currDir(currentFileDirectory);
     QString suffix;
     QString toolMode = currentFileDirectory.right(currentFileDirectory.size() - currentFileDirectory.lastIndexOf('/') - 1);
+
+
+
     if (toolMode == "CorrectorOutput" || toolMode == "VerifierOutput")
     {
         suffix = "*.html";
@@ -279,8 +282,14 @@ void GlobalReplaceWorker::replaceWordsInFiles()
     }
     QStringList fileNameList = currDir.entryList({suffix}, QDir::Files);
     int numberOfFiles = fileNameList.size();
+
+    //Change -> to see number of html files
+    qDebug()<<numberOfFiles;
+
     int count = 0;
     int perc = 0; // percentage to be shown on progress bar
+    int estimationTime = numberOfFiles * 1 / 60 ;
+    emit changeProgressText(estimationTime);
 
     if (numOfChangedWords == 1)
     {
@@ -304,10 +313,14 @@ void GlobalReplaceWorker::replaceWordsInFiles()
                     }
                 }
                 count++;
+                estimationTime = (numberOfFiles - count) * 1 / 60;
                 int tempPerc = (count * 100) / numberOfFiles;
                 if (tempPerc > perc) {
                     perc = tempPerc;
                     emit changeProgressBarValue(perc);
+                    if(estimationTime > numberOfFiles * 1 /120) {
+                        emit changeProgressText(estimationTime);
+                    }
                 }
             }
         }
@@ -327,10 +340,15 @@ void GlobalReplaceWorker::replaceWordsInFiles()
                     *x1 = writeGlobalCPairsToFiles(it_file_path, globalReplacementMap, doc);
                 }
                 count++;
+                estimationTime = (numberOfFiles - count) * 1 / 60;
+
                 int tempPerc = (count * 100) / numberOfFiles;
                 if (tempPerc > perc) {
                     perc = tempPerc;
                     emit changeProgressBarValue(perc);
+                    if(estimationTime > numberOfFiles * 1 /120) {
+                        emit changeProgressText(estimationTime);
+                    }
                 }
             }
         }
@@ -357,13 +375,18 @@ void GlobalReplaceWorker::replaceWordsInFiles()
                 }
             }
             count++;
+            estimationTime = (numberOfFiles - count) * 1 / 60;
             int tempPerc = (count * 100) / numberOfFiles;
             if ((tempPerc > perc) && (tempPerc < 50)) {
                 perc = tempPerc;
                 emit changeProgressBarValue(perc);
+                if(estimationTime > numberOfFiles * 1 /120) {
+                    emit changeProgressText(estimationTime);
+                }
             }
         }
         emit changeProgressBarValue(50);
+        emit changeProgressText(numberOfFiles * 1 /120);
         count = 0;
         perc = 0;
 
@@ -386,15 +409,20 @@ void GlobalReplaceWorker::replaceWordsInFiles()
             }
 
             count++;
+            estimationTime = (numberOfFiles-count) * 5/60;
             int tempPerc = (count * 100) / numberOfFiles;
             if ((tempPerc > perc) && (tempPerc > 50)) {
                 perc = tempPerc;
                 emit changeProgressBarValue(perc);
+                if(estimationTime > 0 and estimationTime < numberOfFiles * 1 /120){
+                    emit changeProgressText(estimationTime);
+                }
             }
         }
     }
 
     emit changeProgressBarValue(100);
+    emit changeProgressText(0);
     emit finishedReplacingWords();
 }
 
