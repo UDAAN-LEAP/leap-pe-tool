@@ -1468,6 +1468,15 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->viewComments->setDisabled(false);
     ui->compareCorrectorOutput->setDisabled(false);
     ui->groupBox->setDisabled(false);
+    ui->actionRedo->setEnabled(false);
+    ui->actionCopy->setEnabled(false);
+    ui->actionCut->setEnabled(false);
+    ui->menuText->setEnabled(false);
+    ui->actionAllFontProperties->setEnabled(false);
+    ui->actionClear_Formatting->setEnabled(false);
+    ui->actionFontBlack->setEnabled(false);
+    ui->actionCopy_Format->setEnabled(false);
+    ui->actionPaste_Format->setEnabled(false);
 
 }
 /*!
@@ -1512,6 +1521,12 @@ void MainWindow::AddRecentProjects()
     FileAction->setIconText("Clear Menu");
     ui->menuRecent_Project->addAction(FileAction);
     connect(FileAction, &QAction::triggered, this , &MainWindow::on_actionClear_Menu_triggered);
+    if(ui->menuRecent_Project->isEmpty())
+
+        ui->menuRecent_Project->setEnabled(false);
+    else
+        ui->menuRecent_Project->setEnabled(true);
+
 }
 
 
@@ -2303,6 +2318,7 @@ void MainWindow::on_actionUndo_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->undo();
+    ui->actionRedo->setEnabled(true);
 }
 
 /*!
@@ -2314,6 +2330,7 @@ void MainWindow::on_actionRedo_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->redo();
+    ui->actionRedo->setEnabled(false);
 }
 
 /*!
@@ -3901,7 +3918,37 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     markRegion objectMarkRegion;
     QString bboxf = currentTabPageName;
     QFile bbox_file(gDirTwoLevelUp + "/bboxf/"+bboxf.replace(".html", ".bbox"));
+
+
     //! When user moves his mouse the system will ask user to download new update.
+    if(event->type()== QEvent::MouseMove ){
+
+           if(curr_browser && !curr_browser->isReadOnly() && !curr_browser->textCursor().selectedText().isEmpty() && curr_browser->textCursor().selectedText() != "\n")
+           {
+               ui->actionCopy->setEnabled(true);
+               ui->actionCut->setEnabled(true);
+               ui->menuText->setEnabled(true);
+               ui->actionAllFontProperties->setEnabled(true);
+               ui->actionClear_Formatting->setEnabled(true);
+               ui->actionFontBlack->setEnabled(true);
+               ui->actionCopy_Format->setEnabled(true);
+               ui->actionPaste_Format->setEnabled(true);
+           }
+
+           else
+           {
+                ui->actionCopy->setEnabled(false);
+                ui->actionCut->setEnabled(false);
+                ui->menuText->setEnabled(false);
+                ui->actionAllFontProperties->setEnabled(false);
+                ui->actionClear_Formatting->setEnabled(false);
+                ui->actionFontBlack->setEnabled(false);
+                ui->actionCopy_Format->setEnabled(false);
+                ui->actionPaste_Format->setEnabled(false);
+           }
+
+       }
+
     if(event->type() == QEvent::MouseMove){
         if(ui->tabWidget->width() == 0 && flag_tab != 1){
             ui->backward_Button->setVisible(false);
@@ -10724,6 +10771,7 @@ void MainWindow::on_actionClear_Menu_triggered()
     settings.setValue("Project3","");
     ui->menuRecent_Project->clear();
     isRecentProjclick = false;
+    ui->menuRecent_Project->setEnabled(false);
     settings.endGroup();
 }
 
