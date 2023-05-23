@@ -92,8 +92,8 @@ bool UndoGlobalReplace::on_applyButton_clicked()
         QListWidgetItem *item = ui->listWidget->item(i);
         if ( item->checkState() == Qt::Checked )
         {
-            QStringList strList = item->text().split(" ");
-            this->finalUndoMap[strList[0]] = strList[3];
+            QStringList strList = item->text().split(" -> ");
+            this->finalUndoMap[strList[0]] = strList[1];
         }
     }
     this->close();

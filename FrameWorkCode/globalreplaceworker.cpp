@@ -137,7 +137,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
             if(sanstr.isEmpty() || sanstr.length() == 1)
                 continue;
             sanstr.replace("\(","\\(");sanstr.replace("\)","\\)");
-            sanstr = sanstr.simplified();
+            sanstr = sanstr.trimmed();
             QString replacementString = grmIterator.key().first; // \1 would be replace by the first paranthesis i.e. the \b  and \2 would be replaced by the second \b by QT Regex
             QStringList org_sen = sanstr.split(" ");
 
@@ -168,7 +168,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                 if(replaced_list.contains(org_sen[i]))
                     replaced_sen = replaced_sen.remove(org_sen[i]);
             }
-            replaced_sen = replaced_sen.simplified();
+            replaced_sen = replaced_sen.trimmed();
             qDebug() <<"original :"<<sanstr;
             QTextCursor docCursor(doc);
             docCursor.movePosition(QTextCursor::Start, QTextCursor::MoveAnchor);
@@ -191,7 +191,7 @@ int GlobalReplaceWorker::writeGlobalCPairsToFiles(QString file_path, QMap<QStrin
                     cur.setPosition(ancr, QTextCursor::KeepAnchor);
                 }
                 fmt = cur.charFormat(); // get the QTextCharFormat of old/word phrase to be replaced
-                replacementString1 = replacementString.simplified();
+                replacementString1 = replacementString.trimmed();
                 QString final_str = replacementString1;
                 final_str = final_str.replace(replaced_sen, "<span style = \"background-color:#ffff00;\">" + replaced_sen + "</span>");
                 origCur.insertHtml(final_str);
