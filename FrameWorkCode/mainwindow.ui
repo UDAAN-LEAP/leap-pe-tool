@@ -1438,6 +1438,7 @@ background-color: #EEF0F2;
    <addaction name="actionZoom_Out"/>
    <addaction name="separator"/>
    <addaction name="actionGet_Help"/>
+   <addaction name="actionEnable_Disable_Suggestions"/>
   </widget>
   <action name="actionOpen_Project">
    <property name="icon">
@@ -2720,6 +2721,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionEnable_Disable_Suggestions">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/auto_suggestion.png</normaloff>:/Images/Resources/auto_suggestion.png</iconset>
+   </property>
    <property name="text">
     <string>Enable/Disable Suggestions</string>
    </property>
