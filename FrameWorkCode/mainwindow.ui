@@ -1286,8 +1286,26 @@ QMenu::item:selected{
      <property name="title">
       <string>Bullets and Numbering</string>
      </property>
-     <addaction name="actionInsert_Numbered_List"/>
-     <addaction name="actionInsert_Bulleted_List"/>
+     <widget class="QMenu" name="menuNumbered_List_Menu">
+      <property name="title">
+       <string>Numbered List Menu</string>
+      </property>
+      <addaction name="actionDecimal"/>
+      <addaction name="actionLower_Alpha"/>
+      <addaction name="actionUpper_Alpha"/>
+      <addaction name="actionLower_Roman"/>
+      <addaction name="actionUpper_Roman"/>
+     </widget>
+     <widget class="QMenu" name="menuBulleted_List_Menu">
+      <property name="title">
+       <string>Bulleted List Menu</string>
+      </property>
+      <addaction name="actionDisc"/>
+      <addaction name="actionCircle"/>
+      <addaction name="actionSquare"/>
+     </widget>
+     <addaction name="menuNumbered_List_Menu"/>
+     <addaction name="menuBulleted_List_Menu"/>
     </widget>
     <widget class="QMenu" name="menuAlign_and_Indent">
      <property name="title">
@@ -2301,24 +2319,6 @@ background-color: #EEF0F2;
     <string>Split Cell</string>
    </property>
   </action>
-  <action name="actionInsert_Bulleted_List">
-   <property name="icon">
-    <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Resources/bulleted_list-modified.png</normaloff>:/Images/Resources/bulleted_list-modified.png</iconset>
-   </property>
-   <property name="text">
-    <string>Bulleted List Menu</string>
-   </property>
-  </action>
-  <action name="actionInsert_Numbered_List">
-   <property name="icon">
-    <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Resources/numbered_list-modified.png</normaloff>:/Images/Resources/numbered_list-modified.png</iconset>
-   </property>
-   <property name="text">
-    <string>Numbered List Menu</string>
-   </property>
-  </action>
   <action name="actionInsert_Equation">
    <property name="icon">
     <iconset resource="AppResources.qrc">
@@ -2727,6 +2727,58 @@ background-color: #EEF0F2;
    </property>
    <property name="text">
     <string>Enable/Disable Suggestions</string>
+   </property>
+  </action>
+  <action name="actionDecimal">
+   <property name="text">
+    <string>Decimal</string>
+   </property>
+  </action>
+  <action name="actionLower_Alpha">
+   <property name="text">
+    <string>Lower Alpha</string>
+   </property>
+  </action>
+  <action name="actionUpper_Alpha">
+   <property name="text">
+    <string>Upper Alpha</string>
+   </property>
+  </action>
+  <action name="actionLower_Roman">
+   <property name="text">
+    <string>Lower Roman</string>
+   </property>
+  </action>
+  <action name="actionUpper_Roman">
+   <property name="text">
+    <string>Upper  Roman</string>
+   </property>
+  </action>
+  <action name="actionDisc">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/disc.png</normaloff>:/Images/Resources/disc.png</iconset>
+   </property>
+   <property name="text">
+    <string>Disc</string>
+   </property>
+  </action>
+  <action name="actionCircle">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/circle.png</normaloff>:/Images/Resources/circle.png</iconset>
+   </property>
+   <property name="text">
+    <string>Circle</string>
+   </property>
+  </action>
+  <action name="actionSquare">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/square.png</normaloff>:/Images/Resources/square.png</iconset>
+   </property>
+   <property name="text">
+    <string>Square</string>
    </property>
   </action>
  </widget>

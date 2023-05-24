@@ -8694,106 +8694,6 @@ void MainWindow::on_actionSplit_Cell_triggered()
 }
 
 /*!
- * \fn MainWindow::on_actionInsert_Bulleted_List_triggered
- * \brief Adds the bulleted list to the text browser
- * \details Shows the radio buttons to chose the list type to be added
- * \sa insertList
- */
-void MainWindow::on_actionInsert_Bulleted_List_triggered()
-{
-    QDialog dialog(this);
-    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
-
-    //! Add the lineEdits with their respective labels
-    QGroupBox *groupBox = new QGroupBox(tr("Bulleted Lists"));
-    QRadioButton *radioBtn1 = new QRadioButton("List Disc");
-    QRadioButton *radioBtn2 = new QRadioButton("List Circle");
-    QRadioButton *radioBtn3 = new QRadioButton("List Square");
-    QRadioButton *radioBtn4 = new QRadioButton("List Decimal");
-
-    radioBtn1->setChecked(true);
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(radioBtn1);
-    vbox->addWidget(radioBtn2);
-    vbox->addWidget(radioBtn3);
-    vbox->addWidget(radioBtn4);
-    vbox->addStretch(1);
-    groupBox->setLayout(vbox);
-
-    form.addRow(groupBox);
-
-    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-    form.addRow(&buttonBox);
-    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
-    //! Show the dialog as modal
-    if (dialog.exec() == QDialog::Accepted)
-    {
-        if (radioBtn1->isChecked()) {
-            insertList(QTextListFormat::ListDisc);
-        } else if (radioBtn2->isChecked()) {
-            insertList(QTextListFormat::ListCircle);
-        } else if (radioBtn3->isChecked()) {
-            insertList(QTextListFormat::ListSquare);
-        } else if (radioBtn4->isChecked()) {
-            insertList(QTextListFormat::ListDecimal);
-        }
-    }
-}
-
-/*!
- * \fn MainWindow::on_actionInsert_Numbered_List_triggered
- * \brief Adds the Numbered list to the text browser
- * \details Shows the radio buttons to chose the list type to be added
- * \sa insertList
- */
-void MainWindow::on_actionInsert_Numbered_List_triggered()
-{
-    QDialog dialog(this);
-    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
-
-    //! Add the lineEdits with their respective labels
-    QGroupBox *groupBox = new QGroupBox(tr("Bulleted Lists"));
-    QRadioButton *radioBtn1 = new QRadioButton("List Lower Alpha");
-    QRadioButton *radioBtn2 = new QRadioButton("List Upper Alpha");
-    QRadioButton *radioBtn3 = new QRadioButton("List Lower Roman");
-    QRadioButton *radioBtn4 = new QRadioButton("List Upper Roman");
-
-    radioBtn1->setChecked(true);
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(radioBtn1);
-    vbox->addWidget(radioBtn2);
-    vbox->addWidget(radioBtn3);
-    vbox->addWidget(radioBtn4);
-    vbox->addStretch(1);
-    groupBox->setLayout(vbox);
-
-    form.addRow(groupBox);
-
-    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog); // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-    form.addRow(&buttonBox);
-    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
-    //! Show the dialog as modal
-    if (dialog.exec() == QDialog::Accepted)
-    {
-        if (radioBtn1->isChecked()) {
-            insertList(QTextListFormat::ListLowerAlpha);
-        } else if (radioBtn2->isChecked()) {
-            insertList(QTextListFormat::ListUpperAlpha);
-        } else if (radioBtn3->isChecked()) {
-            insertList(QTextListFormat::ListLowerRoman);
-        } else if (radioBtn4->isChecked()) {
-            insertList(QTextListFormat::ListUpperRoman);
-        }
-    }
-}
-
-/*!
  * \fn MainWindow::insertList
  * \brief Acts as a helper for adding ordered and unordered lists
  * \details Inserts the list according to the styleIndex provided
@@ -10917,7 +10817,11 @@ void MainWindow::changeColumnWidth(){
     table->setFormat(tf);
 }
 
-
+/*!
+ * \fn MainWindow::on_actionEnable_Disable_Suggestions_triggered
+ * \brief  If the suggestions are enabled, it disables suggestions. Or if they are disabled, it enables them.
+ * \details It uses QSettings to remember.
+ */
 void MainWindow::on_actionEnable_Disable_Suggestions_triggered()
 {
     QSettings settings("IIT-B", "OpenOCRCorrect");
@@ -10932,6 +10836,87 @@ void MainWindow::on_actionEnable_Disable_Suggestions_triggered()
         ui->actionEnable_Disable_Suggestions->setText("Enable auto suggestions");
     }
     settings.endGroup();
-    QMessageBox::information(this, "Suggestions status", "Restart the tool.", 0);
+    QMessageBox::information(this, "Success", "Please restart the tool to enable/diisable the auto suggestions.", 0);
 }
+
+/*!
+ * \fn MainWindow::on_actionDecimal_triggered
+ * \brief Adds the numbered decimal list  to the text document at cursor positiion.
+ * \sa insertList
+ */
+void MainWindow::on_actionDecimal_triggered()
+{
+    insertList(QTextListFormat::ListDecimal);
+}
+
+/*!
+ * \fn MainWindow::on_actionUpper_Roman_triggered
+ * \brief Adds the nummbered upper roman list  to the text document at cursor positiion.
+ * \sa insertList
+ */
+void MainWindow::on_actionUpper_Roman_triggered()
+{
+    insertList(QTextListFormat::ListUpperRoman);
+}
+
+/*!
+ * \fn MainWindow::on_actionLower_Alpha_triggered
+ * \brief Adds the numbered lower alpha list  to the text document at cursor positiion.
+ * \sa insertList
+ */
+void MainWindow::on_actionLower_Alpha_triggered()
+{
+    insertList(QTextListFormat::ListLowerAlpha);
+}
+
+/*!
+ * \fn MainWindow::on_actionUpper_Alpha_triggered
+ * \brief Adds the Numbered uppper alpha list  to the text document at cursor positiion.
+ * \sa insertList
+ */
+void MainWindow::on_actionUpper_Alpha_triggered()
+{
+    insertList(QTextListFormat::ListUpperAlpha);
+}
+
+/*!
+ * \fn MainWindow::on_actionLower_Roman_triggered
+ * \brief Adds the numbered lower roman list to the text document at cursor positiion.
+ * \sa insertList
+ */
+void MainWindow::on_actionLower_Roman_triggered()
+{
+    insertList(QTextListFormat::ListLowerRoman);
+}
+
+/*!
+ * \fn MainWindow::on_actionDisc_triggered
+ * \brief Adds the bullleted disc list  to the text document at cursor positiion.
+ * \sa insertList
+ */
+void MainWindow::on_actionDisc_triggered()
+{
+    insertList(QTextListFormat::ListDisc);
+}
+
+/*!
+ * \fn MainWindow::on_actionCircle_triggered
+ * \brief Adds the bullleted circle list  to the text document at cursor positiion.
+ * \sa insertList
+ */
+void MainWindow::on_actionCircle_triggered()
+{
+    insertList(QTextListFormat::ListCircle);
+}
+
+/*!
+ * \fn MainWindow::on_actionSquare_triggered
+ * \briief Adds the bullleted Square list  to the text document at cursor positiion.
+ * \sa insertList
+ */
+void MainWindow::on_actionSquare_triggered()
+{
+    insertList(QTextListFormat::ListSquare);
+}
+
 

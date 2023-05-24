@@ -389,10 +389,6 @@ private slots:
 
     void on_actionSplit_Cell_triggered();
 
-    void on_actionInsert_Bulleted_List_triggered();
-
-    void on_actionInsert_Numbered_List_triggered();
-
     void insertList(QTextListFormat::Style styleIndex);
 
     void on_actionInsert_Equation_triggered();
@@ -532,6 +528,22 @@ private slots:
 
 
     void on_actionEnable_Disable_Suggestions_triggered();
+
+    void on_actionDecimal_triggered();
+
+    void on_actionUpper_Roman_triggered();
+
+    void on_actionLower_Alpha_triggered();
+
+    void on_actionUpper_Alpha_triggered();
+
+    void on_actionLower_Roman_triggered();
+
+    void on_actionDisc_triggered();
+
+    void on_actionCircle_triggered();
+
+    void on_actionSquare_triggered();
 
 public slots:
     void on_actionLoad_Next_Page_triggered();
