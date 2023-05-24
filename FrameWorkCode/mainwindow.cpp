@@ -9498,6 +9498,11 @@ void MainWindow::on_pushButton_4_clicked()
 
         m_audioRecorder->setEncodingSettings(settings, QVideoEncoderSettings(), "");
         m_audioRecorder->record();
+        QTimer::singleShot(60000,this,[=](){
+            qDebug()<<"stopped your recording!";
+            ui->pushButton_4->setText("Speech to text");
+            m_audioRecorder->stop();
+        });
     }
     else {
         qDebug()<<"stopped your recording!";
