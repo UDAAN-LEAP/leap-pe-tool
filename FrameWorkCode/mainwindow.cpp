@@ -1477,6 +1477,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->actionFontBlack->setEnabled(false);
     ui->actionCopy_Format->setEnabled(false);
     ui->actionPaste_Format->setEnabled(false);
+    ui->actionHighlight->setEnabled(false);
+    ui->actionEdit_Equation->setEnabled(false);
 
 }
 /*!
@@ -3933,6 +3935,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                ui->actionFontBlack->setEnabled(true);
                ui->actionCopy_Format->setEnabled(true);
                ui->actionPaste_Format->setEnabled(true);
+               ui->actionHighlight->setEnabled(true);
            }
 
            else
@@ -3945,10 +3948,21 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 ui->actionFontBlack->setEnabled(false);
                 ui->actionCopy_Format->setEnabled(false);
                 ui->actionPaste_Format->setEnabled(false);
+                ui->actionHighlight->setEnabled(false);
            }
 
        }
-
+    if(event->type() == QEvent::MouseMove)
+        {
+            if(curr_browser && !curr_browser->isReadOnly())
+            {
+                QString txt = curr_browser->textCursor().selection().toHtml();
+                if(txt.contains("/Equations_"))
+                    ui->actionEdit_Equation->setEnabled(true);
+                else
+                    ui->actionEdit_Equation->setEnabled(false);
+            }
+        }
     if(event->type() == QEvent::MouseMove){
         if(ui->tabWidget->width() == 0 && flag_tab != 1){
             ui->backward_Button->setVisible(false);
