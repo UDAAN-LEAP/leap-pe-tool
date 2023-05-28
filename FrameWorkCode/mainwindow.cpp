@@ -3167,7 +3167,7 @@ void MainWindow::createTable(){
     tf.setCellPadding(7);
     QVector<QTextLength> columnWidth;
     for(int i = 0; i < columns;i++){
-        columnWidth.append(QTextLength(QTextLength::FixedLength,50));
+        columnWidth.append(QTextLength(QTextLength::VariableLength,50));
     }
     tf.setColumnWidthConstraints(columnWidth);
 
@@ -9618,7 +9618,7 @@ void MainWindow::on_actionEnter_manauly_triggered()
         tf.setCellPadding(7);
         QVector<QTextLength> columnWidth;
         for(int i = 0; i < columns->text().toInt();i++){
-            columnWidth.append(QTextLength(QTextLength::FixedLength,50));
+            columnWidth.append(QTextLength(QTextLength::VariableLength,50));
         }
         tf.setColumnWidthConstraints(columnWidth);
         //        tf.setAlignment(Qt::AlignCenter);
@@ -10795,23 +10795,19 @@ void MainWindow::on_actionColumn_Width_triggered()
     QTextTable * table = cursor.currentTable();
     if(table == nullptr) return;
 
-    int presentCell = cursor.position();
+    QTextTableCell cell = table->cellAt(cursor);
 
-//    qDebug()<<cursor.position();
+    int position = cell.column();
 
-    QTextCursor cur(cursor);
-    cursor = table->rowStart(cur);
-    int position = (presentCell - cursor.position());
-
-//    qDebug()<<cursor.position();
+//    qDebug()<<"Present Cell "<<position;
 
     QTextTableFormat tf = table->format();
     QVector<QTextLength> columnWidth = tf.columnWidthConstraints();
     QTextLength * data = columnWidth.data();
-    presentWidth = data[position-1].rawValue();
-    currentTablePosition = position-1;
+    presentWidth = data[position].rawValue();
+    currentTablePosition = position;
 
-//    qDebug()<<currentTablePosition;
+//    qDebug()<<"Current Position "<<currentTablePosition;
 
 
     column_width * col = new column_width(&presentWidth, nullptr);
