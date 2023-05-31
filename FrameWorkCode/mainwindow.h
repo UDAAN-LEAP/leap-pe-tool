@@ -545,6 +545,8 @@ private slots:
 
     void on_actionSquare_triggered();
 
+    void on_pushButton_7_clicked();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

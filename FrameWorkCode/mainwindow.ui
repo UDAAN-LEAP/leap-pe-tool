@@ -301,7 +301,7 @@ QTabWidget::pane {
 </string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -615,6 +615,13 @@ background-color: rgb(136, 138, 133);
                </widget>
               </item>
              </layout>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_7">
+              <property name="text">
+               <string>Add Custom Words</string>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QTextEdit" name="textEdit_dict">
@@ -2756,7 +2763,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionDisc">
    <property name="icon">
-    <iconset resource="AppResources.qrc">
+    <iconset>
      <normaloff>:/Images/Resources/disc.png</normaloff>:/Images/Resources/disc.png</iconset>
    </property>
    <property name="text">
@@ -2765,7 +2772,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionCircle">
    <property name="icon">
-    <iconset resource="AppResources.qrc">
+    <iconset>
      <normaloff>:/Images/Resources/circle.png</normaloff>:/Images/Resources/circle.png</iconset>
    </property>
    <property name="text">
@@ -2774,7 +2781,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionSquare">
    <property name="icon">
-    <iconset resource="AppResources.qrc">
+    <iconset>
      <normaloff>:/Images/Resources/square.png</normaloff>:/Images/Resources/square.png</iconset>
    </property>
    <property name="text">
