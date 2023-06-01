@@ -10,11 +10,16 @@
  *
  */
 #include "Symbols.h"
+#include "qbuffer.h"
 #include "qclipboard.h"
+#include "qdir.h"
+#include "qpainter.h"
+#include "qsvgrenderer.h"
 #include "ui_Symbols.h"
 
 SymbolsView *SymbolsView::symbolsView = 0;
-
+map<QChar,QString>mp;
+int flag=0;
 /*!
  * \fn SymbolsView::SymbolsView
  * \param QWidget->parent
@@ -61,6 +66,18 @@ A᳒  B᳒  C᳒  D᳒  E᳒  F᳒  G᳒  H᳒  I᳒  J᳒  K᳒  L᳒  M᳒  N�
 A᳙  B᳙  C᳙  D᳙  E᳙  F᳙  G᳙  H᳙  I᳙  J᳙  K᳙  L᳙  M᳙  N᳙  O᳙  P᳙  Q᳙  R᳙  S᳙  T᳙  U᳙  V᳙  W᳙  X᳙  Y᳙  Z᳙
 •  ⊙  ◉  ○  ◌  ●  ⦿  ◆  ◇  ★  □  ✓  ✦  ➢  ➣  ➤  ▶  ▷  ⬛  ◼  ◾  ♦  ⚫ .   ~   `   !   @   #   $   %
 ^   &   *   (   )   -   =   +   _   {   [   ]   }   \   |   /   :   ;   '   "   <   ,   >   .   ?   ₹)");
+    ui->Shapes->setText(R"(Arrows
+    | ↕ → ← ↑ ↓ ↘ ↔ ↺ ↻ ↝ ⤡ ➤ ➢
+        Geometric
+    ■ ● ⓪ ▲ ▼ ◆ ⬟ ⬢ ○ □ △ ▭ ◇ ◯ ⊙ ⊕ ⊗ ⊘ ⦿ ⊃ ⊂ ∆ ∇
+        Block arrows
+    ⇒ ⇔ ⇗ ⇖ ⇘ ⇙ ⇩ ⇪ ⇧ ⇦ ⇨
+        Stars
+    ✦ ✧ ✩ ✪ ✫ ✰ ✱ ✲ ✵ ✶ ✽
+        Equations
+    + - × ÷ = < > ≤ ≥ ≠
+    )"
+        );
     setWindowTitle("Special Symbols");
     ui->Diacritics->setText(
                 R"(A
@@ -153,11 +170,12 @@ A᳙  B᳙  C᳙  D᳙  E᳙  F᳙  G᳙  H᳙  I᳙  J᳙  K᳙  L᳙  M᳙  N�
             Ź ź   Ẑ ẑ   Ž ž   Ż ż   Ẓ ẓ   Ẕ ẕ   Ⱬ ⱬ)"
             );
     currentTab = ui->Diacritics;
+    ui->tabWidget->setCurrentWidget(ui->tabWidget->widget(0));
     bool b = connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
     ui->Diacritics->installEventFilter(this);
     ui->SpecialCharacters->installEventFilter(this);
     ui->MathematicalSymbols->installEventFilter(this);
-
+    ui->Shapes->installEventFilter(this);
     // Install event filter for double-click detection
     installEventFilter(this);
 }
@@ -176,6 +194,8 @@ bool SymbolsView::eventFilter(QObject *obj, QEvent *event){
  */
 void SymbolsView::tabChanged(int idx)
 {
+    if(idx==3)
+        flag=1;
     QWidget *widget = ui->tabWidget->widget(idx);
     QList<QTextEdit*> allTextEdits = widget->findChildren<QTextEdit*>();
     if(allTextEdits.count()!= 1)
@@ -198,9 +218,70 @@ SymbolsView::~SymbolsView()
  */
 void SymbolsView::on_copyButton_clicked()
 {
+    QString arr ="|↕→←↑↓↘↔↺↻↝⤡➤➢■●⓪▲▼◆⬟⬢○□△▭◇◯⊙⊕⊗⊘⦿⊃⊂∆∇⇒⇔⇗⇖⇘⇙⇩⇪⇧⇦⇨✦✧✩✪✫✰✱✲✵✶✽+-×÷=<>≤≥≠";
+
+        for(int i=0;i<arr.length();i++)
+        {
+            //QString p = QString(QChar(arr[i]));
+            QChar a = arr[i];
+            QString s = QString::number(i);
+            mp[a] = s;
+        }
     QClipboard *clipboard = QApplication::clipboard();
     currentTab->copy();
     QString copiedText = clipboard->text();
+    int x= ui->tabWidget->currentIndex();
+        if(x==3)
+            flag=1;
+        if(flag==1)
+        {
+            QChar t = copiedText.back();
+                QString w;
+                if(mp.find(t)!=mp.end())
+                    {
+                        w = mp[t];
+
+                    }
+            QSvgRenderer svgRenderer;
+            svgRenderer.load(QString(":/Images/Resources/Old Icons/" + w + ".svg"));
+            if(!QDir("../Inserted_Images").exists())
+                QDir().mkdir("../Inserted_Images");
+                QDir dir("../Inserted_Images");
+                QString count = QString::number(dir.count() +1);
+                QString file_name = "../Inserted_Images/"+count+".png";
+            if(svgRenderer.defaultSize().isEmpty())
+            {
+                QFont font("Arial", 24);
+                   QFontMetrics fontMetrics(font);
+                   int textWidth = fontMetrics.width(copiedText);
+                   int textHeight = fontMetrics.height();
+                   QImage image(textWidth, textHeight, QImage::Format_ARGB32);
+                   image.fill(Qt::white);
+                   QPainter painter(&image);
+                   painter.setRenderHint(QPainter::Antialiasing);
+                   painter.setFont(font);
+                   painter.setPen(Qt::black);
+                   painter.drawText(image.rect(), Qt::AlignCenter, copiedText);
+                   image.save(file_name);
+            }
+            else
+            {
+                QImage image(60, 60, QImage::Format_ARGB32);
+                image.fill(Qt::transparent);
+                QPainter painter(&image);
+                svgRenderer.render(&painter);
+                painter.end();
+                QByteArray svgData;
+                QBuffer buffer(&svgData);
+                buffer.open(QIODevice::WriteOnly);
+                image.save(file_name, "PNG");
+            }
+                QString html = "<img src=\""+file_name+"\">";
+                QTextCursor cursor = cust_brow->textCursor();
+                cursor.insertHtml(html);
+            flag=0;
+        }
+        else
     cust_brow->textCursor().insertText(copiedText);
 }
 
