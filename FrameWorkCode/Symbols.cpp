@@ -19,7 +19,6 @@
 
 SymbolsView *SymbolsView::symbolsView = 0;
 map<QChar,QString>mp;
-int flag=0;
 /*!
  * \fn SymbolsView::SymbolsView
  * \param QWidget->parent
@@ -29,6 +28,13 @@ int flag=0;
  */
 SymbolsView::SymbolsView(QWidget *parent, CustomTextBrowser *curr_brow) : QDialog(parent, Qt::WindowCloseButtonHint), ui(new Ui::SymbolsView)
 {
+    QString arr ="|↕→←↑↓↘↔↺↻↝⤡➤➢■●⓪▲▼◆⬟⬢○□△▭◇◯⊙⊕⊗⊘⦿⊃⊂∆∇⇒⇔⇗⇖⇘⇙⇩⇪⇧⇦⇨✦✧✩✪✫✰✱✲✵✶✽+-×÷=<>≤≥≠";
+
+        for(int i=0;i<arr.length();i++)
+        {
+            QString s = QString::number(i);
+            mp[arr[i]] = s;
+        }
     ui->setupUi(this);
     this->cust_brow = curr_brow;
     ui->MathematicalSymbols->setText(
@@ -194,8 +200,6 @@ bool SymbolsView::eventFilter(QObject *obj, QEvent *event){
  */
 void SymbolsView::tabChanged(int idx)
 {
-    if(idx==3)
-        flag=1;
     QWidget *widget = ui->tabWidget->widget(idx);
     QList<QTextEdit*> allTextEdits = widget->findChildren<QTextEdit*>();
     if(allTextEdits.count()!= 1)
@@ -218,37 +222,26 @@ SymbolsView::~SymbolsView()
  */
 void SymbolsView::on_copyButton_clicked()
 {
-    QString arr ="|↕→←↑↓↘↔↺↻↝⤡➤➢■●⓪▲▼◆⬟⬢○□△▭◇◯⊙⊕⊗⊘⦿⊃⊂∆∇⇒⇔⇗⇖⇘⇙⇩⇪⇧⇦⇨✦✧✩✪✫✰✱✲✵✶✽+-×÷=<>≤≥≠";
 
-        for(int i=0;i<arr.length();i++)
-        {
-            //QString p = QString(QChar(arr[i]));
-            QChar a = arr[i];
-            QString s = QString::number(i);
-            mp[a] = s;
-        }
     QClipboard *clipboard = QApplication::clipboard();
     currentTab->copy();
     QString copiedText = clipboard->text();
     int x= ui->tabWidget->currentIndex();
         if(x==3)
-            flag=1;
-        if(flag==1)
         {
             QChar t = copiedText.back();
-                QString w;
-                if(mp.find(t)!=mp.end())
-                    {
-                        w = mp[t];
-
-                    }
-            QSvgRenderer svgRenderer;
-            svgRenderer.load(QString(":/Images/Resources/Old Icons/" + w + ".svg"));
+            QString w;
             if(!QDir("../Inserted_Images").exists())
                 QDir().mkdir("../Inserted_Images");
                 QDir dir("../Inserted_Images");
                 QString count = QString::number(dir.count() +1);
                 QString file_name = "../Inserted_Images/"+count+".png";
+            if(mp.find(t)!=mp.end())
+            {
+                w=mp[t];
+            }
+            QSvgRenderer svgRenderer;
+            svgRenderer.load(QString(":/Images/Resources/Old Icons/" + w + ".svg"));
             if(svgRenderer.defaultSize().isEmpty())
             {
                 QFont font("Arial", 24);
@@ -265,7 +258,7 @@ void SymbolsView::on_copyButton_clicked()
                    image.save(file_name);
             }
             else
-            {
+            {           
                 QImage image(60, 60, QImage::Format_ARGB32);
                 image.fill(Qt::transparent);
                 QPainter painter(&image);
@@ -278,8 +271,7 @@ void SymbolsView::on_copyButton_clicked()
             }
                 QString html = "<img src=\""+file_name+"\">";
                 QTextCursor cursor = cust_brow->textCursor();
-                cursor.insertHtml(html);
-            flag=0;
+                cursor.insertHtml(html);            
         }
         else
     cust_brow->textCursor().insertText(copiedText);
