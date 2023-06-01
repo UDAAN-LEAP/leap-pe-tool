@@ -547,6 +547,11 @@ private slots:
 
     void on_pushButton_7_clicked();
 
+    void on_actionPaste_without_Format_triggered();
+
+    void on_actionClear_Settings_triggered();
+
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
