@@ -164,6 +164,63 @@ QDialog *tableDialog;
  * \brief This is the constructor which creates the GUI and does all the prerequisites which are needed to be done
  * \param parent
  */
+QString latest;
+bool check_for_update()
+{
+    //cout<<" i am in "<<endl;
+    QUrl url("https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/releases");
+    QNetworkRequest request(url);               //requesting url over the network
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QNetworkAccessManager nam;                  //sending network request
+    QNetworkReply * reply = nam.get(request);
+
+    while(true){
+        qApp->processEvents();
+        if(reply->isFinished()) break;
+    }
+
+    if(reply->isFinished()){
+        QByteArray response_data = reply->readAll();
+        QJsonDocument json = QJsonDocument::fromJson(response_data);
+        qDebug() << json[0]["name"].toString();
+        if(json[0]["name"].toString() == "")
+        {
+            qDebug() << QString("Timeout .... Internet Not Available");
+            QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Check your internet connection.");
+            return false;
+        }
+        QString latestVersion=json[0]["name"].toString();
+        //QString newFeatures = json[0]["body"].toString();
+        qDebug()<<latestVersion;
+        QString curr_version = qApp->applicationVersion();
+        //QString latestVersion = UpdateInfo();
+        qDebug() << curr_version;
+        if(curr_version!=latestVersion)
+        {
+
+            latest=latestVersion;
+            return true;
+        }
+
+    }
+}
+void saveDonot_Pref(bool value)
+{
+    // Store the preference in a configuration file or database
+    // Here's an example of how you can use QSettings to save the preference
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.setValue("donot_pref", value);
+}
+bool retrieve()
+{
+    // Retrieve the preference from the stored configuration file or database
+    // Here's an example of how you can use QSettings to retrieve the preference
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    return settings.value("donot_pref", false).toBool();
+}
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -262,6 +319,44 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     QString value = settings.value("consent").toString();
     if(value != "dna" && value != "loggedIn"){
         login();
+    }
+    if(check_for_update()==true)
+    {
+        // cout<<"i am in it"<<endl;
+        QDialog dialog(this);
+        QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+        form.addRow(new QLabel("Update Available: Click On Ok To Update Now", this));
+
+        QCheckBox checkBox("Do not ask again", &dialog); // Create the checkbox
+        form.addRow(&checkBox);
+        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+        form.addRow(&buttonBox);
+        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+        //QString dictFilename1;
+        bool show_d=true;
+        bool donot_pref=retrieve();
+        if(donot_pref==true)
+        {
+            show_d=false;
+        }
+
+        //! Show the dialog as modal
+        if(show_d==true)
+        {
+            if (dialog.exec() == QDialog::Accepted)
+            {
+                bool doNotAskAgain = checkBox.isChecked();
+                if(doNotAskAgain==true)
+                {
+                    saveDonot_Pref(true);
+                }
+                else
+                    update_tool(latest);
+            }
+
+        }
+
     }
 
     QString common = "डॉ - xZ,, अ  - a,, आ/ ा  - A,, इ/ ि  - i,, ई/ ी  - I,, उ/ ु  - u,, ऊ/ ू  - U,, ऋ/ ृ  - f,, ए/ े  - e,, ऐ/ ै  - E,, ओ/ ो  - o,, औ/ ौ  - O,, ं  - M,, ः  - H,,  ँ   - ~,, ज्ञ  - jYa,, त्र  - tra,, श्र  - Sra,, क्ष्/क्ष  - kz/kza,, द्य्/द्य  - dy/dya,, क्/क  - k/ka,, ख्/ख  - K/Ka,, ग्/ग  - g/ga,, घ्/घ  - G/Ga,, ङ्/ङ  - N/Na,, च्/च  - c/ca,, छ्/छ  - C/Ca,, ज्/ज  - j/ja,, झ्/झ  - J/Ja,, ञ्/ञ  - Y/Ya,, ट्/ट  - w/wa,, ठ्/ठ  - W/Wa,, ड्/ड  - q/qa,, ढ्/ढ  - Q/Qa,, ण्/ण  - R/Ra,, त्/त  - t/ta,, थ्/थ  - T/Ta,, द्/द  - d/da,, ध्/ध  - D/Da,, न्/न  - n/na,, प्/प  - p/pa,, फ्/फ  - P/Pa,, ब्/ब  - b/ba,, भ्/भ  - B/Ba,, म्/म  - m/ma,, य्/य  - y/ya,, र्/र  - r/ra,, ल्/ल  - l/la,, व्/व  - v/va,, श्/श  - S/Sa,, ष्/ष  - z/za,, स्/स  - s/sa,, ह्/ह  - h/ha,, ळ्/ळ  - L/La,, १  - 1,, २  - 2,, ३  - 3,, ४  - 4,, ५  - 5,, ६  - 6,, ७  - 7,, ८  - 8,, ९  - 9,, ०  - 0,, ।  - |,, ॥  - ||";
@@ -1155,11 +1250,11 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
     // Testing of project.xml
     VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
-    int result = verifySetObj.testProjectXML();
+   // int result = verifySetObj.testProjectXML();
     if(mProject.isProjectOpen()){ //checking if some project is opened, then closing it before opening new project
         on_actionClose_project_triggered();
     }
-
+    int result=0;
 
 //    correct.clear();
 //    verify.clear();
@@ -7861,80 +7956,171 @@ void MainWindow::RecentPageInfo()
  */
 void MainWindow::on_actionCheck_for_Updates_triggered()
 {
-    QUrl url("https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/releases");
-    //    qInfo() << url.toString();
-    QNetworkRequest request(url);               //requesting url over the network
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QNetworkAccessManager nam;                  //sending network request
-    QNetworkReply * reply = nam.get(request);
-    //    QTimer *timer = new QTimer();
-    //    timer->start(5000);
+    QDialog dialog(this);
+    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+    form.addRow(new QLabel("Update Available: Click On Ok To Update Now", this));
 
-    while(true){
-        qApp->processEvents();
-        if(reply->isFinished()) break;
-    }
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    QPushButton* updateButton = buttonBox.button(QDialogButtonBox::Ok);
+    QPushButton* rollbackButton = buttonBox.button(QDialogButtonBox::Cancel);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+    updateButton->setText("Update New Version");
+    rollbackButton->setText("Rollback to Previous Version");
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        QUrl url("https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/releases");
+        //    qInfo() << url.toString();
+        QNetworkRequest request(url);               //requesting url over the network
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+        QNetworkAccessManager nam;                  //sending network request
+        QNetworkReply * reply = nam.get(request);
+        //    QTimer *timer = new QTimer();
+        //    timer->start(5000);
 
-    if(reply->isFinished()){
-        QByteArray response_data = reply->readAll();
-        QJsonDocument json = QJsonDocument::fromJson(response_data);
-        qDebug() << json[0]["name"].toString();
-        if(json[0]["name"].toString() == "")
-        {
-            qDebug() << QString("Timeout .... Internet Not Available");
-            QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Check your internet connection.");
-            return;
+        while(true){
+            qApp->processEvents();
+            if(reply->isFinished()) break;
         }
-        QString latestVersion=json[0]["name"].toString();
-        QString newFeatures = json[0]["body"].toString();
-        qDebug()<<latestVersion;
-        QString curr_version = qApp->applicationVersion();
-        //QString latestVersion = UpdateInfo();
-        qDebug() << curr_version;
-        if(curr_version==latestVersion)
-        {
-            QMessageBox box;
-            box.setText("There are currently no updates available");
-            box.exec();
-        }
-        else{
-            QMessageBox msg;
-            msg.setWindowTitle("Update Available");
-            msg.setIcon(QMessageBox::Information);
-            msg.setText("A New Version of Udaan Editing Tool is Available!!\n\nUdaan Editing Tool "+latestVersion+"\nTo Download the latest version of this software click 'Update' button below");
 
-            QAbstractButton *rml = msg.addButton(tr("Later"), QMessageBox::RejectRole);
-            rml->setMaximumWidth(60);
-            QAbstractButton *features = msg.addButton(tr("What's New?"), QMessageBox::ApplyRole);
-            features->setMinimumWidth(80);
-            QAbstractButton *download = msg.addButton(tr("Update"), QMessageBox::ActionRole);
-            download->setMinimumWidth(60);
+        if(reply->isFinished()){
+            QByteArray response_data = reply->readAll();
+            QJsonDocument json = QJsonDocument::fromJson(response_data);
+            qDebug() << json[0]["name"].toString();
+            if(json[0]["name"].toString() == "")
+            {
+                qDebug() << QString("Timeout .... Internet Not Available");
+                QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Check your internet connection.");
+                return;
+            }
+            QString latestVersion=json[0]["name"].toString();
+            QString newFeatures = json[0]["body"].toString();
+            qDebug()<<latestVersion;
+            QString curr_version = qApp->applicationVersion();
+            //QString latestVersion = UpdateInfo();
+            qDebug() << curr_version;
+            if(curr_version==latestVersion)
+            {
+                QMessageBox box;
+                box.setText("There are currently no updates available");
+                box.exec();
+            }
+            else{
+                QMessageBox msg;
+                msg.setWindowTitle("Update Available");
+                msg.setIcon(QMessageBox::Information);
+                msg.setText("A New Version of Udaan Editing Tool is Available!!\n\nUdaan Editing Tool "+latestVersion+"\nTo Download the latest version of this software click 'Update' button below");
 
-            msg.exec();
+                QAbstractButton *rml = msg.addButton(tr("Later"), QMessageBox::RejectRole);
+                rml->setMaximumWidth(60);
+                QAbstractButton *features = msg.addButton(tr("What's New?"), QMessageBox::ApplyRole);
+                features->setMinimumWidth(80);
+                QAbstractButton *download = msg.addButton(tr("Update"), QMessageBox::ActionRole);
+                download->setMinimumWidth(60);
 
-            if(msg.clickedButton() == features){
-                QDialog new_features(this);
-                QFormLayout form(&new_features);
-                form.addRow(new QLabel("What's new in "+latestVersion + "\n" + newFeatures,this));
+                msg.exec();
 
-                QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&new_features);
-                buttonbox.button(QDialogButtonBox::Ok)->setText("Update");
-                form.addRow(&buttonbox);
+                if(msg.clickedButton() == features){
+                    QDialog new_features(this);
+                    QFormLayout form(&new_features);
+                    form.addRow(new QLabel("What's new in "+latestVersion + "\n" + newFeatures,this));
 
-                QObject::connect(&buttonbox,SIGNAL(accepted()),&new_features,SLOT(accept()));
-                QObject::connect(&buttonbox,SIGNAL(rejected()),&new_features,SLOT(reject()));
-                if(new_features.exec() ==QDialog::Accepted)
+                    QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&new_features);
+                    buttonbox.button(QDialogButtonBox::Ok)->setText("Update");
+                    form.addRow(&buttonbox);
+
+                    QObject::connect(&buttonbox,SIGNAL(accepted()),&new_features,SLOT(accept()));
+                    QObject::connect(&buttonbox,SIGNAL(rejected()),&new_features,SLOT(reject()));
+                    if(new_features.exec() ==QDialog::Accepted)
+                        update_tool(latestVersion);
+                }
+                if(msg.clickedButton() == download){
                     update_tool(latestVersion);
-            }
-            if(msg.clickedButton() == download){
-                update_tool(latestVersion);
-            }
-            else {
-                msg.close();
+                }
+                else {
+                    msg.close();
+                }
             }
         }
     }
+    else
+    {
+        QUrl url("https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/releases");
+        QNetworkRequest request(url);
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+        QNetworkAccessManager nam;
+        QNetworkReply *reply = nam.get(request);
+
+        while (true) {
+            qApp->processEvents();
+            if (reply->isFinished())
+                break;
+        }
+
+        if (reply->isFinished()) {
+            QByteArray response_data = reply->readAll();
+            QJsonDocument json = QJsonDocument::fromJson(response_data);
+
+            QJsonArray releasesArray = json.array();
+            if (releasesArray.size() >= 2) {
+                QJsonObject previousRelease = releasesArray.at(1).toObject();
+                QString previousVersion = previousRelease["name"].toString();
+                QString newFeatures = previousRelease["body"].toString();
+                qDebug() << previousVersion;
+
+                QString curr_version = qApp->applicationVersion();
+                qDebug() << curr_version;
+
+                if (curr_version == previousVersion) {
+                    QMessageBox box;
+                    box.setText("There are currently no updates available");
+                    box.exec();
+                } else {
+                    QMessageBox msg;
+                    msg.setWindowTitle("Update Available");
+                    msg.setIcon(QMessageBox::Information);
+                    msg.setText("A Previous Version of Udaan Editing Tool is Available!!\n\nUdaan Editing Tool " + previousVersion + "\nTo Download the previous version of this software, click the 'Update' button below");
+
+                    QAbstractButton *rml = msg.addButton(tr("Later"), QMessageBox::RejectRole);
+                    rml->setMaximumWidth(60);
+                    QAbstractButton *features = msg.addButton(tr("What's New?"), QMessageBox::ApplyRole);
+                    features->setMinimumWidth(80);
+                    QAbstractButton *download = msg.addButton(tr("Update"), QMessageBox::ActionRole);
+                    download->setMinimumWidth(60);
+
+                    msg.exec();
+
+                    if (msg.clickedButton() == features) {
+                        QDialog new_features(this);
+                        QFormLayout form(&new_features);
+                        form.addRow(new QLabel("What's new in " + previousVersion + "\n" + newFeatures, this));
+
+                        QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &new_features);
+                        buttonbox.button(QDialogButtonBox::Ok)->setText("Update");
+                        form.addRow(&buttonbox);
+
+                        QObject::connect(&buttonbox, SIGNAL(accepted()), &new_features, SLOT(accept()));
+                        QObject::connect(&buttonbox, SIGNAL(rejected()), &new_features, SLOT(reject()));
+                        if (new_features.exec() == QDialog::Accepted)
+                        update_tool(previousVersion);
+                    }
+
+                    if (msg.clickedButton() == download) {
+                        update_tool(previousVersion);
+                    } else {
+                        msg.close();
+                    }
+                }
+            }
+        }
+
+    }
+
+
+
 }
+
 
 /*!
  * \fn MainWindow::on_find_clicked
@@ -10932,6 +11118,80 @@ void MainWindow::on_actionCircle_triggered()
 void MainWindow::on_actionSquare_triggered()
 {
     insertList(QTextListFormat::ListSquare);
+}
+void MainWindow::on_pushButton_7_clicked()
+{
+    QDialog dialog(this);
+    QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+    form.addRow(new QLabel("Enter the Word and the Title", this));
+
+    //! Add the lineEdits with their respective labels
+    QLineEdit *Text1 = new QLineEdit(&dialog);
+    QLineEdit *Text2 = new QLineEdit(&dialog);
+    form.addRow("Word", Text1);
+    form.addRow("Meaning", Text2);
+
+    //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+    //QString dictFilename1;
+
+    //! Show the dialog as modal
+    if (dialog.exec() == QDialog::Accepted)
+    {     QString T1 = Text1->text();
+        QString T2 = Text2->text();
+        //qDebug()<<T1<<" "<<T2<<endl;
+        QString dictFilename;
+        dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
+        //dictFilename.replace(".txt", ".dict");
+        dictFilename.replace(".html", ".dict");
+
+
+
+        QFile jsonFile(dictFilename);
+        if (jsonFile.open(QIODevice::ReadWrite | QIODevice::Text))
+        {
+            QByteArray jsonData = jsonFile.readAll();
+            QJsonDocument doc = QJsonDocument::fromJson(jsonData);
+            QJsonObject rootObj = doc.object();
+
+            // Find the existing object within the root object
+            QString existingObjectName = "words"; // Modify this according to your JSON structure
+            QJsonValue existingObjectValue = rootObj.value(existingObjectName);
+
+            // Check if the existing object is a valid JSON object
+            if (existingObjectValue.isObject())
+            {
+                // Convert the existing object to a QJsonObject
+                QJsonObject existingObject = existingObjectValue.toObject();
+
+                // Insert the new key-value pair into the existing object
+                QJsonArray existingArray;
+                existingArray.append(T2);
+                existingObject[T1] = existingArray;
+
+                // Update the root object with the modified existing object
+                rootObj[existingObjectName] = existingObject;
+
+                // Update the QJsonDocument with the modified root object
+                doc.setObject(rootObj);
+
+                // Clear the file contents and write the updated JSON data back to the file
+                jsonFile.resize(0);
+                jsonFile.write(doc.toJson());
+            }
+            else
+            {
+                qDebug() << "Error: Existing object is not a valid JSON object.";
+            }
+
+            jsonFile.close();
+        }
+    }
+
+
 }
 
 
