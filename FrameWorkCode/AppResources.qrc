@@ -87,6 +87,25 @@
         <file>Resources/copy-modified.png</file>
         <file>Resources/cut-modified.png</file>
         <file>Resources/auto_suggestion.png</file>
+        <file>Resources/Old Icons/63.svg</file>
+        <file>Resources/Old Icons/62.svg</file>
+        <file>Resources/Old Icons/61.svg</file>
+        <file>Resources/Old Icons/60.svg</file>
+        <file>Resources/Old Icons/59.svg</file>
+        <file>Resources/Old Icons/27.svg</file>
+        <file>Resources/Old Icons/26.svg</file>
+        <file>Resources/Old Icons/25.svg</file>
+        <file>Resources/Old Icons/24.svg</file>
+        <file>Resources/Old Icons/23.svg</file>
+        <file>Resources/Old Icons/19.svg</file>
+        <file>Resources/Old Icons/14.svg</file>
+        <file>Resources/Old Icons/11.svg</file>
+        <file>Resources/Old Icons/7.svg</file>
+        <file>Resources/Old Icons/5.svg</file>
+        <file>Resources/Old Icons/4.svg</file>
+        <file>Resources/Old Icons/3.svg</file>
+        <file>Resources/Old Icons/2.svg</file>
+        <file>Resources/Old Icons/1.svg</file>
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>
