@@ -10936,6 +10936,7 @@ void MainWindow::on_pushButton_7_clicked()
     form.addRow("Word", word);
     form.addRow("Meaning", meaning);
 
+
     //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
     form.addRow(&buttonBox);
@@ -10987,6 +10988,11 @@ void MainWindow::on_pushButton_7_clicked()
     }
 }
 
+/*!
+ * \fn MainWindow::check_for_updates
+ * \brief Checks if a any update is available.
+ * \return
+ */
 QString MainWindow::check_for_updates(){
     QUrl url("https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/releases");
     QNetworkRequest request(url);               //requesting url over the network
@@ -11012,4 +11018,29 @@ QString MainWindow::check_for_updates(){
         return latestVersion;
     }
     return "false";
+}
+
+/*!
+ * \fn MainWindow::on_actionPaste_without_Format_triggered()
+ * \brief Only copies text that is copied on the clipboard and paste in curr_browser
+*/
+void MainWindow::on_actionPaste_without_Format_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+    if(clipboardone->text() != ""){
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.setCharFormat(QTextCharFormat());
+        cursor.insertText(clipboardone->text());
+    }
+}
+
+/*!
+ * \fn  MainWindow::on_actionClear_Settings_triggered()
+ * \brief This function resets the settings of the application
+*/
+void MainWindow::on_actionClear_Settings_triggered()
+{
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.clear();
 }

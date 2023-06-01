@@ -1184,6 +1184,7 @@ QMenu::item:selected{
     <addaction name="separator"/>
     <addaction name="actionAbout_Udaan_PE"/>
     <addaction name="separator"/>
+    <addaction name="actionClear_Settings"/>
    </widget>
    <widget class="QMenu" name="menuOCR_Correction_Window">
     <property name="styleSheet">
@@ -1393,6 +1394,7 @@ QMenu::item:selected{
     <addaction name="actionCut"/>
     <addaction name="actionCopy"/>
     <addaction name="actionPaste"/>
+    <addaction name="actionPaste_without_Format"/>
     <addaction name="separator"/>
     <addaction name="actionSelect_All"/>
     <addaction name="actionDelete"/>
@@ -2752,26 +2754,46 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionDecimal">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/decimal.png</normaloff>:/Images/Resources/decimal.png</iconset>
+   </property>
    <property name="text">
     <string>Decimal</string>
    </property>
   </action>
   <action name="actionLower_Alpha">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/lower.png</normaloff>:/Images/Resources/lower.png</iconset>
+   </property>
    <property name="text">
     <string>Lower Alpha</string>
    </property>
   </action>
   <action name="actionUpper_Alpha">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/upper.png</normaloff>:/Images/Resources/upper.png</iconset>
+   </property>
    <property name="text">
     <string>Upper Alpha</string>
    </property>
   </action>
   <action name="actionLower_Roman">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/lower_roman.png</normaloff>:/Images/Resources/lower_roman.png</iconset>
+   </property>
    <property name="text">
     <string>Lower Roman</string>
    </property>
   </action>
   <action name="actionUpper_Roman">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/upper_roman.png</normaloff>:/Images/Resources/upper_roman.png</iconset>
+   </property>
    <property name="text">
     <string>Upper  Roman</string>
    </property>
@@ -2801,6 +2823,24 @@ background-color: #EEF0F2;
    </property>
    <property name="text">
     <string>Square</string>
+   </property>
+  </action>
+  <action name="actionPaste_without_Format">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/paste_without_format.png</normaloff>:/Images/Resources/paste_without_format.png</iconset>
+   </property>
+   <property name="text">
+    <string>Paste without Format</string>
+   </property>
+  </action>
+  <action name="actionClear_Settings">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/reset_settings.png</normaloff>:/Images/Resources/reset_settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>Clear Settings</string>
    </property>
   </action>
  </widget>
