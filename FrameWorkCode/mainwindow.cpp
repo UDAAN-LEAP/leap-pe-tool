@@ -263,6 +263,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     if(value != "dna" && value != "loggedIn"){
         login();
     }
+    settings.endGroup();
 
     QString common = "डॉ - xZ,, अ  - a,, आ/ ा  - A,, इ/ ि  - i,, ई/ ी  - I,, उ/ ु  - u,, ऊ/ ू  - U,, ऋ/ ृ  - f,, ए/ े  - e,, ऐ/ ै  - E,, ओ/ ो  - o,, औ/ ौ  - O,, ं  - M,, ः  - H,,  ँ   - ~,, ज्ञ  - jYa,, त्र  - tra,, श्र  - Sra,, क्ष्/क्ष  - kz/kza,, द्य्/द्य  - dy/dya,, क्/क  - k/ka,, ख्/ख  - K/Ka,, ग्/ग  - g/ga,, घ्/घ  - G/Ga,, ङ्/ङ  - N/Na,, च्/च  - c/ca,, छ्/छ  - C/Ca,, ज्/ज  - j/ja,, झ्/झ  - J/Ja,, ञ्/ञ  - Y/Ya,, ट्/ट  - w/wa,, ठ्/ठ  - W/Wa,, ड्/ड  - q/qa,, ढ्/ढ  - Q/Qa,, ण्/ण  - R/Ra,, त्/त  - t/ta,, थ्/थ  - T/Ta,, द्/द  - d/da,, ध्/ध  - D/Da,, न्/न  - n/na,, प्/प  - p/pa,, फ्/फ  - P/Pa,, ब्/ब  - b/ba,, भ्/भ  - B/Ba,, म्/म  - m/ma,, य्/य  - y/ya,, र्/र  - r/ra,, ल्/ल  - l/la,, व्/व  - v/va,, श्/श  - S/Sa,, ष्/ष  - z/za,, स्/स  - s/sa,, ह्/ह  - h/ha,, ळ्/ळ  - L/La,, १  - 1,, २  - 2,, ३  - 3,, ४  - 4,, ५  - 5,, ६  - 6,, ७  - 7,, ८  - 8,, ९  - 9,, ०  - 0,, ।  - |,, ॥  - ||";
     gSanskrit = "SLP1 Sanskrit Guide:";
@@ -349,6 +350,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     //saves current path - useful for auto upgrade feature
     m_update_path = QDir().currentPath();
 
+    //check for new update whenn tool is launched
+    settings.beginGroup("update");
+    QString consent = settings.value("value").toString();
+    settings.endGroup();
+    if(consent != "false")
+    on_actionCheck_for_Updates_triggered(1);
 }
 
 /*!
@@ -7859,49 +7866,28 @@ void MainWindow::RecentPageInfo()
  * Latest Version is download if Current version is not equal to Latest Version.
  * (Later) Button is also set if user does not want to upgrade this time.
  */
-void MainWindow::on_actionCheck_for_Updates_triggered()
+void MainWindow::on_actionCheck_for_Updates_triggered(int arg)
 {
-    QUrl url("https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/releases");
-    //    qInfo() << url.toString();
-    QNetworkRequest request(url);               //requesting url over the network
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QNetworkAccessManager nam;                  //sending network request
-    QNetworkReply * reply = nam.get(request);
-    //    QTimer *timer = new QTimer();
-    //    timer->start(5000);
-
-    while(true){
-        qApp->processEvents();
-        if(reply->isFinished()) break;
-    }
-
-    if(reply->isFinished()){
-        QByteArray response_data = reply->readAll();
-        QJsonDocument json = QJsonDocument::fromJson(response_data);
-        qDebug() << json[0]["name"].toString();
-        if(json[0]["name"].toString() == "")
-        {
-            qDebug() << QString("Timeout .... Internet Not Available");
-            QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Check your internet connection.");
-            return;
-        }
-        QString latestVersion=json[0]["name"].toString();
-        QString newFeatures = json[0]["body"].toString();
-        qDebug()<<latestVersion;
+        QString latestVersion = check_for_updates();
+        if(latestVersion == "false") return;
         QString curr_version = qApp->applicationVersion();
         //QString latestVersion = UpdateInfo();
         qDebug() << curr_version;
         if(curr_version==latestVersion)
         {
+            if(arg!=1){
             QMessageBox box;
             box.setText("There are currently no updates available");
-            box.exec();
+            box.exec();}
         }
         else{
+            QString message = "Exciting news for all our users 🥳! We are thrilled to introduce the latest version of our post-editing tool, designed to take your editing experience to the next level🔥."
+                    " With enhanced features and a streamlined interface, you can now edit faster and more efficiently than ever before. Don't wait, upgrade now and start enjoying the benefits of the new and improved post-editing tool! ✨ "
+                    "\nClick What's New button to Read full list of upgraded features🙂";
             QMessageBox msg;
             msg.setWindowTitle("Update Available");
             msg.setIcon(QMessageBox::Information);
-            msg.setText("A New Version of Udaan Editing Tool is Available!!\n\nUdaan Editing Tool "+latestVersion+"\nTo Download the latest version of this software click 'Update' button below");
+            msg.setText("A New Version of Udaan Editing Tool is Available!!\n\nUdaan Editing Tool "+latestVersion+"\n"+message+"\nTo Download the latest version of this software click 'Update' button below");
 
             QAbstractButton *rml = msg.addButton(tr("Later"), QMessageBox::RejectRole);
             rml->setMaximumWidth(60);
@@ -7909,22 +7895,16 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
             features->setMinimumWidth(80);
             QAbstractButton *download = msg.addButton(tr("Update"), QMessageBox::ActionRole);
             download->setMinimumWidth(60);
+            if(arg == 1){
+                QCheckBox *cb = new QCheckBox("Do not ask again");
+                cb->setStyleSheet("color: white;");
+                msg.setCheckBox(cb);
+            }
 
             msg.exec();
 
             if(msg.clickedButton() == features){
-                QDialog new_features(this);
-                QFormLayout form(&new_features);
-                form.addRow(new QLabel("What's new in "+latestVersion + "\n" + newFeatures,this));
-
-                QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&new_features);
-                buttonbox.button(QDialogButtonBox::Ok)->setText("Update");
-                form.addRow(&buttonbox);
-
-                QObject::connect(&buttonbox,SIGNAL(accepted()),&new_features,SLOT(accept()));
-                QObject::connect(&buttonbox,SIGNAL(rejected()),&new_features,SLOT(reject()));
-                if(new_features.exec() ==QDialog::Accepted)
-                    update_tool(latestVersion);
+                QDesktopServices::openUrl(QUrl("https://github.com/UDAAN-LEAP/leap-pe-tool/releases", QUrl::TolerantMode));
             }
             if(msg.clickedButton() == download){
                 update_tool(latestVersion);
@@ -7932,8 +7912,13 @@ void MainWindow::on_actionCheck_for_Updates_triggered()
             else {
                 msg.close();
             }
+            if(arg ==1 && msg.checkBox()->checkState() == Qt::Checked){
+                QSettings settings("IIT-B", "OpenOCRCorrect");
+                settings.beginGroup("update");
+                settings.setValue("value","false");
+                settings.endGroup();
+            }
         }
-    }
 }
 
 /*!
@@ -11000,4 +10985,31 @@ void MainWindow::on_pushButton_7_clicked()
             jsonFile.close();
         }
     }
+}
+
+QString MainWindow::check_for_updates(){
+    QUrl url("https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/releases");
+    QNetworkRequest request(url);               //requesting url over the network
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QNetworkAccessManager nam;                  //sending network request
+    QNetworkReply * reply = nam.get(request);
+    while(true){
+        qApp->processEvents();
+        if(reply->isFinished()) break;
+    }
+    if(reply->isFinished()){
+        QByteArray response_data = reply->readAll();
+        QJsonDocument json = QJsonDocument::fromJson(response_data);
+        qDebug() << json[0]["name"].toString();
+        if(json[0]["name"].toString() == "")
+        {
+            qDebug() << QString("Timeout .... Internet Not Available");
+            QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Check your internet connection.");
+            return "false";
+        }
+        QString latestVersion=json[0]["name"].toString();
+        QString newFeatures = json[0]["body"].toString();
+        return latestVersion;
+    }
+    return "false";
 }

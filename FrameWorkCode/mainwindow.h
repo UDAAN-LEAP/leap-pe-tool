@@ -352,7 +352,7 @@ private slots:
 
     void on_action3_triggered();
 
-    void on_actionCheck_for_Updates_triggered();
+    void on_actionCheck_for_Updates_triggered(int arg = 2);
 
     void closeProgressBar();
 
@@ -634,10 +634,6 @@ private:
     QVector <QString> changedWords;
     QByteArray m_data;
     std::string m_user, m_pass;
-
-
-
-
     //Storing the status of the pages :-> Corrected || Verified
     QMap<QString,int>correct;
     QMap<QString,int>verify;
@@ -645,11 +641,9 @@ private:
     QString currentFile = "";
     QMap<QString,int>markForReview;
     QString m_update_path = "";
-
-
     int presentWidth;
     int currentTablePosition;
-
+    QString check_for_updates();
 };
 
 #endif // MAINWINDOW_H
