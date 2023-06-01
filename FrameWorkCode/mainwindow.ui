@@ -618,6 +618,21 @@ background-color: rgb(136, 138, 133);
             </item>
             <item>
              <widget class="QPushButton" name="pushButton_7">
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+background-color:rgb(227, 228, 228);
+border:0px;
+color: rgb(32, 33, 72);
+height:26.96px;
+border-radius:4.8px; 
+selection-color: rgb(32, 33, 72);
+ selection-background-color: rgb(136, 138, 133);
+margin-top: 1px;
+} 
+QPushButton:pressed {
+background-color: rgb(136, 138, 133);
+}</string>
+              </property>
               <property name="text">
                <string>Add Custom Words</string>
               </property>
