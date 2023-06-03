@@ -551,10 +551,9 @@ private slots:
 
     void on_actionClear_Settings_triggered();
 
-
     void on_actionFullScreen_triggered();
 
-    void on_actionRevertBack_triggered();
+    void on_pushButton_8_clicked();
 
 public slots:
     void on_actionLoad_Next_Page_triggered();

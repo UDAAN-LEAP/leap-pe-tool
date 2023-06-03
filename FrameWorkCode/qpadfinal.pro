@@ -32,7 +32,7 @@ CONFIG += c++11
 QMAKE_CXXFLAGS += -w
 
 # Windows icon
-#win32:RC_FILE += qpadfinal.rc
+win32:RC_FILE += qpadfinal.rc
 
 INCLUDEPATH += ../include
 INCLUDEPATH += $$PWD/../

@@ -414,7 +414,7 @@ void GlobalReplaceWorker::replaceWordsInFiles()
             if ((tempPerc > perc) && (tempPerc > 50)) {
                 perc = tempPerc;
                 emit changeProgressBarValue(perc);
-                if(estimationTime > 0 and estimationTime < numberOfFiles * 1 /120){
+                if(estimationTime > 0 && estimationTime < numberOfFiles * 1 /120){
                     emit changeProgressText(estimationTime);
                 }
             }

@@ -62,6 +62,19 @@ background-color: #BCBDBD; height:26.96px; width:30.03px; border:0px; padding:0p
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButton_8">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);
+image: url(:/Images/Resources/Old Icons/fullscreen.png);
+height:26.96px; width:30.03px; border:0px; padding:0px 3.6px;border-radius:6px;
+background-color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="pushButton_5">
           <property name="styleSheet">
            <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:30px; width:30px;padding-top:1px; border-radius:3px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
@@ -2854,17 +2867,6 @@ background-color: #EEF0F2;
    </property>
    <property name="toolTip">
     <string>FullScreen</string>
-   </property>
-  </action>
-  <action name="actionRevertBack">
-   <property name="text">
-    <string>RevertBack</string>
-   </property>
-   <property name="toolTip">
-    <string>RevertBack</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Shift+N</string>
    </property>
   </action>
  </widget>

@@ -233,6 +233,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->forward_Button->setVisible(false);
     ui->pushButton_6->setVisible(false);
     ui->actionFetch_2->setVisible(false);
+    ui->pushButton_8->setVisible(false);
 
     settings.beginGroup("cloudSave");
     settings.remove("");
@@ -355,7 +356,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     QString consent = settings.value("value").toString();
     settings.endGroup();
     if(consent != "false")
-    on_actionCheck_for_Updates_triggered(1);
+        on_actionCheck_for_Updates_triggered(1);
 }
 
 /*!
@@ -1168,22 +1169,22 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     }
 
 
-//    correct.clear();
-//    verify.clear();
-//    markForReview.clear();
-//    ui->status->setVisible(true);
+    //    correct.clear();
+    //    verify.clear();
+    //    markForReview.clear();
+    //    ui->status->setVisible(true);
 
-//    if(mRole == "Corrector"){
-//        ui->corrected->setVisible(true);
-//        ui->corrected->setEnabled(true);
-//    }
+    //    if(mRole == "Corrector"){
+    //        ui->corrected->setVisible(true);
+    //        ui->corrected->setEnabled(true);
+    //    }
 
-//    if(mRole == "Verifier"){
-//        ui->verified->setVisible(true);
-//        ui->mark_review->setVisible(true);
-//        ui->verified->setEnabled(true);
-//        ui->mark_review->setEnabled(true);
-//    }
+    //    if(mRole == "Verifier"){
+    //        ui->verified->setVisible(true);
+    //        ui->mark_review->setVisible(true);
+    //        ui->verified->setEnabled(true);
+    //        ui->mark_review->setEnabled(true);
+    //    }
 
 
     if (result != 0) {
@@ -1435,13 +1436,13 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         RecentPageInfo();
     }
 
-//    read_recorrected_pages();
-//    read_review_pages();
-//    read_corrected_pages();
-//    read_verified_pages();
+    //    read_recorrected_pages();
+    //    read_review_pages();
+    //    read_corrected_pages();
+    //    read_verified_pages();
 
-//    //<<<<<<Change
-//    pageStatusHandler();
+    //    //<<<<<<Change
+    //    pageStatusHandler();
 
 
     QMessageBox::information(0, "Success", "Project opened successfully.");
@@ -3370,10 +3371,10 @@ void MainWindow::on_actionFetch_2_triggered()
 void MainWindow::on_actionTurn_In_triggered()
 {
     //Save to cloud after writing the pages to files
-//    write_verified_pages();
-//    write_corrected_pages();
-//    write_review_pages();
-//    write_recorrected_pages();
+    //    write_verified_pages();
+    //    write_corrected_pages();
+    //    write_review_pages();
+    //    write_recorrected_pages();
 
 
     //! Checking if the files are saved or not.
@@ -3932,44 +3933,44 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     //! When user moves his mouse the system will ask user to download new update.
     if(event->type()== QEvent::MouseMove ){
 
-           if(curr_browser && !curr_browser->isReadOnly() && !curr_browser->textCursor().selectedText().isEmpty() && curr_browser->textCursor().selectedText() != "\n")
-           {
-               ui->actionCopy->setEnabled(true);
-               ui->actionCut->setEnabled(true);
-               ui->menuText->setEnabled(true);
-               ui->actionAllFontProperties->setEnabled(true);
-               ui->actionClear_Formatting->setEnabled(true);
-               ui->actionFontBlack->setEnabled(true);
-               ui->actionCopy_Format->setEnabled(true);
-               ui->actionPaste_Format->setEnabled(true);
-               ui->actionHighlight->setEnabled(true);
-           }
-
-           else
-           {
-                ui->actionCopy->setEnabled(false);
-                ui->actionCut->setEnabled(false);
-                ui->menuText->setEnabled(false);
-                ui->actionAllFontProperties->setEnabled(false);
-                ui->actionClear_Formatting->setEnabled(false);
-                ui->actionFontBlack->setEnabled(false);
-                ui->actionCopy_Format->setEnabled(false);
-                ui->actionPaste_Format->setEnabled(false);
-                ui->actionHighlight->setEnabled(false);
-           }
-
-       }
-    if(event->type() == QEvent::MouseMove)
+        if(curr_browser && !curr_browser->isReadOnly() && !curr_browser->textCursor().selectedText().isEmpty() && curr_browser->textCursor().selectedText() != "\n")
         {
-            if(curr_browser && !curr_browser->isReadOnly())
-            {
-                QString txt = curr_browser->textCursor().selection().toHtml();
-                if(txt.contains("/Equations_"))
-                    ui->actionEdit_Equation->setEnabled(true);
-                else
-                    ui->actionEdit_Equation->setEnabled(false);
-            }
+            ui->actionCopy->setEnabled(true);
+            ui->actionCut->setEnabled(true);
+            ui->menuText->setEnabled(true);
+            ui->actionAllFontProperties->setEnabled(true);
+            ui->actionClear_Formatting->setEnabled(true);
+            ui->actionFontBlack->setEnabled(true);
+            ui->actionCopy_Format->setEnabled(true);
+            ui->actionPaste_Format->setEnabled(true);
+            ui->actionHighlight->setEnabled(true);
         }
+
+        else
+        {
+            ui->actionCopy->setEnabled(false);
+            ui->actionCut->setEnabled(false);
+            ui->menuText->setEnabled(false);
+            ui->actionAllFontProperties->setEnabled(false);
+            ui->actionClear_Formatting->setEnabled(false);
+            ui->actionFontBlack->setEnabled(false);
+            ui->actionCopy_Format->setEnabled(false);
+            ui->actionPaste_Format->setEnabled(false);
+            ui->actionHighlight->setEnabled(false);
+        }
+
+    }
+    if(event->type() == QEvent::MouseMove)
+    {
+        if(curr_browser && !curr_browser->isReadOnly())
+        {
+            QString txt = curr_browser->textCursor().selection().toHtml();
+            if(txt.contains("/Equations_"))
+                ui->actionEdit_Equation->setEnabled(true);
+            else
+                ui->actionEdit_Equation->setEnabled(false);
+        }
+    }
     if(event->type() == QEvent::MouseMove){
         if(ui->tabWidget->width() == 0 && flag_tab != 1){
             ui->backward_Button->setVisible(false);
@@ -6837,10 +6838,10 @@ void MainWindow::closeEvent (QCloseEvent *event)
     }
 
 
-//    write_verified_pages();
-//    write_corrected_pages();
-//    write_review_pages();
-//    write_recorrected_pages();
+    //    write_verified_pages();
+    //    write_corrected_pages();
+    //    write_review_pages();
+    //    write_recorrected_pages();
 
     correct.clear();
     verify.clear();
@@ -6993,153 +6994,153 @@ void MainWindow::on_actionas_PDF_triggered()
         endPage = pdfRangeDialog->getEndPage();
 
 
-    qDebug() << startPage << " : " << endPage;
+        qDebug() << startPage << " : " << endPage;
 
 
-    //! Loop through all files
-    foreach(auto a, dir.entryList())
-    {
-        QString x = currentDirAbsolutePath + a;
-
-        //        startFrom = 0; // The position from which searchString will be scanned
-        //! if condition makes sure we extract only html files for PDF Processing
-        //! (folder has hocr, dict, htranslate, and other such files)
-        if(x.contains("."))
+        //! Loop through all files
+        foreach(auto a, dir.entryList())
         {
-            QStringList html_files = x.split(QRegExp("[.]"));
+            QString x = currentDirAbsolutePath + a;
 
-            //! condition to check if file is html
-            if(html_files[1]=="html")
+            //        startFrom = 0; // The position from which searchString will be scanned
+            //! if condition makes sure we extract only html files for PDF Processing
+            //! (folder has hocr, dict, htranslate, and other such files)
+            if(x.contains("."))
             {
-                if (itr < startPage) {
+                QStringList html_files = x.split(QRegExp("[.]"));
+
+                //! condition to check if file is html
+                if(html_files[1]=="html")
+                {
+                    if (itr < startPage) {
+                        itr++;
+                        continue;
+                    }
+
+                    QFile file(x);
+                    if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
+                    QTextStream stream(&file);
+                    stream.setCodec("UTF-8");
+
+                    //! Read the file
+
+                    mainHtml=stream.readAll();
+                    mainHtml.replace("background-color:","Background-colour:");
+                    //                mainHtml.remove("background-color:");
+                    //                mainHtml.remove("background-color:#ffff00");
+                    //                //! Changing the text background to white by setting the background to #fffff
+                    //                while (true){
+                    //                    stIndex = mainHtml.indexOf(searchString, startFrom);
+                    //                    if (stIndex == -1)
+                    //                        break;
+                    //                    stIndex += l; // increment line
+                    //                    mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
+                    //                    startFrom = stIndex + 6;
+                    //                }
+                    //! append counter when one file is fully scanned
+                    counter++;
+                    if(pdfRangeDialog->on_checkBox_clicked())
+                    {
+                        QTextDocument doc;
+                        doc.setHtml(mainHtml);
+                        QString s1 = doc.toPlainText();
+                        if(s1.count() == 0)
+                            continue;
+                    }
+
+                    //! Search for Latex code in html files and replace it by corresponding png images
+                    //! We save latext for mathematical equations in html, and show png in our tool as our tool can't render Latex
+                    if(mainHtml.contains("$$")){
+
+                        QRegularExpression rex_lat("<a(.*?)</a>",QRegularExpression::DotMatchesEverythingOption);
+                        QRegularExpressionMatchIterator itr_lat;
+                        itr_lat = rex_lat.globalMatch(mainHtml);
+                        while(itr_lat.hasNext()){
+
+                            QRegularExpressionMatch match = itr_lat.next();
+                            QString text = match.captured(1);
+
+                            if(text.contains("Equations_"))
+                            {
+                                int sindex = match.capturedStart(1);
+                                int l_index = match.capturedEnd(1);
+                                std::string inputText_ = text.toStdString();
+                                int ind = inputText_.find("/");
+                                int lindex = inputText_.find(".tex");
+
+                                std::string str = inputText_.substr(ind,lindex-ind);
+                                QString path = QString::fromStdString(str) + ".png";
+                                QString html = "<img src=\""+path+"\">";
+                                text = "<a"+text+"</a>";
+                                mainHtml.replace(text,html);
+                            }
+
+                        }
+                        mainHtml = mainHtml.replace("$$","dne_nqe"); //where dne_nqe is a random string used as end delimiter here.
+                        //Note that this string should not appear as an original text - else it will cause parsing issues.
+                        QRegularExpression rex_dollar("dne_nqe(.*?)dne_nqe",QRegularExpression::DotMatchesEverythingOption);
+                        mainHtml = mainHtml.remove(rex_dollar);
+                    }
+
+                    //! Once page html is extracted ... before we move to next page we add html tag
+                    //! for page break so that the PDF printer separates the pages
+                    //! We do this till all pages done
+                    if(counter<count){
+                        mainHtml+="<P style=\"page-break-before: always\"></P>";
+                    }
+                    file.close();
+                    html_contents.append(mainHtml);
                     itr++;
+
+                    if (itr == endPage) {
+                        break;
+                    }
+
+                }
+                //! if file is not html
+                else {
                     continue;
                 }
-
-                QFile file(x);
-                if (!file.open(QIODevice::ReadOnly)) qDebug() << "Error reading file main.html";
-                QTextStream stream(&file);
-                stream.setCodec("UTF-8");
-
-                //! Read the file
-
-                mainHtml=stream.readAll();
-                mainHtml.replace("background-color:","Background-colour:");
-                //                mainHtml.remove("background-color:");
-                //                mainHtml.remove("background-color:#ffff00");
-                //                //! Changing the text background to white by setting the background to #fffff
-                //                while (true){
-                //                    stIndex = mainHtml.indexOf(searchString, startFrom);
-                //                    if (stIndex == -1)
-                //                        break;
-                //                    stIndex += l; // increment line
-                //                    mainHtml.replace(stIndex, 6, whiteColor); // Here, 6 is used because length of whiteColor is 6
-                //                    startFrom = stIndex + 6;
-                //                }
-                //! append counter when one file is fully scanned
-                counter++;
-                if(pdfRangeDialog->on_checkBox_clicked())
-                {
-                    QTextDocument doc;
-                    doc.setHtml(mainHtml);
-                    QString s1 = doc.toPlainText();
-                    if(s1.count() == 0)
-                        continue;
-                }
-
-                //! Search for Latex code in html files and replace it by corresponding png images
-                //! We save latext for mathematical equations in html, and show png in our tool as our tool can't render Latex
-                if(mainHtml.contains("$$")){
-
-                    QRegularExpression rex_lat("<a(.*?)</a>",QRegularExpression::DotMatchesEverythingOption);
-                    QRegularExpressionMatchIterator itr_lat;
-                    itr_lat = rex_lat.globalMatch(mainHtml);
-                    while(itr_lat.hasNext()){
-
-                        QRegularExpressionMatch match = itr_lat.next();
-                        QString text = match.captured(1);
-
-                        if(text.contains("Equations_"))
-                        {
-                            int sindex = match.capturedStart(1);
-                            int l_index = match.capturedEnd(1);
-                            std::string inputText_ = text.toStdString();
-                            int ind = inputText_.find("/");
-                            int lindex = inputText_.find(".tex");
-
-                            std::string str = inputText_.substr(ind,lindex-ind);
-                            QString path = QString::fromStdString(str) + ".png";
-                            QString html = "<img src=\""+path+"\">";
-                            text = "<a"+text+"</a>";
-                            mainHtml.replace(text,html);
-                        }
-
-                    }
-                    mainHtml = mainHtml.replace("$$","dne_nqe"); //where dne_nqe is a random string used as end delimiter here.
-                    //Note that this string should not appear as an original text - else it will cause parsing issues.
-                    QRegularExpression rex_dollar("dne_nqe(.*?)dne_nqe",QRegularExpression::DotMatchesEverythingOption);
-                    mainHtml = mainHtml.remove(rex_dollar);
-                }
-
-                //! Once page html is extracted ... before we move to next page we add html tag
-                //! for page break so that the PDF printer separates the pages
-                //! We do this till all pages done
-                if(counter<count){
-                    mainHtml+="<P style=\"page-break-before: always\"></P>";
-                }
-                file.close();
-                html_contents.append(mainHtml);
-                itr++;
-
-                if (itr == endPage) {
-                    break;
-                }
-
-            }
-            //! if file is not html
-            else {
-                continue;
             }
         }
+
+        // Asking the path where to save the PDF
+        QString saveFileName = QFileDialog::getSaveFileName(this, "Save File", gDirTwoLevelUp, tr("PDF(*.pdf)"));
+
+        // New way of printing pdf
+        QPrinter printer(QPrinter::ScreenResolution);
+        printer.setPaperSize(QPrinter::A4);
+        printer.setPageMargins(QMarginsF(5, 5, 5, 5));
+        printer.setOutputFileName(saveFileName);
+        printer.setOutputFormat(QPrinter::NativeFormat);
+
+        QPrintDialog printDialog(&printer, this);
+
+        if (printDialog.exec() == QDialog::Accepted) {
+            PrintWorker *workerPrint = new PrintWorker(nullptr, html_contents);
+            QThread *thread = new QThread;
+            workerPrint->printer = printDialog.printer(); // Assigning the printer for printing (VERY IMPORTANT)
+
+            connect(thread, SIGNAL(started()), workerPrint, SLOT(printPDF()));
+            connect(workerPrint, SIGNAL(finishedPrintingPDF()), thread, SLOT(quit()));
+            connect(workerPrint, SIGNAL(finishedPrintingPDF()), workerPrint, SLOT(deleteLater()));
+            connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+            connect(workerPrint, SIGNAL(finishedPrintingPDF()), this, SLOT(stopSpinning()));
+
+            workerPrint->moveToThread(thread);
+            thread->start();
+            spinner = new LoadingSpinner(this);
+            spinner->SetMessage("Printing PDF...", "Printing...");
+            spinner->setModal(false);
+            spinner->exec();
+
+
+            QMessageBox::information(this, "Print Successful", "Printed PDF successfully", QMessageBox::Ok, QMessageBox::Ok);
+        }
     }
-
-    // Asking the path where to save the PDF
-    QString saveFileName = QFileDialog::getSaveFileName(this, "Save File", gDirTwoLevelUp, tr("PDF(*.pdf)"));
-
-    // New way of printing pdf
-    QPrinter printer(QPrinter::ScreenResolution);
-    printer.setPaperSize(QPrinter::A4);
-    printer.setPageMargins(QMarginsF(5, 5, 5, 5));
-    printer.setOutputFileName(saveFileName);
-    printer.setOutputFormat(QPrinter::NativeFormat);
-
-    QPrintDialog printDialog(&printer, this);
-
-    if (printDialog.exec() == QDialog::Accepted) {
-        PrintWorker *workerPrint = new PrintWorker(nullptr, html_contents);
-        QThread *thread = new QThread;
-        workerPrint->printer = printDialog.printer(); // Assigning the printer for printing (VERY IMPORTANT)
-
-        connect(thread, SIGNAL(started()), workerPrint, SLOT(printPDF()));
-        connect(workerPrint, SIGNAL(finishedPrintingPDF()), thread, SLOT(quit()));
-        connect(workerPrint, SIGNAL(finishedPrintingPDF()), workerPrint, SLOT(deleteLater()));
-        connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-        connect(workerPrint, SIGNAL(finishedPrintingPDF()), this, SLOT(stopSpinning()));
-
-        workerPrint->moveToThread(thread);
-        thread->start();
-        spinner = new LoadingSpinner(this);
-        spinner->SetMessage("Printing PDF...", "Printing...");
-        spinner->setModal(false);
-        spinner->exec();
-
-
-        QMessageBox::information(this, "Print Successful", "Printed PDF successfully", QMessageBox::Ok, QMessageBox::Ok);
-    }
-}
-else
+    else
     {
-    return;
+        return;
     }
 }
 
@@ -7868,57 +7869,57 @@ void MainWindow::RecentPageInfo()
  */
 void MainWindow::on_actionCheck_for_Updates_triggered(int arg)
 {
-        QString latestVersion = check_for_updates();
-        if(latestVersion == "false") return;
-        QString curr_version = qApp->applicationVersion();
-        //QString latestVersion = UpdateInfo();
-        qDebug() << curr_version;
-        if(curr_version==latestVersion)
-        {
-            if(arg!=1){
+    QString latestVersion = check_for_updates();
+    if(latestVersion == "false") return;
+    QString curr_version = qApp->applicationVersion();
+    //QString latestVersion = UpdateInfo();
+    qDebug() << curr_version;
+    if(curr_version==latestVersion)
+    {
+        if(arg!=1){
             QMessageBox box;
             box.setText("There are currently no updates available");
             box.exec();}
+    }
+    else{
+        QString message = "Exciting news for all our users 🥳! We are thrilled to introduce the latest version of our post-editing tool, designed to take your editing experience to the next level🔥."
+                          " With enhanced features and a streamlined interface, you can now edit faster and more efficiently than ever before. Don't wait, upgrade now and start enjoying the benefits of the new and improved post-editing tool! ✨ "
+                          "\nClick What's New button to Read full list of upgraded features🙂";
+        QMessageBox msg;
+        msg.setWindowTitle("Update Available");
+        msg.setIcon(QMessageBox::Information);
+        msg.setText("A New Version of Udaan Editing Tool is Available!!\n\nUdaan Editing Tool "+latestVersion+"\n"+message+"\nTo Download the latest version of this software click 'Update' button below");
+
+        QAbstractButton *rml = msg.addButton(tr("Later"), QMessageBox::RejectRole);
+        rml->setMaximumWidth(60);
+        QAbstractButton *features = msg.addButton(tr("What's New?"), QMessageBox::ApplyRole);
+        features->setMinimumWidth(80);
+        QAbstractButton *download = msg.addButton(tr("Update"), QMessageBox::ActionRole);
+        download->setMinimumWidth(60);
+        if(arg == 1){
+            QCheckBox *cb = new QCheckBox("Do not ask again");
+            cb->setStyleSheet("color: white;");
+            msg.setCheckBox(cb);
         }
-        else{
-            QString message = "Exciting news for all our users 🥳! We are thrilled to introduce the latest version of our post-editing tool, designed to take your editing experience to the next level🔥."
-                    " With enhanced features and a streamlined interface, you can now edit faster and more efficiently than ever before. Don't wait, upgrade now and start enjoying the benefits of the new and improved post-editing tool! ✨ "
-                    "\nClick What's New button to Read full list of upgraded features🙂";
-            QMessageBox msg;
-            msg.setWindowTitle("Update Available");
-            msg.setIcon(QMessageBox::Information);
-            msg.setText("A New Version of Udaan Editing Tool is Available!!\n\nUdaan Editing Tool "+latestVersion+"\n"+message+"\nTo Download the latest version of this software click 'Update' button below");
 
-            QAbstractButton *rml = msg.addButton(tr("Later"), QMessageBox::RejectRole);
-            rml->setMaximumWidth(60);
-            QAbstractButton *features = msg.addButton(tr("What's New?"), QMessageBox::ApplyRole);
-            features->setMinimumWidth(80);
-            QAbstractButton *download = msg.addButton(tr("Update"), QMessageBox::ActionRole);
-            download->setMinimumWidth(60);
-            if(arg == 1){
-                QCheckBox *cb = new QCheckBox("Do not ask again");
-                cb->setStyleSheet("color: white;");
-                msg.setCheckBox(cb);
-            }
+        msg.exec();
 
-            msg.exec();
-
-            if(msg.clickedButton() == features){
-                QDesktopServices::openUrl(QUrl("https://github.com/UDAAN-LEAP/leap-pe-tool/releases", QUrl::TolerantMode));
-            }
-            if(msg.clickedButton() == download){
-                update_tool(latestVersion);
-            }
-            else {
-                msg.close();
-            }
-            if(arg ==1 && msg.checkBox()->checkState() == Qt::Checked){
-                QSettings settings("IIT-B", "OpenOCRCorrect");
-                settings.beginGroup("update");
-                settings.setValue("value","false");
-                settings.endGroup();
-            }
+        if(msg.clickedButton() == features){
+            QDesktopServices::openUrl(QUrl("https://github.com/UDAAN-LEAP/leap-pe-tool/releases", QUrl::TolerantMode));
         }
+        if(msg.clickedButton() == download){
+            update_tool(latestVersion);
+        }
+        else {
+            msg.close();
+        }
+        if(arg ==1 && msg.checkBox()->checkState() == Qt::Checked){
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            settings.beginGroup("update");
+            settings.setValue("value","false");
+            settings.endGroup();
+        }
+    }
 }
 
 /*!
@@ -8573,10 +8574,10 @@ void MainWindow::on_actionClose_project_triggered()
     AddRecentProjects();
 
 
-//    write_verified_pages();
-//    write_corrected_pages();
-//    write_review_pages();
-//    write_recorrected_pages();
+    //    write_verified_pages();
+    //    write_corrected_pages();
+    //    write_review_pages();
+    //    write_recorrected_pages();
 
 
     correct.clear();
@@ -8780,10 +8781,10 @@ void MainWindow::on_actionEdit_Equation_triggered()
 void MainWindow::on_actionExit_triggered()
 {
 
-//    write_verified_pages();
-//    write_corrected_pages();
-//    write_review_pages();
-//    write_recorrected_pages();
+    //    write_verified_pages();
+    //    write_corrected_pages();
+    //    write_review_pages();
+    //    write_recorrected_pages();
 
     markForReview.clear();
     correct.clear();
@@ -9183,11 +9184,11 @@ void MainWindow::cloud_save(){
             settings.setValue("save","success" );
             settings.endGroup();
 
-//            //<<<<<<Change
-//            read_recorrected_pages();
-//            read_review_pages();
-//            read_corrected_pages();
-//            read_verified_pages();
+            //            //<<<<<<Change
+            //            read_recorrected_pages();
+            //            read_review_pages();
+            //            read_corrected_pages();
+            //            read_verified_pages();
 
             pageStatusHandler();
         }
@@ -9266,7 +9267,7 @@ void MainWindow::preprocessing(){
 void MainWindow::on_actionCopy_Format_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
-  //  QFont font = cursor.selectedText().currentFont();
+    //  QFont font = cursor.selectedText().currentFont();
     QFont font = curr_browser->currentFont();
     auto size = curr_browser->fontPointSize();
     QString fam = font.family();
@@ -9283,7 +9284,7 @@ void MainWindow::on_actionCopy_Format_triggered()
     bool isUnderline = cursor.charFormat().font().underline();
     bool isStrike = cursor.charFormat().font().strikeOut();
     int val = cursor.charFormat().font().capitalization();
-   QColor cl = curr_browser->textBackgroundColor();
+    QColor cl = curr_browser->textBackgroundColor();
     QColor color = curr_browser->textColor();
     Qt::Alignment align = curr_browser->alignment();
     auto var=0;
@@ -9322,12 +9323,12 @@ void MainWindow::on_actionPaste_Format_triggered()
     QTextCharFormat fmt;
     QString fam = settings.value("fam").toString();
     auto size = settings.value("size").toInt();
-     QString style = settings.value("style").toString();
-     int bold = settings.value("bold").toInt();
+    QString style = settings.value("style").toString();
+    int bold = settings.value("bold").toInt();
     font.setFamily(fam);
     font.setPointSize(size);
-   font.setStyleName(style);
-   font.setWeight(bold);
+    font.setStyleName(style);
+    font.setWeight(bold);
     auto var = settings.value("var").toInt();
     QString color = settings.value("color").toString();
     QString isBold =  settings.value("isBold").toString();
@@ -9337,20 +9338,20 @@ void MainWindow::on_actionPaste_Format_triggered()
     int val = settings.value("val").toInt();
     QString isStrike = settings.value("isStrike").toString();
 
-     fmt.setFontWeight(isBold=="false" ? QFont::Normal : QFont::Bold);
+    fmt.setFontWeight(isBold=="false" ? QFont::Normal : QFont::Bold);
     fmt.setFontItalic(isItalic == "false" ? false:true);
     fmt.setFontUnderline(isUnderline =="false" ? false:true);
     font.setUnderline(isUnderline =="false" ? false:true);
     fmt.setFont(font);
     if(val == 2)
-    fmt.setFontCapitalization(QFont::AllLowercase);
+        fmt.setFontCapitalization(QFont::AllLowercase);
     else if(val == 1)
         fmt.setFontCapitalization(QFont::AllUppercase);
     else if(val == 4)
         fmt.setFontCapitalization(QFont::Capitalize);
     fmt.setFontStrikeOut(isStrike == "false" ? false:true);
     if(back != "#000000")
-    curr_browser->setTextBackgroundColor(back);
+        curr_browser->setTextBackgroundColor(back);
 
     if(var==1)
         curr_browser->setAlignment(Qt::AlignRight);
@@ -9747,15 +9748,15 @@ void MainWindow::on_actionPaste_triggered()
     if(!clipboardone->image().isNull())
     {
         img = clipboardone->image();
-       insertImage(img);
+        insertImage(img);
     }
     else
-    curr_browser->paste();
+        curr_browser->paste();
 }
 void MainWindow::insertImage(QImage img)
 {
     if(!QDir("../Inserted_Images").exists())
-            QDir().mkdir("../Inserted_Images");
+        QDir().mkdir("../Inserted_Images");
 
     QDir dir("../Inserted_Images");
     QString count = QString::number(dir.count() +1);
@@ -9791,16 +9792,16 @@ void MainWindow::on_actionDate_triggered()
     QCalendarWidget *calendar = new QCalendarWidget(this);
     layout->addWidget(calendar);
     QObject::connect(calendar, &QCalendarWidget::selectionChanged, this, [=](){
-            getDate(calendar);
-        });
+        getDate(calendar);
+    });
     dateDialog->setLayout(layout);
     dateDialog->exec();
 }
 
- void MainWindow::getDate(QCalendarWidget *calendar) {
-        QDate date = calendar->selectedDate();
-        QTextCursor cursor = curr_browser->textCursor();
-        cursor.insertText(date.toString("dd/MMMM/yyyy"));
+void MainWindow::getDate(QCalendarWidget *calendar) {
+    QDate date = calendar->selectedDate();
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.insertText(date.toString("dd/MMMM/yyyy"));
 }
 
 void MainWindow::on_actionLink_triggered()
@@ -10303,90 +10304,90 @@ void MainWindow::update_tool(QString latestVersion){
     connect(reply, &QNetworkReply::finished, this, [&]() {
         file->close();
 #ifdef Q_OS_WIN
-    QuaZip zip(path);
-    if (!zip.open(QuaZip::mdUnzip)) {
-        qDebug() << "Failed to open ZIP file:" << zip.getZipError();
-        QMessageBox::warning(this, "Update error", "We were unable to find the zip file\nSource: "+path, QMessageBox::Ok);
-        return;
-    }
-
-    QuaZipFile file(&zip);
-
-    QuaZipFileInfo info;
-
-    for (bool more = zip.goToFirstFile(); more; more = zip.goToNextFile()) {
-        if (!zip.getCurrentFileInfo(&info)) break;
-
-        QString name = info.name;
-        QDir().mkdir(output + "Udaan-" + latestVersion + "/");
-        QString outputFilePath = output + "Udaan-" + latestVersion + "/" + name;
-        qDebug() << "This is the path" << outputFilePath;
-        if (!file.open(QIODevice::ReadOnly)) break;
-        QByteArray data = file.readAll();
-        file.close();
-        QFile outputFile(outputFilePath);
-        QString temp = outputFilePath;
-        QStringList list = outputFilePath.split("/");
-        temp.remove(list[list.size() - 1]);
-        QFile tempFile(temp);
-        if (!tempFile.exists()) {
-            QDir().mkdir(temp);
+        QuaZip zip(path);
+        if (!zip.open(QuaZip::mdUnzip)) {
+            qDebug() << "Failed to open ZIP file:" << zip.getZipError();
+            QMessageBox::warning(this, "Update error", "We were unable to find the zip file\nSource: "+path, QMessageBox::Ok);
+            return;
         }
-        if (!outputFile.open(QIODevice::WriteOnly)) {
-            qDebug() << "Failed to open output file:" << outputFile.errorString() << outputFile.fileName();
-            continue;
-        }
-        outputFile.write(data);
-        outputFile.close();
-    }
-    zip.close();
 
-    QMessageBox::StandardButton reply_d;
-    reply_d = QMessageBox::question(this, "Restart Application",
-        "qpadfinal has been successfully updated to latest version\nAre you sure you want to restart the application to use the updated version?",
-        QMessageBox::Yes | QMessageBox::No);
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    if (reply_d == QMessageBox::Yes) {
-        // Quit the application
-        QProcess process;
-        QStringList arguments;
-        QString command = "start " + output + "Udaan-" + latestVersion + "/" + latestVersion + "/qpadfinal.exe";
-        arguments << "/c" << command;
-        process.startDetached("cmd.exe", arguments);
-        process.waitForFinished();
+        QuaZipFile file(&zip);
+
+        QuaZipFileInfo info;
+
+        for (bool more = zip.goToFirstFile(); more; more = zip.goToNextFile()) {
+            if (!zip.getCurrentFileInfo(&info)) break;
+
+            QString name = info.name;
+            QDir().mkdir(output + "Udaan-" + latestVersion + "/");
+            QString outputFilePath = output + "Udaan-" + latestVersion + "/" + name;
+            qDebug() << "This is the path" << outputFilePath;
+            if (!file.open(QIODevice::ReadOnly)) break;
+            QByteArray data = file.readAll();
+            file.close();
+            QFile outputFile(outputFilePath);
+            QString temp = outputFilePath;
+            QStringList list = outputFilePath.split("/");
+            temp.remove(list[list.size() - 1]);
+            QFile tempFile(temp);
+            if (!tempFile.exists()) {
+                QDir().mkdir(temp);
+            }
+            if (!outputFile.open(QIODevice::WriteOnly)) {
+                qDebug() << "Failed to open output file:" << outputFile.errorString() << outputFile.fileName();
+                continue;
+            }
+            outputFile.write(data);
+            outputFile.close();
+        }
+        zip.close();
+
+        QMessageBox::StandardButton reply_d;
+        reply_d = QMessageBox::question(this, "Restart Application",
+                                        "qpadfinal has been successfully updated to latest version\nAre you sure you want to restart the application to use the updated version?",
+                                        QMessageBox::Yes | QMessageBox::No);
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        if (reply_d == QMessageBox::Yes) {
+            // Quit the application
+            QProcess process;
+            QStringList arguments;
+            QString command = "start " + output + "Udaan-" + latestVersion + "/" + latestVersion + "/qpadfinal.exe";
+            arguments << "/c" << command;
+            process.startDetached("cmd.exe", arguments);
+            process.waitForFinished();
+
+            qDebug() << "saved " << m_t_path;
+            settings.beginGroup("prev-version");
+            settings.setValue("link", m_t_path);
+            settings.endGroup();
+            qApp->quit();
+        }
 
         qDebug() << "saved " << m_t_path;
         settings.beginGroup("prev-version");
         settings.setValue("link", m_t_path);
         settings.endGroup();
-        qApp->quit();
-    }
-
-    qDebug() << "saved " << m_t_path;
-    settings.beginGroup("prev-version");
-    settings.setValue("link", m_t_path);
-    settings.endGroup();
 
 #else
-    QProcess* process = new QProcess(this);
-    QString command = "tar -xJf " + path + " -C " + output;
-    process->start("/bin/sh", QStringList() << "-c" << command);
-    qDebug() << process->arguments();
-    process->waitForFinished(100000000);
+        QProcess* process = new QProcess(this);
+        QString command = "tar -xJf " + path + " -C " + output;
+        process->start("/bin/sh", QStringList() << "-c" << command);
+        qDebug() << process->arguments();
+        process->waitForFinished(100000000);
 
-    if (process->exitCode() != QProcess::NormalExit || process->exitStatus() != QProcess::NormalExit) {
-        qDebug() << process->readAllStandardError();
-    }
+        if (process->exitCode() != QProcess::NormalExit || process->exitStatus() != QProcess::NormalExit) {
+            qDebug() << process->readAllStandardError();
+        }
 
-    QMessageBox::information(this, "Update status", "Extraction of the Udaan pe tool udpate file is successfully completed."
-        "\nTo rebuild the application, run these following commands in order - "
-        "\n⚫ make clean"
-        "\n⚫ qmake qpadfinal.pro"
-        "\n⚫ make", QMessageBox::Button::Ok);
+        QMessageBox::information(this, "Update status", "Extraction of the Udaan pe tool udpate file is successfully completed."
+                                                        "\nTo rebuild the application, run these following commands in order - "
+                                                        "\n⚫ make clean"
+                                                        "\n⚫ qmake qpadfinal.pro"
+                                                        "\n⚫ make", QMessageBox::Button::Ok);
 #endif
-    QFile::remove(path);
-    reply->deleteLater();
-});
+        QFile::remove(path);
+        reply->deleteLater();
+    });
     connect(reply, &QNetworkReply::downloadProgress, this, [&](qint64 bytesReceived, qint64 bytesTotal) {
         processProgress(bytesReceived, bytesTotal, &pb, labelProgress);
     });
@@ -10573,7 +10574,7 @@ void MainWindow::write_review_pages(){
 
     QFile f(file);
 
- /*  if (mRole == "Corrector") {
+    /*  if (mRole == "Corrector") {
         if(f.open(QIODevice::WriteOnly)){
             QTextStream outputStream(&f);
             QString string;
@@ -10784,7 +10785,7 @@ void MainWindow::on_actionColumn_Width_triggered()
 
     int position = cell.column();
 
-//    qDebug()<<"Present Cell "<<position;
+    //    qDebug()<<"Present Cell "<<position;
 
     QTextTableFormat tf = table->format();
     QVector<QTextLength> columnWidth = tf.columnWidthConstraints();
@@ -10792,7 +10793,7 @@ void MainWindow::on_actionColumn_Width_triggered()
     presentWidth = data[position].rawValue();
     currentTablePosition = position;
 
-//    qDebug()<<"Current Position "<<currentTablePosition;
+    //    qDebug()<<"Current Position "<<currentTablePosition;
 
 
     column_width * col = new column_width(&presentWidth, nullptr);
@@ -11048,14 +11049,15 @@ void MainWindow::on_actionClear_Settings_triggered()
 void MainWindow::on_actionFullScreen_triggered()
 {
     ui->splitter->setVisible(true);
-           ui->menuBar->setVisible(false);
-           ui->mainToolBar->setVisible(false);
+    ui->menuBar->setVisible(false);
+    ui->mainToolBar->setVisible(false);
+    ui->pushButton_8->setVisible(true);
 }
 
-
-void MainWindow::on_actionRevertBack_triggered()
+void MainWindow::on_pushButton_8_clicked()
 {
     ui->menuBar->setVisible(true);
-        ui->mainToolBar->setVisible(true);
+    ui->mainToolBar->setVisible(true);
+    ui->pushButton_8->setVisible(false);
 }
 
