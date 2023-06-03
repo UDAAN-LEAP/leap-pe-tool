@@ -11044,3 +11044,18 @@ void MainWindow::on_actionClear_Settings_triggered()
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.clear();
 }
+
+void MainWindow::on_actionFullScreen_triggered()
+{
+    ui->splitter->setVisible(true);
+           ui->menuBar->setVisible(false);
+           ui->mainToolBar->setVisible(false);
+}
+
+
+void MainWindow::on_actionRevertBack_triggered()
+{
+    ui->menuBar->setVisible(true);
+        ui->mainToolBar->setVisible(true);
+}
+

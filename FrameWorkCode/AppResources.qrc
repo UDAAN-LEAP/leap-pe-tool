@@ -87,7 +87,6 @@
         <file>Resources/copy-modified.png</file>
         <file>Resources/cut-modified.png</file>
         <file>Resources/auto_suggestion.png</file>
-
         <file>Resources/Old Icons/63.svg</file>
         <file>Resources/Old Icons/62.svg</file>
         <file>Resources/Old Icons/61.svg</file>
@@ -107,7 +106,6 @@
         <file>Resources/Old Icons/3.svg</file>
         <file>Resources/Old Icons/2.svg</file>
         <file>Resources/Old Icons/1.svg</file>
-
         <file>Resources/upper_roman.png</file>
         <file>Resources/upper.png</file>
         <file>Resources/unfilled_square.png</file>
@@ -119,6 +117,7 @@
         <file>Resources/decimal.png</file>
         <file>Resources/circle.png</file>
         <file>Resources/reset_settings.png</file>
+        <file>Resources/Old Icons/fullscreen.png</file>
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>

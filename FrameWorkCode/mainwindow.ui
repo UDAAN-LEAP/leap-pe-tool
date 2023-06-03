@@ -1474,6 +1474,7 @@ background-color: #EEF0F2;
    <addaction name="actionInsert_Horizontal_Line"/>
    <addaction name="separator"/>
    <addaction name="actionHighlight"/>
+   <addaction name="actionFullScreen"/>
    <addaction name="actionSymbols"/>
    <addaction name="separator"/>
    <addaction name="actionZoom_In"/>
@@ -2800,7 +2801,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionDisc">
    <property name="icon">
-    <iconset>
+    <iconset resource="AppResources.qrc">
      <normaloff>:/Images/Resources/disc.png</normaloff>:/Images/Resources/disc.png</iconset>
    </property>
    <property name="text">
@@ -2809,7 +2810,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionCircle">
    <property name="icon">
-    <iconset>
+    <iconset resource="AppResources.qrc">
      <normaloff>:/Images/Resources/circle.png</normaloff>:/Images/Resources/circle.png</iconset>
    </property>
    <property name="text">
@@ -2818,7 +2819,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionSquare">
    <property name="icon">
-    <iconset>
+    <iconset resource="AppResources.qrc">
      <normaloff>:/Images/Resources/square.png</normaloff>:/Images/Resources/square.png</iconset>
    </property>
    <property name="text">
@@ -2841,6 +2842,29 @@ background-color: #EEF0F2;
    </property>
    <property name="text">
     <string>Clear Settings</string>
+   </property>
+  </action>
+  <action name="actionFullScreen">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/Old Icons/fullscreen.png</normaloff>:/Images/Resources/Old Icons/fullscreen.png</iconset>
+   </property>
+   <property name="text">
+    <string>FullScreen</string>
+   </property>
+   <property name="toolTip">
+    <string>FullScreen</string>
+   </property>
+  </action>
+  <action name="actionRevertBack">
+   <property name="text">
+    <string>RevertBack</string>
+   </property>
+   <property name="toolTip">
+    <string>RevertBack</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+N</string>
    </property>
   </action>
  </widget>
