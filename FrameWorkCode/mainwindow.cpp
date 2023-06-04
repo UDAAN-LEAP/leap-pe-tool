@@ -296,6 +296,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     connect(ui->horizontalSlider, SIGNAL(sliderMoved(int)), this, SLOT(zoom_slider_moved(int)));
     connect(&watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(directoryChanged(const QString&)));
 
+    connect(curr_browser, &QTextEdit::undoAvailable,[this](bool value){
+        ui->actionUndo->setEnabled(value);
+    });
+    connect(curr_browser, &QTextEdit::redoAvailable, [this](bool value){
+        ui->actionRedo->setEnabled(value);
+    });
+
     qApp->installEventFilter(this);
     AddRecentProjects();
 
@@ -347,9 +354,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->corrected->setVisible(false);
     ui->verified->setVisible(false);
     ui->mark_review->setVisible(false);
-
     //saves current path - useful for auto upgrade feature
     m_update_path = QDir().currentPath();
+
 
     //check for new update whenn tool is launched
     settings.beginGroup("update");
@@ -1476,7 +1483,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->viewComments->setDisabled(false);
     ui->compareCorrectorOutput->setDisabled(false);
     ui->groupBox->setDisabled(false);
-    ui->actionRedo->setEnabled(false);
     ui->actionCopy->setEnabled(false);
     ui->actionCut->setEnabled(false);
     ui->menuText->setEnabled(false);
@@ -2328,7 +2334,6 @@ void MainWindow::on_actionUndo_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->undo();
-    ui->actionRedo->setEnabled(true);
 }
 
 /*!
@@ -2340,7 +2345,6 @@ void MainWindow::on_actionRedo_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
     curr_browser->redo();
-    ui->actionRedo->setEnabled(false);
 }
 
 /*!
@@ -7401,11 +7405,12 @@ void MainWindow::on_actionUndo_Global_Replace_triggered()
             }
             csvFile.close();
         }
+        QString msg  = QString::fromStdString(std::to_string(undoGRMap.values().length()) + " words changed" + "\n" + std::to_string(r2) + " instances replaced" + "\n" + std::to_string(files) + " files modified");
+        QMessageBox messageBox;
+        if(undoGRMap.values().length()>0)
+            messageBox.information(0, "Undo Global Replacement Successful", msg);
     }
-    QString msg  = QString::fromStdString(std::to_string(undoGRMap.values().length()) + " words changed" + "\n" + std::to_string(r2) + " instances replaced" + "\n" + std::to_string(files) + " files modified");
-    QMessageBox messageBox;
-    if(undoGRMap.values().length()>0)
-        messageBox.information(0, "Undo Global Replacement Successful", msg);
+
 }
 
 /*!
@@ -7466,8 +7471,8 @@ QMap<QString, QString> MainWindow::getUndoGlobalReplaceMap_Multiple_Words(QMap<Q
     ugrWindow.setModal(true);
     ugrWindow.exec();
 
-    if ( ugrWindow.on_applyButton_clicked() )
-        undoGRMap = ugrWindow.getFinalUndoMap();
+    undoGRMap = ugrWindow.getFinalUndoMap();
+
     return undoGRMap;
 }
 
@@ -11038,7 +11043,7 @@ void MainWindow::on_actionPaste_without_Format_triggered()
 
 /*!
  * \fn  MainWindow::on_actionClear_Settings_triggered()
- * \brief This function resets the settings of the application
+ * \brief This function resets the settings of the application such as saved login and also resets the role
 */
 void MainWindow::on_actionClear_Settings_triggered()
 {
