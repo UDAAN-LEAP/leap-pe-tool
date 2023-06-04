@@ -65,8 +65,8 @@ background-color: #BCBDBD; height:26.96px; width:30.03px; border:0px; padding:0p
          <widget class="QPushButton" name="pushButton_8">
           <property name="styleSheet">
            <string notr="true">color: rgb(0, 0, 0);
-image: url(:/Images/Resources/Old Icons/fullscreen.png);
-height:26.96px; width:30.03px; border:0px; padding:0px 3.6px;border-radius:6px;
+image: url(:/Images/Resources/exit_full_screen.png);
+height:34px; width:34px;border-radius:17px;
 background-color: rgb(255, 255, 255);</string>
           </property>
           <property name="text">

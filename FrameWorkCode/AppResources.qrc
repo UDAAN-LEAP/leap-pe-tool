@@ -118,6 +118,7 @@
         <file>Resources/circle.png</file>
         <file>Resources/reset_settings.png</file>
         <file>Resources/Old Icons/fullscreen.png</file>
+        <file>Resources/exit_full_screen.png</file>
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>
