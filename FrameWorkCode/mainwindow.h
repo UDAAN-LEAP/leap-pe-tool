@@ -578,6 +578,10 @@ public slots:
 
     void changeColumnWidth();
 
+    void setWordCount(int value);
+    void setPageCount(int value);
+    void setTotalWords(int value);
+    void showWordCount();
 private:
     bool mExitStatus = false;
     QString mRole;
@@ -652,6 +656,10 @@ private:
     int presentWidth;
     int currentTablePosition;
     QString check_for_updates();
+
+    int wordCount = 0;
+    int pageCount = 0;
+    int totalWord = 0;
 };
 
 #endif // MAINWINDOW_H

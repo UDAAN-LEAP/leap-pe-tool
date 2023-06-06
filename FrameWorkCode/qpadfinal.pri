@@ -27,6 +27,7 @@ HEADERS += ./Filters.h \
     $$PWD/threadingpush.h \
     $$PWD/undoglobalreplace.h \
     $$PWD/verifyset.h \
+    $$PWD/word_count.h \
     $$PWD/worker.h \
     ./3rdParty/RapidXML/rapidxml.hpp \
     ./3rdParty/RapidXML/rapidxml_iterators.hpp \
@@ -84,6 +85,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/trieEditdis.cpp \
     $$PWD/undoglobalreplace.cpp \
     $$PWD/verifyset.cpp \
+    $$PWD/word_count.cpp \
     $$PWD/worker.cpp \
     ./Filters.cpp \
     ./Project.cpp \

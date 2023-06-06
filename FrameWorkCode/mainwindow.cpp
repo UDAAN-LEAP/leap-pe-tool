@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "dashboard.h"
 #include"column_width.h"
+#include"word_count.h"
 #include "indentoptions.h"
 #include "qobjectdefs.h"
 #include "qtablewidget.h"
@@ -10034,109 +10035,80 @@ void MainWindow::on_actionResize_Image_2_triggered()
 }
 
 /*!
+ * \fn MainWindow::setWordCount
+ * \brief sets the total word count after recieving a signal
+ * \param value which is received with the signal
+*/
+void MainWindow::setWordCount(int value){
+    this->wordCount = value;
+}
+
+/*!
+ * \fn MainWindow::setPageCount
+ * \brief sets the total page count after recieving a signal
+ * \param value which is received with the signal
+*/
+void MainWindow::setPageCount(int value){
+    this->pageCount = value;
+}
+
+/*!
+ * \fn MainWindow::setTotalWords
+ * \brief sets the total word count after recieving a signal
+ * \param value which is received with the signal
+*/
+void MainWindow::setTotalWords(int value){
+    this->totalWord = value;
+}
+
+/*!
+ * \fn MainWindow::showWordCount
+ * \brief shows the total word count after recieving a signal
+*/
+void MainWindow::showWordCount(){
+    QDialog dialog(this);
+    QFormLayout form(&dialog);
+    form.addRow(new QLabel("Word Count", this));
+
+    QLineEdit *page = new QLineEdit(&dialog);
+    QLineEdit *c_page = new QLineEdit(&dialog);
+    QLineEdit *total_words = new QLineEdit(&dialog);
+
+    QString str = QString::number(wordCount);
+    QString str1 = QString::number(pageCount);
+    QString str3 = QString::number(totalWord);
+
+    c_page->setText(str);
+    page->setText(str1);
+    total_words->setText(str3);
+    page->setReadOnly(true);
+    c_page->setReadOnly(true);
+    total_words->setReadOnly(true);
+    form.addRow("Current Page", c_page);
+    form.addRow("Total Pages", page);
+    form.addRow("Total Words",total_words);
+    dialog.exec();
+}
+
+/*!
  * \fn MainWindow::on_actionWord_Count_triggered()
  * \brief This function displays word count in current page ,total number of pages and total number of words in all pages
  */
 void MainWindow::on_actionWord_Count_triggered()
 {
-    if(curr_browser){
-        QString extText = curr_browser->toPlainText();
-        //!Removes these symbol while counting
-        extText.remove("?");
-        extText.remove("|");
-        extText.remove("`");
-        extText.remove("[");
-        extText.remove("]");
-        extText.remove("'");
-        extText.remove(",");
+    word_count * counter = new word_count( curr_browser, mRole ,gDirTwoLevelUp);
+    QThread * thread = new QThread;
 
-        int wordcnt = extText.split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
-        QString str = QString::number(wordcnt);
-        QString currentDirAbsolutePath;
-        if(mRole=="Verifier")
-            currentDirAbsolutePath = gDirTwoLevelUp + "/VerifierOutput/";
-        else if (mRole=="Corrector") {
-            currentDirAbsolutePath = gDirTwoLevelUp + "/CorrectorOutput/";
-        }
-
-
-        //! We then open this directory and set sorting preferences.
-        QDir dir(currentDirAbsolutePath);
-        dir.setSorting(QDir::SortFlag::DirsFirst | QDir::SortFlag::Name);
-        QDirIterator dirIterator(dir,QDirIterator::NoIteratorFlags);
-        qDebug()<<dir;
-        //! Set count of files in directory
-
-        int count = dir.entryList(QStringList("*.html"), QDir::Files | QDir::NoDotAndDotDot).count();
-        QString str1 = QString::number(count);
-        int t_words=0;
-        foreach(auto a, dir.entryList())
-        {
-            QString x = currentDirAbsolutePath + a;
-            QString mainHtml;
-            int count=0;
-            if(x.contains("."))
-            {
-                QStringList html_files = x.split(QRegExp("[.]"));
-                if(html_files[1]=="html")
-                {
-                    QFile file(x);
-                    if (!file.open(QIODevice::ReadOnly))
-                        qDebug() << "Error reading file main.html";
-                    QTextStream stream(&file);
-                    stream.setCodec("UTF-8");
-                    mainHtml=stream.readAll();
-                    QRegularExpression rex_dollar("(?<=\\$\\$)(.*?)(?=\\$\\$)",QRegularExpression::DotMatchesEverythingOption);
-
-                    auto itr = rex_dollar.globalMatch(mainHtml);
-                    QTextDocument doc;
-                    doc.setHtml(mainHtml);
-                    QString s1 = doc.toPlainText();
-
-
-
-                    while(itr.hasNext())
-                    {
-                        count++;
-                        itr.next();
-                    }
-                    s1.remove("?");
-                    s1.remove("|");
-                    s1.remove("`");
-                    s1.remove("[");
-                    s1.remove("]");
-                    s1.remove("'");
-                    s1.remove(",");
-                    s1.remove(rex_dollar);
-
-                    int wordcnt = s1.split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
-                    wordcnt += (count-1)/2;
-                    t_words += wordcnt;
-
-                }
-            }
-        }
-
-        QString str3 = QString::number(t_words);
-        QDialog dialog(this);
-        QFormLayout form(&dialog);
-        form.addRow(new QLabel("Word Count", this));
-
-        QLineEdit *page = new QLineEdit(&dialog);
-        QLineEdit *c_page = new QLineEdit(&dialog);
-        QLineEdit *total_words = new QLineEdit(&dialog);
-
-        c_page->setText(str);
-        page->setText(str1);
-        total_words->setText(str3);
-        page->setReadOnly(true);
-        c_page->setReadOnly(true);
-        total_words->setReadOnly(true);
-        form.addRow("Current Page", c_page);
-        form.addRow("Total Pages", page);
-        form.addRow("Total Words",total_words);
-        dialog.exec();
-    }
+    connect(thread,SIGNAL(started()), counter, SLOT(run_wordCount()));
+    connect(counter, SIGNAL(word_Count(int)), this, SLOT(setWordCount(int)));
+    connect(counter, SIGNAL(page_Count(int)), this, SLOT(setPageCount(int)));
+    connect(counter,SIGNAL(total_Words(int)), this, SLOT(setTotalWords(int)));
+    connect(counter,SIGNAL(done()), counter, SLOT(deleteLater()));
+    connect(counter, SIGNAL(done()), thread, SLOT(quit()));
+    connect(thread,SIGNAL(finished()), thread, SLOT(deleteLater()));
+    connect(thread,SIGNAL(finished()), this, SLOT(showWordCount()));
+    counter->moveToThread(thread);
+    thread->start();
 }
 
 /*!
@@ -10148,9 +10120,10 @@ void MainWindow::on_actionVoice_Typing_triggered()
     on_pushButton_4_clicked();
 }
 
-
-
-
+/*!
+ * \fn MainWindow::on_actionTable_Border_Color_triggered
+ * \brief This function sets the border color of the table
+ */
 void MainWindow::on_actionTable_Border_Color_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
