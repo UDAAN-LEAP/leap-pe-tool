@@ -10458,6 +10458,10 @@ void MainWindow::write_corrected_pages(){
     }
 }
 
+/*!
+ * \fn MainWindow::read_corrected_pages
+ * \brief This function will read the entries from the text file and store it in the QMap
+*/
 void MainWindow::read_corrected_pages(){
     QString fstring = mProject.GetDir().absolutePath() + "/logs/corrected_page.txt";
     QFile f(fstring);
@@ -10507,6 +10511,10 @@ void MainWindow::write_verified_pages(){
     }
 }
 
+/*!
+ * \fn MainWindow::read_verified_pages
+ * \brief This function will read the entries from the text file and store it in the QMap
+*/
 void MainWindow::read_verified_pages(){
     QString fstring = mProject.GetDir().absolutePath() + "/logs/verified_page.txt";
     QFile f(fstring);
@@ -10522,6 +10530,10 @@ void MainWindow::read_verified_pages(){
     f.close();
 }
 
+/*!
+ * \fn MainWindow::read_review_pages
+ * \brief This function will read the entries from the text file and store it in the QMap
+*/
 void MainWindow::read_review_pages(){
     QString fstring = mProject.GetDir().absolutePath() + "/logs/marked_for_review_page.txt";
     QFile f(fstring);
@@ -10533,11 +10545,16 @@ void MainWindow::read_review_pages(){
         QString line = in.readLine();
         if(!line.contains(".html"))continue;
         markForReview[line] = 1;
-
     }
     f.close();
 }
 
+
+/*!
+ * \fn MainWindow::write_review_pages
+ * \brief This functions writes the reviewed pages in to a text file from the QMap
+ * It will only be written by Verifier
+*/
 void MainWindow::write_review_pages(){
     QString directory = mProject.GetDir().absolutePath();
 
@@ -10552,38 +10569,23 @@ void MainWindow::write_review_pages(){
 
     QFile f(file);
 
-    /*  if (mRole == "Corrector") {
-        if(f.open(QIODevice::WriteOnly)){
-            QTextStream outputStream(&f);
-            QString string;
-            QMapIterator<QString , int>i(markForReview);
-            while(i.hasNext()){
-                i.next();
-                string = i.key();
-
-                if(i.value() != 0){
-                    outputStream << string << endl;
-                }
-            }
-            f.close();
-        }
-    }*/
     if(mRole == "Verifier"){
         if(f.open(QIODevice::ReadWrite)){
             QTextStream in(&f);
             QString line = "";
             while(!in.atEnd()) {
-                line = in.readAll();
+                line = in.readLine(20);
+                if(markForReview[line] != 0) markForReview[line] = 0;
             }
 
             QTextStream outputStream(&f);
             QString string;
             QMapIterator<QString , int>i(markForReview);
-            outputStream << line << endl; qDebug() << line;
+
             while(i.hasNext()){
                 i.next();
                 string = i.key();
-                if(mRole == "Verifier")correct[string] = 0;
+                correct[string] = 0;
                 if(i.value() != 0){
                     outputStream << string << endl;
                 }
@@ -10593,6 +10595,10 @@ void MainWindow::write_review_pages(){
     }
 }
 
+/*!
+ * \fn MainWindow::read_recorrected_pages
+ * \brief This function will read the entries from the text file and store it in the QMap
+*/
 void MainWindow::read_recorrected_pages(){
     QString fstring = mProject.GetDir().absolutePath() + "/logs/recorrected_page.txt";
     QFile f(fstring);
@@ -10608,6 +10614,10 @@ void MainWindow::read_recorrected_pages(){
     f.close();
 }
 
+/*!
+ * \fn MainWindow::write_recorrected_pages
+ * \brief This functions writes the recorrected pages in to a text file from the QMap
+*/
 void MainWindow::write_recorrected_pages(){
     QString directory = mProject.GetDir().absolutePath();
 
