@@ -80,7 +80,7 @@ public:
         return mProject;
     }
 
-    bool setRole(QString role);
+    bool setRole();
 
     bool exitStatus() {
         return mExitStatus;

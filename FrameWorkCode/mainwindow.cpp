@@ -240,20 +240,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     settings.remove("");
     settings.endGroup();
 
-    QString password  = "";
-    QString passwordFilePath = QDir::currentPath() + "/pass.txt";
-    QFile passwordFile(passwordFilePath);
-    if(passwordFile.open(QFile::ReadOnly | QFile::Text))
-        password = passwordFile.readAll().replace("\n","").replace("\r","");
-    passwordFile.close();
+//    QString password  = "";
+//    QString passwordFilePath = QDir::currentPath() + "/pass.txt";
+//    QFile passwordFile(passwordFilePath);
+//    if(passwordFile.open(QFile::ReadOnly | QFile::Text))
+//        password = passwordFile.readAll().replace("\n","").replace("\r","");
+//    passwordFile.close();
 
 
-    map<QString, QString> passwordRoleMap = { { "x3JzWx5KY}Gd&,]A" ,"Verifier"},
-                                              { "3`t,FxjytJ[uU,HW" ,"Corrector"},
-                                              { "$5Y9hkc+`{<7N%{L:KuR", "Admin"},
-                                              { "sfbkasg81!248-Bks","Project Manager"}
-                                            };
-    if(!setRole(passwordRoleMap[password])){
+//    map<QString, QString> passwordRoleMap = { { "x3JzWx5KY}Gd&,]A" ,"Verifier"},
+//                                              { "3`t,FxjytJ[uU,HW" ,"Corrector"},
+//                                              { "$5Y9hkc+`{<7N%{L:KuR", "Admin"},
+//                                              { "sfbkasg81!248-Bks","Project Manager"}
+//                                            };
+    if(!setRole()){
         mExitStatus = true;
     }
 
@@ -375,9 +375,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
  * \param role
  * \return true/false
  */
-bool MainWindow::setRole(QString role)
+bool MainWindow::setRole()
 {
-    this->mRole = role;
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("prev-version");
     QString link;
@@ -398,11 +397,6 @@ bool MainWindow::setRole(QString role)
 
     }
     settings.endGroup();
-
-    //! Checking role
-    if(mRole == "Admin")
-    {
-
         settings.beginGroup("SetRole");
         QString role;
         role = settings.value("role").toString();
@@ -458,8 +452,6 @@ bool MainWindow::setRole(QString role)
             }
         }
 
-    }
-
     if(mRole == "Project Manager")
     {
         ui->actionNew_Project->setEnabled(true);    //enable the option
@@ -508,7 +500,7 @@ bool MainWindow::setRole(QString role)
     }
     else
     {
-        int result = QMessageBox::information(this,"Login","Login Failed");
+        int result = QMessageBox::information(this,"Select Role","No role selected");
         return false;
     }
 
