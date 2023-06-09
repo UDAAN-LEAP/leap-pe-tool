@@ -687,7 +687,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
             QMenu* popup_menu = curr_browser->createStandardContextMenu();
             QMenu* clipboard_menu;
-            clipboard_menu = new QMenu("clipboard", this);
+            clipboard_menu = new QMenu("clipboard", popup_menu);
             clipboard_menu->setStyleSheet("height: 4.7em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
             QString menuStyle(
                         "QMenu::item{"
@@ -733,27 +733,106 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             gtrans = new QAction("Google translate",popup_menu);
             QAction* insertImage;
             insertImage = new QAction("Insert image",popup_menu);
-            QAction* fillTable;
-            fillTable = new QAction("Shade table",popup_menu);
 
+
+            QMenu* table_menu;
+            table_menu = new QMenu("Table", popup_menu);
+            table_menu->setStyleSheet("height: 3em; "
+                                      "width: 13em; overflow: visible; "
+                                      "white-space: wrap; "
+                                      "color: black; "
+                                      "background-color: white;"
+                                      );
+            QMenu* column_menu;
+            column_menu = new QMenu("Column", popup_menu);
+            column_menu->setStyleSheet("height: 6em; "
+                                      "width: 13em; overflow: visible; "
+                                      "white-space: wrap; "
+                                      "color: black; "
+                                      "background-color: white;"
+                                      );
+
+            QMenu* row_menu;
+            row_menu = new QMenu("Row", popup_menu);
+            row_menu->setStyleSheet("height: 4.5em; "
+                                      "width: 13em; overflow: visible; "
+                                      "white-space: wrap; "
+                                      "color: black; "
+                                      "background-color: white;"
+                                      );
+
+            QMenu* cell_menu;
+            cell_menu = new QMenu("Cell", popup_menu);
+            cell_menu->setStyleSheet("height: 6em; "
+                                      "width: 13em; overflow: visible; "
+                                      "white-space: wrap; "
+                                      "color: black; "
+                                      "background-color: white;"
+                                      );
+
+            QAction * rowAbove;
+            rowAbove = new QAction("Insert Row Above", row_menu);
+            QAction * rowBelow;
+            rowBelow = new QAction("Insert Row Below", row_menu);
+            QAction * rowDelete;
+            rowDelete = new QAction("Delete Row", row_menu);
+
+            QAction * columnLeft;
+            columnLeft = new QAction("Insert Column Left", column_menu);
             QAction * setColumnWidth;
-            setColumnWidth = new QAction("Column Width", popup_menu);
+            setColumnWidth = new QAction("Column Width", column_menu);
+            QAction * columnRight;
+            columnRight = new QAction("Insert Column Right", column_menu);
+            QAction * columnDelete;
+            columnDelete = new QAction("Delete Column", column_menu);
+
+
+            QAction * deleteTable;
+            deleteTable = new QAction("Delete Table", table_menu);
+            QAction * borderColor;
+            borderColor = new QAction("Table Border Color", table_menu);
+
+            QAction * splitCell;
+            splitCell = new QAction("Split Cell", cell_menu);
+            QAction * mergeCell;
+            mergeCell = new QAction("Merge Cell", cell_menu);
+            QAction * cellBackgroundColor;
+            cellBackgroundColor = new QAction("Cell Background color", cell_menu);
+            QAction * cellPadding;
+            cellPadding = new QAction("Cell Padding", cell_menu);
 
             popup_menu->insertSeparator(popup_menu->actions()[0]);
             popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
             popup_menu->addAction(gsearch);
             popup_menu->addAction(gtrans);
             popup_menu->addAction(insertImage);
-            popup_menu->addAction(fillTable);
+
 
             QTextCursor cursor2 = curr_browser->textCursor();
             QTextTable * table = cursor2.currentTable();
             if(table != nullptr) {
-                int no_of_col = table->columns();
-                int position = cursor.position() % no_of_col;
-                if(position == 0) position = no_of_col;
-                popup_menu->addAction(setColumnWidth);
-                currentTablePosition = position-1;
+                popup_menu->insertSeparator(popup_menu->actions()[0]);
+                popup_menu->insertMenu(popup_menu->actions()[0], table_menu);
+                popup_menu->insertMenu(popup_menu->actions()[0],column_menu);
+                popup_menu->insertMenu(popup_menu->actions()[0],row_menu);
+                popup_menu->insertMenu(popup_menu->actions()[0],cell_menu);
+
+                row_menu->addAction(rowDelete);
+                row_menu->addAction(rowAbove);
+                row_menu->addAction(rowBelow);
+
+                column_menu->addAction(columnLeft);
+                column_menu->addAction(columnRight);
+                column_menu->addAction(columnDelete);
+                column_menu->addAction(setColumnWidth);
+
+                table_menu->addAction(deleteTable);
+                table_menu->addAction(borderColor);
+
+                cell_menu->addAction(splitCell);
+                cell_menu->addAction(mergeCell);
+                cell_menu->addAction(cellPadding);
+                cell_menu->addAction(cellBackgroundColor);
             }
 
 
@@ -761,9 +840,22 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
             connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
             connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
-            connect(fillTable, SIGNAL(triggered()), this, SLOT(on_actionFill_Table_triggered()));
 
             connect(setColumnWidth, SIGNAL(triggered()), this ,SLOT(on_actionColumn_Width_triggered()));
+            connect(rowAbove, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Rowabove_triggered()));
+            connect(rowBelow, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Rowbelow_triggered()));
+            connect(columnLeft, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Columnleft_triggered()));
+            connect(columnRight, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Columnright_triggered()));
+            connect(deleteTable, SIGNAL(triggered()), this ,SLOT(on_actionDelete_Table_triggered()));
+            connect(rowDelete, SIGNAL(triggered()), this ,SLOT(on_actionRemove_Row_triggered()));
+            connect(columnDelete, SIGNAL(triggered()), this ,SLOT(on_actionRemove_Column_triggered()));
+            connect(borderColor, SIGNAL(triggered()), this, SLOT(on_actionTable_Border_Color_triggered()));
+            connect(splitCell, SIGNAL(triggered()), this , SLOT(on_actionSplit_Cell_triggered()));
+            connect(mergeCell, SIGNAL(triggered()), this , SLOT(on_actionMerge_Cells_triggered()));
+            connect(cellPadding, SIGNAL(triggered()), this, SLOT(on_actionCell_Padding_triggered()));
+            connect(cellBackgroundColor, SIGNAL(triggered()), this, SLOT(on_actionFill_Table_triggered()));
+
+
             popup_menu->exec(ev->globalPos());
             popup_menu->close(); popup_menu->clear();
         }
@@ -9530,10 +9622,11 @@ void MainWindow::on_actionFill_Table_triggered()
 
     // Get the table format and set the alignment to center
     QTextTableFormat tableFormat = selectedTable->format();
+
+    QTextCharFormat cellFormat = curr_browser->textCursor().blockCharFormat();
+
     QColor color = QColorDialog::getColor();
 
-    // Set the background color for each selected cell in the table
-    QTextCharFormat cellFormat = curr_browser->textCursor().blockCharFormat();
     cellFormat.setBackground(color);
     curr_browser->textCursor().setBlockCharFormat(cellFormat);
 }
