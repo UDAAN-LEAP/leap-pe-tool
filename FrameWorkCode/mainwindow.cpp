@@ -9623,11 +9623,13 @@ void MainWindow::on_actionFill_Table_triggered()
     // Get the table format and set the alignment to center
     QTextTableFormat tableFormat = selectedTable->format();
 
-    QTextCharFormat cellFormat = curr_browser->textCursor().blockCharFormat();
+    QTextCharFormat cellFormat = selectedTable->cellAt(cursor.position()).format();
+    QColor color = cellFormat.background().color();
 
-    QColor color = QColorDialog::getColor();
+    color = QColorDialog::getColor(color);
 
-    cellFormat.setBackground(color);
+    if(color.isValid()) cellFormat.setBackground(color);
+
     curr_browser->textCursor().setBlockCharFormat(cellFormat);
 }
 
@@ -10297,12 +10299,29 @@ void MainWindow::on_actionCell_Padding_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
         return;
+
+    QTextCursor cursor;
+    QTextTable *table;
+    QTextTableFormat format;
+    if(curr_browser->textCursor().currentTable())
+    {
+        cursor = curr_browser->textCursor();
+        if(cursor.currentTable() != nullptr) {
+            cursor.setPosition(cursor.currentTable()->cellAt(0, 0).firstCursorPosition().position());
+            table = cursor.currentTable();
+            format = table->format();
+        }
+    }
+    else return;
+
     QDialog dialog(this);
     QFormLayout form(&dialog);
     form.addRow(new QLabel("Enter the amount of padding to be applied", this));
 
     QSpinBox *inp = new QSpinBox(&dialog);
     inp->setRange(0, 10);
+    inp->setValue(format.cellPadding());
+    qDebug()<<format.cellPadding();
     form.addRow("Padding", inp);
 
     //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
@@ -10314,17 +10333,8 @@ void MainWindow::on_actionCell_Padding_triggered()
     if (dialog.exec() == QDialog::Accepted)
     {
         padding = inp->value();
-        if(curr_browser->textCursor().currentTable())
-        {
-            QTextCursor cursor = curr_browser->textCursor();
-            if(cursor.currentTable() != nullptr) {
-                cursor.setPosition(cursor.currentTable()->cellAt(0, 0).firstCursorPosition().position());
-                QTextTable *table = cursor.currentTable();
-                QTextTableFormat format = table->format();
-                format.setCellPadding(padding);
-                table->setFormat(format);
-            }
-        }
+        format.setCellPadding(padding);
+        table->setFormat(format);
     }
 }
 
