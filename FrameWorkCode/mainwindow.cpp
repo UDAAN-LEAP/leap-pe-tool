@@ -304,6 +304,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
         ui->actionRedo->setEnabled(value);
     });
 
+    connect(this, SIGNAL(saveStatusChanged()),this, SLOT(setSaveStatus()));
+
     qApp->installEventFilter(this);
     AddRecentProjects();
 
@@ -1910,7 +1912,7 @@ void MainWindow::on_actionSave_triggered()
 
     GlobalReplace();
     saved = 1;
-
+    emit saveStatusChanged();
 }
 
 /*!
@@ -4391,6 +4393,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             //keyPressEvent(keyEvent);
             //            event->ignore();
             WordCount();
+            setSaveStatus();
         }
     }
     if (event->type() == QEvent::ShortcutOverride) {
@@ -6175,6 +6178,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
     QString input = stream.readAll();
     QFont font("Shobhika");
     setWindowTitle(name);
+
     font.setPointSize(16);
     if(ext == "txt") {
         istringstream iss(input.toUtf8().constData());
@@ -7304,6 +7308,7 @@ void MainWindow::on_actionShortcut_Guide_triggered()
 void MainWindow::on_textBrowser_textChanged()
 {
     WordCount();
+    setSaveStatus();
 }
 
 /*!
@@ -11142,5 +11147,22 @@ void MainWindow::on_pushButton_8_clicked()
     ui->menuBar->setVisible(true);
     ui->mainToolBar->setVisible(true);
     ui->pushButton_8->setVisible(false);
+}
+
+/*!
+ * \fn MainWindow::setSaveStatus()
+ * \brief This function will set the save status via showing a { * } to the window titile name
+ * '*' => denotes that the current page is yet to be saved
+*/
+void MainWindow::setSaveStatus()
+{
+    if(curr_browser){
+        if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {
+            setWindowTitle(gCurrentPageName+"*");
+        }
+        else{
+            setWindowTitle(gCurrentPageName);
+        }
+    }
 }
 

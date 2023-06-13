@@ -69,6 +69,8 @@ class MainWindow : public QMainWindow
 signals:
     void closeSignal();
 
+    void saveStatusChanged();
+
     void gotToken(const QString& token);
 
 public:
@@ -92,7 +94,7 @@ public:
 
     CustomTextBrowser * getCurrentBrowser() {
         return curr_browser;
-    };
+    }
 
     void reLoadTabWindow();
 
@@ -358,7 +360,6 @@ private slots:
 
     void setProgressBarPerc(int);
 
-    //Change -> to change the message
     void setProgressBarText(int);
 
     QString toDevanagari(string text);
@@ -555,6 +556,8 @@ private slots:
 
     void on_pushButton_8_clicked();
 
+    void setSaveStatus();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
@@ -582,6 +585,9 @@ public slots:
     void setPageCount(int value);
     void setTotalWords(int value);
     void showWordCount();
+
+
+
 private:
     bool mExitStatus = false;
     QString mRole;
