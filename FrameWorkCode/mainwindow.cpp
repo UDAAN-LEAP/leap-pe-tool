@@ -9731,7 +9731,7 @@ void MainWindow::on_pushButton_5_clicked()
     else{
         QDialog logout(this);
         QFormLayout form(&logout);
-        form.addRow(new QLabel("You are signed in as\n"+email+"\n",this));
+        form.addRow(new QLabel("You are signed in as <"+email+">\nYou are editing <"+gDirTwoLevelUp+"> as "+mRole+"\n",this));
         QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&logout);
         buttonbox.button(QDialogButtonBox::Ok)->setText("Sign Out");
         buttonbox.button(QDialogButtonBox::Cancel)->setText("Close");
