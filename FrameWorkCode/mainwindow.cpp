@@ -1256,7 +1256,58 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     QFile::setPermissions(ProjFile, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
 
     // Testing of project.xml
-    VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
+
+    QString xmlContent = R"(<?xml version="1.0"?>
+    <Project name="">
+            <ItemGroup>
+                    <Filter Include="">
+                        <Extensions>_</Extensions>
+                    </Filter>
+                    <Filter Include="">
+                        <Extensions>_</Extensions>
+                    </Filter>
+                    <Filter Include="">
+                        <Extensions>_</Extensions>
+                    </Filter>
+                    <Filter Include="">
+                        <Extensions>_</Extensions>
+                    </Filter>
+            </ItemGroup>
+            <Configuration>
+                    <Prefixmatch>_</Prefixmatch>
+            </Configuration>
+            <Metadata>
+                    <Version>_</Version>
+                    <Stage>_</Stage>
+                    <Corrector>_</Corrector>
+                    <SanityChecker>_</SanityChecker>
+                    <Verifier>_</Verifier>
+            </Metadata>
+    </Project>)";
+    QString filePath= toolDirAbsolutePath + "/projectXMLFormat.xml";
+        QFile file(filePath);
+        if(!file.exists())
+        {
+            if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+               {
+                       qDebug() << "Failed to open file for writing";
+                       return;
+               }
+        QXmlStreamWriter writer(&file);
+            writer.setAutoFormatting(true);
+            writer.writeStartDocument();
+            writer.writeCharacters(xmlContent);
+            writer.writeEndElement();
+            writer.writeEndDocument();
+
+
+           QString xmlCon = file.readAll();
+           file.resize(0);
+           QTextStream stream(&file);
+           stream << xmlContent;
+        }
+       VerifySet verifySetObj(ProjFile, filePath);
+  //  VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
     int result = verifySetObj.testProjectXML();
     if(mProject.isProjectOpen()){ //checking if some project is opened, then closing it before opening new project
         on_actionClose_project_triggered();
