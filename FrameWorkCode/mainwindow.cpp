@@ -4071,6 +4071,9 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     QString bboxf = currentTabPageName;
     QFile bbox_file(gDirTwoLevelUp + "/bboxf/"+bboxf.replace(".html", ".bbox"));
 
+    if(event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease){
+        setSaveStatus();
+    }
 
     //! When user moves his mouse the system will ask user to download new update.
     if(event->type()== QEvent::MouseMove ){
@@ -4435,6 +4438,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             }
             event->accept();
         }
+
     }
 
     if (event->type() == QEvent::ShortcutOverride) {
@@ -4444,7 +4448,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             //keyPressEvent(keyEvent);
             //            event->ignore();
             WordCount();
-            setSaveStatus();
         }
     }
     if (event->type() == QEvent::ShortcutOverride) {
@@ -11209,7 +11212,7 @@ void MainWindow::setSaveStatus()
 {
     if(curr_browser){
         if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {
-            setWindowTitle(gCurrentPageName+"*");
+            setWindowTitle("*"+gCurrentPageName);
         }
         else{
             setWindowTitle(gCurrentPageName);
