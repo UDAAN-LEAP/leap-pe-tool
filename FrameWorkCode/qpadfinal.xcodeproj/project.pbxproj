@@ -1,0 +1,1285 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		C03CBD3FEE7B9CFCC5F38CC8 /* Qt Preprocess */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 6CC3B5D2136C7CD6A5CF5A59 /* Build configuration list for PBXNativeTarget "qpadfinal" */;
+			buildPhases = (
+				5E618435888B9D49F8540165 /* Qt Qmake */,
+				7EF0942E79C014DCEC8976BC /* Qt Preprocessors */,
+			);
+			dependencies = (
+			);
+			name = "Qt Preprocess";
+			productName = "Qt Preprocess";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		0021F4D7FBA75A01A8299765 /* customtextbrowser.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = C6D20E2FA7EA1D65E5878B75 /* customtextbrowser.cpp */; settings = {ATTRIBUTES = (); }; };
+		04802FFEFA7162309BAF0319 /* moc_about.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 6F6849279547F7D5E6B121E7 /* moc_about.cpp */; settings = {ATTRIBUTES = (); }; };
+		09A1D3846D8A4D9548CDA1B4 /* moc_printworker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = F9E21B8B72C9DDBA63BD402E /* moc_printworker.cpp */; settings = {ATTRIBUTES = (); }; };
+		09F8798EE44AE56C19A746A5 /* moc_ProjectWizard.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 3458C3C9A03BF262A67ECB60 /* moc_ProjectWizard.cpp */; settings = {ATTRIBUTES = (); }; };
+		0C1F0996CE20A3565DCDF20D /* QtNetworkAuth.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 94778A0728D2767F8186179E /* QtNetworkAuth.framework */; };
+		118871A0DF828B9D555A4510 /* markRegion.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 31BE2A9AF3180059CDA0BFDA /* markRegion.cpp */; settings = {ATTRIBUTES = (); }; };
+		13ACDF41BEB02BB003120848 /* editdistance.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 96BEFAE4A6D98546ED62F237 /* editdistance.cpp */; settings = {ATTRIBUTES = (); }; };
+		1466DA48C3C2AA27E6A8073E /* moc_mainwindow.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 0AF3D8AC61B68316DC63B630 /* moc_mainwindow.cpp */; settings = {ATTRIBUTES = (); }; };
+		14711187AC2D46D0F8616874 /* loginpageview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 9636AAEF191F44C113E8A2CA /* loginpageview.cpp */; settings = {ATTRIBUTES = (); }; };
+		16A0BA7667808814E74D213C /* moc_indentoptions.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = E80C587742DA88365359A61B /* moc_indentoptions.cpp */; settings = {ATTRIBUTES = (); }; };
+		17A0C40A551E149F0FC9DD1A /* moc_dashboard.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = F5BEEB2673C522A7E2178955 /* moc_dashboard.cpp */; settings = {ATTRIBUTES = (); }; };
+		1AA62D2B7747703E07343106 /* loaddataworker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = CCAA0599B7CD5D936B35E7E4 /* loaddataworker.cpp */; settings = {ATTRIBUTES = (); }; };
+		1AC7E8B3A94259A9F98A7848 /* moc_globalreplaceworker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = E521168F5543FB82073ED0A4 /* moc_globalreplaceworker.cpp */; settings = {ATTRIBUTES = (); }; };
+		1C5BDE2B893CCB2F6DEF0EA0 /* globalreplaceinformation.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 8B67A9657049ADB534822F2F /* globalreplaceinformation.cpp */; settings = {ATTRIBUTES = (); }; };
+		1CF24A160BCB54A5604CEB6D /* rubberband.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = DB55B2C9675052E6E4978785 /* rubberband.cpp */; settings = {ATTRIBUTES = (); }; };
+		1D48B3BA5F9196365E32B5E2 /* handlebbox.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 19B968024692301D1431CACA /* handlebbox.cpp */; settings = {ATTRIBUTES = (); }; };
+		1F3976912BC3D258F34FA2FC /* commentsview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 293115DD1DACB7D0681F33A1 /* commentsview.cpp */; settings = {ATTRIBUTES = (); }; };
+		23A7ED9738A46559BEEDC240 /* undoglobalreplace.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 8DB8FEA6B27887E5C996392F /* undoglobalreplace.cpp */; settings = {ATTRIBUTES = (); }; };
+		26E2D3DAE17DC98C0ED6AF89 /* QtNetwork.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 533A6390567A41E10143DACA /* QtNetwork.framework */; };
+		2B28A950FBF8AA986A4BBCA4 /* pugixml in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 19FEDC84D6926EEC5BDB05D6 /* pugixml */; };
+		2B81A7BB463D27D0140A2658 /* moc_undoglobalreplace.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 60328688626BE2E2FEE449E2 /* moc_undoglobalreplace.cpp */; settings = {ATTRIBUTES = (); }; };
+		2CAEC0D297E3B38A62944EDA /* trieEditdis.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 8BF4722D3C98738A7B71D324 /* trieEditdis.cpp */; settings = {ATTRIBUTES = (); }; };
+		2DC22124AADDCE7E2BC1A962 /* resizeimageview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 1DD87AD6D17238305E91D962 /* resizeimageview.cpp */; settings = {ATTRIBUTES = (); }; };
+		306D2D1A1BDF164F5C147953 /* QtCore.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 420EF3605DE9278721B94C08 /* QtCore.framework */; };
+		311F8AB7E7F97BBFB83A3942 /* moc_loaddataworker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 47B8573317AE30E6AC005DB0 /* moc_loaddataworker.cpp */; settings = {ATTRIBUTES = (); }; };
+		31A452125DB682897BC00B81 /* TreeModel.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 27FD59770F35DA701B87FFE3 /* TreeModel.cpp */; settings = {ATTRIBUTES = (); }; };
+		352B2C2B580F923D835EF490 /* pdfhandling.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 70AE8A34232CB43EA4BD4612 /* pdfhandling.cpp */; settings = {ATTRIBUTES = (); }; };
+		354515981EA0E2B556294A83 /* mainwindow.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 742F030264CEE075A9116D4E /* mainwindow.cpp */; settings = {ATTRIBUTES = (); }; };
+		364AC36DAB70099AF061B292 /* moc_averageaccuracies.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = D0A2D342681934660055E84E /* moc_averageaccuracies.cpp */; settings = {ATTRIBUTES = (); }; };
+		380B0FC6FA91923799ECF91E /* QtGui.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = D59C48E14B477FFF6C01821D /* QtGui.framework */; };
+		3A990C23F902DC6CCF28548F /* Symbols.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = FA1DA3907BD60F4CF240A4E8 /* Symbols.cpp */; settings = {ATTRIBUTES = (); }; };
+		45CCC6BB62E18CA27EA39EA4 /* moc_loadingspinner.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 4EF6822FCD9EEF8E713D0CC1 /* moc_loadingspinner.cpp */; settings = {ATTRIBUTES = (); }; };
+		4930A339BEBD07C41BFBE4D6 /* moc_globalreplacedialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = E8AEEC9146C9FA13C92B358D /* moc_globalreplacedialog.cpp */; settings = {ATTRIBUTES = (); }; };
+		4BB5E7E365C879017C2D31FC /* qrc_AppResources.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 01B48DB6480878C2615449F6 /* qrc_AppResources.cpp */; settings = {ATTRIBUTES = (); }; };
+		4D1447C41F0A69F902258D75 /* QtPrintSupport.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 2474A20143A47B6065C5A6EB /* QtPrintSupport.framework */; };
+		4E127E53C7C68F6E8122E4C9 /* CreateProjectPage.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = B4E91BA664C9646E3B11EC0B /* CreateProjectPage.cpp */; settings = {ATTRIBUTES = (); }; };
+		545EC6AC09FD45B8598D1F59 /* moc_textfinder.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 5A03F0E58C1FAE0368E4A608 /* moc_textfinder.cpp */; settings = {ATTRIBUTES = (); }; };
+		54D1CA07703065ED7BAB73C7 /* diff_match_patch.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = CDF2AF433B8420FB448CEF68 /* diff_match_patch.cpp */; settings = {ATTRIBUTES = (); }; };
+		568C5EB40CA0C607B38921E6 /* moc_zoom.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 9948A4EC134E88B9D0914AD5 /* moc_zoom.cpp */; settings = {ATTRIBUTES = (); }; };
+		5B0394922A9DEE30DA582339 /* moc_customtextbrowser.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 37BF867BA5AE1112753870DE /* moc_customtextbrowser.cpp */; settings = {ATTRIBUTES = (); }; };
+		5C488F7B973309A13A90C4D4 /* Filters.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 03EA92D27ECB91A752501DA4 /* Filters.cpp */; settings = {ATTRIBUTES = (); }; };
+		5DD6934105EDB2E0C8DB2DF5 /* about.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = A8EA8034B9FF453BFFBB765B /* about.cpp */; settings = {ATTRIBUTES = (); }; };
+		5ED787484C5A8A3A7D181276 /* QtMultimedia.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 0CB5E92BFB391396B225E1AC /* QtMultimedia.framework */; };
+		5EE41DF0907849EC27B1C654 /* moc_threadingpush.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = DB317BCD4D566A891653F579 /* moc_threadingpush.cpp */; settings = {ATTRIBUTES = (); }; };
+		616E5C41EA26BB5890EE6D13 /* zoom.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = D2308E18D8985FB236806255 /* zoom.cpp */; settings = {ATTRIBUTES = (); }; };
+		636D5CA4DF20151D2E1346AF /* main.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 3F68741104054234D302850A /* main.cpp */; settings = {ATTRIBUTES = (); }; };
+		638D7B05E6BABB4190DEAE4C /* textfinder.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = BF5571D0CB3814873E87311A /* textfinder.cpp */; settings = {ATTRIBUTES = (); }; };
+		66DC1F9561AEFCCC689D5D88 /* moc_CreateProjectPage.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = CF53AE6B6907A6CCAE464F97 /* moc_CreateProjectPage.cpp */; settings = {ATTRIBUTES = (); }; };
+		675237DB66EF563119A10580 /* QtSvg.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = FE31250732616B499E2AFDE3 /* QtSvg.framework */; };
+		68998077F8A3EF52C87BBA62 /* moc_pdfrangedialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = B944DC9555F2C2A59747EDEA /* moc_pdfrangedialog.cpp */; settings = {ATTRIBUTES = (); }; };
+		68F02E01BEEB6B5EB90D3911 /* Project.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 8CBEC4341ECEDCEDC2AB9CF2 /* Project.cpp */; settings = {ATTRIBUTES = (); }; };
+		69755BAD2C0141CCB469950C /* averageaccuracies.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = C1BB8F648E5A4FB212568407 /* averageaccuracies.cpp */; settings = {ATTRIBUTES = (); }; };
+		6B1BB654E1611F7E3321FA63 /* moc_loginpageview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 354D98A30ABFA5003C22419E /* moc_loginpageview.cpp */; settings = {ATTRIBUTES = (); }; };
+		6EDEA851B5C6E268A654E976 /* moc_shortcutguidedialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 933456474D916DE1C9883F9C /* moc_shortcutguidedialog.cpp */; settings = {ATTRIBUTES = (); }; };
+		7D3B627D38FC93B16C629DDB /* globalreplacedialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = A48C11824429D2C97C16DC0E /* globalreplacedialog.cpp */; settings = {ATTRIBUTES = (); }; };
+		82905DB079F94E09EE300CF6 /* printworker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 3298E55F9DCF324CC8B779A9 /* printworker.cpp */; settings = {ATTRIBUTES = (); }; };
+		842C42FD77BC8D82051F7B50 /* ProjectHierarchyWindow.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = EDCC12E7F19D85490C0F5564 /* ProjectHierarchyWindow.cpp */; settings = {ATTRIBUTES = (); }; };
+		8771A8C96E9C391044035D99 /* OpenGL.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = D4B32C2222F82AC56BADEB21 /* OpenGL.framework */; };
+		8D267F2E4776F0ECA2F49DC8 /* IOKit.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = A1A67BEAA744704B29168D39 /* IOKit.framework */; };
+		9071F884014C67E03724A6BC /* TreeItem.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = A987AE0DED32D04FE8DDDA00 /* TreeItem.cpp */; settings = {ATTRIBUTES = (); }; };
+		9ABA3B0D24DF5CACB7B4D360 /* moc_TreeModel.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = A3CE519E2E78D7D26D91D180 /* moc_TreeModel.cpp */; settings = {ATTRIBUTES = (); }; };
+		A15332D79C1D55E1F1B74565 /* moc_progressbardialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = DDCD6910BE792DA94320EDF4 /* moc_progressbardialog.cpp */; settings = {ATTRIBUTES = (); }; };
+		A42C945BA862682C980DBA5C /* worker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 0710A7AB4FDB9CCBA0295B11 /* worker.cpp */; settings = {ATTRIBUTES = (); }; };
+		A529858BFF484B8650909C33 /* moc_interndiffview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 02C9848BAA8D90F0C8F1FF49 /* moc_interndiffview.cpp */; settings = {ATTRIBUTES = (); }; };
+		A99B2AA0F9CBBDD12BA126A4 /* DiskArbitration.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 2B774D8E4178765CE52EAAF5 /* DiskArbitration.framework */; };
+		ABB5AE0B9DEC3BCA0B715D4A /* shortcutguidedialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = B0ED8479240637C2F343E092 /* shortcutguidedialog.cpp */; settings = {ATTRIBUTES = (); }; };
+		AE880F9DBE0B42D95B1E5283 /* globalreplacepreview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = E800EA01BF09BE44A721EDC7 /* globalreplacepreview.cpp */; settings = {ATTRIBUTES = (); }; };
+		B265D882DF84239BA26EF4D8 /* progressbardialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = F28C0EB10C9E32F07FE4CCB1 /* progressbardialog.cpp */; settings = {ATTRIBUTES = (); }; };
+		B3DCA008BE1E4F7A2E841E5E /* QtWidgets.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 2200997F2A8CFAA0DFC5981A /* QtWidgets.framework */; };
+		B3FE8FAC746D3D5BB24FA398 /* Metal.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 1B2543FCC48E9436F21C4F63 /* Metal.framework */; };
+		B6C7ACD90B73D4D610B9C4A7 /* moc_Symbols.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 5EA1A744EF178DAB73F08C43 /* moc_Symbols.cpp */; settings = {ATTRIBUTES = (); }; };
+		B7A5F2C1921E96FE5F2953BA /* moc_globalreplaceinformation.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = AFF928C072A9E1522CE85939 /* moc_globalreplaceinformation.cpp */; settings = {ATTRIBUTES = (); }; };
+		C15404A00264F2C7405EE0DD /* slpNPatternDict.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = A172DA43789E103B10BDEE16 /* slpNPatternDict.cpp */; settings = {ATTRIBUTES = (); }; };
+		C23E3BF84DD44C078CC7B29E /* threadingpush.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 643FD5AE2BA85D4342E5434F /* threadingpush.cpp */; settings = {ATTRIBUTES = (); }; };
+		C2C285C7105080F0AC25E3EE /* globalreplaceworker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 75D5EED5727F301267C43376 /* globalreplaceworker.cpp */; settings = {ATTRIBUTES = (); }; };
+		C3761A3096CAEDAFC690DBEB /* moc_ProjectHierarchyWindow.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 0620CF963F3293EC3B8EDB1F /* moc_ProjectHierarchyWindow.cpp */; settings = {ATTRIBUTES = (); }; };
+		C3C6AA6DB18E4FC70AEC58E8 /* moc_commentsview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = A5BFF846E541EC8971247620 /* moc_commentsview.cpp */; settings = {ATTRIBUTES = (); }; };
+		C3EBEBF024AF31579B0C3CAC /* pdfrangedialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 01EE7A506BFCB173AE1EB09A /* pdfrangedialog.cpp */; settings = {ATTRIBUTES = (); }; };
+		C4A16BCE2A3ABCCE0038A952 /* libYAWYSIWYGEE.a in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A16BCD2A3ABCCE0038A952 /* libYAWYSIWYGEE.a */; };
+		C4A16BD02A3ABE350038A952 /* YAWYSIWYGEE.lib in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A16BCF2A3ABE350038A952 /* YAWYSIWYGEE.lib */; };
+		C75D59F9159A6E3B74686621 /* DiffView.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 17CE7A6AA43CB99CC4C3B3A0 /* DiffView.cpp */; settings = {ATTRIBUTES = (); }; };
+		C8804597176C1FF8C544F2B9 /* moc_DiffView.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = EB566382E052324EB5478002 /* moc_DiffView.cpp */; settings = {ATTRIBUTES = (); }; };
+		D4F9B97C710FFA97307EB7CE /* moc_pdfhandling.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = A17A5A2610CAFF8B13073B4D /* moc_pdfhandling.cpp */; settings = {ATTRIBUTES = (); }; };
+		D5B6ABFFD8E5D4E542B49D25 /* loadingspinner.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = EE5A87413762F24B5B4557F9 /* loadingspinner.cpp */; settings = {ATTRIBUTES = (); }; };
+		D8B3D50B69E8FB1EBA3F5854 /* dummy.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 9345E850AA4052489E4759F5 /* dummy.cpp */; settings = {ATTRIBUTES = (); }; };
+		D9A6C95CEBBC780507C288F9 /* QtXml.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 495D04603E66357994DE68EB /* QtXml.framework */; };
+		E12B5197372E17AB8035E5C9 /* indentoptions.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = AB9E8D374EFE7D4A6A942B99 /* indentoptions.cpp */; settings = {ATTRIBUTES = (); }; };
+		E2DE604A79A37875E52AE140 /* moc_worker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = C9ECD338624769C8B697AFDE /* moc_worker.cpp */; settings = {ATTRIBUTES = (); }; };
+		E366C6E1545C6E2DA81FB902 /* moc_rubberband.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = F358718D5320ABFEDB164916 /* moc_rubberband.cpp */; settings = {ATTRIBUTES = (); }; };
+		E45E51A644D5FC9F942ECE55 /* AGL.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 8D9815BDB5BD9F90D2BC05C5 /* AGL.framework */; };
+		E7DECCB52ED83DA3759881F6 /* crashlog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 4BD76469477B67F5D05ABEF2 /* crashlog.cpp */; settings = {ATTRIBUTES = (); }; };
+		E9DE9BACCF55F828390AEA0B /* equationeditor.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = D2BF31F2A229B5E5697AD9D0 /* equationeditor.cpp */; settings = {ATTRIBUTES = (); }; };
+		EE6E0F35EFE46AF8329EEE2E /* ProjectWizard.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = E1262660AFB554640DE8204E /* ProjectWizard.cpp */; settings = {ATTRIBUTES = (); }; };
+		EEB7A573F40F350BDE995B14 /* moc_globalreplacepreview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 9B7310672539B7552B1DD64B /* moc_globalreplacepreview.cpp */; settings = {ATTRIBUTES = (); }; };
+		F120533A42F5D1A09572A387 /* moc_resizeimageview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 54AA8D83E2DDC9104554E600 /* moc_resizeimageview.cpp */; settings = {ATTRIBUTES = (); }; };
+		F20BF54AE86841942B01582C /* lg2_common.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = F1CD542B26A32E265018EE7C /* lg2_common.cpp */; settings = {ATTRIBUTES = (); }; };
+		F21D64CBD73EDF861E9E518E /* git2 in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 156B6EAB27B287AA2911F6EB /* git2 */; };
+		F2A75ACAC9DF6A3F4E5711E7 /* AppKit.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 723F90793B2C195E2CCB2233 /* AppKit.framework */; };
+		F2AA12B0FF91288300D98452 /* eddis.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = F483E1778DD759CF0E084901 /* eddis.cpp */; settings = {ATTRIBUTES = (); }; };
+		F3CB6564FDBB69692F08540D /* interndiffview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 1D178E779916C21892A8D5B7 /* interndiffview.cpp */; settings = {ATTRIBUTES = (); }; };
+		F8056D82C96385B2B88038FC /* moc_equationeditor.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = C06853B2927029A68C020EC9 /* moc_equationeditor.cpp */; settings = {ATTRIBUTES = (); }; };
+		F97C830E133EC7BB122A9A20 /* verifyset.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 360A0FF3C9C20BDAF2E29822 /* verifyset.cpp */; settings = {ATTRIBUTES = (); }; };
+		FB4A93EE07E03C68C4746678 /* meanStdPage.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = D98C8E2C3AA83CDE63FA0B94 /* meanStdPage.cpp */; settings = {ATTRIBUTES = (); }; };
+		FBC88C6FE2CC6D4E5BF3BDC3 /* dashboard.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = D03996C86C9A8BCA6EC5C51F /* dashboard.cpp */; settings = {ATTRIBUTES = (); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C4A16BCC2A3ABC6F0038A952 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6DB9C3763D02B1415CD9D565 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C03CBD3FEE7B9CFCC5F38CC8;
+			remoteInfo = "Qt Preprocess";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		99542592E9780B9225F24AA8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0059756930DED6BC007DA7A8 /* globalreplaceinformation.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = globalreplaceinformation.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/globalreplaceinformation.ui; sourceTree = "<absolute>"; };
+		00C7249BDF8D3FD18D08A464 /* zoom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = zoom.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/zoom.h; sourceTree = "<absolute>"; };
+		01B48DB6480878C2615449F6 /* qrc_AppResources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = qrc_AppResources.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/qrc_AppResources.cpp; sourceTree = "<absolute>"; };
+		01EE7A506BFCB173AE1EB09A /* pdfrangedialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pdfrangedialog.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/pdfrangedialog.cpp; sourceTree = "<absolute>"; };
+		01FBE10CC4E6F6A7CA123E0D /* ui_dashboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_dashboard.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_dashboard.h; sourceTree = "<absolute>"; };
+		02C9848BAA8D90F0C8F1FF49 /* moc_interndiffview.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_interndiffview.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_interndiffview.cpp; sourceTree = "<absolute>"; };
+		03EA92D27ECB91A752501DA4 /* Filters.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Filters.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/Filters.cpp; sourceTree = "<absolute>"; };
+		0620CF963F3293EC3B8EDB1F /* moc_ProjectHierarchyWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_ProjectHierarchyWindow.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_ProjectHierarchyWindow.cpp; sourceTree = "<absolute>"; };
+		0710A7AB4FDB9CCBA0295B11 /* worker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = worker.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/worker.cpp; sourceTree = "<absolute>"; };
+		08A939AF077995F7F8D83616 /* ProjectHierarchyWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProjectHierarchyWindow.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ProjectHierarchyWindow.h; sourceTree = "<absolute>"; };
+		0AC687B310F4FDDE133E5CA4 /* ui_pdfrangedialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pdfrangedialog.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_pdfrangedialog.h; sourceTree = "<absolute>"; };
+		0AF3D8AC61B68316DC63B630 /* moc_mainwindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_mainwindow.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_mainwindow.cpp; sourceTree = "<absolute>"; };
+		0CA084BA4D443F066B3EAA80 /* loginpageview.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = loginpageview.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/loginpageview.ui; sourceTree = "<absolute>"; };
+		0CB5E92BFB391396B225E1AC /* QtMultimedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtMultimedia.framework; path = "/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtMultimedia.framework"; sourceTree = "<absolute>"; };
+		0EAB9FEC38ABB362CFE60E61 /* ui_DiffView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_DiffView.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_DiffView.h; sourceTree = "<absolute>"; };
+		0FC0E4DA41996F6E6A0442DE /* commentsview.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = commentsview.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/commentsview.ui; sourceTree = "<absolute>"; };
+		11A64C4159107F9C2BF41749 /* qpadfinal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qpadfinal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		156B6EAB27B287AA2911F6EB /* git2 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = git2; path = /usr/local/lib/libgit2.dylib; sourceTree = "<absolute>"; };
+		15E191C3C9DBD7E46144644B /* averageaccuracies.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = averageaccuracies.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/averageaccuracies.ui; sourceTree = "<absolute>"; };
+		17CE7A6AA43CB99CC4C3B3A0 /* DiffView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DiffView.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/DiffView.cpp; sourceTree = "<absolute>"; };
+		19B968024692301D1431CACA /* handlebbox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = handlebbox.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/handlebbox.cpp; sourceTree = "<absolute>"; };
+		19FEDC84D6926EEC5BDB05D6 /* pugixml */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = pugixml; path = /usr/local/lib/libpugixml.a; sourceTree = "<absolute>"; };
+		1ACC20FFB3466D13B5B2210E /* undoglobalreplace.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = undoglobalreplace.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/undoglobalreplace.ui; sourceTree = "<absolute>"; };
+		1AFE4D6BC0FF9B904CC1FEED /* resizeimageview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = resizeimageview.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/resizeimageview.h; sourceTree = "<absolute>"; };
+		1B2543FCC48E9436F21C4F63 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = /System/Library/Frameworks/Metal.framework; sourceTree = "<absolute>"; };
+		1CE775A1CE81DE6015067885 /* textfinder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = textfinder.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/textfinder.h; sourceTree = "<absolute>"; };
+		1D178E779916C21892A8D5B7 /* interndiffview.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = interndiffview.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/interndiffview.cpp; sourceTree = "<absolute>"; };
+		1DD87AD6D17238305E91D962 /* resizeimageview.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = resizeimageview.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/resizeimageview.cpp; sourceTree = "<absolute>"; };
+		214CFF8250529B07882D099B /* globalreplaceinformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = globalreplaceinformation.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/globalreplaceinformation.h; sourceTree = "<absolute>"; };
+		2200997F2A8CFAA0DFC5981A /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = "/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtWidgets.framework"; sourceTree = "<absolute>"; };
+		2474A20143A47B6065C5A6EB /* QtPrintSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtPrintSupport.framework; path = "/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtPrintSupport.framework"; sourceTree = "<absolute>"; };
+		25D32F73AC523CA5695C7E33 /* slpNPatternDict.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = slpNPatternDict.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/slpNPatternDict.h; sourceTree = "<absolute>"; };
+		269AF8F152CC476B1EB62722 /* meanStdPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = meanStdPage.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/meanStdPage.h; sourceTree = "<absolute>"; };
+		27FD59770F35DA701B87FFE3 /* TreeModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TreeModel.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/TreeModel.cpp; sourceTree = "<absolute>"; };
+		2854B51A8A588D649EA1A94D /* loadingspinner.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = loadingspinner.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/loadingspinner.ui; sourceTree = "<absolute>"; };
+		293115DD1DACB7D0681F33A1 /* commentsview.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = commentsview.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/commentsview.cpp; sourceTree = "<absolute>"; };
+		2B774D8E4178765CE52EAAF5 /* DiskArbitration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiskArbitration.framework; path = /System/Library/Frameworks/DiskArbitration.framework; sourceTree = "<absolute>"; };
+		2BAF363F20C1975C7F383C2C /* editdistance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = editdistance.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/editdistance.h; sourceTree = "<absolute>"; };
+		2C8FCAA2BBA2F6137A6A6C1A /* trieEditdis.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = trieEditdis.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/trieEditdis.h; sourceTree = "<absolute>"; };
+		2EA6917C1DDE073A89D08A4B /* ui_indentoptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_indentoptions.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_indentoptions.h; sourceTree = "<absolute>"; };
+		31BE2A9AF3180059CDA0BFDA /* markRegion.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = markRegion.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/markRegion.cpp; sourceTree = "<absolute>"; };
+		3298E55F9DCF324CC8B779A9 /* printworker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = printworker.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/printworker.cpp; sourceTree = "<absolute>"; };
+		33481702F7B5AFE88E278550 /* mainwindow.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = mainwindow.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/mainwindow.ui; sourceTree = "<absolute>"; };
+		3458C3C9A03BF262A67ECB60 /* moc_ProjectWizard.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_ProjectWizard.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_ProjectWizard.cpp; sourceTree = "<absolute>"; };
+		354D98A30ABFA5003C22419E /* moc_loginpageview.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_loginpageview.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_loginpageview.cpp; sourceTree = "<absolute>"; };
+		35B3D550D99FD3D9601F18F4 /* dashboard.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = dashboard.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/dashboard.ui; sourceTree = "<absolute>"; };
+		360A0FF3C9C20BDAF2E29822 /* verifyset.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = verifyset.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/verifyset.cpp; sourceTree = "<absolute>"; };
+		37BF867BA5AE1112753870DE /* moc_customtextbrowser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_customtextbrowser.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_customtextbrowser.cpp; sourceTree = "<absolute>"; };
+		3F68741104054234D302850A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/main.cpp; sourceTree = "<absolute>"; };
+		420EF3605DE9278721B94C08 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = "/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtCore.framework"; sourceTree = "<absolute>"; };
+		47B8573317AE30E6AC005DB0 /* moc_loaddataworker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_loaddataworker.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_loaddataworker.cpp; sourceTree = "<absolute>"; };
+		495D04603E66357994DE68EB /* QtXml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtXml.framework; path = "/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtXml.framework"; sourceTree = "<absolute>"; };
+		49CBB3913AA8936A51155F81 /* loginpageview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = loginpageview.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/loginpageview.h; sourceTree = "<absolute>"; };
+		4A8ED580B6F110C095866999 /* qpadfinal.pri */ = {isa = PBXFileReference; lastKnownFileType = text; name = qpadfinal.pri; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/qpadfinal.pri; sourceTree = "<absolute>"; };
+		4BD76469477B67F5D05ABEF2 /* crashlog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = crashlog.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/crashlog.cpp; sourceTree = "<absolute>"; };
+		4C485A74DDEF3CBE5023498B /* handlebbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = handlebbox.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/handlebbox.h; sourceTree = "<absolute>"; };
+		4D9E3EC2D861F480FCDD467B /* progressbardialog.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = progressbardialog.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/progressbardialog.ui; sourceTree = "<absolute>"; };
+		4EF6822FCD9EEF8E713D0CC1 /* moc_loadingspinner.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_loadingspinner.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_loadingspinner.cpp; sourceTree = "<absolute>"; };
+		4FBCC97F7632BAB7FE28E3F4 /* pdfrangedialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pdfrangedialog.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/pdfrangedialog.h; sourceTree = "<absolute>"; };
+		533A6390567A41E10143DACA /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetwork.framework; path = "/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtNetwork.framework"; sourceTree = "<absolute>"; };
+		536F221CB91E5A03A7BBD1DA /* loadingspinner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = loadingspinner.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/loadingspinner.h; sourceTree = "<absolute>"; };
+		54AA8D83E2DDC9104554E600 /* moc_resizeimageview.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_resizeimageview.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_resizeimageview.cpp; sourceTree = "<absolute>"; };
+		552A1978AE45A40FFFB1A6FD /* eddis.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = eddis.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/eddis.h; sourceTree = "<absolute>"; };
+		56FEC68E3A64AA9B2D164F15 /* ProjectHierarchyWindow.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = ProjectHierarchyWindow.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ProjectHierarchyWindow.ui; sourceTree = "<absolute>"; };
+		590463D65FC26E86A8E41BFA /* about.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = about.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/about.h; sourceTree = "<absolute>"; };
+		59B34E8ABAF64D5B631DCB46 /* progressbardialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = progressbardialog.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/progressbardialog.h; sourceTree = "<absolute>"; };
+		5A03F0E58C1FAE0368E4A608 /* moc_textfinder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_textfinder.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_textfinder.cpp; sourceTree = "<absolute>"; };
+		5A95D8AD5FC4AA5C7797E79D /* Filters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Filters.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/Filters.h; sourceTree = "<absolute>"; };
+		5C851E71EE6D9702599F3F91 /* dashboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = dashboard.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/dashboard.h; sourceTree = "<absolute>"; };
+		5EA1A744EF178DAB73F08C43 /* moc_Symbols.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_Symbols.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_Symbols.cpp; sourceTree = "<absolute>"; };
+		60328688626BE2E2FEE449E2 /* moc_undoglobalreplace.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_undoglobalreplace.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_undoglobalreplace.cpp; sourceTree = "<absolute>"; };
+		643447A6C694A42EE21FA967 /* ui_progressbardialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_progressbardialog.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_progressbardialog.h; sourceTree = "<absolute>"; };
+		643FD5AE2BA85D4342E5434F /* threadingpush.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = threadingpush.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/threadingpush.cpp; sourceTree = "<absolute>"; };
+		64D1DDA5D9562F682D4AF8D6 /* indentoptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = indentoptions.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/indentoptions.h; sourceTree = "<absolute>"; };
+		6C054AF303B4DA4581E49C43 /* ui_globalreplacedialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_globalreplacedialog.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_globalreplacedialog.h; sourceTree = "<absolute>"; };
+		6E2593C25F889C5EA68BE9F0 /* verifyset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = verifyset.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/verifyset.h; sourceTree = "<absolute>"; };
+		6F6849279547F7D5E6B121E7 /* moc_about.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_about.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_about.cpp; sourceTree = "<absolute>"; };
+		70AE8A34232CB43EA4BD4612 /* pdfhandling.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pdfhandling.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/pdfhandling.cpp; sourceTree = "<absolute>"; };
+		723F90793B2C195E2CCB2233 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		72A1529D6A57D171C3EBCFFB /* threadingpush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = threadingpush.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/threadingpush.h; sourceTree = "<absolute>"; };
+		72A8E03E64C79E16325B29E1 /* worker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = worker.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/worker.h; sourceTree = "<absolute>"; };
+		73AA6DD9A6AF183180A20A3A /* interndiffview.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = interndiffview.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/interndiffview.ui; sourceTree = "<absolute>"; };
+		742F030264CEE075A9116D4E /* mainwindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mainwindow.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/mainwindow.cpp; sourceTree = "<absolute>"; };
+		74C70FAC797723303832E536 /* TreeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TreeModel.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/TreeModel.h; sourceTree = "<absolute>"; };
+		75D0A7E995443FED2EB97639 /* ui_undoglobalreplace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_undoglobalreplace.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_undoglobalreplace.h; sourceTree = "<absolute>"; };
+		75D5EED5727F301267C43376 /* globalreplaceworker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = globalreplaceworker.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/globalreplaceworker.cpp; sourceTree = "<absolute>"; };
+		76F0C3531EE3E8B60C77A25A /* loaddataworker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = loaddataworker.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/loaddataworker.h; sourceTree = "<absolute>"; };
+		7739ADEFC14F006DBDE14BA9 /* equationeditor.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = equationeditor.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/equationeditor.ui; sourceTree = "<absolute>"; };
+		7FFF488ED1DE22ED62ACD856 /* indentoptions.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = indentoptions.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/indentoptions.ui; sourceTree = "<absolute>"; };
+		82684C8759F3108ED8096A92 /* averageaccuracies.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = averageaccuracies.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/averageaccuracies.h; sourceTree = "<absolute>"; };
+		8B67A9657049ADB534822F2F /* globalreplaceinformation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = globalreplaceinformation.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/globalreplaceinformation.cpp; sourceTree = "<absolute>"; };
+		8BF4722D3C98738A7B71D324 /* trieEditdis.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = trieEditdis.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/trieEditdis.cpp; sourceTree = "<absolute>"; };
+		8CBEC4341ECEDCEDC2AB9CF2 /* Project.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Project.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/Project.cpp; sourceTree = "<absolute>"; };
+		8D9815BDB5BD9F90D2BC05C5 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
+		8DB8FEA6B27887E5C996392F /* undoglobalreplace.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = undoglobalreplace.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/undoglobalreplace.cpp; sourceTree = "<absolute>"; };
+		8DF64D537A7091E3157C136A /* rubberband.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = rubberband.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/rubberband.h; sourceTree = "<absolute>"; };
+		933456474D916DE1C9883F9C /* moc_shortcutguidedialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_shortcutguidedialog.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_shortcutguidedialog.cpp; sourceTree = "<absolute>"; };
+		9345E850AA4052489E4759F5 /* dummy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dummy.cpp; path = "/opt/homebrew/Cellar/qt@5/5.15.8_3/mkspecs/features/data/dummy.cpp"; sourceTree = "<absolute>"; };
+		94778A0728D2767F8186179E /* QtNetworkAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetworkAuth.framework; path = "/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtNetworkAuth.framework"; sourceTree = "<absolute>"; };
+		94FDFB9AEB4A0E9C3CE14F08 /* mainwindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = mainwindow.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/mainwindow.h; sourceTree = "<absolute>"; };
+		95ED5C2228110CFE188B64F8 /* ui_globalreplacepreview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_globalreplacepreview.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_globalreplacepreview.h; sourceTree = "<absolute>"; };
+		9636AAEF191F44C113E8A2CA /* loginpageview.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = loginpageview.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/loginpageview.cpp; sourceTree = "<absolute>"; };
+		96BEFAE4A6D98546ED62F237 /* editdistance.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = editdistance.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/editdistance.cpp; sourceTree = "<absolute>"; };
+		984B3382B2BC339C9D89B4E5 /* ui_loginpageview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_loginpageview.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_loginpageview.h; sourceTree = "<absolute>"; };
+		98FC7B26E5AF29799D7C262C /* ui_equationeditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_equationeditor.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_equationeditor.h; sourceTree = "<absolute>"; };
+		9948A4EC134E88B9D0914AD5 /* moc_zoom.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_zoom.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_zoom.cpp; sourceTree = "<absolute>"; };
+		999D2DB382DA401B145ABB43 /* crashlog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = crashlog.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/crashlog.h; sourceTree = "<absolute>"; };
+		99E94652F8BB982EC16A753E /* undoglobalreplace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = undoglobalreplace.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/undoglobalreplace.h; sourceTree = "<absolute>"; };
+		9B7310672539B7552B1DD64B /* moc_globalreplacepreview.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_globalreplacepreview.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_globalreplacepreview.cpp; sourceTree = "<absolute>"; };
+		9BFC238BA1F31BC56691F484 /* shortcutguidedialog.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = shortcutguidedialog.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/shortcutguidedialog.ui; sourceTree = "<absolute>"; };
+		9C3AD1AFB881A55C61E52FE0 /* globalreplacepreview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = globalreplacepreview.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/globalreplacepreview.h; sourceTree = "<absolute>"; };
+		9D058369B53FBC42D8BAE772 /* ui_loadingspinner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_loadingspinner.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_loadingspinner.h; sourceTree = "<absolute>"; };
+		9D926525B0E32C65FD78C5F2 /* ProjectWizard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProjectWizard.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ProjectWizard.h; sourceTree = "<absolute>"; };
+		9E771D99F221061D6443EA1B /* ui_globalreplaceinformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_globalreplaceinformation.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_globalreplaceinformation.h; sourceTree = "<absolute>"; };
+		A0DA042090547A63A885D1DD /* pdfrangedialog.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pdfrangedialog.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/pdfrangedialog.ui; sourceTree = "<absolute>"; };
+		A172DA43789E103B10BDEE16 /* slpNPatternDict.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = slpNPatternDict.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/slpNPatternDict.cpp; sourceTree = "<absolute>"; };
+		A17A5A2610CAFF8B13073B4D /* moc_pdfhandling.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pdfhandling.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_pdfhandling.cpp; sourceTree = "<absolute>"; };
+		A1A67BEAA744704B29168D39 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
+		A3CE519E2E78D7D26D91D180 /* moc_TreeModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_TreeModel.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_TreeModel.cpp; sourceTree = "<absolute>"; };
+		A48C11824429D2C97C16DC0E /* globalreplacedialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = globalreplacedialog.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/globalreplacedialog.cpp; sourceTree = "<absolute>"; };
+		A5BFF846E541EC8971247620 /* moc_commentsview.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_commentsview.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_commentsview.cpp; sourceTree = "<absolute>"; };
+		A8EA8034B9FF453BFFBB765B /* about.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = about.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/about.cpp; sourceTree = "<absolute>"; };
+		A95E3B7F9D92B91E0AE2280D /* textfinder.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = textfinder.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/textfinder.ui; sourceTree = "<absolute>"; };
+		A987AE0DED32D04FE8DDDA00 /* TreeItem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TreeItem.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/TreeItem.cpp; sourceTree = "<absolute>"; };
+		AA6103A5DF7835FB33AEC2C4 /* printworker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = printworker.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/printworker.h; sourceTree = "<absolute>"; };
+		AACACCC19FE124831116B37A /* rapidxml_print.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = rapidxml_print.hpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/3rdParty/RapidXML/rapidxml_print.hpp; sourceTree = "<absolute>"; };
+		AB9E8D374EFE7D4A6A942B99 /* indentoptions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = indentoptions.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/indentoptions.cpp; sourceTree = "<absolute>"; };
+		AD04ACC913E3AE4A56ADEF0C /* ui_textfinder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_textfinder.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_textfinder.h; sourceTree = "<absolute>"; };
+		AFF928C072A9E1522CE85939 /* moc_globalreplaceinformation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_globalreplaceinformation.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_globalreplaceinformation.cpp; sourceTree = "<absolute>"; };
+		B0284BB59B95C2D324E172B3 /* markRegion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = markRegion.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/markRegion.h; sourceTree = "<absolute>"; };
+		B0ED8479240637C2F343E092 /* shortcutguidedialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = shortcutguidedialog.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/shortcutguidedialog.cpp; sourceTree = "<absolute>"; };
+		B397E85003832B900AB4A346 /* globalreplacedialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = globalreplacedialog.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/globalreplacedialog.h; sourceTree = "<absolute>"; };
+		B3F2736E7BD928C657169171 /* qpadfinal_macos_arm64.pro */ = {isa = PBXFileReference; lastKnownFileType = text; name = qpadfinal_macos_arm64.pro; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/qpadfinal_macos_arm64.pro; sourceTree = "<absolute>"; };
+		B48E584D7EC370DDE960FC07 /* ui_interndiffview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_interndiffview.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_interndiffview.h; sourceTree = "<absolute>"; };
+		B4E91BA664C9646E3B11EC0B /* CreateProjectPage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CreateProjectPage.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/CreateProjectPage.cpp; sourceTree = "<absolute>"; };
+		B5B9D7AE072896F62DE387A0 /* CreateProjectPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CreateProjectPage.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/CreateProjectPage.h; sourceTree = "<absolute>"; };
+		B697B8115D6C627F11AEFB92 /* customtextbrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = customtextbrowser.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/customtextbrowser.h; sourceTree = "<absolute>"; };
+		B7F48FBE6C4E04550660AD11 /* DiffView.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = DiffView.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/DiffView.ui; sourceTree = "<absolute>"; };
+		B944DC9555F2C2A59747EDEA /* moc_pdfrangedialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pdfrangedialog.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_pdfrangedialog.cpp; sourceTree = "<absolute>"; };
+		BDC76B3A5AA3215986170C3F /* commentsview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = commentsview.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/commentsview.h; sourceTree = "<absolute>"; };
+		BF5571D0CB3814873E87311A /* textfinder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textfinder.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/textfinder.cpp; sourceTree = "<absolute>"; };
+		C06853B2927029A68C020EC9 /* moc_equationeditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_equationeditor.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_equationeditor.cpp; sourceTree = "<absolute>"; };
+		C1BB8F648E5A4FB212568407 /* averageaccuracies.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = averageaccuracies.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/averageaccuracies.cpp; sourceTree = "<absolute>"; };
+		C1F09CB920984870A0EC91F9 /* TreeItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TreeItem.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/TreeItem.h; sourceTree = "<absolute>"; };
+		C268DB011455CC8B9FF7AAA4 /* AppResources.qrc */ = {isa = PBXFileReference; lastKnownFileType = text; name = AppResources.qrc; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/AppResources.qrc; sourceTree = "<absolute>"; };
+		C275B0D8FE5EA2497F3A8E26 /* lg2_common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = lg2_common.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/lg2_common.h; sourceTree = "<absolute>"; };
+		C457510C67B95A23F566CCD1 /* diff_match_patch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = diff_match_patch.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/diff_match_patch.h; sourceTree = "<absolute>"; };
+		C4A16BCD2A3ABCCE0038A952 /* libYAWYSIWYGEE.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYAWYSIWYGEE.a; path = ../lib/dist/macos/arm64/libYAWYSIWYGEE.a; sourceTree = "<group>"; };
+		C4A16BCF2A3ABE350038A952 /* YAWYSIWYGEE.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = YAWYSIWYGEE.lib; path = ../lib/YAWYSIWYGEE.lib; sourceTree = "<group>"; };
+		C6D20E2FA7EA1D65E5878B75 /* customtextbrowser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = customtextbrowser.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/customtextbrowser.cpp; sourceTree = "<absolute>"; };
+		C7FC2FE072B98BA678E550E2 /* ui_mainwindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_mainwindow.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_mainwindow.h; sourceTree = "<absolute>"; };
+		C8931B8D66612463B100A487 /* ui_Symbols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_Symbols.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_Symbols.h; sourceTree = "<absolute>"; };
+		C9B586C5A19B8F5A28E04265 /* rapidxml_iterators.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = rapidxml_iterators.hpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/3rdParty/RapidXML/rapidxml_iterators.hpp; sourceTree = "<absolute>"; };
+		C9CA462D608E26B76F71C21C /* globalreplaceworker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = globalreplaceworker.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/globalreplaceworker.h; sourceTree = "<absolute>"; };
+		C9ECD338624769C8B697AFDE /* moc_worker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_worker.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_worker.cpp; sourceTree = "<absolute>"; };
+		CA7D46F4B3A5792E9A7EDE94 /* DiffView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DiffView.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/DiffView.h; sourceTree = "<absolute>"; };
+		CABB1C7847A5955957E06297 /* equationeditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = equationeditor.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/equationeditor.h; sourceTree = "<absolute>"; };
+		CCAA0599B7CD5D936B35E7E4 /* loaddataworker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = loaddataworker.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/loaddataworker.cpp; sourceTree = "<absolute>"; };
+		CDF2AF433B8420FB448CEF68 /* diff_match_patch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = diff_match_patch.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/diff_match_patch.cpp; sourceTree = "<absolute>"; };
+		CEA5016BB9292F27C58451EC /* Project.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Project.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/Project.h; sourceTree = "<absolute>"; };
+		CF53AE6B6907A6CCAE464F97 /* moc_CreateProjectPage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_CreateProjectPage.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_CreateProjectPage.cpp; sourceTree = "<absolute>"; };
+		D03996C86C9A8BCA6EC5C51F /* dashboard.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dashboard.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/dashboard.cpp; sourceTree = "<absolute>"; };
+		D0A2D342681934660055E84E /* moc_averageaccuracies.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_averageaccuracies.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_averageaccuracies.cpp; sourceTree = "<absolute>"; };
+		D120C4984A2D0DFE09245C05 /* ui_commentsview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_commentsview.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_commentsview.h; sourceTree = "<absolute>"; };
+		D1EE41356618C391C3C92CE3 /* Symbols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Symbols.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/Symbols.h; sourceTree = "<absolute>"; };
+		D2308E18D8985FB236806255 /* zoom.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = zoom.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/zoom.cpp; sourceTree = "<absolute>"; };
+		D2BF31F2A229B5E5697AD9D0 /* equationeditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = equationeditor.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/equationeditor.cpp; sourceTree = "<absolute>"; };
+		D4B32C2222F82AC56BADEB21 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		D59C48E14B477FFF6C01821D /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = "/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtGui.framework"; sourceTree = "<absolute>"; };
+		D98C8E2C3AA83CDE63FA0B94 /* meanStdPage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = meanStdPage.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/meanStdPage.cpp; sourceTree = "<absolute>"; };
+		D9A8F27A7770A2E2A0561BA9 /* .qmake.stash */ = {isa = PBXFileReference; lastKnownFileType = text; name = .qmake.stash; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/.qmake.stash; sourceTree = "<absolute>"; };
+		D9B1982BD59E712243557375 /* interndiffview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interndiffview.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/interndiffview.h; sourceTree = "<absolute>"; };
+		DB317BCD4D566A891653F579 /* moc_threadingpush.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_threadingpush.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_threadingpush.cpp; sourceTree = "<absolute>"; };
+		DB55B2C9675052E6E4978785 /* rubberband.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rubberband.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/rubberband.cpp; sourceTree = "<absolute>"; };
+		DD87FCCD7CE6AE7CEFE5639F /* about.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = about.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/about.ui; sourceTree = "<absolute>"; };
+		DDCD6910BE792DA94320EDF4 /* moc_progressbardialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_progressbardialog.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_progressbardialog.cpp; sourceTree = "<absolute>"; };
+		DDE2C3B220FEC5CD2C2C0A36 /* rapidxml.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = rapidxml.hpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/3rdParty/RapidXML/rapidxml.hpp; sourceTree = "<absolute>"; };
+		E1262660AFB554640DE8204E /* ProjectWizard.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProjectWizard.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ProjectWizard.cpp; sourceTree = "<absolute>"; };
+		E1D6EF869E6E8360CF9DC17C /* shortcutguidedialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = shortcutguidedialog.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/shortcutguidedialog.h; sourceTree = "<absolute>"; };
+		E20DD6CB52FD60F736381700 /* ui_about.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_about.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_about.h; sourceTree = "<absolute>"; };
+		E521168F5543FB82073ED0A4 /* moc_globalreplaceworker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_globalreplaceworker.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_globalreplaceworker.cpp; sourceTree = "<absolute>"; };
+		E605D64B441F2FA14F754DFB /* pdfhandling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pdfhandling.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/pdfhandling.h; sourceTree = "<absolute>"; };
+		E800EA01BF09BE44A721EDC7 /* globalreplacepreview.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = globalreplacepreview.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/globalreplacepreview.cpp; sourceTree = "<absolute>"; };
+		E80C587742DA88365359A61B /* moc_indentoptions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_indentoptions.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_indentoptions.cpp; sourceTree = "<absolute>"; };
+		E83CAA7063279280B0431D53 /* rapidxml_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = rapidxml_utils.hpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/3rdParty/RapidXML/rapidxml_utils.hpp; sourceTree = "<absolute>"; };
+		E8AEEC9146C9FA13C92B358D /* moc_globalreplacedialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_globalreplacedialog.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_globalreplacedialog.cpp; sourceTree = "<absolute>"; };
+		E981CBA52F66FD13E14AC6E6 /* globalreplacepreview.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = globalreplacepreview.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/globalreplacepreview.ui; sourceTree = "<absolute>"; };
+		EB566382E052324EB5478002 /* moc_DiffView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_DiffView.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_DiffView.cpp; sourceTree = "<absolute>"; };
+		EDBD27DAD8E819027AA79820 /* ui_averageaccuracies.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_averageaccuracies.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_averageaccuracies.h; sourceTree = "<absolute>"; };
+		EDCC12E7F19D85490C0F5564 /* ProjectHierarchyWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProjectHierarchyWindow.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ProjectHierarchyWindow.cpp; sourceTree = "<absolute>"; };
+		EE5A87413762F24B5B4557F9 /* loadingspinner.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = loadingspinner.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/loadingspinner.cpp; sourceTree = "<absolute>"; };
+		F1CD542B26A32E265018EE7C /* lg2_common.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lg2_common.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/lg2_common.cpp; sourceTree = "<absolute>"; };
+		F28C0EB10C9E32F07FE4CCB1 /* progressbardialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = progressbardialog.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/progressbardialog.cpp; sourceTree = "<absolute>"; };
+		F358718D5320ABFEDB164916 /* moc_rubberband.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_rubberband.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_rubberband.cpp; sourceTree = "<absolute>"; };
+		F395F1AEDFB42E7C6BBAE7DB /* Symbols.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Symbols.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/Symbols.ui; sourceTree = "<absolute>"; };
+		F483E1778DD759CF0E084901 /* eddis.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = eddis.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/eddis.cpp; sourceTree = "<absolute>"; };
+		F5A9D67D9D69F3769758E88B /* ui_ProjectHierarchyWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_ProjectHierarchyWindow.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_ProjectHierarchyWindow.h; sourceTree = "<absolute>"; };
+		F5BEEB2673C522A7E2178955 /* moc_dashboard.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_dashboard.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_dashboard.cpp; sourceTree = "<absolute>"; };
+		F5EA335597EC122D466548F5 /* resizeimageview.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = resizeimageview.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/resizeimageview.ui; sourceTree = "<absolute>"; };
+		F6BB5F7DC8EB9AE2AC032AC3 /* ui_shortcutguidedialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_shortcutguidedialog.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_shortcutguidedialog.h; sourceTree = "<absolute>"; };
+		F9E21B8B72C9DDBA63BD402E /* moc_printworker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_printworker.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/moc_printworker.cpp; sourceTree = "<absolute>"; };
+		FA1DA3907BD60F4CF240A4E8 /* Symbols.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Symbols.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/Symbols.cpp; sourceTree = "<absolute>"; };
+		FB722D98F4AE80BFB8093117 /* ui_resizeimageview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_resizeimageview.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_resizeimageview.h; sourceTree = "<absolute>"; };
+		FE31250732616B499E2AFDE3 /* QtSvg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSvg.framework; path = "/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtSvg.framework"; sourceTree = "<absolute>"; };
+		FE7E6C697E5A777060B2D9BD /* globalreplacedialog.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = globalreplacedialog.ui; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/globalreplacedialog.ui; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D1C883685E82D5676953459A /* Link Binary With Libraries */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B28A950FBF8AA986A4BBCA4 /* pugixml in Link Binary With Libraries */,
+				F21D64CBD73EDF861E9E518E /* git2 in Link Binary With Libraries */,
+				675237DB66EF563119A10580 /* QtSvg.framework in Link Binary With Libraries */,
+				4D1447C41F0A69F902258D75 /* QtPrintSupport.framework in Link Binary With Libraries */,
+				B3DCA008BE1E4F7A2E841E5E /* QtWidgets.framework in Link Binary With Libraries */,
+				5ED787484C5A8A3A7D181276 /* QtMultimedia.framework in Link Binary With Libraries */,
+				380B0FC6FA91923799ECF91E /* QtGui.framework in Link Binary With Libraries */,
+				F2A75ACAC9DF6A3F4E5711E7 /* AppKit.framework in Link Binary With Libraries */,
+				B3FE8FAC746D3D5BB24FA398 /* Metal.framework in Link Binary With Libraries */,
+				C4A16BCE2A3ABCCE0038A952 /* libYAWYSIWYGEE.a in Link Binary With Libraries */,
+				D9A6C95CEBBC780507C288F9 /* QtXml.framework in Link Binary With Libraries */,
+				C4A16BD02A3ABE350038A952 /* YAWYSIWYGEE.lib in Link Binary With Libraries */,
+				0C1F0996CE20A3565DCDF20D /* QtNetworkAuth.framework in Link Binary With Libraries */,
+				26E2D3DAE17DC98C0ED6AF89 /* QtNetwork.framework in Link Binary With Libraries */,
+				306D2D1A1BDF164F5C147953 /* QtCore.framework in Link Binary With Libraries */,
+				A99B2AA0F9CBBDD12BA126A4 /* DiskArbitration.framework in Link Binary With Libraries */,
+				8D267F2E4776F0ECA2F49DC8 /* IOKit.framework in Link Binary With Libraries */,
+				8771A8C96E9C391044035D99 /* OpenGL.framework in Link Binary With Libraries */,
+				E45E51A644D5FC9F942ECE55 /* AGL.framework in Link Binary With Libraries */,
+			);
+			name = "Link Binary With Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		12E908B8A1C3C07C115504F5 /* Sources [uic] */ = {
+			isa = PBXGroup;
+			children = (
+				B7F48FBE6C4E04550660AD11 /* DiffView.ui */,
+				DD87FCCD7CE6AE7CEFE5639F /* about.ui */,
+				35B3D550D99FD3D9601F18F4 /* dashboard.ui */,
+				7739ADEFC14F006DBDE14BA9 /* equationeditor.ui */,
+				7FFF488ED1DE22ED62ACD856 /* indentoptions.ui */,
+				2854B51A8A588D649EA1A94D /* loadingspinner.ui */,
+				A0DA042090547A63A885D1DD /* pdfrangedialog.ui */,
+				4D9E3EC2D861F480FCDD467B /* progressbardialog.ui */,
+				9BFC238BA1F31BC56691F484 /* shortcutguidedialog.ui */,
+				A95E3B7F9D92B91E0AE2280D /* textfinder.ui */,
+				FE7E6C697E5A777060B2D9BD /* globalreplacedialog.ui */,
+				1ACC20FFB3466D13B5B2210E /* undoglobalreplace.ui */,
+				56FEC68E3A64AA9B2D164F15 /* ProjectHierarchyWindow.ui */,
+				F395F1AEDFB42E7C6BBAE7DB /* Symbols.ui */,
+				15E191C3C9DBD7E46144644B /* averageaccuracies.ui */,
+				0FC0E4DA41996F6E6A0442DE /* commentsview.ui */,
+				73AA6DD9A6AF183180A20A3A /* interndiffview.ui */,
+				0CA084BA4D443F066B3EAA80 /* loginpageview.ui */,
+				33481702F7B5AFE88E278550 /* mainwindow.ui */,
+				F5EA335597EC122D466548F5 /* resizeimageview.ui */,
+				E981CBA52F66FD13E14AC6E6 /* globalreplacepreview.ui */,
+				0059756930DED6BC007DA7A8 /* globalreplaceinformation.ui */,
+			);
+			name = "Sources [uic]";
+			sourceTree = "<group>";
+		};
+		25B08E2869634E9BCBA333A2 /* Generated Sources */ = {
+			isa = PBXGroup;
+			children = (
+				01B48DB6480878C2615449F6 /* qrc_AppResources.cpp */,
+				6F6849279547F7D5E6B121E7 /* moc_about.cpp */,
+				37BF867BA5AE1112753870DE /* moc_customtextbrowser.cpp */,
+				F5BEEB2673C522A7E2178955 /* moc_dashboard.cpp */,
+				C06853B2927029A68C020EC9 /* moc_equationeditor.cpp */,
+				E521168F5543FB82073ED0A4 /* moc_globalreplaceworker.cpp */,
+				E80C587742DA88365359A61B /* moc_indentoptions.cpp */,
+				47B8573317AE30E6AC005DB0 /* moc_loaddataworker.cpp */,
+				4EF6822FCD9EEF8E713D0CC1 /* moc_loadingspinner.cpp */,
+				A17A5A2610CAFF8B13073B4D /* moc_pdfhandling.cpp */,
+				B944DC9555F2C2A59747EDEA /* moc_pdfrangedialog.cpp */,
+				F9E21B8B72C9DDBA63BD402E /* moc_printworker.cpp */,
+				DDCD6910BE792DA94320EDF4 /* moc_progressbardialog.cpp */,
+				F358718D5320ABFEDB164916 /* moc_rubberband.cpp */,
+				933456474D916DE1C9883F9C /* moc_shortcutguidedialog.cpp */,
+				5A03F0E58C1FAE0368E4A608 /* moc_textfinder.cpp */,
+				E8AEEC9146C9FA13C92B358D /* moc_globalreplacedialog.cpp */,
+				DB317BCD4D566A891653F579 /* moc_threadingpush.cpp */,
+				60328688626BE2E2FEE449E2 /* moc_undoglobalreplace.cpp */,
+				C9ECD338624769C8B697AFDE /* moc_worker.cpp */,
+				EB566382E052324EB5478002 /* moc_DiffView.cpp */,
+				0620CF963F3293EC3B8EDB1F /* moc_ProjectHierarchyWindow.cpp */,
+				5EA1A744EF178DAB73F08C43 /* moc_Symbols.cpp */,
+				A3CE519E2E78D7D26D91D180 /* moc_TreeModel.cpp */,
+				D0A2D342681934660055E84E /* moc_averageaccuracies.cpp */,
+				A5BFF846E541EC8971247620 /* moc_commentsview.cpp */,
+				02C9848BAA8D90F0C8F1FF49 /* moc_interndiffview.cpp */,
+				354D98A30ABFA5003C22419E /* moc_loginpageview.cpp */,
+				0AF3D8AC61B68316DC63B630 /* moc_mainwindow.cpp */,
+				54AA8D83E2DDC9104554E600 /* moc_resizeimageview.cpp */,
+				9948A4EC134E88B9D0914AD5 /* moc_zoom.cpp */,
+				3458C3C9A03BF262A67ECB60 /* moc_ProjectWizard.cpp */,
+				CF53AE6B6907A6CCAE464F97 /* moc_CreateProjectPage.cpp */,
+				9B7310672539B7552B1DD64B /* moc_globalreplacepreview.cpp */,
+				AFF928C072A9E1522CE85939 /* moc_globalreplaceinformation.cpp */,
+				0EAB9FEC38ABB362CFE60E61 /* ui_DiffView.h */,
+				E20DD6CB52FD60F736381700 /* ui_about.h */,
+				01FBE10CC4E6F6A7CA123E0D /* ui_dashboard.h */,
+				98FC7B26E5AF29799D7C262C /* ui_equationeditor.h */,
+				2EA6917C1DDE073A89D08A4B /* ui_indentoptions.h */,
+				9D058369B53FBC42D8BAE772 /* ui_loadingspinner.h */,
+				0AC687B310F4FDDE133E5CA4 /* ui_pdfrangedialog.h */,
+				643447A6C694A42EE21FA967 /* ui_progressbardialog.h */,
+				F6BB5F7DC8EB9AE2AC032AC3 /* ui_shortcutguidedialog.h */,
+				AD04ACC913E3AE4A56ADEF0C /* ui_textfinder.h */,
+				6C054AF303B4DA4581E49C43 /* ui_globalreplacedialog.h */,
+				75D0A7E995443FED2EB97639 /* ui_undoglobalreplace.h */,
+				F5A9D67D9D69F3769758E88B /* ui_ProjectHierarchyWindow.h */,
+				C8931B8D66612463B100A487 /* ui_Symbols.h */,
+				EDBD27DAD8E819027AA79820 /* ui_averageaccuracies.h */,
+				D120C4984A2D0DFE09245C05 /* ui_commentsview.h */,
+				B48E584D7EC370DDE960FC07 /* ui_interndiffview.h */,
+				984B3382B2BC339C9D89B4E5 /* ui_loginpageview.h */,
+				C7FC2FE072B98BA678E550E2 /* ui_mainwindow.h */,
+				FB722D98F4AE80BFB8093117 /* ui_resizeimageview.h */,
+				95ED5C2228110CFE188B64F8 /* ui_globalreplacepreview.h */,
+				9E771D99F221061D6443EA1B /* ui_globalreplaceinformation.h */,
+			);
+			name = "Generated Sources";
+			sourceTree = "<group>";
+		};
+		2EB56BE3C2D93CDAB0C52E67 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				17CE7A6AA43CB99CC4C3B3A0 /* DiffView.cpp */,
+				A8EA8034B9FF453BFFBB765B /* about.cpp */,
+				4BD76469477B67F5D05ABEF2 /* crashlog.cpp */,
+				C6D20E2FA7EA1D65E5878B75 /* customtextbrowser.cpp */,
+				D03996C86C9A8BCA6EC5C51F /* dashboard.cpp */,
+				F483E1778DD759CF0E084901 /* eddis.cpp */,
+				96BEFAE4A6D98546ED62F237 /* editdistance.cpp */,
+				D2BF31F2A229B5E5697AD9D0 /* equationeditor.cpp */,
+				75D5EED5727F301267C43376 /* globalreplaceworker.cpp */,
+				19B968024692301D1431CACA /* handlebbox.cpp */,
+				AB9E8D374EFE7D4A6A942B99 /* indentoptions.cpp */,
+				CCAA0599B7CD5D936B35E7E4 /* loaddataworker.cpp */,
+				EE5A87413762F24B5B4557F9 /* loadingspinner.cpp */,
+				31BE2A9AF3180059CDA0BFDA /* markRegion.cpp */,
+				D98C8E2C3AA83CDE63FA0B94 /* meanStdPage.cpp */,
+				70AE8A34232CB43EA4BD4612 /* pdfhandling.cpp */,
+				01EE7A506BFCB173AE1EB09A /* pdfrangedialog.cpp */,
+				3298E55F9DCF324CC8B779A9 /* printworker.cpp */,
+				F28C0EB10C9E32F07FE4CCB1 /* progressbardialog.cpp */,
+				DB55B2C9675052E6E4978785 /* rubberband.cpp */,
+				B0ED8479240637C2F343E092 /* shortcutguidedialog.cpp */,
+				A172DA43789E103B10BDEE16 /* slpNPatternDict.cpp */,
+				BF5571D0CB3814873E87311A /* textfinder.cpp */,
+				A48C11824429D2C97C16DC0E /* globalreplacedialog.cpp */,
+				643FD5AE2BA85D4342E5434F /* threadingpush.cpp */,
+				8BF4722D3C98738A7B71D324 /* trieEditdis.cpp */,
+				8DB8FEA6B27887E5C996392F /* undoglobalreplace.cpp */,
+				360A0FF3C9C20BDAF2E29822 /* verifyset.cpp */,
+				0710A7AB4FDB9CCBA0295B11 /* worker.cpp */,
+				03EA92D27ECB91A752501DA4 /* Filters.cpp */,
+				8CBEC4341ECEDCEDC2AB9CF2 /* Project.cpp */,
+				EDCC12E7F19D85490C0F5564 /* ProjectHierarchyWindow.cpp */,
+				FA1DA3907BD60F4CF240A4E8 /* Symbols.cpp */,
+				A987AE0DED32D04FE8DDDA00 /* TreeItem.cpp */,
+				27FD59770F35DA701B87FFE3 /* TreeModel.cpp */,
+				C1BB8F648E5A4FB212568407 /* averageaccuracies.cpp */,
+				293115DD1DACB7D0681F33A1 /* commentsview.cpp */,
+				CDF2AF433B8420FB448CEF68 /* diff_match_patch.cpp */,
+				1D178E779916C21892A8D5B7 /* interndiffview.cpp */,
+				F1CD542B26A32E265018EE7C /* lg2_common.cpp */,
+				9636AAEF191F44C113E8A2CA /* loginpageview.cpp */,
+				3F68741104054234D302850A /* main.cpp */,
+				742F030264CEE075A9116D4E /* mainwindow.cpp */,
+				1DD87AD6D17238305E91D962 /* resizeimageview.cpp */,
+				D2308E18D8985FB236806255 /* zoom.cpp */,
+				E1262660AFB554640DE8204E /* ProjectWizard.cpp */,
+				B4E91BA664C9646E3B11EC0B /* CreateProjectPage.cpp */,
+				E800EA01BF09BE44A721EDC7 /* globalreplacepreview.cpp */,
+				8B67A9657049ADB534822F2F /* globalreplaceinformation.cpp */,
+				5A95D8AD5FC4AA5C7797E79D /* Filters.h */,
+				590463D65FC26E86A8E41BFA /* about.h */,
+				999D2DB382DA401B145ABB43 /* crashlog.h */,
+				B697B8115D6C627F11AEFB92 /* customtextbrowser.h */,
+				5C851E71EE6D9702599F3F91 /* dashboard.h */,
+				2BAF363F20C1975C7F383C2C /* editdistance.h */,
+				CABB1C7847A5955957E06297 /* equationeditor.h */,
+				C9CA462D608E26B76F71C21C /* globalreplaceworker.h */,
+				4C485A74DDEF3CBE5023498B /* handlebbox.h */,
+				64D1DDA5D9562F682D4AF8D6 /* indentoptions.h */,
+				76F0C3531EE3E8B60C77A25A /* loaddataworker.h */,
+				536F221CB91E5A03A7BBD1DA /* loadingspinner.h */,
+				B0284BB59B95C2D324E172B3 /* markRegion.h */,
+				E605D64B441F2FA14F754DFB /* pdfhandling.h */,
+				4FBCC97F7632BAB7FE28E3F4 /* pdfrangedialog.h */,
+				AA6103A5DF7835FB33AEC2C4 /* printworker.h */,
+				59B34E8ABAF64D5B631DCB46 /* progressbardialog.h */,
+				8DF64D537A7091E3157C136A /* rubberband.h */,
+				E1D6EF869E6E8360CF9DC17C /* shortcutguidedialog.h */,
+				1CE775A1CE81DE6015067885 /* textfinder.h */,
+				B397E85003832B900AB4A346 /* globalreplacedialog.h */,
+				72A1529D6A57D171C3EBCFFB /* threadingpush.h */,
+				99E94652F8BB982EC16A753E /* undoglobalreplace.h */,
+				6E2593C25F889C5EA68BE9F0 /* verifyset.h */,
+				72A8E03E64C79E16325B29E1 /* worker.h */,
+				A9DB5837FC970CE40B394DA0 /* 3rdParty */,
+				CEA5016BB9292F27C58451EC /* Project.h */,
+				C1F09CB920984870A0EC91F9 /* TreeItem.h */,
+				C457510C67B95A23F566CCD1 /* diff_match_patch.h */,
+				552A1978AE45A40FFFB1A6FD /* eddis.h */,
+				C275B0D8FE5EA2497F3A8E26 /* lg2_common.h */,
+				269AF8F152CC476B1EB62722 /* meanStdPage.h */,
+				25D32F73AC523CA5695C7E33 /* slpNPatternDict.h */,
+				2C8FCAA2BBA2F6137A6A6C1A /* trieEditdis.h */,
+				CA7D46F4B3A5792E9A7EDE94 /* DiffView.h */,
+				08A939AF077995F7F8D83616 /* ProjectHierarchyWindow.h */,
+				D1EE41356618C391C3C92CE3 /* Symbols.h */,
+				74C70FAC797723303832E536 /* TreeModel.h */,
+				82684C8759F3108ED8096A92 /* averageaccuracies.h */,
+				BDC76B3A5AA3215986170C3F /* commentsview.h */,
+				D9B1982BD59E712243557375 /* interndiffview.h */,
+				49CBB3913AA8936A51155F81 /* loginpageview.h */,
+				94FDFB9AEB4A0E9C3CE14F08 /* mainwindow.h */,
+				1AFE4D6BC0FF9B904CC1FEED /* resizeimageview.h */,
+				00C7249BDF8D3FD18D08A464 /* zoom.h */,
+				9D926525B0E32C65FD78C5F2 /* ProjectWizard.h */,
+				B5B9D7AE072896F62DE387A0 /* CreateProjectPage.h */,
+				9C3AD1AFB881A55C61E52FE0 /* globalreplacepreview.h */,
+				214CFF8250529B07882D099B /* globalreplaceinformation.h */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		74B182DB50CB5611B5C1C297 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B3F2736E7BD928C657169171 /* qpadfinal_macos_arm64.pro */,
+				D9A8F27A7770A2E2A0561BA9 /* .qmake.stash */,
+				4A8ED580B6F110C095866999 /* qpadfinal.pri */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		87DF60DE337FB58864343E39 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C268DB011455CC8B9FF7AAA4 /* AppResources.qrc */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		96F90142A8E3C1CA9229C542 /* RapidXML */ = {
+			isa = PBXGroup;
+			children = (
+				DDE2C3B220FEC5CD2C2C0A36 /* rapidxml.hpp */,
+				C9B586C5A19B8F5A28E04265 /* rapidxml_iterators.hpp */,
+				AACACCC19FE124831116B37A /* rapidxml_print.hpp */,
+				E83CAA7063279280B0431D53 /* rapidxml_utils.hpp */,
+			);
+			name = RapidXML;
+			sourceTree = "<group>";
+		};
+		A9DB5837FC970CE40B394DA0 /* 3rdParty */ = {
+			isa = PBXGroup;
+			children = (
+				96F90142A8E3C1CA9229C542 /* RapidXML */,
+			);
+			name = 3rdParty;
+			sourceTree = "<group>";
+		};
+		AF39DD055C3EF8226FBE929D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C4A16BCF2A3ABE350038A952 /* YAWYSIWYGEE.lib */,
+				C4A16BCD2A3ABCCE0038A952 /* libYAWYSIWYGEE.a */,
+				19FEDC84D6926EEC5BDB05D6 /* pugixml */,
+				156B6EAB27B287AA2911F6EB /* git2 */,
+				FE31250732616B499E2AFDE3 /* QtSvg.framework */,
+				2474A20143A47B6065C5A6EB /* QtPrintSupport.framework */,
+				2200997F2A8CFAA0DFC5981A /* QtWidgets.framework */,
+				0CB5E92BFB391396B225E1AC /* QtMultimedia.framework */,
+				D59C48E14B477FFF6C01821D /* QtGui.framework */,
+				723F90793B2C195E2CCB2233 /* AppKit.framework */,
+				1B2543FCC48E9436F21C4F63 /* Metal.framework */,
+				495D04603E66357994DE68EB /* QtXml.framework */,
+				94778A0728D2767F8186179E /* QtNetworkAuth.framework */,
+				533A6390567A41E10143DACA /* QtNetwork.framework */,
+				420EF3605DE9278721B94C08 /* QtCore.framework */,
+				2B774D8E4178765CE52EAAF5 /* DiskArbitration.framework */,
+				A1A67BEAA744704B29168D39 /* IOKit.framework */,
+				D4B32C2222F82AC56BADEB21 /* OpenGL.framework */,
+				8D9815BDB5BD9F90D2BC05C5 /* AGL.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B8254625CFD509ED2A24A166 /* Sources [moc_predefs] */ = {
+			isa = PBXGroup;
+			children = (
+				9345E850AA4052489E4759F5 /* dummy.cpp */,
+			);
+			name = "Sources [moc_predefs]";
+			sourceTree = "<group>";
+		};
+		E8C543AB96796ECAA2E65C57 /* qpadfinal */ = {
+			isa = PBXGroup;
+			children = (
+				2EB56BE3C2D93CDAB0C52E67 /* Sources */,
+				25B08E2869634E9BCBA333A2 /* Generated Sources */,
+				87DF60DE337FB58864343E39 /* Resources */,
+				B8254625CFD509ED2A24A166 /* Sources [moc_predefs] */,
+				12E908B8A1C3C07C115504F5 /* Sources [uic] */,
+				74B182DB50CB5611B5C1C297 /* Supporting Files */,
+				AF39DD055C3EF8226FBE929D /* Frameworks */,
+				FE0A091FDBFB3E9C31B7A1BD /* Products */,
+			);
+			name = qpadfinal;
+			sourceTree = "<group>";
+		};
+		FE0A091FDBFB3E9C31B7A1BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				11A64C4159107F9C2BF41749 /* qpadfinal.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FC020C59565E88679007D5C0 /* qpadfinal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6CC3B5D2136C7CD6A5CF5A59 /* Build configuration list for PBXNativeTarget "qpadfinal" */;
+			buildPhases = (
+				F7E50F631C51CD5B5DC0BC43 /* Compile Sources */,
+				D1C883685E82D5676953459A /* Link Binary With Libraries */,
+				30414803F31797EB689AE508 /* Copy Bundle Resources */,
+				99542592E9780B9225F24AA8 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D88436E7CF84467424073BA7 /* PBXTargetDependency */,
+			);
+			name = qpadfinal;
+			productName = qpadfinal;
+			productReference = 11A64C4159107F9C2BF41749 /* qpadfinal.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6DB9C3763D02B1415CD9D565 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+			};
+			buildConfigurationList = DAC4C1AA5EDEA1C85E9CA5E6 /* Build configuration list for PBXProject "qpadfinal" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E8C543AB96796ECAA2E65C57 /* qpadfinal */;
+			productRefGroup = FE0A091FDBFB3E9C31B7A1BD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FC020C59565E88679007D5C0 /* qpadfinal */,
+				C03CBD3FEE7B9CFCC5F38CC8 /* Qt Preprocess */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		30414803F31797EB689AE508 /* Copy Bundle Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "Copy Bundle Resources";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5E618435888B9D49F8540165 /* Qt Qmake */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "Qt Qmake";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "make -C /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode -f qpadfinal.xcodeproj/qt_makeqmake.mak";
+			showEnvVarsInLog = 0;
+		};
+		7EF0942E79C014DCEC8976BC /* Qt Preprocessors */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				AppResources.qrc,
+				"/opt/homebrew/Cellar/qt@5/5.15.8_3/mkspecs/features/data/dummy.cpp",
+				about.h,
+				customtextbrowser.h,
+				dashboard.h,
+				equationeditor.h,
+				globalreplaceworker.h,
+				indentoptions.h,
+				loaddataworker.h,
+				loadingspinner.h,
+				pdfhandling.h,
+				pdfrangedialog.h,
+				printworker.h,
+				progressbardialog.h,
+				rubberband.h,
+				shortcutguidedialog.h,
+				textfinder.h,
+				globalreplacedialog.h,
+				threadingpush.h,
+				undoglobalreplace.h,
+				worker.h,
+				DiffView.h,
+				ProjectHierarchyWindow.h,
+				Symbols.h,
+				TreeModel.h,
+				averageaccuracies.h,
+				commentsview.h,
+				interndiffview.h,
+				loginpageview.h,
+				mainwindow.h,
+				resizeimageview.h,
+				zoom.h,
+				ProjectWizard.h,
+				CreateProjectPage.h,
+				globalreplacepreview.h,
+				globalreplaceinformation.h,
+				DiffView.ui,
+				about.ui,
+				dashboard.ui,
+				equationeditor.ui,
+				indentoptions.ui,
+				loadingspinner.ui,
+				pdfrangedialog.ui,
+				progressbardialog.ui,
+				shortcutguidedialog.ui,
+				textfinder.ui,
+				globalreplacedialog.ui,
+				undoglobalreplace.ui,
+				ProjectHierarchyWindow.ui,
+				Symbols.ui,
+				averageaccuracies.ui,
+				commentsview.ui,
+				interndiffview.ui,
+				loginpageview.ui,
+				mainwindow.ui,
+				resizeimageview.ui,
+				globalreplacepreview.ui,
+				globalreplaceinformation.ui,
+			);
+			name = "Qt Preprocessors";
+			outputPaths = (
+				qrc_AppResources.cpp,
+				moc_predefs.h,
+				moc_about.cpp,
+				moc_customtextbrowser.cpp,
+				moc_dashboard.cpp,
+				moc_equationeditor.cpp,
+				moc_globalreplaceworker.cpp,
+				moc_indentoptions.cpp,
+				moc_loaddataworker.cpp,
+				moc_loadingspinner.cpp,
+				moc_pdfhandling.cpp,
+				moc_pdfrangedialog.cpp,
+				moc_printworker.cpp,
+				moc_progressbardialog.cpp,
+				moc_rubberband.cpp,
+				moc_shortcutguidedialog.cpp,
+				moc_textfinder.cpp,
+				moc_globalreplacedialog.cpp,
+				moc_threadingpush.cpp,
+				moc_undoglobalreplace.cpp,
+				moc_worker.cpp,
+				moc_DiffView.cpp,
+				moc_ProjectHierarchyWindow.cpp,
+				moc_Symbols.cpp,
+				moc_TreeModel.cpp,
+				moc_averageaccuracies.cpp,
+				moc_commentsview.cpp,
+				moc_interndiffview.cpp,
+				moc_loginpageview.cpp,
+				moc_mainwindow.cpp,
+				moc_resizeimageview.cpp,
+				moc_zoom.cpp,
+				moc_ProjectWizard.cpp,
+				moc_CreateProjectPage.cpp,
+				moc_globalreplacepreview.cpp,
+				moc_globalreplaceinformation.cpp,
+				ui_DiffView.h,
+				ui_about.h,
+				ui_dashboard.h,
+				ui_equationeditor.h,
+				ui_indentoptions.h,
+				ui_loadingspinner.h,
+				ui_pdfrangedialog.h,
+				ui_progressbardialog.h,
+				ui_shortcutguidedialog.h,
+				ui_textfinder.h,
+				ui_globalreplacedialog.h,
+				ui_undoglobalreplace.h,
+				ui_ProjectHierarchyWindow.h,
+				ui_Symbols.h,
+				ui_averageaccuracies.h,
+				ui_commentsview.h,
+				ui_interndiffview.h,
+				ui_loginpageview.h,
+				ui_mainwindow.h,
+				ui_resizeimageview.h,
+				ui_globalreplacepreview.h,
+				ui_globalreplaceinformation.h,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "make -C /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode -f qpadfinal.xcodeproj/qt_preprocess.mak";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F7E50F631C51CD5B5DC0BC43 /* Compile Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C75D59F9159A6E3B74686621 /* DiffView.cpp in Compile Sources */,
+				5DD6934105EDB2E0C8DB2DF5 /* about.cpp in Compile Sources */,
+				E7DECCB52ED83DA3759881F6 /* crashlog.cpp in Compile Sources */,
+				0021F4D7FBA75A01A8299765 /* customtextbrowser.cpp in Compile Sources */,
+				FBC88C6FE2CC6D4E5BF3BDC3 /* dashboard.cpp in Compile Sources */,
+				F2AA12B0FF91288300D98452 /* eddis.cpp in Compile Sources */,
+				13ACDF41BEB02BB003120848 /* editdistance.cpp in Compile Sources */,
+				E9DE9BACCF55F828390AEA0B /* equationeditor.cpp in Compile Sources */,
+				C2C285C7105080F0AC25E3EE /* globalreplaceworker.cpp in Compile Sources */,
+				1D48B3BA5F9196365E32B5E2 /* handlebbox.cpp in Compile Sources */,
+				E12B5197372E17AB8035E5C9 /* indentoptions.cpp in Compile Sources */,
+				1AA62D2B7747703E07343106 /* loaddataworker.cpp in Compile Sources */,
+				D5B6ABFFD8E5D4E542B49D25 /* loadingspinner.cpp in Compile Sources */,
+				118871A0DF828B9D555A4510 /* markRegion.cpp in Compile Sources */,
+				FB4A93EE07E03C68C4746678 /* meanStdPage.cpp in Compile Sources */,
+				352B2C2B580F923D835EF490 /* pdfhandling.cpp in Compile Sources */,
+				C3EBEBF024AF31579B0C3CAC /* pdfrangedialog.cpp in Compile Sources */,
+				82905DB079F94E09EE300CF6 /* printworker.cpp in Compile Sources */,
+				B265D882DF84239BA26EF4D8 /* progressbardialog.cpp in Compile Sources */,
+				1CF24A160BCB54A5604CEB6D /* rubberband.cpp in Compile Sources */,
+				ABB5AE0B9DEC3BCA0B715D4A /* shortcutguidedialog.cpp in Compile Sources */,
+				C15404A00264F2C7405EE0DD /* slpNPatternDict.cpp in Compile Sources */,
+				638D7B05E6BABB4190DEAE4C /* textfinder.cpp in Compile Sources */,
+				7D3B627D38FC93B16C629DDB /* globalreplacedialog.cpp in Compile Sources */,
+				C23E3BF84DD44C078CC7B29E /* threadingpush.cpp in Compile Sources */,
+				2CAEC0D297E3B38A62944EDA /* trieEditdis.cpp in Compile Sources */,
+				23A7ED9738A46559BEEDC240 /* undoglobalreplace.cpp in Compile Sources */,
+				F97C830E133EC7BB122A9A20 /* verifyset.cpp in Compile Sources */,
+				A42C945BA862682C980DBA5C /* worker.cpp in Compile Sources */,
+				5C488F7B973309A13A90C4D4 /* Filters.cpp in Compile Sources */,
+				68F02E01BEEB6B5EB90D3911 /* Project.cpp in Compile Sources */,
+				842C42FD77BC8D82051F7B50 /* ProjectHierarchyWindow.cpp in Compile Sources */,
+				3A990C23F902DC6CCF28548F /* Symbols.cpp in Compile Sources */,
+				9071F884014C67E03724A6BC /* TreeItem.cpp in Compile Sources */,
+				31A452125DB682897BC00B81 /* TreeModel.cpp in Compile Sources */,
+				69755BAD2C0141CCB469950C /* averageaccuracies.cpp in Compile Sources */,
+				1F3976912BC3D258F34FA2FC /* commentsview.cpp in Compile Sources */,
+				54D1CA07703065ED7BAB73C7 /* diff_match_patch.cpp in Compile Sources */,
+				F3CB6564FDBB69692F08540D /* interndiffview.cpp in Compile Sources */,
+				F20BF54AE86841942B01582C /* lg2_common.cpp in Compile Sources */,
+				14711187AC2D46D0F8616874 /* loginpageview.cpp in Compile Sources */,
+				636D5CA4DF20151D2E1346AF /* main.cpp in Compile Sources */,
+				354515981EA0E2B556294A83 /* mainwindow.cpp in Compile Sources */,
+				2DC22124AADDCE7E2BC1A962 /* resizeimageview.cpp in Compile Sources */,
+				616E5C41EA26BB5890EE6D13 /* zoom.cpp in Compile Sources */,
+				EE6E0F35EFE46AF8329EEE2E /* ProjectWizard.cpp in Compile Sources */,
+				4E127E53C7C68F6E8122E4C9 /* CreateProjectPage.cpp in Compile Sources */,
+				AE880F9DBE0B42D95B1E5283 /* globalreplacepreview.cpp in Compile Sources */,
+				1C5BDE2B893CCB2F6DEF0EA0 /* globalreplaceinformation.cpp in Compile Sources */,
+				4BB5E7E365C879017C2D31FC /* qrc_AppResources.cpp in Compile Sources */,
+				04802FFEFA7162309BAF0319 /* moc_about.cpp in Compile Sources */,
+				5B0394922A9DEE30DA582339 /* moc_customtextbrowser.cpp in Compile Sources */,
+				17A0C40A551E149F0FC9DD1A /* moc_dashboard.cpp in Compile Sources */,
+				F8056D82C96385B2B88038FC /* moc_equationeditor.cpp in Compile Sources */,
+				1AC7E8B3A94259A9F98A7848 /* moc_globalreplaceworker.cpp in Compile Sources */,
+				16A0BA7667808814E74D213C /* moc_indentoptions.cpp in Compile Sources */,
+				311F8AB7E7F97BBFB83A3942 /* moc_loaddataworker.cpp in Compile Sources */,
+				45CCC6BB62E18CA27EA39EA4 /* moc_loadingspinner.cpp in Compile Sources */,
+				D4F9B97C710FFA97307EB7CE /* moc_pdfhandling.cpp in Compile Sources */,
+				68998077F8A3EF52C87BBA62 /* moc_pdfrangedialog.cpp in Compile Sources */,
+				09A1D3846D8A4D9548CDA1B4 /* moc_printworker.cpp in Compile Sources */,
+				A15332D79C1D55E1F1B74565 /* moc_progressbardialog.cpp in Compile Sources */,
+				E366C6E1545C6E2DA81FB902 /* moc_rubberband.cpp in Compile Sources */,
+				6EDEA851B5C6E268A654E976 /* moc_shortcutguidedialog.cpp in Compile Sources */,
+				545EC6AC09FD45B8598D1F59 /* moc_textfinder.cpp in Compile Sources */,
+				4930A339BEBD07C41BFBE4D6 /* moc_globalreplacedialog.cpp in Compile Sources */,
+				5EE41DF0907849EC27B1C654 /* moc_threadingpush.cpp in Compile Sources */,
+				2B81A7BB463D27D0140A2658 /* moc_undoglobalreplace.cpp in Compile Sources */,
+				E2DE604A79A37875E52AE140 /* moc_worker.cpp in Compile Sources */,
+				C8804597176C1FF8C544F2B9 /* moc_DiffView.cpp in Compile Sources */,
+				C3761A3096CAEDAFC690DBEB /* moc_ProjectHierarchyWindow.cpp in Compile Sources */,
+				B6C7ACD90B73D4D610B9C4A7 /* moc_Symbols.cpp in Compile Sources */,
+				9ABA3B0D24DF5CACB7B4D360 /* moc_TreeModel.cpp in Compile Sources */,
+				364AC36DAB70099AF061B292 /* moc_averageaccuracies.cpp in Compile Sources */,
+				C3C6AA6DB18E4FC70AEC58E8 /* moc_commentsview.cpp in Compile Sources */,
+				A529858BFF484B8650909C33 /* moc_interndiffview.cpp in Compile Sources */,
+				6B1BB654E1611F7E3321FA63 /* moc_loginpageview.cpp in Compile Sources */,
+				1466DA48C3C2AA27E6A8073E /* moc_mainwindow.cpp in Compile Sources */,
+				F120533A42F5D1A09572A387 /* moc_resizeimageview.cpp in Compile Sources */,
+				568C5EB40CA0C607B38921E6 /* moc_zoom.cpp in Compile Sources */,
+				09F8798EE44AE56C19A746A5 /* moc_ProjectWizard.cpp in Compile Sources */,
+				66DC1F9561AEFCCC689D5D88 /* moc_CreateProjectPage.cpp in Compile Sources */,
+				EEB7A573F40F350BDE995B14 /* moc_globalreplacepreview.cpp in Compile Sources */,
+				B7A5F2C1921E96FE5F2953BA /* moc_globalreplaceinformation.cpp in Compile Sources */,
+				D8B3D50B69E8FB1EBA3F5854 /* dummy.cpp in Compile Sources */,
+			);
+			name = "Compile Sources";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D88436E7CF84467424073BA7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C03CBD3FEE7B9CFCC5F38CC8 /* Qt Preprocess */;
+			targetProxy = C4A16BCC2A3ABC6F0038A952 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		339EE1B2CC4FC24589A0EA95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				ARCHS = arm64;
+				"ARCHS[sdk=macosx*]" = arm64;
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 8DHRGLG2QY;
+				DYLIB_COMPATIBILITY_VERSION = 1.0;
+				DYLIB_CURRENT_VERSION = 1.0.0;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib",
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					.,
+					../include,
+					../../udaan,
+					../include,
+					../include,
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtSvg.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtPrintSupport.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtWidgets.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtMultimedia.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtGui.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtXml.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtNetworkAuth.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtNetwork.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtCore.framework/Headers",
+					.,
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/System/Library/Frameworks/OpenGL.framework/Headers,
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/System/Library/Frameworks/AGL.framework/Headers,
+					.,
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/mkspecs/macx-clang",
+					/usr/local/lib,
+					/usr/local/include,
+					/opt/YAWYSIWYGEE/bin/,
+				);
+				INFOPLIST_FILE = Info.plist;
+				LDPLUSPLUS = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++";
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					/usr/local/include/git2,
+					/Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/../lib/,
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib",
+					/System/Library/Frameworks/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				OTHER_CFLAGS = (
+					"-pipe",
+					"-O2",
+					"-Wall",
+					"-Wextra",
+					"-fPIC",
+					"-DQT_MESSAGELOGCONTEXT",
+					"-DQT_NO_DEBUG",
+					"-DQT_SVG_LIB",
+					"-DQT_PRINTSUPPORT_LIB",
+					"-DQT_WIDGETS_LIB",
+					"-DQT_MULTIMEDIA_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_XML_LIB",
+					"-DQT_NETWORKAUTH_LIB",
+					"-DQT_NETWORK_LIB",
+					"-DQT_CORE_LIB",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-pipe",
+					"-stdlib=libc++",
+					"-w",
+					"-O2",
+					"-std=gnu++11",
+					"-Wall",
+					"-Wextra",
+					"-fPIC",
+					"-DQT_MESSAGELOGCONTEXT",
+					"-DQT_NO_DEBUG",
+					"-DQT_SVG_LIB",
+					"-DQT_PRINTSUPPORT_LIB",
+					"-DQT_WIDGETS_LIB",
+					"-DQT_MULTIMEDIA_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_XML_LIB",
+					"-DQT_NETWORKAUTH_LIB",
+					"-DQT_NETWORK_LIB",
+					"-DQT_CORE_LIB",
+				);
+				OTHER_LDFLAGS = (
+					"-stdlib=libc++",
+					"-headerpad_max_install_names",
+					"-Wl,-rpath,@executable_path/../Frameworks",
+					"-F/opt/homebrew/Cellar/qt@5/5.15.8_3/lib",
+					"-dead_strip",
+					"-L/usr/local/lib",
+					"-L/usr/local/include/git2",
+					"-L/Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/../lib/dist/macos/arm64",
+					"-lYAWYSIWYGEE",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = qpadfinal;
+				QMAKE_FULL_VERSION = 1.0.0;
+				QMAKE_PKGINFO_TYPEINFO = "????";
+				QMAKE_SHORT_VERSION = 1.0;
+				QT_LIBRARY_SUFFIX = "";
+				SDKROOT = macosx;
+				SYMROOT = .xcode;
+			};
+			name = Release;
+		};
+		3AA6C32AC930069E80220CF1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				ARCHS = arm64;
+				"ARCHS[sdk=macosx*]" = arm64;
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 8DHRGLG2QY;
+				DYLIB_COMPATIBILITY_VERSION = 1.0;
+				DYLIB_CURRENT_VERSION = 1.0.0;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib",
+				);
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					.,
+					../include,
+					../../udaan,
+					../include,
+					../include,
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtSvg.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtPrintSupport.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtWidgets.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtMultimedia.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtGui.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtXml.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtNetworkAuth.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtNetwork.framework/Headers",
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib/QtCore.framework/Headers",
+					.,
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/System/Library/Frameworks/OpenGL.framework/Headers,
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/System/Library/Frameworks/AGL.framework/Headers,
+					.,
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/mkspecs/macx-clang",
+					/usr/local/lib,
+					/usr/local/include,
+					/opt/YAWYSIWYGEE/bin/,
+				);
+				INFOPLIST_FILE = Info.plist;
+				LDPLUSPLUS = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++";
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					/usr/local/include/git2,
+					/Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/../lib/,
+					"/opt/homebrew/Cellar/qt@5/5.15.8_3/lib",
+					/System/Library/Frameworks/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-pipe",
+					"-O2",
+					"-Wall",
+					"-Wextra",
+					"-fPIC",
+					"-DQT_MESSAGELOGCONTEXT",
+					"-DQT_NO_DEBUG",
+					"-DQT_SVG_LIB",
+					"-DQT_PRINTSUPPORT_LIB",
+					"-DQT_WIDGETS_LIB",
+					"-DQT_MULTIMEDIA_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_XML_LIB",
+					"-DQT_NETWORKAUTH_LIB",
+					"-DQT_NETWORK_LIB",
+					"-DQT_CORE_LIB",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-pipe",
+					"-stdlib=libc++",
+					"-w",
+					"-O2",
+					"-std=gnu++11",
+					"-Wall",
+					"-Wextra",
+					"-fPIC",
+					"-DQT_MESSAGELOGCONTEXT",
+					"-DQT_NO_DEBUG",
+					"-DQT_SVG_LIB",
+					"-DQT_PRINTSUPPORT_LIB",
+					"-DQT_WIDGETS_LIB",
+					"-DQT_MULTIMEDIA_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_XML_LIB",
+					"-DQT_NETWORKAUTH_LIB",
+					"-DQT_NETWORK_LIB",
+					"-DQT_CORE_LIB",
+				);
+				OTHER_LDFLAGS = (
+					"-stdlib=libc++",
+					"-headerpad_max_install_names",
+					"-Wl,-rpath,@executable_path/../Frameworks",
+					"-F/opt/homebrew/Cellar/qt@5/5.15.8_3/lib",
+					"-dead_strip",
+					"-L/usr/local/lib",
+					"-L/usr/local/include/git2",
+					"-L/Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/../lib/dist/macos/arm64",
+					"-lYAWYSIWYGEE",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = qpadfinal;
+				QMAKE_FULL_VERSION = 1.0.0;
+				QMAKE_PKGINFO_TYPEINFO = "????";
+				QMAKE_SHORT_VERSION = 1.0;
+				QT_LIBRARY_SUFFIX = "";
+				SDKROOT = macosx;
+				SYMROOT = .xcode;
+			};
+			name = Debug;
+		};
+		6666AA5E688052234F6758D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				"ARCHS[sdk=macosx*]" = arm64;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 8DHRGLG2QY;
+				ENABLE_BITCODE = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = qpadfinal;
+				QMAKE_FULL_VERSION = 1.0.0;
+				QMAKE_PKGINFO_TYPEINFO = "????";
+				QMAKE_SHORT_VERSION = 1.0;
+				QT_LIBRARY_SUFFIX = "";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		77418F46922677BB04ED38DD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				"ARCHS[sdk=macosx*]" = arm64;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 8DHRGLG2QY;
+				ENABLE_BITCODE = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = qpadfinal;
+				QMAKE_FULL_VERSION = 1.0.0;
+				QMAKE_PKGINFO_TYPEINFO = "????";
+				QMAKE_SHORT_VERSION = 1.0;
+				QT_LIBRARY_SUFFIX = "";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6CC3B5D2136C7CD6A5CF5A59 /* Build configuration list for PBXNativeTarget "qpadfinal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				77418F46922677BB04ED38DD /* Debug */,
+				6666AA5E688052234F6758D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DAC4C1AA5EDEA1C85E9CA5E6 /* Build configuration list for PBXProject "qpadfinal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AA6C32AC930069E80220CF1 /* Debug */,
+				339EE1B2CC4FC24589A0EA95 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6DB9C3763D02B1415CD9D565 /* Project object */;
+}
