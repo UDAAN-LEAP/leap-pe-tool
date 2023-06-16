@@ -10151,17 +10151,18 @@ void MainWindow::on_actionIndentation_Options_triggered()
 {
 
     int left = 0, right = 0;
-    indentOptions i(this,&left,&right);
+    indentOptions i(this, &left, &right);
 
-    i.exec();
+    if (i.exec() == QDialog::Accepted) {  // Check if the dialog was accepted
 
-    if(left + right > 14){
-        return;
+        if (left + right <= 14) {
+            on_actionIncrease_Indent_triggered(left, right);
+        }
     }
 
-    on_actionIncrease_Indent_triggered(left,right);
-}
 
+
+}
 /*!
  * \fn MainWindow::on_actionSpecial_Characters_triggered()
  * \brief This function displays the special symbol dialog
