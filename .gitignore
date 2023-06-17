@@ -353,7 +353,6 @@ build/
 sphinx/
 
 #misc
-deps/
 lib/sources/
 FrameWorkCode/qpadfinal1.0.0/
 FrameWorkCode/.xcode/

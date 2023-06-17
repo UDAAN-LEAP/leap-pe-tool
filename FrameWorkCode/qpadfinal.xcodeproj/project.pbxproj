@@ -102,6 +102,8 @@
 		C3EBEBF024AF31579B0C3CAC /* pdfrangedialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 01EE7A506BFCB173AE1EB09A /* pdfrangedialog.cpp */; settings = {ATTRIBUTES = (); }; };
 		C4A16BCE2A3ABCCE0038A952 /* libYAWYSIWYGEE.a in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A16BCD2A3ABCCE0038A952 /* libYAWYSIWYGEE.a */; };
 		C4A16BD02A3ABE350038A952 /* YAWYSIWYGEE.lib in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A16BCF2A3ABE350038A952 /* YAWYSIWYGEE.lib */; };
+		C4A16BD32A3AC39D0038A952 /* libpugixml.a in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A16BD12A3AC39D0038A952 /* libpugixml.a */; };
+		C4A16BD42A3AC39D0038A952 /* libgit2.dylib in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A16BD22A3AC39D0038A952 /* libgit2.dylib */; };
 		C75D59F9159A6E3B74686621 /* DiffView.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 17CE7A6AA43CB99CC4C3B3A0 /* DiffView.cpp */; settings = {ATTRIBUTES = (); }; };
 		C8804597176C1FF8C544F2B9 /* moc_DiffView.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = EB566382E052324EB5478002 /* moc_DiffView.cpp */; settings = {ATTRIBUTES = (); }; };
 		D4F9B97C710FFA97307EB7CE /* moc_pdfhandling.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = A17A5A2610CAFF8B13073B4D /* moc_pdfhandling.cpp */; settings = {ATTRIBUTES = (); }; };
@@ -301,6 +303,8 @@
 		C457510C67B95A23F566CCD1 /* diff_match_patch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = diff_match_patch.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/diff_match_patch.h; sourceTree = "<absolute>"; };
 		C4A16BCD2A3ABCCE0038A952 /* libYAWYSIWYGEE.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYAWYSIWYGEE.a; path = ../lib/dist/macos/arm64/libYAWYSIWYGEE.a; sourceTree = "<group>"; };
 		C4A16BCF2A3ABE350038A952 /* YAWYSIWYGEE.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = YAWYSIWYGEE.lib; path = ../lib/YAWYSIWYGEE.lib; sourceTree = "<group>"; };
+		C4A16BD12A3AC39D0038A952 /* libpugixml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpugixml.a; path = ../lib/macos/arm64/libpugixml.a; sourceTree = "<group>"; };
+		C4A16BD22A3AC39D0038A952 /* libgit2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgit2.dylib; path = ../lib/macos/arm64/libgit2.dylib; sourceTree = "<group>"; };
 		C6D20E2FA7EA1D65E5878B75 /* customtextbrowser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = customtextbrowser.cpp; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/customtextbrowser.cpp; sourceTree = "<absolute>"; };
 		C7FC2FE072B98BA678E550E2 /* ui_mainwindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_mainwindow.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_mainwindow.h; sourceTree = "<absolute>"; };
 		C8931B8D66612463B100A487 /* ui_Symbols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_Symbols.h; path = /Volumes/Lake/Projects/scratchpad/udaan/FrameWorkCode/ui_Symbols.h; sourceTree = "<absolute>"; };
@@ -371,11 +375,13 @@
 				B3DCA008BE1E4F7A2E841E5E /* QtWidgets.framework in Link Binary With Libraries */,
 				5ED787484C5A8A3A7D181276 /* QtMultimedia.framework in Link Binary With Libraries */,
 				380B0FC6FA91923799ECF91E /* QtGui.framework in Link Binary With Libraries */,
+				C4A16BD42A3AC39D0038A952 /* libgit2.dylib in Link Binary With Libraries */,
 				F2A75ACAC9DF6A3F4E5711E7 /* AppKit.framework in Link Binary With Libraries */,
 				B3FE8FAC746D3D5BB24FA398 /* Metal.framework in Link Binary With Libraries */,
 				C4A16BCE2A3ABCCE0038A952 /* libYAWYSIWYGEE.a in Link Binary With Libraries */,
 				D9A6C95CEBBC780507C288F9 /* QtXml.framework in Link Binary With Libraries */,
 				C4A16BD02A3ABE350038A952 /* YAWYSIWYGEE.lib in Link Binary With Libraries */,
+				C4A16BD32A3AC39D0038A952 /* libpugixml.a in Link Binary With Libraries */,
 				0C1F0996CE20A3565DCDF20D /* QtNetworkAuth.framework in Link Binary With Libraries */,
 				26E2D3DAE17DC98C0ED6AF89 /* QtNetwork.framework in Link Binary With Libraries */,
 				306D2D1A1BDF164F5C147953 /* QtCore.framework in Link Binary With Libraries */,
@@ -632,6 +638,8 @@
 				C4A16BCD2A3ABCCE0038A952 /* libYAWYSIWYGEE.a */,
 				19FEDC84D6926EEC5BDB05D6 /* pugixml */,
 				156B6EAB27B287AA2911F6EB /* git2 */,
+				C4A16BD22A3AC39D0038A952 /* libgit2.dylib */,
+				C4A16BD12A3AC39D0038A952 /* libpugixml.a */,
 				FE31250732616B499E2AFDE3 /* QtSvg.framework */,
 				2474A20143A47B6065C5A6EB /* QtPrintSupport.framework */,
 				2200997F2A8CFAA0DFC5981A /* QtWidgets.framework */,
