@@ -1,7 +1,7 @@
-prefix=/Volumes/Lake/Projects/scratchpad/udaan-exp/deps/macos/x64
+prefix=/Volumes/Lake/Projects/scratchpad/udaan-exp/deps/macos/x86_64
 exec_prefix=${prefix}
-includedir=/Volumes/Lake/Projects/scratchpad/udaan-exp/deps/macos/x64/include
-libdir=/Volumes/Lake/Projects/scratchpad/udaan-exp/deps/macos/x64/lib
+includedir=/Volumes/Lake/Projects/scratchpad/udaan-exp/deps/macos/x86_64/include
+libdir=/Volumes/Lake/Projects/scratchpad/udaan-exp/deps/macos/x86_64/lib
 
 Name: pugixml
 Description: Light-weight, simple and fast XML parser for C++ with XPath support.

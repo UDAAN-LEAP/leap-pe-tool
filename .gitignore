@@ -357,6 +357,8 @@ lib/sources/
 FrameWorkCode/qpadfinal1.0.0/
 FrameWorkCode/.xcode/
 deps/macos/universal/
-sourcesUniversal/
+sourcesamd64/
 FrameWorkCode/x86_64/
 FrameWorkCode/x86_64/
+FrameWorkCode/x86_64/udaan.xcodeproj/project.xcworkspace/xcuserdata/
+FrameWorkCode/x86_64/udaan_x86_64.xcodeproj/project.xcworkspace/xcuserdata/

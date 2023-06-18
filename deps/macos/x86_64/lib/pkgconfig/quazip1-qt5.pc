@@ -1,4 +1,4 @@
-prefix=/Volumes/Lake/Projects/scratchpad/udaan-exp/deps/macos/x64
+prefix=/Volumes/Lake/Projects/scratchpad/udaan-exp/deps/macos/x86_64
 exec_prefix=${prefix}
 libdir=${prefix}/lib
 includedir=${prefix}/include

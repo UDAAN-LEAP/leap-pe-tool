@@ -99,29 +99,12 @@
 		B3FE8FAC746D3D5BB24FA398 /* Metal.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 1B2543FCC48E9436F21C4F63 /* Metal.framework */; };
 		BBDFAA72B42F996F5B00857F /* YAWYSIWYGEE in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = FDEBE265E4E14031227A398A /* YAWYSIWYGEE */; };
 		C36C1FE731C00DC6E1F9B0B6 /* editdistance.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = CDC083293A9C976CE3D02386 /* editdistance.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4A205362A3F121E00387AE2 /* libpugixml.a in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A205322A3F121D00387AE2 /* libpugixml.a */; };
-		C4A205372A3F121E00387AE2 /* libgit2.1.7.0.dylib in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A205332A3F121E00387AE2 /* libgit2.1.7.0.dylib */; };
-		C4A205382A3F121F00387AE2 /* libgit2.dylib in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A205342A3F121E00387AE2 /* libgit2.dylib */; };
-		C4A205392A3F121F00387AE2 /* libgit2.1.7.dylib in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A205352A3F121E00387AE2 /* libgit2.1.7.dylib */; };
-		C4A2053B2A3F125100387AE2 /* libYAWYSIWYGEE.a in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A2053A2A3F125100387AE2 /* libYAWYSIWYGEE.a */; };
-		C4A2053C2A3F12D600387AE2 /* libgit2.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C4A205342A3F121E00387AE2 /* libgit2.dylib */; };
-		C4A2053D2A3F12F100387AE2 /* QtSvg.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A2051D2A3F10B900387AE2 /* QtSvg.framework */; };
-		C4A2053E2A3F12F200387AE2 /* QtSvg.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C4A2051D2A3F10B900387AE2 /* QtSvg.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C4A2053F2A3F12F200387AE2 /* QtPrintSupport.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A2051F2A3F10D200387AE2 /* QtPrintSupport.framework */; };
-		C4A205402A3F12F200387AE2 /* QtPrintSupport.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C4A2051F2A3F10D200387AE2 /* QtPrintSupport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C4A205412A3F12F200387AE2 /* QtWidgets.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A205242A3F114D00387AE2 /* QtWidgets.framework */; };
-		C4A205422A3F12F300387AE2 /* QtWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C4A205242A3F114D00387AE2 /* QtWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C4A205432A3F12F300387AE2 /* QtMultimedia.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A205262A3F116D00387AE2 /* QtMultimedia.framework */; };
-		C4A205442A3F12F300387AE2 /* QtMultimedia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C4A205262A3F116D00387AE2 /* QtMultimedia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C4A205452A3F12F400387AE2 /* QtGui.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A205282A3F117A00387AE2 /* QtGui.framework */; };
-		C4A205462A3F12F400387AE2 /* QtGui.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C4A205282A3F117A00387AE2 /* QtGui.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C4A205472A3F12F400387AE2 /* QtXml.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A2052A2A3F118200387AE2 /* QtXml.framework */; };
-		C4A205482A3F12F500387AE2 /* QtXml.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C4A2052A2A3F118200387AE2 /* QtXml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C4A205492A3F12F500387AE2 /* QtNetwork.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A2052D2A3F119100387AE2 /* QtNetwork.framework */; };
-		C4A2054A2A3F12F600387AE2 /* QtNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C4A2052D2A3F119100387AE2 /* QtNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C4A2054B2A3F12F600387AE2 /* QtNetworkAuth.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A2052C2A3F119100387AE2 /* QtNetworkAuth.framework */; };
-		C4A2054C2A3F12F600387AE2 /* QtNetworkAuth.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C4A2052C2A3F119100387AE2 /* QtNetworkAuth.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C4A2054E2A3F132300387AE2 /* QtCore.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A2054D2A3F132300387AE2 /* QtCore.framework */; };
+		C4A206182A3F72D800387AE2 /* libquazip1-qt5.1.4.0.dylib in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A206152A3F72D800387AE2 /* libquazip1-qt5.1.4.0.dylib */; };
+		C4A206192A3F72D800387AE2 /* libquazip1-qt5.1.4.dylib in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4A206162A3F72D800387AE2 /* libquazip1-qt5.1.4.dylib */; };
+		C4A28C3C2A3F899F00799E48 /* libquazip1-qt5.1.4.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = C4A206152A3F72D800387AE2 /* libquazip1-qt5.1.4.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		C4A28C3D2A3F89A300799E48 /* libquazip1-qt5.1.4.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = C4A206162A3F72D800387AE2 /* libquazip1-qt5.1.4.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		C4A28C3E2A3F89AD00799E48 /* libgit2.1.7.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = C4BBB3D82A3EE1310068B46C /* libgit2.1.7.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		C4A28C3F2A3F89B100799E48 /* libgit2.1.7.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = C4BBB3DB2A3EE1CB0068B46C /* libgit2.1.7.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C4BBB3B42A3EC73B0068B46C /* QtCore.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 0C5CF5B55451392F872F0B46 /* QtCore.framework */; };
 		C4BBB3B52A3EC73B0068B46C /* QtCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5CF5B55451392F872F0B46 /* QtCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C4BBB3B62A3EC73C0068B46C /* QtGui.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = DA37B1656B6778C57F374268 /* QtGui.framework */; };
@@ -142,106 +125,7 @@
 		C4BBB3C52A3EC7480068B46C /* QtPrintSupport.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C0C4D396AF0E0A87D1EB0B74 /* QtPrintSupport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C4BBB3D32A3ED75C0068B46C /* AppIcon.xcassets in Copy Bundle Resources */ = {isa = PBXBuildFile; fileRef = C4BBB3D22A3ED75C0068B46C /* AppIcon.xcassets */; };
 		C4BBB3D92A3EE1310068B46C /* libgit2.1.7.0.dylib in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4BBB3D82A3EE1310068B46C /* libgit2.1.7.0.dylib */; };
-		C4BBB3DA2A3EE1440068B46C /* libgit2.1.7.0.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C4BBB3D82A3EE1310068B46C /* libgit2.1.7.0.dylib */; };
 		C4BBB3DC2A3EE1CB0068B46C /* libgit2.1.7.dylib in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4BBB3DB2A3EE1CB0068B46C /* libgit2.1.7.dylib */; };
-		C4BBB3DD2A3EE2950068B46C /* libgit2.1.7.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C4BBB3DB2A3EE1CB0068B46C /* libgit2.1.7.dylib */; };
-		C4BBB3E22A3F06690068B46C /* DiffView.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 6458E74DEBCDB8EB9072CEAE /* DiffView.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3E32A3F06690068B46C /* about.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 077E66F714ABD64F2D9CF4A1 /* about.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3E42A3F06690068B46C /* crashlog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = B5696E7B8996B8B30C65693F /* crashlog.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3E52A3F06690068B46C /* customtextbrowser.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 7025D5C5DEBFA47838282507 /* customtextbrowser.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3E62A3F06690068B46C /* dashboard.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 77EB8BDAA25010E812DE1DCE /* dashboard.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3E72A3F06690068B46C /* eddis.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 4CD61C83221E52CD4AFD632C /* eddis.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3E82A3F06690068B46C /* editdistance.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = CDC083293A9C976CE3D02386 /* editdistance.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3E92A3F06690068B46C /* equationeditor.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = BB3B3D471D34B8F1E7400FA5 /* equationeditor.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3EA2A3F06690068B46C /* globalreplaceworker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = CC572BD6ED9B0C7DC4D5C5D2 /* globalreplaceworker.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3EB2A3F06690068B46C /* handlebbox.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = E6C0F9DD589216FA10FE90CD /* handlebbox.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3EC2A3F06690068B46C /* indentoptions.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 940F9213AD0C92C183E08570 /* indentoptions.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3ED2A3F06690068B46C /* loaddataworker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 2716BEDB9D59BFF33C9F799B /* loaddataworker.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3EE2A3F06690068B46C /* loadingspinner.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = DBF81394395F8846871DCBD6 /* loadingspinner.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3EF2A3F06690068B46C /* markRegion.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 374DF2F35D8176F12237F8F8 /* markRegion.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3F02A3F06690068B46C /* meanStdPage.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = DCA0296B670546BABD8B384E /* meanStdPage.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3F12A3F06690068B46C /* pdfhandling.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = EE0980DDB8A8EFF21E3219E4 /* pdfhandling.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3F22A3F06690068B46C /* pdfrangedialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 9207D9D6BD425109AB5F5734 /* pdfrangedialog.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3F32A3F06690068B46C /* printworker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 86C1C219687022BC09F34657 /* printworker.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3F42A3F06690068B46C /* progressbardialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = E95D65665E98794519C39B27 /* progressbardialog.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3F52A3F06690068B46C /* rubberband.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 414BE6D0516783C891AC1974 /* rubberband.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3F62A3F06690068B46C /* shortcutguidedialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = C21B4273EC2EFA0C65AC6FB6 /* shortcutguidedialog.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3F72A3F06690068B46C /* slpNPatternDict.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 76EAA05484ABA9ECB1C15356 /* slpNPatternDict.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3F82A3F06690068B46C /* textfinder.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = F5C88955AFAAF59D71A011F1 /* textfinder.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3F92A3F06690068B46C /* globalreplacedialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 7A4116715317C86486D66F57 /* globalreplacedialog.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3FA2A3F06690068B46C /* threadingpush.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 46DAE7D471816FCD6289DD9A /* threadingpush.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3FB2A3F06690068B46C /* trieEditdis.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 4EEC030B14F52FB2C76B1B10 /* trieEditdis.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3FC2A3F06690068B46C /* undoglobalreplace.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 554839DDF5501F0F395F605A /* undoglobalreplace.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3FD2A3F06690068B46C /* verifyset.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 79EE6717A10C6E49DD19DA79 /* verifyset.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3FE2A3F06690068B46C /* worker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 31272E5A88C716754C0265E6 /* worker.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB3FF2A3F06690068B46C /* Filters.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 1199FB3D4B9A2EEACCE3CD95 /* Filters.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4002A3F06690068B46C /* Project.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 6C125A4644631EEAAAF5D5CB /* Project.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4012A3F06690068B46C /* ProjectHierarchyWindow.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = DA45B61332918535A21F1AAD /* ProjectHierarchyWindow.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4022A3F06690068B46C /* Symbols.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = A40E3774C0CC3EECFBF39C57 /* Symbols.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4032A3F06690068B46C /* TreeItem.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 2601BBBD84820F1556ABD440 /* TreeItem.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4042A3F06690068B46C /* TreeModel.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 2F93640D5973BB48024718EA /* TreeModel.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4052A3F06690068B46C /* averageaccuracies.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 0FD2BBACABB0A93E5A3F3D1E /* averageaccuracies.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4062A3F06690068B46C /* commentsview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 17C9F07954DB56091FE6F093 /* commentsview.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4072A3F06690068B46C /* diff_match_patch.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 38FD97E252D3A6D6065492EC /* diff_match_patch.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4082A3F06690068B46C /* interndiffview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = A0FBF3A366AA5BB03571484D /* interndiffview.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4092A3F06690068B46C /* lg2_common.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 3F520416E4D93583C3DFC3FC /* lg2_common.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB40A2A3F06690068B46C /* loginpageview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 2EC26FD0F0FD0A399834217A /* loginpageview.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB40B2A3F06690068B46C /* main.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 2C8F240BE622B2D2E7BA33C8 /* main.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB40C2A3F06690068B46C /* mainwindow.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = F17AFBD85C069284D4C040E4 /* mainwindow.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB40D2A3F06690068B46C /* resizeimageview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 52A9B44816750C40DF57A31C /* resizeimageview.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB40E2A3F06690068B46C /* zoom.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 2DF9E2364DF8648236F4C260 /* zoom.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB40F2A3F06690068B46C /* ProjectWizard.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 0C25F488EAD18ABF9086DEC5 /* ProjectWizard.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4102A3F06690068B46C /* CreateProjectPage.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 7B80EEFA88FC710EA1071C59 /* CreateProjectPage.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4112A3F06690068B46C /* globalreplacepreview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 6EF1122F228299E3B6B13D7F /* globalreplacepreview.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4122A3F06690068B46C /* globalreplaceinformation.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = EFF0FF66C6EDD8615393D0C2 /* globalreplaceinformation.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4132A3F06690068B46C /* qrc_AppResources.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = CFFADC11D73109D4CD4AA477 /* qrc_AppResources.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4142A3F06690068B46C /* moc_about.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 6928A00ACA34F31FAF9DF706 /* moc_about.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4152A3F06690068B46C /* moc_customtextbrowser.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 0CA7DF169EA76F6755A4D49B /* moc_customtextbrowser.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4162A3F06690068B46C /* moc_dashboard.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = B1DDDC6CBE5E1D8312717499 /* moc_dashboard.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4172A3F06690068B46C /* moc_equationeditor.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = FF72FF9DE12604544508E90D /* moc_equationeditor.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4182A3F06690068B46C /* moc_globalreplaceworker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 6595EB49AE824C683645A3F1 /* moc_globalreplaceworker.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4192A3F06690068B46C /* moc_indentoptions.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 104013C13310ACF6FB715092 /* moc_indentoptions.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB41A2A3F06690068B46C /* moc_loaddataworker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = B49239F930439DA46B36D41A /* moc_loaddataworker.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB41B2A3F06690068B46C /* moc_loadingspinner.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = CE3C886F7E951228603F7FD2 /* moc_loadingspinner.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB41C2A3F06690068B46C /* moc_pdfhandling.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 77F50523D17F20B7B9659586 /* moc_pdfhandling.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB41D2A3F06690068B46C /* moc_pdfrangedialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 797A13FF54B7E24F06A29847 /* moc_pdfrangedialog.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB41E2A3F06690068B46C /* moc_printworker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 1C3CB4291D506D6A95248B11 /* moc_printworker.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB41F2A3F06690068B46C /* moc_progressbardialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = A5F8813C6324733204AA15A4 /* moc_progressbardialog.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4202A3F06690068B46C /* moc_rubberband.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 881118BC52BF0646C247DA76 /* moc_rubberband.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4212A3F06690068B46C /* moc_shortcutguidedialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = ED6BD9BEBA6DCA2771895CA0 /* moc_shortcutguidedialog.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4222A3F06690068B46C /* moc_textfinder.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 740F4E3EA863029000E7ACD4 /* moc_textfinder.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4232A3F06690068B46C /* moc_globalreplacedialog.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = FE5FD05C68D56D4404CEDBD1 /* moc_globalreplacedialog.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4242A3F06690068B46C /* moc_threadingpush.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 2D567EF6C48A77F9EDEA821C /* moc_threadingpush.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4252A3F06690068B46C /* moc_undoglobalreplace.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = E5AD1615C21857D59BEE45D6 /* moc_undoglobalreplace.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4262A3F06690068B46C /* moc_worker.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 1AF58A12B8FEC9D920E8E685 /* moc_worker.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4272A3F06690068B46C /* moc_DiffView.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 3283394E9FE45679F2B515B4 /* moc_DiffView.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4282A3F06690068B46C /* moc_ProjectHierarchyWindow.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 9C4FC1F79055B21CF7318B6F /* moc_ProjectHierarchyWindow.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4292A3F06690068B46C /* moc_Symbols.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = AEFAB8F2935825625286C418 /* moc_Symbols.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB42A2A3F06690068B46C /* moc_TreeModel.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 12BD212261AA3F4C03EA5425 /* moc_TreeModel.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB42B2A3F06690068B46C /* moc_averageaccuracies.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 29B58792C6854C4B81AB67D2 /* moc_averageaccuracies.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB42C2A3F06690068B46C /* moc_commentsview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 2C8692414351FE58810431F6 /* moc_commentsview.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB42D2A3F06690068B46C /* moc_interndiffview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 4985FCBA5AAA353D3540C064 /* moc_interndiffview.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB42E2A3F06690068B46C /* moc_loginpageview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 5959A1D6C560A8F9501437ED /* moc_loginpageview.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB42F2A3F06690068B46C /* moc_mainwindow.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 463E64945B451F42A306631B /* moc_mainwindow.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4302A3F06690068B46C /* moc_resizeimageview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 27AC419DAD19A88AC7F08B8C /* moc_resizeimageview.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4312A3F06690068B46C /* moc_zoom.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 62E5A79FEDFB0987EC01366B /* moc_zoom.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4322A3F06690068B46C /* moc_ProjectWizard.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 8E80892D259AF12F7A5D81A0 /* moc_ProjectWizard.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4332A3F06690068B46C /* moc_CreateProjectPage.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 4DA90EB9374957644C773A67 /* moc_CreateProjectPage.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4342A3F06690068B46C /* moc_globalreplacepreview.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 25B0A1D085E9DF6B9608A8D3 /* moc_globalreplacepreview.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4352A3F06690068B46C /* moc_globalreplaceinformation.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 1DF7BD34CBF7F4DEE820052C /* moc_globalreplaceinformation.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB4362A3F06690068B46C /* dummy.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = F35E3A0DFEA5C2D811E25AF3 /* dummy.cpp */; settings = {ATTRIBUTES = (); }; };
-		C4BBB43A2A3F06690068B46C /* pugixml in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 4FDFE6D2EB7713CB74AA308B /* pugixml */; };
-		C4BBB4412A3F06690068B46C /* libgit2.1.7.dylib in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4BBB3DB2A3EE1CB0068B46C /* libgit2.1.7.dylib */; };
-		C4BBB4422A3F06690068B46C /* AppKit.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 723F90793B2C195E2CCB2233 /* AppKit.framework */; };
-		C4BBB4432A3F06690068B46C /* Metal.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 1B2543FCC48E9436F21C4F63 /* Metal.framework */; };
-		C4BBB4452A3F06690068B46C /* libgit2.1.7.0.dylib in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C4BBB3D82A3EE1310068B46C /* libgit2.1.7.0.dylib */; };
-		C4BBB4472A3F06690068B46C /* DiskArbitration.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 2B774D8E4178765CE52EAAF5 /* DiskArbitration.framework */; };
-		C4BBB4482A3F06690068B46C /* IOKit.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = A1A67BEAA744704B29168D39 /* IOKit.framework */; };
-		C4BBB4492A3F06690068B46C /* OpenGL.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = D4B32C2222F82AC56BADEB21 /* OpenGL.framework */; };
-		C4BBB44A2A3F06690068B46C /* AGL.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 8D9815BDB5BD9F90D2BC05C5 /* AGL.framework */; };
-		C4BBB44C2A3F06690068B46C /* AppIcon.xcassets in Copy Bundle Resources */ = {isa = PBXBuildFile; fileRef = C4BBB3D22A3ED75C0068B46C /* AppIcon.xcassets */; };
-		C4BBB4502A3F06690068B46C /* libgit2.1.7.0.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C4BBB3D82A3EE1310068B46C /* libgit2.1.7.0.dylib */; };
-		C4BBB4562A3F06690068B46C /* libgit2.1.7.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C4BBB3DB2A3EE1CB0068B46C /* libgit2.1.7.dylib */; };
 		CF046922437C476ECE599237 /* markRegion.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 374DF2F35D8176F12237F8F8 /* markRegion.cpp */; settings = {ATTRIBUTES = (); }; };
 		CFCD3A7C79B288A3E78A2B6B /* moc_pdfhandling.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 77F50523D17F20B7B9659586 /* moc_pdfhandling.cpp */; settings = {ATTRIBUTES = (); }; };
 		D2E5833A6C6BB50D889A6F78 /* moc_Symbols.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = AEFAB8F2935825625286C418 /* moc_Symbols.cpp */; settings = {ATTRIBUTES = (); }; };
@@ -268,13 +152,6 @@
 			remoteGlobalIDString = 18F076888684A1BC1DAF0869;
 			remoteInfo = "Qt Preprocess";
 		};
-		C4BBB3E02A3F06690068B46C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6DB9C3763D02B1415CD9D565 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 18F076888684A1BC1DAF0869;
-			remoteInfo = "Qt Preprocess";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -286,38 +163,28 @@
 			files = (
 				C4BBB3BB2A3EC7400068B46C /* QtNetworkAuth.framework in Embed Frameworks */,
 				C4BBB3C52A3EC7480068B46C /* QtPrintSupport.framework in Embed Frameworks */,
-				C4BBB3DA2A3EE1440068B46C /* libgit2.1.7.0.dylib in Embed Frameworks */,
 				C4BBB3C32A3EC7460068B46C /* QtXml.framework in Embed Frameworks */,
 				C4BBB3B52A3EC73B0068B46C /* QtCore.framework in Embed Frameworks */,
 				C4BBB3BF2A3EC7430068B46C /* QtSvg.framework in Embed Frameworks */,
 				C4BBB3C12A3EC7440068B46C /* QtWidgets.framework in Embed Frameworks */,
 				C4BBB3BD2A3EC7420068B46C /* QtNetwork.framework in Embed Frameworks */,
-				C4BBB3DD2A3EE2950068B46C /* libgit2.1.7.dylib in Embed Frameworks */,
 				C4BBB3B72A3EC73C0068B46C /* QtGui.framework in Embed Frameworks */,
 				C4BBB3B92A3EC73E0068B46C /* QtMultimedia.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C4BBB44D2A3F06690068B46C /* Embed Frameworks */ = {
+		C41C34502A3F8748005C454A /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C4A2053E2A3F12F200387AE2 /* QtSvg.framework in Embed Frameworks */,
-				C4A205422A3F12F300387AE2 /* QtWidgets.framework in Embed Frameworks */,
-				C4A2054A2A3F12F600387AE2 /* QtNetwork.framework in Embed Frameworks */,
-				C4A2054C2A3F12F600387AE2 /* QtNetworkAuth.framework in Embed Frameworks */,
-				C4BBB4502A3F06690068B46C /* libgit2.1.7.0.dylib in Embed Frameworks */,
-				C4A2053C2A3F12D600387AE2 /* libgit2.dylib in Embed Frameworks */,
-				C4A205482A3F12F500387AE2 /* QtXml.framework in Embed Frameworks */,
-				C4A205442A3F12F300387AE2 /* QtMultimedia.framework in Embed Frameworks */,
-				C4A205462A3F12F400387AE2 /* QtGui.framework in Embed Frameworks */,
-				C4A205402A3F12F200387AE2 /* QtPrintSupport.framework in Embed Frameworks */,
-				C4BBB4562A3F06690068B46C /* libgit2.1.7.dylib in Embed Frameworks */,
+				C4A28C3E2A3F89AD00799E48 /* libgit2.1.7.0.dylib in CopyFiles */,
+				C4A28C3F2A3F89B100799E48 /* libgit2.1.7.dylib in CopyFiles */,
+				C4A28C3C2A3F899F00799E48 /* libquazip1-qt5.1.4.0.dylib in CopyFiles */,
+				C4A28C3D2A3F89A300799E48 /* libquazip1-qt5.1.4.dylib in CopyFiles */,
 			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -484,27 +351,13 @@
 		BE86E97F96AE69385B522382 /* commentsview.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = commentsview.ui; path = "/Volumes/Lake/Projects/scratchpad/udaan-exp/FrameWorkCode/commentsview.ui"; sourceTree = "<absolute>"; };
 		C0C4D396AF0E0A87D1EB0B74 /* QtPrintSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtPrintSupport.framework; path = "/opt/homebrew/Cellar/qt@5/5.15.10/lib/QtPrintSupport.framework"; sourceTree = "<absolute>"; };
 		C21B4273EC2EFA0C65AC6FB6 /* shortcutguidedialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = shortcutguidedialog.cpp; path = "/Volumes/Lake/Projects/scratchpad/udaan-exp/FrameWorkCode/shortcutguidedialog.cpp"; sourceTree = "<absolute>"; };
-		C4A2051D2A3F10B900387AE2 /* QtSvg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QtSvg.framework; sourceTree = "<group>"; };
-		C4A2051F2A3F10D200387AE2 /* QtPrintSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QtPrintSupport.framework; sourceTree = "<group>"; };
-		C4A205242A3F114D00387AE2 /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QtWidgets.framework; sourceTree = "<group>"; };
-		C4A205262A3F116D00387AE2 /* QtMultimedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QtMultimedia.framework; sourceTree = "<group>"; };
-		C4A205282A3F117A00387AE2 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QtGui.framework; sourceTree = "<group>"; };
-		C4A2052A2A3F118200387AE2 /* QtXml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QtXml.framework; sourceTree = "<group>"; };
-		C4A2052C2A3F119100387AE2 /* QtNetworkAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QtNetworkAuth.framework; sourceTree = "<group>"; };
-		C4A2052D2A3F119100387AE2 /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QtNetwork.framework; sourceTree = "<group>"; };
-		C4A205322A3F121D00387AE2 /* libpugixml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpugixml.a; path = ../../deps/macos/x86_64/lib/libpugixml.a; sourceTree = "<group>"; };
-		C4A205332A3F121E00387AE2 /* libgit2.1.7.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgit2.1.7.0.dylib; path = ../../deps/macos/x86_64/lib/libgit2.1.7.0.dylib; sourceTree = "<group>"; };
-		C4A205342A3F121E00387AE2 /* libgit2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgit2.dylib; path = ../../deps/macos/x86_64/lib/libgit2.dylib; sourceTree = "<group>"; };
-		C4A205352A3F121E00387AE2 /* libgit2.1.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgit2.1.7.dylib; path = ../../deps/macos/x86_64/lib/libgit2.1.7.dylib; sourceTree = "<group>"; };
-		C4A2053A2A3F125100387AE2 /* libYAWYSIWYGEE.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYAWYSIWYGEE.a; path = ../../deps/macos/x86_64/opt/YAWYSIWYGEE/bin/libYAWYSIWYGEE.a; sourceTree = "<group>"; };
-		C4A2054D2A3F132300387AE2 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QtCore.framework; sourceTree = "<group>"; };
-		C4A205DE2A3F146700387AE2 /* udaan copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "udaan copy-Info.plist"; path = "/Volumes/Lake/Projects/scratchpad/udaan-exp/FrameWorkCode/udaan copy-Info.plist"; sourceTree = "<absolute>"; };
+		C4A206152A3F72D800387AE2 /* libquazip1-qt5.1.4.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libquazip1-qt5.1.4.0.dylib"; path = "../deps/macos/arm64/lib/libquazip1-qt5.1.4.0.dylib"; sourceTree = "<group>"; };
+		C4A206162A3F72D800387AE2 /* libquazip1-qt5.1.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libquazip1-qt5.1.4.dylib"; path = "../deps/macos/arm64/lib/libquazip1-qt5.1.4.dylib"; sourceTree = "<group>"; };
 		C4BBB3C62A3EC7760068B46C /* udaan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = udaan.entitlements; sourceTree = "<group>"; };
 		C4BBB3C82A3EC79F0068B46C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4BBB3D22A3ED75C0068B46C /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		C4BBB3D82A3EE1310068B46C /* libgit2.1.7.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgit2.1.7.0.dylib; path = ../deps/macos/arm64/lib/libgit2.1.7.0.dylib; sourceTree = "<group>"; };
 		C4BBB3DB2A3EE1CB0068B46C /* libgit2.1.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgit2.1.7.dylib; path = ../deps/macos/arm64/lib/libgit2.1.7.dylib; sourceTree = "<group>"; };
-		C4BBB45C2A3F06690068B46C /* udaan x86.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "udaan x86.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C574DA16F4AC674387EEC913 /* globalreplacepreview.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = globalreplacepreview.ui; path = "/Volumes/Lake/Projects/scratchpad/udaan-exp/FrameWorkCode/globalreplacepreview.ui"; sourceTree = "<absolute>"; };
 		C61D17243333B5FEE02FE7BF /* ui_undoglobalreplace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_undoglobalreplace.h; path = "/Volumes/Lake/Projects/scratchpad/udaan-exp/FrameWorkCode/ui_undoglobalreplace.h"; sourceTree = "<absolute>"; };
 		C8DADF760B6E6C68519F9089 /* ui_interndiffview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_interndiffview.h; path = "/Volumes/Lake/Projects/scratchpad/udaan-exp/FrameWorkCode/ui_interndiffview.h"; sourceTree = "<absolute>"; };
@@ -550,37 +403,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		C4BBB4372A3F06690068B46C /* Link Binary With Libraries */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C4BBB43A2A3F06690068B46C /* pugixml in Link Binary With Libraries */,
-				C4A205372A3F121E00387AE2 /* libgit2.1.7.0.dylib in Link Binary With Libraries */,
-				C4A205432A3F12F300387AE2 /* QtMultimedia.framework in Link Binary With Libraries */,
-				C4BBB4412A3F06690068B46C /* libgit2.1.7.dylib in Link Binary With Libraries */,
-				C4A2053F2A3F12F200387AE2 /* QtPrintSupport.framework in Link Binary With Libraries */,
-				C4BBB4422A3F06690068B46C /* AppKit.framework in Link Binary With Libraries */,
-				C4A2054E2A3F132300387AE2 /* QtCore.framework in Link Binary With Libraries */,
-				C4A205392A3F121F00387AE2 /* libgit2.1.7.dylib in Link Binary With Libraries */,
-				C4A205452A3F12F400387AE2 /* QtGui.framework in Link Binary With Libraries */,
-				C4BBB4432A3F06690068B46C /* Metal.framework in Link Binary With Libraries */,
-				C4BBB4452A3F06690068B46C /* libgit2.1.7.0.dylib in Link Binary With Libraries */,
-				C4A205362A3F121E00387AE2 /* libpugixml.a in Link Binary With Libraries */,
-				C4A205412A3F12F200387AE2 /* QtWidgets.framework in Link Binary With Libraries */,
-				C4BBB4472A3F06690068B46C /* DiskArbitration.framework in Link Binary With Libraries */,
-				C4A205472A3F12F400387AE2 /* QtXml.framework in Link Binary With Libraries */,
-				C4A2054B2A3F12F600387AE2 /* QtNetworkAuth.framework in Link Binary With Libraries */,
-				C4A2053B2A3F125100387AE2 /* libYAWYSIWYGEE.a in Link Binary With Libraries */,
-				C4A205492A3F12F500387AE2 /* QtNetwork.framework in Link Binary With Libraries */,
-				C4A205382A3F121F00387AE2 /* libgit2.dylib in Link Binary With Libraries */,
-				C4A2053D2A3F12F100387AE2 /* QtSvg.framework in Link Binary With Libraries */,
-				C4BBB4482A3F06690068B46C /* IOKit.framework in Link Binary With Libraries */,
-				C4BBB4492A3F06690068B46C /* OpenGL.framework in Link Binary With Libraries */,
-				C4BBB44A2A3F06690068B46C /* AGL.framework in Link Binary With Libraries */,
-			);
-			name = "Link Binary With Libraries";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D1C883685E82D5676953459A /* Link Binary With Libraries */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -596,7 +418,9 @@
 				C4BBB3B42A3EC73B0068B46C /* QtCore.framework in Link Binary With Libraries */,
 				C4BBB3DC2A3EE1CB0068B46C /* libgit2.1.7.dylib in Link Binary With Libraries */,
 				F2A75ACAC9DF6A3F4E5711E7 /* AppKit.framework in Link Binary With Libraries */,
+				C4A206192A3F72D800387AE2 /* libquazip1-qt5.1.4.dylib in Link Binary With Libraries */,
 				B3FE8FAC746D3D5BB24FA398 /* Metal.framework in Link Binary With Libraries */,
+				C4A206182A3F72D800387AE2 /* libquazip1-qt5.1.4.0.dylib in Link Binary With Libraries */,
 				C4BBB3BA2A3EC7400068B46C /* QtNetworkAuth.framework in Link Binary With Libraries */,
 				C4BBB3D92A3EE1310068B46C /* libgit2.1.7.0.dylib in Link Binary With Libraries */,
 				C4BBB3C22A3EC7460068B46C /* QtXml.framework in Link Binary With Libraries */,
@@ -849,6 +673,12 @@
 		AF39DD055C3EF8226FBE929D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4FDFE6D2EB7713CB74AA308B /* pugixml */,
+				C4BBB3DB2A3EE1CB0068B46C /* libgit2.1.7.dylib */,
+				C4A206152A3F72D800387AE2 /* libquazip1-qt5.1.4.0.dylib */,
+				C4A206162A3F72D800387AE2 /* libquazip1-qt5.1.4.dylib */,
+				C4BBB3D82A3EE1310068B46C /* libgit2.1.7.0.dylib */,
+				FDEBE265E4E14031227A398A /* YAWYSIWYGEE */,
 				9AC88B0512B5821AB92E22B7 /* QtSvg.framework */,
 				C0C4D396AF0E0A87D1EB0B74 /* QtPrintSupport.framework */,
 				DE7C5A34F42406A173734F04 /* QtWidgets.framework */,
@@ -864,8 +694,6 @@
 				A1A67BEAA744704B29168D39 /* IOKit.framework */,
 				D4B32C2222F82AC56BADEB21 /* OpenGL.framework */,
 				8D9815BDB5BD9F90D2BC05C5 /* AGL.framework */,
-				C4BBB45F2A3F09890068B46C /* arm64 */,
-				C4BBB45E2A3F096E0068B46C /* x86_64 */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -876,38 +704,6 @@
 				F35E3A0DFEA5C2D811E25AF3 /* dummy.cpp */,
 			);
 			name = "Sources [moc_predefs]";
-			sourceTree = "<group>";
-		};
-		C4BBB45E2A3F096E0068B46C /* x86_64 */ = {
-			isa = PBXGroup;
-			children = (
-				C4A205332A3F121E00387AE2 /* libgit2.1.7.0.dylib */,
-				C4A205352A3F121E00387AE2 /* libgit2.1.7.dylib */,
-				C4A205342A3F121E00387AE2 /* libgit2.dylib */,
-				C4A205322A3F121D00387AE2 /* libpugixml.a */,
-				C4A2053A2A3F125100387AE2 /* libYAWYSIWYGEE.a */,
-				C4A2051D2A3F10B900387AE2 /* QtSvg.framework */,
-				C4A2051F2A3F10D200387AE2 /* QtPrintSupport.framework */,
-				C4A2054D2A3F132300387AE2 /* QtCore.framework */,
-				C4A205242A3F114D00387AE2 /* QtWidgets.framework */,
-				C4A205262A3F116D00387AE2 /* QtMultimedia.framework */,
-				C4A205282A3F117A00387AE2 /* QtGui.framework */,
-				C4A2052A2A3F118200387AE2 /* QtXml.framework */,
-				C4A2052D2A3F119100387AE2 /* QtNetwork.framework */,
-				C4A2052C2A3F119100387AE2 /* QtNetworkAuth.framework */,
-			);
-			path = x86_64;
-			sourceTree = "<group>";
-		};
-		C4BBB45F2A3F09890068B46C /* arm64 */ = {
-			isa = PBXGroup;
-			children = (
-				4FDFE6D2EB7713CB74AA308B /* pugixml */,
-				C4BBB3DB2A3EE1CB0068B46C /* libgit2.1.7.dylib */,
-				C4BBB3D82A3EE1310068B46C /* libgit2.1.7.0.dylib */,
-				FDEBE265E4E14031227A398A /* YAWYSIWYGEE */,
-			);
-			name = arm64;
 			sourceTree = "<group>";
 		};
 		E8C543AB96796ECAA2E65C57 /* udaan */ = {
@@ -924,7 +720,6 @@
 				74B182DB50CB5611B5C1C297 /* Supporting Files */,
 				AF39DD055C3EF8226FBE929D /* Frameworks */,
 				FE0A091FDBFB3E9C31B7A1BD /* Products */,
-				C4A205DE2A3F146700387AE2 /* udaan copy-Info.plist */,
 			);
 			name = udaan;
 			sourceTree = "<group>";
@@ -933,7 +728,6 @@
 			isa = PBXGroup;
 			children = (
 				5C1BCA0E99A58EFF11ADF297 /* udaan.app */,
-				C4BBB45C2A3F06690068B46C /* udaan x86.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -945,6 +739,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6CC3B5D2136C7CD6A5CF5A59 /* Build configuration list for PBXNativeTarget "udaan" */;
 			buildPhases = (
+				C41C34502A3F8748005C454A /* CopyFiles */,
 				F7E50F631C51CD5B5DC0BC43 /* Compile Sources */,
 				D1C883685E82D5676953459A /* Link Binary With Libraries */,
 				30414803F31797EB689AE508 /* Copy Bundle Resources */,
@@ -958,25 +753,6 @@
 			name = udaan;
 			productName = udaan;
 			productReference = 5C1BCA0E99A58EFF11ADF297 /* udaan.app */;
-			productType = "com.apple.product-type.application";
-		};
-		C4BBB3DE2A3F06690068B46C /* udaan x86 */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C4BBB4592A3F06690068B46C /* Build configuration list for PBXNativeTarget "udaan x86" */;
-			buildPhases = (
-				C4BBB3E12A3F06690068B46C /* Compile Sources */,
-				C4BBB4372A3F06690068B46C /* Link Binary With Libraries */,
-				C4BBB44B2A3F06690068B46C /* Copy Bundle Resources */,
-				C4BBB44D2A3F06690068B46C /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C4BBB3DF2A3F06690068B46C /* PBXTargetDependency */,
-			);
-			name = "udaan x86";
-			productName = udaan;
-			productReference = C4BBB45C2A3F06690068B46C /* udaan x86.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1003,7 +779,6 @@
 			targets = (
 				278EEC2C4475CB6A40213937 /* udaan */,
 				18F076888684A1BC1DAF0869 /* Qt Preprocess */,
-				C4BBB3DE2A3F06690068B46C /* udaan x86 */,
 			);
 		};
 /* End PBXProject section */
@@ -1014,15 +789,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4BBB3D32A3ED75C0068B46C /* AppIcon.xcassets in Copy Bundle Resources */,
-			);
-			name = "Copy Bundle Resources";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C4BBB44B2A3F06690068B46C /* Copy Bundle Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C4BBB44C2A3F06690068B46C /* AppIcon.xcassets in Copy Bundle Resources */,
 			);
 			name = "Copy Bundle Resources";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1176,99 +942,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		C4BBB3E12A3F06690068B46C /* Compile Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C4BBB3E22A3F06690068B46C /* DiffView.cpp in Compile Sources */,
-				C4BBB3E32A3F06690068B46C /* about.cpp in Compile Sources */,
-				C4BBB3E42A3F06690068B46C /* crashlog.cpp in Compile Sources */,
-				C4BBB3E52A3F06690068B46C /* customtextbrowser.cpp in Compile Sources */,
-				C4BBB3E62A3F06690068B46C /* dashboard.cpp in Compile Sources */,
-				C4BBB3E72A3F06690068B46C /* eddis.cpp in Compile Sources */,
-				C4BBB3E82A3F06690068B46C /* editdistance.cpp in Compile Sources */,
-				C4BBB3E92A3F06690068B46C /* equationeditor.cpp in Compile Sources */,
-				C4BBB3EA2A3F06690068B46C /* globalreplaceworker.cpp in Compile Sources */,
-				C4BBB3EB2A3F06690068B46C /* handlebbox.cpp in Compile Sources */,
-				C4BBB3EC2A3F06690068B46C /* indentoptions.cpp in Compile Sources */,
-				C4BBB3ED2A3F06690068B46C /* loaddataworker.cpp in Compile Sources */,
-				C4BBB3EE2A3F06690068B46C /* loadingspinner.cpp in Compile Sources */,
-				C4BBB3EF2A3F06690068B46C /* markRegion.cpp in Compile Sources */,
-				C4BBB3F02A3F06690068B46C /* meanStdPage.cpp in Compile Sources */,
-				C4BBB3F12A3F06690068B46C /* pdfhandling.cpp in Compile Sources */,
-				C4BBB3F22A3F06690068B46C /* pdfrangedialog.cpp in Compile Sources */,
-				C4BBB3F32A3F06690068B46C /* printworker.cpp in Compile Sources */,
-				C4BBB3F42A3F06690068B46C /* progressbardialog.cpp in Compile Sources */,
-				C4BBB3F52A3F06690068B46C /* rubberband.cpp in Compile Sources */,
-				C4BBB3F62A3F06690068B46C /* shortcutguidedialog.cpp in Compile Sources */,
-				C4BBB3F72A3F06690068B46C /* slpNPatternDict.cpp in Compile Sources */,
-				C4BBB3F82A3F06690068B46C /* textfinder.cpp in Compile Sources */,
-				C4BBB3F92A3F06690068B46C /* globalreplacedialog.cpp in Compile Sources */,
-				C4BBB3FA2A3F06690068B46C /* threadingpush.cpp in Compile Sources */,
-				C4BBB3FB2A3F06690068B46C /* trieEditdis.cpp in Compile Sources */,
-				C4BBB3FC2A3F06690068B46C /* undoglobalreplace.cpp in Compile Sources */,
-				C4BBB3FD2A3F06690068B46C /* verifyset.cpp in Compile Sources */,
-				C4BBB3FE2A3F06690068B46C /* worker.cpp in Compile Sources */,
-				C4BBB3FF2A3F06690068B46C /* Filters.cpp in Compile Sources */,
-				C4BBB4002A3F06690068B46C /* Project.cpp in Compile Sources */,
-				C4BBB4012A3F06690068B46C /* ProjectHierarchyWindow.cpp in Compile Sources */,
-				C4BBB4022A3F06690068B46C /* Symbols.cpp in Compile Sources */,
-				C4BBB4032A3F06690068B46C /* TreeItem.cpp in Compile Sources */,
-				C4BBB4042A3F06690068B46C /* TreeModel.cpp in Compile Sources */,
-				C4BBB4052A3F06690068B46C /* averageaccuracies.cpp in Compile Sources */,
-				C4BBB4062A3F06690068B46C /* commentsview.cpp in Compile Sources */,
-				C4BBB4072A3F06690068B46C /* diff_match_patch.cpp in Compile Sources */,
-				C4BBB4082A3F06690068B46C /* interndiffview.cpp in Compile Sources */,
-				C4BBB4092A3F06690068B46C /* lg2_common.cpp in Compile Sources */,
-				C4BBB40A2A3F06690068B46C /* loginpageview.cpp in Compile Sources */,
-				C4BBB40B2A3F06690068B46C /* main.cpp in Compile Sources */,
-				C4BBB40C2A3F06690068B46C /* mainwindow.cpp in Compile Sources */,
-				C4BBB40D2A3F06690068B46C /* resizeimageview.cpp in Compile Sources */,
-				C4BBB40E2A3F06690068B46C /* zoom.cpp in Compile Sources */,
-				C4BBB40F2A3F06690068B46C /* ProjectWizard.cpp in Compile Sources */,
-				C4BBB4102A3F06690068B46C /* CreateProjectPage.cpp in Compile Sources */,
-				C4BBB4112A3F06690068B46C /* globalreplacepreview.cpp in Compile Sources */,
-				C4BBB4122A3F06690068B46C /* globalreplaceinformation.cpp in Compile Sources */,
-				C4BBB4132A3F06690068B46C /* qrc_AppResources.cpp in Compile Sources */,
-				C4BBB4142A3F06690068B46C /* moc_about.cpp in Compile Sources */,
-				C4BBB4152A3F06690068B46C /* moc_customtextbrowser.cpp in Compile Sources */,
-				C4BBB4162A3F06690068B46C /* moc_dashboard.cpp in Compile Sources */,
-				C4BBB4172A3F06690068B46C /* moc_equationeditor.cpp in Compile Sources */,
-				C4BBB4182A3F06690068B46C /* moc_globalreplaceworker.cpp in Compile Sources */,
-				C4BBB4192A3F06690068B46C /* moc_indentoptions.cpp in Compile Sources */,
-				C4BBB41A2A3F06690068B46C /* moc_loaddataworker.cpp in Compile Sources */,
-				C4BBB41B2A3F06690068B46C /* moc_loadingspinner.cpp in Compile Sources */,
-				C4BBB41C2A3F06690068B46C /* moc_pdfhandling.cpp in Compile Sources */,
-				C4BBB41D2A3F06690068B46C /* moc_pdfrangedialog.cpp in Compile Sources */,
-				C4BBB41E2A3F06690068B46C /* moc_printworker.cpp in Compile Sources */,
-				C4BBB41F2A3F06690068B46C /* moc_progressbardialog.cpp in Compile Sources */,
-				C4BBB4202A3F06690068B46C /* moc_rubberband.cpp in Compile Sources */,
-				C4BBB4212A3F06690068B46C /* moc_shortcutguidedialog.cpp in Compile Sources */,
-				C4BBB4222A3F06690068B46C /* moc_textfinder.cpp in Compile Sources */,
-				C4BBB4232A3F06690068B46C /* moc_globalreplacedialog.cpp in Compile Sources */,
-				C4BBB4242A3F06690068B46C /* moc_threadingpush.cpp in Compile Sources */,
-				C4BBB4252A3F06690068B46C /* moc_undoglobalreplace.cpp in Compile Sources */,
-				C4BBB4262A3F06690068B46C /* moc_worker.cpp in Compile Sources */,
-				C4BBB4272A3F06690068B46C /* moc_DiffView.cpp in Compile Sources */,
-				C4BBB4282A3F06690068B46C /* moc_ProjectHierarchyWindow.cpp in Compile Sources */,
-				C4BBB4292A3F06690068B46C /* moc_Symbols.cpp in Compile Sources */,
-				C4BBB42A2A3F06690068B46C /* moc_TreeModel.cpp in Compile Sources */,
-				C4BBB42B2A3F06690068B46C /* moc_averageaccuracies.cpp in Compile Sources */,
-				C4BBB42C2A3F06690068B46C /* moc_commentsview.cpp in Compile Sources */,
-				C4BBB42D2A3F06690068B46C /* moc_interndiffview.cpp in Compile Sources */,
-				C4BBB42E2A3F06690068B46C /* moc_loginpageview.cpp in Compile Sources */,
-				C4BBB42F2A3F06690068B46C /* moc_mainwindow.cpp in Compile Sources */,
-				C4BBB4302A3F06690068B46C /* moc_resizeimageview.cpp in Compile Sources */,
-				C4BBB4312A3F06690068B46C /* moc_zoom.cpp in Compile Sources */,
-				C4BBB4322A3F06690068B46C /* moc_ProjectWizard.cpp in Compile Sources */,
-				C4BBB4332A3F06690068B46C /* moc_CreateProjectPage.cpp in Compile Sources */,
-				C4BBB4342A3F06690068B46C /* moc_globalreplacepreview.cpp in Compile Sources */,
-				C4BBB4352A3F06690068B46C /* moc_globalreplaceinformation.cpp in Compile Sources */,
-				C4BBB4362A3F06690068B46C /* dummy.cpp in Compile Sources */,
-			);
-			name = "Compile Sources";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F7E50F631C51CD5B5DC0BC43 /* Compile Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1370,11 +1043,6 @@
 			target = 18F076888684A1BC1DAF0869 /* Qt Preprocess */;
 			targetProxy = C4BBB3B32A3EC6CF0068B46C /* PBXContainerItemProxy */;
 		};
-		C4BBB3DF2A3F06690068B46C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 18F076888684A1BC1DAF0869 /* Qt Preprocess */;
-			targetProxy = C4BBB3E02A3F06690068B46C /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -1382,7 +1050,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = (
+					arm64,
+					x86_64,
+				);
 				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -1518,7 +1189,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = (
+					arm64,
+					x86_64,
+				);
 				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -1671,7 +1345,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Udaan Translation Assistant";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "";
 				"MARKETING_VERSION[sdk=macosx*]" = 4.0.0;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1706,7 +1380,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_KEY_CFBundleDisplayName = "Udaan Translation Assistant";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.${PRODUCT_NAME:rfc1034identifier}";
@@ -1720,126 +1394,6 @@
 			};
 			name = Debug;
 		};
-		C4BBB45A2A3F06690068B46C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
-				ARCHS = x86_64;
-				"ARCHS[sdk=macosx*]" = x86_64;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = udaan.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 8DHRGLG2QY;
-				ENABLE_BITCODE = NO;
-				ENABLE_HARDENED_RUNTIME = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib",
-					"$(PROJECT_DIR)/x86_64",
-				);
-				GCC_OPTIMIZATION_LEVEL = 0;
-				HEADER_SEARCH_PATHS = (
-					.,
-					../include,
-					"../../udaan-exp",
-					../include,
-					../deps/macos/x86_64/include,
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtSvg.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtPrintSupport.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtWidgets.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtMultimedia.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtGui.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtXml.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtNetworkAuth.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtNetwork.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtCore.framework/Headers",
-					.,
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/System/Library/Frameworks/OpenGL.framework/Headers,
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/System/Library/Frameworks/AGL.framework/Headers,
-					.,
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/mkspecs/macx-clang",
-				);
-				INFOPLIST_FILE = "udaan copy-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Udaan Translation Assistant";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = "";
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.${PRODUCT_NAME:rfc1034identifier}";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = com.udaan.qpad;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				QMAKE_FULL_VERSION = 1.0.0;
-				QMAKE_PKGINFO_TYPEINFO = "????";
-				QMAKE_SHORT_VERSION = 1.0;
-				QT_LIBRARY_SUFFIX = "";
-				SDKROOT = macosx;
-			};
-			name = Debug;
-		};
-		C4BBB45B2A3F06690068B46C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
-				ARCHS = x86_64;
-				"ARCHS[sdk=macosx*]" = x86_64;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = udaan.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 8DHRGLG2QY;
-				ENABLE_BITCODE = NO;
-				ENABLE_HARDENED_RUNTIME = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib",
-					"$(PROJECT_DIR)/x86_64",
-				);
-				HEADER_SEARCH_PATHS = (
-					.,
-					../include,
-					"../../udaan-exp",
-					../include,
-					../deps/macos/x86_64/include,
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtSvg.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtPrintSupport.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtWidgets.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtMultimedia.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtGui.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtXml.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtNetworkAuth.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtNetwork.framework/Headers",
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/lib/QtCore.framework/Headers",
-					.,
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/System/Library/Frameworks/OpenGL.framework/Headers,
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/System/Library/Frameworks/AGL.framework/Headers,
-					.,
-					"/usr/local/homebrew/Cellar/qt@5/5.15.10/mkspecs/macx-clang",
-				);
-				INFOPLIST_FILE = "udaan copy-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Udaan Translation Assistant";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = "";
-				"MARKETING_VERSION[sdk=macosx*]" = 4.0.0;
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.${PRODUCT_NAME:rfc1034identifier}";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = com.udaan.qpad;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				QMAKE_FULL_VERSION = 1.0.0;
-				QMAKE_PKGINFO_TYPEINFO = "????";
-				QMAKE_SHORT_VERSION = 1.0;
-				QT_LIBRARY_SUFFIX = "";
-				SDKROOT = macosx;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1848,15 +1402,6 @@
 			buildConfigurations = (
 				77418F46922677BB04ED38DD /* Debug */,
 				6666AA5E688052234F6758D8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C4BBB4592A3F06690068B46C /* Build configuration list for PBXNativeTarget "udaan x86" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C4BBB45A2A3F06690068B46C /* Debug */,
-				C4BBB45B2A3F06690068B46C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

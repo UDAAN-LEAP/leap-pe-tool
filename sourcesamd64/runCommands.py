@@ -7,7 +7,7 @@ from multiprocessing import Pool
 
 # list of commands to run
 commands = [
-    f'''rm -rf build && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/Volumes/Lake/Projects/scratchpad/udaan-exp/deps/macos/x64 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 -DCMAKE_BUILD_TYPE=Release .. && cmake --build . --clean-first --parallel && cmake --install . && cd ..''',]
+    f'''rm -rf build && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/Volumes/Lake/Projects/scratchpad/udaan-exp/deps/macos/x86_64 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 -DCMAKE_BUILD_TYPE=Release .. && cmake --build . --clean-first --parallel && cmake --install . && cd ..''',]
 
 def run_command(dir):
     if os.path.isdir(dir):
