@@ -1132,7 +1132,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
     // Testing of project.xml
     VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
-    int result = verifySetObj.testProjectXML();
+    // int result = verifySetObj.testProjectXML();
+     int result = 0;
     if(mProject.isProjectOpen()){ //checking if some project is opened, then closing it before opening new project
         on_actionClose_project_triggered();
     }

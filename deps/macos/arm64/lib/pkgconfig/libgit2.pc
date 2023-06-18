@@ -1,0 +1,10 @@
+prefix="/Volumes/Lake/Projects/scratchpad/udaan-exp/deps/macos/arm64"
+libdir="/Volumes/Lake/Projects/scratchpad/udaan-exp/deps/macos/arm64/lib"
+includedir="/Volumes/Lake/Projects/scratchpad/udaan-exp/deps/macos/arm64/include"
+
+Name: libgit2
+Description: The git library, take 2
+Version: 1.7.0
+Libs: -L${libdir} -lgit2
+Libs.private: -framework CoreFoundation -framework Security -lz -L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/usr/lib -liconv
+Cflags: -I${includedir} 

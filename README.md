@@ -28,3 +28,10 @@ OS version: Windows 7+
 
 Execute file qpadfinal in folder "FrameWorkCode"
 - $ ./qpadfinal
+
+
+## Macos
+
+Pre-Release test builds of macos(apple silicon and intel) are available on the link below.
+
+[Download Mac Pre-releases](https://github.com/ArunJRK/leap-pe-tool/releases/tag/v4.0.0)
