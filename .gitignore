@@ -356,3 +356,7 @@ sphinx/
 lib/sources/
 FrameWorkCode/qpadfinal1.0.0/
 FrameWorkCode/.xcode/
+deps/macos/universal/
+sourcesUniversal/
+FrameWorkCode/x86_64/
+FrameWorkCode/x86_64/
