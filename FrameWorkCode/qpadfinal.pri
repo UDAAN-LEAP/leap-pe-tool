@@ -25,6 +25,7 @@ HEADERS += ./Filters.h \
     $$PWD/textfinder.h \
     $$PWD/globalreplacedialog.h \
     $$PWD/threadingpush.h \
+    $$PWD/tutorial.h \
     $$PWD/undoglobalreplace.h \
     $$PWD/verifyset.h \
     $$PWD/word_count.h \
@@ -83,6 +84,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/globalreplacedialog.cpp \
     $$PWD/threadingpush.cpp \
     $$PWD/trieEditdis.cpp \
+    $$PWD/tutorial.cpp \
     $$PWD/undoglobalreplace.cpp \
     $$PWD/verifyset.cpp \
     $$PWD/word_count.cpp \
@@ -119,6 +121,7 @@ FORMS += ./DiffView.ui \
     $$PWD/shortcutguidedialog.ui \
     $$PWD/textfinder.ui \
     $$PWD/globalreplacedialog.ui \
+    $$PWD/tutorial.ui \
     $$PWD/undoglobalreplace.ui \
     ./ProjectHierarchyWindow.ui \
     ./Symbols.ui \

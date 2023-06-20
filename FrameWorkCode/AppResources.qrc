@@ -119,6 +119,38 @@
         <file>Resources/reset_settings.png</file>
         <file>Resources/Old Icons/fullscreen.png</file>
         <file>Resources/exit_full_screen.png</file>
+        <file>Resources/Old Icons/four.jpeg</file>
+        <file>Resources/Old Icons/five.jpeg</file>
+        <file>Resources/Old Icons/find-and-replace.png</file>
+        <file>Resources/Old Icons/eleven.jpeg</file>
+        <file>Resources/Old Icons/eight.jpeg</file>
+        <file>Resources/Old Icons/Zoom-In-icon.png</file>
+        <file>Resources/Old Icons/two.jpeg</file>
+        <file>Resources/Old Icons/toDevangari.png</file>
+        <file>Resources/Old Icons/three.jpeg</file>
+        <file>Resources/Old Icons/ten.jpeg</file>
+        <file>Resources/Old Icons/symbols.png</file>
+        <file>Resources/Old Icons/six.jpeg</file>
+        <file>Resources/Old Icons/seven.jpeg</file>
+        <file>Resources/Old Icons/saveOld.png</file>
+        <file>Resources/Old Icons/save-as.png</file>
+        <file>Resources/Old Icons/redoOld.png</file>
+        <file>Resources/Old Icons/previous-page.png</file>
+        <file>Resources/Old Icons/previous.png</file>
+        <file>Resources/Old Icons/paste.png</file>
+        <file>Resources/Old Icons/open.png</file>
+        <file>Resources/Old Icons/one.jpeg</file>
+        <file>Resources/Old Icons/nine.jpeg</file>
+        <file>Resources/Old Icons/next-page.png</file>
+        <file>Resources/Old Icons/next.png</file>
+        <file>Resources/Old Icons/New.png</file>
+        <file>Resources/Old Icons/LoadData.png</file>
+        <file>Resources/Old Icons/linespacing.png</file>
+        <file>Resources/Old Icons/JustifiedAlign.png</file>
+        <file>Resources/Old Icons/icon_diacritics.png</file>
+        <file>Resources/Old Icons/horizontal-line.png</file>
+        <file>Resources/Old Icons/highlight-icon.png</file>
+        <file>Resources/Old Icons/Help.png</file>
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>
