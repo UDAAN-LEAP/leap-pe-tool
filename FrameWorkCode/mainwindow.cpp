@@ -1690,16 +1690,32 @@ void MainWindow::AddRecentProjects()
         ui->menuRecent_Project->addAction(FileAction);
         connect(FileAction, &QAction::triggered, this , &MainWindow::on_action3_triggered);
     }
+    if(!ui->menuRecent_Project->isEmpty())
+    {
+        QAction *FileAction = new QAction(this);
+        FileAction->setIconText("Clear Menu");
 
-    QAction *FileAction = new QAction(this);
-    FileAction->setIconText("Clear Menu");
-    ui->menuRecent_Project->addAction(FileAction);
-    connect(FileAction, &QAction::triggered, this , &MainWindow::on_actionClear_Menu_triggered);
-    if(ui->menuRecent_Project->isEmpty())
+        // Set the font size and height
+        QFont font;
+        font.setPointSize(8); // Adjust the point size as per your preference
+        FileAction->setFont(font);
 
-        ui->menuRecent_Project->setEnabled(false);
+        ui->menuRecent_Project->addAction(FileAction);
+        connect(FileAction, &QAction::triggered, this, &MainWindow::on_actionClear_Menu_triggered);
+
+        if (ui->menuRecent_Project->isEmpty())
+            ui->menuRecent_Project->setEnabled(false);
+        else
+            ui->menuRecent_Project->setEnabled(true);
+    }
     else
+    {
+        QAction *noProjectsAction = new QAction("No Recent Projects", this);
+        noProjectsAction->setEnabled(false);
+        ui->menuRecent_Project->addAction(noProjectsAction);
+
         ui->menuRecent_Project->setEnabled(true);
+    }
 
 }
 
