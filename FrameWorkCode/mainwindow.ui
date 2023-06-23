@@ -1455,6 +1455,7 @@ background-color: #EEF0F2;
     <bool>false</bool>
    </attribute>
    <addaction name="actionOpen_Project"/>
+   <addaction name="actionRecentProject"/>
    <addaction name="actionSave"/>
    <addaction name="actionSave_As"/>
    <addaction name="actionLoadData"/>
@@ -2867,6 +2868,18 @@ background-color: #EEF0F2;
    </property>
    <property name="toolTip">
     <string>FullScreen</string>
+   </property>
+  </action>
+  <action name="actionRecentProject">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/Old Icons/recentProjects.png</normaloff>:/Images/Resources/Old Icons/recentProjects.png</iconset>
+   </property>
+   <property name="text">
+    <string>RecentProject</string>
+   </property>
+   <property name="toolTip">
+    <string>RecentProject</string>
    </property>
   </action>
  </widget>

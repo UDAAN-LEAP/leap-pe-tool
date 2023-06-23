@@ -428,6 +428,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->corrected->setVisible(false);
     ui->verified->setVisible(false);
     ui->mark_review->setVisible(false);
+
     //saves current path - useful for auto upgrade feature
     m_update_path = QDir().currentPath();
 
@@ -1327,6 +1328,10 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     QFile::setPermissions(ProjFile, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
 
     // Testing of project.xml
+   // QFile file(fileformatPath);
+    //file.refresh();
+    QDir dir = toolDirAbsolutePath + "/projectXMLFormat.xml";
+    dir.refresh();
        VerifySet verifySetObj(ProjFile, fileformatPath);
   //  VerifySet verifySetObj(ProjFile, toolDirAbsolutePath + "/projectXMLFormat.xml");
     int result = verifySetObj.testProjectXML();
@@ -9850,12 +9855,38 @@ void MainWindow::on_pushButton_5_clicked()
 void MainWindow::e_d_features(bool value)
 {
     ui->actionSave->setEnabled(value);
+    ui->actionSave_As->setEnabled(value);
     ui->actionLoad_Prev_Page->setEnabled(value);
     ui->actionLoad_Next_Page->setEnabled(value);
     ui->actionClose_project->setEnabled(value);
     ui->actionPDF_Preview->setEnabled(value);
     ui->actionas_PDF->setEnabled(value);
-    ui->mainToolBar->setEnabled(value);
+    ui->actionAllFontProperties->setEnabled(value);
+    ui->actionFontBlack->setEnabled(value);
+    ui->actionFont_Color->setEnabled(value);
+    ui->actionBold->setEnabled(value);
+    ui->actionUnBold->setEnabled(value);
+    ui->actionUndo->setEnabled(value);
+    ui->actionRedo->setEnabled(value);
+    ui->actionToDevanagari->setEnabled(value);
+    ui->actionSubscript->setEnabled(value);
+    ui->actionSuperscript->setEnabled(value);
+    ui->actionLoadData->setEnabled(value);
+    ui->actionUnderline->setEnabled(value);
+    ui->actionItalic->setEnabled(value);
+    ui->actionCentreAlign->setEnabled(value);
+    ui->actionLeftAlign->setEnabled(value);
+    ui->actionRightAlign->setEnabled(value);
+    ui->actionJusitfiedAlign->setEnabled(value);
+    ui->actionFind_and_Replace->setEnabled(value);
+    ui->actionInsert_Horizontal_Line->setEnabled(value);
+    ui->actionSymbols->setEnabled(value);
+    ui->actionEnable_Disable_Suggestions->setEnabled(value);
+    ui->actionLoadGDocPage->setEnabled(value);
+    ui->justify->setEnabled(value);
+    ui->actionZoom_In->setEnabled(value);
+    ui->actionZoom_Out->setEnabled(value);
+   // ui->mainToolBar->setEnabled(value);
     ui->pushButton->setEnabled(value);
     ui->pushButton_2->setEnabled(value);
     ui->pushButton_4->setEnabled(value);
@@ -9870,7 +9901,8 @@ void MainWindow::e_d_features(bool value)
     ui->zoom_In_Button->setEnabled(value);
     ui->zoom_Out_Button->setEnabled(value);
     ui->horizontalSlider->setEnabled(value);
-
+    ui->actionOpen_Project->setEnabled(true);
+    ui->actionRecentProject->setEnabled(true);
     ui->actionFetch_2->setEnabled(true);
 
 }
@@ -11256,5 +11288,11 @@ void MainWindow::setSaveStatus()
             setWindowTitle(gCurrentPageName);
         }
     }
+}
+
+
+void MainWindow::on_actionRecentProject_triggered()
+{
+    on_action1_triggered();
 }
 

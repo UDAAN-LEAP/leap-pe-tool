@@ -151,6 +151,7 @@
         <file>Resources/Old Icons/horizontal-line.png</file>
         <file>Resources/Old Icons/highlight-icon.png</file>
         <file>Resources/Old Icons/Help.png</file>
+        <file>Resources/Old Icons/recentProjects.png</file>
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>

@@ -558,6 +558,8 @@ private slots:
 
     void setSaveStatus();
 
+    void on_actionRecentProject_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
