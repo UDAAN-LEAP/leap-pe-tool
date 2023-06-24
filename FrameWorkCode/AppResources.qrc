@@ -75,7 +75,6 @@
         <file>Resources/exit-modified.png</file>
         <file>Resources/equation-modified.png</file>
         <file>Resources/download-modified.png</file>
-        <file>Resources/delete-modified.png</file>
         <file>Resources/decrease_size-modified.png</file>
         <file>Resources/date-modified.png</file>
         <file>Resources/close_project-modified.png</file>
@@ -152,6 +151,10 @@
         <file>Resources/Old Icons/highlight-icon.png</file>
         <file>Resources/Old Icons/Help.png</file>
         <file>Resources/Old Icons/recentProjects.png</file>
+
+        <file>Resources/Delete.png</file>
+        <file>Resources/comments.png</file>
+
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>

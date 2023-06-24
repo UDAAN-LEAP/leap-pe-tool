@@ -1393,6 +1393,7 @@ QMenu::item:selected{
     <addaction name="actionInsert_Equation"/>
     <addaction name="actionLink"/>
     <addaction name="actionInsert_Tab_Space"/>
+    <addaction name="actionComment"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="styleSheet">
@@ -1494,6 +1495,7 @@ background-color: #EEF0F2;
    <addaction name="actionZoom_In"/>
    <addaction name="actionZoom_Out"/>
    <addaction name="separator"/>
+   <addaction name="actionComment"/>
    <addaction name="actionGet_Help"/>
    <addaction name="actionEnable_Disable_Suggestions"/>
   </widget>
@@ -2561,7 +2563,7 @@ background-color: #EEF0F2;
   <action name="actionDelete">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Resources/delete-modified.png</normaloff>:/Images/Resources/delete-modified.png</iconset>
+     <normaloff>:/Images/Resources/Delete.png</normaloff>:/Images/Resources/Delete.png</iconset>
    </property>
    <property name="text">
     <string>Delete</string>
@@ -2880,6 +2882,15 @@ background-color: #EEF0F2;
    </property>
    <property name="toolTip">
     <string>RecentProject</string>
+    </property>
+</action>
+  <action name="actionComment">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/comments.png</normaloff>:/Images/Resources/comments.png</iconset>
+   </property>
+   <property name="text">
+    <string>Comment</string>
    </property>
   </action>
  </widget>

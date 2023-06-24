@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CommentHandler</class>
+ <widget class="QDialog" name="CommentHandler">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>415</width>
+    <height>128</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">font: 11pt &quot;Work Sans&quot;; 
+background-color: rgb(32, 33, 72);</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QTextEdit" name="textEdit">
+     <property name="styleSheet">
+      <string notr="true">font: 11pt &quot;Work Sans&quot;; 
+color: rgb(32, 33, 72);
+border:2px;
+border-radius : 8px;
+background-color: rgb(227, 228, 228);
+selection-background-color: rgb(136, 138, 133);</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QPushButton" name="deleteComment">
+     <property name="styleSheet">
+      <string notr="true">QPushButton{background-color:rgb(227, 228, 228);color: rgb(0, 0, 0);
+image: url(:/Images/Resources/Delete.png);
+height:34px; width:34px;border-radius:22px;padding:5px;selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);border-style:outset;border-color: #8c8c8c;
+} QPushButton:pressed {background-color: rgb(136, 138, 133);}
+</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="AddComment">
+       <property name="styleSheet">
+        <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:2px;color: rgb(32, 33, 72); height:20 pt; width: 113.5px; padding-top:1px; padding:5px;border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);border-style:outset;border-color: #8c8c8c;
+} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
+       </property>
+       <property name="text">
+        <string>Comment</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Cancel">
+       <property name="styleSheet">
+        <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:2px;color: rgb(32, 33, 72); height:20 pt; width: 113.5px; padding-top:1px; padding:5px;border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);border-style:outset;border-color: #8c8c8c;
+} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
+       </property>
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

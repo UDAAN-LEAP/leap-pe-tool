@@ -2,6 +2,7 @@
 #include "dashboard.h"
 #include"column_width.h"
 #include"word_count.h"
+#include"add_comment.h"
 #include "indentoptions.h"
 #include "qobjectdefs.h"
 #include "qtablewidget.h"
@@ -731,6 +732,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
     slpNPatternDict slnp;
     trieEditDis trie;
 
+
     // to make sure the right menu click is not taking place outside of the tabWidget_2
     QRect tabRect = curr_browser->frameGeometry();
 
@@ -929,6 +931,23 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             connect(cellPadding, SIGNAL(triggered()), this, SLOT(on_actionCell_Padding_triggered()));
             connect(cellBackgroundColor, SIGNAL(triggered()), this, SLOT(on_actionFill_Table_triggered()));
 
+
+            QAction* showComment;
+            showComment = new QAction("Show Comment",popup_menu);
+
+            QTextCursor cursor3 = curr_browser->textCursor();
+            QTextCharFormat format = cursor3.charFormat();
+
+            QString text;
+            if(format.background().color().red() == 137 and format.background().color().green() == 207
+                    and format.background().color().blue() == 240 and format.background().color().alpha() == 125){
+
+                popup_menu->addAction(showComment);
+                text = cursor3.selectedText().toUtf8().constData();
+                qDebug()<<text;
+                currentCommentWord = text;
+            }
+            QObject::connect(showComment, SIGNAL(triggered()), this, SLOT(showComments()));
 
             popup_menu->exec(ev->globalPos());
             popup_menu->close(); popup_menu->clear();
@@ -4113,6 +4132,9 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     QString bboxf = currentTabPageName;
     QFile bbox_file(gDirTwoLevelUp + "/bboxf/"+bboxf.replace(".html", ".bbox"));
 
+
+
+    //!When user makes any changes it will change the window title to show its not saved
     if(event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease){
         setSaveStatus();
     }
@@ -9690,7 +9712,6 @@ void MainWindow::on_pushButton_4_clicked()
         m_audioRecorder->setEncodingSettings(settings, QVideoEncoderSettings(), "");
         m_audioRecorder->record();
         QTimer::singleShot(60000,this,[=](){
-            qDebug()<<"stopped your recording!";
             ui->pushButton_4->setText("Speech to text");
             m_audioRecorder->stop();
         });
@@ -9901,6 +9922,7 @@ void MainWindow::e_d_features(bool value)
     ui->zoom_In_Button->setEnabled(value);
     ui->zoom_Out_Button->setEnabled(value);
     ui->horizontalSlider->setEnabled(value);
+    ui->actionComment->setEnabled(value);
     ui->actionOpen_Project->setEnabled(true);
     ui->actionRecentProject->setEnabled(true);
     ui->actionFetch_2->setEnabled(true);
@@ -11291,8 +11313,169 @@ void MainWindow::setSaveStatus()
 }
 
 
+
 void MainWindow::on_actionRecentProject_triggered()
 {
     on_action1_triggered();
 }
 
+/*!
+ * \fn MainWindow::on_actionComment_triggered
+ * \brief This function will add a comment on the current page by highlighting the selected word
+*/
+void MainWindow::on_actionComment_triggered()
+{
+    if(!curr_browser || curr_browser->isReadOnly())
+        return;
+
+    QTextCursor cursor = curr_browser->textCursor();
+
+    QString text = cursor.selectedText().toUtf8().constData();
+
+    currentCommentWord = text;
+
+    CommentHandler * comment = new CommentHandler(this);
+    QObject::connect(comment,SIGNAL(commented()),this,SLOT(highlightComment()));
+    connect(comment, SIGNAL(deleted()),this,SLOT(deleteComment()));
+    connect(comment, SIGNAL(deleted()), comment, SLOT(close()));
+    comment->exec();
+
+    QString str = comment->getComment();
+
+    if(str == "") return;
+
+    writeCommentLogs(text,str);
+}
+
+/*!
+ * \fn MainWindow::highlightComment()
+ * \brief This function will highlight the selected word on receiving the signal from CommentHandler
+*/
+void MainWindow::highlightComment()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+
+    QString text = cursor.selectedText().toUtf8().constData();
+    if(text == "") {
+        qDebug()<<"no text";
+        return;
+    }
+
+    QTextCharFormat  format = cursor.charFormat();
+
+    if(format.background().color().red() == 137 and format.background().color().green() == 207
+            and format.background().color().blue() == 240 and format.background().color().alpha() == 125){
+
+        format.setBackground(QColor::fromRgb(255,255,255));
+    }
+    else {
+        format.setBackground(QColor::fromRgb(137,207,240,125));
+    }
+
+    curr_browser->textCursor().mergeCharFormat(format);
+}
+
+/*!
+ * \fn MainWindow::writeCommentLogs
+ * \brief This function will write the respective comments.json file
+*/
+void MainWindow::writeCommentLogs(QString word, QString comment)
+{
+    QString jsonFile = "";
+
+    if(mRole == "Corrector"){
+       jsonFile = "corrector_comments.json";
+    }
+    if(mRole == "Verifier"){
+        jsonFile = "verifier_comments.json";
+    }
+
+    if(jsonFile == "") return;
+    QString dir = mProject.GetDir().absolutePath();
+
+    QString commentFilename = gDirTwoLevelUp + "/Comments/" + jsonFile;
+    QString pagename = gCurrentPageName;
+
+    pagename.replace(".txt", "");
+    pagename.replace(".html", "");
+
+    QJsonObject mainObj = readJsonFile(commentFilename);
+    QJsonObject page = mainObj.value(pagename).toObject();
+
+    page.remove(word);
+    page.insert(word,comment);
+
+    mainObj.remove(pagename);
+    mainObj.insert(pagename, page);
+
+    writeJsonFile(commentFilename, mainObj);
+}
+
+/*!
+ * \fn MainWindow::showComments
+ * \param word
+ * \brief This function will open the comment dialog
+*/
+void MainWindow::showComments()
+{
+    QString word = currentCommentWord;
+    QString jsonFile = "";
+
+    if(mRole == "Corrector"){
+       jsonFile = "corrector_comments.json";
+    }
+    if(mRole == "Verifier"){
+        jsonFile = "verifier_comments.json";
+    }
+
+    if(jsonFile == "") return;
+    QString dir = mProject.GetDir().absolutePath();
+
+    QString commentFilename = gDirTwoLevelUp + "/Comments/" + jsonFile;
+    QJsonObject mainObj = readJsonFile(commentFilename);
+    QString name = gCurrentPageName;
+    name.replace(".html","");
+
+    QString comment = mainObj.value(name)[word].toString();
+    if(comment == "") return;
+
+    CommentHandler * commentStatus = new CommentHandler(this,comment);
+    connect(commentStatus, SIGNAL(deleted()),this,SLOT(deleteComment()));
+    connect(commentStatus, SIGNAL(deleted()), commentStatus, SLOT(close()));
+    connect(commentStatus, SIGNAL(deleted()), this,SLOT(highlightComment()));
+    commentStatus->show();
+}
+/*!
+ * \fn MainWindow::deleteComment
+ * \brief This function will delete the comment from the json file when
+ * a signal of deleted() recieved
+*/
+void MainWindow::deleteComment()
+{
+    QString word = currentCommentWord;
+    QString jsonFile = "";
+
+    if(mRole == "Corrector"){
+       jsonFile = "corrector_comments.json";
+    }
+    if(mRole == "Verifier"){
+        jsonFile = "verifier_comments.json";
+    }
+
+    if(jsonFile == "") return;
+    QString dir = mProject.GetDir().absolutePath();
+
+    QString commentFilename = gDirTwoLevelUp + "/Comments/" + jsonFile;
+    QJsonObject mainObj = readJsonFile(commentFilename);
+    QString pagename = gCurrentPageName;
+    pagename.replace(".html","");
+
+    QJsonObject page = mainObj.value(pagename).toObject();
+
+    page.remove(word);
+
+    mainObj.remove(pagename);
+    mainObj.insert(pagename, page);
+
+    writeJsonFile(commentFilename, mainObj);
+}

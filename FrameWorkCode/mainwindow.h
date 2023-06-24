@@ -499,23 +499,15 @@ private slots:
 
     void on_pushButton_6_clicked();
 
-
+    //! Page Status -- Corrected || Verified || Marked For Review
     void on_corrected_clicked();
-
     void on_verified_clicked();
-
-    void write_corrected_pages();
-
-    void write_verified_pages();
-
-    void read_corrected_pages();
-
-    void read_verified_pages();
-
     void on_mark_review_clicked();
-
+    void write_corrected_pages();
+    void write_verified_pages();
+    void read_corrected_pages();
+    void read_verified_pages();
     void read_review_pages();
-
     void write_review_pages();
     void read_recorrected_pages();
     void write_recorrected_pages();
@@ -530,20 +522,14 @@ private slots:
 
     void on_actionEnable_Disable_Suggestions_triggered();
 
+    //! Bulleted List Options
     void on_actionDecimal_triggered();
-
     void on_actionUpper_Roman_triggered();
-
     void on_actionLower_Alpha_triggered();
-
     void on_actionUpper_Alpha_triggered();
-
     void on_actionLower_Roman_triggered();
-
     void on_actionDisc_triggered();
-
     void on_actionCircle_triggered();
-
     void on_actionSquare_triggered();
 
     void on_pushButton_7_clicked();
@@ -559,6 +545,14 @@ private slots:
     void setSaveStatus();
 
     void on_actionRecentProject_triggered();
+
+    //! Handling Comments
+    void on_actionComment_triggered();
+    void highlightComment();
+    void writeCommentLogs(QString word, QString comment);
+    void showComments();
+    void deleteComment();
+
 
 public slots:
     void on_actionLoad_Next_Page_triggered();
@@ -668,6 +662,8 @@ private:
     int wordCount = 0;
     int pageCount = 0;
     int totalWord = 0;
+
+    QString currentCommentWord;
 };
 
 #endif // MAINWINDOW_H
