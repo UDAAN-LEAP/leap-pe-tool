@@ -36,13 +36,6 @@ background-color: rgb(255, 255, 255);</string>
     </widget>
    </item>
    <item>
-    <widget class="QTextBrowser" name="textBrowser">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">

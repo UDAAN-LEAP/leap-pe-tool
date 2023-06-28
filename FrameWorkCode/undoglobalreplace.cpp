@@ -24,12 +24,16 @@ UndoGlobalReplace::UndoGlobalReplace(QMap<QString, QString> reversedGRMap, QWidg
     ui->setupUi(this);
     this->mRole = mRole;
     this->path = path;
+
     qInstallMessageHandler(crashlog::myMessageHandler);
     setWindowTitle("Undo Globally Replace Words");
     displayListForUndoOperation(reversedGRMap);
     connect(ui->listWidget, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(highlightChecked(QListWidgetItem*)));
     connect(ui->listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(checkBoxStateChanged(QListWidgetItem*)));
-
+    if(ui->listWidget->count() == 0)
+        ui->checkBox->setVisible(false);
+    else
+        ui->checkBox->setVisible(true);
 }
 
 /*!
