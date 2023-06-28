@@ -936,15 +936,20 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             showComment = new QAction("Show Comment",popup_menu);
 
             QTextCursor cursor3 = curr_browser->textCursor();
+            int pos = cursor3.position();
+            int ancr = cursor3.anchor();
+            if (pos < ancr) {
+                cursor3.setPosition(pos, QTextCursor::MoveAnchor);
+                cursor3.setPosition(ancr, QTextCursor::KeepAnchor);
+            }
             QTextCharFormat format = cursor3.charFormat();
 
             QString text;
-            if(format.background().color().red() == 137 and format.background().color().green() == 207
-                    and format.background().color().blue() == 240 and format.background().color().alpha() == 125){
+            if(format.background().color().red() == 137 && format.background().color().green() == 207
+                    && format.background().color().blue() == 240 ){
 
                 popup_menu->addAction(showComment);
                 text = cursor3.selectedText().toUtf8().constData();
-                qDebug()<<text;
                 currentCommentWord = text;
             }
             QObject::connect(showComment, SIGNAL(triggered()), this, SLOT(showComments()));
@@ -1188,8 +1193,6 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 popup_menu->insertSeparator(popup_menu->actions()[0]);
                 popup_menu->insertMenu(popup_menu->actions()[0], spell_menu);
 
-
-
                 connect(spell_menu, SIGNAL(triggered(QAction*)), this, SLOT(menuSelection(QAction*)));
 
 
@@ -1197,6 +1200,28 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             }
 
             DisplayTimeLog();
+            QAction* showComment;
+            showComment = new QAction("Show Comment",popup_menu);
+
+            QTextCursor cursor3 = curr_browser->textCursor();
+            int pos = cursor3.position();
+            int ancr = cursor3.anchor();
+            if (pos < ancr) {
+                cursor3.setPosition(pos, QTextCursor::MoveAnchor);
+                cursor3.setPosition(ancr, QTextCursor::KeepAnchor);
+            }
+            QTextCharFormat format = cursor3.charFormat();
+
+            QString text;
+            if(format.background().color().red() == 137 && format.background().color().green() == 207
+                    && format.background().color().blue() == 240){
+
+                popup_menu->addAction(showComment);
+                text = cursor3.selectedText().toUtf8().constData();
+                currentCommentWord = text;
+            }
+            QObject::connect(showComment, SIGNAL(triggered()), this, SLOT(showComments()));
+
 
             //QMenu* popup_menu = curr_browser->createStandardContextMenu();
             popup_menu->exec(ev->globalPos());
@@ -4051,6 +4076,7 @@ void MainWindow::on_pushButton_clicked()
     }
 }
 
+int zoomParam = 1;
 /*!
  * \fn MainWindow::keyPressEvent
  * \brief This function handles "Ctrl+C" for storing the copied values and showing when user right clicks. It also handles "Ctrl+D" which is used for converting english text to devanagari text
@@ -4093,6 +4119,28 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         selectedStr = ui->lineEdit_4->text().toUtf8().constData();
         convertedText = toDevanagari(selectedStr);
         ui->lineEdit_4->setText(convertedText);
+    }
+
+    if ( (e->key() == Qt::Key_Plus)  && QApplication::keyboardModifiers() == Qt::ControlModifier)
+    {
+        if(curr_browser){
+            zoomParam++;
+            curr_browser->zoomIn(zoomParam);
+        }
+
+    }
+
+    if ( (e->key() == Qt::Key_Minus)  && QApplication::keyboardModifiers() == Qt::ControlModifier)
+    {
+        if(curr_browser){
+            zoomParam--;
+            if(zoomParam < 0){
+                zoomParam = 0;
+                return;
+            }
+            curr_browser->zoomIn(zoomParam);
+        }
+
     }
 }
 
@@ -11364,7 +11412,7 @@ void MainWindow::highlightComment()
     QTextCharFormat  format = cursor.charFormat();
 
     if(format.background().color().red() == 137 and format.background().color().green() == 207
-            and format.background().color().blue() == 240 and format.background().color().alpha() == 125){
+            and format.background().color().blue() == 240){
 
         format.setBackground(QColor::fromRgb(255,255,255));
     }
