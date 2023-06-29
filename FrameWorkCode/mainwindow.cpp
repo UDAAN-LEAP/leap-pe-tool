@@ -2474,10 +2474,17 @@ void MainWindow::on_actionLoadData_triggered()
 {
     if (mProject.isProjectOpen())
     {
-        if (LoadDataFlag)
+
+        QString filename1 = (mProject).GetDir().absolutePath() + "/Dicts";
+        QDir directory(filename1);
+        QStringList fileList = directory.entryList(QDir::Files);
+        if (!directory.exists()) {
+            ui->actionLoadData->setDisabled(true);
+            ui->actionLoadData->setDisabled(true);
+        }
+        else if(!fileList.isEmpty() && LoadDataFlag)
         {
-            ui->actionLoadData->setDisabled(true);
-            ui->actionLoadData->setDisabled(true);
+
             QString initialText = ui->lineEdit->text();
             ui->lineEdit->setText("Loading Data...");
             QString  localmFilename1 = mFilename;
@@ -2486,27 +2493,27 @@ void MainWindow::on_actionLoadData_triggered()
             localmFilename1 = QString::fromStdString(localmFilename1n);
 
             LoadDataWorker *worker = new LoadDataWorker(
-                        nullptr,
-                        &mProject,
-                        mFilename,
-                        mFilename1,
-                        &LSTM,
-                        &CPairs,
-                        &Dict,
-                        &GBook,
-                        &IBook,
-                        &PWords,
-                        &ConfPmap,
-                        &vGBook,
-                        &vIBook,
-                        &TDict,
-                        &TGBook,
-                        &TGBookP,
-                        &TPWords,
-                        &TPWordsP,
-                        &synonym,
-                        &synrows
-                        );
+                nullptr,
+                &mProject,
+                mFilename,
+                mFilename1,
+                &LSTM,
+                &CPairs,
+                &Dict,
+                &GBook,
+                &IBook,
+                &PWords,
+                &ConfPmap,
+                &vGBook,
+                &vIBook,
+                &TDict,
+                &TGBook,
+                &TGBookP,
+                &TPWords,
+                &TPWordsP,
+                &synonym,
+                &synrows
+                );
             QThread *thread = new QThread;
 
             connect(thread, SIGNAL(started()), worker, SLOT(LoadData()));
@@ -2530,6 +2537,7 @@ void MainWindow::on_actionLoadData_triggered()
         }
     }
 }
+
 
 /*!
  * \fn MainWindow::on_actionSugg_triggered
