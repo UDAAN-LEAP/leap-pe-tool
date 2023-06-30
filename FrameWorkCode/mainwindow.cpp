@@ -1691,16 +1691,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->viewComments->setDisabled(false);
     ui->compareCorrectorOutput->setDisabled(false);
     ui->groupBox->setDisabled(false);
-    ui->actionCopy->setEnabled(false);
-    ui->actionCut->setEnabled(false);
-    ui->menuText->setEnabled(false);
-    ui->actionAllFontProperties->setEnabled(false);
-    ui->actionClear_Formatting->setEnabled(false);
-    ui->actionFontBlack->setEnabled(false);
-    ui->actionCopy_Format->setEnabled(false);
-    ui->actionPaste_Format->setEnabled(false);
-    ui->actionHighlight->setEnabled(false);
-    ui->actionEdit_Equation->setEnabled(false);
 
 }
 /*!
@@ -4196,46 +4186,8 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     }
 
     //! When user moves his mouse the system will ask user to download new update.
-    if(event->type()== QEvent::MouseMove ){
 
-        if(curr_browser && !curr_browser->isReadOnly() && !curr_browser->textCursor().selectedText().isEmpty() && curr_browser->textCursor().selectedText() != "\n")
-        {
-            ui->actionCopy->setEnabled(true);
-            ui->actionCut->setEnabled(true);
-            ui->menuText->setEnabled(true);
-            ui->actionAllFontProperties->setEnabled(true);
-            ui->actionClear_Formatting->setEnabled(true);
-            ui->actionFontBlack->setEnabled(true);
-            ui->actionCopy_Format->setEnabled(true);
-            ui->actionPaste_Format->setEnabled(true);
-            ui->actionHighlight->setEnabled(true);
-        }
 
-        else
-        {
-            ui->actionCopy->setEnabled(false);
-            ui->actionCut->setEnabled(false);
-            ui->menuText->setEnabled(false);
-            ui->actionAllFontProperties->setEnabled(false);
-            ui->actionClear_Formatting->setEnabled(false);
-            ui->actionFontBlack->setEnabled(false);
-            ui->actionCopy_Format->setEnabled(false);
-            ui->actionPaste_Format->setEnabled(false);
-            ui->actionHighlight->setEnabled(false);
-        }
-
-    }
-    if(event->type() == QEvent::MouseMove)
-    {
-        if(curr_browser && !curr_browser->isReadOnly())
-        {
-            QString txt = curr_browser->textCursor().selection().toHtml();
-            if(txt.contains("/Equations_"))
-                ui->actionEdit_Equation->setEnabled(true);
-            else
-                ui->actionEdit_Equation->setEnabled(false);
-        }
-    }
     if(event->type() == QEvent::MouseMove){
         if(ui->tabWidget->width() == 0 && flag_tab != 1){
             ui->backward_Button->setVisible(false);

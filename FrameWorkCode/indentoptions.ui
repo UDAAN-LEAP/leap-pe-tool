@@ -32,10 +32,10 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>41</x>
-     <y>99</y>
+     <x>50</x>
+     <y>80</y>
      <width>81</width>
-     <height>16</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -63,8 +63,8 @@ color:black;
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>140</y>
+     <x>50</x>
+     <y>150</y>
      <width>71</width>
      <height>31</height>
     </rect>

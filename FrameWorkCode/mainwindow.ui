@@ -1344,6 +1344,14 @@ QMenu::item:selected{
      <addaction name="menuBulleted_List_Menu"/>
     </widget>
     <widget class="QMenu" name="menuAlign_and_Indent">
+     <property name="geometry">
+      <rect>
+       <x>852</x>
+       <y>206</y>
+       <width>220</width>
+       <height>344</height>
+      </rect>
+     </property>
      <property name="title">
       <string>Align and Indent</string>
      </property>
@@ -2716,7 +2724,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionIndentation_Options">
    <property name="text">
-    <string>Indentation Options</string>
+    <string>Indentation Options  </string>
    </property>
   </action>
   <action name="actionImport_2">
@@ -2882,8 +2890,8 @@ background-color: #EEF0F2;
    </property>
    <property name="toolTip">
     <string>RecentProject</string>
-    </property>
-</action>
+   </property>
+  </action>
   <action name="actionComment">
    <property name="icon">
     <iconset resource="AppResources.qrc">
