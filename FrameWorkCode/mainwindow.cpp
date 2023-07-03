@@ -2468,13 +2468,11 @@ void MainWindow::on_actionLoadData_triggered()
         QString filename1 = (mProject).GetDir().absolutePath() + "/Dicts";
         QDir directory(filename1);
         QStringList fileList = directory.entryList(QDir::Files);
-        if (!directory.exists()) {
-            ui->actionLoadData->setDisabled(true);
+        if (!directory.exists() || fileList.empty()) {
             ui->actionLoadData->setDisabled(true);
         }
         else if(!fileList.isEmpty() && LoadDataFlag)
         {
-
             QString initialText = ui->lineEdit->text();
             ui->lineEdit->setText("Loading Data...");
             QString  localmFilename1 = mFilename;
@@ -7038,6 +7036,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
         saveBox.setInformativeText("You have unsaved files. Your changes will be lost if you don't save them.\n");
         QPushButton *svButton = saveBox.addButton(QMessageBox::Save);
         QPushButton *discardButton = saveBox.addButton(QMessageBox::Discard);
+        discardButton->setStyleSheet("width:180px");
         QPushButton *cncButton = saveBox.addButton(QMessageBox::Cancel);
         saveBox.exec();
 
