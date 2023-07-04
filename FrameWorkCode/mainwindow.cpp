@@ -810,83 +810,53 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             QAction* insertImage;
             insertImage = new QAction("Insert image",popup_menu);
 
-
-            QMenu* table_menu;
-            table_menu = new QMenu("Table", popup_menu);
-            table_menu->setStyleSheet("height: 3em; "
-                                      "width: 13em; overflow: visible; "
-                                      "white-space: wrap; "
-                                      "color: black; "
-                                      "background-color: white;"
-                                      );
-            QMenu* column_menu;
-            column_menu = new QMenu("Column", popup_menu);
-            column_menu->setStyleSheet("height: 6em; "
-                                      "width: 13em; overflow: visible; "
-                                      "white-space: wrap; "
-                                      "color: black; "
-                                      "background-color: white;"
-                                      );
-
-            QMenu* row_menu;
-            row_menu = new QMenu("Row", popup_menu);
-            row_menu->setStyleSheet("height: 4.5em; "
-                                      "width: 13em; overflow: visible; "
-                                      "white-space: wrap; "
-                                      "color: black; "
-                                      "background-color: white;"
-                                      );
-
-            QMenu* cell_menu;
-            cell_menu = new QMenu("Cell", popup_menu);
-            cell_menu->setStyleSheet("height: 6em; "
-                                      "width: 13em; overflow: visible; "
-                                      "white-space: wrap; "
-                                      "color: black; "
-                                      "background-color: white;"
-                                      );
-
-            QAction * rowAbove;
-            rowAbove = new QAction("Insert Row Above", row_menu);
-            QAction * rowBelow;
-            rowBelow = new QAction("Insert Row Below", row_menu);
-            QAction * rowDelete;
-            rowDelete = new QAction("Delete Row", row_menu);
-
-            QAction * columnLeft;
-            columnLeft = new QAction("Insert Column Left", column_menu);
-            QAction * setColumnWidth;
-            setColumnWidth = new QAction("Column Width", column_menu);
-            QAction * columnRight;
-            columnRight = new QAction("Insert Column Right", column_menu);
-            QAction * columnDelete;
-            columnDelete = new QAction("Delete Column", column_menu);
-
-
-            QAction * deleteTable;
-            deleteTable = new QAction("Delete Table", table_menu);
-            QAction * borderColor;
-            borderColor = new QAction("Table Border Color", table_menu);
-
-            QAction * splitCell;
-            splitCell = new QAction("Split Cell", cell_menu);
-            QAction * mergeCell;
-            mergeCell = new QAction("Merge Cell", cell_menu);
-            QAction * cellBackgroundColor;
-            cellBackgroundColor = new QAction("Cell Background color", cell_menu);
-            QAction * cellPadding;
-            cellPadding = new QAction("Cell Padding", cell_menu);
-
             popup_menu->insertSeparator(popup_menu->actions()[0]);
             popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
             popup_menu->addAction(gsearch);
             popup_menu->addAction(gtrans);
             popup_menu->addAction(insertImage);
 
-
             QTextCursor cursor2 = curr_browser->textCursor();
             QTextTable * table = cursor2.currentTable();
             if(table != nullptr) {
+                QMenu* table_menu;
+                table_menu = new QMenu("Table", popup_menu);
+                QMenu* column_menu;
+                column_menu = new QMenu("Column", popup_menu);
+                QMenu* row_menu;
+                row_menu = new QMenu("Row", popup_menu);
+                QMenu* cell_menu;
+                cell_menu = new QMenu("Cell", popup_menu);
+                QAction * rowAbove;
+                rowAbove = new QAction("Insert Row Above", row_menu);
+                QAction * rowBelow;
+                rowBelow = new QAction("Insert Row Below", row_menu);
+                QAction * rowDelete;
+                rowDelete = new QAction("Delete Row", row_menu);
+
+                QAction * columnLeft;
+                columnLeft = new QAction("Insert Column Left", column_menu);
+                QAction * setColumnWidth;
+                setColumnWidth = new QAction("Column Width", column_menu);
+                QAction * columnRight;
+                columnRight = new QAction("Insert Column Right", column_menu);
+                QAction * columnDelete;
+                columnDelete = new QAction("Delete Column", column_menu);
+
+                QAction * deleteTable;
+                deleteTable = new QAction("Delete Table", table_menu);
+                QAction * borderColor;
+                borderColor = new QAction("Table Border Color", table_menu);
+
+                QAction * splitCell;
+                splitCell = new QAction("Split Cell", cell_menu);
+                QAction * mergeCell;
+                mergeCell = new QAction("Merge Cell", cell_menu);
+                QAction * cellBackgroundColor;
+                cellBackgroundColor = new QAction("Cell Background color", cell_menu);
+                QAction * cellPadding;
+                cellPadding = new QAction("Cell Padding", cell_menu);
+
                 popup_menu->insertSeparator(popup_menu->actions()[0]);
                 popup_menu->insertMenu(popup_menu->actions()[0], table_menu);
                 popup_menu->insertMenu(popup_menu->actions()[0],column_menu);
@@ -909,28 +879,26 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 cell_menu->addAction(mergeCell);
                 cell_menu->addAction(cellPadding);
                 cell_menu->addAction(cellBackgroundColor);
-            }
 
+                connect(setColumnWidth, SIGNAL(triggered()), this ,SLOT(on_actionColumn_Width_triggered()));
+                connect(rowAbove, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Rowabove_triggered()));
+                connect(rowBelow, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Rowbelow_triggered()));
+                connect(columnLeft, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Columnleft_triggered()));
+                connect(columnRight, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Columnright_triggered()));
+                connect(deleteTable, SIGNAL(triggered()), this ,SLOT(on_actionDelete_Table_triggered()));
+                connect(rowDelete, SIGNAL(triggered()), this ,SLOT(on_actionRemove_Row_triggered()));
+                connect(columnDelete, SIGNAL(triggered()), this ,SLOT(on_actionRemove_Column_triggered()));
+                connect(borderColor, SIGNAL(triggered()), this, SLOT(on_actionTable_Border_Color_triggered()));
+                connect(splitCell, SIGNAL(triggered()), this , SLOT(on_actionSplit_Cell_triggered()));
+                connect(mergeCell, SIGNAL(triggered()), this , SLOT(on_actionMerge_Cells_triggered()));
+                connect(cellPadding, SIGNAL(triggered()), this, SLOT(on_actionCell_Padding_triggered()));
+                connect(cellBackgroundColor, SIGNAL(triggered()), this, SLOT(on_actionFill_Table_triggered()));
+            }
 
             connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
             connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
             connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
             connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
-
-            connect(setColumnWidth, SIGNAL(triggered()), this ,SLOT(on_actionColumn_Width_triggered()));
-            connect(rowAbove, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Rowabove_triggered()));
-            connect(rowBelow, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Rowbelow_triggered()));
-            connect(columnLeft, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Columnleft_triggered()));
-            connect(columnRight, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Columnright_triggered()));
-            connect(deleteTable, SIGNAL(triggered()), this ,SLOT(on_actionDelete_Table_triggered()));
-            connect(rowDelete, SIGNAL(triggered()), this ,SLOT(on_actionRemove_Row_triggered()));
-            connect(columnDelete, SIGNAL(triggered()), this ,SLOT(on_actionRemove_Column_triggered()));
-            connect(borderColor, SIGNAL(triggered()), this, SLOT(on_actionTable_Border_Color_triggered()));
-            connect(splitCell, SIGNAL(triggered()), this , SLOT(on_actionSplit_Cell_triggered()));
-            connect(mergeCell, SIGNAL(triggered()), this , SLOT(on_actionMerge_Cells_triggered()));
-            connect(cellPadding, SIGNAL(triggered()), this, SLOT(on_actionCell_Padding_triggered()));
-            connect(cellBackgroundColor, SIGNAL(triggered()), this, SLOT(on_actionFill_Table_triggered()));
-
 
             QAction* showComment;
             showComment = new QAction("Show Comment",popup_menu);
@@ -11370,8 +11338,8 @@ void MainWindow::highlightComment()
 
     QTextCharFormat  format = cursor.charFormat();
 
-    if(format.background().color().red() == 137 and format.background().color().green() == 207
-            and format.background().color().blue() == 240){
+    if(format.background().color().red() == 137 && format.background().color().green() == 207
+            && format.background().color().blue() == 240){
 
         format.setBackground(QColor::fromRgb(255,255,255));
     }
