@@ -15,6 +15,7 @@ PdfRangeDialog::PdfRangeDialog(QWidget *parent, int numOfPages, int maxLimit) :
     ui(new Ui::PdfRangeDialog)
 {
     ui->setupUi(this);
+    setWindowTitle("Download as PDF");
     this->numberOfPages = numOfPages;
     this->maximumLimit = maxLimit;
 
