@@ -238,6 +238,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->pushButton_6->setVisible(false);
     ui->actionFetch_2->setVisible(false);
     ui->pushButton_8->setVisible(false);
+    ui->actionHighlight->setEnabled(false);
 
     settings.beginGroup("cloudSave");
     settings.remove("");
@@ -440,6 +441,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     settings.endGroup();
     if(consent != "false")
         on_actionCheck_for_Updates_triggered(1);
+
+
 }
 
 /*!
@@ -1659,6 +1662,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->viewComments->setDisabled(false);
     ui->compareCorrectorOutput->setDisabled(false);
     ui->groupBox->setDisabled(false);
+    ui->actionHighlight->setEnabled(true);
 
 }
 /*!
@@ -8830,6 +8834,7 @@ void MainWindow::on_actionClose_project_triggered()
     ui->lineEdit->clear();
     ui->lineEdit_3->clear();
     curr_browser=0;
+    ui->actionHighlight->setEnabled(false);
 }
 
 /*!
@@ -9753,6 +9758,7 @@ void MainWindow::on_actionImport_and_Open_triggered()
 {
     on_actionOpen_Project_triggered();
     import_flag = false;
+    ui->actionHighlight->setEnabled(true);
 }
 
 void MainWindow::on_actionImport_triggered()
