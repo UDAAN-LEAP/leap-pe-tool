@@ -151,10 +151,10 @@
         <file>Resources/Old Icons/highlight-icon.png</file>
         <file>Resources/Old Icons/Help.png</file>
         <file>Resources/Old Icons/recentProjects.png</file>
-
         <file>Resources/Delete.png</file>
         <file>Resources/comments.png</file>
-
+        <file>Resources/word-count-cropped.png</file>
+        <file>Resources/find-and-replace-cropped.png</file>
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>
