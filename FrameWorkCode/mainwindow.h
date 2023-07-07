@@ -654,10 +654,13 @@ private:
     QMap<QString,int>recorrect;
     QString currentFile = "";
     QMap<QString,int>markForReview;
-    QString m_update_path = "";
+
     int presentWidth;
     int currentTablePosition;
+
     QString check_for_updates();
+    bool onStart = true;
+    QString m_update_path = "";
 
     int wordCount = 0;
     int pageCount = 0;
