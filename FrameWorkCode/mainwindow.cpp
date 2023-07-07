@@ -11227,7 +11227,10 @@ QString MainWindow::check_for_updates(){
         if(json[0]["name"].toString() == "")
         {
             qDebug() << QString("Timeout .... Internet Not Available");
-            QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Check your internet connection.");
+            if(onStart == false){
+                QMessageBox::information(0,"Error","Uh-Oh! we are unable to connect to the server at the moment. Check your internet connection.");
+            }
+            onStart = false;
             return "false";
         }
         QString latestVersion=json[0]["name"].toString();
