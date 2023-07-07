@@ -11046,13 +11046,14 @@ void MainWindow::on_actionEnable_Disable_Suggestions_triggered()
     if(choice=="false"){
         settings.setValue("choice","true");
         ui->actionEnable_Disable_Suggestions->setText("Disable auto suggestions");
+        QMessageBox::information(this, "Success", "Please restart the tool to enable the auto suggestions.", 0);
     }
     else{
         settings.setValue("choice","false");
         ui->actionEnable_Disable_Suggestions->setText("Enable auto suggestions");
+        QMessageBox::information(this, "Success", "Please restart the tool to disable the auto suggestions.", 0);
     }
     settings.endGroup();
-    QMessageBox::information(this, "Success", "Please restart the tool to enable/diisable the auto suggestions.", 0);
 }
 
 /*!
