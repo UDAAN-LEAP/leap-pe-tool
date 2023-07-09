@@ -442,7 +442,60 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     if(consent != "false")
         on_actionCheck_for_Updates_triggered(1);
 
+    bool showDesktopIconDialog = true;
 
+    showDesktopIconDialog = settings.value("ShowDesktopIconDialog", true).toBool();
+
+    if(showDesktopIconDialog)
+    {   QDialog dialog(this);
+           QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
+           form.addRow(new QLabel("Do you want to create a desktop icon?", this));
+
+
+           //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+           QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+           form.addRow(&buttonBox);
+           QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+           QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+           //! Show the dialog as modal
+           if (dialog.exec() == QDialog::Accepted)
+           {
+                       QString applicationPath = QCoreApplication::applicationFilePath();
+                       QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+                       QString shortcutFilePath = desktopPath + QDir::separator() + QCoreApplication::applicationName() + ".desktop";
+                       QString iconFilePath = QCoreApplication::applicationDirPath() + ":/Images/Resources/logonew.png";
+                       qDebug()<<iconFilePath<<endl;
+                       // Write the .desktop file
+                       QFile shortcutFile(shortcutFilePath);
+                       if (shortcutFile.open(QIODevice::WriteOnly | QIODevice::Text))
+                       {
+                           QTextStream stream(&shortcutFile);
+                           stream << "[Desktop Entry]" << endl;
+                           stream << "Type=Application" << endl;
+                           stream << "Name=" << QCoreApplication::applicationName() << endl;
+                           stream << "Exec=" << applicationPath << endl;
+                           stream << "Icon=" << iconFilePath << endl; // Update the icon path here
+                           //             stream << "Terminal=false" << endl; // Prevent the "Allow launching" dialog
+                           shortcutFile.close();
+                       }
+
+
+                       QProcess process;
+                       process.start("gio set " + shortcutFilePath + " metadata::trusted true");
+                       process.waitForFinished(-1);
+                       // Set the icon for the desktop shortcut
+                       QFile::setPermissions(shortcutFilePath, QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ExeOwner |
+                                                                   QFileDevice::ReadGroup | QFileDevice::ExeGroup |
+                                                                   QFileDevice::ReadOther | QFileDevice::ExeOther);
+           }
+           else
+           {
+                       showDesktopIconDialog = false;
+                       settings.setValue("ShowDesktopIconDialog", false);
+           }
+
+    }
 }
 
 /*!
@@ -10885,15 +10938,26 @@ void MainWindow::on_actionClear_Menu_triggered()
 
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("RecentProjects");
-    if(mProject.isProjectOpen()) settings.setValue("Project", RecentProjFile);
-    else settings.setValue("Project", "");
+    if(mProject.isProjectOpen())
+    {
+
+        settings.setValue("Project", RecentProjFile);
+    }
+    else
+    {
+        cout<<"else triggered"<<endl;
+        RecentProjFile ="";
+        settings.setValue("Project", "");
+    }
     settings.setValue("Project2","");
     settings.setValue("Project3","");
     ui->menuRecent_Project->clear();
     isRecentProjclick = false;
-    ui->menuRecent_Project->setEnabled(false);
+    //ui->menuRecent_Project->setEnabled(false);
     settings.endGroup();
+    qDebug()<<RecentProjFile<<endl;
 }
+
 
 /*!
  * \fn MainWindow::on_actionJustified_triggered
@@ -11298,12 +11362,15 @@ void MainWindow::setSaveStatus()
 }
 
 
-
 void MainWindow::on_actionRecentProject_triggered()
 {
+
+    if(RecentProjFile=="" && RecentProjFile2=="" && RecentProjFile3=="")
+    {
+        return;
+    }
     on_action1_triggered();
 }
-
 /*!
  * \fn MainWindow::on_actionComment_triggered
  * \brief This function will add a comment on the current page by highlighting the selected word
