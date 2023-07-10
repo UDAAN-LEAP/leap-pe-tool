@@ -9125,6 +9125,7 @@ void MainWindow::on_actionTwo_Column_triggered()
         curr_browser->clear();
         QString html = "<table cellspacing=\"0\"><tr><td style=\"padding-right:15; border-right:2px; border-right-color:#000000; border-right-style:solid;\" >"+column1+"</td><td style=\"padding-left:15;\">Paste Column 2 data here</td></tr></table>";
         cursor.insertHtml(html);
+
     }
 }
 
@@ -10285,13 +10286,13 @@ void MainWindow::setTotalWords(int value){
  * \brief shows the total word count after recieving a signal
 */
 void MainWindow::showWordCount(){
-    QDialog dialog(this);
-    QFormLayout form(&dialog);
+    QDialog *dialog = new QDialog(this);
+    QFormLayout form(dialog);
     form.addRow(new QLabel("Word Count", this));
 
-    QLineEdit *page = new QLineEdit(&dialog);
-    QLineEdit *c_page = new QLineEdit(&dialog);
-    QLineEdit *total_words = new QLineEdit(&dialog);
+    QLineEdit *page = new QLineEdit(dialog);
+    QLineEdit *c_page = new QLineEdit(dialog);
+    QLineEdit *total_words = new QLineEdit(dialog);
 
     QString str = QString::number(wordCount);
     QString str1 = QString::number(pageCount);
@@ -10306,7 +10307,7 @@ void MainWindow::showWordCount(){
     form.addRow("Current Page", c_page);
     form.addRow("Total Pages", page);
     form.addRow("Total Words",total_words);
-    dialog.exec();
+    dialog->show();
 }
 
 /*!
@@ -11460,3 +11461,53 @@ void MainWindow::deleteComment()
 
     writeJsonFile(commentFilename, mainObj);
 }
+
+void MainWindow::on_actionUndo_Two_Column_view_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    QString currentHtml = curr_browser->toHtml();
+
+    if (currentHtml.contains("<table"))
+    {
+        int tableStart = currentHtml.indexOf("<table");
+        int tableEnd = currentHtml.indexOf("</table>") + 8;
+
+        QString column1, column2;
+
+        int column1Start = currentHtml.indexOf("<td", tableStart);
+        int column1End = currentHtml.indexOf("</td>", column1Start) + 5;
+
+        int column2Start = currentHtml.indexOf("<td", column1End);
+        int column2End = currentHtml.indexOf("</td>", column2Start) + 5;
+
+        column1 = currentHtml.mid(column1Start, column1End - column1Start);
+        //qDebug()<<"column 1 contents are: " + column1;
+        if (column1.contains("<br />")) column1 = column1.replace("<br />","\n");
+        if (column1.contains("<br/>")) column1 = column1.replace("<br/>","\n");
+        if (column1.contains("<br>")) column1 = column1.replace("<br>","\n");
+        column1 = column1.remove(QRegExp("<[^>]*>"));
+        //qDebug()<<"after removing tags: "+column1;
+        column1 = column1.replace("\n","<br>");
+        //qDebug()<<"after replacing: "+ column1;
+
+        int index = column1.indexOf("<br>");
+        //qDebug()<<"index of n is "<<index;
+        if (index == 0) column1.remove(index,4);
+        //qDebug()<<"final text: "+column1;
+
+        column2 = currentHtml.mid(column2Start, column2End - column2Start);
+        column2 = column2.remove(QRegExp("<[^>]*>"));
+        column2 = column2.replace("\n","<br>");
+        index = column2.indexOf("<br>");
+        if (index == 0) column2.remove(index,4);
+        if (column2.contains("Paste Column 2 data here")) column2.replace("Paste Column 2 data here","");
+
+        curr_browser->clear();
+        cursor.insertHtml(column1 + "<br>" + column2);
+    }
+    else{
+        QMessageBox::warning(0,"Warning","Text is already in single column view");
+    }
+
+}
+

@@ -554,6 +554,8 @@ private slots:
     void deleteComment();
 
 
+    void on_actionUndo_Two_Column_view_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
