@@ -1691,7 +1691,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     //Reset loadData flag
     LoadDataFlag = 1;
     //reset data
-    mFilename.clear();
+//    mFilename.clear();
     //mFilename1.clear();
     LSTM.clear();
     CPairs.clear();
