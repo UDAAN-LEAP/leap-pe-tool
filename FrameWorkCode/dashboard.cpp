@@ -190,19 +190,36 @@ void dashboard::stopSpinning()
  * \brief This function sets index for each button's onClick slot
  * \param integer index of button
 */
-void dashboard::clicked(int index){
+void dashboard::clicked(int index) {
     QPushButton* btn = this->btnMap[index];
-    if(this->presentId[index] == 0){
-        this->presentId[index] = 1;
-        this->totalClickedBooks++;
-        btn->setStyleSheet("color : black; text-align : left; padding : 10px;background-color :rgb(137,207,240); border-radius :5px;");
-    }
-    else{
+
+    // Check if the clicked project is already selected
+    if (this->presentId[index] == 1) {
+        // Project is already selected, so unselect it
         this->presentId[index] = 0;
         this->totalClickedBooks--;
         btn->setStyleSheet("color : black; text-align : left; padding : 10px;background-color :rgb(229,228,226); border-radius :5px;");
+    } else {
+        // Project is not selected, so unselect all other projects and select the clicked one
+        QMapIterator<int, QPushButton*> i(this->btnMap);
+        while (i.hasNext()) {
+            i.next();
+            int currentIndex = i.key();
+            QPushButton* currentBtn = i.value();
+            if (currentIndex != index && this->presentId[currentIndex] == 1) {
+                // Unselect other projects
+                this->presentId[currentIndex] = 0;
+                currentBtn->setStyleSheet("color : black; text-align : left; padding : 10px;background-color :rgb(229,228,226); border-radius :5px;");
+            }
+        }
+
+        // Select the clicked project
+        this->presentId[index] = 1;
+        this->totalClickedBooks = 1;
+        btn->setStyleSheet("color : black; text-align : left; padding : 10px;background-color :rgb(137,207,240); border-radius :5px;");
     }
 }
+
 
 /*!
  * \fn dashboard::on_pushButton_2_clicked
