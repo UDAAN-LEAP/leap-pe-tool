@@ -239,6 +239,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionFetch_2->setVisible(false);
     ui->pushButton_8->setVisible(false);
     ui->actionHighlight->setEnabled(false);
+    ui->pushButton_7->setEnabled(false);
 
     settings.beginGroup("cloudSave");
     settings.remove("");
@@ -1716,7 +1717,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->compareCorrectorOutput->setDisabled(false);
     ui->groupBox->setDisabled(false);
     ui->actionHighlight->setEnabled(true);
-
+    ui->pushButton_7->setEnabled(true);
 }
 /*!
  * \fn MainWindow::AddRecentProjects
@@ -8915,6 +8916,7 @@ void MainWindow::on_actionClose_project_triggered()
     ui->lineEdit_3->clear();
     curr_browser=0;
     ui->actionHighlight->setEnabled(false);
+    ui->pushButton_7->setEnabled(false);
 }
 
 /*!
