@@ -20,7 +20,8 @@ ShortcutGuideDialog::ShortcutGuideDialog(QWidget *parent) :
     ui(new Ui::ShortcutGuideDialog)
 {
     ui->setupUi(this);
-    ui->textBrowser->setMarkdown(this->list);
+//    ui->textBrowser->setMarkdown(this->list);
+    ui->textBrowser->setHtml(this->list);
 }
 
 /*!
