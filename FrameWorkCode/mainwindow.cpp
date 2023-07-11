@@ -239,7 +239,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionFetch_2->setVisible(false);
     ui->pushButton_8->setVisible(false);
     ui->actionHighlight->setEnabled(false);
-    ui->pushButton_7->setEnabled(false);
+
 
     settings.beginGroup("cloudSave");
     settings.remove("");
@@ -8916,7 +8916,6 @@ void MainWindow::on_actionClose_project_triggered()
     ui->lineEdit_3->clear();
     curr_browser=0;
     ui->actionHighlight->setEnabled(false);
-    ui->pushButton_7->setEnabled(false);
 }
 
 /*!
@@ -9990,7 +9989,8 @@ void MainWindow::e_d_features(bool value)
     ui->actionOpen_Project->setEnabled(true);
     ui->actionRecentProject->setEnabled(true);
     ui->actionFetch_2->setEnabled(true);
-
+    ui->find->setEnabled(value);
+    ui->pushButton_7->setEnabled(value);
 }
 
 
