@@ -1432,6 +1432,7 @@ QMenu::item:selected{
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
+    <addaction name="actionUndo_Two_Column_view"/>
     <addaction name="actionCut"/>
     <addaction name="actionCopy"/>
     <addaction name="actionPaste"/>
@@ -2926,6 +2927,11 @@ background-color: #EEF0F2;
    </property>
    <property name="text">
     <string>Comment</string>
+   </property>
+  </action>
+  <action name="actionUndo_Two_Column_view">
+   <property name="text">
+    <string>Undo Two Column view</string>
    </property>
   </action>
  </widget>
