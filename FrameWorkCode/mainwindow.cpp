@@ -4087,13 +4087,21 @@ void MainWindow::on_actionZoom_Out_triggered()
  */
 void MainWindow::on_pushButton_clicked()
 {
-    if(loadimage)                   //Check image is loaded or not.
-    {
-        ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
-        shouldIDraw=true;
-        auto p = (QPushButton*)ui->pushButton;       //get the pushButton
-        p->setStyleSheet("QPushButton { background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; }\n"
-                         "QPushButton:enabled { background-color: rgb(136, 138, 133);color:white; }\n");      //apply style on button when it is triggered
+
+    if(!shouldIDraw){
+        if(loadimage)                   //Check image is loaded or not.
+        {
+            ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
+            shouldIDraw=true;
+            auto p = (QPushButton*)ui->pushButton;       //get the pushButton
+            p->setStyleSheet("QPushButton { background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; }\n"
+                             "QPushButton:enabled { background-color: rgb(136, 138, 133);color:white; }\n");      //apply style on button when it is triggered
+        }
+    }
+    else{
+        ui->pushButton->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");       //remove the style once the operation is done
+        ui->graphicsView->setDragMode( QGraphicsView::DragMode::ScrollHandDrag );
+        shouldIDraw=false;
     }
 }
 
@@ -10340,6 +10348,7 @@ void MainWindow::setTotalWords(int value){
 */
 void MainWindow::showWordCount(){
     QDialog *dialog = new QDialog(this);
+    dialog->setWindowTitle("Word Count");
     QFormLayout form(dialog);
     form.addRow(new QLabel("Word Count", this));
 
