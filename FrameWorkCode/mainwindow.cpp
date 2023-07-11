@@ -4105,6 +4105,25 @@ int zoomParam = 1;
  */
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
+    if((e->key()==Qt::Key_Tab ) && QApplication::keyboardModifiers() == Qt::ControlModifier)
+    {
+        if(!curr_browser || curr_browser->isReadOnly())
+            return;
+        QTextCursor cursor = curr_browser->textCursor();
+
+        QTextBlock block = cursor.block();
+        QTextBlockFormat blockFormat = block.blockFormat();
+
+        int curr_Indent = blockFormat.indent();
+
+
+        int indent = 4+curr_Indent;
+        blockFormat.setIndent(indent);
+
+        cursor.mergeBlockFormat(blockFormat);
+
+    }
+
     if ( (e->key() == Qt::Key_C)  && QApplication::keyboardModifiers() == Qt::ControlModifier)
     {
         QTextCursor cursor = curr_browser->textCursor();
