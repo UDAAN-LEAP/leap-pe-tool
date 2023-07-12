@@ -9170,6 +9170,7 @@ void MainWindow::on_hinButton_toggled(bool checked)
         on_actionHindi_triggered();
 }
 
+
 /*!
  * \brief MainWindow::on_actionTwo_Column_triggered
  * \details When Two column Layout button is clicked, this function is called. This function creates a table with two columns and one row, then puts the browser data in first column.
@@ -11547,39 +11548,72 @@ void MainWindow::on_actionUndo_Two_Column_view_triggered()
     QTextCursor cursor = curr_browser->textCursor();
     QString currentHtml = curr_browser->toHtml();
 
-    if (currentHtml.contains("<table"))
+    if (currentHtml.contains("Paste Column 2 data here"))
     {
         int tableStart = currentHtml.indexOf("<table");
-        int tableEnd = currentHtml.indexOf("</table>") + 8;
+        int tableEnd = currentHtml.lastIndexOf("</table>") + 8;
 
         QString column1, column2;
 
         int column1Start = currentHtml.indexOf("<td", tableStart);
-        int column1End = currentHtml.indexOf("</td>", column1Start) + 5;
+
+        int pos = column1Start;
+        int closingTagPos,openingTagPos;
+        // Find the matching closing tag of the first <td> tag
+        while (1) {
+            openingTagPos = currentHtml.indexOf("<td", pos + 3);
+            closingTagPos = currentHtml.indexOf("</td", pos + 3);
+
+            if(openingTagPos<closingTagPos){
+                pos = closingTagPos +3;
+            }
+            else{
+                break;
+            }
+        }
+
+        int column1End = closingTagPos + 5;
 
         int column2Start = currentHtml.indexOf("<td", column1End);
-        int column2End = currentHtml.indexOf("</td>", column2Start) + 5;
+        int column2End = currentHtml.lastIndexOf("</td>") + 5;
 
         column1 = currentHtml.mid(column1Start, column1End - column1Start);
-        //qDebug()<<"column 1 contents are: " + column1;
-        if (column1.contains("<br />")) column1 = column1.replace("<br />","\n");
-        if (column1.contains("<br/>")) column1 = column1.replace("<br/>","\n");
-        if (column1.contains("<br>")) column1 = column1.replace("<br>","\n");
-        column1 = column1.remove(QRegExp("<[^>]*>"));
-        //qDebug()<<"after removing tags: "+column1;
-        column1 = column1.replace("\n","<br>");
-        //qDebug()<<"after replacing: "+ column1;
+        qDebug()<<"column 1 contents are: " + column1;
 
-        int index = column1.indexOf("<br>");
-        //qDebug()<<"index of n is "<<index;
-        if (index == 0) column1.remove(index,4);
-        //qDebug()<<"final text: "+column1;
+        QRegularExpression pattern1("<td[^>]*>");
+        QRegularExpressionMatchIterator itr1 = pattern1.globalMatch(column1);
+        QRegularExpressionMatch firstMatch1,firstMatch2;
+        firstMatch1 = itr1.next();
+        column1 = column1.replace(firstMatch1.capturedStart(), firstMatch1.capturedLength(), "");
+
+        QRegularExpression pattern2("</td[^>]*>");
+        QRegularExpressionMatchIterator iterator1 = pattern2.globalMatch(column1);
+        QRegularExpressionMatch lastMatch1, lastMatch2;
+
+        while (iterator1.hasNext()) {
+            lastMatch1 = iterator1.next();
+        }
+
+        if (lastMatch1.hasMatch()) {
+            column1 = column1.replace(lastMatch1.capturedStart(), lastMatch1.capturedLength(), "");
+        }
 
         column2 = currentHtml.mid(column2Start, column2End - column2Start);
-        column2 = column2.remove(QRegExp("<[^>]*>"));
-        column2 = column2.replace("\n","<br>");
-        index = column2.indexOf("<br>");
-        if (index == 0) column2.remove(index,4);
+
+        QRegularExpressionMatchIterator itr2 = pattern1.globalMatch(column2);
+        firstMatch2 = itr2.next();
+        column2 = column2.replace(firstMatch2.capturedStart(), firstMatch2.capturedLength(), "");
+
+        QRegularExpressionMatchIterator iterator2 = pattern2.globalMatch(column2);
+
+        while (iterator2.hasNext()) {
+            lastMatch2 = iterator2.next();
+        }
+
+        if (lastMatch2.hasMatch()) {
+            column2 = column2.replace(lastMatch2.capturedStart(), lastMatch2.capturedLength(), "");
+        }
+
         if (column2.contains("Paste Column 2 data here")) column2.replace("Paste Column 2 data here","");
 
         curr_browser->clear();
