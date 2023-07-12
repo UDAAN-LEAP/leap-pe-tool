@@ -240,6 +240,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->pushButton_8->setVisible(false);
     ui->actionHighlight->setEnabled(false);
 
+
     settings.beginGroup("cloudSave");
     settings.remove("");
     settings.endGroup();
@@ -1716,7 +1717,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->compareCorrectorOutput->setDisabled(false);
     ui->groupBox->setDisabled(false);
     ui->actionHighlight->setEnabled(true);
-
+    ui->pushButton_7->setEnabled(true);
 }
 /*!
  * \fn MainWindow::AddRecentProjects
@@ -4113,6 +4114,25 @@ int zoomParam = 1;
  */
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
+    if((e->key()==Qt::Key_Tab ) && QApplication::keyboardModifiers() == Qt::ControlModifier)
+    {
+        if(!curr_browser || curr_browser->isReadOnly())
+            return;
+        QTextCursor cursor = curr_browser->textCursor();
+
+        QTextBlock block = cursor.block();
+        QTextBlockFormat blockFormat = block.blockFormat();
+
+        int curr_Indent = blockFormat.indent();
+
+
+        int indent = 4+curr_Indent;
+        blockFormat.setIndent(indent);
+
+        cursor.mergeBlockFormat(blockFormat);
+
+    }
+
     if ( (e->key() == Qt::Key_C)  && QApplication::keyboardModifiers() == Qt::ControlModifier)
     {
         QTextCursor cursor = curr_browser->textCursor();
@@ -9970,7 +9990,8 @@ void MainWindow::e_d_features(bool value)
     ui->actionOpen_Project->setEnabled(true);
     ui->actionRecentProject->setEnabled(true);
     ui->actionFetch_2->setEnabled(true);
-
+    ui->find->setEnabled(value);
+    ui->pushButton_7->setEnabled(value);
 }
 
 
