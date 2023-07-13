@@ -91,6 +91,8 @@
 #include <QStandardPaths>
 #include <about.h>
 #include <QCalendarWidget>
+#include <QDesktopServices>
+#include <QUrl>
 #ifdef Q_OS_WIN
 #include <quazip.h>
 #include <quazipfile.h>
@@ -10134,7 +10136,51 @@ void MainWindow::on_actionLink_triggered()
     if (dialog.exec() == QDialog::Accepted)
     {
         QTextCursor cursor = curr_browser->textCursor();
+
+        // Insert the HTML hyperlink
         cursor.insertHtml("<a href=\"" + link->text() + "\">" + text->text() + "</a>");
+
+        //! Connect the customContextMenuRequested signal of the curr_browser to a lambda function
+        connect(curr_browser, &CustomTextBrowser::customContextMenuRequested, this, [=](const QPoint& pos){
+
+            // Create a standard context menu for the curr_browser
+            QMenu* contextMenu = curr_browser->createStandardContextMenu();
+
+            // Create an action for opening the selected hyperlink
+            QAction* openLinkAction = new QAction("Open Link", this);
+
+            //! Connect the triggered signal of the action to a lambda function
+            connect(openLinkAction, &QAction::triggered, this, [=](){
+                QTextCursor cursor = curr_browser->textCursor();
+
+                // Select the block (paragraph) under the cursor
+                cursor.select(QTextCursor::BlockUnderCursor);
+
+                // Get the selected HTML
+                QString selectedHTML = cursor.selection().toHtml();
+
+                // Create a regular expression to extract the URL from the selected HTML
+                QRegularExpression urlRegex("<a\\s+(?:[^>]*?\\s+)?href=\"([^\"]+)\">");
+
+                // Match the regular expression against the selected HTML
+                QRegularExpressionMatch match = urlRegex.match(selectedHTML);
+
+                //! Check if a match was found
+                if(match.hasMatch()){
+                    // Get the captured URL from the match
+                    QString url = match.captured(1);
+
+                    // Open the URL in the default web browser
+                    QDesktopServices::openUrl("https://"+url);
+                }
+            });
+
+            // Add the openLinkAction to the context menu
+            contextMenu->addAction(openLinkAction);
+
+            // Show the context menu at the global position of the right-click
+            contextMenu->popup(curr_browser->mapToGlobal(pos));
+        });
     }
 }
 
