@@ -7882,11 +7882,25 @@ void MainWindow::on_actionFont_Color_triggered()
     }
 
     QTextCursor cursor = curr_browser->textCursor();
-    QColor choosencolor = QColorDialog::getColor();
 
-    QTextCharFormat charFormat;
-    charFormat.setForeground(QBrush(choosencolor));
-    cursor.mergeCharFormat(charFormat);
+    QColorDialog dialog;
+    int input = dialog.exec();
+
+    if(input == QColorDialog::Accepted){
+        QColor choosencolor = dialog.selectedColor();
+        QTextCharFormat charFormat;
+        charFormat.setForeground(QBrush(choosencolor));
+        cursor.mergeCharFormat(charFormat);
+    }
+    else if(input == QColorDialog::Rejected){
+        QColor existingcolor;
+        QTextCharFormat charFormat = cursor.charFormat();
+        if (charFormat.hasProperty(QTextFormat::ForegroundBrush))
+            existingcolor = charFormat.foreground().color();
+        else existingcolor.setRgb(0,0,0);
+        charFormat.setForeground(QBrush(existingcolor));
+        cursor.mergeCharFormat(charFormat);
+    }
 }
 
 /*!
