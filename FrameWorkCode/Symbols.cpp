@@ -220,63 +220,84 @@ SymbolsView::~SymbolsView()
  * \fn SymbolsView::on_copyButton_clicked
  * \brief copies the symbol(s) so that user can effortlessly paste to their page
  */
+bool flag=false;
 void SymbolsView::on_copyButton_clicked()
 {
-
     QClipboard *clipboard = QApplication::clipboard();
+
     currentTab->copy();
     QString copiedText = clipboard->text();
     int x= ui->tabWidget->currentIndex();
-        if(x==3)
+    if(x==3)
+    {
+        QChar t = copiedText.back();
+        QString w;
+        if(!QDir("../Inserted_Images").exists())
+            QDir().mkdir("../Inserted_Images");
+        QDir dir("../Inserted_Images");
+        QString count = QString::number(dir.count() +1);
+        QString file_name = "../Inserted_Images/"+count+".png";
+        bool flag=false;
+        if(mp.find(t)!=mp.end())
         {
-            QChar t = copiedText.back();
-            QString w;
-            if(!QDir("../Inserted_Images").exists())
-                QDir().mkdir("../Inserted_Images");
-                QDir dir("../Inserted_Images");
-                QString count = QString::number(dir.count() +1);
-                QString file_name = "../Inserted_Images/"+count+".png";
-            if(mp.find(t)!=mp.end())
-            {
-                w=mp[t];
-            }
-            QSvgRenderer svgRenderer;
-            svgRenderer.load(QString(":/Images/Resources/Old Icons/" + w + ".svg"));
-            if(svgRenderer.defaultSize().isEmpty())
-            {
-                QFont font("Arial", 24);
-                   QFontMetrics fontMetrics(font);
-                   int textWidth = fontMetrics.width(copiedText);
-                   int textHeight = fontMetrics.height();
-                   QImage image(textWidth, textHeight, QImage::Format_ARGB32);
-                   image.fill(Qt::white);
-                   QPainter painter(&image);
-                   painter.setRenderHint(QPainter::Antialiasing);
-                   painter.setFont(font);
-                   painter.setPen(Qt::black);
-                   painter.drawText(image.rect(), Qt::AlignCenter, copiedText);
-                   image.save(file_name);
-            }
-            else
-            {           
-                QImage image(60, 60, QImage::Format_ARGB32);
-                image.fill(Qt::transparent);
-                QPainter painter(&image);
-                svgRenderer.render(&painter);
-                painter.end();
-                QByteArray svgData;
-                QBuffer buffer(&svgData);
-                buffer.open(QIODevice::WriteOnly);
-                image.save(file_name, "PNG");
-            }
-                QString html = "<img src=\""+file_name+"\">";
-                QTextCursor cursor = cust_brow->textCursor();
-                cursor.insertHtml(html);            
+            w=mp[t];
+            flag=true;
         }
-        else
-    cust_brow->textCursor().insertText(copiedText);
-}
 
+        QSvgRenderer svgRenderer;
+        svgRenderer.load(QString(":/Images/Resources/Old Icons/" + w + ".svg"));
+        if(svgRenderer.defaultSize().isEmpty())
+        {
+            QFont font("Arial", 24);
+            QFontMetrics fontMetrics(font);
+            int textWidth = fontMetrics.width(copiedText);
+            int textHeight = fontMetrics.height();
+            QImage image(textWidth, textHeight, QImage::Format_ARGB32);
+            image.fill(Qt::white);
+            QPainter painter(&image);
+            painter.setRenderHint(QPainter::Antialiasing);
+            painter.setFont(font);
+            painter.setPen(Qt::black);
+            painter.drawText(image.rect(), Qt::AlignCenter, copiedText);
+            if(flag==false)
+            {
+                file_name+='#';
+            }
+            image.save(file_name);
+          }
+        else
+        {
+            cout<<"symbols"<<endl;
+            QImage image(60, 60, QImage::Format_ARGB32);
+            image.fill(Qt::transparent);
+            QPainter painter(&image);
+            svgRenderer.render(&painter);
+            painter.end();
+            QByteArray svgData;
+            QBuffer buffer(&svgData);
+            buffer.open(QIODevice::WriteOnly);
+            image.save(file_name, "PNG");
+        }
+        if(file_name.back()!='#')
+        {
+            QString html = "<img src=\""+file_name+"\">";
+            QTextCursor cursor = cust_brow->textCursor();
+            QString selectedText = currentTab->textCursor().selectedText();
+            if(selectedText=="")
+                html="";
+            cursor.insertHtml(html);
+        }
+
+    }
+    else
+    {
+        QString selectedText = currentTab->textCursor().selectedText();
+        if(selectedText=="")
+            copiedText.clear();
+        cust_brow->textCursor().insertText(copiedText);
+
+    }
+}
 /*!
  * \fn SymbolsView::openSymbolTable
  * \brief Opens the symbol table whenever 𝛺 button is clicked on the tool menu
