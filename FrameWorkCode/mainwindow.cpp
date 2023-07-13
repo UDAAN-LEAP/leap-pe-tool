@@ -445,18 +445,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     if(consent != "false")
         on_actionCheck_for_Updates_triggered(1);
 
-    bool showDesktopIconDialog = true;
+            settings.beginGroup("Shortcut");
+    QString createShortcut = settings.value("createShortcut").toString();
+    settings.endGroup();
 
-    showDesktopIconDialog = settings.value("ShowDesktopIconDialog", true).toBool();
 
-    if(showDesktopIconDialog)
-    {   QDialog dialog(this);
+    if(createShortcut != "dna"){
+           QDialog dialog(this);
            QFormLayout form(&dialog);      // Use a layout allowing to have a label next to each field
-           form.addRow(new QLabel("Do you want to create a desktop icon?", this));
+           form.addRow(new QLabel("Do you want to create a desktop shortcut for this application?", this));
 
 
            //! Add some standard buttons (Cancel/Ok) at the bottom of the dialog
            QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+           buttonBox.button(QDialogButtonBox::Ok)->setText("Create Shortcut");
+           buttonBox.button(QDialogButtonBox::Cancel)->setText("Don't Ask");
            form.addRow(&buttonBox);
            QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
            QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
@@ -464,40 +467,40 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
            //! Show the dialog as modal
            if (dialog.exec() == QDialog::Accepted)
            {
-                       QString applicationPath = QCoreApplication::applicationFilePath();
-                       QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
-                       QString shortcutFilePath = desktopPath + QDir::separator() + QCoreApplication::applicationName() + ".desktop";
-                       QString iconFilePath = QCoreApplication::applicationDirPath() + ":/Images/Resources/logonew.png";
-                       qDebug()<<iconFilePath<<endl;
-                       // Write the .desktop file
-                       QFile shortcutFile(shortcutFilePath);
-                       if (shortcutFile.open(QIODevice::WriteOnly | QIODevice::Text))
-                       {
-                           QTextStream stream(&shortcutFile);
-                           stream << "[Desktop Entry]" << endl;
-                           stream << "Type=Application" << endl;
-                           stream << "Name=" << QCoreApplication::applicationName() << endl;
-                           stream << "Exec=" << applicationPath << endl;
-                           stream << "Icon=" << iconFilePath << endl; // Update the icon path here
-                           //             stream << "Terminal=false" << endl; // Prevent the "Allow launching" dialog
-                           shortcutFile.close();
-                       }
+               // Get the path to the executable
+               QString appPath = QCoreApplication::applicationFilePath();
+
+               // Get the path to the desktop folder
+               QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+
+               // Set the shortcut name and file path
+               QString shortcutName = "Qpadfinal.lnk";
+               QString shortcutPath = QDir(desktopPath).filePath(shortcutName);
+
+               // Set the application icon for the shortcut
+               QIcon appIcon = QApplication::windowIcon();
+               QFileInfo fileInfo(appPath);
+               QString iconFilePath = ": / Images / Resources / logonew.png"; // Replace with your application icon file path
+
+               QPixmap iconPixmap = appIcon.pixmap(32, 32);
+               iconPixmap.save(iconFilePath, "ICO"); // Save the pixmap as an ICO file
+
+               // Create the shortcut using QFile::link
+               QFile::link(appPath, shortcutPath);
+
+               // Set the icon for the shortcut
+               QFile::setPermissions(shortcutPath, QFile::ReadOwner | QFile::WriteOwner);
+               QSettings shortcutSettings(shortcutPath, QSettings::IniFormat);
+               shortcutSettings.beginGroup("Icon");
+               shortcutSettings.setValue("IconFile", iconFilePath);
+               shortcutSettings.setValue("IconIndex", 0);
+               shortcutSettings.endGroup();
 
 
-                       QProcess process;
-                       process.start("gio set " + shortcutFilePath + " metadata::trusted true");
-                       process.waitForFinished(-1);
-                       // Set the icon for the desktop shortcut
-                       QFile::setPermissions(shortcutFilePath, QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ExeOwner |
-                                                                   QFileDevice::ReadGroup | QFileDevice::ExeGroup |
-                                                                   QFileDevice::ReadOther | QFileDevice::ExeOther);
            }
-           else
-           {
-                       showDesktopIconDialog = false;
-                       settings.setValue("ShowDesktopIconDialog", false);
-           }
-
+           settings.beginGroup("Shortcut");
+           settings.setValue("createShortcut", "dna");
+           settings.endGroup();
     }
 }
 
@@ -874,85 +877,6 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             popup_menu->addAction(gsearch);
             popup_menu->addAction(gtrans);
             popup_menu->addAction(insertImage);
-
-            QTextCursor cursor2 = curr_browser->textCursor();
-            QTextTable * table = cursor2.currentTable();
-            if(table != nullptr) {
-                QMenu* table_menu;
-                table_menu = new QMenu("Table", popup_menu);
-                QMenu* column_menu;
-                column_menu = new QMenu("Column", popup_menu);
-                QMenu* row_menu;
-                row_menu = new QMenu("Row", popup_menu);
-                QMenu* cell_menu;
-                cell_menu = new QMenu("Cell", popup_menu);
-                QAction * rowAbove;
-                rowAbove = new QAction("Insert Row Above", row_menu);
-                QAction * rowBelow;
-                rowBelow = new QAction("Insert Row Below", row_menu);
-                QAction * rowDelete;
-                rowDelete = new QAction("Delete Row", row_menu);
-
-                QAction * columnLeft;
-                columnLeft = new QAction("Insert Column Left", column_menu);
-                QAction * setColumnWidth;
-                setColumnWidth = new QAction("Column Width", column_menu);
-                QAction * columnRight;
-                columnRight = new QAction("Insert Column Right", column_menu);
-                QAction * columnDelete;
-                columnDelete = new QAction("Delete Column", column_menu);
-
-                QAction * deleteTable;
-                deleteTable = new QAction("Delete Table", table_menu);
-                QAction * borderColor;
-                borderColor = new QAction("Table Border Color", table_menu);
-
-                QAction * splitCell;
-                splitCell = new QAction("Split Cell", cell_menu);
-                QAction * mergeCell;
-                mergeCell = new QAction("Merge Cell", cell_menu);
-                QAction * cellBackgroundColor;
-                cellBackgroundColor = new QAction("Cell Background color", cell_menu);
-                QAction * cellPadding;
-                cellPadding = new QAction("Cell Padding", cell_menu);
-
-                popup_menu->insertSeparator(popup_menu->actions()[0]);
-                popup_menu->insertMenu(popup_menu->actions()[0], table_menu);
-                popup_menu->insertMenu(popup_menu->actions()[0],column_menu);
-                popup_menu->insertMenu(popup_menu->actions()[0],row_menu);
-                popup_menu->insertMenu(popup_menu->actions()[0],cell_menu);
-
-                row_menu->addAction(rowDelete);
-                row_menu->addAction(rowAbove);
-                row_menu->addAction(rowBelow);
-
-                column_menu->addAction(columnLeft);
-                column_menu->addAction(columnRight);
-                column_menu->addAction(columnDelete);
-                column_menu->addAction(setColumnWidth);
-
-                table_menu->addAction(deleteTable);
-                table_menu->addAction(borderColor);
-
-                cell_menu->addAction(splitCell);
-                cell_menu->addAction(mergeCell);
-                cell_menu->addAction(cellPadding);
-                cell_menu->addAction(cellBackgroundColor);
-
-                connect(setColumnWidth, SIGNAL(triggered()), this ,SLOT(on_actionColumn_Width_triggered()));
-                connect(rowAbove, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Rowabove_triggered()));
-                connect(rowBelow, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Rowbelow_triggered()));
-                connect(columnLeft, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Columnleft_triggered()));
-                connect(columnRight, SIGNAL(triggered()), this ,SLOT(on_actionInsert_Columnright_triggered()));
-                connect(deleteTable, SIGNAL(triggered()), this ,SLOT(on_actionDelete_Table_triggered()));
-                connect(rowDelete, SIGNAL(triggered()), this ,SLOT(on_actionRemove_Row_triggered()));
-                connect(columnDelete, SIGNAL(triggered()), this ,SLOT(on_actionRemove_Column_triggered()));
-                connect(borderColor, SIGNAL(triggered()), this, SLOT(on_actionTable_Border_Color_triggered()));
-                connect(splitCell, SIGNAL(triggered()), this , SLOT(on_actionSplit_Cell_triggered()));
-                connect(mergeCell, SIGNAL(triggered()), this , SLOT(on_actionMerge_Cells_triggered()));
-                connect(cellPadding, SIGNAL(triggered()), this, SLOT(on_actionCell_Padding_triggered()));
-                connect(cellBackgroundColor, SIGNAL(triggered()), this, SLOT(on_actionFill_Table_triggered()));
-            }
 
             connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
             connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
