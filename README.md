@@ -17,13 +17,20 @@ OS version: Windows 7+
 - Linux (Ubuntu) : Minimum requirements: OS version: Ubuntu 20.04 +
 
 1. Install qt5:
-- $ sudo apt-get install qt5-default
+- $ `sudo apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools`
 
-2. Go to folder "FrameWorkCode", compile qpadfinal.pro and make:
+2. Install Dependencies:
+- $ `sudo apt install build-essential libgit2-dev libpugixml-dev`
+- $ `sudo apt install libqt5networkauth5 libqt5networkauth5-dev`
+- $ `sudo apt install qtmultimedia5-dev`
+- $ `sudo apt install libqt5svg5 libqt5svg5-dev`
+
+
+3. Go to folder "FrameWorkCode", compile qpadfinal.pro and make:
 - $ cd FrameWorkCode
 - $ qmake qpadfinal.pro
 - $ make
-- Ignore the warnings. Will be removed in the next version.
+- Ignore the warnings(if any). Will be removed in the next version.
 
 
 Execute file qpadfinal in folder "FrameWorkCode"
