@@ -490,11 +490,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
                // Set the icon for the shortcut
                QFile::setPermissions(shortcutPath, QFile::ReadOwner | QFile::WriteOwner);
-               QSettings shortcutSettings(shortcutPath, QSettings::IniFormat);
-               shortcutSettings.beginGroup("Icon");
-               shortcutSettings.setValue("IconFile", iconFilePath);
-               shortcutSettings.setValue("IconIndex", 0);
-               shortcutSettings.endGroup();
+               #ifdef __unix__
+               QFile file(shortcutPath);
+               file.setPermissions(file.permissions() | QFileDevice::ExeUser);
+               #endif
 
 
            }
