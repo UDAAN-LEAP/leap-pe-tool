@@ -1,17 +1,43 @@
 #include "add_comment.h"
 #include "ui_add_comment.h"
 
-CommentHandler::CommentHandler(QWidget *parent, QString comment) :
+/*!
+ * \class CommentHandler
+ * \param It will take comments from corrector and verifier,
+ * \param Role of the user
+*/
+CommentHandler::CommentHandler(QWidget *parent, QString corrector_comment ,QString verifier_comment, QString mRole) :
     QDialog(parent),
     ui(new Ui::CommentHandler)
 {
     ui->setupUi(this);
+    ui->previousComment->setVisible(false);
+    ui->label->setVisible(false);
     setWindowTitle("Comments");
+
+    QString comment = "";
+    QString previousComment = "";
+
+    if(mRole == "Corrector"){
+        comment = corrector_comment;
+        previousComment = verifier_comment;
+        ui->label->setText("Verifier");
+    }
+    if(mRole == "Verifier"){
+        comment = verifier_comment;
+        previousComment = corrector_comment;
+        ui->label->setText("Corrector");
+    }
+
     if(comment != ""){
-        ui->textEdit->setText(comment);
-        ui->textEdit->setEnabled(false);
-        ui->AddComment->setVisible(false);
-        ui->Cancel->setText("Close");
+        ui->presentComment->setText(comment);
+    }
+    if(previousComment != ""){
+        ui->label->setVisible(true);
+
+        ui->previousComment->setVisible(true);
+        ui->previousComment->setText(previousComment);
+        ui->previousComment->setReadOnly(true);
     }
 }
 
@@ -27,10 +53,9 @@ QString CommentHandler::getComment()
 
 void CommentHandler::on_AddComment_clicked()
 {
-    if(ui->textEdit->toPlainText() == "") return;
+    if(ui->presentComment->toPlainText() == "") return;
 
-    this->_comment = ui->textEdit->toPlainText();
-    ui->AddComment->setVisible(false);
+    this->_comment = ui->presentComment->toPlainText();
     ui->Cancel->setText("Close");
     emit commented();
 }

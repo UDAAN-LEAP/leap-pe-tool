@@ -550,8 +550,9 @@ private slots:
     void on_actionComment_triggered();
     void highlightComment();
     void writeCommentLogs(QString word, QString comment);
-    void showComments();
+   // void showComments();
     void deleteComment();
+    void readCommentLogs();
 
 
     void on_actionUndo_Two_Column_view_triggered();
@@ -673,6 +674,8 @@ private:
     int totalWord = 0;
 
     QString currentCommentWord;
+    QMap<QString,QMap<QString,QString>> corrector_comment, verifier_comment;
+
 };
 
 #endif // MAINWINDOW_H

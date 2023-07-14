@@ -880,27 +880,27 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
             connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
 
-            QAction* showComment;
-            showComment = new QAction("Show Comment",popup_menu);
+//            QAction* showComment;
+//            showComment = new QAction("Show Comment",popup_menu);
 
-            QTextCursor cursor3 = curr_browser->textCursor();
-            int pos = cursor3.position();
-            int ancr = cursor3.anchor();
-            if (pos < ancr) {
-                cursor3.setPosition(pos, QTextCursor::MoveAnchor);
-                cursor3.setPosition(ancr, QTextCursor::KeepAnchor);
-            }
-            QTextCharFormat format = cursor3.charFormat();
+//            QTextCursor cursor3 = curr_browser->textCursor();
+//            int pos = cursor3.position();
+//            int ancr = cursor3.anchor();
+//            if (pos < ancr) {
+//                cursor3.setPosition(pos, QTextCursor::MoveAnchor);
+//                cursor3.setPosition(ancr, QTextCursor::KeepAnchor);
+//            }
+//            QTextCharFormat format = cursor3.charFormat();
 
-            QString text;
-            if(format.background().color().red() == 137 && format.background().color().green() == 207
-                    && format.background().color().blue() == 240 ){
+//            QString text;
+//            if(format.background().color().red() == 137 && format.background().color().green() == 207
+//                    && format.background().color().blue() == 240 ){
 
-                popup_menu->addAction(showComment);
-                text = cursor3.selectedText().toUtf8().constData();
-                currentCommentWord = text;
-            }
-            QObject::connect(showComment, SIGNAL(triggered()), this, SLOT(showComments()));
+//                popup_menu->addAction(showComment);
+//                text = cursor3.selectedText().toUtf8().constData();
+//                currentCommentWord = text;
+//            }
+//            QObject::connect(showComment, SIGNAL(triggered()), this, SLOT(showComments()));
 
             popup_menu->exec(ev->globalPos());
             popup_menu->close(); popup_menu->clear();
@@ -1148,27 +1148,27 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             }
 
             DisplayTimeLog();
-            QAction* showComment;
-            showComment = new QAction("Show Comment",popup_menu);
+//            QAction* showComment;
+//            showComment = new QAction("Show Comment",popup_menu);
 
-            QTextCursor cursor3 = curr_browser->textCursor();
-            int pos = cursor3.position();
-            int ancr = cursor3.anchor();
-            if (pos < ancr) {
-                cursor3.setPosition(pos, QTextCursor::MoveAnchor);
-                cursor3.setPosition(ancr, QTextCursor::KeepAnchor);
-            }
-            QTextCharFormat format = cursor3.charFormat();
+//            QTextCursor cursor3 = curr_browser->textCursor();
+//            int pos = cursor3.position();
+//            int ancr = cursor3.anchor();
+//            if (pos < ancr) {
+//                cursor3.setPosition(pos, QTextCursor::MoveAnchor);
+//                cursor3.setPosition(ancr, QTextCursor::KeepAnchor);
+//            }
+//            QTextCharFormat format = cursor3.charFormat();
 
-            QString text;
-            if(format.background().color().red() == 137 && format.background().color().green() == 207
-                    && format.background().color().blue() == 240){
+//            QString text;
+//            if(format.background().color().red() == 137 && format.background().color().green() == 207
+//                    && format.background().color().blue() == 240){
 
-                popup_menu->addAction(showComment);
-                text = cursor3.selectedText().toUtf8().constData();
-                currentCommentWord = text;
-            }
-            QObject::connect(showComment, SIGNAL(triggered()), this, SLOT(showComments()));
+//                popup_menu->addAction(showComment);
+//                text = cursor3.selectedText().toUtf8().constData();
+//                currentCommentWord = text;
+//            }
+//            QObject::connect(showComment, SIGNAL(triggered()), this, SLOT(showComments()));
 
 
             //QMenu* popup_menu = curr_browser->createStandardContextMenu();
@@ -1607,6 +1607,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     //    //<<<<<<Change
     //    pageStatusHandler();
 
+    readCommentLogs();
 
     QMessageBox::information(0, "Success", "Project opened successfully.");
 
@@ -11340,6 +11341,55 @@ void MainWindow::on_actionRecentProject_triggered()
     }
     on_action1_triggered();
 }
+
+
+/*!
+ * \fn MainWindow::readCommentLogs
+ * \brief This function will read the comments from the json file and save it in the QMap for both corrector and verifier
+*/
+void MainWindow::readCommentLogs(){
+    QString jsonFile = "";
+
+    jsonFile = "corrector_comments.json";
+
+    if(jsonFile == "") return;
+    QString dir = mProject.GetDir().absolutePath();
+
+    QString commentFilename = gDirTwoLevelUp + "/Comments/" + jsonFile;
+    QJsonObject correctorComments = readJsonFile(commentFilename);
+
+    jsonFile = "verifier_comments.json";
+    commentFilename = gDirTwoLevelUp + "/Comments/" + jsonFile;
+    QJsonObject verifierComments = readJsonFile(commentFilename);
+
+    QStringList list = correctorComments.keys();
+
+    for(int i = 0;i < list.count(); i++){
+       QJsonObject pair = correctorComments.value(list.at(i)).toObject();
+       QMap<QString, QString> pairComments;
+       QStringList ls = pair.keys();
+        for(int j = 0; j < ls.count(); j++){
+            QString comment = pair.value(ls.at(j)).toString();
+            QString key = ls.at(j);
+            pairComments[key] = comment;
+        }
+        corrector_comment[list.at(i)] = pairComments;
+    }
+
+    list = verifierComments.keys();
+    for(int i = 0;i < list.count(); i++){
+       QJsonObject pair = verifierComments.value(list.at(i)).toObject();
+       QMap<QString, QString> pairComments;
+       QStringList ls = pair.keys();
+        for(int j = 0; j < ls.count(); j++){
+            QString comment = pair.value(ls.at(j)).toString();
+            QString key = ls.at(j);
+            pairComments[key] = comment;
+        }
+        verifier_comment[list.at(i)] = pairComments;
+    }
+}
+
 /*!
  * \fn MainWindow::on_actionComment_triggered
  * \brief This function will add a comment on the current page by highlighting the selected word
@@ -11354,8 +11404,13 @@ void MainWindow::on_actionComment_triggered()
     QString text = cursor.selectedText().toUtf8().constData();
 
     currentCommentWord = text;
+    QString currentPage = gCurrentPageName;
+    currentPage.replace(".html", "");
 
-    CommentHandler * comment = new CommentHandler(this);
+    QString correctorComment = corrector_comment[currentPage][text];
+    QString verifierComment = verifier_comment[currentPage][text];
+
+    CommentHandler * comment = new CommentHandler(this,correctorComment,verifierComment,mRole);
     QObject::connect(comment,SIGNAL(commented()),this,SLOT(highlightComment()));
     connect(comment, SIGNAL(deleted()),this,SLOT(deleteComment()));
     connect(comment, SIGNAL(deleted()), comment, SLOT(close()));
@@ -11375,6 +11430,12 @@ void MainWindow::on_actionComment_triggered()
 void MainWindow::highlightComment()
 {
     QTextCursor cursor = curr_browser->textCursor();
+    int pos = cursor.position();
+    int ancr = cursor.anchor();
+    if (pos < ancr) {
+        cursor.setPosition(pos, QTextCursor::MoveAnchor);
+        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+    }
 
     QString text = cursor.selectedText().toUtf8().constData();
     if(text == "") {
@@ -11403,12 +11464,16 @@ void MainWindow::highlightComment()
 void MainWindow::writeCommentLogs(QString word, QString comment)
 {
     QString jsonFile = "";
+    QString currentPage = gCurrentPageName;
+    currentPage.replace(".html", "");
 
     if(mRole == "Corrector"){
        jsonFile = "corrector_comments.json";
+       corrector_comment[currentPage][word] = comment;
     }
     if(mRole == "Verifier"){
         jsonFile = "verifier_comments.json";
+        verifier_comment[currentPage][word] = comment;
     }
 
     if(jsonFile == "") return;
@@ -11432,40 +11497,32 @@ void MainWindow::writeCommentLogs(QString word, QString comment)
     writeJsonFile(commentFilename, mainObj);
 }
 
-/*!
- * \fn MainWindow::showComments
- * \param word
- * \brief This function will open the comment dialog
-*/
-void MainWindow::showComments()
-{
-    QString word = currentCommentWord;
-    QString jsonFile = "";
+///*!
+// * \fn MainWindow::showComments
+// * \param word
+// * \brief This function will open the comment dialog
+//*/
+//void MainWindow::showComments()
+//{
+//    QString word = currentCommentWord;
+//    QString jsonFile = "";
 
-    if(mRole == "Corrector"){
-       jsonFile = "corrector_comments.json";
-    }
-    if(mRole == "Verifier"){
-        jsonFile = "verifier_comments.json";
-    }
+//    QString currentPage = gCurrentPageName;
+//    currentPage.replace(".html", "");
 
-    if(jsonFile == "") return;
-    QString dir = mProject.GetDir().absolutePath();
+//    CommentHandler * commentStatus = new CommentHandler(this,corrector_comment[currentPage][word],verifier_comment[currentPage][word], mRole);
+//    connect(commentStatus, SIGNAL(deleted()),this,SLOT(deleteComment()));
+//    connect(commentStatus, SIGNAL(deleted()), commentStatus, SLOT(close()));
+//    connect(commentStatus, SIGNAL(deleted()), this,SLOT(highlightComment()));
+//    commentStatus->show();
 
-    QString commentFilename = gDirTwoLevelUp + "/Comments/" + jsonFile;
-    QJsonObject mainObj = readJsonFile(commentFilename);
-    QString name = gCurrentPageName;
-    name.replace(".html","");
+//    QString str = commentStatus->getComment();
 
-    QString comment = mainObj.value(name)[word].toString();
-    if(comment == "") return;
+//    if(str == "") return;
 
-    CommentHandler * commentStatus = new CommentHandler(this,comment);
-    connect(commentStatus, SIGNAL(deleted()),this,SLOT(deleteComment()));
-    connect(commentStatus, SIGNAL(deleted()), commentStatus, SLOT(close()));
-    connect(commentStatus, SIGNAL(deleted()), this,SLOT(highlightComment()));
-    commentStatus->show();
-}
+//    writeCommentLogs(word,str);
+//}
+
 /*!
  * \fn MainWindow::deleteComment
  * \brief This function will delete the comment from the json file when
@@ -11475,12 +11532,16 @@ void MainWindow::deleteComment()
 {
     QString word = currentCommentWord;
     QString jsonFile = "";
+    QString currentPage = gCurrentPageName;
+    currentPage.replace(".html","");
 
     if(mRole == "Corrector"){
        jsonFile = "corrector_comments.json";
+       corrector_comment[currentPage].remove(word);
     }
     if(mRole == "Verifier"){
         jsonFile = "verifier_comments.json";
+        verifier_comment[currentPage].remove(word);
     }
 
     if(jsonFile == "") return;
