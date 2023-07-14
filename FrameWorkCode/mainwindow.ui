@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1928</width>
+    <width>1935</width>
     <height>1190</height>
    </rect>
   </property>
@@ -55,6 +55,38 @@ background-color: #BCBDBD; height:26.96px; width:30.03px; border:0px; padding:0p
            <string notr="true">color: rgb(0, 0, 0);
 image: url(:/Images/Resources/backfinal.png);
 background-color: #BCBDBD; height:26.96px; width:30.03px; border:0px; padding:0px 3.6px;border-radius:6px;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_8">
+          <property name="styleSheet">
+           <string notr="true">QPushButton#pushButton_8 {
+    color: rgb(0, 0, 0);
+    image: url(:/Images/Resources/exit_full_screen.png);
+    height: 34px;
+    width: 34px;
+    border-radius: 17px;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    outline: none;
+}
+
+QPushButton#pushButton_8:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+QPushButton#pushButton_8:pressed {
+    background-color: rgb(200, 200, 200);
+    padding-left: 2px;
+    padding-top: 2px;
+    position: relative;
+    top: 1px;
+    left: 1px;
+}</string>
           </property>
           <property name="text">
            <string/>
@@ -301,7 +333,7 @@ QTabWidget::pane {
 </string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -333,12 +365,6 @@ padding-left:1.3px;
 selection-color: rgb(32, 33, 72);
  selection-background-color: rgb(136, 138, 133);
 margin-top: 5px;
-} 
-QPushButton:checked{
-background-color: rgb(136, 138, 133);
-}
-QPushButton:pressed {
-background-color: rgb(136, 138, 133);
 }</string>
                   </property>
                   <property name="text">
@@ -359,7 +385,7 @@ background-color: rgb(136, 138, 133);
                   </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); width: 113.5px;height:26.96px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133); margin-top: 5px;
-} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
+}</string>
                   </property>
                   <property name="text">
                    <string>Sanskrit</string>
@@ -617,6 +643,28 @@ background-color: rgb(136, 138, 133);
              </layout>
             </item>
             <item>
+             <widget class="QPushButton" name="pushButton_7">
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+background-color:rgb(227, 228, 228);
+border:0px;
+color: rgb(32, 33, 72);
+height:26.96px;
+border-radius:4.8px; 
+selection-color: rgb(32, 33, 72);
+ selection-background-color: rgb(136, 138, 133);
+margin-top: 1px;
+} 
+QPushButton:pressed {
+background-color: rgb(136, 138, 133);
+}</string>
+              </property>
+              <property name="text">
+               <string>Add Custom Words</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QTextEdit" name="textEdit_dict">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -737,8 +785,8 @@ p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
 li.unchecked::marker { content: &quot;\2610&quot;; }
 li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:20pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Cantarell'; font-size:20pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="acceptRichText">
           <bool>true</bool>
@@ -1095,8 +1143,8 @@ background: grey;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1928</width>
-     <height>46</height>
+     <width>1935</width>
+     <height>48</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1162,6 +1210,7 @@ QMenu::item:selected{
     <addaction name="separator"/>
     <addaction name="actionAbout_Udaan_PE"/>
     <addaction name="separator"/>
+    <addaction name="actionClear_Settings"/>
    </widget>
    <widget class="QMenu" name="menuOCR_Correction_Window">
     <property name="styleSheet">
@@ -1217,6 +1266,8 @@ QMenu::item:selected{
     <addaction name="separator"/>
     <addaction name="actionToDevanagari"/>
     <addaction name="actionToSlp1"/>
+    <addaction name="separator"/>
+    <addaction name="actionEnable_Disable_Suggestions"/>
    </widget>
    <widget class="QMenu" name="menuFormat">
     <property name="styleSheet">
@@ -1264,6 +1315,7 @@ QMenu::item:selected{
       <addaction name="actionFill_Table"/>
       <addaction name="actionTable_Border_Color"/>
       <addaction name="actionCell_Padding"/>
+      <addaction name="actionColumn_Width"/>
      </widget>
      <addaction name="actionInsert_Rowabove"/>
      <addaction name="actionInsert_Rowbelow"/>
@@ -1283,10 +1335,36 @@ QMenu::item:selected{
      <property name="title">
       <string>Bullets and Numbering</string>
      </property>
-     <addaction name="actionInsert_Numbered_List"/>
-     <addaction name="actionInsert_Bulleted_List"/>
+     <widget class="QMenu" name="menuNumbered_List_Menu">
+      <property name="title">
+       <string>Numbered List Menu</string>
+      </property>
+      <addaction name="actionDecimal"/>
+      <addaction name="actionLower_Alpha"/>
+      <addaction name="actionUpper_Alpha"/>
+      <addaction name="actionLower_Roman"/>
+      <addaction name="actionUpper_Roman"/>
+     </widget>
+     <widget class="QMenu" name="menuBulleted_List_Menu">
+      <property name="title">
+       <string>Bulleted List Menu</string>
+      </property>
+      <addaction name="actionDisc"/>
+      <addaction name="actionCircle"/>
+      <addaction name="actionSquare"/>
+     </widget>
+     <addaction name="menuNumbered_List_Menu"/>
+     <addaction name="menuBulleted_List_Menu"/>
     </widget>
     <widget class="QMenu" name="menuAlign_and_Indent">
+     <property name="geometry">
+      <rect>
+       <x>852</x>
+       <y>206</y>
+       <width>209</width>
+       <height>353</height>
+      </rect>
+     </property>
      <property name="title">
       <string>Align and Indent</string>
      </property>
@@ -1336,6 +1414,7 @@ QMenu::item:selected{
     <addaction name="actionInsert_Equation"/>
     <addaction name="actionLink"/>
     <addaction name="actionInsert_Tab_Space"/>
+    <addaction name="actionComment"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="styleSheet">
@@ -1347,9 +1426,11 @@ QMenu::item:selected{
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
+    <addaction name="actionUndo_Two_Column_view"/>
     <addaction name="actionCut"/>
     <addaction name="actionCopy"/>
     <addaction name="actionPaste"/>
+    <addaction name="actionPaste_without_Format"/>
     <addaction name="separator"/>
     <addaction name="actionSelect_All"/>
     <addaction name="actionDelete"/>
@@ -1397,6 +1478,7 @@ background-color: #EEF0F2;
     <bool>false</bool>
    </attribute>
    <addaction name="actionOpen_Project"/>
+   <addaction name="actionRecentProject"/>
    <addaction name="actionSave"/>
    <addaction name="actionSave_As"/>
    <addaction name="actionLoadData"/>
@@ -1429,12 +1511,15 @@ background-color: #EEF0F2;
    <addaction name="actionInsert_Horizontal_Line"/>
    <addaction name="separator"/>
    <addaction name="actionHighlight"/>
+   <addaction name="actionFullScreen"/>
    <addaction name="actionSymbols"/>
    <addaction name="separator"/>
    <addaction name="actionZoom_In"/>
    <addaction name="actionZoom_Out"/>
    <addaction name="separator"/>
+   <addaction name="actionComment"/>
    <addaction name="actionGet_Help"/>
+   <addaction name="actionEnable_Disable_Suggestions"/>
   </widget>
   <action name="actionOpen_Project">
    <property name="icon">
@@ -2194,6 +2279,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionUpload">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/find-and-replace-cropped.png</normaloff>:/Images/Resources/find-and-replace-cropped.png</iconset>
+   </property>
    <property name="text">
     <string>Upload and Replace</string>
    </property>
@@ -2295,24 +2384,6 @@ background-color: #EEF0F2;
   <action name="actionSplit_Cell">
    <property name="text">
     <string>Split Cell</string>
-   </property>
-  </action>
-  <action name="actionInsert_Bulleted_List">
-   <property name="icon">
-    <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Resources/bulleted_list-modified.png</normaloff>:/Images/Resources/bulleted_list-modified.png</iconset>
-   </property>
-   <property name="text">
-    <string>Bulleted List Menu</string>
-   </property>
-  </action>
-  <action name="actionInsert_Numbered_List">
-   <property name="icon">
-    <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Resources/numbered_list-modified.png</normaloff>:/Images/Resources/numbered_list-modified.png</iconset>
-   </property>
-   <property name="text">
-    <string>Numbered List Menu</string>
    </property>
   </action>
   <action name="actionInsert_Equation">
@@ -2502,6 +2573,9 @@ background-color: #EEF0F2;
    <property name="text">
     <string>Paste</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+V</string>
+   </property>
   </action>
   <action name="actionSelect_All">
    <property name="icon">
@@ -2515,7 +2589,7 @@ background-color: #EEF0F2;
   <action name="actionDelete">
    <property name="icon">
     <iconset resource="AppResources.qrc">
-     <normaloff>:/Images/Resources/delete-modified.png</normaloff>:/Images/Resources/delete-modified.png</iconset>
+     <normaloff>:/Images/Resources/Delete.png</normaloff>:/Images/Resources/Delete.png</iconset>
    </property>
    <property name="text">
     <string>Delete</string>
@@ -2581,6 +2655,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionWord_Count">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/word-count-cropped.png</normaloff>:/Images/Resources/word-count-cropped.png</iconset>
+   </property>
    <property name="text">
     <string>Word Count</string>
    </property>
@@ -2668,7 +2746,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionIndentation_Options">
    <property name="text">
-    <string>Indentation Options</string>
+    <string>Indentation Options  </string>
    </property>
   </action>
   <action name="actionImport_2">
@@ -2701,6 +2779,153 @@ background-color: #EEF0F2;
   <action name="actionClear_Menu">
    <property name="text">
     <string>Clear Menu</string>
+   </property>
+  </action>
+  <action name="actionPasste">
+   <property name="text">
+    <string>Passte</string>
+   </property>
+  </action>
+  <action name="actionColumn_Width">
+   <property name="text">
+    <string>Column Width</string>
+   </property>
+  </action>
+  <action name="actionEnable_Disable_Suggestions">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/auto_suggestion.png</normaloff>:/Images/Resources/auto_suggestion.png</iconset>
+   </property>
+   <property name="text">
+    <string>Enable/Disable Suggestions</string>
+   </property>
+  </action>
+  <action name="actionDecimal">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/decimal.png</normaloff>:/Images/Resources/decimal.png</iconset>
+   </property>
+   <property name="text">
+    <string>Decimal</string>
+   </property>
+  </action>
+  <action name="actionLower_Alpha">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/lower.png</normaloff>:/Images/Resources/lower.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lower Alpha</string>
+   </property>
+  </action>
+  <action name="actionUpper_Alpha">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/upper.png</normaloff>:/Images/Resources/upper.png</iconset>
+   </property>
+   <property name="text">
+    <string>Upper Alpha</string>
+   </property>
+  </action>
+  <action name="actionLower_Roman">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/lower_roman.png</normaloff>:/Images/Resources/lower_roman.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lower Roman</string>
+   </property>
+  </action>
+  <action name="actionUpper_Roman">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/upper_roman.png</normaloff>:/Images/Resources/upper_roman.png</iconset>
+   </property>
+   <property name="text">
+    <string>Upper  Roman</string>
+   </property>
+  </action>
+  <action name="actionDisc">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/disc.png</normaloff>:/Images/Resources/disc.png</iconset>
+   </property>
+   <property name="text">
+    <string>Disc</string>
+   </property>
+  </action>
+  <action name="actionCircle">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/circle.png</normaloff>:/Images/Resources/circle.png</iconset>
+   </property>
+   <property name="text">
+    <string>Circle</string>
+   </property>
+  </action>
+  <action name="actionSquare">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/square.png</normaloff>:/Images/Resources/square.png</iconset>
+   </property>
+   <property name="text">
+    <string>Square</string>
+   </property>
+  </action>
+  <action name="actionPaste_without_Format">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/paste_without_format.png</normaloff>:/Images/Resources/paste_without_format.png</iconset>
+   </property>
+   <property name="text">
+    <string>Paste without Format</string>
+   </property>
+  </action>
+  <action name="actionClear_Settings">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/reset_settings.png</normaloff>:/Images/Resources/reset_settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>Clear Settings</string>
+   </property>
+  </action>
+  <action name="actionFullScreen">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/Old Icons/fullscreen.png</normaloff>:/Images/Resources/Old Icons/fullscreen.png</iconset>
+   </property>
+   <property name="text">
+    <string>FullScreen</string>
+   </property>
+   <property name="toolTip">
+    <string>FullScreen</string>
+   </property>
+  </action>
+  <action name="actionRecentProject">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/Old Icons/recentProjects.png</normaloff>:/Images/Resources/Old Icons/recentProjects.png</iconset>
+   </property>
+   <property name="text">
+    <string>RecentProject</string>
+   </property>
+   <property name="toolTip">
+    <string>RecentProject</string>
+   </property>
+  </action>
+  <action name="actionComment">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/comments.png</normaloff>:/Images/Resources/comments.png</iconset>
+   </property>
+   <property name="text">
+    <string>Comment</string>
+   </property>
+  </action>
+  <action name="actionUndo_Two_Column_view">
+   <property name="text">
+    <string>Undo Two Column view</string>
    </property>
   </action>
  </widget>

@@ -69,6 +69,8 @@ class MainWindow : public QMainWindow
 signals:
     void closeSignal();
 
+    void saveStatusChanged();
+
     void gotToken(const QString& token);
 
 public:
@@ -80,7 +82,7 @@ public:
         return mProject;
     }
 
-    bool setRole(QString role);
+    bool setRole();
 
     bool exitStatus() {
         return mExitStatus;
@@ -92,7 +94,7 @@ public:
 
     CustomTextBrowser * getCurrentBrowser() {
         return curr_browser;
-    };
+    }
 
     void reLoadTabWindow();
 
@@ -352,11 +354,13 @@ private slots:
 
     void on_action3_triggered();
 
-    void on_actionCheck_for_Updates_triggered();
+    void on_actionCheck_for_Updates_triggered(int arg = 2);
 
     void closeProgressBar();
 
     void setProgressBarPerc(int);
+
+    void setProgressBarText(int);
 
     QString toDevanagari(string text);
 
@@ -385,10 +389,6 @@ private slots:
 	void on_actionMerge_Cells_triggered();
 
     void on_actionSplit_Cell_triggered();
-
-    void on_actionInsert_Bulleted_List_triggered();
-
-    void on_actionInsert_Numbered_List_triggered();
 
     void insertList(QTextListFormat::Style styleIndex);
 
@@ -444,6 +444,7 @@ private slots:
     void on_actionCopy_triggered();
 
     void on_actionPaste_triggered();
+    void insertImage(QImage img);
 
     void on_actionSelect_All_triggered();
 
@@ -486,7 +487,7 @@ private slots:
 
     void on_actionVoice_Typing_triggered();
 
-    void getDate(QDate date, QCalendarWidget *calendar);
+    void getDate(QCalendarWidget *calendar);
 
 
 
@@ -498,23 +499,15 @@ private slots:
 
     void on_pushButton_6_clicked();
 
-
+    //! Page Status -- Corrected || Verified || Marked For Review
     void on_corrected_clicked();
-
     void on_verified_clicked();
-
-    void write_corrected_pages();
-
-    void write_verified_pages();
-
-    void read_corrected_pages();
-
-    void read_verified_pages();
-
     void on_mark_review_clicked();
-
+    void write_corrected_pages();
+    void write_verified_pages();
+    void read_corrected_pages();
+    void read_verified_pages();
     void read_review_pages();
-
     void write_review_pages();
     void read_recorrected_pages();
     void write_recorrected_pages();
@@ -523,6 +516,49 @@ private slots:
     void on_actionClear_Menu_triggered();
 
     void on_actionJustified_triggered();
+
+    void on_actionColumn_Width_triggered();
+
+
+    void on_actionEnable_Disable_Suggestions_triggered();
+
+    //! Bulleted List Options
+    void on_actionDecimal_triggered();
+    void on_actionUpper_Roman_triggered();
+    void on_actionLower_Alpha_triggered();
+    void on_actionUpper_Alpha_triggered();
+    void on_actionLower_Roman_triggered();
+    void on_actionDisc_triggered();
+    void on_actionCircle_triggered();
+    void on_actionSquare_triggered();
+
+    void on_pushButton_7_clicked();
+
+    void on_actionPaste_without_Format_triggered();
+
+    void on_actionClear_Settings_triggered();
+
+    void on_actionFullScreen_triggered();
+
+    void on_pushButton_8_clicked();
+
+    void setSaveStatus();
+
+    void on_actionRecentProject_triggered();
+
+    //! Handling Comments
+    void on_actionComment_triggered();
+    void highlightComment();
+    void writeCommentLogs(QString word, QString comment);
+    void showComments();
+    void deleteComment();
+
+
+    void on_actionUndo_Two_Column_view_triggered();
+
+    void on_hinButton_clicked();
+
+    void on_sanButton_clicked();
 
 public slots:
     void on_actionLoad_Next_Page_triggered();
@@ -544,6 +580,15 @@ public slots:
     void e_d_features(bool value);
 
     void update_tool(QString latestVersion);
+
+    void changeColumnWidth();
+
+    void setWordCount(int value);
+    void setPageCount(int value);
+    void setTotalWords(int value);
+    void showWordCount();
+
+
 
 private:
     bool mExitStatus = false;
@@ -609,19 +654,25 @@ private:
     QVector <QString> changedWords;
     QByteArray m_data;
     std::string m_user, m_pass;
-
-
-
-
     //Storing the status of the pages :-> Corrected || Verified
     QMap<QString,int>correct;
     QMap<QString,int>verify;
     QMap<QString,int>recorrect;
     QString currentFile = "";
     QMap<QString,int>markForReview;
+
+    int presentWidth;
+    int currentTablePosition;
+
+    QString check_for_updates();
+    bool onStart = true;
     QString m_update_path = "";
 
+    int wordCount = 0;
+    int pageCount = 0;
+    int totalWord = 0;
 
+    QString currentCommentWord;
 };
 
 #endif // MAINWINDOW_H

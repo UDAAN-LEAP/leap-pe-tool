@@ -17,16 +17,19 @@ public:
     ~UndoGlobalReplace();
 
 private slots:
+    void checkBoxStateChanged(QListWidgetItem*);
     void displayListForUndoOperation(QMap<QString, QString> reversedGRMap);
-
-    void on_cancelButton_clicked();
 
     void on_pushButton_clicked();
 
+    void on_checkBox_clicked();
+
+    void on_cancel_clicked();
+
+    void on_applyButton_clicked();
+
 public slots:
     void highlightChecked(QListWidgetItem*);
-
-    bool on_applyButton_clicked();
 
     QMap<QString, QString> getFinalUndoMap();
 
@@ -35,6 +38,7 @@ private:
     QMap <QString, QString> finalUndoMap;
     QString mRole;
     QString path;
+
 };
 
 #endif // UNDOGLOBALREPLACE_H

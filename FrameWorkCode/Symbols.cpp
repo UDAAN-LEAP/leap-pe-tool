@@ -10,11 +10,15 @@
  *
  */
 #include "Symbols.h"
+#include "qbuffer.h"
 #include "qclipboard.h"
+#include "qdir.h"
+#include "qpainter.h"
+#include "qsvgrenderer.h"
 #include "ui_Symbols.h"
 
 SymbolsView *SymbolsView::symbolsView = 0;
-
+map<QChar,QString>mp;
 /*!
  * \fn SymbolsView::SymbolsView
  * \param QWidget->parent
@@ -24,6 +28,13 @@ SymbolsView *SymbolsView::symbolsView = 0;
  */
 SymbolsView::SymbolsView(QWidget *parent, CustomTextBrowser *curr_brow) : QDialog(parent, Qt::WindowCloseButtonHint), ui(new Ui::SymbolsView)
 {
+    QString arr ="|↕→←↑↓↘↔↺↻↝⤡➤➢■●⓪▲▼◆⬟⬢○□△▭◇◯⊙⊕⊗⊘⦿⊃⊂∆∇⇒⇔⇗⇖⇘⇙⇩⇪⇧⇦⇨✦✧✩✪✫✰✱✲✵✶✽+-×÷=<>≤≥≠";
+
+        for(int i=0;i<arr.length();i++)
+        {
+            QString s = QString::number(i);
+            mp[arr[i]] = s;
+        }
     ui->setupUi(this);
     this->cust_brow = curr_brow;
     ui->MathematicalSymbols->setText(
@@ -61,6 +72,18 @@ A᳒  B᳒  C᳒  D᳒  E᳒  F᳒  G᳒  H᳒  I᳒  J᳒  K᳒  L᳒  M᳒  N�
 A᳙  B᳙  C᳙  D᳙  E᳙  F᳙  G᳙  H᳙  I᳙  J᳙  K᳙  L᳙  M᳙  N᳙  O᳙  P᳙  Q᳙  R᳙  S᳙  T᳙  U᳙  V᳙  W᳙  X᳙  Y᳙  Z᳙
 •  ⊙  ◉  ○  ◌  ●  ⦿  ◆  ◇  ★  □  ✓  ✦  ➢  ➣  ➤  ▶  ▷  ⬛  ◼  ◾  ♦  ⚫ .   ~   `   !   @   #   $   %
 ^   &   *   (   )   -   =   +   _   {   [   ]   }   \   |   /   :   ;   '   "   <   ,   >   .   ?   ₹)");
+    ui->Shapes->setText(R"(Arrows
+    | ↕ → ← ↑ ↓ ↘ ↔ ↺ ↻ ↝ ⤡ ➤ ➢
+        Geometric
+    ■ ● ⓪ ▲ ▼ ◆ ⬟ ⬢ ○ □ △ ▭ ◇ ◯ ⊙ ⊕ ⊗ ⊘ ⦿ ⊃ ⊂ ∆ ∇
+        Block arrows
+    ⇒ ⇔ ⇗ ⇖ ⇘ ⇙ ⇩ ⇪ ⇧ ⇦ ⇨
+        Stars
+    ✦ ✧ ✩ ✪ ✫ ✰ ✱ ✲ ✵ ✶ ✽
+        Equations
+    + - × ÷ = < > ≤ ≥ ≠
+    )"
+        );
     setWindowTitle("Special Symbols");
     ui->Diacritics->setText(
                 R"(A
@@ -153,9 +176,22 @@ A᳙  B᳙  C᳙  D᳙  E᳙  F᳙  G᳙  H᳙  I᳙  J᳙  K᳙  L᳙  M᳙  N�
             Ź ź   Ẑ ẑ   Ž ž   Ż ż   Ẓ ẓ   Ẕ ẕ   Ⱬ ⱬ)"
             );
     currentTab = ui->Diacritics;
+    ui->tabWidget->setCurrentWidget(ui->tabWidget->widget(0));
     bool b = connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
+    ui->Diacritics->installEventFilter(this);
+    ui->SpecialCharacters->installEventFilter(this);
+    ui->MathematicalSymbols->installEventFilter(this);
+    ui->Shapes->installEventFilter(this);
+    // Install event filter for double-click detection
+    installEventFilter(this);
 }
 
+bool SymbolsView::eventFilter(QObject *obj, QEvent *event){
+    if (event->type() == QEvent::MouseButtonPress) {
+        on_copyButton_clicked();
+        return true; // Event has been handled
+    }   return QDialog::eventFilter(obj, event);
+}
 /*!
  * \fn SymbolsView::tabChanged
  * \brief Function for when tab is changed. Takes tab index (int idx) as a param
@@ -184,14 +220,84 @@ SymbolsView::~SymbolsView()
  * \fn SymbolsView::on_copyButton_clicked
  * \brief copies the symbol(s) so that user can effortlessly paste to their page
  */
+bool flag=false;
 void SymbolsView::on_copyButton_clicked()
 {
     QClipboard *clipboard = QApplication::clipboard();
+
     currentTab->copy();
     QString copiedText = clipboard->text();
-    cust_brow->textCursor().insertText(copiedText);
-}
+    int x= ui->tabWidget->currentIndex();
+    if(x==3)
+    {
+        QChar t = copiedText.back();
+        QString w;
+        if(!QDir("../Inserted_Images").exists())
+            QDir().mkdir("../Inserted_Images");
+        QDir dir("../Inserted_Images");
+        QString count = QString::number(dir.count() +1);
+        QString file_name = "../Inserted_Images/"+count+".png";
+        bool flag=false;
+        if(mp.find(t)!=mp.end())
+        {
+            w=mp[t];
+            flag=true;
+        }
 
+        QSvgRenderer svgRenderer;
+        svgRenderer.load(QString(":/Images/Resources/Old Icons/" + w + ".svg"));
+        if(svgRenderer.defaultSize().isEmpty())
+        {
+            QFont font("Arial", 24);
+            QFontMetrics fontMetrics(font);
+            int textWidth = fontMetrics.width(copiedText);
+            int textHeight = fontMetrics.height();
+            QImage image(textWidth, textHeight, QImage::Format_ARGB32);
+            image.fill(Qt::white);
+            QPainter painter(&image);
+            painter.setRenderHint(QPainter::Antialiasing);
+            painter.setFont(font);
+            painter.setPen(Qt::black);
+            painter.drawText(image.rect(), Qt::AlignCenter, copiedText);
+            if(flag==false)
+            {
+                file_name+='#';
+            }
+            image.save(file_name);
+          }
+        else
+        {
+            cout<<"symbols"<<endl;
+            QImage image(60, 60, QImage::Format_ARGB32);
+            image.fill(Qt::transparent);
+            QPainter painter(&image);
+            svgRenderer.render(&painter);
+            painter.end();
+            QByteArray svgData;
+            QBuffer buffer(&svgData);
+            buffer.open(QIODevice::WriteOnly);
+            image.save(file_name, "PNG");
+        }
+        if(file_name.back()!='#')
+        {
+            QString html = "<img src=\""+file_name+"\">";
+            QTextCursor cursor = cust_brow->textCursor();
+            QString selectedText = currentTab->textCursor().selectedText();
+            if(selectedText=="")
+                html="";
+            cursor.insertHtml(html);
+        }
+
+    }
+    else
+    {
+        QString selectedText = currentTab->textCursor().selectedText();
+        if(selectedText=="")
+            copiedText.clear();
+        cust_brow->textCursor().insertText(copiedText);
+
+    }
+}
 /*!
  * \fn SymbolsView::openSymbolTable
  * \brief Opens the symbol table whenever 𝛺 button is clicked on the tool menu
@@ -208,3 +314,4 @@ SymbolsView* SymbolsView::openSymbolTable(QWidget *parent, CustomTextBrowser *cu
     symbolsView->currentTab = symbolsView->ui->SpecialCharacters;
     return symbolsView;
 }
+

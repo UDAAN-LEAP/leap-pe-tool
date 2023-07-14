@@ -15,8 +15,11 @@
 #include <QDialog>
 #include <QInputDialog>
 #include "lg2_common.h"
+#include "loadingspinner.h"
+#include "qlabel.h"
 #include "qnetworkaccessmanager.h"
 #include "qnetworkreply.h"
+#include "qprogressbar.h"
 #include <QObject>
 #include <git2.h>
 #include <QProcess>
@@ -692,6 +695,15 @@ void Project::set_verifier(){
     c.child("Verifier").first_child().set_value("None");
     save_xml();
 }
+int transfer_progress(const git_transfer_progress *stats, void *payload)
+{
+    LoadingSpinner* spinner = static_cast<LoadingSpinner*>(payload);
+    QString message = QString("Importing Set... %1/%2")
+        .arg(stats->received_objects)
+        .arg(stats->total_objects);
+    spinner->SetMessage("Importing Set...", message);
+    return 0;
+}
 
 /*!
  * \fn Project::push
@@ -705,6 +717,18 @@ void Project::set_verifier(){
  * \return bool
  */
 bool Project::push(QString gDirTwoLevelUp) {
+//    QDialog dialog(nullptr);
+//        QFormLayout form(&dialog);
+//        QProgressBar* pb;
+//        pb->setParent(&dialog);
+//        QLabel *label = new QLabel(&dialog);
+//        QLabel *labelProgress = new QLabel(&dialog);
+//        labelProgress->setText("");
+//        label->setText("Pushing the changes");
+//        form.addRow(label);
+//        form.addWidget(pb);
+//        form.addRow(labelProgress);
+//        dialog.show();
     QString branchName;
     QString gDir = gDirTwoLevelUp+"/.git/config";
     lg2_add();
@@ -863,6 +887,18 @@ bool Project::push(QString gDirTwoLevelUp) {
      */
     char fullsha[42] = {0};
     git_oid_tostr(fullsha, 41, &id);
+//    push_opts.callbacks.transfer_progress = [](const git_transfer_progress* stats, void* payload)-> int {
+//                     qDebug()<<"CRASHING 2";
+//                     QProgressBar *progressBar = static_cast<QProgressBar*>(payload);
+//                  int percentage = (100 * stats->received_objects) / stats->total_objects;
+//                  progressBar->setValue(percentage);
+//                  //      QMetaObject::invokeMethod(progressBar, "processProgress", Qt::QueuedConnection, Q_ARG(int, stats->received_objects), Q_ARG(int, stats->total_objects));
+//                        return 0;
+//    };
+
+   //  push_opts.callbacks.payload = static_cast<void*>(pb);
+
+
     return true;//No errors
 }
 
@@ -1584,14 +1620,19 @@ int Project::GetPageNumber(std::string localFilename, std::string *no, size_t *l
  * \param path
  * \return int
  */
-int Project::clone(QString url_, QString path)
+int Project::clone(QString url_, QString path, LoadingSpinner* spinner)
 {
     QByteArray array = url_.toLocal8Bit();
     const char *url = array.data();
-
+    /*git_clone_options clone_opts = GIT_CLONE_OPTIONS_INIT;
+    clone_opts.fetch_opts.callbacks.credentials = credentials_cb;
+    clone_opts.fetch_opts.callbacks.transfer_progress = &Project::progress_callback;
+    clone_opts.fetch_opts.callbacks.payload = spinner;*/
+    git_repository *repo = NULL;
     git_clone_options clone_opts = GIT_CLONE_OPTIONS_INIT;
     clone_opts.fetch_opts.callbacks.credentials = credentials_cb;
-    git_repository *repo = NULL;
+    clone_opts.fetch_opts.callbacks.transfer_progress = transfer_progress;
+    clone_opts.fetch_opts.callbacks.payload = spinner;
 
     QStringList list = url_.split("/");
     QString repoName = list[list.size() - 1].remove(".git");

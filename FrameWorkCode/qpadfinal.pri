@@ -4,6 +4,8 @@
 
 HEADERS += ./Filters.h \
     $$PWD/about.h \
+    $$PWD/add_comment.h \
+    $$PWD/column_width.h \
     $$PWD/crashlog.h \
     $$PWD/customtextbrowser.h \
     $$PWD/dashboard.h \
@@ -24,8 +26,10 @@ HEADERS += ./Filters.h \
     $$PWD/textfinder.h \
     $$PWD/globalreplacedialog.h \
     $$PWD/threadingpush.h \
+    $$PWD/tutorial.h \
     $$PWD/undoglobalreplace.h \
     $$PWD/verifyset.h \
+    $$PWD/word_count.h \
     $$PWD/worker.h \
     ./3rdParty/RapidXML/rapidxml.hpp \
     ./3rdParty/RapidXML/rapidxml_iterators.hpp \
@@ -56,6 +60,8 @@ HEADERS += ./Filters.h \
     $$PWD/globalreplaceinformation.h
 SOURCES += ./DiffView.cpp \
     $$PWD/about.cpp \
+    $$PWD/add_comment.cpp \
+    $$PWD/column_width.cpp \
     $$PWD/crashlog.cpp \
     $$PWD/customtextbrowser.cpp \
     $$PWD/dashboard.cpp \
@@ -80,8 +86,10 @@ SOURCES += ./DiffView.cpp \
     $$PWD/globalreplacedialog.cpp \
     $$PWD/threadingpush.cpp \
     $$PWD/trieEditdis.cpp \
+    $$PWD/tutorial.cpp \
     $$PWD/undoglobalreplace.cpp \
     $$PWD/verifyset.cpp \
+    $$PWD/word_count.cpp \
     $$PWD/worker.cpp \
     ./Filters.cpp \
     ./Project.cpp \
@@ -105,6 +113,8 @@ SOURCES += ./DiffView.cpp \
     $$PWD/globalreplaceinformation.cpp
 FORMS += ./DiffView.ui \
     $$PWD/about.ui \
+    $$PWD/add_comment.ui \
+    $$PWD/column_width.ui \
     $$PWD/dashboard.ui \
     $$PWD/equationeditor.ui \
     $$PWD/indentoptions.ui \
@@ -114,6 +124,7 @@ FORMS += ./DiffView.ui \
     $$PWD/shortcutguidedialog.ui \
     $$PWD/textfinder.ui \
     $$PWD/globalreplacedialog.ui \
+    $$PWD/tutorial.ui \
     $$PWD/undoglobalreplace.ui \
     ./ProjectHierarchyWindow.ui \
     ./Symbols.ui \

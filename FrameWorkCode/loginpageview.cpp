@@ -66,7 +66,7 @@ void LoginPageView::on_loginButton_clicked()
             QMessageBox::information(this,"Login","Login Succesful!");
             hide();
             mwindow =new MainWindow(this);
-            mwindow->setRole(userRole);
+            mwindow->setRole();
             mwindow->show();
         } else {
             userJsonFile.close();

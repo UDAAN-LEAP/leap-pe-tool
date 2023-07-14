@@ -120,14 +120,46 @@ void dashboard::on_pushButton_clicked()
         return;
     }
 
+    /*git_libgit2_init();
+
+    QByteArray array = url_.toLocal8Bit();
+    const char *url = array.data();
+    git_repository* repo = nullptr;
+    git_repository_open(&repo, url);
+
+    git_revwalk* walker = nullptr;
+    git_revwalk_new(&walker, repo);
+    git_revwalk_sorting(walker, GIT_SORT_NONE);
+    git_revwalk_push_head(walker);
+
+    git_oid oid;
+    git_commit* commit = nullptr;
+    git_tree* tree = nullptr;
+    size_t total_objects = 0;
+
+    while (git_revwalk_next(&oid, walker) == 0)
+    {
+        git_commit_lookup(&commit, repo, &oid);
+        git_commit_tree(&tree, commit);
+        total_objects += git_tree_entrycount(tree);
+        git_tree_free(tree);
+        git_commit_free(commit);
+    }
+
+    qDebug() << "Total objects in repository:" << total_objects;
+
+    git_revwalk_free(walker);
+    git_repository_free(repo);
+    git_libgit2_shutdown();*/
+
     QFutureWatcher<int> watcher;
     connect(&watcher, &QFutureWatcher<int>::finished, this, &dashboard::stopSpinning);
 
-    QFuture<int> t1 = QtConcurrent::run(Project::clone, QString(url_), QString(path));
+    spinner = new LoadingSpinner(this);
+    QFuture<int> t1 = QtConcurrent::run(Project::clone, QString(url_), QString(path), spinner);
     watcher.setFuture(t1);
     QString s = "Importing "+repoMap[id] + "...";
 
-    spinner = new LoadingSpinner(this);
     spinner->SetMessage("Importing Set...", s);
     spinner->setModal(false);
     spinner->exec();
@@ -158,19 +190,36 @@ void dashboard::stopSpinning()
  * \brief This function sets index for each button's onClick slot
  * \param integer index of button
 */
-void dashboard::clicked(int index){
+void dashboard::clicked(int index) {
     QPushButton* btn = this->btnMap[index];
-    if(this->presentId[index] == 0){
-        this->presentId[index] = 1;
-        this->totalClickedBooks++;
-        btn->setStyleSheet("color : black; text-align : left; padding : 10px;background-color :rgb(137,207,240); border-radius :5px;");
-    }
-    else{
+
+    // Check if the clicked project is already selected
+    if (this->presentId[index] == 1) {
+        // Project is already selected, so unselect it
         this->presentId[index] = 0;
         this->totalClickedBooks--;
         btn->setStyleSheet("color : black; text-align : left; padding : 10px;background-color :rgb(229,228,226); border-radius :5px;");
+    } else {
+        // Project is not selected, so unselect all other projects and select the clicked one
+        QMapIterator<int, QPushButton*> i(this->btnMap);
+        while (i.hasNext()) {
+            i.next();
+            int currentIndex = i.key();
+            QPushButton* currentBtn = i.value();
+            if (currentIndex != index && this->presentId[currentIndex] == 1) {
+                // Unselect other projects
+                this->presentId[currentIndex] = 0;
+                currentBtn->setStyleSheet("color : black; text-align : left; padding : 10px;background-color :rgb(229,228,226); border-radius :5px;");
+            }
+        }
+
+        // Select the clicked project
+        this->presentId[index] = 1;
+        this->totalClickedBooks = 1;
+        btn->setStyleSheet("color : black; text-align : left; padding : 10px;background-color :rgb(137,207,240); border-radius :5px;");
     }
 }
+
 
 /*!
  * \fn dashboard::on_pushButton_2_clicked

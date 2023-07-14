@@ -82,7 +82,7 @@ QScrollBar::sub-line:vertical {
 </string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -196,6 +196,21 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </property>
          <property name="textInteractionFlags">
           <set>Qt::TextSelectableByMouse</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_4">
+      <attribute name="title">
+       <string>Shapes</string>
+      </attribute>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QTextEdit" name="Shapes">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255); color: black;
+font-size:30px;</string>
          </property>
         </widget>
        </item>

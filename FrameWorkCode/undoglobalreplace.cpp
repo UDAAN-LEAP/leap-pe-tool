@@ -24,11 +24,16 @@ UndoGlobalReplace::UndoGlobalReplace(QMap<QString, QString> reversedGRMap, QWidg
     ui->setupUi(this);
     this->mRole = mRole;
     this->path = path;
+
     qInstallMessageHandler(crashlog::myMessageHandler);
     setWindowTitle("Undo Globally Replace Words");
     displayListForUndoOperation(reversedGRMap);
-    QObject::connect(ui->listWidget, SIGNAL(itemChanged(QlistWidgetItem*)), this, SLOT(highlightChecked(QListWidgetItem*)));
-
+    connect(ui->listWidget, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(highlightChecked(QListWidgetItem*)));
+    connect(ui->listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(checkBoxStateChanged(QListWidgetItem*)));
+    if(ui->listWidget->count() == 0)
+        ui->checkBox->setVisible(false);
+    else
+        ui->checkBox->setVisible(true);
 }
 
 /*!
@@ -78,35 +83,13 @@ void UndoGlobalReplace::highlightChecked(QListWidgetItem *item)
         item->setBackgroundColor("#ffffff");
 }
 
-
 /*!
- * \fn UndoGlobalReplace::on_applyButton_clicked
- * \brief Updates the finalUndoMap variable with checked items only.
- * \return bool
- */
-bool UndoGlobalReplace::on_applyButton_clicked()
-{
-    //!Checking for checked items
-    for (int i = 0; i < ui->listWidget->count(); i++)
-    {
-        QListWidgetItem *item = ui->listWidget->item(i);
-        if ( item->checkState() == Qt::Checked )
-        {
-            QStringList strList = item->text().split(" ");
-            this->finalUndoMap[strList[0]] = strList[3];
-        }
-    }
-    this->close();
-    return true;
-}
-
-
-/*!
- * \fn UndoGlobalReplace::on_cancelButton_clicked
+ * \fn UndoGlobalReplace::on_cancel_clicked
  * \brief Closes the undo global replace dialog.
  */
-void UndoGlobalReplace::on_cancelButton_clicked()
+void UndoGlobalReplace::on_cancel_clicked()
 {
+    this->finalUndoMap.clear();
     this->close();
 }
 
@@ -124,26 +107,86 @@ void UndoGlobalReplace::on_pushButton_clicked()
 {
     QMap<QString, QString> new_cpair;
 
-        QString filename = path + "/Dicts/" + mRole +"_CPair";
-        QFile file(filename);
-        QStringList split1;
+    QString filename = path + "/Dicts/" + mRole +"_CPair";
+    QFile file(filename);
+    QStringList split1;
 
-            if(file.open(QIODevice::ReadOnly | QIODevice::Text))
+        if(file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            QTextStream out1(&file);
+            out1.setCodec("UTF-8");
+            QString text;
+            while(!out1.atEnd())
             {
-                QTextStream out1(&file);
-                out1.setCodec("UTF-8");
-                QString text;
-                while(!out1.atEnd())
-                {
-                    text = out1.readLine();
-                    split1 = text.split('\t');
-                   // CPairs = {split1[0],split1[1]};
-                    new_cpair[split1[1]]= split1[0];
-                }
-                file.close();
+                text = out1.readLine();
+                split1 = text.split('\t');
+               // CPairs = {split1[0],split1[1]};
+                new_cpair[split1[1]]= split1[0];
             }
+            file.close();
+        }
 
-        displayListForUndoOperation(new_cpair);
+    displayListForUndoOperation(new_cpair);
 
+}
+
+
+
+void UndoGlobalReplace::checkBoxStateChanged(QListWidgetItem* item)
+{
+    int itemRow;
+    itemRow = ui->listWidget->row(item);
+    QListWidgetItem* item_ = 0;
+    int count_=0;
+    for(int j = 0; j < ui ->listWidget->count(); ++j){
+        item_ = ui->listWidget->item(j);
+        if(item_->checkState() == Qt::Checked){
+            count_ ++;
+        }
+    }
+    if(count_ == ui ->listWidget->count()){
+        ui->checkBox->setCheckState(Qt::Checked);
+    }
+    else if( count_ != ui ->listWidget->count() ){
+        ui->checkBox->setCheckState(Qt::Unchecked);
+    }
+
+    return;
+
+}
+
+void UndoGlobalReplace::on_checkBox_clicked()
+{
+    QListWidgetItem* item = 0;
+    for(int i = 0; i < ui ->listWidget->count(); ++i){
+        item = ui->listWidget->item(i);
+        item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+        if(ui->checkBox->checkState() == Qt::Unchecked){
+            item->setCheckState(Qt::Unchecked);
+        }
+        else if(ui->checkBox->checkState() == Qt::Checked){
+            item->setCheckState(Qt::Checked);
+        }
+    }
+    return;
+}
+
+/*!
+ * \fn UndoGlobalReplace::on_applyButton_clicked
+ * \brief Writes the map with selected items
+ */
+void UndoGlobalReplace::on_applyButton_clicked()
+{
+    //!Checking for checked items
+    for (int i = 0; i < ui->listWidget->count(); i++)
+    {
+        QListWidgetItem *item = ui->listWidget->item(i);
+        if ( item->checkState() == Qt::Checked )
+        {
+            QStringList strList = item->text().split(" -> ");
+            this->finalUndoMap[strList[0]] = strList[1];
+        }
+    }
+    this->close();
 }
 

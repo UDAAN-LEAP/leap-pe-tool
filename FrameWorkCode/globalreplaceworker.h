@@ -63,6 +63,7 @@ signals:
     void finishedReplacingWords();
     void finishedWritingLogs();
     void changeProgressBarValue(int);
+    void changeProgressText(int);
 };
 
 #endif // GLOBALREPLACEWORKER_H
