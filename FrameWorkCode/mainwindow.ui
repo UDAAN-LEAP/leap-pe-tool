@@ -333,7 +333,7 @@ QTabWidget::pane {
 </string>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -365,12 +365,6 @@ padding-left:1.3px;
 selection-color: rgb(32, 33, 72);
  selection-background-color: rgb(136, 138, 133);
 margin-top: 5px;
-} 
-QPushButton:checked{
-background-color: rgb(136, 138, 133);
-}
-QPushButton:pressed {
-background-color: rgb(136, 138, 133);
 }</string>
                   </property>
                   <property name="text">
@@ -391,7 +385,7 @@ background-color: rgb(136, 138, 133);
                   </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); width: 113.5px;height:26.96px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133); margin-top: 5px;
-} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
+}</string>
                   </property>
                   <property name="text">
                    <string>Sanskrit</string>

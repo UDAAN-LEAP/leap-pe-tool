@@ -11630,3 +11630,81 @@ void MainWindow::on_actionUndo_Two_Column_view_triggered()
 
 }
 
+/*!
+ * \fn MainWindow::on_hinButton_clicked
+ * \brief This function is called when the "hinButton" is clicked. It updates the stylesheet of the "hinButton" and "sanButton" to change their visual appearance.
+ */
+void MainWindow::on_hinButton_clicked()
+{
+    ui->hinButton->setStyleSheet(
+        "QPushButton {"
+        "   background-color: rgb(136, 138, 133);"
+        "   border: 0px;"
+        "   color: rgb(32, 33, 72);"
+        "   height: 26.96px;"
+        "   width: 113.5px;"
+        "   padding-top: 1px;"
+        "   border-radius: 4.8px;"
+        "   padding-left: 1.3px;"
+        "   selection-color: rgb(32, 33, 72);"
+        "   selection-background-color: rgb(136, 138, 133);"
+        "   margin-top: 5px;"
+        "}"
+        );
+
+    ui->sanButton->setStyleSheet(
+        "QPushButton {"
+        "   background-color: rgb(227, 228, 228);"
+        "   border: 0px;"
+        "   color: rgb(32, 33, 72);"
+        "   height: 26.96px;"
+        "   width: 113.5px;"
+        "   padding-top: 1px;"
+        "   border-radius: 4.8px;"
+        "   padding-left: 1.3px;"
+        "   selection-color: rgb(32, 33, 72);"
+        "   selection-background-color: rgb(136, 138, 133);"
+        "   margin-top: 5px;"
+        "}"
+        );
+}
+
+/*!
+ * \fn MainWindow::on_sanButton_clicked
+ * \brief This function is called when the "sanButton" is clicked. It updates the stylesheet of the "hinButton" and "sanButton" to change their visual appearance.
+ */
+void MainWindow::on_sanButton_clicked()
+{
+    ui->sanButton->setStyleSheet(
+        "QPushButton {"
+        "   background-color: rgb(136, 138, 133);"
+        "   border: 0px;"
+        "   color: rgb(32, 33, 72);"
+        "   height: 26.96px;"
+        "   width: 113.5px;"
+        "   padding-top: 1px;"
+        "   border-radius: 4.8px;"
+        "   padding-left: 1.3px;"
+        "   selection-color: rgb(32, 33, 72);"
+        "   selection-background-color: rgb(136, 138, 133);"
+        "   margin-top: 5px;"
+        "}"
+        );
+
+    ui->hinButton->setStyleSheet(
+        "QPushButton {"
+        "   background-color: rgb(227, 228, 228);"
+        "   border: 0px;"
+        "   color: rgb(32, 33, 72);"
+        "   height: 26.96px;"
+        "   width: 113.5px;"
+        "   padding-top: 1px;"
+        "   border-radius: 4.8px;"
+        "   padding-left: 1.3px;"
+        "   selection-color: rgb(32, 33, 72);"
+        "   selection-background-color: rgb(136, 138, 133);"
+        "   margin-top: 5px;"
+        "}"
+        );
+}
+

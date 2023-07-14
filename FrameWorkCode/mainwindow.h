@@ -556,6 +556,10 @@ private slots:
 
     void on_actionUndo_Two_Column_view_triggered();
 
+    void on_hinButton_clicked();
+
+    void on_sanButton_clicked();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
