@@ -11380,12 +11380,44 @@ void MainWindow::setSaveStatus()
 
 void MainWindow::on_actionRecentProject_triggered()
 {
+    bool isUnsaved = checkUnsavedWork();
 
+    if(isProjectOpen){
+        if (isUnsaved)
+        {
+            QMessageBox saveBox;
+            saveBox.setWindowTitle("Save Changes ?");
+            saveBox.setIcon(QMessageBox::Question);
+            saveBox.setInformativeText("You have unsaved files. Your changes will be lost if you don't save them before opening new project.\nDo you want to save them? \n");
+            QPushButton *svButton = saveBox.addButton(QMessageBox::Save);
+            QPushButton *discardButton = saveBox.addButton(QMessageBox::Discard);
+            discardButton->setStyleSheet("width:180px");
+            discardButton->setText("Discard changes");
+            QPushButton *cncButton = saveBox.addButton(QMessageBox::Cancel);
+            saveBox.exec();
+
+            if (saveBox.clickedButton() == cncButton)
+            {
+                return;
+            }
+            else{
+                if(saveBox.clickedButton() == svButton){
+                    saveAllWork();
+                }
+            }
+        }
+    }
     if(RecentProjFile=="" && RecentProjFile2=="" && RecentProjFile3=="")
     {
         return;
     }
     on_action1_triggered();
+
+    correct.clear();
+    verify.clear();
+    markForReview.clear();
+    recorrect.clear();
+
 }
 /*!
  * \fn MainWindow::on_actionComment_triggered
@@ -11622,7 +11654,7 @@ void MainWindow::on_actionUndo_Two_Column_view_triggered()
         if (column2.contains("Paste Column 2 data here")) column2.replace("Paste Column 2 data here","");
 
         curr_browser->clear();
-        cursor.insertHtml(column1 + "<br>" + column2);
+        cursor.insertHtml(column1 + column2);
     }
     else{
         QMessageBox::warning(0,"Warning","Text is already in single column view");
