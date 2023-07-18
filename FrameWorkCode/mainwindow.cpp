@@ -7002,6 +7002,8 @@ void MainWindow::on_actionSave_All_triggered()  //enable when required
  */
 void MainWindow::closeEvent (QCloseEvent *event)
 {
+
+
     bool isUnsaved = checkUnsavedWork();
 
     if (isUnsaved)
@@ -7044,7 +7046,20 @@ void MainWindow::closeEvent (QCloseEvent *event)
     recorrect.clear();
 
 
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
+    settings.endGroup();
+    if(email=="" && token=="")
+    {
+        QCoreApplication::quit();
+        return;
+    }
     autoSave();
+    QCoreApplication::quit();
+
+
 }
 
 /*!
@@ -9002,11 +9017,20 @@ void MainWindow::on_actionExit_triggered()
     correct.clear();
     verify.clear();
     recorrect.clear();
-
-
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
+    settings.endGroup();
+    if(email=="" && token=="")
+    {
+        QCoreApplication::quit();
+        return;
+    }
     autoSave();
     QCoreApplication::quit();
 }
+
 
 /*!
  * \fn MainWindow::login
