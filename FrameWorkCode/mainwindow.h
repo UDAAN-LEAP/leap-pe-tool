@@ -548,7 +548,7 @@ private slots:
 
     //! Handling Comments
     void on_actionComment_triggered();
-    void highlightComment();
+    void highlightComment(bool deleteCommentFlag = false);
     void writeCommentLogs(QString word, QString comment);
    // void showComments();
     void deleteComment();

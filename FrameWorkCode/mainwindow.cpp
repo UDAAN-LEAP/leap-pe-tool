@@ -11459,7 +11459,7 @@ void MainWindow::on_actionComment_triggered()
  * \fn MainWindow::highlightComment()
  * \brief This function will highlight the selected word on receiving the signal from CommentHandler
 */
-void MainWindow::highlightComment()
+void MainWindow::highlightComment(bool deleteCommentFlag)
 {
     QTextCursor cursor = curr_browser->textCursor();
     int pos = cursor.position();
@@ -11477,9 +11477,7 @@ void MainWindow::highlightComment()
 
     QTextCharFormat  format = cursor.charFormat();
 
-    if(format.background().color().red() == 137 && format.background().color().green() == 207
-            && format.background().color().blue() == 240){
-
+    if(deleteCommentFlag){
         format.setBackground(QColor::fromRgb(255,255,255));
     }
     else {
@@ -11591,6 +11589,7 @@ void MainWindow::deleteComment()
     mainObj.remove(pagename);
     mainObj.insert(pagename, page);
 
+    highlightComment(true);
     writeJsonFile(commentFilename, mainObj);
 }
 
