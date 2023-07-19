@@ -239,7 +239,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionFetch_2->setVisible(false);
     ui->pushButton_8->setVisible(false);
     ui->actionHighlight->setEnabled(false);
-
+    ui->copyToVerifier->setVisible(false);
+    ui->copyToVerifier->setEnabled(false);
 
     settings.beginGroup("cloudSave");
     settings.remove("");
@@ -6592,12 +6593,20 @@ void MainWindow::file_click(const QModelIndex & indx)
     QString fileName = file->fileName();          //gets filename
     // Set the file's permissions to readonly
     if(fileName.contains("CorrectorOutput") && mRole == "Verifier"){
+        ui->copyToVerifier->setVisible(true);
+        ui->copyToVerifier->setEnabled(true);
         QFile::setPermissions(fileName, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
+    }
+    else if(fileName.contains("VerifierOutput") && mRole == "Verifier"){
+        ui->copyToVerifier->setVisible(false);
+        ui->copyToVerifier->setEnabled(false);
     }
     else if(fileName.contains("VerifierOutput") && mRole == "Corrector"){
         QFile::setPermissions(fileName, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
     }
     else{
+        ui->copyToVerifier->setVisible(false);
+        ui->copyToVerifier->setEnabled(false);
         // Set the file's permissions to both read and write mode
         QFile::setPermissions(fileName, QFile::WriteOwner | QFile::WriteGroup | QFile::WriteOther |
                               QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
@@ -11775,5 +11784,116 @@ void MainWindow::on_sanButton_clicked()
         "   margin-top: 5px;"
         "}"
         );
+}
+
+/*!
+ * \fn MainWindow::on_copyToVerifier_clicked
+ * \brief This function is called when the "Copy to Verifier" Button is clicked. It checks if the copy
+ *        operation is confirmed by the user and copies the current page from the Corrector Output to
+ *        the Verifier Output.
+ */
+void MainWindow::on_copyToVerifier_clicked()
+{
+    // Retrieve the confirmation value from settings
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("copyToVerifier");
+    QString copyToVerifier = settings.value("copyToVerifierConfirm").toString();
+    settings.endGroup();
+
+    // If the confirmation value is not "dna"
+    if(copyToVerifier != "dna"){
+        // Create a dialog
+        QDialog dialog(this);
+        QFormLayout form(&dialog);
+        // Add a QLabel to ask for confirmation
+        form.addRow(new QLabel("Do you want to copy the current page from Corrector Output to Verifier Output?"));
+
+        // Create Ok and Cancel buttons
+        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+        buttonBox.button(QDialogButtonBox::Ok)->setText("Yes");
+        buttonBox.button(QDialogButtonBox::Cancel)->setText("No");
+        QHBoxLayout buttonBoxLayout;
+        buttonBoxLayout.addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+        buttonBoxLayout.addWidget(&buttonBox);
+        buttonBoxLayout.addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+        form.addRow(&buttonBoxLayout);
+
+        // Add a checkbox for "Dont Ask Again!" option
+        QCheckBox checkBox("Dont Ask Again!", &dialog);
+        QHBoxLayout checkboxLayout;
+        checkboxLayout.addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+        checkboxLayout.addWidget(&checkBox);
+        checkboxLayout.addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+        form.addRow(&checkboxLayout);
+
+        // Connect the buttonBox signals to dialog slots
+        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+        // If the dialog is accepted (Ok Button clicked)
+        if(dialog.exec() == QDialog::Accepted){
+            // If "Dont Ask Again!" checkbox is checked
+            if(checkBox.isChecked()){
+                // Copy the current page from CorrectorOutput to VerifierOutput
+                QString parentDir = mProject.GetDir().absolutePath();
+                QString fileName = gCurrentPageName;
+                QString correctorFilePath = parentDir + "/CorrectorOutput/" + fileName;
+                QString verifierFilePath = parentDir + "/VerifierOutput/" + fileName;
+                QFile correctorFile(correctorFilePath);
+                QFile verifierFile(verifierFilePath);
+                QFileInfo f(correctorFile);
+                QString suff = f.completeSuffix();
+                LoadDocument(&correctorFile, suff, fileName);
+                if(verifierFile.exists()){
+                    verifierFile.remove();
+                }
+                if(!QFile::copy(correctorFilePath, verifierFilePath)){
+                    qDebug() << "Cannot copy file to VerifierOutput";
+                }
+                // Update the confirmation value in settings
+                settings.beginGroup("copyToVerifier");
+                settings.setValue("copyToVerifierConfirm", "dna");
+                settings.endGroup();
+            }
+            // If "Dont Ask Again!" checkbox is not checked
+            else{
+                // Copy the current page from CorrectorOutput to VerifierOutput
+                QString parentDir = mProject.GetDir().absolutePath();
+                QString fileName = gCurrentPageName;
+                QString correctorFilePath = parentDir + "/CorrectorOutput/" + fileName;
+                QString verifierFilePath = parentDir + "/VerifierOutput/" + fileName;
+                QFile correctorFile(correctorFilePath);
+                QFile verifierFile(verifierFilePath);
+                QFileInfo f(correctorFile);
+                QString suff = f.completeSuffix();
+                LoadDocument(&correctorFile, suff, fileName);
+                if(verifierFile.exists()){
+                    verifierFile.remove();
+                }
+                if(!QFile::copy(correctorFilePath, verifierFilePath)){
+                    qDebug() << "Cannot copy file to VerifierOutput";
+                }
+            }
+        }
+    }
+    // If the confirmation value is "dna"
+    else{
+        // Copy the current page from CorrectorOutput to VerifierOutput
+        QString parentDir = mProject.GetDir().absolutePath();
+        QString fileName = gCurrentPageName;
+        QString correctorFilePath = parentDir + "/CorrectorOutput/" + fileName;
+        QString verifierFilePath = parentDir + "/VerifierOutput/" + fileName;
+        QFile correctorFile(correctorFilePath);
+        QFile verifierFile(verifierFilePath);
+        QFileInfo f(correctorFile);
+        QString suff = f.completeSuffix();
+        LoadDocument(&correctorFile, suff, fileName);
+        if(verifierFile.exists()){
+            verifierFile.remove();
+        }
+        if(!QFile::copy(correctorFilePath, verifierFilePath)){
+            qDebug() << "Cannot copy file to VerifierOutput";
+        }
+    }
 }
 
