@@ -7012,6 +7012,35 @@ void MainWindow::on_actionSave_All_triggered()  //enable when required
 void MainWindow::closeEvent (QCloseEvent *event)
 {
 
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("closeApp");
+    bool dontAsk = settings.value("dontAsk").toBool();
+
+    if(!dontAsk){
+        QMessageBox closeBox;
+        closeBox.setWindowTitle("Close App?");
+        closeBox.setIcon(QMessageBox::Question);
+        closeBox.setInformativeText("Do you want to close the app?");
+        QCheckBox *cb = new QCheckBox("Don't ask again");
+        cb->setStyleSheet("QCheckBox{color:rgb(255,255,255);}QCheckBox::indicator:checked {color:rgb(0,0,0);}");
+        closeBox.setCheckBox(cb);
+        closeBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+
+        int choice = closeBox.exec();
+
+        if(choice==QMessageBox::Ok){
+            event->accept();
+        }
+        if(choice==QMessageBox::Cancel){
+            event->ignore();
+        }
+
+        if(cb->checkState()==Qt::Checked){
+            settings.setValue("dontAsk",1);
+        }
+
+    }
+    settings.endGroup();
 
     bool isUnsaved = checkUnsavedWork();
 
@@ -7055,7 +7084,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
     recorrect.clear();
 
 
-    QSettings settings("IIT-B", "OpenOCRCorrect");
+    //QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
     QString token = settings.value("token").toString();
