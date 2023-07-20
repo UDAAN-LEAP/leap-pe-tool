@@ -817,52 +817,77 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
         DisplayTimeLog();
         if((ev->button() == Qt::RightButton) && (LoadDataFlag)){
-            QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
-            QTextCursor cursor = curr_browser->textCursor();
-            cursor.select(QTextCursor::WordUnderCursor);
-            curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
-            QMenu* popup_menu = curr_browser->createStandardContextMenu();
-            QMenu* clipboard_menu;
-            clipboard_menu = new QMenu("clipboard", popup_menu);
-            clipboard_menu->setStyleSheet("height: 4.7em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
-            QString menuStyle(
-                        "QMenu::item{"
-                        "background-color: rgb(255,255,255);"
-                        "color: rgb(0,0,0);"
-                        "}"
+                QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
+                QTextCursor cursor = curr_browser->textCursor();
+                cursor.select(QTextCursor::WordUnderCursor);
+                curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
+                QMenu* popup_menu = curr_browser->createStandardContextMenu();
+                QMenu* clipboard_menu;
+                clipboard_menu = new QMenu("clipboard", popup_menu);
+                clipboard_menu->setStyleSheet("height: 4.7em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
+                QString menuStyle(
+                    "QMenu::item{"
+                    "background-color: rgb(255,255,255);"
+                    "color: rgb(0,0,0);"
+                    "}"
 
-                        "QMenu::item:selected{"
-                        "background-color: rgb(0, 85, 127);"
-                        "color: rgb(255, 255, 255);"
-                        "}"
-                        "QMenu::item:disabled{"
-                        "background-color: rgb(255, 255, 255);"
-                        "color: rgb(128, 128, 128);"
-                        "}"
+                    "QMenu::item:selected{"
+                    "background-color: rgb(0, 85, 127);"
+                    "color: rgb(255, 255, 255);"
+                    "}"
+                    "QMenu::item:disabled{"
+                    "background-color: rgb(255, 255, 255);"
+                    "color: rgb(128, 128, 128);"
+                    "}"
+                    );
 
-                        );
-            popup_menu->setStyleSheet(menuStyle);
-            //            clipboard_menu->setStyleSheet(menuStyle);
+                popup_menu->setStyleSheet(menuStyle);
 
-            //QFont font("Shobhika-Regular");
-            //font.setWeight(16);
-            //font.setPointSize(16);
-            //clipboard_menu->setFont(font);
-            QAction* act;
-            QSettings settings("IIT-B", "OpenOCRCorrect");
-            settings.beginGroup("Clipboard");
-            QString s1 = settings.value("copy1").toString();
-            QString s2 = settings.value("copy2").toString();
-            QString s3 = settings.value("copy3").toString();
-            settings.endGroup();
-            act = new QAction(s1,clipboard_menu);
-            clipboard_menu->addAction(act);
-            clipboard_menu->addSeparator();
-            act = new QAction(s2,clipboard_menu);
-            clipboard_menu->addAction(act);
-            clipboard_menu->addSeparator();
-            act = new QAction(s3,clipboard_menu);
-            clipboard_menu->addAction(act);
+                QAction* act;
+
+                QSettings settings("IIT-B", "OpenOCRCorrect");
+                settings.beginGroup("Clipboard");
+                QString s1 = settings.value("copy1").toString();
+                QString s2 = settings.value("copy2").toString();
+                QString s3 = settings.value("copy3").toString();
+                settings.endGroup();
+
+                int dataCount = 0;
+
+                if (!s1.isEmpty()) {
+                    act = new QAction(s1, clipboard_menu);
+                    clipboard_menu->addAction(act);
+                    dataCount++;
+                }
+
+                if (!s2.isEmpty()) {
+
+                    clipboard_menu->addSeparator();
+                    act = new QAction(s2, clipboard_menu);
+                    clipboard_menu->addAction(act);
+                    dataCount++;
+                }
+
+                if (!s3.isEmpty()) {
+                    clipboard_menu->addSeparator();
+
+                    act = new QAction(s3, clipboard_menu);
+                    clipboard_menu->addAction(act);
+                    dataCount++;
+                }
+
+                if (dataCount == 0) {
+                    clipboard_menu->setEnabled(false);
+                } else if (dataCount == 1) {
+                    clipboard_menu->setStyleSheet("height: 2.52em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
+                } else if (dataCount == 2) {
+                    clipboard_menu->setStyleSheet("height: 3.52em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
+                }
+                else
+                {
+                    clipboard_menu->setStyleSheet("height: 4.52em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
+                }
+
             QAction* gsearch;
             gsearch = new QAction("Search over google",popup_menu);
             QAction* gtrans;
@@ -10099,7 +10124,7 @@ void MainWindow::on_actionDate_triggered()
     QVBoxLayout *layout = new QVBoxLayout(dateDialog);
     QCalendarWidget *calendar = new QCalendarWidget(this);
     layout->addWidget(calendar);
-    QObject::connect(calendar, &QCalendarWidget::selectionChanged, this, [=](){
+    QObject::connect(calendar, &QCalendarWidget::clicked, this, [=](){
         getDate(calendar);
     });
     dateDialog->setLayout(layout);
