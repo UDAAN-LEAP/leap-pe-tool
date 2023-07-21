@@ -91,6 +91,8 @@
 #include <QStandardPaths>
 #include <about.h>
 #include <QCalendarWidget>
+#include <SimpleMail/SimpleMail>
+#include <sendmail.h>
 #ifdef Q_OS_WIN
 #include <quazip.h>
 #include <quazipfile.h>
@@ -11477,6 +11479,7 @@ void MainWindow::on_actionComment_triggered()
     if(str == "") return;
 
     writeCommentLogs(text,str);
+    sendComment(str);
 }
 
 /*!
@@ -11777,3 +11780,56 @@ void MainWindow::on_sanButton_clicked()
         );
 }
 
+/*!
+ * \fn MainWindow::sendMail
+ * \brief This will send a mail to the respective corrector or verifier
+*/
+void MainWindow::sendComment(QString str)
+{
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("Send Comment Mail");
+    QString send_from = settings.value("send_from", "").toString();
+    QString send_to = settings.value("send_to", "").toString();
+    QString password = settings.value("password", "").toString();
+    settings.endGroup();
+
+    if(send_from == "" || send_to == "" || password == "")
+    {
+        sendMail * mail = new sendMail(&send_from, &send_to, &password, this);
+        mail->exec();
+    }
+
+    if(send_from == "" || send_to == "" || password == "") return;
+    else{
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("Send Comment Mail");
+        settings.setValue("send_from", send_from);
+        settings.setValue("send_to", send_to);
+        settings.setValue("password", password);
+        settings.endGroup();
+    }
+
+    SimpleMail::Sender sender ("smtp.gmail.com", 465, SimpleMail::Sender::SslConnection);
+    sender.setUser(send_from);
+    sender.setPassword(password);
+    SimpleMail::MimeMessage message;
+    message.setSender(SimpleMail::EmailAddress(send_from, mRole + "from Akshar Anveshini"));
+
+    QList <SimpleMail::EmailAddress> listRecipients;
+    listRecipients.append(send_to);
+    message.setToRecipients(listRecipients);
+    message.setSubject("Comment added");
+    SimpleMail::MimeText *text = new SimpleMail::MimeText();
+
+    QString page = gCurrentPageName;
+    page.replace(".html", "");
+
+    text->setText(str);
+    if(text->text() == "") return;
+
+
+    message.addPart(text);
+    if(!sender.sendMail(message))
+        qDebug()<<"Not sent";
+    else qDebug()<<"Sent";
+}
