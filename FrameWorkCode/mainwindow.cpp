@@ -11833,3 +11833,31 @@ void MainWindow::sendComment(QString str)
         qDebug()<<"Not sent";
     else qDebug()<<"Sent";
 }
+
+void MainWindow::on_pushButton_9_clicked()
+{
+    QString pmEmail = "hussainganie388@gmail.com";
+
+    //!Adding Sender Address and credentials
+    SimpleMail::Sender sender ("smtp.gmail.com", 465, SimpleMail::Sender::SslConnection);
+    sender.setUser("kingsofpirates007@gmail.com");
+    sender.setPassword("PirateKing@007"); //has to be encoded
+    SimpleMail::MimeMessage message;
+    message.setSender(SimpleMail::EmailAddress("kingsofpirates007@gmail.com", "Akshar Anveshini"));
+
+    //!Adding recipient
+    QList <SimpleMail::EmailAddress> listRecipients;
+    listRecipients.append(pmEmail);
+    message.setToRecipients(listRecipients);
+    message.setSubject(" Turn In");
+    SimpleMail::MimeText *text = new SimpleMail::MimeText();
+
+    QString emailText = "Comment";
+    text->setText(emailText);
+    message.addPart(text);
+    if(!sender.sendMail(message))
+        qDebug()<<"No sent";
+
+    qDebug()<<"Sent";
+}
+
