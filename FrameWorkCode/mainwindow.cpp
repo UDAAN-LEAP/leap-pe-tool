@@ -105,7 +105,7 @@ map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPair
 trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
 vector<string> vGBook,vIBook;
 QImage imageOrig;
-QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName;
+QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName, gCurrentBookName;
 map<QString, QString> gInitialTextHtml;
 QString gTimeLogLocation;
 map<QString, int> timeLog;
@@ -1612,6 +1612,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     readCommentLogs();
 
     QMessageBox::information(0, "Success", "Project opened successfully.");
+    QStringList list = gDirTwoLevelUp.split('/');
+    gCurrentBookName = list[list.size()-1];
 
     // Enabling the buttons again after a project is opened
     e_d_features(true);
@@ -11813,51 +11815,94 @@ void MainWindow::sendComment(QString str)
     sender.setUser(send_from);
     sender.setPassword(password);
     SimpleMail::MimeMessage message;
-    message.setSender(SimpleMail::EmailAddress(send_from, mRole + "from Akshar Anveshini"));
+    message.setSender(SimpleMail::EmailAddress(send_from, mRole + " " + "from Akshar Anveshini"));
 
     QList <SimpleMail::EmailAddress> listRecipients;
     listRecipients.append(send_to);
     message.setToRecipients(listRecipients);
     message.setSubject("Comment added");
-    SimpleMail::MimeText *text = new SimpleMail::MimeText();
+    SimpleMail::MimeHtml *text = new SimpleMail::MimeHtml();
 
     QString page = gCurrentPageName;
     page.replace(".html", "");
+    QString msg = R"(<html><head></head><body>
+                <div style="background-color:#e9ecef">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tbody>
+                            <tr>
+                                <td align="center" bgcolor="#e9ecef">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px">
+                                        <tbody>
+                                            <tr>
+                                                <td align="left" bgcolor="#ffffff" style="padding:36px 24px 0;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;border-top:3px solid #d4dadf">
+                                                    <h1 style="margin:0;font-size:32px;font-weight:700;letter-spacing:-1px;line-height:48px">
+                                                        Dear MROLE,
+                                                    </h1>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" bgcolor="#e9ecef">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px">
+                                        <tbody>
+                                            <tr>
+                                                <td align="left" bgcolor="#ffffff" style="padding:24px;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;border-radius:0 0 2px 2px">
+                                                    <p style="margin:0">
+                                                        There is comment added for your Document DOCNAME is complete
+                                                        <br>
+                                                        The comment is added on page number :-> PAGENO
+                                                        Comment :-> COMMENT
+                                                    </p>
+                                                </td>
+                                            </tr>
 
-    text->setText(str);
-    if(text->text() == "") return;
+                                            <tr>
+                                                <td align="left" bgcolor="#ffffff" style="padding:24px;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;border-bottom:3px solid #d4dadf">
+                                                    <p style="margin:0">
+                                                        Regards,<br>
+                                                        Project UDAAN
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
 
+                            <tr>
+                                <td align="center" bgcolor="#e9ecef" style="padding:24px">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center" bgcolor="#e9ecef" style="padding:12px 24px;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#666">
+                                                    <p style="margin:0">
+                                                        Feel free to reach out to us at <a href="mailto:udaanprojectiitb@gmail.com" rel="noreferrer" target="_blank">udaanprojectiitb@gmail.com</a>.
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </body></html>)";
+
+    msg.replace("MROLE",mRole);
+    msg.replace("PAGENO", gCurrentPageName);
+    msg.replace("DOCNAME" , gCurrentBookName);
+    msg.replace("COMMENT", str);
+
+    text->setHtml(msg);
+    if(str == "") return;
 
     message.addPart(text);
     if(!sender.sendMail(message))
         qDebug()<<"Not sent";
     else qDebug()<<"Sent";
-}
-
-void MainWindow::on_pushButton_9_clicked()
-{
-    QString pmEmail = "hussainganie388@gmail.com";
-
-    //!Adding Sender Address and credentials
-    SimpleMail::Sender sender ("smtp.gmail.com", 465, SimpleMail::Sender::SslConnection);
-    sender.setUser("kingsofpirates007@gmail.com");
-    sender.setPassword("PirateKing@007"); //has to be encoded
-    SimpleMail::MimeMessage message;
-    message.setSender(SimpleMail::EmailAddress("kingsofpirates007@gmail.com", "Akshar Anveshini"));
-
-    //!Adding recipient
-    QList <SimpleMail::EmailAddress> listRecipients;
-    listRecipients.append(pmEmail);
-    message.setToRecipients(listRecipients);
-    message.setSubject(" Turn In");
-    SimpleMail::MimeText *text = new SimpleMail::MimeText();
-
-    QString emailText = "Comment";
-    text->setText(emailText);
-    message.addPart(text);
-    if(!sender.sendMail(message))
-        qDebug()<<"No sent";
-
-    qDebug()<<"Sent";
 }
 
