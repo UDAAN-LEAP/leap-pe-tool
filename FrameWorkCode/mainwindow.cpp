@@ -9650,9 +9650,42 @@ void MainWindow::speechToTextCall()
         enc = ui->comboBox->itemData(idx).toString();
     QByteArray audioData=audioFile.readAll();
 
+    QString speechKey;
+
+    QNetworkAccessManager* manager = new QNetworkAccessManager();
+    QUrl url_("https://udaaniitb.aicte-india.org/udaan/email/");
+
+    QByteArray postData;
+    postData.append("username=username&password=password");
+
+    QNetworkRequest request(url_);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    // Disable SSL certificate verification
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    QNetworkReply* reply = manager->post(request, postData);
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, [=, &loop]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            QJsonParseError errorPtr;
+            QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+            QJsonObject mainObj = document.object();
+            speechKey = mainObj.value("speech_key").toString();
+
+            loop.quit();
+        } else {
+            qDebug() << "Error:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+    loop.exec();
+
     QUrl url("https://speech.googleapis.com/v1/speech:recognize");
     QUrlQuery query;
-    query.addQueryItem("key","AIzaSyAxmEOabgIUU5oM4spTNC0yL9oJoCyhpBE");
+    query.addQueryItem("key",speechKey);
     url.setQuery(query);
     QNetworkRequest request(url);
 #ifdef Q_OS_WIN
