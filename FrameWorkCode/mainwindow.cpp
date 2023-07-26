@@ -9658,16 +9658,16 @@ void MainWindow::speechToTextCall()
     QByteArray postData;
     postData.append("username=username&password=password");
 
-    QNetworkRequest request(url_);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QNetworkRequest request1(url_);
+    request1.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
     // Disable SSL certificate verification
-    QSslConfiguration sslConfig = request.sslConfiguration();
+    QSslConfiguration sslConfig = request1.sslConfiguration();
     sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
-    request.setSslConfiguration(sslConfig);
-    QNetworkReply* reply = manager->post(request, postData);
+    request1.setSslConfiguration(sslConfig);
+    QNetworkReply* reply = manager->post(request1, postData);
     QEventLoop loop;
-    QObject::connect(reply, &QNetworkReply::finished, [=, &loop]() {
+    QObject::connect(reply, &QNetworkReply::finished, [=, &loop, &speechKey]() {
         if (reply->error() == QNetworkReply::NoError) {
             QByteArray data = reply->readAll();
             QJsonParseError errorPtr;
@@ -9709,8 +9709,8 @@ void MainWindow::speechToTextCall()
     json["audio"]=audio;
     QByteArray jsonData=QJsonDocument(json).toJson();
 
-    QNetworkAccessManager *manager=new QNetworkAccessManager();
-    QNetworkReply *reply=manager->post(request,jsonData);
+    manager=new QNetworkAccessManager();
+    reply=manager->post(request,jsonData);
 
     QObject::connect(reply,&QNetworkReply::finished,[this,reply](){
         if(reply->error()!=QNetworkReply::NoError){
