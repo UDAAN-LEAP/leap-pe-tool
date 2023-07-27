@@ -936,6 +936,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
         if (((ev->button() == Qt::RightButton) && (!LoadDataFlag)) || (RightclickFlag))
         {
+            cout<<"executed"<<endl;
             QMenu* spell_menu, *translate_menu, *clipboard_menu;
             QAction *act;
             QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
@@ -1259,6 +1260,7 @@ void MainWindow::translate_replace(QAction* action)
  */
 void MainWindow::clipboard_paste(QAction* action)
 {
+    cout<<"paste"<<endl;
     QTextCursor cursor = curr_browser->textCursor();
     cursor.insertText(action->text());
 }
@@ -2173,7 +2175,9 @@ void MainWindow::on_actionSpell_Check_triggered()
             wordLineIndex[(word + "###" + line)] = WordCount2; WordCount2++;
         }
     }
+
 }
+
 
 int isProjectOpen = 0;
 
@@ -4085,6 +4089,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 
     if ( (e->key() == Qt::Key_C)  && QApplication::keyboardModifiers() == Qt::ControlModifier)
     {
+        cout<<"hey"<<endl;
         QTextCursor cursor = curr_browser->textCursor();
         QString text = cursor.selectedText().toUtf8().constData();
         if(text!=""){
@@ -11950,4 +11955,179 @@ void MainWindow::on_copyToVerifier_clicked()
         }
     }
 }
+bool checked_first=true;
+int currentFontSize;
+
+
+void MainWindow::on_actionTitle_triggered()
+{
+
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Bold);
+    format.setFontPointSize(26);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+
+}
+void MainWindow::on_actionSubtitle_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Normal);
+    format.setFontPointSize(15);
+    format.setForeground(QColor(Qt::gray));
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+}
+
+
+void MainWindow::on_actionHeading_1_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Bold);
+    format.setFontPointSize(20);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+
+
+}
+
+
+void MainWindow::on_actionHeading_2_triggered()
+{
+
+    QTextCursor cursor = curr_browser->textCursor();
+
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Bold);
+    format.setFontPointSize(16);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+}
+
+
+void MainWindow::on_actionHeading_3_triggered()
+{
+
+    QTextCursor cursor = curr_browser->textCursor();
+
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Bold);
+    format.setFontPointSize(14);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+}
+
+
+void MainWindow::on_actionHeading_4_triggered()
+{
+
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Bold);
+    format.setFontPointSize(12);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+}
+
+
+void MainWindow::on_actionHeading_5_triggered()
+{
+
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Bold);
+    format.setFontPointSize(11);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+}
+
+
+void MainWindow::on_actionHeading_6_triggered()
+{
+
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Normal);
+    //format.setItalic(true);
+    format.setFontPointSize(10);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+}
+
+
+void MainWindow::on_actionNormal_Text_triggered()
+{
+
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Normal);
+    format.setFontPointSize(currentFontSize);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+ }
 

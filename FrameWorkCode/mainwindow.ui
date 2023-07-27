@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1935</width>
+    <width>2028</width>
     <height>1190</height>
    </rect>
   </property>
@@ -796,8 +796,8 @@ p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
 li.unchecked::marker { content: &quot;\2610&quot;; }
 li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Cantarell'; font-size:20pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:20pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="acceptRichText">
           <bool>true</bool>
@@ -1154,8 +1154,8 @@ background: grey;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1935</width>
-     <height>48</height>
+     <width>2028</width>
+     <height>46</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1370,10 +1370,10 @@ QMenu::item:selected{
     <widget class="QMenu" name="menuAlign_and_Indent">
      <property name="geometry">
       <rect>
-       <x>852</x>
+       <x>847</x>
        <y>206</y>
-       <width>209</width>
-       <height>353</height>
+       <width>214</width>
+       <height>344</height>
       </rect>
      </property>
      <property name="title">
@@ -1394,8 +1394,23 @@ QMenu::item:selected{
      </property>
      <addaction name="actionTwo_Column"/>
     </widget>
+    <widget class="QMenu" name="menuParagraph_Styles">
+     <property name="title">
+      <string>Paragraph Styles</string>
+     </property>
+     <addaction name="actionNormal_Text"/>
+     <addaction name="actionTitle"/>
+     <addaction name="actionSubtitle"/>
+     <addaction name="actionHeading_1"/>
+     <addaction name="actionHeading_2"/>
+     <addaction name="actionHeading_3"/>
+     <addaction name="actionHeading_4"/>
+     <addaction name="actionHeading_5"/>
+     <addaction name="actionHeading_6"/>
+    </widget>
     <addaction name="menuText"/>
     <addaction name="menuAlign_and_Indent"/>
+    <addaction name="menuParagraph_Styles"/>
     <addaction name="menuColumns"/>
     <addaction name="menuBullets_and_Numbering"/>
     <addaction name="separator"/>
@@ -2937,6 +2952,51 @@ background-color: #EEF0F2;
   <action name="actionUndo_Two_Column_view">
    <property name="text">
     <string>Undo Two Column view</string>
+   </property>
+  </action>
+  <action name="actionTitle">
+   <property name="text">
+    <string>Title</string>
+   </property>
+  </action>
+  <action name="actionSubtitle">
+   <property name="text">
+    <string>Subtitle</string>
+   </property>
+  </action>
+  <action name="actionHeading_1">
+   <property name="text">
+    <string>Heading 1</string>
+   </property>
+  </action>
+  <action name="actionHeading_2">
+   <property name="text">
+    <string>Heading 2</string>
+   </property>
+  </action>
+  <action name="actionHeading_3">
+   <property name="text">
+    <string>Heading 3</string>
+   </property>
+  </action>
+  <action name="actionHeading_4">
+   <property name="text">
+    <string>Heading 4</string>
+   </property>
+  </action>
+  <action name="actionHeading_5">
+   <property name="text">
+    <string>Heading 5</string>
+   </property>
+  </action>
+  <action name="actionHeading_6">
+   <property name="text">
+    <string>Heading 6</string>
+   </property>
+  </action>
+  <action name="actionNormal_Text">
+   <property name="text">
+    <string>Normal Text</string>
    </property>
   </action>
  </widget>
