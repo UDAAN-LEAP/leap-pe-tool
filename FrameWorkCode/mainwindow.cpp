@@ -91,6 +91,7 @@
 #include <QStandardPaths>
 #include <about.h>
 #include <QCalendarWidget>
+#include "qcustomplot.h"
 #ifdef Q_OS_WIN
 #include <quazip.h>
 #include <quazipfile.h>
@@ -12130,4 +12131,256 @@ void MainWindow::on_actionNormal_Text_triggered()
     cursor.mergeCharFormat(format);
     cursor.insertText(cursor.selectedText(), format);
  }
+
+
+void MainWindow::on_actionInsert_Line_Graph_triggered()
+{
+    QWidget* graphWidget = new QWidget();
+    graphWidget->setWindowTitle("Insert Line Graph");
+    QHBoxLayout* layout = new QHBoxLayout();
+
+    QLabel* numPointsLabel = new QLabel("Enter the number of points: ");
+    layout->addWidget(numPointsLabel);
+
+    QLineEdit* numPointsInput = new QLineEdit(graphWidget);
+    layout->addWidget(numPointsInput);
+
+    QCustomPlot* plotWidget = new QCustomPlot(graphWidget);
+
+    QPushButton* PlotButton = new QPushButton("Plot Graph", graphWidget);
+    layout->addWidget(PlotButton);
+
+    QPushButton* InsertButton = new QPushButton("Insert Graph", graphWidget);
+    layout->addWidget(InsertButton);
+
+    QVBoxLayout* mainLayout = new QVBoxLayout();
+    mainLayout->addLayout(layout);
+    mainLayout->addWidget(plotWidget);
+
+    connect(PlotButton, &QPushButton::clicked, [=](){
+        int numPoints = numPointsInput->text().toInt();
+        QVector<QPointF> points;
+
+        for(int i = 0; i < numPoints; i++) {
+            bool okX, okY;
+            double x, y;
+
+            QDialog dialog(graphWidget);
+            dialog.setWindowTitle("Enter Point " + QString::number(i+1));
+            QVBoxLayout* dialogLayout = new QVBoxLayout(&dialog);
+
+            QLabel* xLabel = new QLabel("X Coordinate: ");
+            QLineEdit* xLineEdit = new QLineEdit;
+            dialogLayout->addWidget(xLabel);
+            dialogLayout->addWidget(xLineEdit);
+
+            QLabel* yLabel = new QLabel("Y Coordinate: ");
+            QLineEdit* yLineEdit = new QLineEdit;
+            dialogLayout->addWidget(yLabel);
+            dialogLayout->addWidget(yLineEdit);
+
+            QPushButton* nextButton = new QPushButton("Next");
+            dialogLayout->addWidget(nextButton);
+
+            QObject::connect(nextButton, &QPushButton::clicked, &dialog, [&](){
+                x = xLineEdit->text().toDouble(&okX);
+                if(!okX) return;
+                y = yLineEdit->text().toDouble(&okY);
+                if(!okY) return;
+                dialog.accept();
+            });
+
+            QObject::connect(&dialog, &QDialog::accepted, [&](){
+                points.append(QPointF(x, y));
+            });
+
+            dialog.exec();
+        }
+
+        if(!points.isEmpty()){
+            plotWidget->clearGraphs();
+
+            plotWidget->addGraph();
+
+            QSharedPointer<QCPGraphDataContainer> dataContainer(new QCPGraphDataContainer);
+            for(const auto& point : points) {
+                dataContainer->add(QCPGraphData(point.x(), point.y()));
+            }
+            plotWidget->graph(0)->setData(dataContainer);
+
+            double minX = std::numeric_limits<double>::max();
+            double maxX = std::numeric_limits<double>::min();
+            double minY = std::numeric_limits<double>::max();
+            double maxY = std::numeric_limits<double>::min();
+
+            for(const auto& point : points) {
+                minX = std::min(minX, point.x());
+                maxX = std::max(maxX, point.x());
+                minY = std::min(minY, point.y());
+                maxY = std::max(maxY, point.y());
+            }
+
+            plotWidget->xAxis->setRange(minX - 1, maxX + 1);
+            plotWidget->yAxis->setRange(minY - 1, maxY + 1);
+
+            plotWidget->xAxis->setLabel("X");
+            plotWidget->xAxis->setLabel("Y");
+
+            plotWidget->replot();
+        }
+    });
+
+    connect(InsertButton, &QPushButton::clicked, [=](){
+        QString baseDir = mProject.GetDir().absolutePath() + "/Cropped_Images/";
+        QString graphDir = baseDir + "Graphs and Bars/";
+
+        QDir dir(graphDir);
+        if (!dir.exists()) {
+            if (!dir.mkpath(graphDir)) {
+                qDebug() << "Error, Failed to create the 'Graphs and Bars' directory.";
+                return;
+            }
+        }
+
+        int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
+
+        QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
+
+        QPixmap pixmap = plotWidget->toPixmap(plotWidget->width(), plotWidget->height());
+        if (!pixmap.save(fileName)) {
+            qDebug() << "Error, Failed to save the image as PNG.";
+        }
+        insertGraph(fileName);
+    });
+
+    graphWidget->setLayout(mainLayout);
+    graphWidget->resize(600, 600);
+    graphWidget->show();
+}
+
+
+void MainWindow::on_actionInsert_Histogram_triggered()
+{
+    QWidget* histogramWidget = new QWidget();
+    histogramWidget->setWindowTitle("Insert Histogram");
+    QHBoxLayout* layout = new QHBoxLayout();
+
+    QCustomPlot *plotWidget = new QCustomPlot(histogramWidget);
+
+    QPushButton* InsertButton = new QPushButton("Insert Graph");
+    layout->addWidget(InsertButton);
+
+    connect(InsertButton, &QPushButton::clicked, [=](){
+        QString baseDir = mProject.GetDir().absolutePath() + "/Cropped_Images/";
+        QString graphDir = baseDir + "Graphs and Bars/";
+
+        QDir dir(graphDir);
+        if (!dir.exists()) {
+            if (!dir.mkpath(graphDir)) {
+                qDebug() << "Error, Failed to create the 'Graphs and Bars' directory.";
+                return;
+            }
+        }
+
+        int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
+
+        QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
+
+        QPixmap pixmap = plotWidget->toPixmap(plotWidget->width(), plotWidget->height());
+        if (!pixmap.save(fileName)) {
+            qDebug() << "Error, Failed to save the image as PNG.";
+        }
+        insertGraph(fileName);
+    });
+
+    bool ok;
+    QString dataInput = QInputDialog::getText(histogramWidget, "Histogram Data", "Enter data (comma-separated value):", QLineEdit::Normal, "", &ok);
+
+    if(!ok) return;
+
+    QStringList dataStrList = dataInput.split(",");
+    QVector<double> data;
+    for(const QString &str : dataStrList) {
+        bool parseOk;
+        double value = str.toDouble(&parseOk);
+        if(parseOk){
+            data.append(value);
+        }
+        else{
+            return;
+        }
+    }
+
+    int numBins = QInputDialog::getInt(histogramWidget, "Histogram Bins", "Enter number of bins:", 10, 1, data.size(), 1, &ok);
+
+    if(!ok) return;
+
+    double dataMin = *std::min_element(data.constBegin(), data.constEnd());
+    double dataMax = *std::max_element(data.constBegin(), data.constEnd());
+    double binWidth = (dataMax - dataMin) / numBins;
+
+    QVector<double> binEdges(numBins+1);
+    QVector<double> binCounts(numBins);
+
+    for (double value : data) {
+        int binIndex = qBound(0, int((value - dataMin) / binWidth), numBins - 1);
+        binCounts[binIndex]++;
+    }
+
+    for(int i = 0; i <= numBins; i++){
+        binEdges[i] = dataMin + i * binWidth;
+    }
+
+    QCPBars* histogram = new QCPBars(plotWidget->xAxis, plotWidget->yAxis);
+    histogram->setWidth(binWidth);
+    histogram->setData(binEdges, binCounts);
+    plotWidget->xAxis->setLabel("Bins");
+    plotWidget->yAxis->setLabel("Frequency");
+    plotWidget->xAxis->setRange(0, dataMax);
+    plotWidget->yAxis->setRange(0, *std::max_element(binCounts.constBegin(), binCounts.constEnd()));
+
+    QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+    QVector<QString> binLabels(numBins);
+    for (int i = 0; i < numBins; ++i) {
+        binLabels[i] = QString::number(binEdges[i]) + " - " + QString::number(binEdges[i + 1]);
+        textTicker->addTick(binEdges[i] + binWidth / 2.0, binLabels[i]);
+    }
+
+    plotWidget->xAxis->setTicker(textTicker);
+
+    plotWidget->replot();
+
+    QVBoxLayout* mainLayout = new QVBoxLayout();
+    mainLayout->addLayout(layout);
+    mainLayout->addWidget(plotWidget);
+
+    histogramWidget->setLayout(mainLayout);
+    histogramWidget->resize(800, 600);
+    histogramWidget->show();
+}
+
+void MainWindow::insertGraph(const QString &graphFilePath)
+{
+    if (!QFile::exists(graphFilePath)) {
+        qDebug() << "Error: Graph file not found.";
+        return;
+    }
+
+    QImage image(graphFilePath);
+    if (image.isNull()) {
+        qDebug() << "Error: Unable to load graph image.";
+        return;
+    }
+
+    QPixmap pixmap = QPixmap::fromImage(image);
+
+    if (pixmap.isNull()) {
+        qDebug() << "Error: Unable to create QPixmap from image.";
+        return;
+    }
+
+    QString html = "<img src=\"" + graphFilePath + "\">";
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.insertHtml(html);
+}
 

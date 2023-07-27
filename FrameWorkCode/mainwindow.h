@@ -581,6 +581,12 @@ private slots:
 
     void on_actionNormal_Text_triggered();
 
+    void on_actionInsert_Line_Graph_triggered();
+
+    void on_actionInsert_Histogram_triggered();
+
+    void insertGraph(const QString& graphFilePath);
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

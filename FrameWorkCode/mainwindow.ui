@@ -1431,6 +1431,13 @@ QMenu::item:selected{
     <property name="title">
      <string>Insert</string>
     </property>
+    <widget class="QMenu" name="menuInsert_Graphs_and_Bars">
+     <property name="title">
+      <string>Insert Graphs and Bars</string>
+     </property>
+     <addaction name="actionInsert_Line_Graph"/>
+     <addaction name="actionInsert_Histogram"/>
+    </widget>
     <addaction name="actionImage"/>
     <addaction name="actionTable_2"/>
     <addaction name="actionInsert_Horizontal_Line"/>
@@ -1441,6 +1448,7 @@ QMenu::item:selected{
     <addaction name="actionLink"/>
     <addaction name="actionInsert_Tab_Space"/>
     <addaction name="actionComment"/>
+    <addaction name="menuInsert_Graphs_and_Bars"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="styleSheet">
@@ -2997,6 +3005,22 @@ background-color: #EEF0F2;
   <action name="actionNormal_Text">
    <property name="text">
     <string>Normal Text</string>
+   </property>
+  </action>
+  <action name="actionInsert_Line_Graph">
+   <property name="text">
+    <string>Insert Line Graph</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Line Graph</string>
+   </property>
+  </action>
+  <action name="actionInsert_Histogram">
+   <property name="text">
+    <string>Insert Histogram</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Histogram</string>
    </property>
   </action>
  </widget>
