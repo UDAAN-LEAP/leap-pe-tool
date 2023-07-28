@@ -12372,13 +12372,6 @@ void MainWindow::insertGraph(const QString &graphFilePath)
         return;
     }
 
-    QPixmap pixmap = QPixmap::fromImage(image);
-
-    if (pixmap.isNull()) {
-        qDebug() << "Error: Unable to create QPixmap from image.";
-        return;
-    }
-
     QString html = "<img src=\"" + graphFilePath + "\">";
     QTextCursor cursor = curr_browser->textCursor();
     cursor.insertHtml(html);
