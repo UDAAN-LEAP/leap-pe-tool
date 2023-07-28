@@ -587,6 +587,18 @@ private slots:
 
     void insertGraph(const QString& graphFilePath);
 
+    void on_actionBar_Plot_triggered();
+    void barPlotManual();
+    void barPlotCsv();
+
+    void on_actionScatter_Plot_triggered();
+    void scatterPlotManual();
+    void scatterPlotCsv();
+
+    void on_actionBox_Plot_triggered();
+    void boxPlotManual();
+    void boxPlotCsv();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
