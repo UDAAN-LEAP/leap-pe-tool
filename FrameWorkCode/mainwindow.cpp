@@ -7092,17 +7092,11 @@ void MainWindow::closeEvent (QCloseEvent *event)
     //QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
-    QString token = settings.value("token").toString();
     settings.endGroup();
-    if(email=="" && token=="")
+    if(email != "")
     {
-        QCoreApplication::quit();
-        return;
+        autoSave();
     }
-    autoSave();
-    QCoreApplication::quit();
-
-
 }
 
 /*!
