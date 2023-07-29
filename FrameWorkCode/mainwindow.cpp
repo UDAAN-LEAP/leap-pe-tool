@@ -2066,7 +2066,7 @@ void MainWindow::on_actionSave_As_triggered()
     }
 }
 
-map<string, int> wordLineIndex;
+//map<string, int> wordLineIndex;
 
 /*!
  * \fn MainWindow::on_actionSpell_Check_triggered
@@ -2080,100 +2080,75 @@ void MainWindow::on_actionSpell_Check_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
 
-    QString textBrowserText = curr_browser->toPlainText();
-    QChar ch;
-    ch=textBrowserText[1];
-    textBrowserText+=" ";
-    string str1=textBrowserText.toUtf8().constData();
+    QTextCharFormat fmt;
+    curr_browser->moveCursor(QTextCursor::Start);
+    QTextCursor cursor =curr_browser->textCursor(); //get the cursor
 
-    //! load number of words
-    istringstream iss1(str1);
-    size_t WordCount = 0;
-    string word1;
-    while(iss1 >> word1) WordCount++;
+    int position=cursor.position();
+    while(position< cursor.document()->characterCount()){
+        cursor.select(QTextCursor::WordUnderCursor);
+        fmt = cursor.charFormat();
+        QString str1 = cursor.selectedText();
+        auto sel = cursor.selection().toHtml();
+        if(!sel.contains("<img") && !str1.contains(QRegExp("[0-9]")) && !str1.contains(QRegExp("[a-zA-Z]")) && !str1.contains(QRegExp("[%!@#$^&*()]")) && !str1.contains(" ")   && !sel.isEmpty()){
 
-    //str1 = toslp1(str1);
-    istringstream iss(str1);
-    string strHtml = "<html><body>";
-    string line;
-
-    int value = 0;
-    while (getline(iss, line))
-    {
-        istringstream issw(line);
-        string word;
-
-        while(issw >> word)
-        {
+            string selectedString = str1.toUtf8().constData();
+            string wordNext;
             if(ConvertSlpDevFlag)
             {
-                string word1 = word;
-                word = slnp.toslp1(word);
-                string wordNext;
+                string word1 = selectedString;
+                selectedString = slnp.toslp1(selectedString);
+
                 if(slnp.hasM40PerAsci(word1))
                 {
                     wordNext = word1;
                 }
                 else
                 {
-                    wordNext = slnp.toDev(word);
+                    wordNext = slnp.toDev(selectedString);
                 }
-                strHtml += wordNext; strHtml += " ";
-                value ++;
+
             }
             else
             {
-                string word1 = word;
-                word = slnp.toslp1(word);
-                string wordNext;
+                string word1 = selectedString;
+                selectedString = slnp.toslp1(selectedString);
+                //string wordNext;
                 //! checks if the word exists in the English language, Seconday OCR, Pwords, Dict and CPair; convert its color coding
                 if(slnp.hasM40PerAsci(word1))
                     wordNext = word1;
 
-                else if(GBook[(word)] > 0 )
+                else if(GBook[(selectedString)] > 0 )
                 {
-                    wordNext = slnp.toDev(word);
-                    PWords[word]++;
+                    wordNext = slnp.toDev(selectedString);
+                    PWords[selectedString]++;
                 }
 
-                else if(PWords[word] > 0)
+                else if(PWords[selectedString] > 0)
                 {
-                    wordNext = "<font color=\'gray\'>" + slnp.toDev(word) + "</font>";
+                    wordNext = "<font color=\'gray\'>" + slnp.toDev(selectedString) + "</font>";
                 }
-                else if((Dict[word] ==0) && (PWords[word] == 0) && (CPair[word].size() > 0))
+                else if((Dict[selectedString] ==0) && (PWords[selectedString] == 0) && (CPair[selectedString].size() > 0))
                 {
-                    wordNext = "<font color=\'purple\'>" + slnp.toDev(CPair[word]) + "</font>";
+                    wordNext = "<font color=\'purple\'>" + slnp.toDev(CPair[selectedString]) + "</font>";
                 }
                 else
                 {
-                    wordNext = slnp.findDictEntries(slnp.toslp1(word),Dict,PWords, word.size());     //replace m1 with m2,m1 for combined search
+                    wordNext = slnp.findDictEntries(slnp.toslp1(selectedString),Dict,PWords, selectedString.size());     //replace m1 with m2,m1 for combined search
                     wordNext = slnp.find_and_replace_oddInstancesblue(wordNext);
                     wordNext = slnp.find_and_replace_oddInstancesorange(wordNext);
                 }
-                strHtml += wordNext;
-                strHtml += " ";
-                value ++;
             }
+            cursor.mergeCharFormat(fmt);
+            cursor.insertHtml(QString::fromStdString(wordNext));
         }
-        strHtml +="<br>";  // To add new line
-    }
-    strHtml += "</body></html>";
-    curr_browser->setHtml(QString::fromStdString(strHtml));
-
-    str1=textBrowserText.toUtf8().constData();
-
-    istringstream iss2(str1);
-    size_t WordCount2 = 0;
-
-    //! clean(word) instead of word
-    while (getline(iss2, line))
-    {
-        istringstream issw(line);
-        string word;
-        while(issw >> word)
-        {
-            wordLineIndex[(word + "###" + line)] = WordCount2; WordCount2++;
+        if(sel.contains("<img") || str1.isEmpty()) position++;
+        else{
+            position += str1.size()+1;
         }
+        if(position >= cursor.document()->characterCount())
+            break;
+        cursor.setPosition(position);
     }
 
 }
