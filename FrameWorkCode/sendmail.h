@@ -12,7 +12,7 @@ class sendMail : public QDialog
     Q_OBJECT
 
 public:
-    explicit sendMail(QString * send_from,QString * send_to , QString * password , QWidget *parent = nullptr);
+    explicit sendMail(QString * send_to , QWidget *parent = nullptr);
     ~sendMail();
 
 private slots:
@@ -21,9 +21,7 @@ private slots:
 
 private:
     Ui::sendMail *ui;
-    QString * from;
     QString * to;
-    QString * password;
 };
 
 #endif // SENDMAIL_H

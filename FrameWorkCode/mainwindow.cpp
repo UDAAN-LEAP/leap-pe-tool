@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "dashboard.h"
 #include"column_width.h"
 #include"word_count.h"
@@ -11821,35 +11821,79 @@ void MainWindow::on_sanButton_clicked()
 */
 void MainWindow::sendComment(QString str)
 {
+    QString comment_mail = "";
+    QString app_password = "";
+
     QSettings settings("IIT-B", "OpenOCRCorrect");
-    settings.beginGroup("Send Comment Mail");
-    QString send_from = settings.value("send_from", "").toString();
-    QString send_to = settings.value("send_to", "").toString();
-    QString password = settings.value("password", "").toString();
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
     settings.endGroup();
 
-    if(send_from == "" || send_to == "" || password == "")
-    {
-        sendMail * mail = new sendMail(&send_from, &send_to, &password, this);
-        mail->exec();
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QUrl url("https://udaaniitb.aicte-india.org/udaan/email/");
+    QUrlQuery params;
+    params.addQueryItem("email", email);
+    params.addQueryItem("password", token);
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    manager->post(request, params.toString(QUrl::FullyEncoded).toUtf8());
+    QEventLoop loop;
+    connect(manager, &QNetworkAccessManager::finished, this, [=, &loop, &comment_mail, &app_password](QNetworkReply *reply) {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            QJsonParseError errorPtr;
+            QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+            QJsonObject mainObj = document.object();
+            comment_mail = mainObj.value("comment_email").toString();
+            app_password = mainObj.value("app_password").toString();
+
+            loop.quit();
+        } else {
+            qDebug() << "Error:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+    loop.exec();
+
+    QString send_to = "";
+
+    settings.beginGroup("Comment Mail");
+    QString book = settings.value("book").toString();
+    QString Send_To = settings.value("Send_To").toString();
+
+    if(book != gCurrentBookName){
+        book = gCurrentBookName;
+        Send_To = "";
+    }
+    else{
+        send_to = Send_To;
     }
 
-    if(send_from == "" || send_to == "" || password == "") return;
-    else{
-        QSettings settings("IIT-B", "OpenOCRCorrect");
-        settings.beginGroup("Send Comment Mail");
-        settings.setValue("send_from", send_from);
-        settings.setValue("send_to", send_to);
-        settings.setValue("password", password);
-        settings.endGroup();
+    if(send_to == ""){
+        sendMail * send = new sendMail(&send_to);
+        send->exec();
     }
+    if(send_to != ""){
+        settings.setValue("book", book);
+        settings.setValue("Send_To", send_to);
+    }
+    settings.endGroup();
+
 
     SimpleMail::Sender sender ("smtp.gmail.com", 465, SimpleMail::Sender::SslConnection);
-    sender.setUser(send_from);
-    sender.setPassword(password);
+    sender.setUser(comment_mail);
+    sender.setPassword(app_password);
     SimpleMail::MimeMessage message;
-    message.setSender(SimpleMail::EmailAddress(send_from, mRole + " " + "from Akshar Anveshini"));
+    message.setSender(SimpleMail::EmailAddress(comment_mail, mRole + " " + "from Akshar Anveshini"));
 
+    if(send_to == ""){
+        return;
+    }
     QList <SimpleMail::EmailAddress> listRecipients;
     listRecipients.append(send_to);
     message.setToRecipients(listRecipients);
@@ -11884,10 +11928,11 @@ void MainWindow::sendComment(QString str)
                                             <tr>
                                                 <td align="left" bgcolor="#ffffff" style="padding:24px;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;border-radius:0 0 2px 2px">
                                                     <p style="margin:0">
-                                                        There is comment added for your Document DOCNAME is complete
+                                                        There is comment added for your Document DOCNAME.
                                                         <br>
-                                                        The comment is added on page number :-> PAGENO
-                                                        Comment :-> COMMENT
+                                                        The comment is added on page number :-> <b>PAGENO</b>
+                                                        <br>
+                                                        Comment :-> <b>COMMENT</b>
                                                     </p>
                                                 </td>
                                             </tr>

@@ -5,14 +5,12 @@
  * \class sendMail
  * This class asked user the info required for sending email
 */
-sendMail::sendMail(QString * send_from ,QString * send_to , QString * password, QWidget *parent) :
+sendMail::sendMail(QString * send_to , QWidget *parent) :
     QDialog(parent),
     ui(new Ui::sendMail)
 {
     ui->setupUi(this);
-    this->from = send_from;
     this->to = send_to;
-    this->password = password;
 }
 
 sendMail::~sendMail()
@@ -27,9 +25,7 @@ sendMail::~sendMail()
 */
 void sendMail::on_send_comment_clicked()
 {
-    *(this->from) = ui->send_from->text();
     *(this->to) = ui->send_to->text();
-    *(this->password) = ui->mail_password->text();
     this->close();
 }
 
