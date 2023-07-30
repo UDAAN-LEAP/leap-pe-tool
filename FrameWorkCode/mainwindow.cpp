@@ -4186,7 +4186,28 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         {
             if(curr_browser != NULL){
 
-                curr_browser->setStyleSheet("CustomTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}");
+                curr_browser->setStyleSheet(R"(CustomTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}QScrollBar:vertical {
+                                            border: none;
+                                            background: white;
+                                        }
+QScrollBar::handle:vertical {
+                                            background-color:  rgba(1, 22, 51, 0.5);
+                                            min-height: 50px;
+                                              max-height: 300px;
+                                                    border: 0px solid red;
+                                                    border-radius:4.905px;
+                                        }
+QScrollBar::add-line:vertical {
+                        height: 0px;
+                        subcontrol-position: bottom;
+                        subcontrol-origin: margin;
+
+                    }
+QScrollBar::sub-line:vertical {
+                        height: 0 px;
+                        subcontrol-position: top;
+                        subcontrol-origin: margin;
+                    })");
             }
         }
     }
@@ -6411,6 +6432,28 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 
     //    curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
     defaultStyle = curr_browser->styleSheet();
+    defaultStyle += R"(QScrollBar:vertical {
+                                            border: none;
+                                            background: white;
+                                        }
+QScrollBar::handle:vertical {
+                                            background-color:  rgba(1, 22, 51, 0.5);
+                                            min-height: 50px;
+                                              max-height: 300px;
+                                                    border: 0px solid red;
+                                                    border-radius:4.905px;
+                                        }
+QScrollBar::add-line:vertical {
+                        height: 0px;
+                        subcontrol-position: bottom;
+                        subcontrol-origin: margin;
+
+                    }
+QScrollBar::sub-line:vertical {
+                        height: 0 px;
+                        subcontrol-position: top;
+                        subcontrol-origin: margin;
+                    })";
     curr_browser->setDocument(b->document()->clone(curr_browser));
     curr_browser->document()->clearUndoRedoStacks();
 
@@ -8021,8 +8064,28 @@ void MainWindow::readSettings()
     pos1=map[gCurrentPageName];
     //qDebug()<<"pos1"<<pos1;
     myFile.close();
-    curr_browser->setStyleSheet("CustomTextBrowser{selection-background-color: #ffa500; selection-color: #ffffff;}");
+    curr_browser->setStyleSheet(R"(CustomTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}QScrollBar:vertical {
+                                border: none;
+                                background: white;
+                            }
+QScrollBar::handle:vertical {
+                                background-color:  rgba(1, 22, 51, 0.5);
+                                min-height: 50px;
+                                  max-height: 300px;
+                                        border: 0px solid red;
+                                        border-radius:4.905px;
+                            }
+QScrollBar::add-line:vertical {
+            height: 0px;
+            subcontrol-position: bottom;
+            subcontrol-origin: margin;
 
+        }
+QScrollBar::sub-line:vertical {
+            height: 0 px;
+            subcontrol-position: top;
+            subcontrol-origin: margin;
+        })");
     auto cursor = curr_browser->textCursor();
     cursor.setPosition(pos1);
     cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
