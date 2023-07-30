@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "dashboard.h"
 #include"column_width.h"
 #include"word_count.h"
@@ -91,6 +91,8 @@
 #include <QStandardPaths>
 #include <about.h>
 #include <QCalendarWidget>
+#include <SimpleMail/SimpleMail>
+#include <sendmail.h>
 #ifdef Q_OS_WIN
 #include <quazip.h>
 #include <quazipfile.h>
@@ -103,7 +105,7 @@ map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPair
 trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
 vector<string> vGBook,vIBook;
 QImage imageOrig;
-QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName;
+QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName, gCurrentBookName;
 map<QString, QString> gInitialTextHtml;
 QString gTimeLogLocation;
 map<QString, int> timeLog;
@@ -1638,6 +1640,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     readCommentLogs();
 
     QMessageBox::information(0, "Success", "Project opened successfully.");
+    QStringList list = gDirTwoLevelUp.split('/');
+    gCurrentBookName = list[list.size()-1];
 
     // Enabling the buttons again after a project is opened
     e_d_features(true);
@@ -9746,9 +9750,42 @@ void MainWindow::speechToTextCall()
         enc = ui->comboBox->itemData(idx).toString();
     QByteArray audioData=audioFile.readAll();
 
+    QString speechKey;
+
+    QNetworkAccessManager* manager = new QNetworkAccessManager();
+    QUrl url_("https://udaaniitb.aicte-india.org/udaan/email/");
+
+    QByteArray postData;
+    postData.append("username=username&password=password");
+
+    QNetworkRequest request1(url_);
+    request1.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    // Disable SSL certificate verification
+    QSslConfiguration sslConfig = request1.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request1.setSslConfiguration(sslConfig);
+    QNetworkReply* reply = manager->post(request1, postData);
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, [=, &loop, &speechKey]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            QJsonParseError errorPtr;
+            QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+            QJsonObject mainObj = document.object();
+            speechKey = mainObj.value("speech_key").toString();
+
+            loop.quit();
+        } else {
+            qDebug() << "Error:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+    loop.exec();
+
     QUrl url("https://speech.googleapis.com/v1/speech:recognize");
     QUrlQuery query;
-    query.addQueryItem("key","AIzaSyAxmEOabgIUU5oM4spTNC0yL9oJoCyhpBE");
+    query.addQueryItem("key",speechKey);
     url.setQuery(query);
     QNetworkRequest request(url);
 #ifdef Q_OS_WIN
@@ -9772,8 +9809,8 @@ void MainWindow::speechToTextCall()
     json["audio"]=audio;
     QByteArray jsonData=QJsonDocument(json).toJson();
 
-    QNetworkAccessManager *manager=new QNetworkAccessManager();
-    QNetworkReply *reply=manager->post(request,jsonData);
+    manager=new QNetworkAccessManager();
+    reply=manager->post(request,jsonData);
 
     QObject::connect(reply,&QNetworkReply::finished,[this,reply](){
         if(reply->error()!=QNetworkReply::NoError){
@@ -11577,6 +11614,7 @@ void MainWindow::on_actionComment_triggered()
     if(str == "") return;
 
     writeCommentLogs(text,str);
+    sendComment(str);
 }
 
 /*!
@@ -12161,5 +12199,173 @@ void MainWindow::on_actionNormal_Text_triggered()
     format.setFontPointSize(currentFontSize);
     cursor.mergeCharFormat(format);
     cursor.insertText(cursor.selectedText(), format);
- }
+}
 
+/*!
+ * \fn MainWindow::sendMail
+ * \brief This will send a mail to the respective corrector or verifier
+*/
+void MainWindow::sendComment(QString str)
+{
+    QString comment_mail = "";
+    QString app_password = "";
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
+    settings.endGroup();
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QUrl url("https://udaaniitb.aicte-india.org/udaan/email/");
+    QUrlQuery params;
+    params.addQueryItem("email", email);
+    params.addQueryItem("password", token);
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    manager->post(request, params.toString(QUrl::FullyEncoded).toUtf8());
+    QEventLoop loop;
+    connect(manager, &QNetworkAccessManager::finished, this, [=, &loop, &comment_mail, &app_password](QNetworkReply *reply) {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            QJsonParseError errorPtr;
+            QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+            QJsonObject mainObj = document.object();
+            comment_mail = mainObj.value("comment_email").toString();
+            app_password = mainObj.value("app_password").toString();
+
+            loop.quit();
+        } else {
+            qDebug() << "Error:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+    loop.exec();
+
+    QString send_to = "";
+
+    settings.beginGroup("Comment Mail");
+    QString book = settings.value("book").toString();
+    QString Send_To = settings.value("Send_To").toString();
+
+    if(book != gCurrentBookName){
+        book = gCurrentBookName;
+        Send_To = "";
+    }
+    else{
+        send_to = Send_To;
+    }
+
+    if(send_to == ""){
+        sendMail * send = new sendMail(&send_to);
+        send->exec();
+    }
+    if(send_to != ""){
+        settings.setValue("book", book);
+        settings.setValue("Send_To", send_to);
+    }
+    settings.endGroup();
+
+
+    SimpleMail::Sender sender ("smtp.gmail.com", 465, SimpleMail::Sender::SslConnection);
+    sender.setUser(comment_mail);
+    sender.setPassword(app_password);
+    SimpleMail::MimeMessage message;
+    message.setSender(SimpleMail::EmailAddress(comment_mail, mRole + " " + "from Akshar Anveshini"));
+
+    if(send_to == ""){
+        return;
+    }
+    QList <SimpleMail::EmailAddress> listRecipients;
+    listRecipients.append(send_to);
+    message.setToRecipients(listRecipients);
+    message.setSubject("Comment added");
+    SimpleMail::MimeHtml *text = new SimpleMail::MimeHtml();
+
+    QString page = gCurrentPageName;
+    page.replace(".html", "");
+    QString msg = R"(<html><head></head><body>
+                <div style="background-color:#e9ecef">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tbody>
+                            <tr>
+                                <td align="center" bgcolor="#e9ecef">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px">
+                                        <tbody>
+                                            <tr>
+                                                <td align="left" bgcolor="#ffffff" style="padding:36px 24px 0;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;border-top:3px solid #d4dadf">
+                                                    <h1 style="margin:0;font-size:32px;font-weight:700;letter-spacing:-1px;line-height:48px">
+                                                        Dear MROLE,
+                                                    </h1>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" bgcolor="#e9ecef">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px">
+                                        <tbody>
+                                            <tr>
+                                                <td align="left" bgcolor="#ffffff" style="padding:24px;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;border-radius:0 0 2px 2px">
+                                                    <p style="margin:0">
+                                                        There is comment added for your Document DOCNAME.
+                                                        <br>
+                                                        The comment is added on page number :-> <b>PAGENO</b>
+                                                        <br>
+                                                        Comment :-> <b>COMMENT</b>
+                                                    </p>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td align="left" bgcolor="#ffffff" style="padding:24px;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;border-bottom:3px solid #d4dadf">
+                                                    <p style="margin:0">
+                                                        Regards,<br>
+                                                        Project UDAAN
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="center" bgcolor="#e9ecef" style="padding:24px">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center" bgcolor="#e9ecef" style="padding:12px 24px;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#666">
+                                                    <p style="margin:0">
+                                                        Feel free to reach out to us at <a href="mailto:udaanprojectiitb@gmail.com" rel="noreferrer" target="_blank">udaanprojectiitb@gmail.com</a>.
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </body></html>)";
+
+    msg.replace("MROLE",mRole);
+    msg.replace("PAGENO", gCurrentPageName);
+    msg.replace("DOCNAME" , gCurrentBookName);
+    msg.replace("COMMENT", str);
+
+    text->setHtml(msg);
+    if(str == "") return;
+
+    message.addPart(text);
+    if(!sender.sendMail(message))
+        qDebug()<<"Not sent";
+    else qDebug()<<"Sent";
+}

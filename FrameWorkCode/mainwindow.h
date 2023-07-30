@@ -553,6 +553,7 @@ private slots:
    // void showComments();
     void deleteComment();
     void readCommentLogs();
+    void sendComment(QString str);
 
 
     void on_actionUndo_Two_Column_view_triggered();
