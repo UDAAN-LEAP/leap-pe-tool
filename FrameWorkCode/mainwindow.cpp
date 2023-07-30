@@ -96,7 +96,8 @@
 #include <quazip.h>
 #include <quazipfile.h>
 #endif
-
+#include <QtCharts>
+QT_CHARTS_USE_NAMESPACE
 
 
 map<string, string> LSTM;
@@ -12231,8 +12232,7 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
     });
 
     connect(InsertButton, &QPushButton::clicked, [=](){
-        QString baseDir = mProject.GetDir().absolutePath() + "/Cropped_Images/";
-        QString graphDir = baseDir + "Graphs and Bars/";
+        QString graphDir = "../Cropped_Images/Graphs and Bars/";
 
         QDir dir(graphDir);
         if (!dir.exists()) {
@@ -12250,7 +12250,10 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
         if (!pixmap.save(fileName)) {
             qDebug() << "Error, Failed to save the image as PNG.";
         }
-        insertGraph(fileName);
+        else{
+            insertGraph(fileName);
+            QMessageBox::information(this, "Line Graph Inserted", "Line Graph data inserted successfully!");
+        }
     });
 
     graphWidget->setLayout(mainLayout);
@@ -12271,8 +12274,7 @@ void MainWindow::on_actionInsert_Histogram_triggered()
     layout->addWidget(InsertButton);
 
     connect(InsertButton, &QPushButton::clicked, [=](){
-        QString baseDir = mProject.GetDir().absolutePath() + "/Cropped_Images/";
-        QString graphDir = baseDir + "Graphs and Bars/";
+        QString graphDir = "../Cropped_Images/Graphs and Bars/";
 
         QDir dir(graphDir);
         if (!dir.exists()) {
@@ -12290,7 +12292,10 @@ void MainWindow::on_actionInsert_Histogram_triggered()
         if (!pixmap.save(fileName)) {
             qDebug() << "Error, Failed to save the image as PNG.";
         }
-        insertGraph(fileName);
+        else{
+            insertGraph(fileName);
+            QMessageBox::information(this, "Histogram Inserted", "Histogram data inserted successfully!");
+        }
     });
 
     bool ok;
@@ -13247,3 +13252,93 @@ void MainWindow::boxPlotCsv(){
     dialog.exec();
 
 }
+
+void MainWindow::on_actionInsert_Pie_Chart_triggered()
+{
+    bool validSliceCount;
+    int sliceCount = QInputDialog::getInt(this, "Enter Number of Slices", "Number of Slices:", 1, 1, 100, 1, &validSliceCount);
+
+    if (!validSliceCount)
+        return;
+
+    QPieSeries* series = new QPieSeries();
+
+    for (int i = 0; i < sliceCount; i++)
+    {
+        bool isValidData = false;
+        do
+        {
+            bool ok;
+            QString label = QInputDialog::getText(this, "Enter Slice Details", QString("Enter Label and Value for Slice %1 (separated by comma):").arg(i + 1), QLineEdit::Normal, "", &ok);
+
+            if (!ok) return;
+
+            QStringList parts = label.split(',');
+            if (parts.size() != 2)
+            {
+                QMessageBox::critical(this, "Invalid Input", "Invalid data entered. The input should be in the format: label, value.");
+            }
+            else
+            {
+                QString trimmedLabel = parts[0].trimmed();
+                double value = parts[1].trimmed().toDouble(&ok);
+                if (!ok || trimmedLabel.isEmpty() || value <= 0.0)
+                {
+                    QMessageBox::critical(this, "Invalid Input", "Invalid data entered. The value should be a positive number.");
+                }
+                else
+                {
+                    series->append(trimmedLabel, value);
+                    isValidData = true;
+                }
+            }
+        } while (!isValidData);
+    }
+
+    QWidget* pieChartWidget = new QWidget();
+    pieChartWidget->setWindowTitle("Insert Pie Chart");
+
+    QChart* chart = new QChart();
+    chart->setTitle("Pie Chart");
+    chart->addSeries(series);
+    series->setLabelsVisible();
+    chart->legend()->show();
+
+    QChartView* chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing, true);
+
+    QVBoxLayout* mainLayout = new QVBoxLayout();
+    mainLayout->addWidget(chartView);
+
+    QPushButton* insertButton = new QPushButton("Insert", this);
+    mainLayout->addWidget(insertButton);
+
+    connect(insertButton, &QPushButton::clicked, [this, series, chartView]() {
+        QString graphDir = "../Cropped_Images/Graphs and Bars/";
+
+        QDir dir(graphDir);
+        if (!dir.exists()) {
+            if (!dir.mkpath(graphDir)) {
+                qDebug() << "Error, Failed to create the 'Graphs and Bars' directory.";
+                return;
+            }
+        }
+
+        int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
+
+        QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
+        QPixmap pixmap = chartView->grab();
+        if(!pixmap.save(fileName)){
+            qDebug() << "Error, Failed to save the image as PNG.";
+        }
+        else{
+            insertGraph(fileName);
+            QMessageBox::information(this, "Pie Chart Inserted", "Pie chart data inserted successfully!");
+        }
+    });
+
+    pieChartWidget->setLayout(mainLayout);
+    pieChartWidget->resize(600, 600);
+    pieChartWidget->show();
+}
+

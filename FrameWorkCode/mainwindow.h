@@ -599,6 +599,8 @@ private slots:
     void boxPlotManual();
     void boxPlotCsv();
 
+    void on_actionInsert_Pie_Chart_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

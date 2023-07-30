@@ -1440,6 +1440,7 @@ QMenu::item:selected{
      <addaction name="actionBar_Plot"/>
      <addaction name="actionScatter_Plot"/>
      <addaction name="actionBox_Plot"/>
+     <addaction name="actionInsert_Pie_Chart"/>
     </widget>
     <addaction name="actionImage"/>
     <addaction name="actionTable_2"/>
@@ -3039,6 +3040,14 @@ background-color: #EEF0F2;
   <action name="actionBox_Plot">
    <property name="text">
     <string>Box Plot</string>
+   </property>
+  </action>
+  <action name="actionInsert_Pie_Chart">
+   <property name="text">
+    <string>Pie Chart</string>
+   </property>
+   <property name="toolTip">
+    <string>Pie Chart</string>
    </property>
   </action>
  </widget>
