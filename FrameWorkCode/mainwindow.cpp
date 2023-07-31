@@ -12356,7 +12356,9 @@ void MainWindow::sendComment(QString str)
                 </div>
             </body></html>)";
 
-    msg.replace("MROLE",mRole);
+    if(mRole == "Corrector" )msg.replace("MROLE","Verifier");
+    else if(mRole == "Verifier") msg.replace("MROLE","Corrector");
+    else msg.replace("MROLE", "User");
     msg.replace("PAGENO", gCurrentPageName);
     msg.replace("DOCNAME" , gCurrentBookName);
     msg.replace("COMMENT", str);
