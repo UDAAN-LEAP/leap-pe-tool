@@ -12140,6 +12140,10 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
     graphWidget->setWindowTitle("Insert Line Graph");
     QHBoxLayout* layout = new QHBoxLayout();
 
+    QPushButton* InfoButton = new QPushButton();
+    InfoButton->setIcon(QIcon(":/Images/Resources/information.png"));
+    layout->addWidget(InfoButton);
+
     QLabel* numPointsLabel = new QLabel("Enter the number of points: ");
     layout->addWidget(numPointsLabel);
 
@@ -12148,10 +12152,10 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
 
     QCustomPlot* plotWidget = new QCustomPlot(graphWidget);
 
-    QPushButton* PlotButton = new QPushButton("Plot Graph", graphWidget);
+    QPushButton* PlotButton = new QPushButton("Plot Line Graph", graphWidget);
     layout->addWidget(PlotButton);
 
-    QPushButton* InsertButton = new QPushButton("Insert Graph", graphWidget);
+    QPushButton* InsertButton = new QPushButton("Insert Line Graph", graphWidget);
     layout->addWidget(InsertButton);
 
     QVBoxLayout* mainLayout = new QVBoxLayout();
@@ -12246,14 +12250,32 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
 
         QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
 
+        bool ok;
+
         QPixmap pixmap = plotWidget->toPixmap(plotWidget->width(), plotWidget->height());
         if (!pixmap.save(fileName)) {
             qDebug() << "Error, Failed to save the image as PNG.";
         }
         else{
-            insertGraph(fileName);
-            QMessageBox::information(this, "Line Graph Inserted", "Line Graph data inserted successfully!");
+            insertGraph(fileName, ok);
+            if(ok){
+                QMessageBox::information(this, "Line Graph Inserted", "Line Graph data inserted successfully!");
+            }
+            else{
+                QMessageBox::critical(this, "Error", "Could not insert Line graph data!");
+            }
         }
+    });
+
+    connect(InfoButton, &QPushButton::clicked, [=](){
+        QString instructions = "To use this function, follow these steps:\n\n"
+                               "1. Enter the number of points for the line graph.\n"
+                               "2. Click 'Plot Graph' to enter the points.\n"
+                               "3. For each point, enter the X and Y coordinates and click 'Next'.\n"
+                               "4. After all the points have been added, the graph will be plotted.\n"
+                               "5. Click 'Insert Line Graph' to save the graph image, and insert it.\n\n"
+                               "Note: The Line Graph image will be saved in the 'Graphs and Bars' directory.";
+        QMessageBox::information(graphWidget, "Instructions", instructions, QMessageBox::Ok);
     });
 
     graphWidget->setLayout(mainLayout);
@@ -12270,7 +12292,7 @@ void MainWindow::on_actionInsert_Histogram_triggered()
 
     QCustomPlot *plotWidget = new QCustomPlot(histogramWidget);
 
-    QPushButton* InsertButton = new QPushButton("Insert Graph");
+    QPushButton* InsertButton = new QPushButton("Insert Histogram");
     layout->addWidget(InsertButton);
 
     connect(InsertButton, &QPushButton::clicked, [=](){
@@ -12287,99 +12309,143 @@ void MainWindow::on_actionInsert_Histogram_triggered()
         int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
 
         QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
+        bool ok;
 
         QPixmap pixmap = plotWidget->toPixmap(plotWidget->width(), plotWidget->height());
         if (!pixmap.save(fileName)) {
             qDebug() << "Error, Failed to save the image as PNG.";
         }
         else{
-            insertGraph(fileName);
-            QMessageBox::information(this, "Histogram Inserted", "Histogram data inserted successfully!");
+            insertGraph(fileName, ok);
+            if(ok){
+                QMessageBox::information(this, "Histogram Inserted", "Histogram data inserted successfully!");
+            }
+            else{
+                QMessageBox::critical(this, "Error", "Could not insert Histogram data!");
+            }
         }
     });
 
-    bool ok;
-    QString dataInput = QInputDialog::getText(histogramWidget, "Histogram Data", "Enter data (comma-separated value):", QLineEdit::Normal, "", &ok);
+    QDialog dialog(this);
+    dialog.setWindowTitle("Histogram Data");
+    QHBoxLayout* dialogLayout1 = new QHBoxLayout();
+    QVBoxLayout* mainDialogLayout = new QVBoxLayout();
 
-    if(!ok) return;
+    QLabel* dataLabel = new QLabel("Enter data (comma-separated value):", &dialog);
+    QLineEdit* dataLineEdit = new QLineEdit(&dialog);
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    QPushButton* InfoButton = new QPushButton();
+    InfoButton->setIcon(QIcon(":/Images/Resources/information.png"));
+    dialogLayout1->addWidget(InfoButton);
+    dialogLayout1->addWidget(dataLabel);
+    dialogLayout1->addWidget(dataLineEdit);
+    mainDialogLayout->addLayout(dialogLayout1);
+    mainDialogLayout->addWidget(&buttonBox);
+    dialog.setLayout(mainDialogLayout);
 
-    QStringList dataStrList = dataInput.split(",");
-    QVector<double> data;
-    for(const QString &str : dataStrList) {
-        bool parseOk;
-        double value = str.toDouble(&parseOk);
-        if(parseOk){
-            data.append(value);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+    connect(InfoButton, &QPushButton::clicked, [&](){
+        QString instructions = "To use this function, follow these steps:\n\n"
+                               "1. Enter the histogram data as comma-separated values. Each value should be a numerical data point.\n"
+                               "  * Example: 10, 15, 20, 25, 30\n\n"
+                               "2. Enter the number of bins for the histogram. Bins represent the number of intervals to divide the data range.\n"
+                               "  * The value should be greater than 0 and less than the total number of data points.\n"
+                               "  * A higher number of bins provide more detailed distribution information, but avoid using too many bins as it may cause clutter.\n\n"
+                               "3. Click 'Insert Histogram' to save the histogram image, and insert it.\n\n"
+                               "Note: The Histogram image will be saved in the 'Graphs and Bars' directory.";
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
+
+    if(dialog.exec() == QDialog::Accepted){
+        bool ok;
+        QString dataInput = dataLineEdit->text();
+
+        QStringList dataStrList = dataInput.split(",");
+        QVector<double> data;
+        for(const QString &str : dataStrList) {
+            bool parseOk;
+            double value = str.toDouble(&parseOk);
+            if(parseOk){
+                data.append(value);
+            }
+            else{
+                QMessageBox::critical(this, "Invalid Input", "Invalid data entered. Enter the histogram data as comma-separated values. Each value should be a numerical data point.");
+                return;
+            }
         }
-        else{
-            return;
+
+        int numBins = QInputDialog::getInt(this, "Histogram Bins", "Enter number of bins:", data.size(), 1, data.size(), 1, &ok);
+
+        if(!ok) return;
+
+        double dataMin = *std::min_element(data.constBegin(), data.constEnd());
+        double dataMax = *std::max_element(data.constBegin(), data.constEnd());
+        double binWidth = (dataMax - dataMin) / numBins;
+
+        QVector<double> binEdges(numBins+1);
+        QVector<double> binCounts(numBins);
+
+        for (double value : data) {
+            int binIndex = qBound(0, int((value - dataMin) / binWidth), numBins - 1);
+            binCounts[binIndex]++;
         }
+
+        for(int i = 0; i <= numBins; i++){
+            binEdges[i] = dataMin + i * binWidth;
+        }
+
+        QCPBars* histogram = new QCPBars(plotWidget->xAxis, plotWidget->yAxis);
+        histogram->setWidth(binWidth);
+        histogram->setData(binEdges, binCounts);
+        plotWidget->xAxis->setLabel("Bins");
+        plotWidget->yAxis->setLabel("Frequency");
+        plotWidget->xAxis->setRange(0, dataMax);
+        plotWidget->yAxis->setRange(0, *std::max_element(binCounts.constBegin(), binCounts.constEnd()));
+
+        QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+        QVector<QString> binLabels(numBins);
+        for (int i = 0; i < numBins; ++i) {
+            binLabels[i] = QString::number(binEdges[i]) + " - " + QString::number(binEdges[i + 1]);
+            textTicker->addTick(binEdges[i] + binWidth / 2.0, binLabels[i]);
+        }
+
+        plotWidget->xAxis->setTicker(textTicker);
+
+        plotWidget->replot();
+
+        QVBoxLayout* mainLayout = new QVBoxLayout();
+        mainLayout->addWidget(plotWidget);
+        mainLayout->addLayout(layout);
+
+        histogramWidget->setLayout(mainLayout);
+        histogramWidget->resize(800, 600);
+        histogramWidget->show();
     }
-
-    int numBins = QInputDialog::getInt(histogramWidget, "Histogram Bins", "Enter number of bins:", 10, 1, data.size(), 1, &ok);
-
-    if(!ok) return;
-
-    double dataMin = *std::min_element(data.constBegin(), data.constEnd());
-    double dataMax = *std::max_element(data.constBegin(), data.constEnd());
-    double binWidth = (dataMax - dataMin) / numBins;
-
-    QVector<double> binEdges(numBins+1);
-    QVector<double> binCounts(numBins);
-
-    for (double value : data) {
-        int binIndex = qBound(0, int((value - dataMin) / binWidth), numBins - 1);
-        binCounts[binIndex]++;
+    else{
+        return;
     }
-
-    for(int i = 0; i <= numBins; i++){
-        binEdges[i] = dataMin + i * binWidth;
-    }
-
-    QCPBars* histogram = new QCPBars(plotWidget->xAxis, plotWidget->yAxis);
-    histogram->setWidth(binWidth);
-    histogram->setData(binEdges, binCounts);
-    plotWidget->xAxis->setLabel("Bins");
-    plotWidget->yAxis->setLabel("Frequency");
-    plotWidget->xAxis->setRange(0, dataMax);
-    plotWidget->yAxis->setRange(0, *std::max_element(binCounts.constBegin(), binCounts.constEnd()));
-
-    QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
-    QVector<QString> binLabels(numBins);
-    for (int i = 0; i < numBins; ++i) {
-        binLabels[i] = QString::number(binEdges[i]) + " - " + QString::number(binEdges[i + 1]);
-        textTicker->addTick(binEdges[i] + binWidth / 2.0, binLabels[i]);
-    }
-
-    plotWidget->xAxis->setTicker(textTicker);
-
-    plotWidget->replot();
-
-    QVBoxLayout* mainLayout = new QVBoxLayout();
-    mainLayout->addLayout(layout);
-    mainLayout->addWidget(plotWidget);
-
-    histogramWidget->setLayout(mainLayout);
-    histogramWidget->resize(800, 600);
-    histogramWidget->show();
 }
 
-void MainWindow::insertGraph(const QString &graphFilePath)
+void MainWindow::insertGraph(const QString &graphFilePath, bool &status)
 {
     if (!QFile::exists(graphFilePath)) {
         qDebug() << "Error: Graph file not found.";
+        status = false;
         return;
     }
 
     QImage image(graphFilePath);
     if (image.isNull()) {
         qDebug() << "Error: Unable to load graph image.";
+        status = false;
         return;
     }
 
     QString html = "<img src=\"" + graphFilePath + "\">";
     QTextCursor cursor = curr_browser->textCursor();
     cursor.insertHtml(html);
+    status = true;
 }
 
 
@@ -13255,90 +13321,130 @@ void MainWindow::boxPlotCsv(){
 
 void MainWindow::on_actionInsert_Pie_Chart_triggered()
 {
-    bool validSliceCount;
-    int sliceCount = QInputDialog::getInt(this, "Enter Number of Slices", "Number of Slices:", 1, 1, 100, 1, &validSliceCount);
+    QDialog dialog(this);
+    dialog.setWindowTitle("Enter Number of Slices");
+    QHBoxLayout* dialogLayout1 = new QHBoxLayout();
+    QVBoxLayout* mainDialogLayout = new QVBoxLayout();
 
-    if (!validSliceCount)
-        return;
+    QLabel* sliceLabel = new QLabel("Number of Slices:", &dialog);
+    QLineEdit* sliceLineEdit = new QLineEdit(&dialog);
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    QPushButton* InfoButton = new QPushButton();
+    InfoButton->setIcon(QIcon(":/Images/Resources/information.png"));
+    dialogLayout1->addWidget(InfoButton);
+    dialogLayout1->addWidget(sliceLabel);
+    dialogLayout1->addWidget(sliceLineEdit);
+    mainDialogLayout->addLayout(dialogLayout1);
+    mainDialogLayout->addWidget(&buttonBox);
+    dialog.setLayout(mainDialogLayout);
 
-    QPieSeries* series = new QPieSeries();
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+    connect(InfoButton, &QPushButton::clicked, [&](){
+        QString instructions = "To use this function, follow these steps:\n\n"
+                               "1. Enter the number of slices for the pie chart. The value should be between 1 and 100.\n"
+                               "2. For each slice, enter the label and value in the format 'Label, Value'. The value should be a positive number.\n"
+                               "3. Click 'Insert Pie Chart' to save the Pie chart image, and insert it.\n\n"
+                               "Note: The Pie Chart image will be saved in the 'Graphs and Bars' directory.";
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
 
-    for (int i = 0; i < sliceCount; i++)
-    {
-        bool isValidData = false;
-        do
+    if(dialog.exec() == QDialog::Accepted){
+        bool ok;
+        int sliceCount = sliceLineEdit->text().toInt(&ok);
+        if(!ok || sliceCount > 100 || sliceCount < 1){
+            QMessageBox::critical(&dialog, "Invalid Input", "Please enter a valid integer between 1 and 100 for the number of slices.");
+            return;
+        }
+
+        QPieSeries* series = new QPieSeries();
+
+        for (int i = 0; i < sliceCount; i++)
         {
-            bool ok;
-            QString label = QInputDialog::getText(this, "Enter Slice Details", QString("Enter Label and Value for Slice %1 (separated by comma):").arg(i + 1), QLineEdit::Normal, "", &ok);
-
-            if (!ok) return;
-
-            QStringList parts = label.split(',');
-            if (parts.size() != 2)
+            bool isValidData = false;
+            do
             {
-                QMessageBox::critical(this, "Invalid Input", "Invalid data entered. The input should be in the format: label, value.");
-            }
-            else
-            {
-                QString trimmedLabel = parts[0].trimmed();
-                double value = parts[1].trimmed().toDouble(&ok);
-                if (!ok || trimmedLabel.isEmpty() || value <= 0.0)
+                bool ok;
+                QString label = QInputDialog::getText(this, "Enter Slice Details", QString("Enter Label and Value for Slice %1 (separated by comma):").arg(i + 1), QLineEdit::Normal, "", &ok);
+
+                if (!ok) return;
+
+                QStringList parts = label.split(',');
+                if (parts.size() != 2)
                 {
-                    QMessageBox::critical(this, "Invalid Input", "Invalid data entered. The value should be a positive number.");
+                    QMessageBox::critical(this, "Invalid Input", "Invalid data entered. The input should be in the format: label, value.");
                 }
                 else
                 {
-                    series->append(trimmedLabel, value);
-                    isValidData = true;
+                    QString trimmedLabel = parts[0].trimmed();
+                    double value = parts[1].trimmed().toDouble(&ok);
+                    if (!ok || trimmedLabel.isEmpty() || value <= 0.0)
+                    {
+                        QMessageBox::critical(this, "Invalid Input", "Invalid data entered. The value should be a positive number.");
+                    }
+                    else
+                    {
+                        series->append(trimmedLabel, value);
+                        isValidData = true;
+                    }
+                }
+            } while (!isValidData);
+        }
+
+        QWidget* pieChartWidget = new QWidget();
+        pieChartWidget->setWindowTitle("Insert Pie Chart");
+
+        QChart* chart = new QChart();
+        chart->setTitle("Pie Chart");
+        chart->addSeries(series);
+        series->setLabelsVisible();
+        chart->legend()->show();
+
+        QChartView* chartView = new QChartView(chart);
+        chartView->setRenderHint(QPainter::Antialiasing, true);
+
+        QVBoxLayout* mainLayout = new QVBoxLayout();
+        mainLayout->addWidget(chartView);
+
+        QPushButton* insertButton = new QPushButton("Insert Pie Chart", this);
+        mainLayout->addWidget(insertButton);
+
+        connect(insertButton, &QPushButton::clicked, [this, series, chartView]() {
+            QString graphDir = "../Cropped_Images/Graphs and Bars/";
+
+            QDir dir(graphDir);
+            if (!dir.exists()) {
+                if (!dir.mkpath(graphDir)) {
+                    qDebug() << "Error, Failed to create the 'Graphs and Bars' directory.";
+                    return;
                 }
             }
-        } while (!isValidData);
-    }
 
-    QWidget* pieChartWidget = new QWidget();
-    pieChartWidget->setWindowTitle("Insert Pie Chart");
+            int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
+            bool ok;
 
-    QChart* chart = new QChart();
-    chart->setTitle("Pie Chart");
-    chart->addSeries(series);
-    series->setLabelsVisible();
-    chart->legend()->show();
-
-    QChartView* chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing, true);
-
-    QVBoxLayout* mainLayout = new QVBoxLayout();
-    mainLayout->addWidget(chartView);
-
-    QPushButton* insertButton = new QPushButton("Insert", this);
-    mainLayout->addWidget(insertButton);
-
-    connect(insertButton, &QPushButton::clicked, [this, series, chartView]() {
-        QString graphDir = "../Cropped_Images/Graphs and Bars/";
-
-        QDir dir(graphDir);
-        if (!dir.exists()) {
-            if (!dir.mkpath(graphDir)) {
-                qDebug() << "Error, Failed to create the 'Graphs and Bars' directory.";
-                return;
+            QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
+            QPixmap pixmap = chartView->grab();
+            if(!pixmap.save(fileName)){
+                qDebug() << "Error, Failed to save the image as PNG.";
             }
-        }
+            else{
+                insertGraph(fileName, ok);
+                if(ok){
+                    QMessageBox::information(this, "Pie Chart Inserted", "Pie chart data inserted successfully!");
+                }
+                else{
+                    QMessageBox::critical(this, "Error", "Could not insert Pie chart data!");
+                }
+            }
+        });
 
-        int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
-
-        QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
-        QPixmap pixmap = chartView->grab();
-        if(!pixmap.save(fileName)){
-            qDebug() << "Error, Failed to save the image as PNG.";
-        }
-        else{
-            insertGraph(fileName);
-            QMessageBox::information(this, "Pie Chart Inserted", "Pie chart data inserted successfully!");
-        }
-    });
-
-    pieChartWidget->setLayout(mainLayout);
-    pieChartWidget->resize(600, 600);
-    pieChartWidget->show();
+        pieChartWidget->setLayout(mainLayout);
+        pieChartWidget->resize(600, 600);
+        pieChartWidget->show();
+    }
+    else{
+        return;
+    }
 }
 
