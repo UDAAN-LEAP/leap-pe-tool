@@ -12231,16 +12231,21 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
     });
 
     connect(InsertButton, &QPushButton::clicked, [=](){
-        QString baseDir = mProject.GetDir().absolutePath() + "/Cropped_Images/";
-        QString graphDir = baseDir + "Graphs and Bars/";
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/lineplots").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/lineplots");
+        }
+
+        QString graphDir = "../Cropped_Images/graphs/lineplots/";
 
         QDir dir(graphDir);
-        if (!dir.exists()) {
-            if (!dir.mkpath(graphDir)) {
-                qDebug() << "Error, Failed to create the 'Graphs and Bars' directory.";
-                return;
-            }
-        }
 
         int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
 
@@ -12251,6 +12256,7 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
             qDebug() << "Error, Failed to save the image as PNG.";
         }
         insertGraph(fileName);
+        graphWidget->close();
     });
 
     graphWidget->setLayout(mainLayout);
@@ -12271,16 +12277,23 @@ void MainWindow::on_actionInsert_Histogram_triggered()
     layout->addWidget(InsertButton);
 
     connect(InsertButton, &QPushButton::clicked, [=](){
-        QString baseDir = mProject.GetDir().absolutePath() + "/Cropped_Images/";
-        QString graphDir = baseDir + "Graphs and Bars/";
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/histograms").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/histograms");
+        }
+
+        QString graphDir = "../Cropped_Images/graphs/histograms/";
 
         QDir dir(graphDir);
-        if (!dir.exists()) {
-            if (!dir.mkpath(graphDir)) {
-                qDebug() << "Error, Failed to create the 'Graphs and Bars' directory.";
-                return;
-            }
-        }
+
 
         int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
 
@@ -12291,12 +12304,17 @@ void MainWindow::on_actionInsert_Histogram_triggered()
             qDebug() << "Error, Failed to save the image as PNG.";
         }
         insertGraph(fileName);
+        histogramWidget->close();
     });
 
     bool ok;
     QString dataInput = QInputDialog::getText(histogramWidget, "Histogram Data", "Enter data (comma-separated value):", QLineEdit::Normal, "", &ok);
 
-    if(!ok) return;
+    if(!ok){
+        QMessageBox::warning(0,"Warning","Enter values in specified format");
+        on_actionInsert_Histogram_triggered();
+        return;
+    }
 
     QStringList dataStrList = dataInput.split(",");
     QVector<double> data;
@@ -12307,6 +12325,8 @@ void MainWindow::on_actionInsert_Histogram_triggered()
             data.append(value);
         }
         else{
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            on_actionInsert_Histogram_triggered();
             return;
         }
     }
@@ -12410,16 +12430,19 @@ void MainWindow::barPlotManual()
     QLabel *x_label = new QLabel("Enter X-axis label");
     QLineEdit *x_title = new QLineEdit;
     layout->addRow(x_label,x_title);
-    QLabel *x_values = new QLabel("Enter X-Axis values(comma separated)");
+    QLabel *x_values = new QLabel("<html>Enter X-Axis values(comma separated)<font color='red'> * </font></html>");
     QLineEdit *xcsv = new QLineEdit;
     layout->addRow(x_values,xcsv);
 
     QLabel *y_label = new QLabel("Enter Y-axis label");
     QLineEdit *y_title = new QLineEdit;
     layout->addRow(y_label,y_title);
-    QLabel *y_values = new QLabel("Enter Y-Axis values(comma separated)");
+    QLabel *y_values = new QLabel("<html>Enter Y-Axis values(comma separated)<font color='red'> * </font></html>");
     QLineEdit *ycsv = new QLineEdit;
     layout->addRow(y_values,ycsv);
+
+    QLabel *required = new QLabel("<html><font color='red'>* required</font></html>");
+    layout->addRow(required);
 
     QPushButton *show = new QPushButton("show");
     layout->addRow(show);
@@ -12427,15 +12450,37 @@ void MainWindow::barPlotManual()
     QCustomPlot *barplot = new QCustomPlot();
     QPushButton *insert = new QPushButton("insert");
 
-    connect(show, &QPushButton::clicked, [this, y_title,x_title,xcsv, ycsv,layout,barplot,insert]() {
+    connect(show, &QPushButton::clicked, [this, y_title,x_title,xcsv, ycsv,layout,barplot,insert,&dialog]() {
         QString ylabel_str = y_title->text();
         QString xlabel_str = x_title->text();
         QString x_string = xcsv->text();
+
+        QRegularExpression regex("^(?=.*[A-Za-z])[A-Za-z, ]*$");
+        QRegularExpressionMatch match = regex.match(x_string);
+        if (!match.hasMatch()) {
+            dialog.accept();
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            barPlotManual();
+            return;
+
+        }
+
         QVector<QString> x_vector;
         QStringList x_stringlist = x_string.split(',');
         x_vector = QVector<QString>::fromList(x_stringlist);
 
         QString y_string = ycsv->text();
+
+        QRegularExpression regex2("^(?=.*\\d)[\\d, .]*$");
+        QRegularExpressionMatch match2 = regex2.match(y_string);
+        if (!match2.hasMatch()) {
+            dialog.accept();
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            barPlotManual();
+            return;
+
+        }
+
         QVector<double> y_vector;
         QStringList y_stringlist = y_string.split(',');
         for(const QString& str : y_stringlist){
@@ -12443,6 +12488,12 @@ void MainWindow::barPlotManual()
             int double_value = str.toDouble(&ok);
             if (ok) {
                 y_vector.append(double_value);
+            }
+            else{
+                dialog.accept();
+                QMessageBox::warning(0,"Warning","Enter values in specified format");
+                barPlotManual();
+                return;
             }
         }
         int x_len = x_vector.length();
@@ -12501,7 +12552,7 @@ void MainWindow::barPlotManual()
                 QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/barplots");
             }
 
-            QString save_path = gDirTwoLevelUp + "/Cropped_Images/graphs/barplots/";
+            QString save_path = "../Cropped_Images/graphs/barplots/";
 
             QString c = QString::number(count);
             QString file_name = save_path + "barchart" + c + ".png";
@@ -12620,7 +12671,7 @@ void MainWindow::barPlotCsv(){
             QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/barplots");
         }
 
-        QString save_path = gDirTwoLevelUp + "/Cropped_Images/graphs/barplots/";
+        QString save_path = "../Cropped_Images/graphs/barplots/";
 
         QString c = QString::number(count);
         QString file_name = save_path + "barchart" + c + ".png";
@@ -12675,14 +12726,14 @@ void MainWindow::scatterPlotManual()
     QLabel *x_label = new QLabel("Enter X-axis label");
     QLineEdit *x_title = new QLineEdit;
     layout->addRow(x_label,x_title);
-    QLabel *x_values = new QLabel("Enter X-Axis values(comma separated)");
+    QLabel *x_values = new QLabel("<html>Enter X-Axis values(comma separated)<font color='red'> * </font></html>");
     QLineEdit *xcsv = new QLineEdit;
     layout->addRow(x_values,xcsv);
 
     QLabel *y_label = new QLabel("Enter Y-axis label");
     QLineEdit *y_title = new QLineEdit;
     layout->addRow(y_label,y_title);
-    QLabel *y_values = new QLabel("Enter Y-Axis values(comma separated)");
+    QLabel *y_values = new QLabel("<html>Enter Y-Axis values(comma separated)<font color='red'> * </font></html>");
     QLineEdit *ycsv = new QLineEdit;
     layout->addRow(y_values,ycsv);
 
@@ -12705,6 +12756,9 @@ void MainWindow::scatterPlotManual()
     comboBox->addItem("Custom");
     layout->addRow(point_label,comboBox);
 
+    QLabel *required = new QLabel("<html><font color='red'>* required</font></html>");
+    layout->addRow(required);
+
     QPushButton *show = new QPushButton("show");
     layout->addRow(show);
 
@@ -12716,7 +12770,7 @@ void MainWindow::scatterPlotManual()
     shapes << QCPScatterStyle::ssStar << QCPScatterStyle::ssTriangle << QCPScatterStyle::ssTriangleInverted << QCPScatterStyle::ssCrossSquare << QCPScatterStyle::ssPlusSquare;
     shapes << QCPScatterStyle::ssCrossCircle << QCPScatterStyle::ssPlusCircle << QCPScatterStyle::ssPeace << QCPScatterStyle::ssCustom;
 
-    connect(show, &QPushButton::clicked, [this, y_title,x_title,xcsv,ycsv,layout,scatterplot,insert,comboBox,shapes]() {
+    connect(show, &QPushButton::clicked, [this, y_title,x_title,xcsv,ycsv,layout,scatterplot,insert,comboBox,shapes,&dialog]() {
         scatterplot->clearGraphs(); // Removes all graphs
         scatterplot->clearItems();
 
@@ -12730,6 +12784,16 @@ void MainWindow::scatterPlotManual()
         QString xlabel_str = x_title->text();
 
         QString x_string = xcsv->text();
+
+        QRegularExpression regex("^(?=.*\\d)[\\d, .]*$");
+        QRegularExpressionMatch match = regex.match(x_string);
+        if (!match.hasMatch()) {
+            dialog.accept();
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            scatterPlotManual();
+            return;
+        }
+
         QVector<double> x_vector;
         QStringList x_stringlist = x_string.split(',');
         for(const QString& str : x_stringlist){
@@ -12738,9 +12802,23 @@ void MainWindow::scatterPlotManual()
             if (ok) {
                 x_vector.append(double_value);
             }
+            else{
+                dialog.accept();
+                QMessageBox::warning(0,"Warning","Enter values in specified format");
+                scatterPlotManual();
+                return;
+            }
         }
 
         QString y_string = ycsv->text();
+        QRegularExpressionMatch match2 = regex.match(y_string);
+        if (!match2.hasMatch()) {
+            dialog.accept();
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            scatterPlotManual();
+            return;
+        }
+
         QVector<double> y_vector;
         QStringList y_stringlist = y_string.split(',');
         for(const QString& str : y_stringlist){
@@ -12748,6 +12826,12 @@ void MainWindow::scatterPlotManual()
             int double_value = str.toDouble(&ok);
             if (ok) {
                 y_vector.append(double_value);
+            }
+            else{
+                dialog.accept();
+                QMessageBox::warning(0,"Warning","Enter values in specified format");
+                scatterPlotManual();
+                return;
             }
         }
 
@@ -12788,7 +12872,7 @@ void MainWindow::scatterPlotManual()
             QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/scatterplots");
         }
 
-        QString save_path = gDirTwoLevelUp + "/Cropped_Images/graphs/scatterplots/";
+        QString save_path = "../Cropped_Images/graphs/scatterplots/";
 
         QString c = QString::number(count);
         QString file_name = save_path + "scatterchart" + c + ".png";
@@ -12910,7 +12994,7 @@ void MainWindow::scatterPlotCsv(){
             QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/scatterplots");
         }
 
-        QString save_path = gDirTwoLevelUp + "/Cropped_Images/graphs/scatterplots/";
+        QString save_path = "../Cropped_Images/graphs/scatterplots/";
 
         QString c = QString::number(count);
         QString file_name = save_path + "scatterchart" + c + ".png";
@@ -12964,9 +13048,11 @@ void MainWindow::boxPlotManual()
     QDialog dialog;
     QFormLayout *layout = new QFormLayout(&dialog);
 
-    QLabel *x_label = new QLabel("Enter labels for x-axis");
+    QLabel *x_label = new QLabel("<html>Enter labels for x-axis<font color='red'> * </font></html>");
     QLineEdit *xaxis_values = new QLineEdit();
     layout->addRow(x_label,xaxis_values);
+    QLabel *required = new QLabel("<html><font color='red'>* required</font></html>");
+    layout->addRow(required);
 
     QPushButton *enter_y = new QPushButton("Enter data for samples");
     layout->addRow(enter_y);
@@ -12984,9 +13070,19 @@ void MainWindow::boxPlotManual()
 
     QPushButton *insert = new QPushButton("Insert");
 
-    connect(enter_y, &QPushButton::clicked, [this,xaxis_values,&x_vector,layout,show,&x_len,&y_values,&y_label] (){
+    connect(enter_y, &QPushButton::clicked, [this,xaxis_values,&x_vector,layout,show,&x_len,&y_values,&y_label,&dialog] (){
 
         QString x_string = xaxis_values->text();
+
+        QRegularExpression regex("^(?=.*[A-Za-z])[A-Za-z, ]*$");
+        QRegularExpressionMatch match = regex.match(x_string);
+        if (!match.hasMatch()) {
+            dialog.accept();
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            boxPlotManual();
+            return;
+        }
+
         QStringList x_stringlist = x_string.split(',');
         x_vector = QVector<QString>::fromList(x_stringlist);
         x_len = x_vector.length();
@@ -13002,7 +13098,7 @@ void MainWindow::boxPlotManual()
         layout->addRow(show);
     });
 
-    connect(show, &QPushButton::clicked, [this,&x_len,&y_values,&x_vector,statistical,boxplot,layout,insert] (){
+    connect(show, &QPushButton::clicked, [this,&x_len,&y_values,&x_vector,statistical,boxplot,layout,insert,&dialog] (){
 
         boxplot->clearGraphs();
 
@@ -13010,15 +13106,29 @@ void MainWindow::boxPlotManual()
         QVector<double> y_vector[MAX];
 
         QStringList y_stringlist[MAX];
+        QRegularExpression regex2("^(?=.*\\d)[\\d, .]*$");
 
         for (int i=0; i<x_len; i++){
             y_string[i] = y_values[i]->text();
+            QRegularExpressionMatch match2 = regex2.match(y_string[i]);
+            if (!match2.hasMatch()) {
+                dialog.accept();
+                QMessageBox::warning(0,"Warning","Enter values in specified format");
+                boxPlotManual();
+                return;
+            }
             y_stringlist[i] = y_string[i].split(',');
             for(const QString& str : y_stringlist[i]){
                 bool ok;
                 double double_value = str.toDouble(&ok);
                 if (ok) {
                     y_vector[i].append(double_value);
+                }
+                else{
+                    dialog.accept();
+                    QMessageBox::warning(0,"Warning","Enter values in specified format");
+                    boxPlotManual();
+                    return;
                 }
             }
         }
@@ -13091,7 +13201,7 @@ void MainWindow::boxPlotManual()
             QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/boxplots");
         }
 
-        QString save_path = gDirTwoLevelUp + "/Cropped_Images/graphs/boxplots/";
+        QString save_path = "../Cropped_Images/graphs/boxplots/";
 
         QString c = QString::number(count);
         QString file_name = save_path + "boxplot" + c + ".png";
@@ -13225,7 +13335,7 @@ void MainWindow::boxPlotCsv(){
             QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/boxplots");
         }
 
-        QString save_path = gDirTwoLevelUp + "/Cropped_Images/graphs/boxplots/";
+        QString save_path ="../Cropped_Images/graphs/boxplots/";
 
         QString c = QString::number(count);
         QString file_name = save_path + "boxplot" + c + ".png";
