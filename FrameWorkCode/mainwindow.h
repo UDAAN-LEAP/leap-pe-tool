@@ -585,7 +585,7 @@ private slots:
 
     void on_actionInsert_Histogram_triggered();
 
-    void insertGraph(const QString& graphFilePath);
+    void insertGraph(const QString& graphFilePath, bool& status);
 
     void on_actionBar_Plot_triggered();
     void barPlotManual();
@@ -598,6 +598,8 @@ private slots:
     void on_actionBox_Plot_triggered();
     void boxPlotManual();
     void boxPlotCsv();
+
+    //void on_actionInsert_Pie_Chart_triggered();
 
 public slots:
     void on_actionLoad_Next_Page_triggered();
