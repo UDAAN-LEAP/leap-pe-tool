@@ -96,8 +96,8 @@
 #include <quazip.h>
 #include <quazipfile.h>
 #endif
-//#include <QtCharts>
-//QT_CHARTS_USE_NAMESPACE
+#include <QtCharts>
+QT_CHARTS_USE_NAMESPACE
 
 
 map<string, string> LSTM;
@@ -13424,7 +13424,7 @@ void MainWindow::boxPlotCsv(){
     dialog.exec();
 
 }
-/*
+
 void MainWindow::on_actionInsert_Pie_Chart_triggered()
 {
     QDialog dialog(this);
@@ -13446,7 +13446,7 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
 
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-    connect(InfoButton, &QPushButton::clicked, [&](){
+    connect(InfoButton, &QPushButton::clicked, [&]() {
         QString instructions = "To use this function, follow these steps:\n\n"
                                "1. Enter the number of slices for the pie chart. The value should be between 1 and 100.\n"
                                "2. For each slice, enter the label and value in the format 'Label, Value'. The value should be a positive number.\n"
@@ -13455,103 +13455,136 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
         QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
     });
 
-    if(dialog.exec() == QDialog::Accepted){
+    if (dialog.exec() == QDialog::Accepted) {
         bool ok;
         int sliceCount = sliceLineEdit->text().toInt(&ok);
-        if(!ok || sliceCount > 100 || sliceCount < 1){
+        if (!ok || sliceCount > 100 || sliceCount < 1) {
             QMessageBox::critical(&dialog, "Invalid Input", "Please enter a valid integer between 1 and 100 for the number of slices.");
             return;
         }
 
-        QPieSeries* series = new QPieSeries();
+        QDialog sliceDialog(this);
+        sliceDialog.setWindowTitle("Enter Slice Details");
+        QVBoxLayout* sliceDialogLayout = new QVBoxLayout();
+        sliceDialog.setLayout(sliceDialogLayout);
 
-        for (int i = 0; i < sliceCount; i++)
-        {
-            bool isValidData = false;
-            do
-            {
-                bool ok;
-                QString label = QInputDialog::getText(this, "Enter Slice Details", QString("Enter Label and Value for Slice %1 (separated by comma):").arg(i + 1), QLineEdit::Normal, "", &ok);
+        QLabel* noteLabel = new QLabel("Enter Label and Value for Slice (separated by comma):", &sliceDialog);
+        sliceDialogLayout->addWidget(noteLabel);
 
-                if (!ok) return;
+        QVector<QLineEdit*> slicesLineEdit;
 
-                QStringList parts = label.split(',');
-                if (parts.size() != 2)
-                {
-                    QMessageBox::critical(this, "Invalid Input", "Invalid data entered. The input should be in the format: label, value.");
-                }
-                else
-                {
-                    QString trimmedLabel = parts[0].trimmed();
-                    double value = parts[1].trimmed().toDouble(&ok);
-                    if (!ok || trimmedLabel.isEmpty() || value <= 0.0)
-                    {
-                        QMessageBox::critical(this, "Invalid Input", "Invalid data entered. The value should be a positive number.");
-                    }
-                    else
-                    {
-                        series->append(trimmedLabel, value);
-                        isValidData = true;
-                    }
-                }
-            } while (!isValidData);
+        QWidget* scrollableContent = new QWidget(&sliceDialog);
+        QVBoxLayout* scrollableLayout = new QVBoxLayout(scrollableContent);
+        QScrollArea* scrollArea = new QScrollArea(&sliceDialog);
+
+        QHBoxLayout* entryLayout;
+        for (int i = 0; i < sliceCount; i++) {
+            QLabel* label = new QLabel("Slice " + QString::number(i + 1), &sliceDialog);
+            QLineEdit* lineEdit = new QLineEdit(&sliceDialog);
+            slicesLineEdit.append(lineEdit);
+
+            entryLayout = new QHBoxLayout;
+            entryLayout->addWidget(label);
+            entryLayout->addWidget(lineEdit);
+            scrollableLayout->addLayout(entryLayout);
         }
 
-        QWidget* pieChartWidget = new QWidget();
-        pieChartWidget->setWindowTitle("Insert Pie Chart");
+        scrollableLayout->addStretch();
 
-        QChart* chart = new QChart();
-        chart->setTitle("Pie Chart");
-        chart->addSeries(series);
-        series->setLabelsVisible();
-        chart->legend()->show();
+        scrollableContent->setLayout(scrollableLayout);
+        scrollArea->setWidget(scrollableContent);
+        sliceDialogLayout->addWidget(scrollArea);
 
-        QChartView* chartView = new QChartView(chart);
-        chartView->setRenderHint(QPainter::Antialiasing, true);
+        QDialogButtonBox sliceButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &sliceDialog);
+        sliceDialogLayout->addWidget(&sliceButtonBox);
 
-        QVBoxLayout* mainLayout = new QVBoxLayout();
-        mainLayout->addWidget(chartView);
+        QObject::connect(&sliceButtonBox, SIGNAL(accepted()), &sliceDialog, SLOT(accept()));
+        QObject::connect(&sliceButtonBox, SIGNAL(rejected()), &sliceDialog, SLOT(reject()));
 
-        QPushButton* insertButton = new QPushButton("Insert Pie Chart", this);
-        mainLayout->addWidget(insertButton);
-
-        connect(insertButton, &QPushButton::clicked, [this, series, chartView]() {
-            QString graphDir = "../Cropped_Images/Graphs and Bars/";
-
-            QDir dir(graphDir);
-            if (!dir.exists()) {
-                if (!dir.mkpath(graphDir)) {
-                    qDebug() << "Error, Failed to create the 'Graphs and Bars' directory.";
+        if (sliceDialog.exec() == QDialog::Accepted) {
+            QPieSeries* series = new QPieSeries();
+            double totalValue = 0.0;
+            for(int i = 0; i < sliceCount; i++){
+                QString labelText = slicesLineEdit[i]->text().trimmed();
+                QStringList parts = labelText.split(',');
+                if (parts.size() != 2) {
+                    QMessageBox::critical(this, "Invalid Input", "Invalid data entered for Slice " + QString::number(i + 1) + ". The input should be in the format: label, value.");
                     return;
                 }
+                else{
+                    QString trimmedLabel = parts[0].trimmed();
+                    bool valueOk;
+                    double value = parts[1].trimmed().toDouble(&valueOk);
+                    if (!valueOk || trimmedLabel.isEmpty() || value <= 0.0) {
+                        QMessageBox::critical(this, "Invalid Input", "Invalid data entered for Slice " + QString::number(i + 1) + ". The value should be a positive number.");
+                        return;
+                    }
+                    else{
+                        totalValue += value;
+                        series->append(trimmedLabel, value);
+                    }
+                }
             }
 
-            int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
-            bool ok;
-
-            QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
-            QPixmap pixmap = chartView->grab();
-            if(!pixmap.save(fileName)){
-                qDebug() << "Error, Failed to save the image as PNG.";
+            for(QPieSlice* slice : series->slices()){
+                double percentage = (slice->value() / totalValue) * 100.0;
+                slice->setLabel(QString("%1 (%2%)").arg(slice->label()).arg(percentage, 0, 'f', 2));
             }
-            else{
-                insertGraph(fileName, ok);
-                if(ok){
-                    QMessageBox::information(this, "Pie Chart Inserted", "Pie chart data inserted successfully!");
+
+            QWidget* pieChartWidget = new QWidget();
+            pieChartWidget->setWindowTitle("Insert Pie Chart");
+
+            QChart* chart = new QChart();
+            chart->setTitle("Pie Chart");
+            chart->addSeries(series);
+            series->setLabelsVisible();
+            chart->legend()->show();
+
+            QChartView* chartView = new QChartView(chart);
+            chartView->setRenderHint(QPainter::Antialiasing, true);
+
+            QVBoxLayout* mainLayout = new QVBoxLayout();
+            mainLayout->addWidget(chartView);
+
+            QPushButton* insertButton = new QPushButton("Insert Pie Chart", this);
+            mainLayout->addWidget(insertButton);
+
+            connect(insertButton, &QPushButton::clicked, [this, series, chartView](){
+                QString graphDir = "../Cropped_Images/Graphs and Bars/";
+
+                QDir dir(graphDir);
+                if (!dir.exists()) {
+                    if (!dir.mkpath(graphDir)) {
+                        qDebug() << "Error, Failed to create the 'Graphs and Bars' directory.";
+                        return;
+                    }
+                }
+
+                int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
+                bool ok;
+
+                QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
+                QPixmap pixmap = chartView->grab();
+                if(!pixmap.save(fileName)){
+                    qDebug() << "Error, Failed to save the image as PNG.";
                 }
                 else{
-                    QMessageBox::critical(this, "Error", "Could not insert Pie chart data!");
+                    insertGraph(fileName, ok);
+                    if(!ok){
+                        QMessageBox::critical(this, "Error", "Could not insert Pie chart data!");
+                    }
                 }
-            }
-        });
+            });
 
-        pieChartWidget->setLayout(mainLayout);
-        pieChartWidget->resize(600, 600);
-        pieChartWidget->show();
+            pieChartWidget->setLayout(mainLayout);
+            pieChartWidget->resize(600, 600);
+            pieChartWidget->show();
+        }
+        else {
+            return;
+        }
     }
-    else{
+    else {
         return;
     }
 }
-
-*/
