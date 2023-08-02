@@ -70,3 +70,8 @@ FORMS +=
 HEADERS +=
 
 SOURCES +=
+
+win32: LIBS += -L$$PWD/../lib/ -lSimpleMail2Qt5
+
+INCLUDEPATH += $$PWD/../include
+DEPENDPATH += $$PWD/../include
