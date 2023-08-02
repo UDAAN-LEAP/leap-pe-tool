@@ -1211,6 +1211,7 @@ QMenu::item:selected{
     <addaction name="actionAbout_Udaan_PE"/>
     <addaction name="separator"/>
     <addaction name="actionClear_Settings"/>
+    <addaction name="actionUpdate_History"/>
    </widget>
    <widget class="QMenu" name="menuOCR_Correction_Window">
     <property name="styleSheet">
@@ -2928,6 +2929,59 @@ background-color: #EEF0F2;
     <string>Undo Two Column view</string>
    </property>
   </action>
+<<<<<<< Updated upstream
+=======
+  <action name="actionTitle">
+   <property name="text">
+    <string>Title</string>
+   </property>
+  </action>
+  <action name="actionSubtitle">
+   <property name="text">
+    <string>Subtitle</string>
+   </property>
+  </action>
+  <action name="actionHeading_1">
+   <property name="text">
+    <string>Heading 1</string>
+   </property>
+  </action>
+  <action name="actionHeading_2">
+   <property name="text">
+    <string>Heading 2</string>
+   </property>
+  </action>
+  <action name="actionHeading_3">
+   <property name="text">
+    <string>Heading 3</string>
+   </property>
+  </action>
+  <action name="actionHeading_4">
+   <property name="text">
+    <string>Heading 4</string>
+   </property>
+  </action>
+  <action name="actionHeading_5">
+   <property name="text">
+    <string>Heading 5</string>
+   </property>
+  </action>
+  <action name="actionHeading_6">
+   <property name="text">
+    <string>Heading 6</string>
+   </property>
+  </action>
+  <action name="actionNormal_Text">
+   <property name="text">
+    <string>Normal Text</string>
+   </property>
+  </action>
+  <action name="actionUpdate_History">
+   <property name="text">
+    <string>Update History</string>
+   </property>
+  </action>
+>>>>>>> Stashed changes
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

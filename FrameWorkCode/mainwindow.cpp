@@ -193,7 +193,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     customtextbrowser->setStyleSheet("padding-top: 100%; padding-left: 40%; color: #1c1c1c; background-color: white;");
     connect(customtextbrowser, &QTextBrowser::textChanged, this, [=]() {
-        if(!QString::compare(QString(), customtextbrowser->toPlainText())) {
+       if(!QString::compare(QString(), customtextbrowser->toPlainText())) {
             customtextbrowser->setStyleSheet("padding-top: 100%; padding-left: 40%; color: #1c1c1c; background-color: white;");
             customtextbrowser->setPlaceholderText("How to Open a Project:\n"
                                                   "―――――――――――――――――――――――――――――――――――――\n"
@@ -875,7 +875,9 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             popup_menu->addAction(gtrans);
             popup_menu->addAction(insertImage);
 
+
             connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
+            //connect(popup_menu->Copy,SIGNAL(triggered()),this,SLOT(on_actionCopy_triggered()));
             connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
             connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
             connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
@@ -9984,6 +9986,8 @@ void MainWindow::on_actionCut_triggered()
 
 void MainWindow::on_actionCopy_triggered()
 {
+
+    cout<<"executed i am";
     curr_browser->copy();
 
 }
@@ -11661,3 +11665,395 @@ void MainWindow::on_sanButton_clicked()
         );
 }
 
+<<<<<<< Updated upstream
+=======
+/*!
+ * \fn MainWindow::on_copyToVerifier_clicked
+ * \brief This function is called when the "Copy to Verifier" Button is clicked. It checks if the copy
+ *        operation is confirmed by the user and copies the current page from the Corrector Output to
+ *        the Verifier Output.
+ */
+void MainWindow::on_copyToVerifier_clicked()
+{
+    // Retrieve the confirmation value from settings
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("copyToVerifier");
+    QString copyToVerifier = settings.value("copyToVerifierConfirm").toString();
+    settings.endGroup();
+
+    // If the confirmation value is not "dna"
+    if(copyToVerifier != "dna"){
+        // Create a dialog
+        QDialog dialog(this);
+        QFormLayout form(&dialog);
+        // Add a QLabel to ask for confirmation
+        form.addRow(new QLabel("Do you want to copy the current page from Corrector Output to Verifier Output?"));
+
+        // Create Ok and Cancel buttons
+        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+        buttonBox.button(QDialogButtonBox::Ok)->setText("Yes");
+        buttonBox.button(QDialogButtonBox::Cancel)->setText("No");
+        QHBoxLayout buttonBoxLayout;
+        buttonBoxLayout.addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+        buttonBoxLayout.addWidget(&buttonBox);
+        buttonBoxLayout.addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+        form.addRow(&buttonBoxLayout);
+
+        // Add a checkbox for "Dont Ask Again!" option
+        QCheckBox checkBox("Dont Ask Again!", &dialog);
+        QHBoxLayout checkboxLayout;
+        checkboxLayout.addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+        checkboxLayout.addWidget(&checkBox);
+        checkboxLayout.addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+        form.addRow(&checkboxLayout);
+
+        // Connect the buttonBox signals to dialog slots
+        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+        // If the dialog is accepted (Ok Button clicked)
+        if(dialog.exec() == QDialog::Accepted){
+            // If "Dont Ask Again!" checkbox is checked
+            if(checkBox.isChecked()){
+                // Copy the current page from CorrectorOutput to VerifierOutput
+                QString parentDir = mProject.GetDir().absolutePath();
+                QString fileName = gCurrentPageName;
+                QString correctorFilePath = parentDir + "/CorrectorOutput/" + fileName;
+                QString verifierFilePath = parentDir + "/VerifierOutput/" + fileName;
+                QFile correctorFile(correctorFilePath);
+                QFile verifierFile(verifierFilePath);
+                QFileInfo f(correctorFile);
+                QString suff = f.completeSuffix();
+                LoadDocument(&correctorFile, suff, fileName);
+                if(verifierFile.exists()){
+                    verifierFile.remove();
+                }
+                if(!QFile::copy(correctorFilePath, verifierFilePath)){
+                    qDebug() << "Cannot copy file to VerifierOutput";
+                }
+                // Update the confirmation value in settings
+                settings.beginGroup("copyToVerifier");
+                settings.setValue("copyToVerifierConfirm", "dna");
+                settings.endGroup();
+            }
+            // If "Dont Ask Again!" checkbox is not checked
+            else{
+                // Copy the current page from CorrectorOutput to VerifierOutput
+                QString parentDir = mProject.GetDir().absolutePath();
+                QString fileName = gCurrentPageName;
+                QString correctorFilePath = parentDir + "/CorrectorOutput/" + fileName;
+                QString verifierFilePath = parentDir + "/VerifierOutput/" + fileName;
+                QFile correctorFile(correctorFilePath);
+                QFile verifierFile(verifierFilePath);
+                QFileInfo f(correctorFile);
+                QString suff = f.completeSuffix();
+                LoadDocument(&correctorFile, suff, fileName);
+                if(verifierFile.exists()){
+                    verifierFile.remove();
+                }
+                if(!QFile::copy(correctorFilePath, verifierFilePath)){
+                    qDebug() << "Cannot copy file to VerifierOutput";
+                }
+            }
+        }
+    }
+    // If the confirmation value is "dna"
+    else{
+        // Copy the current page from CorrectorOutput to VerifierOutput
+        QString parentDir = mProject.GetDir().absolutePath();
+        QString fileName = gCurrentPageName;
+        QString correctorFilePath = parentDir + "/CorrectorOutput/" + fileName;
+        QString verifierFilePath = parentDir + "/VerifierOutput/" + fileName;
+        QFile correctorFile(correctorFilePath);
+        QFile verifierFile(verifierFilePath);
+        QFileInfo f(correctorFile);
+        QString suff = f.completeSuffix();
+        LoadDocument(&correctorFile, suff, fileName);
+        if(verifierFile.exists()){
+            verifierFile.remove();
+        }
+        if(!QFile::copy(correctorFilePath, verifierFilePath)){
+            qDebug() << "Cannot copy file to VerifierOutput";
+        }
+    }
+}
+bool checked_first=true;
+int currentFontSize;
+
+
+void MainWindow::on_actionTitle_triggered()
+{
+
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Bold);
+    format.setFontPointSize(26);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+
+}
+void MainWindow::on_actionSubtitle_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Normal);
+    format.setFontPointSize(15);
+    format.setForeground(QColor(Qt::gray));
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+}
+
+
+void MainWindow::on_actionHeading_1_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Bold);
+    format.setFontPointSize(20);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+
+
+}
+
+
+void MainWindow::on_actionHeading_2_triggered()
+{
+
+    QTextCursor cursor = curr_browser->textCursor();
+
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Bold);
+    format.setFontPointSize(16);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+}
+
+
+void MainWindow::on_actionHeading_3_triggered()
+{
+
+    QTextCursor cursor = curr_browser->textCursor();
+
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Bold);
+    format.setFontPointSize(14);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+}
+
+
+void MainWindow::on_actionHeading_4_triggered()
+{
+
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Bold);
+    format.setFontPointSize(12);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+}
+
+
+void MainWindow::on_actionHeading_5_triggered()
+{
+
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Bold);
+    format.setFontPointSize(11);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+}
+
+
+void MainWindow::on_actionHeading_6_triggered()
+{
+
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first)
+    {
+        currentFontSize = cursor.charFormat().fontPointSize();
+        checked_first=false;
+    }
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Normal);
+    //format.setItalic(true);
+    format.setFontPointSize(10);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+}
+
+
+void MainWindow::on_actionNormal_Text_triggered()
+{
+
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Normal);
+    format.setFontPointSize(currentFontSize);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+ }
+
+
+void MainWindow::on_actionUpdate_History_triggered()
+{
+    const QString url = "https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/releases";
+
+    QUrl apiUrl(url);
+    QNetworkRequest request(apiUrl);
+
+    QNetworkAccessManager nam;
+    QNetworkReply* reply = nam.get(request);
+
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec(); // Wait for the network request to finish
+
+    QObject::connect(reply, &QNetworkReply::errorOccurred, [](QNetworkReply::NetworkError code){
+        qDebug() << "Network error occurred:" << code;
+    });
+
+    QObject::connect(reply, &QNetworkReply::sslErrors, [](const QList<QSslError>& errors){
+        qDebug() << "SSL errors occurred:";
+        for (const QSslError& error : errors) {
+            qDebug() << error.errorString();
+        }
+    });
+    if (reply->error() != QNetworkReply::NoError) {
+        QMessageBox::information(0, "Error", "Uh-Oh! we are unable to connect to the server at the moment. Check your internet connection.");
+        return;
+    }
+
+    QByteArray response_data = reply->readAll();
+    reply->deleteLater(); // Release resources
+
+    QJsonDocument json = QJsonDocument::fromJson(response_data);
+    if (!json.isArray()) {
+        QMessageBox::information(0, "Error", "Failed to parse the response from GitHub.");
+        return;
+    }
+
+    std::vector<QString> releaseVersions;
+    std::vector<QString> releaseNotes;
+    std::vector<QString> timestamps;
+
+    for (const auto& release : json.array()) {
+        if (release.isObject() && release.toObject().contains("tag_name") &&
+            release.toObject().contains("body") && release.toObject().contains("published_at")) {
+
+            releaseVersions.push_back(release.toObject()["tag_name"].toString());
+            releaseNotes.push_back(release.toObject()["body"].toString());
+            timestamps.push_back(release.toObject()["published_at"].toString());
+        }
+    }
+
+    QWidget* mainWindow = new QWidget;
+    QVBoxLayout* layout = new QVBoxLayout;
+    mainWindow->setLayout(layout);
+
+    QTableWidget* tableWidget = new QTableWidget(releaseVersions.size(), 3);
+    tableWidget->setStyleSheet(
+        "QTableWidget {"
+        "    background-color: #f7f7f7;"
+        "    color: #333333;"
+        "    border: 1px solid #cccccc;"
+        "}"
+        "QTableWidget QHeaderView::section {"
+        "    background-color: #e0e0e0;"
+        "    color: #333333;"
+        "    border: 1px solid #cccccc;"
+        "    padding: 5px;"
+        "}"
+        "QTableWidget QHeaderView::section:first {"
+        "    border-left: none;"
+        "}"
+        "QTableWidget QHeaderView::section:last {"
+        "    border-right: none;"
+        "}"
+        "QTableWidget::item {"
+        "    padding: 5px;"
+        "}"
+        "QTableWidget::item:selected {"
+        "    background-color: #0078d7;"
+        "    color: #ffffff;"
+        "}");
+
+    tableWidget->setHorizontalHeaderLabels({ "Version", "Release Notes", "Timestamp" });
+    tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    layout->addWidget(tableWidget);
+
+    for (int i = 0; i < releaseVersions.size(); ++i) {
+        QTableWidgetItem* versionItem = new QTableWidgetItem(releaseVersions[i]);
+        QTableWidgetItem* notesItem = new QTableWidgetItem(releaseNotes[i]);
+        QTableWidgetItem* timestampItem = new QTableWidgetItem(timestamps[i]);
+
+        tableWidget->setItem(i, 0, versionItem);
+        tableWidget->setItem(i, 1, notesItem);
+        tableWidget->setItem(i, 2, timestampItem);
+    }
+
+    mainWindow->setWindowTitle("Application Updates");
+    mainWindow->resize(800, 400);
+    mainWindow->show();
+}
+
+>>>>>>> Stashed changes
