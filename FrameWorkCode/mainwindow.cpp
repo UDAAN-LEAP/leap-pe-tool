@@ -12264,10 +12264,7 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
         }
         else{
             insertGraph(fileName, ok);
-            if(ok){
-                QMessageBox::information(this, "Line Graph Inserted", "Line Graph data inserted successfully!");
-            }
-            else{
+            if(!ok){
                 QMessageBox::critical(this, "Error", "Could not insert Line graph data!");
             }
         }
@@ -12281,7 +12278,7 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
                                "3. For each point, enter the X and Y coordinates and click 'Next'.\n"
                                "4. After all the points have been added, the graph will be plotted.\n"
                                "5. Click 'Insert Line Graph' to save the graph image, and insert it.\n\n"
-                               "Note: The Line Graph image will be saved in the 'Graphs and Bars' directory.";
+                               "Note: The Line Graph image will be saved in the 'Cropped_Images' directory.";
         QMessageBox::information(graphWidget, "Instructions", instructions, QMessageBox::Ok);
     });
 
@@ -12332,10 +12329,7 @@ void MainWindow::on_actionInsert_Histogram_triggered()
         }
         else{
             insertGraph(fileName, ok);
-            if(ok){
-                QMessageBox::information(this, "Histogram Inserted", "Histogram data inserted successfully!");
-            }
-            else{
+            if(!ok){
                 QMessageBox::critical(this, "Error", "Could not insert Histogram data!");
             }
         }
@@ -12369,7 +12363,7 @@ void MainWindow::on_actionInsert_Histogram_triggered()
                                "  * The value should be greater than 0 and less than the total number of data points.\n"
                                "  * A higher number of bins provide more detailed distribution information, but avoid using too many bins as it may cause clutter.\n\n"
                                "3. Click 'Insert Histogram' to save the histogram image, and insert it.\n\n"
-                               "Note: The Histogram image will be saved in the 'Graphs and Bars' directory.";
+                               "Note: The Histogram image will be saved in the 'Cropped_Images' directory.";
         QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
     });
 
@@ -13451,7 +13445,7 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
                                "1. Enter the number of slices for the pie chart. The value should be between 1 and 100.\n"
                                "2. For each slice, enter the label and value in the format 'Label, Value'. The value should be a positive number.\n"
                                "3. Click 'Insert Pie Chart' to save the Pie chart image, and insert it.\n\n"
-                               "Note: The Pie Chart image will be saved in the 'Graphs and Bars' directory.";
+                               "Note: The Pie Chart image will be saved in the 'Cropped_Images' directory.";
         QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
     });
 
@@ -13549,16 +13543,22 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
             QPushButton* insertButton = new QPushButton("Insert Pie Chart", this);
             mainLayout->addWidget(insertButton);
 
-            connect(insertButton, &QPushButton::clicked, [this, series, chartView](){
-                QString graphDir = "../Cropped_Images/Graphs and Bars/";
+            connect(insertButton, &QPushButton::clicked, [this, series, chartView, pieChartWidget](){
+                if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+                    QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+                }
+
+                if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists()){
+                    QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+                }
+
+                if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/pie_charts").exists()){
+                    QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/pie_charts");
+                }
+
+                QString graphDir = "../Cropped_Images/graphs/pie_charts/";
 
                 QDir dir(graphDir);
-                if (!dir.exists()) {
-                    if (!dir.mkpath(graphDir)) {
-                        qDebug() << "Error, Failed to create the 'Graphs and Bars' directory.";
-                        return;
-                    }
-                }
 
                 int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
                 bool ok;
@@ -13573,6 +13573,7 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
                     if(!ok){
                         QMessageBox::critical(this, "Error", "Could not insert Pie chart data!");
                     }
+                    pieChartWidget->close();
                 }
             });
 
