@@ -12341,6 +12341,13 @@ void MainWindow::sendComment(QString str)
                                     <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px">
                                         <tbody>
                                             <tr>
+                                                <td align="center" bgcolor="#e9ecef" style="padding:12px 24px;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:12px;line-height:20px;color:#666">
+                                                    <p style="margin:0">
+                                                        Reach out to MROLE at <a href="mailto:USER_MAIL" rel="noreferrer" target="_blank">USER_MAIL</a>.
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td align="center" bgcolor="#e9ecef" style="padding:12px 24px;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#666">
                                                     <p style="margin:0">
                                                         Feel free to reach out to us at <a href="mailto:udaanprojectiitb@gmail.com" rel="noreferrer" target="_blank">udaanprojectiitb@gmail.com</a>.
@@ -12362,6 +12369,7 @@ void MainWindow::sendComment(QString str)
     msg.replace("PAGENO", gCurrentPageName);
     msg.replace("DOCNAME" , gCurrentBookName);
     msg.replace("COMMENT", str);
+    msg.replace("USER_MAIL", email);
 
     text->setHtml(msg);
     if(str == "") return;
