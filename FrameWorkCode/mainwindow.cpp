@@ -12133,11 +12133,19 @@ void MainWindow::on_actionNormal_Text_triggered()
     cursor.insertText(cursor.selectedText(), format);
  }
 
-
+/*!
+ * \fn MainWindow::on_actionInsert_Line_Graph_triggered
+ * \brief This function displays a widget with options to plot a line graph with user-defined points.
+ *        The user can enter the number of points and their corresponding X and Y coordinates in a dialog box.
+ *        The line graph is then plotted and displayed for preview. The user can save the graph as an image and
+ *        insert it into the curr_browser.
+ */
 void MainWindow::on_actionInsert_Line_Graph_triggered()
 {
+    // Create a widget to display the line graph.
     QWidget* graphWidget = new QWidget();
     graphWidget->setWindowTitle("Insert Line Graph");
+
     QHBoxLayout* layout = new QHBoxLayout();
 
     QPushButton* InfoButton = new QPushButton();
@@ -12150,26 +12158,31 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
     QLineEdit* numPointsInput = new QLineEdit(graphWidget);
     layout->addWidget(numPointsInput);
 
+    // QCustomPlot widget for displaying the line graph.
     QCustomPlot* plotWidget = new QCustomPlot(graphWidget);
 
+    // Buttons for plotting and inserting the line graph.
     QPushButton* PlotButton = new QPushButton("Plot Line Graph", graphWidget);
     layout->addWidget(PlotButton);
-
     QPushButton* InsertButton = new QPushButton("Insert Line Graph", graphWidget);
     layout->addWidget(InsertButton);
 
+     // Set up the main layout
     QVBoxLayout* mainLayout = new QVBoxLayout();
     mainLayout->addLayout(layout);
     mainLayout->addWidget(plotWidget);
 
+    // Connect the PlotButton to a lamda function to plot the Line Graph
     connect(PlotButton, &QPushButton::clicked, [=](){
         int numPoints = numPointsInput->text().toInt();
         QVector<QPointF> points;
 
+        // Loop to get the X and Y coordinates for each point.
         for(int i = 0; i < numPoints; i++) {
             bool okX, okY;
             double x, y;
 
+            // Create a dialog box to enter the X and Y coordinates for each point.
             QDialog dialog(graphWidget);
             dialog.setWindowTitle("Enter Point " + QString::number(i+1));
             QVBoxLayout* dialogLayout = new QVBoxLayout(&dialog);
@@ -12187,6 +12200,7 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
             QPushButton* nextButton = new QPushButton("Next");
             dialogLayout->addWidget(nextButton);
 
+            // Connect the "Next" button to the lambda function to save the X and Y coordinates
             QObject::connect(nextButton, &QPushButton::clicked, &dialog, [&](){
                 x = xLineEdit->text().toDouble(&okX);
                 if(!okX) return;
@@ -12195,29 +12209,35 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
                 dialog.accept();
             });
 
+            // Connect the dialog's "accepted" signal to the lambda function to save the point to the points vector.
             QObject::connect(&dialog, &QDialog::accepted, [&](){
                 points.append(QPointF(x, y));
             });
 
+            // Execute the dialog
             dialog.exec();
         }
 
+        // If points are entered, plot the line graph.
         if(!points.isEmpty()){
+            // Clear any existing graphs from the plot widget.
             plotWidget->clearGraphs();
 
+            // Add a new graph to the plot widget.
             plotWidget->addGraph();
 
+            // Set up a data container to hold the points for the graph.
             QSharedPointer<QCPGraphDataContainer> dataContainer(new QCPGraphDataContainer);
             for(const auto& point : points) {
                 dataContainer->add(QCPGraphData(point.x(), point.y()));
             }
             plotWidget->graph(0)->setData(dataContainer);
 
+            // Calculate the minimum and maximum values for the axes.
             double minX = std::numeric_limits<double>::max();
             double maxX = std::numeric_limits<double>::min();
             double minY = std::numeric_limits<double>::max();
             double maxY = std::numeric_limits<double>::min();
-
             for(const auto& point : points) {
                 minX = std::min(minX, point.x());
                 maxX = std::max(maxX, point.x());
@@ -12225,16 +12245,18 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
                 maxY = std::max(maxY, point.y());
             }
 
+            // Set the axis ranges and labels
             plotWidget->xAxis->setRange(minX - 1, maxX + 1);
             plotWidget->yAxis->setRange(minY - 1, maxY + 1);
-
             plotWidget->xAxis->setLabel("X");
             plotWidget->xAxis->setLabel("Y");
 
+            // Replot the graph to update the changes.
             plotWidget->replot();
         }
     });
 
+    // Connect the InsertButton to the lambda function to save and insert the graph as image in curr_browser
     connect(InsertButton, &QPushButton::clicked, [=](){
         if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
             QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
@@ -12254,16 +12276,19 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
 
         int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
 
+        // Generate the fileName for the image
         QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
 
         bool ok;
 
+        // Save the image as png
         QPixmap pixmap = plotWidget->toPixmap(plotWidget->width(), plotWidget->height());
         if (!pixmap.save(fileName)) {
             qDebug() << "Error, Failed to save the image as PNG.";
         }
         else{
             insertGraph(fileName, ok);
+            // Display a message if could not insert graph as an image in curr_browser.
             if(!ok){
                 QMessageBox::critical(this, "Error", "Could not insert Line graph data!");
             }
@@ -12271,6 +12296,7 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
         graphWidget->close();
     });
 
+    // Connect the InfoButton to the lamda function to show instructions for the Line Graph feature
     connect(InfoButton, &QPushButton::clicked, [=](){
         QString instructions = "To use this function, follow these steps:\n\n"
                                "1. Enter the number of points for the line graph.\n"
@@ -12282,23 +12308,30 @@ void MainWindow::on_actionInsert_Line_Graph_triggered()
         QMessageBox::information(graphWidget, "Instructions", instructions, QMessageBox::Ok);
     });
 
+    // Set the layout for the graph widget, and display it to the user.
     graphWidget->setLayout(mainLayout);
     graphWidget->resize(600, 600);
     graphWidget->show();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionInsert_Histogram_triggered
+ * \brief This function allows the user to input histogram data and the number of bins for the histogram.
+ *        It then plots the histogram and provides an option to save the graph as an image and insert it into the curr_browser.
+ */
 void MainWindow::on_actionInsert_Histogram_triggered()
 {
     QWidget* histogramWidget = new QWidget();
     histogramWidget->setWindowTitle("Insert Histogram");
     QHBoxLayout* layout = new QHBoxLayout();
 
+    // QCustomPlot widget for displaying the histogram
     QCustomPlot *plotWidget = new QCustomPlot(histogramWidget);
 
     QPushButton* InsertButton = new QPushButton("Insert Histogram");
     layout->addWidget(InsertButton);
 
+    // Connect the "Insert Histogram" button to the lambda function to save the histogram image and insert it into the curr_browser.
     connect(InsertButton, &QPushButton::clicked, [=](){
 
         if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
@@ -12320,15 +12353,18 @@ void MainWindow::on_actionInsert_Histogram_triggered()
 
         int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
 
+        // Generate the fileName for the image
         QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
         bool ok;
 
+        // Save the image as png
         QPixmap pixmap = plotWidget->toPixmap(plotWidget->width(), plotWidget->height());
         if (!pixmap.save(fileName)) {
             qDebug() << "Error, Failed to save the image as PNG.";
         }
         else{
             insertGraph(fileName, ok);
+            // Display a message if could not insert graph as an image in curr_browser.
             if(!ok){
                 QMessageBox::critical(this, "Error", "Could not insert Histogram data!");
             }
@@ -12353,8 +12389,11 @@ void MainWindow::on_actionInsert_Histogram_triggered()
     mainDialogLayout->addWidget(&buttonBox);
     dialog.setLayout(mainDialogLayout);
 
+    // Connect the accepted and rejected signals to the accept and reject slots of the dialog.
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    // Connect the InfoButton to the lambda function to display instructions for the Histogram feature
     connect(InfoButton, &QPushButton::clicked, [&](){
         QString instructions = "To use this function, follow these steps:\n\n"
                                "1. Enter the histogram data as comma-separated values. Each value should be a numerical data point.\n"
@@ -12367,6 +12406,7 @@ void MainWindow::on_actionInsert_Histogram_triggered()
         QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
     });
 
+    // If the dialog is accepted, extract and process histogram data and plot the histogram.
     if(dialog.exec() == QDialog::Accepted){
         bool ok;
         QString dataInput = dataLineEdit->text();
@@ -12389,6 +12429,7 @@ void MainWindow::on_actionInsert_Histogram_triggered()
 
         if(!ok) return;
 
+        // Calculate the minimum and maximum data values to determine bin width.
         double dataMin = *std::min_element(data.constBegin(), data.constEnd());
         double dataMax = *std::max_element(data.constBegin(), data.constEnd());
         double binWidth = (dataMax - dataMin) / numBins;
@@ -12422,8 +12463,10 @@ void MainWindow::on_actionInsert_Histogram_triggered()
 
         plotWidget->xAxis->setTicker(textTicker);
 
+        // Replot the histogram with the calculated values.
         plotWidget->replot();
 
+        // Set up the layout for the histogram widget and display it to the user.
         QVBoxLayout* mainLayout = new QVBoxLayout();
         mainLayout->addWidget(plotWidget);
         mainLayout->addLayout(layout);
@@ -13419,10 +13462,19 @@ void MainWindow::boxPlotCsv(){
 
 }
 
+/*!
+ * \fn MainWindow::on_actionInsert_Pie_Chart_triggered
+ * \brief This function displays a dialog box to get the number of slices for the pie chart,
+ *        and then prompts the user to enter the label and value for each slice.
+ *        After entering the data, the pie chart is generated and displayed for preview.
+ *        The user can then choose to insert the pie chart image into the curr_browser.
+ */
 void MainWindow::on_actionInsert_Pie_Chart_triggered()
 {
+    // Create a modal dialog box for getting the number of slices for the pie chart.
     QDialog dialog(this);
     dialog.setWindowTitle("Enter Number of Slices");
+
     QHBoxLayout* dialogLayout1 = new QHBoxLayout();
     QVBoxLayout* mainDialogLayout = new QVBoxLayout();
 
@@ -13431,6 +13483,8 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
     QPushButton* InfoButton = new QPushButton();
     InfoButton->setIcon(QIcon(":/Images/Resources/information.png"));
+
+    // Set up the layout for the dialog box and adds widgets to it.
     dialogLayout1->addWidget(InfoButton);
     dialogLayout1->addWidget(sliceLabel);
     dialogLayout1->addWidget(sliceLineEdit);
@@ -13438,8 +13492,11 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
     mainDialogLayout->addWidget(&buttonBox);
     dialog.setLayout(mainDialogLayout);
 
+    // Connect the accepted and rejected signals of the buttonBox to the appropriate slots.
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    // Connect the InfoButton to the lambda function to display instructions for the Pie Chart feature
     connect(InfoButton, &QPushButton::clicked, [&]() {
         QString instructions = "To use this function, follow these steps:\n\n"
                                "1. Enter the number of slices for the pie chart. The value should be between 1 and 100.\n"
@@ -13449,6 +13506,7 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
         QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
     });
 
+    // Execute the dialog box
     if (dialog.exec() == QDialog::Accepted) {
         bool ok;
         int sliceCount = sliceLineEdit->text().toInt(&ok);
@@ -13457,6 +13515,7 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
             return;
         }
 
+        // Create a new dialog box to prompt the user to enter slice details.
         QDialog sliceDialog(this);
         sliceDialog.setWindowTitle("Enter Slice Details");
         QVBoxLayout* sliceDialogLayout = new QVBoxLayout();
@@ -13471,7 +13530,10 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
         QVBoxLayout* scrollableLayout = new QVBoxLayout(scrollableContent);
         QScrollArea* scrollArea = new QScrollArea(&sliceDialog);
 
+        // Layout for each slice entry.
         QHBoxLayout* entryLayout;
+
+        // Loop to create input fields for each slice.
         for (int i = 0; i < sliceCount; i++) {
             QLabel* label = new QLabel("Slice " + QString::number(i + 1), &sliceDialog);
             QLineEdit* lineEdit = new QLineEdit(&sliceDialog);
@@ -13489,15 +13551,21 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
         scrollArea->setWidget(scrollableContent);
         sliceDialogLayout->addWidget(scrollArea);
 
+        // Add Ok and Cancel buttons to the slice dialog.
         QDialogButtonBox sliceButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &sliceDialog);
         sliceDialogLayout->addWidget(&sliceButtonBox);
 
+        // Connect the accepted and rejected signals to the accept and reject slots of the slice dialog.
         QObject::connect(&sliceButtonBox, SIGNAL(accepted()), &sliceDialog, SLOT(accept()));
         QObject::connect(&sliceButtonBox, SIGNAL(rejected()), &sliceDialog, SLOT(reject()));
 
+        // Execute the slice dialog to get slice details.
         if (sliceDialog.exec() == QDialog::Accepted) {
+            // Create a QPieSeries to hold the pie chart data.
             QPieSeries* series = new QPieSeries();
             double totalValue = 0.0;
+
+            // Loop through each slice and validate the input.
             for(int i = 0; i < sliceCount; i++){
                 QString labelText = slicesLineEdit[i]->text().trimmed();
                 QStringList parts = labelText.split(',');
@@ -13520,29 +13588,35 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
                 }
             }
 
+            // Calculate the percentage for each slice and set labels accordingly.
             for(QPieSlice* slice : series->slices()){
                 double percentage = (slice->value() / totalValue) * 100.0;
                 slice->setLabel(QString("%1 (%2%)").arg(slice->label()).arg(percentage, 0, 'f', 2));
             }
 
+            // Create a widget to display the pie chart.
             QWidget* pieChartWidget = new QWidget();
             pieChartWidget->setWindowTitle("Insert Pie Chart");
 
+            // Create a QChart and set up the pie chart.
             QChart* chart = new QChart();
             chart->setTitle("Pie Chart");
             chart->addSeries(series);
             series->setLabelsVisible();
             chart->legend()->show();
 
+            // Create a QChartView to display the chart.
             QChartView* chartView = new QChartView(chart);
             chartView->setRenderHint(QPainter::Antialiasing, true);
 
             QVBoxLayout* mainLayout = new QVBoxLayout();
             mainLayout->addWidget(chartView);
 
+            // Create a Button to insert the pie chart into the curr_browser.
             QPushButton* insertButton = new QPushButton("Insert Pie Chart", this);
             mainLayout->addWidget(insertButton);
 
+            // Connect the insertButton to the lambda function to save and insert the graph as image in curr_browser
             connect(insertButton, &QPushButton::clicked, [this, series, chartView, pieChartWidget](){
                 if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
                     QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
@@ -13563,13 +13637,18 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
                 int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
                 bool ok;
 
+                // Generate the fileName for the image
                 QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
+
+                // Save the image as png
                 QPixmap pixmap = chartView->grab();
                 if(!pixmap.save(fileName)){
                     qDebug() << "Error, Failed to save the image as PNG.";
                 }
                 else{
                     insertGraph(fileName, ok);
+
+                    // Display a message if could not insert graph as an image in curr_browser.
                     if(!ok){
                         QMessageBox::critical(this, "Error", "Could not insert Pie chart data!");
                     }
@@ -13577,6 +13656,7 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
                 }
             });
 
+            // Display the pie chart widget to the user.
             pieChartWidget->setLayout(mainLayout);
             pieChartWidget->resize(600, 600);
             pieChartWidget->show();
