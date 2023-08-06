@@ -12382,6 +12382,7 @@ void MainWindow::sendComment(QString str)
     else qDebug()<<"Sent";
 }
 
+/*!
  * \fn MainWindow::on_actionInsert_Line_Graph_triggered
  * \brief This function displays a widget with options to plot a line graph with user-defined points.
  *        The user can enter the number of points and their corresponding X and Y coordinates in a dialog box.
