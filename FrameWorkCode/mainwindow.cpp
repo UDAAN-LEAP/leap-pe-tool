@@ -93,11 +93,13 @@
 #include <QCalendarWidget>
 #include <SimpleMail/SimpleMail>
 #include <sendmail.h>
+#include "qcustomplot.h"
 #ifdef Q_OS_WIN
 #include <quazip.h>
 #include <quazipfile.h>
 #endif
-
+#include <QtCharts>
+QT_CHARTS_USE_NAMESPACE
 
 
 map<string, string> LSTM;
@@ -12378,4 +12380,1540 @@ void MainWindow::sendComment(QString str)
     if(!sender.sendMail(message))
         qDebug()<<"Not sent";
     else qDebug()<<"Sent";
+}
+
+ * \fn MainWindow::on_actionInsert_Line_Graph_triggered
+ * \brief This function displays a widget with options to plot a line graph with user-defined points.
+ *        The user can enter the number of points and their corresponding X and Y coordinates in a dialog box.
+ *        The line graph is then plotted and displayed for preview. The user can save the graph as an image and
+ *        insert it into the curr_browser.
+ */
+void MainWindow::on_actionInsert_Line_Graph_triggered()
+{
+    // Create a widget to display the line graph.
+    QWidget* graphWidget = new QWidget();
+    graphWidget->setWindowTitle("Insert Line Graph");
+
+    QHBoxLayout* layout = new QHBoxLayout();
+
+    QPushButton* InfoButton = new QPushButton();
+    InfoButton->setIcon(QIcon(":/Images/Resources/information.png"));
+    layout->addWidget(InfoButton);
+
+    QLabel* numPointsLabel = new QLabel("Enter the number of points: ");
+    layout->addWidget(numPointsLabel);
+
+    QLineEdit* numPointsInput = new QLineEdit(graphWidget);
+    layout->addWidget(numPointsInput);
+
+    // QCustomPlot widget for displaying the line graph.
+    QCustomPlot* plotWidget = new QCustomPlot(graphWidget);
+
+    // Buttons for plotting and inserting the line graph.
+    QPushButton* PlotButton = new QPushButton("Plot Line Graph", graphWidget);
+    layout->addWidget(PlotButton);
+    QPushButton* InsertButton = new QPushButton("Insert Line Graph", graphWidget);
+    layout->addWidget(InsertButton);
+
+     // Set up the main layout
+    QVBoxLayout* mainLayout = new QVBoxLayout();
+    mainLayout->addLayout(layout);
+    mainLayout->addWidget(plotWidget);
+
+    // Connect the PlotButton to a lamda function to plot the Line Graph
+    connect(PlotButton, &QPushButton::clicked, [=](){
+        int numPoints = numPointsInput->text().toInt();
+        QVector<QPointF> points;
+
+        // Loop to get the X and Y coordinates for each point.
+        for(int i = 0; i < numPoints; i++) {
+            bool okX, okY;
+            double x, y;
+
+            // Create a dialog box to enter the X and Y coordinates for each point.
+            QDialog dialog(graphWidget);
+            dialog.setWindowTitle("Enter Point " + QString::number(i+1));
+            QVBoxLayout* dialogLayout = new QVBoxLayout(&dialog);
+
+            QLabel* xLabel = new QLabel("X Coordinate: ");
+            QLineEdit* xLineEdit = new QLineEdit;
+            dialogLayout->addWidget(xLabel);
+            dialogLayout->addWidget(xLineEdit);
+
+            QLabel* yLabel = new QLabel("Y Coordinate: ");
+            QLineEdit* yLineEdit = new QLineEdit;
+            dialogLayout->addWidget(yLabel);
+            dialogLayout->addWidget(yLineEdit);
+
+            QPushButton* nextButton = new QPushButton("Next");
+            dialogLayout->addWidget(nextButton);
+
+            // Connect the "Next" button to the lambda function to save the X and Y coordinates
+            QObject::connect(nextButton, &QPushButton::clicked, &dialog, [&](){
+                x = xLineEdit->text().toDouble(&okX);
+                if(!okX) return;
+                y = yLineEdit->text().toDouble(&okY);
+                if(!okY) return;
+                dialog.accept();
+            });
+
+            // Connect the dialog's "accepted" signal to the lambda function to save the point to the points vector.
+            QObject::connect(&dialog, &QDialog::accepted, [&](){
+                points.append(QPointF(x, y));
+            });
+
+            // Execute the dialog
+            dialog.exec();
+        }
+
+        // If points are entered, plot the line graph.
+        if(!points.isEmpty()){
+            // Clear any existing graphs from the plot widget.
+            plotWidget->clearGraphs();
+
+            // Add a new graph to the plot widget.
+            plotWidget->addGraph();
+
+            // Set up a data container to hold the points for the graph.
+            QSharedPointer<QCPGraphDataContainer> dataContainer(new QCPGraphDataContainer);
+            for(const auto& point : points) {
+                dataContainer->add(QCPGraphData(point.x(), point.y()));
+            }
+            plotWidget->graph(0)->setData(dataContainer);
+
+            // Calculate the minimum and maximum values for the axes.
+            double minX = std::numeric_limits<double>::max();
+            double maxX = std::numeric_limits<double>::min();
+            double minY = std::numeric_limits<double>::max();
+            double maxY = std::numeric_limits<double>::min();
+            for(const auto& point : points) {
+                minX = std::min(minX, point.x());
+                maxX = std::max(maxX, point.x());
+                minY = std::min(minY, point.y());
+                maxY = std::max(maxY, point.y());
+            }
+
+            // Set the axis ranges and labels
+            plotWidget->xAxis->setRange(minX - 1, maxX + 1);
+            plotWidget->yAxis->setRange(minY - 1, maxY + 1);
+            plotWidget->xAxis->setLabel("X");
+            plotWidget->xAxis->setLabel("Y");
+
+            // Replot the graph to update the changes.
+            plotWidget->replot();
+        }
+    });
+
+    // Connect the InsertButton to the lambda function to save and insert the graph as image in curr_browser
+    connect(InsertButton, &QPushButton::clicked, [=](){
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/lineplots").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/lineplots");
+        }
+
+        QString graphDir = "../Cropped_Images/graphs/lineplots/";
+
+        QDir dir(graphDir);
+
+        int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
+
+        // Generate the fileName for the image
+        QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
+
+        bool ok;
+
+        // Save the image as png
+        QPixmap pixmap = plotWidget->toPixmap(plotWidget->width(), plotWidget->height());
+        if (!pixmap.save(fileName)) {
+            qDebug() << "Error, Failed to save the image as PNG.";
+        }
+        else{
+            insertGraph(fileName, ok);
+            // Display a message if could not insert graph as an image in curr_browser.
+            if(!ok){
+                QMessageBox::critical(this, "Error", "Could not insert Line graph data!");
+            }
+        }
+        graphWidget->close();
+    });
+
+    // Connect the InfoButton to the lamda function to show instructions for the Line Graph feature
+    connect(InfoButton, &QPushButton::clicked, [=](){
+        QString instructions = "To use this function, follow these steps:\n\n"
+                               "1. Enter the number of points for the line graph.\n"
+                               "2. Click 'Plot Graph' to enter the points.\n"
+                               "3. For each point, enter the X and Y coordinates and click 'Next'.\n"
+                               "4. After all the points have been added, the graph will be plotted.\n"
+                               "5. Click 'Insert Line Graph' to save the graph image, and insert it.\n\n"
+                               "Note: The Line Graph image will be saved in the 'Cropped_Images' directory.";
+        QMessageBox::information(graphWidget, "Instructions", instructions, QMessageBox::Ok);
+    });
+
+    // Set the layout for the graph widget, and display it to the user.
+    graphWidget->setLayout(mainLayout);
+    graphWidget->resize(600, 600);
+    graphWidget->show();
+}
+
+/*!
+ * \fn MainWindow::on_actionInsert_Histogram_triggered
+ * \brief This function allows the user to input histogram data and the number of bins for the histogram.
+ *        It then plots the histogram and provides an option to save the graph as an image and insert it into the curr_browser.
+ */
+void MainWindow::on_actionInsert_Histogram_triggered()
+{
+    QWidget* histogramWidget = new QWidget();
+    histogramWidget->setWindowTitle("Insert Histogram");
+    QHBoxLayout* layout = new QHBoxLayout();
+
+    // QCustomPlot widget for displaying the histogram
+    QCustomPlot *plotWidget = new QCustomPlot(histogramWidget);
+
+    QPushButton* InsertButton = new QPushButton("Insert Histogram");
+    layout->addWidget(InsertButton);
+
+    // Connect the "Insert Histogram" button to the lambda function to save the histogram image and insert it into the curr_browser.
+    connect(InsertButton, &QPushButton::clicked, [=](){
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/histograms").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/histograms");
+        }
+
+        QString graphDir = "../Cropped_Images/graphs/histograms/";
+
+        QDir dir(graphDir);
+
+
+        int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
+
+        // Generate the fileName for the image
+        QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
+        bool ok;
+
+        // Save the image as png
+        QPixmap pixmap = plotWidget->toPixmap(plotWidget->width(), plotWidget->height());
+        if (!pixmap.save(fileName)) {
+            qDebug() << "Error, Failed to save the image as PNG.";
+        }
+        else{
+            insertGraph(fileName, ok);
+            // Display a message if could not insert graph as an image in curr_browser.
+            if(!ok){
+                QMessageBox::critical(this, "Error", "Could not insert Histogram data!");
+            }
+        }
+        histogramWidget->close();
+    });
+
+    QDialog dialog(this);
+    dialog.setWindowTitle("Histogram Data");
+    QHBoxLayout* dialogLayout1 = new QHBoxLayout();
+    QVBoxLayout* mainDialogLayout = new QVBoxLayout();
+
+    QLabel* dataLabel = new QLabel("Enter data (comma-separated value):", &dialog);
+    QLineEdit* dataLineEdit = new QLineEdit(&dialog);
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    QPushButton* InfoButton = new QPushButton();
+    InfoButton->setIcon(QIcon(":/Images/Resources/information.png"));
+    dialogLayout1->addWidget(InfoButton);
+    dialogLayout1->addWidget(dataLabel);
+    dialogLayout1->addWidget(dataLineEdit);
+    mainDialogLayout->addLayout(dialogLayout1);
+    mainDialogLayout->addWidget(&buttonBox);
+    dialog.setLayout(mainDialogLayout);
+
+    // Connect the accepted and rejected signals to the accept and reject slots of the dialog.
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    // Connect the InfoButton to the lambda function to display instructions for the Histogram feature
+    connect(InfoButton, &QPushButton::clicked, [&](){
+        QString instructions = "To use this function, follow these steps:\n\n"
+                               "1. Enter the histogram data as comma-separated values. Each value should be a numerical data point.\n"
+                               "  * Example: 10, 15, 20, 25, 30\n\n"
+                               "2. Enter the number of bins for the histogram. Bins represent the number of intervals to divide the data range.\n"
+                               "  * The value should be greater than 0 and less than the total number of data points.\n"
+                               "  * A higher number of bins provide more detailed distribution information, but avoid using too many bins as it may cause clutter.\n\n"
+                               "3. Click 'Insert Histogram' to save the histogram image, and insert it.\n\n"
+                               "Note: The Histogram image will be saved in the 'Cropped_Images' directory.";
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
+
+    // If the dialog is accepted, extract and process histogram data and plot the histogram.
+    if(dialog.exec() == QDialog::Accepted){
+        bool ok;
+        QString dataInput = dataLineEdit->text();
+
+        QStringList dataStrList = dataInput.split(",");
+        QVector<double> data;
+        for(const QString &str : dataStrList) {
+            bool parseOk;
+            double value = str.toDouble(&parseOk);
+            if(parseOk){
+                data.append(value);
+            }
+            else{
+                QMessageBox::critical(this, "Invalid Input", "Invalid data entered. Enter the histogram data as comma-separated values. Each value should be a numerical data point.");
+                return;
+            }
+        }
+
+        int numBins = QInputDialog::getInt(this, "Histogram Bins", "Enter number of bins:", data.size(), 1, data.size(), 1, &ok);
+
+        if(!ok) return;
+
+        // Calculate the minimum and maximum data values to determine bin width.
+        double dataMin = *std::min_element(data.constBegin(), data.constEnd());
+        double dataMax = *std::max_element(data.constBegin(), data.constEnd());
+        double binWidth = (dataMax - dataMin) / numBins;
+
+        QVector<double> binEdges(numBins+1);
+        QVector<double> binCounts(numBins);
+
+        for (double value : data) {
+            int binIndex = qBound(0, int((value - dataMin) / binWidth), numBins - 1);
+            binCounts[binIndex]++;
+        }
+
+        for(int i = 0; i <= numBins; i++){
+            binEdges[i] = dataMin + i * binWidth;
+        }
+
+        QCPBars* histogram = new QCPBars(plotWidget->xAxis, plotWidget->yAxis);
+        histogram->setWidth(binWidth);
+        histogram->setData(binEdges, binCounts);
+        plotWidget->xAxis->setLabel("Bins");
+        plotWidget->yAxis->setLabel("Frequency");
+        plotWidget->xAxis->setRange(0, dataMax);
+        plotWidget->yAxis->setRange(0, *std::max_element(binCounts.constBegin(), binCounts.constEnd()));
+
+        QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+        QVector<QString> binLabels(numBins);
+        for (int i = 0; i < numBins; ++i) {
+            binLabels[i] = QString::number(binEdges[i]) + " - " + QString::number(binEdges[i + 1]);
+            textTicker->addTick(binEdges[i] + binWidth / 2.0, binLabels[i]);
+        }
+
+        plotWidget->xAxis->setTicker(textTicker);
+
+        // Replot the histogram with the calculated values.
+        plotWidget->replot();
+
+        // Set up the layout for the histogram widget and display it to the user.
+        QVBoxLayout* mainLayout = new QVBoxLayout();
+        mainLayout->addWidget(plotWidget);
+        mainLayout->addLayout(layout);
+
+        histogramWidget->setLayout(mainLayout);
+        histogramWidget->resize(800, 600);
+        histogramWidget->show();
+    }
+    else{
+        return;
+    }
+}
+
+void MainWindow::insertGraph(const QString &graphFilePath, bool &status)
+{
+    if (!QFile::exists(graphFilePath)) {
+        qDebug() << "Error: Graph file not found.";
+        status = false;
+        return;
+    }
+
+    QImage image(graphFilePath);
+    if (image.isNull()) {
+        qDebug() << "Error: Unable to load graph image.";
+        status = false;
+        return;
+    }
+
+    QString html = "<img src=\"" + graphFilePath + "\">";
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.insertHtml(html);
+    status = true;
+}
+
+
+void MainWindow::on_actionBar_Plot_triggered()
+{
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+
+    QLabel *choice = new QLabel("Do you want to give input manually or choose a csv file?");
+    layout->addRow(choice);
+
+    QPushButton *manual = new QPushButton("enter manually");
+    QPushButton *csv = new QPushButton("choose csv file");
+    layout->addRow(manual,csv);
+
+    connect(manual, &QPushButton::clicked, [this,&dialog]() {
+        barPlotManual();
+        dialog.accept();
+    });
+
+    connect(csv,&QPushButton::clicked,[this,&dialog](){
+        barPlotCsv();
+        dialog.accept();
+    });
+
+    dialog.exec();
+}
+
+void MainWindow::barPlotManual()
+{
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+    QLabel *x_label = new QLabel("Enter X-axis label");
+    QLineEdit *x_title = new QLineEdit;
+    layout->addRow(x_label,x_title);
+    QLabel *x_values = new QLabel("<html>Enter X-Axis values(comma separated)<font color='red'> * </font></html>");
+    QLineEdit *xcsv = new QLineEdit;
+    layout->addRow(x_values,xcsv);
+
+    QLabel *y_label = new QLabel("Enter Y-axis label");
+    QLineEdit *y_title = new QLineEdit;
+    layout->addRow(y_label,y_title);
+    QLabel *y_values = new QLabel("<html>Enter Y-Axis values(comma separated)<font color='red'> * </font></html>");
+    QLineEdit *ycsv = new QLineEdit;
+    layout->addRow(y_values,ycsv);
+
+    QLabel *required = new QLabel("<html><font color='red'>* required</font></html>");
+    layout->addRow(required);
+
+    QPushButton *show = new QPushButton("show");
+    layout->addRow(show);
+
+    QCustomPlot *barplot = new QCustomPlot();
+    QPushButton *insert = new QPushButton("insert");
+
+    connect(show, &QPushButton::clicked, [this, y_title,x_title,xcsv, ycsv,layout,barplot,insert,&dialog]() {
+        QString ylabel_str = y_title->text();
+        QString xlabel_str = x_title->text();
+        QString x_string = xcsv->text();
+
+        QRegularExpression regex("^(?=.*[A-Za-z])[A-Za-z, ]*$");
+        QRegularExpressionMatch match = regex.match(x_string);
+        if (!match.hasMatch()) {
+            dialog.accept();
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            barPlotManual();
+            return;
+
+        }
+
+        QVector<QString> x_vector;
+        QStringList x_stringlist = x_string.split(',');
+        x_vector = QVector<QString>::fromList(x_stringlist);
+
+        QString y_string = ycsv->text();
+
+        QRegularExpression regex2("^(?=.*\\d)[\\d, .]*$");
+        QRegularExpressionMatch match2 = regex2.match(y_string);
+        if (!match2.hasMatch()) {
+            dialog.accept();
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            barPlotManual();
+            return;
+
+        }
+
+        QVector<double> y_vector;
+        QStringList y_stringlist = y_string.split(',');
+        for(const QString& str : y_stringlist){
+            bool ok;
+            int double_value = str.toDouble(&ok);
+            if (ok) {
+                y_vector.append(double_value);
+            }
+            else{
+                dialog.accept();
+                QMessageBox::warning(0,"Warning","Enter values in specified format");
+                barPlotManual();
+                return;
+            }
+        }
+        int x_len = x_vector.length();
+        QVector<double> ticks(x_len);
+        for(int i=0;i<x_len;i++){
+            ticks[i] = i+1;
+        }
+
+
+
+        QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+        textTicker->addTicks(ticks, x_vector);
+        barplot->xAxis->setTicker(textTicker);
+        barplot->xAxis->setTickLabelRotation(60);
+
+
+        QCPBars *barchart = new QCPBars(barplot->xAxis, barplot->yAxis);
+        barchart->setName("Bar Chart");
+        barplot->yAxis->setLabel(ylabel_str);
+        barplot->xAxis->setLabel(xlabel_str);
+
+        barchart->setPen(QPen(QColor(75, 150, 255).lighter(170)));
+        barchart->setBrush(QColor(75, 150, 255));
+        barchart->setData(ticks, y_vector);
+        double xMin = 0;
+        double xMax = x_len+1;
+        double yMin = 0;
+        double yMax = *std::max_element(y_vector.constBegin(), y_vector.constEnd()) + 1; // Maximum value on the y-axis
+        qDebug()<<yMax;
+        barplot->xAxis->setRange(xMin, xMax);
+        barplot->yAxis->setRange(yMin, yMax);
+        double barWidth = 0.5;
+        barchart->setWidth(barWidth);
+        barplot->replot();
+        barplot->setFixedSize(barplot->width(),barplot->height());
+        layout->addRow(barplot);
+
+        layout->addRow(insert);
+    });
+
+    connect(insert, &QPushButton::clicked, [this,barplot,&dialog]() {
+            QPixmap bar_pixmap = barplot->toPixmap();
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            settings.beginGroup("chartCount");
+            int count = settings.value("barChartCount").toInt();
+
+            if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+                QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+            }
+            if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists())
+            {
+                QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+            }
+            if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/barplots").exists())
+            {
+                QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/barplots");
+            }
+
+            QString save_path = "../Cropped_Images/graphs/barplots/";
+
+            QString c = QString::number(count);
+            QString file_name = save_path + "barchart" + c + ".png";
+            count++;
+            settings.setValue("barChartCount",count);
+            settings.endGroup();
+
+            if (!file_name.isEmpty()) {
+                bar_pixmap.save(file_name, "PNG");
+            }
+
+            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(file_name).arg(barplot->width()).arg(barplot->height());
+            QTextCursor cursor = curr_browser->textCursor();
+            cursor.insertHtml(html);
+
+            dialog.accept();
+        });
+
+
+    dialog.exec();
+
+}
+
+
+void MainWindow::barPlotCsv(){
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+    QPushButton *choice = new QPushButton("Choose .csv file");
+    layout->addRow(choice);
+
+    QCustomPlot *barplot = new QCustomPlot();
+    QPushButton *insert = new QPushButton("insert");
+
+    connect(choice,&QPushButton::clicked,[this,barplot,insert,layout](){
+        QString filePath = QFileDialog::getOpenFileName(this, "Open File", QDir::homePath(), "CSV Files (*.csv)");
+        QFile csvFile(filePath);
+        if (!csvFile.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            return;
+        }
+
+        QTextStream in(&csvFile);
+        QString firstLine = in.readLine();
+        QStringList columnNames = firstLine.split(",");
+
+        QVector<QString> x_vector;
+        QVector<double> y_vector;
+
+        double double_value;
+        while (!in.atEnd()){
+            QString line = in.readLine();
+            QStringList fields = line.split(",");
+            x_vector.append(fields[0]);
+
+            double_value = fields[1].toDouble();
+            y_vector.append(double_value);
+        }
+
+        int x_len = x_vector.length();
+        QVector<double> ticks(x_len);
+        for(int i=0;i<x_len;i++){
+            ticks[i] = i+1;
+        }
+
+
+
+        QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+        textTicker->addTicks(ticks, x_vector);
+        barplot->xAxis->setTicker(textTicker);
+        barplot->xAxis->setTickLabelRotation(60);
+
+
+        QCPBars *barchart = new QCPBars(barplot->xAxis, barplot->yAxis);
+        barchart->setName("Bar Chart");
+        barplot->yAxis->setLabel(columnNames[1]);
+        barplot->xAxis->setLabel(columnNames[0]);
+
+        barchart->setPen(QPen(QColor(75, 150, 255).lighter(170)));
+        barchart->setBrush(QColor(75, 150, 255));
+        barchart->setData(ticks, y_vector);
+        double xMin = 0;
+        double xMax = x_len+1;
+        double yMin = 0;
+        double yMax = *std::max_element(y_vector.constBegin(), y_vector.constEnd()) + 1;
+        qDebug()<<yMax;
+        barplot->xAxis->setRange(xMin, xMax);
+        barplot->yAxis->setRange(yMin, yMax);
+        double barWidth = 0.5;
+        barchart->setWidth(barWidth);
+        barplot->replot();
+        barplot->setFixedSize(barplot->width(),barplot->height());
+        layout->addRow(barplot);
+
+        qDebug()<<ticks;
+        qDebug()<<x_vector;
+        qDebug()<<y_vector;
+
+        layout->addRow(insert);
+    });
+
+    connect(insert, &QPushButton::clicked, [this,barplot,&dialog]() {
+        QPixmap bar_pixmap = barplot->toPixmap();
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("chartCount");
+        int count = settings.value("barChartCount").toInt();
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/barplots").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/barplots");
+        }
+
+        QString save_path = "../Cropped_Images/graphs/barplots/";
+
+        QString c = QString::number(count);
+        QString file_name = save_path + "barchart" + c + ".png";
+        count++;
+        settings.setValue("barChartCount",count);
+        settings.endGroup();
+
+        if (!file_name.isEmpty()) {
+            bar_pixmap.save(file_name, "PNG");
+        }
+
+        QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(file_name).arg(barplot->width()).arg(barplot->height());
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertHtml(html);
+
+        dialog.accept();
+    });
+
+    dialog.exec();
+
+}
+
+void MainWindow::on_actionScatter_Plot_triggered()
+{
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+
+    QLabel *choice = new QLabel("Do you want to give input manually or choose a csv file?");
+    layout->addRow(choice);
+
+    QPushButton *manual = new QPushButton("enter manually");
+    QPushButton *csv = new QPushButton("choose csv file");
+    layout->addRow(manual,csv);
+
+    connect(manual, &QPushButton::clicked, [this,&dialog]() {
+        scatterPlotManual();
+        dialog.accept();
+    });
+
+    connect(csv,&QPushButton::clicked,[this,&dialog](){
+        scatterPlotCsv();
+        dialog.accept();
+    });
+
+    dialog.exec();
+}
+
+void MainWindow::scatterPlotManual()
+{
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+    QLabel *x_label = new QLabel("Enter X-axis label");
+    QLineEdit *x_title = new QLineEdit;
+    layout->addRow(x_label,x_title);
+    QLabel *x_values = new QLabel("<html>Enter X-Axis values(comma separated)<font color='red'> * </font></html>");
+    QLineEdit *xcsv = new QLineEdit;
+    layout->addRow(x_values,xcsv);
+
+    QLabel *y_label = new QLabel("Enter Y-axis label");
+    QLineEdit *y_title = new QLineEdit;
+    layout->addRow(y_label,y_title);
+    QLabel *y_values = new QLabel("<html>Enter Y-Axis values(comma separated)<font color='red'> * </font></html>");
+    QLineEdit *ycsv = new QLineEdit;
+    layout->addRow(y_values,ycsv);
+
+    QLabel *point_label = new QLabel("Choose Point Style");
+    QComboBox *comboBox = new QComboBox();
+    comboBox->addItem("Cross");
+    comboBox->addItem("Plus");
+    comboBox->addItem("Circle");
+    comboBox->addItem("Disc");
+    comboBox->addItem("Square");
+    comboBox->addItem("Diamond");
+    comboBox->addItem("Star");
+    comboBox->addItem("Triangle");
+    comboBox->addItem("TriangleInverted");
+    comboBox->addItem("CrossSquare");
+    comboBox->addItem("PlusSquare");
+    comboBox->addItem("CrossCircle");
+    comboBox->addItem("PlusCircle");
+    comboBox->addItem("Peace");
+    comboBox->addItem("Custom");
+    layout->addRow(point_label,comboBox);
+
+    QLabel *required = new QLabel("<html><font color='red'>* required</font></html>");
+    layout->addRow(required);
+
+    QPushButton *show = new QPushButton("show");
+    layout->addRow(show);
+
+    QCustomPlot *scatterplot = new QCustomPlot();
+    QPushButton *insert = new QPushButton("insert");
+
+    QVector<QCPScatterStyle::ScatterShape> shapes;
+    shapes << QCPScatterStyle::ssCross << QCPScatterStyle::ssPlus << QCPScatterStyle::ssCircle << QCPScatterStyle::ssDisc << QCPScatterStyle::ssSquare << QCPScatterStyle::ssDiamond;
+    shapes << QCPScatterStyle::ssStar << QCPScatterStyle::ssTriangle << QCPScatterStyle::ssTriangleInverted << QCPScatterStyle::ssCrossSquare << QCPScatterStyle::ssPlusSquare;
+    shapes << QCPScatterStyle::ssCrossCircle << QCPScatterStyle::ssPlusCircle << QCPScatterStyle::ssPeace << QCPScatterStyle::ssCustom;
+
+    connect(show, &QPushButton::clicked, [this, y_title,x_title,xcsv,ycsv,layout,scatterplot,insert,comboBox,shapes,&dialog]() {
+        scatterplot->clearGraphs(); // Removes all graphs
+        scatterplot->clearItems();
+
+        scatterplot->addGraph();
+        scatterplot->graph()->setPen(QPen(QColor(75, 150, 255),3));
+        int selectedIndex = comboBox->currentIndex();
+        qDebug()<<selectedIndex;
+
+
+        QString ylabel_str = y_title->text();
+        QString xlabel_str = x_title->text();
+
+        QString x_string = xcsv->text();
+
+        QRegularExpression regex("^(?=.*\\d)[\\d, .]*$");
+        QRegularExpressionMatch match = regex.match(x_string);
+        if (!match.hasMatch()) {
+            dialog.accept();
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            scatterPlotManual();
+            return;
+        }
+
+        QVector<double> x_vector;
+        QStringList x_stringlist = x_string.split(',');
+        for(const QString& str : x_stringlist){
+            bool ok;
+            int double_value = str.toDouble(&ok);
+            if (ok) {
+                x_vector.append(double_value);
+            }
+            else{
+                dialog.accept();
+                QMessageBox::warning(0,"Warning","Enter values in specified format");
+                scatterPlotManual();
+                return;
+            }
+        }
+
+        QString y_string = ycsv->text();
+        QRegularExpressionMatch match2 = regex.match(y_string);
+        if (!match2.hasMatch()) {
+            dialog.accept();
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            scatterPlotManual();
+            return;
+        }
+
+        QVector<double> y_vector;
+        QStringList y_stringlist = y_string.split(',');
+        for(const QString& str : y_stringlist){
+            bool ok;
+            int double_value = str.toDouble(&ok);
+            if (ok) {
+                y_vector.append(double_value);
+            }
+            else{
+                dialog.accept();
+                QMessageBox::warning(0,"Warning","Enter values in specified format");
+                scatterPlotManual();
+                return;
+            }
+        }
+
+        scatterplot->graph()->setData(x_vector,y_vector);
+        scatterplot->yAxis->setLabel(ylabel_str);
+        scatterplot->xAxis->setLabel(xlabel_str);
+
+        double xMin = 0;
+        double xMax = *std::max_element(x_vector.constBegin(), x_vector.constEnd()) + 1;
+        double yMin = 0;
+        double yMax = *std::max_element(y_vector.constBegin(), y_vector.constEnd()) + 1;
+        scatterplot->xAxis->setRange(xMin, xMax);
+        scatterplot->yAxis->setRange(yMin, yMax);
+        scatterplot->graph()->setScatterStyle(QCPScatterStyle(shapes.at(selectedIndex),15));
+        scatterplot->graph()->setLineStyle(QCPGraph::lsNone);
+        scatterplot->replot();
+        scatterplot->setFixedSize(scatterplot->width(),scatterplot->height());
+        layout->addRow(scatterplot);
+        layout->addRow(insert);
+
+    });
+
+    connect(insert, &QPushButton::clicked, [this,scatterplot,&dialog]() {
+        QPixmap bar_pixmap = scatterplot->toPixmap();
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("chartCount");
+        int count = settings.value("scatterChartCount").toInt();
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/scatterplots").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/scatterplots");
+        }
+
+        QString save_path = "../Cropped_Images/graphs/scatterplots/";
+
+        QString c = QString::number(count);
+        QString file_name = save_path + "scatterchart" + c + ".png";
+        count++;
+        settings.setValue("scatterChartCount",count);
+        settings.endGroup();
+
+        if (!file_name.isEmpty()) {
+            bar_pixmap.save(file_name, "PNG");
+        }
+
+        QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(file_name).arg(scatterplot->width()).arg(scatterplot->height());
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertHtml(html);
+
+        dialog.accept();
+    });
+
+    dialog.exec();
+}
+
+
+void MainWindow::scatterPlotCsv(){
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+    QLabel *point_label = new QLabel("Choose Point Style");
+    QComboBox *comboBox = new QComboBox();
+    comboBox->addItem("Cross");
+    comboBox->addItem("Plus");
+    comboBox->addItem("Circle");
+    comboBox->addItem("Disc");
+    comboBox->addItem("Square");
+    comboBox->addItem("Diamond");
+    comboBox->addItem("Star");
+    comboBox->addItem("Triangle");
+    comboBox->addItem("TriangleInverted");
+    comboBox->addItem("CrossSquare");
+    comboBox->addItem("PlusSquare");
+    comboBox->addItem("CrossCircle");
+    comboBox->addItem("PlusCircle");
+    comboBox->addItem("Peace");
+    comboBox->addItem("Custom");
+    layout->addRow(point_label,comboBox);
+    QPushButton *choice = new QPushButton("Choose .csv file");
+    layout->addRow(choice);
+
+    QCustomPlot *scatterplot = new QCustomPlot();
+    QPushButton *insert = new QPushButton("insert");
+
+    QVector<QCPScatterStyle::ScatterShape> shapes;
+    shapes << QCPScatterStyle::ssCross << QCPScatterStyle::ssPlus << QCPScatterStyle::ssCircle << QCPScatterStyle::ssDisc << QCPScatterStyle::ssSquare << QCPScatterStyle::ssDiamond;
+    shapes << QCPScatterStyle::ssStar << QCPScatterStyle::ssTriangle << QCPScatterStyle::ssTriangleInverted << QCPScatterStyle::ssCrossSquare << QCPScatterStyle::ssPlusSquare;
+    shapes << QCPScatterStyle::ssCrossCircle << QCPScatterStyle::ssPlusCircle << QCPScatterStyle::ssPeace << QCPScatterStyle::ssCustom;
+
+    connect(choice, &QPushButton::clicked, [this,scatterplot,comboBox,shapes,layout,insert](){
+        QString filePath = QFileDialog::getOpenFileName(this, "Open File", QDir::homePath(), "CSV Files (*.csv)");
+        QFile csvFile(filePath);
+        if (!csvFile.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            return;
+        }
+
+        QTextStream in(&csvFile);
+        QString firstLine = in.readLine();
+        QStringList columnNames = firstLine.split(",");
+
+        QVector<double> x_vector;
+        QVector<double> y_vector;
+
+        double double_value;
+        while (!in.atEnd()){
+            QString line = in.readLine();
+            QStringList fields = line.split(",");
+            double_value = fields[0].toDouble();
+            x_vector.append(double_value);
+
+            double_value = fields[1].toDouble();
+            y_vector.append(double_value);
+        }
+        scatterplot->addGraph();
+        scatterplot->graph()->setPen(QPen(QColor(75, 150, 255),3));
+        int selectedIndex = comboBox->currentIndex();
+        qDebug()<<selectedIndex;
+
+        scatterplot->graph()->setData(x_vector,y_vector);
+        scatterplot->yAxis->setLabel(columnNames[0]);
+        scatterplot->xAxis->setLabel(columnNames[1]);
+
+        double xMin = 0;
+        double xMax = *std::max_element(x_vector.constBegin(), x_vector.constEnd()) + 1;
+        double yMin = 0;
+        double yMax = *std::max_element(y_vector.constBegin(), y_vector.constEnd()) + 1;
+        scatterplot->xAxis->setRange(xMin, xMax);
+        scatterplot->yAxis->setRange(yMin, yMax);
+        scatterplot->graph()->setScatterStyle(QCPScatterStyle(shapes.at(selectedIndex),15));
+        scatterplot->graph()->setLineStyle(QCPGraph::lsNone);
+        scatterplot->replot();
+        scatterplot->setFixedSize(scatterplot->width(),scatterplot->height());
+        layout->addRow(scatterplot);
+        layout->addRow(insert);
+
+    });
+
+    connect(insert, &QPushButton::clicked, [this,scatterplot,&dialog]() {
+        QPixmap bar_pixmap = scatterplot->toPixmap();
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("chartCount");
+        int count = settings.value("scatterChartCount").toInt();
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/scatterplots").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/scatterplots");
+        }
+
+        QString save_path = "../Cropped_Images/graphs/scatterplots/";
+
+        QString c = QString::number(count);
+        QString file_name = save_path + "scatterchart" + c + ".png";
+        count++;
+        settings.setValue("scatterChartCount",count);
+        settings.endGroup();
+
+        if (!file_name.isEmpty()) {
+            bar_pixmap.save(file_name, "PNG");
+        }
+
+        QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(file_name).arg(scatterplot->width()).arg(scatterplot->height());
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertHtml(html);
+
+        dialog.accept();
+    });
+
+    dialog.exec();
+}
+
+const int MAX = 5;
+
+void MainWindow::on_actionBox_Plot_triggered()
+{
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+
+    QLabel *choice = new QLabel("Do you want to give input manually or choose a csv file?");
+    layout->addRow(choice);
+
+    QPushButton *manual = new QPushButton("enter manually");
+    QPushButton *csv = new QPushButton("choose csv file");
+    layout->addRow(manual,csv);
+
+    connect(manual, &QPushButton::clicked, [this,&dialog]() {
+        boxPlotManual();
+        dialog.accept();
+    });
+
+    connect(csv,&QPushButton::clicked,[this,&dialog](){
+        boxPlotCsv();
+        dialog.accept();
+    });
+
+    dialog.exec();
+}
+
+void MainWindow::boxPlotManual()
+{
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+
+    QLabel *x_label = new QLabel("<html>Enter labels for x-axis<font color='red'> * </font></html>");
+    QLineEdit *xaxis_values = new QLineEdit();
+    layout->addRow(x_label,xaxis_values);
+    QLabel *required = new QLabel("<html><font color='red'>* required</font></html>");
+    layout->addRow(required);
+
+    QPushButton *enter_y = new QPushButton("Enter data for samples");
+    layout->addRow(enter_y);
+
+    QVector<QString> x_vector;
+    QPushButton *show = new QPushButton("Show Graph");
+    int x_len;
+    QLabel *y_label[MAX];
+    QLineEdit * y_values[MAX];
+
+    QCustomPlot *boxplot = new QCustomPlot;
+    QCPStatisticalBox *statistical = new QCPStatisticalBox(boxplot->xAxis, boxplot->yAxis);
+    QBrush boxBrush(QColor(75, 150, 255, 100));
+    statistical->setBrush(boxBrush);
+
+    QPushButton *insert = new QPushButton("Insert");
+
+    connect(enter_y, &QPushButton::clicked, [this,xaxis_values,&x_vector,layout,show,&x_len,&y_values,&y_label,&dialog] (){
+
+        QString x_string = xaxis_values->text();
+
+        QRegularExpression regex("^(?=.*[A-Za-z])[A-Za-z, ]*$");
+        QRegularExpressionMatch match = regex.match(x_string);
+        if (!match.hasMatch()) {
+            dialog.accept();
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            boxPlotManual();
+            return;
+        }
+
+        QStringList x_stringlist = x_string.split(',');
+        x_vector = QVector<QString>::fromList(x_stringlist);
+        x_len = x_vector.length();
+
+
+        for(int i=0; i<x_len; i++){
+            y_label[i] = new QLabel("Enter data for label " + QString::number(i));
+            y_values[i] = new QLineEdit();
+
+            layout->addRow(y_label[i],y_values[i]);
+        }
+
+        layout->addRow(show);
+    });
+
+    connect(show, &QPushButton::clicked, [this,&x_len,&y_values,&x_vector,statistical,boxplot,layout,insert,&dialog] (){
+
+        boxplot->clearGraphs();
+
+        QString y_string[MAX];
+        QVector<double> y_vector[MAX];
+
+        QStringList y_stringlist[MAX];
+        QRegularExpression regex2("^(?=.*\\d)[\\d, .]*$");
+
+        for (int i=0; i<x_len; i++){
+            y_string[i] = y_values[i]->text();
+            QRegularExpressionMatch match2 = regex2.match(y_string[i]);
+            if (!match2.hasMatch()) {
+                dialog.accept();
+                QMessageBox::warning(0,"Warning","Enter values in specified format");
+                boxPlotManual();
+                return;
+            }
+            y_stringlist[i] = y_string[i].split(',');
+            for(const QString& str : y_stringlist[i]){
+                bool ok;
+                double double_value = str.toDouble(&ok);
+                if (ok) {
+                    y_vector[i].append(double_value);
+                }
+                else{
+                    dialog.accept();
+                    QMessageBox::warning(0,"Warning","Enter values in specified format");
+                    boxPlotManual();
+                    return;
+                }
+            }
+        }
+
+        double median,lq,uq,min,max;
+        int n,n1,n2;
+        QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+        double yMax = 0;
+
+        for(int i=0; i<x_len; i++){
+            std::sort(y_vector[i].begin(),y_vector[i].end());
+            n = y_vector[i].size();
+            if (n % 2 == 0) {
+                median =  (y_vector[i][n / 2 - 1] + y_vector[i][n / 2]) / 2.0;
+                n1 = n/2 -1;
+                n2 = n/2;
+            }
+            else {
+                median = y_vector[i][n / 2];
+                n1 = n/2;
+                n2 = n/2;
+            }
+
+            if(n1%2 == 0) lq = y_vector[i][n1/2];
+            else lq = (y_vector[i][n1/2] + y_vector[i][n1/2 + 1]) / 2.0;
+
+            if (n2%2 == 0 ) uq = (y_vector[i][n2 + n2/2] + y_vector[i][n2 + n2/2 -1]) / 2.0;
+            else uq = y_vector[i][n2 + n2/2];
+
+            min = y_vector[i][0];
+            max = y_vector[i][n-1];
+
+            if(max > yMax) yMax = max;
+
+            textTicker->addTick(i+1, x_vector[i]);
+            statistical->addData(i+1,min,lq,median,uq,max);
+        }
+
+
+        boxplot->xAxis->setTicker(textTicker);
+
+        double xMin = 0;
+        double xMax = x_len +1;
+        double yMin =0;
+        yMax = yMax + 2;
+        boxplot->xAxis->setRange(xMin, xMax);
+        boxplot->yAxis->setRange(yMin, yMax);
+        boxplot->setFixedSize(boxplot->width(),boxplot->height());
+        boxplot->replot();
+
+        layout->addRow(boxplot);
+        layout->addRow(insert);
+    });
+
+    connect(insert, &QPushButton::clicked, [this,boxplot,&dialog]() {
+        QPixmap bar_pixmap = boxplot->toPixmap();
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("chartCount");
+        int count = settings.value("boxPlotCount").toInt();
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/boxplots").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/boxplots");
+        }
+
+        QString save_path = "../Cropped_Images/graphs/boxplots/";
+
+        QString c = QString::number(count);
+        QString file_name = save_path + "boxplot" + c + ".png";
+        count++;
+        settings.setValue("boxPlotCount",count);
+        settings.endGroup();
+
+        if (!file_name.isEmpty()) {
+            bar_pixmap.save(file_name, "PNG");
+        }
+
+        QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(file_name).arg(boxplot->width()).arg(boxplot->height());
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertHtml(html);
+
+        dialog.accept();
+    });
+
+    dialog.exec();
+}
+
+void MainWindow::boxPlotCsv(){
+
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+
+    QPushButton *choice = new QPushButton("Choose .csv file");
+    layout->addRow(choice);
+
+    QCustomPlot *boxplot = new QCustomPlot;
+    QPushButton *insert = new QPushButton("insert");
+    QCPStatisticalBox *statistical = new QCPStatisticalBox(boxplot->xAxis, boxplot->yAxis);
+    QBrush boxBrush(QColor(75, 150, 255, 100));
+    statistical->setBrush(boxBrush);
+
+    connect(choice, &QPushButton::clicked, [this,boxplot,layout,insert,statistical](){
+        QString filePath = QFileDialog::getOpenFileName(this, "Open File", QDir::homePath(), "CSV Files (*.csv)");
+        QFile csvFile(filePath);
+        if (!csvFile.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            return;
+        }
+
+        QTextStream in(&csvFile);
+        QString firstLine = in.readLine();
+        QStringList columnNames = firstLine.split(",");
+        int x_len = columnNames.size();
+
+        QVector<QString> x_vector;
+        x_vector = QVector<QString>::fromList(columnNames);
+
+        QVector<double> y_vector[MAX];
+
+        double double_value;
+        while (!in.atEnd()){
+            QString line = in.readLine();
+            QStringList fields = line.split(",");
+
+            for(int i=0;i<x_len;i++){
+                double_value = fields[i].toDouble();
+                y_vector[i].append(double_value);
+            }
+        }
+
+        double median,lq,uq,min,max;
+        int n,n1,n2;
+        QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+        double yMax = 0;
+
+        for(int i=0; i<x_len; i++){
+            std::sort(y_vector[i].begin(),y_vector[i].end());
+            n = y_vector[i].size();
+            if (n % 2 == 0) {
+                median =  (y_vector[i][n / 2 - 1] + y_vector[i][n / 2]) / 2.0;
+                n1 = n/2 -1;
+                n2 = n/2;
+            }
+            else {
+                median = y_vector[i][n / 2];
+                n1 = n/2;
+                n2 = n/2;
+            }
+
+            if(n1%2 == 0) lq = y_vector[i][n1/2];
+            else lq = (y_vector[i][n1/2] + y_vector[i][n1/2 + 1]) / 2.0;
+
+            if (n2%2 == 0 ) uq = (y_vector[i][n2 + n2/2] + y_vector[i][n2 + n2/2 -1]) / 2.0;
+            else uq = y_vector[i][n2 + n2/2];
+
+            min = y_vector[i][0];
+            max = y_vector[i][n-1];
+
+            if(max > yMax) yMax = max;
+
+            textTicker->addTick(i+1, x_vector[i]);
+            statistical->addData(i+1,min,lq,median,uq,max);
+        }
+
+
+        boxplot->xAxis->setTicker(textTicker);
+
+        double xMin = 0;
+        double xMax = x_len +1;
+        double yMin =0;
+        yMax = yMax + 2;
+        boxplot->xAxis->setRange(xMin, xMax);
+        boxplot->yAxis->setRange(yMin, yMax);
+        boxplot->setFixedSize(boxplot->width(),boxplot->height());
+        boxplot->replot();
+
+        layout->addRow(boxplot);
+        layout->addRow(insert);
+
+    });
+
+    connect(insert, &QPushButton::clicked, [this,boxplot,&dialog]() {
+        QPixmap bar_pixmap = boxplot->toPixmap();
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("chartCount");
+        int count = settings.value("boxPlotCount").toInt();
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/boxplots").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/boxplots");
+        }
+
+        QString save_path ="../Cropped_Images/graphs/boxplots/";
+
+        QString c = QString::number(count);
+        QString file_name = save_path + "boxplot" + c + ".png";
+        count++;
+        settings.setValue("boxPlotCount",count);
+        settings.endGroup();
+
+        if (!file_name.isEmpty()) {
+            bar_pixmap.save(file_name, "PNG");
+        }
+
+        QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(file_name).arg(boxplot->width()).arg(boxplot->height());
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertHtml(html);
+
+        dialog.accept();
+    });
+
+    dialog.exec();
+
+}
+
+/*!
+ * \fn MainWindow::on_actionInsert_Pie_Chart_triggered
+ * \brief This function displays a dialog box to get the number of slices for the pie chart,
+ *        and then prompts the user to enter the label and value for each slice.
+ *        After entering the data, the pie chart is generated and displayed for preview.
+ *        The user can then choose to insert the pie chart image into the curr_browser.
+ */
+void MainWindow::on_actionInsert_Pie_Chart_triggered()
+{
+    // Create a modal dialog box for getting the number of slices for the pie chart.
+    QDialog dialog(this);
+    dialog.setWindowTitle("Enter Number of Slices");
+
+    QHBoxLayout* dialogLayout1 = new QHBoxLayout();
+    QVBoxLayout* mainDialogLayout = new QVBoxLayout();
+
+    QLabel* sliceLabel = new QLabel("Number of Slices:", &dialog);
+    QLineEdit* sliceLineEdit = new QLineEdit(&dialog);
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    QPushButton* InfoButton = new QPushButton();
+    InfoButton->setIcon(QIcon(":/Images/Resources/information.png"));
+
+    // Set up the layout for the dialog box and adds widgets to it.
+    dialogLayout1->addWidget(InfoButton);
+    dialogLayout1->addWidget(sliceLabel);
+    dialogLayout1->addWidget(sliceLineEdit);
+    mainDialogLayout->addLayout(dialogLayout1);
+    mainDialogLayout->addWidget(&buttonBox);
+    dialog.setLayout(mainDialogLayout);
+
+    // Connect the accepted and rejected signals of the buttonBox to the appropriate slots.
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    // Connect the InfoButton to the lambda function to display instructions for the Pie Chart feature
+    connect(InfoButton, &QPushButton::clicked, [&]() {
+        QString instructions = "To use this function, follow these steps:\n\n"
+                               "1. Enter the number of slices for the pie chart. The value should be between 1 and 100.\n"
+                               "2. For each slice, enter the label and value in the format 'Label, Value'. The value should be a positive number.\n"
+                               "3. Click 'Insert Pie Chart' to save the Pie chart image, and insert it.\n\n"
+                               "Note: The Pie Chart image will be saved in the 'Cropped_Images' directory.";
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
+
+    // Execute the dialog box
+    if (dialog.exec() == QDialog::Accepted) {
+        bool ok;
+        int sliceCount = sliceLineEdit->text().toInt(&ok);
+        if (!ok || sliceCount > 100 || sliceCount < 1) {
+            QMessageBox::critical(&dialog, "Invalid Input", "Please enter a valid integer between 1 and 100 for the number of slices.");
+            return;
+        }
+
+        // Create a new dialog box to prompt the user to enter slice details.
+        QDialog sliceDialog(this);
+        sliceDialog.setWindowTitle("Enter Slice Details");
+        QVBoxLayout* sliceDialogLayout = new QVBoxLayout();
+        sliceDialog.setLayout(sliceDialogLayout);
+
+        QLabel* noteLabel = new QLabel("Enter Label and Value for Slice (separated by comma):", &sliceDialog);
+        sliceDialogLayout->addWidget(noteLabel);
+
+        QVector<QLineEdit*> slicesLineEdit;
+
+        QWidget* scrollableContent = new QWidget(&sliceDialog);
+        QVBoxLayout* scrollableLayout = new QVBoxLayout(scrollableContent);
+        QScrollArea* scrollArea = new QScrollArea(&sliceDialog);
+
+        // Layout for each slice entry.
+        QHBoxLayout* entryLayout;
+
+        // Loop to create input fields for each slice.
+        for (int i = 0; i < sliceCount; i++) {
+            QLabel* label = new QLabel("Slice " + QString::number(i + 1), &sliceDialog);
+            QLineEdit* lineEdit = new QLineEdit(&sliceDialog);
+            slicesLineEdit.append(lineEdit);
+
+            entryLayout = new QHBoxLayout;
+            entryLayout->addWidget(label);
+            entryLayout->addWidget(lineEdit);
+            scrollableLayout->addLayout(entryLayout);
+        }
+
+        scrollableLayout->addStretch();
+
+        scrollableContent->setLayout(scrollableLayout);
+        scrollArea->setWidget(scrollableContent);
+        sliceDialogLayout->addWidget(scrollArea);
+
+        // Add Ok and Cancel buttons to the slice dialog.
+        QDialogButtonBox sliceButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &sliceDialog);
+        sliceDialogLayout->addWidget(&sliceButtonBox);
+
+        // Connect the accepted and rejected signals to the accept and reject slots of the slice dialog.
+        QObject::connect(&sliceButtonBox, SIGNAL(accepted()), &sliceDialog, SLOT(accept()));
+        QObject::connect(&sliceButtonBox, SIGNAL(rejected()), &sliceDialog, SLOT(reject()));
+
+        // Execute the slice dialog to get slice details.
+        if (sliceDialog.exec() == QDialog::Accepted) {
+            // Create a QPieSeries to hold the pie chart data.
+            QPieSeries* series = new QPieSeries();
+            double totalValue = 0.0;
+
+            // Loop through each slice and validate the input.
+            for(int i = 0; i < sliceCount; i++){
+                QString labelText = slicesLineEdit[i]->text().trimmed();
+                QStringList parts = labelText.split(',');
+                if (parts.size() != 2) {
+                    QMessageBox::critical(this, "Invalid Input", "Invalid data entered for Slice " + QString::number(i + 1) + ". The input should be in the format: label, value.");
+                    return;
+                }
+                else{
+                    QString trimmedLabel = parts[0].trimmed();
+                    bool valueOk;
+                    double value = parts[1].trimmed().toDouble(&valueOk);
+                    if (!valueOk || trimmedLabel.isEmpty() || value <= 0.0) {
+                        QMessageBox::critical(this, "Invalid Input", "Invalid data entered for Slice " + QString::number(i + 1) + ". The value should be a positive number.");
+                        return;
+                    }
+                    else{
+                        totalValue += value;
+                        series->append(trimmedLabel, value);
+                    }
+                }
+            }
+
+            // Calculate the percentage for each slice and set labels accordingly.
+            for(QPieSlice* slice : series->slices()){
+                double percentage = (slice->value() / totalValue) * 100.0;
+                slice->setLabel(QString("%1 (%2%)").arg(slice->label()).arg(percentage, 0, 'f', 2));
+            }
+
+            // Create a widget to display the pie chart.
+            QWidget* pieChartWidget = new QWidget();
+            pieChartWidget->setWindowTitle("Insert Pie Chart");
+
+            // Create a QChart and set up the pie chart.
+            QChart* chart = new QChart();
+            chart->setTitle("Pie Chart");
+            chart->addSeries(series);
+            series->setLabelsVisible();
+            chart->legend()->show();
+
+            // Create a QChartView to display the chart.
+            QChartView* chartView = new QChartView(chart);
+            chartView->setRenderHint(QPainter::Antialiasing, true);
+
+            QVBoxLayout* mainLayout = new QVBoxLayout();
+            mainLayout->addWidget(chartView);
+
+            // Create a Button to insert the pie chart into the curr_browser.
+            QPushButton* insertButton = new QPushButton("Insert Pie Chart", this);
+            mainLayout->addWidget(insertButton);
+
+            // Connect the insertButton to the lambda function to save and insert the graph as image in curr_browser
+            connect(insertButton, &QPushButton::clicked, [this, series, chartView, pieChartWidget](){
+                if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+                    QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+                }
+
+                if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists()){
+                    QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+                }
+
+                if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/pie_charts").exists()){
+                    QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/pie_charts");
+                }
+
+                QString graphDir = "../Cropped_Images/graphs/pie_charts/";
+
+                QDir dir(graphDir);
+
+                int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
+                bool ok;
+
+                // Generate the fileName for the image
+                QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
+
+                // Save the image as png
+                QPixmap pixmap = chartView->grab();
+                if(!pixmap.save(fileName)){
+                    qDebug() << "Error, Failed to save the image as PNG.";
+                }
+                else{
+                    insertGraph(fileName, ok);
+
+                    // Display a message if could not insert graph as an image in curr_browser.
+                    if(!ok){
+                        QMessageBox::critical(this, "Error", "Could not insert Pie chart data!");
+                    }
+                    pieChartWidget->close();
+                }
+            });
+
+            // Display the pie chart widget to the user.
+            pieChartWidget->setLayout(mainLayout);
+            pieChartWidget->resize(600, 600);
+            pieChartWidget->show();
+        }
+        else {
+            return;
+        }
+    }
+    else {
+        return;
+    }
 }

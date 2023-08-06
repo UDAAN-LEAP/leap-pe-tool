@@ -582,6 +582,26 @@ private slots:
 
     void on_actionNormal_Text_triggered();
 
+    void on_actionInsert_Line_Graph_triggered();
+
+    void on_actionInsert_Histogram_triggered();
+
+    void insertGraph(const QString& graphFilePath, bool& status);
+
+    void on_actionBar_Plot_triggered();
+    void barPlotManual();
+    void barPlotCsv();
+
+    void on_actionScatter_Plot_triggered();
+    void scatterPlotManual();
+    void scatterPlotCsv();
+
+    void on_actionBox_Plot_triggered();
+    void boxPlotManual();
+    void boxPlotCsv();
+
+    void on_actionInsert_Pie_Chart_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

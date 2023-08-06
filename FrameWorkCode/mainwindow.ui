@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>2002</width>
+    <width>2057</width>
     <height>1190</height>
    </rect>
   </property>
@@ -1154,7 +1154,7 @@ background: grey;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>2002</width>
+    <width>2057</width>
      <height>46</height>
     </rect>
    </property>
@@ -1431,8 +1431,20 @@ QMenu::item:selected{
     <property name="title">
      <string>Insert</string>
     </property>
+    <widget class="QMenu" name="menuInsert_Graphs_and_Bars">
+     <property name="title">
+      <string>Graphs and Bars</string>
+     </property>
+     <addaction name="actionInsert_Line_Graph"/>
+     <addaction name="actionInsert_Histogram"/>
+     <addaction name="actionBar_Plot"/>
+     <addaction name="actionScatter_Plot"/>
+     <addaction name="actionBox_Plot"/>
+     <addaction name="actionInsert_Pie_Chart"/>
+    </widget>
     <addaction name="actionImage"/>
     <addaction name="actionTable_2"/>
+    <addaction name="menuInsert_Graphs_and_Bars"/>
     <addaction name="actionInsert_Horizontal_Line"/>
     <addaction name="actionDate"/>
     <addaction name="separator"/>
@@ -2997,6 +3009,45 @@ background-color: #EEF0F2;
   <action name="actionNormal_Text">
    <property name="text">
     <string>Normal Text</string>
+   </property>
+  </action>
+  <action name="actionInsert_Line_Graph">
+   <property name="text">
+    <string>Line Graph</string>
+   </property>
+   <property name="toolTip">
+    <string>Line Graph</string>
+   </property>
+  </action>
+  <action name="actionInsert_Histogram">
+   <property name="text">
+    <string>Histogram</string>
+   </property>
+   <property name="toolTip">
+    <string>Histogram</string>
+   </property>
+  </action>
+  <action name="actionBar_Plot">
+   <property name="text">
+    <string>Bar Plot</string>
+   </property>
+  </action>
+  <action name="actionScatter_Plot">
+   <property name="text">
+    <string>Scatter Plot</string>
+   </property>
+  </action>
+  <action name="actionBox_Plot">
+   <property name="text">
+    <string>Box Plot</string>
+   </property>
+  </action>
+  <action name="actionInsert_Pie_Chart">
+   <property name="text">
+    <string>Pie Chart</string>
+   </property>
+   <property name="toolTip">
+    <string>Pie Chart</string>
    </property>
   </action>
  </widget>

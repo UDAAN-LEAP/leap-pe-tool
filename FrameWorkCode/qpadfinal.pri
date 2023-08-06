@@ -21,6 +21,7 @@ HEADERS += ./Filters.h \
     $$PWD/pdfrangedialog.h \
     $$PWD/printworker.h \
     $$PWD/progressbardialog.h \
+    $$PWD/qcustomplot.h \
     $$PWD/rubberband.h \
     $$PWD/sendmail.h \
     $$PWD/shortcutguidedialog.h \
@@ -80,6 +81,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/pdfrangedialog.cpp \
     $$PWD/printworker.cpp \
     $$PWD/progressbardialog.cpp \
+    $$PWD/qcustomplot.cpp \
     $$PWD/rubberband.cpp \
     $$PWD/sendmail.cpp \
     $$PWD/shortcutguidedialog.cpp \
