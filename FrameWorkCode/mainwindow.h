@@ -606,6 +606,34 @@ private slots:
 
     void on_actionInsert_Pie_Chart_triggered();
 
+    void on_actionApply_Subtitle_triggered();
+
+    void on_actionUpdate_Subtitle_to_match_triggered();
+
+    void on_actionApply_Heading_1_triggered();
+
+    void on_actionUpdate_Heading_1_to_match_triggered();
+
+    void on_actionApply_Heading_2_triggered();
+
+    void on_actionUpdate_Heading_2_to_match_triggered();
+
+    void on_actionApply_Heading_3_triggered();
+
+    void on_actionUpdate_Heading_3_to_match_triggered();
+
+    void on_actionApply_Heading_4_triggered();
+
+    void on_actionUpdate_Heading_4_to_match_triggered();
+
+    void on_actionApply_Heading_5_triggered();
+
+    void on_actionUpdate_Heading_5_to_match_triggered();
+
+    void on_actionApply_Heading_6_triggered();
+
+    void on_actionUpdate_Heading_6_to_match_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

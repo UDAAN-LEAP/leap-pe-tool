@@ -504,6 +504,31 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
            settings.setValue("createShortcut", "dna");
            settings.endGroup();
     }
+
+    QString defaultTitleStyle = "<span style=\" font-size:26pt; font-weight:600;\">";
+    QString defaultSubtitleStyle = "<span style=\" font-size:15pt; color:#a0a0a4;\">";
+    QString defaultH1Style = "<span style=\" font-size:20pt; font-weight:600;\">";
+    QString defaultH2Style = "<span style=\" font-size:16pt; font-weight:600;\">";
+    QString defaultH3Style = "<span style=\" font-size:14pt; font-weight:600;\">";
+    QString defaultH4Style = "<span style=\" font-size:12pt; font-weight:600;\">";
+    QString defaultH5Style = "<span style=\" font-size:11pt; font-weight:600;\">";
+    QString defaultH6Style = "<span style=\" font-size:10pt; font-weight:600;\">";
+
+
+    settings.beginGroup("paragraphStyles");
+
+    settings.setValue("titleStyle",defaultTitleStyle);
+    settings.setValue("subtitleStyle",defaultSubtitleStyle);
+    settings.setValue("h1Style",defaultH1Style);
+    settings.setValue("h2Style",defaultH2Style);
+    settings.setValue("h3Style",defaultH3Style);
+    settings.setValue("h4Style",defaultH4Style);
+    settings.setValue("h5Style",defaultH5Style);
+    settings.setValue("h6Style",defaultH6Style);
+
+
+    settings.endGroup();
+
 }
 
 /*!
@@ -12027,6 +12052,8 @@ void MainWindow::on_copyToVerifier_clicked()
         }
     }
 }
+
+/*
 bool checked_first=true;
 int currentFontSize;
 
@@ -12197,7 +12224,7 @@ void MainWindow::on_actionHeading_6_triggered()
     cursor.mergeCharFormat(format);
     cursor.insertText(cursor.selectedText(), format);
 }
-
+*/
 
 void MainWindow::on_actionNormal_Text_triggered()
 {
@@ -12398,20 +12425,17 @@ void MainWindow::on_actionApply_Title_triggered()
     QTextCursor cursor = curr_browser->textCursor();
     if (!cursor.hasSelection())
         return;
-    if(checked_first){
-        on_actionTitle_triggered();
-    }
-    else{
-        QSettings settings("IIT-B", "OpenOCRCorrect");
-        settings.beginGroup("paragraphStyles");
-        QString currTitleStyle = settings.value("titleStyle").toString();
 
-        QString html = "<p style=' margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;' title=''>" + currTitleStyle + cursor.selectedText() + "</span></p>";
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currTitleStyle = settings.value("titleStyle").toString();
 
-        cursor.insertHtml(html);
+    QString html = "<p style=' margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;' title=''>" + currTitleStyle + cursor.selectedText() + "</span></p>";
 
-        settings.endGroup();
-    }
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+
 }
 
 
@@ -12428,19 +12452,15 @@ void MainWindow::on_actionUpdate_Title_to_match_triggered()
     QRegularExpressionMatch match = regex.match(text1);
     if (match.hasMatch()) {
         newTitleStyle = match.captured(1) + ">";
-        qDebug()<<"new style: "<<newTitleStyle;
     }
     else return;
 
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("paragraphStyles");
     QString oldTitleStyle = settings.value("titleStyle").toString();
-    qDebug()<<"old style: "<<oldTitleStyle;
     settings.setValue("titleStyle",newTitleStyle);
     QString allHtml = curr_browser->toHtml();
-    qDebug()<<"all html before: "<<allHtml;
     allHtml.replace(oldTitleStyle,newTitleStyle);
-    qDebug()<<"all html after: "<<allHtml;
     curr_browser->clear();
     cursor.insertHtml(allHtml);
     settings.endGroup();
@@ -14120,3 +14140,321 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
     }
 }
 
+
+void MainWindow::on_actionApply_Subtitle_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currStyle = settings.value("subtitleStyle").toString();
+
+    QString html = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">" + currStyle + cursor.selectedText() + "</span></p>";
+
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionUpdate_Subtitle_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newStyle = match.captured(1) + ">";
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldStyle = settings.value("subtitleStyle").toString();
+    settings.setValue("subtitleStyle",newStyle);
+    QString allHtml = curr_browser->toHtml();
+    allHtml.replace(oldStyle,newStyle);
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionApply_Heading_1_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currStyle = settings.value("h1Style").toString();
+
+    QString html = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">" + currStyle + cursor.selectedText() + "</span></p>";
+
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionUpdate_Heading_1_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newStyle = match.captured(1) + ">";
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldStyle = settings.value("h1Style").toString();
+    settings.setValue("h1Style",newStyle);
+    QString allHtml = curr_browser->toHtml();
+    allHtml.replace(oldStyle,newStyle);
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionApply_Heading_2_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currStyle = settings.value("h2Style").toString();
+
+    QString html = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">" + currStyle + cursor.selectedText() + "</span></p>";
+
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionUpdate_Heading_2_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newStyle = match.captured(1) + ">";
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldStyle = settings.value("h2Style").toString();
+    settings.setValue("h2Style",newStyle);
+    QString allHtml = curr_browser->toHtml();
+    allHtml.replace(oldStyle,newStyle);
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionApply_Heading_3_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currStyle = settings.value("h3Style").toString();
+
+    QString html = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">" + currStyle + cursor.selectedText() + "</span></p>";
+
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionUpdate_Heading_3_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newStyle = match.captured(1) + ">";
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldStyle = settings.value("h3Style").toString();
+    settings.setValue("h3Style",newStyle);
+    QString allHtml = curr_browser->toHtml();
+    allHtml.replace(oldStyle,newStyle);
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+}
+
+void MainWindow::on_actionApply_Heading_4_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currStyle = settings.value("h4Style").toString();
+
+    QString html = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">" + currStyle + cursor.selectedText() + "</span></p>";
+
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionUpdate_Heading_4_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newStyle = match.captured(1) + ">";
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldStyle = settings.value("h4Style").toString();
+    settings.setValue("h4Style",newStyle);
+    QString allHtml = curr_browser->toHtml();
+    allHtml.replace(oldStyle,newStyle);
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+}
+
+void MainWindow::on_actionApply_Heading_5_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currStyle = settings.value("h5Style").toString();
+
+    QString html = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">" + currStyle + cursor.selectedText() + "</span></p>";
+
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionUpdate_Heading_5_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newStyle = match.captured(1) + ">";
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldStyle = settings.value("h5Style").toString();
+    settings.setValue("h5Style",newStyle);
+    QString allHtml = curr_browser->toHtml();
+    allHtml.replace(oldStyle,newStyle);
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+}
+
+void MainWindow::on_actionApply_Heading_6_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currStyle = settings.value("h6Style").toString();
+
+    QString html = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">" + currStyle + cursor.selectedText() + "</span></p>";
+
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionUpdate_Heading_6_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newStyle = match.captured(1) + ">";
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldStyle = settings.value("h6Style").toString();
+    settings.setValue("h6Style",newStyle);
+    QString allHtml = curr_browser->toHtml();
+    allHtml.replace(oldStyle,newStyle);
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+}

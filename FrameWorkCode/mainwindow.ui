@@ -12,7 +12,6 @@
   </property>
   <property name="font">
    <font>
-    <weight>50</weight>
     <italic>false</italic>
     <bold>false</bold>
    </font>
@@ -434,7 +433,6 @@ margin-top: 5px;
                 </property>
                 <property name="font">
                  <font>
-                  <weight>50</weight>
                   <italic>false</italic>
                   <bold>false</bold>
                  </font>
@@ -744,7 +742,6 @@ QScrollBar::sub-line:vertical {
          <property name="font">
           <font>
            <pointsize>20</pointsize>
-           <weight>50</weight>
            <italic>false</italic>
            <bold>false</bold>
           </font>
@@ -794,8 +791,11 @@ QScrollBar::sub-line:vertical {
          </property>
          <property name="html">
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:20pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
@@ -1154,7 +1154,7 @@ background: grey;
     <rect>
      <x>0</x>
      <y>0</y>
-    <width>2057</width>
+     <width>2057</width>
      <height>46</height>
     </rect>
    </property>
@@ -1372,8 +1372,8 @@ QMenu::item:selected{
       <rect>
        <x>847</x>
        <y>206</y>
-       <width>194</width>
-       <height>353</height>
+       <width>214</width>
+       <height>344</height>
       </rect>
      </property>
      <property name="title">
@@ -1405,15 +1405,64 @@ QMenu::item:selected{
       <addaction name="actionApply_Title"/>
       <addaction name="actionUpdate_Title_to_match"/>
      </widget>
+     <widget class="QMenu" name="menuSubtitle">
+      <property name="title">
+       <string>Subtitle</string>
+      </property>
+      <addaction name="actionApply_Subtitle"/>
+      <addaction name="actionUpdate_Subtitle_to_match"/>
+     </widget>
+     <widget class="QMenu" name="menuHeading_1">
+      <property name="title">
+       <string>Heading 1</string>
+      </property>
+      <addaction name="actionApply_Heading_1"/>
+      <addaction name="actionUpdate_Heading_1_to_match"/>
+     </widget>
+     <widget class="QMenu" name="menuHeading_2">
+      <property name="title">
+       <string>Heading 2</string>
+      </property>
+      <addaction name="actionApply_Heading_2"/>
+      <addaction name="actionUpdate_Heading_2_to_match"/>
+     </widget>
+     <widget class="QMenu" name="menuHeading_3">
+      <property name="title">
+       <string>Heading 3</string>
+      </property>
+      <addaction name="actionApply_Heading_3"/>
+      <addaction name="actionUpdate_Heading_3_to_match"/>
+     </widget>
+     <widget class="QMenu" name="menuHeading_4">
+      <property name="title">
+       <string>Heading 4</string>
+      </property>
+      <addaction name="actionApply_Heading_4"/>
+      <addaction name="actionUpdate_Heading_4_to_match"/>
+     </widget>
+     <widget class="QMenu" name="menuHeading_5">
+      <property name="title">
+       <string>Heading 5</string>
+      </property>
+      <addaction name="actionApply_Heading_5"/>
+      <addaction name="actionUpdate_Heading_5_to_match"/>
+     </widget>
+     <widget class="QMenu" name="menuHeading_6">
+      <property name="title">
+       <string>Heading 6</string>
+      </property>
+      <addaction name="actionApply_Heading_6"/>
+      <addaction name="actionUpdate_Heading_6_to_match"/>
+     </widget>
      <addaction name="actionNormal_Text"/>
      <addaction name="menuTitle"/>
-     <addaction name="actionSubtitle"/>
-     <addaction name="actionHeading_1"/>
-     <addaction name="actionHeading_2"/>
-     <addaction name="actionHeading_3"/>
-     <addaction name="actionHeading_4"/>
-     <addaction name="actionHeading_5"/>
-     <addaction name="actionHeading_6"/>
+     <addaction name="menuSubtitle"/>
+     <addaction name="menuHeading_1"/>
+     <addaction name="menuHeading_2"/>
+     <addaction name="menuHeading_3"/>
+     <addaction name="menuHeading_4"/>
+     <addaction name="menuHeading_5"/>
+     <addaction name="menuHeading_6"/>
     </widget>
     <addaction name="menuText"/>
     <addaction name="menuAlign_and_Indent"/>
@@ -2973,41 +3022,6 @@ background-color: #EEF0F2;
     <string>Undo Two Column view</string>
    </property>
   </action>
-  <action name="actionSubtitle">
-   <property name="text">
-    <string>Subtitle</string>
-   </property>
-  </action>
-  <action name="actionHeading_1">
-   <property name="text">
-    <string>Heading 1</string>
-   </property>
-  </action>
-  <action name="actionHeading_2">
-   <property name="text">
-    <string>Heading 2</string>
-   </property>
-  </action>
-  <action name="actionHeading_3">
-   <property name="text">
-    <string>Heading 3</string>
-   </property>
-  </action>
-  <action name="actionHeading_4">
-   <property name="text">
-    <string>Heading 4</string>
-   </property>
-  </action>
-  <action name="actionHeading_5">
-   <property name="text">
-    <string>Heading 5</string>
-   </property>
-  </action>
-  <action name="actionHeading_6">
-   <property name="text">
-    <string>Heading 6</string>
-   </property>
-  </action>
   <action name="actionNormal_Text">
    <property name="text">
     <string>Normal Text</string>
@@ -3021,8 +3035,8 @@ background-color: #EEF0F2;
   <action name="actionUpdate_Title_to_match">
    <property name="text">
     <string>Update 'Title' to match</string>
-    </property>
-    </action>
+   </property>
+  </action>
   <action name="actionInsert_Line_Graph">
    <property name="text">
     <string>Line Graph</string>
@@ -3060,6 +3074,76 @@ background-color: #EEF0F2;
    </property>
    <property name="toolTip">
     <string>Pie Chart</string>
+   </property>
+  </action>
+  <action name="actionApply_Subtitle">
+   <property name="text">
+    <string>Apply 'Subtitle'</string>
+   </property>
+  </action>
+  <action name="actionUpdate_Subtitle_to_match">
+   <property name="text">
+    <string>Update 'Subtitle' to match</string>
+   </property>
+  </action>
+  <action name="actionApply_Heading_1">
+   <property name="text">
+    <string>Apply 'Heading 1'</string>
+   </property>
+  </action>
+  <action name="actionUpdate_Heading_1_to_match">
+   <property name="text">
+    <string>Update 'Heading 1' to match</string>
+   </property>
+  </action>
+  <action name="actionApply_Heading_2">
+   <property name="text">
+    <string>Apply 'Heading 2'</string>
+   </property>
+  </action>
+  <action name="actionUpdate_Heading_2_to_match">
+   <property name="text">
+    <string>Update 'Heading 2' to match</string>
+   </property>
+  </action>
+  <action name="actionApply_Heading_3">
+   <property name="text">
+    <string>Apply 'Heading 3'</string>
+   </property>
+  </action>
+  <action name="actionUpdate_Heading_3_to_match">
+   <property name="text">
+    <string>Update 'Heading 3' to match</string>
+   </property>
+  </action>
+  <action name="actionApply_Heading_4">
+   <property name="text">
+    <string>Apply 'Heading 4'</string>
+   </property>
+  </action>
+  <action name="actionUpdate_Heading_4_to_match">
+   <property name="text">
+    <string>Update 'Heading 4' to match</string>
+   </property>
+  </action>
+  <action name="actionApply_Heading_5">
+   <property name="text">
+    <string>Apply 'Heading 5'</string>
+   </property>
+  </action>
+  <action name="actionUpdate_Heading_5_to_match">
+   <property name="text">
+    <string>Update 'Heading 5' to match</string>
+   </property>
+  </action>
+  <action name="actionApply_Heading_6">
+   <property name="text">
+    <string>Apply 'Heading 6'</string>
+   </property>
+  </action>
+  <action name="actionUpdate_Heading_6_to_match">
+   <property name="text">
+    <string>Update 'Heading 6' to match</string>
    </property>
   </action>
  </widget>
