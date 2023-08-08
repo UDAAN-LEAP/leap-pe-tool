@@ -12846,6 +12846,12 @@ void MainWindow::barPlotManual()
 {
     QDialog dialog;
     QFormLayout *layout = new QFormLayout(&dialog);
+
+    QPushButton* info = new QPushButton();
+    info->setIcon(QIcon(":/Images/Resources/information.png"));
+    info->setFixedSize(30,30);
+    layout->addRow(info);
+
     QLabel *x_label = new QLabel("Enter X-axis label");
     QLineEdit *x_title = new QLineEdit;
     layout->addRow(x_label,x_title);
@@ -12869,12 +12875,28 @@ void MainWindow::barPlotManual()
     QCustomPlot *barplot = new QCustomPlot();
     QPushButton *insert = new QPushButton("insert");
 
+    connect(info, &QPushButton::clicked, [&](){
+        QString instructions =  "If you want to enter data manually:\n\n"
+                                "1. Enter the label of the x-axis \n"
+                                "   eg. countries\n"
+                                "2. Enter the categorical values in comma separated format, which will represent the bar names.\n"
+                                "   eg. usa,india,japan\n"
+                                "3. Enter the label of the y-axis\n"
+                                "   eg. GPA (in million dollars)\n"
+                                "4. Enter numeric values in comma separated format, which are the values of the bars.\n"
+                                "   eg. 47,18,32\n";
+
+
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
+
+
     connect(show, &QPushButton::clicked, [this, y_title,x_title,xcsv, ycsv,layout,barplot,insert,&dialog]() {
         QString ylabel_str = y_title->text();
         QString xlabel_str = x_title->text();
         QString x_string = xcsv->text();
 
-        QRegularExpression regex("^(?=.*[A-Za-z])[A-Za-z, ]*$");
+        QRegularExpression regex("^(?=.*[A-Za-z0-9])[A-Za-z0-9, ]*$");
         QRegularExpressionMatch match = regex.match(x_string);
         if (!match.hasMatch()) {
             dialog.accept();
@@ -12999,11 +13021,31 @@ void MainWindow::barPlotManual()
 void MainWindow::barPlotCsv(){
     QDialog dialog;
     QFormLayout *layout = new QFormLayout(&dialog);
+    QPushButton* info = new QPushButton();
+    info->setIcon(QIcon(":/Images/Resources/information.png"));
+    info->setFixedSize(30,30);
+    layout->addRow(info);
+
     QPushButton *choice = new QPushButton("Choose .csv file");
     layout->addRow(choice);
 
     QCustomPlot *barplot = new QCustomPlot();
     QPushButton *insert = new QPushButton("insert");
+
+    connect(info, &QPushButton::clicked, [&](){
+        QString instructions = "If you want to choose csv file:\n\n"
+                               "1. Open a file with correct format: first column is the x axis, and second column is the y axis \n"
+                               "2. The first line are the labels of the x-axis and y-axis\n"
+                               "3. The second line onwards are the data values for x-axis and y-axis\n"
+                               "   Eg. \n"
+                               "        year,students\n"
+                               "        2010, 506\n"
+                               "        2011, 499\n"
+                               "        2012, 514\n"
+                               "        2013, 621\n";
+
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
 
     connect(choice,&QPushButton::clicked,[this,barplot,insert,layout](){
         QString filePath = QFileDialog::getOpenFileName(this, "Open File", QDir::homePath(), "CSV Files (*.csv)");
@@ -13142,6 +13184,12 @@ void MainWindow::scatterPlotManual()
 {
     QDialog dialog;
     QFormLayout *layout = new QFormLayout(&dialog);
+
+    QPushButton* info = new QPushButton();
+    info->setIcon(QIcon(":/Images/Resources/information.png"));
+    info->setFixedSize(30,30);
+    layout->addRow(info);
+
     QLabel *x_label = new QLabel("Enter X-axis label");
     QLineEdit *x_title = new QLineEdit;
     layout->addRow(x_label,x_title);
@@ -13188,6 +13236,21 @@ void MainWindow::scatterPlotManual()
     shapes << QCPScatterStyle::ssCross << QCPScatterStyle::ssPlus << QCPScatterStyle::ssCircle << QCPScatterStyle::ssDisc << QCPScatterStyle::ssSquare << QCPScatterStyle::ssDiamond;
     shapes << QCPScatterStyle::ssStar << QCPScatterStyle::ssTriangle << QCPScatterStyle::ssTriangleInverted << QCPScatterStyle::ssCrossSquare << QCPScatterStyle::ssPlusSquare;
     shapes << QCPScatterStyle::ssCrossCircle << QCPScatterStyle::ssPlusCircle << QCPScatterStyle::ssPeace << QCPScatterStyle::ssCustom;
+
+
+    connect(info, &QPushButton::clicked, [&](){
+        QString instructions = "If you want to enter data manually\n\n"
+                               "1. Enter the label of the x-axis\n"
+                               "   eg. voltage (in V)\n"
+                               "2. Enter numeric values in comma separated format, which are the x-coordinates \n"
+                               "   eg. 2,4,7\n"
+                               "3. Enter the label of the y-axis\n"
+                               "   eg. current (in A)\n"
+                               "4. Enter numeric values in comma separated format, which are the y-coordinates \n"
+                               "   eg. 7,14,23\n";
+
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
 
     connect(show, &QPushButton::clicked, [this, y_title,x_title,xcsv,ycsv,layout,scatterplot,insert,comboBox,shapes,&dialog]() {
         scatterplot->clearGraphs(); // Removes all graphs
@@ -13317,6 +13380,10 @@ void MainWindow::scatterPlotManual()
 void MainWindow::scatterPlotCsv(){
     QDialog dialog;
     QFormLayout *layout = new QFormLayout(&dialog);
+    QPushButton* info = new QPushButton();
+    info->setIcon(QIcon(":/Images/Resources/information.png"));
+    info->setFixedSize(30,30);
+    layout->addRow(info);
     QLabel *point_label = new QLabel("Choose Point Style");
     QComboBox *comboBox = new QComboBox();
     comboBox->addItem("Cross");
@@ -13345,6 +13412,21 @@ void MainWindow::scatterPlotCsv(){
     shapes << QCPScatterStyle::ssCross << QCPScatterStyle::ssPlus << QCPScatterStyle::ssCircle << QCPScatterStyle::ssDisc << QCPScatterStyle::ssSquare << QCPScatterStyle::ssDiamond;
     shapes << QCPScatterStyle::ssStar << QCPScatterStyle::ssTriangle << QCPScatterStyle::ssTriangleInverted << QCPScatterStyle::ssCrossSquare << QCPScatterStyle::ssPlusSquare;
     shapes << QCPScatterStyle::ssCrossCircle << QCPScatterStyle::ssPlusCircle << QCPScatterStyle::ssPeace << QCPScatterStyle::ssCustom;
+
+    connect(info, &QPushButton::clicked, [&](){
+        QString instructions =  "If you want to choose csv file:\n\n"
+                               "1. Open a file with correct format: first column is the x axis, and second column is the y axis \n"
+                               "2. The first line are the labels of the x-axis and y-axis\n"
+                               "3. The second line onwards are the data values for x-axis and y-axis\n"
+                               "   Eg. \n"
+                               "        total sulfur dioxide,quality\n"
+                               "        34,7\n"
+                               "        67,5\n"
+                               "        54,6\n"
+                               "        60,5\n";
+
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
 
     connect(choice, &QPushButton::clicked, [this,scatterplot,comboBox,shapes,layout,insert](){
         QString filePath = QFileDialog::getOpenFileName(this, "Open File", QDir::homePath(), "CSV Files (*.csv)");
@@ -13467,6 +13549,11 @@ void MainWindow::boxPlotManual()
     QDialog dialog;
     QFormLayout *layout = new QFormLayout(&dialog);
 
+    QPushButton* info = new QPushButton();
+    info->setIcon(QIcon(":/Images/Resources/information.png"));
+    info->setFixedSize(30,30);
+    layout->addRow(info);
+
     QLabel *x_label = new QLabel("<html>Enter labels for x-axis<font color='red'> * </font></html>");
     QLineEdit *xaxis_values = new QLineEdit();
     layout->addRow(x_label,xaxis_values);
@@ -13489,11 +13576,25 @@ void MainWindow::boxPlotManual()
 
     QPushButton *insert = new QPushButton("Insert");
 
-    connect(enter_y, &QPushButton::clicked, [this,xaxis_values,&x_vector,layout,show,&x_len,&y_values,&y_label,&dialog] (){
+    connect(info, &QPushButton::clicked, [&](){
+        QString instructions =  "If you want to enter manually:\n\n"
+                               "1. Enter the labels of the box plots in comma separated format\n"
+                               "   eg. firstSample, secondSample, thirdSample\n"
+                               "2. Enter the data points in csv format for each of the samples\n"
+                               "   eg. \n"
+                               "        1,2,3,4,5,6,7,8\n"
+                               "        3,2,6,8,12,45,22 \n"
+                               "        22,12,14,11,7,9\n";
+
+
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
+
+    connect(enter_y, &QPushButton::clicked, [this,xaxis_values,&x_vector,layout,show,&x_len,&y_values,&y_label,&dialog,enter_y] (){
 
         QString x_string = xaxis_values->text();
 
-        QRegularExpression regex("^(?=.*[A-Za-z])[A-Za-z, ]*$");
+        QRegularExpression regex("^(?=.*[A-Za-z0-9])[A-Za-z0-9, ]*$");
         QRegularExpressionMatch match = regex.match(x_string);
         if (!match.hasMatch()) {
             dialog.accept();
@@ -13515,11 +13616,14 @@ void MainWindow::boxPlotManual()
         }
 
         layout->addRow(show);
+
+        enter_y->setEnabled(false);
     });
 
-    connect(show, &QPushButton::clicked, [this,&x_len,&y_values,&x_vector,statistical,boxplot,layout,insert,&dialog] (){
+    connect(show, &QPushButton::clicked, [this,&x_len,&y_values,&x_vector,statistical,boxplot,layout,insert,&dialog,show] (){
 
         boxplot->clearGraphs();
+        boxplot->replot();
 
         QString y_string[MAX];
         QVector<double> y_vector[MAX];
@@ -13600,6 +13704,8 @@ void MainWindow::boxPlotManual()
 
         layout->addRow(boxplot);
         layout->addRow(insert);
+
+        show->setEnabled(false);
     });
 
     connect(insert, &QPushButton::clicked, [this,boxplot,&dialog]() {
@@ -13647,6 +13753,11 @@ void MainWindow::boxPlotCsv(){
     QDialog dialog;
     QFormLayout *layout = new QFormLayout(&dialog);
 
+    QPushButton* info = new QPushButton();
+    info->setIcon(QIcon(":/Images/Resources/information.png"));
+    info->setFixedSize(30,30);
+    layout->addRow(info);
+
     QPushButton *choice = new QPushButton("Choose .csv file");
     layout->addRow(choice);
 
@@ -13655,6 +13766,28 @@ void MainWindow::boxPlotCsv(){
     QCPStatisticalBox *statistical = new QCPStatisticalBox(boxplot->xAxis, boxplot->yAxis);
     QBrush boxBrush(QColor(75, 150, 255, 100));
     statistical->setBrush(boxBrush);
+
+    connect(info, &QPushButton::clicked, [&](){
+        QString instructions =  "If you want to choose csv file:\n\n"
+                               "Note: Box plots will be plotted column wise\n\n"
+                               "1. Open a file with correct format:\n"
+                               "2. The first row typically contains headers for each column of data. These headers describe the variables you're measuring or categorizing. For a box plot, these headers might represent the labels of the box plots on x axis\n"
+                               "3. Subsequent rows contain the actual data values. Each row corresponds to a set of data points within a particular category or group.\n"
+                               "   Eg. \n"
+                               "        Header1, Header2, Header3, ...\n"
+                               "        Value1, Value2, Value3, ...\n"
+                               "        Value4, Value5, Value6, ...\n"
+                               "        ...\n"
+
+                               "   Eg. \n"
+                               "        total sulfur dioxide,quality,free sulfur dioxide\n"
+                               "        34,7,11\n"
+                               "        67,5,25\n"
+                               "        54,6,15\n"
+                               "        60,5,17\n";
+
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
 
     connect(choice, &QPushButton::clicked, [this,boxplot,layout,insert,statistical](){
         QString filePath = QFileDialog::getOpenFileName(this, "Open File", QDir::homePath(), "CSV Files (*.csv)");
@@ -13777,6 +13910,7 @@ void MainWindow::boxPlotCsv(){
 
 }
 
+
 /*!
  * \fn MainWindow::on_actionInsert_Pie_Chart_triggered
  * \brief This function displays a dialog box to get the number of slices for the pie chart,
@@ -13784,6 +13918,7 @@ void MainWindow::boxPlotCsv(){
  *        After entering the data, the pie chart is generated and displayed for preview.
  *        The user can then choose to insert the pie chart image into the curr_browser.
  */
+
 void MainWindow::on_actionInsert_Pie_Chart_triggered()
 {
     // Create a modal dialog box for getting the number of slices for the pie chart.
@@ -13984,3 +14119,4 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
         return;
     }
 }
+
