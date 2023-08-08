@@ -12345,7 +12345,7 @@ void MainWindow::sendComment(QString str)
                                             <tr>
                                                 <td align="center" bgcolor="#e9ecef" style="padding:12px 24px;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:12px;line-height:20px;color:#666">
                                                     <p style="margin:0">
-                                                        Reach out to MROLE at <a href="mailto:USER_MAIL" rel="noreferrer" target="_blank">USER_MAIL</a>.
+                                                        Reach out to SENDER at <a href="mailto:USER_MAIL" rel="noreferrer" target="_blank">USER_MAIL</a>.
                                                     </p>
                                                 </td>
                                             </tr>
@@ -12368,6 +12368,7 @@ void MainWindow::sendComment(QString str)
     if(mRole == "Corrector" )msg.replace("MROLE","Verifier");
     else if(mRole == "Verifier") msg.replace("MROLE","Corrector");
     else msg.replace("MROLE", "User");
+    msg.replace("SENDER", mRole);
     msg.replace("PAGENO", gCurrentPageName);
     msg.replace("DOCNAME" , gCurrentBookName);
     msg.replace("COMMENT", str);
