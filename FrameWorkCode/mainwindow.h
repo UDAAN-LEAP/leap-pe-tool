@@ -582,9 +582,31 @@ private slots:
 
     void on_actionNormal_Text_triggered();
 
+<<<<<<< HEAD
     void on_actionApply_Title_triggered();
 
     void on_actionUpdate_Title_to_match_triggered();
+=======
+    void on_actionInsert_Line_Graph_triggered();
+
+    void on_actionInsert_Histogram_triggered();
+
+    void insertGraph(const QString& graphFilePath, bool& status);
+
+    void on_actionBar_Plot_triggered();
+    void barPlotManual();
+    void barPlotCsv();
+
+    void on_actionScatter_Plot_triggered();
+    void scatterPlotManual();
+    void scatterPlotCsv();
+
+    void on_actionBox_Plot_triggered();
+    void boxPlotManual();
+    void boxPlotCsv();
+
+    void on_actionInsert_Pie_Chart_triggered();
+>>>>>>> 207d7c1fa1ab8d81ebf8807daa4a66543b458b11
 
 public slots:
     void on_actionLoad_Next_Page_triggered();

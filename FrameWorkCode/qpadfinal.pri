@@ -3,29 +3,6 @@
 # ------------------------------------------------------
 
 HEADERS += ./Filters.h \
-    $$PWD/SimpleMail/SimpleMail \
-    $$PWD/SimpleMail/emailaddress.h \
-    $$PWD/SimpleMail/emailaddress_p.h \
-    $$PWD/SimpleMail/mimeattachment.h \
-    $$PWD/SimpleMail/mimecontentformatter.h \
-    $$PWD/SimpleMail/mimefile.h \
-    $$PWD/SimpleMail/mimehtml.h \
-    $$PWD/SimpleMail/mimeinlinefile.h \
-    $$PWD/SimpleMail/mimemessage.h \
-    $$PWD/SimpleMail/mimemessage_p.h \
-    $$PWD/SimpleMail/mimemultipart.h \
-    $$PWD/SimpleMail/mimemultipart_p.h \
-    $$PWD/SimpleMail/mimepart.h \
-    $$PWD/SimpleMail/mimepart_p.h \
-    $$PWD/SimpleMail/mimetext.h \
-    $$PWD/SimpleMail/quotedprintable.h \
-    $$PWD/SimpleMail/sender.h \
-    $$PWD/SimpleMail/sender_p.h \
-    $$PWD/SimpleMail/server.h \
-    $$PWD/SimpleMail/server_p.h \
-    $$PWD/SimpleMail/serverreply.h \
-    $$PWD/SimpleMail/serverreply_p.h \
-    $$PWD/SimpleMail/smtpexports.h \
     $$PWD/about.h \
     $$PWD/add_comment.h \
     $$PWD/column_width.h \
@@ -44,6 +21,7 @@ HEADERS += ./Filters.h \
     $$PWD/pdfrangedialog.h \
     $$PWD/printworker.h \
     $$PWD/progressbardialog.h \
+    $$PWD/qcustomplot.h \
     $$PWD/rubberband.h \
     $$PWD/sendmail.h \
     $$PWD/shortcutguidedialog.h \
@@ -83,20 +61,6 @@ HEADERS += ./Filters.h \
     $$PWD/globalreplacepreview.h \
     $$PWD/globalreplaceinformation.h
 SOURCES += ./DiffView.cpp \
-    $$PWD/SimpleMail/emailaddress.cpp \
-    $$PWD/SimpleMail/mimeattachment.cpp \
-    $$PWD/SimpleMail/mimecontentformatter.cpp \
-    $$PWD/SimpleMail/mimefile.cpp \
-    $$PWD/SimpleMail/mimehtml.cpp \
-    $$PWD/SimpleMail/mimeinlinefile.cpp \
-    $$PWD/SimpleMail/mimemessage.cpp \
-    $$PWD/SimpleMail/mimemultipart.cpp \
-    $$PWD/SimpleMail/mimepart.cpp \
-    $$PWD/SimpleMail/mimetext.cpp \
-    $$PWD/SimpleMail/quotedprintable.cpp \
-    $$PWD/SimpleMail/sender.cpp \
-    $$PWD/SimpleMail/server.cpp \
-    $$PWD/SimpleMail/serverreply.cpp \
     $$PWD/about.cpp \
     $$PWD/add_comment.cpp \
     $$PWD/column_width.cpp \
@@ -117,6 +81,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/pdfrangedialog.cpp \
     $$PWD/printworker.cpp \
     $$PWD/progressbardialog.cpp \
+    $$PWD/qcustomplot.cpp \
     $$PWD/rubberband.cpp \
     $$PWD/sendmail.cpp \
     $$PWD/shortcutguidedialog.cpp \
@@ -180,3 +145,46 @@ FORMS += ./DiffView.ui \
 DISTFILES += \
     $$PWD/SimpleMail/CMakeLists.txt \
     $$PWD/SimpleMail/simplemail-qt5.pc.in
+
+unix{
+HEADERS += \
+$$PWD/SimpleMail/SimpleMail \
+$$PWD/SimpleMail/emailaddress.h \
+$$PWD/SimpleMail/emailaddress_p.h \
+$$PWD/SimpleMail/mimeattachment.h \
+$$PWD/SimpleMail/mimecontentformatter.h \
+$$PWD/SimpleMail/mimefile.h \
+$$PWD/SimpleMail/mimehtml.h \
+$$PWD/SimpleMail/mimeinlinefile.h \
+$$PWD/SimpleMail/mimemessage.h \
+$$PWD/SimpleMail/mimemessage_p.h \
+$$PWD/SimpleMail/mimemultipart.h \
+$$PWD/SimpleMail/mimemultipart_p.h \
+$$PWD/SimpleMail/mimepart.h \
+$$PWD/SimpleMail/mimepart_p.h \
+$$PWD/SimpleMail/mimetext.h \
+$$PWD/SimpleMail/quotedprintable.h \
+$$PWD/SimpleMail/sender.h \
+$$PWD/SimpleMail/sender_p.h \
+$$PWD/SimpleMail/server.h \
+$$PWD/SimpleMail/server_p.h \
+$$PWD/SimpleMail/serverreply.h \
+$$PWD/SimpleMail/serverreply_p.h \
+$$PWD/SimpleMail/smtpexports.h
+
+SOURCES += \
+$$PWD/SimpleMail/emailaddress.cpp \
+$$PWD/SimpleMail/mimeattachment.cpp \
+$$PWD/SimpleMail/mimecontentformatter.cpp \
+$$PWD/SimpleMail/mimefile.cpp \
+$$PWD/SimpleMail/mimehtml.cpp \
+$$PWD/SimpleMail/mimeinlinefile.cpp \
+$$PWD/SimpleMail/mimemessage.cpp \
+$$PWD/SimpleMail/mimemultipart.cpp \
+$$PWD/SimpleMail/mimepart.cpp \
+$$PWD/SimpleMail/mimetext.cpp \
+$$PWD/SimpleMail/quotedprintable.cpp \
+$$PWD/SimpleMail/sender.cpp \
+$$PWD/SimpleMail/server.cpp \
+$$PWD/SimpleMail/serverreply.cpp
+}

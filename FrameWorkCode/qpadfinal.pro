@@ -10,7 +10,7 @@ QT += xml
 QT += network
 QT += multimedia
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets charts
 
 TARGET = qpadfinal
 TEMPLATE = app
@@ -70,3 +70,8 @@ FORMS +=
 HEADERS +=
 
 SOURCES +=
+
+win32: LIBS += -L$$PWD/../lib/ -lSimpleMail2Qt5
+
+INCLUDEPATH += $$PWD/../include
+DEPENDPATH += $$PWD/../include

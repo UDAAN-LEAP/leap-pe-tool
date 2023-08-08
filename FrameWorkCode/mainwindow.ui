@@ -1154,8 +1154,13 @@ background: grey;
     <rect>
      <x>0</x>
      <y>0</y>
+<<<<<<< HEAD
      <width>2057</width>
      <height>47</height>
+=======
+    <width>2057</width>
+     <height>46</height>
+>>>>>>> 207d7c1fa1ab8d81ebf8807daa4a66543b458b11
     </rect>
    </property>
    <property name="styleSheet">
@@ -1438,8 +1443,20 @@ QMenu::item:selected{
     <property name="title">
      <string>Insert</string>
     </property>
+    <widget class="QMenu" name="menuInsert_Graphs_and_Bars">
+     <property name="title">
+      <string>Graphs and Bars</string>
+     </property>
+     <addaction name="actionInsert_Line_Graph"/>
+     <addaction name="actionInsert_Histogram"/>
+     <addaction name="actionBar_Plot"/>
+     <addaction name="actionScatter_Plot"/>
+     <addaction name="actionBox_Plot"/>
+     <addaction name="actionInsert_Pie_Chart"/>
+    </widget>
     <addaction name="actionImage"/>
     <addaction name="actionTable_2"/>
+    <addaction name="menuInsert_Graphs_and_Bars"/>
     <addaction name="actionInsert_Horizontal_Line"/>
     <addaction name="actionDate"/>
     <addaction name="separator"/>
@@ -3001,6 +3018,7 @@ background-color: #EEF0F2;
     <string>Normal Text</string>
    </property>
   </action>
+<<<<<<< HEAD
   <action name="actionApply_Title">
    <property name="text">
     <string>Apply 'Title'</string>
@@ -3009,6 +3027,45 @@ background-color: #EEF0F2;
   <action name="actionUpdate_Title_to_match">
    <property name="text">
     <string>Update 'Title' to match</string>
+=======
+  <action name="actionInsert_Line_Graph">
+   <property name="text">
+    <string>Line Graph</string>
+   </property>
+   <property name="toolTip">
+    <string>Line Graph</string>
+   </property>
+  </action>
+  <action name="actionInsert_Histogram">
+   <property name="text">
+    <string>Histogram</string>
+   </property>
+   <property name="toolTip">
+    <string>Histogram</string>
+   </property>
+  </action>
+  <action name="actionBar_Plot">
+   <property name="text">
+    <string>Bar Plot</string>
+   </property>
+  </action>
+  <action name="actionScatter_Plot">
+   <property name="text">
+    <string>Scatter Plot</string>
+   </property>
+  </action>
+  <action name="actionBox_Plot">
+   <property name="text">
+    <string>Box Plot</string>
+   </property>
+  </action>
+  <action name="actionInsert_Pie_Chart">
+   <property name="text">
+    <string>Pie Chart</string>
+   </property>
+   <property name="toolTip">
+    <string>Pie Chart</string>
+>>>>>>> 207d7c1fa1ab8d81ebf8807daa4a66543b458b11
    </property>
   </action>
  </widget>
