@@ -582,11 +582,10 @@ private slots:
 
     void on_actionNormal_Text_triggered();
 
-<<<<<<< HEAD
     void on_actionApply_Title_triggered();
 
     void on_actionUpdate_Title_to_match_triggered();
-=======
+
     void on_actionInsert_Line_Graph_triggered();
 
     void on_actionInsert_Histogram_triggered();
@@ -606,7 +605,6 @@ private slots:
     void boxPlotCsv();
 
     void on_actionInsert_Pie_Chart_triggered();
->>>>>>> 207d7c1fa1ab8d81ebf8807daa4a66543b458b11
 
 public slots:
     void on_actionLoad_Next_Page_triggered();

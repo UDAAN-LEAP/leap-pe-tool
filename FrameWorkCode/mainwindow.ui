@@ -1154,13 +1154,8 @@ background: grey;
     <rect>
      <x>0</x>
      <y>0</y>
-<<<<<<< HEAD
-     <width>2057</width>
-     <height>47</height>
-=======
     <width>2057</width>
      <height>46</height>
->>>>>>> 207d7c1fa1ab8d81ebf8807daa4a66543b458b11
     </rect>
    </property>
    <property name="styleSheet">
@@ -3018,7 +3013,6 @@ background-color: #EEF0F2;
     <string>Normal Text</string>
    </property>
   </action>
-<<<<<<< HEAD
   <action name="actionApply_Title">
    <property name="text">
     <string>Apply 'Title'</string>
@@ -3027,7 +3021,8 @@ background-color: #EEF0F2;
   <action name="actionUpdate_Title_to_match">
    <property name="text">
     <string>Update 'Title' to match</string>
-=======
+    </property>
+    </action>
   <action name="actionInsert_Line_Graph">
    <property name="text">
     <string>Line Graph</string>
@@ -3065,7 +3060,6 @@ background-color: #EEF0F2;
    </property>
    <property name="toolTip">
     <string>Pie Chart</string>
->>>>>>> 207d7c1fa1ab8d81ebf8807daa4a66543b458b11
    </property>
   </action>
  </widget>
