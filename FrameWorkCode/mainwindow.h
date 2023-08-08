@@ -582,6 +582,10 @@ private slots:
 
     void on_actionNormal_Text_triggered();
 
+    void on_actionApply_Title_triggered();
+
+    void on_actionUpdate_Title_to_match_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

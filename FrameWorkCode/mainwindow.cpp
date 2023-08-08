@@ -12046,6 +12046,16 @@ void MainWindow::on_actionTitle_triggered()
     cursor.mergeCharFormat(format);
     cursor.insertText(cursor.selectedText(), format);
 
+    QString defaultTitleStyle = "<span style=' font-size:26pt; font-weight:600;'>";
+    defaultTitleStyle.replace("'", "\"");
+
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+
+    settings.setValue("titleStyle",defaultTitleStyle);
+    settings.endGroup();
+
 }
 void MainWindow::on_actionSubtitle_triggered()
 {
@@ -12371,3 +12381,59 @@ void MainWindow::sendComment(QString str)
         qDebug()<<"Not sent";
     else qDebug()<<"Sent";
 }
+
+void MainWindow::on_actionApply_Title_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    if(checked_first){
+        on_actionTitle_triggered();
+    }
+    else{
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("paragraphStyles");
+        QString currTitleStyle = settings.value("titleStyle").toString();
+
+        QString html = "<p style=' margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;' title=''>" + currTitleStyle + cursor.selectedText() + "</span></p>";
+
+        cursor.insertHtml(html);
+
+        settings.endGroup();
+    }
+}
+
+
+void MainWindow::on_actionUpdate_Title_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newTitleStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newTitleStyle = match.captured(1) + ">";
+        qDebug()<<"new style: "<<newTitleStyle;
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldTitleStyle = settings.value("titleStyle").toString();
+    qDebug()<<"old style: "<<oldTitleStyle;
+    settings.setValue("titleStyle",newTitleStyle);
+    QString allHtml = curr_browser->toHtml();
+    qDebug()<<"all html before: "<<allHtml;
+    allHtml.replace(oldTitleStyle,newTitleStyle);
+    qDebug()<<"all html after: "<<allHtml;
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+
+
+}
+
