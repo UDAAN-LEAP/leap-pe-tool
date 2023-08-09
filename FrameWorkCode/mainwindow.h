@@ -564,22 +564,6 @@ private slots:
 
     void on_copyToVerifier_clicked();
 
-    void on_actionTitle_triggered();
-
-    void on_actionSubtitle_triggered();
-
-    void on_actionHeading_1_triggered();
-
-    void on_actionHeading_2_triggered();
-
-    void on_actionHeading_3_triggered();
-
-    void on_actionHeading_4_triggered();
-
-    void on_actionHeading_5_triggered();
-
-    void on_actionHeading_6_triggered();
-
     void on_actionNormal_Text_triggered();
 
     void on_actionApply_Title_triggered();
