@@ -1739,6 +1739,8 @@ void MainWindow::AddRecentProjects()
         ui->menuRecent_Project->addAction(FileAction);
         connect(FileAction, &QAction::triggered, this , &MainWindow::on_action3_triggered);
     }
+    ui->actionRecentProject->setEnabled(true);
+
     if(!ui->menuRecent_Project->isEmpty())
     {
         QAction *FileAction = new QAction(this);
@@ -11112,6 +11114,8 @@ void MainWindow::on_actionClear_Menu_triggered()
     ui->menuRecent_Project->clear();
     isRecentProjclick = false;
     //ui->menuRecent_Project->setEnabled(false);
+    ui->actionRecentProject->setEnabled(false);
+
     settings.endGroup();
     qDebug()<<RecentProjFile<<endl;
 }
