@@ -11960,7 +11960,14 @@ void MainWindow::on_copyToVerifier_clicked()
     QString copyToVerifier = settings.value("copyToVerifierConfirm").toString();
     settings.endGroup();
 
-    // If the confirmation value is not "dna"
+    QString parentDir = mProject.GetDir().absolutePath();
+    QString fileName = gCurrentPageName;
+    QString correctorFilePath = parentDir + "/CorrectorOutput/" + fileName;
+    QString verifierFilePath = parentDir + "/VerifierOutput/" + fileName;
+    QFile correctorFile(correctorFilePath);
+    QFile verifierFile(verifierFilePath);
+
+
     if(copyToVerifier != "dna"){
         // Create a dialog
         QDialog dialog(this);
@@ -11994,65 +12001,44 @@ void MainWindow::on_copyToVerifier_clicked()
         if(dialog.exec() == QDialog::Accepted){
             // If "Dont Ask Again!" checkbox is checked
             if(checkBox.isChecked()){
-                // Copy the current page from CorrectorOutput to VerifierOutput
-                QString parentDir = mProject.GetDir().absolutePath();
-                QString fileName = gCurrentPageName;
-                QString correctorFilePath = parentDir + "/CorrectorOutput/" + fileName;
-                QString verifierFilePath = parentDir + "/VerifierOutput/" + fileName;
-                QFile correctorFile(correctorFilePath);
-                QFile verifierFile(verifierFilePath);
-                QFileInfo f(correctorFile);
-                QString suff = f.completeSuffix();
-                LoadDocument(&correctorFile, suff, fileName);
-                if(verifierFile.exists()){
-                    verifierFile.remove();
-                }
-                if(!QFile::copy(correctorFilePath, verifierFilePath)){
-                    qDebug() << "Cannot copy file to VerifierOutput";
-                }
                 // Update the confirmation value in settings
                 settings.beginGroup("copyToVerifier");
                 settings.setValue("copyToVerifierConfirm", "dna");
                 settings.endGroup();
             }
-            // If "Dont Ask Again!" checkbox is not checked
-            else{
-                // Copy the current page from CorrectorOutput to VerifierOutput
-                QString parentDir = mProject.GetDir().absolutePath();
-                QString fileName = gCurrentPageName;
-                QString correctorFilePath = parentDir + "/CorrectorOutput/" + fileName;
-                QString verifierFilePath = parentDir + "/VerifierOutput/" + fileName;
-                QFile correctorFile(correctorFilePath);
-                QFile verifierFile(verifierFilePath);
-                QFileInfo f(correctorFile);
-                QString suff = f.completeSuffix();
-                LoadDocument(&correctorFile, suff, fileName);
-                if(verifierFile.exists()){
-                    verifierFile.remove();
+            if(correctorFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+                QString s = correctorFile.readAll();
+                QFile::setPermissions(verifierFilePath, QFile::WriteOwner | QFile::WriteGroup | QFile::WriteOther |
+                                      QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
+
+                if(verifierFile.open(QIODevice::WriteOnly | QIODevice::Text)){
+                    QTextStream out(&verifierFile);
+                    out.setCodec("UTF-8");
+                    out << s;
+                    verifierFile.close();
+                    qDebug()<<"Copied to verifier";
                 }
-                if(!QFile::copy(correctorFilePath, verifierFilePath)){
-                    qDebug() << "Cannot copy file to VerifierOutput";
-                }
+                correctorFile.close();
+                qDebug()<<"Opened corrector file";
             }
         }
     }
     // If the confirmation value is "dna"
     else{
-        // Copy the current page from CorrectorOutput to VerifierOutput
-        QString parentDir = mProject.GetDir().absolutePath();
-        QString fileName = gCurrentPageName;
-        QString correctorFilePath = parentDir + "/CorrectorOutput/" + fileName;
-        QString verifierFilePath = parentDir + "/VerifierOutput/" + fileName;
-        QFile correctorFile(correctorFilePath);
-        QFile verifierFile(verifierFilePath);
-        QFileInfo f(correctorFile);
-        QString suff = f.completeSuffix();
-        LoadDocument(&correctorFile, suff, fileName);
-        if(verifierFile.exists()){
-            verifierFile.remove();
-        }
-        if(!QFile::copy(correctorFilePath, verifierFilePath)){
-            qDebug() << "Cannot copy file to VerifierOutput";
+        if(correctorFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+            QString s = correctorFile.readAll();
+            QFile::setPermissions(verifierFilePath, QFile::WriteOwner | QFile::WriteGroup | QFile::WriteOther |
+                                  QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
+
+            if(verifierFile.open(QIODevice::WriteOnly | QIODevice::Text)){
+                QTextStream out(&verifierFile);
+                out.setCodec("UTF-8");
+                out << s;
+                verifierFile.close();
+                qDebug()<<"Copied to verifier";
+            }
+            correctorFile.close();
+            qDebug()<<"Opened corrector file";
         }
     }
 }
