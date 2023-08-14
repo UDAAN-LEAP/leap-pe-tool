@@ -12233,11 +12233,11 @@ void MainWindow::sendComment(QString str)
                                             <tr>
                                                 <td align="left" bgcolor="#ffffff" style="padding:24px;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;border-radius:0 0 2px 2px">
                                                     <p style="margin:0">
-                                                        There is comment added for your Document ⇒ <b>DOCNAME</b>.
+                                                        There is comment added for your Document : <b>DOCNAME</b>.
                                                         <br>
-                                                        The comment is added on page number ⇒ <b>PAGENO</b>
+                                                        The comment is added on page number : <b>PAGENO</b>
                                                         <br>
-                                                        Comment ⇒ <b>COMMENT</b>
+                                                        Comment : <b>COMMENT</b>
                                                     </p>
                                                 </td>
                                             </tr>
