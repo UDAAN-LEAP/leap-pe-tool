@@ -837,6 +837,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
     int px = point.x();
     int py = point.y();
 
+    bool isLink = false;
 
     if(!(px>=topLeftx && px<=botRightx &&  py>=150 /*&& py<(botRighty)*/)) return;
 
@@ -849,8 +850,19 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
                 QTextCursor cursor = curr_browser->textCursor();
                 cursor.select(QTextCursor::WordUnderCursor);
+                QString selected_text = cursor.selection().toHtml();
                 curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
                 QMenu* popup_menu = curr_browser->createStandardContextMenu();
+
+                QAction *open_link= NULL;
+                if(selected_text.contains("<a href=")){
+                    QAction *first_action = popup_menu->actions().isEmpty() ? nullptr : popup_menu->actions().first();
+                    open_link = new QAction("Open link in browser",popup_menu);
+                    popup_menu->insertAction(first_action, open_link);
+                    popup_menu->addSeparator();
+                    isLink =true;
+                }
+
                 QMenu* clipboard_menu;
                 clipboard_menu = new QMenu("clipboard", popup_menu);
                 clipboard_menu->setStyleSheet("height: 4.7em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
@@ -916,7 +928,6 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 {
                     clipboard_menu->setStyleSheet("height: 4.52em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
                 }
-
             QAction* gsearch;
             gsearch = new QAction("Search over google",popup_menu);
             QAction* gtrans;
@@ -924,12 +935,20 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             QAction* insertImage;
             insertImage = new QAction("Insert image",popup_menu);
 
-            popup_menu->insertSeparator(popup_menu->actions()[0]);
-            popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
+            QList<QAction*> all_actions = popup_menu->actions();
+            if(isLink) {
+                popup_menu->insertMenu(all_actions[1], clipboard_menu);
+                popup_menu->insertSeparator(popup_menu->actions()[2]);
+            }
+            else {
+                popup_menu->insertMenu(all_actions[0], clipboard_menu);
+                popup_menu->insertSeparator(popup_menu->actions()[1]);
+            }
             popup_menu->addAction(gsearch);
             popup_menu->addAction(gtrans);
             popup_menu->addAction(insertImage);
 
+            connect(open_link, SIGNAL(triggered()), this, SLOT(openLink()));
             connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
             connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
             connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
@@ -971,6 +990,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
             QTextCursor cursor = curr_browser->textCursor();
             cursor.select(QTextCursor::WordUnderCursor);
+            QString selected_word = cursor.selection().toHtml();
             //BlockUnderCursor
             // code to copy selected string:-
             QString str1 = cursor.selectedText();
@@ -978,6 +998,14 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
             curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
             QMenu* popup_menu = curr_browser->createStandardContextMenu();
+
+            QAction *open_link= NULL;
+            if(selected_word.contains("<a href=")){
+                QAction *first_action = popup_menu->actions().isEmpty() ? nullptr : popup_menu->actions().first();
+                open_link = new QAction("Open link in browser",popup_menu);
+                popup_menu->insertAction(first_action, open_link);
+                isLink =true;
+            }
 
             translate_menu = new QMenu("translate", this);
             clipboard_menu = new QMenu("clipboard", this);
@@ -1006,10 +1034,15 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
 
             popup_menu->insertSeparator(popup_menu->actions()[1]);
-            popup_menu->insertMenu(popup_menu->actions()[1], translate_menu);
+            if(isLink){
+                popup_menu->insertMenu(popup_menu->actions()[1], translate_menu);
+                popup_menu->insertMenu(popup_menu->actions()[2], clipboard_menu);
+            }
+            else{
+                popup_menu->insertMenu(popup_menu->actions()[0], translate_menu);
+                popup_menu->insertMenu(popup_menu->actions()[1], clipboard_menu);
+            }
 
-            popup_menu->insertSeparator(popup_menu->actions()[2]);
-            popup_menu->insertMenu(popup_menu->actions()[2], clipboard_menu);
             //connect(spell_menu, SIGNAL(triggered(QAction*)), this, SLOT(menuSelection(QAction*)));
             connect(translate_menu, SIGNAL(triggered(QAction*)), this, SLOT(translate_replace(QAction*)));
             connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
@@ -1019,12 +1052,11 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             gtrans = new QAction("Google translate",popup_menu);
             QAction* insertImage;
             insertImage = new QAction("Insert image",popup_menu);
-            popup_menu->insertSeparator(popup_menu->actions()[0]);
-            //popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
             popup_menu->addAction(gsearch);
             popup_menu->addAction(gtrans);
             popup_menu->addAction(insertImage);
 
+            connect(open_link, SIGNAL(triggered()), this, SLOT(openLink()));
             //connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
             connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
             connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
@@ -1194,9 +1226,15 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 }
                 //For clipboard
 
-                popup_menu->insertSeparator(popup_menu->actions()[0]);
-                popup_menu->insertMenu(popup_menu->actions()[0], spell_menu);
-
+                QList<QAction*> all_actions = popup_menu->actions();
+                if(isLink) {
+                    popup_menu->insertMenu(all_actions[1], spell_menu);
+                    popup_menu->insertSeparator(all_actions[0]);
+                }
+                else {
+                    popup_menu->insertMenu(all_actions[0], spell_menu);
+                    popup_menu->insertSeparator(all_actions[0]);
+                }
                 connect(spell_menu, SIGNAL(triggered(QAction*)), this, SLOT(menuSelection(QAction*)));
 
 
@@ -8663,6 +8701,30 @@ void MainWindow::readOutputFromPdfPrint()
         pdfPrintIsReady();
     }
 }
+
+
+/*!
+ * \fn MainWindow::openLink
+ * \brief selected link is searched over google
+ */
+void MainWindow::openLink()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.select(QTextCursor::WordUnderCursor);
+    QString selected_text = cursor.selection().toHtml();
+    qDebug()<<selected_text;
+
+    QString link;
+    QRegularExpression regex("<!--StartFragment--><a href=\"(.*?)\">");
+
+    QRegularExpressionMatch match = regex.match(selected_text);
+    if (match.hasMatch()) {
+        link = match.captured(1);
+    }
+    qDebug()<<link;
+    QDesktopServices::openUrl(QUrl(link, QUrl::TolerantMode));
+}
+
 
 /*!
  * \fn MainWindow::SearchOnGoogle

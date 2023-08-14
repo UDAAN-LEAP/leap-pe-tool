@@ -588,6 +588,8 @@ private slots:
     void boxPlotManual();
     void boxPlotCsv();
 
+    void openLink();
+
     void on_actionInsert_Pie_Chart_triggered();
 
     void on_actionApply_Subtitle_triggered();
