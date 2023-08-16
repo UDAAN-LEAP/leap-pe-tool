@@ -11954,103 +11954,85 @@ void MainWindow::on_actionNormal_Text_triggered()
 
 void MainWindow::on_actionUpdate_History_triggered()
 {
-    const QString url = "https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/contents";
 
-    QUrl apiUrl(url);
-    QNetworkRequest request(apiUrl);
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QUrl url("https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/releases");
+    QNetworkRequest request(url);
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    manager->get(request);
+    connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
+        if (reply->error() == QNetworkReply::NoError) {
+            m_data = reply->readAll();
+            QJsonParseError errorPtr;
+            QJsonDocument document = QJsonDocument::fromJson(m_data, &errorPtr);
+            QJsonArray mainObj = document.array();
 
-    QNetworkAccessManager nam;
-    QNetworkReply* reply = nam.get(request);
+            std::vector<QString> releaseVersions;
+            std::vector<QString> releaseNotes;
+            std::vector<QString> timestamps;
 
-    QEventLoop loop;
-    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-    loop.exec(); // Wait for the network request to finish
+            for(auto release : mainObj){
+                QJsonObject obj = release.toObject();
+                releaseVersions.push_back(obj.value("tag_name").toString());
+                releaseNotes.push_back(obj.value("body").toString());
+                timestamps.push_back(obj.value("published_at").toString());
+            }
 
-    QObject::connect(reply, &QNetworkReply::errorOccurred, [](QNetworkReply::NetworkError code){
-        qDebug() << "Network error occurred:" << code;
-    });
+            QWidget* mainWindow = new QWidget;
+            QVBoxLayout* layout = new QVBoxLayout;
+            mainWindow->setLayout(layout);
 
-    QObject::connect(reply, &QNetworkReply::sslErrors, [](const QList<QSslError>& errors){
-        qDebug() << "SSL errors occurred:";
-        for (const QSslError& error : errors) {
-            qDebug() << error.errorString();
+            QTableWidget* tableWidget = new QTableWidget(releaseVersions.size(), 3);
+            tableWidget->setStyleSheet(
+                "QTableWidget {"
+                "    background-color: #f7f7f7;"
+                "    color: #333333;"
+                "    border: 1px solid #cccccc;"
+                "}"
+                "QTableWidget QHeaderView::section {"
+                "    background-color: #e0e0e0;"
+                "    color: #333333;"
+                "    border: 1px solid #cccccc;"
+                "    padding: 5px;"
+                "}"
+                "QTableWidget QHeaderView::section:first {"
+                "    border-left: none;"
+                "}"
+                "QTableWidget QHeaderView::section:last {"
+                "    border-right: none;"
+                "}"
+                "QTableWidget::item {"
+                "    padding: 5px;"
+                "}"
+                "QTableWidget::item:selected {"
+                "    background-color: #0078d7;"
+                "    color: #ffffff;"
+                "}");
+
+            tableWidget->setHorizontalHeaderLabels({ "Version", "Release Notes", "Timestamp" });
+            tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+            layout->addWidget(tableWidget);
+
+            for (int i = 0; i < releaseVersions.size(); ++i) {
+                QTableWidgetItem* versionItem = new QTableWidgetItem(releaseVersions[i]);
+                QTableWidgetItem* notesItem = new QTableWidgetItem(releaseNotes[i]);
+                QTableWidgetItem* timestampItem = new QTableWidgetItem(timestamps[i]);
+
+                tableWidget->setItem(i, 0, versionItem);
+                tableWidget->setItem(i, 1, notesItem);
+                tableWidget->setItem(i, 2, timestampItem);
+            }
+
+            mainWindow->setWindowTitle("Application Updates");
+            mainWindow->resize(800, 400);
+            mainWindow->show();
+        } else {
+            QMessageBox::information(this,"Network error",reply->errorString()+"\nThere was an error in the network request. Please try again later or switch your network.");
+            return;
         }
+        reply->deleteLater();
     });
-    if (reply->error() != QNetworkReply::NoError) {
-        QMessageBox::information(0, "Error", "Uh-Oh! we are unable to connect to the server at the moment. Check your internet connection.");
-        return;
-    }
-
-    QByteArray response_data = reply->readAll();
-    reply->deleteLater(); // Release resources
-
-    QJsonDocument json = QJsonDocument::fromJson(response_data);
-    if (!json.isArray()) {
-        QMessageBox::information(0, "Error", "Failed to parse the response from GitHub.");
-        return;
-    }
-
-    std::vector<QString> releaseVersions;
-    std::vector<QString> releaseNotes;
-    std::vector<QString> timestamps;
-
-    for (const auto& release : json.array()) {
-        if (release.isObject() && release.toObject().contains("tag_name") &&
-            release.toObject().contains("body") && release.toObject().contains("published_at")) {
-
-            releaseVersions.push_back(release.toObject()["tag_name"].toString());
-            releaseNotes.push_back(release.toObject()["body"].toString());
-            timestamps.push_back(release.toObject()["published_at"].toString());
-        }
-    }
-
-    QWidget* mainWindow = new QWidget;
-    QVBoxLayout* layout = new QVBoxLayout;
-    mainWindow->setLayout(layout);
-
-    QTableWidget* tableWidget = new QTableWidget(releaseVersions.size(), 3);
-    tableWidget->setStyleSheet(
-        "QTableWidget {"
-        "    background-color: #f7f7f7;"
-        "    color: #333333;"
-        "    border: 1px solid #cccccc;"
-        "}"
-        "QTableWidget QHeaderView::section {"
-        "    background-color: #e0e0e0;"
-        "    color: #333333;"
-        "    border: 1px solid #cccccc;"
-        "    padding: 5px;"
-        "}"
-        "QTableWidget QHeaderView::section:first {"
-        "    border-left: none;"
-        "}"
-        "QTableWidget QHeaderView::section:last {"
-        "    border-right: none;"
-        "}"
-        "QTableWidget::item {"
-        "    padding: 5px;"
-        "}"
-        "QTableWidget::item:selected {"
-        "    background-color: #0078d7;"
-        "    color: #ffffff;"
-        "}");
-
-    tableWidget->setHorizontalHeaderLabels({ "Version", "Release Notes", "Timestamp" });
-    tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    layout->addWidget(tableWidget);
-
-    for (int i = 0; i < releaseVersions.size(); ++i) {
-        QTableWidgetItem* versionItem = new QTableWidgetItem(releaseVersions[i]);
-        QTableWidgetItem* notesItem = new QTableWidgetItem(releaseNotes[i]);
-        QTableWidgetItem* timestampItem = new QTableWidgetItem(timestamps[i]);
-
-        tableWidget->setItem(i, 0, versionItem);
-        tableWidget->setItem(i, 1, notesItem);
-        tableWidget->setItem(i, 2, timestampItem);
-    }
-
-    mainWindow->setWindowTitle("Application Updates");
-    mainWindow->resize(800, 400);
-    mainWindow->show();
 }
 
