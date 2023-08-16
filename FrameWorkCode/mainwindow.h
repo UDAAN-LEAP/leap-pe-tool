@@ -560,8 +560,6 @@ private slots:
 
     void on_sanButton_clicked();
 
-<<<<<<< Updated upstream
-=======
     void on_copyToVerifier_clicked();
 
     void on_actionTitle_triggered();
@@ -584,7 +582,6 @@ private slots:
 
     void on_actionUpdate_History_triggered();
 
->>>>>>> Stashed changes
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

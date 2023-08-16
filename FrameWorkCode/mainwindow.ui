@@ -2929,8 +2929,6 @@ background-color: #EEF0F2;
     <string>Undo Two Column view</string>
    </property>
   </action>
-<<<<<<< Updated upstream
-=======
   <action name="actionTitle">
    <property name="text">
     <string>Title</string>
@@ -2981,7 +2979,6 @@ background-color: #EEF0F2;
     <string>Update History</string>
    </property>
   </action>
->>>>>>> Stashed changes
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

@@ -11665,8 +11665,6 @@ void MainWindow::on_sanButton_clicked()
         );
 }
 
-<<<<<<< Updated upstream
-=======
 /*!
  * \fn MainWindow::on_copyToVerifier_clicked
  * \brief This function is called when the "Copy to Verifier" Button is clicked. It checks if the copy
@@ -11956,7 +11954,7 @@ void MainWindow::on_actionNormal_Text_triggered()
 
 void MainWindow::on_actionUpdate_History_triggered()
 {
-    const QString url = "https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/releases";
+    const QString url = "https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/contents";
 
     QUrl apiUrl(url);
     QNetworkRequest request(apiUrl);
@@ -12056,4 +12054,3 @@ void MainWindow::on_actionUpdate_History_triggered()
     mainWindow->show();
 }
 
->>>>>>> Stashed changes
