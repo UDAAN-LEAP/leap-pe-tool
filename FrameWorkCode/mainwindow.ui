@@ -1217,6 +1217,7 @@ QMenu::item:selected{
     <addaction name="separator"/>
     <addaction name="actionShortcut_Guide"/>
     <addaction name="separator"/>
+    <addaction name="actionUpdate_History"/>
     <addaction name="actionCheck_for_Updates"/>
     <addaction name="separator"/>
     <addaction name="actionAbout_Udaan_PE"/>
@@ -3144,6 +3145,11 @@ background-color: #EEF0F2;
   <action name="actionUpdate_Heading_6_to_match">
    <property name="text">
     <string>Update 'Heading 6' to match</string>
+   </property>
+  </action>
+  <action name="actionUpdate_History">
+   <property name="text">
+    <string>Update History</string>
    </property>
   </action>
  </widget>

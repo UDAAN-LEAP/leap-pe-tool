@@ -620,6 +620,8 @@ private slots:
 
     void on_actionUpdate_Heading_6_to_match_triggered();
 
+    void on_actionUpdate_History_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
