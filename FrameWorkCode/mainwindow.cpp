@@ -14431,7 +14431,10 @@ void MainWindow::on_actionUpdate_History_triggered()
     });
 }
 
-
+/**
+ * \fn MainWindow::on_actionSwitch_Edit_View_Mode_triggered
+ * \brief This function changes the current mode in the tool from Edit to View
+ */
 void MainWindow::on_actionSwitch_Edit_View_Mode_triggered()
 {
     curr_browser->setReadOnly(true);
@@ -14439,7 +14442,10 @@ void MainWindow::on_actionSwitch_Edit_View_Mode_triggered()
     ui->pushButton_9->setVisible(true);
 }
 
-
+/**
+ * \fn MainWindow::on_pushButton_9_clicked
+ * \brief This function changes the current mode in the tool from View to Edit
+ */
 void MainWindow::on_pushButton_9_clicked()
 {
     curr_browser->setReadOnly(false);
