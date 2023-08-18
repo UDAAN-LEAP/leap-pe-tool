@@ -12,7 +12,7 @@ class CommentHandler : public QDialog
     Q_OBJECT
 
 public:
-    explicit CommentHandler(QWidget *parent = nullptr, QString comment = "");
+    explicit CommentHandler(QWidget *parent = nullptr, QString corrector_comment = "", QString verifier_comment = "", QString mRole = "");
     ~CommentHandler();
     QString getComment();
 

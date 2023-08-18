@@ -548,10 +548,12 @@ private slots:
 
     //! Handling Comments
     void on_actionComment_triggered();
-    void highlightComment();
+    void highlightComment(bool deleteCommentFlag = false);
     void writeCommentLogs(QString word, QString comment);
-    void showComments();
+   // void showComments();
     void deleteComment();
+    void readCommentLogs();
+    void sendComment(QString str);
 
 
     void on_actionUndo_Two_Column_view_triggered();
@@ -559,6 +561,70 @@ private slots:
     void on_hinButton_clicked();
 
     void on_sanButton_clicked();
+
+    void on_copyToVerifier_clicked();
+
+    void on_actionNormal_Text_triggered();
+
+    void on_actionApply_Title_triggered();
+
+    void on_actionUpdate_Title_to_match_triggered();
+
+    void on_actionInsert_Line_Graph_triggered();
+
+    void on_actionInsert_Histogram_triggered();
+
+    void insertGraph(const QString& graphFilePath, bool& status);
+
+    void on_actionBar_Plot_triggered();
+    void barPlotManual();
+    void barPlotCsv();
+
+    void on_actionScatter_Plot_triggered();
+    void scatterPlotManual();
+    void scatterPlotCsv();
+
+    void on_actionBox_Plot_triggered();
+    void boxPlotManual();
+    void boxPlotCsv();
+
+    void openLink();
+
+    void on_actionInsert_Pie_Chart_triggered();
+
+    void on_actionApply_Subtitle_triggered();
+
+    void on_actionUpdate_Subtitle_to_match_triggered();
+
+    void on_actionApply_Heading_1_triggered();
+
+    void on_actionUpdate_Heading_1_to_match_triggered();
+
+    void on_actionApply_Heading_2_triggered();
+
+    void on_actionUpdate_Heading_2_to_match_triggered();
+
+    void on_actionApply_Heading_3_triggered();
+
+    void on_actionUpdate_Heading_3_to_match_triggered();
+
+    void on_actionApply_Heading_4_triggered();
+
+    void on_actionUpdate_Heading_4_to_match_triggered();
+
+    void on_actionApply_Heading_5_triggered();
+
+    void on_actionUpdate_Heading_5_to_match_triggered();
+
+    void on_actionApply_Heading_6_triggered();
+
+    void on_actionUpdate_Heading_6_to_match_triggered();
+
+    void on_actionUpdate_History_triggered();
+
+    void on_actionSwitch_Edit_View_Mode_triggered();
+
+    void on_pushButton_9_clicked();
 
 public slots:
     void on_actionLoad_Next_Page_triggered();
@@ -673,6 +739,8 @@ private:
     int totalWord = 0;
 
     QString currentCommentWord;
+    QMap<QString,QMap<QString,QString>> corrector_comment, verifier_comment;
+
 };
 
 #endif // MAINWINDOW_H

@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "dashboard.h"
 #include"column_width.h"
 #include"word_count.h"
@@ -91,11 +91,15 @@
 #include <QStandardPaths>
 #include <about.h>
 #include <QCalendarWidget>
+#include <SimpleMail/SimpleMail>
+#include <sendmail.h>
+#include "qcustomplot.h"
 #ifdef Q_OS_WIN
 #include <quazip.h>
 #include <quazipfile.h>
 #endif
-
+#include <QtCharts>
+QT_CHARTS_USE_NAMESPACE
 
 
 map<string, string> LSTM;
@@ -103,7 +107,7 @@ map<string, int> Dict, GBook, IBook, PWords, PWordsP,ConfPmap,ConfPmapFont,CPair
 trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
 vector<string> vGBook,vIBook;
 QImage imageOrig;
-QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName;
+QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName, gCurrentBookName;
 map<QString, QString> gInitialTextHtml;
 QString gTimeLogLocation;
 map<QString, int> timeLog;
@@ -239,7 +243,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionFetch_2->setVisible(false);
     ui->pushButton_8->setVisible(false);
     ui->actionHighlight->setEnabled(false);
-
+    ui->copyToVerifier->setVisible(false);
+    ui->copyToVerifier->setEnabled(false);
+    ui->actionSwitch_Edit_View_Mode->setEnabled(false);
+    ui->pushButton_9->setVisible(false);
 
     settings.beginGroup("cloudSave");
     settings.remove("");
@@ -499,6 +506,31 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
            settings.setValue("createShortcut", "dna");
            settings.endGroup();
     }
+
+    QString defaultTitleStyle = "<span style=\" font-size:26pt; font-weight:600;\">";
+    QString defaultSubtitleStyle = "<span style=\" font-size:15pt; color:#a0a0a4;\">";
+    QString defaultH1Style = "<span style=\" font-size:20pt; font-weight:600;\">";
+    QString defaultH2Style = "<span style=\" font-size:16pt; font-weight:600;\">";
+    QString defaultH3Style = "<span style=\" font-size:14pt; font-weight:600;\">";
+    QString defaultH4Style = "<span style=\" font-size:12pt; font-weight:600;\">";
+    QString defaultH5Style = "<span style=\" font-size:11pt; font-weight:600;\">";
+    QString defaultH6Style = "<span style=\" font-size:10pt; font-weight:600;\">";
+
+
+    settings.beginGroup("paragraphStyles");
+
+    settings.setValue("titleStyle",defaultTitleStyle);
+    settings.setValue("subtitleStyle",defaultSubtitleStyle);
+    settings.setValue("h1Style",defaultH1Style);
+    settings.setValue("h2Style",defaultH2Style);
+    settings.setValue("h3Style",defaultH3Style);
+    settings.setValue("h4Style",defaultH4Style);
+    settings.setValue("h5Style",defaultH5Style);
+    settings.setValue("h6Style",defaultH6Style);
+
+
+    settings.endGroup();
+
 }
 
 /*!
@@ -807,6 +839,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
     int px = point.x();
     int py = point.y();
 
+    bool isLink = false;
 
     if(!(px>=topLeftx && px<=botRightx &&  py>=150 /*&& py<(botRighty)*/)) return;
 
@@ -816,52 +849,87 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
         DisplayTimeLog();
         if((ev->button() == Qt::RightButton) && (LoadDataFlag)){
-            QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
-            QTextCursor cursor = curr_browser->textCursor();
-            cursor.select(QTextCursor::WordUnderCursor);
-            curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
-            QMenu* popup_menu = curr_browser->createStandardContextMenu();
-            QMenu* clipboard_menu;
-            clipboard_menu = new QMenu("clipboard", popup_menu);
-            clipboard_menu->setStyleSheet("height: 4.7em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
-            QString menuStyle(
-                        "QMenu::item{"
-                        "background-color: rgb(255,255,255);"
-                        "color: rgb(0,0,0);"
-                        "}"
+                QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
+                QTextCursor cursor = curr_browser->textCursor();
+                cursor.select(QTextCursor::WordUnderCursor);
+                QString selected_text = cursor.selection().toHtml();
+                curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
+                QMenu* popup_menu = curr_browser->createStandardContextMenu();
 
-                        "QMenu::item:selected{"
-                        "background-color: rgb(0, 85, 127);"
-                        "color: rgb(255, 255, 255);"
-                        "}"
-                        "QMenu::item:disabled{"
-                        "background-color: rgb(255, 255, 255);"
-                        "color: rgb(128, 128, 128);"
-                        "}"
+                QAction *open_link= NULL;
+                if(selected_text.contains("<a href=")){
+                    QAction *first_action = popup_menu->actions().isEmpty() ? nullptr : popup_menu->actions().first();
+                    open_link = new QAction("Open link in browser",popup_menu);
+                    popup_menu->insertAction(first_action, open_link);
+                    popup_menu->addSeparator();
+                    isLink =true;
+                }
 
-                        );
-            popup_menu->setStyleSheet(menuStyle);
-            //            clipboard_menu->setStyleSheet(menuStyle);
+                QMenu* clipboard_menu;
+                clipboard_menu = new QMenu("clipboard", popup_menu);
+                clipboard_menu->setStyleSheet("height: 4.7em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
+                QString menuStyle(
+                    "QMenu::item{"
+                    "background-color: rgb(255,255,255);"
+                    "color: rgb(0,0,0);"
+                    "}"
 
-            //QFont font("Shobhika-Regular");
-            //font.setWeight(16);
-            //font.setPointSize(16);
-            //clipboard_menu->setFont(font);
-            QAction* act;
-            QSettings settings("IIT-B", "OpenOCRCorrect");
-            settings.beginGroup("Clipboard");
-            QString s1 = settings.value("copy1").toString();
-            QString s2 = settings.value("copy2").toString();
-            QString s3 = settings.value("copy3").toString();
-            settings.endGroup();
-            act = new QAction(s1,clipboard_menu);
-            clipboard_menu->addAction(act);
-            clipboard_menu->addSeparator();
-            act = new QAction(s2,clipboard_menu);
-            clipboard_menu->addAction(act);
-            clipboard_menu->addSeparator();
-            act = new QAction(s3,clipboard_menu);
-            clipboard_menu->addAction(act);
+                    "QMenu::item:selected{"
+                    "background-color: rgb(0, 85, 127);"
+                    "color: rgb(255, 255, 255);"
+                    "}"
+                    "QMenu::item:disabled{"
+                    "background-color: rgb(255, 255, 255);"
+                    "color: rgb(128, 128, 128);"
+                    "}"
+                    );
+
+                popup_menu->setStyleSheet(menuStyle);
+
+                QAction* act;
+
+                QSettings settings("IIT-B", "OpenOCRCorrect");
+                settings.beginGroup("Clipboard");
+                QString s1 = settings.value("copy1").toString();
+                QString s2 = settings.value("copy2").toString();
+                QString s3 = settings.value("copy3").toString();
+                settings.endGroup();
+
+                int dataCount = 0;
+
+                if (!s1.isEmpty()) {
+                    act = new QAction(s1, clipboard_menu);
+                    clipboard_menu->addAction(act);
+                    dataCount++;
+                }
+
+                if (!s2.isEmpty()) {
+
+                    clipboard_menu->addSeparator();
+                    act = new QAction(s2, clipboard_menu);
+                    clipboard_menu->addAction(act);
+                    dataCount++;
+                }
+
+                if (!s3.isEmpty()) {
+                    clipboard_menu->addSeparator();
+
+                    act = new QAction(s3, clipboard_menu);
+                    clipboard_menu->addAction(act);
+                    dataCount++;
+                }
+
+                if (dataCount == 0) {
+                    clipboard_menu->setEnabled(false);
+                } else if (dataCount == 1) {
+                    clipboard_menu->setStyleSheet("height: 2.52em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
+                } else if (dataCount == 2) {
+                    clipboard_menu->setStyleSheet("height: 3.52em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
+                }
+                else
+                {
+                    clipboard_menu->setStyleSheet("height: 4.52em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
+                }
             QAction* gsearch;
             gsearch = new QAction("Search over google",popup_menu);
             QAction* gtrans;
@@ -869,38 +937,46 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             QAction* insertImage;
             insertImage = new QAction("Insert image",popup_menu);
 
-            popup_menu->insertSeparator(popup_menu->actions()[0]);
-            popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
+            QList<QAction*> all_actions = popup_menu->actions();
+            if(isLink) {
+                popup_menu->insertMenu(all_actions[1], clipboard_menu);
+                popup_menu->insertSeparator(popup_menu->actions()[2]);
+            }
+            else {
+                popup_menu->insertMenu(all_actions[0], clipboard_menu);
+                popup_menu->insertSeparator(popup_menu->actions()[1]);
+            }
             popup_menu->addAction(gsearch);
             popup_menu->addAction(gtrans);
             popup_menu->addAction(insertImage);
 
+            connect(open_link, SIGNAL(triggered()), this, SLOT(openLink()));
             connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
             connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
             connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
             connect(insertImage, SIGNAL(triggered()), this, SLOT(insertImageAction()));
 
-            QAction* showComment;
-            showComment = new QAction("Show Comment",popup_menu);
+//            QAction* showComment;
+//            showComment = new QAction("Show Comment",popup_menu);
 
-            QTextCursor cursor3 = curr_browser->textCursor();
-            int pos = cursor3.position();
-            int ancr = cursor3.anchor();
-            if (pos < ancr) {
-                cursor3.setPosition(pos, QTextCursor::MoveAnchor);
-                cursor3.setPosition(ancr, QTextCursor::KeepAnchor);
-            }
-            QTextCharFormat format = cursor3.charFormat();
+//            QTextCursor cursor3 = curr_browser->textCursor();
+//            int pos = cursor3.position();
+//            int ancr = cursor3.anchor();
+//            if (pos < ancr) {
+//                cursor3.setPosition(pos, QTextCursor::MoveAnchor);
+//                cursor3.setPosition(ancr, QTextCursor::KeepAnchor);
+//            }
+//            QTextCharFormat format = cursor3.charFormat();
 
-            QString text;
-            if(format.background().color().red() == 137 && format.background().color().green() == 207
-                    && format.background().color().blue() == 240 ){
+//            QString text;
+//            if(format.background().color().red() == 137 && format.background().color().green() == 207
+//                    && format.background().color().blue() == 240 ){
 
-                popup_menu->addAction(showComment);
-                text = cursor3.selectedText().toUtf8().constData();
-                currentCommentWord = text;
-            }
-            QObject::connect(showComment, SIGNAL(triggered()), this, SLOT(showComments()));
+//                popup_menu->addAction(showComment);
+//                text = cursor3.selectedText().toUtf8().constData();
+//                currentCommentWord = text;
+//            }
+//            QObject::connect(showComment, SIGNAL(triggered()), this, SLOT(showComments()));
 
             popup_menu->exec(ev->globalPos());
             popup_menu->close(); popup_menu->clear();
@@ -910,11 +986,13 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
         if (((ev->button() == Qt::RightButton) && (!LoadDataFlag)) || (RightclickFlag))
         {
+            cout<<"executed"<<endl;
             QMenu* spell_menu, *translate_menu, *clipboard_menu;
             QAction *act;
             QTextCursor cursor1 = curr_browser->cursorForPosition(ev->pos());
             QTextCursor cursor = curr_browser->textCursor();
             cursor.select(QTextCursor::WordUnderCursor);
+            QString selected_word = cursor.selection().toHtml();
             //BlockUnderCursor
             // code to copy selected string:-
             QString str1 = cursor.selectedText();
@@ -922,6 +1000,14 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
             curr_browser->setContextMenuPolicy(Qt::CustomContextMenu);//IMP TO AVOID UNDO ETC AFTER SELECTING A SUGGESTION
             QMenu* popup_menu = curr_browser->createStandardContextMenu();
+
+            QAction *open_link= NULL;
+            if(selected_word.contains("<a href=")){
+                QAction *first_action = popup_menu->actions().isEmpty() ? nullptr : popup_menu->actions().first();
+                open_link = new QAction("Open link in browser",popup_menu);
+                popup_menu->insertAction(first_action, open_link);
+                isLink =true;
+            }
 
             translate_menu = new QMenu("translate", this);
             clipboard_menu = new QMenu("clipboard", this);
@@ -950,10 +1036,15 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
 
             popup_menu->insertSeparator(popup_menu->actions()[1]);
-            popup_menu->insertMenu(popup_menu->actions()[1], translate_menu);
+            if(isLink){
+                popup_menu->insertMenu(popup_menu->actions()[1], translate_menu);
+                popup_menu->insertMenu(popup_menu->actions()[2], clipboard_menu);
+            }
+            else{
+                popup_menu->insertMenu(popup_menu->actions()[0], translate_menu);
+                popup_menu->insertMenu(popup_menu->actions()[1], clipboard_menu);
+            }
 
-            popup_menu->insertSeparator(popup_menu->actions()[2]);
-            popup_menu->insertMenu(popup_menu->actions()[2], clipboard_menu);
             //connect(spell_menu, SIGNAL(triggered(QAction*)), this, SLOT(menuSelection(QAction*)));
             connect(translate_menu, SIGNAL(triggered(QAction*)), this, SLOT(translate_replace(QAction*)));
             connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
@@ -963,12 +1054,11 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             gtrans = new QAction("Google translate",popup_menu);
             QAction* insertImage;
             insertImage = new QAction("Insert image",popup_menu);
-            popup_menu->insertSeparator(popup_menu->actions()[0]);
-            //popup_menu->insertMenu(popup_menu->actions()[0], clipboard_menu);
             popup_menu->addAction(gsearch);
             popup_menu->addAction(gtrans);
             popup_menu->addAction(insertImage);
 
+            connect(open_link, SIGNAL(triggered()), this, SLOT(openLink()));
             //connect(clipboard_menu, SIGNAL(triggered(QAction*)), this, SLOT(clipboard_paste(QAction*)));
             connect(gsearch, SIGNAL(triggered()), this, SLOT(SearchOnGoogle()));
             connect(gtrans, SIGNAL(triggered()), this, SLOT(GoogleTranslation()));
@@ -1138,9 +1228,15 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 }
                 //For clipboard
 
-                popup_menu->insertSeparator(popup_menu->actions()[0]);
-                popup_menu->insertMenu(popup_menu->actions()[0], spell_menu);
-
+                QList<QAction*> all_actions = popup_menu->actions();
+                if(isLink) {
+                    popup_menu->insertMenu(all_actions[1], spell_menu);
+                    popup_menu->insertSeparator(all_actions[0]);
+                }
+                else {
+                    popup_menu->insertMenu(all_actions[0], spell_menu);
+                    popup_menu->insertSeparator(all_actions[0]);
+                }
                 connect(spell_menu, SIGNAL(triggered(QAction*)), this, SLOT(menuSelection(QAction*)));
 
 
@@ -1148,27 +1244,27 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             }
 
             DisplayTimeLog();
-            QAction* showComment;
-            showComment = new QAction("Show Comment",popup_menu);
+//            QAction* showComment;
+//            showComment = new QAction("Show Comment",popup_menu);
 
-            QTextCursor cursor3 = curr_browser->textCursor();
-            int pos = cursor3.position();
-            int ancr = cursor3.anchor();
-            if (pos < ancr) {
-                cursor3.setPosition(pos, QTextCursor::MoveAnchor);
-                cursor3.setPosition(ancr, QTextCursor::KeepAnchor);
-            }
-            QTextCharFormat format = cursor3.charFormat();
+//            QTextCursor cursor3 = curr_browser->textCursor();
+//            int pos = cursor3.position();
+//            int ancr = cursor3.anchor();
+//            if (pos < ancr) {
+//                cursor3.setPosition(pos, QTextCursor::MoveAnchor);
+//                cursor3.setPosition(ancr, QTextCursor::KeepAnchor);
+//            }
+//            QTextCharFormat format = cursor3.charFormat();
 
-            QString text;
-            if(format.background().color().red() == 137 && format.background().color().green() == 207
-                    && format.background().color().blue() == 240){
+//            QString text;
+//            if(format.background().color().red() == 137 && format.background().color().green() == 207
+//                    && format.background().color().blue() == 240){
 
-                popup_menu->addAction(showComment);
-                text = cursor3.selectedText().toUtf8().constData();
-                currentCommentWord = text;
-            }
-            QObject::connect(showComment, SIGNAL(triggered()), this, SLOT(showComments()));
+//                popup_menu->addAction(showComment);
+//                text = cursor3.selectedText().toUtf8().constData();
+//                currentCommentWord = text;
+//            }
+//            QObject::connect(showComment, SIGNAL(triggered()), this, SLOT(showComments()));
 
 
             //QMenu* popup_menu = curr_browser->createStandardContextMenu();
@@ -1233,6 +1329,7 @@ void MainWindow::translate_replace(QAction* action)
  */
 void MainWindow::clipboard_paste(QAction* action)
 {
+    cout<<"paste"<<endl;
     QTextCursor cursor = curr_browser->textCursor();
     cursor.insertText(action->text());
 }
@@ -1607,8 +1704,11 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     //    //<<<<<<Change
     //    pageStatusHandler();
 
+    readCommentLogs();
 
     QMessageBox::information(0, "Success", "Project opened successfully.");
+    QStringList list = gDirTwoLevelUp.split('/');
+    gCurrentBookName = list[list.size()-1];
 
     // Enabling the buttons again after a project is opened
     e_d_features(true);
@@ -1641,6 +1741,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->groupBox->setDisabled(false);
     ui->actionHighlight->setEnabled(true);
     ui->pushButton_7->setEnabled(true);
+    ui->actionSwitch_Edit_View_Mode->setEnabled(true);
 }
 /*!
  * \fn MainWindow::AddRecentProjects
@@ -1679,6 +1780,8 @@ void MainWindow::AddRecentProjects()
         ui->menuRecent_Project->addAction(FileAction);
         connect(FileAction, &QAction::triggered, this , &MainWindow::on_action3_triggered);
     }
+    ui->actionRecentProject->setEnabled(true);
+
     if(!ui->menuRecent_Project->isEmpty())
     {
         QAction *FileAction = new QAction(this);
@@ -2037,7 +2140,7 @@ void MainWindow::on_actionSave_As_triggered()
     }
 }
 
-map<string, int> wordLineIndex;
+//map<string, int> wordLineIndex;
 
 /*!
  * \fn MainWindow::on_actionSpell_Check_triggered
@@ -2051,102 +2154,79 @@ void MainWindow::on_actionSpell_Check_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
 
-    QString textBrowserText = curr_browser->toPlainText();
-    QChar ch;
-    ch=textBrowserText[1];
-    textBrowserText+=" ";
-    string str1=textBrowserText.toUtf8().constData();
+    QTextCharFormat fmt;
+    curr_browser->moveCursor(QTextCursor::Start);
+    QTextCursor cursor =curr_browser->textCursor(); //get the cursor
 
-    //! load number of words
-    istringstream iss1(str1);
-    size_t WordCount = 0;
-    string word1;
-    while(iss1 >> word1) WordCount++;
+    int position=cursor.position();
+    while(position< cursor.document()->characterCount()){
+        cursor.select(QTextCursor::WordUnderCursor);
+        fmt = cursor.charFormat();
+        QString str1 = cursor.selectedText();
+        auto sel = cursor.selection().toHtml();
+        if(!sel.contains("<img") && !str1.contains(QRegExp("[0-9]")) && !str1.contains(QRegExp("[a-zA-Z]")) && !str1.contains(QRegExp("[%!@#$^&*()]")) && !str1.contains(" ")   && !sel.isEmpty()){
 
-    //str1 = toslp1(str1);
-    istringstream iss(str1);
-    string strHtml = "<html><body>";
-    string line;
-
-    int value = 0;
-    while (getline(iss, line))
-    {
-        istringstream issw(line);
-        string word;
-
-        while(issw >> word)
-        {
+            string selectedString = str1.toUtf8().constData();
+            string wordNext;
             if(ConvertSlpDevFlag)
             {
-                string word1 = word;
-                word = slnp.toslp1(word);
-                string wordNext;
+                string word1 = selectedString;
+                selectedString = slnp.toslp1(selectedString);
+
                 if(slnp.hasM40PerAsci(word1))
                 {
                     wordNext = word1;
                 }
                 else
                 {
-                    wordNext = slnp.toDev(word);
+                    wordNext = slnp.toDev(selectedString);
                 }
-                strHtml += wordNext; strHtml += " ";
-                value ++;
+
             }
             else
             {
-                string word1 = word;
-                word = slnp.toslp1(word);
-                string wordNext;
+                string word1 = selectedString;
+                selectedString = slnp.toslp1(selectedString);
+                //string wordNext;
                 //! checks if the word exists in the English language, Seconday OCR, Pwords, Dict and CPair; convert its color coding
                 if(slnp.hasM40PerAsci(word1))
                     wordNext = word1;
 
-                else if(GBook[(word)] > 0 )
+                else if(GBook[(selectedString)] > 0 )
                 {
-                    wordNext = slnp.toDev(word);
-                    PWords[word]++;
+                    wordNext = slnp.toDev(selectedString);
+                    PWords[selectedString]++;
                 }
 
-                else if(PWords[word] > 0)
+                else if(PWords[selectedString] > 0)
                 {
-                    wordNext = "<font color=\'gray\'>" + slnp.toDev(word) + "</font>";
+                    wordNext = "<font color=\'gray\'>" + slnp.toDev(selectedString) + "</font>";
                 }
-                else if((Dict[word] ==0) && (PWords[word] == 0) && (CPair[word].size() > 0))
+                else if((Dict[selectedString] ==0) && (PWords[selectedString] == 0) && (CPair[selectedString].size() > 0))
                 {
-                    wordNext = "<font color=\'purple\'>" + slnp.toDev(CPair[word]) + "</font>";
+                    wordNext = "<font color=\'purple\'>" + slnp.toDev(CPair[selectedString]) + "</font>";
                 }
                 else
                 {
-                    wordNext = slnp.findDictEntries(slnp.toslp1(word),Dict,PWords, word.size());     //replace m1 with m2,m1 for combined search
+                    wordNext = slnp.findDictEntries(slnp.toslp1(selectedString),Dict,PWords, selectedString.size());     //replace m1 with m2,m1 for combined search
                     wordNext = slnp.find_and_replace_oddInstancesblue(wordNext);
                     wordNext = slnp.find_and_replace_oddInstancesorange(wordNext);
                 }
-                strHtml += wordNext;
-                strHtml += " ";
-                value ++;
             }
+            cursor.mergeCharFormat(fmt);
+            cursor.insertHtml(QString::fromStdString(wordNext));
         }
-        strHtml +="<br>";  // To add new line
-    }
-    strHtml += "</body></html>";
-    curr_browser->setHtml(QString::fromStdString(strHtml));
-
-    str1=textBrowserText.toUtf8().constData();
-
-    istringstream iss2(str1);
-    size_t WordCount2 = 0;
-
-    //! clean(word) instead of word
-    while (getline(iss2, line))
-    {
-        istringstream issw(line);
-        string word;
-        while(issw >> word)
-        {
-            wordLineIndex[(word + "###" + line)] = WordCount2; WordCount2++;
+        if(sel.contains("<img") || str1.isEmpty()) position++;
+        else{
+            position += str1.size()+1;
         }
+        if(position >= cursor.document()->characterCount())
+            break;
+        cursor.setPosition(position);
     }
+
 }
+
 
 int isProjectOpen = 0;
 
@@ -4058,6 +4138,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 
     if ( (e->key() == Qt::Key_C)  && QApplication::keyboardModifiers() == Qt::ControlModifier)
     {
+        cout<<"hey"<<endl;
         QTextCursor cursor = curr_browser->textCursor();
         QString text = cursor.selectedText().toUtf8().constData();
         if(text!=""){
@@ -4179,7 +4260,28 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         {
             if(curr_browser != NULL){
 
-                curr_browser->setStyleSheet("CustomTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}");
+                curr_browser->setStyleSheet(R"(CustomTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}QScrollBar:vertical {
+                                            border: none;
+                                            background: white;
+                                        }
+QScrollBar::handle:vertical {
+                                            background-color:  rgba(1, 22, 51, 0.5);
+                                            min-height: 50px;
+                                              max-height: 300px;
+                                                    border: 0px solid red;
+                                                    border-radius:4.905px;
+                                        }
+QScrollBar::add-line:vertical {
+                        height: 0px;
+                        subcontrol-position: bottom;
+                        subcontrol-origin: margin;
+
+                    }
+QScrollBar::sub-line:vertical {
+                        height: 0 px;
+                        subcontrol-position: top;
+                        subcontrol-origin: margin;
+                    })");
             }
         }
     }
@@ -6404,6 +6506,28 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 
     //    curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
     defaultStyle = curr_browser->styleSheet();
+    defaultStyle += R"(QScrollBar:vertical {
+                                            border: none;
+                                            background: white;
+                                        }
+QScrollBar::handle:vertical {
+                                            background-color:  rgba(1, 22, 51, 0.5);
+                                            min-height: 50px;
+                                              max-height: 300px;
+                                                    border: 0px solid red;
+                                                    border-radius:4.905px;
+                                        }
+QScrollBar::add-line:vertical {
+                        height: 0px;
+                        subcontrol-position: bottom;
+                        subcontrol-origin: margin;
+
+                    }
+QScrollBar::sub-line:vertical {
+                        height: 0 px;
+                        subcontrol-position: top;
+                        subcontrol-origin: margin;
+                    })";
     curr_browser->setDocument(b->document()->clone(curr_browser));
     curr_browser->document()->clearUndoRedoStacks();
 
@@ -6591,12 +6715,20 @@ void MainWindow::file_click(const QModelIndex & indx)
     QString fileName = file->fileName();          //gets filename
     // Set the file's permissions to readonly
     if(fileName.contains("CorrectorOutput") && mRole == "Verifier"){
+        ui->copyToVerifier->setVisible(true);
+        ui->copyToVerifier->setEnabled(true);
         QFile::setPermissions(fileName, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
+    }
+    else if(fileName.contains("VerifierOutput") && mRole == "Verifier"){
+        ui->copyToVerifier->setVisible(false);
+        ui->copyToVerifier->setEnabled(false);
     }
     else if(fileName.contains("VerifierOutput") && mRole == "Corrector"){
         QFile::setPermissions(fileName, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
     }
     else{
+        ui->copyToVerifier->setVisible(false);
+        ui->copyToVerifier->setEnabled(false);
         // Set the file's permissions to both read and write mode
         QFile::setPermissions(fileName, QFile::WriteOwner | QFile::WriteGroup | QFile::WriteOther |
                               QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
@@ -7001,6 +7133,37 @@ void MainWindow::on_actionSave_All_triggered()  //enable when required
  */
 void MainWindow::closeEvent (QCloseEvent *event)
 {
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("closeApp");
+    bool dontAsk = settings.value("dontAsk").toBool();
+
+    if(!dontAsk){
+        QMessageBox closeBox;
+        closeBox.setWindowTitle("Close App?");
+        closeBox.setIcon(QMessageBox::Question);
+        closeBox.setInformativeText("Do you want to close the app?");
+        QCheckBox *cb = new QCheckBox("Don't ask again");
+        cb->setStyleSheet("QCheckBox{color:rgb(255,255,255);}QCheckBox::indicator:checked {color:rgb(0,0,0);}");
+        closeBox.setCheckBox(cb);
+        closeBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+
+        int choice = closeBox.exec();
+
+        if(choice==QMessageBox::Ok){
+            event->accept();
+        }
+        if(choice==QMessageBox::Cancel){
+            event->ignore();
+        }
+
+        if(cb->checkState()==Qt::Checked){
+            settings.setValue("dontAsk",1);
+        }
+
+    }
+    settings.endGroup();
+
     bool isUnsaved = checkUnsavedWork();
 
     if (isUnsaved)
@@ -7043,7 +7206,14 @@ void MainWindow::closeEvent (QCloseEvent *event)
     recorrect.clear();
 
 
-    autoSave();
+    //QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    settings.endGroup();
+    if(email != "")
+    {
+        autoSave();
+    }
 }
 
 /*!
@@ -7968,8 +8138,28 @@ void MainWindow::readSettings()
     pos1=map[gCurrentPageName];
     //qDebug()<<"pos1"<<pos1;
     myFile.close();
-    curr_browser->setStyleSheet("CustomTextBrowser{selection-background-color: #ffa500; selection-color: #ffffff;}");
+    curr_browser->setStyleSheet(R"(CustomTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}QScrollBar:vertical {
+                                border: none;
+                                background: white;
+                            }
+QScrollBar::handle:vertical {
+                                background-color:  rgba(1, 22, 51, 0.5);
+                                min-height: 50px;
+                                  max-height: 300px;
+                                        border: 0px solid red;
+                                        border-radius:4.905px;
+                            }
+QScrollBar::add-line:vertical {
+            height: 0px;
+            subcontrol-position: bottom;
+            subcontrol-origin: margin;
 
+        }
+QScrollBar::sub-line:vertical {
+            height: 0 px;
+            subcontrol-position: top;
+            subcontrol-origin: margin;
+        })");
     auto cursor = curr_browser->textCursor();
     cursor.setPosition(pos1);
     cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
@@ -8517,6 +8707,30 @@ void MainWindow::readOutputFromPdfPrint()
     }
 }
 
+
+/*!
+ * \fn MainWindow::openLink
+ * \brief selected link is searched over google
+ */
+void MainWindow::openLink()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.select(QTextCursor::WordUnderCursor);
+    QString selected_text = cursor.selection().toHtml();
+    qDebug()<<selected_text;
+
+    QString link;
+    QRegularExpression regex("<!--StartFragment--><a href=\"(.*?)\">");
+
+    QRegularExpressionMatch match = regex.match(selected_text);
+    if (match.hasMatch()) {
+        link = match.captured(1);
+    }
+    qDebug()<<link;
+    QDesktopServices::openUrl(QUrl(link, QUrl::TolerantMode));
+}
+
+
 /*!
  * \fn MainWindow::SearchOnGoogle
  * \brief selected text is searched over google to find it's meaning
@@ -8853,6 +9067,7 @@ void MainWindow::on_actionClose_project_triggered()
     ui->lineEdit_3->clear();
     curr_browser=0;
     ui->actionHighlight->setEnabled(false);
+    ui->actionSwitch_Edit_View_Mode->setEnabled(false);
 }
 
 /*!
@@ -9001,11 +9216,20 @@ void MainWindow::on_actionExit_triggered()
     correct.clear();
     verify.clear();
     recorrect.clear();
-
-
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
+    settings.endGroup();
+    if(email=="" && token=="")
+    {
+        QCoreApplication::quit();
+        return;
+    }
     autoSave();
     QCoreApplication::quit();
 }
+
 
 /*!
  * \fn MainWindow::login
@@ -9621,9 +9845,42 @@ void MainWindow::speechToTextCall()
         enc = ui->comboBox->itemData(idx).toString();
     QByteArray audioData=audioFile.readAll();
 
+    QString speechKey;
+
+    QNetworkAccessManager* manager = new QNetworkAccessManager();
+    QUrl url_("https://udaaniitb.aicte-india.org/udaan/email/");
+
+    QByteArray postData;
+    postData.append("username=username&password=password");
+
+    QNetworkRequest request1(url_);
+    request1.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    // Disable SSL certificate verification
+    QSslConfiguration sslConfig = request1.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request1.setSslConfiguration(sslConfig);
+    QNetworkReply* reply = manager->post(request1, postData);
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, [=, &loop, &speechKey]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            QJsonParseError errorPtr;
+            QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+            QJsonObject mainObj = document.object();
+            speechKey = mainObj.value("speech_key").toString();
+
+            loop.quit();
+        } else {
+            qDebug() << "Error:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+    loop.exec();
+
     QUrl url("https://speech.googleapis.com/v1/speech:recognize");
     QUrlQuery query;
-    query.addQueryItem("key","AIzaSyAxmEOabgIUU5oM4spTNC0yL9oJoCyhpBE");
+    query.addQueryItem("key",speechKey);
     url.setQuery(query);
     QNetworkRequest request(url);
 #ifdef Q_OS_WIN
@@ -9647,8 +9904,8 @@ void MainWindow::speechToTextCall()
     json["audio"]=audio;
     QByteArray jsonData=QJsonDocument(json).toJson();
 
-    QNetworkAccessManager *manager=new QNetworkAccessManager();
-    QNetworkReply *reply=manager->post(request,jsonData);
+    manager=new QNetworkAccessManager();
+    reply=manager->post(request,jsonData);
 
     QObject::connect(reply,&QNetworkReply::finished,[this,reply](){
         if(reply->error()!=QNetworkReply::NoError){
@@ -10036,7 +10293,7 @@ void MainWindow::on_actionDate_triggered()
     QVBoxLayout *layout = new QVBoxLayout(dateDialog);
     QCalendarWidget *calendar = new QCalendarWidget(this);
     layout->addWidget(calendar);
-    QObject::connect(calendar, &QCalendarWidget::selectionChanged, this, [=](){
+    QObject::connect(calendar, &QCalendarWidget::clicked, this, [=](){
         getDate(calendar);
     });
     dateDialog->setLayout(layout);
@@ -10923,6 +11180,8 @@ void MainWindow::on_actionClear_Menu_triggered()
     ui->menuRecent_Project->clear();
     isRecentProjclick = false;
     //ui->menuRecent_Project->setEnabled(false);
+    ui->actionRecentProject->setEnabled(false);
+
     settings.endGroup();
     qDebug()<<RecentProjFile<<endl;
 }
@@ -11333,13 +11592,94 @@ void MainWindow::setSaveStatus()
 
 void MainWindow::on_actionRecentProject_triggered()
 {
+    bool isUnsaved = checkUnsavedWork();
 
+    if(isProjectOpen){
+        if (isUnsaved)
+        {
+            QMessageBox saveBox;
+            saveBox.setWindowTitle("Save Changes ?");
+            saveBox.setIcon(QMessageBox::Question);
+            saveBox.setInformativeText("You have unsaved files. Your changes will be lost if you don't save them before opening new project.\nDo you want to save them? \n");
+            QPushButton *svButton = saveBox.addButton(QMessageBox::Save);
+            QPushButton *discardButton = saveBox.addButton(QMessageBox::Discard);
+            discardButton->setStyleSheet("width:180px");
+            discardButton->setText("Discard changes");
+            QPushButton *cncButton = saveBox.addButton(QMessageBox::Cancel);
+            saveBox.exec();
+
+            if (saveBox.clickedButton() == cncButton)
+            {
+                return;
+            }
+            else{
+                if(saveBox.clickedButton() == svButton){
+                    saveAllWork();
+                }
+            }
+        }
+    }
     if(RecentProjFile=="" && RecentProjFile2=="" && RecentProjFile3=="")
     {
         return;
     }
     on_action1_triggered();
+
+    correct.clear();
+    verify.clear();
+    markForReview.clear();
+    recorrect.clear();
+
 }
+
+
+/*!
+ * \fn MainWindow::readCommentLogs
+ * \brief This function will read the comments from the json file and save it in the QMap for both corrector and verifier
+*/
+void MainWindow::readCommentLogs(){
+    QString jsonFile = "";
+
+    jsonFile = "corrector_comments.json";
+
+    if(jsonFile == "") return;
+    QString dir = mProject.GetDir().absolutePath();
+
+    QString commentFilename = gDirTwoLevelUp + "/Comments/" + jsonFile;
+    QJsonObject correctorComments = readJsonFile(commentFilename);
+
+    jsonFile = "verifier_comments.json";
+    commentFilename = gDirTwoLevelUp + "/Comments/" + jsonFile;
+    QJsonObject verifierComments = readJsonFile(commentFilename);
+
+    QStringList list = correctorComments.keys();
+
+    for(int i = 0;i < list.count(); i++){
+       QJsonObject pair = correctorComments.value(list.at(i)).toObject();
+       QMap<QString, QString> pairComments;
+       QStringList ls = pair.keys();
+        for(int j = 0; j < ls.count(); j++){
+            QString comment = pair.value(ls.at(j)).toString();
+            QString key = ls.at(j);
+            pairComments[key] = comment;
+        }
+        corrector_comment[list.at(i)] = pairComments;
+    }
+
+    list = verifierComments.keys();
+    for(int i = 0;i < list.count(); i++){
+       QJsonObject pair = verifierComments.value(list.at(i)).toObject();
+       QMap<QString, QString> pairComments;
+       QStringList ls = pair.keys();
+        for(int j = 0; j < ls.count(); j++){
+            QString comment = pair.value(ls.at(j)).toString();
+            QString key = ls.at(j);
+            pairComments[key] = comment;
+        }
+        verifier_comment[list.at(i)] = pairComments;
+    }
+}
+
 /*!
  * \fn MainWindow::on_actionComment_triggered
  * \brief This function will add a comment on the current page by highlighting the selected word
@@ -11354,8 +11694,13 @@ void MainWindow::on_actionComment_triggered()
     QString text = cursor.selectedText().toUtf8().constData();
 
     currentCommentWord = text;
+    QString currentPage = gCurrentPageName;
+    currentPage.replace(".html", "");
 
-    CommentHandler * comment = new CommentHandler(this);
+    QString correctorComment = corrector_comment[currentPage][text];
+    QString verifierComment = verifier_comment[currentPage][text];
+
+    CommentHandler * comment = new CommentHandler(this,correctorComment,verifierComment,mRole);
     QObject::connect(comment,SIGNAL(commented()),this,SLOT(highlightComment()));
     connect(comment, SIGNAL(deleted()),this,SLOT(deleteComment()));
     connect(comment, SIGNAL(deleted()), comment, SLOT(close()));
@@ -11366,15 +11711,22 @@ void MainWindow::on_actionComment_triggered()
     if(str == "") return;
 
     writeCommentLogs(text,str);
+    sendComment(str);
 }
 
 /*!
  * \fn MainWindow::highlightComment()
  * \brief This function will highlight the selected word on receiving the signal from CommentHandler
 */
-void MainWindow::highlightComment()
+void MainWindow::highlightComment(bool deleteCommentFlag)
 {
     QTextCursor cursor = curr_browser->textCursor();
+    int pos = cursor.position();
+    int ancr = cursor.anchor();
+    if (pos < ancr) {
+        cursor.setPosition(pos, QTextCursor::MoveAnchor);
+        cursor.setPosition(ancr, QTextCursor::KeepAnchor);
+    }
 
     QString text = cursor.selectedText().toUtf8().constData();
     if(text == "") {
@@ -11384,9 +11736,7 @@ void MainWindow::highlightComment()
 
     QTextCharFormat  format = cursor.charFormat();
 
-    if(format.background().color().red() == 137 && format.background().color().green() == 207
-            && format.background().color().blue() == 240){
-
+    if(deleteCommentFlag){
         format.setBackground(QColor::fromRgb(255,255,255));
     }
     else {
@@ -11403,12 +11753,16 @@ void MainWindow::highlightComment()
 void MainWindow::writeCommentLogs(QString word, QString comment)
 {
     QString jsonFile = "";
+    QString currentPage = gCurrentPageName;
+    currentPage.replace(".html", "");
 
     if(mRole == "Corrector"){
        jsonFile = "corrector_comments.json";
+       corrector_comment[currentPage][word] = comment;
     }
     if(mRole == "Verifier"){
         jsonFile = "verifier_comments.json";
+        verifier_comment[currentPage][word] = comment;
     }
 
     if(jsonFile == "") return;
@@ -11432,40 +11786,32 @@ void MainWindow::writeCommentLogs(QString word, QString comment)
     writeJsonFile(commentFilename, mainObj);
 }
 
-/*!
- * \fn MainWindow::showComments
- * \param word
- * \brief This function will open the comment dialog
-*/
-void MainWindow::showComments()
-{
-    QString word = currentCommentWord;
-    QString jsonFile = "";
+///*!
+// * \fn MainWindow::showComments
+// * \param word
+// * \brief This function will open the comment dialog
+//*/
+//void MainWindow::showComments()
+//{
+//    QString word = currentCommentWord;
+//    QString jsonFile = "";
 
-    if(mRole == "Corrector"){
-       jsonFile = "corrector_comments.json";
-    }
-    if(mRole == "Verifier"){
-        jsonFile = "verifier_comments.json";
-    }
+//    QString currentPage = gCurrentPageName;
+//    currentPage.replace(".html", "");
 
-    if(jsonFile == "") return;
-    QString dir = mProject.GetDir().absolutePath();
+//    CommentHandler * commentStatus = new CommentHandler(this,corrector_comment[currentPage][word],verifier_comment[currentPage][word], mRole);
+//    connect(commentStatus, SIGNAL(deleted()),this,SLOT(deleteComment()));
+//    connect(commentStatus, SIGNAL(deleted()), commentStatus, SLOT(close()));
+//    connect(commentStatus, SIGNAL(deleted()), this,SLOT(highlightComment()));
+//    commentStatus->show();
 
-    QString commentFilename = gDirTwoLevelUp + "/Comments/" + jsonFile;
-    QJsonObject mainObj = readJsonFile(commentFilename);
-    QString name = gCurrentPageName;
-    name.replace(".html","");
+//    QString str = commentStatus->getComment();
 
-    QString comment = mainObj.value(name)[word].toString();
-    if(comment == "") return;
+//    if(str == "") return;
 
-    CommentHandler * commentStatus = new CommentHandler(this,comment);
-    connect(commentStatus, SIGNAL(deleted()),this,SLOT(deleteComment()));
-    connect(commentStatus, SIGNAL(deleted()), commentStatus, SLOT(close()));
-    connect(commentStatus, SIGNAL(deleted()), this,SLOT(highlightComment()));
-    commentStatus->show();
-}
+//    writeCommentLogs(word,str);
+//}
+
 /*!
  * \fn MainWindow::deleteComment
  * \brief This function will delete the comment from the json file when
@@ -11475,12 +11821,16 @@ void MainWindow::deleteComment()
 {
     QString word = currentCommentWord;
     QString jsonFile = "";
+    QString currentPage = gCurrentPageName;
+    currentPage.replace(".html","");
 
     if(mRole == "Corrector"){
        jsonFile = "corrector_comments.json";
+       corrector_comment[currentPage].remove(word);
     }
     if(mRole == "Verifier"){
         jsonFile = "verifier_comments.json";
+        verifier_comment[currentPage].remove(word);
     }
 
     if(jsonFile == "") return;
@@ -11498,6 +11848,7 @@ void MainWindow::deleteComment()
     mainObj.remove(pagename);
     mainObj.insert(pagename, page);
 
+    highlightComment(true);
     writeJsonFile(commentFilename, mainObj);
 }
 
@@ -11575,7 +11926,7 @@ void MainWindow::on_actionUndo_Two_Column_view_triggered()
         if (column2.contains("Paste Column 2 data here")) column2.replace("Paste Column 2 data here","");
 
         curr_browser->clear();
-        cursor.insertHtml(column1 + "<br>" + column2);
+        cursor.insertHtml(column1 + column2);
     }
     else{
         QMessageBox::warning(0,"Warning","Text is already in single column view");
@@ -11659,5 +12010,2446 @@ void MainWindow::on_sanButton_clicked()
         "   margin-top: 5px;"
         "}"
         );
+}
+
+/*!
+ * \fn MainWindow::on_copyToVerifier_clicked
+ * \brief This function is called when the "Copy to Verifier" Button is clicked. It checks if the copy
+ *        operation is confirmed by the user and copies the current page from the Corrector Output to
+ *        the Verifier Output.
+ */
+void MainWindow::on_copyToVerifier_clicked()
+{
+    // Retrieve the confirmation value from settings
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("copyToVerifier");
+    QString copyToVerifier = settings.value("copyToVerifierConfirm").toString();
+    settings.endGroup();
+
+    QString parentDir = mProject.GetDir().absolutePath();
+    QString fileName = gCurrentPageName;
+    QString correctorFilePath = parentDir + "/CorrectorOutput/" + fileName;
+    QString verifierFilePath = parentDir + "/VerifierOutput/" + fileName;
+    QFile correctorFile(correctorFilePath);
+    QFile verifierFile(verifierFilePath);
+
+
+    if(copyToVerifier != "dna"){
+        // Create a dialog
+        QDialog dialog(this);
+        QFormLayout form(&dialog);
+        // Add a QLabel to ask for confirmation
+        form.addRow(new QLabel("Do you want to copy the current page from Corrector Output to Verifier Output?"));
+
+        // Create Ok and Cancel buttons
+        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+        buttonBox.button(QDialogButtonBox::Ok)->setText("Yes");
+        buttonBox.button(QDialogButtonBox::Cancel)->setText("No");
+        QHBoxLayout buttonBoxLayout;
+        buttonBoxLayout.addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+        buttonBoxLayout.addWidget(&buttonBox);
+        buttonBoxLayout.addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+        form.addRow(&buttonBoxLayout);
+
+        // Add a checkbox for "Dont Ask Again!" option
+        QCheckBox checkBox("Dont Ask Again!", &dialog);
+        QHBoxLayout checkboxLayout;
+        checkboxLayout.addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+        checkboxLayout.addWidget(&checkBox);
+        checkboxLayout.addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+        form.addRow(&checkboxLayout);
+
+        // Connect the buttonBox signals to dialog slots
+        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+        // If the dialog is accepted (Ok Button clicked)
+        if(dialog.exec() == QDialog::Accepted){
+            // If "Dont Ask Again!" checkbox is checked
+            if(checkBox.isChecked()){
+                // Update the confirmation value in settings
+                settings.beginGroup("copyToVerifier");
+                settings.setValue("copyToVerifierConfirm", "dna");
+                settings.endGroup();
+            }
+            if(correctorFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+                QString s = correctorFile.readAll();
+                QFile::setPermissions(verifierFilePath, QFile::WriteOwner | QFile::WriteGroup | QFile::WriteOther |
+                                      QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
+
+                if(verifierFile.open(QIODevice::WriteOnly | QIODevice::Text)){
+                    QTextStream out(&verifierFile);
+                    out.setCodec("UTF-8");
+                    out << s;
+                    verifierFile.close();
+                    qDebug()<<"Copied to verifier";
+                }
+                correctorFile.close();
+                qDebug()<<"Opened corrector file";
+            }
+        }
+    }
+    // If the confirmation value is "dna"
+    else{
+        if(correctorFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+            QString s = correctorFile.readAll();
+            QFile::setPermissions(verifierFilePath, QFile::WriteOwner | QFile::WriteGroup | QFile::WriteOther |
+                                  QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
+
+            if(verifierFile.open(QIODevice::WriteOnly | QIODevice::Text)){
+                QTextStream out(&verifierFile);
+                out.setCodec("UTF-8");
+                out << s;
+                verifierFile.close();
+                qDebug()<<"Copied to verifier";
+            }
+            correctorFile.close();
+            qDebug()<<"Opened corrector file";
+        }
+    }
+}
+int currentFontSize;
+
+void MainWindow::on_actionNormal_Text_triggered()
+{
+
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Normal);
+    format.setFontPointSize(currentFontSize);
+    cursor.mergeCharFormat(format);
+    cursor.insertText(cursor.selectedText(), format);
+}
+
+/*!
+ * \fn MainWindow::sendMail
+ * \brief This will send a mail to the respective corrector or verifier
+*/
+void MainWindow::sendComment(QString str)
+{
+    QString comment_mail = "";
+    QString app_password = "";
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("login");
+    QString email = settings.value("email").toString();
+    QString token = settings.value("token").toString();
+    settings.endGroup();
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QUrl url("https://udaaniitb.aicte-india.org/udaan/email/");
+    QUrlQuery params;
+    params.addQueryItem("email", email);
+    params.addQueryItem("password", token);
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    manager->post(request, params.toString(QUrl::FullyEncoded).toUtf8());
+    QEventLoop loop;
+    connect(manager, &QNetworkAccessManager::finished, this, [=, &loop, &comment_mail, &app_password](QNetworkReply *reply) {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            QJsonParseError errorPtr;
+            QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+            QJsonObject mainObj = document.object();
+            comment_mail = mainObj.value("comment_email").toString();
+            app_password = mainObj.value("app_password").toString();
+
+            loop.quit();
+        } else {
+            qDebug() << "Error:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+    loop.exec();
+
+    QString send_to = "";
+
+    settings.beginGroup("Comment Mail");
+    QString book = settings.value("book").toString();
+    QString Send_To = settings.value("Send_To").toString();
+
+    if(book != gCurrentBookName){
+        book = gCurrentBookName;
+        Send_To = "";
+    }
+    else{
+        send_to = Send_To;
+    }
+
+    if(send_to == ""){
+        sendMail * send = new sendMail(&send_to);
+        send->exec();
+    }
+    if(send_to != ""){
+        settings.setValue("book", book);
+        settings.setValue("Send_To", send_to);
+    }
+    settings.endGroup();
+
+
+    SimpleMail::Sender sender ("smtp.gmail.com", 465, SimpleMail::Sender::SslConnection);
+    sender.setUser(comment_mail);
+    sender.setPassword(app_password);
+    SimpleMail::MimeMessage message;
+    message.setSender(SimpleMail::EmailAddress(comment_mail, mRole + " " + "from Akshar Anveshini"));
+
+    if(send_to == ""){
+        return;
+    }
+    QList <SimpleMail::EmailAddress> listRecipients;
+    listRecipients.append(send_to);
+    message.setToRecipients(listRecipients);
+    message.setSubject("Comment added");
+    SimpleMail::MimeHtml *text = new SimpleMail::MimeHtml();
+
+    QString page = gCurrentPageName;
+    page.replace(".html", "");
+    QString msg = R"(<html><head></head><body>
+                <div style="background-color:#e9ecef">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tbody>
+                            <tr>
+                                <td align="center" bgcolor="#e9ecef">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px">
+                                        <tbody>
+                                            <tr>
+                                                <td align="left" bgcolor="#ffffff" style="padding:36px 24px 0;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;border-top:3px solid #d4dadf">
+                                                    <h1 style="margin:0;font-size:32px;font-weight:700;letter-spacing:-1px;line-height:48px">
+                                                        Dear MROLE,
+                                                    </h1>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" bgcolor="#e9ecef">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px">
+                                        <tbody>
+                                            <tr>
+                                                <td align="left" bgcolor="#ffffff" style="padding:24px;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;border-radius:0 0 2px 2px">
+                                                    <p style="margin:0">
+                                                        There is comment added for your Document : <b>DOCNAME</b>.
+                                                        <br>
+                                                        The comment is added on page number : <b>PAGENO</b>
+                                                        <br>
+                                                        Comment : <b>COMMENT</b>
+                                                    </p>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td align="left" bgcolor="#ffffff" style="padding:24px;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;border-bottom:3px solid #d4dadf">
+                                                    <p style="margin:0">
+                                                        Regards,<br>
+                                                        Project UDAAN
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="center" bgcolor="#e9ecef" style="padding:24px">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center" bgcolor="#e9ecef" style="padding:12px 24px;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:12px;line-height:20px;color:#666">
+                                                    <p style="margin:0">
+                                                        Reach out to SENDER at <a href="mailto:USER_MAIL" rel="noreferrer" target="_blank">USER_MAIL</a>.
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" bgcolor="#e9ecef" style="padding:12px 24px;font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#666">
+                                                    <p style="margin:0">
+                                                        Feel free to reach out to us at <a href="mailto:udaanprojectiitb@gmail.com" rel="noreferrer" target="_blank">udaanprojectiitb@gmail.com</a>.
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </body></html>)";
+
+    if(mRole == "Corrector" )msg.replace("MROLE","Verifier");
+    else if(mRole == "Verifier") msg.replace("MROLE","Corrector");
+    else msg.replace("MROLE", "User");
+    msg.replace("SENDER", mRole);
+    msg.replace("PAGENO", gCurrentPageName);
+    msg.replace("DOCNAME" , gCurrentBookName);
+    msg.replace("COMMENT", str);
+    msg.replace("USER_MAIL", email);
+
+    text->setHtml(msg);
+    if(str == "") return;
+
+    message.addPart(text);
+    if(!sender.sendMail(message))
+        qDebug()<<"Not sent";
+    else qDebug()<<"Sent";
+}
+
+void MainWindow::on_actionApply_Title_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currTitleStyle = settings.value("titleStyle").toString();
+
+    QString html = "<p style=' margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;' title=''>" + currTitleStyle + cursor.selectedText() + "</span></p>";
+
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+
+}
+
+
+void MainWindow::on_actionUpdate_Title_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newTitleStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newTitleStyle = match.captured(1) + ">";
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldTitleStyle = settings.value("titleStyle").toString();
+    settings.setValue("titleStyle",newTitleStyle);
+    QString allHtml = curr_browser->toHtml();
+    allHtml.replace(oldTitleStyle,newTitleStyle);
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+
+
+}
+
+/*!
+ * \fn MainWindow::on_actionInsert_Line_Graph_triggered
+ * \brief This function displays a widget with options to plot a line graph with user-defined points.
+ *        The user can enter the number of points and their corresponding X and Y coordinates in a dialog box.
+ *        The line graph is then plotted and displayed for preview. The user can save the graph as an image and
+ *        insert it into the curr_browser.
+ */
+void MainWindow::on_actionInsert_Line_Graph_triggered()
+{
+    // Create a widget to display the line graph.
+    QWidget* graphWidget = new QWidget();
+    graphWidget->setWindowTitle("Insert Line Graph");
+
+    QHBoxLayout* layout = new QHBoxLayout();
+
+    QPushButton* InfoButton = new QPushButton();
+    InfoButton->setIcon(QIcon(":/Images/Resources/information.png"));
+    layout->addWidget(InfoButton);
+
+    QLabel* numPointsLabel = new QLabel("Enter the number of points: ");
+    layout->addWidget(numPointsLabel);
+
+    QLineEdit* numPointsInput = new QLineEdit(graphWidget);
+    layout->addWidget(numPointsInput);
+
+    // QCustomPlot widget for displaying the line graph.
+    QCustomPlot* plotWidget = new QCustomPlot(graphWidget);
+
+    // Buttons for plotting and inserting the line graph.
+    QPushButton* PlotButton = new QPushButton("Plot Line Graph", graphWidget);
+    layout->addWidget(PlotButton);
+    QPushButton* InsertButton = new QPushButton("Insert Line Graph", graphWidget);
+    layout->addWidget(InsertButton);
+
+     // Set up the main layout
+    QVBoxLayout* mainLayout = new QVBoxLayout();
+    mainLayout->addLayout(layout);
+    mainLayout->addWidget(plotWidget);
+
+    // Connect the PlotButton to a lamda function to plot the Line Graph
+    connect(PlotButton, &QPushButton::clicked, [=](){
+        int numPoints = numPointsInput->text().toInt();
+        QVector<QPointF> points;
+
+        // Loop to get the X and Y coordinates for each point.
+        for(int i = 0; i < numPoints; i++) {
+            bool okX, okY;
+            double x, y;
+
+            // Create a dialog box to enter the X and Y coordinates for each point.
+            QDialog dialog(graphWidget);
+            dialog.setWindowTitle("Enter Point " + QString::number(i+1));
+            QVBoxLayout* dialogLayout = new QVBoxLayout(&dialog);
+
+            QLabel* xLabel = new QLabel("X Coordinate: ");
+            QLineEdit* xLineEdit = new QLineEdit;
+            dialogLayout->addWidget(xLabel);
+            dialogLayout->addWidget(xLineEdit);
+
+            QLabel* yLabel = new QLabel("Y Coordinate: ");
+            QLineEdit* yLineEdit = new QLineEdit;
+            dialogLayout->addWidget(yLabel);
+            dialogLayout->addWidget(yLineEdit);
+
+            QPushButton* nextButton = new QPushButton("Next");
+            dialogLayout->addWidget(nextButton);
+
+            // Connect the "Next" button to the lambda function to save the X and Y coordinates
+            QObject::connect(nextButton, &QPushButton::clicked, &dialog, [&](){
+                x = xLineEdit->text().toDouble(&okX);
+                if(!okX) return;
+                y = yLineEdit->text().toDouble(&okY);
+                if(!okY) return;
+                dialog.accept();
+            });
+
+            // Connect the dialog's "accepted" signal to the lambda function to save the point to the points vector.
+            QObject::connect(&dialog, &QDialog::accepted, [&](){
+                points.append(QPointF(x, y));
+            });
+
+            // Execute the dialog
+            dialog.exec();
+        }
+
+        // If points are entered, plot the line graph.
+        if(!points.isEmpty()){
+            // Clear any existing graphs from the plot widget.
+            plotWidget->clearGraphs();
+
+            // Add a new graph to the plot widget.
+            plotWidget->addGraph();
+
+            // Set up a data container to hold the points for the graph.
+            QSharedPointer<QCPGraphDataContainer> dataContainer(new QCPGraphDataContainer);
+            for(const auto& point : points) {
+                dataContainer->add(QCPGraphData(point.x(), point.y()));
+            }
+            plotWidget->graph(0)->setData(dataContainer);
+
+            // Calculate the minimum and maximum values for the axes.
+            double minX = std::numeric_limits<double>::max();
+            double maxX = std::numeric_limits<double>::min();
+            double minY = std::numeric_limits<double>::max();
+            double maxY = std::numeric_limits<double>::min();
+            for(const auto& point : points) {
+                minX = std::min(minX, point.x());
+                maxX = std::max(maxX, point.x());
+                minY = std::min(minY, point.y());
+                maxY = std::max(maxY, point.y());
+            }
+
+            // Set the axis ranges and labels
+            plotWidget->xAxis->setRange(minX - 1, maxX + 1);
+            plotWidget->yAxis->setRange(minY - 1, maxY + 1);
+            plotWidget->xAxis->setLabel("X");
+            plotWidget->xAxis->setLabel("Y");
+
+            // Replot the graph to update the changes.
+            plotWidget->replot();
+        }
+    });
+
+    // Connect the InsertButton to the lambda function to save and insert the graph as image in curr_browser
+    connect(InsertButton, &QPushButton::clicked, [=](){
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/lineplots").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/lineplots");
+        }
+
+        QString graphDir = "../Cropped_Images/graphs/lineplots/";
+
+        QDir dir(graphDir);
+
+        int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
+
+        // Generate the fileName for the image
+        QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
+
+        bool ok;
+
+        // Save the image as png
+        QPixmap pixmap = plotWidget->toPixmap(plotWidget->width(), plotWidget->height());
+        if (!pixmap.save(fileName)) {
+            qDebug() << "Error, Failed to save the image as PNG.";
+        }
+        else{
+            insertGraph(fileName, ok);
+            // Display a message if could not insert graph as an image in curr_browser.
+            if(!ok){
+                QMessageBox::critical(this, "Error", "Could not insert Line graph data!");
+            }
+        }
+        graphWidget->close();
+    });
+
+    // Connect the InfoButton to the lamda function to show instructions for the Line Graph feature
+    connect(InfoButton, &QPushButton::clicked, [=](){
+        QString instructions = "To use this function, follow these steps:\n\n"
+                               "1. Enter the number of points for the line graph.\n"
+                               "2. Click 'Plot Graph' to enter the points.\n"
+                               "3. For each point, enter the X and Y coordinates and click 'Next'.\n"
+                               "4. After all the points have been added, the graph will be plotted.\n"
+                               "5. Click 'Insert Line Graph' to save the graph image, and insert it.\n\n"
+                               "Note: The Line Graph image will be saved in the 'Cropped_Images' directory.";
+        QMessageBox::information(graphWidget, "Instructions", instructions, QMessageBox::Ok);
+    });
+
+    // Set the layout for the graph widget, and display it to the user.
+    graphWidget->setLayout(mainLayout);
+    graphWidget->resize(600, 600);
+    graphWidget->show();
+}
+
+/*!
+ * \fn MainWindow::on_actionInsert_Histogram_triggered
+ * \brief This function allows the user to input histogram data and the number of bins for the histogram.
+ *        It then plots the histogram and provides an option to save the graph as an image and insert it into the curr_browser.
+ */
+void MainWindow::on_actionInsert_Histogram_triggered()
+{
+    QWidget* histogramWidget = new QWidget();
+    histogramWidget->setWindowTitle("Insert Histogram");
+    QHBoxLayout* layout = new QHBoxLayout();
+
+    // QCustomPlot widget for displaying the histogram
+    QCustomPlot *plotWidget = new QCustomPlot(histogramWidget);
+
+    QPushButton* InsertButton = new QPushButton("Insert Histogram");
+    layout->addWidget(InsertButton);
+
+    // Connect the "Insert Histogram" button to the lambda function to save the histogram image and insert it into the curr_browser.
+    connect(InsertButton, &QPushButton::clicked, [=](){
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/histograms").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/histograms");
+        }
+
+        QString graphDir = "../Cropped_Images/graphs/histograms/";
+
+        QDir dir(graphDir);
+
+
+        int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
+
+        // Generate the fileName for the image
+        QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
+        bool ok;
+
+        // Save the image as png
+        QPixmap pixmap = plotWidget->toPixmap(plotWidget->width(), plotWidget->height());
+        if (!pixmap.save(fileName)) {
+            qDebug() << "Error, Failed to save the image as PNG.";
+        }
+        else{
+            insertGraph(fileName, ok);
+            // Display a message if could not insert graph as an image in curr_browser.
+            if(!ok){
+                QMessageBox::critical(this, "Error", "Could not insert Histogram data!");
+            }
+        }
+        histogramWidget->close();
+    });
+
+    QDialog dialog(this);
+    dialog.setWindowTitle("Histogram Data");
+    QHBoxLayout* dialogLayout1 = new QHBoxLayout();
+    QVBoxLayout* mainDialogLayout = new QVBoxLayout();
+
+    QLabel* dataLabel = new QLabel("Enter data (comma-separated value):", &dialog);
+    QLineEdit* dataLineEdit = new QLineEdit(&dialog);
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    QPushButton* InfoButton = new QPushButton();
+    InfoButton->setIcon(QIcon(":/Images/Resources/information.png"));
+    dialogLayout1->addWidget(InfoButton);
+    dialogLayout1->addWidget(dataLabel);
+    dialogLayout1->addWidget(dataLineEdit);
+    mainDialogLayout->addLayout(dialogLayout1);
+    mainDialogLayout->addWidget(&buttonBox);
+    dialog.setLayout(mainDialogLayout);
+
+    // Connect the accepted and rejected signals to the accept and reject slots of the dialog.
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    // Connect the InfoButton to the lambda function to display instructions for the Histogram feature
+    connect(InfoButton, &QPushButton::clicked, [&](){
+        QString instructions = "To use this function, follow these steps:\n\n"
+                               "1. Enter the histogram data as comma-separated values. Each value should be a numerical data point.\n"
+                               "  * Example: 10, 15, 20, 25, 30\n\n"
+                               "2. Enter the number of bins for the histogram. Bins represent the number of intervals to divide the data range.\n"
+                               "  * The value should be greater than 0 and less than the total number of data points.\n"
+                               "  * A higher number of bins provide more detailed distribution information, but avoid using too many bins as it may cause clutter.\n\n"
+                               "3. Click 'Insert Histogram' to save the histogram image, and insert it.\n\n"
+                               "Note: The Histogram image will be saved in the 'Cropped_Images' directory.";
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
+
+    // If the dialog is accepted, extract and process histogram data and plot the histogram.
+    if(dialog.exec() == QDialog::Accepted){
+        bool ok;
+        QString dataInput = dataLineEdit->text();
+
+        QStringList dataStrList = dataInput.split(",");
+        QVector<double> data;
+        for(const QString &str : dataStrList) {
+            bool parseOk;
+            double value = str.toDouble(&parseOk);
+            if(parseOk){
+                data.append(value);
+            }
+            else{
+                QMessageBox::critical(this, "Invalid Input", "Invalid data entered. Enter the histogram data as comma-separated values. Each value should be a numerical data point.");
+                return;
+            }
+        }
+
+        int numBins = QInputDialog::getInt(this, "Histogram Bins", "Enter number of bins:", data.size(), 1, data.size(), 1, &ok);
+
+        if(!ok) return;
+
+        // Calculate the minimum and maximum data values to determine bin width.
+        double dataMin = *std::min_element(data.constBegin(), data.constEnd());
+        double dataMax = *std::max_element(data.constBegin(), data.constEnd());
+        double binWidth = (dataMax - dataMin) / numBins;
+
+        QVector<double> binEdges(numBins+1);
+        QVector<double> binCounts(numBins);
+
+        for (double value : data) {
+            int binIndex = qBound(0, int((value - dataMin) / binWidth), numBins - 1);
+            binCounts[binIndex]++;
+        }
+
+        for(int i = 0; i <= numBins; i++){
+            binEdges[i] = dataMin + i * binWidth;
+        }
+
+        QCPBars* histogram = new QCPBars(plotWidget->xAxis, plotWidget->yAxis);
+        histogram->setWidth(binWidth);
+        histogram->setData(binEdges, binCounts);
+        plotWidget->xAxis->setLabel("Bins");
+        plotWidget->yAxis->setLabel("Frequency");
+        plotWidget->xAxis->setRange(0, dataMax);
+        plotWidget->yAxis->setRange(0, *std::max_element(binCounts.constBegin(), binCounts.constEnd()));
+
+        QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+        QVector<QString> binLabels(numBins);
+        for (int i = 0; i < numBins; ++i) {
+            binLabels[i] = QString::number(binEdges[i]) + " - " + QString::number(binEdges[i + 1]);
+            textTicker->addTick(binEdges[i] + binWidth / 2.0, binLabels[i]);
+        }
+
+        plotWidget->xAxis->setTicker(textTicker);
+
+        // Replot the histogram with the calculated values.
+        plotWidget->replot();
+
+        // Set up the layout for the histogram widget and display it to the user.
+        QVBoxLayout* mainLayout = new QVBoxLayout();
+        mainLayout->addWidget(plotWidget);
+        mainLayout->addLayout(layout);
+
+        histogramWidget->setLayout(mainLayout);
+        histogramWidget->resize(800, 600);
+        histogramWidget->show();
+    }
+    else{
+        return;
+    }
+}
+
+void MainWindow::insertGraph(const QString &graphFilePath, bool &status)
+{
+    if (!QFile::exists(graphFilePath)) {
+        qDebug() << "Error: Graph file not found.";
+        status = false;
+        return;
+    }
+
+    QImage image(graphFilePath);
+    if (image.isNull()) {
+        qDebug() << "Error: Unable to load graph image.";
+        status = false;
+        return;
+    }
+
+    QString html = "<img src=\"" + graphFilePath + "\">";
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.insertHtml(html);
+    status = true;
+}
+
+
+void MainWindow::on_actionBar_Plot_triggered()
+{
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+
+    QLabel *choice = new QLabel("Do you want to give input manually or choose a csv file?");
+    layout->addRow(choice);
+
+    QPushButton *manual = new QPushButton("enter manually");
+    QPushButton *csv = new QPushButton("choose csv file");
+    layout->addRow(manual,csv);
+
+    connect(manual, &QPushButton::clicked, [this,&dialog]() {
+        barPlotManual();
+        dialog.accept();
+    });
+
+    connect(csv,&QPushButton::clicked,[this,&dialog](){
+        barPlotCsv();
+        dialog.accept();
+    });
+
+    dialog.exec();
+}
+
+void MainWindow::barPlotManual()
+{
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+
+    QPushButton* info = new QPushButton();
+    info->setIcon(QIcon(":/Images/Resources/information.png"));
+    info->setFixedSize(30,30);
+    layout->addRow(info);
+
+    QLabel *x_label = new QLabel("Enter X-axis label");
+    QLineEdit *x_title = new QLineEdit;
+    layout->addRow(x_label,x_title);
+    QLabel *x_values = new QLabel("<html>Enter X-Axis values(comma separated)<font color='red'> * </font></html>");
+    QLineEdit *xcsv = new QLineEdit;
+    layout->addRow(x_values,xcsv);
+
+    QLabel *y_label = new QLabel("Enter Y-axis label");
+    QLineEdit *y_title = new QLineEdit;
+    layout->addRow(y_label,y_title);
+    QLabel *y_values = new QLabel("<html>Enter Y-Axis values(comma separated)<font color='red'> * </font></html>");
+    QLineEdit *ycsv = new QLineEdit;
+    layout->addRow(y_values,ycsv);
+
+    QLabel *required = new QLabel("<html><font color='red'>* required</font></html>");
+    layout->addRow(required);
+
+    QPushButton *show = new QPushButton("show");
+    layout->addRow(show);
+
+    QCustomPlot *barplot = new QCustomPlot();
+    QPushButton *insert = new QPushButton("insert");
+
+    connect(info, &QPushButton::clicked, [&](){
+        QString instructions =  "If you want to enter data manually:\n\n"
+                                "1. Enter the label of the x-axis \n"
+                                "   eg. countries\n"
+                                "2. Enter the categorical values in comma separated format, which will represent the bar names.\n"
+                                "   eg. usa,india,japan\n"
+                                "3. Enter the label of the y-axis\n"
+                                "   eg. GPA (in million dollars)\n"
+                                "4. Enter numeric values in comma separated format, which are the values of the bars.\n"
+                                "   eg. 47,18,32\n";
+
+
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
+
+
+    connect(show, &QPushButton::clicked, [this, y_title,x_title,xcsv, ycsv,layout,barplot,insert,&dialog]() {
+        QString ylabel_str = y_title->text();
+        QString xlabel_str = x_title->text();
+        QString x_string = xcsv->text();
+
+        QRegularExpression regex("^(?=.*[A-Za-z0-9])[A-Za-z0-9, ]*$");
+        QRegularExpressionMatch match = regex.match(x_string);
+        if (!match.hasMatch()) {
+            dialog.accept();
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            barPlotManual();
+            return;
+
+        }
+
+        QVector<QString> x_vector;
+        QStringList x_stringlist = x_string.split(',');
+        x_vector = QVector<QString>::fromList(x_stringlist);
+
+        QString y_string = ycsv->text();
+
+        QRegularExpression regex2("^(?=.*\\d)[\\d, .]*$");
+        QRegularExpressionMatch match2 = regex2.match(y_string);
+        if (!match2.hasMatch()) {
+            dialog.accept();
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            barPlotManual();
+            return;
+
+        }
+
+        QVector<double> y_vector;
+        QStringList y_stringlist = y_string.split(',');
+        for(const QString& str : y_stringlist){
+            bool ok;
+            int double_value = str.toDouble(&ok);
+            if (ok) {
+                y_vector.append(double_value);
+            }
+            else{
+                dialog.accept();
+                QMessageBox::warning(0,"Warning","Enter values in specified format");
+                barPlotManual();
+                return;
+            }
+        }
+        int x_len = x_vector.length();
+        QVector<double> ticks(x_len);
+        for(int i=0;i<x_len;i++){
+            ticks[i] = i+1;
+        }
+
+
+
+        QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+        textTicker->addTicks(ticks, x_vector);
+        barplot->xAxis->setTicker(textTicker);
+        barplot->xAxis->setTickLabelRotation(60);
+
+
+        QCPBars *barchart = new QCPBars(barplot->xAxis, barplot->yAxis);
+        barchart->setName("Bar Chart");
+        barplot->yAxis->setLabel(ylabel_str);
+        barplot->xAxis->setLabel(xlabel_str);
+
+        barchart->setPen(QPen(QColor(75, 150, 255).lighter(170)));
+        barchart->setBrush(QColor(75, 150, 255));
+        barchart->setData(ticks, y_vector);
+        double xMin = 0;
+        double xMax = x_len+1;
+        double yMin = 0;
+        double yMax = *std::max_element(y_vector.constBegin(), y_vector.constEnd()) + 1; // Maximum value on the y-axis
+        qDebug()<<yMax;
+        barplot->xAxis->setRange(xMin, xMax);
+        barplot->yAxis->setRange(yMin, yMax);
+        double barWidth = 0.5;
+        barchart->setWidth(barWidth);
+        barplot->replot();
+        barplot->setFixedSize(barplot->width(),barplot->height());
+        layout->addRow(barplot);
+
+        layout->addRow(insert);
+    });
+
+    connect(insert, &QPushButton::clicked, [this,barplot,&dialog]() {
+            QPixmap bar_pixmap = barplot->toPixmap();
+            QSettings settings("IIT-B", "OpenOCRCorrect");
+            settings.beginGroup("chartCount");
+            int count = settings.value("barChartCount").toInt();
+
+            if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+                QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+            }
+            if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists())
+            {
+                QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+            }
+            if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/barplots").exists())
+            {
+                QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/barplots");
+            }
+
+            QString save_path = "../Cropped_Images/graphs/barplots/";
+
+            QString c = QString::number(count);
+            QString file_name = save_path + "barchart" + c + ".png";
+            count++;
+            settings.setValue("barChartCount",count);
+            settings.endGroup();
+
+            if (!file_name.isEmpty()) {
+                bar_pixmap.save(file_name, "PNG");
+            }
+
+            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(file_name).arg(barplot->width()).arg(barplot->height());
+            QTextCursor cursor = curr_browser->textCursor();
+            cursor.insertHtml(html);
+
+            dialog.accept();
+        });
+
+
+    dialog.exec();
+
+}
+
+
+void MainWindow::barPlotCsv(){
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+    QPushButton* info = new QPushButton();
+    info->setIcon(QIcon(":/Images/Resources/information.png"));
+    info->setFixedSize(30,30);
+    layout->addRow(info);
+
+    QPushButton *choice = new QPushButton("Choose .csv file");
+    layout->addRow(choice);
+
+    QCustomPlot *barplot = new QCustomPlot();
+    QPushButton *insert = new QPushButton("insert");
+
+    connect(info, &QPushButton::clicked, [&](){
+        QString instructions = "If you want to choose csv file:\n\n"
+                               "1. Open a file with correct format: first column is the x axis, and second column is the y axis \n"
+                               "2. The first line are the labels of the x-axis and y-axis\n"
+                               "3. The second line onwards are the data values for x-axis and y-axis\n"
+                               "   Eg. \n"
+                               "        year,students\n"
+                               "        2010, 506\n"
+                               "        2011, 499\n"
+                               "        2012, 514\n"
+                               "        2013, 621\n";
+
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
+
+    connect(choice,&QPushButton::clicked,[this,barplot,insert,layout](){
+        QString filePath = QFileDialog::getOpenFileName(this, "Open File", QDir::homePath(), "CSV Files (*.csv)");
+        QFile csvFile(filePath);
+        if (!csvFile.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            return;
+        }
+
+        QTextStream in(&csvFile);
+        QString firstLine = in.readLine();
+        QStringList columnNames = firstLine.split(",");
+
+        QVector<QString> x_vector;
+        QVector<double> y_vector;
+
+        double double_value;
+        while (!in.atEnd()){
+            QString line = in.readLine();
+            QStringList fields = line.split(",");
+            x_vector.append(fields[0]);
+
+            double_value = fields[1].toDouble();
+            y_vector.append(double_value);
+        }
+
+        int x_len = x_vector.length();
+        QVector<double> ticks(x_len);
+        for(int i=0;i<x_len;i++){
+            ticks[i] = i+1;
+        }
+
+
+
+        QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+        textTicker->addTicks(ticks, x_vector);
+        barplot->xAxis->setTicker(textTicker);
+        barplot->xAxis->setTickLabelRotation(60);
+
+
+        QCPBars *barchart = new QCPBars(barplot->xAxis, barplot->yAxis);
+        barchart->setName("Bar Chart");
+        barplot->yAxis->setLabel(columnNames[1]);
+        barplot->xAxis->setLabel(columnNames[0]);
+
+        barchart->setPen(QPen(QColor(75, 150, 255).lighter(170)));
+        barchart->setBrush(QColor(75, 150, 255));
+        barchart->setData(ticks, y_vector);
+        double xMin = 0;
+        double xMax = x_len+1;
+        double yMin = 0;
+        double yMax = *std::max_element(y_vector.constBegin(), y_vector.constEnd()) + 1;
+        qDebug()<<yMax;
+        barplot->xAxis->setRange(xMin, xMax);
+        barplot->yAxis->setRange(yMin, yMax);
+        double barWidth = 0.5;
+        barchart->setWidth(barWidth);
+        barplot->replot();
+        barplot->setFixedSize(barplot->width(),barplot->height());
+        layout->addRow(barplot);
+
+        qDebug()<<ticks;
+        qDebug()<<x_vector;
+        qDebug()<<y_vector;
+
+        layout->addRow(insert);
+    });
+
+    connect(insert, &QPushButton::clicked, [this,barplot,&dialog]() {
+        QPixmap bar_pixmap = barplot->toPixmap();
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("chartCount");
+        int count = settings.value("barChartCount").toInt();
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/barplots").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/barplots");
+        }
+
+        QString save_path = "../Cropped_Images/graphs/barplots/";
+
+        QString c = QString::number(count);
+        QString file_name = save_path + "barchart" + c + ".png";
+        count++;
+        settings.setValue("barChartCount",count);
+        settings.endGroup();
+
+        if (!file_name.isEmpty()) {
+            bar_pixmap.save(file_name, "PNG");
+        }
+
+        QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(file_name).arg(barplot->width()).arg(barplot->height());
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertHtml(html);
+
+        dialog.accept();
+    });
+
+    dialog.exec();
+
+}
+
+void MainWindow::on_actionScatter_Plot_triggered()
+{
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+
+    QLabel *choice = new QLabel("Do you want to give input manually or choose a csv file?");
+    layout->addRow(choice);
+
+    QPushButton *manual = new QPushButton("enter manually");
+    QPushButton *csv = new QPushButton("choose csv file");
+    layout->addRow(manual,csv);
+
+    connect(manual, &QPushButton::clicked, [this,&dialog]() {
+        scatterPlotManual();
+        dialog.accept();
+    });
+
+    connect(csv,&QPushButton::clicked,[this,&dialog](){
+        scatterPlotCsv();
+        dialog.accept();
+    });
+
+    dialog.exec();
+}
+
+void MainWindow::scatterPlotManual()
+{
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+
+    QPushButton* info = new QPushButton();
+    info->setIcon(QIcon(":/Images/Resources/information.png"));
+    info->setFixedSize(30,30);
+    layout->addRow(info);
+
+    QLabel *x_label = new QLabel("Enter X-axis label");
+    QLineEdit *x_title = new QLineEdit;
+    layout->addRow(x_label,x_title);
+    QLabel *x_values = new QLabel("<html>Enter X-Axis values(comma separated)<font color='red'> * </font></html>");
+    QLineEdit *xcsv = new QLineEdit;
+    layout->addRow(x_values,xcsv);
+
+    QLabel *y_label = new QLabel("Enter Y-axis label");
+    QLineEdit *y_title = new QLineEdit;
+    layout->addRow(y_label,y_title);
+    QLabel *y_values = new QLabel("<html>Enter Y-Axis values(comma separated)<font color='red'> * </font></html>");
+    QLineEdit *ycsv = new QLineEdit;
+    layout->addRow(y_values,ycsv);
+
+    QLabel *point_label = new QLabel("Choose Point Style");
+    QComboBox *comboBox = new QComboBox();
+    comboBox->addItem("Cross");
+    comboBox->addItem("Plus");
+    comboBox->addItem("Circle");
+    comboBox->addItem("Disc");
+    comboBox->addItem("Square");
+    comboBox->addItem("Diamond");
+    comboBox->addItem("Star");
+    comboBox->addItem("Triangle");
+    comboBox->addItem("TriangleInverted");
+    comboBox->addItem("CrossSquare");
+    comboBox->addItem("PlusSquare");
+    comboBox->addItem("CrossCircle");
+    comboBox->addItem("PlusCircle");
+    comboBox->addItem("Peace");
+    comboBox->addItem("Custom");
+    layout->addRow(point_label,comboBox);
+
+    QLabel *required = new QLabel("<html><font color='red'>* required</font></html>");
+    layout->addRow(required);
+
+    QPushButton *show = new QPushButton("show");
+    layout->addRow(show);
+
+    QCustomPlot *scatterplot = new QCustomPlot();
+    QPushButton *insert = new QPushButton("insert");
+
+    QVector<QCPScatterStyle::ScatterShape> shapes;
+    shapes << QCPScatterStyle::ssCross << QCPScatterStyle::ssPlus << QCPScatterStyle::ssCircle << QCPScatterStyle::ssDisc << QCPScatterStyle::ssSquare << QCPScatterStyle::ssDiamond;
+    shapes << QCPScatterStyle::ssStar << QCPScatterStyle::ssTriangle << QCPScatterStyle::ssTriangleInverted << QCPScatterStyle::ssCrossSquare << QCPScatterStyle::ssPlusSquare;
+    shapes << QCPScatterStyle::ssCrossCircle << QCPScatterStyle::ssPlusCircle << QCPScatterStyle::ssPeace << QCPScatterStyle::ssCustom;
+
+
+    connect(info, &QPushButton::clicked, [&](){
+        QString instructions = "If you want to enter data manually\n\n"
+                               "1. Enter the label of the x-axis\n"
+                               "   eg. voltage (in V)\n"
+                               "2. Enter numeric values in comma separated format, which are the x-coordinates \n"
+                               "   eg. 2,4,7\n"
+                               "3. Enter the label of the y-axis\n"
+                               "   eg. current (in A)\n"
+                               "4. Enter numeric values in comma separated format, which are the y-coordinates \n"
+                               "   eg. 7,14,23\n";
+
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
+
+    connect(show, &QPushButton::clicked, [this, y_title,x_title,xcsv,ycsv,layout,scatterplot,insert,comboBox,shapes,&dialog]() {
+        scatterplot->clearGraphs(); // Removes all graphs
+        scatterplot->clearItems();
+
+        scatterplot->addGraph();
+        scatterplot->graph()->setPen(QPen(QColor(75, 150, 255),3));
+        int selectedIndex = comboBox->currentIndex();
+        qDebug()<<selectedIndex;
+
+
+        QString ylabel_str = y_title->text();
+        QString xlabel_str = x_title->text();
+
+        QString x_string = xcsv->text();
+
+        QRegularExpression regex("^(?=.*\\d)[\\d, .]*$");
+        QRegularExpressionMatch match = regex.match(x_string);
+        if (!match.hasMatch()) {
+            dialog.accept();
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            scatterPlotManual();
+            return;
+        }
+
+        QVector<double> x_vector;
+        QStringList x_stringlist = x_string.split(',');
+        for(const QString& str : x_stringlist){
+            bool ok;
+            int double_value = str.toDouble(&ok);
+            if (ok) {
+                x_vector.append(double_value);
+            }
+            else{
+                dialog.accept();
+                QMessageBox::warning(0,"Warning","Enter values in specified format");
+                scatterPlotManual();
+                return;
+            }
+        }
+
+        QString y_string = ycsv->text();
+        QRegularExpressionMatch match2 = regex.match(y_string);
+        if (!match2.hasMatch()) {
+            dialog.accept();
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            scatterPlotManual();
+            return;
+        }
+
+        QVector<double> y_vector;
+        QStringList y_stringlist = y_string.split(',');
+        for(const QString& str : y_stringlist){
+            bool ok;
+            int double_value = str.toDouble(&ok);
+            if (ok) {
+                y_vector.append(double_value);
+            }
+            else{
+                dialog.accept();
+                QMessageBox::warning(0,"Warning","Enter values in specified format");
+                scatterPlotManual();
+                return;
+            }
+        }
+
+        scatterplot->graph()->setData(x_vector,y_vector);
+        scatterplot->yAxis->setLabel(ylabel_str);
+        scatterplot->xAxis->setLabel(xlabel_str);
+
+        double xMin = 0;
+        double xMax = *std::max_element(x_vector.constBegin(), x_vector.constEnd()) + 1;
+        double yMin = 0;
+        double yMax = *std::max_element(y_vector.constBegin(), y_vector.constEnd()) + 1;
+        scatterplot->xAxis->setRange(xMin, xMax);
+        scatterplot->yAxis->setRange(yMin, yMax);
+        scatterplot->graph()->setScatterStyle(QCPScatterStyle(shapes.at(selectedIndex),15));
+        scatterplot->graph()->setLineStyle(QCPGraph::lsNone);
+        scatterplot->replot();
+        scatterplot->setFixedSize(scatterplot->width(),scatterplot->height());
+        layout->addRow(scatterplot);
+        layout->addRow(insert);
+
+    });
+
+    connect(insert, &QPushButton::clicked, [this,scatterplot,&dialog]() {
+        QPixmap bar_pixmap = scatterplot->toPixmap();
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("chartCount");
+        int count = settings.value("scatterChartCount").toInt();
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/scatterplots").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/scatterplots");
+        }
+
+        QString save_path = "../Cropped_Images/graphs/scatterplots/";
+
+        QString c = QString::number(count);
+        QString file_name = save_path + "scatterchart" + c + ".png";
+        count++;
+        settings.setValue("scatterChartCount",count);
+        settings.endGroup();
+
+        if (!file_name.isEmpty()) {
+            bar_pixmap.save(file_name, "PNG");
+        }
+
+        QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(file_name).arg(scatterplot->width()).arg(scatterplot->height());
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertHtml(html);
+
+        dialog.accept();
+    });
+
+    dialog.exec();
+}
+
+
+void MainWindow::scatterPlotCsv(){
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+    QPushButton* info = new QPushButton();
+    info->setIcon(QIcon(":/Images/Resources/information.png"));
+    info->setFixedSize(30,30);
+    layout->addRow(info);
+    QLabel *point_label = new QLabel("Choose Point Style");
+    QComboBox *comboBox = new QComboBox();
+    comboBox->addItem("Cross");
+    comboBox->addItem("Plus");
+    comboBox->addItem("Circle");
+    comboBox->addItem("Disc");
+    comboBox->addItem("Square");
+    comboBox->addItem("Diamond");
+    comboBox->addItem("Star");
+    comboBox->addItem("Triangle");
+    comboBox->addItem("TriangleInverted");
+    comboBox->addItem("CrossSquare");
+    comboBox->addItem("PlusSquare");
+    comboBox->addItem("CrossCircle");
+    comboBox->addItem("PlusCircle");
+    comboBox->addItem("Peace");
+    comboBox->addItem("Custom");
+    layout->addRow(point_label,comboBox);
+    QPushButton *choice = new QPushButton("Choose .csv file");
+    layout->addRow(choice);
+
+    QCustomPlot *scatterplot = new QCustomPlot();
+    QPushButton *insert = new QPushButton("insert");
+
+    QVector<QCPScatterStyle::ScatterShape> shapes;
+    shapes << QCPScatterStyle::ssCross << QCPScatterStyle::ssPlus << QCPScatterStyle::ssCircle << QCPScatterStyle::ssDisc << QCPScatterStyle::ssSquare << QCPScatterStyle::ssDiamond;
+    shapes << QCPScatterStyle::ssStar << QCPScatterStyle::ssTriangle << QCPScatterStyle::ssTriangleInverted << QCPScatterStyle::ssCrossSquare << QCPScatterStyle::ssPlusSquare;
+    shapes << QCPScatterStyle::ssCrossCircle << QCPScatterStyle::ssPlusCircle << QCPScatterStyle::ssPeace << QCPScatterStyle::ssCustom;
+
+    connect(info, &QPushButton::clicked, [&](){
+        QString instructions =  "If you want to choose csv file:\n\n"
+                               "1. Open a file with correct format: first column is the x axis, and second column is the y axis \n"
+                               "2. The first line are the labels of the x-axis and y-axis\n"
+                               "3. The second line onwards are the data values for x-axis and y-axis\n"
+                               "   Eg. \n"
+                               "        total sulfur dioxide,quality\n"
+                               "        34,7\n"
+                               "        67,5\n"
+                               "        54,6\n"
+                               "        60,5\n";
+
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
+
+    connect(choice, &QPushButton::clicked, [this,scatterplot,comboBox,shapes,layout,insert](){
+        QString filePath = QFileDialog::getOpenFileName(this, "Open File", QDir::homePath(), "CSV Files (*.csv)");
+        QFile csvFile(filePath);
+        if (!csvFile.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            return;
+        }
+
+        QTextStream in(&csvFile);
+        QString firstLine = in.readLine();
+        QStringList columnNames = firstLine.split(",");
+
+        QVector<double> x_vector;
+        QVector<double> y_vector;
+
+        double double_value;
+        while (!in.atEnd()){
+            QString line = in.readLine();
+            QStringList fields = line.split(",");
+            double_value = fields[0].toDouble();
+            x_vector.append(double_value);
+
+            double_value = fields[1].toDouble();
+            y_vector.append(double_value);
+        }
+        scatterplot->addGraph();
+        scatterplot->graph()->setPen(QPen(QColor(75, 150, 255),3));
+        int selectedIndex = comboBox->currentIndex();
+        qDebug()<<selectedIndex;
+
+        scatterplot->graph()->setData(x_vector,y_vector);
+        scatterplot->yAxis->setLabel(columnNames[0]);
+        scatterplot->xAxis->setLabel(columnNames[1]);
+
+        double xMin = 0;
+        double xMax = *std::max_element(x_vector.constBegin(), x_vector.constEnd()) + 1;
+        double yMin = 0;
+        double yMax = *std::max_element(y_vector.constBegin(), y_vector.constEnd()) + 1;
+        scatterplot->xAxis->setRange(xMin, xMax);
+        scatterplot->yAxis->setRange(yMin, yMax);
+        scatterplot->graph()->setScatterStyle(QCPScatterStyle(shapes.at(selectedIndex),15));
+        scatterplot->graph()->setLineStyle(QCPGraph::lsNone);
+        scatterplot->replot();
+        scatterplot->setFixedSize(scatterplot->width(),scatterplot->height());
+        layout->addRow(scatterplot);
+        layout->addRow(insert);
+
+    });
+
+    connect(insert, &QPushButton::clicked, [this,scatterplot,&dialog]() {
+        QPixmap bar_pixmap = scatterplot->toPixmap();
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("chartCount");
+        int count = settings.value("scatterChartCount").toInt();
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/scatterplots").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/scatterplots");
+        }
+
+        QString save_path = "../Cropped_Images/graphs/scatterplots/";
+
+        QString c = QString::number(count);
+        QString file_name = save_path + "scatterchart" + c + ".png";
+        count++;
+        settings.setValue("scatterChartCount",count);
+        settings.endGroup();
+
+        if (!file_name.isEmpty()) {
+            bar_pixmap.save(file_name, "PNG");
+        }
+
+        QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(file_name).arg(scatterplot->width()).arg(scatterplot->height());
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertHtml(html);
+
+        dialog.accept();
+    });
+
+    dialog.exec();
+}
+
+const int MAX = 5;
+
+void MainWindow::on_actionBox_Plot_triggered()
+{
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+
+    QLabel *choice = new QLabel("Do you want to give input manually or choose a csv file?");
+    layout->addRow(choice);
+
+    QPushButton *manual = new QPushButton("enter manually");
+    QPushButton *csv = new QPushButton("choose csv file");
+    layout->addRow(manual,csv);
+
+    connect(manual, &QPushButton::clicked, [this,&dialog]() {
+        boxPlotManual();
+        dialog.accept();
+    });
+
+    connect(csv,&QPushButton::clicked,[this,&dialog](){
+        boxPlotCsv();
+        dialog.accept();
+    });
+
+    dialog.exec();
+}
+
+void MainWindow::boxPlotManual()
+{
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+
+    QPushButton* info = new QPushButton();
+    info->setIcon(QIcon(":/Images/Resources/information.png"));
+    info->setFixedSize(30,30);
+    layout->addRow(info);
+
+    QLabel *x_label = new QLabel("<html>Enter labels for x-axis<font color='red'> * </font></html>");
+    QLineEdit *xaxis_values = new QLineEdit();
+    layout->addRow(x_label,xaxis_values);
+    QLabel *required = new QLabel("<html><font color='red'>* required</font></html>");
+    layout->addRow(required);
+
+    QPushButton *enter_y = new QPushButton("Enter data for samples");
+    layout->addRow(enter_y);
+
+    QVector<QString> x_vector;
+    QPushButton *show = new QPushButton("Show Graph");
+    int x_len;
+    QLabel *y_label[MAX];
+    QLineEdit * y_values[MAX];
+
+    QCustomPlot *boxplot = new QCustomPlot;
+    QCPStatisticalBox *statistical = new QCPStatisticalBox(boxplot->xAxis, boxplot->yAxis);
+    QBrush boxBrush(QColor(75, 150, 255, 100));
+    statistical->setBrush(boxBrush);
+
+    QPushButton *insert = new QPushButton("Insert");
+
+    connect(info, &QPushButton::clicked, [&](){
+        QString instructions =  "If you want to enter manually:\n\n"
+                               "1. Enter the labels of the box plots in comma separated format\n"
+                               "   eg. firstSample, secondSample, thirdSample\n"
+                               "2. Enter the data points in csv format for each of the samples\n"
+                               "   eg. \n"
+                               "        1,2,3,4,5,6,7,8\n"
+                               "        3,2,6,8,12,45,22 \n"
+                               "        22,12,14,11,7,9\n";
+
+
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
+
+    connect(enter_y, &QPushButton::clicked, [this,xaxis_values,&x_vector,layout,show,&x_len,&y_values,&y_label,&dialog,enter_y] (){
+
+        QString x_string = xaxis_values->text();
+
+        QRegularExpression regex("^(?=.*[A-Za-z0-9])[A-Za-z0-9, ]*$");
+        QRegularExpressionMatch match = regex.match(x_string);
+        if (!match.hasMatch()) {
+            dialog.accept();
+            QMessageBox::warning(0,"Warning","Enter values in specified format");
+            boxPlotManual();
+            return;
+        }
+
+        QStringList x_stringlist = x_string.split(',');
+        x_vector = QVector<QString>::fromList(x_stringlist);
+        x_len = x_vector.length();
+
+
+        for(int i=0; i<x_len; i++){
+            y_label[i] = new QLabel("Enter data for label " + QString::number(i));
+            y_values[i] = new QLineEdit();
+
+            layout->addRow(y_label[i],y_values[i]);
+        }
+
+        layout->addRow(show);
+
+        enter_y->setEnabled(false);
+    });
+
+    connect(show, &QPushButton::clicked, [this,&x_len,&y_values,&x_vector,statistical,boxplot,layout,insert,&dialog,show] (){
+
+        boxplot->clearGraphs();
+        boxplot->replot();
+
+        QString y_string[MAX];
+        QVector<double> y_vector[MAX];
+
+        QStringList y_stringlist[MAX];
+        QRegularExpression regex2("^(?=.*\\d)[\\d, .]*$");
+
+        for (int i=0; i<x_len; i++){
+            y_string[i] = y_values[i]->text();
+            QRegularExpressionMatch match2 = regex2.match(y_string[i]);
+            if (!match2.hasMatch()) {
+                dialog.accept();
+                QMessageBox::warning(0,"Warning","Enter values in specified format");
+                boxPlotManual();
+                return;
+            }
+            y_stringlist[i] = y_string[i].split(',');
+            for(const QString& str : y_stringlist[i]){
+                bool ok;
+                double double_value = str.toDouble(&ok);
+                if (ok) {
+                    y_vector[i].append(double_value);
+                }
+                else{
+                    dialog.accept();
+                    QMessageBox::warning(0,"Warning","Enter values in specified format");
+                    boxPlotManual();
+                    return;
+                }
+            }
+        }
+
+        double median,lq,uq,min,max;
+        int n,n1,n2;
+        QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+        double yMax = 0;
+
+        for(int i=0; i<x_len; i++){
+            std::sort(y_vector[i].begin(),y_vector[i].end());
+            n = y_vector[i].size();
+            if (n % 2 == 0) {
+                median =  (y_vector[i][n / 2 - 1] + y_vector[i][n / 2]) / 2.0;
+                n1 = n/2 -1;
+                n2 = n/2;
+            }
+            else {
+                median = y_vector[i][n / 2];
+                n1 = n/2;
+                n2 = n/2;
+            }
+
+            if(n1%2 == 0) lq = y_vector[i][n1/2];
+            else lq = (y_vector[i][n1/2] + y_vector[i][n1/2 + 1]) / 2.0;
+
+            if (n2%2 == 0 ) uq = (y_vector[i][n2 + n2/2] + y_vector[i][n2 + n2/2 -1]) / 2.0;
+            else uq = y_vector[i][n2 + n2/2];
+
+            min = y_vector[i][0];
+            max = y_vector[i][n-1];
+
+            if(max > yMax) yMax = max;
+
+            textTicker->addTick(i+1, x_vector[i]);
+            statistical->addData(i+1,min,lq,median,uq,max);
+        }
+
+
+        boxplot->xAxis->setTicker(textTicker);
+
+        double xMin = 0;
+        double xMax = x_len +1;
+        double yMin =0;
+        yMax = yMax + 2;
+        boxplot->xAxis->setRange(xMin, xMax);
+        boxplot->yAxis->setRange(yMin, yMax);
+        boxplot->setFixedSize(boxplot->width(),boxplot->height());
+        boxplot->replot();
+
+        layout->addRow(boxplot);
+        layout->addRow(insert);
+
+        show->setEnabled(false);
+    });
+
+    connect(insert, &QPushButton::clicked, [this,boxplot,&dialog]() {
+        QPixmap bar_pixmap = boxplot->toPixmap();
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("chartCount");
+        int count = settings.value("boxPlotCount").toInt();
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/boxplots").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/boxplots");
+        }
+
+        QString save_path = "../Cropped_Images/graphs/boxplots/";
+
+        QString c = QString::number(count);
+        QString file_name = save_path + "boxplot" + c + ".png";
+        count++;
+        settings.setValue("boxPlotCount",count);
+        settings.endGroup();
+
+        if (!file_name.isEmpty()) {
+            bar_pixmap.save(file_name, "PNG");
+        }
+
+        QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(file_name).arg(boxplot->width()).arg(boxplot->height());
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertHtml(html);
+
+        dialog.accept();
+    });
+
+    dialog.exec();
+}
+
+void MainWindow::boxPlotCsv(){
+
+    QDialog dialog;
+    QFormLayout *layout = new QFormLayout(&dialog);
+
+    QPushButton* info = new QPushButton();
+    info->setIcon(QIcon(":/Images/Resources/information.png"));
+    info->setFixedSize(30,30);
+    layout->addRow(info);
+
+    QPushButton *choice = new QPushButton("Choose .csv file");
+    layout->addRow(choice);
+
+    QCustomPlot *boxplot = new QCustomPlot;
+    QPushButton *insert = new QPushButton("insert");
+    QCPStatisticalBox *statistical = new QCPStatisticalBox(boxplot->xAxis, boxplot->yAxis);
+    QBrush boxBrush(QColor(75, 150, 255, 100));
+    statistical->setBrush(boxBrush);
+
+    connect(info, &QPushButton::clicked, [&](){
+        QString instructions =  "If you want to choose csv file:\n\n"
+                               "Note: Box plots will be plotted column wise\n\n"
+                               "1. Open a file with correct format:\n"
+                               "2. The first row typically contains headers for each column of data. These headers describe the variables you're measuring or categorizing. For a box plot, these headers might represent the labels of the box plots on x axis\n"
+                               "3. Subsequent rows contain the actual data values. Each row corresponds to a set of data points within a particular category or group.\n"
+                               "   Eg. \n"
+                               "        Header1, Header2, Header3, ...\n"
+                               "        Value1, Value2, Value3, ...\n"
+                               "        Value4, Value5, Value6, ...\n"
+                               "        ...\n"
+
+                               "   Eg. \n"
+                               "        total sulfur dioxide,quality,free sulfur dioxide\n"
+                               "        34,7,11\n"
+                               "        67,5,25\n"
+                               "        54,6,15\n"
+                               "        60,5,17\n";
+
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
+
+    connect(choice, &QPushButton::clicked, [this,boxplot,layout,insert,statistical](){
+        QString filePath = QFileDialog::getOpenFileName(this, "Open File", QDir::homePath(), "CSV Files (*.csv)");
+        QFile csvFile(filePath);
+        if (!csvFile.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            return;
+        }
+
+        QTextStream in(&csvFile);
+        QString firstLine = in.readLine();
+        QStringList columnNames = firstLine.split(",");
+        int x_len = columnNames.size();
+
+        QVector<QString> x_vector;
+        x_vector = QVector<QString>::fromList(columnNames);
+
+        QVector<double> y_vector[MAX];
+
+        double double_value;
+        while (!in.atEnd()){
+            QString line = in.readLine();
+            QStringList fields = line.split(",");
+
+            for(int i=0;i<x_len;i++){
+                double_value = fields[i].toDouble();
+                y_vector[i].append(double_value);
+            }
+        }
+
+        double median,lq,uq,min,max;
+        int n,n1,n2;
+        QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+        double yMax = 0;
+
+        for(int i=0; i<x_len; i++){
+            std::sort(y_vector[i].begin(),y_vector[i].end());
+            n = y_vector[i].size();
+            if (n % 2 == 0) {
+                median =  (y_vector[i][n / 2 - 1] + y_vector[i][n / 2]) / 2.0;
+                n1 = n/2 -1;
+                n2 = n/2;
+            }
+            else {
+                median = y_vector[i][n / 2];
+                n1 = n/2;
+                n2 = n/2;
+            }
+
+            if(n1%2 == 0) lq = y_vector[i][n1/2];
+            else lq = (y_vector[i][n1/2] + y_vector[i][n1/2 + 1]) / 2.0;
+
+            if (n2%2 == 0 ) uq = (y_vector[i][n2 + n2/2] + y_vector[i][n2 + n2/2 -1]) / 2.0;
+            else uq = y_vector[i][n2 + n2/2];
+
+            min = y_vector[i][0];
+            max = y_vector[i][n-1];
+
+            if(max > yMax) yMax = max;
+
+            textTicker->addTick(i+1, x_vector[i]);
+            statistical->addData(i+1,min,lq,median,uq,max);
+        }
+
+
+        boxplot->xAxis->setTicker(textTicker);
+
+        double xMin = 0;
+        double xMax = x_len +1;
+        double yMin =0;
+        yMax = yMax + 2;
+        boxplot->xAxis->setRange(xMin, xMax);
+        boxplot->yAxis->setRange(yMin, yMax);
+        boxplot->setFixedSize(boxplot->width(),boxplot->height());
+        boxplot->replot();
+
+        layout->addRow(boxplot);
+        layout->addRow(insert);
+
+    });
+
+    connect(insert, &QPushButton::clicked, [this,boxplot,&dialog]() {
+        QPixmap bar_pixmap = boxplot->toPixmap();
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("chartCount");
+        int count = settings.value("boxPlotCount").toInt();
+
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+        }
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/boxplots").exists())
+        {
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/boxplots");
+        }
+
+        QString save_path ="../Cropped_Images/graphs/boxplots/";
+
+        QString c = QString::number(count);
+        QString file_name = save_path + "boxplot" + c + ".png";
+        count++;
+        settings.setValue("boxPlotCount",count);
+        settings.endGroup();
+
+        if (!file_name.isEmpty()) {
+            bar_pixmap.save(file_name, "PNG");
+        }
+
+        QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(file_name).arg(boxplot->width()).arg(boxplot->height());
+        QTextCursor cursor = curr_browser->textCursor();
+        cursor.insertHtml(html);
+
+        dialog.accept();
+    });
+
+    dialog.exec();
+
+}
+
+
+/*!
+ * \fn MainWindow::on_actionInsert_Pie_Chart_triggered
+ * \brief This function displays a dialog box to get the number of slices for the pie chart,
+ *        and then prompts the user to enter the label and value for each slice.
+ *        After entering the data, the pie chart is generated and displayed for preview.
+ *        The user can then choose to insert the pie chart image into the curr_browser.
+ */
+
+void MainWindow::on_actionInsert_Pie_Chart_triggered()
+{
+    // Create a modal dialog box for getting the number of slices for the pie chart.
+    QDialog dialog(this);
+    dialog.setWindowTitle("Enter Number of Slices");
+
+    QHBoxLayout* dialogLayout1 = new QHBoxLayout();
+    QVBoxLayout* mainDialogLayout = new QVBoxLayout();
+
+    QLabel* sliceLabel = new QLabel("Number of Slices:", &dialog);
+    QLineEdit* sliceLineEdit = new QLineEdit(&dialog);
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    QPushButton* InfoButton = new QPushButton();
+    InfoButton->setIcon(QIcon(":/Images/Resources/information.png"));
+
+    // Set up the layout for the dialog box and adds widgets to it.
+    dialogLayout1->addWidget(InfoButton);
+    dialogLayout1->addWidget(sliceLabel);
+    dialogLayout1->addWidget(sliceLineEdit);
+    mainDialogLayout->addLayout(dialogLayout1);
+    mainDialogLayout->addWidget(&buttonBox);
+    dialog.setLayout(mainDialogLayout);
+
+    // Connect the accepted and rejected signals of the buttonBox to the appropriate slots.
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    // Connect the InfoButton to the lambda function to display instructions for the Pie Chart feature
+    connect(InfoButton, &QPushButton::clicked, [&]() {
+        QString instructions = "To use this function, follow these steps:\n\n"
+                               "1. Enter the number of slices for the pie chart. The value should be between 1 and 100.\n"
+                               "2. For each slice, enter the label and value in the format 'Label, Value'. The value should be a positive number.\n"
+                               "3. Click 'Insert Pie Chart' to save the Pie chart image, and insert it.\n\n"
+                               "Note: The Pie Chart image will be saved in the 'Cropped_Images' directory.";
+        QMessageBox::information(&dialog, "Instructions", instructions, QMessageBox::Ok);
+    });
+
+    // Execute the dialog box
+    if (dialog.exec() == QDialog::Accepted) {
+        bool ok;
+        int sliceCount = sliceLineEdit->text().toInt(&ok);
+        if (!ok || sliceCount > 100 || sliceCount < 1) {
+            QMessageBox::critical(&dialog, "Invalid Input", "Please enter a valid integer between 1 and 100 for the number of slices.");
+            return;
+        }
+
+        // Create a new dialog box to prompt the user to enter slice details.
+        QDialog sliceDialog(this);
+        sliceDialog.setWindowTitle("Enter Slice Details");
+        QVBoxLayout* sliceDialogLayout = new QVBoxLayout();
+        sliceDialog.setLayout(sliceDialogLayout);
+
+        QLabel* noteLabel = new QLabel("Enter Label and Value for Slice (separated by comma):", &sliceDialog);
+        sliceDialogLayout->addWidget(noteLabel);
+
+        QVector<QLineEdit*> slicesLineEdit;
+
+        QWidget* scrollableContent = new QWidget(&sliceDialog);
+        QVBoxLayout* scrollableLayout = new QVBoxLayout(scrollableContent);
+        QScrollArea* scrollArea = new QScrollArea(&sliceDialog);
+
+        // Layout for each slice entry.
+        QHBoxLayout* entryLayout;
+
+        // Loop to create input fields for each slice.
+        for (int i = 0; i < sliceCount; i++) {
+            QLabel* label = new QLabel("Slice " + QString::number(i + 1), &sliceDialog);
+            QLineEdit* lineEdit = new QLineEdit(&sliceDialog);
+            slicesLineEdit.append(lineEdit);
+
+            entryLayout = new QHBoxLayout;
+            entryLayout->addWidget(label);
+            entryLayout->addWidget(lineEdit);
+            scrollableLayout->addLayout(entryLayout);
+        }
+
+        scrollableLayout->addStretch();
+
+        scrollableContent->setLayout(scrollableLayout);
+        scrollArea->setWidget(scrollableContent);
+        sliceDialogLayout->addWidget(scrollArea);
+
+        // Add Ok and Cancel buttons to the slice dialog.
+        QDialogButtonBox sliceButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &sliceDialog);
+        sliceDialogLayout->addWidget(&sliceButtonBox);
+
+        // Connect the accepted and rejected signals to the accept and reject slots of the slice dialog.
+        QObject::connect(&sliceButtonBox, SIGNAL(accepted()), &sliceDialog, SLOT(accept()));
+        QObject::connect(&sliceButtonBox, SIGNAL(rejected()), &sliceDialog, SLOT(reject()));
+
+        // Execute the slice dialog to get slice details.
+        if (sliceDialog.exec() == QDialog::Accepted) {
+            // Create a QPieSeries to hold the pie chart data.
+            QPieSeries* series = new QPieSeries();
+            double totalValue = 0.0;
+
+            // Loop through each slice and validate the input.
+            for(int i = 0; i < sliceCount; i++){
+                QString labelText = slicesLineEdit[i]->text().trimmed();
+                QStringList parts = labelText.split(',');
+                if (parts.size() != 2) {
+                    QMessageBox::critical(this, "Invalid Input", "Invalid data entered for Slice " + QString::number(i + 1) + ". The input should be in the format: label, value.");
+                    return;
+                }
+                else{
+                    QString trimmedLabel = parts[0].trimmed();
+                    bool valueOk;
+                    double value = parts[1].trimmed().toDouble(&valueOk);
+                    if (!valueOk || trimmedLabel.isEmpty() || value <= 0.0) {
+                        QMessageBox::critical(this, "Invalid Input", "Invalid data entered for Slice " + QString::number(i + 1) + ". The value should be a positive number.");
+                        return;
+                    }
+                    else{
+                        totalValue += value;
+                        series->append(trimmedLabel, value);
+                    }
+                }
+            }
+
+            // Calculate the percentage for each slice and set labels accordingly.
+            for(QPieSlice* slice : series->slices()){
+                double percentage = (slice->value() / totalValue) * 100.0;
+                slice->setLabel(QString("%1 (%2%)").arg(slice->label()).arg(percentage, 0, 'f', 2));
+            }
+
+            // Create a widget to display the pie chart.
+            QWidget* pieChartWidget = new QWidget();
+            pieChartWidget->setWindowTitle("Insert Pie Chart");
+
+            // Create a QChart and set up the pie chart.
+            QChart* chart = new QChart();
+            chart->setTitle("Pie Chart");
+            chart->addSeries(series);
+            series->setLabelsVisible();
+            chart->legend()->show();
+
+            // Create a QChartView to display the chart.
+            QChartView* chartView = new QChartView(chart);
+            chartView->setRenderHint(QPainter::Antialiasing, true);
+
+            QVBoxLayout* mainLayout = new QVBoxLayout();
+            mainLayout->addWidget(chartView);
+
+            // Create a Button to insert the pie chart into the curr_browser.
+            QPushButton* insertButton = new QPushButton("Insert Pie Chart", this);
+            mainLayout->addWidget(insertButton);
+
+            // Connect the insertButton to the lambda function to save and insert the graph as image in curr_browser
+            connect(insertButton, &QPushButton::clicked, [this, series, chartView, pieChartWidget](){
+                if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+                    QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+                }
+
+                if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs").exists()){
+                    QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs");
+                }
+
+                if(!QDir(gDirTwoLevelUp+"/Cropped_Images/graphs/pie_charts").exists()){
+                    QDir(gDirTwoLevelUp).mkdir("Cropped_Images/graphs/pie_charts");
+                }
+
+                QString graphDir = "../Cropped_Images/graphs/pie_charts/";
+
+                QDir dir(graphDir);
+
+                int totalPngImages = dir.entryList(QStringList() << "*.png", QDir::Files).count();
+                bool ok;
+
+                // Generate the fileName for the image
+                QString fileName = graphDir + "image_" + QString::number(totalPngImages + 1, 10).rightJustified(2, '0') + ".png";
+
+                // Save the image as png
+                QPixmap pixmap = chartView->grab();
+                if(!pixmap.save(fileName)){
+                    qDebug() << "Error, Failed to save the image as PNG.";
+                }
+                else{
+                    insertGraph(fileName, ok);
+
+                    // Display a message if could not insert graph as an image in curr_browser.
+                    if(!ok){
+                        QMessageBox::critical(this, "Error", "Could not insert Pie chart data!");
+                    }
+                    pieChartWidget->close();
+                }
+            });
+
+            // Display the pie chart widget to the user.
+            pieChartWidget->setLayout(mainLayout);
+            pieChartWidget->resize(600, 600);
+            pieChartWidget->show();
+        }
+        else {
+            return;
+        }
+    }
+    else {
+        return;
+    }
+}
+
+
+void MainWindow::on_actionApply_Subtitle_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currStyle = settings.value("subtitleStyle").toString();
+
+    QString html = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">" + currStyle + cursor.selectedText() + "</span></p>";
+
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionUpdate_Subtitle_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newStyle = match.captured(1) + ">";
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldStyle = settings.value("subtitleStyle").toString();
+    settings.setValue("subtitleStyle",newStyle);
+    QString allHtml = curr_browser->toHtml();
+    allHtml.replace(oldStyle,newStyle);
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionApply_Heading_1_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currStyle = settings.value("h1Style").toString();
+
+    QString html = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">" + currStyle + cursor.selectedText() + "</span></p>";
+
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionUpdate_Heading_1_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newStyle = match.captured(1) + ">";
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldStyle = settings.value("h1Style").toString();
+    settings.setValue("h1Style",newStyle);
+    QString allHtml = curr_browser->toHtml();
+    allHtml.replace(oldStyle,newStyle);
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionApply_Heading_2_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currStyle = settings.value("h2Style").toString();
+
+    QString html = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">" + currStyle + cursor.selectedText() + "</span></p>";
+
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionUpdate_Heading_2_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newStyle = match.captured(1) + ">";
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldStyle = settings.value("h2Style").toString();
+    settings.setValue("h2Style",newStyle);
+    QString allHtml = curr_browser->toHtml();
+    allHtml.replace(oldStyle,newStyle);
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionApply_Heading_3_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currStyle = settings.value("h3Style").toString();
+
+    QString html = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">" + currStyle + cursor.selectedText() + "</span></p>";
+
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionUpdate_Heading_3_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newStyle = match.captured(1) + ">";
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldStyle = settings.value("h3Style").toString();
+    settings.setValue("h3Style",newStyle);
+    QString allHtml = curr_browser->toHtml();
+    allHtml.replace(oldStyle,newStyle);
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+}
+
+void MainWindow::on_actionApply_Heading_4_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currStyle = settings.value("h4Style").toString();
+
+    QString html = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">" + currStyle + cursor.selectedText() + "</span></p>";
+
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionUpdate_Heading_4_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newStyle = match.captured(1) + ">";
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldStyle = settings.value("h4Style").toString();
+    settings.setValue("h4Style",newStyle);
+    QString allHtml = curr_browser->toHtml();
+    allHtml.replace(oldStyle,newStyle);
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+}
+
+void MainWindow::on_actionApply_Heading_5_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currStyle = settings.value("h5Style").toString();
+
+    QString html = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">" + currStyle + cursor.selectedText() + "</span></p>";
+
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionUpdate_Heading_5_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newStyle = match.captured(1) + ">";
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldStyle = settings.value("h5Style").toString();
+    settings.setValue("h5Style",newStyle);
+    QString allHtml = curr_browser->toHtml();
+    allHtml.replace(oldStyle,newStyle);
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+}
+
+void MainWindow::on_actionApply_Heading_6_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString currStyle = settings.value("h6Style").toString();
+
+    QString html = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">" + currStyle + cursor.selectedText() + "</span></p>";
+
+    cursor.insertHtml(html);
+
+    settings.endGroup();
+}
+
+
+void MainWindow::on_actionUpdate_Heading_6_to_match_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    if (!cursor.hasSelection())
+        return;
+    QString text1 = cursor.selection().toHtml();
+    QRegularExpression regex("<!--StartFragment-->(.*?)>");
+
+    QString newStyle;
+
+    QRegularExpressionMatch match = regex.match(text1);
+    if (match.hasMatch()) {
+        newStyle = match.captured(1) + ">";
+    }
+    else return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("paragraphStyles");
+    QString oldStyle = settings.value("h6Style").toString();
+    settings.setValue("h6Style",newStyle);
+    QString allHtml = curr_browser->toHtml();
+    allHtml.replace(oldStyle,newStyle);
+    curr_browser->clear();
+    cursor.insertHtml(allHtml);
+    settings.endGroup();
+}
+
+
+/*!
+ * \fn MainWindow::on_actionUpdate_History_triggered
+ * \brief Fetches the version details of the current tool
+*/
+void MainWindow::on_actionUpdate_History_triggered()
+{
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QUrl url("https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/releases");
+    QNetworkRequest request(url);
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    manager->get(request);
+    connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
+        if (reply->error() == QNetworkReply::NoError) {
+            m_data = reply->readAll();
+            QJsonParseError errorPtr;
+            QJsonDocument document = QJsonDocument::fromJson(m_data, &errorPtr);
+            QJsonArray mainObj = document.array();
+
+            std::vector<QString> releaseVersions;
+            std::vector<QString> releaseNotes;
+            std::vector<QString> timestamps;
+
+            for(auto release : mainObj){
+                QJsonObject obj = release.toObject();
+                releaseVersions.push_back(obj.value("tag_name").toString());
+                releaseNotes.push_back(obj.value("body").toString());
+                timestamps.push_back(obj.value("published_at").toString());
+            }
+
+            QWidget* mainWindow = new QWidget;
+            QVBoxLayout* layout = new QVBoxLayout;
+            mainWindow->setLayout(layout);
+
+            QTableWidget* tableWidget = new QTableWidget(releaseVersions.size(), 3);
+            tableWidget->setStyleSheet(
+                "QTableWidget {"
+                "    background-color: #f7f7f7;"
+                "    color: #333333;"
+                "    border: 1px solid #cccccc;"
+                "}"
+                "QTableWidget QHeaderView::section {"
+                "    background-color: #e0e0e0;"
+                "    color: #333333;"
+                "    border: 1px solid #cccccc;"
+                "    padding: 5px;"
+                "}"
+                "QTableWidget QHeaderView::section:first {"
+                "    border-left: none;"
+                "}"
+                "QTableWidget QHeaderView::section:last {"
+                "    border-right: none;"
+                "}"
+                "QTableWidget::item {"
+                "    padding: 5px;"
+                "}"
+                "QTableWidget::item:selected {"
+                "    background-color: #0078d7;"
+                "    color: #ffffff;"
+                "}");
+
+            tableWidget->setHorizontalHeaderLabels({ "Version", "Release Notes", "Timestamp" });
+            tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+            layout->addWidget(tableWidget);
+
+            for (int i = 0; i < releaseVersions.size(); ++i) {
+                QTableWidgetItem* versionItem = new QTableWidgetItem(releaseVersions[i]);
+                QTableWidgetItem* notesItem = new QTableWidgetItem(releaseNotes[i]);
+                QTableWidgetItem* timestampItem = new QTableWidgetItem(timestamps[i]);
+
+                tableWidget->setItem(i, 0, versionItem);
+                tableWidget->setItem(i, 1, notesItem);
+                tableWidget->setItem(i, 2, timestampItem);
+            }
+
+            mainWindow->setWindowTitle("Application Updates");
+            mainWindow->resize(800, 400);
+            mainWindow->show();
+        } else {
+            QMessageBox::information(this,"Network error",reply->errorString()+"\nThere was an error in the network request. Please try again later or switch your network.");
+            return;
+        }
+        reply->deleteLater();
+    });
+}
+
+/**
+ * \fn MainWindow::on_actionSwitch_Edit_View_Mode_triggered
+ * \brief This function changes the current mode in the tool from Edit to View
+ */
+void MainWindow::on_actionSwitch_Edit_View_Mode_triggered()
+{
+    curr_browser->setReadOnly(true);
+    on_actionFullScreen_triggered();
+    ui->pushButton_9->setVisible(true);
+}
+
+/**
+ * \fn MainWindow::on_pushButton_9_clicked
+ * \brief This function changes the current mode in the tool from View to Edit
+ */
+void MainWindow::on_pushButton_9_clicked()
+{
+    curr_browser->setReadOnly(false);
+    on_pushButton_8_clicked();
+    ui->pushButton_9->setVisible(false);
 }
 

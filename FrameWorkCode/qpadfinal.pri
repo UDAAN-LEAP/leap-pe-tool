@@ -21,7 +21,9 @@ HEADERS += ./Filters.h \
     $$PWD/pdfrangedialog.h \
     $$PWD/printworker.h \
     $$PWD/progressbardialog.h \
+    $$PWD/qcustomplot.h \
     $$PWD/rubberband.h \
+    $$PWD/sendmail.h \
     $$PWD/shortcutguidedialog.h \
     $$PWD/textfinder.h \
     $$PWD/globalreplacedialog.h \
@@ -79,7 +81,9 @@ SOURCES += ./DiffView.cpp \
     $$PWD/pdfrangedialog.cpp \
     $$PWD/printworker.cpp \
     $$PWD/progressbardialog.cpp \
+    $$PWD/qcustomplot.cpp \
     $$PWD/rubberband.cpp \
+    $$PWD/sendmail.cpp \
     $$PWD/shortcutguidedialog.cpp \
     $$PWD/slpNPatternDict.cpp \
     $$PWD/textfinder.cpp \
@@ -121,6 +125,7 @@ FORMS += ./DiffView.ui \
     $$PWD/loadingspinner.ui \
     $$PWD/pdfrangedialog.ui \
     $$PWD/progressbardialog.ui \
+    $$PWD/sendmail.ui \
     $$PWD/shortcutguidedialog.ui \
     $$PWD/textfinder.ui \
     $$PWD/globalreplacedialog.ui \
@@ -136,3 +141,50 @@ FORMS += ./DiffView.ui \
     ./resizeimageview.ui \
     $$PWD/globalreplacepreview.ui \
     $$PWD/globalreplaceinformation.ui
+
+DISTFILES += \
+    $$PWD/SimpleMail/CMakeLists.txt \
+    $$PWD/SimpleMail/simplemail-qt5.pc.in
+
+unix{
+HEADERS += \
+$$PWD/SimpleMail/SimpleMail \
+$$PWD/SimpleMail/emailaddress.h \
+$$PWD/SimpleMail/emailaddress_p.h \
+$$PWD/SimpleMail/mimeattachment.h \
+$$PWD/SimpleMail/mimecontentformatter.h \
+$$PWD/SimpleMail/mimefile.h \
+$$PWD/SimpleMail/mimehtml.h \
+$$PWD/SimpleMail/mimeinlinefile.h \
+$$PWD/SimpleMail/mimemessage.h \
+$$PWD/SimpleMail/mimemessage_p.h \
+$$PWD/SimpleMail/mimemultipart.h \
+$$PWD/SimpleMail/mimemultipart_p.h \
+$$PWD/SimpleMail/mimepart.h \
+$$PWD/SimpleMail/mimepart_p.h \
+$$PWD/SimpleMail/mimetext.h \
+$$PWD/SimpleMail/quotedprintable.h \
+$$PWD/SimpleMail/sender.h \
+$$PWD/SimpleMail/sender_p.h \
+$$PWD/SimpleMail/server.h \
+$$PWD/SimpleMail/server_p.h \
+$$PWD/SimpleMail/serverreply.h \
+$$PWD/SimpleMail/serverreply_p.h \
+$$PWD/SimpleMail/smtpexports.h
+
+SOURCES += \
+$$PWD/SimpleMail/emailaddress.cpp \
+$$PWD/SimpleMail/mimeattachment.cpp \
+$$PWD/SimpleMail/mimecontentformatter.cpp \
+$$PWD/SimpleMail/mimefile.cpp \
+$$PWD/SimpleMail/mimehtml.cpp \
+$$PWD/SimpleMail/mimeinlinefile.cpp \
+$$PWD/SimpleMail/mimemessage.cpp \
+$$PWD/SimpleMail/mimemultipart.cpp \
+$$PWD/SimpleMail/mimepart.cpp \
+$$PWD/SimpleMail/mimetext.cpp \
+$$PWD/SimpleMail/quotedprintable.cpp \
+$$PWD/SimpleMail/sender.cpp \
+$$PWD/SimpleMail/server.cpp \
+$$PWD/SimpleMail/serverreply.cpp
+}
