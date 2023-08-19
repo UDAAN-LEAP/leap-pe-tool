@@ -155,6 +155,8 @@
         <file>Resources/comments.png</file>
         <file>Resources/word-count-cropped.png</file>
         <file>Resources/find-and-replace-cropped.png</file>
+        <file>Resources/pen.png</file>
+        <file>Resources/view.png</file>
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>

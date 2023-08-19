@@ -94,6 +94,38 @@ QPushButton#pushButton_8:pressed {
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButton_9">
+          <property name="styleSheet">
+           <string notr="true">QPushButton#pushButton_9 {
+    color: rgb(0, 0, 0);
+    image: url(:/Images/Resources/pen.png);
+    height: 34px;
+    width: 34px;
+    border-radius: 17px;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    outline: none;
+}
+
+QPushButton#pushButton_9:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+QPushButton#pushButton_9:pressed {
+    background-color: rgb(200, 200, 200);
+    padding-left: 2px;
+    padding-top: 2px;
+    position: relative;
+    top: 1px;
+    left: 1px;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="pushButton_5">
           <property name="styleSheet">
            <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:30px; width:30px;padding-top:1px; border-radius:3px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
@@ -1615,6 +1647,7 @@ background-color: #EEF0F2;
    <addaction name="actionComment"/>
    <addaction name="actionGet_Help"/>
    <addaction name="actionEnable_Disable_Suggestions"/>
+   <addaction name="actionSwitch_Edit_View_Mode"/>
   </widget>
   <action name="actionOpen_Project">
    <property name="icon">
@@ -3150,6 +3183,18 @@ background-color: #EEF0F2;
   <action name="actionUpdate_History">
    <property name="text">
     <string>Update History</string>
+   </property>
+  </action>
+  <action name="actionSwitch_Edit_View_Mode">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/view.png</normaloff>:/Images/Resources/view.png</iconset>
+   </property>
+   <property name="text">
+    <string>Switch Edit/View Mode</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch Edit/View Mode</string>
    </property>
   </action>
  </widget>
