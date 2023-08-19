@@ -11558,12 +11558,12 @@ void MainWindow::on_actionClear_Settings_triggered()
     settings.clear();
 }
 
-void MainWindow::on_actionFullScreen_triggered()
+void MainWindow::on_actionFullScreen_triggered(bool viewMode)
 {
     ui->splitter->setVisible(true);
     ui->menuBar->setVisible(false);
     ui->mainToolBar->setVisible(false);
-    ui->pushButton_8->setVisible(true);
+    if(viewMode == false)ui->pushButton_8->setVisible(true);
 }
 
 void MainWindow::on_pushButton_8_clicked()
@@ -14422,7 +14422,7 @@ void MainWindow::on_actionUpdate_History_triggered()
 void MainWindow::on_actionSwitch_Edit_View_Mode_triggered()
 {
     curr_browser->setReadOnly(true);
-    on_actionFullScreen_triggered();
+    on_actionFullScreen_triggered(true);
     ui->pushButton_9->setVisible(true);
 }
 
