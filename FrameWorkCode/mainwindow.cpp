@@ -99,6 +99,7 @@
 #include <quazipfile.h>
 #endif
 #include <QtCharts>
+#include "releasenote_msg.h"
 QT_CHARTS_USE_NAMESPACE
 
 
@@ -14346,6 +14347,7 @@ void MainWindow::on_actionUpdate_Heading_6_to_match_triggered()
 */
 void MainWindow::on_actionUpdate_History_triggered()
 {
+
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QUrl url("https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/releases");
     QNetworkRequest request(url);
@@ -14359,10 +14361,9 @@ void MainWindow::on_actionUpdate_History_triggered()
             QJsonParseError errorPtr;
             QJsonDocument document = QJsonDocument::fromJson(m_data, &errorPtr);
             QJsonArray mainObj = document.array();
-
-            std::vector<QString> releaseVersions;
-            std::vector<QString> releaseNotes;
-            std::vector<QString> timestamps;
+            QVector<QString> releaseVersions;
+            QVector<QString> releaseNotes;
+            QVector<QString> timestamps;
 
             for(auto release : mainObj){
                 QJsonObject obj = release.toObject();
@@ -14376,34 +14377,10 @@ void MainWindow::on_actionUpdate_History_triggered()
             mainWindow->setLayout(layout);
 
             QTableWidget* tableWidget = new QTableWidget(releaseVersions.size(), 3);
-            tableWidget->setStyleSheet(
-                "QTableWidget {"
-                "    background-color: #f7f7f7;"
-                "    color: #333333;"
-                "    border: 1px solid #cccccc;"
-                "}"
-                "QTableWidget QHeaderView::section {"
-                "    background-color: #e0e0e0;"
-                "    color: #333333;"
-                "    border: 1px solid #cccccc;"
-                "    padding: 5px;"
-                "}"
-                "QTableWidget QHeaderView::section:first {"
-                "    border-left: none;"
-                "}"
-                "QTableWidget QHeaderView::section:last {"
-                "    border-right: none;"
-                "}"
-                "QTableWidget::item {"
-                "    padding: 5px;"
-                "}"
-                "QTableWidget::item:selected {"
-                "    background-color: #0078d7;"
-                "    color: #ffffff;"
-                "}");
 
             tableWidget->setHorizontalHeaderLabels({ "Version", "Release Notes", "Timestamp" });
             tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
             layout->addWidget(tableWidget);
 
             for (int i = 0; i < releaseVersions.size(); ++i) {
@@ -14418,7 +14395,14 @@ void MainWindow::on_actionUpdate_History_triggered()
 
             mainWindow->setWindowTitle("Application Updates");
             mainWindow->resize(800, 400);
-            mainWindow->show();
+            connect(tableWidget, &QTableWidget::itemClicked, mainWindow,[=](QTableWidgetItem * itm){
+                if(itm->column() == 1){
+                    ReleaseNote_Msg * releaseMsg = new ReleaseNote_Msg(mainWindow, itm->text());
+                    releaseMsg->show();
+                }
+            });
+
+            mainWindow->showMaximized();
         } else {
             QMessageBox::information(this,"Network error",reply->errorString()+"\nThere was an error in the network request. Please try again later or switch your network.");
             return;

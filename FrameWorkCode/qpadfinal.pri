@@ -22,6 +22,7 @@ HEADERS += ./Filters.h \
     $$PWD/printworker.h \
     $$PWD/progressbardialog.h \
     $$PWD/qcustomplot.h \
+    $$PWD/releasenote_msg.h \
     $$PWD/rubberband.h \
     $$PWD/sendmail.h \
     $$PWD/shortcutguidedialog.h \
@@ -82,6 +83,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/printworker.cpp \
     $$PWD/progressbardialog.cpp \
     $$PWD/qcustomplot.cpp \
+    $$PWD/releasenote_msg.cpp \
     $$PWD/rubberband.cpp \
     $$PWD/sendmail.cpp \
     $$PWD/shortcutguidedialog.cpp \
@@ -125,6 +127,7 @@ FORMS += ./DiffView.ui \
     $$PWD/loadingspinner.ui \
     $$PWD/pdfrangedialog.ui \
     $$PWD/progressbardialog.ui \
+    $$PWD/releasenote_msg.ui \
     $$PWD/sendmail.ui \
     $$PWD/shortcutguidedialog.ui \
     $$PWD/textfinder.ui \
