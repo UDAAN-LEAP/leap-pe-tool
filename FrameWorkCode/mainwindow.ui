@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>2057</width>
+    <width>2068</width>
     <height>1190</height>
    </rect>
   </property>
@@ -1186,7 +1186,7 @@ background: grey;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>2057</width>
+     <width>2068</width>
      <height>46</height>
     </rect>
    </property>
@@ -3181,8 +3181,12 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionUpdate_History">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/release.png</normaloff>:/Images/Resources/release.png</iconset>
+   </property>
    <property name="text">
-    <string>Update History</string>
+    <string>Tool Releases</string>
    </property>
   </action>
   <action name="actionSwitch_Edit_View_Mode">
