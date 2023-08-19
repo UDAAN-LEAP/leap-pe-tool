@@ -3181,6 +3181,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionUpdate_History">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/release.png</normaloff>:/Images/Resources/release.png</iconset>
+   </property>
    <property name="text">
     <string>Tool Releases</string>
    </property>
