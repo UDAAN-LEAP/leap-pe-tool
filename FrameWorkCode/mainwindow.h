@@ -622,10 +622,6 @@ private slots:
 
     void on_actionUpdate_History_triggered();
 
-    void on_actionSwitch_Edit_View_Mode_triggered();
-
-    void on_pushButton_9_clicked();
-
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

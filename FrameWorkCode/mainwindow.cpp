@@ -246,8 +246,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionHighlight->setEnabled(false);
     ui->copyToVerifier->setVisible(false);
     ui->copyToVerifier->setEnabled(false);
-    ui->actionSwitch_Edit_View_Mode->setEnabled(false);
-    ui->pushButton_9->setVisible(false);
 
     settings.beginGroup("cloudSave");
     settings.remove("");
@@ -1742,7 +1740,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->groupBox->setDisabled(false);
     ui->actionHighlight->setEnabled(true);
     ui->pushButton_7->setEnabled(true);
-    ui->actionSwitch_Edit_View_Mode->setEnabled(true);
 }
 /*!
  * \fn MainWindow::AddRecentProjects
@@ -6645,6 +6642,7 @@ QScrollBar::sub-line:vertical {
         curr_browser->setReadOnly(true);
     }
     if (!isVerifier && (current_folder == "Inds" || current_folder == "VerifierOutput")) {
+        qDebug()<<"Set Read only";
         curr_browser->setReadOnly(true);
     }
     changedWords.clear();
@@ -6754,9 +6752,9 @@ void MainWindow::file_click(const QModelIndex & indx)
 
         currentFile = gCurrentPageName;
 
-        if(currentFile != ""){
-            pageStatusHandler();
-        }
+//        if(currentFile != ""){
+//            pageStatusHandler();
+//        }
 
         break;
     }
@@ -9068,7 +9066,6 @@ void MainWindow::on_actionClose_project_triggered()
     ui->lineEdit_3->clear();
     curr_browser=0;
     ui->actionHighlight->setEnabled(false);
-    ui->actionSwitch_Edit_View_Mode->setEnabled(false);
 }
 
 /*!
@@ -9628,7 +9625,7 @@ void MainWindow::cloud_save(){
             //            read_corrected_pages();
             //            read_verified_pages();
 
-            pageStatusHandler();
+//            pageStatusHandler();
         }
         else{
             QMessageBox::information(0, "Cloud sync", "Failed to Sync and merge remote changes!");
@@ -14414,26 +14411,3 @@ void MainWindow::on_actionUpdate_History_triggered()
         reply->deleteLater();
     });
 }
-
-/**
- * \fn MainWindow::on_actionSwitch_Edit_View_Mode_triggered
- * \brief This function changes the current mode in the tool from Edit to View
- */
-void MainWindow::on_actionSwitch_Edit_View_Mode_triggered()
-{
-    curr_browser->setReadOnly(true);
-    on_actionFullScreen_triggered(true);
-    ui->pushButton_9->setVisible(true);
-}
-
-/**
- * \fn MainWindow::on_pushButton_9_clicked
- * \brief This function changes the current mode in the tool from View to Edit
- */
-void MainWindow::on_pushButton_9_clicked()
-{
-    curr_browser->setReadOnly(false);
-    on_pushButton_8_clicked();
-    ui->pushButton_9->setVisible(false);
-}
-
