@@ -54,6 +54,462 @@
 
 #include <QProgressBar>
 
+const QString lightTheme = R"(
+    mainToolBar {
+        background: rgb(143, 89, 2);
+    }
+
+    QTabBar::tab {
+        background-color: rgb(38, 162, 105);
+        border-radius: 0px;
+        padding: 5px 15px;
+        color: #1F2046;
+    }
+
+    QTabBar::tab:selected {
+        background-color: #BCBDBD;
+    }
+
+    QTabBar::tab:!selected {
+        background-color: #E3E4E4;
+    }
+
+    QTabWidget::pane {
+        top: -1px;
+        bottom: 0px;
+        border: 0px solid #BCBDBD;
+        padding: 0px;
+        margin: -10px -9px -10px -9px;
+    }
+
+    QTextBrowser {
+        border: 0px;
+        background-color: white;
+        font-size: 20pt;
+    }
+
+    QScrollBar:vertical {
+        border: none;
+        background: white;
+    }
+
+    QScrollBar::handle:vertical {
+        background-color: rgba(1, 22, 51, 0.5);
+        border: 0px solid red;
+    }
+
+    QScrollBar::add-line:vertical {
+        height: 0px;
+        subcontrol-position: bottom;
+        subcontrol-origin: margin;
+    }
+
+    QScrollBar::sub-line:vertical {
+        height: 0 px;
+        subcontrol-position: top;
+        subcontrol-origin: margin;
+    }
+
+    QTreeView#treeView {
+        color: rgb(32, 33, 72);
+        border: 5px solid #BCBDBD;
+        background-color: white;
+        margin: 0px;
+    }
+
+    QHeaderView {
+        background-color: #ffffff;
+    }
+
+    QHeaderView::section {
+        background-color: #ffffff;
+        color: #202148;
+        font-size: 15px;
+        line-height: 18px;
+        border: none;
+        margin: 11px 11px 13px 20px;
+    }
+
+    QTreeView::item {
+        padding: 12px 12px 12px 17px;
+        border: 0.5px solid #202148;
+        color: #202148;
+        font-size: 15px;
+    }
+
+    QTreeView::branch {
+        background-color: white;
+    }
+
+    QTreeView::item:selected {
+        background: #0267d4;
+        color: #ffffff;
+    }
+
+    QTreeView::branch:open:has-children:!has-siblings,
+    QTreeView::branch:open:has-children:has-siblings {
+        image: url(":/Images/Resources/stylesheet-branch-open.png");
+    }
+
+    QTreeView::branch:has-children:!has-siblings:closed,
+    QTreeView::branch:closed:has-children:has-siblings {
+        image: url(":/Images/Resources/stylesheet-branch-closed.png");
+    }
+
+    QLineEdit#lineEditSearch {
+        background-color: rgb(255, 255, 255);
+        color: black;
+        border: 0px;
+        height: 26.96px;
+        padding-top: 1px;
+        border-radius: 4.8px;
+        padding-left: 1.3px;
+        margin-top: 8px;
+    }
+
+    QTextEdit#textEdit_dict {
+        color: rgb(32, 33, 72);
+        border: 5px solid #BCBDBD;
+        margin: 0px;
+        background-color: white;
+    }
+
+    QTextEdit QScrollBar:vertical,
+    QTextEdit QScrollBar:horizontal {
+        border: none;
+        background: white;
+    }
+
+    QTextEdit QScrollBar::handle:vertical,
+    QTextEdit QScrollBar::handle:horizontal {
+        background-color: rgba(1, 22, 51, 0.5);
+        border: 0px solid red;
+        border-radius: 4.905px;
+    }
+
+    QTextEdit QScrollBar::add-line:vertical,
+    QTextEdit QScrollBar::add-line:horizontal {
+        height: 0px;
+        subcontrol-position: bottom;
+        subcontrol-origin: margin;
+    }
+
+    QTextEdit QScrollBar::sub-line:vertical,
+    QTextEdit QScrollBar::sub-line:horizontal {
+        height: 0 px;
+        subcontrol-position: top;
+        subcontrol-origin: margin;
+    }
+
+    QGraphicsView {
+        background-color: white;
+    }
+
+    QGraphicsView QScrollBar:vertical,
+    QGraphicsView QScrollBar:horizontal {
+        border: none;
+        background: white;
+    }
+
+    QGraphicsView QScrollBar::handle:vertical,
+    QGraphicsView QScrollBar::handle:horizontal {
+        background-color: rgba(1, 22, 51, 0.5);
+        border: 0px solid red;
+    }
+
+    QGraphicsView QScrollBar::add-line:vertical,
+    QGraphicsView QScrollBar::add-line:horizontal {
+        height: 0px;
+        subcontrol-position: bottom;
+        subcontrol-origin: margin;
+    }
+
+    QGraphicsView QScrollBar::sub-line:vertical,
+    QGraphicsView QScrollBar::sub-line:horizontal {
+        height: 0 px;
+        subcontrol-position: top;
+        subcontrol-origin: margin;
+    }
+
+    QGroupBox {
+        background: white;
+        padding-top: 15px;
+        margin-top: -15px;
+        height: 37.9px;
+        font-size: 11pt !important;
+    }
+
+    QMenuBar {
+        font-size: 16px;
+    }
+
+    QMenuBar::item {
+        padding: 14px 14px 14px 14px;
+        background: transparent;
+    }
+
+    QMenuBar::item:selected {
+        background-color: rgb(52, 73, 94);
+    }
+
+    QMenu::item {
+        spacing: 2px;
+        padding: 10px 20px 10px 20px;
+        background: transparent;
+    }
+
+    QMenu::item:selected {
+        background-color: rgb(52, 73, 94);
+        border-top: none;
+        border-left: none;
+        border-bottom: none;
+        border-left: 3px solid #EEF0F2;
+    }
+
+    QToolBar {
+        spacing: 3px;
+        padding: 5px;
+        color: rgb(0, 0, 0);
+    }
+
+    QToolTip {
+        color: #202148;
+        background-color: #EEF0F2;
+    }
+)";
+
+const QString darkTheme = R"(
+    QWidget {
+        background-color: rgb(41, 44, 51);
+        color: #D8D8D8;
+    }
+
+    mainToolBar {
+        background: rgb(36, 37, 38);
+    }
+
+    QTabBar::tab {
+        background-color: rgb(41, 44, 51);
+        border-radius: 0px;
+        padding: 5px 15px;
+        color: #D8D8D8;
+    }
+
+    QTabBar::tab:selected {
+        background-color: #525357;
+    }
+
+    QTabBar::tab:!selected {
+        background-color: #3A3C3F;
+    }
+
+    QTabWidget::pane {
+        top: -1px;
+        bottom: 0px;
+        border: 0px solid #3A3C3F;
+        padding: 0px;
+        margin: -10px -9px -10px -9px;
+    }
+
+    QTextBrowser {
+        border: 0px;
+        background-color: #2C2E31;
+        font-size: 20pt;
+    }
+
+    QScrollBar:vertical {
+        border: none;
+        background: #2C2E31;
+    }
+
+    QScrollBar::handle:vertical {
+        background-color: rgba(28, 30, 33, 0.5);
+        border: 0px solid #F02849;
+    }
+
+    QScrollBar::add-line:vertical {
+        height: 0px;
+        subcontrol-position: bottom;
+        subcontrol-origin: margin;
+    }
+
+    QScrollBar::sub-line:vertical {
+        height: 0 px;
+        subcontrol-position: top;
+        subcontrol-origin: margin;
+    }
+
+    /* Treeview */
+    QTreeView#treeView {
+        color: #D8D8D8;
+        border: 5px solid #3A3C3F;
+        background-color: #2C2E31;
+        margin: 0px;
+    }
+
+    QHeaderView {
+        background-color: #2C2E31;
+    }
+
+    QHeaderView::section {
+        background-color: #2C2E31;
+        color: #D8D8D8;
+        font-size: 15px;
+        line-height: 18px;
+        border: none;
+        margin: 11px 11px 13px 20px;
+    }
+
+    QTreeView::item {
+        padding: 12px 12px 12px 17px;
+        border: 0.5px solid #3A3C3F;
+        color: #D8D8D8;
+        font-size: 15px;
+    }
+
+    QTreeView::branch {
+        background-color: #2C2E31;
+    }
+
+    QTreeView::item:selected {
+        background: #074B8C;
+        color: #ffffff;
+    }
+
+    QTreeView::branch:open:has-children:!has-siblings,
+    QTreeView::branch:open:has-children:has-siblings {
+        image: url(":/Images/Resources/stylesheet-branch-open.png");
+    }
+
+    QTreeView::branch:has-children:!has-siblings:closed,
+    QTreeView::branch:closed:has-children:has-siblings {
+        image: url(":/Images/Resources/stylesheet-branch-closed.png");
+    }
+
+    QLineEdit#lineEditSearch {
+        background-color: #3A3C3F;
+        color: #D8D8D8;
+        border: 0px;
+        height: 26.96px;
+        padding-top: 1px;
+        border-radius: 4.8px;
+        padding-left: 1.3px;
+        margin-top: 8px;
+    }
+
+    QTextEdit#textEdit_dict {
+        color: #D8D8D8;
+        border: 5px solid #3A3C3F;
+        margin: 0px;
+        background-color: #2C2E31;
+    }
+
+    QTextEdit QScrollBar:vertical,
+    QTextEdit QScrollBar:horizontal {
+        border: none;
+        background: #2C2E31;
+    }
+
+    QTextEdit QScrollBar::handle:vertical,
+    QTextEdit QScrollBar::handle:horizontal {
+        background-color: rgba(28, 30, 33, 0.5);
+        border: 0px solid #F02849;
+        border-radius: 4.905px;
+    }
+
+    QTextEdit QScrollBar::add-line:vertical,
+    QTextEdit QScrollBar::add-line:horizontal {
+        height: 0px;
+        subcontrol-position: bottom;
+        subcontrol-origin: margin;
+    }
+
+    QTextEdit QScrollBar::sub-line:vertical,
+    QTextEdit QScrollBar::sub-line:horizontal {
+        height: 0 px;
+        subcontrol-position: top;
+        subcontrol-origin: margin;
+    }
+
+    QGraphicsView {
+        background-color: #2C2E31;
+    }
+
+    QGraphicsView QScrollBar:vertical,
+    QGraphicsView QScrollBar:horizontal {
+        border: none;
+        background: #2C2E31;
+    }
+
+    QGraphicsView QScrollBar::handle:vertical,
+    QGraphicsView QScrollBar::handle:horizontal {
+        background-color: rgba(28, 30, 33, 0.5);
+        border: 0px solid #F02849;
+    }
+
+    QGraphicsView QScrollBar::add-line:vertical,
+    QGraphicsView QScrollBar::add-line:horizontal {
+        height: 0px;
+        subcontrol-position: bottom;
+        subcontrol-origin: margin;
+    }
+
+    QGraphicsView QScrollBar::sub-line:vertical,
+    QGraphicsView QScrollBar::sub-line:horizontal {
+        height: 0 px;
+        subcontrol-position: top;
+        subcontrol-origin: margin;
+    }
+
+    QGroupBox {
+        background: #2C2E31;
+        padding-top: 15px;
+        margin-top: -15px;
+        height: 37.9px;
+        font-size: 11pt !important;
+    }
+
+    QMenuBar {
+        font-size: 16px;
+        background: #2C2E31;
+        color: #D8D8D8;
+    }
+
+    QMenuBar::item {
+        padding: 14px 14px 14px 14px;
+        background: transparent;
+    }
+
+    QMenuBar::item:selected {
+        background-color: rgb(52, 73, 94);
+    }
+
+    QMenu::item {
+        spacing: 2px;
+        padding: 10px 20px 10px 20px;
+        background: transparent;
+    }
+
+    QMenu::item:selected {
+        background-color: rgb(52, 73, 94);
+        border-top: none;
+        border-left: none;
+        border-bottom: none;
+        border-left: 3px solid #EEF0F2;
+    }
+
+    QToolBar {
+        spacing: 3px;
+        padding: 5px;
+        background: rgb(41, 44, 51);
+        color: rgb(255, 255, 255);
+    }
+
+    QToolTip {
+        color: #D8D8D8;
+        background-color: #2C2E31;
+    }
+)";
 
 
 using namespace std;
@@ -622,6 +1078,8 @@ private slots:
 
     void on_actionUpdate_History_triggered();
 
+    void on_actionToggle_Dark_Theme_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
@@ -650,7 +1108,7 @@ public slots:
     void setTotalWords(int value);
     void showWordCount();
 
-
+    void applyTheme(const QString theme);
 
 private:
     bool mExitStatus = false;

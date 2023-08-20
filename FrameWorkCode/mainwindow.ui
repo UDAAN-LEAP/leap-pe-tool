@@ -1615,6 +1615,7 @@ background-color: #EEF0F2;
    <addaction name="actionComment"/>
    <addaction name="actionGet_Help"/>
    <addaction name="actionEnable_Disable_Suggestions"/>
+   <addaction name="actionToggle_Dark_Theme"/>
   </widget>
   <action name="actionOpen_Project">
    <property name="icon">
@@ -3154,6 +3155,18 @@ background-color: #EEF0F2;
    </property>
    <property name="text">
     <string>Tool Releases</string>
+   </property>
+  </action>
+  <action name="actionToggle_Dark_Theme">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/find 1.png</normaloff>:/Images/Resources/find 1.png</iconset>
+   </property>
+   <property name="text">
+    <string>Toggle Dark Theme</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle Dark Theme</string>
    </property>
   </action>
  </widget>

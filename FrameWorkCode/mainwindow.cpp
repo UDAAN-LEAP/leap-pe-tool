@@ -168,6 +168,8 @@ QTableWidget *m_table;
 QDialog *tableDialog;
 //QDialog *dateDialog;
 
+QString currentTheme;
+
 /*!
  * \fn MainWindow::MainWindow
  * \brief This is the constructor which creates the GUI and does all the prerequisites which are needed to be done
@@ -530,6 +532,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     settings.endGroup();
 
+    settings.beginGroup("themes");
+    QString themeChoice = settings.value("currentTheme", "light").toString();
+    settings.endGroup();
+
+    if(themeChoice == "dark"){
+           applyTheme(darkTheme);
+           currentTheme = darkTheme;
+    }
+    else if(themeChoice == "light"){
+           applyTheme(lightTheme);
+           currentTheme = lightTheme;
+    }
 }
 
 /*!
@@ -4258,28 +4272,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         {
             if(curr_browser != NULL){
 
-                curr_browser->setStyleSheet(R"(CustomTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}QScrollBar:vertical {
-                                            border: none;
-                                            background: white;
-                                        }
-QScrollBar::handle:vertical {
-                                            background-color:  rgba(1, 22, 51, 0.5);
-                                            min-height: 50px;
-                                              max-height: 300px;
-                                                    border: 0px solid red;
-                                                    border-radius:4.905px;
-                                        }
-QScrollBar::add-line:vertical {
-                        height: 0px;
-                        subcontrol-position: bottom;
-                        subcontrol-origin: margin;
-
-                    }
-QScrollBar::sub-line:vertical {
-                        height: 0 px;
-                        subcontrol-position: top;
-                        subcontrol-origin: margin;
-                    })");
+                curr_browser->setStyleSheet(currentTheme);
             }
         }
     }
@@ -8137,28 +8130,7 @@ void MainWindow::readSettings()
     pos1=map[gCurrentPageName];
     //qDebug()<<"pos1"<<pos1;
     myFile.close();
-    curr_browser->setStyleSheet(R"(CustomTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}QScrollBar:vertical {
-                                border: none;
-                                background: white;
-                            }
-QScrollBar::handle:vertical {
-                                background-color:  rgba(1, 22, 51, 0.5);
-                                min-height: 50px;
-                                  max-height: 300px;
-                                        border: 0px solid red;
-                                        border-radius:4.905px;
-                            }
-QScrollBar::add-line:vertical {
-            height: 0px;
-            subcontrol-position: bottom;
-            subcontrol-origin: margin;
-
-        }
-QScrollBar::sub-line:vertical {
-            height: 0 px;
-            subcontrol-position: top;
-            subcontrol-origin: margin;
-        })");
+    curr_browser->setStyleSheet(currentTheme);
     auto cursor = curr_browser->textCursor();
     cursor.setPosition(pos1);
     cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
@@ -9057,7 +9029,7 @@ void MainWindow::on_actionClose_project_triggered()
 
     if(ui->lineEdit_3->text()!="" && ui->lineEdit_3->text()!="Words 0" && ui->lineEdit_3->text()!="0 Words"){
         curr_browser->clear();
-        curr_browser->setStyleSheet(defaultStyle);
+        curr_browser->setStyleSheet(currentTheme);
     }
     ui->treeView->setModel(nullptr);
     ui->graphicsView->setScene(nullptr);
@@ -10584,6 +10556,19 @@ void MainWindow::showWordCount(){
     form.addRow("Total Pages", page);
     form.addRow("Total Words",total_words);
     dialog->show();
+}
+
+void MainWindow::applyTheme(const QString theme)
+{
+    ui->menuBar->setStyleSheet(theme);
+    ui->mainToolBar->setStyleSheet(theme);
+    ui->splitter->widget(0)->setStyleSheet(theme);
+    ui->splitter->widget(1)->setStyleSheet(theme);
+    ui->splitter->widget(2)->setStyleSheet(theme);
+    ui->textEdit->setStyleSheet(theme);
+    ui->textEdit_dict->setStyleSheet(theme);
+    ui->centralWidget->setStyleSheet(theme);
+    ui->treeView->setStyleSheet(theme);
 }
 
 /*!
@@ -14411,3 +14396,28 @@ void MainWindow::on_actionUpdate_History_triggered()
         reply->deleteLater();
     });
 }
+
+void MainWindow::on_actionToggle_Dark_Theme_triggered()
+{
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("themes");
+    QString themeChoice = settings.value("currentTheme", "light").toString();
+    settings.endGroup();
+
+    if(themeChoice == "dark"){
+        applyTheme(lightTheme);
+        currentTheme = lightTheme;
+        settings.beginGroup("themes");
+        settings.setValue("currentTheme", "light");
+        settings.endGroup();
+    }
+    else if(themeChoice == "light"){
+        applyTheme(darkTheme);
+        currentTheme = darkTheme;
+        settings.beginGroup("themes");
+        settings.setValue("currentTheme", "dark");
+        settings.endGroup();
+    }
+
+}
+
