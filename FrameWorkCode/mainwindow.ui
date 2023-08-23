@@ -1223,6 +1223,7 @@ QMenu::item:selected{
     <addaction name="actionAbout_Udaan_PE"/>
     <addaction name="separator"/>
     <addaction name="actionClear_Settings"/>
+    <addaction name="actionCommit_History"/>
    </widget>
    <widget class="QMenu" name="menuOCR_Correction_Window">
     <property name="styleSheet">
@@ -3154,6 +3155,11 @@ background-color: #EEF0F2;
    </property>
    <property name="text">
     <string>Tool Releases</string>
+   </property>
+  </action>
+  <action name="actionCommit_History">
+   <property name="text">
+    <string>Commit History</string>
    </property>
   </action>
  </widget>

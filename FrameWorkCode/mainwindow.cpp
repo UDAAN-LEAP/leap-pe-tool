@@ -14411,3 +14411,150 @@ void MainWindow::on_actionUpdate_History_triggered()
         reply->deleteLater();
     });
 }
+
+void MainWindow::on_actionCommit_History_triggered()
+{
+
+    QDir directory(gDirTwoLevelUp);
+
+    QString directoryName = directory.dirName();
+
+    QNetworkAccessManager* manager1 = new QNetworkAccessManager();
+    QUrl url_("https://udaaniitb.aicte-india.org/udaan/email/");
+
+    QByteArray postData;
+    postData.append("username=username&password=password");
+
+    QNetworkRequest request1(url_);
+    request1.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    // Disable SSL certificate verification
+    QSslConfiguration sslConfig1 = request1.sslConfiguration();
+    sslConfig1.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request1.setSslConfiguration(sslConfig1);
+    QNetworkReply* reply1 = manager1->post(request1, postData);
+    QEventLoop loop1;
+    QString git_token;
+    QObject::connect(reply1, &QNetworkReply::finished, [=, &loop1,&git_token]() {
+        if (reply1->error() == QNetworkReply::NoError) {
+            QByteArray data = reply1->readAll();
+            QJsonParseError errorPtr;
+            QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+            QJsonObject mainObj = document.object();
+            git_token = mainObj.value("github_token").toString();
+            loop1.quit();
+        } else {
+            qDebug() << "Error:" << reply1->errorString();
+            QMessageBox::information(this,"Authentication error",reply1->errorString());
+            return;
+        }
+        reply1->deleteLater();
+    });
+    loop1.exec();
+
+
+
+    QNetworkAccessManager manager;
+    QString url_str = "https://api.github.com/repos/UdaanContentForLogging/" + directoryName + "/commits";
+    QUrl url(url_str);
+    QNetworkRequest request(url);
+
+    QString token = git_token;
+
+    QByteArray authorizationHeader = "Bearer " + token.toUtf8();
+    request.setRawHeader("Authorization", authorizationHeader);
+
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+
+    QNetworkReply *reply = manager.get(request);
+
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+    QList<QJsonObject> jsonObjects;
+    if (reply->error() == QNetworkReply::NoError) {
+        QByteArray data = reply->readAll();
+
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+        if (jsonDoc.isNull()) {
+            qDebug() << "Failed to parse JSON";
+        }
+
+        QJsonArray jsonArray = jsonDoc.array();
+
+        for (const QJsonValue &jsonValue : jsonArray) {
+            if (jsonValue.isObject()) {
+                QJsonObject jsonObject = jsonValue.toObject();
+                jsonObjects.append(jsonObject);
+            }
+        }
+    } else {
+        qDebug() << "Error:" << reply->errorString();
+        QMessageBox::information(this,"Git Commit History Not Found",reply->errorString());
+        return;
+    }
+
+    int i=0;
+    int count=0;
+    int maxCommits = 10;
+
+    QVector<QString> commitHashV;
+    QVector<QString> commitMsgV;
+    QVector<QString> commitDateV;
+
+    while(count<maxCommits && i < jsonObjects.size() ){
+
+        QString msg = jsonObjects[i]["commit"].toObject()["message"].toString();
+
+        if(!msg.contains("Merge commit")){
+            commitMsgV.append(msg);
+
+            QString commitHash = jsonObjects[i]["sha"].toString().left(7);
+            commitHashV.append(commitHash);
+
+            QString commit_date = jsonObjects[i]["commit"].toObject()["author"].toObject()["date"].toString();
+            commitDateV.append(commit_date);
+            count++;
+        }
+        i++;
+
+    }
+
+    QWidget* commitWindow = new QWidget;
+    QVBoxLayout* layout = new QVBoxLayout;
+    commitWindow->setLayout(layout);
+
+    QTableWidget* tableWidget = new QTableWidget(maxCommits, 3);
+
+    tableWidget->setHorizontalHeaderLabels({ "Commit Hash", "Commit Text", "Timestamp" });
+    tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    layout->addWidget(tableWidget);
+
+    for (int i = 0; i < maxCommits; ++i) {
+        QTableWidgetItem* hashItem = new QTableWidgetItem(commitHashV[i]);
+        QTableWidgetItem* msgItem = new QTableWidgetItem(commitMsgV[i]);
+        QTableWidgetItem* timestampItem = new QTableWidgetItem(commitDateV[i]);
+
+        hashItem->setFlags(hashItem->flags() ^ Qt::ItemIsEditable);
+        msgItem->setFlags(msgItem->flags() ^ Qt::ItemIsEditable);
+        timestampItem->setFlags(timestampItem->flags() ^ Qt::ItemIsEditable);
+
+        tableWidget->setItem(i, 0, hashItem);
+        tableWidget->setItem(i, 1, msgItem);
+        tableWidget->setItem(i, 2, timestampItem);
+    }
+
+    commitWindow->setWindowTitle("Commit History");
+    commitWindow->resize(800, 400);
+
+
+    commitWindow->showMaximized();
+
+
+    reply->deleteLater();
+
+}
+

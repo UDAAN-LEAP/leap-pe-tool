@@ -622,6 +622,8 @@ private slots:
 
     void on_actionUpdate_History_triggered();
 
+    void on_actionCommit_History_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
