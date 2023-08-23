@@ -921,13 +921,13 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 if (dataCount == 0) {
                     clipboard_menu->setEnabled(false);
                 } else if (dataCount == 1) {
-                    clipboard_menu->setStyleSheet("height: 2.52em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
+                    clipboard_menu->setStyleSheet("height: 1.5em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
                 } else if (dataCount == 2) {
-                    clipboard_menu->setStyleSheet("height: 3.52em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
+                    clipboard_menu->setStyleSheet("height: 3.0em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
                 }
                 else
                 {
-                    clipboard_menu->setStyleSheet("height: 4.52em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
+                    clipboard_menu->setStyleSheet("height: 4.5em; width: 13em; overflow: visible; white-space: nowrap; color: black; background-color: white;");
                 }
             QAction* gsearch;
             gsearch = new QAction("Search over google",popup_menu);
