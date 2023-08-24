@@ -12302,6 +12302,10 @@ void MainWindow::sendComment(QString str)
     else qDebug()<<"Sent";
 }
 
+/*!
+ * \fn MainWindow::on_actionApply_Title_triggered()
+ * \brief The stylesheet of the title which is customised by the user and stored in the qsettings is applied to the selected text
+*/
 void MainWindow::on_actionApply_Title_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -12320,7 +12324,10 @@ void MainWindow::on_actionApply_Title_triggered()
 
 }
 
-
+/*!
+ * \fn MainWindow::on_actionUpdate_Title_to_match_triggered()
+ * \brief Stores the stylesheet of the selected text into qsettings as new default stylesheet for title
+*/
 void MainWindow::on_actionUpdate_Title_to_match_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -12718,7 +12725,12 @@ void MainWindow::insertGraph(const QString &graphFilePath, bool &status)
     status = true;
 }
 
-
+/*!
+ * \fn MainWindow::on_actionBar_Plot_triggered()
+ * \brief This function takes input in 2 forms: manual input or a csv file
+ *        If manual input is chosen, the function MainWindow::barPlotManual() is called
+ *        If csv file is chosen, the function MainWindow::barPlotCsv() is called
+*/
 void MainWindow::on_actionBar_Plot_triggered()
 {
     QDialog dialog;
@@ -12744,6 +12756,12 @@ void MainWindow::on_actionBar_Plot_triggered()
     dialog.exec();
 }
 
+/*!
+ * \fn MainWindow::barPlotManual()
+ * \brief Shows a dialog box to get values for x-axis labels and y-axis bar values in comma separated format
+ *        Then it uses QCustomPlot's classes to plot a bar chart from the input values and then finally save the chart as a png
+ *        file in project folder and also display it in the curr_browser
+*/
 void MainWindow::barPlotManual()
 {
     QDialog dialog;
@@ -12919,7 +12937,12 @@ void MainWindow::barPlotManual()
 
 }
 
-
+/*!
+ * \fn MainWindow::barPlotCsv()
+ * \brief A dialog box shows up to get the csv file as input
+ *        The csv file is read as per the instructions button displayed in the dialog box
+ *        The bar chart created using QCustomPlot is saved as png file and displayed in curr_browser
+*/
 void MainWindow::barPlotCsv(){
     QDialog dialog;
     QFormLayout *layout = new QFormLayout(&dialog);
@@ -13057,6 +13080,13 @@ void MainWindow::barPlotCsv(){
 
 }
 
+
+/*!
+ * \fn MainWindow::on_actionScatter_Plot_triggered()
+ * \brief This function takes input in 2 forms: manual input or a csv file
+ *        If manual input is chosen, the function MainWindow::scatterPlotManual() is called
+ *        If csv file is chosen, the function MainWindow::scatterPlotCsv() is called
+*/
 void MainWindow::on_actionScatter_Plot_triggered()
 {
     QDialog dialog;
@@ -13082,6 +13112,13 @@ void MainWindow::on_actionScatter_Plot_triggered()
     dialog.exec();
 }
 
+
+/*!
+ * \fn MainWindow::scatterPlotManual()
+ * \brief Shows a dialog box to get values for x-axis and y-axis in comma separated format
+ *        Then it uses QCustomPlot's classes to plot a scatter chart from the input values and then finally save the chart as a png
+ *        file in project folder and also display it in the curr_browser
+*/
 void MainWindow::scatterPlotManual()
 {
     QDialog dialog;
@@ -13278,7 +13315,12 @@ void MainWindow::scatterPlotManual()
     dialog.exec();
 }
 
-
+/*!
+ * \fn MainWindow::scatterPlotCsv()
+ * \brief A dialog box shows up to get the csv file as input
+ *        The csv file is read as per the instructions button displayed in the dialog box
+ *        The scatter chart created using QCustomPlot is saved as png file and displayed in curr_browser
+*/
 void MainWindow::scatterPlotCsv(){
     QDialog dialog;
     QFormLayout *layout = new QFormLayout(&dialog);
@@ -13421,6 +13463,12 @@ void MainWindow::scatterPlotCsv(){
 
 const int MAX = 5;
 
+/*!
+ * \fn MainWindow::on_actionBox_Plot_triggered()
+ * \brief This function takes input in 2 forms: manual input or a csv file
+ *        If manual input is chosen, the function MainWindow::boxPlotManual() is called
+ *        If csv file is chosen, the function MainWindow::boxPlotCsv() is called
+*/
 void MainWindow::on_actionBox_Plot_triggered()
 {
     QDialog dialog;
@@ -13446,6 +13494,14 @@ void MainWindow::on_actionBox_Plot_triggered()
     dialog.exec();
 }
 
+/*!
+ * \fn MainWindow::boxPlotManual()
+ * \brief Shows a dialog box to ask the user to enter the labels of the box plots in comma separated format
+ *        eg. firstSample, secondSample, thirdSample
+ *        Then the user is asked to enter the data points in csv format for each of the samples
+ *        Dynamic element allocation is done in the dialog box as per the values entered in the first label
+ *        A box plot which uses the median concept is plot using QCustomPlot and saved as png and displayed in curr_browser
+*/
 void MainWindow::boxPlotManual()
 {
     QDialog dialog;
@@ -13650,6 +13706,13 @@ void MainWindow::boxPlotManual()
     dialog.exec();
 }
 
+
+/*!
+ * \fn MainWindow::boxPlotCsv()
+ * \brief A dialog box shows up to get the csv file as input
+ *        The csv file is read as per the instructions button displayed in the dialog box
+ *        The box plot created using QCustomPlot is saved as png file and displayed in curr_browser
+*/
 void MainWindow::boxPlotCsv(){
 
     QDialog dialog;
@@ -14022,7 +14085,10 @@ void MainWindow::on_actionInsert_Pie_Chart_triggered()
     }
 }
 
-
+/*!
+ * \fn MainWindow::on_actionApply_Subtitle_triggered()
+ * \brief The stylesheet of the subtitle which is customised by the user and stored in the qsettings is applied to the selected text
+*/
 void MainWindow::on_actionApply_Subtitle_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -14040,7 +14106,10 @@ void MainWindow::on_actionApply_Subtitle_triggered()
     settings.endGroup();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionUpdate_Subtitle_to_match_triggered()
+ * \brief Stores the stylesheet of the selected text into qsettings as new default stylesheet for subtitle
+*/
 void MainWindow::on_actionUpdate_Subtitle_to_match_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -14068,7 +14137,10 @@ void MainWindow::on_actionUpdate_Subtitle_to_match_triggered()
     settings.endGroup();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionApply_Heading_1_triggered()
+ * \brief The stylesheet of the heading 1 which is customised by the user and stored in the qsettings is applied to the selected text
+*/
 void MainWindow::on_actionApply_Heading_1_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -14086,7 +14158,10 @@ void MainWindow::on_actionApply_Heading_1_triggered()
     settings.endGroup();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionUpdate_Heading_1_to_match_triggered()
+ * \brief Stores the stylesheet of the selected text into qsettings as new default stylesheet for heading 1
+*/
 void MainWindow::on_actionUpdate_Heading_1_to_match_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -14114,7 +14189,10 @@ void MainWindow::on_actionUpdate_Heading_1_to_match_triggered()
     settings.endGroup();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionApply_Heading_2_triggered()
+ * \brief The stylesheet of the heading 2 which is customised by the user and stored in the qsettings is applied to the selected text
+*/
 void MainWindow::on_actionApply_Heading_2_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -14132,7 +14210,10 @@ void MainWindow::on_actionApply_Heading_2_triggered()
     settings.endGroup();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionUpdate_Heading_2_to_match_triggered()
+ * \brief Stores the stylesheet of the selected text into qsettings as new default stylesheet for heading 2
+*/
 void MainWindow::on_actionUpdate_Heading_2_to_match_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -14160,7 +14241,10 @@ void MainWindow::on_actionUpdate_Heading_2_to_match_triggered()
     settings.endGroup();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionApply_Heading_3_triggered()
+ * \brief The stylesheet of the heading 3 which is customised by the user and stored in the qsettings is applied to the selected text
+*/
 void MainWindow::on_actionApply_Heading_3_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -14178,7 +14262,10 @@ void MainWindow::on_actionApply_Heading_3_triggered()
     settings.endGroup();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionUpdate_Heading_3_to_match_triggered()
+ * \brief Stores the stylesheet of the selected text into qsettings as new default stylesheet for heading 3
+*/
 void MainWindow::on_actionUpdate_Heading_3_to_match_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -14206,6 +14293,10 @@ void MainWindow::on_actionUpdate_Heading_3_to_match_triggered()
     settings.endGroup();
 }
 
+/*!
+ * \fn MainWindow::on_actionApply_Heading_4_triggered()
+ * \brief The stylesheet of the heading 4 which is customised by the user and stored in the qsettings is applied to the selected text
+*/
 void MainWindow::on_actionApply_Heading_4_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -14223,7 +14314,10 @@ void MainWindow::on_actionApply_Heading_4_triggered()
     settings.endGroup();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionUpdate_Heading_4_to_match_triggered()
+ * \brief Stores the stylesheet of the selected text into qsettings as new default stylesheet for heading 4
+*/
 void MainWindow::on_actionUpdate_Heading_4_to_match_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -14251,6 +14345,10 @@ void MainWindow::on_actionUpdate_Heading_4_to_match_triggered()
     settings.endGroup();
 }
 
+/*!
+ * \fn MainWindow::on_actionApply_Heading_5_triggered()
+ * \brief The stylesheet of the heading 5 which is customised by the user and stored in the qsettings is applied to the selected text
+*/
 void MainWindow::on_actionApply_Heading_5_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -14268,7 +14366,10 @@ void MainWindow::on_actionApply_Heading_5_triggered()
     settings.endGroup();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionUpdate_Heading_5_to_match_triggered()
+ * \brief Stores the stylesheet of the selected text into qsettings as new default stylesheet for heading 5
+*/
 void MainWindow::on_actionUpdate_Heading_5_to_match_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -14296,6 +14397,10 @@ void MainWindow::on_actionUpdate_Heading_5_to_match_triggered()
     settings.endGroup();
 }
 
+/*!
+ * \fn MainWindow::on_actionApply_Heading_6_triggered()
+ * \brief The stylesheet of the heading 6 which is customised by the user and stored in the qsettings is applied to the selected text
+*/
 void MainWindow::on_actionApply_Heading_6_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -14313,7 +14418,10 @@ void MainWindow::on_actionApply_Heading_6_triggered()
     settings.endGroup();
 }
 
-
+/*!
+ * \fn MainWindow::on_actionUpdate_Heading_6_to_match_triggered()
+ * \brief Stores the stylesheet of the selected text into qsettings as new default stylesheet for heading 6
+*/
 void MainWindow::on_actionUpdate_Heading_6_to_match_triggered()
 {
     QTextCursor cursor = curr_browser->textCursor();
@@ -14370,7 +14478,12 @@ void MainWindow::on_actionUpdate_History_triggered()
                 QJsonObject obj = release.toObject();
                 releaseVersions.push_back(obj.value("tag_name").toString());
                 releaseNotes.push_back(obj.value("body").toString());
-                timestamps.push_back(obj.value("published_at").toString());
+
+                QString dateTimeString = obj.value("published_at").toString();
+                QDateTime dateTime = QDateTime::fromString(dateTimeString, Qt::ISODate);
+                QString dateString = dateTime.date().toString("yyyy-MM-dd");
+                QString timeString = dateTime.time().toString("hh:mm:ss");
+                timestamps.push_back(dateString + "\t" + timeString);
             }
 
             QWidget* mainWindow = new QWidget;
@@ -14379,7 +14492,7 @@ void MainWindow::on_actionUpdate_History_triggered()
 
             QTableWidget* tableWidget = new QTableWidget(releaseVersions.size(), 3);
 
-            tableWidget->setHorizontalHeaderLabels({ "Version", "Release Notes", "Timestamp" });
+            tableWidget->setHorizontalHeaderLabels({ "Version", "Release Notes", "Date and Time" });
             tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
             layout->addWidget(tableWidget);
@@ -14411,6 +14524,14 @@ void MainWindow::on_actionUpdate_History_triggered()
         reply->deleteLater();
     });
 }
+
+
+/*!
+ * \fn MainWindow::on_actionCommit_History_triggered()
+ * \brief Shows the recent github commits of the opened project and displays it in a new window.
+ *         A network request is made and if the user has access to the folder on github, authentication will be a success and
+ *         data is read via the network reply.
+*/
 
 void MainWindow::on_actionCommit_History_triggered()
 {
