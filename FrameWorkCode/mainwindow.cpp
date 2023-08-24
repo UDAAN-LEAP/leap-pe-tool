@@ -12128,88 +12128,90 @@ void MainWindow::on_actionNormal_Text_triggered()
 */
 void MainWindow::sendComment(QString str)
 {
-    QString comment_mail = "";
-    QString app_password = "";
+    QThread* workerThread = new QThread();
+    QObject::connect(workerThread, &QThread::started, [=](){
+        QString comment_mail = "";
+        QString app_password = "";
 
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    settings.beginGroup("login");
-    QString email = settings.value("email").toString();
-    QString token = settings.value("token").toString();
-    settings.endGroup();
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("login");
+        QString email = settings.value("email").toString();
+        QString token = settings.value("token").toString();
+        settings.endGroup();
 
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QUrl url("https://udaaniitb.aicte-india.org/udaan/email/");
-    QUrlQuery params;
-    params.addQueryItem("email", email);
-    params.addQueryItem("password", token);
-    QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+        QNetworkAccessManager *manager = new QNetworkAccessManager();
+        QUrl url("https://udaaniitb.aicte-india.org/udaan/email/");
+        QUrlQuery params;
+        params.addQueryItem("email", email);
+        params.addQueryItem("password", token);
+        QNetworkRequest request(url);
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
-    QSslConfiguration sslConfig = request.sslConfiguration();
-    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
-    request.setSslConfiguration(sslConfig);
-    manager->post(request, params.toString(QUrl::FullyEncoded).toUtf8());
-    QEventLoop loop;
-    connect(manager, &QNetworkAccessManager::finished, this, [=, &loop, &comment_mail, &app_password](QNetworkReply *reply) {
-        if (reply->error() == QNetworkReply::NoError) {
-            QByteArray data = reply->readAll();
-            QJsonParseError errorPtr;
-            QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
-            QJsonObject mainObj = document.object();
-            comment_mail = mainObj.value("comment_email").toString();
-            app_password = mainObj.value("app_password").toString();
+        QSslConfiguration sslConfig = request.sslConfiguration();
+        sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+        request.setSslConfiguration(sslConfig);
+        manager->post(request, params.toString(QUrl::FullyEncoded).toUtf8());
+        QEventLoop loop;
+        connect(manager, &QNetworkAccessManager::finished, this, [=, &loop, &comment_mail, &app_password](QNetworkReply *reply) {
+            if (reply->error() == QNetworkReply::NoError) {
+                QByteArray data = reply->readAll();
+                QJsonParseError errorPtr;
+                QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+                QJsonObject mainObj = document.object();
+                comment_mail = mainObj.value("comment_email").toString();
+                app_password = mainObj.value("app_password").toString();
 
-            loop.quit();
-        } else {
-            qDebug() << "Error:" << reply->errorString();
+                loop.quit();
+            } else {
+                qDebug() << "Error:" << reply->errorString();
+            }
+            reply->deleteLater();
+        });
+        loop.exec();
+
+        QString send_to = "";
+
+        settings.beginGroup("Comment Mail");
+        QString book = settings.value("book").toString();
+        QString Send_To = settings.value("Send_To").toString();
+
+        if(book != gCurrentBookName){
+            book = gCurrentBookName;
+            Send_To = "";
         }
-        reply->deleteLater();
-    });
-    loop.exec();
+        else{
+            send_to = Send_To;
+        }
 
-    QString send_to = "";
-
-    settings.beginGroup("Comment Mail");
-    QString book = settings.value("book").toString();
-    QString Send_To = settings.value("Send_To").toString();
-
-    if(book != gCurrentBookName){
-        book = gCurrentBookName;
-        Send_To = "";
-    }
-    else{
-        send_to = Send_To;
-    }
-
-    if(send_to == ""){
-        sendMail * send = new sendMail(&send_to);
-        send->exec();
-    }
-    if(send_to != ""){
-        settings.setValue("book", book);
-        settings.setValue("Send_To", send_to);
-    }
-    settings.endGroup();
+        if(send_to == ""){
+            sendMail * send = new sendMail(&send_to);
+            send->exec();
+        }
+        if(send_to != ""){
+            settings.setValue("book", book);
+            settings.setValue("Send_To", send_to);
+        }
+        settings.endGroup();
 
 
-    SimpleMail::Sender sender ("smtp.gmail.com", 465, SimpleMail::Sender::SslConnection);
-    sender.setUser(comment_mail);
-    sender.setPassword(app_password);
-    SimpleMail::MimeMessage message;
-    message.setSender(SimpleMail::EmailAddress(comment_mail, mRole + " " + "from Akshar Anveshini"));
+        SimpleMail::Sender sender ("smtp.gmail.com", 465, SimpleMail::Sender::SslConnection);
+        sender.setUser(comment_mail);
+        sender.setPassword(app_password);
+        SimpleMail::MimeMessage message;
+        message.setSender(SimpleMail::EmailAddress(comment_mail, mRole + " " + "from Akshar Anveshini"));
 
-    if(send_to == ""){
-        return;
-    }
-    QList <SimpleMail::EmailAddress> listRecipients;
-    listRecipients.append(send_to);
-    message.setToRecipients(listRecipients);
-    message.setSubject("Comment added");
-    SimpleMail::MimeHtml *text = new SimpleMail::MimeHtml();
+        if(send_to == ""){
+            return;
+        }
+        QList <SimpleMail::EmailAddress> listRecipients;
+        listRecipients.append(send_to);
+        message.setToRecipients(listRecipients);
+        message.setSubject("Comment added");
+        SimpleMail::MimeHtml *text = new SimpleMail::MimeHtml();
 
-    QString page = gCurrentPageName;
-    page.replace(".html", "");
-    QString msg = R"(<html><head></head><body>
+        QString page = gCurrentPageName;
+        page.replace(".html", "");
+        QString msg = R"(<html><head></head><body>
                 <div style="background-color:#e9ecef">
                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tbody>
@@ -12284,22 +12286,27 @@ void MainWindow::sendComment(QString str)
                 </div>
             </body></html>)";
 
-    if(mRole == "Corrector" )msg.replace("MROLE","Verifier");
-    else if(mRole == "Verifier") msg.replace("MROLE","Corrector");
-    else msg.replace("MROLE", "User");
-    msg.replace("SENDER", mRole);
-    msg.replace("PAGENO", gCurrentPageName);
-    msg.replace("DOCNAME" , gCurrentBookName);
-    msg.replace("COMMENT", str);
-    msg.replace("USER_MAIL", email);
+        if(mRole == "Corrector" )msg.replace("MROLE","Verifier");
+        else if(mRole == "Verifier") msg.replace("MROLE","Corrector");
+        else msg.replace("MROLE", "User");
+        msg.replace("SENDER", mRole);
+        msg.replace("PAGENO", gCurrentPageName);
+        msg.replace("DOCNAME" , gCurrentBookName);
+        msg.replace("COMMENT", str);
+        msg.replace("USER_MAIL", email);
 
-    text->setHtml(msg);
-    if(str == "") return;
+        text->setHtml(msg);
+        if(str == "") return;
 
-    message.addPart(text);
-    if(!sender.sendMail(message))
-        qDebug()<<"Not sent";
-    else qDebug()<<"Sent";
+        message.addPart(text);
+        if(!sender.sendMail(message))
+            qDebug()<<"Not sent";
+        else qDebug()<<"Sent";
+    });
+
+    QObject::connect(workerThread, &QThread::finished, workerThread, &QThread::deleteLater);
+
+    workerThread->start();
 }
 
 void MainWindow::on_actionApply_Title_triggered()
