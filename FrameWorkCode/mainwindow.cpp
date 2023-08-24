@@ -14642,8 +14642,11 @@ void MainWindow::on_actionCommit_History_triggered()
             QString commitHash = jsonObjects[i]["sha"].toString().left(7);
             commitHashV.append(commitHash);
 
-            QString commit_date = jsonObjects[i]["commit"].toObject()["author"].toObject()["date"].toString();
-            commitDateV.append(commit_date);
+            QString dateTimeString = jsonObjects[i]["commit"].toObject()["author"].toObject()["date"].toString();
+            QDateTime dateTime = QDateTime::fromString(dateTimeString, Qt::ISODate);
+            QString dateString = dateTime.date().toString("yyyy-MM-dd");
+            QString timeString = dateTime.time().toString("hh:mm:ss");
+            commitDateV.append(dateString + "\t" + timeString);
             count++;
         }
         i++;
@@ -14656,7 +14659,7 @@ void MainWindow::on_actionCommit_History_triggered()
 
     QTableWidget* tableWidget = new QTableWidget(maxCommits, 3);
 
-    tableWidget->setHorizontalHeaderLabels({ "Commit Hash", "Commit Text", "Timestamp" });
+    tableWidget->setHorizontalHeaderLabels({ "Commit Hash", "Commit Text", "Date and Time" });
     tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     layout->addWidget(tableWidget);
