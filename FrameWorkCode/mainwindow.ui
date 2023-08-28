@@ -1192,6 +1192,7 @@ QMenu::item:selected{
     </property>
     <addaction name="actionTurn_In"/>
     <addaction name="actionFetch_2"/>
+    <addaction name="actionCommit_History"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="styleSheet">
@@ -1223,7 +1224,6 @@ QMenu::item:selected{
     <addaction name="actionAbout_Udaan_PE"/>
     <addaction name="separator"/>
     <addaction name="actionClear_Settings"/>
-    <addaction name="actionCommit_History"/>
    </widget>
    <widget class="QMenu" name="menuOCR_Correction_Window">
     <property name="styleSheet">
@@ -3159,7 +3159,7 @@ background-color: #EEF0F2;
   </action>
   <action name="actionCommit_History">
    <property name="text">
-    <string>Commit History</string>
+    <string>Sync History</string>
    </property>
   </action>
  </widget>
