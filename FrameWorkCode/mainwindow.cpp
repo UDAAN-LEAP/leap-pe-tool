@@ -10184,6 +10184,7 @@ void MainWindow::e_d_features(bool value)
     ui->actionFetch_2->setEnabled(true);
     ui->find->setEnabled(value);
     ui->pushButton_7->setEnabled(value);
+ui->pushButton_9->setEnabled(value);
 }
 
 
@@ -14687,5 +14688,14 @@ void MainWindow::on_actionCommit_History_triggered()
 
     reply->deleteLater();
 
+}
+
+
+void MainWindow::on_pushButton_9_clicked()
+{
+    qDebug() << "Reset Zoom Button Clicked";
+    if (z) {
+        z->gentle_zoom(1.0); // Set zoom factor to 1.0 for 100% zoom
+    }
 }
 
