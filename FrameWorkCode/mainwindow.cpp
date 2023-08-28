@@ -14690,10 +14690,12 @@ void MainWindow::on_actionCommit_History_triggered()
 
 }
 
-
+/*!
+ * \fn on_pushButton_9_clicked
+ * \brief Resets the zoom of graphic view to 100%
+*/
 void MainWindow::on_pushButton_9_clicked()
 {
-    qDebug() << "Reset Zoom Button Clicked";
     if (z) {
         z->gentle_zoom(1.0); // Set zoom factor to 1.0 for 100% zoom
     }
