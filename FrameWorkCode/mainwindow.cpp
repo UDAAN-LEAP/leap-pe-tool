@@ -12164,6 +12164,9 @@ void MainWindow::sendComment(QString str)
                 loop.quit();
             } else {
                 qDebug() << "Error:" << reply->errorString();
+                QMessageBox::critical(this, "Error", reply->errorString());
+                workerThread->quit();
+                return;
             }
             reply->deleteLater();
         });
