@@ -38,6 +38,14 @@ Graphics_view_zoom::Graphics_view_zoom(QGraphicsView* view, QGraphicsScene *scen
  */
 void Graphics_view_zoom::gentle_zoom(double factor)
 {
+  if (factor == 1.0) {
+      // Reset zoom to 100%
+      zoom_level = 100;
+      _view->fitInView(_scene->itemsBoundingRect(), Qt::KeepAspectRatio);
+      _view->centerOn(target_scene_pos);
+      emit zoomed();
+      return;
+  }
   int previousZoomLevel = zoom_level;
   //! Restricting the zoom value between 0 and maxzoom
   if ( zoom_level >= maxzoom && factor > 1 )

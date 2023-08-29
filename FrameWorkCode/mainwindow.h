@@ -624,6 +624,8 @@ private slots:
 
     void on_actionCommit_History_triggered();
 
+    void on_pushButton_9_clicked();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
