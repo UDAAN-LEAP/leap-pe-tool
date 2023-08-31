@@ -14519,6 +14519,8 @@ void MainWindow::on_actionUpdate_History_triggered()
                 tableWidget->setItem(i, 2, timestampItem);
             }
 
+            tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
             mainWindow->setWindowTitle("Application Updates");
             mainWindow->resize(800, 400);
             connect(tableWidget, &QTableWidget::itemClicked, mainWindow,[=](QTableWidgetItem * itm){
@@ -14609,18 +14611,19 @@ void MainWindow::on_actionCommit_History_triggered()
     QList<QJsonObject> jsonObjects;
     if (reply->error() == QNetworkReply::NoError) {
         QByteArray data = reply->readAll();
-
         QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
-        if (jsonDoc.isNull()) {
-            qDebug() << "Failed to parse JSON";
-        }
-
         QJsonArray jsonArray = jsonDoc.array();
-
-        for (const QJsonValue &jsonValue : jsonArray) {
-            if (jsonValue.isObject()) {
-                QJsonObject jsonObject = jsonValue.toObject();
-                jsonObjects.append(jsonObject);
+        if (jsonDoc.isNull() || jsonArray.isEmpty()) {
+            qDebug() << "Failed to parse JSON or no commit history";
+            QMessageBox::information(this,"Not found!", "Sync history not found!");
+            return;
+        }
+        else{
+            for (const QJsonValue &jsonValue : jsonArray) {
+                if (jsonValue.isObject()) {
+                    QJsonObject jsonObject = jsonValue.toObject();
+                    jsonObjects.append(jsonObject);
+                }
             }
         }
     } else {
@@ -14669,7 +14672,7 @@ void MainWindow::on_actionCommit_History_triggered()
 
     layout->addWidget(tableWidget);
 
-    for (int i = 0; i < maxCommits; ++i) {
+    for (int i = 0; i < maxCommits; i++) {
         QTableWidgetItem* hashItem = new QTableWidgetItem(commitHashV[i]);
         QTableWidgetItem* msgItem = new QTableWidgetItem(commitMsgV[i]);
         QTableWidgetItem* timestampItem = new QTableWidgetItem(commitDateV[i]);
@@ -14685,11 +14688,7 @@ void MainWindow::on_actionCommit_History_triggered()
 
     commitWindow->setWindowTitle("Commit History");
     commitWindow->resize(800, 400);
-
-
-    commitWindow->showMaximized();
-
-
+    commitWindow->show();
     reply->deleteLater();
 
 }
