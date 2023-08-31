@@ -14518,6 +14518,8 @@ void MainWindow::on_actionUpdate_History_triggered()
                 tableWidget->setItem(i, 2, timestampItem);
             }
 
+            tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
             mainWindow->setWindowTitle("Application Updates");
             mainWindow->resize(800, 400);
             connect(tableWidget, &QTableWidget::itemClicked, mainWindow,[=](QTableWidgetItem * itm){
