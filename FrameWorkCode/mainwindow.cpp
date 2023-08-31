@@ -11554,6 +11554,7 @@ void MainWindow::on_actionClear_Settings_triggered()
 {
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.clear();
+    on_actionClear_Menu_triggered();
 }
 
 void MainWindow::on_actionFullScreen_triggered(bool viewMode)
