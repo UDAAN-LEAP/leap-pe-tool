@@ -6207,6 +6207,10 @@ void MainWindow::on_actionAdd_Image_triggered()
  */
 void MainWindow::on_actionResize_Image_triggered()
 {
+    if(curr_browser == nullptr){
+        return;
+    }
+
     //! gets the block position of the image in the current browser
     QTextBlock currentBlock = curr_browser->textCursor().block();
     QTextBlock::iterator it;
