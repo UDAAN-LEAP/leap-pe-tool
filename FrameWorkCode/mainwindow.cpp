@@ -1759,11 +1759,16 @@ void MainWindow::AddRecentProjects()
 
     if(RecentProjFile!="")
     {
+        ui->actionRecentProject->setEnabled(true);
         QAction *FileAction = new QAction(this);
         FileAction->setIconText("~"+ RecentProjFile);
         ui->menuRecent_Project->addAction(FileAction);
         connect(FileAction, &QAction::triggered, this , &MainWindow::on_action1_triggered);
     }
+    else{
+        ui->actionRecentProject->setEnabled(false);
+    }
+
     if(RecentProjFile2!="")
     {
         QAction *FileAction = new QAction(this);
@@ -1778,7 +1783,7 @@ void MainWindow::AddRecentProjects()
         ui->menuRecent_Project->addAction(FileAction);
         connect(FileAction, &QAction::triggered, this , &MainWindow::on_action3_triggered);
     }
-    ui->actionRecentProject->setEnabled(true);
+
 
     if(!ui->menuRecent_Project->isEmpty())
     {
@@ -10184,11 +10189,12 @@ void MainWindow::e_d_features(bool value)
     ui->horizontalSlider->setEnabled(value);
     ui->actionComment->setEnabled(value);
     ui->actionOpen_Project->setEnabled(true);
-    ui->actionRecentProject->setEnabled(true);
+
     ui->actionFetch_2->setEnabled(true);
     ui->find->setEnabled(value);
     ui->pushButton_7->setEnabled(value);
-ui->pushButton_9->setEnabled(value);
+    ui->pushButton_9->setEnabled(value);
+
 }
 
 
@@ -11174,19 +11180,15 @@ void MainWindow::on_actionClear_Menu_triggered()
     }
     else
     {
-        cout<<"else triggered"<<endl;
         RecentProjFile ="";
         settings.setValue("Project", "");
+        ui->actionRecentProject->setEnabled(false);
     }
     settings.setValue("Project2","");
     settings.setValue("Project3","");
     ui->menuRecent_Project->clear();
     isRecentProjclick = false;
-    //ui->menuRecent_Project->setEnabled(false);
-    ui->actionRecentProject->setEnabled(false);
-
     settings.endGroup();
-    qDebug()<<RecentProjFile<<endl;
 }
 
 
