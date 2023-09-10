@@ -654,7 +654,7 @@ public slots:
     void setTotalWords(int value);
     void showWordCount();
 
-
+    void onClipboardDataChanged();
 
 private:
     bool mExitStatus = false;
@@ -740,6 +740,7 @@ private:
 
     QString currentCommentWord;
     QMap<QString,QMap<QString,QString>> corrector_comment, verifier_comment;
+    QStringList clipboardHistory;
 
 };
 

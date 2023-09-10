@@ -530,6 +530,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     settings.endGroup();
 
+    connect(QApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(onClipboardDataChanged()));
 }
 
 /*!
@@ -885,36 +886,12 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
                 popup_menu->setStyleSheet(menuStyle);
 
-                QAction* act;
-
-                QSettings settings("IIT-B", "OpenOCRCorrect");
-                settings.beginGroup("Clipboard");
-                QString s1 = settings.value("copy1").toString();
-                QString s2 = settings.value("copy2").toString();
-                QString s3 = settings.value("copy3").toString();
-                settings.endGroup();
-
+                clipboard_menu->clear();
                 int dataCount = 0;
-
-                if (!s1.isEmpty()) {
-                    act = new QAction(s1, clipboard_menu);
-                    clipboard_menu->addAction(act);
-                    dataCount++;
-                }
-
-                if (!s2.isEmpty()) {
-
-                    clipboard_menu->addSeparator();
-                    act = new QAction(s2, clipboard_menu);
-                    clipboard_menu->addAction(act);
-                    dataCount++;
-                }
-
-                if (!s3.isEmpty()) {
-                    clipboard_menu->addSeparator();
-
-                    act = new QAction(s3, clipboard_menu);
-                    clipboard_menu->addAction(act);
+                for(const QString &item : qAsConst(clipboardHistory)){
+                    if(dataCount >= 3)
+                        break;
+                    clipboard_menu->addAction(item);
                     dataCount++;
                 }
 
@@ -10595,6 +10572,24 @@ void MainWindow::showWordCount(){
     form.addRow("Total Pages", page);
     form.addRow("Total Words",total_words);
     dialog->show();
+}
+
+void MainWindow::onClipboardDataChanged()
+{
+    QClipboard *clipboard = QApplication::clipboard();
+    const QMimeData *mimeData = clipboard->mimeData();
+
+    if (mimeData->hasText())
+    {
+        QString newText = mimeData->text();
+        clipboardHistory.append(newText);
+
+        while (clipboardHistory.size() > 3)
+        {
+            QString item = clipboardHistory.takeFirst();
+            qDebug() << item;
+        }
+    }
 }
 
 /*!
