@@ -10582,12 +10582,15 @@ void MainWindow::onClipboardDataChanged()
     if (mimeData->hasText())
     {
         QString newText = mimeData->text();
-        clipboardHistory.append(newText);
 
-        while (clipboardHistory.size() > 3)
-        {
-            QString item = clipboardHistory.takeFirst();
-            qDebug() << item;
+        if(!clipboardHistory.contains(newText)){
+            clipboardHistory.prepend(newText);
+
+            while (clipboardHistory.size() > 3)
+            {
+                QString item = clipboardHistory.takeLast();
+                qDebug() << item;
+            }
         }
     }
 }
