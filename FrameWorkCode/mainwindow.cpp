@@ -530,6 +530,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     settings.endGroup();
 
+    connect(QApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(onClipboardDataChanged()));
 }
 
 /*!
@@ -979,36 +980,12 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
                 popup_menu->setStyleSheet(menuStyle);
 
-                QAction* act;
-
-                QSettings settings("IIT-B", "OpenOCRCorrect");
-                settings.beginGroup("Clipboard");
-                QString s1 = settings.value("copy1").toString();
-                QString s2 = settings.value("copy2").toString();
-                QString s3 = settings.value("copy3").toString();
-                settings.endGroup();
-
+                clipboard_menu->clear();
                 int dataCount = 0;
-
-                if (!s1.isEmpty()) {
-                    act = new QAction(s1, clipboard_menu);
-                    clipboard_menu->addAction(act);
-                    dataCount++;
-                }
-
-                if (!s2.isEmpty()) {
-
-                    clipboard_menu->addSeparator();
-                    act = new QAction(s2, clipboard_menu);
-                    clipboard_menu->addAction(act);
-                    dataCount++;
-                }
-
-                if (!s3.isEmpty()) {
-                    clipboard_menu->addSeparator();
-
-                    act = new QAction(s3, clipboard_menu);
-                    clipboard_menu->addAction(act);
+                for(const QString &item : qAsConst(clipboardHistory)){
+                    if(dataCount >= 3)
+                        break;
+                    clipboard_menu->addAction(item);
                     dataCount++;
                 }
 
@@ -1853,11 +1830,16 @@ void MainWindow::AddRecentProjects()
 
     if(RecentProjFile!="")
     {
+        ui->actionRecentProject->setEnabled(true);
         QAction *FileAction = new QAction(this);
         FileAction->setIconText("~"+ RecentProjFile);
         ui->menuRecent_Project->addAction(FileAction);
         connect(FileAction, &QAction::triggered, this , &MainWindow::on_action1_triggered);
     }
+    else{
+        ui->actionRecentProject->setEnabled(false);
+    }
+
     if(RecentProjFile2!="")
     {
         QAction *FileAction = new QAction(this);
@@ -1872,7 +1854,7 @@ void MainWindow::AddRecentProjects()
         ui->menuRecent_Project->addAction(FileAction);
         connect(FileAction, &QAction::triggered, this , &MainWindow::on_action3_triggered);
     }
-    ui->actionRecentProject->setEnabled(true);
+
 
     if(!ui->menuRecent_Project->isEmpty())
     {
@@ -6301,6 +6283,10 @@ void MainWindow::on_actionAdd_Image_triggered()
  */
 void MainWindow::on_actionResize_Image_triggered()
 {
+    if(curr_browser == nullptr){
+        return;
+    }
+
     //! gets the block position of the image in the current browser
     QTextBlock currentBlock = curr_browser->textCursor().block();
     QTextBlock::iterator it;
@@ -10274,11 +10260,12 @@ void MainWindow::e_d_features(bool value)
     ui->horizontalSlider->setEnabled(value);
     ui->actionComment->setEnabled(value);
     ui->actionOpen_Project->setEnabled(true);
-    ui->actionRecentProject->setEnabled(true);
+
     ui->actionFetch_2->setEnabled(true);
     ui->find->setEnabled(value);
     ui->pushButton_7->setEnabled(value);
-ui->pushButton_9->setEnabled(value);
+    ui->pushButton_9->setEnabled(value);
+
 }
 
 
@@ -10679,6 +10666,27 @@ void MainWindow::showWordCount(){
     form.addRow("Total Pages", page);
     form.addRow("Total Words",total_words);
     dialog->show();
+}
+
+void MainWindow::onClipboardDataChanged()
+{
+    QClipboard *clipboard = QApplication::clipboard();
+    const QMimeData *mimeData = clipboard->mimeData();
+
+    if (mimeData->hasText())
+    {
+        QString newText = mimeData->text();
+
+        if(!clipboardHistory.contains(newText)){
+            clipboardHistory.prepend(newText);
+
+            while (clipboardHistory.size() > 3)
+            {
+                QString item = clipboardHistory.takeLast();
+                qDebug() << item;
+            }
+        }
+    }
 }
 
 /*!
@@ -11264,19 +11272,15 @@ void MainWindow::on_actionClear_Menu_triggered()
     }
     else
     {
-        cout<<"else triggered"<<endl;
         RecentProjFile ="";
         settings.setValue("Project", "");
+        ui->actionRecentProject->setEnabled(false);
     }
     settings.setValue("Project2","");
     settings.setValue("Project3","");
     ui->menuRecent_Project->clear();
     isRecentProjclick = false;
-    //ui->menuRecent_Project->setEnabled(false);
-    ui->actionRecentProject->setEnabled(false);
-
     settings.endGroup();
-    qDebug()<<RecentProjFile<<endl;
 }
 
 
