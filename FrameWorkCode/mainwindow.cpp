@@ -531,6 +531,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     settings.endGroup();
 
     connect(QApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(onClipboardDataChanged()));
+    clipboardHistory = settings.value("clipboardHistory").toStringList();
 }
 
 /*!
@@ -7190,6 +7191,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
     markForReview.clear();
     recorrect.clear();
 
+    settings.setValue("clipboardHistory", clipboardHistory);
 
     //QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("login");
