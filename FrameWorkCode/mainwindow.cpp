@@ -846,7 +846,8 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
     if(ev->button() == Qt::RightButton){
         QPoint point_c = ev->pos();
-        if(ui->tabWidget->rect().contains(point_c) ){
+        qDebug()<<ui->tabWidget->currentWidget()->objectName();
+        if(ui->tabWidget->rect().contains(point_c) && ui->tabWidget->currentWidget()->objectName() == "tab"){
             ui->textEdit->setContextMenuPolicy(Qt::CustomContextMenu);
 
             QObject::connect(ui->textEdit, &QTextEdit::customContextMenuRequested, [=](const QPoint &pos) {
@@ -891,7 +892,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 menu.close();
             });
         }
-        else if(ui->textEdit_dict->rect().contains(point_c)){
+        else if(ui->tabWidget->rect().contains(point_c) && ui->tabWidget->currentWidget()->objectName() == "tab_3"){
             ui->textEdit_dict->setContextMenuPolicy(Qt::CustomContextMenu);
 
             QObject::connect(ui->textEdit_dict, &QTextEdit::customContextMenuRequested, [=](const QPoint &pos) {
