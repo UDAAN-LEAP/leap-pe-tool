@@ -531,6 +531,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     settings.endGroup();
 
     connect(QApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(onClipboardDataChanged()));
+    clipboardHistory = settings.value("clipboardHistory").toStringList();
 }
 
 /*!
@@ -845,7 +846,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
     if(ev->button() == Qt::RightButton){
         QPoint point_c = ev->pos();
-        if(ui->tabWidget->rect().contains(point_c) ){
+        if(ui->tabWidget->rect().contains(point_c)){
             ui->textEdit->setContextMenuPolicy(Qt::CustomContextMenu);
             ui->textEdit_dict->setContextMenuPolicy(Qt::CustomContextMenu);
             QMenu *menu = NULL;
@@ -7228,6 +7229,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
     markForReview.clear();
     recorrect.clear();
 
+    settings.setValue("clipboardHistory", clipboardHistory);
 
     //QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("login");
@@ -10523,20 +10525,18 @@ void MainWindow::on_actionDecrease_Indent_triggered()
 
 void MainWindow::on_actionIndentation_Options_triggered()
 {
-
     int left = 0, right = 0;
-    indentOptions i(this, &left, &right);
+    indentOptions *i = new indentOptions(this, &left, &right);
+    i->show();
 
-    if (i.exec() == QDialog::Accepted) {  // Check if the dialog was accepted
-
-        if (left + right <= 14) {
+    connect(i, &indentOptions::dialogAccepted, this, [=](){
+        if(left + right <= 14){
             on_actionIncrease_Indent_triggered(left, right);
         }
-    }
-
-
-
+        i->deleteLater();
+    });
 }
+
 /*!
  * \fn MainWindow::on_actionSpecial_Characters_triggered()
  * \brief This function displays the special symbol dialog
@@ -10627,7 +10627,7 @@ void MainWindow::onClipboardDataChanged()
             while (clipboardHistory.size() > 3)
             {
                 QString item = clipboardHistory.takeLast();
-                qDebug() << item;
+//                qDebug() << item;
             }
         }
     }
@@ -10915,6 +10915,10 @@ void MainWindow::update_tool(QString latestVersion){
                                                         "\n⚫ make", QMessageBox::Button::Ok);
 #endif
         QFile::remove(path);
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("update");
+        settings.setValue("version",latestVersion);
+        settings.endGroup();
         reply->deleteLater();
     });
     connect(reply, &QNetworkReply::downloadProgress, this, [&](qint64 bytesReceived, qint64 bytesTotal) {
@@ -11547,6 +11551,11 @@ QString MainWindow::check_for_updates(){
     QUrl url("https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/releases");
     QNetworkRequest request(url);               //requesting url over the network
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+
     QNetworkAccessManager nam;                  //sending network request
     QNetworkReply * reply = nam.get(request);
     while(true){
@@ -11568,7 +11577,7 @@ QString MainWindow::check_for_updates(){
         }
         QString latestVersion=json[0]["name"].toString();
         QString newFeatures = json[0]["body"].toString();
-        return latestVersion;
+        return "v4.2";
     }
     return "false";
 }
@@ -11730,6 +11739,12 @@ void MainWindow::on_actionComment_triggered()
 {
     if(!curr_browser || curr_browser->isReadOnly())
         return;
+
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    if(settings.value("loginConsent/consent").toString() != "loggedIn"){
+        QMessageBox::information(this, "Reminder", "You are not logged in. Please log in to access this feature.");
+        return;
+    }
 
     QTextCursor cursor = curr_browser->textCursor();
 

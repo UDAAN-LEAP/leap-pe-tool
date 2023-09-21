@@ -14,7 +14,9 @@ class indentOptions : public QDialog
 public:
     explicit indentOptions(QWidget *parent = nullptr, int * left = nullptr, int * right = nullptr);
     ~indentOptions();
-
+signals:
+    void dialogAccepted();
+    void dialogRejected();
 
 protected:
     void closeEvent(QCloseEvent* event) override;
