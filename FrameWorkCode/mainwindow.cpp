@@ -10684,7 +10684,7 @@ void MainWindow::onClipboardDataChanged()
             while (clipboardHistory.size() > 3)
             {
                 QString item = clipboardHistory.takeLast();
-                qDebug() << item;
+//                qDebug() << item;
             }
         }
     }
@@ -10972,6 +10972,10 @@ void MainWindow::update_tool(QString latestVersion){
                                                         "\n⚫ make", QMessageBox::Button::Ok);
 #endif
         QFile::remove(path);
+        QSettings settings("IIT-B", "OpenOCRCorrect");
+        settings.beginGroup("update");
+        settings.setValue("version",latestVersion);
+        settings.endGroup();
         reply->deleteLater();
     });
     connect(reply, &QNetworkReply::downloadProgress, this, [&](qint64 bytesReceived, qint64 bytesTotal) {
@@ -11604,6 +11608,11 @@ QString MainWindow::check_for_updates(){
     QUrl url("https://api.github.com/repos/UDAAN-LEAP/leap-pe-tool/releases");
     QNetworkRequest request(url);               //requesting url over the network
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+
     QNetworkAccessManager nam;                  //sending network request
     QNetworkReply * reply = nam.get(request);
     while(true){
@@ -11625,7 +11634,7 @@ QString MainWindow::check_for_updates(){
         }
         QString latestVersion=json[0]["name"].toString();
         QString newFeatures = json[0]["body"].toString();
-        return latestVersion;
+        return "v4.2";
     }
     return "false";
 }
