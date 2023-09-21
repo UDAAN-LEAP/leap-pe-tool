@@ -847,91 +847,35 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
         QPoint point_c = ev->pos();
         if(ui->tabWidget->rect().contains(point_c) ){
             ui->textEdit->setContextMenuPolicy(Qt::CustomContextMenu);
-
-            QObject::connect(ui->textEdit, &QTextEdit::customContextMenuRequested, [=](const QPoint &pos) {
-                QMenu menu;
-                QAction* copyAction = menu.addAction("Copy");
-                QAction* selectAllAction = menu.addAction("Select All");
-
-                QAction* selectedAction = menu.exec(ui->textEdit->mapToGlobal(pos));
-
-                if (selectedAction == copyAction)
-                {
-                    ui->textEdit->copy();
-                    QTextCursor cursor = ui->textEdit->textCursor();
-                    QString text = cursor.selectedText().toUtf8().constData();
-                    if(text!=""){
-                        QSettings settings("IIT-B", "OpenOCRCorrect");
-                        settings.beginGroup("Clipboard");
-                        QString s1,s2,s3;
-                        s1 = settings.value("copy1").toString();
-                        s2 = settings.value("copy2").toString();
-                        s3 = settings.value("copy3").toString();
-                        if(text == s1){
-                            settings.setValue("copy1",text);
-                        }
-                        else if(text == s2){
-                            settings.setValue("copy2",settings.value("copy1").toString());
-                            settings.setValue("copy1",text);
-                        }
-                        else{
-                            settings.setValue("copy3",settings.value("copy2").toString());
-                            settings.setValue("copy2",settings.value("copy1").toString());
-                            settings.setValue("copy1",text);
-                        }
-                        settings.endGroup();
-                    }
-                }
-                else if (selectedAction == selectAllAction)
-                {
-                    ui->textEdit->selectAll();
-                }
-
-                menu.close();
-            });
-        }
-        else if(ui->textEdit_dict->rect().contains(point_c)){
             ui->textEdit_dict->setContextMenuPolicy(Qt::CustomContextMenu);
+            QMenu *menu = NULL;
+            int index = ui->tabWidget->currentIndex();
+            if(index == 0) menu = ui->textEdit->createStandardContextMenu();
+            else if (index == 2) menu = ui->textEdit_dict->createStandardContextMenu();
+            QString menuStyle(
+                "QMenu::item{"
+                "background-color: rgb(255,255,255);"
+                "color: rgb(0,0,0);"
+                "}"
 
-            QObject::connect(ui->textEdit_dict, &QTextEdit::customContextMenuRequested, [=](const QPoint &pos) {
-                QMenu menu;
-                QAction* copyAction = menu.addAction("Copy");
-                QAction* selectAllAction = menu.addAction("Select All");
+                "QMenu::item:selected{"
+                "background-color: rgb(0, 85, 127);"
+                "color: rgb(255, 255, 255);"
+                "}"
+                "QMenu::item:disabled{"
+                "background-color: rgb(255, 255, 255);"
+                "color: rgb(128, 128, 128);"
+                "}"
+                );
 
-                QAction* selectedAction = menu.exec(ui->textEdit_dict->mapToGlobal(pos));
+            menu->setStyleSheet(menuStyle);
 
-                if (selectedAction == copyAction)
-                {
-                    ui->textEdit_dict->copy();
-                    QTextCursor cursor = ui->textEdit_dict->textCursor();
-                    QString text = cursor.selectedText().toUtf8().constData();
-                    if(text!=""){
-                        QSettings settings("IIT-B", "OpenOCRCorrect");
-                        settings.beginGroup("Clipboard");
-                        QString s1,s2,s3;
-                        s1 = settings.value("copy1").toString();
-                        s2 = settings.value("copy2").toString();
-                        s3 = settings.value("copy3").toString();
-                        if(text == s1){
-                            settings.setValue("copy1",text);
-                        }
-                        else if(text == s2){
-                            settings.setValue("copy2",settings.value("copy1").toString());
-                            settings.setValue("copy1",text);
-                        }
-                        else{
-                            settings.setValue("copy3",settings.value("copy2").toString());
-                            settings.setValue("copy2",settings.value("copy1").toString());
-                            settings.setValue("copy1",text);
-                        }
-                        settings.endGroup();
-                    }
-                }
-                else if (selectedAction == selectAllAction)
-                {
-                    ui->textEdit_dict->selectAll();
-                }
-            });
+
+            menu->exec(ev->globalPos());
+
+            menu->close();
+            menu->clear();
+            delete(menu);
 
         }
     }
