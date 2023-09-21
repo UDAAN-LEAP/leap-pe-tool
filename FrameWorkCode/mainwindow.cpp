@@ -11788,6 +11788,12 @@ void MainWindow::on_actionComment_triggered()
     if(!curr_browser || curr_browser->isReadOnly())
         return;
 
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    if(settings.value("loginConsent/consent").toString() != "loggedIn"){
+        QMessageBox::information(this, "Reminder", "You are not logged in. Please log in to access this feature.");
+        return;
+    }
+
     QTextCursor cursor = curr_browser->textCursor();
 
     QString text = cursor.selectedText().toUtf8().constData();
