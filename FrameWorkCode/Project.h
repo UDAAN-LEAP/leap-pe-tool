@@ -40,6 +40,7 @@ public:
     int GetGraphemesCount(QString string);
     int GetPageNumber(std::string localFilename, std::string *no, size_t *loc, QString *ext);
     static int clone(QString url_, QString path, LoadingSpinner* spinner);
+    QString describe_commit(QString mRole,QString commit_number);
 
 	~Project() {
 		for (auto p : mFiles) {

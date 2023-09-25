@@ -14742,7 +14742,12 @@ void MainWindow::on_actionCommit_History_triggered()
         tableWidget->setItem(i, 1, msgItem);
         tableWidget->setItem(i, 2, timestampItem);
     }
-
+    connect(tableWidget, &QTableWidget::itemClicked, commitWindow,[=](QTableWidgetItem * itm){
+        QString commit_num = tableWidget->item(itm->row(),0)->text();
+        QString description = mProject.describe_commit(mRole,commit_num);
+        ReleaseNote_Msg * releaseMsg = new ReleaseNote_Msg(commitWindow, description);
+        releaseMsg->show();
+    });
     commitWindow->setWindowTitle("Commit History");
     commitWindow->resize(800, 400);
     commitWindow->show();
