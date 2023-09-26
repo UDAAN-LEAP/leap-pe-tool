@@ -1403,6 +1403,7 @@ void MainWindow::on_actionEnglish_triggered()
 void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     //QString ProjFile;
 
+    QThread* workerThread = new QThread();
 
     int totalFileCountInDir = 0;
     QMap<QString, int> fileCountInDir;
@@ -1529,82 +1530,99 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         //!To lookout for changes in CorrectorOutput and VerifierOutput directory
         watcher.addPath(str1);
         watcher.addPath(str2);
+        qDebug() << "Starting workerThread";
+        qDebug() << "Current Thread ID:" << QThread::currentThreadId();
 
-        //!To Display tree view for Document
-        QDir cdir(str1);
 
-        Filter * filter = mProject.getFilter("CorrectorOutput");
-        //!Adds each file present in CorrectorOutput directory to treeView
-        auto list = cdir.entryList(QDir::Filter::Files);
-        QString t;
-        QStringList x;
-        for (auto f : list)
-        {
-            x = f.split(QRegExp("[.]"));
-            t = str1 + "/" + f;
-            if(x[1]=="html") {
-                QFile f2(t);
-                totalFileCountInDir++;
-                mProject.AddTemp(filter,f2,"");
+        QObject::connect(workerThread, &QThread::started, [&](){
+            qDebug() << "Inside the workerThread";
+            qDebug() << "Current Thread ID:" << QThread::currentThreadId();
+
+            //!To Display tree view for Document
+            QDir cdir(str1);
+
+            Filter * filter = mProject.getFilter("CorrectorOutput");
+            //!Adds each file present in CorrectorOutput directory to treeView
+            auto list = cdir.entryList(QDir::Filter::Files);
+            QString t;
+            QStringList x;
+            for (auto f : list)
+            {
+                x = f.split(QRegExp("[.]"));
+                t = str1 + "/" + f;
+                if(x[1]=="html") {
+                    QFile f2(t);
+                    totalFileCountInDir++;
+                    mProject.AddTemp(filter,f2,"");
+                }
+                corrector_set.insert(f);
             }
-            corrector_set.insert(f);
-        }
-        fileCountInDir["Corrector"] = totalFileCountInDir;
-        totalFileCountInDir = 0;
+            fileCountInDir["Corrector"] = totalFileCountInDir;
+            totalFileCountInDir = 0;
 
 
 
-        //!Adds each file present in VerifierOutput directory to treeView
-        cdir.setPath(str2);
+            //!Adds each file present in VerifierOutput directory to treeView
+            cdir.setPath(str2);
 
-        filter = mProject.getFilter("VerifierOutput");
-        list = cdir.entryList(QDir::Filter::Files);
-        for (auto f : list)
-        {
-            x= f.split(QRegExp("[.]"));
-            t= str2 + "/" + f;
-            if(x[1]=="html") {
+            filter = mProject.getFilter("VerifierOutput");
+            list = cdir.entryList(QDir::Filter::Files);
+            for (auto f : list)
+            {
+                x= f.split(QRegExp("[.]"));
+                t= str2 + "/" + f;
+                if(x[1]=="html") {
+                    QFile f2(t);
+                    totalFileCountInDir++;
+                    mProject.AddTemp(filter, f2, "");
+                }
+                verifier_set.insert(f);
+            }
+            fileCountInDir["Verifier"] = totalFileCountInDir;
+            totalFileCountInDir = 0;
+
+            filter = mProject.getFilter("Document");
+            //!Adds the files from inds folder to treeView
+            cdir.setPath(str3);
+
+            list = cdir.entryList(QDir::Filter::Files);
+            for (auto f : list)
+            {
+                t = str3 + "/" + f;
                 QFile f2(t);
                 totalFileCountInDir++;
                 mProject.AddTemp(filter, f2, "");
             }
-            verifier_set.insert(f);
-        }
-        fileCountInDir["Verifier"] = totalFileCountInDir;
-        totalFileCountInDir = 0;
+            fileCountInDir["Inds"] = totalFileCountInDir;
+            totalFileCountInDir = 0;
 
-        filter = mProject.getFilter("Document");
-        //!Adds the files from inds folder to treeView
-        cdir.setPath(str3);
+            //!To Display treeView for Image
+            filter = mProject.getFilter("Image");
 
-        list = cdir.entryList(QDir::Filter::Files);
-        for (auto f : list)
-        {
-            t = str3 + "/" + f;
-            QFile f2(t);
-            totalFileCountInDir++;
-            mProject.AddTemp(filter, f2, "");
-        }
-        fileCountInDir["Inds"] = totalFileCountInDir;
-        totalFileCountInDir = 0;
+            //!Adds the files from Image folder to treeView
+            cdir.setPath(str4);
 
-        //!To Display treeView for Image
-        filter = mProject.getFilter("Image");
+            list = cdir.entryList(QDir::Filter::Files);
+            for (auto f : list) {
+                t= str4 + "/" + f;
+                QFile f2(t);
+                totalFileCountInDir++;
+                mProject.AddTemp(filter, f2, "");
+            }
+            fileCountInDir["Image"] = totalFileCountInDir;
+            totalFileCountInDir = 0; // Resetting variable to 0
+            qDebug() << "workerThread work done!";
+            workerThread->quit();
+        });
 
-        //!Adds the files from Image folder to treeView
-        cdir.setPath(str4);
-
-        list = cdir.entryList(QDir::Filter::Files);
-        for (auto f : list) {
-            t= str4 + "/" + f;
-            QFile f2(t);
-            totalFileCountInDir++;
-            mProject.AddTemp(filter, f2, "");
-        }
-        fileCountInDir["Image"] = totalFileCountInDir;
-        totalFileCountInDir = 0; // Resetting variable to 0
+        QObject::connect(workerThread, &QThread::finished, workerThread, &QThread::deleteLater);
+        workerThread->start();
+        workerThread->wait();
 
         // Resizing scroll bar for project window
+
+        qDebug() << "Resuming the main thread!";
+        qDebug() << "Current Thread ID:" << QThread::currentThreadId();
 
         int maxFilesInDir = 0;
         for (auto fileCount : fileCountInDir.values())
@@ -10915,7 +10933,6 @@ void MainWindow::update_tool(QString latestVersion){
                                                         "\n⚫ make", QMessageBox::Button::Ok);
 #endif
         QFile::remove(path);
-        QSettings settings("IIT-B", "OpenOCRCorrect");
         settings.beginGroup("update");
         settings.setValue("version",latestVersion);
         settings.endGroup();
@@ -14743,7 +14760,6 @@ void MainWindow::on_actionCommit_History_triggered()
         tableWidget->setItem(i, 1, msgItem);
         tableWidget->setItem(i, 2, timestampItem);
     }
-
     QPushButton *addMore = new QPushButton("Show more");
     layout->addWidget(addMore);
 
@@ -14784,8 +14800,12 @@ void MainWindow::on_actionCommit_History_triggered()
         showLess->setEnabled(false);
     });
 
-
-
+    connect(tableWidget, &QTableWidget::itemClicked, commitWindow,[=](QTableWidgetItem * itm){
+        QString commit_num = tableWidget->item(itm->row(),0)->text();
+        QString description = mProject.describe_commit(mRole,commit_num);
+        ReleaseNote_Msg * releaseMsg = new ReleaseNote_Msg(commitWindow, description);
+        releaseMsg->show();
+    });
     commitWindow->setWindowTitle("Commit History");
     commitWindow->resize(800, 800);
     commitWindow->show();
