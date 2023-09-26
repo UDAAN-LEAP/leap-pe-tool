@@ -10915,7 +10915,6 @@ void MainWindow::update_tool(QString latestVersion){
                                                         "\n⚫ make", QMessageBox::Button::Ok);
 #endif
         QFile::remove(path);
-        QSettings settings("IIT-B", "OpenOCRCorrect");
         settings.beginGroup("update");
         settings.setValue("version",latestVersion);
         settings.endGroup();
