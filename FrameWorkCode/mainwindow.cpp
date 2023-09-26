@@ -14691,7 +14691,8 @@ void MainWindow::on_actionCommit_History_triggered()
 
     int i=0;
     int count=0;
-    int maxCommits = 10;
+    int maxCommits = 20;
+    int showInitially = 10;
 
     QVector<QString> commitHashV;
     QVector<QString> commitMsgV;
@@ -14722,14 +14723,14 @@ void MainWindow::on_actionCommit_History_triggered()
     QVBoxLayout* layout = new QVBoxLayout;
     commitWindow->setLayout(layout);
 
-    QTableWidget* tableWidget = new QTableWidget(maxCommits, 3);
+    QTableWidget* tableWidget = new QTableWidget(showInitially, 3);
 
     tableWidget->setHorizontalHeaderLabels({ "Commit Hash", "Commit Text", "Date and Time" });
     tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     layout->addWidget(tableWidget);
 
-    for (int i = 0; i < maxCommits; i++) {
+    for (int i = 0; i < showInitially; i++) {
         QTableWidgetItem* hashItem = new QTableWidgetItem(commitHashV[i]);
         QTableWidgetItem* msgItem = new QTableWidgetItem(commitMsgV[i]);
         QTableWidgetItem* timestampItem = new QTableWidgetItem(commitDateV[i]);
@@ -14743,8 +14744,50 @@ void MainWindow::on_actionCommit_History_triggered()
         tableWidget->setItem(i, 2, timestampItem);
     }
 
+    QPushButton *addMore = new QPushButton("Show more");
+    layout->addWidget(addMore);
+
+    QPushButton *showLess = new QPushButton("Show less");
+    layout->addWidget(showLess);
+    showLess->setVisible(false);
+    showLess->setEnabled(false);
+
+    connect(addMore,  &QPushButton::clicked, [=] () {
+        for (int i = 10; (i < 20 && i<commitHashV.size()); i++) {
+            tableWidget->insertRow(i);
+            QTableWidgetItem* hashItem = new QTableWidgetItem(commitHashV[i]);
+            QTableWidgetItem* msgItem = new QTableWidgetItem(commitMsgV[i]);
+            QTableWidgetItem* timestampItem = new QTableWidgetItem(commitDateV[i]);
+
+            hashItem->setFlags(hashItem->flags() ^ Qt::ItemIsEditable);
+            msgItem->setFlags(msgItem->flags() ^ Qt::ItemIsEditable);
+            timestampItem->setFlags(timestampItem->flags() ^ Qt::ItemIsEditable);
+
+            tableWidget->setItem(i, 0, hashItem);
+            tableWidget->setItem(i, 1, msgItem);
+            tableWidget->setItem(i, 2, timestampItem);
+        }
+        addMore->setVisible(false);
+        addMore->setEnabled(false);
+        showLess->setVisible(true);
+        showLess->setEnabled(true);
+    });
+
+    connect(showLess,  &QPushButton::clicked, [=] () {
+        int rowCount = tableWidget->rowCount();
+        for(int i=rowCount-1 ; i>=10 ; i--){
+            tableWidget->removeRow(i);
+        }
+        addMore->setVisible(true);
+        addMore->setEnabled(true);
+        showLess->setVisible(false);
+        showLess->setEnabled(false);
+    });
+
+
+
     commitWindow->setWindowTitle("Commit History");
-    commitWindow->resize(800, 400);
+    commitWindow->resize(800, 800);
     commitWindow->show();
     reply->deleteLater();
 
