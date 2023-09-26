@@ -10916,6 +10916,7 @@ void MainWindow::update_tool(QString latestVersion){
         settings.endGroup();
 
 #else
+        QSettings settings("IIT-B", "OpenOCRCorrect");
         QProcess* process = new QProcess(this);
         QString command = "tar -xJf " + path + " -C " + output;
         process->start("/bin/sh", QStringList() << "-c" << command);
