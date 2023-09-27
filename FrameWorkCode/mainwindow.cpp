@@ -4297,28 +4297,50 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         {
             if(curr_browser != NULL){
 
-                curr_browser->setStyleSheet(R"(CustomTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}QScrollBar:vertical {
+                curr_browser->setStyleSheet(R"(CustomTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}
+                            QScrollBar:vertical {
                                             border: none;
                                             background: white;
-                                        }
-QScrollBar::handle:vertical {
+                            }
+                            QScrollBar::handle:vertical {
                                             background-color:  rgba(1, 22, 51, 0.5);
                                             min-height: 50px;
                                               max-height: 300px;
                                                     border: 0px solid red;
                                                     border-radius:4.905px;
-                                        }
-QScrollBar::add-line:vertical {
-                        height: 0px;
-                        subcontrol-position: bottom;
-                        subcontrol-origin: margin;
-
-                    }
-QScrollBar::sub-line:vertical {
-                        height: 0 px;
-                        subcontrol-position: top;
-                        subcontrol-origin: margin;
-                    })");
+                            }
+                            QScrollBar::add-line:vertical {
+                                height: 0px;
+                                subcontrol-position: bottom;
+                                subcontrol-origin: margin;
+                            }
+                            QScrollBar::sub-line:vertical {
+                                height: 0 px;
+                                subcontrol-position: top;
+                                subcontrol-origin: margin;
+                            }
+                            QScrollBar:horizontal {
+                                            border: none;
+                                            background: white;
+                            }
+                            QScrollBar::handle:horizontal {
+                                            background-color:  rgba(1, 22, 51, 0.5);
+                                            min-height: 50px;
+                                              max-height: 300px;
+                                                    border: 0px solid red;
+                                                    border-radius:4.905px;
+                            }
+                            QScrollBar::add-line:horizontal {
+                                height: 0px;
+                                subcontrol-position: bottom;
+                                subcontrol-origin: margin;
+                            }
+                            QScrollBar::sub-line:horizontal {
+                                height: 0 px;
+                                subcontrol-position: top;
+                                subcontrol-origin: margin;
+                            }
+)");
             }
         }
     }
