@@ -212,6 +212,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <string notr="true">background-color: rgb(255, 255, 255); color: black;
 font-size:30px;</string>
          </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>

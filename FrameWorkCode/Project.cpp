@@ -1840,6 +1840,13 @@ int Project::findNumberOfFilesInDirectory(std::string path)
 }
 #endif
 
+/*!
+ * \fn Project::describe_commit
+ * \brief Returns the names of changed files in the particular commit number
+ * \details It is equivalent to "git show --name-only {commit number}" command on git bash
+ * \param mRole, commit_number
+ * \return QString 
+ */
 QString Project::describe_commit(QString mRole,QString commit_number)
 {
     QByteArray array = commit_number.toLocal8Bit();

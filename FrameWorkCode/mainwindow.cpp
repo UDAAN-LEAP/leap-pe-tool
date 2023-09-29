@@ -4297,28 +4297,50 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         {
             if(curr_browser != NULL){
 
-                curr_browser->setStyleSheet(R"(CustomTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}QScrollBar:vertical {
+                curr_browser->setStyleSheet(R"(CustomTextBrowser{selection-background-color: #3297fd; selection-color: #ffffff;}
+                            QScrollBar:vertical {
                                             border: none;
                                             background: white;
-                                        }
-QScrollBar::handle:vertical {
+                            }
+                            QScrollBar::handle:vertical {
                                             background-color:  rgba(1, 22, 51, 0.5);
                                             min-height: 50px;
                                               max-height: 300px;
                                                     border: 0px solid red;
                                                     border-radius:4.905px;
-                                        }
-QScrollBar::add-line:vertical {
-                        height: 0px;
-                        subcontrol-position: bottom;
-                        subcontrol-origin: margin;
-
-                    }
-QScrollBar::sub-line:vertical {
-                        height: 0 px;
-                        subcontrol-position: top;
-                        subcontrol-origin: margin;
-                    })");
+                            }
+                            QScrollBar::add-line:vertical {
+                                height: 0px;
+                                subcontrol-position: bottom;
+                                subcontrol-origin: margin;
+                            }
+                            QScrollBar::sub-line:vertical {
+                                height: 0 px;
+                                subcontrol-position: top;
+                                subcontrol-origin: margin;
+                            }
+                            QScrollBar:horizontal {
+                                            border: none;
+                                            background: white;
+                            }
+                            QScrollBar::handle:horizontal {
+                                            background-color:  rgba(1, 22, 51, 0.5);
+                                            min-height: 50px;
+                                              max-height: 300px;
+                                                    border: 0px solid red;
+                                                    border-radius:4.905px;
+                            }
+                            QScrollBar::add-line:horizontal {
+                                height: 0px;
+                                subcontrol-position: bottom;
+                                subcontrol-origin: margin;
+                            }
+                            QScrollBar::sub-line:horizontal {
+                                height: 0 px;
+                                subcontrol-position: top;
+                                subcontrol-origin: margin;
+                            }
+)");
             }
         }
     }
@@ -14745,7 +14767,50 @@ void MainWindow::on_actionCommit_History_triggered()
     tableWidget->setHorizontalHeaderLabels({ "Commit Hash", "Commit Text", "Date and Time" });
     tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
+    QComboBox* filterComboBox = new QComboBox;
+    filterComboBox->addItem("All Commits");
+    filterComboBox->addItem("Corrector Commits");
+    filterComboBox->addItem("Verifier Commits");
+
+    layout->addWidget(filterComboBox);
     layout->addWidget(tableWidget);
+
+    connect(filterComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
+        QString filterType = filterComboBox->currentText();
+        QVector<QString> filteredCommitHashV;
+        QVector<QString> filteredCommitMsgV;
+        QVector<QString> filteredCommitDateV;
+
+        for (int i = 0; i < commitHashV.size(); i++) {
+            QString msg = commitMsgV[i];
+
+            if (filterType == "All Commits" ||
+                (filterType == "Corrector Commits" && msg.contains("completed by Corrector")) ||
+                (filterType == "Verifier Commits" && msg.contains("completed by Verifier"))) {
+                filteredCommitHashV.append(commitHashV[i]);
+                filteredCommitMsgV.append(msg);
+                filteredCommitDateV.append(commitDateV[i]);
+            }
+        }
+
+        tableWidget->setRowCount(0);
+
+        int numRows = qMin(showInitially, filteredCommitHashV.size());
+        tableWidget->setRowCount(numRows);
+        for (int i = 0; i < numRows; i++) {
+            QTableWidgetItem* hashItem = new QTableWidgetItem(filteredCommitHashV[i]);
+            QTableWidgetItem* msgItem = new QTableWidgetItem(filteredCommitMsgV[i]);
+            QTableWidgetItem* timestampItem = new QTableWidgetItem(filteredCommitDateV[i]);
+
+            hashItem->setFlags(hashItem->flags() ^ Qt::ItemIsEditable);
+            msgItem->setFlags(msgItem->flags() ^ Qt::ItemIsEditable);
+            timestampItem->setFlags(timestampItem->flags() ^ Qt::ItemIsEditable);
+
+            tableWidget->setItem(i, 0, hashItem);
+            tableWidget->setItem(i, 1, msgItem);
+            tableWidget->setItem(i, 2, timestampItem);
+        }
+    });
 
     for (int i = 0; i < showInitially; i++) {
         QTableWidgetItem* hashItem = new QTableWidgetItem(commitHashV[i]);
