@@ -14709,14 +14709,13 @@ void MainWindow::on_actionCommit_History_triggered()
 
     int i=0;
     int count=0;
-    int maxCommits = 20;
     int showInitially = 10;
 
     QVector<QString> commitHashV;
     QVector<QString> commitMsgV;
     QVector<QString> commitDateV;
 
-    while(count<maxCommits && i < jsonObjects.size() ){
+    while(i < jsonObjects.size() ){
 
         QString msg = jsonObjects[i]["commit"].toObject()["message"].toString();
 
@@ -14770,7 +14769,7 @@ void MainWindow::on_actionCommit_History_triggered()
     showLess->setEnabled(false);
 
     connect(addMore,  &QPushButton::clicked, [=] () {
-        for (int i = 10; (i < 20 && i<commitHashV.size()); i++) {
+        for (int i = 10; (i<commitHashV.size()); i++) {
             tableWidget->insertRow(i);
             QTableWidgetItem* hashItem = new QTableWidgetItem(commitHashV[i]);
             QTableWidgetItem* msgItem = new QTableWidgetItem(commitMsgV[i]);
@@ -14808,7 +14807,7 @@ void MainWindow::on_actionCommit_History_triggered()
         releaseMsg->show();
     });
     commitWindow->setWindowTitle("Commit History");
-    commitWindow->resize(800, 800);
+    commitWindow->resize(800, 400);
     commitWindow->show();
     reply->deleteLater();
 
