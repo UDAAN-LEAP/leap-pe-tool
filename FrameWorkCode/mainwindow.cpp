@@ -14768,7 +14768,50 @@ void MainWindow::on_actionCommit_History_triggered()
     tableWidget->setHorizontalHeaderLabels({ "Commit Hash", "Commit Text", "Date and Time" });
     tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
+    QComboBox* filterComboBox = new QComboBox;
+    filterComboBox->addItem("All Commits");
+    filterComboBox->addItem("Corrector Commits");
+    filterComboBox->addItem("Verifier Commits");
+
+    layout->addWidget(filterComboBox);
     layout->addWidget(tableWidget);
+
+    connect(filterComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
+        QString filterType = filterComboBox->currentText();
+        QVector<QString> filteredCommitHashV;
+        QVector<QString> filteredCommitMsgV;
+        QVector<QString> filteredCommitDateV;
+
+        for (int i = 0; i < commitHashV.size(); i++) {
+            QString msg = commitMsgV[i];
+
+            if (filterType == "All Commits" ||
+                (filterType == "Corrector Commits" && msg.contains("completed by Corrector")) ||
+                (filterType == "Verifier Commits" && msg.contains("completed by Verifier"))) {
+                filteredCommitHashV.append(commitHashV[i]);
+                filteredCommitMsgV.append(msg);
+                filteredCommitDateV.append(commitDateV[i]);
+            }
+        }
+
+        tableWidget->setRowCount(0);
+
+        int numRows = qMin(showInitially, filteredCommitHashV.size());
+        tableWidget->setRowCount(numRows);
+        for (int i = 0; i < numRows; i++) {
+            QTableWidgetItem* hashItem = new QTableWidgetItem(filteredCommitHashV[i]);
+            QTableWidgetItem* msgItem = new QTableWidgetItem(filteredCommitMsgV[i]);
+            QTableWidgetItem* timestampItem = new QTableWidgetItem(filteredCommitDateV[i]);
+
+            hashItem->setFlags(hashItem->flags() ^ Qt::ItemIsEditable);
+            msgItem->setFlags(msgItem->flags() ^ Qt::ItemIsEditable);
+            timestampItem->setFlags(timestampItem->flags() ^ Qt::ItemIsEditable);
+
+            tableWidget->setItem(i, 0, hashItem);
+            tableWidget->setItem(i, 1, msgItem);
+            tableWidget->setItem(i, 2, timestampItem);
+        }
+    });
 
     for (int i = 0; i < showInitially; i++) {
         QTableWidgetItem* hashItem = new QTableWidgetItem(commitHashV[i]);
