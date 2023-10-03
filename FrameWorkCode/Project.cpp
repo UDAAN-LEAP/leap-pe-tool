@@ -1856,8 +1856,7 @@ QString Project::describe_commit(QString mRole,QString commit_number)
 
     int error = git_revparse_single((git_object **)&commit, repo, commit_no);
     if (error < 0) {
-        fprintf(stderr, "Error parsing commit: %s\n", git_error_last()->message);
-        git_repository_free(repo);
+        qDebug() << "Error parsing commit: " << git_error_last()->message;
         return changedFiles;
     }
 

@@ -14646,6 +14646,12 @@ void MainWindow::on_actionUpdate_History_triggered()
 
 void MainWindow::on_actionCommit_History_triggered()
 {
+    // Reminds the user to log in first to use the feature if not currently logged in.
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    if(settings.value("loginConsent/consent").toString() != "loggedIn"){
+        QMessageBox::information(this, "Reminder", "You are not logged in. Please log in to access this feature.");
+        return;
+    }
 
     QDir directory(gDirTwoLevelUp);
 
