@@ -9315,6 +9315,10 @@ void MainWindow::login(){
 
     form.addRow("Email",email);
     form.addRow("Password",password);
+
+    QCheckBox* showPasswordCheckBox = new QCheckBox("Show Password", &login);
+    form.addRow("", showPasswordCheckBox);
+
     QLabel *label = new QLabel(&login);
     label->setText("Forgot your password?\t<a href=\"https://udaaniitb.aicte-india.org/udaan/accounts/password_reset/\"> reset password</a>");
     QLabel *label2 = new QLabel(&login);
@@ -9333,6 +9337,16 @@ void MainWindow::login(){
     QObject::connect(&buttonbox,SIGNAL(accepted()),&login,SLOT(accept()));
     QObject::connect(&buttonbox,SIGNAL(rejected()),&login,SLOT(reject()));
     QSettings settings("IIT-B", "OpenOCRCorrect");
+
+    // Makes the passwords visible in the login dialog box if the checkbox is checked
+    QObject::connect(showPasswordCheckBox, &QCheckBox::stateChanged, this, [=](){
+        if(showPasswordCheckBox->isChecked()){
+            password->setEchoMode(QLineEdit::Normal);
+        }
+        else{
+            password->setEchoMode(QLineEdit::Password);
+        }
+    });
 
     if(login.exec() ==QDialog::Accepted){
         user_email = email->text();
