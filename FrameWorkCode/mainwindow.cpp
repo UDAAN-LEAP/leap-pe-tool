@@ -842,45 +842,6 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
     bool isLink = false;
 
-
-
-    if(ev->button() == Qt::RightButton){
-        QPoint point_c = ev->pos();
-        if(ui->tabWidget->rect().contains(point_c)){
-            ui->textEdit->setContextMenuPolicy(Qt::CustomContextMenu);
-            ui->textEdit_dict->setContextMenuPolicy(Qt::CustomContextMenu);
-            QMenu *menu = NULL;
-            int index = ui->tabWidget->currentIndex();
-            if(index == 0) menu = ui->textEdit->createStandardContextMenu();
-            else if (index == 2) menu = ui->textEdit_dict->createStandardContextMenu();
-            QString menuStyle(
-                "QMenu::item{"
-                "background-color: rgb(255,255,255);"
-                "color: rgb(0,0,0);"
-                "}"
-
-                "QMenu::item:selected{"
-                "background-color: rgb(0, 85, 127);"
-                "color: rgb(255, 255, 255);"
-                "}"
-                "QMenu::item:disabled{"
-                "background-color: rgb(255, 255, 255);"
-                "color: rgb(128, 128, 128);"
-                "}"
-                );
-
-            menu->setStyleSheet(menuStyle);
-
-
-            menu->exec(ev->globalPos());
-
-            menu->close();
-            menu->clear();
-            delete(menu);
-
-        }
-    }
-
     if(!(px>=topLeftx && px<=botRightx &&  py>=150 /*&& py<(botRighty)*/)) return;
     if (curr_browser)
     {
