@@ -4719,75 +4719,7 @@ void MainWindow::saveImageRegion(QPixmap cropped, QString a, QString s1,int z, i
  */
 void MainWindow::on_pushButton_2_clicked()
 {
-    if(!curr_browser) return;
-
-    auto cursor = curr_browser->textCursor();
-    auto selected = cursor.selection();
-    QString sel = selected.toHtml();
-    QRegularExpression rex("<img(.*?)>",QRegularExpression::DotMatchesEverythingOption);
-    //    QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
-    QRegularExpressionMatchIterator itr;
-    itr = rex.globalMatch(sel);
-    int height=0;
-    int width=0;
-    if(!sel.contains("<img")){
-        QMessageBox::critical(this,"Error","Image Not selected");
-        return;
-    }
-    QDialog dialog(this);
-    QFormLayout form(&dialog);
-
-    form.addRow(new QLabel("Insert Height and Width",this));
-
-    QLineEdit *height_textLine= new QLineEdit(&dialog);
-    QLineEdit *width_textLine= new QLineEdit(&dialog);
-
-    form.addRow("Height",height_textLine);
-    form.addRow("Width",width_textLine);
-
-    QDialogButtonBox buttonbox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
-    form.addRow(&buttonbox);
-
-    QObject::connect(&buttonbox,SIGNAL(accepted()),&dialog,SLOT(accept()));
-    QObject::connect(&buttonbox,SIGNAL(rejected()),&dialog,SLOT(reject()));
-
-    if(dialog.exec() ==QDialog::Accepted){
-        height=height_textLine->text().toInt();
-        width=width_textLine->text().toInt();
-    }
-
-    while(itr.hasNext())
-    {
-        QRegularExpressionMatch match = itr.next();
-        QString ex = match.captured(1);
-        string str = ex.toStdString();
-        int ind = str.find("src=");
-        ind+=5;
-        int start = ind;
-        int end = 0;
-
-        if (str.find(".jpg") != -1) {
-            end = str.find(".jpg");
-            end += 3;
-        } else if (str.find(".png") != -1) {
-            end = str.find(".png");
-            end += 3;
-        } else if (str.find(".jpeg") != -1) {
-            end = str.find(".jpeg");
-            end += 4;
-        } else {
-            qDebug() << "File extension not recognisable";
-        }
-
-        str = str.substr(start,end-start+1);
-        QString imgname = QString::fromStdString(str);
-
-        if(height>0 && width>0)
-        {
-            QString html = QString("\n <img src='%1' width='%2' height='%3'>").arg(imgname).arg(width).arg(height);
-            cursor.insertHtml(html);      //insert new image with modified attributes height and width
-        }
-    }
+    on_actionResize_Image_triggered();
 }
 
 /*!
