@@ -3169,6 +3169,10 @@ background-color: #EEF0F2;
    </property>
   </action>
   <action name="actionCommit_History">
+   <property name="icon">
+    <iconset resource="AppResources.qrc">
+     <normaloff>:/Images/Resources/sync_history.png</normaloff>:/Images/Resources/sync_history.png</iconset>
+   </property>
    <property name="text">
     <string>Sync History</string>
    </property>
