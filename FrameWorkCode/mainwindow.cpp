@@ -4136,7 +4136,9 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 
     if ( (e->key() == Qt::Key_C)  && QApplication::keyboardModifiers() == Qt::ControlModifier)
     {
-        cout<<"hey"<<endl;
+        if(!curr_browser || curr_browser->isReadOnly())
+            return;
+
         QTextCursor cursor = curr_browser->textCursor();
         QString text = cursor.selectedText().toUtf8().constData();
         if(text!=""){
