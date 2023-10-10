@@ -888,11 +888,16 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
                 clipboard_menu->clear();
                 int dataCount = 0;
+                QRegularExpression pattern("^\\s+$");
+
                 for(const QString &item : qAsConst(clipboardHistory)){
+                    QRegularExpressionMatch match = pattern.match(item);
                     if(dataCount >= 3)
                         break;
-                    clipboard_menu->addAction(item);
-                    dataCount++;
+                    if(!(match.hasMatch())){
+                        clipboard_menu->addAction(item);
+                        dataCount++;
+                    }
                 }
 
                 if (dataCount == 0) {
@@ -995,23 +1000,21 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             translate_menu->setFont(font);
             clipboard_menu->setFont(font);
 
-            QSettings settings("IIT-B", "OpenOCRCorrect");
-            settings.beginGroup("Clipboard");
-            QString s1 = settings.value("copy1").toString();
-            QString s2 = settings.value("copy2").toString();
-            QString s3 = settings.value("copy3").toString();
-            settings.endGroup();
-            act = new QAction(s1,clipboard_menu);
-            clipboard_menu->addAction(act);
-            clipboard_menu->addSeparator();
-            act = new QAction(s2,clipboard_menu);
-            clipboard_menu->addAction(act);
-            clipboard_menu->addSeparator();
-            act = new QAction(s3,clipboard_menu);
-            clipboard_menu->addAction(act);
+            QRegularExpression pattern("^\\s+$");
+            int dataCount=0;
 
-
+            for(const QString &item : qAsConst(clipboardHistory)){
+                QRegularExpressionMatch match = pattern.match(item);
+                if(dataCount >= 3)
+                        break;
+                if(!(match.hasMatch())){
+                        clipboard_menu->addAction(item);
+                        clipboard_menu->addSeparator();
+                        dataCount++;
+                }
+            }
             popup_menu->insertSeparator(popup_menu->actions()[1]);
+
             if(isLink){
                 popup_menu->insertMenu(popup_menu->actions()[1], translate_menu);
                 popup_menu->insertMenu(popup_menu->actions()[2], clipboard_menu);
@@ -7164,9 +7167,13 @@ void MainWindow::closeEvent (QCloseEvent *event)
     markForReview.clear();
     recorrect.clear();
 
+    while (clipboardHistory.size() > 3)
+    {
+        clipboardHistory.takeLast();
+    }
+
     settings.setValue("clipboardHistory", clipboardHistory);
 
-    //QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
     settings.endGroup();
@@ -10569,15 +10576,9 @@ void MainWindow::onClipboardDataChanged()
     if (mimeData->hasText())
     {
         QString newText = mimeData->text();
-
-        if(!clipboardHistory.contains(newText)){
+        newText = newText.trimmed();
+        if(newText != "" && !clipboardHistory.contains(newText)){
             clipboardHistory.prepend(newText);
-
-            while (clipboardHistory.size() > 3)
-            {
-                QString item = clipboardHistory.takeLast();
-//                qDebug() << item;
-            }
         }
     }
 }
