@@ -532,6 +532,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     connect(QApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(onClipboardDataChanged()));
     clipboardHistory = settings.value("clipboardHistory").toStringList();
+
+    ui->corrected->setEnabled(true);
+    ui->verified->setEnabled(true);
+    ui->mark_review->setEnabled(true);
 }
 
 /*!
@@ -1409,22 +1413,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     }
 
 
-    //    correct.clear();
-    //    verify.clear();
-    //    markForReview.clear();
-    //    ui->status->setVisible(true);
-
-    //    if(mRole == "Corrector"){
-    //        ui->corrected->setVisible(true);
-    //        ui->corrected->setEnabled(true);
-    //    }
-
-    //    if(mRole == "Verifier"){
-    //        ui->verified->setVisible(true);
-    //        ui->mark_review->setVisible(true);
-    //        ui->verified->setEnabled(true);
-    //        ui->mark_review->setEnabled(true);
-    //    }
+        correct.clear();
+        verify.clear();
+        markForReview.clear();
 
 
     if (result != 0) {
@@ -10168,6 +10159,15 @@ void MainWindow::e_d_features(bool value)
     ui->pushButton_7->setEnabled(value);
     ui->pushButton_9->setEnabled(value);
 
+    ui->status->setVisible(false);
+    if(mRole == "Corrector"){
+        ui->corrected->setVisible(true);
+    }
+
+    if(mRole == "Verifier"){
+        ui->verified->setVisible(true);
+        ui->mark_review->setVisible(true);
+    }
 }
 
 
