@@ -1695,8 +1695,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
     //    read_recorrected_pages();
     //    read_review_pages();
-    //    read_corrected_pages();
-    //    read_verified_pages();
+        read_corrected_pages();
+        read_verified_pages();
 
     //    //<<<<<<Change
     //    pageStatusHandler();
@@ -7157,8 +7157,8 @@ void MainWindow::closeEvent (QCloseEvent *event)
     }
 
 
-    //    write_verified_pages();
-    //    write_corrected_pages();
+        write_verified_pages();
+        write_corrected_pages();
     //    write_review_pages();
     //    write_recorrected_pages();
 
@@ -8965,8 +8965,8 @@ void MainWindow::on_actionClose_project_triggered()
     AddRecentProjects();
 
 
-    //    write_verified_pages();
-    //    write_corrected_pages();
+        write_verified_pages();
+        write_corrected_pages();
     //    write_review_pages();
     //    write_recorrected_pages();
 
@@ -9173,8 +9173,8 @@ void MainWindow::on_actionEdit_Equation_triggered()
 void MainWindow::on_actionExit_triggered()
 {
 
-    //    write_verified_pages();
-    //    write_corrected_pages();
+        write_verified_pages();
+        write_corrected_pages();
     //    write_review_pages();
     //    write_recorrected_pages();
 
@@ -10931,108 +10931,74 @@ void MainWindow::on_mark_review_clicked()
     }
 }
 
-
+/*!
+ * \fn MainWindow::write_corrected_pages
+ * \brief This function will write the entries to QSettings from the QMap
+ */
 void MainWindow::write_corrected_pages(){
-    QString directory = mProject.GetDir().absolutePath();
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("CorrectedPages");
+    settings.beginGroup(gCurrentBookName);
 
-    //Logs folder
-    QString folder = directory + "/logs";
-
-    if(!QDir(folder).exists()){
-        QDir(gDirTwoLevelUp).mkdir("logs");
-    }
-
-    QString file = folder + "/corrected_page.txt";
-
-    QFile f(file);
-    f.remove();
-
-    if(f.open(QIODevice::WriteOnly)){
-        QTextStream outputStream(&f);
-        QString string;
-        QMapIterator<QString , int>i(correct);
-        while(i.hasNext()){
-            i.next();
-            string = i.key();
-
-            if(i.value() != 0){
-                outputStream << string << endl;
-            }
-        }
-        f.close();
-    }
+    QStringList pageNames = correct.keys();
+    settings.setValue("Page Names", pageNames);
+    settings.endGroup();
+    settings.endGroup();
 }
 
 /*!
  * \fn MainWindow::read_corrected_pages
- * \brief This function will read the entries from the text file and store it in the QMap
+ * \brief This function will read the entries from the QSettings and store it in the QMap
 */
 void MainWindow::read_corrected_pages(){
-    QString fstring = mProject.GetDir().absolutePath() + "/logs/corrected_page.txt";
-    QFile f(fstring);
-    if(!f.open(QIODevice::ReadOnly))
-        return;
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("CorrectedPages");
+    settings.beginGroup(gCurrentBookName);
 
-    QTextStream in(&f);
-    while(!in.atEnd()) {
-        QString line = in.readLine();
-        if(!line.contains(".html"))continue;
+    QStringList pageNames = settings.value("Page Names").toStringList();
 
-        correct[line] = 1;
+    foreach(const QString &pageName, pageNames){
+        correct[pageName] = 1;
+        qDebug() << pageName;
     }
-    f.close();
 
-
+    settings.endGroup();
+    settings.endGroup();
 }
 
+/*!
+ * \fn MainWindow::write_verified_pages
+ * \brief This function will write the entries to QSettings from the QMap
+ */
 void MainWindow::write_verified_pages(){
-    QString directory = mProject.GetDir().absolutePath();
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("VerifiedPages");
+    settings.beginGroup(gCurrentBookName);
 
-    //Logs folder
-    QString folder = directory + "/logs";
-
-    if(!QDir(folder).exists()){
-        QDir(gDirTwoLevelUp).mkdir("logs");
-    }
-
-    QString file = folder + "/verified_page.txt";
-
-    QFile f(file);
-    f.remove();
-
-    if(f.open(QIODevice::WriteOnly)){
-        QTextStream outputStream(&f);
-        QString string;
-        QMapIterator<QString , int>i(verify);
-        while(i.hasNext()){
-            i.next();
-            string = i.key();
-            if(i.value() != 0){
-                outputStream << string << endl;
-            }
-
-        }
-        f.close();
-    }
+    QStringList pageNames = verify.keys();
+    settings.setValue("Page Names", pageNames);
+    settings.endGroup();
+    settings.endGroup();
 }
 
 /*!
  * \fn MainWindow::read_verified_pages
- * \brief This function will read the entries from the text file and store it in the QMap
+ * \brief This function will read the entries from the QSettings and store it in the QMap
 */
 void MainWindow::read_verified_pages(){
-    QString fstring = mProject.GetDir().absolutePath() + "/logs/verified_page.txt";
-    QFile f(fstring);
-    if(!f.open(QIODevice::ReadOnly))
-        return;
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("VerifiedPages");
+    settings.beginGroup(gCurrentBookName);
 
-    QTextStream in(&f);
-    while(!in.atEnd()) {
-        QString line = in.readLine();
-        if(!line.contains(".html"))continue;
-        verify[line] = 1;
+    QStringList pageNames = settings.value("Page Names").toStringList();
+
+    foreach(const QString &pageName, pageNames){
+        correct[pageName] = 1;
+        qDebug() << pageName;
     }
-    f.close();
+
+    settings.endGroup();
+    settings.endGroup();
 }
 
 /*!
