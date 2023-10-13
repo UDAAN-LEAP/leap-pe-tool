@@ -626,6 +626,10 @@ private slots:
 
     void on_pushButton_9_clicked();
 
+    void on_corrected_stateChanged(int arg1);
+
+    void on_verified_stateChanged(int arg1);
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
