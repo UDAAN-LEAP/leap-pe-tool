@@ -6263,11 +6263,7 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 
     QSettings settings("IIT-B", "OpenOCRCorrect");
     if(mRole == "Corrector"){
-        settings.beginGroup("CorrectedPages");
-        settings.beginGroup(gCurrentBookName);
-        QStringList pageNames = settings.value("Page Names").toStringList();
-        settings.endGroup();
-        settings.endGroup();
+        QStringList pageNames = correct.keys();
         if(pageNames.contains(name)){
             ui->corrected->setChecked(true);
             on_corrected_stateChanged(2);
@@ -6277,19 +6273,20 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
             on_corrected_stateChanged(0);
         }
     }
-
-    if(mRole == "Verifier"){
-        settings.beginGroup("VerifiedPages");
-        settings.beginGroup(gCurrentBookName);
-        QStringList pageNames = settings.value("Page Names").toStringList();
-        settings.endGroup();
-        settings.endGroup();
+    else if(mRole == "Verifier"){
+        qDebug()<<"inside verfier";
+        QStringList pageNames = verify.keys();
+        qDebug()<<"verifier keys: "<<pageNames;
         if(pageNames.contains(name)){
+            qDebug()<<"map contains the page";
             ui->verified->setChecked(true);
+            qDebug()<<"verified checked true and arg passed as 2";
             on_verified_stateChanged(2);
         }
         else {
+            qDebug()<<"map does not contains the page";
             ui->verified->setChecked(false);
+            qDebug()<<"verified checked false and arg passed as 0";
             on_verified_stateChanged(0);
         }
     }
@@ -14809,45 +14806,35 @@ void MainWindow::on_pushButton_9_clicked()
 
 void MainWindow::on_corrected_stateChanged(int arg1)
 {
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    settings.beginGroup("CorrectedPages");
-    settings.beginGroup(gCurrentBookName);
-    QStringList pageNames = settings.value("Page Names").toStringList();
+    QStringList pageNames = correct.keys();
     if(arg1 == 2){
         if(!pageNames.contains(gCurrentOpenPage)){
-            pageNames.append(gCurrentOpenPage);
+            correct[gCurrentOpenPage] = 1;
         }
     }
     else if(arg1 == 0){
         if(pageNames.contains(gCurrentOpenPage)){
-            pageNames.removeAll(gCurrentOpenPage);
+            correct.remove(gCurrentOpenPage);
         }
     }
-    settings.setValue("Page Names",pageNames);
-    settings.endGroup();
-    settings.endGroup();
 }
 
 
 void MainWindow::on_verified_stateChanged(int arg1)
 {
     qDebug()<<arg1;
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    settings.beginGroup("VerifiedPages");
-    settings.beginGroup(gCurrentBookName);
-    QStringList pageNames = settings.value("Page Names").toStringList();
+    QStringList pageNames = verify.keys();
     if(arg1 == 2){
         if(!pageNames.contains(gCurrentOpenPage)){
-            pageNames.append(gCurrentOpenPage);
+            verify[gCurrentOpenPage] = 1;
+            qDebug()<<"verify keys after addition are: "<<verify.keys();
         }
     }
     else if(arg1 == 0){
         if(pageNames.contains(gCurrentOpenPage)){
-            pageNames.removeAll(gCurrentOpenPage);
+            verify.remove(gCurrentOpenPage);
+            qDebug()<<"verify keys after deletion are: "<<verify.keys();
         }
     }
-    settings.setValue("Page Names",pageNames);
-    settings.endGroup();
-    settings.endGroup();
 }
 
