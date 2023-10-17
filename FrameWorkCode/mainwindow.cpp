@@ -10192,11 +10192,12 @@ void MainWindow::e_d_features(bool value)
     ui->status->setVisible(false);
     if(mRole == "Corrector"){
         ui->corrected->setVisible(true);
+        ui->corrected->setEnabled(true);
     }
 
     if(mRole == "Verifier"){
         ui->verified->setVisible(true);
-        ui->mark_review->setVisible(true);
+        ui->verified->setEnabled(true);
     }
 }
 
