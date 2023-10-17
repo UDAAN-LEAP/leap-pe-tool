@@ -6274,19 +6274,13 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
         }
     }
     else if(mRole == "Verifier"){
-        qDebug()<<"inside verfier";
         QStringList pageNames = verify.keys();
-        qDebug()<<"verifier keys: "<<pageNames;
         if(pageNames.contains(name)){
-            qDebug()<<"map contains the page";
             ui->verified->setChecked(true);
-            qDebug()<<"verified checked true and arg passed as 2";
             on_verified_stateChanged(2);
         }
         else {
-            qDebug()<<"map does not contains the page";
             ui->verified->setChecked(false);
-            qDebug()<<"verified checked false and arg passed as 0";
             on_verified_stateChanged(0);
         }
     }
@@ -10703,7 +10697,7 @@ void MainWindow::on_verified_clicked()
 
     if(ui->mark_review->checkState() == Qt::Checked){
         ui->verified->setEnabled(false);
-        ui->verified->setChecked(false);
+        //ui->verified->setChecked(false);
         ui->status->setText("Marked For Review");
         return;
     }
@@ -10711,7 +10705,7 @@ void MainWindow::on_verified_clicked()
     if(ui->verified->checkState() == Qt::Checked && correct[currentFile] != 0){
         verify[fileName] = 1;
 
-        ui->verified->setChecked(true);
+//        ui->verified->setChecked(true);
         ui->corrected->setChecked(true);
         ui->mark_review->setEnabled(false);
         ui->status->setText("Verified");
@@ -10724,7 +10718,7 @@ void MainWindow::on_verified_clicked()
     }
     else{
         verify[fileName] = 0;
-        ui->verified->setChecked(false);
+        //ui->verified->setChecked(false);
         ui->mark_review->setEnabled(true);
         ui->status->setText("Status - None");
     }
@@ -10955,7 +10949,7 @@ void MainWindow::on_mark_review_clicked()
     }
     else{
         markForReview[fileName] = 0;
-        ui->verified->setChecked(false);
+        //ui->verified->setChecked(false);
         ui->verified->setEnabled(false);
         ui->mark_review->setEnabled(false);
         ui->status->setText("Status - None");
@@ -11228,7 +11222,7 @@ void MainWindow::pageStatusHandler(){
 
             if(verify[gCurrentPageName] != 0){
                 ui->status->setText("Verified");
-                ui->verified->setChecked(true);
+//                ui->verified->setChecked(true);
                 ui->mark_review->setChecked(false);
                 ui->mark_review->setEnabled(false);
             }
@@ -11263,7 +11257,7 @@ void MainWindow::pageStatusHandler(){
             ui->mark_review->setEnabled(false);
             ui->verified->setEnabled(false);
             ui->mark_review->setChecked(false);
-            ui->verified->setChecked(false);
+            //ui->verified->setChecked(false);
         }
     }
 }
@@ -14823,18 +14817,15 @@ void MainWindow::on_corrected_stateChanged(int arg1)
 
 void MainWindow::on_verified_stateChanged(int arg1)
 {
-    qDebug()<<arg1;
     QStringList pageNames = verify.keys();
     if(arg1 == 2){
         if(!pageNames.contains(gCurrentOpenPage)){
             verify[gCurrentOpenPage] = 1;
-            qDebug()<<"verify keys after addition are: "<<verify.keys();
         }
     }
     else if(arg1 == 0){
         if(pageNames.contains(gCurrentOpenPage)){
             verify.remove(gCurrentOpenPage);
-            qDebug()<<"verify keys after deletion are: "<<verify.keys();
         }
     }
 }
