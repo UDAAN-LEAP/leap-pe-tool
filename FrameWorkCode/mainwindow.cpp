@@ -11402,7 +11402,7 @@ void MainWindow::read_verified_pages(){
     QStringList pageNames = settings.value("Page Names").toStringList();
 
     foreach(const QString &pageName, pageNames){
-        correct[pageName] = 1;
+        verify[pageName] = 1;
         qDebug() << pageName;
     }
 
