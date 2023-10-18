@@ -6647,11 +6647,7 @@ QScrollBar::sub-line:vertical {
 
     QSettings settings("IIT-B", "OpenOCRCorrect");
     if(mRole == "Corrector"){
-        settings.beginGroup("CorrectedPages");
-        settings.beginGroup(gCurrentBookName);
-        QStringList pageNames = settings.value("Page Names").toStringList();
-        settings.endGroup();
-        settings.endGroup();
+        QStringList pageNames = correct.keys();
         if(pageNames.contains(name)){
             ui->corrected->setChecked(true);
             on_corrected_stateChanged(2);
@@ -6661,13 +6657,8 @@ QScrollBar::sub-line:vertical {
             on_corrected_stateChanged(0);
         }
     }
-
-    if(mRole == "Verifier"){
-        settings.beginGroup("VerifiedPages");
-        settings.beginGroup(gCurrentBookName);
-        QStringList pageNames = settings.value("Page Names").toStringList();
-        settings.endGroup();
-        settings.endGroup();
+    else if(mRole == "Verifier"){
+        QStringList pageNames = verify.keys();
         if(pageNames.contains(name)){
             ui->verified->setChecked(true);
             on_verified_stateChanged(2);
@@ -11090,7 +11081,7 @@ void MainWindow::on_verified_clicked()
 
     if(ui->mark_review->checkState() == Qt::Checked){
         ui->verified->setEnabled(false);
-        ui->verified->setChecked(false);
+        //ui->verified->setChecked(false);
         ui->status->setText("Marked For Review");
         return;
     }
@@ -11098,7 +11089,7 @@ void MainWindow::on_verified_clicked()
     if(ui->verified->checkState() == Qt::Checked && correct[currentFile] != 0){
         verify[fileName] = 1;
 
-        ui->verified->setChecked(true);
+//        ui->verified->setChecked(true);
         ui->corrected->setChecked(true);
         ui->mark_review->setEnabled(false);
         ui->status->setText("Verified");
@@ -11111,7 +11102,7 @@ void MainWindow::on_verified_clicked()
     }
     else{
         verify[fileName] = 0;
-        ui->verified->setChecked(false);
+        //ui->verified->setChecked(false);
         ui->mark_review->setEnabled(true);
         ui->status->setText("Status - None");
     }
@@ -11342,7 +11333,7 @@ void MainWindow::on_mark_review_clicked()
     }
     else{
         markForReview[fileName] = 0;
-        ui->verified->setChecked(false);
+        //ui->verified->setChecked(false);
         ui->verified->setEnabled(false);
         ui->mark_review->setEnabled(false);
         ui->status->setText("Status - None");
@@ -11615,7 +11606,7 @@ void MainWindow::pageStatusHandler(){
 
             if(verify[gCurrentPageName] != 0){
                 ui->status->setText("Verified");
-                ui->verified->setChecked(true);
+//                ui->verified->setChecked(true);
                 ui->mark_review->setChecked(false);
                 ui->mark_review->setEnabled(false);
             }
@@ -11650,7 +11641,7 @@ void MainWindow::pageStatusHandler(){
             ui->mark_review->setEnabled(false);
             ui->verified->setEnabled(false);
             ui->mark_review->setChecked(false);
-            ui->verified->setChecked(false);
+            //ui->verified->setChecked(false);
         }
     }
 }
@@ -15194,45 +15185,32 @@ void MainWindow::on_pushButton_9_clicked()
 
 void MainWindow::on_corrected_stateChanged(int arg1)
 {
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    settings.beginGroup("CorrectedPages");
-    settings.beginGroup(gCurrentBookName);
-    QStringList pageNames = settings.value("Page Names").toStringList();
+    QStringList pageNames = correct.keys();
     if(arg1 == 2){
         if(!pageNames.contains(gCurrentOpenPage)){
-            pageNames.append(gCurrentOpenPage);
+            correct[gCurrentOpenPage] = 1;
         }
     }
     else if(arg1 == 0){
         if(pageNames.contains(gCurrentOpenPage)){
-            pageNames.removeAll(gCurrentOpenPage);
+            correct.remove(gCurrentOpenPage);
         }
     }
-    settings.setValue("Page Names",pageNames);
-    settings.endGroup();
-    settings.endGroup();
 }
 
 
 void MainWindow::on_verified_stateChanged(int arg1)
 {
-    qDebug()<<arg1;
-    QSettings settings("IIT-B", "OpenOCRCorrect");
-    settings.beginGroup("VerifiedPages");
-    settings.beginGroup(gCurrentBookName);
-    QStringList pageNames = settings.value("Page Names").toStringList();
+    QStringList pageNames = verify.keys();
     if(arg1 == 2){
         if(!pageNames.contains(gCurrentOpenPage)){
-            pageNames.append(gCurrentOpenPage);
+            verify[gCurrentOpenPage] = 1;
         }
     }
     else if(arg1 == 0){
         if(pageNames.contains(gCurrentOpenPage)){
-            pageNames.removeAll(gCurrentOpenPage);
+            verify.remove(gCurrentOpenPage);
         }
     }
-    settings.setValue("Page Names",pageNames);
-    settings.endGroup();
-    settings.endGroup();
 }
 
