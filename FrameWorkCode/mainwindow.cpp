@@ -109,6 +109,7 @@ trie TDict,TGBook,TGBookP, newtrie,TPWords,TPWordsP;
 vector<string> vGBook,vIBook;
 QImage imageOrig;
 QString gDirOneLevelUp,gDirTwoLevelUp,gCurrentPageName, gCurrentDirName, gCurrentBookName;
+QString gCurrentOpenPage;
 map<QString, QString> gInitialTextHtml;
 QString gTimeLogLocation;
 map<QString, int> timeLog;
@@ -532,6 +533,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
     connect(QApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(onClipboardDataChanged()));
     clipboardHistory = settings.value("clipboardHistory").toStringList();
+
+    ui->corrected->setEnabled(true);
+    ui->verified->setEnabled(true);
+    ui->mark_review->setEnabled(true);
 }
 
 /*!
@@ -1409,22 +1414,9 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     }
 
 
-    //    correct.clear();
-    //    verify.clear();
-    //    markForReview.clear();
-    //    ui->status->setVisible(true);
-
-    //    if(mRole == "Corrector"){
-    //        ui->corrected->setVisible(true);
-    //        ui->corrected->setEnabled(true);
-    //    }
-
-    //    if(mRole == "Verifier"){
-    //        ui->verified->setVisible(true);
-    //        ui->mark_review->setVisible(true);
-    //        ui->verified->setEnabled(true);
-    //        ui->mark_review->setEnabled(true);
-    //    }
+        correct.clear();
+        verify.clear();
+        markForReview.clear();
 
 
     if (result != 0) {
@@ -1695,8 +1687,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
     //    read_recorrected_pages();
     //    read_review_pages();
-    //    read_corrected_pages();
-    //    read_verified_pages();
+        read_corrected_pages();
+        read_verified_pages();
 
     //    //<<<<<<Change
     //    pageStatusHandler();
@@ -6252,6 +6244,7 @@ QString GetFilter(QString & Name, const QStringList &list) {
  */
 void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 {
+    gCurrentOpenPage = name;
     if(curr_browser) {
         if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
             previousTabPageName = currentTabPageName;
@@ -6652,6 +6645,38 @@ QScrollBar::sub-line:vertical {
         }
     }
 
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    if(mRole == "Corrector"){
+        settings.beginGroup("CorrectedPages");
+        settings.beginGroup(gCurrentBookName);
+        QStringList pageNames = settings.value("Page Names").toStringList();
+        settings.endGroup();
+        settings.endGroup();
+        if(pageNames.contains(name)){
+            ui->corrected->setChecked(true);
+            on_corrected_stateChanged(2);
+        }
+        else {
+            ui->corrected->setChecked(false);
+            on_corrected_stateChanged(0);
+        }
+    }
+
+    if(mRole == "Verifier"){
+        settings.beginGroup("VerifiedPages");
+        settings.beginGroup(gCurrentBookName);
+        QStringList pageNames = settings.value("Page Names").toStringList();
+        settings.endGroup();
+        settings.endGroup();
+        if(pageNames.contains(name)){
+            ui->verified->setChecked(true);
+            on_verified_stateChanged(2);
+        }
+        else {
+            ui->verified->setChecked(false);
+            on_verified_stateChanged(0);
+        }
+    }
     f->open(QIODevice::ReadOnly);
     QFileInfo finfo(f->fileName());
 
@@ -6685,7 +6710,6 @@ QScrollBar::sub-line:vertical {
     }
     // Saves the current opened page
 
-    QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("RecentPageLoaded");
     QString tmp1 = settings.value("projectName1").toString();
     QString tmp2 = settings.value("projectName2").toString();
@@ -7541,8 +7565,8 @@ void MainWindow::closeEvent (QCloseEvent *event)
     }
 
 
-    //    write_verified_pages();
-    //    write_corrected_pages();
+        write_verified_pages();
+        write_corrected_pages();
     //    write_review_pages();
     //    write_recorrected_pages();
 
@@ -9349,8 +9373,8 @@ void MainWindow::on_actionClose_project_triggered()
     AddRecentProjects();
 
 
-    //    write_verified_pages();
-    //    write_corrected_pages();
+        write_verified_pages();
+        write_corrected_pages();
     //    write_review_pages();
     //    write_recorrected_pages();
 
@@ -9557,8 +9581,8 @@ void MainWindow::on_actionEdit_Equation_triggered()
 void MainWindow::on_actionExit_triggered()
 {
 
-    //    write_verified_pages();
-    //    write_corrected_pages();
+        write_verified_pages();
+        write_corrected_pages();
     //    write_review_pages();
     //    write_recorrected_pages();
 
@@ -10552,6 +10576,16 @@ void MainWindow::e_d_features(bool value)
     ui->pushButton_7->setEnabled(value);
     ui->pushButton_9->setEnabled(value);
 
+    ui->status->setVisible(false);
+    if(mRole == "Corrector"){
+        ui->corrected->setVisible(value);
+        ui->corrected->setEnabled(value);
+    }
+
+    if(mRole == "Verifier"){
+        ui->verified->setVisible(value);
+        ui->verified->setEnabled(value);
+    }
 }
 
 
@@ -11315,108 +11349,74 @@ void MainWindow::on_mark_review_clicked()
     }
 }
 
-
+/*!
+ * \fn MainWindow::write_corrected_pages
+ * \brief This function will write the entries to QSettings from the QMap
+ */
 void MainWindow::write_corrected_pages(){
-    QString directory = mProject.GetDir().absolutePath();
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("CorrectedPages");
+    settings.beginGroup(gCurrentBookName);
 
-    //Logs folder
-    QString folder = directory + "/logs";
-
-    if(!QDir(folder).exists()){
-        QDir(gDirTwoLevelUp).mkdir("logs");
-    }
-
-    QString file = folder + "/corrected_page.txt";
-
-    QFile f(file);
-    f.remove();
-
-    if(f.open(QIODevice::WriteOnly)){
-        QTextStream outputStream(&f);
-        QString string;
-        QMapIterator<QString , int>i(correct);
-        while(i.hasNext()){
-            i.next();
-            string = i.key();
-
-            if(i.value() != 0){
-                outputStream << string << endl;
-            }
-        }
-        f.close();
-    }
+    QStringList pageNames = correct.keys();
+    settings.setValue("Page Names", pageNames);
+    settings.endGroup();
+    settings.endGroup();
 }
 
 /*!
  * \fn MainWindow::read_corrected_pages
- * \brief This function will read the entries from the text file and store it in the QMap
+ * \brief This function will read the entries from the QSettings and store it in the QMap
 */
 void MainWindow::read_corrected_pages(){
-    QString fstring = mProject.GetDir().absolutePath() + "/logs/corrected_page.txt";
-    QFile f(fstring);
-    if(!f.open(QIODevice::ReadOnly))
-        return;
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("CorrectedPages");
+    settings.beginGroup(gCurrentBookName);
 
-    QTextStream in(&f);
-    while(!in.atEnd()) {
-        QString line = in.readLine();
-        if(!line.contains(".html"))continue;
+    QStringList pageNames = settings.value("Page Names").toStringList();
 
-        correct[line] = 1;
+    foreach(const QString &pageName, pageNames){
+        correct[pageName] = 1;
+        qDebug() << pageName;
     }
-    f.close();
 
-
+    settings.endGroup();
+    settings.endGroup();
 }
 
+/*!
+ * \fn MainWindow::write_verified_pages
+ * \brief This function will write the entries to QSettings from the QMap
+ */
 void MainWindow::write_verified_pages(){
-    QString directory = mProject.GetDir().absolutePath();
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("VerifiedPages");
+    settings.beginGroup(gCurrentBookName);
 
-    //Logs folder
-    QString folder = directory + "/logs";
-
-    if(!QDir(folder).exists()){
-        QDir(gDirTwoLevelUp).mkdir("logs");
-    }
-
-    QString file = folder + "/verified_page.txt";
-
-    QFile f(file);
-    f.remove();
-
-    if(f.open(QIODevice::WriteOnly)){
-        QTextStream outputStream(&f);
-        QString string;
-        QMapIterator<QString , int>i(verify);
-        while(i.hasNext()){
-            i.next();
-            string = i.key();
-            if(i.value() != 0){
-                outputStream << string << endl;
-            }
-
-        }
-        f.close();
-    }
+    QStringList pageNames = verify.keys();
+    settings.setValue("Page Names", pageNames);
+    settings.endGroup();
+    settings.endGroup();
 }
 
 /*!
  * \fn MainWindow::read_verified_pages
- * \brief This function will read the entries from the text file and store it in the QMap
+ * \brief This function will read the entries from the QSettings and store it in the QMap
 */
 void MainWindow::read_verified_pages(){
-    QString fstring = mProject.GetDir().absolutePath() + "/logs/verified_page.txt";
-    QFile f(fstring);
-    if(!f.open(QIODevice::ReadOnly))
-        return;
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("VerifiedPages");
+    settings.beginGroup(gCurrentBookName);
 
-    QTextStream in(&f);
-    while(!in.atEnd()) {
-        QString line = in.readLine();
-        if(!line.contains(".html"))continue;
-        verify[line] = 1;
+    QStringList pageNames = settings.value("Page Names").toStringList();
+
+    foreach(const QString &pageName, pageNames){
+        correct[pageName] = 1;
+        qDebug() << pageName;
     }
-    f.close();
+
+    settings.endGroup();
+    settings.endGroup();
 }
 
 /*!
@@ -15189,5 +15189,50 @@ void MainWindow::on_pushButton_9_clicked()
     if (z) {
         z->gentle_zoom(1.0); // Set zoom factor to 1.0 for 100% zoom
     }
+}
+
+
+void MainWindow::on_corrected_stateChanged(int arg1)
+{
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("CorrectedPages");
+    settings.beginGroup(gCurrentBookName);
+    QStringList pageNames = settings.value("Page Names").toStringList();
+    if(arg1 == 2){
+        if(!pageNames.contains(gCurrentOpenPage)){
+            pageNames.append(gCurrentOpenPage);
+        }
+    }
+    else if(arg1 == 0){
+        if(pageNames.contains(gCurrentOpenPage)){
+            pageNames.removeAll(gCurrentOpenPage);
+        }
+    }
+    settings.setValue("Page Names",pageNames);
+    settings.endGroup();
+    settings.endGroup();
+}
+
+
+void MainWindow::on_verified_stateChanged(int arg1)
+{
+    qDebug()<<arg1;
+    QSettings settings("IIT-B", "OpenOCRCorrect");
+    settings.beginGroup("VerifiedPages");
+    settings.beginGroup(gCurrentBookName);
+    QStringList pageNames = settings.value("Page Names").toStringList();
+    if(arg1 == 2){
+        if(!pageNames.contains(gCurrentOpenPage)){
+            pageNames.append(gCurrentOpenPage);
+        }
+    }
+    else if(arg1 == 0){
+        if(pageNames.contains(gCurrentOpenPage)){
+            pageNames.removeAll(gCurrentOpenPage);
+        }
+    }
+    settings.setValue("Page Names",pageNames);
+    settings.endGroup();
+    settings.endGroup();
 }
 
