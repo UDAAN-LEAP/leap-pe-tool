@@ -666,6 +666,7 @@ private:
     QString mFilename;
     QString mFilenameImage;
     QString current_folder;
+    QString previousTabPageName="";
     QString currentTabPageName="";
     int currentTabIndex;
     CustomTextBrowser * curr_browser = nullptr;

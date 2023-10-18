@@ -6254,16 +6254,400 @@ void MainWindow::LoadDocument(QFile * f, QString ext, QString name)
 {
     if(curr_browser) {
         if(gInitialTextHtml[currentTabPageName].compare(curr_browser->toHtml())) {   //fetching the text from the key(tab name) and comparing it to current browser text
-            QMessageBox currBox2;
-            currBox2.setWindowTitle("Save?");
-            currBox2.setIcon(QMessageBox::Question);
-            currBox2.setInformativeText("Do you want to save " + currentTabPageName + " file?");
-            QPushButton *okButton2 = currBox2.addButton(QMessageBox::StandardButton::Ok);
-            QPushButton *noButton2 = currBox2.addButton(QMessageBox::StandardButton::No);
-            currBox2.exec();
+            previousTabPageName = currentTabPageName;
+            bool ok = false;
+            QDialog dialog(this);
+            dialog.setWindowTitle("Save?");
+            QFormLayout form(&dialog);
+            form.addRow(new QLabel("Do you want to save " + currentTabPageName + " file?", this));
+            QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+            buttonBox.button(QDialogButtonBox::Ok)->setText("Yes");
+            buttonBox.button(QDialogButtonBox::Cancel)->setText("No");
+            form.addRow(&buttonBox);
+            QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+            QObject::connect(&buttonBox, &QDialogButtonBox::rejected, this, [&](){
+                dialog.close();
+                f->open(QIODevice::ReadOnly);
+                QFileInfo finfo(f->fileName());
 
-            if (currBox2.clickedButton() == okButton2){
+                if(!(finfo.exists() && finfo.isFile())){
+                    return;
+                }
+                int danFlag = 0;
+
+                //!Retreives current folder details
+                current_folder = finfo.dir().dirName();
+                QString fileName = finfo.fileName();
+                setMFilename(mFilename = f->fileName());
+                UpdateFileBrekadown();
+                CustomTextBrowser * b = new CustomTextBrowser();
+                b->setReadOnly(false);
+                b->setStyleSheet("background-color:white; color:black;");
+
+                if (!isVerifier && current_folder == "Inds") {     //checks if role is not verifier
+                    QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
+                    output_file.replace(".txt", ".html");
+                    if (QFile::exists(output_file)) {
+                        b->setReadOnly(true);
+                    }
+                }
+                if (isVerifier && (current_folder == "Inds" || current_folder == "CorrectorOutput")) {
+                    QString output_file = mProject.GetDir().absolutePath() + "/" + filestructure_fw[current_folder] + "/" + fileName;
+                    output_file.replace(".txt", ".html");
+                    if (QFile::exists(output_file)) {
+                        b->setReadOnly(true);
+                    }
+                }
+                // Saves the current opened page
+
+                QSettings settings("IIT-B", "OpenOCRCorrect");
+                settings.beginGroup("RecentPageLoaded");
+                QString tmp1 = settings.value("projectName1").toString();
+                QString tmp2 = settings.value("projectName2").toString();
+                QString tmp3 = settings.value("projectName3").toString();
+
+                if(ProjFile == tmp1){
+                    settings.setValue("projectName1",ProjFile );
+                    settings.setValue("name1",name );
+                    settings.setValue("pageParent1",gCurrentDirName );}
+                else if(ProjFile == tmp2){
+                    settings.setValue("projectName2",settings.value("projectName1").toString() );
+                    settings.setValue("name2",settings.value("name1").toString() );
+                    settings.setValue("pageParent2",settings.value("pageParent1").toString() );
+                    settings.setValue("projectName1",ProjFile );
+                    settings.setValue("name1",name );
+                    settings.setValue("pageParent1",gCurrentDirName );}
+                else{
+                    settings.setValue("projectName3",settings.value("projectName2").toString() );
+                    settings.setValue("name3",settings.value("name2").toString() );
+                    settings.setValue("pageParent3",settings.value("pageParent2").toString() );
+                    settings.setValue("projectName2",settings.value("projectName1").toString() );
+                    settings.setValue("name2",settings.value("name1").toString() );
+                    settings.setValue("pageParent2",settings.value("pageParent1").toString() );
+                    settings.setValue("projectName1",ProjFile );
+                    settings.setValue("name1",name );
+                    settings.setValue("pageParent1",gCurrentDirName );
+                }
+                settings.endGroup();
+
+                isProjectOpen = 1;
+
+                doc = b->document();
+                curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
+                //!Display format by setting font size and styles
+                QTextStream stream(f);
+                stream.setCodec("UTF-8");
+                QString input = stream.readAll();
+                QFont font("Shobhika");
+                setWindowTitle(name);
+
+                font.setPointSize(16);
+                if(ext == "txt") {
+                    istringstream iss(input.toUtf8().constData());
+                    string strHtml = "<html><body><p>";
+                    string line;
+                    while (getline(iss, line)) {
+                        QString qline = QString::fromStdString(line);
+                        if((line == "\n") || (line == "") || (qline.contains("\r")) )
+                            strHtml+=line + "</p><p>";    //for html view
+                        else strHtml += line + "<br />";
+                    }
+                    strHtml += "</p></body></html>";
+                    QString qstrHtml = QString::fromStdString(strHtml);
+                    qstrHtml.replace("<br /></p>", "</p>");
+
+                    QFont font("Shobhika-Regular");
+                    font.setWeight(16);
+                    font.setPointSize(16);
+                    font.setFamily("Shobhika");
+                    b->setFont(font);
+                    b->setHtml(qstrHtml);
+                }
+                if (ext == "html") {
+                    QSize graphicsViewSize = ui->graphicsView->size();
+                    int graphicsViewHeight = graphicsViewSize.height()/4;
+                    int graphicsViewWidth = graphicsViewSize.width()/3;
+                    QRegularExpression rex("(<img[^>]*>)",QRegularExpression::DotMatchesEverythingOption);
+                    QRegularExpressionMatchIterator itr;
+                    itr = rex.globalMatch(input);
+                    int height=graphicsViewHeight;
+                    int width=graphicsViewWidth;
+
+                    while(itr.hasNext())
+                    {
+                        QRegularExpressionMatch match = itr.next();
+                        QString ex = match.captured(1);
+
+                        if(!ex.contains("width") && !ex.contains("height")){
+                            string str = ex.toStdString();
+                            int ind = str.find("src=");
+                            ind += 5;
+                            int start = ind;
+
+                            int end = 0;
+                            if (str.find(".jpg") != -1) {
+                                end = str.find(".jpg");
+                                end += 3;
+                            } else if (str.find(".png") != -1) {
+                                end = str.find(".png");
+                                end += 3;
+                            } else if (str.find(".jpeg") != -1) {
+                                end = str.find(".jpeg");
+                                end += 4;
+                            } else {
+                                qDebug() << "File extension not recognisable";
+                            }
+
+                            string ttstr = str.substr(end+2,str.length()-end-3);// title tag string
+                            str = str.substr(start,end-start+1);
+                            QString imgname = QString::fromStdString(str);
+                            QString titleString = QString::fromStdString(ttstr);
+                            QString html = QString("\n <img src='%1' width='%2' height='%3'%4>").arg(imgname).arg(width).arg(height).arg(titleString);
+                            input.replace(ex,html);
+                        }
+                    }
+                    //		b->setHtml(input);
+
+                    f->close();
+
+                    if (!f->open(QIODevice::WriteOnly | QIODevice::Text)) {
+                        qDebug() << "Cannot open file in write mode";
+                    }
+                    QTextStream out(f);
+                    out.setCodec("utf-8");
+                    out << input;
+                    out.flush();
+                    f->close();
+
+                    if (handleBbox != nullptr) {
+                        delete handleBbox;
+                    }
+                    handleBbox = new HandleBbox();
+                    QTextDocument *curDoc = handleBbox->loadFileInDoc(f);
+                    if (curDoc == nullptr) {
+                        qDebug() << "Cannot load file";
+                        return;
+                    }
+                    curDoc = curDoc->clone(static_cast<QObject*>(b));
+                    b->setDocument(curDoc);
+                    doc = b->document();
+                    //		loadHtmlInDoc(f);
+
+                    if(!QDir(gDirTwoLevelUp+"/logs").exists())
+                        QDir().mkdir(gDirTwoLevelUp+"/logs");
+                    QString loc = gDirTwoLevelUp + "/logs/."+mRole+"_dan.log";
+                    QFile sFile(loc);
+                    if(!sFile.open(QIODevice::ReadOnly)) {qDebug()<<"can't read the dan logs";}
+                    QString logs = sFile.readAll();
+                    sFile.close();
+                    if(!logs.contains(gCurrentPageName)){
+                        preprocessing(); //for removing dangling mathras
+                        danFlag = 1;
+                    }
+                    connect(b->document(), SIGNAL(blockCountChanged(int)), this, SLOT(blockCountChanged(int)));
+                    blockCount = b->document()->blockCount();
+                    if (!f->open(QIODevice::ReadOnly | QIODevice::Text)) {
+                        qDebug() << "Cannot open file for reading";
+                        return;
+                    }
+
+                }
+                QDir::setCurrent(gDirOneLevelUp);   //changing application path to load document in a relative path
+                b->setFont(font);
+                input = b->toPlainText();
+
+
+                DisplayJsonDict(b,input);
+                //highlight(b , input);
+
+                b->setMouseTracking(true);
+                b->setLineWrapColumnOrWidth(QTextEdit::NoWrap);
+                b->setUndoRedoEnabled(true);
+
+                //    curr_browser = (CustomTextBrowser*)ui->splitter->widget(1);
+                defaultStyle = curr_browser->styleSheet();
+                defaultStyle += R"(QScrollBar:vertical {
+                                            border: none;
+                                            background: white;
+                                        }
+QScrollBar::handle:vertical {
+                                            background-color:  rgba(1, 22, 51, 0.5);
+                                            min-height: 50px;
+                                              max-height: 300px;
+                                                    border: 0px solid red;
+                                                    border-radius:4.905px;
+                                        }
+QScrollBar::add-line:vertical {
+                        height: 0px;
+                        subcontrol-position: bottom;
+                        subcontrol-origin: margin;
+
+                    }
+QScrollBar::sub-line:vertical {
+                        height: 0 px;
+                        subcontrol-position: top;
+                        subcontrol-origin: margin;
+                    })";
+                curr_browser->setDocument(b->document()->clone(curr_browser));
+                curr_browser->document()->clearUndoRedoStacks();
+
+                QFileInfo info(*f);
+                currentTabPageName = info.fileName();
+
+                gInitialTextHtml[currentTabPageName] = b->toHtml();
+
+                f->close();
+
+                QString imageFilePath = mProject.GetDir().absolutePath()+"/Images/" + gCurrentPageName;
+
+                QString temp = imageFilePath;
+                int flag=0;
+
+                //!removing extention from the document name
+                temp.replace(".txt", ".jpeg");
+                if (QFile::exists(temp) && flag==0)
+                {
+                    imageFilePath=temp;
+
+                    QFile *pImageFile = new QFile(imageFilePath);
+                    flag=1;
+                    LoadImageFromFile(pImageFile);
+                }
+                else
+                {
+                    temp=imageFilePath;
+                }
+
+                temp.replace(".html", ".jpeg");
+                if (QFile::exists(temp) && flag==0)
+                {
+                    imageFilePath=temp;
+                    QFile *pImageFile = new QFile(imageFilePath);
+                    flag=1;
+                    LoadImageFromFile(pImageFile);
+                }
+                else
+                {
+                    temp = imageFilePath;
+                }
+                temp.replace(".html", ".png");
+                if (QFile::exists(temp) && flag==0)
+                {
+                    imageFilePath=temp;
+                    QFile *pImageFile = new QFile(imageFilePath);
+                    flag=1;
+                    LoadImageFromFile(pImageFile);
+                }
+                else
+                {
+                    temp = imageFilePath;
+                }
+                temp.replace(".html", ".jpg");
+                if (QFile::exists(temp) && flag==0)
+                {
+                    imageFilePath=temp;
+                    QFile *pImageFile = new QFile(imageFilePath);
+                    flag=1;
+                    LoadImageFromFile(pImageFile);
+                }
+                else
+                {
+                    temp = imageFilePath;
+                }
+                NextPrevTrig =0;
+
+                //! Enabling Selection in treeView
+                ui->treeView->selectionModel()->clearSelection();
+
+                QModelIndex currentTreeItemIndex = ui->treeView->selectionModel()->currentIndex();
+                QModelIndex parentIndex = currentTreeItemIndex.parent();
+                auto model = ui->treeView->model();
+                int rowCount = ui->treeView->model()->rowCount(parentIndex);
+
+                QString treeItemLabel;
+                for (int i = 0; i < rowCount; i++)
+                {
+                    QModelIndex index = model->index(i, 0, parentIndex);
+
+                    treeItemLabel = index.data(Qt::DisplayRole).toString();
+
+                    if (index.isValid())
+                    {
+
+                        if (treeItemLabel == currentTabPageName)
+                        {
+                            ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+                            break;
+                        }
+                    }
+                }
+
+                QString x=finfo.fileName();
+                if(x.contains("txt")){
+                    curr_browser->setReadOnly(true);
+                }
+                else{
+                    curr_browser->setReadOnly(false);
+                }
+
+                // Deleting temporarily created CustomTextBrowser
+                delete b;
+                myTimer.start();
+                WordCount();     //for counting no of words in the document
+                readSettings();
+                if(danFlag == 1){
+                    initialSave = true;
+                    SaveFile_GUI_Postprocessing();
+                    saved = 0;
+                }
+                if (isVerifier && (current_folder == "Inds" || current_folder == "CorrectorOutput")) {
+                    curr_browser->setReadOnly(true);
+                }
+                if (!isVerifier && (current_folder == "Inds" || current_folder == "VerifierOutput")) {
+                    qDebug()<<"Set Read only";
+                    curr_browser->setReadOnly(true);
+                }
+                changedWords.clear();
+                ui->pushButton_6->setVisible(false);
+                ok = true;
+            });
+            int result = dialog.exec();
+            if(result == QDialog::Accepted){
                 on_actionSave_triggered();
+
+            }
+            else if(result == QDialog::Rejected){
+                // if buttonBox is rejected, terminates further execution of function
+                if(ok){
+                    return;
+                }
+
+                // update the treeView selection back to previous state.
+                ui->treeView->selectionModel()->clearSelection();
+
+                QModelIndex currentTreeItemIndex = ui->treeView->selectionModel()->currentIndex();
+                QModelIndex parentIndex = currentTreeItemIndex.parent();
+                auto model = ui->treeView->model();
+                int rowCount = ui->treeView->model()->rowCount(parentIndex);
+
+                QString treeItemLabel;
+                for (int i = 0; i < rowCount; i++)
+                {
+                    QModelIndex index = model->index(i, 0, parentIndex);
+
+                    treeItemLabel = index.data(Qt::DisplayRole).toString();
+
+                    if (index.isValid())
+                    {
+
+                        if (treeItemLabel == previousTabPageName)
+                        {
+                            ui->treeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+                            break;
+                        }
+                    }
+                }
+                return;
             }
         }
     }
