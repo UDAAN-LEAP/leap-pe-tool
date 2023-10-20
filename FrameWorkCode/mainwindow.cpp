@@ -1685,10 +1685,12 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         RecentPageInfo();
     }
 
-    //    read_recorrected_pages();
-    //    read_review_pages();
+    if(mRole == "Corrector"){
         read_corrected_pages();
+    }
+    else if(mRole == "Verifier"){
         read_verified_pages();
+    }
 
     //    //<<<<<<Change
     //    pageStatusHandler();
@@ -7555,11 +7557,12 @@ void MainWindow::closeEvent (QCloseEvent *event)
         }
     }
 
-
-        write_verified_pages();
+    if(mRole == "Corrector"){
         write_corrected_pages();
-    //    write_review_pages();
-    //    write_recorrected_pages();
+    }
+    else if(mRole == "Verifier") {
+        write_verified_pages();
+    }
 
     correct.clear();
     verify.clear();
@@ -9363,12 +9366,12 @@ void MainWindow::on_actionClose_project_triggered()
 {
     AddRecentProjects();
 
-
-        write_verified_pages();
+    if(mRole == "Corrector"){
         write_corrected_pages();
-    //    write_review_pages();
-    //    write_recorrected_pages();
-
+    }
+    else if(mRole == "Verifier") {
+        write_verified_pages();
+    }
 
     correct.clear();
     verify.clear();
@@ -9571,11 +9574,12 @@ void MainWindow::on_actionEdit_Equation_triggered()
  */
 void MainWindow::on_actionExit_triggered()
 {
-
-        write_verified_pages();
+    if(mRole == "Corrector"){
         write_corrected_pages();
-    //    write_review_pages();
-    //    write_recorrected_pages();
+    }
+    else if(mRole == "Verifier") {
+        write_verified_pages();
+    }
 
     markForReview.clear();
     correct.clear();
