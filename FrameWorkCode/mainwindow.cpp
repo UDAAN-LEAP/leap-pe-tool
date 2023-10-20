@@ -1685,13 +1685,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
         RecentPageInfo();
     }
 
-    if(mRole == "Corrector"){
-        read_corrected_pages();
-    }
-    else if(mRole == "Verifier"){
-        read_verified_pages();
-    }
-
     //    //<<<<<<Change
     //    pageStatusHandler();
 
@@ -1700,6 +1693,13 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     QMessageBox::information(0, "Success", "Project opened successfully.");
     QStringList list = gDirTwoLevelUp.split('/');
     gCurrentBookName = list[list.size()-1];
+
+    if(mRole == "Corrector"){
+        read_corrected_pages();
+    }
+    else if(mRole == "Verifier"){
+        read_verified_pages();
+    }
 
     // Enabling the buttons again after a project is opened
     e_d_features(true);
@@ -11351,11 +11351,9 @@ void MainWindow::on_mark_review_clicked()
 void MainWindow::write_corrected_pages(){
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("CorrectedPages");
-    settings.beginGroup(gCurrentBookName);
 
     QStringList pageNames = correct.keys();
-    settings.setValue("Page Names", pageNames);
-    settings.endGroup();
+    settings.setValue(gCurrentBookName + "/pages", pageNames);
     settings.endGroup();
 }
 
@@ -11366,16 +11364,13 @@ void MainWindow::write_corrected_pages(){
 void MainWindow::read_corrected_pages(){
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("CorrectedPages");
-    settings.beginGroup(gCurrentBookName);
 
-    QStringList pageNames = settings.value("Page Names").toStringList();
+    QStringList pageNames = settings.value(gCurrentBookName + "/pages").toStringList();
 
     foreach(const QString &pageName, pageNames){
         correct[pageName] = 1;
-        qDebug() << pageName;
     }
 
-    settings.endGroup();
     settings.endGroup();
 }
 
@@ -11386,11 +11381,9 @@ void MainWindow::read_corrected_pages(){
 void MainWindow::write_verified_pages(){
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("VerifiedPages");
-    settings.beginGroup(gCurrentBookName);
 
     QStringList pageNames = verify.keys();
-    settings.setValue("Page Names", pageNames);
-    settings.endGroup();
+    settings.setValue(gCurrentBookName + "/pages", pageNames);
     settings.endGroup();
 }
 
@@ -11401,16 +11394,13 @@ void MainWindow::write_verified_pages(){
 void MainWindow::read_verified_pages(){
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("VerifiedPages");
-    settings.beginGroup(gCurrentBookName);
 
-    QStringList pageNames = settings.value("Page Names").toStringList();
+    QStringList pageNames = settings.value(gCurrentBookName + "/pages").toStringList();
 
     foreach(const QString &pageName, pageNames){
         verify[pageName] = 1;
-        qDebug() << pageName;
     }
 
-    settings.endGroup();
     settings.endGroup();
 }
 
@@ -12005,8 +11995,8 @@ void MainWindow::on_actionRecentProject_triggered()
     }
     on_action1_triggered();
 
-    correct.clear();
-    verify.clear();
+    //correct.clear();
+    //verify.clear();
     markForReview.clear();
     recorrect.clear();
 
