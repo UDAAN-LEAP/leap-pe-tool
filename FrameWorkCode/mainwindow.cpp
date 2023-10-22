@@ -6692,24 +6692,38 @@ void MainWindow::file_click(const QModelIndex & indx)
     QString fileName = file->fileName();          //gets filename
     // Set the file's permissions to readonly
     if(fileName.contains("CorrectorOutput") && mRole == "Verifier"){
+        ui->verified->setVisible(false);
+        ui->verified->setEnabled(false);
         ui->copyToVerifier->setVisible(true);
         ui->copyToVerifier->setEnabled(true);
         QFile::setPermissions(fileName, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
     }
     else if(fileName.contains("VerifierOutput") && mRole == "Verifier"){
+        ui->verified->setVisible(true);
+        ui->verified->setEnabled(true);
         ui->copyToVerifier->setVisible(false);
         ui->copyToVerifier->setEnabled(false);
     }
     else if(fileName.contains("VerifierOutput") && mRole == "Corrector"){
+        ui->corrected->setEnabled(false);
+        ui->corrected->setVisible(false);
         QFile::setPermissions(fileName, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
+    }
+    else if(fileName.contains("CorrectorOutput") && mRole == "Corrector"){
+        ui->corrected->setVisible(true);
+        ui->corrected->setEnabled(true);
+        ui->copyToVerifier->setVisible(false);
+        ui->copyToVerifier->setEnabled(false);
+        // Set the file's permissions to both read and write mode
+        QFile::setPermissions(fileName, QFile::WriteOwner | QFile::WriteGroup | QFile::WriteOther |
+                              QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
     }
     else{
         ui->copyToVerifier->setVisible(false);
         ui->copyToVerifier->setEnabled(false);
         // Set the file's permissions to both read and write mode
         QFile::setPermissions(fileName, QFile::WriteOwner | QFile::WriteGroup | QFile::WriteOther |
-                              QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
-
+                                            QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
     }
     NodeType type = item->GetNodeType();
     switch (type) {
@@ -8207,7 +8221,8 @@ void MainWindow::RecentPageInfo()
     QString stored_project3 = settings.value("projectName3").toString();
     if(ProjFile == stored_project){
         var1 = settings.value("name1").toString();
-        var2 = settings.value("pageParent1").toString();}
+        var2 = settings.value("pageParent1").toString();
+    }
     else if(ProjFile == stored_project2){
         var1 = settings.value("name2").toString();
         var2 = settings.value("pageParent2").toString();
@@ -8215,6 +8230,22 @@ void MainWindow::RecentPageInfo()
     else if(ProjFile == stored_project3){
         var1 = settings.value("name3").toString();
         var2 = settings.value("pageParent3").toString();
+    }
+    if(var2.contains("Corrector") && mRole=="Corrector"){
+        ui->corrected->setVisible(true);
+        ui->corrected->setEnabled(true);
+    }
+    else if(var2.contains("Verifier") && mRole =="Corrector"){
+        ui->corrected->setVisible(false);
+        ui->corrected->setEnabled(false);
+    }
+    else if(var2.contains("Corrector") && mRole=="Verifier"){
+        ui->verified->setVisible(false);
+        ui->verified->setEnabled(false);
+    }
+    else if(var2.contains("Verifier") && mRole=="Verifier"){
+        ui->verified->setVisible(true);
+        ui->verified->setEnabled(true);
     }
     settings.endGroup();
     QString item,item1;
@@ -10185,12 +10216,12 @@ void MainWindow::e_d_features(bool value)
 
     ui->status->setVisible(false);
     if(mRole == "Corrector"){
-        ui->corrected->setVisible(true);
+//        ui->corrected->setVisible(true);
         ui->corrected->setEnabled(true);
     }
 
     if(mRole == "Verifier"){
-        ui->verified->setVisible(true);
+//        ui->verified->setVisible(true);
         ui->verified->setEnabled(true);
     }
 }
