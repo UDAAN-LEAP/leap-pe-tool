@@ -10621,15 +10621,6 @@ void MainWindow::e_d_features(bool value)
     ui->pushButton_9->setEnabled(value);
 
     ui->status->setVisible(false);
-    if(mRole == "Corrector"){
-        ui->corrected->setVisible(value);
-        ui->corrected->setEnabled(value);
-    }
-
-    if(mRole == "Verifier"){
-        ui->verified->setVisible(value);
-        ui->verified->setEnabled(value);
-    }
 }
 
 
