@@ -6719,6 +6719,14 @@ void MainWindow::file_click(const QModelIndex & indx)
                               QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
     }
     else{
+        if(mRole == "Corrector"){
+            ui->corrected->setVisible(false);
+            ui->corrected->setEnabled(false);
+        }
+        else if(mRole == "Verifier"){
+            ui->verified->setVisible(false);
+            ui->verified->setEnabled(false);
+        }
         ui->copyToVerifier->setVisible(false);
         ui->copyToVerifier->setEnabled(false);
         // Set the file's permissions to both read and write mode
@@ -8246,6 +8254,16 @@ void MainWindow::RecentPageInfo()
     else if(var2.contains("Verifier") && mRole=="Verifier"){
         ui->verified->setVisible(true);
         ui->verified->setEnabled(true);
+    }
+    else{
+        if(mRole == "Corrector"){
+            ui->corrected->setVisible(false);
+            ui->corrected->setEnabled(false);
+        }
+        else if(mRole == "Verifier"){
+            ui->verified->setVisible(false);
+            ui->verified->setEnabled(false);
+        }
     }
     settings.endGroup();
     QString item,item1;
