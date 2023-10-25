@@ -10636,6 +10636,8 @@ void MainWindow::e_d_features(bool value)
     ui->find->setEnabled(value);
     ui->pushButton_7->setEnabled(value);
     ui->pushButton_9->setEnabled(value);
+    ui->copyToVerifier->setEnabled(value);
+    ui->copyToVerifier->setVisible(value);
 
     ui->status->setVisible(false);
 }
