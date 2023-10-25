@@ -1681,6 +1681,18 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     QString stored_project2 = settings.value("projectName2").toString();
     QString stored_project3 = settings.value("projectName3").toString();
     settings.endGroup();
+
+    // Reading the corrected and verified pages from settings
+    QStringList list = gDirTwoLevelUp.split('/');
+    gCurrentBookName = list[list.size()-1];
+
+    if(mRole == "Corrector"){
+        read_corrected_pages();
+    }
+    else if(mRole == "Verifier"){
+        read_verified_pages();
+    }
+
     if(ProjFile == stored_project || ProjFile == stored_project2 || ProjFile == stored_project3){
         RecentPageInfo();
     }
@@ -1691,15 +1703,6 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     readCommentLogs();
 
     QMessageBox::information(0, "Success", "Project opened successfully.");
-    QStringList list = gDirTwoLevelUp.split('/');
-    gCurrentBookName = list[list.size()-1];
-
-    if(mRole == "Corrector"){
-        read_corrected_pages();
-    }
-    else if(mRole == "Verifier"){
-        read_verified_pages();
-    }
 
     // Enabling the buttons again after a project is opened
     e_d_features(true);
@@ -8652,6 +8655,20 @@ void MainWindow::RecentPageInfo()
             ui->verified->setEnabled(false);
         }
     }
+
+    if(mRole == "Corrector"){
+        QStringList pageNames = correct.keys();
+        if(pageNames.contains(var1)){
+            ui->corrected->setChecked(true);
+        }
+    }
+    else if (mRole == "Verifier"){
+        QStringList pageNames = verify.keys();
+        if(pageNames.contains(var1)){
+            ui->verified->setChecked(true);
+        }
+    }
+
     settings.endGroup();
     QString item,item1;
     for(int i=0;i<model->rowCount();i++){
