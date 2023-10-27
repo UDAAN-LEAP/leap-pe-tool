@@ -645,8 +645,6 @@ bool MainWindow::setRole()
         //ui->actionTurn_In->setVisible(false);      //set false to its visibility; now shown
         //ui->actionTurn_In->setEnabled(false);      //disable the option
 
-
-
         this->setWindowTitle("Udaan Editing Tool-Verifier");
 
 
@@ -7093,6 +7091,8 @@ void MainWindow::file_click(const QModelIndex & indx)
     else if(fileName.contains("VerifierOutput") && mRole == "Corrector"){
         ui->corrected->setEnabled(false);
         ui->corrected->setVisible(false);
+        ui->copyToVerifier->setVisible(false);
+        ui->copyToVerifier->setEnabled(false);
         QFile::setPermissions(fileName, QFile::ReadOwner | QFile::ReadGroup | QFile::ReadOther);
     }
     else if(fileName.contains("CorrectorOutput") && mRole == "Corrector"){
@@ -8629,18 +8629,26 @@ void MainWindow::RecentPageInfo()
     if(var2.contains("Corrector") && mRole=="Corrector"){
         ui->corrected->setVisible(true);
         ui->corrected->setEnabled(true);
+        ui->copyToVerifier->setVisible(false);
+        ui->copyToVerifier->setEnabled(false);
     }
     else if(var2.contains("Verifier") && mRole =="Corrector"){
         ui->corrected->setVisible(false);
         ui->corrected->setEnabled(false);
+        ui->copyToVerifier->setVisible(false);
+        ui->copyToVerifier->setEnabled(false);
     }
     else if(var2.contains("Corrector") && mRole=="Verifier"){
         ui->verified->setVisible(false);
         ui->verified->setEnabled(false);
+        ui->copyToVerifier->setVisible(true);
+        ui->copyToVerifier->setEnabled(true);
     }
     else if(var2.contains("Verifier") && mRole=="Verifier"){
         ui->verified->setVisible(true);
         ui->verified->setEnabled(true);
+        ui->copyToVerifier->setVisible(false);
+        ui->copyToVerifier->setEnabled(false);
     }
     else{
         if(mRole == "Corrector"){
@@ -10619,8 +10627,6 @@ void MainWindow::e_d_features(bool value)
     ui->find->setEnabled(value);
     ui->pushButton_7->setEnabled(value);
     ui->pushButton_9->setEnabled(value);
-    ui->copyToVerifier->setEnabled(value);
-    ui->copyToVerifier->setVisible(value);
 
     ui->status->setVisible(false);
 }
