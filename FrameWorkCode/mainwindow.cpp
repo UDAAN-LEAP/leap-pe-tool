@@ -4488,10 +4488,22 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
                     //qDebug() << x1 << " " << y1 << " " << x2 - x1 << " " << y2 - y1;   //getting the coordinates
 
-                    crop_rect->setRect(x1, y1, x2 - x1, y2 - y1);       //set final coordinates for rectangular region
-                    QRect rect(x1, y1, x2 - x1, y2 - y1);              //set QRect
-                    QPixmap image=QPixmap::fromImage(imageOrig);       //set QPixmap image
-                    QPixmap cropped=image.copy(rect);                   //get cropped image according to coordinates
+                    int width = x2 - x1;
+                    int height = y2 - y1;
+                    crop_rect->setRect(x1, y1, width, height);       //set final coordinates for rectangular region
+                    QRect rect(x1, y1, width, height);              //set QRect
+                    QPixmap image = QPixmap::fromImage(imageOrig);       //set QPixmap image
+                    QPixmap cropped1 = image.copy(rect);                   //get cropped image according to coordinates
+
+                    if(width >= 710){
+                        width = 600;
+                    }
+
+                    if(height >= 1200){
+                        height = 500;
+                    }
+
+                    QPixmap cropped = cropped1.scaled(width, height, Qt::KeepAspectRatio);
 
                     //! Set a messagebox for choosing what do you want to add: Figure/Table/Equation/Cancel
                     QMessageBox messageBox;          //isisde this argument is remove need to be tested
@@ -4514,7 +4526,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                         //graphic->removeItem(crop_rect);
 
                         //!Saving Image Regions to their respective folder(Figure/Table/Equation)
-                        saveImageRegion(cropped,a,s1,i,x2-x1,y2-y1);
+                        saveImageRegion(cropped, a, s1, i, width, height);
 
                         i++;       //increment values when a figure is inserted in the textBrowser
 
@@ -4535,7 +4547,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                         //graphic->removeItem(crop_rect);
 
                         //!Saving Image Regions to their respective folder(Figure/Table/Equation)
-                        saveImageRegion(cropped,a,s1,j,x2-x1,y2-y1);
+                        saveImageRegion(cropped, a, s1, j, width, height);
 
                         j++;         //increment values when a table is inserted in the textBrowser
 
@@ -4559,7 +4571,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                         //graphic->removeItem(crop_rect);
 
                         //!Saving Image Regions to their respective folder(Figure/Table/Equation)
-                        saveImageRegion(cropped,a,s1,k,x2-x1,y2-y1);
+                        saveImageRegion(cropped, a, s1, k, width, height);
 
                         k++;       //increment values when a equation is inserted in the textBrowser
 
