@@ -94,6 +94,7 @@
 #include <SimpleMail/SimpleMail>
 #include <sendmail.h>
 #include "qcustomplot.h"
+#include<customtreeviewitem.h>
 #ifdef Q_OS_WIN
 #include <quazip.h>
 #include <quazipfile.h>
@@ -2310,6 +2311,7 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
     //! Check if the file is saved or not
     if(curr_browser) {
         string localFilename = mFilename.toUtf8().constData();
+        cout<<"local file name: "<<localFilename;
         //! Extract page number from the localFilename
         string no = "";
         size_t loc;
@@ -2319,28 +2321,38 @@ void MainWindow::on_actionLoad_Prev_Page_triggered()
 
         //!checks if the decremented page exists
         QFile *file = new QFile(QString::fromStdString(localFilename));
+        qDebug()<<"file: "<<file->fileName();
         QFileInfo finfo(file->fileName());
         if(!(finfo.exists() && finfo.isFile())) // Check if file exists
             return;
 
         ui->treeView->selectionModel()->clearSelection();
         QModelIndex currentTreeItemIndex = ui->treeView->selectionModel()->currentIndex();
+        qDebug()<<"currentTreeItem index: "<<currentTreeItemIndex;
         QModelIndex parentIndex = currentTreeItemIndex.parent();
+        qDebug()<<"parent index: "<<parentIndex;
         auto model = ui->treeView->model();
         int rowCount = ui->treeView->model()->rowCount(parentIndex);
+        qDebug()<<"rowcount is: "<<rowCount;
 
         QString treeItemLabel;
         for (int i = 0; i < rowCount; i++)
         {
+            qDebug()<<"i: "<<i;
             QModelIndex index = model->index(i, 0, parentIndex);
+            qDebug()<<"index: "<<index;
             treeItemLabel = index.data(Qt::DisplayRole).toString();
+            qDebug()<<"treeitem label: "<<treeItemLabel;
+            qDebug()<<"current tab page name: "<<currentTabPageName;
             if (index.isValid())
             {
                 if (treeItemLabel == currentTabPageName)
                 {
                     if(i==0) i = rowCount;
                     index = model->index(i-1, 0, parentIndex);
+                    qDebug()<<"index i-1: "<<index;
                     treeItemLabel = index.data(Qt::DisplayRole).toString();
+                    qDebug()<<"treeItemLabel i-1: "<<treeItemLabel;
                     file_click(index);
                     break;
                 }
@@ -15271,5 +15283,25 @@ void MainWindow::on_verified_stateChanged(int arg1)
             verify.remove(gCurrentOpenPage);
         }
     }
+}
+
+
+void MainWindow::on_actionopen_triggered()
+{
+    ui->treeView->selectionModel()->clearSelection();
+    auto model = ui->treeView->model();
+
+    customTreeviewItem* customDelegate = new customTreeviewItem(ui->treeView,correct,model);
+    ui->treeView->setItemDelegate(customDelegate);
+
+    /*QModelIndex rootIndex = QModelIndex(); // The root item has an invalid index
+    QModelIndex firstItemIndex = model->index(1, 0, rootIndex); // Access the first item at the root
+
+    int n_directories = ui->treeView->model()->rowCount(rootIndex);
+    qDebug()<<"number of directories: "<<n_directories;
+    if (model->hasChildren(firstItemIndex)) {
+        QModelIndex firstChildIndex = model->index(0, 0, firstItemIndex);
+        //file_click(firstChildIndex);
+    }*/
 }
 

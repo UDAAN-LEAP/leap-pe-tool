@@ -8,6 +8,7 @@ HEADERS += ./Filters.h \
     $$PWD/column_width.h \
     $$PWD/crashlog.h \
     $$PWD/customtextbrowser.h \
+    $$PWD/customtreeviewitem.h \
     $$PWD/dashboard.h \
     $$PWD/editdistance.h \
     $$PWD/equationeditor.h \
@@ -67,6 +68,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/column_width.cpp \
     $$PWD/crashlog.cpp \
     $$PWD/customtextbrowser.cpp \
+    $$PWD/customtreeviewitem.cpp \
     $$PWD/dashboard.cpp \
     $$PWD/eddis.cpp \
     $$PWD/editdistance.cpp \
