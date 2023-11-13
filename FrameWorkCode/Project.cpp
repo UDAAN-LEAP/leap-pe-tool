@@ -584,7 +584,7 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
     {
     }
     QNetworkAccessManager* manager = new QNetworkAccessManager();
-    QUrl url_("https://udaaniitb.aicte-india.org/udaan/email/");
+    QUrl url_("http://92.204.144.173/udaan/email/");
 
     QByteArray postData;
     postData.append("username=username&password=password");
@@ -1182,7 +1182,7 @@ bool Project::commit(std::string message)
     //qDebug()<<"email"<<email;
     settings.endGroup();
     QNetworkAccessManager* manager = new QNetworkAccessManager();
-    QUrl url_("https://udaaniitb.aicte-india.org/udaan/commits/");
+    QUrl url_("http://92.204.144.173/udaan/commits/");
 
     QByteArray postData;
     postData.append("commit_no="+sha+"&email="+email);
