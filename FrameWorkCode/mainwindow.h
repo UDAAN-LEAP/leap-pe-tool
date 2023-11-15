@@ -500,8 +500,6 @@ private slots:
     void on_pushButton_6_clicked();
 
     //! Page Status -- Corrected || Verified || Marked For Review
-    void on_corrected_clicked();
-    void on_verified_clicked();
     void on_mark_review_clicked();
     void write_corrected_pages();
     void write_verified_pages();

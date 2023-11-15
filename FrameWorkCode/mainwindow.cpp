@@ -101,6 +101,7 @@
 #endif
 #include <QtCharts>
 #include "releasenote_msg.h"
+#include <QHttpPart>
 QT_CHARTS_USE_NAMESPACE
 
 
@@ -432,6 +433,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->comboBox->addItem(QStringLiteral("Telugu"), QVariant("te-IN"));
     ui->comboBox->addItem(QStringLiteral("Urdu"), QVariant("ur-IN"));
     ui->comboBox->addItem(QStringLiteral("Punjabi"), QVariant("pa-Guru-IN"));
+    ui->comboBox->addItem(QStringLiteral("Sanskrit"), QVariant("san-IN"));
 
     //disable features
     e_d_features(false);
@@ -9395,7 +9397,7 @@ void MainWindow::on_actionClone_Repository()
     QString token = settings.value("token").toString();
     settings.endGroup();
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QUrl url("https://udaaniitb.aicte-india.org/udaan/email/");
+    QUrl url("http://92.204.144.173/udaan/email/");
     QUrlQuery params;
     params.addQueryItem("email", email);
     params.addQueryItem("password", token);
@@ -9727,9 +9729,9 @@ void MainWindow::login(){
     form.addRow("", showPasswordCheckBox);
 
     QLabel *label = new QLabel(&login);
-    label->setText("Forgot your password?\t<a href=\"https://udaaniitb.aicte-india.org/udaan/accounts/password_reset/\"> reset password</a>");
+    label->setText("Forgot your password?\t<a href=\"http://92.204.144.173/udaan/accounts/password_reset/\"> reset password</a>");
     QLabel *label2 = new QLabel(&login);
-    label2->setText("Don't have an account yet?<a href=\"https://udaaniitb.aicte-india.org/udaan/auth/register/\"> create account</a>");
+    label2->setText("Don't have an account yet?<a href=\"http://92.204.144.173/udaan/auth/register/\"> create account</a>");
     label->setOpenExternalLinks(true);
     label2->setOpenExternalLinks(true);
     form.addRow("",label);
@@ -9760,7 +9762,7 @@ void MainWindow::login(){
         user_pass = password->text();
         if(!user_email.isEmpty() && !user_pass.isEmpty()){
             QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-            QUrl url("https://udaaniitb.aicte-india.org/udaan/email/");
+            QUrl url("http://92.204.144.173/udaan/email/");
             QUrlQuery params;
             params.addQueryItem("email", user_email);
             params.addQueryItem("password", user_pass);
@@ -9928,7 +9930,7 @@ bool MainWindow::check_access()
     QString token = settings.value("token").toString();
     settings.endGroup();
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QUrl url("https://udaaniitb.aicte-india.org/udaan/email/");
+    QUrl url("http://92.204.144.173/udaan/email/");
     QUrlQuery params;
     params.addQueryItem("email", email);
     params.addQueryItem("password", token);
@@ -10029,7 +10031,7 @@ void MainWindow::cloud_save(){
     parObj.insert(date, mainObj);
     writeJsonFile(corrected_count, parObj);
     QNetworkAccessManager* manager = new QNetworkAccessManager();
-    QUrl url_("https://udaaniitb.aicte-india.org/udaan/email/");
+    QUrl url_("http://92.204.144.173/udaan/email/");
 
     QByteArray postData;
     postData.append("username=username&password=password");
@@ -10329,11 +10331,52 @@ void MainWindow::speechToTextCall()
     else
         enc = ui->comboBox->itemData(idx).toString();
     QByteArray audioData=audioFile.readAll();
-
     QString speechKey;
 
     QNetworkAccessManager* manager = new QNetworkAccessManager();
-    QUrl url_("https://udaaniitb.aicte-india.org/udaan/email/");
+
+    if(enc == "san-IN"){
+        qDebug()<<"Sanskrit";
+        QUrl url("http://127.0.0.1:5000/asr/transcript");
+        QNetworkRequest request(url);
+        QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+
+        // Step 3: Add the audio file part to the multipart
+        QHttpPart audioPart;
+        audioPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"file\";filename=\"" + QFileInfo(audioFile).fileName() + "\""));
+        audioPart.setBody(audioFile.readAll());
+        audioFile.close();
+        multiPart->append(audioPart);
+
+        QNetworkReply* reply = manager->post(request, multiPart);
+
+        QObject::connect(reply,&QNetworkReply::finished,[this,reply](){
+            if(reply->error()!=QNetworkReply::NoError){
+                QMessageBox::critical(0,"Error Occured","Error connecting to server...Please try again after some time");
+                ui->pushButton_4->setText("Speech to text");
+                return;
+            }
+            else if(reply->error()==QNetworkReply::UnknownNetworkError){
+                QMessageBox::warning(0,"Network Error","Please check your internet connection and try again!");
+
+            }
+            else if(reply->isFinished() && reply->error()==QNetworkReply::NoError){
+
+                QString responseString=(reply->readAll());
+                qDebug()<<responseString;
+
+//                QTextCursor cur = curr_browser->textCursor();
+//                cur.insertText(ResponseText);
+            }
+            ui->pushButton_4->setText("Speech to text");
+
+            reply->deleteLater();
+        });
+
+        return;
+
+    }
+    QUrl url_("http://92.204.144.173/udaan/email/");
 
     QByteArray postData;
     postData.append("username=username&password=password");
@@ -10435,6 +10478,7 @@ void MainWindow::on_pushButton_4_clicked()
 {
     if(!isProjectOpen) return;
     QString fileName = QDir::currentPath() + "/audio.wav";
+
     if (m_audioRecorder->state() == QMediaRecorder::StoppedState) {
         m_audioRecorder->setOutputLocation(QUrl::fromLocalFile(fileName));
         qDebug()<<"Recording your audio!!";
@@ -11139,72 +11183,6 @@ void MainWindow::on_actionTable_Border_Color_triggered()
 
     }
 }
-
-void MainWindow::on_corrected_clicked()
-{
-    QString fileName = currentFile;
-
-    if(ui->corrected->checkState() == Qt::Checked && markForReview[fileName] != 0){
-        correct[fileName] = 1;
-        recorrect[fileName] = 1;
-        ui->corrected->setChecked(true);
-        ui->status->setText("Corrected");
-    }
-    else if(ui->corrected->checkState() == Qt::Checked ){
-        correct[fileName] = 1;
-        recorrect[fileName] = 0;
-        ui->corrected->setChecked(true);
-        ui->status->setText("Corrected");
-    }
-    else if(markForReview[fileName] != 0){
-        ui->status->setText("Marked For Review");
-        recorrect[fileName] = 0;
-        correct[fileName] = 0;
-        ui->corrected->setEnabled(true);
-        ui->corrected->setChecked(false);
-    }
-    else{
-        correct[fileName] = 0;
-        recorrect[fileName] = 0;
-        ui->corrected->setChecked(false);
-        ui->status->setText("Status - None");
-    }
-}
-
-
-void MainWindow::on_verified_clicked()
-{
-    QString fileName = currentFile;
-
-    if(ui->mark_review->checkState() == Qt::Checked){
-        ui->verified->setEnabled(false);
-        //ui->verified->setChecked(false);
-        ui->status->setText("Marked For Review");
-        return;
-    }
-
-    if(ui->verified->checkState() == Qt::Checked && correct[currentFile] != 0){
-        verify[fileName] = 1;
-
-//        ui->verified->setChecked(true);
-        ui->corrected->setChecked(true);
-        ui->mark_review->setEnabled(false);
-        ui->status->setText("Verified");
-    }
-    else if(correct[currentFile] != 0){
-        verify[fileName] = 0;
-        ui->status->setText("Corrected");
-        ui->verified->setEnabled(true);
-        ui->mark_review->setEnabled(true);
-    }
-    else{
-        verify[fileName] = 0;
-        //ui->verified->setChecked(false);
-        ui->mark_review->setEnabled(true);
-        ui->status->setText("Status - None");
-    }
-}
-
 
 
 void MainWindow::on_actionCell_Padding_triggered()
@@ -12611,7 +12589,7 @@ void MainWindow::sendComment(QString str)
         settings.endGroup();
 
         QNetworkAccessManager *manager = new QNetworkAccessManager();
-        QUrl url("https://udaaniitb.aicte-india.org/udaan/email/");
+        QUrl url("http://92.204.144.173/udaan/email/");
         QUrlQuery params;
         params.addQueryItem("email", email);
         params.addQueryItem("password", token);
@@ -15030,7 +15008,7 @@ void MainWindow::on_actionCommit_History_triggered()
     QString directoryName = directory.dirName();
 
     QNetworkAccessManager* manager1 = new QNetworkAccessManager();
-    QUrl url_("https://udaaniitb.aicte-india.org/udaan/email/");
+    QUrl url_("http://92.204.144.173/udaan/email/");
 
     QByteArray postData;
     postData.append("username=username&password=password");
