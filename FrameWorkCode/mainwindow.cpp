@@ -1687,9 +1687,11 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
     if(mRole == "Corrector"){
         read_corrected_pages();
+        updateTreeviewHighlights(correct);
     }
     else if(mRole == "Verifier"){
         read_verified_pages();
+        updateTreeviewHighlights(verify);
     }
 
     if(ProjFile == stored_project || ProjFile == stored_project2 || ProjFile == stored_project3){
@@ -1735,6 +1737,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->actionHighlight->setEnabled(true);
     ui->pushButton_7->setEnabled(true);
 }
+
+
 /*!
  * \fn MainWindow::AddRecentProjects
  * \brief This function will allow user to open the last opened project.
@@ -15279,6 +15283,8 @@ void MainWindow::on_corrected_stateChanged(int arg1)
             correct.remove(gCurrentOpenPage);
         }
     }
+
+    updateTreeviewHighlights(correct);
 }
 
 
@@ -15295,25 +15301,16 @@ void MainWindow::on_verified_stateChanged(int arg1)
             verify.remove(gCurrentOpenPage);
         }
     }
+
+    updateTreeviewHighlights(verify);
 }
 
 
-void MainWindow::on_actionopen_triggered()
+void MainWindow::updateTreeviewHighlights(QMap<QString, int> checkedPages)
 {
-    ui->treeView->selectionModel()->clearSelection();
     auto model = ui->treeView->model();
 
-    customTreeviewItem* customDelegate = new customTreeviewItem(ui->treeView,correct,model);
+    customTreeviewItem* customDelegate = new customTreeviewItem(ui->treeView,checkedPages,model);
     ui->treeView->setItemDelegate(customDelegate);
-
-    /*QModelIndex rootIndex = QModelIndex(); // The root item has an invalid index
-    QModelIndex firstItemIndex = model->index(1, 0, rootIndex); // Access the first item at the root
-
-    int n_directories = ui->treeView->model()->rowCount(rootIndex);
-    qDebug()<<"number of directories: "<<n_directories;
-    if (model->hasChildren(firstItemIndex)) {
-        QModelIndex firstChildIndex = model->index(0, 0, firstItemIndex);
-        //file_click(firstChildIndex);
-    }*/
 }
 

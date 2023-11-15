@@ -1582,12 +1582,6 @@ QMenu::item:selected{
     <addaction name="separator"/>
     <addaction name="actionChange_Role"/>
    </widget>
-   <widget class="QMenu" name="menutest">
-    <property name="title">
-     <string>test</string>
-    </property>
-    <addaction name="actionopen"/>
-   </widget>
    <addaction name="menuOCR_Correction_Window"/>
    <addaction name="menuEdit"/>
    <addaction name="menuInsert"/>
@@ -1595,7 +1589,6 @@ QMenu::item:selected{
    <addaction name="menuTool"/>
    <addaction name="menuGit"/>
    <addaction name="menuHelp"/>
-   <addaction name="menutest"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="styleSheet">
@@ -3212,11 +3205,6 @@ background-color: #EEF0F2;
    </property>
    <property name="text">
     <string>Sync History</string>
-   </property>
-  </action>
-  <action name="actionopen">
-   <property name="text">
-    <string>open</string>
    </property>
   </action>
  </widget>
