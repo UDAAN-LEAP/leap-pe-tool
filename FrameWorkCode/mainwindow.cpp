@@ -11133,6 +11133,267 @@ void MainWindow::onClipboardDataChanged()
     }
 }
 
+/**
+ * @fn MainWindow::fetch()
+ * @brief Fetches HTML content from GitHub or a local directory based on commit SHA.
+ *
+ * This function fetches HTML content either from GitHub or a local directory, depending
+ * on whether the head commit SHA is "Current Version (Local)" or not. If the head commit SHA
+ * is local, it sends a single network request to fetch the content for the base commit SHA
+ * using the loadLocal function. If the head commit SHA is not local, it sends one network
+ * request for the head commit SHA and checks if the base commit SHA and head commit SHA are
+ * the same. If they are not the same, it sends an additional request for the base commit SHA.
+ *
+ * @param api The API endpoint for GitHub repository.
+ * @param token The GitHub access token for authentication.
+ */
+void MainWindow::fetch(const QString api, const QString token)
+{
+    if(headCommitSHA == "Current Version (Local)"){
+        QNetworkAccessManager manager;
+
+        QUrl url(api);
+
+        QNetworkRequest request(url);
+
+        QByteArray authorizationHeader = "Bearer " + token.toUtf8();
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+        request.setRawHeader("Authorization", authorizationHeader);
+
+        QUrlQuery urlQuery;
+        urlQuery.addQueryItem("ref", baseCommitSHA);
+        url.setQuery(urlQuery);
+
+        QNetworkReply* reply = manager.get(request);
+
+        QEventLoop loop;
+        QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+
+        if(reply->error() == QNetworkReply::NoError) {
+            QByteArray responseData2 = reply->readAll();
+            QJsonDocument responseDoc2 = QJsonDocument::fromJson(responseData2);
+            QJsonArray responseArray2 = responseDoc2.array();
+
+            for(const QJsonValue& value : responseArray2){
+                QJsonObject jsonObject = value.toObject();
+
+                if (jsonObject["name"].toString().endsWith(".html")) {
+                    QString pageName = jsonObject["name"].toString();
+                    QString downloadUrl = jsonObject["download_url"].toString();
+
+                    downloadUrls2[pageName] = downloadUrl;
+                }
+            }
+        }
+        else {
+            QMessageBox::information(this, "Error", reply->errorString());
+        }
+
+        reply->deleteLater();
+    }
+    else{
+        QNetworkAccessManager manager;
+
+        QUrl url1(api);
+        QUrl url2(api);
+
+        QNetworkRequest request1(url1);
+        QNetworkRequest request2(url2);
+
+        QByteArray authorizationHeader = "Bearer " + token.toUtf8();
+        request1.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+        request1.setRawHeader("Authorization", authorizationHeader);
+        request2.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+        request2.setRawHeader("Authorization", authorizationHeader);
+
+        QUrlQuery urlQuery1;
+        urlQuery1.addQueryItem("ref", headCommitSHA);
+        url1.setQuery(urlQuery1);
+
+        QUrlQuery urlQuery2;
+        urlQuery2.addQueryItem("ref", baseCommitSHA);
+        url2.setQuery(urlQuery2);
+
+        QNetworkReply* reply1 = manager.get(request1);
+
+        QEventLoop loop1;
+        QObject::connect(reply1, &QNetworkReply::finished, &loop1, &QEventLoop::quit);
+        loop1.exec();
+
+        if (reply1->error() == QNetworkReply::NoError) {
+            QByteArray responseData1 = reply1->readAll();
+            QJsonDocument responseDoc1 = QJsonDocument::fromJson(responseData1);
+            QJsonArray responseArray1 = responseDoc1.array();
+
+            for(const QJsonValue& value : responseArray1){
+                QJsonObject jsonObject = value.toObject();
+
+                if (jsonObject["name"].toString().endsWith(".html")) {
+                    QString pageName = jsonObject["name"].toString();
+                    QString downloadUrl = jsonObject["download_url"].toString();
+
+                    downloadUrls1[pageName] = downloadUrl;
+                }
+            }
+        }
+        else {
+            QMessageBox::information(this, "Error", reply1->errorString());
+        }
+
+        reply1->deleteLater();
+
+        if(baseCommitSHA != headCommitSHA){
+            QNetworkReply* reply2 = manager.get(request2);
+
+            QEventLoop loop2;
+            QObject::connect(reply2, &QNetworkReply::finished, &loop2, &QEventLoop::quit);
+            loop2.exec();
+
+            if (reply2->error() == QNetworkReply::NoError) {
+                QByteArray responseData2 = reply2->readAll();
+                QJsonDocument responseDoc2 = QJsonDocument::fromJson(responseData2);
+                QJsonArray responseArray2 = responseDoc2.array();
+
+                for(const QJsonValue& value : responseArray2){
+                    QJsonObject jsonObject = value.toObject();
+
+                    if (jsonObject["name"].toString().endsWith(".html")) {
+                        QString pageName = jsonObject["name"].toString();
+                        QString downloadUrl = jsonObject["download_url"].toString();
+
+                        downloadUrls2[pageName] = downloadUrl;
+                    }
+                }
+            }
+            else {
+                QMessageBox::information(this, "Error", reply2->errorString());
+            }
+
+            reply2->deleteLater();
+        }
+    }
+
+}
+
+/**
+ * @fn MainWindow::load()
+ * @brief Loads HTML content into a QTextBrowser based on the specified URL.
+ *
+ * This function loads HTML content into a QTextBrowser widget based on the specified URL.
+ * It uses QNetworkAccessManager to make a network request for the HTML content. The flag
+ * parameter determines whether the HTML should be loaded from downloadUrls1 or downloadUrls2.
+ *
+ * @param browser The QTextBrowser widget to display the HTML content.
+ * @param token The GitHub access token for authentication.
+ * @param flag A flag to determine which downloadUrls map to use.
+ */
+void MainWindow::load(QTextBrowser *browser, QString token, bool flag)
+{
+    QNetworkAccessManager manager;
+    QString pageUrl;
+    QString html;
+
+    if(flag){
+        QMapIterator<QString, QString> i(downloadUrls1);
+        while(i.hasNext()){
+            i.next();
+            if(i.key() == headPage){
+                pageUrl = i.value();
+            }
+        }
+    }
+    else{
+        if(baseCommitSHA == headCommitSHA){
+            QMapIterator<QString, QString> i(downloadUrls1);
+            while(i.hasNext()){
+                i.next();
+                if(i.key() == basePage){
+                    pageUrl = i.value();
+                }
+            }
+        }
+        else{
+            QMapIterator<QString, QString> i(downloadUrls2);
+            while(i.hasNext()){
+                i.next();
+                if(i.key() == basePage){
+                    pageUrl = i.value();
+                }
+            }
+        }
+    }
+
+    QUrl url(pageUrl);
+
+    QNetworkRequest request(url);
+
+    QByteArray authorizationHeader = "Bearer " + token.toUtf8();
+    request.setRawHeader("Authorization", authorizationHeader);
+
+    QNetworkReply* reply = manager.get(request);
+
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    if(reply->error() == QNetworkReply::NoError){
+        html = reply->readAll();
+        browser->setHtml(html);
+        browser->setReadOnly(true);
+    }
+    else{
+        QMessageBox::information(this, "Error", reply->errorString());
+    }
+
+    reply->deleteLater();
+}
+
+/**
+ * @fn MainWindow::loadLocal()
+ * @brief Loads HTML content from a local directory into a QTextBrowser widget.
+ *
+ * This function loads HTML content from a local directory into a QTextBrowser widget. It reads
+ * the contents of the local HTML file specified by headPage. The local directory is determined
+ * by gDirOneLevelUp.
+ *
+ * @param browser The QTextBrowser widget to display the HTML content.
+ */
+void MainWindow::loadLocal(QTextBrowser *browser)
+{
+    QDir dir(gDirOneLevelUp);
+
+    if(!(dir.exists())){
+        qDebug() << "Invalid directory!";
+        return;
+    }
+
+    dir.setFilter(QDir::Files);
+
+    QStringList fileList = dir.entryList();
+
+    for (const QString &fileName : fileList){
+        if (fileName.endsWith(".html", Qt::CaseInsensitive) && fileName == headPage){
+            QString fullFilePath = dir.filePath(fileName);
+
+            QFile file(fullFilePath);
+
+            if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+            {
+                qDebug() << "Could not open file: " << fullFilePath;
+                return;
+            }
+
+            QTextStream in(&file);
+            QString htmlContent = in.readAll();
+
+            file.close();
+
+            browser->setHtml(htmlContent);
+        }
+    }
+}
+
 /*!
  * \fn MainWindow::on_actionWord_Count_triggered()
  * \brief This function displays word count in current page ,total number of pages and total number of words in all pages
@@ -15131,11 +15392,14 @@ void MainWindow::on_actionCommit_History_triggered()
     layout->addWidget(filterComboBox);
     layout->addWidget(tableWidget);
 
-    connect(filterComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
+    QVector<QString> filteredCommitHashV;
+    QVector<QString> filteredCommitMsgV;
+    QVector<QString> filteredCommitDateV;
+    connect(filterComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [=]() mutable {
         QString filterType = filterComboBox->currentText();
-        QVector<QString> filteredCommitHashV;
-        QVector<QString> filteredCommitMsgV;
-        QVector<QString> filteredCommitDateV;
+        filteredCommitHashV.clear();
+        filteredCommitMsgV.clear();
+        filteredCommitDateV.clear();
 
         for (int i = 0; i < commitHashV.size(); i++) {
             QString msg = commitMsgV[i];
@@ -15188,6 +15452,172 @@ void MainWindow::on_actionCommit_History_triggered()
     layout->addWidget(showLess);
     showLess->setVisible(false);
     showLess->setEnabled(false);
+
+    QPushButton* showDiff = new QPushButton("Show Diff");
+    layout->addWidget(showDiff);
+
+    // Connecting the clicked signal of the push button to the lambda function to handle further processing.
+    connect(showDiff, &QPushButton::clicked, [=]() mutable {
+        // Creating new widget and layouts.
+        QWidget* commitWindow = new QWidget();
+        QVBoxLayout* commitLayout = new QVBoxLayout();
+        commitWindow->setLayout(commitLayout);
+
+        // Clearing the QVectors.
+        filteredCommitHashV.clear();
+        filteredCommitMsgV.clear();
+        filteredCommitDateV.clear();
+
+        // Filtering the commits based on the user role.
+        for(int i = 0; i < commitHashV.size(); i++){
+            QString msg = commitMsgV[i];
+            QString role = mRole;
+
+            if(msg.contains(role)){
+                filteredCommitHashV.append(commitHashV[i]);
+                filteredCommitMsgV.append(msg);
+                filteredCommitDateV.append(commitDateV[i]);
+            }
+        }
+
+        // Creating some more layouts.
+        QHBoxLayout* layout1 = new QHBoxLayout();
+        QHBoxLayout* layout2 = new QHBoxLayout();
+
+        // Creating labels for the commit window.
+        QLabel* label1 = new QLabel("Select Commit for Comparison:          ");
+        QLabel* label2 = new QLabel("Select Commit for Comparison Reference:");
+
+        // Adding the labels to their respective layouts.
+        layout1->addWidget(label1);
+        layout2->addWidget(label2);
+
+        // Creating comboBoxes to select commits for comparison.
+        QComboBox* comboBox1 = new QComboBox();
+        QComboBox* comboBox2 = new QComboBox();
+
+        // Adding commits in their respective comboBoxes.
+        comboBox1->addItem("Current Version (Local)");
+        for(int i = 0; i < filteredCommitHashV.size(); i++){
+            comboBox1->addItem(filteredCommitHashV[i]);
+        }
+        for(int i = 0; i < filteredCommitHashV.size(); i++){
+            comboBox2->addItem(filteredCommitHashV[i]);
+        }
+
+        // Initializing the variables for head and base commit.
+        QString api = QString("https://api.github.com/repos/UdaanContentForLogging/%1/contents/%2Output").arg(directoryName, mRole);
+        qDebug() << "Initial Url: " << api;
+        headCommitSHA = comboBox1->currentText();
+        baseCommitSHA = comboBox2->currentText();
+
+        // Updating the head and base commits based on the selection in the comboBox.
+        connect(comboBox1, QOverload<int>::of(&QComboBox::currentIndexChanged), [=]() mutable {
+            headCommitSHA = comboBox1->currentText();
+        });
+        connect(comboBox2, QOverload<int>::of(&QComboBox::currentIndexChanged), [=]() mutable {
+            baseCommitSHA = comboBox2->currentText();
+        });
+
+        // Adding the comboBoxes to the commit window.
+        layout1->addWidget(comboBox1);
+        layout2->addWidget(comboBox2);
+
+        // Creating a push button to send GET requests.
+        QPushButton* compareButton = new QPushButton("Compare");
+
+        // Connecting the clicked signal of the push button to a lambda function to handle further processing and to show diff.
+        connect(compareButton, &QPushButton::clicked, [=]() mutable {
+            commitWindow->close();
+            fetch(api, token);
+
+            // Creating new widget and layouts.
+            QWidget* diffWindow = new QWidget();
+            QVBoxLayout* mainDiffLayout = new QVBoxLayout();
+            diffWindow->setLayout(mainDiffLayout);
+            QHBoxLayout* diffLayout1 = new QHBoxLayout();
+            QHBoxLayout* diffLayout2 = new QHBoxLayout();
+
+            // Creating comboBoxes for selecting page.
+            QComboBox* comboBox3 = new QComboBox();
+            QComboBox* comboBox4 = new QComboBox();
+
+            // Adding the pages in the comboBoxes.
+            QString role = QString("/%1Output/").arg(mRole);
+            QString str1 = mProject.GetDir().absolutePath() + role;
+            QDir dir1(str1);
+            auto fileList1 = dir1.entryList(QDir::Files);
+            foreach (QString filePath, fileList1) {
+                QFile file(filePath);
+
+                if(file.exists() && filePath.endsWith(".html")){
+                    comboBox3->addItem(filePath);
+                    comboBox4->addItem(filePath);
+                }
+            }
+
+            // Initializing the base and head pages with the default selection in the comboBoxes.
+            headPage = comboBox3->currentText();
+            basePage = comboBox4->currentText();
+
+            // Setting the vertical scroll bar in the comboBoxes.
+            comboBox3->view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+            comboBox4->view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
+            // Creating two text browser to display the pages.
+            QTextBrowser* browser1 = new QTextBrowser();
+            QTextBrowser* browser2 = new QTextBrowser();
+
+            // Setting the text browsers to read only.
+            browser1->setReadOnly(true);
+            browser2->setReadOnly(true);
+
+            // Updating the pages when the selection is updated in the comboBoxes.
+            connect(comboBox3, QOverload<int>::of(&QComboBox::currentIndexChanged), [=]() mutable {
+                headPage = comboBox3->currentText();
+                if(headCommitSHA == "Current Version (Local)"){
+                    loadLocal(browser1);
+                }
+                else{
+                    load(browser1, token, true);
+                }
+            });
+            connect(comboBox4, QOverload<int>::of(&QComboBox::currentIndexChanged), [=]() mutable {
+                basePage = comboBox4->currentText();
+                load(browser2, token, false);
+            });
+
+            // Adding the comboBoxes to layout.
+            diffLayout1->addWidget(comboBox3);
+            diffLayout1->addWidget(comboBox4);
+
+            // Adding the browsers to layout.
+            diffLayout2->addWidget(browser1);
+            diffLayout2->addWidget(browser2);
+
+            // Adding the layouts to the main diff layout.
+            mainDiffLayout->addLayout(diffLayout1);
+            mainDiffLayout->addLayout(diffLayout2);
+
+            // Loading the pages in the text browsers.
+            loadLocal(browser1);
+            load(browser2, token, false);
+
+            // Displaying the widget.
+            diffWindow->setWindowTitle("View Differences");
+            diffWindow->showMaximized();
+        });
+
+        // Adding the layouts and buttons to the commit window.
+        commitLayout->addLayout(layout1);
+        commitLayout->addLayout(layout2);
+        commitLayout->addWidget(compareButton);
+
+        // Setting the properties of commit window.
+        commitWindow->setWindowTitle("Show Differences");
+        commitWindow->resize(600, 100);
+        commitWindow->show();
+    });
 
     connect(addMore,  &QPushButton::clicked, [=] () {
         for (int i = 10; (i<commitHashV.size()); i++) {

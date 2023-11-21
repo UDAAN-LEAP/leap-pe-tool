@@ -660,6 +660,10 @@ public slots:
 
     void onClipboardDataChanged();
 
+    void fetch(const QString api, const QString token);
+    void load(QTextBrowser *browser, QString token, bool flag);
+    void loadLocal(QTextBrowser* browser);
+
 private:
     bool mExitStatus = false;
     QString mRole;
@@ -746,7 +750,12 @@ private:
     QString currentCommentWord;
     QMap<QString,QMap<QString,QString>> corrector_comment, verifier_comment;
     QStringList clipboardHistory;
-
+    QString headCommitSHA;
+    QString baseCommitSHA;
+    QString headPage;
+    QString basePage;
+    QMap<QString, QString> downloadUrls1;
+    QMap<QString, QString> downloadUrls2;
 };
 
 #endif // MAINWINDOW_H
