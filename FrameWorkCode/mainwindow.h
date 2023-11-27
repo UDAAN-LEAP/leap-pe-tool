@@ -663,6 +663,8 @@ public slots:
     void fetch(const QString api, const QString token);
     void load(QTextBrowser *browser, QString token, bool flag);
     void loadLocal(QTextBrowser* browser);
+    void highlightLine(QTextBrowser *browser, int lineNumber, const QColor &color);
+    void visualDiff(QTextBrowser *browser1, QTextBrowser *browser2);
 
 private:
     bool mExitStatus = false;
@@ -752,8 +754,7 @@ private:
     QStringList clipboardHistory;
     QString headCommitSHA;
     QString baseCommitSHA;
-    QString headPage;
-    QString basePage;
+    QString page;
     QMap<QString, QString> downloadUrls1;
     QMap<QString, QString> downloadUrls2;
 };

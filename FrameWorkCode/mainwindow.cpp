@@ -11298,7 +11298,7 @@ void MainWindow::load(QTextBrowser *browser, QString token, bool flag)
         QMapIterator<QString, QString> i(downloadUrls1);
         while(i.hasNext()){
             i.next();
-            if(i.key() == headPage){
+            if(i.key() == page){
                 pageUrl = i.value();
             }
         }
@@ -11308,7 +11308,7 @@ void MainWindow::load(QTextBrowser *browser, QString token, bool flag)
             QMapIterator<QString, QString> i(downloadUrls1);
             while(i.hasNext()){
                 i.next();
-                if(i.key() == basePage){
+                if(i.key() == page){
                     pageUrl = i.value();
                 }
             }
@@ -11317,7 +11317,7 @@ void MainWindow::load(QTextBrowser *browser, QString token, bool flag)
             QMapIterator<QString, QString> i(downloadUrls2);
             while(i.hasNext()){
                 i.next();
-                if(i.key() == basePage){
+                if(i.key() == page){
                     pageUrl = i.value();
                 }
             }
@@ -11373,7 +11373,7 @@ void MainWindow::loadLocal(QTextBrowser *browser)
     QStringList fileList = dir.entryList();
 
     for (const QString &fileName : fileList){
-        if (fileName.endsWith(".html", Qt::CaseInsensitive) && fileName == headPage){
+        if (fileName.endsWith(".html", Qt::CaseInsensitive) && fileName == page){
             QString fullFilePath = dir.filePath(fileName);
 
             QFile file(fullFilePath);
@@ -11391,6 +11391,65 @@ void MainWindow::loadLocal(QTextBrowser *browser)
 
             browser->setHtml(htmlContent);
         }
+    }
+}
+
+void MainWindow::highlightLine(QTextBrowser *browser, int lineNumber, const QColor &color)
+{
+    QTextCursor cursor(browser->document());
+    cursor.movePosition(QTextCursor::Start);
+    for (int i = 0; i < lineNumber; ++i) {
+        cursor.movePosition(QTextCursor::NextBlock);
+    }
+
+    cursor.select(QTextCursor::LineUnderCursor);
+
+    QTextCharFormat format;
+    format.setBackground(color);
+    cursor.mergeCharFormat(format);
+}
+
+void MainWindow::visualDiff(QTextBrowser *browser1, QTextBrowser *browser2)
+{
+    QString text1 = browser1->toPlainText();
+    QString text2 = browser2->toPlainText();
+
+    QStringList lines1 = text1.split('\n');
+    QStringList lines2 = text2.split('\n');
+
+    QMap<QString, int> lineMap1;
+    QMap<QString, int> lineMap2;
+
+    for (int i = 0; i < lines1.size(); ++i) {
+        lineMap1[lines1[i]] = i;
+    }
+
+    for (int i = 0; i < lines2.size(); ++i) {
+        lineMap2[lines2[i]] = i;
+    }
+
+    QMap<QString, int>::const_iterator it1 = lineMap1.constBegin();
+    QMap<QString, int>::const_iterator end1 = lineMap1.constEnd();
+
+    while (it1 != end1) {
+        if (!lineMap2.contains(it1.key())) {
+            // Line in browser1 is not present in browser2 (addition)
+            highlightLine(browser1, it1.value(), Qt::green);
+        }
+
+        ++it1;
+    }
+
+    QMap<QString, int>::const_iterator it2 = lineMap2.constBegin();
+    QMap<QString, int>::const_iterator end2 = lineMap2.constEnd();
+
+    while (it2 != end2) {
+        if (!lineMap1.contains(it2.key())) {
+            // Line in browser2 is not present in browser1 (deletion)
+            highlightLine(browser2, it2.value(), Qt::red);
+        }
+
+        ++it2;
     }
 }
 
@@ -15507,7 +15566,6 @@ void MainWindow::on_actionCommit_History_triggered()
 
         // Initializing the variables for head and base commit.
         QString api = QString("https://api.github.com/repos/UdaanContentForLogging/%1/contents/%2Output").arg(directoryName, mRole);
-        qDebug() << "Initial Url: " << api;
         headCommitSHA = comboBox1->currentText();
         baseCommitSHA = comboBox2->currentText();
 
@@ -15538,9 +15596,12 @@ void MainWindow::on_actionCommit_History_triggered()
             QHBoxLayout* diffLayout1 = new QHBoxLayout();
             QHBoxLayout* diffLayout2 = new QHBoxLayout();
 
+            // Creating a new Label and adding to the layout.
+            QLabel* label = new QLabel("Select Page to Compare:  ");
+            diffLayout1->addWidget(label);
+
             // Creating comboBoxes for selecting page.
             QComboBox* comboBox3 = new QComboBox();
-            QComboBox* comboBox4 = new QComboBox();
 
             // Adding the pages in the comboBoxes.
             QString role = QString("/%1Output/").arg(mRole);
@@ -15552,17 +15613,17 @@ void MainWindow::on_actionCommit_History_triggered()
 
                 if(file.exists() && filePath.endsWith(".html")){
                     comboBox3->addItem(filePath);
-                    comboBox4->addItem(filePath);
                 }
             }
 
             // Initializing the base and head pages with the default selection in the comboBoxes.
-            headPage = comboBox3->currentText();
-            basePage = comboBox4->currentText();
+            page = comboBox3->currentText();
 
             // Setting the vertical scroll bar in the comboBoxes.
             comboBox3->view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-            comboBox4->view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
+            // Adding the comboBoxes to layout.
+            diffLayout1->addWidget(comboBox3);
 
             // Creating two text browser to display the pages.
             QTextBrowser* browser1 = new QTextBrowser();
@@ -15574,22 +15635,18 @@ void MainWindow::on_actionCommit_History_triggered()
 
             // Updating the pages when the selection is updated in the comboBoxes.
             connect(comboBox3, QOverload<int>::of(&QComboBox::currentIndexChanged), [=]() mutable {
-                headPage = comboBox3->currentText();
+                page = comboBox3->currentText();
                 if(headCommitSHA == "Current Version (Local)"){
                     loadLocal(browser1);
+                    load(browser2, token, false);
+                    visualDiff(browser1, browser2);
                 }
                 else{
                     load(browser1, token, true);
+                    load(browser2, token, false);
+                    visualDiff(browser1, browser2);
                 }
             });
-            connect(comboBox4, QOverload<int>::of(&QComboBox::currentIndexChanged), [=]() mutable {
-                basePage = comboBox4->currentText();
-                load(browser2, token, false);
-            });
-
-            // Adding the comboBoxes to layout.
-            diffLayout1->addWidget(comboBox3);
-            diffLayout1->addWidget(comboBox4);
 
             // Adding the browsers to layout.
             diffLayout2->addWidget(browser1);
