@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>2068</width>
+    <width>2149</width>
     <height>1190</height>
    </rect>
   </property>
@@ -166,17 +166,6 @@ color: rgb(121,255, 121);
           </property>
           <property name="text">
            <string>Verified</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_10">
-          <property name="styleSheet">
-           <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
-} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
-          </property>
-          <property name="text">
-           <string>Update Page</string>
           </property>
          </widget>
         </item>
@@ -1206,7 +1195,7 @@ background: grey;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>2068</width>
+     <width>2149</width>
      <height>46</height>
     </rect>
    </property>
