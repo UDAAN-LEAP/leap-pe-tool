@@ -11434,7 +11434,7 @@ void MainWindow::visualDiff(QTextBrowser *browser1, QTextBrowser *browser2)
     while (it1 != end1) {
         if (!lineMap2.contains(it1.key())) {
             // Line in browser1 is not present in browser2 (addition)
-            highlightLine(browser1, it1.value(), Qt::green);
+            highlightLine(browser1, it1.value(), QColor(159, 255, 173, 255));
         }
 
         ++it1;
@@ -11446,7 +11446,7 @@ void MainWindow::visualDiff(QTextBrowser *browser1, QTextBrowser *browser2)
     while (it2 != end2) {
         if (!lineMap1.contains(it2.key())) {
             // Line in browser2 is not present in browser1 (deletion)
-            highlightLine(browser2, it2.value(), Qt::red);
+            highlightLine(browser2, it2.value(), QColor(255, 159, 159, 255));
         }
 
         ++it2;
