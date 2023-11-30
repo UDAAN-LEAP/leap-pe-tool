@@ -630,6 +630,8 @@ private slots:
 
     void updateTreeviewHighlights(QMap<QString, int> checkedPages);
 
+    void on_pushButton_10_clicked();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

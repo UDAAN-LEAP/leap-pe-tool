@@ -249,6 +249,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionHighlight->setEnabled(false);
     ui->copyToVerifier->setVisible(false);
     ui->copyToVerifier->setEnabled(false);
+    ui->pushButton_10->setEnabled(false);
 
     settings.beginGroup("cloudSave");
     settings.remove("");
@@ -10716,6 +10717,7 @@ void MainWindow::e_d_features(bool value)
     ui->find->setEnabled(value);
     ui->pushButton_7->setEnabled(value);
     ui->pushButton_9->setEnabled(value);
+    ui->pushButton_10->setEnabled(value);
 
     ui->status->setVisible(false);
 }
@@ -15777,5 +15779,67 @@ void MainWindow::updateTreeviewHighlights(QMap<QString, int> checkedPages)
 
     customTreeviewItem* customDelegate = new customTreeviewItem(ui->treeView,checkedPages,model);
     ui->treeView->setItemDelegate(customDelegate);
+}
+
+
+void MainWindow::on_pushButton_10_clicked()
+{
+    QDialog* updateDialog = new QDialog(this);
+    QVBoxLayout* mainLayout = new QVBoxLayout();
+    updateDialog->setLayout(mainLayout);
+
+    QLabel* currentPageLabel = new QLabel("Current Page: " + currentTabPageName);
+
+    QHBoxLayout* layout1 = new QHBoxLayout();
+    QLabel* selectPageLabel = new QLabel("Enter page name to go to: ");
+    QLineEdit* selectPageLineEdit = new QLineEdit();
+    layout1->addWidget(selectPageLabel);
+    layout1->addWidget(selectPageLineEdit);
+
+    mainLayout->addWidget(currentPageLabel);
+    mainLayout->addLayout(layout1);
+
+    QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    mainLayout->addWidget(buttonBox);
+
+    QObject::connect(buttonBox, &QDialogButtonBox::accepted, [=]() {
+        // Get the page name from the QLineEdit
+        QString pageName = selectPageLineEdit->text();
+
+        QString role = QString("/%1Output/").arg(mRole);
+        QString filePath = mProject.GetDir().absolutePath() + role + pageName;
+
+        if (!pageName.endsWith(".html", Qt::CaseInsensitive)) {
+            pageName += ".html";
+            filePath += ".html";
+        }
+
+        QFile file(filePath);
+
+        if(file.exists() && filePath.endsWith(".html")){
+            QString baseFileName = QFileInfo(filePath).fileName();
+
+            if (baseFileName == pageName) {
+                QString ext = "html";
+                LoadDocument(&file, ext, pageName);
+            }
+            else{
+                QMessageBox::warning(this, "Error", "The page could not be found. Please try again.");
+                return;
+            }
+        }
+        else{
+            QMessageBox::warning(this, "Error", "Invalid input. Please try again.");
+            return;
+        }
+
+        // Close the dialog when OK is clicked and the input is valid
+        updateDialog->accept();
+    });
+
+    QObject::connect(buttonBox, &QDialogButtonBox::rejected, updateDialog, &QDialog::reject);
+
+    updateDialog->setWindowTitle("Update Page");
+    updateDialog->exec();
 }
 
