@@ -170,6 +170,17 @@ color: rgb(121,255, 121);
          </widget>
         </item>
         <item>
+         <widget class="QLineEdit" name="lineEdit_5">
+          <property name="styleSheet">
+           <string notr="true">#lineEdit_5{
+background-color: rgb(255, 255, 255);
+color:black;
+max-width: 150px;
+}</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QCheckBox" name="mark_review">
           <property name="minimumSize">
            <size>

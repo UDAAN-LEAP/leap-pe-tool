@@ -441,6 +441,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->corrected->setVisible(false);
     ui->verified->setVisible(false);
     ui->mark_review->setVisible(false);
+    ui->lineEdit_5->setVisible(false);
 
     //saves current path - useful for auto upgrade feature
     m_update_path = QDir().currentPath();
@@ -1738,6 +1739,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->groupBox->setDisabled(false);
     ui->actionHighlight->setEnabled(true);
     ui->pushButton_7->setEnabled(true);
+
+    ui->lineEdit_5->setVisible(true);
 }
 
 
@@ -7042,6 +7045,7 @@ QScrollBar::sub-line:vertical {
     }
     changedWords.clear();
     ui->pushButton_6->setVisible(false);
+    ui->lineEdit_5->setText(gCurrentOpenPage);
 }
 
 /*!
@@ -9495,7 +9499,9 @@ void MainWindow::on_actionClose_project_triggered()
     ui->verified->setChecked(false);
     ui->mark_review->setChecked(false);
     ui->status->setText("Status - None");
+    ui->lineEdit_5->clear();
 
+    ui->lineEdit_5->setVisible(false);
 
     if(!mProject.isProjectOpen()){
         //        QMessageBox::critical(this,"Error","Project Not Opened");
@@ -15777,5 +15783,47 @@ void MainWindow::updateTreeviewHighlights(QMap<QString, int> checkedPages)
 
     customTreeviewItem* customDelegate = new customTreeviewItem(ui->treeView,checkedPages,model);
     ui->treeView->setItemDelegate(customDelegate);
+}
+
+
+void MainWindow::on_lineEdit_5_returnPressed()
+{
+    QString pageName = ui->lineEdit_5->text();
+
+    pageName = pageName.trimmed();
+
+    if (!pageName.startsWith("p-", Qt::CaseInsensitive)) {
+        bool isNumeric = false;
+        int pageNumber = pageName.toInt(&isNumeric);
+
+        if (isNumeric) {
+            pageName = QString("p-%1").arg(pageNumber, 3, 10, QChar('0'));
+        }
+        else{
+            QMessageBox::warning(this, "Error", "Invalid Input");
+            return;
+        }
+    }
+
+    if (!pageName.endsWith(".html", Qt::CaseInsensitive)) {
+        pageName += ".html";
+    }
+
+    QString role = QString("/%1Output/").arg(mRole);
+    QString filePath = mProject.GetDir().absolutePath() + role + pageName;
+
+    QFile file(filePath);
+
+    if (file.exists() && filePath.endsWith(".html")) {
+        QString baseFileName = QFileInfo(filePath).fileName();
+
+        if (baseFileName == pageName) {
+            QString ext = "html";
+            LoadDocument(&file, ext, pageName);
+        }
+    }
+    else{
+        QMessageBox::warning(this, "Error", "Couldn't find the page.");
+    }
 }
 
