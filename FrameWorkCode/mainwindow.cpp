@@ -1515,6 +1515,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
                 }
                 corrector_set.insert(f);
             }
+            totalPages = totalFileCountInDir;
             fileCountInDir["Corrector"] = totalFileCountInDir;
             totalFileCountInDir = 0;
 
@@ -15797,7 +15798,8 @@ void MainWindow::on_lineEdit_5_returnPressed()
         int pageNumber = pageName.toInt(&isNumeric);
 
         if (isNumeric) {
-            pageName = QString("p-%1").arg(pageNumber, 3, 10, QChar('0'));
+            int totalDigits = QString::number(totalPages).length();
+            pageName = QString("p-%1").arg(pageNumber, totalDigits, 10, QChar('0'));
         }
         else{
             QMessageBox::warning(this, "Error", "Invalid Input");

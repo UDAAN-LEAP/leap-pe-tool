@@ -757,6 +757,7 @@ private:
     QString headCommitSHA;
     QString baseCommitSHA;
     QString page;
+    int totalPages;
     QMap<QString, QString> downloadUrls1;
     QMap<QString, QString> downloadUrls2;
 };
