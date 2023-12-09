@@ -11392,6 +11392,8 @@ void MainWindow::loadLocal(QTextBrowser *browser)
             }
 
             QTextStream in(&file);
+            in.setCodec("UTF - 8");
+
             QString htmlContent = in.readAll();
 
             file.close();
@@ -15666,6 +15668,9 @@ void MainWindow::on_actionCommit_History_triggered()
             // Loading the pages in the text browsers.
             loadLocal(browser1);
             load(browser2, token, false);
+
+            // Highlighting the Differences
+            visualDiff(browser1, browser2);
 
             // Displaying the widget.
             diffWindow->setWindowTitle("View Differences");
