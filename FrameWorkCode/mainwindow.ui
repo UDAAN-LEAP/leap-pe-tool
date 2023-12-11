@@ -176,6 +176,10 @@ color: rgb(121,255, 121);
 background-color: rgb(255, 255, 255);
 color:black;
 max-width: 150px;
+padding-top:1px;
+padding-left:1.3px;
+border-radius:4.8px;
+height:26.96px;
 }</string>
           </property>
          </widget>

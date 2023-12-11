@@ -7046,7 +7046,19 @@ QScrollBar::sub-line:vertical {
     }
     changedWords.clear();
     ui->pushButton_6->setVisible(false);
-    ui->lineEdit_5->setText(gCurrentOpenPage);
+
+    QRegularExpression regex("(p-)?(\\d+)\\.html");
+    QRegularExpressionMatch match = regex.match(gCurrentOpenPage);
+
+    if (match.hasMatch()) {
+        QString numericPart = match.captured(2);
+        int pageNumber = numericPart.toInt();
+        QString pageString = QString::number(pageNumber);
+        ui->lineEdit_5->setText(pageString);
+    }
+    else {
+        ui->lineEdit_5->setText(gCurrentOpenPage);
+    }
 }
 
 /*!
