@@ -10344,7 +10344,7 @@ void MainWindow::speechToTextCall()
 
     if(enc == "san-IN"){
         qDebug()<<"Sanskrit";
-        QUrl url("http://127.0.0.1:5000/asr/transcript");
+        QUrl url("https://pepmiitb.jio.com/asr/transcript");
         QNetworkRequest request(url);
         QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
