@@ -10336,6 +10336,77 @@ void MainWindow::on_actionUnderline_triggered()
 void MainWindow::speechToTextCall()
 {
     QString fileName = QDir::currentPath() + "/audio.wav";
+    int idx = ui->comboBox->currentIndex();
+    QString enc;
+    if (idx == -1)
+        enc = "en-US";
+    else
+        enc = ui->comboBox->itemData(idx).toString();
+
+    if (enc == "san-IN") {
+        qDebug() << "Sanskrit";
+        QNetworkAccessManager * manager = new QNetworkAccessManager();
+        QUrl url("https://pepmiitb.jio.com/asr/transcript");
+
+        qDebug() << "Reading audio file";
+        QFile* audioFile = new QFile(fileName);
+        if (!audioFile->open(QIODevice::ReadOnly)) {
+            QMessageBox::critical(0, "Error", "Error recording your audio! Try again");
+            ui->pushButton_4->setText("Speech to text");
+            return;
+        }
+
+        qDebug() << "Audio File read";
+        qDebug() << audioFile->fileName();
+        
+        QNetworkRequest request(url);
+
+        // Disable SSL certificate verification
+        QSslConfiguration sslConfig = request.sslConfiguration();
+        sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+        request.setSslConfiguration(sslConfig);
+
+        QHttpMultiPart* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+
+        QHttpPart audioPart;
+        audioPart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("audio/wav"));
+        audioPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"file\"; filename=\""+ audioFile->fileName() + "\""));
+       
+        audioFile->open(QIODevice::ReadOnly);
+        audioPart.setBodyDevice(audioFile);
+        audioFile->setParent(multiPart);
+        multiPart->append(audioPart);
+
+
+        QNetworkReply* reply = manager->post(request, multiPart);
+        multiPart->setParent(reply);
+
+        QEventLoop loop;
+        qDebug() << "Made network request";
+        QObject::connect(reply, &QNetworkReply::finished, [=, &loop]() {
+            if (reply->error() == QNetworkReply::NoError) {
+
+                qDebug() << "No error in request";
+                QString responseString = (reply->readAll());
+
+                qDebug() << responseString;
+
+                //QTextCursor cur = curr_browser->textCursor();
+                //cur.insertText(responseString);
+                loop.quit();
+            }
+            else{
+                qDebug() << reply->errorString();
+                QMessageBox::critical(0, "Error Occured", "Error connecting to server...Please try again after some time");
+            }
+            ui->pushButton_4->setText("Speech to text");
+            reply->deleteLater();
+            });
+        loop.exec();
+        return;
+
+    }
+
     QFile audioFile(fileName);
     if(!audioFile.open(QIODevice::ReadOnly)){
         QMessageBox::critical(0,"Error","Error recording your audio! Try again");
@@ -10343,58 +10414,11 @@ void MainWindow::speechToTextCall()
         return;
     }
 
-    int idx = ui->comboBox->currentIndex();
-    QString enc;
-    if (idx == -1)
-        enc = "en-US";
-    else
-        enc = ui->comboBox->itemData(idx).toString();
     QByteArray audioData=audioFile.readAll();
     QString speechKey;
 
     QNetworkAccessManager* manager = new QNetworkAccessManager();
 
-    if(enc == "san-IN"){
-        qDebug()<<"Sanskrit";
-        QUrl url("https://pepmiitb.jio.com/asr/transcript");
-        QNetworkRequest request(url);
-        QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
-
-        // Step 3: Add the audio file part to the multipart
-        QHttpPart audioPart;
-        audioPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"file\";filename=\"" + QFileInfo(audioFile).fileName() + "\""));
-        audioPart.setBody(audioFile.readAll());
-        audioFile.close();
-        multiPart->append(audioPart);
-
-        QNetworkReply* reply = manager->post(request, multiPart);
-
-        QObject::connect(reply,&QNetworkReply::finished,[this,reply](){
-            if(reply->error()!=QNetworkReply::NoError){
-                QMessageBox::critical(0,"Error Occured","Error connecting to server...Please try again after some time");
-                ui->pushButton_4->setText("Speech to text");
-                return;
-            }
-            else if(reply->error()==QNetworkReply::UnknownNetworkError){
-                QMessageBox::warning(0,"Network Error","Please check your internet connection and try again!");
-
-            }
-            else if(reply->isFinished() && reply->error()==QNetworkReply::NoError){
-
-                QString responseString=(reply->readAll());
-                qDebug()<<responseString;
-
-//                QTextCursor cur = curr_browser->textCursor();
-//                cur.insertText(ResponseText);
-            }
-            ui->pushButton_4->setText("Speech to text");
-
-            reply->deleteLater();
-        });
-
-        return;
-
-    }
     QUrl url_("http://92.204.144.173/udaan/email/");
 
     QByteArray postData;
