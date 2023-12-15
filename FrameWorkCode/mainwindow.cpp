@@ -10388,11 +10388,33 @@ void MainWindow::speechToTextCall()
 
                 qDebug() << "No error in request";
                 QString responseString = (reply->readAll());
+                QXmlStreamReader xml(responseString);
 
-                qDebug() << responseString;
-
-                //QTextCursor cur = curr_browser->textCursor();
-                //cur.insertText(responseString);
+                QTextCursor cur = curr_browser->textCursor();
+                QString s = "";
+                if (xml.readNextStartElement()) {
+                    if (xml.name() == "transcript") {
+                        qDebug() << "Read transcript";
+                        while (xml.readNextStartElement()) {
+                            if (xml.name() == "line") {
+                                while (xml.readNextStartElement()) {
+                                    if (xml.name() == "word") {
+                                        s = s + xml.readElementText() + " ";
+                                    }
+                                    else
+                                        xml.skipCurrentElement();
+                                }
+                                s = s + "\n";
+                            }
+                            else
+                                xml.skipCurrentElement();
+                        }
+                    }
+                    else
+                        xml.raiseError(QObject::tr("Incorrect file"));
+                }
+                qDebug() << s;
+                cur.insertText(s);
                 loop.quit();
             }
             else{
