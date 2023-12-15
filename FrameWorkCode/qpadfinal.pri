@@ -27,6 +27,7 @@ HEADERS += ./Filters.h \
     $$PWD/rubberband.h \
     $$PWD/sendmail.h \
     $$PWD/shortcutguidedialog.h \
+    $$PWD/simplecrypt.h \
     $$PWD/textfinder.h \
     $$PWD/globalreplacedialog.h \
     $$PWD/threadingpush.h \
@@ -89,6 +90,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/rubberband.cpp \
     $$PWD/sendmail.cpp \
     $$PWD/shortcutguidedialog.cpp \
+    $$PWD/simplecrypt.cpp \
     $$PWD/slpNPatternDict.cpp \
     $$PWD/textfinder.cpp \
     $$PWD/globalreplacedialog.cpp \
