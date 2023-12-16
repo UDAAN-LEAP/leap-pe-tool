@@ -15865,3 +15865,50 @@ void MainWindow::on_lineEdit_5_returnPressed()
     }
 }
 
+
+void MainWindow::on_actionWatermark_triggered()
+{
+    QFileDialog fileDialog(this);
+    QString filePath;
+
+    fileDialog.setFileMode(QFileDialog::ExistingFile);
+    fileDialog.setOption(QFileDialog::DontUseNativeDialog); // Ensure native dialog is not used
+    QStringList nameFilters;
+    nameFilters << "JPEG Image Files (*.jpeg *.jpg)" << "PNG Image Files (*.png)";
+    fileDialog.setNameFilters(nameFilters);
+
+    if (fileDialog.exec() == QDialog::Accepted) {
+        QStringList selectedFiles = fileDialog.selectedFiles();
+
+        if (!selectedFiles.isEmpty()) {
+            filePath = selectedFiles.first();
+            qDebug() << "Selected file: " << filePath;
+        }
+    } else {
+        qDebug() << "Operation canceled.";
+        return;
+    }
+    if(curr_browser){
+        QString stringToAdd = "body {"
+                              "background-color: rgba(255, 255, 255, 0.3);"
+                              "background-blend-mode: overlay;"
+                              "background-image: url(\"" + filePath + "\");"
+                              "background-repeat: no-repeat;"
+                              "background-size: cover;"
+                              "}";
+
+
+        QString htmlText = curr_browser->toHtml();
+
+        int positionStyle = htmlText.indexOf("</style>");
+
+        if (positionStyle != -1) {
+            htmlText.insert(positionStyle, stringToAdd);
+        } else {
+            qDebug() << "Error: '</style>' not found in the HTML string.";
+        }
+        curr_browser->setHtml(htmlText);
+
+    }
+}
+
