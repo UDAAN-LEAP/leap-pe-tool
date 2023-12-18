@@ -102,6 +102,7 @@
 #include <QtCharts>
 #include "releasenote_msg.h"
 #include <QHttpPart>
+#include <simplecrypt.h>
 QT_CHARTS_USE_NAMESPACE
 
 
@@ -3580,10 +3581,7 @@ void MainWindow::on_actionFetch_2_triggered()
         msg.exec();
         return;
     }
-    settings.beginGroup("login");
-    QString email = settings.value("email").toString();
-    QString token = settings.value("token").toString();
-    settings.endGroup();
+
     if(check_access()){
         QString repo = "";
         QString gDir = gDirTwoLevelUp+"/.git/config";
@@ -9411,7 +9409,11 @@ void MainWindow::on_actionClone_Repository()
     //retrieve details from database and check if user has access to push into this repo
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
-    QString token = settings.value("token").toString();
+    QString user_pass = settings.value("token").toString();
+
+    SimpleCrypt crypto(Q_UINT64_C(0x1a3e5d8f2b7c6a9d));
+    QString token = crypto.decryptToString(user_pass);
+
     settings.endGroup();
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QUrl url("http://92.204.144.173/udaan/email/");
@@ -9711,7 +9713,11 @@ void MainWindow::on_actionExit_triggered()
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
-    QString token = settings.value("token").toString();
+    QString user_pass = settings.value("token").toString();
+
+    SimpleCrypt crypto(Q_UINT64_C(0x1a3e5d8f2b7c6a9d));
+    QString token = crypto.decryptToString(user_pass);
+
     settings.endGroup();
     if(email=="" && token=="")
     {
@@ -9779,6 +9785,10 @@ void MainWindow::login(){
     if(login.exec() ==QDialog::Accepted){
         user_email = email->text();
         user_pass = password->text();
+
+        SimpleCrypt crypto(Q_UINT64_C(0x1a3e5d8f2b7c6a9d));
+        QString pass_encr = crypto.encryptToString(user_pass);
+
         if(!user_email.isEmpty() && !user_pass.isEmpty()){
             QNetworkAccessManager *manager = new QNetworkAccessManager(this);
             QUrl url("http://92.204.144.173/udaan/email/");
@@ -9804,7 +9814,7 @@ void MainWindow::login(){
                         //save details in QSettings
                         settings.beginGroup("login");
                         settings.setValue("email",user_email);
-                        settings.setValue("token",user_pass);
+                        settings.setValue("token",pass_encr);
                         settings.endGroup();
                         settings.beginGroup("loginConsent");
                         settings.setValue("consent","loggedIn");
@@ -9946,7 +9956,11 @@ bool MainWindow::check_access()
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
-    QString token = settings.value("token").toString();
+    QString user_pass = settings.value("token").toString();
+
+    SimpleCrypt crypto(Q_UINT64_C(0x1a3e5d8f2b7c6a9d));
+    QString token = crypto.decryptToString(user_pass);
+
     settings.endGroup();
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QUrl url("http://92.204.144.173/udaan/email/");
@@ -12972,7 +12986,12 @@ void MainWindow::sendComment(QString str)
         QSettings settings("IIT-B", "OpenOCRCorrect");
         settings.beginGroup("login");
         QString email = settings.value("email").toString();
-        QString token = settings.value("token").toString();
+        QString user_pass = settings.value("token").toString();
+
+        SimpleCrypt crypto(Q_UINT64_C(0x1a3e5d8f2b7c6a9d));
+        QString token = crypto.decryptToString(user_pass);
+        qDebug()<<token;
+
         settings.endGroup();
 
         QNetworkAccessManager *manager = new QNetworkAccessManager();
@@ -15889,6 +15908,53 @@ void MainWindow::on_lineEdit_5_returnPressed()
     }
     else{
         QMessageBox::warning(this, "Error", "Couldn't find the page.");
+    }
+}
+
+
+void MainWindow::on_actionWatermark_triggered()
+{
+    QFileDialog fileDialog(this);
+    QString filePath;
+
+    fileDialog.setFileMode(QFileDialog::ExistingFile);
+    fileDialog.setOption(QFileDialog::DontUseNativeDialog); // Ensure native dialog is not used
+    QStringList nameFilters;
+    nameFilters << "JPEG Image Files (*.jpeg *.jpg)" << "PNG Image Files (*.png)";
+    fileDialog.setNameFilters(nameFilters);
+
+    if (fileDialog.exec() == QDialog::Accepted) {
+        QStringList selectedFiles = fileDialog.selectedFiles();
+
+        if (!selectedFiles.isEmpty()) {
+            filePath = selectedFiles.first();
+            qDebug() << "Selected file: " << filePath;
+        }
+    } else {
+        qDebug() << "Operation canceled.";
+        return;
+    }
+    if(curr_browser){
+        QString stringToAdd = "body {"
+                              "background-color: rgba(255, 255, 255, 0.3);"
+                              "background-blend-mode: overlay;"
+                              "background-image: url(\"" + filePath + "\");"
+                              "background-repeat: no-repeat;"
+                              "background-size: cover;"
+                              "}";
+
+
+        QString htmlText = curr_browser->toHtml();
+
+        int positionStyle = htmlText.indexOf("</style>");
+
+        if (positionStyle != -1) {
+            htmlText.insert(positionStyle, stringToAdd);
+        } else {
+            qDebug() << "Error: '</style>' not found in the HTML string.";
+        }
+        curr_browser->setHtml(htmlText);
+
     }
 }
 

@@ -1567,6 +1567,7 @@ QMenu::item:selected{
     <addaction name="actionLink"/>
     <addaction name="actionInsert_Tab_Space"/>
     <addaction name="actionComment"/>
+    <addaction name="actionWatermark"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="styleSheet">
@@ -3220,6 +3221,11 @@ background-color: #EEF0F2;
    </property>
    <property name="text">
     <string>Sync History</string>
+   </property>
+  </action>
+  <action name="actionWatermark">
+   <property name="text">
+    <string>Watermark</string>
    </property>
   </action>
  </widget>

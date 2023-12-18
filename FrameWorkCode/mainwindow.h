@@ -632,6 +632,8 @@ private slots:
 
     void on_lineEdit_5_returnPressed();
 
+    void on_actionWatermark_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
