@@ -1692,11 +1692,13 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
 
     if(mRole == "Corrector"){
         read_corrected_pages();
-        updateTreeviewHighlights(correct);
+        customDelegate = new customTreeviewItem(ui->treeView, correct, ui->treeView->model());
+        ui->treeView->setItemDelegate(customDelegate);
     }
     else if(mRole == "Verifier"){
         read_verified_pages();
-        updateTreeviewHighlights(verify);
+        customDelegate = new customTreeviewItem(ui->treeView, verify, ui->treeView->model());
+        ui->treeView->setItemDelegate(customDelegate);
     }
 
     if(ProjFile == stored_project || ProjFile == stored_project2 || ProjFile == stored_project3){
@@ -15862,10 +15864,9 @@ void MainWindow::on_verified_stateChanged(int arg1)
 
 void MainWindow::updateTreeviewHighlights(QMap<QString, int> checkedPages)
 {
-    auto model = ui->treeView->model();
-
-    customTreeviewItem* customDelegate = new customTreeviewItem(ui->treeView,checkedPages,model);
-    ui->treeView->setItemDelegate(customDelegate);
+    if (customDelegate) {
+        customDelegate->update(checkedPages);
+    }
 }
 
 

@@ -27,6 +27,8 @@ public:
 
     }
 
+    void update(QMap<QString, int> checkedPages);
+
 private:
     QTreeView* treeView;
     QMap<QString, int> changedPages;

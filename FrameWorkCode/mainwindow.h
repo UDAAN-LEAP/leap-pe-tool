@@ -51,7 +51,7 @@
 #include "handlebbox.h"
 #include <QMediaRecorder>
 #include <QCalendarWidget>
-
+#include "customtreeviewitem.h"
 #include <QProgressBar>
 
 
@@ -762,6 +762,7 @@ private:
     int totalPages;
     QMap<QString, QString> downloadUrls1;
     QMap<QString, QString> downloadUrls2;
+    customTreeviewItem* customDelegate;
 };
 
 #endif // MAINWINDOW_H

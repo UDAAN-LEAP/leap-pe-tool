@@ -7,3 +7,8 @@ customTreeviewItem::customTreeviewItem(QTreeView* tv,QMap<QString, int> checkedP
     this->model = model;
 }
 
+void customTreeviewItem::update(QMap<QString, int> checkedPages)
+{
+    this->changedPages = checkedPages;
+}
+
