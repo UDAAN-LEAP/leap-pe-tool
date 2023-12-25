@@ -10369,6 +10369,7 @@ void MainWindow::speechToTextCall()
         if (!audioFile->open(QIODevice::ReadOnly)) {
             QMessageBox::critical(0, "Error", "Error recording your audio! Try again");
             ui->pushButton_4->setText("Speech to text");
+            ui->pushButton_4->setEnabled(true);
             return;
         }
 
@@ -10438,6 +10439,7 @@ void MainWindow::speechToTextCall()
                 QMessageBox::critical(0, "Error Occured", "Error connecting to server...Please try again after some time");
             }
             ui->pushButton_4->setText("Speech to text");
+            ui->pushButton_4->setEnabled(true);
             reply->deleteLater();
             });
         loop.exec();
@@ -10449,6 +10451,7 @@ void MainWindow::speechToTextCall()
     if(!audioFile.open(QIODevice::ReadOnly)){
         QMessageBox::critical(0,"Error","Error recording your audio! Try again");
         ui->pushButton_4->setText("Speech to text");
+        ui->pushButton_4->setEnabled(true);
         return;
     }
 
@@ -10520,6 +10523,7 @@ void MainWindow::speechToTextCall()
         if(reply->error()!=QNetworkReply::NoError){
             QMessageBox::critical(0,"Error Occured","Error connecting to server...Please try again after some time");
             ui->pushButton_4->setText("Speech to text");
+            ui->pushButton_4->setEnabled(true);
             return;
         }
         else if(reply->error()==QNetworkReply::UnknownNetworkError){
@@ -10541,6 +10545,7 @@ void MainWindow::speechToTextCall()
             cur.insertText(ResponseText);
         }
         ui->pushButton_4->setText("Speech to text");
+        ui->pushButton_4->setEnabled(true);
 
         reply->deleteLater();
     });
@@ -10586,6 +10591,7 @@ void MainWindow::on_pushButton_4_clicked()
     else {
         qDebug()<<"stopped your recording!";
         ui->pushButton_4->setText("Processing ...");
+        ui->pushButton_4->setEnabled(false);
         m_audioRecorder->stop();
         speechToTextCall();
         QFile::remove(fileName);
