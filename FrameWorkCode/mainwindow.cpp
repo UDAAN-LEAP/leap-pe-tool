@@ -10386,7 +10386,7 @@ void MainWindow::speechToTextCall()
 
         QHttpPart audioPart;
         audioPart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("audio/wav"));
-        audioPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"file\"; filename=\""+ audioFile->fileName() + "\""));
+        audioPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"file\"; filename=\"audio.wav\""));
        
         audioFile->open(QIODevice::ReadOnly);
         audioPart.setBodyDevice(audioFile);
