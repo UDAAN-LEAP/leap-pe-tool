@@ -51,7 +51,7 @@
 #include "handlebbox.h"
 #include <QMediaRecorder>
 #include <QCalendarWidget>
-
+#include "customtreeviewitem.h"
 #include <QProgressBar>
 
 
@@ -500,8 +500,6 @@ private slots:
     void on_pushButton_6_clicked();
 
     //! Page Status -- Corrected || Verified || Marked For Review
-    void on_corrected_clicked();
-    void on_verified_clicked();
     void on_mark_review_clicked();
     void write_corrected_pages();
     void write_verified_pages();
@@ -622,9 +620,19 @@ private slots:
 
     void on_actionUpdate_History_triggered();
 
-    void on_actionSwitch_Edit_View_Mode_triggered();
+    void on_actionCommit_History_triggered();
 
     void on_pushButton_9_clicked();
+
+    void on_corrected_stateChanged(int arg1);
+
+    void on_verified_stateChanged(int arg1);
+
+    void updateTreeviewHighlights(QMap<QString, int> checkedPages);
+
+    void on_lineEdit_5_returnPressed();
+
+    void on_actionWatermark_triggered();
 
 public slots:
     void on_actionLoad_Next_Page_triggered();
@@ -654,7 +662,13 @@ public slots:
     void setTotalWords(int value);
     void showWordCount();
 
+    void onClipboardDataChanged();
 
+    void fetch(const QString api, const QString token);
+    void load(QTextBrowser *browser, QString token, bool flag);
+    void loadLocal(QTextBrowser* browser);
+    void highlightLine(QTextBrowser *browser, int lineNumber, const QColor &color);
+    void visualDiff(QTextBrowser *browser1, QTextBrowser *browser2);
 
 private:
     bool mExitStatus = false;
@@ -666,6 +680,7 @@ private:
     QString mFilename;
     QString mFilenameImage;
     QString current_folder;
+    QString previousTabPageName="";
     QString currentTabPageName="";
     int currentTabIndex;
     CustomTextBrowser * curr_browser = nullptr;
@@ -740,7 +755,14 @@ private:
 
     QString currentCommentWord;
     QMap<QString,QMap<QString,QString>> corrector_comment, verifier_comment;
-
+    QStringList clipboardHistory;
+    QString headCommitSHA;
+    QString baseCommitSHA;
+    QString page;
+    int totalPages;
+    QMap<QString, QString> downloadUrls1;
+    QMap<QString, QString> downloadUrls2;
+    customTreeviewItem* customDelegate;
 };
 
 #endif // MAINWINDOW_H

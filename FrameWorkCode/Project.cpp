@@ -584,7 +584,7 @@ int credentials_cb(git_cred ** out, const char *url, const char *username_from_u
     {
     }
     QNetworkAccessManager* manager = new QNetworkAccessManager();
-    QUrl url_("https://udaaniitb.aicte-india.org/udaan/email/");
+    QUrl url_("http://92.204.144.173/udaan/email/");
 
     QByteArray postData;
     postData.append("username=username&password=password");
@@ -1182,7 +1182,7 @@ bool Project::commit(std::string message)
     //qDebug()<<"email"<<email;
     settings.endGroup();
     QNetworkAccessManager* manager = new QNetworkAccessManager();
-    QUrl url_("https://udaaniitb.aicte-india.org/udaan/commits/");
+    QUrl url_("http://92.204.144.173/udaan/commits/");
 
     QByteArray postData;
     postData.append("commit_no="+sha+"&email="+email);
@@ -1839,3 +1839,74 @@ int Project::findNumberOfFilesInDirectory(std::string path)
 
 }
 #endif
+
+/*!
+ * \fn Project::describe_commit
+ * \brief Returns the names of changed files in the particular commit number
+ * \details It is equivalent to "git show --name-only {commit number}" command on git bash
+ * \param mRole, commit_number
+ * \return QString 
+ */
+QString Project::describe_commit(QString mRole,QString commit_number)
+{
+    QByteArray array = commit_number.toLocal8Bit();
+    const char * commit_no = array.data();
+    QString changedFiles = "No Changed Files";
+    git_commit *commit = NULL;
+
+    int error = git_revparse_single((git_object **)&commit, repo, commit_no);
+    if (error < 0) {
+        qDebug() << "Error parsing commit: " << git_error_last()->message;
+        return changedFiles;
+    }
+
+    size_t parent_count = git_commit_parentcount(commit);
+    if (parent_count > 0) {
+        git_commit *parent = NULL;
+        error = git_commit_parent(&parent, commit, 0);
+        if (error >= 0) {
+            git_tree *tree, *parent_tree;
+            error = git_commit_tree(&tree, commit);
+            if (error >= 0) {
+                error = git_commit_tree(&parent_tree, parent);
+                if (error >= 0) {
+                    git_diff *diff;
+                    error = git_diff_tree_to_tree(&diff, repo, parent_tree, tree, NULL);
+                    if (error >= 0) {
+                        size_t num_deltas = git_diff_num_deltas(diff);
+                        for (size_t i = 0; i < num_deltas; ++i) {
+                            const git_diff_delta *delta = git_diff_get_delta(diff, i);
+                            QString str = delta->new_file.path;
+                            if(mRole == "Corrector" && !str.contains("CorrectorOutput")){
+                                continue;
+                            }
+                            else{
+                                str.remove("CorrectorOutput");
+                            }
+                            if(mRole == "Verifier" && !str.contains("VerifierOutput")){
+                                continue;
+                            }
+                            else{
+                                str.remove("VerifierOutput");
+                            }
+
+                            if(changedFiles == "No Changed Files")
+                                changedFiles = str;
+                            else
+                                changedFiles += str;
+                            changedFiles.append("\n");
+                        }
+                        git_diff_free(diff);
+                    }
+                }
+                git_tree_free(parent_tree);
+            }
+            git_tree_free(tree);
+            git_commit_free(parent);
+        }
+    }
+
+    git_commit_free(commit);
+
+    return changedFiles;
+}

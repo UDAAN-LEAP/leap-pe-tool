@@ -158,6 +158,7 @@
         <file>Resources/pen.png</file>
         <file>Resources/view.png</file>
         <file>Resources/release.png</file>
+        <file>Resources/sync_history.png</file>
     </qresource>
     <qresource prefix="/WordList">
         <file>wordlists/english.txt</file>

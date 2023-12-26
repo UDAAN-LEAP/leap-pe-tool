@@ -8,6 +8,7 @@ indentOptions::indentOptions(QWidget *parent, int* left, int* right) :
     ui->setupUi(this);
     this->left = left;
     this->right = right;
+    setWindowTitle("Indentation Options");
 }
 
 indentOptions::~indentOptions()
@@ -17,30 +18,28 @@ indentOptions::~indentOptions()
 
 void indentOptions::closeEvent(QCloseEvent* event)
 {
-
-    reject();// Set check_b to true when the dialog is closed
+    emit dialogRejected();
     QDialog::closeEvent(event);
 }
+
 void indentOptions::on_buttonBox_accepted()
 {
 
     int l = ui->textEdit_left->toPlainText().toInt();
     int r = ui->textEdit_right->toPlainText().toInt();
     if(l==0 && r==0){
-        reject();
+        emit dialogRejected();
         return;
     }
 
     *left = l;
     *right = r;
-    accept();
-
-
+    emit dialogAccepted();
 }
 
 
 void indentOptions::on_buttonBox_rejected()
 {
-    reject();
+    emit dialogRejected();
     this->close();
 }
