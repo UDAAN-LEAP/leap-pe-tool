@@ -9489,6 +9489,31 @@ void MainWindow::on_actionClone_Repository()
  */
 void MainWindow::on_actionClose_project_triggered()
 {
+    bool isUnsaved = checkUnsavedWork();
+
+    if (isUnsaved){
+        QMessageBox saveBox;
+        saveBox.setWindowTitle("Save Changes ?");
+        saveBox.setIcon(QMessageBox::Question);
+        saveBox.setInformativeText("You have unsaved files. Your changes will be lost if you don't save them before closing the project.\nDo you want to save them? \n");
+        QPushButton *svButton = saveBox.addButton(QMessageBox::Save);
+        QPushButton *discardButton = saveBox.addButton(QMessageBox::Discard);
+        discardButton->setStyleSheet("width:180px");
+        discardButton->setText("Discard changes");
+        QPushButton *cncButton = saveBox.addButton(QMessageBox::Cancel);
+        saveBox.exec();
+
+        if (saveBox.clickedButton() == cncButton)
+        {
+            return;
+        }
+        else{
+            if(saveBox.clickedButton() == svButton){
+                saveAllWork();
+            }
+        }
+    }
+
     AddRecentProjects();
 
     if(mRole == "Corrector"){
