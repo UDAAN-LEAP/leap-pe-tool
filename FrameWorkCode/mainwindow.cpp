@@ -10830,6 +10830,8 @@ void MainWindow::e_d_features(bool value)
     ui->pushButton_9->setEnabled(value);
 
     ui->status->setVisible(false);
+
+    ui->lineEditSearch->setEnabled(value);
 }
 
 
