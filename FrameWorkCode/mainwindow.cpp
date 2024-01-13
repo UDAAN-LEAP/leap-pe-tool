@@ -15968,6 +15968,42 @@ void MainWindow::on_actionWatermark_triggered()
         qDebug() << "Operation canceled.";
         return;
     }
+
+    // Process the image as a QImage and Save it to the Project.
+    QImageReader imageReader(filePath);
+    QImage image = imageReader.read();
+
+    if(!image.isNull()){
+        // Creating the directories for the watermarks if they dont already exist
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+
+        if(!QDir(gDirOneLevelUp+"/Cropped_Images/watermarks").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/watermarks");
+        }
+
+        QString saveDir = "../Cropped_Images/watermarks/";
+        QDir dir(saveDir);
+
+        // Counting the number of existing images in the directory
+        QStringList existingImages = dir.entryList(QDir::Files, QDir::Name);
+        int imageCount = existingImages.count();
+
+        // Generating the filename for the image
+        QString savePath = saveDir + "watermark_" + QString::number(imageCount + 1) + ".png";
+
+        if(image.save(savePath)){
+            qDebug() << "Succesfully saved the image.";
+        }
+        else{
+            qDebug() << "Error while saving the image.";
+        }
+    }
+    else{
+        qDebug() << "Image is null.";
+    }
+
     if(curr_browser){
         QString stringToAdd = "body {"
                               "background-color: rgba(255, 255, 255, 0.3);"
