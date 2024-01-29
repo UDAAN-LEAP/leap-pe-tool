@@ -634,6 +634,8 @@ private slots:
 
     void on_actionWatermark_triggered();
 
+    void on_checkBox_stateChanged(int arg1);
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
@@ -763,6 +765,7 @@ private:
     QMap<QString, QString> downloadUrls1;
     QMap<QString, QString> downloadUrls2;
     customTreeviewItem* customDelegate;
+    bool loadAllDicts;
 };
 
 #endif // MAINWINDOW_H

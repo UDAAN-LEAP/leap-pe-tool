@@ -198,7 +198,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     customtextbrowser->setStyleSheet("background-color:white; color:black;");
     ui->splitter->replaceWidget(1,customtextbrowser);
     customtextbrowser->show();
-
+    loadAllDicts = false;
 
     customtextbrowser->setStyleSheet("padding-top: 100%; padding-left: 40%; color: #1c1c1c; background-color: white;");
     connect(customtextbrowser, &QTextBrowser::textChanged, this, [=]() {
@@ -5848,158 +5848,309 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
  */
 void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
 {
-    QVector<QString> dictionary;
-    QJsonDocument doc;
-    QJsonObject obj;
-    QByteArray data_json;
-    QStringList list1;
-    QSet<QString> dict_set;
-    dict_set1.clear();
-    //! Get dict file from current opened file
-    QString dictFilename;
-    //    if(mRole=="Verifier")
-    //    {
-    //        if(gCurrentDirName == "CorrectorOutput")
-    //        dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
-    //        else
-    //        dictFilename = gDirTwoLevelUp + "/" + "VerifierOutput" + "/" + gCurrentPageName;
+    if(loadAllDicts){
+        QVector<QString> dictionary;
+        QJsonDocument doc;
+        QJsonObject obj;
+        QByteArray data_json;
+        QStringList list1;
+        QSet<QString> dict_set;
+        dict_set1.clear();
+        QString directory = gDirTwoLevelUp + "/" + "CorrectorOutput";
+        QDir dir(directory);
+        QStringList dictFilenames = dir.entryList(QStringList("*.dict"));
 
-    //        qDebug()<<"here";
-    //    }
-    //    else if(mRole=="Corrector")
-    //    {
-    dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
+        ui->textEdit_dict->clear();
+        ui->textEdit_dict->setFontPointSize(14);
 
-    //    }
-    dictFilename.replace(".txt", ".dict");
-    dictFilename.replace(".html", ".dict");
-    //    QFile dictQFile(dictFilename);
+        foreach (const QString &dictFile, dictFilenames){
+            QString fullFilePath = directory + "/" + dictFile;
 
-    ui->textEdit_dict->clear();
-    ui->textEdit_dict->setFontPointSize(14);
-    //! Open the dict file and display it in textedit view
-    if(QFile::exists(dictFilename))
-    {
-
-        QFile dictQFile(dictFilename);
-        if(dictQFile.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            data_json = dictQFile.readAll();
-            dictQFile.close();
-            doc = doc.fromJson(data_json);
-            obj = doc.object();
-            if( obj.size() == 0){
-                QMessageBox::information(0, "Error !", "Dictionary of current page can't be loaded, please correct the syntax of corresponding Json file.");
-                return;
-            }
-            QJsonValue jv = obj.value(obj.keys().at(0));
-            QJsonObject item = jv.toObject();
-
-            for(int i = 0; i < item.count(); i++)
+            if (QFile::exists(fullFilePath))
             {
-                ui->textEdit_dict->append(item.keys().at(i)+":");
-                QJsonValue subobj = item.value(item.keys().at(i));
-                QJsonArray test = subobj.toArray();
-                for(int k = 0; k < test.count(); k++)
+                QFile dictQFile(fullFilePath);
+                if (dictQFile.open(QIODevice::ReadOnly | QIODevice::Text))
                 {
-                    if(test[k].toString()!=NULL){
-                        QString jsonDi;
+                    data_json = dictQFile.readAll();
+                    dictQFile.close();
 
-                        for(int i=0;i<test[k].toString().length();i++){
-                            QString newStr=test[k].toString();
-                            list1 = newStr.split(",");
+                    doc = QJsonDocument::fromJson(data_json);
+                    obj = doc.object();
+
+                    if (obj.size() == 0)
+                    {
+                        QMessageBox::information(0, "Error !", "Dictionary of the current page can't be loaded, please correct the syntax of the corresponding Json file.");
+                        return;
+                    }
+
+                    QJsonValue jv = obj.value(obj.keys().at(0));
+                    QJsonObject item = jv.toObject();
+
+                    for (int i = 0; i < item.count(); i++)
+                    {
+                        ui->textEdit_dict->append(item.keys().at(i) + ":");
+                        QJsonValue subobj = item.value(item.keys().at(i));
+                        QJsonArray test = subobj.toArray();
+
+                        for (int k = 0; k < test.count(); k++)
+                        {
+                            if (test[k].toString() != NULL)
+                            {
+                                QString jsonDi;
+
+                                for (int i = 0; i < test[k].toString().length(); i++)
+                                {
+                                    QString newStr = test[k].toString();
+                                    list1 = newStr.split(",");
+                                }
+
+                                ui->textEdit_dict->moveCursor(QTextCursor::End);
+                                ui->textEdit_dict->insertPlainText(" " + test[k].toString());
+
+                                if (k < test.count() - 1)
+                                {
+                                    ui->textEdit_dict->insertPlainText(",");
+                                }
+                                ui->textEdit_dict->moveCursor(QTextCursor::End);
+                            }
+
+                            foreach (auto &x, list1)
+                            {
+                                dict_set.insert(x);
+                            }
                         }
 
+                        foreach (auto &x, dict_set)
+                        {
+                            std::string string1 = x.toStdString();
+                            std::string string2;
+                            string2 = string1.substr(0, string1.find("(", 0));
+                            QString qstr = QString::fromStdString(string2);
+                            dict_set1.insert(qstr);
+                        }
                     }
 
-                    ui->textEdit_dict->moveCursor(QTextCursor::End);
-                    ui->textEdit_dict->insertPlainText(" "+test[k].toString());
+                    QTextCharFormat fmt;
+                    fmt.setBackground(Qt::green);
+                    QTextCursor cursor(b->document());
+                    int indexOfReplacedWord;
+                    int from = 0;
+                    int count;
+                    int numReplaced = 0;
 
-                    if(k<test.count()-1)
+                    foreach (auto &x, dict_set1)
                     {
-                        ui->textEdit_dict->insertPlainText(",");
+                        count = input.count(x, Qt::CaseInsensitive);
+                        numReplaced = 0;
+                        from = 0;
+                        int flag = 0;
+
+                        while (numReplaced < count)
+                        {
+                            int endIndex;
+                            indexOfReplacedWord = input.indexOf(x, from, Qt::CaseInsensitive);
+                            endIndex = indexOfReplacedWord;
+                            int len = x.length();
+
+                            while (len > 0)
+                            {
+                                endIndex++;
+                                len--;
+                            }
+
+                            int start = indexOfReplacedWord;
+
+                            if (indexOfReplacedWord == 0)
+                            {
+                                input[start] == " ";
+                            }
+                            else
+                            {
+                                start = start - 1;
+                            }
+
+                            QRegExp regex("[$&+,:;=?@#|'\"<>.^*()%!-\n\t]");
+
+                            QString test1 = input.at(start);
+                            QString test2 = input.at(endIndex);
+
+                            if ((input[endIndex] == " " || test2.contains(regex)) && (input[start] == " " || test1.contains(regex)))
+                            {
+                                flag = 1;
+                            }
+
+                            if (flag == 1)
+                            {
+                                cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
+                                cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
+                                cursor.mergeCharFormat(fmt);
+                                QTextEdit::ExtraSelection h;
+                                h.format.setBackground(Qt::green);
+                            }
+
+                            from = endIndex;
+                            numReplaced += 1;
+                            flag = 0;
+                        }
                     }
-                    ui->textEdit_dict->moveCursor(QTextCursor::End);
                 }
-                foreach(auto &x,list1){
-                    dict_set.insert(x);
-                }
-
-            }
-
-            foreach(auto &x,dict_set){
-                std::string string1= x.toStdString();
-                std::string string2;
-                string2=string1.substr(0, string1.find("(", 0));
-                QString qstr = QString::fromStdString(string2);
-                dict_set1.insert(qstr);
             }
 
         }
     }
+    else{
+        QVector<QString> dictionary;
+        QJsonDocument doc;
+        QJsonObject obj;
+        QByteArray data_json;
+        QStringList list1;
+        QSet<QString> dict_set;
+        dict_set1.clear();
+        //! Get dict file from current opened file
+        QString dictFilename;
+        //    if(mRole=="Verifier")
+        //    {
+        //        if(gCurrentDirName == "CorrectorOutput")
+        //        dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
+        //        else
+        //        dictFilename = gDirTwoLevelUp + "/" + "VerifierOutput" + "/" + gCurrentPageName;
 
-    QTextCharFormat fmt;
-    fmt.setBackground(Qt::green);
-    QTextCursor cursor(b->document());
-    int indexOfReplacedWord;
-    int from=0;
-    int count;
-    int numReplaced=0;
-    foreach(auto &x, dict_set1)
-    {
-        count = input.count(x, Qt::CaseInsensitive);
+        //        qDebug()<<"here";
+        //    }
+        //    else if(mRole=="Corrector")
+        //    {
+        dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
 
-        numReplaced=0;
-        from=0;
-        int flag=0;
+        //    }
+        dictFilename.replace(".txt", ".dict");
+        dictFilename.replace(".html", ".dict");
+        //    QFile dictQFile(dictFilename);
 
-        while(numReplaced<count)
+        ui->textEdit_dict->clear();
+        ui->textEdit_dict->setFontPointSize(14);
+        //! Open the dict file and display it in textedit view
+        if(QFile::exists(dictFilename))
         {
-            //            if(x.size()<count){
-            //                break;
-            //            }
-            int endIndex;
-            indexOfReplacedWord = input.indexOf(x,from , Qt::CaseInsensitive);
-            endIndex = indexOfReplacedWord;
-            int len = x.length();
 
-            while(len > 0)
+            QFile dictQFile(dictFilename);
+            if(dictQFile.open(QIODevice::ReadOnly | QIODevice::Text))
             {
-                endIndex++;
-                len--;
+                data_json = dictQFile.readAll();
+                dictQFile.close();
+                doc = doc.fromJson(data_json);
+                obj = doc.object();
+                if( obj.size() == 0){
+                    QMessageBox::information(0, "Error !", "Dictionary of current page can't be loaded, please correct the syntax of corresponding Json file.");
+                    return;
+                }
+                QJsonValue jv = obj.value(obj.keys().at(0));
+                QJsonObject item = jv.toObject();
+
+                for(int i = 0; i < item.count(); i++)
+                {
+                    ui->textEdit_dict->append(item.keys().at(i)+":");
+                    QJsonValue subobj = item.value(item.keys().at(i));
+                    QJsonArray test = subobj.toArray();
+                    for(int k = 0; k < test.count(); k++)
+                    {
+                        if(test[k].toString()!=NULL){
+                            QString jsonDi;
+
+                            for(int i=0;i<test[k].toString().length();i++){
+                                QString newStr=test[k].toString();
+                                list1 = newStr.split(",");
+                            }
+
+                        }
+
+                        ui->textEdit_dict->moveCursor(QTextCursor::End);
+                        ui->textEdit_dict->insertPlainText(" "+test[k].toString());
+
+                        if(k<test.count()-1)
+                        {
+                            ui->textEdit_dict->insertPlainText(",");
+                        }
+                        ui->textEdit_dict->moveCursor(QTextCursor::End);
+                    }
+                    foreach(auto &x,list1){
+                        dict_set.insert(x);
+                    }
+
+                }
+
+                foreach(auto &x,dict_set){
+                    std::string string1= x.toStdString();
+                    std::string string2;
+                    string2=string1.substr(0, string1.find("(", 0));
+                    QString qstr = QString::fromStdString(string2);
+                    dict_set1.insert(qstr);
+                }
+
             }
+        }
 
-            int start = indexOfReplacedWord;
+        QTextCharFormat fmt;
+        fmt.setBackground(Qt::green);
+        QTextCursor cursor(b->document());
+        int indexOfReplacedWord;
+        int from=0;
+        int count;
+        int numReplaced=0;
+        foreach(auto &x, dict_set1)
+        {
+            count = input.count(x, Qt::CaseInsensitive);
 
-            if(indexOfReplacedWord == 0){
-                input[start] == " ";
-            }
-            else{
-                start=start-1;
-            }
+            numReplaced=0;
+            from=0;
+            int flag=0;
 
-            QRegExp regex("[$&+,:;=?@#|'\"<>.^*()%!-\n\t]");
-
-            QString test1=input.at(start);
-            QString test2=input.at(endIndex);
-            if((input[endIndex] == " " || test2.contains(regex)) && (input[start] == " " || test1.contains(regex))){
-                flag=1;
-            }
-
-            if(flag==1)
+            while(numReplaced<count)
             {
-                cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
-                cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
-                cursor.mergeCharFormat(fmt);
-                QTextEdit::ExtraSelection h;
-                h.format.setBackground(Qt::green);
+                //            if(x.size()<count){
+                //                break;
+                //            }
+                int endIndex;
+                indexOfReplacedWord = input.indexOf(x,from , Qt::CaseInsensitive);
+                endIndex = indexOfReplacedWord;
+                int len = x.length();
+
+                while(len > 0)
+                {
+                    endIndex++;
+                    len--;
+                }
+
+                int start = indexOfReplacedWord;
+
+                if(indexOfReplacedWord == 0){
+                    input[start] == " ";
+                }
+                else{
+                    start=start-1;
+                }
+
+                QRegExp regex("[$&+,:;=?@#|'\"<>.^*()%!-\n\t]");
+
+                QString test1=input.at(start);
+                QString test2=input.at(endIndex);
+                if((input[endIndex] == " " || test2.contains(regex)) && (input[start] == " " || test1.contains(regex))){
+                    flag=1;
+                }
+
+                if(flag==1)
+                {
+                    cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
+                    cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
+                    cursor.mergeCharFormat(fmt);
+                    QTextEdit::ExtraSelection h;
+                    h.format.setBackground(Qt::green);
+                }
+                from = endIndex;
+                numReplaced+=1;
+                flag=0;
             }
-            from = endIndex;
-            numReplaced+=1;
-            flag=0;
         }
     }
-
 }
 
 /*!
@@ -16026,5 +16177,13 @@ void MainWindow::on_actionWatermark_triggered()
         curr_browser->setHtml(htmlText);
 
     }
+}
+
+
+void MainWindow::on_checkBox_stateChanged(int arg1)
+{
+    loadAllDicts = (arg1 == Qt::Checked);
+
+    DisplayJsonDict(curr_browser, curr_browser->toPlainText());
 }
 
