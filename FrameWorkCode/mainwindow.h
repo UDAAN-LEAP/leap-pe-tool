@@ -110,6 +110,8 @@ private slots:
 
     void DisplayJsonDict(CustomTextBrowser *b, QString input);
 
+    void DisplayAllDicts(CustomTextBrowser *b, QString input);
+
     bool eventFilter(QObject *, QEvent *);
 
     void saveImageRegion(QPixmap, QString, QString,int,int,int);
@@ -766,6 +768,7 @@ private:
     QMap<QString, QString> downloadUrls2;
     customTreeviewItem* customDelegate;
     bool loadAllDicts;
+    QMap<QString, QString> dictionary;
 };
 
 #endif // MAINWINDOW_H

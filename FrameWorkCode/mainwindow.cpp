@@ -5849,153 +5849,61 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
 void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
 {
     if(loadAllDicts){
-        QVector<QString> dictionary;
         QJsonDocument doc;
         QJsonObject obj;
         QByteArray data_json;
-        QStringList list1;
         QSet<QString> dict_set;
         dict_set1.clear();
+
         QString directory = gDirTwoLevelUp + "/" + "CorrectorOutput";
         QDir dir(directory);
         QStringList dictFilenames = dir.entryList(QStringList("*.dict"));
 
-        ui->textEdit_dict->clear();
-        ui->textEdit_dict->setFontPointSize(14);
-
         foreach (const QString &dictFile, dictFilenames){
             QString fullFilePath = directory + "/" + dictFile;
 
-            if (QFile::exists(fullFilePath))
-            {
+            if (QFile::exists(fullFilePath)){
                 QFile dictQFile(fullFilePath);
-                if (dictQFile.open(QIODevice::ReadOnly | QIODevice::Text))
-                {
+                if (dictQFile.open(QIODevice::ReadOnly | QIODevice::Text)){
                     data_json = dictQFile.readAll();
                     dictQFile.close();
 
                     doc = QJsonDocument::fromJson(data_json);
                     obj = doc.object();
 
-                    if (obj.size() == 0)
-                    {
-                        QMessageBox::information(0, "Error !", "Dictionary of the current page can't be loaded, please correct the syntax of the corresponding Json file.");
+                    if(obj.size() == 0){
+                        QMessageBox::information(0, "Error!", "Dictionary of the current page" + dictFile + "can't be loaded, please correct the syntax of the corresponding Json file.");
                         return;
                     }
 
                     QJsonValue jv = obj.value(obj.keys().at(0));
                     QJsonObject item = jv.toObject();
 
-                    for (int i = 0; i < item.count(); i++)
-                    {
-                        ui->textEdit_dict->append(item.keys().at(i) + ":");
+                    for (int i = 0; i < item.count(); i++){
                         QJsonValue subobj = item.value(item.keys().at(i));
                         QJsonArray test = subobj.toArray();
 
-                        for (int k = 0; k < test.count(); k++)
-                        {
-                            if (test[k].toString() != NULL)
-                            {
-                                QString jsonDi;
+                        for (int k = 0; k < test.count(); k++){
+                            if(!test[k].toString().isNull() && !test[k].toString().isEmpty()){
+                                dictionary.insert(item.keys().at(i), test[k].toString());
 
-                                for (int i = 0; i < test[k].toString().length(); i++)
-                                {
-                                    QString newStr = test[k].toString();
-                                    list1 = newStr.split(",");
+                                QStringList list = test[k].toString().split(",");
+                                foreach (auto &word, list) {
+                                    dict_set.insert(word);
                                 }
 
-                                ui->textEdit_dict->moveCursor(QTextCursor::End);
-                                ui->textEdit_dict->insertPlainText(" " + test[k].toString());
 
-                                if (k < test.count() - 1)
-                                {
-                                    ui->textEdit_dict->insertPlainText(",");
+                                foreach (auto &word, dict_set) {
+                                    std::string string1 = word.toStdString();
+                                    std::string string2 = string1.substr(0, string1.find("(", 0));
+                                    QString qstr = QString::fromStdString(string2);
+                                    dict_set1.insert(qstr);
                                 }
-                                ui->textEdit_dict->moveCursor(QTextCursor::End);
                             }
-
-                            foreach (auto &x, list1)
-                            {
-                                dict_set.insert(x);
-                            }
-                        }
-
-                        foreach (auto &x, dict_set)
-                        {
-                            std::string string1 = x.toStdString();
-                            std::string string2;
-                            string2 = string1.substr(0, string1.find("(", 0));
-                            QString qstr = QString::fromStdString(string2);
-                            dict_set1.insert(qstr);
-                        }
-                    }
-
-                    QTextCharFormat fmt;
-                    fmt.setBackground(Qt::green);
-                    QTextCursor cursor(b->document());
-                    int indexOfReplacedWord;
-                    int from = 0;
-                    int count;
-                    int numReplaced = 0;
-
-                    foreach (auto &x, dict_set1)
-                    {
-                        count = input.count(x, Qt::CaseInsensitive);
-                        numReplaced = 0;
-                        from = 0;
-                        int flag = 0;
-
-                        while (numReplaced < count)
-                        {
-                            int endIndex;
-                            indexOfReplacedWord = input.indexOf(x, from, Qt::CaseInsensitive);
-                            endIndex = indexOfReplacedWord;
-                            int len = x.length();
-
-                            while (len > 0)
-                            {
-                                endIndex++;
-                                len--;
-                            }
-
-                            int start = indexOfReplacedWord;
-
-                            if (indexOfReplacedWord == 0)
-                            {
-                                input[start] == " ";
-                            }
-                            else
-                            {
-                                start = start - 1;
-                            }
-
-                            QRegExp regex("[$&+,:;=?@#|'\"<>.^*()%!-\n\t]");
-
-                            QString test1 = input.at(start);
-                            QString test2 = input.at(endIndex);
-
-                            if ((input[endIndex] == " " || test2.contains(regex)) && (input[start] == " " || test1.contains(regex)))
-                            {
-                                flag = 1;
-                            }
-
-                            if (flag == 1)
-                            {
-                                cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
-                                cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
-                                cursor.mergeCharFormat(fmt);
-                                QTextEdit::ExtraSelection h;
-                                h.format.setBackground(Qt::green);
-                            }
-
-                            from = endIndex;
-                            numReplaced += 1;
-                            flag = 0;
                         }
                     }
                 }
             }
-
         }
     }
     else{
@@ -6149,6 +6057,88 @@ void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
                 numReplaced+=1;
                 flag=0;
             }
+        }
+    }
+}
+
+/*!
+ * \fn MainWindow::DisplayAllDicts
+ * \brief Displays all the words and meaning from the dictionary QMap in the Dict tab.
+ * \param b A pointer to the CustomTextBrowser.
+ * \param input The input string in which occurrences of specified words will be highlighted.
+ */
+void MainWindow::DisplayAllDicts(CustomTextBrowser *b, QString input)
+{
+    ui->textEdit_dict->clear();
+    ui->textEdit_dict->setFontPointSize(14);
+
+    if(loadAllDicts){
+        QMapIterator<QString, QString> i(dictionary);
+        while (i.hasNext()) {
+            i.next();
+            QString word = i.key();
+            QString translation = i.value();
+
+            ui->textEdit_dict->append(word + ": " + translation);
+        }
+    }
+
+    QTextCharFormat fmt;
+    fmt.setBackground(Qt::green);
+
+    QTextCursor cursor(b->document());
+
+    int indexOfReplacedWord;
+    int from = 0;
+    int count;
+    int numReplaced = 0;
+
+    foreach(auto &x, dict_set1){
+        count = input.count(x, Qt::CaseInsensitive);
+
+        numReplaced = 0;
+        from = 0;
+        int flag = 0;
+
+        while(numReplaced<count){
+            int endIndex;
+            indexOfReplacedWord = input.indexOf(x,from , Qt::CaseInsensitive);
+            endIndex = indexOfReplacedWord;
+            int len = x.length();
+
+            while(len > 0){
+                endIndex++;
+                len--;
+            }
+
+            int start = indexOfReplacedWord;
+
+            if(indexOfReplacedWord == 0){
+                input[start] == " ";
+            }
+            else{
+                start=start-1;
+            }
+
+            QRegExp regex("[$&+,:;=?@#|'\"<>.^*()%!-\n\t]");
+
+            QString test1=input.at(start);
+            QString test2=input.at(endIndex);
+
+            if((input[endIndex] == " " || test2.contains(regex)) && (input[start] == " " || test1.contains(regex))){
+                flag=1;
+            }
+
+            if(flag==1) {
+                cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
+                cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
+                cursor.mergeCharFormat(fmt);
+                QTextEdit::ExtraSelection h;
+                h.format.setBackground(Qt::green);
+            }
+            from = endIndex;
+            numReplaced+=1;
+            flag=0;
         }
     }
 }
@@ -16184,6 +16174,12 @@ void MainWindow::on_checkBox_stateChanged(int arg1)
 {
     loadAllDicts = (arg1 == Qt::Checked);
 
-    DisplayJsonDict(curr_browser, curr_browser->toPlainText());
+    if(loadAllDicts){
+        DisplayJsonDict(curr_browser, curr_browser->toPlainText());
+        DisplayAllDicts(curr_browser, curr_browser->toPlainText());
+    }
+    else{
+        DisplayJsonDict(curr_browser, curr_browser->toPlainText());
+    }
 }
 
