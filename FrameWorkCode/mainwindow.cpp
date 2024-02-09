@@ -926,6 +926,25 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             QAction* insertImage;
             insertImage = new QAction("Insert image",popup_menu);
 
+            if (cursor.currentTable()) {
+                QMenu* tableMenu = new QMenu("Table Options", popup_menu);
+
+                // Create Actions
+                QAction* addRowAction = new QAction("Add Row", tableMenu);
+                QAction* addColumnAction = new QAction("Add Column", tableMenu);
+
+                // Add Actions to tableMenu
+                tableMenu->addAction(addRowAction);
+                tableMenu->addAction(addColumnAction);
+
+                // Connect actions
+                connect(addRowAction, &QAction::triggered, this, &MainWindow::addRowAction);
+                connect(addColumnAction, &QAction::triggered, this, &MainWindow::addColumnAction);
+
+                // Add tableMenu to popup_menu
+                popup_menu->addMenu(tableMenu);
+            }
+
             QList<QAction*> all_actions = popup_menu->actions();
             if(isLink) {
                 popup_menu->insertMenu(all_actions[1], clipboard_menu);
@@ -12547,6 +12566,30 @@ QString MainWindow::check_for_updates(){
         return "v4.2";
     }
     return "false";
+}
+
+void MainWindow::addRowAction()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextTable* table = cursor.currentTable();
+
+    if (table) {
+        // Insert a new row below the current row
+        int rowCount = table->rows();
+        table->insertRows(rowCount, 1);
+    }
+}
+
+void MainWindow::addColumnAction()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    QTextTable* table = cursor.currentTable();
+
+    if (table) {
+        // Insert a new column to the right of the current column
+        int columnCount = table->columns();
+        table->insertColumns(columnCount, 1);
+    }
 }
 
 /*!
