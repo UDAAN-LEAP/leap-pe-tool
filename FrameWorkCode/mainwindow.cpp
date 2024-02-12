@@ -103,6 +103,7 @@
 #include "releasenote_msg.h"
 #include <QHttpPart>
 #include <simplecrypt.h>
+#include "xlsx_headers.h"
 QT_CHARTS_USE_NAMESPACE
 
 
@@ -16195,6 +16196,16 @@ void MainWindow::on_addDictionary_clicked()
         return;
     }
 
+    Document xlsxR(xlsx);
+        if (xlsxR.load())
+        {
+            Cell* cell = xlsxR.cellAt(2, 2);
+            if ( cell != NULL )
+            {
+                QVariant var = cell->readValue();
+                qDebug() << var;
+            }
+        }
 
 }
 

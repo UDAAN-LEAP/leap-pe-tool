@@ -36,6 +36,7 @@ HEADERS += ./Filters.h \
     $$PWD/verifyset.h \
     $$PWD/word_count.h \
     $$PWD/worker.h \
+    $$PWD/xlsx_headers.h \
     ./3rdParty/RapidXML/rapidxml.hpp \
     ./3rdParty/RapidXML/rapidxml_iterators.hpp \
     ./3rdParty/RapidXML/rapidxml_print.hpp \
