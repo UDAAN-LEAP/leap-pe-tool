@@ -638,6 +638,8 @@ private slots:
 
     void on_checkBox_stateChanged(int arg1);
 
+    void on_addDictionary_clicked();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

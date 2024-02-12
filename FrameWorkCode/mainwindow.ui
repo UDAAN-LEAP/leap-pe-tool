@@ -695,6 +695,40 @@ color: rgb(121,255, 121);
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QPushButton" name="addDictionary">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton#addDictionary{
+    color: rgb(0, 0, 0);
+    image: url(:/Images/Resources/add_dict.png);
+    height: 34px;
+    width: 34px;
+    border-radius: 17px;
+    background-color: rgb(255, 255, 255);
+}
+
+QPushButton#addDictionary:hover {
+    background-color: rgb(230, 230, 230);
+height: 34px;
+    width: 34px;
+}
+
+QPushButton#addDictionary:pressed {
+    background-color: rgb(200, 200, 200);
+    padding-left: 2px;
+    padding-top: 2px;
+height: 34px;
+    width: 34px;
+    position: relative;
+    top: 1px;
+    left: 1px;
+}</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
@@ -705,6 +739,7 @@ background-color:rgb(227, 228, 228);
 border:0px;
 color: rgb(32, 33, 72);
 height:26.96px;
+width : 250px;
 border-radius:4.8px; 
 selection-color: rgb(32, 33, 72);
  selection-background-color: rgb(136, 138, 133);
@@ -855,8 +890,8 @@ p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
 li.unchecked::marker { content: &quot;\2610&quot;; }
 li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:20pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:20pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="acceptRichText">
           <bool>true</bool>
@@ -1225,7 +1260,7 @@ background: grey;
      <x>0</x>
      <y>0</y>
      <width>2149</width>
-     <height>46</height>
+     <height>50</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1444,8 +1479,8 @@ QMenu::item:selected{
       <rect>
        <x>847</x>
        <y>206</y>
-       <width>214</width>
-       <height>344</height>
+       <width>206</width>
+       <height>371</height>
       </rect>
      </property>
      <property name="title">

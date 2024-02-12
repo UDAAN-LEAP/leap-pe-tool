@@ -16183,3 +16183,18 @@ void MainWindow::on_checkBox_stateChanged(int arg1)
     }
 }
 
+/*!
+ * \fn on_addDictionary_clicked
+ * \brief Reads a xlsx file from user
+*/
+void MainWindow::on_addDictionary_clicked()
+{
+    QString xlsx = "";
+    xlsx = QFileDialog::getOpenFileName(this, "Upload Excel", "./", tr("Excel (*.xlsx)"));   //Opens only if the file name is Project.xml
+    if(xlsx.size() == 0){
+        return;
+    }
+
+
+}
+
