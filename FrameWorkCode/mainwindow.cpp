@@ -932,14 +932,17 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 // Create Actions
                 QAction* addRowAction = new QAction("Add Row", tableMenu);
                 QAction* addColumnAction = new QAction("Add Column", tableMenu);
+                QAction* deleteTableAction = new QAction("Delete Table", tableMenu);
 
                 // Add Actions to tableMenu
                 tableMenu->addAction(addRowAction);
                 tableMenu->addAction(addColumnAction);
+                tableMenu->addAction(deleteTableAction);
 
                 // Connect actions
                 connect(addRowAction, &QAction::triggered, this, &MainWindow::addRowAction);
                 connect(addColumnAction, &QAction::triggered, this, &MainWindow::addColumnAction);
+                connect(deleteTableAction, &QAction::triggered, this, &MainWindow::deleteTableAction);
 
                 // Add tableMenu to popup_menu
                 popup_menu->addMenu(tableMenu);
@@ -12589,6 +12592,22 @@ void MainWindow::addColumnAction()
         // Insert a new column to the right of the current column
         int columnCount = table->columns();
         table->insertColumns(columnCount, 1);
+    }
+}
+
+void MainWindow::deleteTableAction()
+{
+    if (!curr_browser || curr_browser->isReadOnly())
+        return;
+    if (curr_browser->textCursor().currentTable())
+    {
+        QTextCursor cursor = curr_browser->textCursor();
+        if (cursor.currentTable() != nullptr) {
+            cursor.setPosition(cursor.currentTable()->cellAt(0, 0).firstCursorPosition().position());
+            QTextTable* table = cursor.currentTable();
+            int numRows = table->rows();
+            table->removeRows(0, numRows);
+        }
     }
 }
 
