@@ -930,8 +930,8 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 QMenu* tableMenu = new QMenu("Table Options", popup_menu);
 
                 // Create Actions
-                QAction* addRowAction = new QAction("Add Row", tableMenu);
-                QAction* addColumnAction = new QAction("Add Column", tableMenu);
+                QAction* addRowAction = new QAction("Insert Row Above", tableMenu);
+                QAction* addColumnAction = new QAction("Insert Column to Left", tableMenu);
                 QAction* deleteTableAction = new QAction("Delete Table", tableMenu);
 
                 // Add Actions to tableMenu
@@ -940,8 +940,8 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
                 tableMenu->addAction(deleteTableAction);
 
                 // Connect actions
-                connect(addRowAction, &QAction::triggered, this, &MainWindow::addRowAction);
-                connect(addColumnAction, &QAction::triggered, this, &MainWindow::addColumnAction);
+                connect(addRowAction, &QAction::triggered, this, &MainWindow::on_actionInsert_Rowabove_triggered);
+                connect(addColumnAction, &QAction::triggered, this, &MainWindow::on_actionInsert_Columnleft_triggered);
                 connect(deleteTableAction, &QAction::triggered, this, &MainWindow::deleteTableAction);
 
                 // Add tableMenu to popup_menu
@@ -12569,30 +12569,6 @@ QString MainWindow::check_for_updates(){
         return "v4.2";
     }
     return "false";
-}
-
-void MainWindow::addRowAction()
-{
-    QTextCursor cursor = curr_browser->textCursor();
-    QTextTable* table = cursor.currentTable();
-
-    if (table) {
-        // Insert a new row below the current row
-        int rowCount = table->rows();
-        table->insertRows(rowCount, 1);
-    }
-}
-
-void MainWindow::addColumnAction()
-{
-    QTextCursor cursor = curr_browser->textCursor();
-    QTextTable* table = cursor.currentTable();
-
-    if (table) {
-        // Insert a new column to the right of the current column
-        int columnCount = table->columns();
-        table->insertColumns(columnCount, 1);
-    }
 }
 
 void MainWindow::deleteTableAction()
