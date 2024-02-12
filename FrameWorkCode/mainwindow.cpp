@@ -16186,7 +16186,8 @@ void MainWindow::on_checkBox_stateChanged(int arg1)
 
 /*!
  * \fn on_addDictionary_clicked
- * \brief Reads a xlsx file from user
+ * \brief Reads a xlsx file from user provided the excel sheet contains only 2 columns i.e. first -> WORD
+ * \brief and second -> MEANING
 */
 void MainWindow::on_addDictionary_clicked()
 {
@@ -16197,15 +16198,51 @@ void MainWindow::on_addDictionary_clicked()
     }
 
     Document xlsxR(xlsx);
-        if (xlsxR.load())
+    if (xlsxR.load())
+    {
+        int wordRow = 1;
+        int wordCol = 1;
+        int meaningRow = 1;
+        int meaningCol = 2;
+
+        Cell* word = xlsxR.cellAt(wordRow, wordCol);
+        Cell* meaning = xlsxR.cellAt(meaningRow, meaningCol);
+        if ( word != NULL && meaning != NULL)
         {
-            Cell* cell = xlsxR.cellAt(2, 2);
-            if ( cell != NULL )
-            {
-                QVariant var = cell->readValue();
-                qDebug() << var;
+            QString w = word->readValue().toString();
+            QString m = meaning->readValue().toString();
+            if(w == "WORD" && m == "MEANING"){
+                wordRow++;
+                meaningRow++;
+                while(true){
+                    word = xlsxR.cellAt(wordRow, wordCol);
+                    meaning = xlsxR.cellAt(meaningRow, meaningCol);
+
+                    if(word != NULL && meaning != NULL){
+                        QString w = word->readValue().toString();
+                        QString m = meaning->readValue().toString();
+                        QString a = w + " " + m;
+                        qDebug()<<a;
+                        wordRow++;
+                        qDebug() << wordRow;
+                        meaningRow++;
+                    }
+                    else{
+                        break;
+                    }
+                }
+            }
+            else{
+                QMessageBox::information(this,"Column Headers don't match","Please update the column names to WORD and MEANING");
             }
         }
+        else{
+            QMessageBox::warning(0, "Empty Excel!" , "Excel might be empty!");
+        }
+    }
+    else{
+        QMessageBox::warning(0,"Loading error!" ,"Excel file didn't load properly. \nMake sure the format of excel is .xlsx .\n");
+    }
 
 }
 
