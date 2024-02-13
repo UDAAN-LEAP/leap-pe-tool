@@ -16191,6 +16191,11 @@ void MainWindow::on_checkBox_stateChanged(int arg1)
 */
 void MainWindow::on_addDictionary_clicked()
 {
+    if(isProjectOpen != 1) return;
+
+    QString dict_path = gDirTwoLevelUp + "/Dicts/User_Dictionary.json";
+    QJsonObject word_dict = readJsonFile(dict_path);
+
     QString xlsx = "";
     xlsx = QFileDialog::getOpenFileName(this, "Upload Excel", "./", tr("Excel (*.xlsx)"));   //Opens only if the file name is Project.xml
     if(xlsx.size() == 0){
@@ -16220,11 +16225,12 @@ void MainWindow::on_addDictionary_clicked()
 
                     if(word != NULL && meaning != NULL){
                         QString w = word->readValue().toString();
-                        QString m = meaning->readValue().toString();
-                        QString a = w + " " + m;
-                        qDebug()<<a;
+                        QString m = meaning->readValue().toString() + ", " + word_dict.value(w).toString();
+                        QJsonValue mean =  QJsonValue::fromVariant(m);
+
+                        word_dict.insert(w,mean);
+
                         wordRow++;
-                        qDebug() << wordRow;
                         meaningRow++;
                     }
                     else{
@@ -16244,5 +16250,6 @@ void MainWindow::on_addDictionary_clicked()
         QMessageBox::warning(0,"Loading error!" ,"Excel file didn't load properly. \nMake sure the format of excel is .xlsx .\n");
     }
 
+    writeJsonFile(dict_path,word_dict);
 }
 
