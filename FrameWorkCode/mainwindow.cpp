@@ -6074,6 +6074,16 @@ void MainWindow::DisplayAllDicts(CustomTextBrowser *b, QString input)
     ui->textEdit_dict->setFontPointSize(14);
 
     if(loadAllDicts){
+
+        QString dict_path = gDirTwoLevelUp + "/Dicts/User_Dictionary.json";
+        QJsonObject word_dict = readJsonFile(dict_path);
+
+        QStringList list = word_dict.keys();
+        for(auto i = 0; i < list.count(); i++){
+            QString word = list[i];
+            QString mean = word_dict.value(word).toString();
+            dictionary.insert(word, mean);
+        }
         QMapIterator<QString, QString> i(dictionary);
         while (i.hasNext()) {
             i.next();
@@ -16229,6 +16239,7 @@ void MainWindow::on_addDictionary_clicked()
                         QJsonValue mean =  QJsonValue::fromVariant(m);
 
                         word_dict.insert(w,mean);
+                        dictionary.insert(w, m);
 
                         wordRow++;
                         meaningRow++;
