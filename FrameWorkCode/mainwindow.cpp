@@ -927,6 +927,28 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             QAction* insertImage;
             insertImage = new QAction("Insert image",popup_menu);
 
+            if (cursor.currentTable()) {
+                QMenu* tableMenu = new QMenu("Table Options", popup_menu);
+
+                // Create Actions
+                QAction* addRowAction = new QAction("Insert Row Above", tableMenu);
+                QAction* addColumnAction = new QAction("Insert Column to Left", tableMenu);
+                QAction* deleteTableAction = new QAction("Delete Table", tableMenu);
+
+                // Add Actions to tableMenu
+                tableMenu->addAction(addRowAction);
+                tableMenu->addAction(addColumnAction);
+                tableMenu->addAction(deleteTableAction);
+
+                // Connect actions
+                connect(addRowAction, &QAction::triggered, this, &MainWindow::on_actionInsert_Rowabove_triggered);
+                connect(addColumnAction, &QAction::triggered, this, &MainWindow::on_actionInsert_Columnleft_triggered);
+                connect(deleteTableAction, &QAction::triggered, this, &MainWindow::deleteTableAction);
+
+                // Add tableMenu to popup_menu
+                popup_menu->addMenu(tableMenu);
+            }
+
             QList<QAction*> all_actions = popup_menu->actions();
             if(isLink) {
                 popup_menu->insertMenu(all_actions[1], clipboard_menu);
@@ -12558,6 +12580,22 @@ QString MainWindow::check_for_updates(){
         return "v4.2";
     }
     return "false";
+}
+
+void MainWindow::deleteTableAction()
+{
+    if (!curr_browser || curr_browser->isReadOnly())
+        return;
+    if (curr_browser->textCursor().currentTable())
+    {
+        QTextCursor cursor = curr_browser->textCursor();
+        if (cursor.currentTable() != nullptr) {
+            cursor.setPosition(cursor.currentTable()->cellAt(0, 0).firstCursorPosition().position());
+            QTextTable* table = cursor.currentTable();
+            int numRows = table->rows();
+            table->removeRows(0, numRows);
+        }
+    }
 }
 
 /*!

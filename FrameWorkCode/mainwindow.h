@@ -771,6 +771,9 @@ private:
     customTreeviewItem* customDelegate;
     bool loadAllDicts;
     QMap<QString, QString> dictionary;
+    void addRowAction();
+    void addColumnAction();
+    void deleteTableAction();
 };
 
 #endif // MAINWINDOW_H
