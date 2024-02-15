@@ -6115,65 +6115,6 @@ void MainWindow::DisplayAllDicts(CustomTextBrowser *b, QString input)
             ui->textEdit_dict->append(word + ": " + translation);
         }
     }
-
-    QTextCharFormat fmt;
-    fmt.setBackground(Qt::green);
-
-    QTextCursor cursor(b->document());
-
-    int indexOfReplacedWord;
-    int from = 0;
-    int count;
-    int numReplaced = 0;
-
-    foreach(auto &x, dict_set1){
-        count = input.count(x, Qt::CaseInsensitive);
-
-        numReplaced = 0;
-        from = 0;
-        int flag = 0;
-
-        while(numReplaced<count){
-            int endIndex;
-            indexOfReplacedWord = input.indexOf(x,from , Qt::CaseInsensitive);
-            endIndex = indexOfReplacedWord;
-            int len = x.length();
-
-            while(len > 0){
-                endIndex++;
-                len--;
-            }
-
-            int start = indexOfReplacedWord;
-
-            if(indexOfReplacedWord == 0){
-                input[start] == " ";
-            }
-            else{
-                start=start-1;
-            }
-
-            QRegExp regex("[$&+,:;=?@#|'\"<>.^*()%!-\n\t]");
-
-            QString test1=input.at(start);
-            QString test2=input.at(endIndex);
-
-            if((input[endIndex] == " " || test2.contains(regex)) && (input[start] == " " || test1.contains(regex))){
-                flag=1;
-            }
-
-            if(flag==1) {
-                cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
-                cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
-                cursor.mergeCharFormat(fmt);
-                QTextEdit::ExtraSelection h;
-                h.format.setBackground(Qt::green);
-            }
-            from = endIndex;
-            numReplaced+=1;
-            flag=0;
-        }
-    }
 }
 
 /*!
