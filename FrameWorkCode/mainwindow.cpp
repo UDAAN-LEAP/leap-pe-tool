@@ -16276,8 +16276,13 @@ void MainWindow::on_addDictionary_clicked()
                         QString m = meaning->readValue().toString() + ", " + word_dict.value(w).toString();
                         QJsonValue mean =  QJsonValue::fromVariant(m);
 
-                        word_dict.insert(w,mean);
-                        dictionary.insert(w, m);
+                        if(!word_dict.contains(w)){
+                            word_dict.insert(w,mean);
+                        }
+
+                        if(!dictionary.contains(w)){
+                            dictionary.insert(w, m);
+                        }
 
                         wordRow++;
                         meaningRow++;
