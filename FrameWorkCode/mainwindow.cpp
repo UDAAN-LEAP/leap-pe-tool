@@ -16232,6 +16232,7 @@ void MainWindow::on_addDictionary_clicked()
                         break;
                     }
                 }
+                QMessageBox::information(this, "Dictionary Added", "Dictionary has been successfully added.");
             }
             else{
                 QMessageBox::information(this,"Column Headers don't match","Please update the column names to WORD and MEANING");
