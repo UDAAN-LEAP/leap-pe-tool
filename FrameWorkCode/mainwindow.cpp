@@ -251,6 +251,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionHighlight->setEnabled(false);
     ui->copyToVerifier->setVisible(false);
     ui->copyToVerifier->setEnabled(false);
+    ui->checkBox->setEnabled(false);
 
     settings.beginGroup("cloudSave");
     settings.remove("");
@@ -1766,7 +1767,7 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->groupBox->setDisabled(false);
     ui->actionHighlight->setEnabled(true);
     ui->pushButton_7->setEnabled(true);
-
+    ui->checkBox->setEnabled(true);
     ui->lineEdit_5->setVisible(true);
 }
 
@@ -9657,7 +9658,7 @@ void MainWindow::on_actionClose_project_triggered()
     ui->mark_review->setChecked(false);
     ui->status->setText("Status - None");
     ui->lineEdit_5->clear();
-
+    ui->checkBox->setEnabled(false);
     ui->lineEdit_5->setVisible(false);
 
     if(!mProject.isProjectOpen()){
