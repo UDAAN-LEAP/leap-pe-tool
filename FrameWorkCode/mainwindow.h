@@ -640,6 +640,8 @@ private slots:
 
     void on_addDictionary_clicked();
 
+    void on_OCR_Button_clicked();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
