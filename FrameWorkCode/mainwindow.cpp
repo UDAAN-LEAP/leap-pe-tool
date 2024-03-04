@@ -4571,6 +4571,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
                         if(cropped.save(fileName, "PNG")){
                             QMessageBox::information(0, "Saved", "OCR image saved as ocr_image.png in the current directory");
+                            img_ocr(fileName);
                         }
                         else{
                             QMessageBox::critical(0, "Error", "Failed to save OCR image");
@@ -12711,6 +12712,80 @@ void MainWindow::deleteTableAction()
             table->removeRows(0, numRows);
         }
     }
+}
+
+void MainWindow::img_ocr(QString img_path)
+{
+    QFile imageFile(img_path);
+    if (!imageFile.open(QIODevice::ReadOnly)) {
+        qDebug() << "Failed to open image file";
+        return;
+    }
+
+    QByteArray imageContent = imageFile.readAll();
+    QByteArray base64Bytes = imageContent.toBase64();
+    QString base64String = QString::fromUtf8(base64Bytes);
+
+    int idx = ui->comboBox->currentIndex();
+    QString enc = ui->comboBox->itemData(idx).toString();
+    QStringList EncList = enc.split("-");
+    QString finalEnc = EncList.at(0);
+
+    // Prepare JSON payload
+    QJsonObject payload;
+    payload["modality"] = "printed";
+    payload["language"] = finalEnc;
+    payload["version"] = "v4_robust";
+
+    QJsonArray imageContentArray;
+    imageContentArray.append(base64String);
+    payload["imageContent"] = imageContentArray;
+
+    QJsonDocument jsonDoc(payload);
+    QByteArray jsonData = jsonDoc.toJson();
+
+    // Send POST request
+    QNetworkAccessManager manager;
+    QNetworkRequest request(QUrl("https://ilocr.iiit.ac.in/ocr/infer"));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    QNetworkReply *reply = manager.post(request, jsonData);
+
+    QString ocred_text;
+
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+    if (reply->error() == QNetworkReply::NoError) {
+        QByteArray data = reply->readAll();
+        QJsonParseError errorPtr;
+        QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+        if (errorPtr.error != QJsonParseError::NoError) {
+            qDebug() << "JSON parse error:" << errorPtr.errorString();
+        } else {
+            if (document.isArray()) {
+                QJsonArray jsonArray = document.array();
+                for (const QJsonValue& value : jsonArray) {
+                    QJsonObject obj = value.toObject();
+                    ocred_text = obj["text"].toString();
+                    qDebug() << "OCR Text:" << ocred_text;
+                }
+            } else {
+                qDebug() << "Unexpected JSON format - not an array";
+            }
+        }
+
+    } else {
+        qDebug() << "Error:" << reply->errorString();
+    }
+
+    reply->deleteLater();
+
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.insertText(ocred_text);
 }
 
 /*!

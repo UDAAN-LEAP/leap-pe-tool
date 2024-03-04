@@ -776,6 +776,7 @@ private:
     void addRowAction();
     void addColumnAction();
     void deleteTableAction();
+    void img_ocr(QString img_path);
 };
 
 #endif // MAINWINDOW_H
