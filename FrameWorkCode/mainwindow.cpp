@@ -4568,19 +4568,29 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     if (messageBox.clickedButton() == textButton)
                     {
                         QString fileName = QDir::currentPath() + "/ocr_image.png";
+                        QFile file(fileName);
 
-                        if(cropped.save(fileName, "PNG")){
-                            QMessageBox::information(0, "Saved", "OCR image saved as ocr_image.png in the current directory");
-                            img_ocr(fileName);
+                        if (file.exists()) {
+                            qDebug() << "File Exists";
+                            if (file.remove(fileName)) {
+                                qDebug() << "File Removed";
+                            }
                         }
-                        else{
+
+                        if(!cropped.save(fileName, "PNG", 100)){
+                            crop_rect->setRect(0,0,1,1);
+                            shouldIOCR=false;
+                            ui->OCR_Button->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");
                             QMessageBox::critical(0, "Error", "Failed to save OCR image");
+                            return false;
                         }
 
                         crop_rect->setRect(0,0,1,1);       //settings this for dynamic rectangular region
+                        QMessageBox::information(0, "Saved", "OCR image saved as ocr_image.png in the current directory");
 
                         shouldIOCR=false;
                         ui->OCR_Button->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");     //remove the style once the operation is done
+                        img_ocr(fileName);
                     }
                     //! settings for a tableholder
                     // else if (messageBox.clickedButton() == tableButton)
