@@ -4450,12 +4450,13 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         {
             //! Capturing mouse press event on graphics view for OCR
             if (event->type() == QEvent::MouseButtonPress && shouldIOCR){
+                //! calls handleOCR function reponsible for handling the OCR functionality
                 handleOCR(event, x1, y1, x2, y2);
             }
 
             //! Capturing mouse release event on graphicsview for OCR
             if (event->type() == QEvent::MouseButtonRelease && shouldIOCR){
-                //! reponsible for preventing the event second time.
+                //! calls handleOCR function reponsible for handling the OCR functionality
                 handleOCR(event, x1, y1, x2, y2);
             }
 
@@ -12556,6 +12557,11 @@ void MainWindow::deleteTableAction()
     }
 }
 
+/*!
+ * \fn MainWindow::img_ocr
+ * \brief Performs OCR on an image file using the Bhashini OCR API
+ * \param img_path The file path of the image to be processed
+ */
 void MainWindow::img_ocr(QString img_path)
 {
     QFile imageFile(img_path);
@@ -12572,6 +12578,11 @@ void MainWindow::img_ocr(QString img_path)
     QString enc = ui->comboBox->itemData(idx).toString();
     QStringList EncList = enc.split("-");
     QString finalEnc = EncList.at(0);
+
+    // Updates the language code for Sanskrit according to Bhashini OCR Api
+    if(finalEnc == "san"){
+        finalEnc = "sa";
+    }
 
     // Prepare JSON payload
     QJsonObject payload;
@@ -12630,6 +12641,22 @@ void MainWindow::img_ocr(QString img_path)
     cursor.insertText(ocred_text);
 }
 
+/*!
+ * \fn MainWindow::handleOCR
+ * \brief Handles OCR functionality based on mouse events within the graphics view.
+ * \param event The event triggered within the graphics view.
+ * \param x1
+ * \param y1
+ * \param x2
+ * \param y2
+ *
+ * This function is responsible for capturing mouse events within the graphics view,
+ * specifically handling mouse button press and release events for initiating OCR on a selected region.
+ * When the user presses the mouse button, it records the initial coordinates (x1, y1).
+ * Upon releasing the mouse button, it finalizes the selection, computes the bounding rectangle (x2, y2),
+ * prompts the user for OCR, and performs OCR on the selected region if requested.
+ *
+ */
 void MainWindow::handleOCR(QEvent* event, int& x1, int& y1, int& x2, int& y2)
 {
     if(event->type() == QEvent::MouseButtonPress && shouldIOCR){
