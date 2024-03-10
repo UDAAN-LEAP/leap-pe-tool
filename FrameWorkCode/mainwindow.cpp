@@ -12618,6 +12618,7 @@ void MainWindow::img_ocr(QString img_path)
         QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
         if (errorPtr.error != QJsonParseError::NoError) {
             qDebug() << "JSON parse error:" << errorPtr.errorString();
+            QMessageBox::critical(0, "JSON parse error", errorPtr.errorString());
         } else {
             if (document.isArray()) {
                 QJsonArray jsonArray = document.array();
@@ -12628,11 +12629,13 @@ void MainWindow::img_ocr(QString img_path)
                 }
             } else {
                 qDebug() << "Unexpected JSON format - not an array";
+                QMessageBox::critical(0, "JSON parse error", "Unexpected JSON format - not an array");
             }
         }
 
     } else {
         qDebug() << "Error:" << reply->errorString();
+        QMessageBox::critical(0, "Error", "Failed to process OCR request. Please try again later.");
     }
 
     reply->deleteLater();
@@ -12729,13 +12732,19 @@ void MainWindow::handleOCR(QEvent* event, int& x1, int& y1, int& x2, int& y2)
                 }
 
                 crop_rect->setRect(0,0,1,1);
-                QMessageBox::information(0, "Saved", "OCR image saved as ocr_image.png in the current directory");
+                QMessageBox::information(0, "OCR Processing", "Your OCR request is being processed. Please wait.");
                 shouldIOCR=false;
                 ui->OCR_Button->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");
                 img_ocr(fileName);
-                ui->graphicsView->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
-                event->accept();
             }
+            else if(messageBox.clickedButton() == cancelButton){
+                QMessageBox::information(0, "OCR Request Status", "Cancelled");
+                crop_rect->setRect(0,0,1,1);
+                shouldIOCR=false;
+                ui->OCR_Button->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");
+            }
+            ui->graphicsView->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
+            event->accept();
         }
     }
 }
