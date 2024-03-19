@@ -12740,6 +12740,7 @@ void MainWindow::img_ocr(QString img_path)
     QString enc = ui->comboBox->itemData(idx).toString();
     QStringList EncList = enc.split("-");
     QString finalEnc = EncList.at(0);
+    qDebug()<<"language detected: "<<finalEnc;
 
     // Prepare JSON payload
     QJsonObject payload;
