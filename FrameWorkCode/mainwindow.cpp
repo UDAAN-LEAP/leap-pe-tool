@@ -4450,181 +4450,14 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         {
             //! Capturing mouse press event on graphics view for OCR
             if (event->type() == QEvent::MouseButtonPress && shouldIOCR){
-                QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-                QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos()); //Capturing the coordinates values according to the image.
-                QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y());
-
-                x1 = ( int )pos.x();      //left coordinate value
-                y1 = ( int )pos.y();      //top coordinate value
-                pressedFlag=1;            //drawing is on until it becomes 0 or for continuous pressing event
-                event->accept();
+                //! calls handleOCR function reponsible for handling the OCR functionality
+                handleOCR(event, x1, y1, x2, y2);
             }
 
             //! Capturing mouse release event on graphicsview for OCR
             if (event->type() == QEvent::MouseButtonRelease && shouldIOCR){
-                //! reponsible for preventing the event second time.
-                if(drawRectangleFlag==true)
-                {
-                    drawRectangleFlag=false;
-                    pressedFlag =0;        //for stopping the drawing
-                    event->accept();
-                    return true;
-                }
-                if(shouldIOCR){
-
-                    drawRectangleFlag=true;     //set the flag true when occuring for first time
-                    // static int i,j,k;           //for storing the counter values for figure/equation/table for each page
-                    // static QString a;           //pagecounter
-
-                    // //! Getting PageNo string from gCurrentPageName
-                    // QStringList PageNo=gCurrentPageName.split(QRegExp("[-.]"));
-                    // QString PageNumber = PageNo[1];
-
-                    // //!Getting i,j,k values from image.xml file
-                    // //! first reading the file
-                    // QDomDocument document;
-                    // QString filename12 = mProject.GetDir().absolutePath() + "/image.xml";
-                    // QFile f(filename12);
-
-                    // //! throws an error if file is not in readonly mode
-                    // if (!f.open(QIODevice::ReadOnly ))
-                    // {
-                    //     std::cerr << "Error while loading file" << std::endl;
-                    //     return 1;
-                    // }
-                    // document.setContent(&f);       // Set data into the QDomDocument before processing
-                    // f.close();
-
-                    // //!for this you can refer image.xml file
-                    // QDomElement root=document.documentElement();       //Item: BookSet
-                    // QDomElement Component=root.firstChild().toElement();      //Item: Page(No)
-
-                    // //! Loop while there is a child
-                    // while(!Component.isNull())
-                    // {
-                    //     //! Check if the child tag name is Page(No)
-                    //     if (Component.tagName()=="page"+PageNo[1])
-                    //     {
-                    //         a = Component.attribute("count");        //get counter value for each page starts with 1.
-                    //         QDomElement Child=Component.firstChild().toElement();      //Item: figure
-                    //         while (!Child.isNull())
-                    //         {
-                    //             //! Read tagNames and values
-                    //             if (Child.tagName()=="figure") i=Child.firstChild().toText().data().toInt();
-                    //             if (Child.tagName()=="table") j=Child.firstChild().toText().data().toInt();
-                    //             if (Child.tagName()=="equation") k=Child.firstChild().toText().data().toInt();
-
-                    //             Child = Child.nextSibling().toElement();        // Next child
-                    //         }
-                    //     }
-                    //     Component = Component.nextSibling().toElement();        // Next component
-                    // }
-
-                    QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-                    QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos() );
-                    QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y() );
-
-                    x2 = ( int )pos.x();         //right coordinate value
-                    y2 = ( int )pos.y();         //bottom coordinate value
-                    pressedFlag =0;              // stop rectangular drawing
-
-
-                    QColor blue40 = Qt::blue;     //sets its color
-                    blue40.setAlphaF( 0.4 );      //for transparency
-
-                    crop_rect->setBrush(blue40);   //set brush
-
-                    //qDebug() << x1 << " " << y1 << " " << x2 - x1 << " " << y2 - y1;   //getting the coordinates
-
-                    int width = x2 - x1;
-                    int height = y2 - y1;
-                    crop_rect->setRect(x1, y1, width, height);       //set final coordinates for rectangular region
-                    QRect rect(x1, y1, width, height);              //set QRect
-                    QPixmap image = QPixmap::fromImage(imageOrig);       //set QPixmap image
-                    QPixmap cropped1 = image.copy(rect);                   //get cropped image according to coordinates
-
-                    if(width >= 710){
-                        width = 600;
-                    }
-
-                    if(height >= 1200){
-                        height = 500;
-                    }
-
-                    QPixmap cropped = cropped1.scaled(width, height, Qt::KeepAspectRatio);
-
-                    //! Set a messagebox for choosing what do you want to add: Figure/Table/Equation/Cancel
-                    QMessageBox messageBox;          //isisde this argument is remove need to be tested
-                    messageBox.setWindowTitle("Do you want to OCR");
-                    QAbstractButton *textButton = messageBox.addButton(tr("Text"), QMessageBox::ActionRole);
-                    // QAbstractButton *tableButton = messageBox.addButton(tr("Table"), QMessageBox::ActionRole);
-                    QAbstractButton *cancelButton = messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
-
-                    QString msg = "Select an option\n";
-                    messageBox.setText(msg);
-                    messageBox.exec();
-
-                    //! settings for a text
-                    if (messageBox.clickedButton() == textButton)
-                    {
-                        QString fileName = QDir::currentPath() + "/ocr_image.png";
-                        QFile file(fileName);
-
-                        if (file.exists()) {
-                            qDebug() << "File Exists";
-                            if (file.remove(fileName)) {
-                                qDebug() << "File Removed";
-                            }
-                        }
-
-                        if(!cropped.save(fileName, "PNG", 100)){
-                            crop_rect->setRect(0,0,1,1);
-                            shouldIOCR=false;
-                            ui->OCR_Button->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");
-                            QMessageBox::critical(0, "Error", "Failed to save OCR image");
-                            return false;
-                        }
-
-                        crop_rect->setRect(0,0,1,1);       //settings this for dynamic rectangular region
-                        QMessageBox::information(0, "Saved", "OCR image saved as ocr_image.png in the current directory");
-
-                        shouldIOCR=false;
-                        ui->OCR_Button->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");     //remove the style once the operation is done
-                        img_ocr(fileName);
-                    }
-                    //! settings for a tableholder
-                    // else if (messageBox.clickedButton() == tableButton)
-                    // {
-                    //     QString s1 = "TBHOLDER";
-                    //     QString s2 = "Table";
-
-                    //     //graphic->removeItem(crop_rect);
-
-                    //     //!Saving Image Regions to their respective folder(Figure/Table/Equation)
-                    //     saveImageRegion(cropped, a, s1, j, width, height);
-
-                    //     j++;         //increment values when a table is inserted in the textBrowser
-
-                    //     crop_rect->setRect(0,0,1,1);         //settings this for dynamic rectangular region
-
-                    //     //! updating entries for table entries in xml file
-                    //     objectMarkRegion.updateEntries(document, filename12, PageNo[1], s2, j);
-
-                    //     shouldIOCR=false;
-                    //     ui->OCR_Button->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");       //remove the style once the operation is done
-                    // }
-                    //! setting for cancelbutton
-                    else
-                    {
-                        QMessageBox::information(0, "Not saved", "Cancelled");
-                        crop_rect->setRect(0,0,1,1);
-                        shouldIOCR=false;
-                        ui->OCR_Button->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");       //remove the style once the operation is done
-                    }
-                    ui->graphicsView->setDragMode( QGraphicsView::DragMode::ScrollHandDrag );
-                    event->accept();
-                    //return true;
-                }
+                //! calls handleOCR function reponsible for handling the OCR functionality
+                handleOCR(event, x1, y1, x2, y2);
             }
 
             installEventFilter(this);
@@ -12724,6 +12557,11 @@ void MainWindow::deleteTableAction()
     }
 }
 
+/*!
+ * \fn MainWindow::img_ocr
+ * \brief Performs OCR on an image file using the Bhashini OCR API
+ * \param img_path The file path of the image to be processed
+ */
 void MainWindow::img_ocr(QString img_path)
 {
     QFile imageFile(img_path);
@@ -12741,6 +12579,11 @@ void MainWindow::img_ocr(QString img_path)
     QStringList EncList = enc.split("-");
     QString finalEnc = EncList.at(0);
     qDebug()<<"language detected: "<<finalEnc;
+
+    // Updates the language code for Sanskrit according to Bhashini OCR Api
+    if(finalEnc == "san"){
+        finalEnc = "sa";
+    }
 
     // Prepare JSON payload
     QJsonObject payload;
@@ -12776,6 +12619,7 @@ void MainWindow::img_ocr(QString img_path)
         QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
         if (errorPtr.error != QJsonParseError::NoError) {
             qDebug() << "JSON parse error:" << errorPtr.errorString();
+            QMessageBox::critical(0, "JSON parse error", errorPtr.errorString());
         } else {
             if (document.isArray()) {
                 QJsonArray jsonArray = document.array();
@@ -12786,17 +12630,124 @@ void MainWindow::img_ocr(QString img_path)
                 }
             } else {
                 qDebug() << "Unexpected JSON format - not an array";
+                QMessageBox::critical(0, "JSON parse error", "Unexpected JSON format - not an array");
             }
         }
 
     } else {
         qDebug() << "Error:" << reply->errorString();
+        QMessageBox::critical(0, "Error", "Failed to process OCR request. Please try again later.");
     }
 
     reply->deleteLater();
 
     QTextCursor cursor = curr_browser->textCursor();
     cursor.insertText(ocred_text);
+}
+
+/*!
+ * \fn MainWindow::handleOCR
+ * \brief Handles OCR functionality based on mouse events within the graphics view.
+ * \param event The event triggered within the graphics view.
+ * \param x1
+ * \param y1
+ * \param x2
+ * \param y2
+ *
+ * This function is responsible for capturing mouse events within the graphics view,
+ * specifically handling mouse button press and release events for initiating OCR on a selected region.
+ * When the user presses the mouse button, it records the initial coordinates (x1, y1).
+ * Upon releasing the mouse button, it finalizes the selection, computes the bounding rectangle (x2, y2),
+ * prompts the user for OCR, and performs OCR on the selected region if requested.
+ *
+ */
+void MainWindow::handleOCR(QEvent* event, int& x1, int& y1, int& x2, int& y2)
+{
+    if(event->type() == QEvent::MouseButtonPress && shouldIOCR){
+        QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+        QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos());
+        QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y());
+
+        x1 = ( int )pos.x();
+        y1 = ( int )pos.y();
+        pressedFlag=1;
+        event->accept();
+    }
+
+    if(event->type() == QEvent::MouseButtonRelease){
+        if(drawRectangleFlag==true){
+            drawRectangleFlag=false;
+            pressedFlag =0;
+            event->accept();
+            return;
+        }
+
+        if(shouldIOCR){
+            drawRectangleFlag=true;
+
+            QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+            QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos());
+            QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y());
+
+            x2 = ( int )pos.x();
+            y2 = ( int )pos.y();
+            pressedFlag =0;
+
+            QColor blue40 = Qt::blue;
+            blue40.setAlphaF( 0.4 );
+
+            crop_rect->setBrush(blue40);
+            int width = x2 - x1;
+            int height = y2 - y1;
+            crop_rect->setRect(x1, y1, width, height);
+            QRect rect(x1, y1, width, height);
+            QPixmap image = QPixmap::fromImage(imageOrig);
+            QPixmap cropped = image.copy(rect);
+
+            QMessageBox messageBox;
+            messageBox.setWindowTitle("Do you want to OCR");
+            QAbstractButton *textButton = messageBox.addButton(tr("Text"), QMessageBox::ActionRole);
+            QAbstractButton *cancelButton = messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+
+            QString msg = "Select an option\n";
+            messageBox.setText(msg);
+            messageBox.exec();
+
+            if (messageBox.clickedButton() == textButton){
+                QString fileName = QDir::currentPath() + "/ocr_image.png";
+                QFile file(fileName);
+
+                if (file.exists()) {
+                    qDebug() << "File Exists";
+                    if (file.remove(fileName)) {
+                        qDebug() << "File Removed";
+                    }
+                }
+
+                if(!cropped.save(fileName, "PNG", 100)){
+                    crop_rect->setRect(0,0,1,1);
+                    shouldIOCR=false;
+                    ui->OCR_Button->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");
+                    QMessageBox::critical(0, "Error", "Failed to save OCR image");
+                    return;
+                }
+
+                crop_rect->setRect(0,0,1,1);
+                QMessageBox::information(0, "OCR Processing", "Your OCR request is being processed. Please wait.");
+                shouldIOCR=false;
+                ui->OCR_Button->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");
+                img_ocr(fileName);
+            }
+            else if(messageBox.clickedButton() == cancelButton){
+                QMessageBox::information(0, "OCR Request Status", "Cancelled");
+                crop_rect->setRect(0,0,1,1);
+                shouldIOCR=false;
+                ui->OCR_Button->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");
+            }
+            ui->graphicsView->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
+            event->accept();
+        }
+    }
 }
 
 /*!

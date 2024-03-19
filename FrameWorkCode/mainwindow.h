@@ -777,6 +777,7 @@ private:
     void addColumnAction();
     void deleteTableAction();
     void img_ocr(QString img_path);
+    void handleOCR(QEvent* event, int& x1, int& y1, int& x2, int& y2);
 };
 
 #endif // MAINWINDOW_H
