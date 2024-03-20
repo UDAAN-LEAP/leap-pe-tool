@@ -12536,7 +12536,7 @@ QString MainWindow::check_for_updates(){
         }
         QString latestVersion=json[0]["name"].toString();
         QString newFeatures = json[0]["body"].toString();
-        return "v4.2";
+        return latestVersion;
     }
     return "false";
 }
