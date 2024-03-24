@@ -9418,7 +9418,7 @@ void MainWindow::on_actionClone_Repository()
 
     settings.endGroup();
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QUrl url("http://92.204.144.173/udaan/email/");
+    QUrl url("https://translate.udaanproject.org/udaan/email/");
     QUrlQuery params;
     params.addQueryItem("email", email);
     params.addQueryItem("password", token);
@@ -9756,9 +9756,9 @@ void MainWindow::login(){
     form.addRow("", showPasswordCheckBox);
 
     QLabel *label = new QLabel(&login);
-    label->setText("Forgot your password?\t<a href=\"http://92.204.144.173/udaan/accounts/password_reset/\"> reset password</a>");
+    label->setText("Forgot your password?\t<a href=\"https://translate.udaanproject.org/udaan/accounts/password_reset/\"> reset password</a>");
     QLabel *label2 = new QLabel(&login);
-    label2->setText("Don't have an account yet?<a href=\"http://92.204.144.173/udaan/auth/register/\"> create account</a>");
+    label2->setText("Don't have an account yet?<a href=\"https://translate.udaanproject.org/udaan/auth/register/\"> create account</a>");
     label->setOpenExternalLinks(true);
     label2->setOpenExternalLinks(true);
     form.addRow("",label);
@@ -9793,7 +9793,7 @@ void MainWindow::login(){
 
         if(!user_email.isEmpty() && !user_pass.isEmpty()){
             QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-            QUrl url("http://92.204.144.173/udaan/email/");
+            QUrl url("https://translate.udaanproject.org/udaan/email/");
             QUrlQuery params;
             params.addQueryItem("email", user_email);
             params.addQueryItem("password", user_pass);
@@ -9965,7 +9965,7 @@ bool MainWindow::check_access()
 
     settings.endGroup();
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QUrl url("http://92.204.144.173/udaan/email/");
+    QUrl url("https://translate.udaanproject.org/udaan/email/");
     QUrlQuery params;
     params.addQueryItem("email", email);
     params.addQueryItem("password", token);
@@ -10066,7 +10066,7 @@ void MainWindow::cloud_save(){
     parObj.insert(date, mainObj);
     writeJsonFile(corrected_count, parObj);
     QNetworkAccessManager* manager = new QNetworkAccessManager();
-    QUrl url_("http://92.204.144.173/udaan/email/");
+    QUrl url_("https://translate.udaanproject.org/udaan/email/");
 
     QByteArray postData;
     postData.append("username=username&password=password");
@@ -10460,7 +10460,7 @@ void MainWindow::speechToTextCall()
 
     QNetworkAccessManager* manager = new QNetworkAccessManager();
 
-    QUrl url_("http://92.204.144.173/udaan/email/");
+    QUrl url_("https://translate.udaanproject.org/udaan/email/");
 
     QByteArray postData;
     postData.append("username=username&password=password");
@@ -13003,7 +13003,7 @@ void MainWindow::sendComment(QString str)
         settings.endGroup();
 
         QNetworkAccessManager *manager = new QNetworkAccessManager();
-        QUrl url("http://92.204.144.173/udaan/email/");
+        QUrl url("https://translate.udaanproject.org/udaan/email/");
         QUrlQuery params;
         params.addQueryItem("email", email);
         params.addQueryItem("password", token);
@@ -15422,7 +15422,7 @@ void MainWindow::on_actionCommit_History_triggered()
     QString directoryName = directory.dirName();
 
     QNetworkAccessManager* manager1 = new QNetworkAccessManager();
-    QUrl url_("http://92.204.144.173/udaan/email/");
+    QUrl url_("https://translate.udaanproject.org/udaan/email/");
 
     QByteArray postData;
     postData.append("username=username&password=password");
