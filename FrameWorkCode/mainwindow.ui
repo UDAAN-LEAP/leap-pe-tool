@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>2149</width>
+    <width>2208</width>
     <height>1190</height>
    </rect>
   </property>
@@ -1269,7 +1269,7 @@ background: grey;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>2149</width>
+     <width>2208</width>
      <height>46</height>
     </rect>
    </property>
@@ -1626,7 +1626,6 @@ QMenu::item:selected{
     <addaction name="actionLink"/>
     <addaction name="actionInsert_Tab_Space"/>
     <addaction name="actionComment"/>
-    <addaction name="actionWatermark"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="styleSheet">
