@@ -12916,7 +12916,15 @@ void MainWindow::on_actionComment_triggered()
 
     QTextCursor cursor = curr_browser->textCursor();
 
-    QString text = cursor.selectedText().toUtf8().constData();
+    QString text;
+
+    if(cursor.hasSelection()){
+        text = cursor.selectedText().toUtf8().constData();
+    }
+    else{
+        cursor.select(QTextCursor::WordUnderCursor);
+        text = cursor.selectedText().toUtf8().constData();
+    }
 
     currentCommentWord = text;
     QString currentPage = gCurrentPageName;
