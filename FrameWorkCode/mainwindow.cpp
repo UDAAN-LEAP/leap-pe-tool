@@ -104,6 +104,8 @@
 #include <QHttpPart>
 #include <simplecrypt.h>
 #include "xlsx_headers.h"
+#include <QCryptographicHash>
+#include "qaesencryption.h"
 QT_CHARTS_USE_NAMESPACE
 
 
@@ -16485,5 +16487,32 @@ void MainWindow::on_OCR_Button_clicked()
         ui->graphicsView->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
         shouldIOCR = false;
     }
+}
+
+
+void MainWindow::on_actiontest_encryption_triggered()
+{
+    QTextCursor cursor = curr_browser->textCursor();
+    QString text;
+    if(cursor.hasSelection()) text = cursor.selectedText();
+    qDebug()<<"selected text: "<<text;
+
+    QByteArray iv;
+    quint8 iv_16[16] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
+    for (int i=0; i<16; i++)
+        iv.append(iv_16[i]);
+
+    QByteArray key;
+    quint8 key_16[16] =  {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
+    for (int i=0; i<16; i++)
+        key.append(key_16[i]);
+
+    QAESEncryption encryption(QAESEncryption::AES_128, QAESEncryption::CBC);
+
+    QByteArray encodedByteArr = encryption.encode(text.toLocal8Bit(), key, iv);
+    qDebug()<<"encodedByteArr: "<<encodedByteArr;
+    QByteArray decodedByteArr = encryption.decode(encodedByteArr, key, iv);
+    QString decodedString = QString(encryption.removePadding(decodedByteArr));
+    qDebug()<<"decodedString: "<<decodedString;
 }
 

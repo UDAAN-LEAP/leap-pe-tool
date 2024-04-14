@@ -642,6 +642,8 @@ private slots:
 
     void on_OCR_Button_clicked();
 
+    void on_actiontest_encryption_triggered();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 

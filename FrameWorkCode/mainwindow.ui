@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>2208</width>
+    <width>2249</width>
     <height>1190</height>
    </rect>
   </property>
@@ -1269,7 +1269,7 @@ background: grey;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>2208</width>
+     <width>2249</width>
      <height>46</height>
     </rect>
    </property>
@@ -1339,6 +1339,7 @@ QMenu::item:selected{
     <addaction name="actionAbout_Udaan_PE"/>
     <addaction name="separator"/>
     <addaction name="actionClear_Settings"/>
+    <addaction name="actiontest_encryption"/>
    </widget>
    <widget class="QMenu" name="menuOCR_Correction_Window">
     <property name="styleSheet">
@@ -3284,6 +3285,11 @@ background-color: #EEF0F2;
   <action name="actionWatermark">
    <property name="text">
     <string>Watermark</string>
+   </property>
+  </action>
+  <action name="actiontest_encryption">
+   <property name="text">
+    <string>test_encryption</string>
    </property>
   </action>
  </widget>
