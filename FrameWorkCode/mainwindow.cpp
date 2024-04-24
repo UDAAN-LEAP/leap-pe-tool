@@ -15907,6 +15907,10 @@ void MainWindow::on_actionCommit_History_triggered()
 
     }
 
+    if(showInitially > commitHashV.size()){
+        showInitially = commitHashV.size();
+    }
+
     QWidget* commitWindow = new QWidget;
     QVBoxLayout* layout = new QVBoxLayout;
     commitWindow->setLayout(layout);
