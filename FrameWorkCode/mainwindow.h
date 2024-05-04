@@ -642,7 +642,9 @@ private slots:
 
     void on_OCR_Button_clicked();
 
-    void on_actiontest_encryption_triggered();
+    QByteArray encrypt(QString text);
+
+    QString decrypt(QByteArray encrypted_arr);
 
 public slots:
     void on_actionLoad_Next_Page_triggered();

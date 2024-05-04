@@ -9545,10 +9545,9 @@ void MainWindow::on_actionClone_Repository()
     //retrieve details from database and check if user has access to push into this repo
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
-    QString user_pass = settings.value("token").toString();
+    QByteArray user_pass = settings.value("token").toByteArray();
 
-    SimpleCrypt crypto(Q_UINT64_C(0x1a3e5d8f2b7c6a9d));
-    QString token = crypto.decryptToString(user_pass);
+    QString token = decrypt(user_pass);
 
     settings.endGroup();
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
@@ -9875,10 +9874,9 @@ void MainWindow::on_actionExit_triggered()
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
-    QString user_pass = settings.value("token").toString();
+    QByteArray user_pass = settings.value("token").toByteArray();
 
-    SimpleCrypt crypto(Q_UINT64_C(0x1a3e5d8f2b7c6a9d));
-    QString token = crypto.decryptToString(user_pass);
+    QString token = decrypt(user_pass);
 
     settings.endGroup();
     if(email=="" && token=="")
@@ -9948,8 +9946,7 @@ void MainWindow::login(){
         user_email = email->text();
         user_pass = password->text();
 
-        SimpleCrypt crypto(Q_UINT64_C(0x1a3e5d8f2b7c6a9d));
-        QString pass_encr = crypto.encryptToString(user_pass);
+        QByteArray pass_encr = encrypt(user_pass);
 
         if(!user_email.isEmpty() && !user_pass.isEmpty()){
             QNetworkAccessManager *manager = new QNetworkAccessManager(this);
@@ -10118,10 +10115,9 @@ bool MainWindow::check_access()
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
-    QString user_pass = settings.value("token").toString();
+    QByteArray user_pass = settings.value("token").toByteArray();
 
-    SimpleCrypt crypto(Q_UINT64_C(0x1a3e5d8f2b7c6a9d));
-    QString token = crypto.decryptToString(user_pass);
+    QString token = decrypt(user_pass);
 
     settings.endGroup();
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
@@ -13373,11 +13369,9 @@ void MainWindow::sendComment(QString str)
         QSettings settings("IIT-B", "OpenOCRCorrect");
         settings.beginGroup("login");
         QString email = settings.value("email").toString();
-        QString user_pass = settings.value("token").toString();
+        QByteArray user_pass = settings.value("token").toByteArray();
 
-        SimpleCrypt crypto(Q_UINT64_C(0x1a3e5d8f2b7c6a9d));
-        QString token = crypto.decryptToString(user_pass);
-        qDebug()<<token;
+        QString token = decrypt(user_pass);
 
         settings.endGroup();
 
@@ -16494,29 +16488,49 @@ void MainWindow::on_OCR_Button_clicked()
 }
 
 
-void MainWindow::on_actiontest_encryption_triggered()
-{
-    QTextCursor cursor = curr_browser->textCursor();
-    QString text;
-    if(cursor.hasSelection()) text = cursor.selectedText();
-    qDebug()<<"selected text: "<<text;
+/*!
+ * \fn encrypt
+ * \brief Uses the AES Encrypt function to encrpyt the text
+ * \param text
+*/
+QByteArray MainWindow::encrypt(QString text){
+  QByteArray iv;
+  quint8 iv_16[16] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
+  for (int i=0; i<16; i++)
+      iv.append(iv_16[i]);
 
-    QByteArray iv;
-    quint8 iv_16[16] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
-    for (int i=0; i<16; i++)
-        iv.append(iv_16[i]);
+  QByteArray key;
+  quint8 key_16[16] =  {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
+  for (int i=0; i<16; i++)
+      key.append(key_16[i]);
 
-    QByteArray key;
-    quint8 key_16[16] =  {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
-    for (int i=0; i<16; i++)
-        key.append(key_16[i]);
+  QAESEncryption encryption(QAESEncryption::AES_128, QAESEncryption::CBC);
+  QByteArray encodedByteArr = encryption.encode(text.toLocal8Bit(), key, iv);
 
-    QAESEncryption encryption(QAESEncryption::AES_128, QAESEncryption::CBC);
-
-    QByteArray encodedByteArr = encryption.encode(text.toLocal8Bit(), key, iv);
-    qDebug()<<"encodedByteArr: "<<encodedByteArr;
-    QByteArray decodedByteArr = encryption.decode(encodedByteArr, key, iv);
-    QString decodedString = QString(encryption.removePadding(decodedByteArr));
-    qDebug()<<"decodedString: "<<decodedString;
+  return encodedByteArr;
 }
 
+
+/*!
+ * \fn decrypt
+ * \brief Uses the AES Encrypt function to decrpyt the text
+ * \param encrypted_arr
+*/
+QString MainWindow::decrypt(QByteArray encrypted_arr){
+  QByteArray iv;
+  quint8 iv_16[16] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
+  for (int i=0; i<16; i++)
+      iv.append(iv_16[i]);
+
+  QByteArray key;
+  quint8 key_16[16] =  {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
+  for (int i=0; i<16; i++)
+      key.append(key_16[i]);
+
+  QAESEncryption encryption(QAESEncryption::AES_128, QAESEncryption::CBC);
+
+  QByteArray decodedByteArr = encryption.decode(encrypted_arr, key, iv);
+  QString decodedString = QString(encryption.removePadding(decodedByteArr));
+
+  return decodedString;
+}
