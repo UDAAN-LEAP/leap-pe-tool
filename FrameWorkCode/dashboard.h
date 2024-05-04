@@ -25,6 +25,8 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void clearButtons();
+
     void on_Import_Open_btn_clicked();
 
     void on_Import_btn_clicked();

@@ -9577,6 +9577,8 @@ void MainWindow::on_actionClone_Repository()
                 msg.exec();
                 return;
             }
+            qDebug()<<repos;
+            qDebug()<<repos[0];
             QJsonArray::iterator itr; int flag = 0;
             int lineindex = 0;
             QString importHtml="<table><tr><th>#Project ID</th><th>#Project name</th></tr>";
@@ -9588,6 +9590,7 @@ void MainWindow::on_actionClone_Repository()
                 QString num = QString::number(lineindex);
                 importHtml += QString::fromStdString("<tr><td>")+num+"</td><td>"+itr->toString()+"</td></tr";
             }
+            qDebug()<<repoMap[1];
             importHtml += "</table>";
             QString p_str = "";
             bool open = false;
