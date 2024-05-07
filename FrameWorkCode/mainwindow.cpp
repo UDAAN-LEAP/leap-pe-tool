@@ -257,6 +257,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->copyToVerifier->setEnabled(false);
     ui->checkBox->setEnabled(false);
     ui->addDictionary->setEnabled(false);
+    ui->actionComment->setVisible(false);
+    ui->actionComment->setEnabled(false);
 
     settings.beginGroup("cloudSave");
     settings.remove("");
@@ -10952,7 +10954,7 @@ void MainWindow::e_d_features(bool value)
     ui->zoom_In_Button->setEnabled(value);
     ui->zoom_Out_Button->setEnabled(value);
     ui->horizontalSlider->setEnabled(value);
-    ui->actionComment->setEnabled(value);
+    // ui->actionComment->setEnabled(value);
     ui->actionOpen_Project->setEnabled(true);
 
     ui->actionFetch_2->setEnabled(true);
