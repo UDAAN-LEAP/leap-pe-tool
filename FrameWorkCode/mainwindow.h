@@ -110,6 +110,8 @@ private slots:
 
     void DisplayJsonDict(CustomTextBrowser *b, QString input);
 
+    void DisplayAllDicts(CustomTextBrowser *b, QString input);
+
     bool eventFilter(QObject *, QEvent *);
 
     void saveImageRegion(QPixmap, QString, QString,int,int,int);
@@ -634,6 +636,16 @@ private slots:
 
     void on_actionWatermark_triggered();
 
+    void on_checkBox_stateChanged(int arg1);
+
+    void on_addDictionary_clicked();
+
+    void on_OCR_Button_clicked();
+
+    QByteArray encrypt(QString text);
+
+    QString decrypt(QByteArray encrypted_arr);
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
@@ -763,6 +775,13 @@ private:
     QMap<QString, QString> downloadUrls1;
     QMap<QString, QString> downloadUrls2;
     customTreeviewItem* customDelegate;
+    bool loadAllDicts;
+    QMap<QString, QString> dictionary;
+    void addRowAction();
+    void addColumnAction();
+    void deleteTableAction();
+    void img_ocr(QString img_path);
+    void handleOCR(QEvent* event, int& x1, int& y1, int& x2, int& y2);
 };
 
 #endif // MAINWINDOW_H

@@ -103,6 +103,9 @@
 #include "releasenote_msg.h"
 #include <QHttpPart>
 #include <simplecrypt.h>
+#include "xlsx_headers.h"
+#include <QCryptographicHash>
+#include "qaesencryption.h"
 QT_CHARTS_USE_NAMESPACE
 
 
@@ -155,6 +158,8 @@ bool loadimage=false; //Check image is loaded on not
 
 bool shouldIDraw=false; //button functioning over marking a region for figure/table/equations
 
+bool shouldIOCR = false;
+
 int pressedFlag; //Resposible for dynamic rectangular drawing
 QString ProjFile;
 QString branchName;
@@ -198,7 +203,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     customtextbrowser->setStyleSheet("background-color:white; color:black;");
     ui->splitter->replaceWidget(1,customtextbrowser);
     customtextbrowser->show();
-
+    loadAllDicts = false;
 
     customtextbrowser->setStyleSheet("padding-top: 100%; padding-left: 40%; color: #1c1c1c; background-color: white;");
     connect(customtextbrowser, &QTextBrowser::textChanged, this, [=]() {
@@ -250,6 +255,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->actionHighlight->setEnabled(false);
     ui->copyToVerifier->setVisible(false);
     ui->copyToVerifier->setEnabled(false);
+    ui->checkBox->setEnabled(false);
+    ui->addDictionary->setEnabled(false);
+    ui->actionComment->setVisible(false);
+    ui->actionComment->setEnabled(false);
 
     settings.beginGroup("cloudSave");
     settings.remove("");
@@ -925,6 +934,28 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             gtrans = new QAction("Google translate",popup_menu);
             QAction* insertImage;
             insertImage = new QAction("Insert image",popup_menu);
+
+            if (cursor.currentTable()) {
+                QMenu* tableMenu = new QMenu("Table Options", popup_menu);
+
+                // Create Actions
+                QAction* addRowAction = new QAction("Insert Row Above", tableMenu);
+                QAction* addColumnAction = new QAction("Insert Column to Left", tableMenu);
+                QAction* deleteTableAction = new QAction("Delete Table", tableMenu);
+
+                // Add Actions to tableMenu
+                tableMenu->addAction(addRowAction);
+                tableMenu->addAction(addColumnAction);
+                tableMenu->addAction(deleteTableAction);
+
+                // Connect actions
+                connect(addRowAction, &QAction::triggered, this, &MainWindow::on_actionInsert_Rowabove_triggered);
+                connect(addColumnAction, &QAction::triggered, this, &MainWindow::on_actionInsert_Columnleft_triggered);
+                connect(deleteTableAction, &QAction::triggered, this, &MainWindow::deleteTableAction);
+
+                // Add tableMenu to popup_menu
+                popup_menu->addMenu(tableMenu);
+            }
 
             QList<QAction*> all_actions = popup_menu->actions();
             if(isLink) {
@@ -1743,7 +1774,8 @@ void MainWindow::on_actionOpen_Project_triggered() { //Version Based
     ui->groupBox->setDisabled(false);
     ui->actionHighlight->setEnabled(true);
     ui->pushButton_7->setEnabled(true);
-
+    ui->checkBox->setEnabled(true);
+    ui->addDictionary->setEnabled(true);
     ui->lineEdit_5->setVisible(true);
 }
 
@@ -4420,6 +4452,18 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         //! Apply event on graphicsview (image loaded part)
         if( object->parent() == ui->graphicsView)
         {
+            //! Capturing mouse press event on graphics view for OCR
+            if (event->type() == QEvent::MouseButtonPress && shouldIOCR){
+                //! calls handleOCR function reponsible for handling the OCR functionality
+                handleOCR(event, x1, y1, x2, y2);
+            }
+
+            //! Capturing mouse release event on graphicsview for OCR
+            if (event->type() == QEvent::MouseButtonRelease && shouldIOCR){
+                //! calls handleOCR function reponsible for handling the OCR functionality
+                handleOCR(event, x1, y1, x2, y2);
+            }
+
             installEventFilter(this);
             //! Capturing mouse press event on graphicsview
             if (event->type() == QEvent::MouseButtonPress && shouldIDraw)
@@ -4434,7 +4478,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 event->accept();
             }
             //! Capturing mouse release event on graphicsview
-            if (event->type() == QEvent::MouseButtonRelease)
+            if (event->type() == QEvent::MouseButtonRelease && shouldIDraw)
             {
                 //! reponsible for preventing the event second time.
                 if(drawRectangleFlag==true)
@@ -5848,158 +5892,250 @@ QMap<QString,QStringList> MainWindow::getBeforeAndAfterWords(QString fPath,QMap 
  */
 void MainWindow::DisplayJsonDict(CustomTextBrowser *b, QString input)
 {
-    QVector<QString> dictionary;
-    QJsonDocument doc;
-    QJsonObject obj;
-    QByteArray data_json;
-    QStringList list1;
-    QSet<QString> dict_set;
-    dict_set1.clear();
-    //! Get dict file from current opened file
-    QString dictFilename;
-    //    if(mRole=="Verifier")
-    //    {
-    //        if(gCurrentDirName == "CorrectorOutput")
-    //        dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
-    //        else
-    //        dictFilename = gDirTwoLevelUp + "/" + "VerifierOutput" + "/" + gCurrentPageName;
+    if(loadAllDicts){
+        QJsonDocument doc;
+        QJsonObject obj;
+        QByteArray data_json;
+        QSet<QString> dict_set;
+        dict_set1.clear();
 
-    //        qDebug()<<"here";
-    //    }
-    //    else if(mRole=="Corrector")
-    //    {
-    dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
+        QString directory = gDirTwoLevelUp + "/" + "CorrectorOutput";
+        QDir dir(directory);
+        QStringList dictFilenames = dir.entryList(QStringList("*.dict"));
 
-    //    }
-    dictFilename.replace(".txt", ".dict");
-    dictFilename.replace(".html", ".dict");
-    //    QFile dictQFile(dictFilename);
+        foreach (const QString &dictFile, dictFilenames){
+            QString fullFilePath = directory + "/" + dictFile;
 
-    ui->textEdit_dict->clear();
-    ui->textEdit_dict->setFontPointSize(14);
-    //! Open the dict file and display it in textedit view
-    if(QFile::exists(dictFilename))
-    {
+            if (QFile::exists(fullFilePath)){
+                QFile dictQFile(fullFilePath);
+                if (dictQFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+                    data_json = dictQFile.readAll();
+                    dictQFile.close();
 
-        QFile dictQFile(dictFilename);
-        if(dictQFile.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            data_json = dictQFile.readAll();
-            dictQFile.close();
-            doc = doc.fromJson(data_json);
-            obj = doc.object();
-            if( obj.size() == 0){
-                QMessageBox::information(0, "Error !", "Dictionary of current page can't be loaded, please correct the syntax of corresponding Json file.");
-                return;
+                    doc = QJsonDocument::fromJson(data_json);
+                    obj = doc.object();
+
+                    if(obj.size() == 0){
+                        QMessageBox::information(0, "Error!", "Dictionary of the current page" + dictFile + "can't be loaded, please correct the syntax of the corresponding Json file.");
+                        return;
+                    }
+
+                    QJsonValue jv = obj.value(obj.keys().at(0));
+                    QJsonObject item = jv.toObject();
+
+                    for (int i = 0; i < item.count(); i++){
+                        QJsonValue subobj = item.value(item.keys().at(i));
+                        QJsonArray test = subobj.toArray();
+
+                        for (int k = 0; k < test.count(); k++){
+                            if(!test[k].toString().isNull() && !test[k].toString().isEmpty()){
+                                dictionary.insert(item.keys().at(i), test[k].toString());
+
+                                QStringList list = test[k].toString().split(",");
+                                foreach (auto &word, list) {
+                                    dict_set.insert(word);
+                                }
+
+
+                                foreach (auto &word, dict_set) {
+                                    std::string string1 = word.toStdString();
+                                    std::string string2 = string1.substr(0, string1.find("(", 0));
+                                    QString qstr = QString::fromStdString(string2);
+                                    dict_set1.insert(qstr);
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            QJsonValue jv = obj.value(obj.keys().at(0));
-            QJsonObject item = jv.toObject();
+        }
+    }
+    else{
+        QVector<QString> dictionary;
+        QJsonDocument doc;
+        QJsonObject obj;
+        QByteArray data_json;
+        QStringList list1;
+        QSet<QString> dict_set;
+        dict_set1.clear();
+        //! Get dict file from current opened file
+        QString dictFilename;
+        //    if(mRole=="Verifier")
+        //    {
+        //        if(gCurrentDirName == "CorrectorOutput")
+        //        dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
+        //        else
+        //        dictFilename = gDirTwoLevelUp + "/" + "VerifierOutput" + "/" + gCurrentPageName;
 
-            for(int i = 0; i < item.count(); i++)
+        //        qDebug()<<"here";
+        //    }
+        //    else if(mRole=="Corrector")
+        //    {
+        dictFilename = gDirTwoLevelUp + "/" + "CorrectorOutput" + "/" + gCurrentPageName;
+
+        //    }
+        dictFilename.replace(".txt", ".dict");
+        dictFilename.replace(".html", ".dict");
+        //    QFile dictQFile(dictFilename);
+
+        ui->textEdit_dict->clear();
+        ui->textEdit_dict->setFontPointSize(14);
+        //! Open the dict file and display it in textedit view
+        if(QFile::exists(dictFilename))
+        {
+
+            QFile dictQFile(dictFilename);
+            if(dictQFile.open(QIODevice::ReadOnly | QIODevice::Text))
             {
-                ui->textEdit_dict->append(item.keys().at(i)+":");
-                QJsonValue subobj = item.value(item.keys().at(i));
-                QJsonArray test = subobj.toArray();
-                for(int k = 0; k < test.count(); k++)
-                {
-                    if(test[k].toString()!=NULL){
-                        QString jsonDi;
+                data_json = dictQFile.readAll();
+                dictQFile.close();
+                doc = doc.fromJson(data_json);
+                obj = doc.object();
+                if( obj.size() == 0){
+                    QMessageBox::information(0, "Error !", "Dictionary of current page can't be loaded, please correct the syntax of corresponding Json file.");
+                    return;
+                }
+                QJsonValue jv = obj.value(obj.keys().at(0));
+                QJsonObject item = jv.toObject();
 
-                        for(int i=0;i<test[k].toString().length();i++){
-                            QString newStr=test[k].toString();
-                            list1 = newStr.split(",");
+                for(int i = 0; i < item.count(); i++)
+                {
+                    ui->textEdit_dict->append(item.keys().at(i)+":");
+                    QJsonValue subobj = item.value(item.keys().at(i));
+                    QJsonArray test = subobj.toArray();
+                    for(int k = 0; k < test.count(); k++)
+                    {
+                        if(test[k].toString()!=NULL){
+                            QString jsonDi;
+
+                            for(int i=0;i<test[k].toString().length();i++){
+                                QString newStr=test[k].toString();
+                                list1 = newStr.split(",");
+                            }
+
                         }
 
+                        ui->textEdit_dict->moveCursor(QTextCursor::End);
+                        ui->textEdit_dict->insertPlainText(" "+test[k].toString());
+
+                        if(k<test.count()-1)
+                        {
+                            ui->textEdit_dict->insertPlainText(",");
+                        }
+                        ui->textEdit_dict->moveCursor(QTextCursor::End);
+                    }
+                    foreach(auto &x,list1){
+                        dict_set.insert(x);
                     }
 
-                    ui->textEdit_dict->moveCursor(QTextCursor::End);
-                    ui->textEdit_dict->insertPlainText(" "+test[k].toString());
-
-                    if(k<test.count()-1)
-                    {
-                        ui->textEdit_dict->insertPlainText(",");
-                    }
-                    ui->textEdit_dict->moveCursor(QTextCursor::End);
                 }
-                foreach(auto &x,list1){
-                    dict_set.insert(x);
+
+                foreach(auto &x,dict_set){
+                    std::string string1= x.toStdString();
+                    std::string string2;
+                    string2=string1.substr(0, string1.find("(", 0));
+                    QString qstr = QString::fromStdString(string2);
+                    dict_set1.insert(qstr);
                 }
 
             }
-
-            foreach(auto &x,dict_set){
-                std::string string1= x.toStdString();
-                std::string string2;
-                string2=string1.substr(0, string1.find("(", 0));
-                QString qstr = QString::fromStdString(string2);
-                dict_set1.insert(qstr);
-            }
-
         }
-    }
 
-    QTextCharFormat fmt;
-    fmt.setBackground(Qt::green);
-    QTextCursor cursor(b->document());
-    int indexOfReplacedWord;
-    int from=0;
-    int count;
-    int numReplaced=0;
-    foreach(auto &x, dict_set1)
-    {
-        count = input.count(x, Qt::CaseInsensitive);
-
-        numReplaced=0;
-        from=0;
-        int flag=0;
-
-        while(numReplaced<count)
+        QTextCharFormat fmt;
+        fmt.setBackground(Qt::green);
+        QTextCursor cursor(b->document());
+        int indexOfReplacedWord;
+        int from=0;
+        int count;
+        int numReplaced=0;
+        foreach(auto &x, dict_set1)
         {
-            //            if(x.size()<count){
-            //                break;
-            //            }
-            int endIndex;
-            indexOfReplacedWord = input.indexOf(x,from , Qt::CaseInsensitive);
-            endIndex = indexOfReplacedWord;
-            int len = x.length();
+            count = input.count(x, Qt::CaseInsensitive);
 
-            while(len > 0)
+            numReplaced=0;
+            from=0;
+            int flag=0;
+
+            while(numReplaced<count)
             {
-                endIndex++;
-                len--;
-            }
+                //            if(x.size()<count){
+                //                break;
+                //            }
+                int endIndex;
+                indexOfReplacedWord = input.indexOf(x,from , Qt::CaseInsensitive);
+                endIndex = indexOfReplacedWord;
+                int len = x.length();
 
-            int start = indexOfReplacedWord;
+                while(len > 0)
+                {
+                    endIndex++;
+                    len--;
+                }
 
-            if(indexOfReplacedWord == 0){
-                input[start] == " ";
-            }
-            else{
-                start=start-1;
-            }
+                int start = indexOfReplacedWord;
 
-            QRegExp regex("[$&+,:;=?@#|'\"<>.^*()%!-\n\t]");
+                if(indexOfReplacedWord == 0){
+                    input[start] == " ";
+                }
+                else{
+                    start=start-1;
+                }
 
-            QString test1=input.at(start);
-            QString test2=input.at(endIndex);
-            if((input[endIndex] == " " || test2.contains(regex)) && (input[start] == " " || test1.contains(regex))){
-                flag=1;
-            }
+                QRegExp regex("[$&+,:;=?@#|'\"<>.^*()%!-\n\t]");
 
-            if(flag==1)
-            {
-                cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
-                cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
-                cursor.mergeCharFormat(fmt);
-                QTextEdit::ExtraSelection h;
-                h.format.setBackground(Qt::green);
+                QString test1=input.at(start);
+                QString test2=input.at(endIndex);
+                if((input[endIndex] == " " || test2.contains(regex)) && (input[start] == " " || test1.contains(regex))){
+                    flag=1;
+                }
+
+                if(flag==1)
+                {
+                    cursor.setPosition(indexOfReplacedWord, QTextCursor::MoveAnchor);
+                    cursor.setPosition(endIndex, QTextCursor::KeepAnchor);
+                    cursor.mergeCharFormat(fmt);
+                    QTextEdit::ExtraSelection h;
+                    h.format.setBackground(Qt::green);
+                }
+                from = endIndex;
+                numReplaced+=1;
+                flag=0;
             }
-            from = endIndex;
-            numReplaced+=1;
-            flag=0;
         }
     }
+}
 
+/*!
+ * \fn MainWindow::DisplayAllDicts
+ * \brief Displays all the words and meaning from the dictionary QMap in the Dict tab.
+ * \param b A pointer to the CustomTextBrowser.
+ * \param input The input string in which occurrences of specified words will be highlighted.
+ */
+void MainWindow::DisplayAllDicts(CustomTextBrowser *b, QString input)
+{
+    ui->textEdit_dict->clear();
+    ui->textEdit_dict->setFontPointSize(14);
+
+    if(loadAllDicts){
+
+        QString dict_path = gDirTwoLevelUp + "/Dicts/User_Dictionary.json";
+        QJsonObject word_dict = readJsonFile(dict_path);
+
+        QStringList list = word_dict.keys();
+        for(auto i = 0; i < list.count(); i++){
+            QString word = list[i];
+            QString mean = word_dict.value(word).toString();
+            dictionary.insert(word, mean);
+        }
+        QMapIterator<QString, QString> i(dictionary);
+        while (i.hasNext()) {
+            i.next();
+            QString word = i.key();
+            QString translation = i.value();
+
+            ui->textEdit_dict->append(word + ": " + translation);
+        }
+    }
 }
 
 /*!
@@ -9411,14 +9547,13 @@ void MainWindow::on_actionClone_Repository()
     //retrieve details from database and check if user has access to push into this repo
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
-    QString user_pass = settings.value("token").toString();
+    QByteArray user_pass = settings.value("token").toByteArray();
 
-    SimpleCrypt crypto(Q_UINT64_C(0x1a3e5d8f2b7c6a9d));
-    QString token = crypto.decryptToString(user_pass);
+    QString token = decrypt(user_pass);
 
     settings.endGroup();
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QUrl url("http://92.204.144.173/udaan/email/");
+    QUrl url("https://translate.udaanproject.org/udaan/email/");
     QUrlQuery params;
     params.addQueryItem("email", email);
     params.addQueryItem("password", token);
@@ -9489,6 +9624,31 @@ void MainWindow::on_actionClone_Repository()
  */
 void MainWindow::on_actionClose_project_triggered()
 {
+    bool isUnsaved = checkUnsavedWork();
+
+    if (isUnsaved){
+        QMessageBox saveBox;
+        saveBox.setWindowTitle("Save Changes ?");
+        saveBox.setIcon(QMessageBox::Question);
+        saveBox.setInformativeText("You have unsaved files. Your changes will be lost if you don't save them before closing the project.\nDo you want to save them? \n");
+        QPushButton *svButton = saveBox.addButton(QMessageBox::Save);
+        QPushButton *discardButton = saveBox.addButton(QMessageBox::Discard);
+        discardButton->setStyleSheet("width:180px");
+        discardButton->setText("Discard changes");
+        QPushButton *cncButton = saveBox.addButton(QMessageBox::Cancel);
+        saveBox.exec();
+
+        if (saveBox.clickedButton() == cncButton)
+        {
+            return;
+        }
+        else{
+            if(saveBox.clickedButton() == svButton){
+                saveAllWork();
+            }
+        }
+    }
+
     AddRecentProjects();
 
     if(mRole == "Corrector"){
@@ -9517,7 +9677,8 @@ void MainWindow::on_actionClose_project_triggered()
     ui->mark_review->setChecked(false);
     ui->status->setText("Status - None");
     ui->lineEdit_5->clear();
-
+    ui->checkBox->setEnabled(false);
+    ui->addDictionary->setEnabled(false);
     ui->lineEdit_5->setVisible(false);
 
     if(!mProject.isProjectOpen()){
@@ -9715,10 +9876,9 @@ void MainWindow::on_actionExit_triggered()
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
-    QString user_pass = settings.value("token").toString();
+    QByteArray user_pass = settings.value("token").toByteArray();
 
-    SimpleCrypt crypto(Q_UINT64_C(0x1a3e5d8f2b7c6a9d));
-    QString token = crypto.decryptToString(user_pass);
+    QString token = decrypt(user_pass);
 
     settings.endGroup();
     if(email=="" && token=="")
@@ -9756,9 +9916,9 @@ void MainWindow::login(){
     form.addRow("", showPasswordCheckBox);
 
     QLabel *label = new QLabel(&login);
-    label->setText("Forgot your password?\t<a href=\"http://92.204.144.173/udaan/accounts/password_reset/\"> reset password</a>");
+    label->setText("Forgot your password?\t<a href=\"https://translate.udaanproject.org/udaan/accounts/password_reset/\"> reset password</a>");
     QLabel *label2 = new QLabel(&login);
-    label2->setText("Don't have an account yet?<a href=\"http://92.204.144.173/udaan/auth/register/\"> create account</a>");
+    label2->setText("Don't have an account yet?<a href=\"https://translate.udaanproject.org/udaan/auth/register/\"> create account</a>");
     label->setOpenExternalLinks(true);
     label2->setOpenExternalLinks(true);
     form.addRow("",label);
@@ -9788,12 +9948,11 @@ void MainWindow::login(){
         user_email = email->text();
         user_pass = password->text();
 
-        SimpleCrypt crypto(Q_UINT64_C(0x1a3e5d8f2b7c6a9d));
-        QString pass_encr = crypto.encryptToString(user_pass);
+        QByteArray pass_encr = encrypt(user_pass);
 
         if(!user_email.isEmpty() && !user_pass.isEmpty()){
             QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-            QUrl url("http://92.204.144.173/udaan/email/");
+            QUrl url("https://translate.udaanproject.org/udaan/email/");
             QUrlQuery params;
             params.addQueryItem("email", user_email);
             params.addQueryItem("password", user_pass);
@@ -9958,14 +10117,13 @@ bool MainWindow::check_access()
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("login");
     QString email = settings.value("email").toString();
-    QString user_pass = settings.value("token").toString();
+    QByteArray user_pass = settings.value("token").toByteArray();
 
-    SimpleCrypt crypto(Q_UINT64_C(0x1a3e5d8f2b7c6a9d));
-    QString token = crypto.decryptToString(user_pass);
+    QString token = decrypt(user_pass);
 
     settings.endGroup();
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QUrl url("http://92.204.144.173/udaan/email/");
+    QUrl url("https://translate.udaanproject.org/udaan/email/");
     QUrlQuery params;
     params.addQueryItem("email", email);
     params.addQueryItem("password", token);
@@ -10066,7 +10224,7 @@ void MainWindow::cloud_save(){
     parObj.insert(date, mainObj);
     writeJsonFile(corrected_count, parObj);
     QNetworkAccessManager* manager = new QNetworkAccessManager();
-    QUrl url_("http://92.204.144.173/udaan/email/");
+    QUrl url_("https://translate.udaanproject.org/udaan/email/");
 
     QByteArray postData;
     postData.append("username=username&password=password");
@@ -10460,7 +10618,7 @@ void MainWindow::speechToTextCall()
 
     QNetworkAccessManager* manager = new QNetworkAccessManager();
 
-    QUrl url_("http://92.204.144.173/udaan/email/");
+    QUrl url_("https://translate.udaanproject.org/udaan/email/");
 
     QByteArray postData;
     postData.append("username=username&password=password");
@@ -10796,7 +10954,7 @@ void MainWindow::e_d_features(bool value)
     ui->zoom_In_Button->setEnabled(value);
     ui->zoom_Out_Button->setEnabled(value);
     ui->horizontalSlider->setEnabled(value);
-    ui->actionComment->setEnabled(value);
+    // ui->actionComment->setEnabled(value);
     ui->actionOpen_Project->setEnabled(true);
 
     ui->actionFetch_2->setEnabled(true);
@@ -10805,6 +10963,8 @@ void MainWindow::e_d_features(bool value)
     ui->pushButton_9->setEnabled(value);
 
     ui->status->setVisible(false);
+
+    ui->lineEditSearch->setEnabled(value);
 }
 
 
@@ -12376,9 +12536,218 @@ QString MainWindow::check_for_updates(){
         }
         QString latestVersion=json[0]["name"].toString();
         QString newFeatures = json[0]["body"].toString();
-        return "v4.2";
+        return latestVersion;
     }
     return "false";
+}
+
+void MainWindow::deleteTableAction()
+{
+    if (!curr_browser || curr_browser->isReadOnly())
+        return;
+    if (curr_browser->textCursor().currentTable())
+    {
+        QTextCursor cursor = curr_browser->textCursor();
+        if (cursor.currentTable() != nullptr) {
+            cursor.setPosition(cursor.currentTable()->cellAt(0, 0).firstCursorPosition().position());
+            QTextTable* table = cursor.currentTable();
+            int numRows = table->rows();
+            table->removeRows(0, numRows);
+        }
+    }
+}
+
+/*!
+ * \fn MainWindow::img_ocr
+ * \brief Performs OCR on an image file using the Bhashini OCR API
+ * \param img_path The file path of the image to be processed
+ */
+void MainWindow::img_ocr(QString img_path)
+{
+    QFile imageFile(img_path);
+    if (!imageFile.open(QIODevice::ReadOnly)) {
+        qDebug() << "Failed to open image file";
+        return;
+    }
+
+    QByteArray imageContent = imageFile.readAll();
+    QByteArray base64Bytes = imageContent.toBase64();
+    QString base64String = QString::fromUtf8(base64Bytes);
+
+    int idx = ui->comboBox->currentIndex();
+    QString enc = ui->comboBox->itemData(idx).toString();
+    QStringList EncList = enc.split("-");
+    QString finalEnc = EncList.at(0);
+    qDebug()<<"language detected: "<<finalEnc;
+
+    // Updates the language code for Sanskrit according to Bhashini OCR Api
+    if(finalEnc == "san"){
+        finalEnc = "sa";
+    }
+
+    // Prepare JSON payload
+    QJsonObject payload;
+    payload["modality"] = "printed";
+    payload["language"] = finalEnc;
+    payload["version"] = "v4_robust";
+
+    QJsonArray imageContentArray;
+    imageContentArray.append(base64String);
+    payload["imageContent"] = imageContentArray;
+
+    QJsonDocument jsonDoc(payload);
+    QByteArray jsonData = jsonDoc.toJson();
+
+    // Send POST request
+    QNetworkAccessManager manager;
+    QNetworkRequest request(QUrl("https://ilocr.iiit.ac.in/ocr/infer"));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(sslConfig);
+    QNetworkReply *reply = manager.post(request, jsonData);
+
+    QString ocred_text;
+
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+    if (reply->error() == QNetworkReply::NoError) {
+        QByteArray data = reply->readAll();
+        QJsonParseError errorPtr;
+        QJsonDocument document = QJsonDocument::fromJson(data, &errorPtr);
+        if (errorPtr.error != QJsonParseError::NoError) {
+            qDebug() << "JSON parse error:" << errorPtr.errorString();
+            QMessageBox::critical(0, "JSON parse error", errorPtr.errorString());
+        } else {
+            if (document.isArray()) {
+                QJsonArray jsonArray = document.array();
+                for (const QJsonValue& value : jsonArray) {
+                    QJsonObject obj = value.toObject();
+                    ocred_text = obj["text"].toString();
+                    qDebug() << "OCR Text:" << ocred_text;
+                }
+            } else {
+                qDebug() << "Unexpected JSON format - not an array";
+                QMessageBox::critical(0, "JSON parse error", "Unexpected JSON format - not an array");
+            }
+        }
+
+    } else {
+        qDebug() << "Error:" << reply->errorString();
+        QMessageBox::critical(0, "Error", "Failed to process OCR request. Please try again later.");
+    }
+
+    reply->deleteLater();
+
+    QTextCursor cursor = curr_browser->textCursor();
+    cursor.insertText(ocred_text);
+}
+
+/*!
+ * \fn MainWindow::handleOCR
+ * \brief Handles OCR functionality based on mouse events within the graphics view.
+ * \param event The event triggered within the graphics view.
+ * \param x1
+ * \param y1
+ * \param x2
+ * \param y2
+ *
+ * This function is responsible for capturing mouse events within the graphics view,
+ * specifically handling mouse button press and release events for initiating OCR on a selected region.
+ * When the user presses the mouse button, it records the initial coordinates (x1, y1).
+ * Upon releasing the mouse button, it finalizes the selection, computes the bounding rectangle (x2, y2),
+ * prompts the user for OCR, and performs OCR on the selected region if requested.
+ *
+ */
+void MainWindow::handleOCR(QEvent* event, int& x1, int& y1, int& x2, int& y2)
+{
+    if(event->type() == QEvent::MouseButtonPress && shouldIOCR){
+        QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+        QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos());
+        QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y());
+
+        x1 = ( int )pos.x();
+        y1 = ( int )pos.y();
+        pressedFlag=1;
+        event->accept();
+    }
+
+    if(event->type() == QEvent::MouseButtonRelease){
+        if(drawRectangleFlag==true){
+            drawRectangleFlag=false;
+            pressedFlag =0;
+            event->accept();
+            return;
+        }
+
+        if(shouldIOCR){
+            drawRectangleFlag=true;
+
+            QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+            QPointF pos =  ui->graphicsView->mapToScene( mEvent->pos());
+            QRgb rgb = imageOrig.pixel( ( int )pos.x(), ( int )pos.y());
+
+            x2 = ( int )pos.x();
+            y2 = ( int )pos.y();
+            pressedFlag =0;
+
+            QColor blue40 = Qt::blue;
+            blue40.setAlphaF( 0.4 );
+
+            crop_rect->setBrush(blue40);
+            int width = x2 - x1;
+            int height = y2 - y1;
+            crop_rect->setRect(x1, y1, width, height);
+            QRect rect(x1, y1, width, height);
+            QPixmap image = QPixmap::fromImage(imageOrig);
+            QPixmap cropped = image.copy(rect);
+
+            QMessageBox messageBox;
+            messageBox.setWindowTitle("Do you want to OCR");
+            QAbstractButton *textButton = messageBox.addButton(tr("Text"), QMessageBox::ActionRole);
+            QAbstractButton *cancelButton = messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+
+            QString msg = "Select an option\n";
+            messageBox.setText(msg);
+            messageBox.exec();
+
+            if (messageBox.clickedButton() == textButton){
+                QString fileName = QDir::currentPath() + "/ocr_image.png";
+                QFile file(fileName);
+
+                if (file.exists()) {
+                    qDebug() << "File Exists";
+                    if (file.remove(fileName)) {
+                        qDebug() << "File Removed";
+                    }
+                }
+
+                if(!cropped.save(fileName, "PNG", 100)){
+                    crop_rect->setRect(0,0,1,1);
+                    shouldIOCR=false;
+                    ui->OCR_Button->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");
+                    QMessageBox::critical(0, "Error", "Failed to save OCR image");
+                    return;
+                }
+
+                crop_rect->setRect(0,0,1,1);
+                QMessageBox::information(0, "OCR Processing", "Your OCR request is being processed. Please wait.");
+                shouldIOCR=false;
+                ui->OCR_Button->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");
+                img_ocr(fileName);
+            }
+            else if(messageBox.clickedButton() == cancelButton){
+                QMessageBox::information(0, "OCR Request Status", "Cancelled");
+                crop_rect->setRect(0,0,1,1);
+                shouldIOCR=false;
+                ui->OCR_Button->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");
+            }
+            ui->graphicsView->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
+            event->accept();
+        }
+    }
 }
 
 /*!
@@ -12547,7 +12916,15 @@ void MainWindow::on_actionComment_triggered()
 
     QTextCursor cursor = curr_browser->textCursor();
 
-    QString text = cursor.selectedText().toUtf8().constData();
+    QString text;
+
+    if(cursor.hasSelection()){
+        text = cursor.selectedText().toUtf8().constData();
+    }
+    else{
+        cursor.select(QTextCursor::WordUnderCursor);
+        text = cursor.selectedText().toUtf8().constData();
+    }
 
     currentCommentWord = text;
     QString currentPage = gCurrentPageName;
@@ -12994,16 +13371,14 @@ void MainWindow::sendComment(QString str)
         QSettings settings("IIT-B", "OpenOCRCorrect");
         settings.beginGroup("login");
         QString email = settings.value("email").toString();
-        QString user_pass = settings.value("token").toString();
+        QByteArray user_pass = settings.value("token").toByteArray();
 
-        SimpleCrypt crypto(Q_UINT64_C(0x1a3e5d8f2b7c6a9d));
-        QString token = crypto.decryptToString(user_pass);
-        qDebug()<<token;
+        QString token = decrypt(user_pass);
 
         settings.endGroup();
 
         QNetworkAccessManager *manager = new QNetworkAccessManager();
-        QUrl url("http://92.204.144.173/udaan/email/");
+        QUrl url("https://translate.udaanproject.org/udaan/email/");
         QUrlQuery params;
         params.addQueryItem("email", email);
         params.addQueryItem("password", token);
@@ -15422,7 +15797,7 @@ void MainWindow::on_actionCommit_History_triggered()
     QString directoryName = directory.dirName();
 
     QNetworkAccessManager* manager1 = new QNetworkAccessManager();
-    QUrl url_("http://92.204.144.173/udaan/email/");
+    QUrl url_("https://translate.udaanproject.org/udaan/email/");
 
     QByteArray postData;
     postData.append("username=username&password=password");
@@ -15526,6 +15901,10 @@ void MainWindow::on_actionCommit_History_triggered()
         }
         i++;
 
+    }
+
+    if(showInitially > commitHashV.size()){
+        showInitially = commitHashV.size();
     }
 
     QWidget* commitWindow = new QWidget;
@@ -15941,6 +16320,42 @@ void MainWindow::on_actionWatermark_triggered()
         qDebug() << "Operation canceled.";
         return;
     }
+
+    // Process the image as a QImage and Save it to the Project.
+    QImageReader imageReader(filePath);
+    QImage image = imageReader.read();
+
+    if(!image.isNull()){
+        // Creating the directories for the watermarks if they dont already exist
+        if(!QDir(gDirTwoLevelUp+"/Cropped_Images").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images");
+        }
+
+        if(!QDir(gDirOneLevelUp+"/Cropped_Images/watermarks").exists()){
+            QDir(gDirTwoLevelUp).mkdir("Cropped_Images/watermarks");
+        }
+
+        QString saveDir = "../Cropped_Images/watermarks/";
+        QDir dir(saveDir);
+
+        // Counting the number of existing images in the directory
+        QStringList existingImages = dir.entryList(QDir::Files, QDir::Name);
+        int imageCount = existingImages.count();
+
+        // Generating the filename for the image
+        QString savePath = saveDir + "watermark_" + QString::number(imageCount + 1) + ".png";
+
+        if(image.save(savePath)){
+            qDebug() << "Succesfully saved the image.";
+        }
+        else{
+            qDebug() << "Error while saving the image.";
+        }
+    }
+    else{
+        qDebug() << "Image is null.";
+    }
+
     if(curr_browser){
         QString stringToAdd = "body {"
                               "background-color: rgba(255, 255, 255, 0.3);"
@@ -15965,3 +16380,159 @@ void MainWindow::on_actionWatermark_triggered()
     }
 }
 
+
+void MainWindow::on_checkBox_stateChanged(int arg1)
+{
+    loadAllDicts = (arg1 == Qt::Checked);
+
+    if(loadAllDicts){
+        DisplayJsonDict(curr_browser, curr_browser->toPlainText());
+        DisplayAllDicts(curr_browser, curr_browser->toPlainText());
+    }
+    else{
+        DisplayJsonDict(curr_browser, curr_browser->toPlainText());
+    }
+}
+
+/*!
+ * \fn on_addDictionary_clicked
+ * \brief Reads a xlsx file from user provided the excel sheet contains only 2 columns i.e. first -> WORD
+ * \brief and second -> MEANING
+*/
+void MainWindow::on_addDictionary_clicked()
+{
+    if(isProjectOpen != 1) return;
+
+    QString dict_path = gDirTwoLevelUp + "/Dicts/User_Dictionary.json";
+    QJsonObject word_dict = readJsonFile(dict_path);
+
+    QString xlsx = "";
+    xlsx = QFileDialog::getOpenFileName(this, "Upload Excel", "./", tr("Excel (*.xlsx)"));   //Opens only if the file name is Project.xml
+    if(xlsx.size() == 0){
+        return;
+    }
+
+    Document xlsxR(xlsx);
+    if (xlsxR.load())
+    {
+        int wordRow = 1;
+        int wordCol = 1;
+        int meaningRow = 1;
+        int meaningCol = 2;
+
+        Cell* word = xlsxR.cellAt(wordRow, wordCol);
+        Cell* meaning = xlsxR.cellAt(meaningRow, meaningCol);
+        if ( word != NULL && meaning != NULL)
+        {
+            QString w = word->readValue().toString();
+            QString m = meaning->readValue().toString();
+            if(w == "WORD" && m == "MEANING"){
+                wordRow++;
+                meaningRow++;
+                while(true){
+                    word = xlsxR.cellAt(wordRow, wordCol);
+                    meaning = xlsxR.cellAt(meaningRow, meaningCol);
+
+                    if(word != NULL && meaning != NULL){
+                        QString w = word->readValue().toString();
+                        QString m = meaning->readValue().toString() + ", " + word_dict.value(w).toString();
+                        QJsonValue mean =  QJsonValue::fromVariant(m);
+
+                        if(!word_dict.contains(w)){
+                            word_dict.insert(w,mean);
+                        }
+
+                        if(!dictionary.contains(w)){
+                            dictionary.insert(w, m);
+                        }
+
+                        wordRow++;
+                        meaningRow++;
+                    }
+                    else{
+                        break;
+                    }
+                }
+                QMessageBox::information(this, "Dictionary Added", "Dictionary has been successfully added.");
+            }
+            else{
+                QMessageBox::information(this,"Column Headers don't match","Please update the column names to WORD and MEANING");
+            }
+        }
+        else{
+            QMessageBox::warning(0, "Empty Excel!" , "Excel might be empty!");
+        }
+    }
+    else{
+        QMessageBox::warning(0,"Loading error!" ,"Excel file didn't load properly. \nMake sure the format of excel is .xlsx .\n");
+    }
+
+    writeJsonFile(dict_path,word_dict);
+}
+
+
+void MainWindow::on_OCR_Button_clicked()
+{
+    if(!shouldIOCR){
+        if(loadimage){
+            ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
+            shouldIOCR = true;
+            auto button = (QPushButton*)ui->OCR_Button;
+            button->setStyleSheet("QPushButton { background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; }\n"
+                                  "QPushButton:enabled { background-color: rgb(136, 138, 133);color:white; }\n");
+        }
+    }
+    else{
+        ui->OCR_Button->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");
+        ui->graphicsView->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
+        shouldIOCR = false;
+    }
+}
+
+
+/*!
+ * \fn encrypt
+ * \brief Uses the AES Encrypt function to encrpyt the text
+ * \param text
+*/
+QByteArray MainWindow::encrypt(QString text){
+  QByteArray iv;
+  quint8 iv_16[16] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
+  for (int i=0; i<16; i++)
+      iv.append(iv_16[i]);
+
+  QByteArray key;
+  quint8 key_16[16] =  {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
+  for (int i=0; i<16; i++)
+      key.append(key_16[i]);
+
+  QAESEncryption encryption(QAESEncryption::AES_128, QAESEncryption::CBC);
+  QByteArray encodedByteArr = encryption.encode(text.toLocal8Bit(), key, iv);
+
+  return encodedByteArr;
+}
+
+
+/*!
+ * \fn decrypt
+ * \brief Uses the AES Encrypt function to decrpyt the text
+ * \param encrypted_arr
+*/
+QString MainWindow::decrypt(QByteArray encrypted_arr){
+  QByteArray iv;
+  quint8 iv_16[16] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
+  for (int i=0; i<16; i++)
+      iv.append(iv_16[i]);
+
+  QByteArray key;
+  quint8 key_16[16] =  {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
+  for (int i=0; i<16; i++)
+      key.append(key_16[i]);
+
+  QAESEncryption encryption(QAESEncryption::AES_128, QAESEncryption::CBC);
+
+  QByteArray decodedByteArr = encryption.decode(encrypted_arr, key, iv);
+  QString decodedString = QString(encryption.removePadding(decodedByteArr));
+
+  return decodedString;
+}

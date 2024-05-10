@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>2149</width>
+    <width>2249</width>
     <height>1190</height>
    </rect>
   </property>
@@ -253,6 +253,16 @@ color: rgb(121,255, 121);
           </property>
           <property name="text">
            <string>Mark Regions</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="OCR_Button">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;}QPushButton:checked{background-color: rgb(136, 138, 133);}QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
+          </property>
+          <property name="text">
+           <string>OCR</string>
           </property>
          </widget>
         </item>
@@ -681,6 +691,54 @@ background-color: rgb(136, 138, 133);
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox">
+                <property name="styleSheet">
+                 <string notr="true">QCheckBox{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px;  padding-top:1px; margin-top:6px; border-radius:4.8px; padding-left:1.3px; 
+width: 80px;}
+QCheckBox::indicator:checked{
+color: rgb(121,255, 121);
+}</string>
+                </property>
+                <property name="text">
+                 <string>Show All</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="addDictionary">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton#addDictionary{
+    color: rgb(0, 0, 0);
+    image: url(:/Images/Resources/add_dict.png);
+    height: 34px;
+    width: 34px;
+    border-radius: 17px;
+    background-color: rgb(255, 255, 255);
+}
+
+QPushButton#addDictionary:hover {
+    background-color: rgb(230, 230, 230);
+height: 34px;
+    width: 34px;
+}
+
+QPushButton#addDictionary:pressed {
+    background-color: rgb(200, 200, 200);
+    padding-left: 2px;
+    padding-top: 2px;
+height: 34px;
+    width: 34px;
+    position: relative;
+    top: 1px;
+    left: 1px;
+}</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
@@ -691,6 +749,7 @@ background-color:rgb(227, 228, 228);
 border:0px;
 color: rgb(32, 33, 72);
 height:26.96px;
+width : 250px;
 border-radius:4.8px; 
 selection-color: rgb(32, 33, 72);
  selection-background-color: rgb(136, 138, 133);
@@ -1210,8 +1269,8 @@ background: grey;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>2149</width>
-     <height>50</height>
+     <width>2249</width>
+     <height>46</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1669,9 +1728,9 @@ background-color: #EEF0F2;
    <addaction name="actionZoom_In"/>
    <addaction name="actionZoom_Out"/>
    <addaction name="separator"/>
-   <addaction name="actionComment"/>
    <addaction name="actionGet_Help"/>
    <addaction name="actionEnable_Disable_Suggestions"/>
+   <addaction name="actionComment"/>
   </widget>
   <action name="actionOpen_Project">
    <property name="icon">

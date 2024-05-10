@@ -48,11 +48,45 @@ dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> rep
     setWindowTitle("User Dashboard");
     this->repoMap = repoMap;
 
+    // search
+    QLineEdit *searchLineEdit = new QLineEdit(this);
+    searchLineEdit->setPlaceholderText("Search...");
+    searchLineEdit->setStyleSheet("color : black; text-align : left; background-color :rgb(255,255,255);  border: 1px solid black; border-radius :5px;");
+    ui->verticalLayout->addWidget(searchLineEdit);
+    //
+
     ui->scrollArea->setWidget(ui->verticalLayout->widget());
     ui->verticalLayout->setAlignment(Qt::AlignLeft);
+    ui->verticalLayout->setAlignment(Qt::AlignTop);
 
     int index = 0;
     QMapIterator<int,QString>i(repoMap);
+
+    connect(searchLineEdit, &QLineEdit::textChanged, this, [=](const QString &text) {
+        clearButtons();
+        QMapIterator<int, QString> i(repoMap);
+        int index=0;
+        while (i.hasNext()) {
+            i.next();
+            index = i.key();
+            auto btn = new QPushButton();
+
+            btn->setText(i.value());
+            btn->setFixedHeight(50);
+            btn->setMinimumWidth(ui->scrollArea->width());
+            btn->setStyleSheet("color : black; text-align : left; padding : 10px;background-color :rgb(229,228,226); border-radius :5px;");
+            connect(btn, &QPushButton::clicked , [this, index] {clicked(index);});
+            this->btnMap[index] = btn;
+            ui->verticalLayout->addWidget(btn);
+            if (i.value().contains(text, Qt::CaseInsensitive)) {
+                btn->setVisible(true); // Show button
+            } else {
+                btn->setVisible(false); // Hide button
+            }
+        }
+    });
+
+    index=0;
     while(i.hasNext()){
         i.next();
         index = i.key();
@@ -78,6 +112,23 @@ dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> rep
 dashboard::~dashboard()
 {
     delete ui;
+}
+
+/*!
+ * \fn dashboard::clearButtons()
+ * \brief Removes all the current repo buttons in the dashboard
+ */
+void dashboard::clearButtons() {
+    // Iterate through the button map and delete each button
+    for (auto it = btnMap.begin(); it != btnMap.end(); ++it) {
+        QPushButton *btn = it.value();
+        // Remove the button from the layout
+        ui->verticalLayout->removeWidget(btn);
+        // Delete the button
+        delete btn;
+    }
+    // Clear the button map
+    btnMap.clear();
 }
 
 

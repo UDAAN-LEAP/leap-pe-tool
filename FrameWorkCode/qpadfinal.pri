@@ -5,6 +5,10 @@
 HEADERS += ./Filters.h \
     $$PWD/about.h \
     $$PWD/add_comment.h \
+    $$PWD/aesni-enc-cbc.h \
+    $$PWD/aesni-enc-ecb.h \
+    $$PWD/aesni-key-exp.h \
+    $$PWD/aesni-key-init.h \
     $$PWD/column_width.h \
     $$PWD/crashlog.h \
     $$PWD/customtextbrowser.h \
@@ -22,6 +26,7 @@ HEADERS += ./Filters.h \
     $$PWD/pdfrangedialog.h \
     $$PWD/printworker.h \
     $$PWD/progressbardialog.h \
+    $$PWD/qaesencryption.h \
     $$PWD/qcustomplot.h \
     $$PWD/releasenote_msg.h \
     $$PWD/rubberband.h \
@@ -36,6 +41,7 @@ HEADERS += ./Filters.h \
     $$PWD/verifyset.h \
     $$PWD/word_count.h \
     $$PWD/worker.h \
+    $$PWD/xlsx_headers.h \
     ./3rdParty/RapidXML/rapidxml.hpp \
     ./3rdParty/RapidXML/rapidxml_iterators.hpp \
     ./3rdParty/RapidXML/rapidxml_print.hpp \
@@ -85,6 +91,7 @@ SOURCES += ./DiffView.cpp \
     $$PWD/pdfrangedialog.cpp \
     $$PWD/printworker.cpp \
     $$PWD/progressbardialog.cpp \
+    $$PWD/qaesencryption.cpp \
     $$PWD/qcustomplot.cpp \
     $$PWD/releasenote_msg.cpp \
     $$PWD/rubberband.cpp \
