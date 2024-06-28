@@ -9572,6 +9572,7 @@ void MainWindow::on_actionClone_Repository()
             QJsonDocument document = QJsonDocument::fromJson(m_data, &errorPtr);
             QJsonObject mainObj = document.object();
             QJsonArray repos = mainObj.value("repo_list").toArray();
+            qDebug()<<repos;
             if(repos.size() == 0){
                 QMessageBox msg;
                 msg.setText("There is nothing to show on dashboard");
@@ -9583,12 +9584,18 @@ void MainWindow::on_actionClone_Repository()
             QString importHtml="<table><tr><th>#Project ID</th><th>#Project name</th></tr>";
             QStandardItemModel *model = new QStandardItemModel;
             QMap<int, QString> repoMap;
-            for(itr = repos.begin(); itr != repos.end(); itr++){
+            for(itr = repos.end() - 1; itr != repos.begin(); itr--){
                 lineindex++;
                 repoMap[lineindex] = itr->toString();
                 QString num = QString::number(lineindex);
                 importHtml += QString::fromStdString("<tr><td>")+num+"</td><td>"+itr->toString()+"</td></tr";
             }
+            itr = repos.begin();
+            lineindex++;
+            repoMap[lineindex] = itr->toString();
+            QString num = QString::number(lineindex);
+            importHtml += QString::fromStdString("<tr><td>")+num+"</td><td>"+itr->toString()+"</td></tr";
+
             importHtml += "</table>";
             QString p_str = "";
             bool open = false;
