@@ -158,7 +158,7 @@ void threadingPush::ControlPush()
              */
         error = (git_reference_peel((git_object **)&parents[0], head_ref, GIT_OBJ_COMMIT))
                 || (git_commit_lookup(&parents[1], repo, git_annotated_commit_id(heads[0])))
-                || (git_commit_create(&id, repo, "HEAD", signature, signature, NULL, "Merge commit", tree, 0, (const git_commit **)parents))
+                || (git_commit_create(&id, repo, "HEAD", signature, signature, NULL, "Merge commit", tree, 0, parents))
                 || (git_repository_state_cleanup(repo));
 
         if(error<0){
