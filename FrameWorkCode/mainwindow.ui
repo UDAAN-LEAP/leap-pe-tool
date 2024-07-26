@@ -2432,6 +2432,12 @@ background-color: #EEF0F2;
    <property name="text">
     <string>Linux</string>
    </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionWindows">
    <property name="icon">
