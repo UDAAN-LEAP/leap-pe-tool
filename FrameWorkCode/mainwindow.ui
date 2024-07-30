@@ -12,6 +12,7 @@
   </property>
   <property name="font">
    <font>
+    <weight>50</weight>
     <italic>false</italic>
     <bold>false</bold>
    </font>
@@ -458,6 +459,7 @@ margin-top: 5px;
                 </property>
                 <property name="font">
                  <font>
+                  <weight>50</weight>
                   <italic>false</italic>
                   <bold>false</bold>
                  </font>
@@ -551,8 +553,8 @@ margin-top: 8px;
               </property>
               <property name="minimumSize">
                <size>
-                <width>0</width>
-                <height>0</height>
+                <width>266</width>
+                <height>266</height>
                </size>
               </property>
               <property name="maximumSize">
@@ -846,6 +848,7 @@ color: rgb(128, 128, 128);
          <property name="font">
           <font>
            <pointsize>20</pointsize>
+           <weight>50</weight>
            <italic>false</italic>
            <bold>false</bold>
           </font>
@@ -895,12 +898,9 @@ QScrollBar::sub-line:vertical {
          </property>
          <property name="html">
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:20pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:20pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="acceptRichText">
@@ -1321,7 +1321,7 @@ QMenu::item:selected{
       <string notr="true">font-size: 17px;</string>
      </property>
      <property name="title">
-      <string>Installation Guide</string>
+      <string>Installation &amp;&amp; User Guide</string>
      </property>
      <addaction name="actionLinux"/>
      <addaction name="actionWindows"/>
@@ -1489,7 +1489,7 @@ QMenu::item:selected{
       <rect>
        <x>847</x>
        <y>206</y>
-       <width>206</width>
+       <width>186</width>
        <height>371</height>
       </rect>
      </property>
@@ -2630,7 +2630,7 @@ background-color: #EEF0F2;
   <action name="actionExit">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/exit-modified.png</normaloff>Resources/exit-modified.png</iconset>
+     <normaloff>../../Users/hp/Users/hp/.designer/backup/Resources/exit-modified.png</normaloff>../../Users/hp/Users/hp/.designer/backup/Resources/exit-modified.png</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -2651,6 +2651,9 @@ background-color: #EEF0F2;
    </property>
    <property name="text">
     <string>User Guide</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionCopy_Format">
