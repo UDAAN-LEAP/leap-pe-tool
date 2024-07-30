@@ -8127,7 +8127,7 @@ void MainWindow::on_actionLinux_triggered()
  */
 void MainWindow::on_actionWindows_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/12Zbe9OLYOoguGu7HWRnpYkHD0BaW8SOvjYh96DYZ_8Y/edit", QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/1FcnBcxjjQ4rd3xfDMyHft0iVndEj8Iu7PaTvuWJrTSM/edit?usp=sharing", QUrl::TolerantMode));
 }
 
 /*!
