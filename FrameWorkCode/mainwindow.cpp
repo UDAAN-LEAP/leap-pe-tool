@@ -16543,3 +16543,16 @@ QString MainWindow::decrypt(QByteArray encrypted_arr){
 
   return decodedString;
 }
+
+/*!
+ * \brief Fit To Width Button to fit the image width in graphicView for better visibility
+ */
+void MainWindow::on_fit_to_width_clicked()
+{
+    if (ui->graphicsView && ui->graphicsView->scene())
+    {
+        QRectF rect = ui->graphicsView->scene()->itemsBoundingRect();
+        ui->graphicsView->fitInView(rect, Qt::KeepAspectRatioByExpanding);
+    }
+}
+
