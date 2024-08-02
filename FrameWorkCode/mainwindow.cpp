@@ -12789,6 +12789,9 @@ void MainWindow::on_actionFullScreen_triggered(bool viewMode)
     ui->menuBar->setVisible(false);
     ui->mainToolBar->setVisible(false);
     if(viewMode == false)ui->pushButton_8->setVisible(true);
+    ui->textEdit_dict->setVisible(false);
+    ui->lineEdit_4->setVisible(false);
+    ui->tabWidget->setVisible(false);
 }
 
 void MainWindow::on_pushButton_8_clicked()
@@ -12796,6 +12799,9 @@ void MainWindow::on_pushButton_8_clicked()
     ui->menuBar->setVisible(true);
     ui->mainToolBar->setVisible(true);
     ui->pushButton_8->setVisible(false);
+    ui->textEdit_dict->setVisible(true);
+    ui->lineEdit_4->setVisible(true);
+    ui->tabWidget->setVisible(true);
 }
 
 /*!
