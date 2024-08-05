@@ -53,6 +53,7 @@ dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> rep
     searchLineEdit->setPlaceholderText("Search...");
     searchLineEdit->setStyleSheet("color : black; text-align : left; background-color :rgb(255,255,255);  border: 1px solid black; border-radius :5px;");
     ui->verticalLayout->addWidget(searchLineEdit);
+    searchLineEdit->setFixedHeight(30); // Set the desired height
     //
 
     ui->scrollArea->setWidget(ui->verticalLayout->widget());
