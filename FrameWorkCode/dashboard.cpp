@@ -53,6 +53,7 @@ dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> rep
     searchLineEdit->setPlaceholderText("Search...");
     searchLineEdit->setStyleSheet("color : black; text-align : left; background-color :rgb(255,255,255);  border: 1px solid black; border-radius :5px;");
     ui->verticalLayout->addWidget(searchLineEdit);
+    searchLineEdit->setFixedWidth(510);
     searchLineEdit->setFixedHeight(30); // Set the desired height
     //
 
@@ -74,7 +75,8 @@ dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> rep
 
             btn->setText(i.value());
             btn->setFixedHeight(50);
-            btn->setMinimumWidth(ui->scrollArea->width());
+            btn->setFixedWidth(510);
+            //btn->setMinimumWidth(ui->scrollArea->width());
             btn->setStyleSheet("color : black; text-align : left; padding : 10px;background-color :rgb(229,228,226); border-radius :5px;");
             connect(btn, &QPushButton::clicked , [this, index] {clicked(index);});
             this->btnMap[index] = btn;
@@ -95,7 +97,8 @@ dashboard::dashboard(QWidget *parent, QString s, int max, QMap<int, QString> rep
 
         btn->setText(i.value());
         btn->setFixedHeight(50);
-        btn->setMinimumWidth(ui->scrollArea->width());
+        btn->setFixedWidth(510);
+        //btn->setMinimumWidth(ui->scrollArea->width());
         btn->setStyleSheet("color : black; text-align : left; padding : 10px;background-color :rgb(229,228,226); border-radius :5px;");
         connect(btn, &QPushButton::clicked , [this, index] {clicked(index);});
         this->btnMap[index] = btn;
