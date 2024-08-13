@@ -123,6 +123,8 @@ dashboard::~dashboard()
  * \brief Removes all the current repo buttons in the dashboard
  */
 void dashboard::clearButtons() {
+    //Clearing the total clicked button count
+    this->totalClickedBooks = 0;
     // Iterate through the button map and delete each button
     for (auto it = btnMap.begin(); it != btnMap.end(); ++it) {
         QPushButton *btn = it.value();
