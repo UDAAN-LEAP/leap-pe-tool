@@ -4452,6 +4452,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         //! Apply event on graphicsview (image loaded part)
         if( object->parent() == ui->graphicsView)
         {
+            installEventFilter(this);
             //! Capturing mouse press event on graphics view for OCR
             if (event->type() == QEvent::MouseButtonPress && shouldIOCR){
                 //! calls handleOCR function reponsible for handling the OCR functionality
@@ -4464,7 +4465,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 handleOCR(event, x1, y1, x2, y2);
             }
 
-            installEventFilter(this);
             //! Capturing mouse press event on graphicsview
             if (event->type() == QEvent::MouseButtonPress && shouldIDraw)
             {
