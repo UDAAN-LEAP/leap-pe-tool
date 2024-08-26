@@ -4652,7 +4652,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     //! setting for cancelbutton
                     else
                     {
-                        QMessageBox::information(0, "Not saved", "Cancelled");
                         crop_rect->setRect(0,0,1,1);
                         shouldIDraw=false;
                         ui->pushButton->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");       //remove the style once the operation is done
