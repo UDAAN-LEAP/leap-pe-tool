@@ -4486,7 +4486,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     drawRectangleFlag=false;
                     pressedFlag =0;        //for stopping the drawing
                     event->accept();
-                    return true;
                 }
                 if(shouldIDraw){
 
