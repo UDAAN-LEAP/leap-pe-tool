@@ -257,8 +257,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->copyToVerifier->setEnabled(false);
     ui->checkBox->setEnabled(false);
     ui->addDictionary->setEnabled(false);
-    ui->actionComment->setVisible(false);
-    ui->actionComment->setEnabled(false);
+    ui->actionComment->setVisible(true);
+    ui->actionComment->setEnabled(true);
 
     settings.beginGroup("cloudSave");
     settings.remove("");
@@ -12951,9 +12951,7 @@ void MainWindow::on_actionComment_triggered()
     comment->exec();
 
     QString str = comment->getComment();
-
     if(str == "") return;
-
     writeCommentLogs(text,str);
     sendComment(str);
 }
@@ -13374,8 +13372,6 @@ void MainWindow::on_actionNormal_Text_triggered()
 */
 void MainWindow::sendComment(QString str)
 {
-    QThread* workerThread = new QThread();
-    QObject::connect(workerThread, &QThread::started, [=](){
         QString comment_mail = "";
         QString app_password = "";
 
@@ -13414,7 +13410,6 @@ void MainWindow::sendComment(QString str)
             } else {
                 qDebug() << "Error:" << reply->errorString();
                 QMessageBox::critical(this, "Error", reply->errorString());
-                workerThread->quit();
                 return;
             }
             reply->deleteLater();
@@ -13554,11 +13549,6 @@ void MainWindow::sendComment(QString str)
         if(!sender.sendMail(message))
             qDebug()<<"Not sent";
         else qDebug()<<"Sent";
-    });
-
-    QObject::connect(workerThread, &QThread::finished, workerThread, &QThread::deleteLater);
-
-    workerThread->start();
 }
 
 /*!
