@@ -8897,7 +8897,6 @@ void MainWindow::on_actionCheck_for_Updates_triggered(int arg)
     if(latestVersion == "false") return;
     QString curr_version = qApp->applicationVersion();
     //QString latestVersion = UpdateInfo();
-    qDebug() << curr_version;
     if(curr_version==latestVersion)
     {
         if(arg!=1){
