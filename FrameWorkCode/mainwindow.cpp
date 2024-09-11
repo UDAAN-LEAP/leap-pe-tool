@@ -257,8 +257,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->copyToVerifier->setEnabled(false);
     ui->checkBox->setEnabled(false);
     ui->addDictionary->setEnabled(false);
-    ui->actionComment->setVisible(false);
-    ui->actionComment->setEnabled(false);
+    ui->actionComment->setVisible(true);
+    ui->actionComment->setEnabled(true);
 
     settings.beginGroup("cloudSave");
     settings.remove("");
@@ -4452,6 +4452,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         //! Apply event on graphicsview (image loaded part)
         if( object->parent() == ui->graphicsView)
         {
+            installEventFilter(this);
             //! Capturing mouse press event on graphics view for OCR
             if (event->type() == QEvent::MouseButtonPress && shouldIOCR){
                 //! calls handleOCR function reponsible for handling the OCR functionality
@@ -4464,7 +4465,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                 handleOCR(event, x1, y1, x2, y2);
             }
 
-            installEventFilter(this);
             //! Capturing mouse press event on graphicsview
             if (event->type() == QEvent::MouseButtonPress && shouldIDraw)
             {
@@ -4486,7 +4486,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     drawRectangleFlag=false;
                     pressedFlag =0;        //for stopping the drawing
                     event->accept();
-                    return true;
                 }
                 if(shouldIDraw){
 
@@ -4652,7 +4651,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
                     //! setting for cancelbutton
                     else
                     {
-                        QMessageBox::information(0, "Not saved", "Cancelled");
                         crop_rect->setRect(0,0,1,1);
                         shouldIDraw=false;
                         ui->pushButton->setStyleSheet("background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72);height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;");       //remove the style once the operation is done
@@ -8127,7 +8125,7 @@ void MainWindow::on_actionLinux_triggered()
  */
 void MainWindow::on_actionWindows_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/12Zbe9OLYOoguGu7HWRnpYkHD0BaW8SOvjYh96DYZ_8Y/edit", QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl("https://docs.google.com/document/d/1FcnBcxjjQ4rd3xfDMyHft0iVndEj8Iu7PaTvuWJrTSM/edit?usp=sharing", QUrl::TolerantMode));
 }
 
 /*!
@@ -8899,7 +8897,6 @@ void MainWindow::on_actionCheck_for_Updates_triggered(int arg)
     if(latestVersion == "false") return;
     QString curr_version = qApp->applicationVersion();
     //QString latestVersion = UpdateInfo();
-    qDebug() << curr_version;
     if(curr_version==latestVersion)
     {
         if(arg!=1){
@@ -9572,6 +9569,7 @@ void MainWindow::on_actionClone_Repository()
             QJsonDocument document = QJsonDocument::fromJson(m_data, &errorPtr);
             QJsonObject mainObj = document.object();
             QJsonArray repos = mainObj.value("repo_list").toArray();
+            qDebug()<<repos;
             if(repos.size() == 0){
                 QMessageBox msg;
                 msg.setText("There is nothing to show on dashboard");
@@ -9583,12 +9581,18 @@ void MainWindow::on_actionClone_Repository()
             QString importHtml="<table><tr><th>#Project ID</th><th>#Project name</th></tr>";
             QStandardItemModel *model = new QStandardItemModel;
             QMap<int, QString> repoMap;
-            for(itr = repos.begin(); itr != repos.end(); itr++){
+            for(itr = repos.end() - 1; itr != repos.begin(); itr--){
                 lineindex++;
                 repoMap[lineindex] = itr->toString();
                 QString num = QString::number(lineindex);
                 importHtml += QString::fromStdString("<tr><td>")+num+"</td><td>"+itr->toString()+"</td></tr";
             }
+            itr = repos.begin();
+            lineindex++;
+            repoMap[lineindex] = itr->toString();
+            QString num = QString::number(lineindex);
+            importHtml += QString::fromStdString("<tr><td>")+num+"</td><td>"+itr->toString()+"</td></tr";
+
             importHtml += "</table>";
             QString p_str = "";
             bool open = false;
@@ -12782,6 +12786,9 @@ void MainWindow::on_actionFullScreen_triggered(bool viewMode)
     ui->menuBar->setVisible(false);
     ui->mainToolBar->setVisible(false);
     if(viewMode == false)ui->pushButton_8->setVisible(true);
+    ui->textEdit_dict->setVisible(false);
+    ui->lineEdit_4->setVisible(false);
+    ui->tabWidget->setVisible(false);
 }
 
 void MainWindow::on_pushButton_8_clicked()
@@ -12789,6 +12796,9 @@ void MainWindow::on_pushButton_8_clicked()
     ui->menuBar->setVisible(true);
     ui->mainToolBar->setVisible(true);
     ui->pushButton_8->setVisible(false);
+    ui->textEdit_dict->setVisible(true);
+    ui->lineEdit_4->setVisible(true);
+    ui->tabWidget->setVisible(true);
 }
 
 /*!
@@ -12940,9 +12950,7 @@ void MainWindow::on_actionComment_triggered()
     comment->exec();
 
     QString str = comment->getComment();
-
     if(str == "") return;
-
     writeCommentLogs(text,str);
     sendComment(str);
 }
@@ -13363,8 +13371,6 @@ void MainWindow::on_actionNormal_Text_triggered()
 */
 void MainWindow::sendComment(QString str)
 {
-    QThread* workerThread = new QThread();
-    QObject::connect(workerThread, &QThread::started, [=](){
         QString comment_mail = "";
         QString app_password = "";
 
@@ -13403,7 +13409,6 @@ void MainWindow::sendComment(QString str)
             } else {
                 qDebug() << "Error:" << reply->errorString();
                 QMessageBox::critical(this, "Error", reply->errorString());
-                workerThread->quit();
                 return;
             }
             reply->deleteLater();
@@ -13543,11 +13548,6 @@ void MainWindow::sendComment(QString str)
         if(!sender.sendMail(message))
             qDebug()<<"Not sent";
         else qDebug()<<"Sent";
-    });
-
-    QObject::connect(workerThread, &QThread::finished, workerThread, &QThread::deleteLater);
-
-    workerThread->start();
 }
 
 /*!
@@ -16536,3 +16536,16 @@ QString MainWindow::decrypt(QByteArray encrypted_arr){
 
   return decodedString;
 }
+
+/*!
+ * \brief Fit To Width Button to fit the image width in graphicView for better visibility
+ */
+void MainWindow::on_fit_to_width_clicked()
+{
+    if (ui->graphicsView && ui->graphicsView->scene())
+    {
+        QRectF rect = ui->graphicsView->scene()->itemsBoundingRect();
+        ui->graphicsView->fitInView(rect, Qt::KeepAspectRatioByExpanding);
+    }
+}
+

@@ -12,6 +12,7 @@
   </property>
   <property name="font">
    <font>
+    <weight>50</weight>
     <italic>false</italic>
     <bold>false</bold>
    </font>
@@ -55,38 +56,6 @@ background-color: #BCBDBD; height:26.96px; width:30.03px; border:0px; padding:0p
            <string notr="true">color: rgb(0, 0, 0);
 image: url(:/Images/Resources/backfinal.png);
 background-color: #BCBDBD; height:26.96px; width:30.03px; border:0px; padding:0px 3.6px;border-radius:6px;</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_8">
-          <property name="styleSheet">
-           <string notr="true">QPushButton#pushButton_8 {
-    color: rgb(0, 0, 0);
-    image: url(:/Images/Resources/exit_full_screen.png);
-    height: 34px;
-    width: 34px;
-    border-radius: 17px;
-    background-color: rgb(255, 255, 255);
-    border: none;
-    outline: none;
-}
-
-QPushButton#pushButton_8:hover {
-    background-color: rgb(230, 230, 230);
-}
-
-QPushButton#pushButton_8:pressed {
-    background-color: rgb(200, 200, 200);
-    padding-left: 2px;
-    padding-top: 2px;
-    position: relative;
-    top: 1px;
-    left: 1px;
-}</string>
           </property>
           <property name="text">
            <string/>
@@ -138,6 +107,38 @@ margin-top:10px;
           </property>
           <property name="text">
            <string>Status - None</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_8">
+          <property name="styleSheet">
+           <string notr="true">QPushButton#pushButton_8 {
+    color: rgb(0, 0, 0);
+    image: url(:/Images/Resources/exit_full_screen.png);
+    height: 34px;
+    width: 34px;
+    border-radius: 17px;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    outline: none;
+}
+
+QPushButton#pushButton_8:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+QPushButton#pushButton_8:pressed {
+    background-color: rgb(200, 200, 200);
+    padding-left: 2px;
+    padding-top: 2px;
+    position: relative;
+    top: 1px;
+    left: 1px;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>
@@ -262,7 +263,7 @@ color: rgb(121,255, 121);
            <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 109.11px; padding-top:1px; border-radius:4.8px; padding-left:1.3px;}QPushButton:checked{background-color: rgb(136, 138, 133);}QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
           </property>
           <property name="text">
-           <string>OCR</string>
+           <string>Image to Text</string>
           </property>
          </widget>
         </item>
@@ -458,6 +459,7 @@ margin-top: 5px;
                 </property>
                 <property name="font">
                  <font>
+                  <weight>50</weight>
                   <italic>false</italic>
                   <bold>false</bold>
                  </font>
@@ -551,8 +553,8 @@ margin-top: 8px;
               </property>
               <property name="minimumSize">
                <size>
-                <width>0</width>
-                <height>0</height>
+                <width>266</width>
+                <height>266</height>
                </size>
               </property>
               <property name="maximumSize">
@@ -846,6 +848,7 @@ color: rgb(128, 128, 128);
          <property name="font">
           <font>
            <pointsize>20</pointsize>
+           <weight>50</weight>
            <italic>false</italic>
            <bold>false</bold>
           </font>
@@ -895,12 +898,9 @@ QScrollBar::sub-line:vertical {
          </property>
          <property name="html">
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:20pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:20pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffffff&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;Please Select the Language from top left menu before loading any document.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="acceptRichText">
@@ -1082,6 +1082,17 @@ color: rgb(0, 0, 0); height:37.39px; border:0px; width:184.8px; padding-left:7.8
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="fit_to_width">
+        <property name="styleSheet">
+         <string notr="true">QPushButton{background-color:rgb(227, 228, 228);border:0px; color: rgb(32, 33, 72); height:26.96px; width: 113.5px; padding-top:1px; border-radius:4.8px; padding-left:1.3px; selection-color: rgb(32, 33, 72); selection-background-color: rgb(136, 138, 133);
+} QPushButton:checked{background-color: rgb(136, 138, 133);} QPushButton:pressed {background-color: rgb(136, 138, 133);}</string>
+        </property>
+        <property name="text">
+         <string>Fit To Width</string>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_9">
@@ -1270,7 +1281,7 @@ background: grey;
      <x>0</x>
      <y>0</y>
      <width>2249</width>
-     <height>46</height>
+     <height>49</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1321,7 +1332,7 @@ QMenu::item:selected{
       <string notr="true">font-size: 17px;</string>
      </property>
      <property name="title">
-      <string>Installation Guide</string>
+      <string>Installation &amp;&amp; User Guide</string>
      </property>
      <addaction name="actionLinux"/>
      <addaction name="actionWindows"/>
@@ -1489,7 +1500,7 @@ QMenu::item:selected{
       <rect>
        <x>847</x>
        <y>206</y>
-       <width>206</width>
+       <width>186</width>
        <height>371</height>
       </rect>
      </property>
@@ -2432,6 +2443,12 @@ background-color: #EEF0F2;
    <property name="text">
     <string>Linux</string>
    </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionWindows">
    <property name="icon">
@@ -2624,7 +2641,7 @@ background-color: #EEF0F2;
   <action name="actionExit">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/exit-modified.png</normaloff>Resources/exit-modified.png</iconset>
+     <normaloff>../../Users/hp/Users/hp/.designer/backup/Resources/exit-modified.png</normaloff>../../Users/hp/Users/hp/.designer/backup/Resources/exit-modified.png</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -2645,6 +2662,9 @@ background-color: #EEF0F2;
    </property>
    <property name="text">
     <string>User Guide</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionCopy_Format">

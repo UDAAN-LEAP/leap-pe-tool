@@ -646,6 +646,8 @@ private slots:
 
     QString decrypt(QByteArray encrypted_arr);
 
+    void on_fit_to_width_clicked();
+
 public slots:
     void on_actionLoad_Next_Page_triggered();
 
