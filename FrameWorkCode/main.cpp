@@ -98,6 +98,7 @@ int main(int argc, char *argv[])
     QSettings settings("IIT-B", "OpenOCRCorrect");
     settings.beginGroup("update");
     QString default_version = "v4.7";
+
     QString version = settings.value("version").toString();
     settings.endGroup();
     if(version == "") version = default_version;
