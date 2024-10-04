@@ -11803,11 +11803,14 @@ void MainWindow::on_actionCell_Padding_triggered()
 
 void MainWindow::update_tool(QString latestVersion){
 #ifdef Q_OS_WIN
-    QUrl downloadUrl("https://www.cse.iitb.ac.in/~ayusham/Udaan-Windows-"+latestVersion+".zip");
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/"+latestVersion+".zip";
+    QUrl downloadUrl("https://github.com/UDAAN-LEAP/leap-pe-tool/releases/download/" + latestVersion + "/Udaan-Windows-" + latestVersion + ".zip");
+
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/Udaan-Windows-" + latestVersion + ".zip";
+
 #else
-    QUrl downloadUrl("https://www.cse.iitb.ac.in/~ayusham/Udaan-Linux-"+latestVersion+".tar.xz");
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/"+latestVersion+".tar.xz";
+    QUrl downloadUrl("https://github.com/UDAAN-LEAP/leap-pe-tool/releases/download/" + latestVersion + "/Udaan-Linux-" + latestVersion + ".tar.xz");
+
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/Udaan-Linux-" + latestVersion + ".tar.xz";
 #endif
     QDialog dialog(this);
     QFormLayout form(&dialog);
